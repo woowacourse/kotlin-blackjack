@@ -19,10 +19,10 @@ internal class PlayerTest {
     @DisplayName("사용자에 카드를 추가한다.")
     @Test
     fun draw() {
-        player.draw("k1")
+        player.receive("k1")
         assertThat(player.cards).usingRecursiveComparison().isEqualTo(listOf("k1"))
 
-        player.draw("a2", "c10")
+        player.receive("a2", "c10")
         assertThat(player.cards).usingRecursiveComparison().isEqualTo(listOf("k1", "a2", "c10"))
     }
 }

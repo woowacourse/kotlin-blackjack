@@ -1,12 +1,12 @@
 package domain.player
 
+import domain.card.Card
+
 class Player(val name: String, val bettingMoney: Int) {
 
-    val cards = PlayerCards()
+    private var cards = PlayerCards()
 
-    fun draw(vararg additionCards : String){
-        for(card in additionCards){
-//            cards.add(card)
-        }
+    fun receive(card : Card){
+        cards = cards.add(card)
     }
 }
