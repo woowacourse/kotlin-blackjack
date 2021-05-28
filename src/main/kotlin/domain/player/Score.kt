@@ -6,9 +6,11 @@ private const val BLACK_JACK_POINT = 21
 
 data class Score(val cards: List<Card>) {
     val value: Int
+    val type : ScoreType
 
     init {
         value = sumCardsPoint()
+        type = ScoreType.of(value, cards.size)
     }
 
     private fun sumCardsPoint() :Int{

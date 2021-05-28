@@ -13,10 +13,7 @@ class CardDeck(private val deck:MutableList<Card> = mutableListOf()){
 
     fun draw() : Card{
         require(deck.isNotEmpty()) { "카드가 더 이상 존재하지 않습니다." }
-
-        val picked = deck.first()
-        deck.removeFirst()
-        return picked
+        return deck.removeFirst()
     }
 
     fun contains(card:Card):Boolean{

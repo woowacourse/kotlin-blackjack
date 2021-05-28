@@ -25,8 +25,7 @@ class GameController {
         }
 
         // TODO :: 딜러 추가 카드 지급
-        calculate()
-
+//        printResult()
     }
 
     private fun initPlayers(): List<Player> {
