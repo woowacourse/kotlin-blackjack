@@ -1,10 +1,23 @@
 package view
 
+import domain.player.Money
 import domain.player.Player
 
 object InputView {
 
-    fun inputPlayerNames(): List<String> {
+    fun inputGamblers(): List<Player> {
+        val names = inputPlayerNames()
+
+        require(names.size == names.distinct().size) {
+            "이름은 중복될 수 없습니다."
+        }
+
+        return names.map {
+            Player(it, inputBettingMoney(it))
+        }
+    }
+
+    private fun inputPlayerNames(): List<String> {
         return try {
             println("게임에 참여할 사람의 이름을 입력하세요")
             readLine()!!.split(",").map { it.trim() }
@@ -14,10 +27,10 @@ object InputView {
         }
     }
 
-    fun inputBettingMoney(name: String): Int {
+    private fun inputBettingMoney(name: String): Money {
         return try {
-            println("$name 의 베팅 금액은?")
-            readLine()!!.toInt()
+            println("${name}의 베팅 금액은?")
+            Money(readLine()!!.toInt())
         } catch (e: Exception) {
             println("ERROR : " + e.message)
             inputBettingMoney(name)

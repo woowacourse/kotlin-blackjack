@@ -2,39 +2,35 @@ package domain.player
 
 import domain.card.Card
 
-open class Player(val name: String, val bettingMoney: Int = 0) {
+open class Player(val name: String, val bettingMoney: Money = Money.ZERO) {
 
-    private var earningMoney = 0
+    var earningMoney = Money.ZERO
+        private set
 
     var cards = PlayerCards()
         private set
 
-    fun receiveCard(card : Card){
-        cards = cards.add(card)
+    fun receiveCards(receivedCards: List<Card>) {
+        cards = cards.add(receivedCards)
     }
 
-    fun giveMoney(other :Player, money :Int){
-        this.earningMoney -= money
-        other.earningMoney += money
+    fun earn(money : Money){
+        earningMoney = earningMoney.earn(money)
     }
 
-    fun takeMoney(other :Player, money :Int){
-        giveMoney(other, -money)
+    fun lose(money: Money){
+        earningMoney = earningMoney.lose(money)
     }
 
     fun isBlackJack(): Boolean {
-        return cards.type.isBlackJack()
+        return cards.isBlackJack()
     }
 
     fun isWin(other: Player): Boolean {
-        return this.cards.isWin(other.cards)
+        return cards.isWin(other.cards)
     }
 
     fun isLose(other: Player): Boolean {
-        return this.cards.isLose(other.cards)
-    }
-
-    fun score(): Int {
-        return cards.score.value
+        return cards.isLose(other.cards)
     }
 }

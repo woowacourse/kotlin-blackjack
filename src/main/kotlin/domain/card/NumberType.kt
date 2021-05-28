@@ -1,6 +1,6 @@
 package domain.card
 
-enum class NumberType(val point :Int, val specialPoint :Int) {
+enum class NumberType(val point: Int, val specialPoint: Int = 0) {
     ACE(1, 10),
     TWO(2),
     THREE(3),
@@ -14,6 +14,4 @@ enum class NumberType(val point :Int, val specialPoint :Int) {
     KING(10),
     QUEEN(10),
     JACK(10);
-
-    constructor(point:Int) :this(point, 0)
 }

@@ -4,45 +4,44 @@ import domain.BlackJackGame
 import domain.player.Player
 import view.InputView
 import view.OutputView
-import view.YesOrNo
 
 class GameController {
 
-    val players = initPlayers()
-    val gameService = BlackJackGame(players)
+    private val blackJackGame = BlackJackGame(InputView.inputGamblers())
 
     fun play() {
         giveInitialCards()
-        giveAdditionalCards()
+
+        giveGamblerAdditionalCards()
+        giveDealerAdditionalCards()
+
         printResult()
     }
 
-    private fun initPlayers(): List<Player> {
-        val names: List<String> = InputView.inputPlayerNames()
-        return names.map { Player(it, InputView.inputBettingMoney(it)) }
+    private fun giveInitialCards() {
+        val players = blackJackGame.giveInitialCards()
+        OutputView.printPlayersCards(players)
     }
 
-    private fun giveInitialCards(){
-        val result = gameService.giveInitialCards()
-        OutputView.printResult(result)
-    }
-
-    private fun giveAdditionalCards() {
-        for(player in players){
-            askDrawMore(player)
+    private fun giveGamblerAdditionalCards() {
+        blackJackGame.gamblers.forEach {
+            askDrawMore(it)
         }
-        gameService.giveDealerAdditionalCards()
     }
 
     private fun askDrawMore(player: Player) {
-        while (InputView.askDrawMore(player) == YesOrNo.YES) {
-            val result = gameService.givePlayerCard(player)
-            OutputView.printResult(result)
+        while (InputView.askDrawMore(player).isYes()) {
+            val player = blackJackGame.givePlayerCard(player)
+            OutputView.printPlayerCard(player)
         }
     }
 
-    private fun printResult(){
-        val result = gameService.gameResult()
-        OutputView.printResult(result)
+    private fun giveDealerAdditionalCards() {
+        val dealer = blackJackGame.giveDealerAdditionalCards()
+        OutputView.printPlayerCard(dealer)
+    }
+
+    private fun printResult() {
+        OutputView.printResult(blackJackGame.gameResult())
     }
 }

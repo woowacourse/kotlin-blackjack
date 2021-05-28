@@ -1,28 +1,37 @@
 package domain.player
 
+const val MINIMUM_SCORE_OF_DEALER = 16
+
 class Dealer(name: String) : Player(name) {
 
     fun compare(player: Player) {
         if (isWin(player)) {
-            takeMoneyFromPlayer(player)
+            takeMoney(player, player.bettingMoney)
         }
 
         if (isLose(player)) {
-            givePlayerMoney(player)
+            giveMoney(player, decidePrize(player))
         }
     }
 
-    private fun takeMoneyFromPlayer(player: Player) {
-        this.takeMoney(player, player.bettingMoney)
+    private fun takeMoney(gambler: Player, money: Money) {
+        gambler.lose(money)
+        this.earn(money)
     }
 
-    private fun givePlayerMoney(player: Player) {
+    private fun giveMoney(gambler: Player, money: Money) {
+        gambler.earn(money)
+        this.lose(money)
+    }
+
+    private fun decidePrize(player: Player): Money {
         if (player.isBlackJack()) {
-            this.giveMoney(player, (player.bettingMoney * 1.5).toInt())
+            return player.bettingMoney.asBlackJackPrize()
         }
+        return player.bettingMoney
+    }
 
-        if (!player.isBlackJack()) {
-            this.giveMoney(player, player.bettingMoney)
-        }
+    fun shouldDraw(): Boolean {
+        return cards.score() <= MINIMUM_SCORE_OF_DEALER
     }
 }

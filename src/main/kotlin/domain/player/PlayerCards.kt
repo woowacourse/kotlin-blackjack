@@ -1,33 +1,30 @@
 package domain.player
 
 import domain.card.Card
+import domain.score.Score
 
 data class PlayerCards(val cards: List<Card> = listOf()) {
 
-    val score = Score(cards)
-    val type = score.type
+    private val score = Score(cards)
+    private val type = score.type
 
-    fun add(card: Card): PlayerCards {
-        return PlayerCards(cards.plus(card))
+    fun add(additionCards: List<Card>): PlayerCards {
+        return PlayerCards(cards.plus(additionCards))
     }
 
     fun isWin(other: PlayerCards): Boolean {
-        if(this.type.isBlackJack() && !other.type.isBlackJack()){
-            return true
-        }
-
-        if(!this.type.isOver() && other.type.isOver()){
-            return true
-        }
-
-        if(this.type.isUnder() && other.type.isUnder()){
-            return this.score.value > other.score.value
-        }
-
-        return false
+        return score.isWin(other.score)
     }
 
-    fun isLose(other: PlayerCards) :Boolean{
-        return other.isWin(this)
+    fun isLose(other: PlayerCards): Boolean {
+        return score.isLose(other.score)
+    }
+
+    fun isBlackJack(): Boolean {
+        return type.isBlackJack()
+    }
+
+    fun score(): Int {
+        return this.score.value
     }
 }

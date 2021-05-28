@@ -10,4 +10,8 @@ enum class YesOrNo(val answer: String) {
                 ?: throw IllegalArgumentException("YesOrNo가 아닙니다.")
         }
     }
+
+    fun isYes(): Boolean {
+        return this == YES
+    }
 }

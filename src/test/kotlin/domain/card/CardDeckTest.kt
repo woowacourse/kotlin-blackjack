@@ -1,10 +1,8 @@
 package domain.card
 
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Test
-
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 internal class CardDeckTest {
@@ -14,8 +12,10 @@ internal class CardDeckTest {
     fun draw() {
         val deck = CardDeck()
 
-        val picked = deck.draw()
-        assertThat(deck.contains(picked)).isFalse
+        val picked = deck.drawCards()
+        for (card in picked) {
+            assertThat(deck.contains(card)).isFalse
+        }
     }
 
     @DisplayName("덱에 카드가 없는 상황에서 draw를 호출하면 에러를 발생한다.")
@@ -25,9 +25,9 @@ internal class CardDeckTest {
         val numberOfCardInDeck = deck.size()
 
         for (i in 0 until numberOfCardInDeck) {
-            deck.draw()
+            deck.drawCards()
         }
 
-        assertThrows<IllegalArgumentException> {  deck.draw() }
+        assertThrows<IllegalArgumentException> { deck.drawCards() }
     }
 }
