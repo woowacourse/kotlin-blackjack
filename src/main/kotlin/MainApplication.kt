@@ -10,5 +10,5 @@ fun main() {
     val players = playerNames
         .map{ Player(it, InputView.inputBettingMoney(it)) }
 
-
+    InputView.askDrawMore(players[0])
 }
