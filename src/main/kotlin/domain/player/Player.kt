@@ -1,10 +1,8 @@
-package domain
-
-import domain.card.Cards
+package domain.player
 
 class Player(val name: String, val bettingMoney: Int) {
 
-    val cards = Cards()
+    val cards = PlayerCards()
 
     fun draw(vararg additionCards : String){
         for(card in additionCards){

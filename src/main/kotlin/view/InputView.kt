@@ -1,6 +1,6 @@
 package view
 
-import domain.Player
+import domain.player.Player
 
 object InputView {
 
