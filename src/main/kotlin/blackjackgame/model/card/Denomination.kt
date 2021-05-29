@@ -1,4 +1,4 @@
-package blackjackgame.model
+package blackjackgame.model.card
 
 enum class Denomination(val value: String, val score: Int) {
     ACE("A", 1), KING("K", 10), JACK("J", 10),
