@@ -1,4 +1,4 @@
-package blackjackgame.model
+package blackjackgame.model.player
 
 import blackjackgame.model.card.Card
 
@@ -11,6 +11,10 @@ class Player(val name: String) {
 
     fun drawCard(cards: List<Card>) {
         this.cards.addAll(cards)
+    }
+
+    fun getInitCards(): List<Card> {
+        return this.cards.subList(0, 2)
     }
 
 }
