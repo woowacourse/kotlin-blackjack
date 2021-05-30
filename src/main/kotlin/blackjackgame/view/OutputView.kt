@@ -1,5 +1,6 @@
 package blackjackgame.view
 
+import blackjackgame.model.result.Result
 import blackjackgame.model.card.Card
 
 fun printStatus(players: List<Pair<String, List<Card>>>) {
@@ -30,4 +31,10 @@ fun printFinalResult(results: List<Triple<String, List<Card>, Int>>) {
 
 fun printDealerTurnResult() {
     println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+}
+
+fun printWinLoseResult(results: List<Pair<String, Result>>) {
+    results.forEach {
+        println("${it.first}: ${it.second}")
+    }
 }

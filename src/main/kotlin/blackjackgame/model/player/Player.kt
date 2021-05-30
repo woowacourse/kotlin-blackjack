@@ -23,7 +23,7 @@ open class Player(val name: String) {
     }
 
     fun isBurst(): Boolean {
-        return cards.calculateScore() >= BLACKJACK_SCORE
+        return cards.calculateScore() > BLACKJACK_SCORE
     }
 
     fun isBlackjack(): Boolean {
@@ -42,5 +42,9 @@ open class Player(val name: String) {
 
     open fun isPlayer(): Boolean {
         return true
+    }
+
+    fun calculateFinalScore() : Int {
+        return cards.calculateFinalScore()
     }
 }
