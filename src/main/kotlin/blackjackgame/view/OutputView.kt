@@ -9,11 +9,17 @@ fun printStatus(players: List<Pair<String, List<Card>>>) {
     }
 }
 
-fun printStatus(player: Pair<String, List<Card>>){
+fun printStatus(player: Pair<String, List<Card>>) {
     println("${player.first}카드: ${printCard(player.second)} ")
 }
 
 fun printCard(cards: List<Card>): String {
     val result = cards.map { "${it.denomination.value}${it.suit.value}" }
     return result.joinToString(",")
+}
+
+fun printFinalResult(results: List<Triple<String, List<Card>, Int>>) {
+    results.forEach {
+        println("${it.first}카드: ${printCard(it.second)} - 결과: ${it.third}")
+    }
 }
