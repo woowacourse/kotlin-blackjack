@@ -9,6 +9,10 @@ fun printStatus(players: List<Pair<String, List<Card>>>) {
     }
 }
 
+fun printStatus(player: Pair<String, List<Card>>){
+    println("${player.first}카드: ${printCard(player.second)} ")
+}
+
 fun printCard(cards: List<Card>): String {
     val result = cards.map { "${it.denomination.value}${it.suit.value}" }
     return result.joinToString(",")
