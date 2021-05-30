@@ -1,9 +1,14 @@
 package blackjackgame.model.player
 
 import blackjackgame.model.card.Card
+import blackjackgame.model.card.Cards
+
+const val BLACKJACK_SCORE = 21
 
 class Player(val name: String) {
-    val cards = mutableListOf<Card>()
+    val cards = Cards(mutableListOf())
+    var isPlaying = true
+        private set
 
     fun drawCard(card: Card) {
         cards.add(card)
@@ -17,4 +22,19 @@ class Player(val name: String) {
         return this.cards.subList(0, 2)
     }
 
+    fun isBurst(): Boolean {
+        return cards.calculateScore() >= BLACKJACK_SCORE
+    }
+
+    fun isBlackjack(): Boolean {
+        return cards.isInitSize()  && cards.calculateScore() == BLACKJACK_SCORE
+    }
+
+    fun isHit(): Boolean {
+        return cards.calculateScore() < BLACKJACK_SCORE
+    }
+
+    fun endTurn() {
+        isPlaying = false
+    }
 }
