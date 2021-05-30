@@ -9,9 +9,4 @@ class Players(val players: List<Player>) : List<Player> by players {
             it.drawCard(deck.handOutInitialCards())
         }
     }
-
-    fun findCurrentPlayer() {
-        
-    }
-
 }

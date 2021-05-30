@@ -5,7 +5,7 @@ import blackjackgame.model.card.Cards
 
 const val BLACKJACK_SCORE = 21
 
-class Player(val name: String) {
+open class Player(val name: String) {
     val cards = Cards(mutableListOf())
     var isPlaying = true
         private set
@@ -18,7 +18,7 @@ class Player(val name: String) {
         this.cards.addAll(cards)
     }
 
-    fun getInitCards(): List<Card> {
+    open fun getInitCards(): List<Card> {
         return this.cards.subList(0, 2)
     }
 
@@ -33,8 +33,14 @@ class Player(val name: String) {
     fun isHit(): Boolean {
         return cards.calculateScore() < BLACKJACK_SCORE
     }
-
+    fun canDraw(): Boolean {
+        return cards.calculateScore() < BLACKJACK_SCORE
+    }
     fun endTurn() {
         isPlaying = false
+    }
+
+    open fun isPlayer(): Boolean {
+        return true
     }
 }
