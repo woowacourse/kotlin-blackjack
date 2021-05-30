@@ -25,6 +25,7 @@ class BlackjackController {
         }
 
         printFinalResult(blackjackGame.extractResult())
+        printWinLoseResult(blackjackGame.extractWinLoseResult())
     }
 
 }

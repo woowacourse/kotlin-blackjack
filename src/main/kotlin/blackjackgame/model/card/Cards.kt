@@ -3,7 +3,6 @@ package blackjackgame.model.card
 class Cards(private val cards: MutableList<Card>) {
 
     fun calculateScore(): Int {
-        // 사용자가 1, 11 인지 선택할수  -> 사용자의 선택을 받아야한다.
         return cards.sumOf { it.denomination.score }
     }
 
