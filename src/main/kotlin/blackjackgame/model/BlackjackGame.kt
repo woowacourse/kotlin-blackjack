@@ -2,6 +2,7 @@ package blackjackgame.model
 
 import blackjackgame.model.card.Card
 import blackjackgame.model.card.Deck
+import blackjackgame.model.player.Dealer
 import blackjackgame.model.player.Player
 import blackjackgame.model.player.Players
 
@@ -46,5 +47,14 @@ class BlackjackGame(players: List<Player>, dealer: Player, private val deck: Dec
 
     fun extractResult(): List<Triple<String, List<Card>, Int>> {
         return participants.map { Triple(it.name, it.cards.getCards(), it.cards.calculateFinalScore()) }
+    }
+
+    fun playDealerTurn():Boolean {
+        val dealer = participants.first { !it.isPlayer() } as Dealer
+        if (dealer.isAvailableToDraw()) {
+            dealer.drawCard(deck.handOutCard())
+            return true
+        }
+        return false
     }
 }
