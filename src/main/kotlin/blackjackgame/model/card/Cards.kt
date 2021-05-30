@@ -3,7 +3,20 @@ package blackjackgame.model.card
 class Cards(private val cards: MutableList<Card>) {
 
     fun calculateScore(): Int {
+        // 사용자가 1, 11 인지 선택할수  -> 사용자의 선택을 받아야한다.
         return cards.sumOf { it.denomination.score }
+    }
+
+    fun calculateFinalScore(): Int {
+        val aceNumber = cards.count { it.denomination == Denomination.ACE }
+        var totalScore = calculateScore()
+        for (i in 1..aceNumber) {
+            if (totalScore + 10 > 21) {
+                break
+            }
+            totalScore += 10
+        }
+        return totalScore
     }
 
     fun add(card: Card) {

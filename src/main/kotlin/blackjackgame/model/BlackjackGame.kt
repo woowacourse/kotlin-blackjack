@@ -32,4 +32,8 @@ class BlackjackGame(private val players: Players, private val deck: Deck) {
     fun findTurnPlayer(): Player {
         return players.first { it.isHit() && it.isPlaying }
     }
+
+    fun extractResult(): List<Triple<String, List<Card>, Int>> {
+        return players.map { Triple(it.name, it.cards.getCards(), it.cards.calculateFinalScore()) }
+    }
 }

@@ -6,6 +6,7 @@ import blackjackgame.model.player.Player
 import blackjackgame.model.player.Players
 import blackjackgame.view.inputAskDrawCard
 import blackjackgame.view.inputPlayerNames
+import blackjackgame.view.printFinalResult
 import blackjackgame.view.printStatus
 
 class BlackjackController {
@@ -21,6 +22,7 @@ class BlackjackController {
             val turnResult = blackjackGame.playTurn(inputAskDrawCard(player.name))
             printStatus(turnResult)
         }
+        printFinalResult(blackjackGame.extractResult())
     }
 }
 
