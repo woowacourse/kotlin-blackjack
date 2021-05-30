@@ -5,18 +5,27 @@ import blackjackgame.model.card.Deck
 import blackjackgame.model.player.Player
 import blackjackgame.model.player.Players
 
-class BlackjackGame(private val players: Players, private val deck: Deck) {
+class BlackjackGame(players: List<Player>, dealer: Player, private val deck: Deck) {
+    private val participants: Players
+
+    init {
+        val playerGroup = mutableListOf(dealer)
+        players.forEach{ playerGroup.add(it)}
+        participants = Players(playerGroup)
+    }
 
     fun start() {
-        players.drawInitCards(deck)
+        participants.drawInitCards(deck)
     }
 
     fun getInitStatus(): List<Pair<String, List<Card>>> {
-        return players.map { Pair(it.name, it.getInitCards()) }
+        return participants.map { Pair(it.name, it.getInitCards()) }
     }
 
     fun isExistHitPlayer(): Boolean {
-        return players.any { it.isHit() && it.isPlaying }
+        return participants.asSequence()
+            .filter{it.isPlayer()}
+            .any { it.canDraw() && it.isPlaying }
     }
 
     fun playTurn(answer: Boolean): Pair<String, List<Card>> {
@@ -30,10 +39,12 @@ class BlackjackGame(private val players: Players, private val deck: Deck) {
     }
 
     fun findTurnPlayer(): Player {
-        return players.first { it.isHit() && it.isPlaying }
+        return participants.asSequence()
+            .filter{it.isPlayer()}
+            .first { it.isHit() && it.isPlaying }
     }
 
     fun extractResult(): List<Triple<String, List<Card>, Int>> {
-        return players.map { Triple(it.name, it.cards.getCards(), it.cards.calculateFinalScore()) }
+        return participants.map { Triple(it.name, it.cards.getCards(), it.cards.calculateFinalScore()) }
     }
 }
