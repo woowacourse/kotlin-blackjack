@@ -1,18 +1,18 @@
 package view
 
-import domain.player.Player
+import controller.PlayerResponse
 import domain.player.PlayerCards
 
 object OutputView {
 
-    fun printPlayersCards(gamblers: List<Player>) {
-        gamblers.forEach {
+    fun printPlayersCards(players: List<PlayerResponse>) {
+        players.forEach {
             printPlayerCard(it)
         }
         println()
     }
 
-    fun printPlayerCard(player: Player) {
+    fun printPlayerCard(player: PlayerResponse) {
         println("${player.name} : ${possessCards(player.cards)}")
     }
 
@@ -23,15 +23,15 @@ object OutputView {
         }
     }
 
-    fun printResult(gamblers: List<Player>) {
+    fun printResult(players: List<PlayerResponse>) {
         println("\n## 최종 수익")
-        gamblers.forEach {
+        players.forEach {
             printPlayerEarningMoney(it)
         }
         println()
     }
 
-    private fun printPlayerEarningMoney(player: Player) {
+    private fun printPlayerEarningMoney(player: PlayerResponse) {
         println("${player.name} : ${player.earningMoney.value}")
     }
 }

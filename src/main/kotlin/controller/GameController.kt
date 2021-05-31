@@ -1,47 +1,44 @@
 package controller
 
-import domain.BlackJackGame
-import domain.player.Player
+import service.GameService
 import view.InputView
 import view.OutputView
 
 class GameController {
 
-    private val blackJackGame = BlackJackGame(InputView.inputGamblers())
+    private val playerNames = InputView.inputPlayerNames()
+    private val gameService = GameService(InputView.inputPlayers(playerNames))
 
     fun play() {
         giveInitialCards()
 
-        giveGamblerAdditionalCards()
+        giveGamblerAdditionalCards(playerNames)
         giveDealerAdditionalCards()
 
         printResult()
     }
 
     private fun giveInitialCards() {
-        val players = blackJackGame.giveInitialCards()
-        OutputView.printPlayersCards(players)
+        OutputView.printPlayersCards(gameService.distributeInitialCards())
     }
 
-    private fun giveGamblerAdditionalCards() {
-        blackJackGame.gamblers.forEach {
+    private fun giveGamblerAdditionalCards(names : List<String>) {
+        names.forEach {
             askDrawMore(it)
         }
     }
 
-    private fun askDrawMore(player: Player) {
-        while (InputView.askDrawMore(player).isYes()) {
-            val player = blackJackGame.givePlayerCard(player)
-            OutputView.printPlayerCard(player)
+    private fun askDrawMore(name: String) {
+        while (InputView.askDrawMore(name).isYes()) {
+            OutputView.printPlayerCard(gameService.distributeCard(name))
         }
     }
 
     private fun giveDealerAdditionalCards() {
-        val dealer = blackJackGame.giveDealerAdditionalCards()
-        OutputView.printPlayerCard(dealer)
+        OutputView.printPlayerCard(gameService.giveDealerAdditionalCards())
     }
 
     private fun printResult() {
-        OutputView.printResult(blackJackGame.gameResult())
+        OutputView.printResult(gameService.calculateResult())
     }
 }
