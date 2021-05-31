@@ -20,7 +20,7 @@ class PlayerTest {
         val card = Card(Symbol.DIAMOND, Value.SEVEN)
         player.draw(card)
 
-        assertThat(player.hand.cards).hasSize(1)
-        assertThat(player.hand.cards).contains(card)
+        assertThat(player.hand).hasSize(1)
+        assertThat(player.hand).contains(card)
     }
 }

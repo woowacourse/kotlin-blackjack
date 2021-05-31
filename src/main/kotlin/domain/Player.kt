@@ -5,4 +5,12 @@ class Player(val name: String, val hand: Hand = Hand()) {
         hand.addCard(card)
     }
 
+    fun score(): Int {
+        return hand.getScore()
+    }
+
+    fun isBust(): Boolean {
+        return hand.isBust()
+    }
+
 }

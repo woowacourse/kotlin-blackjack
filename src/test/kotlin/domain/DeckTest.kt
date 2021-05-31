@@ -7,8 +7,8 @@ class DeckTest {
     @Test
     internal fun name() {
         val deck = Deck()
-        Assertions.assertThat(deck.cards).hasSize(52)
-        deck.draw()
-        Assertions.assertThat(deck.cards).hasSize(51)
+        Assertions.assertThat(deck).hasSize(52)
+        deck.pop()
+        Assertions.assertThat(deck).hasSize(51)
     }
 }

@@ -1,9 +1,9 @@
 package domain
 
-const val BLACKJACK_SCORE: Int = 21
-const val ACE_SUBTRACT_VALUE = 10
+private const val BLACKJACK_SCORE: Int = 21
+private const val ACE_SUBTRACT_VALUE = 10
 
-class Hand(val cards: MutableList<Card> = mutableListOf()) {
+class Hand(private val cards: MutableList<Card> = mutableListOf()) : List<Card> by cards{
 
     fun addCard(card: Card) {
         cards.add(card)
@@ -21,6 +21,10 @@ class Hand(val cards: MutableList<Card> = mutableListOf()) {
             tmpSum -= ACE_SUBTRACT_VALUE
         }
         return tmpSum
+    }
+
+    fun isBust(): Boolean {
+        return getScore() > BLACKJACK_SCORE
     }
 
 }

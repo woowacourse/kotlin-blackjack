@@ -1,7 +1,7 @@
 package domain
 
 
-class Deck(val cards: MutableList<Card> = mutableListOf()) {
+class Deck(private val cards: MutableList<Card> = mutableListOf()) : List<Card> by cards {
     init {
         if (cards.isEmpty()) {
             for (symbol in enumValues<Symbol>()) {
@@ -11,7 +11,7 @@ class Deck(val cards: MutableList<Card> = mutableListOf()) {
         }
     }
 
-    fun draw(): Card {
+    fun pop(): Card {
         val card = cards.component1()
         cards.remove(card)
         return card
