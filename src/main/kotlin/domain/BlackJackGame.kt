@@ -33,7 +33,7 @@ class BlackJackGame(
 
     fun endGame() {
         gamblers.forEach {
-            dealer.compare(it)
+            dealer.compete(it)
         }
     }
 

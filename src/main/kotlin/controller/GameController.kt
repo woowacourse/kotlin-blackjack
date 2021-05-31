@@ -6,13 +6,13 @@ import view.OutputView
 
 class GameController {
 
-    private val playerNames = InputView.inputPlayerNames()
-    private val gameService = GameService(InputView.inputPlayers(playerNames))
+    private val playerInfos = InputView.inputPlayerInfos()
+    private val gameService = GameService(playerInfos)
 
     fun play() {
         giveInitialCards()
 
-        giveGamblerAdditionalCards(playerNames)
+        giveGamblerAdditionalCards()
         giveDealerAdditionalCards()
 
         printResult()
@@ -22,9 +22,9 @@ class GameController {
         OutputView.printPlayersCards(gameService.distributeInitialCards())
     }
 
-    private fun giveGamblerAdditionalCards(names: List<String>) {
-        names.forEach {
-            askPlayerDraw(it)
+    private fun giveGamblerAdditionalCards() {
+        playerInfos.forEach {
+            askPlayerDraw(it.name)
         }
     }
 

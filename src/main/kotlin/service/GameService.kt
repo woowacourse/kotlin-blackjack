@@ -1,35 +1,40 @@
 package service
 
-import controller.PlayerResponse
 import domain.BlackJackGame
 import domain.player.Player
+import dto.PlayerInfo
+import dto.PlayerResponse
 
-class GameService(players: List<Player>) {
+class GameService(playerInfos: List<PlayerInfo>) {
 
-    private val blackJackGame = BlackJackGame(players)
+    private val blackJackGame = BlackJackGame(playerInfos.map {
+        Player(it.name, it.money)
+    })
 
     fun distributeInitialCards(): List<PlayerResponse> {
         blackJackGame.giveInitialCards()
-
-        return PlayerResponse.parseList(blackJackGame.players)
+        return playersAsResponses(blackJackGame.players)
     }
 
     fun distributeCard(name: String): PlayerResponse {
         val player = blackJackGame.findGamblerByName(name)
         blackJackGame.giveCard(player)
-
         return PlayerResponse(player)
     }
 
     fun giveDealerAdditionalCards(): PlayerResponse {
         blackJackGame.giveDealerAdditionalCards()
-
         return PlayerResponse(blackJackGame.dealer)
     }
 
     fun calculateResult(): List<PlayerResponse> {
         blackJackGame.endGame()
+        return playersAsResponses(blackJackGame.players)
+    }
 
-        return PlayerResponse.parseList(blackJackGame.players)
+    private fun playersAsResponses(players: List<Player>): List<PlayerResponse> {
+        return players.map {
+            PlayerResponse(it)
+        }
     }
 }

@@ -22,8 +22,4 @@ class CardDeck(private val deck: MutableList<Card> = mutableListOf()) {
     fun contains(card: Card): Boolean {
         return deck.contains(card)
     }
-
-    fun size(): Int {
-        return deck.size
-    }
 }

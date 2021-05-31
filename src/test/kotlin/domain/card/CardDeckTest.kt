@@ -22,7 +22,7 @@ internal class CardDeckTest {
     @Test
     fun testEmptyDeck() {
         val deck = CardDeck()
-        val numberOfCardInDeck = deck.size()
+        val numberOfCardInDeck = 52
 
         for (i in 0 until numberOfCardInDeck) {
             deck.drawCards()

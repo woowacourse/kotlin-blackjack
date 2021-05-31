@@ -1,17 +1,18 @@
 package view
 
 import domain.player.Money
-import domain.player.Player
+import dto.PlayerInfo
 
 object InputView {
 
-    fun inputPlayers(names: List<String>): List<Player> {
+    fun inputPlayerInfos(): List<PlayerInfo> {
+        val names = inputPlayerNames()
         return names.map {
-            Player(it, inputBettingMoney(it))
+            PlayerInfo(it, inputBettingMoney(it))
         }
     }
 
-    fun inputPlayerNames(): List<String> {
+    private fun inputPlayerNames(): List<String> {
         return try {
             println("게임에 참여할 사람의 이름을 입력하세요")
             readLine()!!.split(",").map { it.trim() }

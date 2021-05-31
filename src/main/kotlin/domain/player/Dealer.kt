@@ -4,7 +4,7 @@ const val MINIMUM_SCORE_OF_DEALER = 16
 
 class Dealer(name: String) : Player(name) {
 
-    fun compare(player: Player) {
+    fun compete(player: Player) {
         if (isWin(player)) {
             takeMoney(player, player.bettingMoney)
         }

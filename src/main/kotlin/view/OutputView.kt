@@ -1,7 +1,7 @@
 package view
 
-import controller.PlayerResponse
 import domain.player.PlayerCards
+import dto.PlayerResponse
 
 object OutputView {
 
@@ -9,7 +9,6 @@ object OutputView {
         players.forEach {
             printPlayerCard(it)
         }
-        println()
     }
 
     fun printPlayerCard(player: PlayerResponse) {
@@ -24,11 +23,10 @@ object OutputView {
     }
 
     fun printResult(players: List<PlayerResponse>) {
-        println("\n## 최종 수익")
+        println("## 최종 수익")
         players.forEach {
             printPlayerEarningMoney(it)
         }
-        println()
     }
 
     private fun printPlayerEarningMoney(player: PlayerResponse) {

@@ -1,5 +1,7 @@
 package domain.player
 
+const val BLACK_JACK_PRIZE_MULTIPLES = 1.5
+
 data class Money(val value: Int) {
 
     fun earn(money: Money): Money {
@@ -11,7 +13,7 @@ data class Money(val value: Int) {
     }
 
     fun asBlackJackPrize(): Money {
-        return Money((this.value * 1.5).toInt())
+        return Money((this.value * BLACK_JACK_PRIZE_MULTIPLES).toInt())
     }
 
     companion object {
