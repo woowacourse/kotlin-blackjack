@@ -27,15 +27,17 @@ open class Player(val name: String) {
     }
 
     fun isBlackjack(): Boolean {
-        return cards.isInitSize()  && cards.calculateScore() == BLACKJACK_SCORE
+        return cards.isInitSize() && cards.calculateScore() == BLACKJACK_SCORE
     }
 
     fun isHit(): Boolean {
         return cards.calculateScore() < BLACKJACK_SCORE
     }
+
     fun canDraw(): Boolean {
         return cards.calculateScore() < BLACKJACK_SCORE
     }
+
     fun endTurn() {
         isPlaying = false
     }
@@ -44,7 +46,7 @@ open class Player(val name: String) {
         return true
     }
 
-    fun calculateFinalScore() : Int {
+    fun calculateFinalScore(): Int {
         return cards.calculateFinalScore()
     }
 }
