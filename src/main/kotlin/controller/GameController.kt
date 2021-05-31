@@ -22,13 +22,13 @@ class GameController {
         OutputView.printPlayersCards(gameService.distributeInitialCards())
     }
 
-    private fun giveGamblerAdditionalCards(names : List<String>) {
+    private fun giveGamblerAdditionalCards(names: List<String>) {
         names.forEach {
-            askDrawMore(it)
+            askPlayerDraw(it)
         }
     }
 
-    private fun askDrawMore(name: String) {
+    private fun askPlayerDraw(name: String) {
         while (InputView.askDrawMore(name).isYes()) {
             OutputView.printPlayerCard(gameService.distributeCard(name))
         }

@@ -10,14 +10,13 @@ class GameService(players: List<Player>) {
 
     fun distributeInitialCards(): List<PlayerResponse> {
         blackJackGame.giveInitialCards()
-        val players = blackJackGame.players
 
-        return PlayerResponse.parseList(players)
+        return PlayerResponse.parseList(blackJackGame.players)
     }
 
     fun distributeCard(name: String): PlayerResponse {
         val player = blackJackGame.findGamblerByName(name)
-        blackJackGame.givePlayerCard(player)
+        blackJackGame.giveCard(player)
 
         return PlayerResponse(player)
     }
@@ -30,8 +29,7 @@ class GameService(players: List<Player>) {
 
     fun calculateResult(): List<PlayerResponse> {
         blackJackGame.endGame()
-        val players = blackJackGame.players
 
-        return PlayerResponse.parseList(players)
+        return PlayerResponse.parseList(blackJackGame.players)
     }
 }

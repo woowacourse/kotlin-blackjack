@@ -11,7 +11,7 @@ class CardDeck(private val deck: MutableList<Card> = mutableListOf()) {
         deck.shuffle()
     }
 
-    fun drawCards(count: Int): List<Card> {
+    fun drawCards(count: Int = 1): List<Card> {
         val pickedCards = mutableListOf<Card>()
         repeat(count) {
             pickedCards.add(deck.removeFirst())

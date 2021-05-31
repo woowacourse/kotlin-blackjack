@@ -19,7 +19,7 @@ object OutputView {
     private fun possessCards(cards: PlayerCards): String {
         val cardsAsList = cards.cards
         return cardsAsList.joinToString(",") {
-            CardSymbol.parse(it)
+            CardPrintSymbol.parse(it)
         }
     }
 

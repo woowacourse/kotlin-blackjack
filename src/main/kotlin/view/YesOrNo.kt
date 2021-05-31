@@ -6,8 +6,7 @@ enum class YesOrNo(val answer: String) {
 
     companion object {
         fun parse(str: String): YesOrNo {
-            return values().find { it.answer == str }
-                ?: throw IllegalArgumentException("YesOrNo가 아닙니다.")
+            return values().find { it.answer == str } ?: throw IllegalArgumentException("YesOrNo가 아닙니다.")
         }
     }
 

@@ -28,6 +28,6 @@ internal class CardDeckTest {
             deck.drawCards()
         }
 
-        assertThrows<IllegalArgumentException> { deck.drawCards() }
+        assertThrows<NoSuchElementException> { deck.drawCards() }
     }
 }

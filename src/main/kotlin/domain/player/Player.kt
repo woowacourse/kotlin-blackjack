@@ -14,11 +14,11 @@ open class Player(val name: String, val bettingMoney: Money = Money.ZERO) {
         cards = cards.add(receivedCards)
     }
 
-    fun earn(money : Money){
+    fun earn(money: Money) {
         earningMoney = earningMoney.earn(money)
     }
 
-    fun lose(money: Money){
+    fun lose(money: Money) {
         earningMoney = earningMoney.lose(money)
     }
 

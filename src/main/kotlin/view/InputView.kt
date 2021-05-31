@@ -5,7 +5,7 @@ import domain.player.Player
 
 object InputView {
 
-    fun inputPlayers(names : List<String>): List<Player> {
+    fun inputPlayers(names: List<String>): List<Player> {
         return names.map {
             Player(it, inputBettingMoney(it))
         }

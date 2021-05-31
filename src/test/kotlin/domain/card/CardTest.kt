@@ -17,7 +17,7 @@ internal class CardTest {
     @Test
     fun equalsCard() {
         val newCard1 = Card(NumberType.ACE, ShapeType.CLOVER)
-        val newCard2 = Card(NumberType.ACE, ShapeType.CLOVER,)
+        val newCard2 = Card(NumberType.ACE, ShapeType.CLOVER)
 
         assertThat(newCard1).isEqualTo(newCard2)
     }

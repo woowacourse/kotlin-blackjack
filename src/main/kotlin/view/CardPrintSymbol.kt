@@ -3,7 +3,7 @@ package view
 import domain.card.Card
 import domain.card.ShapeType
 
-enum class CardSymbol(val shapeType: ShapeType) {
+enum class CardPrintSymbol(val shapeType: ShapeType) {
     다이아몬드(ShapeType.DIAMOND),
     하트(ShapeType.HEART),
     클로버(ShapeType.CLOVER),
