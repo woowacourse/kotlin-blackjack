@@ -8,17 +8,11 @@ enum class ScoreType {
     BLACK_JACK,
     OVER;
 
-    fun isUnder(): Boolean {
-        return this == UNDER
-    }
+    fun isUnder() = this == UNDER
 
-    fun isBlackJack(): Boolean {
-        return this == BLACK_JACK
-    }
+    fun isBlackJack() = this == BLACK_JACK
 
-    fun isOver(): Boolean {
-        return this == OVER
-    }
+    fun isOver() = this == OVER
 
     companion object {
         fun of(point: Int, numberOfCards: Int): ScoreType {

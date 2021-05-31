@@ -10,22 +10,18 @@ class GameController {
     private val gameService = GameService(playerInfos)
 
     fun play() {
-        giveInitialCards()
-
-        giveGamblerAdditionalCards()
-        giveDealerAdditionalCards()
-
+        initPlayerCards()
+        distributeAdditionalCards()
         printResult()
     }
 
-    private fun giveInitialCards() {
+    private fun initPlayerCards() {
         OutputView.printPlayersCards(gameService.distributeInitialCards())
     }
 
-    private fun giveGamblerAdditionalCards() {
-        playerInfos.forEach {
-            askPlayerDraw(it.name)
-        }
+    private fun distributeAdditionalCards() {
+        playerInfos.forEach { askPlayerDraw(it.name) }
+        OutputView.printPlayerCard(gameService.giveDealerAdditionalCards())
     }
 
     private fun askPlayerDraw(name: String) {
@@ -34,11 +30,8 @@ class GameController {
         }
     }
 
-    private fun giveDealerAdditionalCards() {
-        OutputView.printPlayerCard(gameService.giveDealerAdditionalCards())
-    }
-
     private fun printResult() {
         OutputView.printResult(gameService.calculateResult())
     }
 }
+

@@ -19,7 +19,5 @@ class CardDeck(private val deck: MutableList<Card> = mutableListOf()) {
         return pickedCards
     }
 
-    fun contains(card: Card): Boolean {
-        return deck.contains(card)
-    }
+    fun contains(card: Card) = deck.contains(card)
 }

@@ -4,6 +4,8 @@ const val MINIMUM_SCORE_OF_DEALER = 16
 
 class Dealer(name: String) : Player(name) {
 
+    fun shouldDraw() = cards.score() <= MINIMUM_SCORE_OF_DEALER
+
     fun compete(player: Player) {
         if (isWin(player)) {
             takeMoney(player, player.bettingMoney)
@@ -30,8 +32,6 @@ class Dealer(name: String) : Player(name) {
         }
         return player.bettingMoney
     }
-
-    fun shouldDraw(): Boolean {
-        return cards.score() <= MINIMUM_SCORE_OF_DEALER
-    }
 }
+
+

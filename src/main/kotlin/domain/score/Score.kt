@@ -39,7 +39,5 @@ data class Score(val cards: List<Card>) {
         return false
     }
 
-    fun isLose(other: Score): Boolean {
-        return other.isWin(this)
-    }
+    fun isLose(other: Score) = other.isWin(this)
 }

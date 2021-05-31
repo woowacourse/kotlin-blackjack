@@ -8,23 +8,13 @@ data class PlayerCards(val cards: List<Card> = listOf()) {
     private val score = Score(cards)
     private val type = score.type
 
-    fun add(additionCards: List<Card>): PlayerCards {
-        return PlayerCards(cards.plus(additionCards))
-    }
+    fun add(additionCards: List<Card>) = PlayerCards(cards.plus(additionCards))
 
-    fun isWin(other: PlayerCards): Boolean {
-        return score.isWin(other.score)
-    }
+    fun isWin(other: PlayerCards) = score.isWin(other.score)
 
-    fun isLose(other: PlayerCards): Boolean {
-        return score.isLose(other.score)
-    }
+    fun isLose(other: PlayerCards) = score.isLose(other.score)
 
-    fun isBlackJack(): Boolean {
-        return type.isBlackJack()
-    }
+    fun isBlackJack() = type.isBlackJack()
 
-    fun score(): Int {
-        return this.score.value
-    }
+    fun score() = score.value
 }

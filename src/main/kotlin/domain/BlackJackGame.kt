@@ -15,10 +15,8 @@ class BlackJackGame(
 
     val players = gamblers.plus(dealer)
 
-    fun giveInitialCards() {
-        players.forEach {
-            giveCard(it, INITIAL_CARDS_SIZE)
-        }
+    fun giveInitialCards() = players.forEach {
+        giveCard(it, INITIAL_CARDS_SIZE)
     }
 
     fun giveDealerAdditionalCards() {
@@ -31,15 +29,13 @@ class BlackJackGame(
         player.receiveCards(cardDeck.drawCards(count))
     }
 
-    fun endGame() {
-        gamblers.forEach {
-            dealer.compete(it)
-        }
-    }
-
     fun findGamblerByName(name: String): Player {
         return gamblers.first {
             it.name == name
         }
+    }
+
+    fun endGame() = gamblers.forEach {
+        dealer.compete(it)
     }
 }

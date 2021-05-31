@@ -5,11 +5,8 @@ import dto.PlayerInfo
 
 object InputView {
 
-    fun inputPlayerInfos(): List<PlayerInfo> {
-        val names = inputPlayerNames()
-        return names.map {
-            PlayerInfo(it, inputBettingMoney(it))
-        }
+    fun inputPlayerInfos() = inputPlayerNames().map {
+        PlayerInfo(it, inputBettingMoney(it))
     }
 
     private fun inputPlayerNames(): List<String> {
