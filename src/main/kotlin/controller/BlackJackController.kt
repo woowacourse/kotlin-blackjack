@@ -1,5 +1,6 @@
 package controller
 
+import domain.Dealer
 import domain.Deck
 import domain.Player
 import domain.Players
@@ -10,13 +11,23 @@ import view.printStatus
 
 class BlackJackController {
     fun run() {
+        val deck = Deck()
         val names = inputNames()
         val players = Players(names.map { Player(it) })
-        val deck = Deck()
+        val dealer = Dealer()
+
         players.initStage(deck)
+        repeat(2) { dealer.draw(deck.pop()) }
+
         printStatus(players)
+
+
         players.forEach { hitStage(it, deck) }
+        while (dealer.isMustHit()) {
+            dealer.draw(deck.pop())
+        }
         printResult(players)
+
     }
 
     private fun hitStage(player: Player, deck: Deck) {
@@ -36,18 +47,4 @@ class BlackJackController {
         "n" -> false
         else -> throw IllegalArgumentException()
     }
-}
-
-fun main() {
-    val con = BlackJackController()
-    con.run()
-}
-
-fun drawD(input: String) = when (input) {
-    "y" -> {
-        true
-        2
-    }
-    "n" -> 2
-    else -> 3
 }

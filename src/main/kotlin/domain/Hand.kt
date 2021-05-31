@@ -1,16 +1,14 @@
 package domain
 
-private const val BLACKJACK_SCORE: Int = 21
-private const val ACE_SUBTRACT_VALUE = 10
 
-class Hand(private val cards: MutableList<Card> = mutableListOf()) : List<Card> by cards{
+class Hand(private val cards: MutableList<Card> = mutableListOf()) : List<Card> by cards {
 
     fun addCard(card: Card) {
         cards.add(card)
     }
 
     fun getScore(): Int {
-        var tmpSum =  cards.sumOf { it.value.score }
+        var tmpSum = cards.sumOf { it.value.score }
         val aceCount = cards.filter { it.value == Value.ACE }
             .count()
 
@@ -27,4 +25,9 @@ class Hand(private val cards: MutableList<Card> = mutableListOf()) : List<Card> 
         return getScore() > BLACKJACK_SCORE
     }
 
+    companion object {
+        private const val BLACKJACK_SCORE: Int = 21
+        private const val ACE_SUBTRACT_VALUE = 10
+
+    }
 }
