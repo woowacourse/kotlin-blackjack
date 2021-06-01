@@ -1,13 +1,16 @@
 package controller
 
-import domain.*
+import domain.card.Deck
+import domain.gamer.Dealer
+import domain.gamer.Player
+import domain.gamer.Players
+import domain.result.GameResultBoard
 import view.*
 
 class BlackJackController {
     fun run() {
         val deck = Deck()
-        val names = inputNames()
-        val players = Players(names.map { Player(it) })
+        val players = Players(inputNames().map { Player(it) })
         val dealer = Dealer()
 
         players.initStage(deck)

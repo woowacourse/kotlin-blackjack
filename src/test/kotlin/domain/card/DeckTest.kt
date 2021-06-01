@@ -1,5 +1,6 @@
-package domain
+package domain.card
 
+import domain.card.Deck
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 

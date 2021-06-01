@@ -1,4 +1,6 @@
-package domain
+package domain.gamer
+
+import domain.card.Card
 
 
 class Hand(private val cards: MutableList<Card> = mutableListOf()) : List<Card> by cards {
@@ -8,9 +10,8 @@ class Hand(private val cards: MutableList<Card> = mutableListOf()) : List<Card> 
     }
 
     fun getScore(): Int {
-        var tmpSum = cards.sumOf { it.value.score }
-        val aceCount = cards.filter { it.value == Value.ACE }
-            .count()
+        var tmpSum = cards.sumOf { it.score() }
+        val aceCount = aceCount()
 
         repeat(aceCount) {
             if (tmpSum <= BLACKJACK_SCORE) {
@@ -21,6 +22,9 @@ class Hand(private val cards: MutableList<Card> = mutableListOf()) : List<Card> 
         return tmpSum
     }
 
+    private fun aceCount() = cards.filter { it.isAce() }
+        .count()
+
     fun isBust(): Boolean {
         return getScore() > BLACKJACK_SCORE
     }
@@ -28,6 +32,5 @@ class Hand(private val cards: MutableList<Card> = mutableListOf()) : List<Card> 
     companion object {
         private const val BLACKJACK_SCORE: Int = 21
         private const val ACE_SUBTRACT_VALUE = 10
-
     }
 }

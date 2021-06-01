@@ -1,4 +1,7 @@
-package domain
+package domain.result
+
+import domain.gamer.Dealer
+import domain.gamer.Player
 
 enum class GameResult(val result: String, val compareStatus: (Int, Int) -> Boolean) {
     WIN("승", { playerScore, dealerScore -> playerScore > dealerScore }),

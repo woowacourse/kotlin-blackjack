@@ -1,5 +1,12 @@
-package domain
+package domain.result
 
+import domain.card.Card
+import domain.card.Symbol
+import domain.card.Value
+import domain.gamer.Dealer
+import domain.gamer.Hand
+import domain.gamer.Player
+import domain.result.GameResult
 import org.assertj.core.api.AssertionsForInterfaceTypes.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.params.ParameterizedTest

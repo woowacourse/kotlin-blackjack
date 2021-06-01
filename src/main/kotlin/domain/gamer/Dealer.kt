@@ -1,4 +1,4 @@
-package domain
+package domain.gamer
 
 class Dealer(name: String = "딜러", hand: Hand = Hand()) : Gamer(name, hand) {
     fun isMustHit(): Boolean {

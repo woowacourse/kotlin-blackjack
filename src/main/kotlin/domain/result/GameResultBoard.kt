@@ -1,4 +1,8 @@
-package domain
+package domain.result
+
+import domain.gamer.Dealer
+import domain.gamer.Player
+import domain.gamer.Players
 
 class GameResultBoard(private val resultBoard: Map<Player, GameResult>) :
     Map<Player, GameResult> by resultBoard {

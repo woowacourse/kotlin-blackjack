@@ -1,4 +1,6 @@
-package domain
+package domain.gamer
+
+import domain.card.Card
 
 abstract class Gamer(val name: String, val hand: Hand = Hand()) {
     fun draw(card: Card) {
