@@ -12,8 +12,6 @@ class Deck(private val cards: MutableList<Card> = mutableListOf()) : List<Card> 
     }
 
     fun pop(): Card {
-        val card = cards.component1()
-        cards.remove(card)
-        return card
+        return cards.removeFirstOrNull() ?: throw IllegalArgumentException("남은 카드가 없습니다.")
     }
 }
