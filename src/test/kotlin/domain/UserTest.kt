@@ -30,4 +30,25 @@ class UserTest {
         assertThat(cards.getTotalScore()).isEqualTo(15)
     }
 
+    @DisplayName("에이스 카드 점수 계산")
+    @Test
+    fun carsListAceScore() {
+        //given
+        val fiveCard = TrumpCard(TrumpCardNumber.FIVE, TrumpCardPattern.CLOVER)
+        val aceCard = TrumpCard(TrumpCardNumber.ACE, TrumpCardPattern.CLOVER)
+        val cards = Cards(listOf(fiveCard, fiveCard, aceCard))
+        //then
+        assertThat(cards.getTotalScore()).isEqualTo(21)
+    }
+
+    @DisplayName("에이스 카드 점수 계산이 손해인 경우")
+    @Test
+    fun carsListAceScore2() {
+        //given
+        val fiveCard = TrumpCard(TrumpCardNumber.FIVE, TrumpCardPattern.CLOVER)
+        val aceCard = TrumpCard(TrumpCardNumber.ACE, TrumpCardPattern.CLOVER)
+        val cards = Cards(listOf(fiveCard, fiveCard, fiveCard, fiveCard, aceCard))
+        //then
+        assertThat(cards.getTotalScore()).isEqualTo(21)
+    }
 }
