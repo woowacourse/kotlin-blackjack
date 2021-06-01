@@ -1,13 +1,7 @@
 package controller
 
-import domain.Dealer
-import domain.Deck
-import domain.Player
-import domain.Players
-import view.inputHit
-import view.inputNames
-import view.printResult
-import view.printStatus
+import domain.*
+import view.*
 
 class BlackJackController {
     fun run() {
@@ -19,15 +13,17 @@ class BlackJackController {
         players.initStage(deck)
         repeat(2) { dealer.draw(deck.pop()) }
 
-        printStatus(players)
+        printStatus(players, dealer)
 
 
         players.forEach { hitStage(it, deck) }
         while (dealer.isMustHit()) {
             dealer.draw(deck.pop())
+            printDealerHit()
         }
-        printResult(players)
+        printResult(players.plus(dealer))
 
+        printGameResultBoard(GameResultBoard.of(players, dealer))
     }
 
     private fun hitStage(player: Player, deck: Deck) {
