@@ -1,7 +1,11 @@
 package controller
 
-class GameController {
+import view.InputView
+
+class GameController(val inputView: InputView) {
+
     fun playGame() {
-        TODO("Not yet implemented")
+        inputView.guideGameStart()
+
     }
 }
