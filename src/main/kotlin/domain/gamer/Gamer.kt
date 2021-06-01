@@ -8,7 +8,7 @@ abstract class Gamer(val name: String, val hand: Hand = Hand()) {
     }
 
     fun score(): Int {
-        return hand.getScore()
+        return hand.totalScore()
     }
 
     fun isBust(): Boolean {

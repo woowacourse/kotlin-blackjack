@@ -1,6 +1,8 @@
 package domain.gamer
 
 import domain.card.Card
+import domain.gamer.Score.Companion.ACE_SUBTRACT_VALUE
+import domain.gamer.Score.Companion.BLACKJACK_SCORE
 
 
 class Hand(private val cards: MutableList<Card> = mutableListOf()) : List<Card> by cards {
@@ -9,28 +11,24 @@ class Hand(private val cards: MutableList<Card> = mutableListOf()) : List<Card> 
         cards.add(card)
     }
 
-    fun getScore(): Int {
-        var tmpSum = cards.sumOf { it.score() }
+    fun totalScore(): Int {
+        var tempSum = cards.map { it.score() }
+            .reduce { total, num -> total + num }
         val aceCount = aceCount()
 
         repeat(aceCount) {
-            if (tmpSum <= BLACKJACK_SCORE) {
-                return tmpSum
+            if (tempSum <= BLACKJACK_SCORE) {
+                return tempSum.value
             }
-            tmpSum -= ACE_SUBTRACT_VALUE
+            tempSum -= ACE_SUBTRACT_VALUE
         }
-        return tmpSum
+        return tempSum.value
     }
 
     private fun aceCount() = cards.filter { it.isAce() }
         .count()
 
     fun isBust(): Boolean {
-        return getScore() > BLACKJACK_SCORE
-    }
-
-    companion object {
-        private const val BLACKJACK_SCORE: Int = 21
-        private const val ACE_SUBTRACT_VALUE = 10
+        return Score(totalScore()) > BLACKJACK_SCORE
     }
 }

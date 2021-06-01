@@ -3,7 +3,6 @@ package domain.gamer
 import domain.card.Card
 import domain.card.Symbol
 import domain.card.Value
-import domain.gamer.Hand
 import org.assertj.core.api.Assertions
 import org.assertj.core.api.AssertionsForInterfaceTypes.assertThat
 import org.junit.jupiter.api.DisplayName
@@ -21,7 +20,7 @@ class HandTest {
     internal fun getScoreWithAce(cards: MutableList<Card>, expected: Int) {
         val hand = Hand(cards)
 
-        Assertions.assertThat(hand.getScore()).isEqualTo(expected)
+        Assertions.assertThat(hand.totalScore()).isEqualTo(expected)
     }
 
     @Test
