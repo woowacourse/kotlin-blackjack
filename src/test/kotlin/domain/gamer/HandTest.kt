@@ -31,12 +31,6 @@ class HandTest {
         assertThat(hand.isBust()).isFalse
     }
 
-    @Test
-    @DisplayName("점수를 계산한다.")
-    internal fun getScore() {
-        TODO("Not yet implemented")
-    }
-
     companion object {
         @JvmStatic
         fun parameterProvider() = Stream.of(

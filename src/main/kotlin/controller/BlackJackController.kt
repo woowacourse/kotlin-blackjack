@@ -13,11 +13,9 @@ class BlackJackController {
         val players = Players(inputNames().map { Player(it) })
         val dealer = Dealer()
 
-        players.initStage(deck)
-        repeat(2) { dealer.draw(deck.pop()) }
+        initStatge(players, deck, dealer)
 
         printStatus(players, dealer)
-
 
         players.forEach { hitStage(it, deck) }
         while (dealer.isMustHit()) {
@@ -27,6 +25,11 @@ class BlackJackController {
         printResult(players.plus(dealer))
 
         printGameResultBoard(GameResultBoard.of(players, dealer))
+    }
+
+    private fun initStatge(players: Players, deck: Deck, dealer: Dealer) {
+        players.initStage(deck)
+        repeat(2) { dealer.draw(deck.pop()) }
     }
 
     private fun hitStage(player: Player, deck: Deck) {

@@ -16,6 +16,4 @@ enum class Value(val valueName: String, val score: Score) {
     JACK("J", Score(10)),
     QUEEN("Q", Score(10)),
     KING("K", Score(10))
-
-
 }

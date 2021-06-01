@@ -1,13 +1,12 @@
 package domain.gamer
 
-class Score(value: Int) {
-    var value = 0
-        private set
+class Score(val value: Int) : Comparable<Score> {
 
     operator fun plus(other: Score): Score = Score(value + other.value)
     operator fun minus(other: Score): Score = Score(value - other.value)
-    operator fun compareTo(other: Score): Int {
-        return compareValuesBy(this, other, Score::value)
+
+    override fun compareTo(other: Score): Int {
+        return this.value - other.value
     }
 
     companion object {
