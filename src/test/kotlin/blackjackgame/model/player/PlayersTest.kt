@@ -20,8 +20,8 @@ internal class PlayersTest {
         players.drawInitCards(deck)
 
         val playersGroup = players.players
-        assertThat(playersGroup[0].cards).hasSize(2)
-        assertThat(playersGroup[1].cards).hasSize(2)
+        assertThat(playersGroup[0].cards.getCards()).hasSize(2)
+        assertThat(playersGroup[1].cards.getCards()).hasSize(2)
         assertThat(deck.cards).hasSize(0)
     }
 }

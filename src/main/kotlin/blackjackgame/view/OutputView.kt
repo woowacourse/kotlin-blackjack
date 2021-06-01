@@ -1,7 +1,7 @@
 package blackjackgame.view
 
-import blackjackgame.model.result.Result
 import blackjackgame.model.card.Card
+import blackjackgame.model.result.Result
 
 fun printStatus(players: List<Pair<String, List<Card>>>) {
     println()

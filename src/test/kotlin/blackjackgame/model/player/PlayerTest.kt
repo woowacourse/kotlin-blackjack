@@ -20,8 +20,8 @@ internal class PlayerTest {
         val card = Card(Suit.HEART, Denomination.ACE)
         better.drawCard(card)
 
-        assertThat(better.cards).hasSize(1)
-        assertThat(better.cards[0]).isEqualTo(card)
+        assertThat(better.cards.getCards()).hasSize(1)
+        assertThat(better.cards.getCards()[0]).isEqualTo(card)
     }
 
     @Test
@@ -29,9 +29,9 @@ internal class PlayerTest {
         val better = Player("better")
         val card1 = Card(Suit.HEART, Denomination.ACE)
         val card2 = Card(Suit.CLOVER, Denomination.TWO)
-        better.drawCard(listOf(card1,card2))
+        better.drawCard(listOf(card1, card2))
 
-        assertThat(better.cards).hasSize(2)
-        assertThat(better.cards).containsExactly(card1, card2)
+        assertThat(better.cards.getCards()).hasSize(2)
+        assertThat(better.cards.getCards()).containsExactly(card1, card2)
     }
 }

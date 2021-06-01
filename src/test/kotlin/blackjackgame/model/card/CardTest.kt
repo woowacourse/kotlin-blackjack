@@ -1,8 +1,5 @@
 package blackjackgame.model.card
 
-import blackjackgame.model.card.Card
-import blackjackgame.model.card.Denomination
-import blackjackgame.model.card.Suit
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

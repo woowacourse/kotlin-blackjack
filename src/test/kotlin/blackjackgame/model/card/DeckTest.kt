@@ -3,7 +3,7 @@ package blackjackgame.model.card
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-internal class DeckTest{
+internal class DeckTest {
 
     @Test
     internal fun createDeck() {

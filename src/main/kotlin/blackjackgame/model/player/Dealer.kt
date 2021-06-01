@@ -12,7 +12,7 @@ class Dealer : Player("딜러") {
         return this.cards.subList(0, 1)
     }
 
-    fun isAvailableToDraw() : Boolean {
+    fun isAvailableToDraw(): Boolean {
         return this.cards.calculateScore() <= 16
     }
 }
