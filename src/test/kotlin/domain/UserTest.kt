@@ -143,5 +143,6 @@ class UserTest {
         assertThat(gamers.gamers.map { it.hand.size() }).containsAll(mutableListOf(2, 2))
         assertThat(deck.size()).isEqualTo(48)
     }
+
 }
 

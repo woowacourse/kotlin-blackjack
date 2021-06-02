@@ -8,6 +8,4 @@ class Gamers(inputNames: String) {
     fun dealCard(cards: Cards) {
         this.gamers.map { it -> it.draw(cards) }
     }
-
-
 }
