@@ -1,20 +1,26 @@
 package view
 
+import domain.Participant
 import domain.Player
 
-fun printStatus(players: List<Player>) {
-    println("${players.joinToString(",") { it.name }} 에게 2장의 나누었습니다.")
+fun printInitMessage(players: List<Participant>) {
+    println("${players.joinToString(",") { it.name }} 에게 2장을 나누었습니다.")
+    printStatus(players)
+}
+
+fun printStatus(players: List<Participant>) {
     for (player in players) {
         println(getStatusFormat(player))
     }
+    println()
 }
 
-fun printResult(players: List<Player>) {
+fun printResult(players: List<Participant>) {
     for (player in players) {
         println("${getStatusFormat(player)} - 결과: ${player.score()}")
     }
 }
 
-private fun getStatusFormat(player: Player): String {
+private fun getStatusFormat(player: Participant): String {
     return "${player.name}카드: ${player.hand.joinToString(",") { it.name() }}"
 }

@@ -1,30 +1,39 @@
 package controller
 
-import domain.Deck
-import domain.Player
-import domain.Players
-import view.inputHit
-import view.inputNames
-import view.printResult
-import view.printStatus
+import domain.*
+import view.*
 
 class BlackJackController {
     fun run() {
         val names = inputNames()
-        val players = Players(names.map { Player(it) })
+        val players = Participants(names.map { Player(it) })
+        val participants = Participants(listOf(Dealer()).plus(players))
         val deck = Deck()
-        players.initStage(deck)
-        printStatus(players)
-        players.forEach { hitStage(it, deck) }
-        printResult(players)
+        participants.initStage(deck)
+        printInitMessage(participants)
+        participants.forEach { hitStage(it, deck) }
+        printResult(participants)
     }
 
-    private fun hitStage(player: Player, deck: Deck) {
+    private fun hitStage(player: Participant, deck: Deck) {
         var answer = true
-        while (!player.isBust() && answer) {
-            val input = inputHit(player.name)
-            answer = drawDecision(input, player, deck)
-            printStatus(listOf(player))
+        while (player.isHitStatus() && answer) {
+            answer = distributeCard(player, deck)
+        }
+    }
+
+    private fun distributeCard(player: Participant, deck: Deck): Boolean {
+        return when (player is Dealer) {
+            true -> {
+                player.draw(deck.pop())
+                true
+            }
+            false -> {
+                val input = inputHit(player.name)
+                val hit = drawDecision(input, player as Player, deck)
+                printStatus(listOf(player))
+                hit
+            }
         }
     }
 
