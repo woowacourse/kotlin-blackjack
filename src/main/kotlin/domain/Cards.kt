@@ -1,7 +1,7 @@
 package domain
 
 
-class Cards(val cards: List<TrumpCard>) {
+class Cards(val cards: MutableList<TrumpCard>) {
     fun getTotalScore(): Int {
         val defaultScore = cards.map { it.getScore() }.sum()
         if (canPlusScore(defaultScore)) {
@@ -18,4 +18,13 @@ class Cards(val cards: List<TrumpCard>) {
         return hasAce() && defaultScore + 10 <= 21
     }
 
+    fun dealCard(): TrumpCard {
+        if (this.cards.isEmpty()) {
+            throw EmptyCardException()
+        }
+
+        val last = this.cards.last()
+        this.cards.removeLast()
+        return last
+    }
 }

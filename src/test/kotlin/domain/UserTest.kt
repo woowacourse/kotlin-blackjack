@@ -3,6 +3,7 @@ package domain
 import org.assertj.core.api.AssertionsForInterfaceTypes.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 class UserTest {
     @DisplayName("게이머 생성")
@@ -25,7 +26,7 @@ class UserTest {
     fun carsListScore() {
         //given
         val fiveCard = TrumpCard(TrumpCardNumber.FIVE, TrumpCardPattern.CLOVER)
-        val cards = Cards(listOf(fiveCard, fiveCard, fiveCard))
+        val cards = Cards(mutableListOf(fiveCard, fiveCard, fiveCard))
         //then
         assertThat(cards.getTotalScore()).isEqualTo(15)
     }
@@ -36,7 +37,7 @@ class UserTest {
         //given
         val fiveCard = TrumpCard(TrumpCardNumber.FIVE, TrumpCardPattern.CLOVER)
         val aceCard = TrumpCard(TrumpCardNumber.ACE, TrumpCardPattern.CLOVER)
-        val cards = Cards(listOf(fiveCard, fiveCard, aceCard))
+        val cards = Cards(mutableListOf(fiveCard, fiveCard, aceCard))
         //then
         assertThat(cards.getTotalScore()).isEqualTo(21)
     }
@@ -47,8 +48,34 @@ class UserTest {
         //given
         val fiveCard = TrumpCard(TrumpCardNumber.FIVE, TrumpCardPattern.CLOVER)
         val aceCard = TrumpCard(TrumpCardNumber.ACE, TrumpCardPattern.CLOVER)
-        val cards = Cards(listOf(fiveCard, fiveCard, fiveCard, fiveCard, aceCard))
+        val cards = Cards(mutableListOf(fiveCard, fiveCard, fiveCard, fiveCard, aceCard))
         //then
         assertThat(cards.getTotalScore()).isEqualTo(21)
+    }
+
+    @DisplayName("덱에서 카드를 꺼내는 경우")
+    @Test
+    fun dealCard() {
+        //given
+        val fiveCard = TrumpCard(TrumpCardNumber.FIVE, TrumpCardPattern.CLOVER)
+        val aceCard = TrumpCard(TrumpCardNumber.ACE, TrumpCardPattern.CLOVER)
+        val cards = Cards(mutableListOf(fiveCard, aceCard))
+        //then
+        assertThat(cards.dealCard()).isEqualTo(
+            TrumpCard(
+                TrumpCardNumber.ACE,
+                TrumpCardPattern.CLOVER
+            )
+        )
+    }
+
+    @DisplayName("덱에서 꺼낼 카드가 없는 경우")
+    @Test
+    fun createDeck() {
+        //given
+        val cards = Cards(mutableListOf())
+        //then
+
+        assertThrows<EmptyCardException> { cards.dealCard() }
     }
 }
