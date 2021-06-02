@@ -2,18 +2,18 @@ package blackjack.controller
 
 import blackjack.domain.card.Deck
 import blackjack.domain.gamer.Dealer
+import blackjack.domain.gamer.Gamer
 import blackjack.domain.gamer.Player
-import blackjack.domain.gamer.Players
 import blackjack.domain.result.GameResultBoard
 import blackjack.view.*
 
 class BlackJackController {
     fun run() {
         val deck = Deck()
-        val players = Players(inputNames().map { Player(it) })
+        val players = inputNames().map { Player(it) }
         val dealer = Dealer()
 
-        initStatge(players, deck, dealer)
+        initStage(players.plus(dealer), deck)
 
         printStatus(players, dealer)
 
@@ -27,9 +27,8 @@ class BlackJackController {
         printGameResultBoard(GameResultBoard.of(players, dealer))
     }
 
-    private fun initStatge(players: Players, deck: Deck, dealer: Dealer) {
-        players.initStage(deck)
-        repeat(2) { dealer.draw(deck.pop()) }
+    private fun initStage(players: List<Gamer>, deck: Deck) {
+        repeat(2) { players.forEach { it.draw(deck.pop()) } }
     }
 
     private fun hitStage(player: Player, deck: Deck) {
