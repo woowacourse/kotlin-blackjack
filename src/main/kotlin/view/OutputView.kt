@@ -1,7 +1,7 @@
 package view
 
-import domain.Participant
-import domain.Player
+import domain.participant.Participant
+import domain.ResultType
 
 fun printInitMessage(players: List<Participant>) {
     println("${players.joinToString(",") { it.name }} 에게 2장을 나누었습니다.")
@@ -15,10 +15,15 @@ fun printStatus(players: List<Participant>) {
     println()
 }
 
-fun printResult(players: List<Participant>) {
+fun printStatusWithScore(players: List<Participant>) {
     for (player in players) {
         println("${getStatusFormat(player)} - 결과: ${player.score()}")
     }
+}
+
+fun printResult(gameResult: List<Pair<String, Int>>) {
+    println("## 최종 승패")
+    gameResult.forEach { println("${it.first}: ${it.second}") }
 }
 
 private fun getStatusFormat(player: Participant): String {

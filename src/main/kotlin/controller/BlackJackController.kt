@@ -1,49 +1,43 @@
 package controller
 
 import domain.*
+import domain.card.Deck
+import domain.participant.*
 import view.*
 
 class BlackJackController {
     fun run() {
         val names = inputNames()
-        val players = Participants(names.map { Player(it) })
-        val participants = Participants(listOf(Dealer()).plus(players))
-        val deck = Deck()
-        participants.initStage(deck)
-        printInitMessage(participants)
-        participants.forEach { hitStage(it, deck) }
-        printResult(participants)
+        val game = BlackJackGame(Players(names.map { Player(it) }))
+        bettingStage(game.players)
+        game.initStage()
+        printInitMessage(game.participants)
+        game.participants.forEach { hitStage(it, game.deck) }
+        printStatusWithScore(game.participants)
+        printResult(game.getProfitResult())
+    }
+
+    private fun bettingStage(players: Players) {
+        players.forEach { it.addMoney(inputMoney(it.name)) }
     }
 
     private fun hitStage(player: Participant, deck: Deck) {
-        var answer = true
-        while (player.isHitStatus() && answer) {
-            answer = distributeCard(player, deck)
+        while (player.isHitStatus) {
+            distributeCard(player, deck)
         }
     }
 
-    private fun distributeCard(player: Participant, deck: Deck): Boolean {
-        return when (player is Dealer) {
+    private fun distributeCard(player: Participant, deck: Deck) {
+        when (player is Dealer) {
             true -> {
-                player.draw(deck.pop())
-                true
+                player.draw(deck.pop(), null)
             }
             false -> {
                 val input = inputHit(player.name)
-                val hit = drawDecision(input, player as Player, deck)
+                player.draw(deck.pop(), getResponse(input))
                 printStatus(listOf(player))
-                hit
             }
         }
-    }
-
-    private fun drawDecision(input: String, player: Player, deck: Deck) = when (input) {
-        "y" -> {
-            player.draw(deck.pop())
-            true
-        }
-        "n" -> false
-        else -> throw IllegalArgumentException()
     }
 }
 

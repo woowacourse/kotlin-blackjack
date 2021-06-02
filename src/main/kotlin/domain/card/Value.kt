@@ -1,4 +1,4 @@
-package domain
+package domain.card
 
 enum class Value(val valueName: String, val score: Int) {
     ACE("A", 11),

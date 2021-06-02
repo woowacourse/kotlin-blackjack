@@ -9,6 +9,6 @@ fun Any.bla(str: String): String {
 }
 
 fun main() {
-    val list = listOf("1","2","3")
+    val list = listOf("1", "2", "3")
     println(list.add("123"))
 }

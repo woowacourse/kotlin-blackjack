@@ -1,5 +1,9 @@
 package domain
 
+import domain.card.Card
+import domain.card.Symbol
+import domain.card.Value
+import domain.participant.Hand
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.params.ParameterizedTest
@@ -25,21 +29,24 @@ class HandTest {
                 mutableListOf(
                     Card(Symbol.DIAMOND, Value.SEVEN),
                     Card(Symbol.CLOVER, Value.QUEEN)
-                ), 17
+                ),
+                17
             ),
             Arguments.of(
                 mutableListOf(
 
                     Card(Symbol.DIAMOND, Value.ACE),
                     Card(Symbol.CLOVER, Value.QUEEN)
-                ), 21
+                ),
+                21
             ),
             Arguments.of(
                 mutableListOf(
                     Card(Symbol.HEART, Value.ACE),
                     Card(Symbol.DIAMOND, Value.ACE),
                     Card(Symbol.CLOVER, Value.QUEEN)
-                ), 12
+                ),
+                12
             ),
             Arguments.of(
                 mutableListOf(
@@ -47,7 +54,8 @@ class HandTest {
                     Card(Symbol.DIAMOND, Value.JACK),
                     Card(Symbol.HEART, Value.JACK),
                     Card(Symbol.CLOVER, Value.QUEEN)
-                ), 31
+                ),
+                31
             )
         )
     }

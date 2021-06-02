@@ -1,10 +1,9 @@
 package dsl
-class Operator (val first: String, val last: String) {
+class Operator(val first: String, val last: String) {
     operator fun rem(other: Operator): String {
         return this.first + other.last
     }
 }
-
 
 fun main() {
     val op1 = Operator("1first", "1last")

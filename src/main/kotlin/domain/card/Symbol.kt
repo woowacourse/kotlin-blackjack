@@ -1,4 +1,4 @@
-package domain
+package domain.card
 
 enum class Symbol(val symbol: String) {
     DIAMOND("다이아몬드"),

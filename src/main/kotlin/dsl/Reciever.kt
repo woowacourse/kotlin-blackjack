@@ -12,9 +12,8 @@ fun <T> T.applyThenReturn2(f: T.() -> Unit): T {
     return this
 }
 
-fun <T> T.applyThenReturnString(f: T.() -> T): T {
-    f()
-    return this
+fun applyThenReturnString(f: String.() -> Unit) {
+    println("hi")
 }
 
 fun alphabet() = with(StringBuilder()) {
@@ -37,12 +36,9 @@ fun concat(f: StringBuilder.() -> String): StringBuilder = StringBuilder().apply
 }
 
 fun main() {
-    val aaron = "aaron".applyThenReturn1 { println(it.toUpperCase()) }
-    val aaron2 = "aaron".applyThenReturn2 { println(toUpperCase()) }
+    "aaron".applyThenReturn1 { println(it.toUpperCase()) }
+    "aaron".applyThenReturn2 { println(toUpperCase()) }
     println(alphabet())
     println(alphabet2())
-    println(concat {
-        "Hello!".applyThenReturnString { println(toUpperCase())
-            this}
-    })
+    applyThenReturnString { alphabet() }
 }
