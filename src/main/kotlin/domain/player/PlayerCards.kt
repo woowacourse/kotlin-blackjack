@@ -8,7 +8,7 @@ data class PlayerCards(val cards: List<Card> = listOf()) {
     private val score = Score(cards)
     private val type = score.type
 
-    fun add(additionCards: List<Card>) = PlayerCards(cards.plus(additionCards))
+    fun add(additionCards: List<Card>) = PlayerCards(cards + additionCards)
 
     fun isWin(other: PlayerCards) = score.isWin(other.score)
 

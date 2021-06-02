@@ -9,6 +9,5 @@ data class PlayerResponse(
     val earningMoney: Money = Money.ZERO,
     val cards: PlayerCards = PlayerCards(listOf())
 ) {
-
     constructor(player: Player) : this(player.name, player.earningMoney, player.cards)
 }

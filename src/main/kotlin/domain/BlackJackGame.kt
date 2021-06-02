@@ -13,14 +13,12 @@ class BlackJackGame(
     private val cardDeck: CardDeck = CardDeck()
 ) {
 
-    val players = gamblers.plus(dealer)
+    val players = gamblers + dealer
 
-    fun giveInitialCards() = players.forEach {
-        giveCard(it, INITIAL_CARDS_SIZE)
-    }
+    fun giveInitialCards() = players.forEach { giveCard(it, INITIAL_CARDS_SIZE) }
 
     fun giveDealerAdditionalCards() {
-        while (dealer.shouldDraw()) {
+        while (dealer.shouldDraw) {
             giveCard(dealer)
         }
     }
@@ -30,12 +28,8 @@ class BlackJackGame(
     }
 
     fun findGamblerByName(name: String): Player {
-        return gamblers.first {
-            it.name == name
-        }
+        return gamblers.first { it.name == name }
     }
 
-    fun endGame() = gamblers.forEach {
-        dealer.compete(it)
-    }
+    fun endGame() = gamblers.forEach { dealer.compete(it) }
 }

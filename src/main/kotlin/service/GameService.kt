@@ -8,9 +8,7 @@ import dto.PlayerResponse
 class GameService(playerInfos: List<PlayerInfo>) {
 
     private val blackJackGame = BlackJackGame(
-        playerInfos.map {
-            Player(it.name, it.money)
-        }
+        playerInfos.map { Player(it.name, it.money) }
     )
 
     fun distributeInitialCards(): List<PlayerResponse> {
@@ -35,8 +33,6 @@ class GameService(playerInfos: List<PlayerInfo>) {
     }
 
     private fun playersAsResponses(players: List<Player>): List<PlayerResponse> {
-        return players.map {
-            PlayerResponse(it)
-        }
+        return players.map { PlayerResponse(it) }
     }
 }

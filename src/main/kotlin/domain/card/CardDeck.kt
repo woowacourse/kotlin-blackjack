@@ -12,11 +12,7 @@ class CardDeck(private val deck: MutableList<Card> = mutableListOf()) {
     }
 
     fun drawCards(count: Int = 1): List<Card> {
-        val pickedCards = mutableListOf<Card>()
-        repeat(count) {
-            pickedCards.add(deck.removeFirst())
-        }
-        return pickedCards
+        return (1..count).map { deck.removeFirst() }
     }
 
     fun contains(card: Card) = deck.contains(card)

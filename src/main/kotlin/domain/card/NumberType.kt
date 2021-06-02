@@ -13,5 +13,9 @@ enum class NumberType(val point: Int, val specialPoint: Int = 0) {
     TEN(10),
     KING(10),
     QUEEN(10),
-    JACK(10);
+    JACK(10),
+    ;
+
+    fun myFunc() {}
+
 }

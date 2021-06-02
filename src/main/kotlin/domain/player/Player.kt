@@ -22,7 +22,7 @@ open class Player(val name: String, val bettingMoney: Money = Money.ZERO) {
         earningMoney = earningMoney.lose(money)
     }
 
-    fun isBlackJack() = this.cards.isBlackJack()
+    fun isBlackJack(): Boolean = this.cards.isBlackJack()
 
     fun isWin(other: Player) = this.cards.isWin(other.cards)
 

@@ -20,22 +20,16 @@ object InputView {
     }
 
     private fun inputBettingMoney(name: String): Money {
-        return try {
-            println("${name}의 베팅 금액은?")
-            Money(readLine()!!.toInt())
-        } catch (e: Exception) {
-            println("ERROR : " + e.message)
-            inputBettingMoney(name)
-        }
+        println("${name}의 베팅 금액을 입력하세요.")
+        return Money(inputInteger())
     }
 
-    fun askDrawMore(name: String): YesOrNo {
-        return try {
-            println("${name}은 한 장의 카드를 더 받으시겠습니까 (예는 y, 아니오는 n)")
-            YesOrNo.parse(readLine()!!)
-        } catch (e: Exception) {
-            println("ERROR : " + e.message)
-            askDrawMore(name)
-        }
+    private tailrec fun inputInteger(): Int {
+        return readLine()?.toInt() ?: inputInteger()
+    }
+
+    tailrec fun askDrawMore(name: String): YesOrNo {
+        println("${name}은 한 장의 카드를 더 받으시겠습니까 (예는 y, 아니오는 n)")
+        return readLine()?.toYesOrNo() ?: askDrawMore(name)
     }
 }
