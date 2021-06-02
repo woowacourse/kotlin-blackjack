@@ -1,6 +1,6 @@
 import controller.GameController
 
-class MainApplication {}
+class MainApplication
 
 fun main() {
     GameController().play()

@@ -33,5 +33,3 @@ class Dealer(name: String) : Player(name) {
         return player.bettingMoney
     }
 }
-
-

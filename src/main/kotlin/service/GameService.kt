@@ -7,9 +7,11 @@ import dto.PlayerResponse
 
 class GameService(playerInfos: List<PlayerInfo>) {
 
-    private val blackJackGame = BlackJackGame(playerInfos.map {
-        Player(it.name, it.money)
-    })
+    private val blackJackGame = BlackJackGame(
+        playerInfos.map {
+            Player(it.name, it.money)
+        }
+    )
 
     fun distributeInitialCards(): List<PlayerResponse> {
         blackJackGame.giveInitialCards()

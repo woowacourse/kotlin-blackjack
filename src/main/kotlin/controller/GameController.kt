@@ -34,4 +34,3 @@ class GameController {
         OutputView.printResult(gameService.calculateResult())
     }
 }
-
