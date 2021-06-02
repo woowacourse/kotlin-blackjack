@@ -37,5 +37,4 @@ class Cards(private val cards: MutableList<Card>) {
     fun getCards(): List<Card> {
         return cards
     }
-
 }

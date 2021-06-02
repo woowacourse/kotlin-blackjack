@@ -8,10 +8,12 @@ fun main() {
     println(3.addByBetter(5))
     println(5.sum(10))
     println(5.sum2(10))
-    println(sb.apply {
-        this.append("Yes")
-        append("No")
-    })
+    println(
+        sb.apply {
+            this.append("Yes")
+            append("No")
+        }
+    )
 }
 
 fun String.lastChar(): Char {
@@ -27,7 +29,7 @@ fun List<String>.getFirstByBetter(): List<Char> {
 }
 
 infix fun Int.addByBetter(before: Int): Int {
-    return this + before;
+    return this + before
 }
 
 data class Point(val x: Int, val y: Int) {

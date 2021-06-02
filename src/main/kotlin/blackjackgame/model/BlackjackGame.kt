@@ -77,6 +77,4 @@ class BlackjackGame(players: List<Player>, dealer: Player, private val deck: Dec
         val map: List<Result> = this.map { it.second }
         return map.reduce { a, b -> a + b }.reverse()
     }
-
-
 }

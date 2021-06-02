@@ -4,7 +4,12 @@ import blackjackgame.model.BlackjackGame
 import blackjackgame.model.card.Deck
 import blackjackgame.model.player.Dealer
 import blackjackgame.model.player.Player
-import blackjackgame.view.*
+import blackjackgame.view.inputPlayerNames
+import blackjackgame.view.printStatus
+import blackjackgame.view.inputAskDrawCard
+import blackjackgame.view.printDealerTurnResult
+import blackjackgame.view.printFinalResult
+import blackjackgame.view.printWinLoseResult
 
 class BlackjackController {
 
@@ -27,7 +32,6 @@ class BlackjackController {
         printFinalResult(blackjackGame.extractResult())
         printWinLoseResult(blackjackGame.extractWinLoseResult())
     }
-
 }
 
 fun main() {

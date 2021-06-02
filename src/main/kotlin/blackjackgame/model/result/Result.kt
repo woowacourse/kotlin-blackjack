@@ -1,6 +1,5 @@
 package blackjackgame.model.result
 
-
 val WIN = Result(1, 0, 0)
 val LOSE = Result(0, 1, 0)
 val DRAW = Result(0, 0, 1)
