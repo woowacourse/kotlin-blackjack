@@ -3,6 +3,7 @@ package domain.user
 import domain.card.Cards
 import domain.card.TrumpCard
 import domain.status.Blackjack
+import domain.status.Bust
 import domain.status.Hit
 import domain.status.Status
 
@@ -20,6 +21,9 @@ class Gamer(val name: String, val hand: Cards = Cards(mutableListOf())) : User {
     override fun changeStatus() {
         if (getScore() == 21 && hand.size() == 2) {
             this.status = Blackjack()
+        }
+        if (getScore() > 21) {
+            this.status = Bust()
         }
     }
 

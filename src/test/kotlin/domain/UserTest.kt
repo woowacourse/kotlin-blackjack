@@ -5,6 +5,7 @@ import domain.card.TrumpCard
 import domain.card.TrumpCardNumber
 import domain.card.TrumpCardPattern
 import domain.status.Blackjack
+import domain.status.Bust
 import domain.user.Gamer
 import domain.user.Gamers
 import org.assertj.core.api.AssertionsForInterfaceTypes.assertThat
@@ -100,9 +101,9 @@ class UserTest {
     @Test
     fun blackjack() {
         //given
-        val fiveCard = TrumpCard(TrumpCardNumber.KING, TrumpCardPattern.CLOVER)
+        val kingCard = TrumpCard(TrumpCardNumber.KING, TrumpCardPattern.CLOVER)
         val aceCard = TrumpCard(TrumpCardNumber.ACE, TrumpCardPattern.CLOVER)
-        val deck = Cards(mutableListOf(fiveCard, aceCard))
+        val deck = Cards(mutableListOf(kingCard, aceCard))
         val gamer = Gamer("testUser")
         //when
         gamer.receiveCard(deck.dealCard())
@@ -111,4 +112,22 @@ class UserTest {
         //then
         assertThat(gamer.status).isInstanceOf(Blackjack().javaClass)
     }
+
+    @DisplayName("버스트 상태인 경우")
+    @Test
+    fun bust() {
+        //given
+        val kingCard = TrumpCard(TrumpCardNumber.KING, TrumpCardPattern.CLOVER)
+
+        val deck = Cards(mutableListOf(kingCard, kingCard, kingCard))
+        val gamer = Gamer("testUser")
+        //when
+        gamer.receiveCard(deck.dealCard())
+        gamer.receiveCard(deck.dealCard())
+        gamer.receiveCard(deck.dealCard())
+        gamer.changeStatus()
+        //then
+        assertThat(gamer.status).isInstanceOf(Bust().javaClass)
+    }
+
 }
