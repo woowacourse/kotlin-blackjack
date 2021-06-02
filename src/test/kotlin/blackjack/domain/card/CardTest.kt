@@ -16,6 +16,5 @@ class CardTest {
         Assertions.assertThat(diamondQueen.symbol.symbol).isEqualTo("다이아몬드")
         Assertions.assertThat(diamondQueen.value.valueName).isEqualTo("Q")
         Assertions.assertThat(diamondQueen.value.score).isEqualTo(10)
-
     }
 }

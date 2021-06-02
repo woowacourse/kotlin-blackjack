@@ -4,7 +4,6 @@ import blackjack.domain.card.Card
 import blackjack.domain.gamer.Score.Companion.ACE_SUBTRACT_VALUE
 import blackjack.domain.gamer.Score.Companion.BLACKJACK_SCORE
 
-
 class Hand(private val cards: MutableList<Card> = mutableListOf()) : List<Card> by cards {
 
     fun addCard(card: Card) {

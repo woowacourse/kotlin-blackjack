@@ -46,30 +46,36 @@ internal class GameResultTest {
                 mutableListOf(
                     Card(Symbol.DIAMOND, Value.SEVEN),
                     Card(Symbol.CLOVER, Value.QUEEN)
-                ), mutableListOf(
+                ),
+                mutableListOf(
                     Card(Symbol.DIAMOND, Value.ACE),
                     Card(Symbol.CLOVER, Value.QUEEN)
-                ), GameResult.LOSE
+                ),
+                GameResult.LOSE
             ),
             Arguments.of(
                 mutableListOf(
                     Card(Symbol.DIAMOND, Value.ACE),
                     Card(Symbol.CLOVER, Value.QUEEN)
-                ), mutableListOf(
+                ),
+                mutableListOf(
                     Card(Symbol.DIAMOND, Value.ACE),
                     Card(Symbol.CLOVER, Value.SEVEN)
-                ), GameResult.WIN
+                ),
+                GameResult.WIN
             ),
             Arguments.of(
                 mutableListOf(
                     Card(Symbol.HEART, Value.ACE),
                     Card(Symbol.DIAMOND, Value.ACE),
                     Card(Symbol.CLOVER, Value.QUEEN)
-                ), mutableListOf(
+                ),
+                mutableListOf(
                     Card(Symbol.HEART, Value.ACE),
                     Card(Symbol.DIAMOND, Value.ACE),
                     Card(Symbol.CLOVER, Value.QUEEN)
-                ), GameResult.STAND_OFF
+                ),
+                GameResult.STAND_OFF
             )
         )
     }

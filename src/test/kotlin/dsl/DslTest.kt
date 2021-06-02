@@ -21,7 +21,7 @@ class DslTest {
 
         assertThat(person.name).isEqualTo("amazzi")
         assertThat(person.company).isEqualTo("woowa")
-        assertThat(person.skills).contains("passion","kotlin")
+        assertThat(person.skills).contains("passion", "kotlin")
         assertThat(person.languages).containsExactly(Pair("Korean", 5), Pair("English", 3))
     }
 }

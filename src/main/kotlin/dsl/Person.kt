@@ -2,7 +2,7 @@ package dsl
 
 class Person {
     lateinit var name: String
-    private set
+        private set
     lateinit var company: String
         private set
     var skills: Skills? = null
@@ -14,7 +14,7 @@ class Person {
         this.name = name
     }
 
-    fun company(company : String) {
+    fun company(company: String) {
         this.company = company
     }
 
