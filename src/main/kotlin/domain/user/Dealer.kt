@@ -1,8 +1,12 @@
 package domain.user
 
-class Dealer : User {
+import domain.card.Cards
 
-    override fun draw() {
+class Dealer(
+    val name: String, override val hand: Cards = Cards(mutableListOf()),
+) : User {
+
+    override fun draw(cards: Cards) {
         TODO("Not yet implemented")
     }
 

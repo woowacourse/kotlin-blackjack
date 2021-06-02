@@ -7,11 +7,14 @@ import domain.status.Bust
 import domain.status.Hit
 import domain.status.Status
 
-class Gamer(val name: String, val hand: Cards = Cards(mutableListOf())) : User {
+class Gamer(
+    val name: String, override val hand: Cards = Cards(mutableListOf()),
+) : User {
     var status: Status = Hit()
         private set
 
-    override fun draw() {
+    override fun draw(cards: Cards) {
+        hand.receiveCard(cards)
     }
 
     fun receiveCard(trumpCard: TrumpCard) {

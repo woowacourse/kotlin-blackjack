@@ -1,10 +1,18 @@
 package controller
 
-import view.InputView
+import domain.card.Cards
+import domain.user.Gamers
+import view.View
 
-class GameController(val inputView: InputView) {
-
+class GameController(val view: View) {
+    val deck = Cards.createAllCards()
     fun playGame() {
-        inputView.guideGameStart()
+        val gamers = Gamers(view.guideGameStart())
+
+        for (i in 0 until 2) {
+            gamers.dealCard(deck)
+            gamers.dealCard(deck)
+        }
+
     }
 }

@@ -4,6 +4,17 @@ import domain.EmptyCardException
 
 
 class Cards(val cards: MutableList<TrumpCard>) {
+    companion object {
+        fun createAllCards(): Cards {
+            val deck = ArrayList<TrumpCard>()
+            for (trumpCardPattern: TrumpCardPattern in TrumpCardPattern.values()) {
+                for (trumpCardNumber: TrumpCardNumber in TrumpCardNumber.values()) {
+                    deck.add(TrumpCard(trumpCardNumber, trumpCardPattern))
+                }
+            }
+            return Cards(deck)
+        }
+    }
 
     fun size(): Int {
         return cards.size
@@ -37,5 +48,9 @@ class Cards(val cards: MutableList<TrumpCard>) {
 
     fun receiveCard(trumpCard: TrumpCard) {
         this.cards.add(trumpCard)
+    }
+
+    fun receiveCard(cards: Cards) {
+        this.cards.add(cards.dealCard())
     }
 }

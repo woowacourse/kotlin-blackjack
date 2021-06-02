@@ -20,7 +20,7 @@ class UserTest {
         val inputNames = "test1,test2,test3"
         val gamers = Gamers(inputNames)
         listOf("test1", "test2", "test3")
-        assertThat(gamers.names).isEqualTo(listOf(Gamer("test1"), Gamer("test2"), Gamer("test3")))
+        assertThat(gamers.gamers).isEqualTo(listOf(Gamer("test1"), Gamer("test2"), Gamer("test3")))
     }
 
     @DisplayName("카드 객체 생성")
@@ -130,4 +130,18 @@ class UserTest {
         assertThat(gamer.status).isInstanceOf(Bust().javaClass)
     }
 
+    @DisplayName("카드 분배 테스트")
+    @Test
+    fun dealCardsAllPlayers() {
+        //given
+        val deck = Cards.createAllCards()
+        val gamers = Gamers("testUser1,testUser2")
+        //when
+        gamers.dealCard(deck)
+        gamers.dealCard(deck)
+        //then
+        assertThat(gamers.gamers.map { it.hand.size() }).containsAll(mutableListOf(2, 2))
+        assertThat(deck.size()).isEqualTo(48)
+    }
 }
+

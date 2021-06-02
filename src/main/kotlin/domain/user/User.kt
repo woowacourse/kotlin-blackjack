@@ -1,7 +1,10 @@
 package domain.user
 
-interface User {
+import domain.card.Cards
 
-    fun draw()
+interface User {
+    val hand: Cards
+
+    fun draw(cards: Cards)
     fun changeStatus()
 }

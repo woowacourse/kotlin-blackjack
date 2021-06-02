@@ -1,7 +1,7 @@
 import controller.GameController
-import view.InputView
+import view.View
 
 fun main() {
-    val gameController = GameController(InputView())
+    val gameController = GameController(View())
     gameController.playGame()
 }
