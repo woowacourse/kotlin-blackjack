@@ -12,6 +12,7 @@ class Cards(val cards: MutableList<TrumpCard>) {
                     deck.add(TrumpCard(trumpCardNumber, trumpCardPattern))
                 }
             }
+            deck.shuffle()
             return Cards(deck)
         }
     }

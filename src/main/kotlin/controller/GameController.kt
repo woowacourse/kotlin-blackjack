@@ -2,7 +2,6 @@ package controller
 
 import domain.Winning
 import domain.card.Cards
-import domain.status.Finished
 import domain.status.Running
 import domain.user.Dealer
 import domain.user.Gamers
@@ -20,11 +19,13 @@ class GameController(val view: View) {
             gamers.dealCard(deck)
         }
 
-        while (gamers.gamers.any { it -> it.status is Running } && dealer.status is Finished) {
+        while (gamers.gamers.any { it -> it.status is Running } && dealer.status is Running) {
             for (gamer: User in gamers.gamers) {
                 if (view.guideContinueMessage(gamer).equals("y")) {
                     gamer.draw(deck)
+                    continue
                 }
+                gamer.stayGame()
             }
             if (dealer.score() <= 16) {
                 view.printDealerDraw()

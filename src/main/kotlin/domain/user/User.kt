@@ -10,4 +10,5 @@ interface User {
     fun draw(cards: Cards)
     fun changeStatus()
     fun score(): Int
+    fun stayGame()
 }

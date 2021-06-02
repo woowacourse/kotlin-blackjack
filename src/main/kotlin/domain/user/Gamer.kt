@@ -2,10 +2,7 @@ package domain.user
 
 import domain.card.Cards
 import domain.card.TrumpCard
-import domain.status.Blackjack
-import domain.status.Bust
-import domain.status.Hit
-import domain.status.Status
+import domain.status.*
 
 class Gamer(override val name: String, override val hand: Cards = Cards(mutableListOf())) : User {
     override var status: Status = Hit()
@@ -16,20 +13,21 @@ class Gamer(override val name: String, override val hand: Cards = Cards(mutableL
     }
 
     override fun changeStatus() {
-        if (getScore() == 21 && hand.size() == 2) {
+        if (score() == 21 && hand.size() == 2) {
             this.status = Blackjack()
         }
-        if (getScore() > 21) {
+        if (score() > 21) {
             this.status = Bust()
         }
     }
 
-    fun getScore(): Int {
-        return this.hand.getTotalScore()
+    override fun stayGame() {
+        this.status = Stay()
     }
 
     override fun draw(cards: Cards) {
         hand.receiveCard(cards)
+        changeStatus()
     }
 
     override fun score(): Int {

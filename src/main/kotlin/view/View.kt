@@ -32,9 +32,9 @@ class View {
         }
     }
 
-    fun guideContinueMessage(gamer: User) {
+    fun guideContinueMessage(gamer: User): String {
         println("${gamer.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
-        readLine()
+        return readLine() ?: "n"
     }
 
     fun printDealerDraw() {
