@@ -42,12 +42,3 @@ fun main() {
     val con = BlackJackController()
     con.run()
 }
-
-fun drawD(input: String) = when (input) {
-    "y" -> {
-        true
-        2
-    }
-    "n" -> 2
-    else -> 3
-}
