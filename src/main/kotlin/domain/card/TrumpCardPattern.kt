@@ -1,4 +1,4 @@
-package domain
+package domain.card
 
 enum class TrumpCardPattern(koreaName: String) {
     HEART("하트"),

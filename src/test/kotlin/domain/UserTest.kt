@@ -1,5 +1,12 @@
 package domain
 
+import domain.card.Cards
+import domain.card.TrumpCard
+import domain.card.TrumpCardNumber
+import domain.card.TrumpCardPattern
+import domain.status.Blackjack
+import domain.user.Gamer
+import domain.user.Gamers
 import org.assertj.core.api.AssertionsForInterfaceTypes.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -77,5 +84,31 @@ class UserTest {
         //then
 
         assertThrows<EmptyCardException> { cards.dealCard() }
+    }
+
+    @DisplayName("카드를 받지 않는 경우")
+    @Test
+    fun noDealCard() {
+        //given
+        val cards = Cards(mutableListOf())
+        //then
+
+        assertThrows<EmptyCardException> { cards.dealCard() }
+    }
+
+    @DisplayName("블랙잭 상태인 경우")
+    @Test
+    fun blackjack() {
+        //given
+        val fiveCard = TrumpCard(TrumpCardNumber.KING, TrumpCardPattern.CLOVER)
+        val aceCard = TrumpCard(TrumpCardNumber.ACE, TrumpCardPattern.CLOVER)
+        val deck = Cards(mutableListOf(fiveCard, aceCard))
+        val gamer = Gamer("testUser")
+        //when
+        gamer.receiveCard(deck.dealCard())
+        gamer.receiveCard(deck.dealCard())
+        gamer.changeStatus()
+        //then
+        assertThat(gamer.status).isInstanceOf(Blackjack().javaClass)
     }
 }

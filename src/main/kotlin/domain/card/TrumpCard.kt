@@ -1,4 +1,4 @@
-package domain
+package domain.card
 
 class TrumpCard(val trumpCardNumber: TrumpCardNumber, val trumpCardPattern: TrumpCardPattern) {
 

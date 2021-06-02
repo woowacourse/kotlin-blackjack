@@ -1,7 +1,14 @@
-package domain
+package domain.card
+
+import domain.EmptyCardException
 
 
 class Cards(val cards: MutableList<TrumpCard>) {
+
+    fun size(): Int {
+        return cards.size
+    }
+
     fun getTotalScore(): Int {
         val defaultScore = cards.map { it.getScore() }.sum()
         if (canPlusScore(defaultScore)) {
@@ -26,5 +33,9 @@ class Cards(val cards: MutableList<TrumpCard>) {
         val last = this.cards.last()
         this.cards.removeLast()
         return last
+    }
+
+    fun receiveCard(trumpCard: TrumpCard) {
+        this.cards.add(trumpCard)
     }
 }

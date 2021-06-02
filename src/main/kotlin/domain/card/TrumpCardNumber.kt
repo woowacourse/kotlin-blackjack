@@ -1,4 +1,4 @@
-package domain
+package domain.card
 
 enum class TrumpCardNumber(val uniqueName: String, val score: Int) {
     ACE("A", 1),
