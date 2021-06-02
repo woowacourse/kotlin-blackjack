@@ -8,7 +8,7 @@ import domain.status.Hit
 import domain.status.Status
 
 class Gamer(override val name: String, override val hand: Cards = Cards(mutableListOf())) : User {
-    var status: Status = Hit()
+    override var status: Status = Hit()
         private set
 
     fun receiveCard(trumpCard: TrumpCard) {

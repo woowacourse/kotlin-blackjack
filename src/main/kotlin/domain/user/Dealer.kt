@@ -9,7 +9,7 @@ import domain.status.Status
 
 class Dealer(override val name: String, override val hand: Cards = Cards(mutableListOf())) :
     User {
-    var status: Status = Hit()
+    override var status: Status = Hit()
         private set
 
 
