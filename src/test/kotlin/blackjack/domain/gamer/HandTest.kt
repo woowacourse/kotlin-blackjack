@@ -17,7 +17,7 @@ class HandTest {
     @ParameterizedTest
     @MethodSource("parameterProvider")
     @DisplayName("점수를 계산한다.")
-    internal fun getScoreWithAce(cards: MutableList<Card>, expected: Int) {
+    internal fun getScoreWithAce(cards: MutableList<Card>, expected: Score) {
         val hand = Hand(cards)
 
         Assertions.assertThat(hand.totalScore()).isEqualTo(expected)
@@ -39,7 +39,7 @@ class HandTest {
                     Card(Symbol.DIAMOND, Value.SEVEN),
                     Card(Symbol.CLOVER, Value.QUEEN)
                 ),
-                17
+                Score(17)
             ),
             Arguments.of(
                 mutableListOf(
@@ -47,7 +47,7 @@ class HandTest {
                     Card(Symbol.DIAMOND, Value.ACE),
                     Card(Symbol.CLOVER, Value.QUEEN)
                 ),
-                21
+                Score(21)
             ),
             Arguments.of(
                 mutableListOf(
@@ -55,7 +55,7 @@ class HandTest {
                     Card(Symbol.DIAMOND, Value.ACE),
                     Card(Symbol.CLOVER, Value.QUEEN)
                 ),
-                12
+                Score(12)
             ),
             Arguments.of(
                 mutableListOf(
@@ -64,7 +64,7 @@ class HandTest {
                     Card(Symbol.HEART, Value.JACK),
                     Card(Symbol.CLOVER, Value.QUEEN)
                 ),
-                31
+                Score(31)
             )
         )
     }

@@ -4,7 +4,6 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.Symbol
 import blackjack.domain.card.Value
 import blackjack.domain.gamer.Dealer
-import blackjack.domain.gamer.Hand
 import blackjack.domain.gamer.Player
 import org.assertj.core.api.AssertionsForInterfaceTypes.assertThat
 import org.junit.jupiter.api.DisplayName
@@ -19,11 +18,17 @@ internal class GameResultTest {
     @ParameterizedTest
     @MethodSource("parameterProvider")
     @DisplayName("승패 결과를 찾는다.")
-    fun find(playerCards: MutableList<Card>, dealerCards: MutableList<Card>, gameResult: GameResult) {
-        val player = Player("mazzi", Hand(playerCards))
-        val dealer = Dealer("딜러", Hand(dealerCards))
+    fun find(
+        playerCards: MutableList<Card>,
+        dealerCards: MutableList<Card>,
+        gameResult: GameResult
+    ) {
+        val player = Player("mazzi")
+        player.initializeCards(playerCards)
+        val dealer = Dealer("딜러")
+        dealer.initializeCards(dealerCards)
 
-        assertThat(GameResult.find(player, dealer)).isEqualTo(gameResult)
+        assertThat(GameResult.find(player.score(), dealer.score())).isEqualTo(gameResult)
     }
 
     @ParameterizedTest

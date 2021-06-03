@@ -2,8 +2,9 @@ package blackjack.domain.result
 
 import blackjack.domain.gamer.Dealer
 import blackjack.domain.gamer.Player
+import blackjack.domain.gamer.Score
 
-enum class GameResult(val result: String, val compareStatus: (Int, Int) -> Boolean) {
+enum class GameResult(val result: String, val compareStatus: (Score, Score) -> Boolean) {
     WIN("승", { playerScore, dealerScore -> playerScore > dealerScore }),
     STAND_OFF("무", { playerScore, dealerScore -> playerScore == dealerScore }),
     LOSE("패", { playerScore, dealerScore -> playerScore < dealerScore });
@@ -21,8 +22,11 @@ enum class GameResult(val result: String, val compareStatus: (Int, Int) -> Boole
 
     companion object {
         @JvmStatic
-        fun find(player: Player, dealer: Dealer): GameResult {
-            return values().firstOrNull { it.compareStatus(player.score(), dealer.score()) }
+        fun find(playerScore: Score, dealerScore: Score): GameResult {
+            if(dealerScore > Score.BLACKJACK_SCORE) {
+                return WIN
+            }
+            return values().firstOrNull { it.compareStatus(playerScore, dealerScore) }
                 ?: throw IllegalArgumentException("승패 결과를 찾을 수 없습니다.")
         }
     }

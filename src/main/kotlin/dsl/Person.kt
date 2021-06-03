@@ -10,8 +10,9 @@ class Person {
     var languages: Languages? = null
         private set
 
-    fun name(name: String) {
+    fun name(name: String): String {
         this.name = name
+        return name
     }
 
     fun company(company: String) {

@@ -2,7 +2,7 @@ package blackjack.domain.result
 
 import blackjack.domain.gamer.Dealer
 import blackjack.domain.gamer.Player
-import blackjack.domain.gamer.Players
+
 
 class GameResultBoard(private val resultBoard: Map<Player, GameResult>) :
     Map<Player, GameResult> by resultBoard {
@@ -14,8 +14,8 @@ class GameResultBoard(private val resultBoard: Map<Player, GameResult>) :
     }
 
     companion object {
-        fun of(players: Players, dealer: Dealer): GameResultBoard {
-            val resultBoard = players.associateWith { GameResult.find(it, dealer) }
+        fun of(players: List<Player>, dealer: Dealer): GameResultBoard {
+            val resultBoard = players.associateWith { it.result(dealer.state.totalScore()) }
             return GameResultBoard(resultBoard)
         }
     }
