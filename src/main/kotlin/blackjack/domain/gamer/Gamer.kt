@@ -29,5 +29,4 @@ abstract class Gamer(val name: String) {
     fun isBlackjack(): Boolean {
         return state.isBlackjack()
     }
-
 }

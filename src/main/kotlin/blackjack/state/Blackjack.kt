@@ -18,10 +18,9 @@ class Blackjack(hand: Hand) : Finish(hand) {
         return GameResult.WIN
     }
 
-    override fun earningRate(dealer: Dealer): Double {
-        if (dealer.isBlackjack()) {
-            return 0.0;
+    override fun earningRate(dealer: Dealer) =
+        when (dealer.isBlackjack()) {
+            true -> 0.0
+            false -> 1.5
         }
-        return 1.5;
-    }
 }

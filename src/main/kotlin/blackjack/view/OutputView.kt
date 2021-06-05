@@ -41,7 +41,6 @@ fun printGameResultBoard(resultBoard: GameResultBoard) {
     }
 }
 
-
 fun printProfitResult(profitResult: ProfitResult) {
     println("## 최종 수익")
     println("딜러: ${profitResult.dealerProfit}")

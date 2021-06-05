@@ -27,13 +27,12 @@ class Stay(hand: Hand) : Finish(hand) {
         return GameResult.find(hand.totalScore(), dealerScore)
     }
 
-    override fun earningRate(dealer: Dealer): Double {
+    override fun earningRate(dealer: Dealer) =
         if (dealer.isBust() || hand.totalScore() > dealer.score()) {
-            return 1.0
+            1.0
+        } else if (!dealer.isBust() && hand.totalScore() == dealer.score()) {
+            0.0
+        } else {
+            -1.0
         }
-        if (!dealer.isBust() && hand.totalScore() == dealer.score()) {
-            return 0.0
-        }
-        return -1.0
-    }
 }
