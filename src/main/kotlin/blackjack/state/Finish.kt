@@ -2,6 +2,8 @@ package blackjack.state
 
 import blackjack.domain.card.Card
 import blackjack.domain.gamer.Hand
+import blackjack.domain.gamer.Money
+import blackjack.domain.gamer.Score
 import java.lang.IllegalArgumentException
 
 abstract class Finish(hand: Hand) : Started(hand) {

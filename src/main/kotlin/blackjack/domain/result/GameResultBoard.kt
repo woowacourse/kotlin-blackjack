@@ -18,5 +18,10 @@ class GameResultBoard(private val resultBoard: Map<Player, GameResult>) :
             val resultBoard = players.associateWith { it.result(dealer.state.totalScore()) }
             return GameResultBoard(resultBoard)
         }
+
+        fun ofProfit(players: List<Player>, dealer: Dealer): GameResultBoard {
+            val resultBoard = players.associateWith { it.result(dealer.state.totalScore()) }
+            return GameResultBoard(resultBoard)
+        }
     }
 }

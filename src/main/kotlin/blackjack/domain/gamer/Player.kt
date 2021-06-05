@@ -3,6 +3,8 @@ package blackjack.domain.gamer
 import blackjack.domain.result.GameResult
 
 class Player(name: String) : Gamer(name) {
+    lateinit var money: Money
+
     fun isAbleToHit(): Boolean {
         return !state.isFinish()
     }
@@ -13,5 +15,9 @@ class Player(name: String) : Gamer(name) {
 
     fun result(dealerScore: Score): GameResult {
         return state.result(dealerScore)
+    }
+
+    fun profit(dealer: Dealer) : Money {
+        return money * state.earningRate(dealer)
     }
 }

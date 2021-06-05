@@ -1,6 +1,8 @@
 package blackjack.state
 
 import blackjack.domain.card.Card
+import blackjack.domain.gamer.Dealer
+import blackjack.domain.gamer.Money
 import blackjack.domain.gamer.Score
 import blackjack.domain.result.GameResult
 
@@ -13,4 +15,5 @@ interface State {
     fun stay(): State
     fun isFinish() : Boolean
     fun result(dealerScore: Score): GameResult
+    fun earningRate(dealer: Dealer): Double
 }

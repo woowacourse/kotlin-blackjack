@@ -17,3 +17,8 @@ private tailrec fun input(): String {
     }
     return input
 }
+
+tailrec fun inputMoney(name: String): Int {
+    println("${name}의 배팅 금액은?")
+    return readLine()?.toIntOrNull() ?: inputMoney(name)
+}

@@ -1,5 +1,6 @@
 package blackjack.view
 
+import blackjack.domain.result.ProfitResult
 import blackjack.domain.gamer.Dealer
 import blackjack.domain.gamer.Gamer
 import blackjack.domain.gamer.Player
@@ -38,4 +39,11 @@ fun printGameResultBoard(resultBoard: GameResultBoard) {
     for (result in resultBoard) {
         println("${result.key.name}: ${result.value.result}")
     }
+}
+
+
+fun printProfitResult(profitResult: ProfitResult) {
+    println("## 최종 수익")
+    println("딜러: ${profitResult.dealerProfit}")
+    profitResult.playerProfits.forEach{ println("${it.key.name}: ${it.value}")}
 }
