@@ -1,0 +1,71 @@
+package blackjack.domain.gamer
+
+import blackjack.domain.card.Card
+import blackjack.domain.card.Symbol
+import blackjack.domain.card.Value
+import org.assertj.core.api.Assertions
+import org.assertj.core.api.AssertionsForInterfaceTypes.assertThat
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.MethodSource
+import java.util.stream.Stream
+
+class HandTest {
+
+    @ParameterizedTest
+    @MethodSource("parameterProvider")
+    @DisplayName("점수를 계산한다.")
+    internal fun getScoreWithAce(cards: MutableList<Card>, expected: Score) {
+        val hand = Hand(cards)
+
+        Assertions.assertThat(hand.totalScore()).isEqualTo(expected)
+    }
+
+    @Test
+    @DisplayName("버스트인지 확인한다.")
+    internal fun isBust() {
+        val hand = Hand(mutableListOf(Card(Symbol.HEART, Value.SEVEN)))
+
+        assertThat(hand.isBust()).isFalse
+    }
+
+    companion object {
+        @JvmStatic
+        fun parameterProvider() = Stream.of(
+            Arguments.of(
+                mutableListOf(
+                    Card(Symbol.DIAMOND, Value.SEVEN),
+                    Card(Symbol.CLOVER, Value.QUEEN)
+                ),
+                Score(17)
+            ),
+            Arguments.of(
+                mutableListOf(
+
+                    Card(Symbol.DIAMOND, Value.ACE),
+                    Card(Symbol.CLOVER, Value.QUEEN)
+                ),
+                Score(21)
+            ),
+            Arguments.of(
+                mutableListOf(
+                    Card(Symbol.HEART, Value.ACE),
+                    Card(Symbol.DIAMOND, Value.ACE),
+                    Card(Symbol.CLOVER, Value.QUEEN)
+                ),
+                Score(12)
+            ),
+            Arguments.of(
+                mutableListOf(
+                    Card(Symbol.HEART, Value.ACE),
+                    Card(Symbol.DIAMOND, Value.JACK),
+                    Card(Symbol.HEART, Value.JACK),
+                    Card(Symbol.CLOVER, Value.QUEEN)
+                ),
+                Score(31)
+            )
+        )
+    }
+}
