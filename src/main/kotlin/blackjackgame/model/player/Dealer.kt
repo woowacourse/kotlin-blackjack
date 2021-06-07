@@ -2,7 +2,7 @@ package blackjackgame.model.player
 
 import blackjackgame.model.card.Card
 
-class Dealer : Player("딜러", 0) {
+class Dealer : Participant("딜러", 0) {
 
     override fun isPlayer(): Boolean {
         return false

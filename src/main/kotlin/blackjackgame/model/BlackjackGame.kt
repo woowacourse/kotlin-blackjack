@@ -3,12 +3,13 @@ package blackjackgame.model
 import blackjackgame.model.card.Card
 import blackjackgame.model.card.Deck
 import blackjackgame.model.player.Dealer
+import blackjackgame.model.player.Participant
 import blackjackgame.model.player.Player
 import blackjackgame.model.player.Players
 import blackjackgame.model.result.Result
 import blackjackgame.model.result.getPlayerResult
 
-class BlackjackGame(players: List<Player>, dealer: Player, private val deck: Deck) {
+class BlackjackGame(players: List<Participant>, dealer: Participant, private val deck: Deck) {
     private val participants: Players
 
     init {
@@ -41,7 +42,7 @@ class BlackjackGame(players: List<Player>, dealer: Player, private val deck: Dec
         return Pair(player.name, player.cards.getCards())
     }
 
-    fun findTurnPlayer(): Player {
+    fun findTurnPlayer(): Participant {
         return participants.asSequence()
             .filter { it.isPlayer() }
             .first { it.isHit() && it.isPlaying }
@@ -62,7 +63,9 @@ class BlackjackGame(players: List<Player>, dealer: Player, private val deck: Dec
 
     fun extractWinLoseResult(): List<Pair<String, Result>> {
         val dealer: Dealer = participants.first { !it.isPlayer() } as Dealer
-        val players = participants.filter { it.isPlayer() }
+        val players = participants
+            .filter { it.isPlayer() }
+            .map { it as Player }
 
         val playerResult = players.map { Pair(it.name, getPlayerResult(dealer, it)) }
         val dealerResult = Pair(dealer.name, playerResult.reverse())
@@ -89,7 +92,7 @@ class BlackjackGame(players: List<Player>, dealer: Player, private val deck: Dec
         return getMoneyResult(dealer, players)
     }
 
-    private fun getMoneyResult(dealer: Dealer, players: List<Player>): List<Pair<String, Int>> {
+    private fun getMoneyResult(dealer: Dealer, players: List<Participant>): List<Pair<String, Int>> {
         val results = mutableListOf<Pair<String, Int>>()
         results.add(dealer.name to dealer.finalMoney)
         players.map {

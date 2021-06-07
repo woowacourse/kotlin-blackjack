@@ -8,50 +8,18 @@ import blackjackgame.model.result.WIN
 
 const val BLACKJACK_SCORE = 21
 
-open class Player(val name: String = "any", val initialMoney: Int = 0) {
-    var finalMoney: Int = 0
-    val cards = Cards(mutableListOf())
-    var isPlaying = true
-        private set
+class Player(name:String = "any", initialMoney:Int = 0) : Participant(name, initialMoney) {
 
-    fun drawCard(card: Card) {
-        cards.add(card)
-    }
-
-    fun drawCard(cards: List<Card>) {
-        this.cards.addAll(cards)
-    }
-
-    open fun getInitCards(): List<Card> {
+    override fun getInitCards(): List<Card> {
         return this.cards.subList(0, 2)
     }
 
-    fun isBurst(): Boolean {
-        return cards.calculateScore() > BLACKJACK_SCORE
-    }
-
-    fun isBlackjack(): Boolean {
+    private fun isBlackjack(): Boolean {
         return cards.isInitSize() && cards.calculateScore() == BLACKJACK_SCORE
     }
 
-    fun isHit(): Boolean {
-        return cards.calculateScore() < BLACKJACK_SCORE
-    }
-
-    fun canDraw(): Boolean {
-        return cards.calculateScore() < BLACKJACK_SCORE
-    }
-
-    fun endTurn() {
-        isPlaying = false
-    }
-
-    open fun isPlayer(): Boolean {
+    override fun isPlayer(): Boolean {
         return true
-    }
-
-    fun calculateFinalScore(): Int {
-        return cards.calculateFinalScore()
     }
 
     fun earnMoney(result: Result) {
