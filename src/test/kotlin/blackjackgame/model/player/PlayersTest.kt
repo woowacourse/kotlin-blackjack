@@ -16,7 +16,7 @@ internal class PlayersTest {
             Card(Suit.CLOVER, Denomination.TWO), Card(Suit.DIAMOND, Denomination.FIVE),
         )
         val deck = Deck(initCards)
-        var players = Players(listOf(Player("better"), Player("roki")))
+        var players = Players(listOf(Player("better", 0), Player("roki", 0)))
         players.drawInitCards(deck)
 
         val playersGroup = players.players

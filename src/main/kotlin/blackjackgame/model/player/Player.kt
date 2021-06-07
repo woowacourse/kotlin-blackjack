@@ -5,7 +5,8 @@ import blackjackgame.model.card.Cards
 
 const val BLACKJACK_SCORE = 21
 
-open class Player(val name: String) {
+open class Player(val name: String, initialMoney: Int = 0) {
+    val money = initialMoney
     val cards = Cards(mutableListOf())
     var isPlaying = true
         private set

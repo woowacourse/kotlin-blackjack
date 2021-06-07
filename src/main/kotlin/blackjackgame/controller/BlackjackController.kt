@@ -14,7 +14,7 @@ import blackjackgame.view.printWinLoseResult
 class BlackjackController {
 
     fun run() {
-        val players = inputPlayerNames().map { Player(it) }
+        val players = inputPlayerNames().map { Player(it, 0) }
         val blackjackGame = BlackjackGame(players, Dealer(), Deck())
         blackjackGame.start()
         printStatus(blackjackGame.getInitStatus())

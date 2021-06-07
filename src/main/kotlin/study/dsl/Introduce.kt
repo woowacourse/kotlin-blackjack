@@ -1,10 +1,10 @@
 package study.dsl
 
 class Resume {
-    var name = ""
-    var company = ""
-    var skills = Skill()
-    var languages = Languages()
+    lateinit var name: String
+    lateinit var company: String
+    lateinit var skill: Skill
+    lateinit var languages: Languages
 
     fun introduce(function: Resume.() -> Unit): Resume {
         this.function()
@@ -22,7 +22,7 @@ class Resume {
     fun skills(function: Skill.() -> Unit) {
         val skill = Skill()
         skill.function()
-        this.skills = skill
+        this.skill = skill
     }
 
     fun languages(function: Languages.() -> Unit) {

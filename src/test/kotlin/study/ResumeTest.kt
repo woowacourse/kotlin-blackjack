@@ -12,8 +12,8 @@ internal class ResumeTest {
             name("김배럴")
             company("우테코코")
             skills {
-                soft("A passion for problem solving")
-                soft("Good communication skills")
+                soft("problem solving")
+                soft("Good communication")
                 hard("Kotlin")
             }
             languages {
@@ -23,11 +23,11 @@ internal class ResumeTest {
         }
         assertThat(introduce.name).isEqualTo("김배럴")
         assertThat(introduce.company).isEqualTo("우테코코")
-        assertThat(introduce.skills.softSkills).hasSize(2)
-        assertThat(introduce.skills.softSkills[0]).isEqualTo("A passion for problem solving")
-        assertThat(introduce.skills.softSkills[1]).isEqualTo("Good communication skills")
-        assertThat(introduce.skills.hardSkills).hasSize(1)
-        assertThat(introduce.skills.hardSkills[0]).isEqualTo("Kotlin")
+        assertThat(introduce.skill.softSkills).hasSize(2)
+        assertThat(introduce.skill.softSkills[0]).isEqualTo("problem solving")
+        assertThat(introduce.skill.softSkills[1]).isEqualTo("Good communication")
+        assertThat(introduce.skill.hardSkills).hasSize(1)
+        assertThat(introduce.skill.hardSkills[0]).isEqualTo("Kotlin")
 
         assertThat(introduce.languages.languages).hasSize(2)
         assertThat(introduce.languages.languages["Korean"]).isEqualTo(5)
