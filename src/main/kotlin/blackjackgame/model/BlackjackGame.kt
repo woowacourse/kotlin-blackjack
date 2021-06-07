@@ -5,7 +5,6 @@ import blackjackgame.model.card.Deck
 import blackjackgame.model.player.Dealer
 import blackjackgame.model.player.Player
 import blackjackgame.model.player.Players
-import blackjackgame.model.result.MoneyResult
 import blackjackgame.model.result.Result
 import blackjackgame.model.result.getPlayerResult
 
@@ -84,10 +83,18 @@ class BlackjackGame(players: List<Player>, dealer: Player, private val deck: Dec
         val players = participants.filter { it.isPlayer() }
 
         val dealerMoney: Int = players
-            .map {  it.initialMoney - it.finalMoney}
+            .map { it.initialMoney - it.finalMoney }
             .reduce { a, b -> a + b }.toInt()
         dealer.earnMoney(dealerMoney)
-        val moneyResult = MoneyResult(dealer, players)
-        return moneyResult.getMoneyResult()
+        return getMoneyResult(dealer, players)
+    }
+
+    private fun getMoneyResult(dealer: Dealer, players: List<Player>): List<Pair<String, Int>> {
+        val results = mutableListOf<Pair<String, Int>>()
+        results.add(dealer.name to dealer.finalMoney)
+        players.map {
+            results.add(it.name to it.finalMoney)
+        }
+        return results.toList()
     }
 }

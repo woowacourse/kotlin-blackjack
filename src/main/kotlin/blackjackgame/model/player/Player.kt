@@ -3,7 +3,6 @@ package blackjackgame.model.player
 import blackjackgame.model.card.Card
 import blackjackgame.model.card.Cards
 import blackjackgame.model.result.LOSE
-
 import blackjackgame.model.result.Result
 import blackjackgame.model.result.WIN
 

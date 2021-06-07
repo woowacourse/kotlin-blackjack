@@ -3,6 +3,7 @@ package blackjackgame.model.result
 import blackjackgame.model.player.Dealer
 import blackjackgame.model.player.Player
 
+
 fun getPlayerResult(dealer: Dealer, player: Player): Result {
     if (!dealer.isBurst() && !player.isBurst()) {
         if (dealer.cards.calculateFinalScore() < player.calculateFinalScore()) {
