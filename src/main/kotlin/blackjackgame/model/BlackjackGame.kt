@@ -5,8 +5,9 @@ import blackjackgame.model.card.Deck
 import blackjackgame.model.player.Dealer
 import blackjackgame.model.player.Player
 import blackjackgame.model.player.Players
+import blackjackgame.model.result.MoneyResult
 import blackjackgame.model.result.Result
-import blackjackgame.model.result.getResult
+import blackjackgame.model.result.getPlayerResult
 
 class BlackjackGame(players: List<Player>, dealer: Player, private val deck: Deck) {
     private val participants: Players
@@ -64,7 +65,7 @@ class BlackjackGame(players: List<Player>, dealer: Player, private val deck: Dec
         val dealer: Dealer = participants.first { !it.isPlayer() } as Dealer
         val players = participants.filter { it.isPlayer() }
 
-        val playerResult = players.map { Pair(it.name, getResult(dealer, it)) }
+        val playerResult = players.map { Pair(it.name, getPlayerResult(dealer, it)) }
         val dealerResult = Pair(dealer.name, playerResult.reverse())
 
         val finalResult = mutableListOf(dealerResult)
@@ -74,7 +75,19 @@ class BlackjackGame(players: List<Player>, dealer: Player, private val deck: Dec
     }
 
     private fun List<Pair<String, Result>>.reverse(): Result {
-        val map: List<Result> = this.map { it.second }
-        return map.reduce { a, b -> a + b }.reverse()
+        val results: List<Result> = this.map { it.second }
+        return results.reduce { a, b -> a + b }.reverse()
+    }
+
+    fun extractMoneyResult(): List<Pair<String, Int>> {
+        val dealer: Dealer = participants.first { !it.isPlayer() } as Dealer
+        val players = participants.filter { it.isPlayer() }
+
+        val dealerMoney: Int = players
+            .map {  it.initialMoney - it.finalMoney}
+            .reduce { a, b -> a + b }.toInt()
+        dealer.earnMoney(dealerMoney)
+        val moneyResult = MoneyResult(dealer, players)
+        return moneyResult.getMoneyResult()
     }
 }

@@ -15,4 +15,8 @@ class Dealer : Player("딜러", 0) {
     fun isAvailableToDraw(): Boolean {
         return this.cards.calculateScore() <= 16
     }
+
+    fun earnMoney(result:Int){
+        finalMoney = result
+    }
 }

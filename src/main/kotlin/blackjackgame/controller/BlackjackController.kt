@@ -4,17 +4,12 @@ import blackjackgame.model.BlackjackGame
 import blackjackgame.model.card.Deck
 import blackjackgame.model.player.Dealer
 import blackjackgame.model.player.Player
-import blackjackgame.view.inputPlayerNames
-import blackjackgame.view.printStatus
-import blackjackgame.view.inputAskDrawCard
-import blackjackgame.view.printDealerTurnResult
-import blackjackgame.view.printFinalResult
-import blackjackgame.view.printWinLoseResult
+import blackjackgame.view.*
 
 class BlackjackController {
 
     fun run() {
-        val players = inputPlayerNames().map { Player(it, 0) }
+        val players = inputPlayerNames().map { Player(it, inputPlayerBetting(it)) }
         val blackjackGame = BlackjackGame(players, Dealer(), Deck())
         blackjackGame.start()
         printStatus(blackjackGame.getInitStatus())
@@ -31,7 +26,9 @@ class BlackjackController {
 
         printFinalResult(blackjackGame.extractResult())
         printWinLoseResult(blackjackGame.extractWinLoseResult())
+        printFinalMoney(blackjackGame.extractMoneyResult())
     }
+
 }
 
 fun main() {

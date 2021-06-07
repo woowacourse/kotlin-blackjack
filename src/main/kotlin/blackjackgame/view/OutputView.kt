@@ -34,6 +34,14 @@ fun printDealerTurnResult() {
 }
 
 fun printWinLoseResult(results: List<Pair<String, Result>>) {
+    println("## 최종승패")
+    results.forEach {
+        println("${it.first}: ${it.second}")
+    }
+}
+
+fun printFinalMoney(results: List<Pair<String, Int>>) {
+    println("## 최종수익")
     results.forEach {
         println("${it.first}: ${it.second}")
     }

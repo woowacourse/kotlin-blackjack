@@ -4,6 +4,8 @@ import blackjackgame.model.card.Card
 import blackjackgame.model.card.Denomination
 import blackjackgame.model.card.Suit
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
 internal class PlayerTest {
@@ -39,6 +41,16 @@ internal class PlayerTest {
     fun initialMoney() {
         val better = Player("better", 1000)
 
-        assertThat(better.money).isEqualTo(1000)
+        assertThat(better.initialMoney).isEqualTo(1000)
     }
+
+    @Test
+    fun calculateScore() {
+        val better = Player("better", 1000)
+
+        better.drawCard(listOf(Card(Suit.DIAMOND, Denomination.ACE), Card(Suit.SPADE, Denomination.KING)))
+
+        assertThat(better.calculateFinalScore()).isEqualTo(21)
+    }
+
 }
