@@ -1,17 +1,20 @@
 package domain
 
 class CardMachine {
-    private val _cards: MutableList<Card> = mutableListOf()
-    val cards: List<Card> get() = _cards.toList()
+    private val cards: MutableList<Card> = mutableListOf()
 
     init {
         addCards()
-        _cards.shuffled()
+        cards.shuffled()
     }
 
-    fun getCardPair(): List<Card> {
-        val pickedCard = _cards.take(2)
-        _cards.removeAll(pickedCard)
+    fun getCardPairs(count: Int): List<List<Card>> {
+        return List(count) { makeCardPair() }
+    }
+
+    fun makeCardPair(): List<Card> {
+        val pickedCard = cards.take(2)
+        cards.removeAll(pickedCard)
         return pickedCard
     }
 
@@ -23,7 +26,7 @@ class CardMachine {
 
     private fun addCardValue(shape: Card.Shape) {
         Card.Value.values().map { value ->
-            _cards.add(Card(shape, value))
+            cards.add(Card(shape, value))
         }
     }
 }
