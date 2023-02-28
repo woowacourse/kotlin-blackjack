@@ -1,6 +1,6 @@
 package blackjack.domain
 
-class Card(val mark: CardMark, val value: CardValue) {
+data class Card(val mark: CardMark, val value: CardValue) {
 
     companion object {
         private val CARDS: List<Card> =
