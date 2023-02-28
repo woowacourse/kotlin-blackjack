@@ -12,4 +12,14 @@ class PlayerTest {
 
         assertThat(player.getScore()).isEqualTo(21)
     }
+
+    @Test
+    fun `플레이어가 A를 갖고있고 합이 21을 초과하는 경우 A 중 일부의 가치가 1이 될 수 있다`() {
+        val player = Player("pobi")
+        player.receive(Card(CardNumber.ACE, CardShape.DIAMOND))
+        player.receive(Card(CardNumber.ACE, CardShape.CLOVER))
+        player.receive(Card(CardNumber.ACE, CardShape.HEART))
+
+        assertThat(player.getScore()).isEqualTo(13)
+    }
 }
