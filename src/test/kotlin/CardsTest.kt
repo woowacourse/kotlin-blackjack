@@ -30,4 +30,16 @@ class CardsTest {
             ).isPossibleToDraw(17)
         ).isFalse()
     }
+
+    @Test
+    fun `가지고 있는 카드 숫자의 합을 구한다`() {
+        assertThat(
+            Cards(
+                listOf(
+                    Card(CardNumber.K, Shape.HEART),
+                    Card(CardNumber.SEVEN, Shape.SPADE)
+                )
+            ).getSum()
+        ).isEqualTo(17)
+    }
 }

@@ -14,4 +14,8 @@ class Cards(cards: List<Card>) {
 
         return true
     }
+
+    fun getSum(): Int {
+        return cards.sumOf { card -> card.number.value }
+    }
 }
