@@ -1,1 +1,4 @@
-class Player(private val cards: Cards)
+class Player(
+    val name: String,
+    val cards: Cards
+)

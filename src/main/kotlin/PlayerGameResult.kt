@@ -1,1 +1,1 @@
-data class PlayerGameResult(val player: Player, val gameResult: GameResult)
+data class PlayerGameResult(val playerName: String, val gameResult: GameResult)
