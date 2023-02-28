@@ -1,6 +1,8 @@
 class CardGame(private val cardPicker: CardPicker) {
-    fun pickTwice(): List<Card> = buildList {
-        add(cardPicker.pick())
-        add(cardPicker.pick())
-    }
+    fun pickTwice(): Cards = Cards(
+        buildList {
+            add(cardPicker.pick())
+            add(cardPicker.pick())
+        },
+    )
 }

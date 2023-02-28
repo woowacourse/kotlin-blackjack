@@ -14,7 +14,7 @@ class CardGameTest {
         val game = CardGame(CardPicker(CardPackGenerator().createCards()))
         val player1 = Player(game.pickTwice())
         val player2 = Player(game.pickTwice())
-        assertThat(player1.cards.size).isEqualTo(2)
-        assertThat(player2.cards.size).isEqualTo(2)
+        assertThat(player1.cards.cards.size).isEqualTo(2)
+        assertThat(player2.cards.cards.size).isEqualTo(2)
     }
 }

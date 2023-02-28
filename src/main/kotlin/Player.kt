@@ -1,1 +1,1 @@
-class Player(val cards: List<Card>)
+class Player(val cards: Cards)

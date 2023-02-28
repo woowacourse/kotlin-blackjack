@@ -8,6 +8,6 @@ class CardPackGeneratorTest {
     @Test
     fun `카드팩을 중복 없이 48장 생성한다`() {
         val cards = CardPackGenerator().createCards()
-        assertThat(cards.distinct().size).isEqualTo(48)
+        assertThat(cards.cards.distinct().size).isEqualTo(48)
     }
 }

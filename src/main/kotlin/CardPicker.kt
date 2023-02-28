@@ -1,6 +1,6 @@
-class CardPicker(private val cards: List<Card>) {
+class CardPicker(private val cards: Cards) {
     private var cursor = 0
     fun pick(): Card {
-        return cards[cursor++]
+        return cards.cards[cursor++]
     }
 }
