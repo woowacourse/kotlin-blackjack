@@ -2,7 +2,7 @@
 
 ## Domain
 #### Card
-- [ ] <Shape, Value>
+- [X] Shape와 Value를 저장한다
 
 #### RandomCardFactory -> Map<Shape, Value>
 - [ ] 카드를 뽑는다
