@@ -13,13 +13,13 @@ class CardDistributerTest() {
         // given
         val manualCardFactory = ManualCardFactory(listOf(CardType.CLUB, CardType.SPADE), listOf(CardNumber.THREE, CardNumber.QUEEN))
         val cardDistributer = CardDistributer(manualCardFactory)
-        val player = Player(Cards(mutableListOf()))
+        val user = User(Cards(mutableListOf()))
 
         // when
         val except = listOf(Card(CardType.CLUB, CardNumber.THREE), Card(CardType.SPADE, CardNumber.QUEEN))
-        cardDistributer.distribute(player, 2)
+        cardDistributer.distribute(user, 2)
 
         // then
-        assertThat(player.cards.value).isEqualTo(except)
+        assertThat(user.cards.value).isEqualTo(except)
     }
 }

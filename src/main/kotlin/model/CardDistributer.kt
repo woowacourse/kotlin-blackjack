@@ -1,7 +1,7 @@
 package model
 
 class CardDistributer(private val cardFactory: CardFactory) {
-    fun distribute(player: Player, count: Int) {
-        repeat(count) { player.cards.value.add(cardFactory.generate()) }
+    fun distribute(user: User, count: Int) {
+        repeat(count) { user.cards.value.add(cardFactory.generate()) }
     }
 }
