@@ -8,6 +8,10 @@ class Cards(cards: List<Card>) {
         require(cards.size == 2)
     }
 
+    fun draw() {
+        _cards.add(Card.draw())
+    }
+
     fun isPossibleToDraw(score: Int): Boolean {
         if (cards.sumOf { card -> card.number.value } >= score)
             return false
