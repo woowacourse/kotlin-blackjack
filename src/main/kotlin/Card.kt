@@ -1,4 +1,4 @@
-class Card(number: CardNumber, shape: Shape) {
+class Card(val number: CardNumber, val shape: Shape) {
     companion object {
         private val ALL_CARDS: MutableSet<Card> = (
             CardNumber.values().map { cardNumber -> Card(cardNumber, Shape.CLOVER) }.toSet() +

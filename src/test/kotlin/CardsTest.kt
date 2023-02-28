@@ -1,3 +1,4 @@
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
@@ -16,5 +17,17 @@ class CardsTest {
         assertDoesNotThrow {
             Cards(listOf(Card(CardNumber.A, Shape.SPADE), Card(CardNumber.A, Shape.HEART)))
         }
+    }
+
+    @Test
+    fun `특정 점수를 넘으면 false를 반환한다(17점)`() {
+        assertThat(
+            Cards(
+                listOf(
+                    Card(CardNumber.K, Shape.HEART),
+                    Card(CardNumber.SEVEN, Shape.SPADE)
+                )
+            ).isPossibleToDraw(17)
+        ).isFalse()
     }
 }
