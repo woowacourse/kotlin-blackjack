@@ -1,6 +1,6 @@
 package domain
 
-enum class CardCategory(name: String) {
+enum class CardCategory(val pattern: String) {
     CLOVER("클로버"),
     DIAMOND("다이아"),
     HEART("하트"),
