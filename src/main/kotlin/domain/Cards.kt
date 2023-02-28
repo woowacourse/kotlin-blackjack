@@ -1,9 +1,12 @@
 package domain
 
-class Cards(cards: List<Card>) {
+class Cards(cards: Set<Card>) {
     private val _cards = cards.toMutableList()
     val cards: List<Card>
         get() = _cards.toList()
+
+    val size: Int
+        get() = _cards.size
 
     init {
         check(cards.size >= MINIMUM_CARDS_SIZE) { ERROR_CARDS_SIZE }
@@ -11,6 +14,14 @@ class Cards(cards: List<Card>) {
 
     fun sum(): Int {
         return cards.sumOf { it.cardNumber.value }
+    }
+
+    fun add(card: Card) {
+        _cards.add(card)
+    }
+
+    fun contains(card: Card): Boolean {
+        return _cards.contains(card)
     }
 
     companion object {
