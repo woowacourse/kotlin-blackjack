@@ -1,5 +1,6 @@
 class Card(val number: CardNumber, val shape: Shape) {
     companion object {
+        // TODO: 카드 생성을 간단하게
         private val ALL_CARDS: MutableSet<Card> = (
             CardNumber.values().map { cardNumber -> Card(cardNumber, Shape.CLOVER) }.toSet() +
                 CardNumber.values().map { cardNumber -> Card(cardNumber, Shape.SPADE) }.toSet() +

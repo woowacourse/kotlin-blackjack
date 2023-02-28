@@ -1,4 +1,4 @@
-class Dealear(val cards: Cards) {
+class Dealer(val cards: Cards) {
 
     fun drawCard() {
         if (cards.isPossibleToDraw(17)) {
