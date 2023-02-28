@@ -1,10 +1,14 @@
 # 블랙잭 기능 정의
+* [ ] 카드 랜덤 생성
+* [X] 유저에게 n장의 카드 분배
+* [X] 유저가 카드를 더 분배받을 수 있는지 검사
+* [X] 카드 숫자 합 계산
+* [ ] 최종 승패 결정
+
 
 ### Entity
 - CardType
-    - type
 - CardNumber
-    - name
     - numberStrategy
 - Card
     - type
@@ -13,19 +17,19 @@
     - List<Card>
 
 ### Model
-- Player
+- User
     - name
     - cards
     - checkMoreCard(cardChecker)
     - determineGameResult(determiner)
-- CardChecker
-    - UserCardChecker
-    - DealerCardChecker
+- CardDistributeConditionChecker
+    - Player
+    - Dealer
 - GameResultDeterminer
-    - UserGameResultDeterminer
-    - DealerGameResultDeterminer
+    - Player
+    - Dealer
 - CardDistributer
-    - distribute(player, count)
+    - distribute(user, count)
 - GameRule
     - initialDistribute()
-    - checkPlayer(player)
+    - checkUser(user)
