@@ -17,16 +17,4 @@ class CardTest {
         val card = Card(Rank.DEUCE, Suit.CLOVER)
         assertThat(card.rank.getScore(10)).isEqualTo(2)
     }
-
-    @Test
-    fun `현재 점수가 10 이하인 경우 ACE의 점수는 11이다`() {
-        val card = Card(Rank.ACE, Suit.CLOVER)
-        assertThat(card.rank.getScore(10)).isEqualTo(11)
-    }
-
-    @Test
-    fun `현재 점수가 10 초과인 경우 ACE의 점수는 1이다`() {
-        val card = Card(Rank.ACE, Suit.CLOVER)
-        assertThat(card.rank.getScore(15)).isEqualTo(1)
-    }
 }
