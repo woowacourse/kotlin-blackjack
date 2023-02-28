@@ -25,7 +25,7 @@
     - UserGameResultDeterminer
     - DealerGameResultDeterminer
 - CardDistributer
-    - distribute(player, number)
+    - distribute(player, count)
 - GameRule
     - initialDistribute()
     - checkPlayer(player)
