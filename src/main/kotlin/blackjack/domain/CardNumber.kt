@@ -14,4 +14,9 @@ enum class CardNumber(val value: Int?) {
     JACK(10),
     QUEEN(10),
     KING(10),
+    ;
+
+    companion object {
+        fun shuffledCardNumbers(): List<CardNumber> = CardNumber.values().toList().shuffled()
+    }
 }

@@ -4,11 +4,13 @@
 #### Card
 - [X] Shape와 Value를 저장한다
 
-#### RandomCardFactory -> Map<Shape, Value>
-- [ ] 카드를 뽑는다
-  - [ ] Shape를 랜덤으로 뽑는다
-  - [ ] Shape의 리스트를 셔플하고 한 장 뽑고 삭제한다
+#### CardDeck 
   - [ ] Card로 포장하여 반환하다
+  ##### RandomShapeGenerator
+  - [ ] Shape를 랜덤으로 뽑는다
+  ##### RandomCardNumberGenerator -> Map<Shape, Value>
+  - [x] Shape의 리스트를 셔플하고 한 장 뽑고 삭제한다
+ 
 
 ### GamePlayer
 - [ ] CardBunch를 소유한다
