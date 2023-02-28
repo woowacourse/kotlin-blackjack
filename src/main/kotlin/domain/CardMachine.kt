@@ -1,6 +1,6 @@
 package domain
 
-class CardMachine {
+object CardMachine {
     private val cards: MutableList<Card> = mutableListOf()
 
     init {
@@ -8,11 +8,13 @@ class CardMachine {
         cards.shuffled()
     }
 
+    fun getNewCard() = cards.removeFirst()
+
     fun getCardPairs(count: Int): List<List<Card>> {
         return List(count) { makeCardPair() }
     }
 
-    fun makeCardPair(): List<Card> {
+    private fun makeCardPair(): List<Card> {
         val pickedCard = cards.take(2)
         cards.removeAll(pickedCard)
         return pickedCard

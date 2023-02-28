@@ -1,7 +1,7 @@
 package domain
 
-class Player(val card: List<Card>) {
+class Player(private val cards: List<Card>) {
     fun calculateCardValueSum(): Int {
-        return card.sumOf { Card.valueOf(it) }
+        return cards.sumOf { Card.valueOf(it) }
     }
 }
