@@ -26,7 +26,7 @@
   - [ ] 카드는 모양을 가진다
 - CardNumber (Enum Class)
   - [x] 1이상 10이하에 해당하는 숫자를 가진다
-  - [ ] 숫자에 해당하는 이름을 가진다
+  - [x] 숫자에 해당하는 이름을 가진다
 - CardShape (Enum Class)
   - [ ] 카드 모양을 가진다
 - CardGenerator
