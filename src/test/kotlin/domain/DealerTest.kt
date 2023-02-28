@@ -56,4 +56,38 @@ class DealerTest {
         // then
         assertThat(actual).hasSize(2)
     }
+
+    @Test
+    fun `Ace와 FIVE를 소지한 경우 합은 16이다`() {
+        // given
+        val dealer = Dealer(
+            mutableListOf(
+                Card(Card.Shape.CLUBS, Card.Value.ACE),
+                Card(Card.Shape.CLUBS, Card.Value.FIVE),
+            ),
+        )
+
+        // when
+        val actual = dealer.calculateCardValueSum()
+
+        // then
+        assertThat(actual).isEqualTo(16)
+    }
+
+    @Test
+    fun `Ace와 ACE를 소지한 경우 합은 12이다`() {
+        // given
+        val dealer = Dealer(
+            mutableListOf(
+                Card(Card.Shape.CLUBS, Card.Value.ACE),
+                Card(Card.Shape.HEARTS, Card.Value.ACE),
+            ),
+        )
+
+        // when
+        val actual = dealer.calculateCardValueSum()
+
+        // then
+        assertThat(actual).isEqualTo(12)
+    }
 }
