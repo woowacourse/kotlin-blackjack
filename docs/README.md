@@ -2,12 +2,12 @@
 
 ## Domain
 #### Card
-- [ ] <Mark, Value>
+- [ ] <Shape, Value>
 
-#### RandomCardFactory -> Map<Mark, Value>
+#### RandomCardFactory -> Map<Shape, Value>
 - [ ] 카드를 뽑는다
-  - [ ] Mark를 랜덤으로 뽑는다
-  - [ ] Mark의 리스트를 셔플하고 한 장 뽑고 삭제한다
+  - [ ] Shape를 랜덤으로 뽑는다
+  - [ ] Shape의 리스트를 셔플하고 한 장 뽑고 삭제한다
   - [ ] Card로 포장하여 반환하다
 
 ### GamePlayer
