@@ -7,14 +7,14 @@ class CardsTest {
     @Test
     fun `게임을 시작할때 카드가 두장이 아니면 예외를 발생시킨다`() {
         assertThrows<IllegalArgumentException> {
-            Cards(listOf(Card()))
+            Cards(listOf(Card(CardNumber.A, Shape.SPADE)))
         }
     }
 
     @Test
     fun `게임을 시작할때 카드가 두장이어야한다`() {
         assertDoesNotThrow {
-            Cards(listOf(Card(), Card()))
+            Cards(listOf(Card(CardNumber.A, Shape.SPADE), Card(CardNumber.A, Shape.HEART)))
         }
     }
 }
