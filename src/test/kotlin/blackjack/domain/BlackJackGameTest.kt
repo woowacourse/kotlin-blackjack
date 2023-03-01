@@ -8,7 +8,10 @@ class BlackJackGameTest {
     fun `게임을 실행한다`() {
         val blackJack = BlackJackBuilder.init {
             cardDeck(Card.all().shuffled())
-            participants("딜러", listOf("아크", "로피"))
+            participants {
+                dealer("딜러")
+                users(listOf("아크", "로피"))
+            }
         }
 
         assertDoesNotThrow {

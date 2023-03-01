@@ -9,7 +9,11 @@ class BlackJackBuilderTest {
     fun `세팅이 된다`() {
         val blackJack = BlackJackBuilder.init {
             cardDeck(Card.all().shuffled())
-            participants("딜러", listOf("아크", "로피"))
+            participants {
+                dealer("딜러")
+                users(listOf("아크", "로피"))
+            }
+            draw()
         }
         assertAll(
             { assertThat(blackJack.users[0].name).isEqualTo("아크") },

@@ -7,12 +7,19 @@ class BlackJackBuilder {
         cardDeck = CardDeck(cards)
     }
 
-    fun participants(name: String, names: List<String>) {
-        participants = ParticipantsBuilder().apply {
-            dealer(name, cardDeck)
-            users(names, cardDeck)
-        }.build()
+    fun participants(block: ParticipantsBuilder.() -> Unit) {
+        participants = ParticipantsBuilder().apply { block() }.build()
     }
+
+    fun draw() {
+        participants.dealer.draw(cardDeck.nextCard())
+        participants.dealer.draw(cardDeck.nextCard())
+        participants.users.map {
+            it.draw(cardDeck.nextCard())
+            it.draw(cardDeck.nextCard())
+        }
+    }
+
     fun build(): BlackJack {
         return BlackJack(cardDeck, participants)
     }
