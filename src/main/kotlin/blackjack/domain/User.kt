@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import blackjack.domain.BlackJackGame.Companion.BLACKJACK_NUMBER
 class User(val name: String) {
     val cards = Cards()
     val score: Int
@@ -11,13 +12,16 @@ class User(val name: String) {
     val maxScore: Int
         get() {
             var score = cards.toList().sumOf { it.value.value }
-            if (cards.containsACE() && score <= 21 - 10) {
-                score += 10
+            if (cards.containsACE() && score <= BLACKJACK_NUMBER - ACE_OTHER_NUMBER_DIFF) {
+                score += ACE_OTHER_NUMBER_DIFF
             }
             return score
         }
 
     fun draw(card: Card) {
         cards.add(card)
+    }
+    companion object {
+        private const val ACE_OTHER_NUMBER_DIFF = 10
     }
 }

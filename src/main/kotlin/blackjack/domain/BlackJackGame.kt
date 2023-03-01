@@ -15,17 +15,23 @@ class BlackJackGame() {
     fun run(blackJack: BlackJack) {
         blackJack.run {
             users.forEach { user -> command(user, blackJack.cardDeck) }
-            while (dealer.maxScore < 17) { dealer.draw(cardDeck.draw()) }
+            while (dealer.maxScore < DEALER_MIN_NUMBER) { dealer.draw(cardDeck.draw()) }
         }
     }
 
     fun command(user: User, cardDeck: CardDeck) {
-        if (input(user.name) == "y") {
+        if (input(user.name) in DRAW_COMMANDS) {
             user.draw(cardDeck.draw())
             output(user)
-            if (user.minScore < 21) {
+            if (user.minScore < BLACKJACK_NUMBER) {
                 command(user, cardDeck)
             }
         }
+    }
+
+    companion object {
+        const val BLACKJACK_NUMBER = 21
+        private const val DEALER_MIN_NUMBER = 17
+        private val DRAW_COMMANDS = listOf("Y", "y")
     }
 }
