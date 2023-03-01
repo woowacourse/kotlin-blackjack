@@ -1,6 +1,7 @@
 package blackjack.domain
 
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
@@ -28,5 +29,10 @@ class CardNumberTest {
     fun `카드 숫자를 문자로 반환한다`(number: Int, expected: String) {
         val cardNumber = CardNumber(number)
         assertThat(cardNumber.toLetter()).isEqualTo(expected)
+    }
+
+    @Test
+    fun `카드 숫자를 정수형으로 반환한다`() {
+        assertThat(CardNumber(10).toInt()).isEqualTo(10)
     }
 }

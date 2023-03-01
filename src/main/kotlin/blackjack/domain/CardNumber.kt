@@ -14,6 +14,8 @@ value class CardNumber(private val number: Int) {
         else -> number.toString()
     }
 
+    fun toInt(): Int = number
+
     companion object {
         private const val MIN_CARD_NUMBER = 1
         private const val MAX_CARD_NUMBER = 13
