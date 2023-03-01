@@ -44,4 +44,15 @@ class BlackJackGameTest {
 
         assertThat(blackJackGame.userIndex).isEqualTo(1)
     }
+
+    @Test
+    fun `게임의 결과를 반환한다`() {
+        // given
+        val names = listOf("아크", "로피")
+        // when
+        val blackJackGame = BlackJackGame(names)
+        blackJackGame.setUp()
+        // then
+        assertThat(blackJackGame.getResult().size).isEqualTo(2)
+    }
 }

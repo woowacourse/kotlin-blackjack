@@ -26,16 +26,19 @@ class BlackJackGame(names: List<String>) {
         when (command) {
             "y" -> {
                 user.draw(cardDeck.draw())
-                if (user.score >= 21) {
-                    userIndex++
-                }
-                if (userIndex >= users.size) {
-                    status = GameStatus.END
-                    return User("")
-                }
+                if (user.minScore >= 21) { userIndex++ }
             }
             "n" -> userIndex++
         }
+        if (userIndex >= users.size) {
+            status = GameStatus.END
+            while (dealer.maxScore < 17) { dealer.draw(cardDeck.draw()) }
+            return User("")
+        }
         return users[userIndex]
+    }
+
+    fun getResult(): List<Outcome> {
+        return users.map { user -> Outcome.of(dealer, user) }
     }
 }
