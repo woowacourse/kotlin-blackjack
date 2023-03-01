@@ -28,5 +28,10 @@ value class CardNumber(private val number: Int) {
 
         fun min(): Int = MIN_CARD_NUMBER
         fun max(): Int = MAX_CARD_NUMBER
+
+        fun ace(): Int = ACE_NUMBER
+        fun jack(): Int = JACK_NUMBER
+        fun queen(): Int = QUEEN_NUMBER
+        fun king(): Int = KING_NUMBER
     }
 }
