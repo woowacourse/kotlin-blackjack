@@ -1,15 +1,15 @@
 package blackjack.domain
 
-class Cards {
-    private val _items: MutableList<Card> by lazy { mutableListOf() }
-    val items: List<Card>
-        get() = _items.toList()
+class PlayerHand {
+    private val _cards: MutableList<Card> by lazy { mutableListOf() }
+    val cards: List<Card>
+        get() = _cards.toList()
 
     fun add(card: Card) {
-        _items.add(card)
+        _cards.add(card)
     }
 
-    fun calculateTotalScore(): Int = items.map { it.number.toInt() }.fold(0) { total, number -> total + calculateEachScore(total, number) }
+    fun calculateTotalScore(): Int = cards.map { it.number.toInt() }.fold(0) { total, number -> total + calculateEachScore(total, number) }
 
     private fun calculateEachScore(score: Int, number: Int): Int = when (number) {
         CardNumber.ace() -> calculateAceScore(score)
