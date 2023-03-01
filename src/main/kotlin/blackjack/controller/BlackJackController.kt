@@ -23,5 +23,7 @@ class BlackJackController(
             user = blackJackGame.progress(user, inputView.inputDrawMore(user.name))
             outputView.outputCard(prev)
         }
+
+        outputView.outputResult(blackJackGame.dealer, blackJackGame.users, blackJackGame.getResult())
     }
 }
