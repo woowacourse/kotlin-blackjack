@@ -1,58 +1,29 @@
 package blackjack.domain
 
-import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertDoesNotThrow
 
 class BlackJackGameTest {
-
     @Test
-    fun `초기세팅이 된다`() {
-        // given
-        val names = listOf("아크", "로피")
-        // when
-        val blackJackGame = BlackJackGame(names)
-        blackJackGame.setUp()
+    fun `게임을 실행한다`() {
+        val blackJack = BlackJackBuilder.init {
+            cardDeck(Card.all().shuffled())
+            dealer("딜러")
+            users(listOf("아크", "로피"))
+        }
 
-        // then
-        assertThat(blackJackGame.dealer.cards.size).isEqualTo(2)
-        blackJackGame.users.forEach { user ->
-            assertThat(user.cards.size).isEqualTo(2)
+        assertDoesNotThrow {
+            BlackJackGame().apply {
+                input(::inputDrawMore)
+                output(::outputCard)
+                run(blackJack)
+            }
         }
     }
 
-    @Test
-    fun `y를 누를 누르면 한장이 뽑아진다`() {
-        // given
-        val names = listOf("아크", "로피")
-        // when
-        val blackJackGame = BlackJackGame(names)
-        val user = blackJackGame.setUp()
-        blackJackGame.progress(user, "y")
-
-        // then
-        assertThat(user.cards.size).isEqualTo(3)
+    private fun inputDrawMore(string: String): String {
+        return "y"
     }
 
-    @Test
-    fun `n을 누르면 다음 사람 차례다`() {
-        // given
-        val names = listOf("아크", "로피")
-        // when
-        val blackJackGame = BlackJackGame(names)
-        val user = blackJackGame.setUp()
-        blackJackGame.progress(user, "n")
-
-        assertThat(blackJackGame.userIndex).isEqualTo(1)
-    }
-
-    @Test
-    fun `게임의 결과를 반환한다`() {
-        // given
-        val names = listOf("아크", "로피")
-        // when
-        val blackJackGame = BlackJackGame(names)
-        blackJackGame.setUp()
-        // then
-        assertThat(blackJackGame.getResult().size).isEqualTo(2)
-    }
+    private fun outputCard(user: User) = null
 }

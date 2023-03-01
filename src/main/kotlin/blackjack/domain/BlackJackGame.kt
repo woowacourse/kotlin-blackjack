@@ -1,44 +1,31 @@
 package blackjack.domain
 
-class BlackJackGame(names: List<String>) {
-    val dealer = User("딜러")
-    private val cardDeck = CardDeck(Card.all())
-    val users: List<User> = names.map { User(it) }
-    var userIndex: Int = 0
-    private var status: GameStatus = GameStatus.START
+class BlackJackGame() {
+    lateinit var input: (String) -> String
+    lateinit var output: (User) -> Unit
 
-    val isRunning
-        get() = status == GameStatus.RUNNING
-    fun setUp(): User {
-        cardDeck.shuffle()
-        dealer.draw(cardDeck.draw())
-        dealer.draw(cardDeck.draw())
-
-        users.map {
-            it.draw(cardDeck.draw())
-            it.draw(cardDeck.draw())
-        }
-        status = GameStatus.RUNNING
-        return users[userIndex]
+    fun input(func: (String) -> String) {
+        input = func
     }
 
-    fun progress(user: User, command: String): User {
-        when (command) {
-            "y" -> {
-                user.draw(cardDeck.draw())
-                if (user.minScore >= 21) { userIndex++ }
-            }
-            "n" -> userIndex++
-        }
-        if (userIndex >= users.size) {
-            status = GameStatus.END
+    fun output(func: (User) -> Unit) {
+        output = func
+    }
+
+    fun run(blackJack: BlackJack) {
+        blackJack.run {
+            users.forEach { user -> command(user, blackJack.cardDeck) }
             while (dealer.maxScore < 17) { dealer.draw(cardDeck.draw()) }
-            return User("")
         }
-        return users[userIndex]
     }
 
-    fun getResult(): List<Outcome> {
-        return users.map { user -> Outcome.of(dealer, user) }
+    fun command(user: User, cardDeck: CardDeck) {
+        if (input(user.name) == "y") {
+            user.draw(cardDeck.draw())
+            output(user)
+            if (user.minScore < 21) {
+                command(user, cardDeck)
+            }
+        }
     }
 }

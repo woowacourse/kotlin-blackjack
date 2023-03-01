@@ -1,8 +1,8 @@
 package blackjack.controller
 
+import blackjack.domain.BlackJackBuilder
 import blackjack.domain.BlackJackGame
 import blackjack.domain.Card
-import blackjack.domain.CardDeck
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -11,19 +11,18 @@ class BlackJackController(
     val outputView: OutputView,
 ) {
     fun run() {
-        val cardDeck = CardDeck(Card.all())
-        cardDeck.shuffle()
-        val names = inputView.inputParticipants()
-        val blackJackGame = BlackJackGame(names)
-        var user = blackJackGame.setUp()
-        outputView.outputInitState(blackJackGame.dealer, blackJackGame.users)
-
-        while (blackJackGame.isRunning) {
-            val prev = user
-            user = blackJackGame.progress(user, inputView.inputDrawMore(user.name))
-            outputView.outputCard(prev)
+        val blackJack = BlackJackBuilder.init {
+            cardDeck(Card.all().shuffled())
+            dealer("딜러")
+            users(inputView.inputParticipants())
         }
+        outputView.outputInitState(blackJack.dealer, blackJack.users)
 
-        outputView.outputResult(blackJackGame.dealer, blackJackGame.users, blackJackGame.getResult())
+        BlackJackGame().apply {
+            input(inputView::inputDrawMore)
+            output(outputView::outputCard)
+            run(blackJack)
+        }
+        outputView.outputResult(blackJack.dealer, blackJack.users, blackJack.result)
     }
 }

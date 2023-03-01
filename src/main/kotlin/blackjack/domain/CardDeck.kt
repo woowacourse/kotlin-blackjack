@@ -11,8 +11,6 @@ class CardDeck(cards: List<Card>) {
     val size: Int
         get() = cards.size
 
-    fun shuffle() = cards.shuffle()
-
     fun draw(): Card = cards.removeFirst()
 
     companion object {

@@ -31,7 +31,6 @@ class OutputView {
     }
 
     fun outputCard(user: User) {
-        println("## 최종 승패")
         print("${user.name}카드")
         user.cards.toList().forEach {
             print(" ${it.value.value}${it.mark.title}")
@@ -43,6 +42,7 @@ class OutputView {
     }
 
     private fun outputOutcomes(dealer: User, users: List<User>, outcomes: List<Outcome>) {
+        println("## 최종 승패")
         println("${dealer.name}: ${outcomes.count{ it == Outcome.LOSE}}승 ${outcomes.count{ it == Outcome.WIN}}패")
         users.forEachIndexed { index, user -> outputOutcome(user, outcomes[index]) }
     }
