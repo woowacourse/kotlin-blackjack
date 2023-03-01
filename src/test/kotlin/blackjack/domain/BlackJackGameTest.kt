@@ -12,13 +12,15 @@ class BlackJackGameTest {
                 dealer("딜러")
                 users(listOf("아크", "로피"))
             }
+            draw()
         }
 
         assertDoesNotThrow {
             BlackJackGame().apply {
                 input(::inputDrawMore)
                 output(::outputCard)
-                run(blackJack)
+                dealerOutput(::outputDealer)
+                blackJack.run()
             }
         }
     }
@@ -28,4 +30,5 @@ class BlackJackGameTest {
     }
 
     private fun outputCard(user: User) = null
+    private fun outputDealer() = null
 }
