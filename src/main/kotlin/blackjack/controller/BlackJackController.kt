@@ -15,5 +15,7 @@ class BlackJackController(
         cardDeck.shuffle()
         val names = inputView.inputParticipants()
         val blackJackGame = BlackJackGame(names)
+        var user = blackJackGame.setUp()
+        outputView.outputInitState(blackJackGame.dealer, blackJackGame.users)
     }
 }
