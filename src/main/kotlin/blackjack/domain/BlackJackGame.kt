@@ -1,8 +1,8 @@
 package blackjack.domain
 
-class BlackJackGame() {
-    lateinit var input: (String) -> String
-    lateinit var output: (User) -> Unit
+class BlackJackGame {
+    private lateinit var input: (String) -> String
+    private lateinit var output: (User) -> Unit
 
     fun input(func: (String) -> String) {
         input = func
@@ -19,7 +19,7 @@ class BlackJackGame() {
         }
     }
 
-    fun command(user: User, cardDeck: CardDeck) {
+    private fun command(user: User, cardDeck: CardDeck) {
         if (input(user.name) in DRAW_COMMANDS) {
             user.draw(cardDeck.draw())
             output(user)

@@ -7,8 +7,8 @@ import blackjack.view.InputView
 import blackjack.view.OutputView
 
 class BlackJackController(
-    val inputView: InputView,
-    val outputView: OutputView,
+    private val inputView: InputView,
+    private val outputView: OutputView,
 ) {
     fun run() {
         val blackJack = BlackJackBuilder.init {
