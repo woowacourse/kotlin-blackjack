@@ -9,5 +9,6 @@ class Card private constructor(private val shape: Shape, val number: CardNumber)
         }.flatten()
 
         fun of(id: Int): Card = CARDS[id - 1]
+        fun all(): List<Card> = CARDS.toList()
     }
 }
