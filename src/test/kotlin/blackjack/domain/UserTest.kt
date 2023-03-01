@@ -18,6 +18,22 @@ class UserTest {
         user.draw(Card(CardMark.SPADE, CardValue.EIGHT))
         assertThat(user.score).isEqualTo(16)
     }
+
+    @Test
+    fun `나올 수 있는 최저 점수를 반환한다`() {
+        val user = User("아크")
+        user.draw(Card(CardMark.CLOVER, CardValue.ACE))
+        user.draw(Card(CardMark.SPADE, CardValue.EIGHT))
+        assertThat(user.minScore).isEqualTo(9)
+    }
+
+    @Test
+    fun `나올 수 있는 최고 점수를 반환한다`() {
+        val user = User("아크")
+        user.draw(Card(CardMark.CLOVER, CardValue.ACE))
+        user.draw(Card(CardMark.SPADE, CardValue.EIGHT))
+        assertThat(user.maxScore).isEqualTo(19)
+    }
 }
 
 /*

@@ -6,8 +6,8 @@ import org.junit.jupiter.api.Test
 class CardValueTest {
 
     @Test
-    fun `A의 값은 11이다`() {
-        assertThat(CardValue.ACE.value).isEqualTo(11)
+    fun `A의 값은 1이다`() {
+        assertThat(CardValue.ACE.value).isEqualTo(1)
     }
 
     @Test
