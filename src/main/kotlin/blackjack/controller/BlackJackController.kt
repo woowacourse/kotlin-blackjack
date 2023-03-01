@@ -30,6 +30,7 @@ class BlackJackController(
     private fun runBlackJack(blackJack: BlackJack) = BlackJackGame().apply {
         input(inputView::inputDrawMore)
         output(outputView::outputCard)
-        run(blackJack)
+        dealerOutput(outputView::outputDealerDraw)
+        blackJack.run()
     }
 }

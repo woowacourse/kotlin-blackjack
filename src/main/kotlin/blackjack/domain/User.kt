@@ -18,6 +18,9 @@ class User(val name: String) {
             return score
         }
 
+    val isBust: Boolean
+        get() = minScore < BLACKJACK_NUMBER
+
     fun draw(card: Card) {
         cards.add(card)
     }
