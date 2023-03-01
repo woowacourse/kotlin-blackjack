@@ -23,5 +23,8 @@ value class CardNumber(private val number: Int) {
         private const val JACK_NUMBER = 11
         private const val QUEEN_NUMBER = 12
         private const val KING_NUMBER = 13
+
+        fun min(): Int = MIN_CARD_NUMBER
+        fun max(): Int = MAX_CARD_NUMBER
     }
 }
