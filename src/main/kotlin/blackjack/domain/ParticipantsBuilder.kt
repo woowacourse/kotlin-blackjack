@@ -6,15 +6,15 @@ class ParticipantsBuilder {
     private lateinit var users: List<User>
     fun dealer(name: String, cardDeck: CardDeck) {
         dealer = User(name)
-        dealer.draw(cardDeck.draw())
-        dealer.draw(cardDeck.draw())
+        dealer.draw(cardDeck.nextCard())
+        dealer.draw(cardDeck.nextCard())
     }
 
     fun users(names: List<String>, cardDeck: CardDeck) {
         users = names.map { User(it) }
         users.map {
-            it.draw(cardDeck.draw())
-            it.draw(cardDeck.draw())
+            it.draw(cardDeck.nextCard())
+            it.draw(cardDeck.nextCard())
         }
     }
 

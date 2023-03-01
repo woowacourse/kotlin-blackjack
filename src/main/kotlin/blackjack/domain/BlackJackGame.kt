@@ -15,13 +15,13 @@ class BlackJackGame {
     fun run(blackJack: BlackJack) {
         blackJack.run {
             users.forEach { user -> command(user, blackJack.cardDeck) }
-            while (dealer.maxScore < DEALER_MIN_NUMBER) { dealer.draw(cardDeck.draw()) }
+            while (dealer.maxScore < DEALER_MIN_NUMBER) { dealer.draw(cardDeck.nextCard()) }
         }
     }
 
     private fun command(user: User, cardDeck: CardDeck) {
         if (input(user.name) in DRAW_COMMANDS) {
-            user.draw(cardDeck.draw())
+            user.draw(cardDeck.nextCard())
             output(user)
             if (user.minScore < BLACKJACK_NUMBER) {
                 command(user, cardDeck)

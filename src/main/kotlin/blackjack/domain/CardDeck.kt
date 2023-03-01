@@ -11,7 +11,7 @@ class CardDeck(cards: List<Card>) {
     val size: Int
         get() = cards.size
 
-    fun draw(): Card = cards.removeFirst()
+    fun nextCard(): Card = cards.removeFirst()
 
     companion object {
         private const val CARDS_SIZE = 52

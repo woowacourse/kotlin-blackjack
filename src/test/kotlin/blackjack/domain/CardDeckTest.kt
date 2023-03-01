@@ -15,7 +15,7 @@ class CardDeckTest {
     @Test
     fun `카드 draw가 잘 되었는지 확인`() {
         val cardDeck = CardDeck(Card.all())
-        cardDeck.draw()
+        cardDeck.nextCard()
         assertThat(cardDeck.size).isEqualTo(51)
     }
 
