@@ -17,5 +17,10 @@ class BlackJackController(
         val blackJackGame = BlackJackGame(names)
         var user = blackJackGame.setUp()
         outputView.outputInitState(blackJackGame.dealer, blackJackGame.users)
+
+        while (blackJackGame.isRunning) {
+            val prev = user
+            user = blackJackGame.progress(user, inputView.inputDrawMore(user.name))
+        }
     }
 }
