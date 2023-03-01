@@ -4,7 +4,7 @@ import blackjack.domain.BlackJackGame.Companion.BLACKJACK_NUMBER
 class User(val name: String) {
     val cards = Cards()
     val score: Int
-        get() = if (maxScore <= 21) maxScore else minScore
+        get() = if (maxScore <= BLACKJACK_NUMBER) maxScore else minScore
 
     val minScore: Int
         get() = cards.toList().sumOf { it.value.value }
