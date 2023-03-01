@@ -7,8 +7,7 @@ class BlackJackTest {
     @Test
     fun `게임 결과를 반환한다`() {
         val blackJack = BlackJack(
-            dealer = User("딜러"),
-            users = listOf(User("아크"), User("로피")),
+            participants = Participants(User("딜러"), listOf(User("아크"), User("로피"))),
             cardDeck = CardDeck(Card.all()),
         ).apply {
             dealer.draw(Card(CardMark.CLOVER, CardValue.QUEEN))

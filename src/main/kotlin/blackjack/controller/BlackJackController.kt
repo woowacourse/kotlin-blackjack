@@ -13,8 +13,7 @@ class BlackJackController(
     fun run() {
         val blackJack = BlackJackBuilder.init {
             cardDeck(Card.all().shuffled())
-            dealer("딜러")
-            users(inputView.inputParticipants())
+            participants("딜러", inputView.inputParticipants())
         }
         outputView.outputInitState(blackJack.dealer, blackJack.users)
 
