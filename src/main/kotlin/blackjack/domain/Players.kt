@@ -5,5 +5,7 @@ class Players(private val players: List<Player>) {
         players.forEach { it.addCard(deck.draw()) }
     }
 
+    fun toList(): List<Player> = players.toList()
+
     operator fun get(index: Int): Player = players[index]
 }
