@@ -1,5 +1,7 @@
 package blackjack.view
 
+import blackjack.domain.CardMark
+import blackjack.domain.CardValue
 import blackjack.domain.Outcome
 import blackjack.domain.User
 
@@ -33,7 +35,7 @@ class OutputView {
     fun outputCard(user: User) {
         print("${user.name}카드")
         user.cards.toList().forEach {
-            print(" ${it.value.value}${it.mark.title}")
+            print(" ${it.value.pattern()}${it.mark.name()}")
         }
     }
 
@@ -58,4 +60,21 @@ class OutputView {
             Outcome.LOSE -> "패"
         }.let { println("${user.name}: $it") }
     }
+
+    private fun CardMark.name(): String =
+        when (this) {
+            CardMark.CLOVER -> "클로버"
+            CardMark.DIA -> "다이아몬드"
+            CardMark.HEART -> "하트"
+            CardMark.SPADE -> "스페이드"
+        }
+
+    private fun CardValue.pattern(): String =
+        when (this) {
+            CardValue.ACE -> "A"
+            CardValue.KING -> "K"
+            CardValue.QUEEN -> "Q"
+            CardValue.JACK -> "J"
+            else -> this.value.toString()
+        }
 }
