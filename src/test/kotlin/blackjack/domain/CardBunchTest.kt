@@ -1,6 +1,7 @@
 package blackjack.domain
 
 import blackjack.Shape
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
@@ -11,7 +12,7 @@ class CardBunchTest {
         val card1 = Card(Shape.HEART, CardNumber.SEVEN)
         val card2 = Card(Shape.HEART, CardNumber.SIX)
 
-        assertDoesNotThrow { CardBunch(setOf(card1, card2)) }
+        assertDoesNotThrow { CardBunch(card1, card2) }
     }
 
     @Test
@@ -19,7 +20,7 @@ class CardBunchTest {
         val card1 = Card(Shape.HEART, CardNumber.SIX)
         val card2 = Card(Shape.HEART, CardNumber.SIX)
 
-        assertThrows<IllegalArgumentException> { CardBunch(setOf(card1, card2)) }
+        assertThrows<IllegalArgumentException> { CardBunch(card1, card2) }
     }
 
     @Test
@@ -28,6 +29,29 @@ class CardBunchTest {
         val card2 = Card(Shape.HEART, CardNumber.SIX)
         val card3 = Card(Shape.HEART, CardNumber.NINE)
 
-        assertThrows<IllegalArgumentException> { CardBunch(setOf(card1, card2, card3)) }
+        assertThrows<IllegalArgumentException> { CardBunch(card1, card2, card3) }
+    }
+
+    @Test
+    fun `중복된 카드를 추가할시 에러를 발생시킨다`() {
+        val card1 = Card(Shape.HEART, CardNumber.SEVEN)
+        val card2 = Card(Shape.HEART, CardNumber.SIX)
+        val card3 = Card(Shape.HEART, CardNumber.SIX)
+
+        val cardBunch = CardBunch(card1, card2)
+
+        assertThrows<IllegalArgumentException> { cardBunch.addCard(card3) }
+    }
+
+    @Test
+    fun `카드를 추가한다`() {
+        val card1 = Card(Shape.HEART, CardNumber.SEVEN)
+        val card2 = Card(Shape.HEART, CardNumber.SIX)
+        val card3 = Card(Shape.HEART, CardNumber.NINE)
+
+        val cardBunch = CardBunch(card1, card2)
+        cardBunch.addCard(card3)
+
+        assertThat(cardBunch.cards.size).isEqualTo(3)
     }
 }
