@@ -12,9 +12,7 @@ class BlackJackBuilder {
     }
 
     fun draw() {
-        participants.dealer.draw(cardDeck.nextCard())
-        participants.dealer.draw(cardDeck.nextCard())
-        participants.users.map {
+        participants.all().map {
             it.draw(cardDeck.nextCard())
             it.draw(cardDeck.nextCard())
         }
