@@ -3,6 +3,8 @@ package blackjack.domain
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 
 class PlayerTest {
     lateinit var player: Player
@@ -39,5 +41,14 @@ class PlayerTest {
         player.addCard(Card.of(13))
 
         assertThat(player.isBust()).isFalse
+    }
+
+    @ParameterizedTest
+    @CsvSource("1, 14, 12", "1, 11, 21", "10, 20, 17")
+    fun `자신의 점수를 반환한다`(firstCardNumber: Int, secondCardNumber: Int, expected: Int) {
+        player.addCard(Card.of(firstCardNumber))
+        player.addCard(Card.of(secondCardNumber))
+
+        assertThat(player.getTotalScore()).isEqualTo(expected)
     }
 }

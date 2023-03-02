@@ -10,4 +10,6 @@ class Player(val name: String) {
     }
 
     fun isBust(): Boolean = hand.calculateTotalScore() > SCORE_LIMIT
+
+    fun getTotalScore(): Int = hand.calculateTotalScore()
 }
