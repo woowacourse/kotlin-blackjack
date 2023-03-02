@@ -14,13 +14,13 @@ abstract class Participant(val name: String) {
         var score = _cards.sumOf { it.value }
 
         val aceCount = _cards.count { it.isAce() }
-        repeat(aceCount) { score = updateScore(score) }
+        repeat(aceCount) { score = adjustAceValue(score) }
         return score
     }
 
-    fun isBusted(): Boolean = getScore() > TARGET_SCORE
+    fun isBust(): Boolean = getScore() > TARGET_SCORE
 
-    private fun updateScore(score: Int): Int = if (score > TARGET_SCORE) score - GAP_ACE else score
+    private fun adjustAceValue(score: Int): Int = if (score > TARGET_SCORE) score - GAP_ACE else score
 
     companion object {
         private const val TARGET_SCORE = 21

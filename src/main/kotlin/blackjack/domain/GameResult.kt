@@ -20,8 +20,8 @@ class GameResult(private val playerResult: Map<Player, ResultType>) {
         }
 
         private infix fun Player.against(dealer: Player): ResultType {
-            if (this.isBusted()) return ResultType.LOSE
-            if (dealer.isBusted()) return ResultType.WIN
+            if (this.isBust()) return ResultType.LOSE
+            if (dealer.isBust()) return ResultType.WIN
 
             val score = this.getScore()
             val dealerScore = dealer.getScore()
