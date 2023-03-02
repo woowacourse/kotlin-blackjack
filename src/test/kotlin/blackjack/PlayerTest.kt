@@ -19,6 +19,6 @@ class PlayerTest {
         }
 
         val player = Player(Cards(card))
-        assertThat(player.cards).isEqualTo(listOf(Card(Rank.ACE, Suit.DIAMOND), Card(Rank.ACE, Suit.CLOVER)))
+        assertThat(player.cards.cards).isEqualTo(listOf(Card(Rank.ACE, Suit.DIAMOND), Card(Rank.ACE, Suit.CLOVER)))
     }
 }
