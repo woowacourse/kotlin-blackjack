@@ -1,12 +1,8 @@
 package domain.gamer
 
-import domain.card.Card
+import domain.gamer.state.PlayerState
 
-class Player(private val _cards: MutableList<Card> = mutableListOf()) : Participant(_cards) {
-
-    fun checkBurst(): Boolean = calculateCardSum() > CARD_SUM_MAX_VALUE
-
-    companion object {
-        private const val CARD_SUM_MAX_VALUE = 21
-    }
-}
+data class Player(
+    val name: String,
+    val state: PlayerState
+)

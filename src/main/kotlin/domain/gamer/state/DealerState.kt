@@ -1,8 +1,8 @@
-package domain.gamer
+package domain.gamer.state
 
 import domain.card.Card
 
-class Dealer(private val _cards: MutableList<Card> = mutableListOf()) : Participant(_cards) {
+class DealerState(private val _cards: MutableList<Card> = mutableListOf()) : ParticipantState(_cards) {
     fun checkAvailableForPick() = calculateCardSum() > CARD_PICK_CONDITION
 
     companion object {
