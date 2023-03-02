@@ -1,6 +1,7 @@
 package entity
 
-import model.User
+import model.CardDistributor
+import model.RandomCardFactory
 
 class Players(val value: List<Player>) {
     fun determineAllPlayerGameResult(dealer: User): PlayersGameResult {
@@ -8,5 +9,13 @@ class Players(val value: List<Player>) {
         return value.associate {
             it.determineGameResult(dealerCardNumberSum)
         }.let { PlayersGameResult(it) }
+    }
+
+    fun requestAllPlayerReceiveMoreCard(printMessage: (name: String) -> Unit, response: () -> String) {
+        val cardFactory = RandomCardFactory()
+        val cardDistributor = CardDistributor(cardFactory)
+        value.forEach {
+            it.requestReceiveMoreCard(printMessage, response, cardDistributor)
+        }
     }
 }
