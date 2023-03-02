@@ -16,11 +16,11 @@ class BlackJackBuilderTest {
             draw()
         }
         assertAll(
-            { assertThat(blackJack.users[0].name).isEqualTo("아크") },
+            { assertThat(blackJack.users[0].name.toString()).isEqualTo("아크") },
             { assertThat(blackJack.users[0].cards.size).isEqualTo(2) },
-            { assertThat(blackJack.users[1].name).isEqualTo("로피") },
+            { assertThat(blackJack.users[1].name.toString()).isEqualTo("로피") },
             { assertThat(blackJack.users[1].cards.size).isEqualTo(2) },
-            { assertThat(blackJack.dealer.name).isEqualTo("딜러") },
+            { assertThat(blackJack.dealer.name.toString()).isEqualTo("딜러") },
             { assertThat(blackJack.dealer.cards.size).isEqualTo(2) },
             { assertThat(blackJack.cardDeck.size).isEqualTo(46) },
         )

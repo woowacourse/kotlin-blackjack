@@ -1,7 +1,8 @@
 package blackjack.domain
 
 import blackjack.domain.BlackJackGame.Companion.BLACKJACK_NUMBER
-class User(val name: String) {
+class User(name: String) {
+    val name = Name(name)
     val cards = Cards()
     val score: Int
         get() = if (maxScore <= BLACKJACK_NUMBER) maxScore else minScore

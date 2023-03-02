@@ -27,7 +27,7 @@ class BlackJackGame {
     }
 
     private fun command(user: User, cardDeck: CardDeck) {
-        if (user.name.isDrawCommand()) return
+        if (user.name.toString().isDrawCommand()) return
 
         user.draw(cardDeck.nextCard())
         output(user)
