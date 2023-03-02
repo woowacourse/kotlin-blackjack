@@ -1,3 +1,7 @@
 package blackjack.domain.carddeck.shapegenerator
 
-interface ShapeGenerator
+import blackjack.Shape
+
+interface ShapeGenerator {
+    fun pickShape(): Shape
+}

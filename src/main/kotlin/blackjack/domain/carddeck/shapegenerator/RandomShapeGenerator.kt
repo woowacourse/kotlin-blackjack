@@ -1,3 +1,7 @@
 package blackjack.domain.carddeck.shapegenerator
 
-class RandomShapeGenerator
+import blackjack.Shape
+
+class RandomShapeGenerator : ShapeGenerator {
+    override fun pickShape(): Shape = Shape.values().toList().shuffled().last()
+}

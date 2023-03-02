@@ -7,7 +7,7 @@
 #### CardDeck 
   - [ ] Card로 포장하여 반환하다
   ##### RandomShapeGenerator
-  - [ ] Shape를 랜덤으로 뽑는다
+  - [x] Shape를 랜덤으로 뽑는다
   ##### RandomCardNumberGenerator -> Map<Shape, Value>
   - [x] Shape의 리스트를 셔플하고 한 장 뽑고 삭제한다
  
