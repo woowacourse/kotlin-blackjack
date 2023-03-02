@@ -11,10 +11,10 @@ object CardMachine {
     fun getNewCard() = cards.removeFirst()
 
     fun getCardPairs(count: Int): List<List<Card>> {
-        return List(count) { makeCardPair() }
+        return List(count) { getCardPair() }
     }
 
-    private fun makeCardPair(): List<Card> {
+    fun getCardPair(): List<Card> {
         val pickedCard = cards.take(2)
         cards.removeAll(pickedCard)
         return pickedCard

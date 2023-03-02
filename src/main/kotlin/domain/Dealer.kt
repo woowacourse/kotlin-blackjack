@@ -19,5 +19,6 @@ class Dealer(private val _cards: MutableList<Card>) {
 
     companion object {
         private const val SUM_CONDITION = 16
+        fun create(cards: List<Card>) = Dealer(cards.toMutableList())
     }
 }
