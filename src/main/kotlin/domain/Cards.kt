@@ -30,9 +30,17 @@ class Cards(cards: Set<Card>) {
         return State.NoBurst(minSum)
     }
 
-    sealed class State {
-        data class Burst(val sum: Int) : State()
-        data class NoBurst(val sum: Int) : State()
+    fun maxSumState(): State {
+        val minSumState = minSumState()
+        val aceCount = cards.count { it.cardNumber == CardNumber.ACE }
+        if (aceCount == 0) return minSumState
+        if (minSumState.sum + 10 > 21) return minSumState
+        return State.NoBurst(minSumState.sum + 10)
+    }
+
+    sealed class State(open val sum: Int) {
+        data class Burst(override val sum: Int) : State(sum)
+        data class NoBurst(override val sum: Int) : State(sum)
     }
 
 
