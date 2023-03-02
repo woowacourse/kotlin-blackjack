@@ -4,6 +4,7 @@ import Card
 import CardPackGenerator
 import CardPicker
 import Cards
+import Name
 import Player
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -18,13 +19,14 @@ class PlayerTest {
             add(cardPicker.pick())
         }
 
-        val player = Player(Cards(card))
+        val player = Player(Name("jason"), Cards(card))
         assertThat(player.cards.cards).isEqualTo(listOf(Card(Rank.ACE, Suit.DIAMOND), Card(Rank.ACE, Suit.CLOVER)))
     }
 
     @Test
     fun `카드의 합이 21이 넘지 않으면 burst이다`() {
         val player = Player(
+            Name("jason"),
             Cards(
                 listOf(
                     Card(Rank.KING, Suit.DIAMOND),
@@ -39,6 +41,7 @@ class PlayerTest {
     @Test
     fun `카드의 합이 21이 넘으면 burst이다`() {
         val player = Player(
+            Name("jason"),
             Cards(
                 listOf(
                     Card(Rank.KING, Suit.DIAMOND),
@@ -53,6 +56,7 @@ class PlayerTest {
     @Test
     fun `카드의 합이 21을 초과하지 않으면 hit 한다`() {
         val player = Player(
+            Name("jason"),
             Cards(
                 listOf(
                     Card(Rank.ACE, Suit.DIAMOND),
@@ -62,9 +66,11 @@ class PlayerTest {
         )
         assertThat(player.isHit()).isTrue
     }
+
     @Test
     fun `카드의 합이 21을 초과하면 stay 한다`() {
         val player = Player(
+            Name("jason"),
             Cards(
                 listOf(
                     Card(Rank.ACE, Suit.DIAMOND),
