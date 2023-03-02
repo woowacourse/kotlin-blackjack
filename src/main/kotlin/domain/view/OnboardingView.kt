@@ -3,8 +3,8 @@ package domain.view
 import domain.person.Dealer
 import domain.person.Player
 
-class OnboardingView {
-
+object OnboardingView {
+    private const val ERROR_INPUT_BLACK = "공백은 입력할 수 없습니다."
     fun requestInputNames(): List<String> {
         val input = readln()
         if (input.isBlank()) {
@@ -26,9 +26,5 @@ class OnboardingView {
 
     private fun printInitialCards(player: Player) {
         println("${player.name}카드: " + player.cards.joinToString(",") { it.toString() })
-    }
-
-    companion object {
-        const val ERROR_INPUT_BLACK = "공백은 입력할 수 없습니다."
     }
 }
