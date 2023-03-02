@@ -13,7 +13,7 @@ class BlackJackGame {
     }
 
     fun BlackJack.dealerTurn(output: () -> Unit) {
-        while (dealer.maxScore < DEALER_MIN_NUMBER) {
+        if (dealer.maxScore < DEALER_MIN_NUMBER) {
             dealer.draw(cardDeck.nextCard())
             output()
         }
