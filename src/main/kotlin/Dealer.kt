@@ -1,7 +1,7 @@
 class Dealer(val cards: Cards = Cards()) {
 
     fun isPossibleToDraw(): Boolean {
-        if (cards.getSum() >= 17)
+        if (cards.getTotalCardsValue() >= 17)
             return false
 
         return true

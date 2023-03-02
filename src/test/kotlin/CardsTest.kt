@@ -27,7 +27,7 @@ class CardsTest {
                     Card(CardNumber.K, Shape.HEART),
                     Card(CardNumber.SEVEN, Shape.SPADE)
                 )
-            ).getSum()
+            ).getTotalCardsValue()
         ).isEqualTo(17)
     }
 
@@ -39,7 +39,7 @@ class CardsTest {
                     Card(CardNumber.A, Shape.HEART),
                     Card(CardNumber.SEVEN, Shape.SPADE)
                 )
-            ).getSum()
+            ).getTotalCardsValue()
         ).isEqualTo(18)
     }
 
@@ -51,7 +51,7 @@ class CardsTest {
                     Card(CardNumber.A, Shape.HEART),
                     Card(CardNumber.A, Shape.SPADE)
                 )
-            ).getSum()
+            ).getTotalCardsValue()
         ).isEqualTo(12)
     }
 }

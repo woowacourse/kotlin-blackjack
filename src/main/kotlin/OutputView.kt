@@ -20,10 +20,10 @@ object OutputView {
     }
 
     fun printFinalCards(dealer: Dealer, players: List<Player>) {
-        println("딜러 카드: ${dealer.cards.cards.joinToString(", ")} - 결과: ${dealer.cards.getSum()}")
+        println("딜러 카드: ${dealer.cards.cards.joinToString(", ")} - 결과: ${dealer.cards.getTotalCardsValue()}")
         // TODO: 함수 분리
         players.forEach { player ->
-            println("${player.name}카드: ${player.cards.cards.joinToString(", ")} - 결과: ${player.cards.getSum()}")
+            println("${player.name}카드: ${player.cards.cards.joinToString(", ")} - 결과: ${player.cards.getTotalCardsValue()}")
         }
     }
 
