@@ -2,7 +2,8 @@ package domain.gamer
 
 import domain.card.Card
 import domain.card.Shape
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
@@ -15,7 +16,7 @@ class PlayerTest {
         for (card in cards) {
             player.pickCard(card)
         }
-        Assertions.assertThat(player.cards).isEqualTo(cards)
+        assertThat(player.cards).isEqualTo(cards)
     }
 
     companion object {
@@ -27,5 +28,17 @@ class PlayerTest {
                     listOf(Card(Shape.SPADE, "Q"), Card(Shape.SPADE, "3"))
                 )
             )
+    }
+
+    @Test
+    fun `플레이어 카드의 합이 21이 넘었을 경우 true를 반환한다`() {
+        val player = Player(mutableListOf(Card(Shape.SPADE, "J"), Card(Shape.SPADE, "J"), Card(Shape.SPADE, "J")))
+        assertThat(player.checkBurst()).isTrue
+    }
+
+    @Test
+    fun `플레이어 카드의 합이 21이 넘지 않았을 경우 false를 반환한다`() {
+        val player = Player(mutableListOf(Card(Shape.SPADE, "J"), Card(Shape.SPADE, "J")))
+        assertThat(player.checkBurst()).isFalse
     }
 }
