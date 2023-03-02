@@ -35,4 +35,14 @@ class PlayerTest {
 
         assertThat(player.isBust()).isTrue
     }
+
+    @Test
+    fun `카드의 합이 21 미만이면 Hit가 가능하다`() {
+        val player = Player("pobi").apply {
+            receive(Card(CardNumber.TWO, CardShape.HEART))
+            receive(Card(CardNumber.TWO, CardShape.DIAMOND))
+        }
+
+        assertThat(player.canHit()).isTrue
+    }
 }

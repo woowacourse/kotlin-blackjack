@@ -23,7 +23,7 @@ abstract class Participant(val name: String) {
     private fun adjustAceValue(score: Int): Int = if (score > TARGET_SCORE) score - GAP_ACE else score
 
     companion object {
-        private const val TARGET_SCORE = 21
+        const val TARGET_SCORE = 21
         private val GAP_ACE: Int = CardNumber.ACE.value - 1
     }
 }
