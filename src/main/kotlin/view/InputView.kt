@@ -4,28 +4,20 @@ import model.Name
 
 class InputView {
     fun readName(): List<Name> {
-        return runCatching {
-            val input = readln()
-            require(!input.isNullOrBlank()) { NULL_ERROR }
-            val names = input.split(",")
-            names.map { Name(it) }
-        }.onFailure {
-            println(ERROR_MESSAGE + it.message)
-        }.getOrDefault(readName())
+        val input = readln().replace(" ", "")
+        require(!input.isNullOrBlank()) { NULL_ERROR }
+        val names = input.split(",")
+        return names.map { Name(it) }
     }
 
     fun readYesOrNo(): Boolean {
-        return runCatching {
-            val input = readln()
-            require(!input.isNullOrBlank()) { NULL_ERROR }
-            require(Regex("[yYnN]").matches(input)) { IS_NOT_YES_OR_NO_ERROR }
-            if (input == "y" || input == "Y") {
-                true
-            }
-            false
-        }.onFailure {
-            println(ERROR_MESSAGE + it.message)
-        }.getOrDefault(readYesOrNo())
+        val input = readln()
+        require(!input.isNullOrBlank()) { NULL_ERROR }
+        require(Regex("[yYnN]").matches(input)) { IS_NOT_YES_OR_NO_ERROR }
+        if (input == "y" || input == "Y") {
+            return true
+        }
+        return false
     }
 
     companion object {
