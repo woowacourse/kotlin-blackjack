@@ -5,7 +5,7 @@ object CardMachine {
 
     init {
         addCards()
-        cards.shuffled()
+        cards.shuffle()
     }
 
     fun getNewCard() = cards.removeFirst()
