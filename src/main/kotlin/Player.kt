@@ -10,8 +10,6 @@ class Player(
     }
 
     fun drawCard() {
-        if (isPossibleToDraw()) {
-            cards.draw()
-        }
+        cards.draw()
     }
 }
