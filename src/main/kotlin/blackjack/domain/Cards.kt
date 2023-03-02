@@ -14,6 +14,14 @@ class Cards(cards: List<Card>) {
         _cards.add(card)
     }
 
+    fun sumCardsNumber(): Int {
+        var result = 0
+        _cards.forEach {
+            result += it.number.value
+        }
+        return result
+    }
+
     private fun checkCardInitSize() {
         require(_cards.size == CARDS_INITIAL_SIZE) { ERROR_CARDS_INITIAL_SIZE }
     }
