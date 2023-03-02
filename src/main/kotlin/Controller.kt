@@ -30,7 +30,8 @@ class Controller(
 
         if (!dealer.isOverSumCondition()) {
             playGameView.printDealerPickNewCard()
-            dealer.addCard(cardMachine.getNewCard())
+            val newCard = cardMachine.getNewCard()
+            dealer.addCard(newCard)
         }
     }
 

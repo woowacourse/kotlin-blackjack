@@ -2,6 +2,9 @@ package domain
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.MethodSource
 
 class DealerTest {
     @Test
@@ -30,9 +33,10 @@ class DealerTest {
                 Card(Card.Shape.DIAMONDS, Card.Value.THREE),
             ),
         )
+        val newCard = CardMachine().getNewCard()
 
         // when
-        dealer.pickNewCard()
+        dealer.addCard(newCard)
         val actual = dealer.cards
 
         // then
@@ -57,37 +61,108 @@ class DealerTest {
         assertThat(actual).hasSize(2)
     }
 
-    @Test
-    fun `Ace와 FIVE를 소지한 경우 합은 16이다`() {
+    @MethodSource("provideOneAceCards")
+    @ParameterizedTest
+    fun `A가 한 장인 경우`(cards: List<Card>, sum: Int) {
         // given
-        val dealer = Dealer(
-            mutableListOf(
-                Card(Card.Shape.CLUBS, Card.Value.ACE),
-                Card(Card.Shape.CLUBS, Card.Value.FIVE),
-            ),
-        )
-
+        val dealer = Dealer.create(cards)
         // when
-        val actual = dealer.calculateCardValueSum()
-
+        val actual = dealer.validDealerSum()
         // then
-        assertThat(actual).isEqualTo(16)
+        assertThat(actual).isEqualTo(sum)
     }
 
-    @Test
-    fun `Ace와 ACE를 소지한 경우 합은 12이다`() {
+    @MethodSource("provideTwoAceCards")
+    @ParameterizedTest
+    fun `A가 두 장인 경우`(cards: List<Card>, sum: Int) {
         // given
-        val dealer = Dealer(
-            mutableListOf(
-                Card(Card.Shape.CLUBS, Card.Value.ACE),
-                Card(Card.Shape.HEARTS, Card.Value.ACE),
+        val dealer = Dealer.create(cards)
+        // when
+        val actual = dealer.validDealerSum()
+        // then
+        assertThat(actual).isEqualTo(sum)
+    }
+
+    @MethodSource("provideThreeAceCards")
+    @ParameterizedTest
+    fun `A가 세 장인 경우`(cards: List<Card>, sum: Int) {
+        // given
+        val dealer = Dealer.create(cards)
+        // when
+        val actual = dealer.validDealerSum()
+        // then
+        assertThat(actual).isEqualTo(sum)
+    }
+
+    companion object {
+        private val ACE = Card(Card.Shape.DIAMONDS, Card.Value.ACE)
+
+        @JvmStatic
+        fun provideOneAceCards(): List<Arguments> = listOf(
+            Arguments.of(
+                listOf(
+                    ACE,
+                    Card(Card.Shape.DIAMONDS, Card.Value.NINE),
+                    Card(Card.Shape.DIAMONDS, Card.Value.FIVE),
+                ),
+                15,
+            ),
+            Arguments.of(
+                listOf(
+                    Card(Card.Shape.DIAMONDS, Card.Value.TWO),
+                    Card(Card.Shape.DIAMONDS, Card.Value.THREE),
+                    ACE,
+                ),
+                16,
+            ),
+            Arguments.of(
+                listOf(
+                    Card(Card.Shape.DIAMONDS, Card.Value.THREE),
+                    Card(Card.Shape.DIAMONDS, Card.Value.JACK),
+                    ACE,
+                ),
+                14,
             ),
         )
 
-        // when
-        val actual = dealer.calculateCardValueSum()
+        @JvmStatic
+        fun provideTwoAceCards(): List<Arguments> = listOf(
+            Arguments.of(
+                listOf(
+                    ACE,
+                    Card(Card.Shape.DIAMONDS, Card.Value.TEN),
+                    ACE,
+                ),
+                12,
+            ),
+            Arguments.of(
+                listOf(
+                    ACE,
+                    Card(Card.Shape.DIAMONDS, Card.Value.THREE),
+                    ACE,
+                ),
+                15,
+            ),
+            Arguments.of(
+                listOf(
+                    ACE,
+                    ACE,
+                    Card(Card.Shape.DIAMONDS, Card.Value.FOUR),
+                ),
+                16,
+            ),
+        )
 
-        // then
-        assertThat(actual).isEqualTo(12)
+        @JvmStatic
+        fun provideThreeAceCards(): List<Arguments> = listOf(
+            Arguments.of(
+                listOf(
+                    ACE,
+                    ACE,
+                    ACE,
+                ),
+                13,
+            ),
+        )
     }
 }

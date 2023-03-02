@@ -49,7 +49,7 @@ class UserTest {
                     Card(Card.Shape.DIAMONDS, Card.Value.FIVE),
                 ),
         )
-        val card = CardMachine.getNewCard()
+        val card = Card(Card.Shape.SPADES, Card.Value.FIVE)
 
         // when
         user.addCard(card)

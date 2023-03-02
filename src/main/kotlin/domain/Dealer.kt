@@ -3,12 +3,15 @@ package domain
 class Dealer(private val _cards: MutableList<Card>) {
     val cards: List<Card> get() = _cards.toList()
 
-    fun calculateCardValueSum(): Int = _cards.sumOf { Card.valueOf(it) } + addAce()
+    fun validDealerSum(): Int {
+        if ((calculateCardValueSum() < 10) and (countAce() != 0)) {
+            return calculateCardValueSum() + 10
+        }
 
-    fun addAce(): Int = when (countAce()) {
-        1, 2 -> 10
-        else -> 0
+        return calculateCardValueSum()
     }
+
+    fun calculateCardValueSum(): Int = _cards.sumOf { Card.valueOf(it) }
 
     fun addCard(card: Card) {
         _cards.add(card)
