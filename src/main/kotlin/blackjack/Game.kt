@@ -14,6 +14,7 @@ fun main() {
     dealCards(players + dealer)
     ResultView.printSetUp(dealer, players)
     decideHitOrStand(players)
+    checkDealerHitOrStand(dealer)
 }
 
 private fun dealCards(participants: List<Participant>) {
@@ -30,5 +31,12 @@ private fun decideHitOrStand(player: Player) {
     while (player.canHit() && InputView.doesPlayerWantHit(player.name)) {
         player.receive(Deck.draw())
         ResultView.printPlayerCards(player)
+    }
+}
+
+private fun checkDealerHitOrStand(dealer: Dealer) {
+    if (dealer.shouldHit()) {
+        dealer.receive(Deck.draw())
+        ResultView.printDealerHitMessage(dealer.name)
     }
 }
