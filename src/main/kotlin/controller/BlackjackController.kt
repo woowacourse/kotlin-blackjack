@@ -35,7 +35,8 @@ class BlackjackController {
     private fun checkMoreCard(blackjackStage: BlackjackStage) {
         blackjackStage.players.requestAllPlayerReceiveMoreCard(
             { name -> gameView.printWhetherMoreCard(name) },
-            { gameView.readWhetherMoreCard() }
+            { gameView.readWhetherMoreCard() },
+            { player -> gameView.printPlayerStatus(player) }
         )
         blackjackStage.dealer.requestReceiveMoreCard(blackjackStage.cardDistributor)
     }

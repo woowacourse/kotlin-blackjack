@@ -22,6 +22,7 @@ class Player(val name: String, cards: Cards = Cards(listOf())) : User(cards) {
     fun requestReceiveMoreCard(
         printMessage: (name: String) -> Unit,
         response: () -> String,
+        printStatus: (player: Player) -> Unit,
         cardDistributor: CardDistributor
     ) {
         while (isDistributable()) {
@@ -29,6 +30,7 @@ class Player(val name: String, cards: Cards = Cards(listOf())) : User(cards) {
             val response = response()
             if (response == "y") {
                 cards.addCards(cardDistributor.distribute(SINGLE_DISTRIBUTE_COUNT))
+                printStatus(this)
             }
         }
     }

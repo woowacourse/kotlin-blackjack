@@ -11,11 +11,11 @@ class Players(val value: List<Player>) {
         }.let { PlayersGameResult(it) }
     }
 
-    fun requestAllPlayerReceiveMoreCard(printMessage: (name: String) -> Unit, response: () -> String) {
+    fun requestAllPlayerReceiveMoreCard(printMessage: (name: String) -> Unit, response: () -> String, printStatus: (player: Player) -> Unit) {
         val cardFactory = RandomCardFactory()
         val cardDistributor = CardDistributor(cardFactory)
         value.forEach {
-            it.requestReceiveMoreCard(printMessage, response, cardDistributor)
+            it.requestReceiveMoreCard(printMessage, response, printStatus, cardDistributor)
         }
     }
 }
