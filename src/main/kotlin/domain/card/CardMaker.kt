@@ -1,7 +1,7 @@
 package domain.card
 
 class CardMaker {
-    fun make(): List<Card> {
+    fun makeCards(): List<Card> {
         val cards = mutableListOf<Card>()
 
         for (shape in Shape.values()) {

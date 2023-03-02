@@ -13,7 +13,7 @@ class PlayerTest {
     fun `뽑은 카드를 저장한다`(cards: List<Card>) {
         val player = Player()
         for (card in cards) {
-            player.pick(card)
+            player.pickCard(card)
         }
         Assertions.assertThat(player.cards).isEqualTo(cards)
     }

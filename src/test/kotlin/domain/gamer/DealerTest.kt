@@ -10,7 +10,7 @@ class DealerTest {
     fun `뽑은 카드를 저장한다`() {
         val card = Card(Shape.HEART, "2")
         val dealer = Dealer()
-        dealer.pick(card)
+        dealer.pickCard(card)
         assertThat(dealer.cards).isEqualTo(listOf(card))
     }
 }
