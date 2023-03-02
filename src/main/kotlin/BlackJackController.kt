@@ -41,4 +41,6 @@ class BlackJackController(
         }
         OutputView.printIsDealerReceivedCard(isReceived)
     }
+
+    private fun showFinalCards() = OutputView.printFinalCards(dealer, players)
 }
