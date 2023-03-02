@@ -3,21 +3,18 @@ class BlackJackController(
     private val blackJackReferee: BlackJackReferee = BlackJackReferee()
 ) {
 
-    private lateinit var players: List<Player>
+    private val players: List<Player> by lazy {
+        InputView.requestPlayersName().map { name ->
+            Player(name)
+        }
+    }
 
     fun run() {
-        initGamePlayers()
         showDividingCards()
         drawAdditionalCards()
         drawAdditionalCardForDealer()
         showFinalCards()
         judgeGameResults()
-    }
-
-    private fun initGamePlayers() {
-        players = InputView.requestPlayersName().map { name ->
-            Player(name)
-        }
     }
 
     private fun showDividingCards() = OutputView.printCardDividingMessage(dealer, players)
@@ -30,6 +27,7 @@ class BlackJackController(
         do {
             val drawFlag = InputView.requestAdditionalDraw(player)
         } while (drawFlag == "y" && drawAdditionalCardForPlayer(player) == DrawState.POSSIBLE)
+
         if (player.cards.cards.size == 2) {
             OutputView.printCardResults(player)
         }
@@ -37,7 +35,9 @@ class BlackJackController(
 
     private fun drawAdditionalCardForPlayer(player: Player): DrawState {
         val drawState = player.drawCard()
+
         OutputView.printCardResults(player)
+
         return drawState
     }
 
