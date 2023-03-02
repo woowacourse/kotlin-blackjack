@@ -10,6 +10,7 @@ class Controller(
     private val playGameView: PlayGameView = PlayGameView(),
     private val cardMachine: CardMachine = CardMachine(),
     private val gameResultView: GameResultView = GameResultView(),
+
 ) {
 
     fun run() {
@@ -37,6 +38,10 @@ class Controller(
         }
 
         gameResultView.printCardResult(dealer, users)
+        val referee: Referee = Referee(dealer.validDealerSum(), users.map { it.validUserSum() })
+        val gameResult = referee.getResult()
+
+        gameResultView.printFinalResult(gameResult,users)
     }
 
     private fun repeatGetCommand(user: User) {
