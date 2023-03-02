@@ -64,4 +64,20 @@ class CardsTest {
         val expected = true
         assertThat(cards.contains(card)).isEqualTo(expected)
     }
+
+    @Test
+    fun `에이스가 있다면 모두 1로 보고 더한 최소 합을 구한다`() {
+        val cards =
+            Cards(
+                setOf<Card>(
+                    Card(CardCategory.CLOVER, CardNumber.TWO),
+                    Card(CardCategory.CLOVER, CardNumber.KING),
+                    Card(CardCategory.CLOVER, CardNumber.ACE)
+                )
+            )
+
+        val result = cards.minSumState()
+        val expected = Cards.State.NoBurst(13)
+        assertThat(result).isEqualTo(expected)
+    }
 }
