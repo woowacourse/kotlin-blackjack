@@ -1,13 +1,21 @@
 package blackjack.domain
 
-class Cards(private val cards: MutableList<Card>) {
+class Cards(cards: List<Card>) {
+
+    private val _cards: MutableList<Card> = cards.toMutableList()
+    val values: List<Card>
+        get() = _cards.toList()
 
     init {
         checkCardInitSize()
     }
 
+    fun addCard(card: Card) {
+        _cards.add(card)
+    }
+
     private fun checkCardInitSize() {
-        require(cards.size == CARDS_INITIAL_SIZE) { ERROR_CARDS_INITIAL_SIZE }
+        require(_cards.size == CARDS_INITIAL_SIZE) { ERROR_CARDS_INITIAL_SIZE }
     }
 
     companion object {
