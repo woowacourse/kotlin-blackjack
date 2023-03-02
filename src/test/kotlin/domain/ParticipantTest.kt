@@ -19,7 +19,7 @@ class ParticipantTest {
                 return cards.cards.take(2)
             }
 
-            override fun isMoreAddCard(): Boolean {
+            override fun isPossibleDrawCard(): Boolean {
                 return true
             }
         }
@@ -45,7 +45,7 @@ class ParticipantTest {
                 return cards.cards.take(2)
             }
 
-            override fun isMoreAddCard(): Boolean {
+            override fun isPossibleDrawCard(): Boolean {
                 return true
             }
         }

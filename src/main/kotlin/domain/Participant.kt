@@ -2,7 +2,7 @@ package domain
 
 abstract class Participant(val name: Name, val cards: Cards) {
     abstract fun showInitCards(): List<Card>
-    abstract fun isMoreAddCard(): Boolean
+    abstract fun isPossibleDrawCard(): Boolean
     fun getResult(): Cards.State {
         return cards.maxSumState()
     }

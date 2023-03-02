@@ -5,11 +5,10 @@ class Player(name: Name, cards: Cards) : Participant(name, cards) {
         return cards.cards.take(2)
     }
 
-    override fun isMoreAddCard(): Boolean {
+    override fun isPossibleDrawCard(): Boolean {
         return when (cards.minSumState()) {
             is Cards.State.Burst -> false
             is Cards.State.NoBurst -> true
         }
     }
-
 }

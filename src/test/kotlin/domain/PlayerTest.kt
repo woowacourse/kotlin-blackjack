@@ -30,7 +30,7 @@ class PlayerTest {
                 )
             )
         )
-        val actual = player.isMoreAddCard()
+        val actual = player.isPossibleDrawCard()
         assertThat(actual).isTrue
     }
 }
