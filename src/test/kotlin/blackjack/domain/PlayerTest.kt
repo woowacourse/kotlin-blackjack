@@ -51,4 +51,12 @@ class PlayerTest {
 
         assertThat(player.getTotalScore()).isEqualTo(expected)
     }
+
+    @Test
+    fun `자신이 가진 카드를 반환한다`() {
+        player.addCard(Card.of(1))
+        player.addCard(Card.of(24))
+
+        assertThat(player.getCardNames()).isEqualTo(listOf("A스페이드", "J다이아몬드"))
+    }
 }

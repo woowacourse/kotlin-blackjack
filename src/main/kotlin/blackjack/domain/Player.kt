@@ -10,4 +10,6 @@ class Player(val name: String) {
     fun isBust(): Boolean = hand.calculateTotalScore() > PlayerHand.blackjackScore()
 
     fun getTotalScore(): Int = hand.calculateTotalScore()
+
+    fun getCardNames(): List<String> = hand.cards.map(Card::toString)
 }
