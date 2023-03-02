@@ -3,9 +3,11 @@ import domain.Dealer
 import domain.User
 import domain.UserNameContainer
 import view.LoginView
+import view.PlayGameView
 
 class Controller(
     private val loginView: LoginView = LoginView(),
+    private val playGameView: PlayGameView = PlayGameView(),
 ) {
 
     fun run() {
@@ -19,6 +21,8 @@ class Controller(
             User.create(userNameAndCard)
         }
         val dealer = Dealer.create(dealerCards)
+        playGameView.printNoticeSplitCard(userNames)
+        playGameView.printPlayerCard(dealer, users)
     }
 
     private fun getUserNames(): UserNameContainer = UserNameContainer(loginView.requestPlayerName())
