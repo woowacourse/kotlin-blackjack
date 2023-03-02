@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
@@ -24,5 +25,10 @@ class PlayerTest {
         assertThrows<IllegalArgumentException> { TestPlayer(expected) }
     }
 
+    @Test
+    fun `카드들을 가진다`() {
+        val player = TestPlayer("aa")
+        assertThat(player.cards.values).isEqualTo(Cards().values)
+    }
     class TestPlayer(name: String) : Player(name)
 }
