@@ -2,6 +2,8 @@ package blackjack.domain
 
 open class Player(val name: String) {
 
+    val card: Cards = Cards()
+
     init {
         require(name.length in 2..10) { ERROR_NAME_LENGTH }
     }
