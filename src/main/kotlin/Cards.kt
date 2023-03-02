@@ -6,6 +6,7 @@ class Cards(cards: List<Card>) {
     init {
         require(cards.distinct().size == cards.size) { CARD_DUPLICATE_ERROR }
     }
+
     fun add(card: Card) {
         require(!cards.contains(card)) { CARD_DUPLICATE_ERROR }
         _cards.add(card)

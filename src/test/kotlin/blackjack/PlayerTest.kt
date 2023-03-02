@@ -49,4 +49,30 @@ class PlayerTest {
         )
         assertThat(player.isBurst()).isTrue
     }
+
+    @Test
+    fun `카드의 합이 21을 초과하지 않으면 hit 한다`() {
+        val player = Player(
+            Cards(
+                listOf(
+                    Card(Rank.ACE, Suit.DIAMOND),
+                    Card(Rank.JACK, Suit.CLOVER),
+                ),
+            ),
+        )
+        assertThat(player.isHit()).isTrue
+    }
+    @Test
+    fun `카드의 합이 21을 초과하면 stay 한다`() {
+        val player = Player(
+            Cards(
+                listOf(
+                    Card(Rank.ACE, Suit.DIAMOND),
+                    Card(Rank.ACE, Suit.CLOVER),
+                    Card(Rank.JACK, Suit.CLOVER),
+                ),
+            ),
+        )
+        assertThat(player.isHit()).isFalse
+    }
 }

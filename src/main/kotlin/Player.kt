@@ -1,6 +1,8 @@
-class Player(val cards: Cards) {
-    fun isBurst(): Boolean {
-        if (cards.sum() > 21) return true
-        return false
+class Player(cards: Cards) : Participant(cards) {
+    override fun isHit(): Boolean {
+        if (isBurst()) {
+            return false
+        }
+        return true
     }
 }
