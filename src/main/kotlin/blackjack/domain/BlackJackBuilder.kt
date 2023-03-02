@@ -8,7 +8,7 @@ class BlackJackBuilder {
     }
 
     fun participants(block: ParticipantsBuilder.() -> Unit) {
-        participants = ParticipantsBuilder().apply { block() }.build()
+        participants = ParticipantsBuilder.init { block() }
     }
 
     fun draw() {
