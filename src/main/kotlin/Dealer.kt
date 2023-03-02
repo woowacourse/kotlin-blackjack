@@ -8,8 +8,6 @@ class Dealer(val cards: Cards = Cards()) {
     }
 
     fun drawCard() {
-        if (isPossibleToDraw()) {
-            cards.draw()
-        }
+        cards.draw()
     }
 }
