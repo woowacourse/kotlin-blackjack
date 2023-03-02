@@ -8,9 +8,9 @@ class GameResult private constructor(val playersResult: Map<String, Boolean>) {
     companion object {
         private const val BLACKJACK_POINT = 21
         private fun match(dealer: Dealer, player: Player): Boolean {
-            return if (player.isBurst()) {
+            return if (player.isBust()) {
                 false
-            } else if (dealer.isBurst()) {
+            } else if (dealer.isBust()) {
                 true
             } else {
                 (BLACKJACK_POINT - dealer.cards.sum()) > (BLACKJACK_POINT - player.cards.sum())

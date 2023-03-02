@@ -37,7 +37,7 @@ class PlayerTest {
                 ),
             ),
         )
-        assertThat(player.isBurst()).isFalse
+        assertThat(player.isBust()).isFalse
     }
 
     @Test
@@ -52,7 +52,7 @@ class PlayerTest {
                 ),
             ),
         )
-        assertThat(player.isBurst()).isTrue
+        assertThat(player.isBust()).isTrue
     }
 
     @Test

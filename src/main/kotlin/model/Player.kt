@@ -1,5 +1,5 @@
 package model
 
-class Player(val name: Name, cards: Cards) : Participant(cards) {
-    override fun isHit(): Boolean = !isBurst()
+class Player(name: Name, cards: Cards) : Participant(name, cards) {
+    override fun isHit(): Boolean = !isBust()
 }
