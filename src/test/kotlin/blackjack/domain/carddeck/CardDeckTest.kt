@@ -13,8 +13,7 @@ class CardDeckTest {
     fun `Card로 포장하여 반환한다`() {
         val expected = Card(Shape.HEART, CardNumber.SEVEN)
         val actual = CardDeck(StubShapeGenerator(), StubCardNumberGenerator()).drawCard()
-        assertThat(actual.cardNumber).isEqualTo(expected.cardNumber)
-        assertThat(actual.shape).isEqualTo(expected.shape)
+        assertThat(actual).isEqualTo(expected)
     }
 }
 
