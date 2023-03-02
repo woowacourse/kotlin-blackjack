@@ -5,13 +5,14 @@ class Card(
 
     override fun toString(): String {
         var numberValue = number.name
-        if (numberValue.length != 1) {
+        if (numberValue.length != SPECIAL_CARDS_NAME_LENGTH) {
             numberValue = number.value.toString()
         }
         return numberValue + shape.description
     }
 
     companion object {
+        private const val SPECIAL_CARDS_NAME_LENGTH = 1
 
         private val ALL_CARDS: MutableSet<Card> = CardNumber.values().flatMap { cardNumber ->
             listOf(

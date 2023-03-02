@@ -1,7 +1,7 @@
 class Dealer(val cards: Cards = Cards()) {
 
     private fun isPossibleToDraw(): DrawState {
-        if (cards.getTotalCardsValue() >= 17) {
+        if (cards.getTotalCardsValue() >= DEALER_UPPER_DRAW_CONDITION) {
             return DrawState.IMPOSSIBLE
         }
 
@@ -16,5 +16,9 @@ class Dealer(val cards: Cards = Cards()) {
         }
 
         return DrawResult.Failure
+    }
+
+    companion object {
+        private const val DEALER_UPPER_DRAW_CONDITION = 17
     }
 }
