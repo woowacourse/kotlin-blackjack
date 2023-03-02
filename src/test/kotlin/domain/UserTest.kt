@@ -38,4 +38,24 @@ class UserTest {
         // then
         assertThat(actual).isEqualTo(10)
     }
+
+    @Test
+    fun `카드 한장을 추가한다`() {
+        // given
+        val user = User.create(
+            "산군" to
+                listOf<Card>(
+                    Card(Card.Shape.CLUBS, Card.Value.FIVE),
+                    Card(Card.Shape.DIAMONDS, Card.Value.FIVE),
+                ),
+        )
+        val card = CardMachine.getNewCard()
+
+        // when
+        user.addCard(card)
+        val actual = user.cards
+
+        // then
+        assertThat(actual).hasSize(3)
+    }
 }
