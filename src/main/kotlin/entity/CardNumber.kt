@@ -1,7 +1,7 @@
 package entity
 
 enum class CardNumber(val numberStrategy: (cards: Cards) -> Int) {
-    ACE({ cards -> 11 }),
+    ACE({ cards -> 1 }),
     TWO({ _ -> 2 }),
     THREE({ _ -> 3 }),
     FOUR({ _ -> 4 }),
