@@ -9,7 +9,7 @@ class Dealer : Person() {
     }
 
     override fun checkState() {
-        if (getTotalCardNumber() >= DEALER_STAND_CONDITION) {
+        if (getTotalCardNumber() > DEALER_STAND_CONDITION) {
             gameState = GameState.STAND
         }
     }
