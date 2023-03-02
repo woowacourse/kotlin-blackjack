@@ -29,10 +29,10 @@
 
 ### Enum class
 #### Shape
-- [ ] 하트, 클로버, 스페이드, 다이아몬드
+- [x] 하트, 클로버, 스페이드, 다이아몬드
 #### CardNumber
-- [ ] Value : Int?
-- [ ] Ace, Jack, Queen, King ... 숫자 영문 표기
+- [x] Value : Int?
+- [x] Ace, Jack, Queen, King ... 숫자 영문 표기
 
 ## View
 ### InputView
