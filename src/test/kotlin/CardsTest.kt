@@ -20,15 +20,15 @@ class CardsTest {
     }
 
     @Test
-    fun `가지고 있는 카드 숫자의 합을 구한다`() {
+    fun `Ace를 1로 처리했을 떄의 합을 구한다`() {
         assertThat(
             Cards(
                 listOf(
                     Card(CardNumber.K, Shape.HEART),
-                    Card(CardNumber.SEVEN, Shape.SPADE)
+                    Card(CardNumber.A, Shape.SPADE)
                 )
-            ).getTotalCardsValue()
-        ).isEqualTo(17)
+            ).getMinimumCardsValue()
+        ).isEqualTo(11)
     }
 
     @Test

@@ -14,6 +14,8 @@ class Cards(
         _cards.add(card)
     }
 
+    fun getMinimumCardsValue(): Int = cards.sumOf { card -> card.number.value }
+
     fun getTotalCardsValue(): Int {
         val aceCardsCount = cards.count { card -> card.number == CardNumber.A }
         var currentSum = cards.filter { card -> card.number != CardNumber.A }

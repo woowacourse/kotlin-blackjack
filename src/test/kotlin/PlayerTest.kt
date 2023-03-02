@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test
 class PlayerTest {
 
     @Test
-    fun `21점을 넘으면 false를 반환한다`() {
+    fun `21점을 넘으면 카드를 뽑는데 실패한다`() {
         val player = Player(
             "우기",
             Cards(
@@ -17,7 +17,7 @@ class PlayerTest {
         player.cards.draw(Card(CardNumber.TWO, Shape.CLOVER))
 
         assertThat(
-            player.isPossibleToDraw()
-        ).isFalse
+            player.drawCard()
+        ).isEqualTo(DrawResult.Failure)
     }
 }

@@ -22,24 +22,23 @@ class BlackJackController(
 
     private fun showDividingCards() = OutputView.printCardDividingMessage(dealer, players)
 
-    private fun drawAdditionalCards() {
-        players.forEach { player ->
-            askToDrawAdditionalCard(player)
-            if (player.cards.cards.size == 2) {
-                OutputView.printCardResults(player)
-            }
-        }
+    private fun drawAdditionalCards() = players.forEach { player ->
+        askToDrawAdditionalCard(player)
     }
 
     private fun askToDrawAdditionalCard(player: Player) {
         do {
-            val input = InputView.requestAdditionalDraw(player)
-            if (input == "n") {
-                return
-            }
-            player.drawCard()
+            val drawFlag = InputView.requestAdditionalDraw(player)
+        } while (drawFlag == "y" && drawAdditionalCardForPlayer(player) == DrawState.POSSIBLE)
+        if (player.cards.cards.size == 2) {
             OutputView.printCardResults(player)
-        } while (player.isPossibleToDraw())
+        }
+    }
+
+    private fun drawAdditionalCardForPlayer(player: Player): DrawState {
+        val drawState = player.drawCard()
+        OutputView.printCardResults(player)
+        return drawState
     }
 
     private fun drawAdditionalCardForDealer() {

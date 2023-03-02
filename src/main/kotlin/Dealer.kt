@@ -1,15 +1,15 @@
 class Dealer(val cards: Cards = Cards()) {
 
-    private fun isPossibleToDraw(): Boolean {
+    private fun isPossibleToDraw(): DrawState {
         if (cards.getTotalCardsValue() >= 17) {
-            return false
+            return DrawState.IMPOSSIBLE
         }
 
-        return true
+        return DrawState.POSSIBLE
     }
 
     fun drawCard(): DrawResult {
-        if (isPossibleToDraw()) {
+        if (isPossibleToDraw() == DrawState.POSSIBLE) {
             cards.draw()
 
             return DrawResult.Success

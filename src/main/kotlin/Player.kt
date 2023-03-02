@@ -2,16 +2,18 @@ class Player(
     val name: String,
     val cards: Cards = Cards()
 ) {
-    // TODO: 로직 개선
 
-    fun isPossibleToDraw(): Boolean {
-        if (cards.cards.sumOf { card -> card.number.value } > 21)
-            return false
+    private fun isPossibleToDrawAdditionalCard(): DrawState {
+        if (cards.getMinimumCardsValue() > 21) {
+            return DrawState.IMPOSSIBLE
+        }
 
-        return true
+        return DrawState.POSSIBLE
     }
 
-    fun drawCard() {
+    fun drawCard(): DrawState {
         cards.draw()
+
+        return isPossibleToDrawAdditionalCard()
     }
 }
