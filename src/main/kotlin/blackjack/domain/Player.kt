@@ -18,6 +18,8 @@ class Player(val name: String) {
         return score
     }
 
+    fun isBusted(): Boolean = getScore() > TARGET_SCORE
+
     private fun updateScore(score: Int): Int = if (score > TARGET_SCORE) score - GAP_ACE else score
 
     companion object {

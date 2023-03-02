@@ -24,4 +24,15 @@ class PlayerTest {
 
         assertThat(player.getScore()).isEqualTo(13)
     }
+
+    @Test
+    fun `카드의 합이 21을 넘기면 true를 반환한다`() {
+        val player = Player("pobi").apply {
+            receive(Card(CardNumber.KING, CardShape.HEART))
+            receive(Card(CardNumber.KING, CardShape.DIAMOND))
+            receive(Card(CardNumber.KING, CardShape.CLOVER))
+        }
+
+        assertThat(player.isBusted()).isTrue
+    }
 }
