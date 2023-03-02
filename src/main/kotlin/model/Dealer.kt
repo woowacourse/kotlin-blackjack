@@ -1,6 +1,6 @@
 package model
 
-class Dealer(name: Name = Name(DEALER), cards: Cards) : Participant(name, cards) {
+class Dealer(cards: Cards, name: Name = Name(DEALER)) : Participant(cards, name) {
     override fun isHit(): Boolean {
         if (cards.sum() < 17) return true
         return false

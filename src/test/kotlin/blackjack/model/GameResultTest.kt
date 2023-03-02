@@ -14,9 +14,17 @@ import org.junit.jupiter.api.Test
 class GameResultTest {
     @Test
     fun `딜러 21점 승리 플레이어 19점, 20점 패배`() {
-        val dealer = Dealer(Cards(listOf(Card(Rank.JACK, Suit.HEART), Card(Rank.JACK, Suit.DIAMOND), Card(Rank.ACE, Suit.DIAMOND))))
-        val player1 = Player(Name("jason"), Cards(listOf(Card(Rank.JACK, Suit.HEART), Card(Rank.NINE, Suit.DIAMOND))))
-        val player2 = Player(Name("pobi"), Cards(listOf(Card(Rank.JACK, Suit.SPACE), Card(Rank.KING, Suit.DIAMOND))))
+        val dealer = Dealer(
+            Cards(
+                listOf(
+                    Card(Rank.JACK, Suit.HEART),
+                    Card(Rank.JACK, Suit.DIAMOND),
+                    Card(Rank.ACE, Suit.DIAMOND),
+                ),
+            ),
+        )
+        val player1 = Player(Cards(listOf(Card(Rank.JACK, Suit.HEART), Card(Rank.NINE, Suit.DIAMOND))), Name("jason"))
+        val player2 = Player(Cards(listOf(Card(Rank.JACK, Suit.SPADE), Card(Rank.KING, Suit.DIAMOND))), Name("pobi"))
         val result = GameResult.of(dealer, listOf(player1, player2))
 
         assertThat(result.getDealerWinResult()).isEqualTo(2)
@@ -27,9 +35,17 @@ class GameResultTest {
 
     @Test
     fun `딜러 22점 패배 플레이어 19점, 20점 승리`() {
-        val dealer = Dealer(Cards(listOf(Card(Rank.JACK, Suit.HEART), Card(Rank.JACK, Suit.DIAMOND), Card(Rank.DEUCE, Suit.DIAMOND))))
-        val player1 = Player(Name("jason"), Cards(listOf(Card(Rank.JACK, Suit.HEART), Card(Rank.NINE, Suit.DIAMOND))))
-        val player2 = Player(Name("pobi"), Cards(listOf(Card(Rank.JACK, Suit.SPACE), Card(Rank.KING, Suit.DIAMOND))))
+        val dealer = Dealer(
+            Cards(
+                listOf(
+                    Card(Rank.JACK, Suit.HEART),
+                    Card(Rank.JACK, Suit.DIAMOND),
+                    Card(Rank.DEUCE, Suit.DIAMOND),
+                ),
+            ),
+        )
+        val player1 = Player(Cards(listOf(Card(Rank.JACK, Suit.HEART), Card(Rank.NINE, Suit.DIAMOND))), Name("jason"))
+        val player2 = Player(Cards(listOf(Card(Rank.JACK, Suit.SPADE), Card(Rank.KING, Suit.DIAMOND))), Name("pobi"))
         val result = GameResult.of(dealer, listOf(player1, player2))
 
         assertThat(result.getDealerWinResult()).isEqualTo(0)
@@ -41,17 +57,19 @@ class GameResultTest {
     @Test
     fun `딜러 20점 1승1패 플레이어 19점 패배, 21점 승리`() {
         val dealer = Dealer(Cards(listOf(Card(Rank.JACK, Suit.HEART), Card(Rank.JACK, Suit.DIAMOND))))
-        val player1 = Player(Name("jason"), Cards(listOf(Card(Rank.JACK, Suit.HEART), Card(Rank.NINE, Suit.DIAMOND))))
+        val player1 = Player(Cards(listOf(Card(Rank.JACK, Suit.HEART), Card(Rank.NINE, Suit.DIAMOND))), Name("jason"))
         val player2 = Player(
-            Name("pobi"),
             Cards(
                 listOf(
-                    Card(Rank.JACK, Suit.SPACE), Card(Rank.KING, Suit.DIAMOND),
+                    Card(Rank.JACK, Suit.SPADE),
+                    Card(Rank.KING, Suit.DIAMOND),
                     Card(
-                        Rank.ACE, Suit.DIAMOND
-                    )
-                )
-            )
+                        Rank.ACE,
+                        Suit.DIAMOND,
+                    ),
+                ),
+            ),
+            Name("pobi"),
         )
         val result = GameResult.of(dealer, listOf(player1, player2))
 

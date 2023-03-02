@@ -1,5 +1,5 @@
 package model
 
-class Player(name: Name, cards: Cards) : Participant(name, cards) {
+class Player(cards: Cards, name: Name) : Participant(cards, name) {
     override fun isHit(): Boolean = !isBust()
 }
