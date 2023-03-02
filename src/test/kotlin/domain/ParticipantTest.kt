@@ -15,6 +15,10 @@ class ParticipantTest {
                 )
             )
         ) {
+            override fun showInitCards(): List<Card> {
+                return cards.cards.take(2)
+            }
+
             override fun isMoreAddCard(): Boolean {
                 return true
             }
@@ -37,6 +41,10 @@ class ParticipantTest {
                 )
             )
         ) {
+            override fun showInitCards(): List<Card> {
+                return cards.cards.take(2)
+            }
+
             override fun isMoreAddCard(): Boolean {
                 return true
             }
