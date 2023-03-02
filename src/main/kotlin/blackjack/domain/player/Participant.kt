@@ -8,6 +8,10 @@ class Participant(name: String) : Player(name) {
     lateinit var result: Result
         private set
 
+    fun updateResult(dealerSum: Int) {
+        result = Result.valueOf(dealerSum, cards.sumCardsNumber())
+    }
+
     fun isGenerateCardPossible(): Boolean {
         if (cards.sumCardsNumber() > MAX_SUM_NUMBER) return false
         return true
