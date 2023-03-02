@@ -1,7 +1,5 @@
 package blackjack.domain
 
-import blackjack.domain.PlayerHand.Companion.SCORE_LIMIT
-
 class Player(val name: String) {
     val hand = PlayerHand()
 
@@ -9,7 +7,7 @@ class Player(val name: String) {
         hand.add(card)
     }
 
-    fun isBust(): Boolean = hand.calculateTotalScore() > SCORE_LIMIT
+    fun isBust(): Boolean = hand.calculateTotalScore() > PlayerHand.blackjackScore()
 
     fun getTotalScore(): Int = hand.calculateTotalScore()
 }
