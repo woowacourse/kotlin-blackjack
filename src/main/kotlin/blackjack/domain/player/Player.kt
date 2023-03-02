@@ -16,6 +16,8 @@ open class Player(val name: String) {
     }
 
     companion object {
+        const val MAX_SUM_NUMBER = 21
+
         const val ERROR_NAME_LENGTH = "이름은 2글자 이상 10글자 이하여야 합니다."
     }
 }
