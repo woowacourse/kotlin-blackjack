@@ -6,6 +6,15 @@ class User(
 ) {
 
     val cards: List<Card> get() = _cards.toList()
+
+    fun validUserSum(): Int {
+        if ((calculateCardValueSum() < 10) and (countAce() != 0)) {
+            return calculateCardValueSum() + 10
+        }
+
+        return calculateCardValueSum()
+    }
+
     fun calculateCardValueSum(): Int {
         return _cards.sumOf { Card.valueOf(it) }
     }
@@ -13,6 +22,10 @@ class User(
     fun addCard(card: Card) {
         _cards.add(card)
     }
+
+    private fun countAce(): Int = _cards.filter { card ->
+        card.value == Card.Value.ACE
+    }.size
 
     companion object {
         fun create(userNameAndCard: Pair<String, List<Card>>): User =

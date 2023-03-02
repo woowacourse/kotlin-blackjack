@@ -1,6 +1,7 @@
 import domain.*
 import domain.Answer.Companion.NO
 import domain.Answer.Companion.YES
+import view.GameResultView
 import view.LoginView
 import view.PlayGameView
 
@@ -8,6 +9,7 @@ class Controller(
     private val loginView: LoginView = LoginView(),
     private val playGameView: PlayGameView = PlayGameView(),
     private val cardMachine: CardMachine = CardMachine(),
+    private val gameResultView: GameResultView = GameResultView(),
 ) {
 
     fun run() {
@@ -33,6 +35,8 @@ class Controller(
             val newCard = cardMachine.getNewCard()
             dealer.addCard(newCard)
         }
+
+        gameResultView.printCardResult(dealer, users)
     }
 
     private fun repeatGetCommand(user: User) {
