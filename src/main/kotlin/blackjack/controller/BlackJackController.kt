@@ -13,9 +13,9 @@ class BlackJackController(
 ) {
     fun run() {
         val blackJack = setBlackJack()
-        outputView.outputInitState(blackJack.dealer, blackJack.users)
+        outputView.outputInitState(blackJack)
         runBlackJack(blackJack)
-        outputView.outputResult(blackJack.dealer, blackJack.users, blackJack.result)
+        outputView.outputResult(blackJack)
     }
 
     private fun setBlackJack(): BlackJack = BlackJackBuilder.init {

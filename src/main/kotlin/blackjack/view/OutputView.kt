@@ -1,39 +1,36 @@
 package blackjack.view
 
+import blackjack.domain.BlackJack
 import blackjack.domain.CardMark
 import blackjack.domain.CardValue
 import blackjack.domain.Outcome
 import blackjack.domain.User
 
 class OutputView {
-    fun outputInitState(dealer: User, users: List<User>) {
-        println("\n딜러와 ${users.map{it.name}} 에게 2장의 나누었습니다.")
-        outputCard(dealer)
-        println("")
-
-        users.forEach { user ->
+    fun outputInitState(blackJack: BlackJack) {
+        print("\n딜러와 ${blackJack.users.map{it.name}.joinToString(", ")} 에게 2장의 나누었습니다.")
+        outputCardForDealer(blackJack.dealer)
+        blackJack.users.forEach { user ->
             outputCard(user)
-            println("")
         }
     }
 
-    fun outputResult(dealer: User, users: List<User>, outcomes: List<Outcome>) {
-        println("")
-        outputCard(dealer)
-        outputScore(dealer)
-        println("")
-
-        users.forEach { user ->
+    fun outputResult(blackJack: BlackJack) {
+        blackJack.participants.all().forEach { user ->
             outputCard(user)
             outputScore(user)
-            println("")
         }
         println("")
-        outputOutcomes(dealer, users, outcomes)
+        outputOutcomes(blackJack)
+    }
+
+    fun outputCardForDealer(user: User) {
+        print("\n${user.name}카드:")
+        print(" ${user.cards.toList()[0].value.pattern()}${user.cards.toList()[0].mark.name()}")
     }
 
     fun outputCard(user: User) {
-        print("${user.name}카드")
+        print("\n${user.name}카드")
         user.cards.toList().forEach {
             print(" ${it.value.pattern()}${it.mark.name()}")
         }
@@ -47,13 +44,15 @@ class OutputView {
         print("- 결과 ${user.score}")
     }
 
-    private fun outputOutcomes(dealer: User, users: List<User>, outcomes: List<Outcome>) {
-        println("## 최종 승패")
-        println("${dealer.name}: ${outcomes.count{ it == Outcome.LOSE}}승 ${outcomes.count{ it == Outcome.WIN}}패")
-        users.forEachIndexed { index, user -> outputOutcome(user, outcomes[index]) }
+    private fun outputOutcomes(blackJack: BlackJack) {
+        blackJack.run {
+            println("\n## 최종 승패")
+            println("${dealer.name}: ${result.count { it == Outcome.LOSE }}승 ${result.count { it == Outcome.WIN }}패")
+            users.forEachIndexed { index, user -> outputOutcome(user, result[index]) }
+        }
     }
 
-    fun outputOutcome(user: User, outcome: Outcome) {
+    private fun outputOutcome(user: User, outcome: Outcome) {
         when (outcome) {
             Outcome.WIN -> "승"
             Outcome.DRAW -> "무"
