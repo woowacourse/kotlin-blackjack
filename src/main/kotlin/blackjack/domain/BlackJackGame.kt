@@ -13,7 +13,7 @@ class BlackJackGame {
     }
 
     fun BlackJack.dealerTurn(output: () -> Unit) {
-        if (dealer.maxScore < DEALER_MIN_NUMBER) {
+        if (dealer.checkDealerScore) {
             dealer.draw(cardDeck.nextCard())
             output()
         }
@@ -31,7 +31,6 @@ class BlackJackGame {
 
     companion object {
         const val BLACKJACK_NUMBER = 21
-        private const val DEALER_MIN_NUMBER = 17
         private val DRAW_COMMANDS = listOf("Y", "y")
     }
 }

@@ -16,6 +16,9 @@ class User(name: String) {
     val isNotBust: Boolean
         get() = minScore <= BLACKJACK_NUMBER
 
+    val checkDealerScore: Boolean
+        get() = maxScore < DEALER_MIN_NUMBER
+
     private val validateAceCondition: Boolean
         get() = minScore + ACE_OTHER_NUMBER_DIFF <= BLACKJACK_NUMBER
 
@@ -26,6 +29,7 @@ class User(name: String) {
         cards.add(card)
     }
     companion object {
+        private const val DEALER_MIN_NUMBER = 17
         private const val ACE_OTHER_NUMBER_DIFF = 10
     }
 }
