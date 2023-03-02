@@ -1,6 +1,6 @@
 package domain.card
 
-enum class CardNumber(val number: Int, val label: String) {
+enum class CardNumber(val value: Int, val label: String) {
     ACE(1, "A"),
     TWO(2, "2"),
     THREE(3, "3"),
