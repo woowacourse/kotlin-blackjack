@@ -36,6 +36,12 @@ class PlayerTest {
     }
 
     @Test
+    fun `카드 값의 합을 반환한다`() {
+        val player = Player(mutableListOf(Card(Shape.SPADE, CardValue.JACK), Card(Shape.SPADE, CardValue.JACK)))
+        assertThat(player.calculateCardSum()).isEqualTo(20)
+    }
+
+    @Test
     fun `플레이어 카드의 합이 21이 넘었을 경우 true를 반환한다`() {
         val player = Player(
             mutableListOf(

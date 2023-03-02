@@ -7,4 +7,5 @@ abstract class Participant(private val _cards: MutableList<Card>) {
     open fun pickCard(card: Card) {
         _cards.add(card)
     }
+    fun calculateCardSum() = _cards.sumOf { it.cardValue.value }
 }
