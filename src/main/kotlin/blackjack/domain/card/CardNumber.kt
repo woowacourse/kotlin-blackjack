@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.card
 
 enum class CardNumber(val value: Int, val word: String) {
     ONE(1, "1"),

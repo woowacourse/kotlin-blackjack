@@ -1,4 +1,6 @@
-package blackjack.domain
+package blackjack.domain.card
+
+import blackjack.domain.Generator
 
 class CardGenerator(private val randomGenerator: Generator) {
 

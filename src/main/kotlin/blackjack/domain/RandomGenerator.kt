@@ -1,5 +1,8 @@
 package blackjack.domain
 
+import blackjack.domain.card.CardNumber
+import blackjack.domain.card.CardShape
+
 class RandomGenerator : Generator {
     override fun generateCardNumber(): CardNumber {
         val cardNumbers: List<CardNumber> = CardNumber.values().toList()

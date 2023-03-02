@@ -1,4 +1,6 @@
-package blackjack.domain
+package blackjack.domain.player
+
+import blackjack.domain.Result
 
 class Participant(name: String) : Player(name) {
 
