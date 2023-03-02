@@ -1,6 +1,6 @@
 package domain
 
-object CardMachine {
+class CardMachine {
     private val cards: MutableList<Card> = mutableListOf()
 
     init {

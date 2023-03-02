@@ -10,7 +10,9 @@ class Dealer(private val _cards: MutableList<Card>) {
         else -> 0
     }
 
-    fun pickNewCard() = _cards.add(CardMachine.getNewCard())
+    fun addCard(card: Card) {
+        _cards.add(card)
+    }
 
     fun isOverSumCondition(): Boolean = (calculateCardValueSum() > SUM_CONDITION)
     private fun countAce(): Int = _cards.filter { card ->

@@ -26,7 +26,10 @@ class PlayGameView {
         return readLine() ?: requestOneMoreCard(user)
     }
 
+    fun printDealerPickNewCard() = println(NOTICE_DEALER_PICK_NEW_CARD)
+
     companion object {
+        private const val NOTICE_DEALER_PICK_NEW_CARD = "딜러는 16이하라 한장의 카드를 더 받았습니다."
         private const val NOTICE_SPLIT_CARD = "딜러와 %s에게 2장의 카드를 나누었습니다."
         private const val DEALER_CARD = "딜러: %s"
         private const val USERS_CARD = "%s: %s"

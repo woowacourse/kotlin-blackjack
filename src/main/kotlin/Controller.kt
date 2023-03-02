@@ -7,12 +7,13 @@ import view.PlayGameView
 class Controller(
     private val loginView: LoginView = LoginView(),
     private val playGameView: PlayGameView = PlayGameView(),
+    private val cardMachine: CardMachine = CardMachine(),
 ) {
 
     fun run() {
         val userNameContainer = repeatWithRunCatching { getUserNames() }
-        val dealerCards = CardMachine.getCardPair()
-        val userCards = CardMachine.getCardPairs(userNameContainer.names.size)
+        val dealerCards = cardMachine.getCardPair()
+        val userCards = cardMachine.getCardPairs(userNameContainer.names.size)
         val userNames = userNameContainer.names
 
         val userNamesAndCards = userNames.zip(userCards)
@@ -26,12 +27,17 @@ class Controller(
         users.forEach { user ->
             repeatGetCommand(user)
         }
+
+        if (!dealer.isOverSumCondition()) {
+            playGameView.printDealerPickNewCard()
+            dealer.addCard(cardMachine.getNewCard())
+        }
     }
 
     private fun repeatGetCommand(user: User) {
         val answer = getAnswer(user)
         if (answer.value == YES) {
-            user.addCard(CardMachine.getNewCard())
+            user.addCard(cardMachine.getNewCard())
             playGameView.printUserCard(user)
             repeatGetCommand(user)
         }
