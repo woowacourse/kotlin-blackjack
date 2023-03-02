@@ -12,13 +12,15 @@ class Card(
     }
 
     companion object {
-        // TODO: 카드 생성을 간단하게
-        private val ALL_CARDS: MutableSet<Card> = (
-            CardNumber.values().map { cardNumber -> Card(cardNumber, Shape.CLOVER) }.toSet() +
-                CardNumber.values().map { cardNumber -> Card(cardNumber, Shape.SPADE) }.toSet() +
-                CardNumber.values().map { cardNumber -> Card(cardNumber, Shape.DIAMOND) }.toSet() +
-                CardNumber.values().map { cardNumber -> Card(cardNumber, Shape.HEART) }.toSet()
-            ).toMutableSet()
+
+        private val ALL_CARDS: MutableSet<Card> = CardNumber.values().flatMap { cardNumber ->
+            listOf(
+                Card(cardNumber, Shape.CLOVER),
+                Card(cardNumber, Shape.HEART),
+                Card(cardNumber, Shape.DIAMOND),
+                Card(cardNumber, Shape.SPADE)
+            )
+        }.toMutableSet()
 
         fun draw(): Card {
             val card = ALL_CARDS.random()
