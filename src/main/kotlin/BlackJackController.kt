@@ -43,13 +43,9 @@ class BlackJackController(
     }
 
     private fun drawAdditionalCardForDealer() {
-        // TODO: isPossibleToDraw의 위치? sealed class?
-        val isReceived = dealer.isPossibleToDraw()
+        val drawResult = dealer.drawCard()
 
-        if (isReceived) {
-            dealer.drawCard()
-        }
-        OutputView.printIsDealerReceivedCard(isReceived)
+        OutputView.printIsDealerReceivedCard(drawResult)
     }
 
     private fun showFinalCards() = OutputView.printFinalCards(dealer, players)

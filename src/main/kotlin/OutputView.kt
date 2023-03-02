@@ -10,12 +10,10 @@ object OutputView {
         println("${player.name}카드: ${player.cards.cards.joinToString(", ")}")
     }
 
-    fun printIsDealerReceivedCard(isReceived: Boolean) {
-        // TODO: 함수 분리
-        if (isReceived) {
-            println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
-        } else {
-            println("딜러는 17이상이라 한장의 카드를 더 받지 않았습니다.")
+    fun printIsDealerReceivedCard(drawResult: DrawResult) {
+        when (drawResult) {
+            is DrawResult.Success -> println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+            is DrawResult.Failure -> println("딜러는 17이상이라 한장의 카드를 더 받지 않았습니다.")
         }
     }
 
