@@ -1,6 +1,7 @@
 package view
 
 import entity.CardNumber
+import entity.CardType
 import entity.Cards
 
 class ViewUtils {
@@ -14,9 +15,17 @@ class ViewUtils {
             return ""
         }
 
+        fun cardTypeToString(cardType: CardType): String {
+            if (cardType == CardType.CLUB) return "클로버"
+            else if (cardType == CardType.HEART) return "하트"
+            else if (cardType == CardType.SPADE) return "스페이드"
+            else if (cardType == CardType.DIAMOND) return "다이아몬드"
+            return ""
+        }
+
         fun cardsToString(cards: Cards): String {
             return cards.value.joinToString(", ") {
-                it.cardNumber.toString()
+                cardNumberToString(it.cardNumber) + cardTypeToString(it.cardType)
             }
         }
     }

@@ -18,7 +18,13 @@ class GameView {
     }
 
     fun printInitialUsersStatus(dealer: Dealer, players: Players) {
-        println(MESSAGE_USERS_STATUS.format(players.value.joinToString(", ")))
+        println(
+            MESSAGE_USERS_STATUS.format(
+                players.value.joinToString(", ") {
+                    it.name
+                }
+            )
+        )
         printDealerStatus(dealer)
         players.value.forEach { printPlayerStatus(it) }
     }
