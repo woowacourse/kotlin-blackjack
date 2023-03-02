@@ -39,5 +39,14 @@ class PlayerTest {
         assertThat(player.cards.values).isEqualTo(listOf(expected))
     }
 
+    @Test
+    fun `갖고 있는 카드 숫자의 합을 계산해 반환한다`() {
+        val player = TestPlayer("aa")
+        player.addCard(Card(CardNumber.FOUR, CardShape.HEART))
+        player.addCard(Card(CardNumber.EIGHT, CardShape.CLOVER))
+        val actual = player.cards.sumCardsNumber()
+        assertThat(actual).isEqualTo(12)
+    }
+
     class TestPlayer(name: String) : Player(name)
 }
