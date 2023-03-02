@@ -22,7 +22,7 @@ class BlackJackController(
         cardDeck(Card.all().shuffled())
         participants {
             dealer("딜러")
-            users(inputView.inputParticipants())
+            guests(inputView.inputParticipants())
         }
         draw()
     }
@@ -30,7 +30,7 @@ class BlackJackController(
     private fun startBlackJack(blackJack: BlackJack) =
         BlackJackGame().apply {
             input(inputView::inputDrawMore)
-            blackJack.usersTurn(outputView::outputCard)
+            blackJack.guestsTurn(outputView::outputCard)
             blackJack.dealerTurn(outputView::outputDealerDraw)
         }
 }

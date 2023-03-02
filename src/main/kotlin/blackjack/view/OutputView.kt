@@ -8,9 +8,9 @@ import blackjack.domain.User
 
 class OutputView {
     fun outputInitState(blackJack: BlackJack) {
-        print("\n딜러와 ${blackJack.users.map{it.name}.joinToString(", ")} 에게 2장의 나누었습니다.")
+        print("\n딜러와 ${blackJack.guests.map{it.name}.joinToString(", ")} 에게 2장의 나누었습니다.")
         outputCardForDealer(blackJack.dealer)
-        blackJack.users.forEach { user ->
+        blackJack.guests.forEach { user ->
             outputCard(user)
         }
     }
@@ -48,7 +48,7 @@ class OutputView {
         blackJack.run {
             println("\n## 최종 승패")
             println("${dealer.name}: ${result.count { it == Outcome.LOSE }}승 ${result.count { it == Outcome.WIN }}패")
-            users.forEachIndexed { index, user -> outputOutcome(user, result[index]) }
+            guests.forEachIndexed { index, user -> outputOutcome(user, result[index]) }
         }
     }
 

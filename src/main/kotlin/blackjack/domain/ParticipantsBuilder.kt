@@ -2,18 +2,18 @@ package blackjack.domain
 
 class ParticipantsBuilder {
 
-    private lateinit var dealer: User
-    private lateinit var users: List<User>
+    private lateinit var dealer: Dealer
+    private lateinit var guests: List<Guest>
     fun dealer(name: String) {
-        dealer = User(name)
+        dealer = Dealer(name)
     }
 
-    fun users(names: List<String>) {
-        users = names.map { User(it) }
+    fun guests(names: List<String>) {
+        guests = names.map { Guest(it) }
     }
 
     fun build(): Participants {
-        return Participants(dealer, users)
+        return Participants(dealer, guests)
     }
 
     companion object {

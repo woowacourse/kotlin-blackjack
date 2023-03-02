@@ -7,15 +7,15 @@ enum class Outcome {
     WIN, DRAW, LOSE;
 
     companion object {
-        fun of(dealer: User, user: User): Outcome =
+        fun of(dealer: Dealer, guest: Guest): Outcome =
             when {
-                dealer.score > BLACKJACK_NUMBER && user.score > BLACKJACK_NUMBER -> DRAW
+                dealer.score > BLACKJACK_NUMBER && guest.score > BLACKJACK_NUMBER -> DRAW
                 dealer.score > BLACKJACK_NUMBER -> WIN
-                user.score > BLACKJACK_NUMBER -> LOSE
+                guest.score > BLACKJACK_NUMBER -> LOSE
 
-                dealer.score == user.score -> DRAW
-                user.score > dealer.score -> WIN
-                dealer.score > user.score -> LOSE
+                dealer.score == guest.score -> DRAW
+                guest.score > dealer.score -> WIN
+                dealer.score > guest.score -> LOSE
 
                 else -> throw IllegalStateException()
             }

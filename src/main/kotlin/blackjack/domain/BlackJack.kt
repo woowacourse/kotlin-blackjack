@@ -5,11 +5,11 @@ data class BlackJack(
     val participants: Participants,
 ) {
     val result: List<Outcome>
-        get() = participants.users.map { user -> Outcome.of(participants.dealer, user) }
+        get() = participants.guests.map { guest -> Outcome.of(participants.dealer, guest) }
 
-    val dealer: User
+    val dealer: Dealer
         get() = participants.dealer
 
-    val users: List<User>
-        get() = participants.users
+    val guests: List<Guest>
+        get() = participants.guests
 }

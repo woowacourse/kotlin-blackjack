@@ -10,7 +10,7 @@ class BlackJackGameTest {
             cardDeck(Card.all().shuffled())
             participants {
                 dealer("딜러")
-                users(listOf("아크", "로피"))
+                guests(listOf("아크", "로피"))
             }
             draw()
         }
@@ -18,7 +18,7 @@ class BlackJackGameTest {
         assertDoesNotThrow {
             BlackJackGame().apply {
                 input(::inputDrawMore)
-                blackJack.usersTurn(::outputCard)
+                blackJack.guestsTurn(::outputCard)
                 blackJack.dealerTurn(::outputDealer)
             }
         }

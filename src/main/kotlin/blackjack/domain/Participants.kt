@@ -1,8 +1,8 @@
 package blackjack.domain
 
 data class Participants(
-    val dealer: User,
-    val users: List<User>,
+    val dealer: Dealer,
+    val guests: List<Guest>,
 ) {
-    fun all() = listOf(dealer) + users
+    fun all() = listOf(dealer) + guests
 }

@@ -5,29 +5,28 @@ class BlackJackGame {
 
     fun input(func: (String) -> String) { input = func }
 
-    fun BlackJack.usersTurn(output: (User) -> Unit) {
-        users.forEach { user ->
-            command(user, this.cardDeck)
-            output(user)
+    fun BlackJack.guestsTurn(output: (User) -> Unit) {
+        guests.forEach { guest ->
+            while (guest.isContinue) {
+                command(guest, cardDeck)
+                output(guest)
+            }
         }
     }
 
     fun BlackJack.dealerTurn(output: () -> Unit) {
-        if (dealer.checkDealerScore) {
+        if (dealer.isContinue) {
             dealer.draw(cardDeck.nextCard())
             output()
         }
     }
 
-    private fun command(user: User, cardDeck: CardDeck) {
-        if (user.isDrawCommand()) return
-
-        user.draw(cardDeck.nextCard())
-
-        if (user.isNotBust) { command(user, cardDeck) }
+    private fun command(guest: Guest, cardDeck: CardDeck) {
+        if (guest.isDrawCommand()) return
+        guest.draw(cardDeck.nextCard())
     }
 
-    private fun User.isDrawCommand() = input(this.name.toString()) !in DRAW_COMMANDS
+    private fun Guest.isDrawCommand() = input(this.name.toString()) !in DRAW_COMMANDS
 
     companion object {
         const val BLACKJACK_NUMBER = 21
