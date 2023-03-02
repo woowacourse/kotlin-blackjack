@@ -1,3 +1,4 @@
+import domain.UserNameContainer
 import view.LoginView
 
 class Controller(
@@ -5,13 +6,15 @@ class Controller(
 ) {
 
     fun run() {
-        getPlayerNames()
+        repeatWithRunCatching { getPlayerNames() }
     }
 
-    private fun getPlayerNames(): List<String> {
-        val playerNames = loginView.requestPlayerName()
-        if (playerNames.contains("")) getPlayerNames()
+    private fun getPlayerNames(): UserNameContainer = UserNameContainer(loginView.requestPlayerName())
 
-        return playerNames
+    private fun <T> repeatWithRunCatching(action: () -> T): T {
+        return runCatching(action).getOrElse { error ->
+            println(error.message.toString())
+            repeatWithRunCatching(action)
+        }
     }
 }
