@@ -5,6 +5,7 @@ object Deck {
     private val cards: MutableList<Card> = CardNumber.values()
         .flatMap { number -> CardShape.values().map { number to it } }
         .map { Card(number = it.first, shape = it.second) }
+        .shuffled()
         .toMutableList()
 
     private fun refillDeck() {
