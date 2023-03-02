@@ -57,4 +57,23 @@ class GameResultTest {
 
         assertThat(actual).isEqualTo(ResultType.WIN)
     }
+
+    @Test
+    fun `플레이어의 승패 여부로부터 딜러의 승패 여부를 계산한다`() {
+        val playerResult = mapOf(
+            Player("pobi") to ResultType.WIN,
+            Player("thomas") to ResultType.TIE,
+            Player("hatti") to ResultType.LOSE,
+            Player("jason") to ResultType.LOSE
+        )
+
+        val actual = GameResult(playerResult).dealer
+        val expect = mapOf(
+            ResultType.WIN to 2,
+            ResultType.TIE to 1,
+            ResultType.LOSE to 1
+        )
+
+        assertThat(actual).isEqualTo(expect)
+    }
 }
