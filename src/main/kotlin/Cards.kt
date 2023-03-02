@@ -1,4 +1,4 @@
-class Cards(cards: List<Card>) {
+class Cards(cards: List<Card> = listOf(Card.draw(), Card.draw())) {
 
     private var _cards: MutableList<Card> = cards.toMutableList()
     val cards: List<Card>
@@ -10,16 +10,5 @@ class Cards(cards: List<Card>) {
 
     fun draw() {
         _cards.add(Card.draw())
-    }
-
-    fun isPossibleToDraw(score: Int): Boolean {
-        if (cards.sumOf { card -> card.number.value } >= score)
-            return false
-
-        return true
-    }
-
-    fun getSum(): Int {
-        return cards.sumOf { card -> card.number.value }
     }
 }
