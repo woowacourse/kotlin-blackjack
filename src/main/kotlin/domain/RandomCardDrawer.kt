@@ -23,4 +23,8 @@ class RandomCardDrawer : CardDrawer {
         cards.remove(drawCard)
         return drawCard
     }
+
+    override fun drawInitCards(): Cards {
+        return Cards(List(2) { draw() }.toSet())
+    }
 }
