@@ -14,11 +14,9 @@ class DealerTest {
             )
         )
 
-        dealer.drawCard()
-
         assertThat(
-            dealer.cards.cards.size
-        ).isEqualTo(3)
+            dealer.drawCard()
+        ).isEqualTo(DrawResult.Success)
     }
 
     @Test
@@ -32,25 +30,8 @@ class DealerTest {
             )
         )
 
-        dealer.drawCard()
-
-        // TODO: 중복 이름 해결
         assertThat(
-            dealer.cards.cards.size
-        ).isEqualTo(2)
-    }
-
-    @Test
-    fun `특정 점수를 넘으면 false를 반환한다(17점)`() {
-        assertThat(
-            Dealer(
-                Cards(
-                    listOf(
-                        Card(CardNumber.K, Shape.HEART),
-                        Card(CardNumber.SEVEN, Shape.SPADE)
-                    )
-                )
-            ).isPossibleToDraw()
-        ).isFalse()
+            dealer.drawCard()
+        ).isEqualTo(DrawResult.Failure)
     }
 }
