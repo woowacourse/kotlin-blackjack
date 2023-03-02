@@ -1,7 +1,12 @@
 package entity
 
-enum class CardNumber(val numberStrategy: (cards: Cards) -> Int) {
-    ACE({ cards -> 1 }),
+import misc.GameRule
+
+enum class CardNumber(val numberStrategy: (sumOfCardNumbers: Int) -> Int) {
+    ACE({ sumOfCards ->
+        if (sumOfCards + 11 > GameRule.WINNING_NUMBER) 1
+        else 11
+    }),
     TWO({ _ -> 2 }),
     THREE({ _ -> 3 }),
     FOUR({ _ -> 4 }),
