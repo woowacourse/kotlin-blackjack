@@ -1,3 +1,3 @@
 package entity
 
-data class Card(private val cardType: CardType, val cardNumber: CardNumber)
+data class Card(val cardType: CardType, val cardNumber: CardNumber)
