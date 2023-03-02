@@ -15,9 +15,9 @@ class CardsTest {
     @Test
     fun `갖고 있는 카드 숫자의 합을 계산해 반환한다`() {
         val cards = Cards()
-        cards.addCard(Card(CardNumber.FOUR, CardShape.DIAMOND))
+        cards.addCard(Card(CardNumber.ONE, CardShape.DIAMOND))
         cards.addCard(Card(CardNumber.JACK, CardShape.CLOVER))
         val actual = cards.sumCardsNumber()
-        assertThat(actual).isEqualTo(14)
+        assertThat(actual).isEqualTo(21)
     }
 }

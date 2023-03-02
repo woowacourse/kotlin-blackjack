@@ -1,7 +1,7 @@
 package blackjack.domain.card
 
 enum class CardNumber(val value: Int, val word: String) {
-    ONE(1, "1"),
+    ONE(1, "A"),
     TWO(2, "2"),
     THREE(3, "3"),
     FOUR(4, "4"),

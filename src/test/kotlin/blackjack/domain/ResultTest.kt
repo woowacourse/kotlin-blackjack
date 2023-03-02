@@ -1,6 +1,5 @@
-package blackjack.domain.player
+package blackjack.domain
 
-import blackjack.domain.Result
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource

@@ -1,6 +1,7 @@
 package blackjack.domain.player
 
 import blackjack.domain.Result
+import blackjack.domain.card.Cards.Companion.MAX_SUM_NUMBER
 
 class Participant(name: String) : Player(name) {
 
