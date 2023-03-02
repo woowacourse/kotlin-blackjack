@@ -8,7 +8,20 @@ class Cards(cards: List<Card> = listOf(Card.draw(), Card.draw())) {
         require(cards.size == 2)
     }
 
-    fun draw() {
-        _cards.add(Card.draw())
+    fun draw(card: Card = Card.draw()) {
+        _cards.add(card)
+    }
+
+    fun getSum(): Int {
+        val count = cards.count { card -> card.number == CardNumber.A }
+        var sum = cards.sumOf { card -> card.number.value }
+        // TODO: depth 개선
+        repeat(count) {
+            sum += 10
+            if (sum > 21)
+                return sum - 10
+        }
+
+        return sum
     }
 }
