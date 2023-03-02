@@ -7,34 +7,21 @@ import domain.result.OutCome.DRAW
 import domain.result.OutCome.LOSE
 import domain.result.OutCome.WIN
 
-class GameResult(val players: List<Player>, val dealer: Dealer) {
-    val playersResult = mutableMapOf<String, OutCome>()
-    val dealerResult = mutableMapOf<OutCome, Int>()
+class GameResult(private val players: List<Player>, private val dealer: Dealer) {
+    fun getPlayerResult(): Map<String, OutCome> =
+        players.associate { compareTotalNumbers(it) }
 
-    init {
-        judgeResult()
+    fun getDealerResult(): Map<OutCome, Int> {
+        return getPlayerResult().values.groupingBy { it.convertOutCome() }.eachCount()
     }
 
-    private fun judgeResult() {
-        players.forEach { compareTotalNumbers(it) }
-    }
-
-    private fun compareTotalNumbers(player: Player) {
+    private fun compareTotalNumbers(player: Player): Pair<String, OutCome> {
         val differenceCardNumber = player.getTotalCardNumber() - dealer.getTotalCardNumber()
-        when {
-            player.gameState == BUST -> setPlayerResult(LOSE, player.name)
-            differenceCardNumber < 0 -> setPlayerResult(LOSE, player.name)
-            differenceCardNumber > 0 -> setPlayerResult(WIN, player.name)
-            else -> setPlayerResult(DRAW, player.name)
+        return when {
+            player.gameState == BUST -> player.name to LOSE
+            differenceCardNumber < 0 -> player.name to LOSE
+            differenceCardNumber > 0 -> player.name to WIN
+            else -> player.name to DRAW
         }
-    }
-
-    private fun setPlayerResult(playerOutCome: OutCome, name: String) {
-        playersResult[name] = playerOutCome
-        addDealerResult(playerOutCome.convertOutCome())
-    }
-
-    private fun addDealerResult(outCome: OutCome) {
-        dealerResult[outCome] = dealerResult[outCome]?.plus(1) ?: 1
     }
 }

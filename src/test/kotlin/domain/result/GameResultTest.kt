@@ -33,8 +33,8 @@ class GameResultTest {
         val expectedPlayersResult = mapOf("빅스" to OutCome.LOSE, "베르" to OutCome.WIN)
 
         assertAll(
-            { assertThat(gameResult.dealerResult).isEqualTo(expectedDealerResult) },
-            { assertThat(gameResult.playersResult).isEqualTo(expectedPlayersResult) }
+            { assertThat(gameResult.getDealerResult()).isEqualTo(expectedDealerResult) },
+            { assertThat(gameResult.getPlayerResult()).isEqualTo(expectedPlayersResult) }
         )
     }
 }
