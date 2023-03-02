@@ -17,4 +17,11 @@ object OutputView {
             println("딜러는 17이상이라 한장의 카드를 더 받지 않았습니다.")
         }
     }
+
+    fun printFinalCards(dealer: Dealer, players: List<Player>) {
+        println("딜러 카드: ${dealer.cards.cards.joinToString(", ")} - 결과: ${dealer.cards.getSum()}")
+        players.forEach { player ->
+            println("${player.name}카드: ${player.cards.cards.joinToString(", ")} - 결과: ${player.cards.getSum()}")
+        }
+    }
 }
