@@ -16,6 +16,10 @@ object ResultView {
         players.forEach { println(it.faceUp()) }
     }
 
+    fun printPlayerCards(player: Player) {
+        println(player.faceUp())
+    }
+
     private fun Dealer.faceUp() = FACE_UP_CARDS.format(this.name, this.cards[0].name())
     private fun Player.faceUp() = FACE_UP_CARDS.format(this.name, this.cards.joinToString(", ") { it.name() })
     private fun Card.name() = "${this.number.mark}${this.shape.mark}"

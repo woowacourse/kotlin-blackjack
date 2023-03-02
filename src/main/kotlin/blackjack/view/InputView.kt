@@ -12,4 +12,13 @@ object InputView {
         val names = input.split(",").map { it.trim() }
         return if (names.all { it.isNotBlank() }) names else getNames()
     }
+
+    fun doesPlayerWantHit(name: String): Boolean {
+        println(INSERT_GET_ONE_MORE_CARD.format(name))
+        return when (readln().lowercase()) {
+            "y" -> true
+            "n" -> false
+            else -> doesPlayerWantHit(name)
+        }
+    }
 }

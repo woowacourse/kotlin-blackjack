@@ -13,10 +13,22 @@ fun main() {
     val dealer = Dealer()
     dealCards(players + dealer)
     ResultView.printSetUp(dealer, players)
+    decideHitOrStand(players)
 }
 
 private fun dealCards(participants: List<Participant>) {
     repeat(INIT_CARD_SIZE) {
         participants.forEach { it.receive(Deck.draw()) }
+    }
+}
+
+private fun decideHitOrStand(players: List<Player>) {
+    players.forEach { decideHitOrStand(it) }
+}
+
+private fun decideHitOrStand(player: Player) {
+    while (player.canHit() && InputView.doesPlayerWantHit(player.name)) {
+        player.receive(Deck.draw())
+        ResultView.printPlayerCards(player)
     }
 }
