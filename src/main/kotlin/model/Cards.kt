@@ -22,6 +22,8 @@ class Cards(cards: List<Card>) {
         return sum
     }
 
+    override fun toString(): String = cards.joinToString(", ")
+
     companion object {
         private const val CARD_DUPLICATE_ERROR = "카드는 중복될 수 없습니다."
     }
