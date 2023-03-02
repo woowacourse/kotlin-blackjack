@@ -20,14 +20,14 @@ class BlackJackGame {
     }
 
     private fun command(user: User, cardDeck: CardDeck) {
-        if (user.name.toString().isDrawCommand()) return
+        if (user.isDrawCommand()) return
 
         user.draw(cardDeck.nextCard())
 
-        if (user.isBust) { command(user, cardDeck) }
+        if (user.isNotBust) { command(user, cardDeck) }
     }
 
-    private fun String.isDrawCommand() = input(this) !in DRAW_COMMANDS
+    private fun User.isDrawCommand() = input(this.name.toString()) !in DRAW_COMMANDS
 
     companion object {
         const val BLACKJACK_NUMBER = 21

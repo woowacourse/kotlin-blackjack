@@ -5,22 +5,22 @@ class User(name: String) {
     val name = Name(name)
     val cards = Cards()
     val score: Int
-        get() = if (maxScore <= BLACKJACK_NUMBER) maxScore else minScore
+        get() = if (isMaxScoreInRange) maxScore else minScore
 
     val minScore: Int
         get() = cards.toList().sumOf { it.value.value }
 
     val maxScore: Int
-        get() {
-            var score = cards.toList().sumOf { it.value.value }
-            if (cards.containsACE() && score <= BLACKJACK_NUMBER - ACE_OTHER_NUMBER_DIFF) {
-                score += ACE_OTHER_NUMBER_DIFF
-            }
-            return score
-        }
+        get() = minScore + if (cards.containsACE() && validateAceCondition) ACE_OTHER_NUMBER_DIFF else 0
 
-    val isBust: Boolean
-        get() = minScore < BLACKJACK_NUMBER
+    val isNotBust: Boolean
+        get() = minScore <= BLACKJACK_NUMBER
+
+    private val validateAceCondition: Boolean
+        get() = minScore + ACE_OTHER_NUMBER_DIFF <= BLACKJACK_NUMBER
+
+    private val isMaxScoreInRange: Boolean
+        get() = maxScore <= BLACKJACK_NUMBER
 
     fun draw(card: Card) {
         cards.add(card)
