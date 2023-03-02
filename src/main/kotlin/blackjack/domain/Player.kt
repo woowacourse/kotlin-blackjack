@@ -1,9 +1,8 @@
 package blackjack.domain
 
-interface Player {
-    val name: String
+open class Player(val name: String) {
 
-    fun checkNameLength() {
+    init {
         require(name.length in 2..10) { ERROR_NAME_LENGTH }
     }
 

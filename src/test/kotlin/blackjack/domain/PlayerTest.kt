@@ -24,9 +24,5 @@ class PlayerTest {
         assertThrows<IllegalArgumentException> { TestPlayer(expected) }
     }
 
-    class TestPlayer(override val name: String) : Player {
-        init {
-            checkNameLength()
-        }
-    }
+    class TestPlayer(name: String) : Player(name)
 }
