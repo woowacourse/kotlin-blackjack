@@ -1,3 +1,5 @@
+package model
+
 @JvmInline
 value class Name(val value: String) {
     init {

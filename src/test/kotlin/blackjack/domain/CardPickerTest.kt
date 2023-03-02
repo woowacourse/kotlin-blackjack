@@ -1,7 +1,9 @@
-package blackjack
+package blackjack.domain
 
-import CardPackGenerator
-import CardPicker
+import domain.CardPackGenerator
+import domain.CardPicker
+import model.Rank
+import model.Suit
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

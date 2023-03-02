@@ -1,3 +1,5 @@
+package model
+
 enum class Rank(private val score: Int) {
     ACE(1),
     DEUCE(2),

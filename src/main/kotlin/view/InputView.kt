@@ -1,6 +1,6 @@
 package view
 
-import Name
+import model.Name
 
 class InputView {
     fun readName(): List<Name> {

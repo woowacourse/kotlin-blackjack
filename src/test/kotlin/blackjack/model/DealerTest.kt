@@ -1,8 +1,10 @@
-package blackjack
+package blackjack.model
 
-import Card
-import Cards
-import Dealer
+import model.Card
+import model.Cards
+import model.Dealer
+import model.Rank
+import model.Suit
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

@@ -1,3 +1,5 @@
+package model
+
 class GameResult private constructor(val playersResult: Map<String, Boolean>) {
 
     fun getDealerWinResult(): Int = playersResult.count { !it.value }

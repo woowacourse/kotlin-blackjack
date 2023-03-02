@@ -1,3 +1,5 @@
+package model
+
 class Cards(cards: List<Card>) {
     private val _cards = cards.toMutableList()
     val cards: List<Card>

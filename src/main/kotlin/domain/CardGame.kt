@@ -1,3 +1,7 @@
+package domain
+
+import model.Cards
+
 class CardGame(private val cardPicker: CardPicker) {
     fun pickTwice(): Cards = Cards(
         buildList {
