@@ -53,5 +53,13 @@ class PlayerTest {
         assertThat(actual).isEqualTo(12)
     }
 
+    @Test
+    fun `카드를 발급받아 카드의 개수가 늘었는지 확인한다`() {
+        val player = Player("aaa")
+        player.addCard(Card(CardNumber.EIGHT, CardShape.CLOVER))
+        player.generateCard()
+        assertThat(player.cards.values.size).isEqualTo(2)
+    }
+
     class TestPlayer(name: String) : Player(name)
 }

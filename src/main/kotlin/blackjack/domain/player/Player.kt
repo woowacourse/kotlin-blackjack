@@ -1,9 +1,16 @@
 package blackjack.domain.player
 
+import blackjack.domain.RandomGenerator
 import blackjack.domain.card.Card
+import blackjack.domain.card.CardGenerator
 import blackjack.domain.card.Cards
 
-open class Player(val name: String) {
+open class Player(
+    val name: String,
+    private val generator: CardGenerator = CardGenerator(
+        RandomGenerator()
+    )
+) {
 
     val cards: Cards = Cards()
 
@@ -13,6 +20,10 @@ open class Player(val name: String) {
 
     fun addCard(card: Card) {
         cards.addCard(card)
+    }
+
+    fun generateCard() {
+        cards.addCard(generator.generateCard())
     }
 
     companion object {

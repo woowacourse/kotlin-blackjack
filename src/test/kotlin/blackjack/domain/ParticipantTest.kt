@@ -16,12 +16,4 @@ class ParticipantTest {
         val actual = participant.isGeneratePossible()
         assertThat(actual).isEqualTo(true)
     }
-
-    @Test
-    fun `카드를 발급받는다`() {
-        val participant = Participant("aaa")
-        participant.addCard(Card(CardNumber.EIGHT, CardShape.CLOVER))
-        participant.generateCard()
-        assertThat(participant.cards.values.size).isEqualTo(2)
-    }
 }
