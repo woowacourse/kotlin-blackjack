@@ -40,7 +40,7 @@ class PlayerTest {
         player.receiveCard(Card(HEART, number1))
         player.receiveCard(Card(HEART, number2))
 
-        assertThat(player.calculateTotalCardNumber()).isEqualTo(sum)
+        assertThat(player.getTotalCardNumber()).isEqualTo(sum)
     }
 
     @Test

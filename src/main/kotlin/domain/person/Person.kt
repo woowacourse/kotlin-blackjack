@@ -21,7 +21,7 @@ abstract class Person {
 
     protected abstract fun checkState()
 
-    fun calculateTotalCardNumber(): Int {
+    fun getTotalCardNumber(): Int {
         val sumExceptAce: Int = calculateSumExceptAce()
         val aceCount: Int = countAce()
         return sumExceptAce + calculateSumAce(BLACK_JACK - sumExceptAce, aceCount)

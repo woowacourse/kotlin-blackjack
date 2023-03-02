@@ -40,7 +40,7 @@ class DealerTest {
         dealer.receiveCard(Card(CardShape.HEART, number1))
         dealer.receiveCard(Card(CardShape.HEART, number2))
 
-        assertThat(dealer.calculateTotalCardNumber()).isEqualTo(sum)
+        assertThat(dealer.getTotalCardNumber()).isEqualTo(sum)
     }
 
     @Test
