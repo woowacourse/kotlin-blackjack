@@ -16,16 +16,12 @@ enum class Rank(private val score: Int, val description: String? = null) {
     ;
 
     fun getScore(score: Int = 0): Int {
-        return when (this) {
+        when (this) {
             ACE -> {
-                if (score + ACE_SCORE_ELEVEN > WIN_SCORE) {
-                    ACE_SCORE_ONE
-                } else {
-                    ACE_SCORE_ELEVEN
-                }
+                if (score + ACE_SCORE_ELEVEN > WIN_SCORE) return ACE_SCORE_ONE
+                return ACE_SCORE_ELEVEN
             }
-
-            else -> this.score
+            else -> return this.score
         }
     }
 
