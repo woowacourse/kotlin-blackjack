@@ -11,4 +11,12 @@ class Player(name: Name, cards: Cards) : Participant(name, cards) {
             is Cards.State.NoBurst -> true
         }
     }
+
+    fun getGameResult(compareState: Cards.State): GameResult {
+        val myState = getSumStateResult()
+        if (myState is Cards.State.Burst) return GameResult.LOSE
+        if (compareState is Cards.State.Burst) return GameResult.WIN
+        if (myState.sum > compareState.sum) return GameResult.WIN
+        return GameResult.LOSE
+    }
 }

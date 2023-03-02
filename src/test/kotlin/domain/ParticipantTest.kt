@@ -24,7 +24,7 @@ class ParticipantTest {
             }
         }
 
-        val actual = participant.getResult()
+        val actual = participant.getSumStateResult()
         val expected = Cards.State.NoBurst(17)
         assertThat(actual).isEqualTo(expected)
 
