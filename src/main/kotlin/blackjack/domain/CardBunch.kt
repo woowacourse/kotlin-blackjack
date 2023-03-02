@@ -9,7 +9,7 @@ class CardBunch private constructor(cards: MutableSet<Card>) {
     }
 
     private fun validateSize() {
-        require(_cards.size == 2) { INITIAL_SIZE_ERROR }
+        require(_cards.size == INITIAL_CARD_SIZE) { INITIAL_SIZE_ERROR }
     }
 
     fun addCard(card: Card) {
@@ -29,16 +29,20 @@ class CardBunch private constructor(cards: MutableSet<Card>) {
     }
 
     private fun checkAceValue(result: Int): Int {
-        return when (result + 11 > 21) {
-            true -> 1
-            false -> 11
+        return when (result + BIG_ACE_SCORE > MAX_CONDITION) {
+            true -> SMALL_ACE_SCORE
+            false -> BIG_ACE_SCORE
         }
     }
 
-    fun isBurst(): Boolean = getTotalScore() > 21
+    fun isBurst(): Boolean = getTotalScore() > MAX_CONDITION
 
     companion object {
         private const val INITIAL_SIZE_ERROR = "초기 카드는 2장이 배정되어야 합니다."
         private const val DUPLICATE_ERROR = "중복된 카드는 추가할 수 없습니다."
+        private const val INITIAL_CARD_SIZE = 2
+        private const val BIG_ACE_SCORE = 11
+        private const val SMALL_ACE_SCORE = 1
+        private const val MAX_CONDITION = 21
     }
 }
