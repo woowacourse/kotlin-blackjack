@@ -14,4 +14,16 @@ class DealerTest {
         dealer.pickCard(card)
         assertThat(dealer.cards).isEqualTo(listOf(card))
     }
+
+    @Test
+    fun `딜러 카드의 합이 16을 넘었을 경우 true를 반환한다`() {
+        val dealer = Dealer(mutableListOf(Card(Shape.SPADE, CardValue.JACK), Card(Shape.SPADE, CardValue.JACK)))
+        assertThat(dealer.checkAvailableForPick()).isTrue
+    }
+
+    @Test
+    fun `딜러 카드의 합이 16을 넘지 않았을 경우 false를 반환한다`() {
+        val dealer = Dealer(mutableListOf(Card(Shape.SPADE, CardValue.JACK)))
+        assertThat(dealer.checkAvailableForPick()).isFalse
+    }
 }
