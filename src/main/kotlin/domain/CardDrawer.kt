@@ -1,5 +1,5 @@
 package domain
 
 interface CardDrawer {
-    fun draw(): Card?
+    fun draw(): Card
 }

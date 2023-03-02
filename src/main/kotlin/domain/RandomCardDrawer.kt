@@ -18,8 +18,8 @@ class RandomCardDrawer : CardDrawer {
         return cards.contains(card)
     }
 
-    override fun draw(): Card? {
-        val drawCard = cards.shuffled().getOrNull(0) ?: return null
+    override fun draw(): Card {
+        val drawCard = cards.shuffled()[0]
         cards.remove(drawCard)
         return drawCard
     }
