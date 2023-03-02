@@ -22,8 +22,8 @@ class ResultView {
         }
     }
 
-    private fun formatDealerGameResult(dealerGameResult: DealerGameResult) {
-        dealerGameResult.value.asSequence().joinToString(" ") {
+    private fun formatDealerGameResult(dealerGameResult: DealerGameResult): String {
+        return dealerGameResult.value.asSequence().joinToString(" ") {
             MESSAGE_GAME_RESULT_TYPE.format(it.value, gameResultTypeToString(it.key))
         }
     }
