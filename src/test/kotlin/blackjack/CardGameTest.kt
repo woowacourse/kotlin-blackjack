@@ -1,14 +1,15 @@
 package blackjack
 
+import Card
 import CardGame
 import CardPackGenerator
 import CardPicker
+import Cards
 import Player
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class CardGameTest {
-
     @Test
     fun `카드를 플레이어별로 2장씩 랜덤으로 지급한다`() {
         val game = CardGame(CardPicker(CardPackGenerator().createCards()))

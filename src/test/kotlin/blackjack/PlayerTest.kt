@@ -21,4 +21,32 @@ class PlayerTest {
         val player = Player(Cards(card))
         assertThat(player.cards.cards).isEqualTo(listOf(Card(Rank.ACE, Suit.DIAMOND), Card(Rank.ACE, Suit.CLOVER)))
     }
+
+    @Test
+    fun `카드의 합이 21이 넘지 않으면 burst이다`() {
+        val player = Player(
+            Cards(
+                listOf(
+                    Card(Rank.KING, Suit.DIAMOND),
+                    Card(Rank.JACK, Suit.CLOVER),
+                    Card(Rank.ACE, Suit.HEART),
+                ),
+            ),
+        )
+        assertThat(player.isBurst()).isFalse
+    }
+
+    @Test
+    fun `카드의 합이 21이 넘으면 burst이다`() {
+        val player = Player(
+            Cards(
+                listOf(
+                    Card(Rank.KING, Suit.DIAMOND),
+                    Card(Rank.JACK, Suit.CLOVER),
+                    Card(Rank.JACK, Suit.HEART),
+                ),
+            ),
+        )
+        assertThat(player.isBurst()).isTrue
+    }
 }

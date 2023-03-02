@@ -37,4 +37,10 @@ class CardsTest {
         cards.add(Card(Rank.DEUCE, Suit.DIAMOND))
         assertThat(cards.cards.size).isEqualTo(3)
     }
+
+    @Test
+    fun `카드의 합을 구할 수 있다`() {
+        val cards = Cards(listOf(Card(Rank.ACE, Suit.CLOVER), Card(Rank.DEUCE, Suit.DIAMOND)))
+        assertThat(cards.sum()).isEqualTo(13)
+    }
 }

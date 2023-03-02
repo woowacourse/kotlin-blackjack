@@ -11,6 +11,14 @@ class Cards(cards: List<Card>) {
         _cards.add(card)
     }
 
+    fun sum(): Int {
+        var sum = _cards.filter { it.rank != Rank.ACE }.sumOf { it.rank.getScore(0) }
+        for (card in _cards.filter { it.rank == Rank.ACE }) {
+            sum += card.rank.getScore(sum)
+        }
+        return sum
+    }
+
     companion object {
         private const val CARD_DUPLICATE_ERROR = "카드는 중복될 수 없습니다."
     }
