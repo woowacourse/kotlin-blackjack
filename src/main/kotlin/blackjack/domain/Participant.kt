@@ -1,3 +1,9 @@
 package blackjack.domain
 
-interface Participant
+interface Participant {
+    val cardBunch: CardBunch
+
+    fun receiveCard(card: Card) {
+        cardBunch.addCard(card)
+    }
+}

@@ -1,3 +1,3 @@
 package blackjack.domain
 
-class Player(val name: String) : Participant
+class Player(val name: String, override val cardBunch: CardBunch) : Participant

@@ -13,8 +13,8 @@
  
 
 ### Participant
-- [ ] CardBunch를 소유한다
-- [ ] 카드를 받아서 cardBunch에 추가한다
+- [x] CardBunch를 소유한다
+- [x] 카드를 받아서 cardBunch에 추가한다
 
 #### Dealer
 - [ ] 최종 승패를 계산한다
