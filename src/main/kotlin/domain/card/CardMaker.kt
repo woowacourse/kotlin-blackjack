@@ -12,7 +12,7 @@ class CardMaker {
 
     private fun makeCard(shape: Shape): List<Card> {
         val result = mutableListOf<Card>()
-        Card.VALUES.forEach {
+        CardValue.values().forEach {
             result.add(Card(shape, it))
         }
         return result.toList()

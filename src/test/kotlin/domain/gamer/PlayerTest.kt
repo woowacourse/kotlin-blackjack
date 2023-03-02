@@ -1,6 +1,7 @@
 package domain.gamer
 
 import domain.card.Card
+import domain.card.CardValue
 import domain.card.Shape
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -24,21 +25,31 @@ class PlayerTest {
         private fun generateCard(): List<Arguments> =
             listOf(
                 Arguments.of(
-                    listOf(Card(Shape.SPADE, "A"), Card(Shape.HEART, "2"), Card(Shape.CLOVER, "3")),
-                    listOf(Card(Shape.SPADE, "Q"), Card(Shape.SPADE, "3"))
+                    listOf(
+                        Card(Shape.SPADE, CardValue.ACE),
+                        Card(Shape.HEART, CardValue.TWO),
+                        Card(Shape.CLOVER, CardValue.THREE)
+                    ),
+                    listOf(Card(Shape.SPADE, CardValue.QUEEN), Card(Shape.SPADE, CardValue.THREE))
                 )
             )
     }
 
     @Test
     fun `플레이어 카드의 합이 21이 넘었을 경우 true를 반환한다`() {
-        val player = Player(mutableListOf(Card(Shape.SPADE, "J"), Card(Shape.SPADE, "J"), Card(Shape.SPADE, "J")))
+        val player = Player(
+            mutableListOf(
+                Card(Shape.SPADE, CardValue.JACK),
+                Card(Shape.SPADE, CardValue.JACK),
+                Card(Shape.SPADE, CardValue.JACK)
+            )
+        )
         assertThat(player.checkBurst()).isTrue
     }
 
     @Test
     fun `플레이어 카드의 합이 21이 넘지 않았을 경우 false를 반환한다`() {
-        val player = Player(mutableListOf(Card(Shape.SPADE, "J"), Card(Shape.SPADE, "J")))
+        val player = Player(mutableListOf(Card(Shape.SPADE, CardValue.JACK), Card(Shape.SPADE, CardValue.JACK)))
         assertThat(player.checkBurst()).isFalse
     }
 }

@@ -5,8 +5,8 @@ import org.junit.jupiter.api.Test
 
 class CardMakerTest {
     @Test
-    fun `카드를 만들었을 때 48장이다`() {
+    fun `카드를 만들었을 때 52장이다`() {
         val cards = CardMaker().makeCards()
-        assertThat(cards.size).isEqualTo(48)
+        assertThat(cards.size).isEqualTo(52)
     }
 }
