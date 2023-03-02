@@ -39,6 +39,7 @@ class PlayerTest {
     fun `카드 패의 총합을 계산한다`(number1: CardNumber, number2: CardNumber, sum: Int) {
         player.receiveCard(Card(HEART, number1))
         player.receiveCard(Card(HEART, number2))
+
         assertThat(player.calculateTotalCardNumber()).isEqualTo(sum)
     }
 
@@ -47,12 +48,14 @@ class PlayerTest {
         player.receiveCard(Card(HEART, CardNumber.KING))
         player.receiveCard(Card(HEART, CardNumber.QUEEN))
         player.receiveCard(Card(HEART, CardNumber.JACK))
+
         assertThat(player.gameState).isEqualTo(GameState.BUST)
     }
 
     @Test
     fun `카드를 받기를 거부하면 게임 상태가 STAND 가 된다`() {
         player.rejectReceiveCard()
+
         assertThat(player.gameState).isEqualTo(GameState.STAND)
     }
 }

@@ -14,9 +14,12 @@ abstract class Person {
     var gameState: GameState = GameState.HIT
         protected set
 
-    open fun receiveCard(card: Card) {
+    fun receiveCard(card: Card) {
         _cards.add(card)
+        checkState()
     }
+
+    protected abstract fun checkState()
 
     fun calculateTotalCardNumber(): Int {
         val sumExceptAce: Int = calculateSumExceptAce()
