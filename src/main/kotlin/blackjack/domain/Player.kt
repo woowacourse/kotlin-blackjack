@@ -7,7 +7,7 @@ open class Player(val name: String) {
         hand.add(card)
     }
 
-    fun isBust(): Boolean = hand.calculateTotalScore() > PlayerHand.blackjackScore()
+    fun isBust(): Boolean = hand.calculateTotalScore() > GameResult.blackjackScore()
 
     fun getTotalScore(): Int = hand.calculateTotalScore()
 

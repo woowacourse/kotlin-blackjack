@@ -18,14 +18,11 @@ class PlayerHand {
     }
 
     private fun calculateAceScore(score: Int): Int =
-        if (score + ACE_MAX_SCORE > BLACKJACK_SCORE) ACE_MIN_SCORE else ACE_MAX_SCORE
+        if (score + ACE_MAX_SCORE > GameResult.blackjackScore()) ACE_MIN_SCORE else ACE_MAX_SCORE
 
     companion object {
-        private const val BLACKJACK_SCORE = 21
         private const val ACE_MIN_SCORE = 1
         private const val ACE_MAX_SCORE = 11
         private const val JQK_SCORE = 10
-
-        fun blackjackScore(): Int = BLACKJACK_SCORE
     }
 }
