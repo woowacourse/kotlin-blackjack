@@ -1,7 +1,6 @@
-import domain.CardMachine
-import domain.Dealer
-import domain.User
-import domain.UserNameContainer
+import domain.*
+import domain.Answer.Companion.NO
+import domain.Answer.Companion.YES
 import view.LoginView
 import view.PlayGameView
 
@@ -23,6 +22,27 @@ class Controller(
         val dealer = Dealer.create(dealerCards)
         playGameView.printNoticeSplitCard(userNames)
         playGameView.printPlayerCard(dealer, users)
+
+        users.forEach { user ->
+            repeatGetCommand(user)
+        }
+    }
+
+    private fun repeatGetCommand(user: User) {
+        val answer = getAnswer(user)
+        if (answer.value == YES) {
+            user.addCard(CardMachine.getNewCard())
+            playGameView.printUserCard(user)
+            repeatGetCommand(user)
+        }
+
+        if (answer.value == NO) {
+            playGameView.printUserCard(user)
+        }
+    }
+
+    private fun getAnswer(user: User): Answer {
+        return repeatWithRunCatching { Answer(playGameView.requestOneMoreCard(user)) }
     }
 
     private fun getUserNames(): UserNameContainer = UserNameContainer(loginView.requestPlayerName())

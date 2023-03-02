@@ -17,10 +17,20 @@ class PlayGameView {
         }
     }
 
+    fun printUserCard(user: User) {
+        println(USERS_CARD.format(user.name, (user.cards.map { it.toString() }).joinToString(SEPARATOR)))
+    }
+
+    fun requestOneMoreCard(user: User): String {
+        println(REQUEST_MORE_CARD.format(user.name))
+        return readLine() ?: requestOneMoreCard(user)
+    }
+
     companion object {
         private const val NOTICE_SPLIT_CARD = "딜러와 %s에게 2장의 카드를 나누었습니다."
         private const val DEALER_CARD = "딜러: %s"
         private const val USERS_CARD = "%s: %s"
         private const val SEPARATOR = ", "
+        private const val REQUEST_MORE_CARD = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)"
     }
 }

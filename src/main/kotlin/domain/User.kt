@@ -10,6 +10,10 @@ class User(
         return _cards.sumOf { Card.valueOf(it) }
     }
 
+    fun addCard(card: Card) {
+        _cards.add(card)
+    }
+
     companion object {
         fun create(userNameAndCard: Pair<String, List<Card>>): User =
             User(userNameAndCard.first, userNameAndCard.second.toMutableList())
