@@ -5,4 +5,8 @@ abstract class User(val cards: Cards) {
     fun cardsNumberSum(): Int {
         return cards.sumOfNumbers()
     }
+
+    companion object {
+        const val SINGLE_DISTRIBUTE_COUNT = 1
+    }
 }

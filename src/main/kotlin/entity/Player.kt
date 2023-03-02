@@ -3,7 +3,7 @@ package entity
 import misc.GameRule
 import model.CardDistributor
 
-class Player(val name: String, cards: Cards) : User(cards) {
+class Player(val name: String, cards: Cards = Cards(listOf())) : User(cards) {
     override fun isDistributable(): Boolean = cardsNumberSum() < GameRule.WINNING_NUMBER
 
     fun determineGameResult(dealerCardNumberSum: Int): Pair<Player, GameResultType> {
@@ -28,7 +28,7 @@ class Player(val name: String, cards: Cards) : User(cards) {
             printMessage(name)
             val response = response()
             if (response == "y") {
-                cards.addCards(cardDistributor.distribute(1))
+                cards.addCards(cardDistributor.distribute(SINGLE_DISTRIBUTE_COUNT))
             }
         }
     }
