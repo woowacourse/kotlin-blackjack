@@ -13,7 +13,7 @@ class ParticipantTest {
     fun `카드를 발급 받을 수 있는지 확인한다`() {
         val participant = Participant("aaa")
         participant.addCard(Card(CardNumber.EIGHT, CardShape.CLOVER))
-        val actual = participant.isGeneratePossible()
+        val actual = participant.isGenerateCardPossible()
         assertThat(actual).isEqualTo(true)
     }
 }

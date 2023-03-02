@@ -7,7 +7,7 @@ class Participant(name: String) : Player(name) {
     lateinit var result: Result
         private set
 
-    fun isGeneratePossible(): Boolean {
+    fun isGenerateCardPossible(): Boolean {
         if (cards.sumCardsNumber() > MAX_SUM_NUMBER) return false
         return true
     }
