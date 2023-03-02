@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import blackjack.const.MAX_SCORE_CONDITION
+
 class CardBunch private constructor(cards: MutableSet<Card>) {
     private val _cards: MutableSet<Card> = cards
     val cards: Set<Card> get() = _cards.toSet()
@@ -29,13 +31,13 @@ class CardBunch private constructor(cards: MutableSet<Card>) {
     }
 
     private fun checkAceValue(result: Int): Int {
-        return when (result + BIG_ACE_SCORE > MAX_CONDITION) {
+        return when (result + BIG_ACE_SCORE > MAX_SCORE_CONDITION) {
             true -> SMALL_ACE_SCORE
             false -> BIG_ACE_SCORE
         }
     }
 
-    fun isBurst(): Boolean = getTotalScore() > MAX_CONDITION
+    fun isBurst(): Boolean = getTotalScore() > MAX_SCORE_CONDITION
 
     companion object {
         private const val INITIAL_SIZE_ERROR = "초기 카드는 2장이 배정되어야 합니다."
@@ -43,6 +45,5 @@ class CardBunch private constructor(cards: MutableSet<Card>) {
         private const val INITIAL_CARD_SIZE = 2
         private const val BIG_ACE_SCORE = 11
         private const val SMALL_ACE_SCORE = 1
-        private const val MAX_CONDITION = 21
     }
 }
