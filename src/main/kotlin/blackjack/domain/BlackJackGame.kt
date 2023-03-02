@@ -2,27 +2,20 @@ package blackjack.domain
 
 class BlackJackGame {
     private lateinit var input: (String) -> String
-    private lateinit var output: (User) -> Unit
-    private lateinit var dealerOutput: () -> Unit
 
     fun input(func: (String) -> String) { input = func }
 
-    fun output(func: (User) -> Unit) { output = func }
-
-    fun dealerOutput(func: () -> Unit) { dealerOutput = func }
-
-    fun BlackJack.run() {
-        this.usersTurn()
-        this.dealerTurn()
+    fun BlackJack.usersTurn(output: (User) -> Unit) {
+        users.forEach { user ->
+            command(user, this.cardDeck)
+            output(user)
+        }
     }
 
-    private fun BlackJack.usersTurn() =
-        users.forEach { user -> command(user, this.cardDeck) }
-
-    private fun BlackJack.dealerTurn() {
+    fun BlackJack.dealerTurn(output: () -> Unit) {
         while (dealer.maxScore < DEALER_MIN_NUMBER) {
             dealer.draw(cardDeck.nextCard())
-            dealerOutput()
+            output()
         }
     }
 
@@ -30,7 +23,6 @@ class BlackJackGame {
         if (user.name.toString().isDrawCommand()) return
 
         user.draw(cardDeck.nextCard())
-        output(user)
 
         if (user.isBust) { command(user, cardDeck) }
     }
