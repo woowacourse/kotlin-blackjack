@@ -17,7 +17,7 @@
 - [x] 카드를 받아서 cardBunch에 추가한다
 
 #### Dealer
-- [ ] 최종 승패를 계산한다
+- [x] 최종 승패를 계산한다
 - [x] 딜러 카드의 합이 16이하인지 판단한다
 
 #### Player
@@ -35,6 +35,8 @@
 #### CardNumber
 - [x] Value : Int?
 - [x] Ace, Jack, Queen, King ... 숫자 영문 표기
+#### Consequence
+- [x] WIN,LOSE,DRAW
 
 ## View
 ### InputView
