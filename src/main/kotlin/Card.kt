@@ -1,4 +1,8 @@
-class Card(val number: CardNumber, val shape: Shape) {
+class Card(
+    val number: CardNumber,
+    val shape: Shape
+) {
+
     override fun toString(): String {
         var numberValue = number.name
         if (numberValue.length != 1) {

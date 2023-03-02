@@ -1,4 +1,6 @@
-class Cards(cards: List<Card> = listOf(Card.draw(), Card.draw())) {
+class Cards(
+    cards: List<Card> = listOf(Card.draw(), Card.draw())
+) {
 
     private var _cards: MutableList<Card> = cards.toMutableList()
     val cards: List<Card>
