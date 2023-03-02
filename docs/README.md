@@ -5,7 +5,7 @@
 - [X] Shape와 Value를 저장한다
 
 #### CardDeck 
-  - [ ] Card로 포장하여 반환하다
+  - [x] Card로 포장하여 반환하다
   ##### RandomShapeGenerator
   - [x] Shape를 랜덤으로 뽑는다
   ##### RandomCardNumberGenerator -> Map<Shape, Value>
