@@ -6,6 +6,13 @@ import org.junit.jupiter.api.Test
 class CardGeneratorTest {
 
     @Test
+    fun `카드를 발행한다`() {
+        val cardGenerator = CardGenerator(TestCardGenerator(CardNumber.TWO, CardShape.CLOVER))
+        val actual = cardGenerator.generateCard()
+        assertThat(actual).isEqualTo(Card(CardNumber.TWO, CardShape.CLOVER))
+    }
+
+    @Test
     fun `카드 숫자를 랜덤으로 발행한다`() {
         val cardGenerator = CardGenerator(TestCardGenerator(CardNumber.TWO, CardShape.CLOVER))
         val actual = cardGenerator.generateCardNumber()
@@ -23,6 +30,7 @@ class CardGeneratorTest {
         private val number: CardNumber,
         private val shape: CardShape
     ) : Generator {
+
         override fun generateCardNumber(): CardNumber = number
 
         override fun generateCardShape(): CardShape = shape
