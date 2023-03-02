@@ -1,6 +1,6 @@
 class Player(
     val name: String,
-    val cards: Cards
+    val cards: Cards = Cards()
 ) {
     fun isPossibleToDraw(): Boolean {
         if (cards.cards.sumOf { card -> card.number.value } > 21)

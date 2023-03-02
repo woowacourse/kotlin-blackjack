@@ -1,4 +1,4 @@
-class Dealer(val cards: Cards) {
+class Dealer(val cards: Cards = Cards()) {
 
     fun isPossibleToDraw(): Boolean {
         if (cards.getSum() >= 17)
