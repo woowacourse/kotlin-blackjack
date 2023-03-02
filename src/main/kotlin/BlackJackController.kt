@@ -1,8 +1,18 @@
 class BlackJackController(
-    private val dealer: Dealer = Dealer()
+    private val dealer: Dealer = Dealer(),
+    private val blackJackReferee: BlackJackReferee = BlackJackReferee()
 ) {
 
     private lateinit var players: List<Player>
+
+    fun run() {
+        initGamePlayers()
+        showDividingCards()
+        drawAdditionalCards()
+        drawAdditionalCardForDealer()
+        showFinalCards()
+        judgeGameResults()
+    }
 
     private fun initGamePlayers() {
         players = InputView.requestPlayersName().map { name ->
@@ -43,4 +53,13 @@ class BlackJackController(
     }
 
     private fun showFinalCards() = OutputView.printFinalCards(dealer, players)
+
+    private fun judgeGameResults() {
+        val playersGameResult = blackJackReferee.judgeGameResult(players, dealer)
+        val dealerGameResult = playersGameResult.map { playerGameResult ->
+            !playerGameResult.gameResult
+        }
+
+        OutputView.printGameResults(playersGameResult, dealerGameResult)
+    }
 }
