@@ -30,5 +30,14 @@ class PlayerTest {
         val player = TestPlayer("aa")
         assertThat(player.cards.values).isEqualTo(Cards().values)
     }
+
+    @Test
+    fun `새로운 카드를 받아 가진 카드에 추가한다`() {
+        val player = TestPlayer("aa")
+        val expected = Card(CardNumber.FOUR, CardShape.HEART)
+        player.addCard(expected)
+        assertThat(player.cards.values).isEqualTo(listOf(expected))
+    }
+
     class TestPlayer(name: String) : Player(name)
 }
