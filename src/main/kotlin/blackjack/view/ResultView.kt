@@ -52,9 +52,9 @@ object ResultView {
     }
 
     private fun printDealerResult(blackjackResult: BlackjackResult, dealer: Dealer) {
-        val result = ResultType.WIN.toKorean(blackjackResult.getCountOfDealer(ResultType.WIN)) +
-            ResultType.TIE.toKorean(blackjackResult.getCountOfDealer(ResultType.TIE)) +
-            ResultType.LOSE.toKorean(blackjackResult.getCountOfDealer(ResultType.LOSE))
+        val result = ResultType.values().fold("") { s, type ->
+            s + type.toKorean(blackjackResult.getCountOfDealer(type))
+        }
         println(FINAL_RESULT.format(dealer.name, result))
     }
 
