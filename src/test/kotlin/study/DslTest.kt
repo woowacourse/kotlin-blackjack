@@ -36,24 +36,32 @@ class DslTest {
     }
 
     data class Language(
-        var languages: MutableList<Pair<String, Int>> = mutableListOf()
+        private var _languages: MutableList<Pair<String, Int>> = mutableListOf()
     ) {
+        val languages
+            get() = _languages.toList()
+
         infix fun String.level(that: Int) {
-            languages.add(Pair(this, that))
+            _languages.add(Pair(this, that))
         }
     }
 
     data class Skill(
-        var hardSkills: MutableList<String> = mutableListOf<String>(),
-        var softSkills: MutableList<String> = mutableListOf<String>()
+        private var _hardSkills: MutableList<String> = mutableListOf<String>(),
+        private var _softSkills: MutableList<String> = mutableListOf<String>()
     ) {
+        val hardSkills
+            get() = _hardSkills.toList()
+
+        val softSkills
+            get() = _softSkills.toList()
 
         fun soft(name: String) {
-            softSkills.add(name)
+            _softSkills.add(name)
         }
 
         fun hard(name: String) {
-            hardSkills.add(name)
+            _hardSkills.add(name)
         }
     }
 
