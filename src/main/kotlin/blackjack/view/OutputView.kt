@@ -6,15 +6,14 @@ object OutputView {
     private const val GAME_SET_UP = "%s와 %s에게 2장의 카드를 나누었습니다."
     private const val DEALER_HIT_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다."
 
-
     fun printSetUp(dto: HandsDTO) {
-        println(GAME_SET_UP.format(dto.dealerName, dto.playerHands.keys.joinToString(", ")))
+        println(GAME_SET_UP.format(dto.dealerHand.name, dto.playerHands.joinToString(", ") { it.name }))
         printSetUpCards(dto)
         printInterval()
     }
 
     private fun printSetUpCards(dto: HandsDTO) {
-        printHand(dto.dealerName, dto.dealerHand)
+        printHand(dto.dealerHand.name, dto.dealerHand.hand)
         dto.playerHands.forEach { (name, hand) -> printHand(name, hand) }
     }
 
