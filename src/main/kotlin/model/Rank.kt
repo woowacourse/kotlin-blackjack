@@ -10,6 +10,7 @@ enum class Rank(private val score: Int, val description: String? = null) {
     SEVEN(7),
     EIGHT(8),
     NINE(9),
+    TEN(10),
     KING(10, "K"),
     QUEEN(10, "Q"),
     JACK(10, "J"),
