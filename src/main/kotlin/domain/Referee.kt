@@ -8,9 +8,18 @@ class Referee(private val dealerScore: Int, private val userScore: List<Int>) {
         }
     }
 
-    private fun calculateResult(score: Int): GameResult {
-        if (((dealerScore > 21) and (score > 21)) or (dealerScore == score)) return GameResult.DRAW
-        if (((dealerScore > score) and (dealerScore < 22)) or (score > 21)) return GameResult.LOSE
-        return GameResult.WIN
+    private fun calculateResult(userScore: Int): GameResult {
+        val dealerOverMaxScore = dealerScore > GAME_MAX_SCORE
+        val playerOverMaxScore = userScore > GAME_MAX_SCORE
+
+        return when {
+            (dealerOverMaxScore and playerOverMaxScore) or (dealerScore == userScore) -> GameResult.DRAW
+            ((dealerScore > userScore) and !dealerOverMaxScore) or playerOverMaxScore -> GameResult.LOSE
+            else -> GameResult.WIN
+        }
+    }
+
+    companion object {
+        private const val GAME_MAX_SCORE = 21
     }
 }
