@@ -1,6 +1,8 @@
 package blackjack.view
 
 import blackjack.domain.Card
+import blackjack.domain.CardNumber
+import blackjack.domain.CardShape
 import blackjack.domain.Dealer
 import blackjack.domain.Dealer.Companion.HIT_STANDARD_SCORE
 import blackjack.domain.Participant
@@ -41,5 +43,22 @@ object ResultView {
     private fun Dealer.faceUpOnlyOne() = FACE_UP_CARDS.format(this.name, this.cards[0].name())
     private fun Participant.faceUp() = FACE_UP_CARDS.format(this.name, this.cards.joinToString(", ") { it.name() })
     private fun Participant.showScore() = SHOW_SCORE.format(this.getScore())
-    private fun Card.name() = "${this.number.mark}${this.shape.mark}"
+    private fun Card.name() = "${this.number.toMark()}${this.shape.toKorean()}"
+
+    private fun CardNumber.toMark() =
+        when (this) {
+            CardNumber.ACE -> "A"
+            CardNumber.JACK -> "J"
+            CardNumber.QUEEN -> "Q"
+            CardNumber.KING -> "K"
+            else -> this.value.toString()
+        }
+
+    private fun CardShape.toKorean() =
+        when (this) {
+            CardShape.DIAMOND -> "다이아몬드"
+            CardShape.HEART -> "하트"
+            CardShape.CLOVER -> "클로버"
+            CardShape.SPADE -> "스페이드"
+        }
 }
