@@ -1,5 +1,6 @@
 package view
 
+import model.Dealer.Companion.DEALER
 import model.GameResult
 import model.Name
 import model.Participant
@@ -30,7 +31,7 @@ class OutputView {
     }
 
     fun printPlayerStatus(participant: Participant) {
-        if (participant.name.value == "딜러") {
+        if (participant.name.value == DEALER) {
             println(MESSAGE_DEALER_STATUS.format(participant.cards.cards[0].toString()))
             return
         }
