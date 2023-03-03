@@ -1,8 +1,8 @@
 package blackjack
 
+import blackjack.domain.BlackjackResult
 import blackjack.domain.Dealer
 import blackjack.domain.Deck
-import blackjack.domain.BlackjackResult
 import blackjack.domain.Participant
 import blackjack.domain.Participant.Companion.INIT_CARD_SIZE
 import blackjack.domain.Player

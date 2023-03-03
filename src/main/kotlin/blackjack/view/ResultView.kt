@@ -1,11 +1,11 @@
 package blackjack.view
 
+import blackjack.domain.BlackjackResult
 import blackjack.domain.Card
 import blackjack.domain.CardNumber
 import blackjack.domain.CardShape
 import blackjack.domain.Dealer
 import blackjack.domain.Dealer.Companion.HIT_STANDARD_SCORE
-import blackjack.domain.BlackjackResult
 import blackjack.domain.Participant
 import blackjack.domain.Participant.Companion.INIT_CARD_SIZE
 import blackjack.domain.Player
@@ -43,7 +43,7 @@ object ResultView {
         println(FINAL_RESULT_MESSAGE)
         printDealerResult(blackjackResult, dealer)
         players.forEach {
-            printPlayerResult(it, blackjackResult[it])
+            printPlayerResult(it, blackjackResult.getResultOf(it))
         }
     }
 
@@ -52,9 +52,9 @@ object ResultView {
     }
 
     private fun printDealerResult(blackjackResult: BlackjackResult, dealer: Dealer) {
-        val result = ResultType.WIN.toKorean(blackjackResult.dealer[ResultType.WIN]) +
-            ResultType.TIE.toKorean(blackjackResult.dealer[ResultType.TIE]) +
-            ResultType.LOSE.toKorean(blackjackResult.dealer[ResultType.LOSE])
+        val result = ResultType.WIN.toKorean(blackjackResult.getCountOfDealer(ResultType.WIN)) +
+            ResultType.TIE.toKorean(blackjackResult.getCountOfDealer(ResultType.TIE)) +
+            ResultType.LOSE.toKorean(blackjackResult.getCountOfDealer(ResultType.LOSE))
         println(FINAL_RESULT.format(dealer.name, result))
     }
 

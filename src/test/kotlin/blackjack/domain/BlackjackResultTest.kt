@@ -16,7 +16,7 @@ class BlackjackResultTest {
         }
         val blackjackResult = BlackjackResult.of(dealer, listOf(player))
 
-        val actual = blackjackResult[player]
+        val actual = blackjackResult.getResultOf(player)
 
         assertThat(actual).isEqualTo(ResultType.WIN)
     }
@@ -35,7 +35,7 @@ class BlackjackResultTest {
         }
         val blackjackResult = BlackjackResult.of(dealer, listOf(player))
 
-        val actual = blackjackResult[player]
+        val actual = blackjackResult.getResultOf(player)
 
         assertThat(actual).isEqualTo(ResultType.LOSE)
     }
@@ -53,7 +53,7 @@ class BlackjackResultTest {
         }
         val blackjackResult = BlackjackResult.of(dealer, listOf(player))
 
-        val actual = blackjackResult[player]
+        val actual = blackjackResult.getResultOf(player)
 
         assertThat(actual).isEqualTo(ResultType.WIN)
     }
@@ -67,7 +67,11 @@ class BlackjackResultTest {
             Player("jason") to ResultType.LOSE
         )
 
-        val actual = BlackjackResult(playerResult).dealer
+        val actual = mapOf(
+            ResultType.WIN to BlackjackResult(playerResult).getCountOfDealer(ResultType.WIN),
+            ResultType.TIE to BlackjackResult(playerResult).getCountOfDealer(ResultType.TIE),
+            ResultType.LOSE to BlackjackResult(playerResult).getCountOfDealer(ResultType.LOSE),
+        )
         val expect = mapOf(
             ResultType.WIN to 2,
             ResultType.TIE to 1,
