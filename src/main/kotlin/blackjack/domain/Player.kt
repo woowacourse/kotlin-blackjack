@@ -13,6 +13,8 @@ class Player(val name: String, override val cardBunch: CardBunch) : Participant 
             Consequence.WIN
         } else if (playerScore == score) {
             Consequence.DRAW
+        } else if (score > MAX_SCORE_CONDITION) {
+            Consequence.WIN
         } else {
             Consequence.LOSE
         }
