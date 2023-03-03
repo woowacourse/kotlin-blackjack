@@ -37,7 +37,7 @@ class CardsTest {
     fun `카드를 한 장씩 추가할 수 있다`() {
         val cards = Cards(listOf(Card(Rank.ACE, Suit.CLOVER), Card(Rank.ACE, Suit.DIAMOND)))
         cards.add(Card(Rank.DEUCE, Suit.DIAMOND))
-        assertThat(cards.cards.size).isEqualTo(3)
+        assertThat(cards.size).isEqualTo(3)
     }
 
     @Test
