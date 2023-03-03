@@ -1,5 +1,7 @@
 package domain
 
+import controller.BlackJackGame
+
 class Cards(cards: Set<Card>) {
     private val _cards = cards.toMutableList()
     val cards: List<Card>
@@ -26,16 +28,16 @@ class Cards(cards: Set<Card>) {
 
     fun minSumState(): State {
         val minSum = sum()
-        if (minSum > 21) return State.Burst(minSum)
+        if (minSum > BlackJackGame.BLACKJACK_NUMBER) return State.Burst(minSum)
         return State.NoBurst(minSum)
     }
 
     fun maxSumState(): State {
         val minSumState = minSumState()
-        val aceCount = cards.count { it.cardNumber == CardNumber.ACE }
-        if (aceCount == 0) return minSumState
-        if (minSumState.sum + 10 > 21) return minSumState
-        return State.NoBurst(minSumState.sum + 10)
+        val aceCount = cards.count { it.isAce }
+        if (aceCount == NO_COUNT) return minSumState
+        if (minSumState.sum + ACE_ADDITIONAL_VALUE > BlackJackGame.BLACKJACK_NUMBER) return minSumState
+        return State.NoBurst(minSumState.sum + ACE_ADDITIONAL_VALUE)
     }
 
     sealed class State(open val sum: Int) {
@@ -47,5 +49,7 @@ class Cards(cards: Set<Card>) {
     companion object {
         private const val MINIMUM_CARDS_SIZE = 2
         private const val ERROR_CARDS_SIZE = "[ERROR] 초기 카드는 ${MINIMUM_CARDS_SIZE}장 이상이어야 합니다."
+        private const val ACE_ADDITIONAL_VALUE = 10
+        private const val NO_COUNT = 0
     }
 }

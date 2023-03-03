@@ -1,6 +1,6 @@
 package domain
 
-enum class GameResult {
-    WIN,
-    LOSE,
+enum class GameResult(val output: String) {
+    WIN("승"),
+    LOSE("패"),
 }

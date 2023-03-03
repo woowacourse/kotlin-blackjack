@@ -4,68 +4,89 @@ import domain.*
 
 class ResultView {
     fun printGameInit(players: Players) {
-        println("\n딜러와 ${formatStringName(players)}에게 2장의 나누었습니다.")
+        println(PRINT_GAME_INIT_MESSAGE.format(formatStringName(players)))
+    }
+
+    private fun formatStringName(players: Players): String {
+        return players.players.joinToString(SEPARATOR) { it.name.name }
     }
 
     fun printInitCards(participants: Participants) {
         participants.participants.forEach { participant ->
-            println(formatStringInitCards(participant))
+            println(PRINT_NAME_AND_CARDS.format(participant.name.name, formatStringCards(participant.showInitCards())))
         }
         println()
     }
 
     fun printPlayerCard(player: Player) {
-        println("${player.name.name}카드: ${formatStringCards(player)}")
+        println(PRINT_NAME_AND_CARDS.format(player.name.name, formatStringCards(player.cards.cards)))
     }
 
-    fun printDealerAddCard() {
-        println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.")
+    fun printDealerAddCard(dealer: Dealer) {
+        println(PRINT_DEALER_ADD_CARD.format(dealer.name.name))
     }
 
     fun printGameResult(players: Players, dealer: Dealer) {
-        println("\n## 최종승패")
-        formatStringGameResult(players, dealer)
+        println(PRINT_GAME_RESULT)
+        formatStringDealerResult(players, dealer)
+        formatStringPlayersResult(players, dealer)
     }
 
-    private fun formatStringName(players: Players): String {
-        val sb = StringBuilder()
-        players.players.forEach { sb.append(it.name.name + ", ") }
-        sb.delete(sb.length - 2, sb.length)
-        return sb.toString()
+    private fun formatStringCards(cards: List<Card>): String {
+        return cards.joinToString(SEPARATOR) { card ->
+            card.info()
+        }
     }
 
-    private fun formatStringCards(participant: Participant): String {
-        val sb = StringBuilder()
-        participant.cards.cards.forEach { sb.append("${it.cardNumber.number}${it.cardCategory.pattern}" + ", ") }
-        sb.delete(sb.length - 2, sb.length)
-        return sb.toString()
+    private fun Card.info(): String {
+        return "${cardNumber.number}${cardCategory.pattern}"
     }
 
-    private fun formatStringInitCards(participant: Participant): String {
-        val sb = StringBuilder()
-        sb.append(participant.name.name + ": ")
-        participant.showInitCards().forEach { sb.append("${it.cardNumber.number}${it.cardCategory.pattern}" + ", ") }
-        sb.delete(sb.length - 2, sb.length)
-        return sb.toString()
-    }
-
-    private fun formatStringGameResult(players: Players, dealer: Dealer) {
+    private fun formatStringDealerResult(players: Players, dealer: Dealer) {
         val dealerResult = dealer.getResult(players)
-        println("딜러: ${dealerResult[GameResult.WIN]}승 ${dealerResult[GameResult.LOSE]}패")
+        println(
+            PRINT_DEALER_GAME_RESULT.format(
+                dealer.name.name,
+                dealerResult[GameResult.WIN],
+                GameResult.WIN.output,
+                dealerResult[GameResult.LOSE],
+                GameResult.LOSE.output
+            )
+        )
+    }
+
+    private fun formatStringPlayersResult(players: Players, dealer: Dealer) {
         players.players.forEach { player ->
             val playerResult = player.getGameResult(dealer.getSumStateResult())
-            if (playerResult == GameResult.WIN) {
-                println("${player.name.name}: 승")
-            } else {
-                println("${player.name.name}: 패")
-            }
+            if (playerResult == GameResult.WIN)
+                println(PRINT_PLAYER_GAME_RESULT.format(player.name.name, GameResult.WIN.output))
+            if (playerResult == GameResult.LOSE)
+                println(PRINT_PLAYER_GAME_RESULT.format(player.name.name, GameResult.LOSE.output))
+
         }
     }
 
     fun printScore(participants: Participants) {
-        participants.participants.forEach {
-            println("${it.name.name} 카드: ${formatStringCards(it)} - 결과: ${it.getSumStateResult().sum}")
+        participants.participants.forEach { participant ->
+            println(
+                PRINT_NAME_AND_CARDS_AND_SCORE.format(
+                    participant.name.name,
+                    formatStringCards(participant.cards.cards),
+                    participant.getSumStateResult().sum
+                )
+            )
         }
+    }
+
+    companion object {
+        private const val PRINT_GAME_INIT_MESSAGE = "\n딜러와 %s에게 ${RandomCardDrawer.DRAW_INIT_CARD_COUNT}장의 나누었습니다."
+        private const val SEPARATOR = ", "
+        private const val PRINT_NAME_AND_CARDS = "%s카드: %s"
+        private const val PRINT_DEALER_ADD_CARD = "\n%s는 ${Dealer.DEALER_ADD_CARD_CONDITION}이하라 한장의 카드를 더 받았습니다."
+        private const val PRINT_GAME_RESULT = "\n## 최종승패"
+        private const val PRINT_DEALER_GAME_RESULT = "%s: %d%s %d%s"
+        private const val PRINT_PLAYER_GAME_RESULT = "%s: %s"
+        private const val PRINT_NAME_AND_CARDS_AND_SCORE = "%s 카드: %s - 결과: %d"
     }
 }
 

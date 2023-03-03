@@ -2,7 +2,7 @@ package domain
 
 class Player(name: Name, cards: Cards) : Participant(name, cards) {
     override fun showInitCards(): List<Card> {
-        return cards.cards.take(2)
+        return cards.cards.take(TAKE_TWO)
     }
 
     override fun isPossibleDrawCard(): Boolean {
@@ -18,5 +18,9 @@ class Player(name: Name, cards: Cards) : Participant(name, cards) {
         if (compareState is Cards.State.Burst) return GameResult.WIN
         if (myState.sum > compareState.sum) return GameResult.WIN
         return GameResult.LOSE
+    }
+
+    companion object {
+        private const val TAKE_TWO = 2
     }
 }

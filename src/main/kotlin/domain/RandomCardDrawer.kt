@@ -25,6 +25,10 @@ class RandomCardDrawer : CardDrawer {
     }
 
     override fun drawInitCards(): Cards {
-        return Cards(List(2) { draw() }.toSet())
+        return Cards(List(DRAW_INIT_CARD_COUNT) { draw() }.toSet())
+    }
+
+    companion object {
+        const val DRAW_INIT_CARD_COUNT = 2
     }
 }
