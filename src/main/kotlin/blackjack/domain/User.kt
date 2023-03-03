@@ -9,9 +9,13 @@ abstract class User(name: String) {
     abstract val isContinue: Boolean
 
     val isBlackJack: Boolean
-        get() = Score(cards).score == BlackJackGame.BLACKJACK_NUMBER
+        get() = Score(cards).score == BLACKJACK_NUMBER
 
     fun draw(card: Card) {
         cards.add(card)
+    }
+
+    companion object {
+        private const val BLACKJACK_NUMBER = 21
     }
 }

@@ -1,12 +1,11 @@
 package blackjack.domain
-
-import blackjack.domain.BlackJackGame.Companion.BLACKJACK_NUMBER
 import java.lang.IllegalStateException
 
 enum class Outcome {
     WIN, DRAW, LOSE;
 
     companion object {
+        private const val BLACKJACK_NUMBER = 21
         fun User.winTo(other: User): Outcome =
             when {
                 other.score > BLACKJACK_NUMBER && this.score > BLACKJACK_NUMBER -> DRAW

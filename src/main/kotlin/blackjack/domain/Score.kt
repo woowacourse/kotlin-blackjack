@@ -11,12 +11,13 @@ class Score(val cards: Cards) {
         get() = minScore + if (cards.containsACE() && validateAceCondition) ACE_OTHER_NUMBER_DIFF else 0
 
     private val validateAceCondition: Boolean
-        get() = minScore + ACE_OTHER_NUMBER_DIFF <= BlackJackGame.BLACKJACK_NUMBER
+        get() = minScore + ACE_OTHER_NUMBER_DIFF <= BLACKJACK_NUMBER
 
     private val isMaxScoreInRange: Boolean
-        get() = maxScore <= BlackJackGame.BLACKJACK_NUMBER
+        get() = maxScore <= BLACKJACK_NUMBER
 
     companion object {
         private const val ACE_OTHER_NUMBER_DIFF = 10
+        private const val BLACKJACK_NUMBER = 21
     }
 }
