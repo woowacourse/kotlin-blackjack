@@ -11,6 +11,7 @@ class DeckTest {
             val card = Deck.draw()
             cards.add(card)
         }
+
         assertThat(cards.size).isEqualTo(52)
     }
 }
