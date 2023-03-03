@@ -8,7 +8,7 @@ class BlackJackBuilderTest {
     @Test
     fun `세팅이 된다`() {
         val blackJack = BlackJackBuilder.init {
-            cardDeck(Card.all().shuffled())
+            cardDeck(Cards.all())
             participants {
                 dealer()
                 guests(listOf("아크", "로피"))

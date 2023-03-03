@@ -3,7 +3,7 @@ package blackjack.controller
 import blackjack.domain.BlackJack
 import blackjack.domain.BlackJackBuilder
 import blackjack.domain.BlackJackGame
-import blackjack.domain.Card
+import blackjack.domain.Cards
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -19,7 +19,7 @@ class BlackJackController(
     }
 
     private fun setBlackJack(): BlackJack = BlackJackBuilder.init {
-        cardDeck(Card.all().shuffled())
+        cardDeck(Cards.all())
         participants {
             dealer()
             guests(inputView.inputParticipants())

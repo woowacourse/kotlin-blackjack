@@ -9,4 +9,14 @@ class Cards(private val cards: MutableSet<Card> = mutableSetOf()) {
     fun add(card: Card) = cards.add(card)
 
     fun containsACE() = cards.map { it.value }.contains(CardValue.ACE)
+
+    companion object {
+        private val CARDS: List<Card> =
+            CardMark.values().map { mark ->
+                CardValue.values().map { value ->
+                    Card(mark, value)
+                }
+            }.flatten()
+        fun all(): List<Card> = CARDS
+    }
 }

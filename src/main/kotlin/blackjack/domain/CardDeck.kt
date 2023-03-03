@@ -13,6 +13,8 @@ class CardDeck(cards: List<Card>) {
 
     fun nextCard(): Card = cards.removeFirst()
 
+    fun shuffle() = cards.shuffle()
+
     companion object {
         private const val CARDS_SIZE = 52
         private const val ERROR_INVALID_CARDS_SIZE = "카드덱 초기 사이즈는 ${CARDS_SIZE}장이어야 합니다."

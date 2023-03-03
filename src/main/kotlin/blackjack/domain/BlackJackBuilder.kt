@@ -5,6 +5,7 @@ class BlackJackBuilder {
     private lateinit var participants: Participants
     fun cardDeck(cards: List<Card>) {
         cardDeck = CardDeck(cards)
+        cardDeck.shuffle()
     }
 
     fun participants(block: ParticipantsBuilder.() -> Unit) {
