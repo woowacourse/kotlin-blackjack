@@ -1,5 +1,6 @@
 package view
 
+import domain.Answer
 import domain.Name
 import domain.Names
 import domain.Player
@@ -11,9 +12,9 @@ class InputView {
         return Names(input.split(",").map { Name(it.trim()) })
     }
 
-    fun readChoiceOfAddCard(player: Player): String {
+    fun readChoiceOfAddCard(player: Player): Answer {
         println("${player.name.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
         val input = readln()
-        return input
+        return Answer.of(input)
     }
 }
