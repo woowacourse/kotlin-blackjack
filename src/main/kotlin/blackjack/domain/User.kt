@@ -7,6 +7,10 @@ abstract class User(name: String) {
         get() = Score(cards).score
 
     abstract val isContinue: Boolean
+
+    val isBlackJack: Boolean
+        get() = Score(cards).score == BlackJackGame.BLACKJACK_NUMBER
+
     fun draw(card: Card) {
         cards.add(card)
     }

@@ -9,6 +9,7 @@ class BlackJackGame {
         guests.forEach { guest -> guestTurn(guest, output) }
 
     fun BlackJack.dealerTurn(output: () -> Unit) {
+        if (dealer.isBlackJack) return
         if (dealer.isContinue) {
             dealer.draw(cardDeck.nextCard())
             output()
@@ -16,6 +17,7 @@ class BlackJackGame {
     }
 
     private fun BlackJack.guestTurn(guest: Guest, output: (User) -> Unit) {
+        if (guest.isBlackJack) return
         when (getCommand(guest.name)) {
             in DRAW_COMMANDS -> draw(guest, output)
             in END_TURN_COMMANDS -> output(guest)
