@@ -5,25 +5,25 @@ class DslTest {
     @Test
     fun name() {
         val person = introduce {
-            name("부나")
+            name("글로")
         }
-        assertThat(person.name).isEqualTo("부나")
+        assertThat(person.name).isEqualTo("글로")
     }
 
     @Test
     fun company() {
         val person = introduce {
-            name("부나")
+            name("글로")
             company("우아한테크코스")
         }
-        assertThat(person.name).isEqualTo("부나")
+        assertThat(person.name).isEqualTo("글로")
         assertThat(person.company).isEqualTo("우아한테크코스")
     }
 
     @Test
     fun skills() {
         val person = introduce {
-            name("부나")
+            name("글로")
             company("우아한테크코스")
             skills {
                 soft("A passion for problem solving")
@@ -31,7 +31,7 @@ class DslTest {
                 hard("Kotlin")
             }
         }
-        assertThat(person.name).isEqualTo("부나")
+        assertThat(person.name).isEqualTo("글로")
         assertThat(person.company).isEqualTo("우아한테크코스")
         assertThat(person.skills["soft"]).containsExactly("A passion for problem solving", "Good communication skills")
         assertThat(person.skills["hard"]).containsExactly("Kotlin")
@@ -40,7 +40,7 @@ class DslTest {
     @Test
     fun language() {
         val person = introduce {
-            name("부나")
+            name("글로")
             company("우아한테크코스")
             skills {
                 soft("A passion for problem solving")
@@ -52,7 +52,7 @@ class DslTest {
                 "English" level 3
             }
         }
-        assertThat(person.name).isEqualTo("부나")
+        assertThat(person.name).isEqualTo("글로")
         assertThat(person.company).isEqualTo("우아한테크코스")
         assertThat(person.skills["soft"]).containsExactly("A passion for problem solving", "Good communication skills")
         assertThat(person.skills["hard"]).containsExactly("Kotlin")
