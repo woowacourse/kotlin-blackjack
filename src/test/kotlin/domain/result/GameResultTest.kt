@@ -27,7 +27,7 @@ class GameResultTest {
             receiveCard(Card(CardShape.CLOVER, CardNumber.KING))
             receiveCard(Card(CardShape.SPADE, CardNumber.NINE))
         }
-        val gameResult = GameResult(players, dealer)
+        val gameResult = GameResult(dealer, players)
 
         val expectedDealerResult = mapOf(OutCome.WIN to 1, OutCome.LOSE to 1)
         val expectedPlayersResult = mapOf("빅스" to OutCome.LOSE, "베르" to OutCome.WIN)

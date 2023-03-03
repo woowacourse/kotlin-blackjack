@@ -7,7 +7,7 @@ import domain.result.OutCome.DRAW
 import domain.result.OutCome.LOSE
 import domain.result.OutCome.WIN
 
-class GameResult(private val players: List<Player>, private val dealer: Dealer) {
+class GameResult(private val dealer: Dealer, private val players: List<Player>) {
     fun getPlayerResult(): Map<String, OutCome> =
         players.associate { compareTotalNumbers(it) }
 
