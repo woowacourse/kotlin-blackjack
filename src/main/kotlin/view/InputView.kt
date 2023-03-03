@@ -13,9 +13,7 @@ class InputView {
         val input = readln()
         require(input.isNotBlank()) { NULL_ERROR }
         require(Regex("[$Y$y$N$n]").matches(input)) { IS_NOT_YES_OR_NO_ERROR }
-        if (input == Y || input == y) {
-            return true
-        }
+        if (input == Y || input == y) return true
         return false
     }
 
