@@ -1,4 +1,4 @@
-package domain.view
+package view
 
 import domain.constant.DEALER_STAND_CONDITION
 import domain.person.Player
@@ -17,9 +17,11 @@ object MainView {
 
     fun printDealerGetMoreCard() {
         println("딜러는 ${DEALER_STAND_CONDITION}이하라 한장의 카드를 더 받았습니다.")
+        println()
     }
 
     fun printDealerNoMoreCard() {
         println("딜러는 ${DEALER_STAND_CONDITION}초과라 한장의 카드를 받지 않습니다.")
+        println()
     }
 }

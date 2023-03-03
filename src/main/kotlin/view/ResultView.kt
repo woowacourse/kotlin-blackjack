@@ -1,4 +1,4 @@
-package domain.view
+package view
 
 import domain.person.Dealer
 import domain.person.Person
@@ -10,6 +10,7 @@ object ResultView {
     fun printPersonsCards(dealer: Dealer, players: List<Player>) {
         printPersonCards(dealer)
         players.forEach { printPersonCards(it) }
+        println()
     }
 
     private fun printPersonCards(person: Person) {
