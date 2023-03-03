@@ -39,9 +39,17 @@ class BlackjackGame(private val names: List<String>) {
         return startDeck
     }
 
-    fun pickCard(name: String) {
+    fun pickPlayerCard(name: String) {
         playersStates.getValue(name).pickCard(deck.giveCard())
     }
 
+    fun pickDealerCard() {
+        dealerState.pickCard(deck.giveCard())
+    }
+
     fun checkBurst(name: String) = playersStates.getValue(name).checkBurst()
+
+    fun checkDealerAvailableForPick(): Boolean {
+        return dealerState.checkAvailableForPick()
+    }
 }

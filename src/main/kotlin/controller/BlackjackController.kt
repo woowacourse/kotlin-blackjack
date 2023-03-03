@@ -1,6 +1,7 @@
 package controller
 
 import domain.BlackjackGame
+import domain.gamer.state.ParticipantState
 import view.InputView
 import view.OutputView
 
@@ -13,6 +14,12 @@ class BlackjackController() {
         OutputView.printDealerSettingCard(blackjackGame.dealerState.cards[0])
         OutputView.printParticipantsCards(blackjackGame.playersStates)
         requestPickCard(names, blackjackGame)
+        dealerPickCard(blackjackGame)
+        val cardResult = mutableMapOf<String, ParticipantState>("딜러" to blackjackGame.dealerState)
+        blackjackGame.playersStates.map {
+            cardResult.put(it.key, it.value)
+        }
+        OutputView.printCardResult(cardResult)
     }
 
     private fun requestPickCard(names: List<String>, blackjackGame: BlackjackGame) {
@@ -24,7 +31,7 @@ class BlackjackController() {
     private fun repeatPickCard(blackjackGame: BlackjackGame, name: String) {
         while (!blackjackGame.checkBurst(name)) {
             val answer = validatePickAnswer(name)
-            if (answer == "y") blackjackGame.pickCard(name)
+            if (answer == "y") blackjackGame.pickPlayerCard(name)
             if (answer == "n") return
             OutputView.printParticipantCards(name, blackjackGame.playersStates.getValue(name).cards)
         }
@@ -33,5 +40,12 @@ class BlackjackController() {
     private fun validatePickAnswer(name: String): String {
         val answer = InputView.inputRepeatGetCard(name)
         return answer ?: validatePickAnswer(name)
+    }
+
+    private fun dealerPickCard(blackjackGame: BlackjackGame) {
+        if (blackjackGame.checkDealerAvailableForPick()) {
+            OutputView.printDealerUnder16()
+            blackjackGame.pickDealerCard()
+        }
     }
 }
