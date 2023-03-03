@@ -2,7 +2,7 @@ package blackjack.domain
 
 class Card(
     val number: CardNumber,
-    val shape: Shape
+    private val shape: Shape
 ) {
 
     override fun toString(): String {
