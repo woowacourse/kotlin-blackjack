@@ -1,3 +1,5 @@
+package blackjack.domain
+
 class Dealer(val cards: Cards = Cards()) {
 
     private fun isPossibleToDraw(): DrawState {

@@ -1,3 +1,9 @@
+package domain
+
+import blackjack.domain.Card
+import blackjack.domain.CardNumber
+import blackjack.domain.Cards
+import blackjack.domain.Shape
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow

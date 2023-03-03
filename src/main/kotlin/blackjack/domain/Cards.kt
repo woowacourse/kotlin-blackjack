@@ -1,3 +1,5 @@
+package blackjack.domain
+
 class Cards(
     cards: List<Card> = listOf(Card.draw(), Card.draw())
 ) {

@@ -1,3 +1,7 @@
+package blackjack.view
+
+import blackjack.domain.Player
+
 object InputView {
 
     private const val REQUEST_PLAYERS_NAME_MSG = "게임에 참여할 사람의 이름을 입력하세요."

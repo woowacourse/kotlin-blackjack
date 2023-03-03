@@ -1,3 +1,5 @@
+package blackjack.domain
+
 enum class CardNumber(val value: Int) {
     A(1),
     ONE(1),

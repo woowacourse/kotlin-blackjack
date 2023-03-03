@@ -1,3 +1,6 @@
+package domain
+
+import blackjack.domain.GameResult
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -30,5 +33,20 @@ class GameResultTest {
     @Test
     fun `dealer와 player의 점수가 21점이 넘지 않고, player의 점수가 더 높은 경우 player는 승리한다`() {
         assertThat(GameResult.valueOf(playerScore = 20, dealerScore = 18)).isEqualTo(GameResult.WIN)
+    }
+
+    @Test
+    fun `WIN의 반대는 LOSE`() {
+        assertThat(!GameResult.WIN).isEqualTo(GameResult.LOSE)
+    }
+
+    @Test
+    fun `DRAW의 반대는 DRAW`() {
+        assertThat(!GameResult.DRAW).isEqualTo(GameResult.DRAW)
+    }
+
+    @Test
+    fun `LOSE의 반대는 WIN`() {
+        assertThat(!GameResult.LOSE).isEqualTo(GameResult.WIN)
     }
 }

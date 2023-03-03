@@ -1,3 +1,5 @@
+package blackjack.domain
+
 enum class Shape(val description: String) {
     HEART("하트"),
     CLOVER("클로버"),

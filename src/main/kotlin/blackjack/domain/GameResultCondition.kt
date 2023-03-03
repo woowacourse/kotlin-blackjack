@@ -1,3 +1,5 @@
+package blackjack.domain
+
 enum class GameResultCondition(
     val gameResult: GameResult,
     val condition: (playerScore: Int, dealerScore: Int) -> Boolean

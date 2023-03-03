@@ -1,3 +1,11 @@
+package blackjack.view
+
+import blackjack.domain.Dealer
+import blackjack.domain.DrawResult
+import blackjack.domain.GameResult
+import blackjack.domain.Player
+import blackjack.domain.PlayerGameResult
+
 object OutputView {
 
     private const val CARD_DIVIDING_MSG = "딜러와 %s에게 2장의 카드를 나누었습니다."
