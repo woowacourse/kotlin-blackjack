@@ -9,12 +9,18 @@ class Referee(private val dealerScore: Int, private val userScore: List<Int>) {
     }
 
     private fun calculateResult(score: Int): GameResult {
-        if (((dealerScore > SCORE_CONDITION) and (score > SCORE_CONDITION)) or (dealerScore == score))
+        if (isDraw(score))
             return GameResult.DRAW
-        if (((dealerScore > score) and (dealerScore <= SCORE_CONDITION)) or (score > SCORE_CONDITION))
+        if (isLose(score))
             return GameResult.LOSE
         return GameResult.WIN
     }
+
+    private fun isDraw(score: Int) =
+        ((dealerScore > SCORE_CONDITION) and (score > SCORE_CONDITION)) or (dealerScore == score)
+
+    private fun isLose(score: Int) =
+        ((dealerScore > score) and (dealerScore <= SCORE_CONDITION)) or (score > SCORE_CONDITION)
 
     companion object {
         private const val SCORE_CONDITION = 21
