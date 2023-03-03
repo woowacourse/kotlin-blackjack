@@ -9,7 +9,7 @@ enum class OutCome(val text: String) {
     },
     LOSE("패") {
         override fun convertOutCome() = WIN
-    };
+    }, ;
 
     abstract fun convertOutCome(): OutCome
 }

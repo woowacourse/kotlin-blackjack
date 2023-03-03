@@ -13,5 +13,5 @@ enum class CardNumber(val value: Int, val label: String) {
     TEN(10, "10"),
     KING(10, "K"),
     QUEEN(10, "Q"),
-    JACK(10, "J");
+    JACK(10, "J"),
 }

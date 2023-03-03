@@ -13,7 +13,7 @@ class DecisionTest {
             { assertDoesNotThrow { Decision.of("y") } },
             { assertDoesNotThrow { Decision.of("n") } },
             { assertThrows<IllegalArgumentException> { Decision.of("p") } },
-            { assertThrows<IllegalArgumentException> { Decision.of("1") } }
+            { assertThrows<IllegalArgumentException> { Decision.of("1") } },
         )
     }
 

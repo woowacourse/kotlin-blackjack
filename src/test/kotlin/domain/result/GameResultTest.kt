@@ -21,7 +21,7 @@ class GameResultTest {
             Player("베르").apply {
                 receiveCard(Card(CardShape.CLOVER, CardNumber.ACE))
                 receiveCard(Card(CardShape.SPADE, CardNumber.KING))
-            }
+            },
         )
         val dealer = Dealer().apply {
             receiveCard(Card(CardShape.CLOVER, CardNumber.KING))
@@ -34,7 +34,7 @@ class GameResultTest {
 
         assertAll(
             { assertThat(gameResult.getDealerResult()).isEqualTo(expectedDealerResult) },
-            { assertThat(gameResult.getPlayerResult()).isEqualTo(expectedPlayersResult) }
+            { assertThat(gameResult.getPlayerResult()).isEqualTo(expectedPlayersResult) },
         )
     }
 }

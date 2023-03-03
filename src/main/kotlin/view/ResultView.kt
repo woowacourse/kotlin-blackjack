@@ -21,8 +21,8 @@ object ResultView {
             INITIAL_CARDS_SCRIPT.format(
                 person.name,
                 person.cards.joinToString(",") { it.toString() },
-                person.getTotalCardNumber()
-            )
+                person.getTotalCardNumber(),
+            ),
         )
     }
 
