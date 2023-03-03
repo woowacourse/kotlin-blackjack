@@ -1,6 +1,10 @@
 package blackjack.domain
 
 class Dealer(name: String = "딜러") : User(name) {
-    override val isContinue: Boolean // dealer
-        get() = Score(cards).checkDealerScore
+    override val isContinue: Boolean
+        get() = Score(cards).maxScore < DEALER_MIN_NUMBER
+
+    companion object {
+        private const val DEALER_MIN_NUMBER = 17
+    }
 }
