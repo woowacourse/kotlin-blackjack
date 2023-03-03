@@ -4,10 +4,10 @@ import domain.constant.DEALER_STAND_CONDITION
 import domain.person.Player
 
 object MainView {
-    fun requestPlayerDecision(player: Player): String {
-        println("${player.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
+    fun requestPlayerDecision(name: String): String {
+        println("${name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
         val input = readln().trim()
-        if (input !in setOf("y", "n")) return requestPlayerDecision(player)
+        if (input !in setOf("y", "n")) return requestPlayerDecision(name)
         return input
     }
 
