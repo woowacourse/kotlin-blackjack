@@ -5,7 +5,7 @@ import blackjack.domain.CardNumber
 import blackjack.domain.CardShape
 import blackjack.domain.Dealer
 import blackjack.domain.Dealer.Companion.HIT_STANDARD_SCORE
-import blackjack.domain.GameResult
+import blackjack.domain.BlackjackResult
 import blackjack.domain.Participant
 import blackjack.domain.Participant.Companion.INIT_CARD_SIZE
 import blackjack.domain.Player
@@ -36,14 +36,14 @@ object ResultView {
         println(DEALER_HIT_MESSAGE.format(name))
     }
 
-    fun printResult(dealer: Dealer, players: List<Player>, gameResult: GameResult) {
+    fun printResult(dealer: Dealer, players: List<Player>, blackjackResult: BlackjackResult) {
         printCardsWithScore(dealer)
         players.forEach { printCardsWithScore(it) }
 
         println(FINAL_RESULT_MESSAGE)
-        printDealerResult(gameResult, dealer)
+        printDealerResult(blackjackResult, dealer)
         players.forEach {
-            printPlayerResult(it, gameResult[it])
+            printPlayerResult(it, blackjackResult[it])
         }
     }
 
@@ -51,10 +51,10 @@ object ResultView {
         println(participant.faceUp() + participant.showScore())
     }
 
-    private fun printDealerResult(gameResult: GameResult, dealer: Dealer) {
-        val result = ResultType.WIN.toKorean(gameResult.dealer[ResultType.WIN]) +
-            ResultType.TIE.toKorean(gameResult.dealer[ResultType.TIE]) +
-            ResultType.LOSE.toKorean(gameResult.dealer[ResultType.LOSE])
+    private fun printDealerResult(blackjackResult: BlackjackResult, dealer: Dealer) {
+        val result = ResultType.WIN.toKorean(blackjackResult.dealer[ResultType.WIN]) +
+            ResultType.TIE.toKorean(blackjackResult.dealer[ResultType.TIE]) +
+            ResultType.LOSE.toKorean(blackjackResult.dealer[ResultType.LOSE])
         println(FINAL_RESULT.format(dealer.name, result))
     }
 

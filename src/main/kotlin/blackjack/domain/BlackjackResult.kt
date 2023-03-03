@@ -1,22 +1,22 @@
 package blackjack.domain
 
-class GameResult(private val playerResult: Map<Player, ResultType>) {
+class BlackjackResult(private val player: Map<Player, ResultType>) {
 
     val dealer: Map<ResultType, Int> = ResultType.values().associate { type ->
         when (type) {
-            ResultType.WIN -> type to playerResult.values.count { it == ResultType.LOSE }
-            ResultType.TIE -> type to playerResult.values.count { it == ResultType.TIE }
-            ResultType.LOSE -> type to playerResult.values.count { it == ResultType.WIN }
+            ResultType.WIN -> type to player.values.count { it == ResultType.LOSE }
+            ResultType.TIE -> type to player.values.count { it == ResultType.TIE }
+            ResultType.LOSE -> type to player.values.count { it == ResultType.WIN }
         }
     }
 
-    operator fun get(player: Player): ResultType? = playerResult[player]
+    operator fun get(player: Player): ResultType? = this.player[player]
 
     companion object {
-        fun of(dealer: Dealer, players: List<Player>): GameResult {
+        fun of(dealer: Dealer, players: List<Player>): BlackjackResult {
             val result = players.associateWith { it against dealer }
 
-            return GameResult(result)
+            return BlackjackResult(result)
         }
 
         private infix fun Player.against(dealer: Dealer): ResultType {

@@ -3,7 +3,7 @@ package blackjack.domain
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class GameResultTest {
+class BlackjackResultTest {
     @Test
     fun `플레이어가 딜러를 이긴 경우 WIN을 반환한다`() {
         val player = Player("pobi").apply {
@@ -14,9 +14,9 @@ class GameResultTest {
             receive(Card(CardNumber.KING, CardShape.HEART))
             receive(Card(CardNumber.QUEEN, CardShape.HEART))
         }
-        val gameResult = GameResult.of(dealer, listOf(player))
+        val blackjackResult = BlackjackResult.of(dealer, listOf(player))
 
-        val actual = gameResult[player]
+        val actual = blackjackResult[player]
 
         assertThat(actual).isEqualTo(ResultType.WIN)
     }
@@ -33,9 +33,9 @@ class GameResultTest {
             receive(Card(CardNumber.QUEEN, CardShape.HEART))
             receive(Card(CardNumber.TWO, CardShape.HEART))
         }
-        val gameResult = GameResult.of(dealer, listOf(player))
+        val blackjackResult = BlackjackResult.of(dealer, listOf(player))
 
-        val actual = gameResult[player]
+        val actual = blackjackResult[player]
 
         assertThat(actual).isEqualTo(ResultType.LOSE)
     }
@@ -51,9 +51,9 @@ class GameResultTest {
             receive(Card(CardNumber.QUEEN, CardShape.HEART))
             receive(Card(CardNumber.TWO, CardShape.HEART))
         }
-        val gameResult = GameResult.of(dealer, listOf(player))
+        val blackjackResult = BlackjackResult.of(dealer, listOf(player))
 
-        val actual = gameResult[player]
+        val actual = blackjackResult[player]
 
         assertThat(actual).isEqualTo(ResultType.WIN)
     }
@@ -67,7 +67,7 @@ class GameResultTest {
             Player("jason") to ResultType.LOSE
         )
 
-        val actual = GameResult(playerResult).dealer
+        val actual = BlackjackResult(playerResult).dealer
         val expect = mapOf(
             ResultType.WIN to 2,
             ResultType.TIE to 1,
