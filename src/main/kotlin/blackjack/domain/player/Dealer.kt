@@ -2,7 +2,7 @@ package blackjack.domain.player
 
 import blackjack.domain.Result
 
-class Dealer(name: String) : Player(name) {
+class Dealer(override val name: String = "딜러") : Player(name) {
 
     val results: MutableMap<Result, Int> = Result.values().associateWith { 0 }.toMutableMap()
 

@@ -6,7 +6,7 @@ import blackjack.domain.card.CardGenerator
 import blackjack.domain.card.Cards
 
 open class Player(
-    val name: String,
+    open val name: String,
     private val generator: CardGenerator = CardGenerator(
         RandomGenerator()
     )
