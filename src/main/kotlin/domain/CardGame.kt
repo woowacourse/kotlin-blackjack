@@ -4,10 +4,11 @@ import model.Cards
 import model.Dealer
 import model.Name
 import model.Player
+import model.Players
 
 class CardGame(private val cardPicker: CardPicker) {
-    fun initPlayers(names: List<Name>): List<Player> {
-        return names.map { Player(pickTwice(), it) }
+    fun initPlayers(names: List<Name>): Players {
+        return Players(names.map { Player(pickTwice(), it) })
     }
 
     fun initDealer(): Dealer {

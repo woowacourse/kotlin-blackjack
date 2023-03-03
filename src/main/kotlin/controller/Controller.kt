@@ -8,8 +8,10 @@ import model.Dealer
 import model.Dealer.Companion.DEALER
 import model.GameResult
 import model.Name
-import model.Participant
+import model.Names
+import model.Participants
 import model.Player
+import model.Players
 import view.InputView
 import view.OutputView
 
@@ -20,7 +22,7 @@ class Controller(private val inputView: InputView, private val outputView: Outpu
         val cardGame = CardGame(picker)
         val players = cardGame.initPlayers(initNames())
         val dealer = cardGame.initDealer()
-        val participants = listOf(dealer as Participant) + (players as List<Participant>)
+        val participants = Participants.of(dealer, players)
         printParticipants(participants)
         askGetMorePlayersCard(players)
         getMoreDealerCard(dealer)
@@ -28,18 +30,17 @@ class Controller(private val inputView: InputView, private val outputView: Outpu
         outputView.printFinalResult(GameResult.of(dealer, players))
     }
 
-    private fun initNames(): List<Name> {
+    private fun initNames(): Names {
         outputView.printInputPlayerNames()
-        return inputView.readName().map(::Name)
+        return Names(inputView.readName().map(::Name))
     }
 
-    private fun printParticipants(participants: List<Participant>): List<Participant> {
+    private fun printParticipants(participants: Participants) {
         outputView.printNoticeDistributeCards(participants.filter { it.name.value != DEALER }.map { it.name })
         outputView.printPlayersStatus(participants)
-        return participants
     }
 
-    private fun askGetMorePlayersCard(players: List<Player>) {
+    private fun askGetMorePlayersCard(players: Players) {
         players.filter { it.isHit() }.forEach {
             outputView.printGetCardMore(it.name)
             askGetMorePlayerCard(it)
