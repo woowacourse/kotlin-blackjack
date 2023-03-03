@@ -9,7 +9,7 @@ import domain.gamer.state.PlayerState
 class BlackjackGame(private val names: List<String>) {
     private val deck: Deck = Deck(CardMaker().makeCards())
     lateinit var dealerState: DealerState
-    val playersStates = mutableListOf<PlayerState>()
+    val playersStates = mutableMapOf<String, PlayerState>()
 
     init {
         makeParticipants()
@@ -25,9 +25,9 @@ class BlackjackGame(private val names: List<String>) {
     }
 
     private fun makePlayer(names: List<String>) {
-        repeat(names.size) {
+        names.forEach {
             val startDeck = makeStartDeck()
-            playersStates.add(PlayerState(startDeck))
+            playersStates[it] = PlayerState(startDeck)
         }
     }
 
@@ -38,4 +38,10 @@ class BlackjackGame(private val names: List<String>) {
         }
         return startDeck
     }
+
+    fun pickCard(name: String) {
+        playersStates.getValue(name).pickCard(deck.giveCard())
+    }
+
+    fun checkBurst(name: String) = playersStates.getValue(name).checkBurst()
 }
