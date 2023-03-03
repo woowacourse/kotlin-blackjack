@@ -10,7 +10,7 @@ object OnboardingView {
         val input = readln()
         if (input.isBlank()) {
             println(ERROR_INPUT_BLACK)
-            requestInputNames()
+            return requestInputNames()
         }
         return input.split(',').map { it.trim() }
     }
