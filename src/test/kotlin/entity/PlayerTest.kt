@@ -24,7 +24,7 @@ class PlayerTest {
     fun `플레이어 카드 숫자의 합이 21이고 딜러 카드 숫자의 합이 21이면 무승부이다`() {
         // given
         val player1 = Player(
-            Name(""),
+            Name("test"),
             Cards(
                 listOf(
                     Card(CardType.HEART, CardNumber.TEN),
@@ -55,7 +55,7 @@ class PlayerTest {
     fun `플레이어 카드 숫자의 합이 22이고 딜러 카드 숫자의 합이 22이면 무승부이다`() {
         // given
         val player1 = Player(
-            Name(""),
+            Name("test"),
             Cards(
                 listOf(
                     Card(CardType.HEART, CardNumber.TEN),
@@ -86,7 +86,7 @@ class PlayerTest {
     fun `플레이어 카드 숫자의 합이 19이고 딜러 카드 숫자의 합이 22이면 플레이어의 승리이다`() {
         // given
         val player1 = Player(
-            Name(""),
+            Name("test"),
             Cards(
                 listOf(
                     Card(CardType.HEART, CardNumber.TEN), Card(CardType.SPADE, CardNumber.NINE)
@@ -115,7 +115,7 @@ class PlayerTest {
     fun `플레이어 카드 숫자의 합이 21이고 딜러 카드 숫자의 합이 20이면 플레이어의 승리이다`() {
         // given
         val player1 = Player(
-            Name(""),
+            Name("test"),
             Cards(
                 listOf(
                     Card(CardType.HEART, CardNumber.SEVEN),
@@ -144,7 +144,7 @@ class PlayerTest {
     fun `플레이어 카드 숫자의 합이 20이고 딜러 카드 숫자의 합이 21이면 플레이어의 패배이다`() {
         // given
         val player1 = Player(
-            Name(""),
+            Name("test"),
             Cards(
                 listOf(
                     Card(CardType.HEART, CardNumber.TEN), Card(CardType.SPADE, CardNumber.TEN)
@@ -173,7 +173,7 @@ class PlayerTest {
     fun `플레이어 카드 숫자의 합이 22이고 딜러 카드 숫자의 합이 21이면 플레이어의 패배이다`() {
         // given
         val player1 = Player(
-            Name(""),
+            Name("test"),
             Cards(
                 listOf(
                     Card(CardType.HEART, CardNumber.TEN),
