@@ -8,7 +8,7 @@ import blackjack.domain.player.Participants
 class OutputView {
 
     fun printSettingCard(dealer: Dealer, participants: Participants) {
-        val participantsNames = participants.values.map { it.name }
+        val participantsNames: List<String> = participants.values.map { it.name }
         println(SETTING_CARD_MENT.format(participantsNames.joinToString(", ")))
         printFirstRoundDealerCard(dealer)
         println()
@@ -53,10 +53,10 @@ class OutputView {
     }
 
     private fun printParticipantCards(participant: Participant) {
-        val cardWords = participant.cards.values.map {
+        val cardsWord: String = participant.cards.values.map {
             it.number.word + it.shape.word
-        }.joinToString { ", " }
-        print("$participant.name 카드: $cardWords")
+        }.joinToString(", ")
+        print("${participant.name} 카드: $cardsWord")
     }
 
     companion object {
