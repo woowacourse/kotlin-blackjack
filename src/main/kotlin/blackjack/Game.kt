@@ -15,6 +15,7 @@ fun main() {
     ResultView.printSetUp(dealer, players)
     decideHitOrStand(players)
     checkDealerHitOrStand(dealer)
+    ResultView.printResult(dealer, players)
 }
 
 private fun dealCards(participants: List<Participant>) {
@@ -30,7 +31,7 @@ private fun decideHitOrStand(players: List<Player>) {
 private fun decideHitOrStand(player: Player) {
     while (player.canHit() && InputView.doesPlayerWantHit(player.name)) {
         player.receive(Deck.draw())
-        ResultView.printPlayerCards(player)
+        ResultView.printCards(player)
     }
 }
 
