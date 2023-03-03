@@ -21,6 +21,8 @@ abstract class Person {
 
     protected abstract fun checkState()
 
+    fun isStateHit() = gameState == GameState.HIT
+    fun isStateBust() = gameState == GameState.BUST
     fun getTotalCardNumber(): Int {
         val sumExceptAce: Int = calculateSumExceptAce()
         val aceCount: Int = countAce()

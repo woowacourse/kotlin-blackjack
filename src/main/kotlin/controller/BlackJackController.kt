@@ -3,7 +3,6 @@ package controller
 import domain.card.Deck
 import domain.constant.Decision
 import domain.person.Dealer
-import domain.person.GameState
 import domain.person.Player
 import domain.result.GameResult
 import view.MainView
@@ -35,13 +34,13 @@ class BlackJackController {
     }
 
     private fun handOutCardsToPlayer(deck: Deck, player: Player) {
-        while (player.gameState == GameState.HIT) {
+        while (player.isStateHit()) {
             applyPlayerDecision(deck, player)
         }
     }
 
     private fun handOutCardToDealer(deck: Deck, dealer: Dealer) {
-        if (dealer.gameState == GameState.HIT) {
+        if (dealer.isStateHit()) {
             dealer.receiveCard(deck.getCard())
             MainView.printDealerGetMoreCard()
             return
