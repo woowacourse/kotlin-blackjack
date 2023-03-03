@@ -3,6 +3,7 @@ package blackjack.view
 import blackjack.domain.Card
 import blackjack.domain.CardBunch
 import blackjack.domain.CardNumber
+import blackjack.domain.Consequence
 import blackjack.domain.Dealer
 import blackjack.domain.Player
 
@@ -41,10 +42,37 @@ class OutputView {
         println()
     }
 
+    fun printResult(players: List<Player>) {
+        val result = mutableListOf(0, 0, 0)
+        var resultString = ""
+        println("##최종 승패")
+        players.forEach { player ->
+            when (player.consequence) {
+                Consequence.WIN -> {
+                    resultString += "${player.name}: 승\n"
+                    result[DEALER_WIN]++
+                }
+                Consequence.LOSE -> {
+                    resultString += "${player.name}: 패\n"
+                    result[DEALER_LOSE]++
+                }
+                Consequence.DRAW -> {
+                    resultString += "${player.name}: 무\n"
+                    result[DRAW]++
+                }
+            }
+        }
+        println("딜러: ${result[DEALER_WIN]}승 ${result[DEALER_LOSE]}패 ${result[DRAW]}무")
+        println(resultString)
+    }
+
     companion object {
         private const val DEALER_INITIAL_CARD_SCRIPT = "딜러: %s"
         private const val DISTRIBUTE_SCRIPT = "딜러와 %s에게 2장의 카드를 나누었습니다."
         private const val CAN_GET_CARD_SCRIPT = "딜러는 16이하라 한 장의 카드를 더 받았습니다."
         private const val CANNOT_GET_CARD_SCRIPT = "딜러는 17이상이라 카드를 더 받지 못합니다."
+        private const val DEALER_WIN = 0
+        private const val DEALER_LOSE = 1
+        private const val DRAW = 2
     }
 }
