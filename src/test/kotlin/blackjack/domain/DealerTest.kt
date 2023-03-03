@@ -28,4 +28,12 @@ class DealerTest {
 
         assertThat(dealer.isStay()).isFalse
     }
+
+    @Test
+    fun `딜러는 자신이 보유한 첫번째 카드를 반환한다`() {
+        dealer.addCard(Card.of(1))
+        dealer.addCard(Card.of(5))
+
+        assertThat(dealer.getFirstCardHand().hand.first()).isEqualTo(Card.of(1).toString())
+    }
 }
