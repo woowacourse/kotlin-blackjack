@@ -10,13 +10,17 @@ class BlackjackController() {
     fun startGame() {
         val names = InputView.inputPlayerNames()
         val blackjackGame = BlackjackGame(names)
-        OutputView.printDivideCard(names)
-        OutputView.printDealerSettingCard(blackjackGame.dealerState.cards[0])
-        OutputView.printParticipantsCards(blackjackGame.playersStates)
+        printBlackjackSetting(names, blackjackGame)
         requestPickCard(names, blackjackGame)
         dealerPickCard(blackjackGame)
         printCardResult(blackjackGame)
         printWinningResult(blackjackGame)
+    }
+
+    private fun printBlackjackSetting(names: List<String>, blackjackGame: BlackjackGame) {
+        OutputView.printDivideCard(names)
+        OutputView.printDealerSettingCard(blackjackGame.dealerState.cards[0])
+        OutputView.printParticipantsCards(blackjackGame.playersStates)
     }
 
     private fun printWinningResult(blackjackGame: BlackjackGame) {
@@ -26,7 +30,7 @@ class BlackjackController() {
     }
 
     private fun printCardResult(blackjackGame: BlackjackGame) {
-        val cardResult = mutableMapOf<String, ParticipantState>("딜러" to blackjackGame.dealerState)
+        val cardResult = mutableMapOf<String, ParticipantState>(DEALER to blackjackGame.dealerState)
         blackjackGame.playersStates.map {
             cardResult.put(it.key, it.value)
         }
@@ -42,8 +46,8 @@ class BlackjackController() {
     private fun repeatPickCard(blackjackGame: BlackjackGame, name: String) {
         while (!blackjackGame.checkBurst(name)) {
             val answer = validatePickAnswer(name)
-            if (answer == "y") blackjackGame.pickPlayerCard(name)
-            if (answer == "n") return
+            if (answer == YES_ANSWER) blackjackGame.pickPlayerCard(name)
+            if (answer == NO_ANSWER) return
             OutputView.printParticipantCards(name, blackjackGame.playersStates.getValue(name).cards)
         }
     }
@@ -58,5 +62,11 @@ class BlackjackController() {
             OutputView.printDealerUnder16()
             blackjackGame.pickDealerCard()
         }
+    }
+
+    companion object {
+        private const val DEALER = "딜러"
+        private const val YES_ANSWER = "y"
+        private const val NO_ANSWER = "n"
     }
 }

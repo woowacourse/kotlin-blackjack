@@ -2,6 +2,7 @@ package domain.gamer.state
 
 import domain.card.Card
 import domain.card.CardValue
+import domain.judge.Referee
 
 abstract class ParticipantState(private val _cards: MutableList<Card>) {
     val cards: List<Card> get() = _cards.toList()
@@ -25,13 +26,17 @@ abstract class ParticipantState(private val _cards: MutableList<Card>) {
         }
 
     private fun getAceValue(value: Int) =
-        if (countAce() >= 2) {
+        if (countAce() >= ACE_COUNT_VALUE_CHANGE_CONDITION) {
             CardValue.ACE.aceValue
-        } else if (value > 10) {
+        } else if (value > Referee.CARD_SUM_MAX_VALUE - CardValue.ACE.value) {
             CardValue.ACE.aceValue
         } else {
             CardValue.ACE.value
         }
 
     private fun countAce() = _cards.count { it.cardValue.title == "ACE" }
+
+    companion object {
+        private const val ACE_COUNT_VALUE_CHANGE_CONDITION = 2
+    }
 }
