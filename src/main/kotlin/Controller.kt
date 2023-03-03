@@ -9,7 +9,6 @@ class Controller(
     private val playGameView: PlayGameView = PlayGameView(),
     private val gameResultView: GameResultView = GameResultView(),
     private val cardMachine: CardMachine = CardMachine(),
-
 ) {
 
     fun run() {

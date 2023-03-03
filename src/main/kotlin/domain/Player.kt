@@ -8,8 +8,8 @@ abstract class Player(
     val cards: List<Card> get() = _cards.toList()
 
     fun validPlayerSum(): Int {
-        if ((calculateCardValueSum() < 10) and (countAce() != 0)) {
-            return calculateCardValueSum() + 10
+        if ((calculateCardValueSum() < ACE_CARD_PLUS_TEN) and (countAce() != NO_ACE)) {
+            return calculateCardValueSum() + ACE_CARD_PLUS_TEN
         }
 
         return calculateCardValueSum()
@@ -24,4 +24,9 @@ abstract class Player(
     private fun countAce(): Int = _cards.filter { card ->
         card.value == Card.Value.ACE
     }.size
+
+    companion object {
+        private const val ACE_CARD_PLUS_TEN = 10
+        private const val NO_ACE = 0
+    }
 }
