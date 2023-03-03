@@ -2,7 +2,7 @@ package entity
 
 class Name(val value: String) {
     init {
-        require(value.isEmpty()) { NAME_ERROR_MESSAGE }
+        require(value.isNotEmpty()) { NAME_ERROR_MESSAGE }
     }
 
     companion object {
