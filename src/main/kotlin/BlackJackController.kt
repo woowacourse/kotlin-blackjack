@@ -23,6 +23,7 @@ class BlackJackController(
         askToDrawAdditionalCard(player)
     }
 
+    // TODO: 상수 분리
     private fun askToDrawAdditionalCard(player: Player) {
         do {
             val drawFlag = InputView.requestAdditionalDraw(player)

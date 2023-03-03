@@ -2,10 +2,9 @@ class Player(
     val name: String,
     val cards: Cards = Cards()
 ) {
-    // TODO: NAME 원시값 포장
 
     private fun isPossibleToDrawAdditionalCard(): DrawState {
-        if (cards.getMinimumCardsValue() > 21) {
+        if (cards.getMinimumCardsValue() > BLACK_JACK_SCORE) {
             return DrawState.IMPOSSIBLE
         }
 
@@ -16,5 +15,9 @@ class Player(
         cards.draw()
 
         return isPossibleToDrawAdditionalCard()
+    }
+
+    companion object {
+        private const val BLACK_JACK_SCORE = 21
     }
 }
