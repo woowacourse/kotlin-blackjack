@@ -14,8 +14,8 @@ abstract class Person {
     var gameState: GameState = GameState.HIT
         protected set
 
-    fun receiveCard(card: Card) {
-        _cards.add(card)
+    fun receiveCard(vararg card: Card) {
+        card.forEach { _cards.add(it) }
         checkState()
     }
 
