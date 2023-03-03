@@ -63,10 +63,10 @@ object ResultView {
             ?: println(NOT_PARTICIPATE_PLAYER.format(player.name))
     }
 
-    private fun Dealer.faceUpOnlyOne() = FACE_UP_CARDS.format(this.name, this.cards[0].name())
-    private fun Participant.faceUp() = FACE_UP_CARDS.format(this.name, this.cards.joinToString(", ") { it.name() })
-    private fun Participant.showScore() = SHOW_SCORE.format(this.getScore())
-    private fun Card.name() = "${this.number.toMark()}${this.shape.toKorean()}"
+    private fun Dealer.faceUpOnlyOne(): String = FACE_UP_CARDS.format(this.name, this.cards[0].name())
+    private fun Participant.faceUp(): String = FACE_UP_CARDS.format(this.name, this.cards.joinToString(", ") { it.name() })
+    private fun Participant.showScore(): String = SHOW_SCORE.format(this.getScore())
+    private fun Card.name(): String = "${this.number.toMark()}${this.shape.toKorean()}"
 
     private fun CardNumber.toMark(): String =
         when (this) {
