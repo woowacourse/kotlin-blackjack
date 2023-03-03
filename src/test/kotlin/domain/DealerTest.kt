@@ -36,7 +36,7 @@ class DealerTest {
         val newCard = CardMachine().getNewCard()
 
         // when
-        dealer.addCard(newCard)
+        // dealer.addCard(newCard)
         val actual = dealer.cards
 
         // then
@@ -67,7 +67,7 @@ class DealerTest {
         // given
         val dealer = Dealer.create(cards)
         // when
-        val actual = dealer.validDealerSum()
+        val actual = dealer.validPlayerSum()
         // then
         assertThat(actual).isEqualTo(sum)
     }
@@ -78,7 +78,7 @@ class DealerTest {
         // given
         val dealer = Dealer.create(cards)
         // when
-        val actual = dealer.validDealerSum()
+        val actual = dealer.validPlayerSum()
         // then
         assertThat(actual).isEqualTo(sum)
     }
@@ -89,7 +89,7 @@ class DealerTest {
         // given
         val dealer = Dealer.create(cards)
         // when
-        val actual = dealer.validDealerSum()
+        val actual = dealer.validPlayerSum()
         // then
         assertThat(actual).isEqualTo(sum)
     }

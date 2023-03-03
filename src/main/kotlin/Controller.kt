@@ -1,4 +1,4 @@
-import domain.*
+import domain.* // ktlint-disable no-wildcard-imports
 import domain.Answer.Companion.YES
 import view.GameResultView
 import view.LoginView
@@ -38,9 +38,9 @@ class Controller(
 
     private fun getGameResult(dealer: Dealer, users: List<User>): List<GameResult> {
         val referee: Referee = Referee(
-            dealer.validDealerSum(),
+            dealer.validPlayerSum(),
             users.map { user ->
-                user.validUserSum()
+                user.validPlayerSum()
             },
         )
         return referee.getResult()

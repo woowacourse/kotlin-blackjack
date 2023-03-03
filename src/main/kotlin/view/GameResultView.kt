@@ -7,7 +7,7 @@ import domain.User
 class GameResultView {
 
     fun printCardResult(dealer: Dealer, users: List<User>) {
-        println(DEALER_CARD.format(dealer.cards.map { it.toString() }.joinToString(SEPARATOR), dealer.validDealerSum()))
+        println(DEALER_CARD.format(dealer.cards.map { it.toString() }.joinToString(SEPARATOR), dealer.validPlayerSum()))
         users.forEach { user ->
             println(
                 USERS_CARD.format(
@@ -15,7 +15,7 @@ class GameResultView {
                     (user.cards.map { it.toString() }).joinToString(
                         SEPARATOR,
                     ),
-                    user.validUserSum(),
+                    user.validPlayerSum(),
                 ),
             )
         }
