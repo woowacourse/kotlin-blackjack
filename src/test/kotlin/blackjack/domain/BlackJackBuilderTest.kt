@@ -10,7 +10,7 @@ class BlackJackBuilderTest {
         val blackJack = BlackJackBuilder.init {
             cardDeck(Card.all().shuffled())
             participants {
-                dealer("딜러")
+                dealer()
                 guests(listOf("아크", "로피"))
             }
             draw()

@@ -21,7 +21,7 @@ class BlackJackController(
     private fun setBlackJack(): BlackJack = BlackJackBuilder.init {
         cardDeck(Card.all().shuffled())
         participants {
-            dealer("딜러")
+            dealer()
             guests(inputView.inputParticipants())
         }
         draw()
