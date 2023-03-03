@@ -1,6 +1,7 @@
 package blackjack.domain
 
 import blackjack.dto.HandsDTO
+import blackjack.dto.ScoresDTO
 
 class BlackJack(private val deck: CardDeck, private val participants: Participants) {
     fun drawAll() {
@@ -16,6 +17,8 @@ class BlackJack(private val deck: CardDeck, private val participants: Participan
     }
 
     fun drawDealer(block: (Boolean) -> Unit) = participants.drawDealerCard(deck, block)
+
+    fun getGameScores(): ScoresDTO = participants.getGameScores()
 
     fun getGameResults(): Map<String, String> = participants.getGameResults()
 }

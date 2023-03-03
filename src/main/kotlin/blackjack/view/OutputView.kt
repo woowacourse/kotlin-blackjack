@@ -38,7 +38,7 @@ object OutputView {
     }
 
     private fun printScore(dto: ScoreDTO) {
-        println(SCORE_BOARD_MESSAGE.format(dto.name, dto.hand.joinToString(", "), dto.score))
+        println(SCORE_BOARD_MESSAGE.format(dto.handDTO.name, dto.handDTO.hand.joinToString(", "), dto.score))
     }
 
     fun printResults(dto: ResultsDTO) {

@@ -20,6 +20,9 @@ class BlackJackController {
 
         takeDealerTurn()
         OutputView.printInterval()
+
+        OutputView.printScores(blackJack.getGameScores())
+        OutputView.printInterval()
     }
 
     private fun initBlackJack() {

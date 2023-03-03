@@ -1,6 +1,7 @@
 package blackjack.domain
 
 import blackjack.dto.HandsDTO
+import blackjack.dto.ScoresDTO
 
 class Participants(private val dealer: Dealer, private val players: Players) {
     fun drawAll(deck: CardDeck) {
@@ -18,6 +19,12 @@ class Participants(private val dealer: Dealer, private val players: Players) {
             block(true)
         }
         block(false)
+    }
+
+    fun getGameScores(): ScoresDTO {
+        val dealerScore = dealer.getScore()
+        val playersScore = players.toList().map(Player::getScore)
+        return ScoresDTO(dealerScore, playersScore)
     }
 
     fun getGameResults(): Map<String, String> = players.toList().associate {
