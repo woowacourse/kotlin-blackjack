@@ -8,7 +8,7 @@ class Player(
     constructor(name: String) : this(PlayerName(name))
 
     private fun isPossibleToDrawAdditionalCard(): DrawState {
-        if (cards.getMinimumCardsValue() >= BLACK_JACK_SCORE) {
+        if (cards.getMinimumCardsScore() >= BLACK_JACK_SCORE) {
             return DrawState.IMPOSSIBLE
         }
 

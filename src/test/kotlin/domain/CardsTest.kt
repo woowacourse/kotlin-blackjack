@@ -33,7 +33,7 @@ class CardsTest {
                     Card(CardNumber.K, Shape.HEART),
                     Card(CardNumber.A, Shape.SPADE)
                 )
-            ).getMinimumCardsValue()
+            ).getMinimumCardsScore()
         ).isEqualTo(11)
     }
 
@@ -45,7 +45,7 @@ class CardsTest {
                     Card(CardNumber.A, Shape.HEART),
                     Card(CardNumber.SEVEN, Shape.SPADE)
                 )
-            ).getTotalCardsValue()
+            ).getTotalCardsScore()
         ).isEqualTo(18)
     }
 
@@ -57,7 +57,7 @@ class CardsTest {
                     Card(CardNumber.A, Shape.HEART),
                     Card(CardNumber.A, Shape.SPADE)
                 )
-            ).getTotalCardsValue()
+            ).getTotalCardsScore()
         ).isEqualTo(12)
     }
 }

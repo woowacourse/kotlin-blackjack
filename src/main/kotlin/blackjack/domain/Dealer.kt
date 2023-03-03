@@ -3,7 +3,7 @@ package blackjack.domain
 class Dealer(val cards: Cards = Cards()) {
 
     private fun isPossibleToDraw(): DrawState {
-        if (cards.getTotalCardsValue() >= DEALER_UPPER_DRAW_CONDITION) {
+        if (cards.getTotalCardsScore() >= DEALER_UPPER_DRAW_CONDITION) {
             return DrawState.IMPOSSIBLE
         }
 

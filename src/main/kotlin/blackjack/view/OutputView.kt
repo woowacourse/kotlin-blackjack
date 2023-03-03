@@ -41,9 +41,9 @@ object OutputView {
 
     fun printFinalCards(dealer: Dealer, players: List<Player>) {
         println()
-        println(SHOW_DEALER_CARD.format(dealer.cards.cards.joinToString(SEPERATOR)) + FINAL_SCORE.format(dealer.cards.getTotalCardsValue()))
+        println(SHOW_DEALER_CARD.format(dealer.cards.cards.joinToString(SEPERATOR)) + FINAL_SCORE.format(dealer.cards.getTotalCardsScore()))
         players.forEach { player ->
-            println(SHOW_PLAYER_CARDS.format(player.name.value, player.cards.cards.joinToString(SEPERATOR)) + FINAL_SCORE.format(player.cards.getTotalCardsValue()))
+            println(SHOW_PLAYER_CARDS.format(player.name.value, player.cards.cards.joinToString(SEPERATOR)) + FINAL_SCORE.format(player.cards.getTotalCardsScore()))
         }
     }
 
