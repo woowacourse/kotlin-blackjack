@@ -13,7 +13,13 @@ class BlackJackController {
     fun start() {
         initBlackJack()
         setUpCard()
+        OutputView.printInterval()
+
         takeTurns()
+        OutputView.printInterval()
+
+        takeDealerTurn()
+        OutputView.printInterval()
     }
 
     private fun initBlackJack() {
@@ -47,8 +53,14 @@ class BlackJackController {
                 OutputView.printHand(player.getHand())
                 return
             }
-            blackJack.draw(player)
+            blackJack.drawPlayer(player)
             OutputView.printHand(player.getHand())
+        }
+    }
+
+    private fun takeDealerTurn() {
+        blackJack.drawDealer { isHit ->
+            if (isHit) OutputView.printDealerHit()
         }
     }
 }

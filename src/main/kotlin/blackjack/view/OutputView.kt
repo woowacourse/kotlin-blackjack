@@ -17,7 +17,6 @@ object OutputView {
     fun printInitialHands(dto: HandsDTO) {
         println(GAME_SET_UP_MESSAGE.format(dto.dealerHand.name, dto.playerHands.joinToString(", ") { it.name }))
         printHands(dto)
-        printInterval()
     }
 
     private fun printHands(dto: HandsDTO) {
@@ -59,5 +58,5 @@ object OutputView {
         println("${dto.name}: ${dto.result}")
     }
 
-    private fun printInterval() = println()
+    fun printInterval() = println()
 }

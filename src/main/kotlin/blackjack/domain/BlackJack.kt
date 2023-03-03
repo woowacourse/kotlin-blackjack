@@ -11,9 +11,11 @@ class BlackJack(private val deck: CardDeck, private val participants: Participan
 
     fun getPlayers(): List<Player> = participants.getPlayers()
 
-    fun draw(player: Player) {
+    fun drawPlayer(player: Player) {
         player.addCard(deck.draw())
     }
+
+    fun drawDealer(block: (Boolean) -> Unit) = participants.drawDealerCard(deck, block)
 
     fun getGameResults(): Map<String, String> = participants.getGameResults()
 }
