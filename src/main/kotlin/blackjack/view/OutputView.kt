@@ -17,7 +17,7 @@ class OutputView {
 
     fun printPlayerCards(player: Player) {
         val bunchString = makeBunchString(player.cardBunch)
-        print("${player.name}카드 : $bunchString")
+        println("${player.name}카드 : $bunchString ")
     }
 
     fun printDistributeScript(players: List<Player>) {
