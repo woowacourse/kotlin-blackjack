@@ -1,5 +1,9 @@
 package blackjack.domain
 
+fun introduce(block: BlackJackBuilder.() -> Unit): BlackJack {
+    return BlackJackBuilder().apply(block).build()
+}
+
 class BlackJackBuilder {
     private lateinit var cardDeck: CardDeck
     private lateinit var participants: Participants
@@ -9,7 +13,7 @@ class BlackJackBuilder {
     }
 
     fun participants(block: ParticipantsBuilder.() -> Unit) {
-        participants = ParticipantsBuilder.init { block() }
+        participants = ParticipantsBuilder().apply(block).build()
     }
 
     fun draw() {
@@ -21,10 +25,5 @@ class BlackJackBuilder {
 
     fun build(): BlackJack {
         return BlackJack(cardDeck, participants)
-    }
-
-    companion object {
-        fun init(block: BlackJackBuilder.() -> Unit): BlackJack =
-            BlackJackBuilder().apply(block).build()
     }
 }

@@ -15,9 +15,4 @@ class ParticipantsBuilder {
     fun build(): Participants {
         return Participants(dealer, guests)
     }
-
-    companion object {
-        fun init(block: ParticipantsBuilder.() -> Unit): Participants =
-            ParticipantsBuilder().apply(block).build()
-    }
 }
