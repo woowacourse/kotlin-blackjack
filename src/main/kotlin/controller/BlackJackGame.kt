@@ -1,4 +1,6 @@
-package domain
+package controller
+
+import domain.*
 
 class BlackJackGame(names: Names, private val cardDrawer: CardDrawer = RandomCardDrawer()) {
     val participants: Participants

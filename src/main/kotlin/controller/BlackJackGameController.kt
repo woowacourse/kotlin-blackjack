@@ -1,10 +1,10 @@
-package domain
+package controller
 
 import view.InputView
 import view.ResultView
 
-class BlackJackGameController(private val inputView: InputView, private val resultView: ResultView) {
-    fun run() {
+class BlackJackGameController(private val inputView: InputView, private val resultView: ResultView):Runnable {
+    override fun run() {
         val blackJackGame = initGame()
         mainGame(blackJackGame)
         gameResult(blackJackGame)
