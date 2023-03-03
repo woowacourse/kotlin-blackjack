@@ -29,4 +29,20 @@ class DealerTest {
         assertThat(participant1.result).isEqualTo(Result.LOSE)
         assertThat(participant2.result).isEqualTo(Result.WIN)
     }
+
+    @Test
+    fun `딜러는 각 참가자들의 승패와 상반되는 승패 결과를 모두 더한다`() {
+        val participant1 = Participant("aa")
+        val participant2 = Participant("bb")
+        participant1.addCard(Card(CardNumber.FIVE, CardShape.HEART))
+        participant2.addCard(Card(CardNumber.QUEEN, CardShape.DIAMOND))
+        val participants = Participants(listOf(participant1, participant2))
+        val dealer = Dealer("dealer")
+        dealer.addCard(Card(CardNumber.SEVEN, CardShape.DIAMOND))
+        dealer.decideParticipantsResult(participants)
+        dealer.decideDealerResult(participants)
+        assertThat(dealer.results).isEqualTo(
+            mapOf(Result.WIN to 1, Result.DRAW to 0, Result.LOSE to 1)
+        )
+    }
 }
