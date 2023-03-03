@@ -17,6 +17,16 @@ enum class CardNumber(val value: Int?) {
     ;
 
     companion object {
+        fun valueOf(cardNumber: CardNumber): String {
+            return when (cardNumber) {
+                ACE -> "A"
+                TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN -> cardNumber.value.toString()
+                JACK -> "J"
+                QUEEN -> "Q"
+                KING -> "K"
+            }
+        }
+
         fun shuffledCardNumbers(): List<CardNumber> = CardNumber.values().toList().shuffled()
     }
 }
