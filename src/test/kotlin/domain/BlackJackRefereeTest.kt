@@ -8,6 +8,7 @@ import blackjack.domain.Dealer
 import blackjack.domain.GameResult
 import blackjack.domain.Player
 import blackjack.domain.PlayerGameResult
+import blackjack.domain.PlayerName
 import blackjack.domain.Shape
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -17,7 +18,7 @@ class BlackJackRefereeTest {
     @Test
     fun `딜러를 상대로 링링은 패배하고 우기는 승리하고 써니는 무승부`() {
         val woogi = Player(
-            name = "woogi",
+            name = PlayerName("woogi"),
             cards = Cards(
                 listOf(
                     Card(CardNumber.SEVEN, Shape.SPADE),
@@ -27,7 +28,7 @@ class BlackJackRefereeTest {
         )
 
         val ring = Player(
-            name = "ring",
+            name = PlayerName("ring"),
             cards = Cards(
                 listOf(
                     Card(CardNumber.EIGHT, Shape.HEART),
@@ -37,7 +38,7 @@ class BlackJackRefereeTest {
         )
 
         val sunny = Player(
-            name = "sunny",
+            name = PlayerName("sunny"),
             cards = Cards(
                 listOf(
                     Card(CardNumber.EIGHT, Shape.HEART),

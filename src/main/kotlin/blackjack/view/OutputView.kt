@@ -20,7 +20,7 @@ object OutputView {
     private const val PLAYER_GAME_RESULT = "%s: %s"
 
     fun printCardDividingMessage(dealer: Dealer, players: List<Player>) {
-        println(CARD_DIVIDING_MSG.format(players.joinToString(SEPERATOR) { it.name }))
+        println(CARD_DIVIDING_MSG.format(players.joinToString(SEPERATOR) { player -> player.name.value }))
         println(SHOW_DEALER_CARD.format(dealer.cards.cards.first()))
         players.forEach { player -> printCardResults(player) }
     }

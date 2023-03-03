@@ -1,9 +1,11 @@
 package blackjack.domain
 
 class Player(
-    val name: String,
+    val name: PlayerName,
     val cards: Cards = Cards()
 ) {
+
+    constructor(name: String) : this(PlayerName(name))
 
     private fun isPossibleToDrawAdditionalCard(): DrawState {
         if (cards.getMinimumCardsValue() >= BLACK_JACK_SCORE) {
