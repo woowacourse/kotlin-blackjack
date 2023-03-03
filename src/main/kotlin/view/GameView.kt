@@ -21,7 +21,7 @@ class GameView {
         println(
             MESSAGE_USERS_STATUS.format(
                 players.value.joinToString(", ") {
-                    it.name
+                    it.name.value
                 }
             )
         )
@@ -34,8 +34,7 @@ class GameView {
     }
 
     fun readWhetherMoreCard(): String {
-        val input = readln()
-        return input
+        return readln().trim()
     }
 
     fun printDealerMoreCard() {

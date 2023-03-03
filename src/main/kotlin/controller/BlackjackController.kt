@@ -1,6 +1,8 @@
 package controller
 
+import entity.CardDistributeCondition
 import entity.Dealer
+import entity.Name
 import entity.Player
 import entity.Players
 import model.BlackjackStage
@@ -16,7 +18,7 @@ class BlackjackController {
 
     private fun readPlayers(): Players {
         return initView.readPlayerNames().map {
-            Player(it)
+            Player(Name(it))
         }.let { Players(it) }
     }
 
@@ -32,8 +34,8 @@ class BlackjackController {
 
     private fun distributeMoreCardPlayer(blackjackStage: BlackjackStage) {
         blackjackStage.distributePlayers {
-            gameView.printWhetherMoreCard(it.name)
-            it.addMoreCards(gameView.readWhetherMoreCard()) {
+            gameView.printWhetherMoreCard(it.name.value)
+            it.addMoreCards(CardDistributeCondition(gameView.readWhetherMoreCard())) {
                 blackjackStage.distributePlayer(it)
                 gameView.printPlayerStatus(it)
                 distributeMoreCardPlayer(blackjackStage)

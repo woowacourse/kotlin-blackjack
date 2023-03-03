@@ -2,11 +2,11 @@ package entity
 
 import misc.GameRule
 
-class Player(val name: String, cards: Cards = Cards(listOf())) : User(cards) {
+class Player(val name: Name, cards: Cards = Cards(listOf())) : User(cards) {
     override fun isDistributable(): Boolean = cardsNumberSum() < GameRule.WINNING_NUMBER
 
-    fun addMoreCards(condition: String, onDistribute: () -> Unit) {
-        if (condition == "y") {
+    fun addMoreCards(condition: CardDistributeCondition, onDistribute: () -> Unit) {
+        if (condition.toBoolean()) {
             onDistribute()
         }
     }
