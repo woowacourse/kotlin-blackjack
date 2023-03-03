@@ -10,7 +10,7 @@ class GameResultTest {
             receive(Card(CardNumber.KING, CardShape.CLOVER))
             receive(Card(CardNumber.ACE, CardShape.CLOVER))
         }
-        val dealer = Player("딜러").apply {
+        val dealer = Dealer().apply {
             receive(Card(CardNumber.KING, CardShape.HEART))
             receive(Card(CardNumber.QUEEN, CardShape.HEART))
         }
@@ -28,7 +28,7 @@ class GameResultTest {
             receive(Card(CardNumber.QUEEN, CardShape.CLOVER))
             receive(Card(CardNumber.TWO, CardShape.CLOVER))
         }
-        val dealer = Player("딜러").apply {
+        val dealer = Dealer().apply {
             receive(Card(CardNumber.KING, CardShape.HEART))
             receive(Card(CardNumber.QUEEN, CardShape.HEART))
             receive(Card(CardNumber.TWO, CardShape.HEART))
@@ -46,7 +46,7 @@ class GameResultTest {
             receive(Card(CardNumber.KING, CardShape.CLOVER))
             receive(Card(CardNumber.TWO, CardShape.CLOVER))
         }
-        val dealer = Player("딜러").apply {
+        val dealer = Dealer().apply {
             receive(Card(CardNumber.KING, CardShape.HEART))
             receive(Card(CardNumber.QUEEN, CardShape.HEART))
             receive(Card(CardNumber.TWO, CardShape.HEART))
