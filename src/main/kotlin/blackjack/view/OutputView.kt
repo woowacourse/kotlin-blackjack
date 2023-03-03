@@ -51,28 +51,37 @@ object OutputView {
     }
 
     fun printResult(players: List<Player>) {
-        val result = mutableListOf(0, 0, 0)
-        var resultString = ""
         println("##최종 승패")
+        printDealerResult(players)
+        getResultString(players)
+    }
+
+    private fun printDealerResult(players: List<Player>) {
+        val result = mutableListOf(0, 0, 0)
         players.forEach { player ->
-            when (player.consequence) {
-                Consequence.WIN -> {
-                    resultString += "${player.name}: 승\n"
-                    result[DEALER_LOSE]++
-                }
-
-                Consequence.LOSE -> {
-                    resultString += "${player.name}: 패\n"
-                    result[DEALER_WIN]++
-                }
-
-                Consequence.DRAW -> {
-                    resultString += "${player.name}: 무\n"
-                    result[DRAW]++
-                }
-            }
+            result[decideDealerResult(player)]++
         }
         println("딜러: ${result[DEALER_WIN]}승 ${result[DEALER_LOSE]}패 ${result[DRAW]}무")
+    }
+
+    private fun decideDealerResult(player: Player): Int =
+        when (player.consequence) {
+            Consequence.WIN -> DEALER_LOSE
+            Consequence.LOSE -> DEALER_WIN
+            Consequence.DRAW -> DRAW
+        }
+
+    private fun getResultString(players: List<Player>) {
+        var resultString = ""
+        players.forEach { player ->
+            resultString += decidePlayerResult(player)
+        }
         println(resultString)
+    }
+
+    private fun decidePlayerResult(player: Player) = when (player.consequence) {
+        Consequence.WIN -> "${player.name}: 승\n"
+        Consequence.LOSE -> "${player.name}: 패\n"
+        Consequence.DRAW -> "${player.name}: 무\n"
     }
 }
