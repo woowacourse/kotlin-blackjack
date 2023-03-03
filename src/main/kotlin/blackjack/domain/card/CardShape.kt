@@ -1,6 +1,6 @@
 package blackjack.domain.card
 
-enum class CardShape(val shape: String) {
+enum class CardShape(val word: String) {
     SPADE("스페이드"),
     DIAMOND("다이아몬드"),
     HEART("하트"),
