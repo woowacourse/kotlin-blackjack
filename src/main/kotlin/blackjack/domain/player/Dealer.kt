@@ -7,6 +7,12 @@ class Dealer(name: String) : Player(name) {
         return false
     }
 
+    fun decideParticipantsResult(participants: Participants) {
+        participants.values.forEach {
+            it.updateResult(cards.sumCardsNumber())
+        }
+    }
+
     companion object {
         const val MIN_SUM_NUMBER = 16
     }

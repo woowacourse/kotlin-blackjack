@@ -1,6 +1,6 @@
 package blackjack.domain.player
 
-class Participants(values: List<Participant>) {
+class Participants(val values: List<Participant>) {
     init {
         require(values.size in PARTICIPANTS_MIN_NUMBER..PARTICIPANTS_MAX_NUMBER) { ERROR_PARTICIPANTS_BOUNDARY }
     }
