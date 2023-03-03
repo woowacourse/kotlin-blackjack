@@ -35,6 +35,7 @@ object OutputView {
     fun printScores(dto: ScoresDTO) {
         printScore(dto.dealerScore)
         dto.playersScore.forEach(::printScore)
+        printInterval()
     }
 
     private fun printScore(dto: ScoreDTO) {

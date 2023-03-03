@@ -14,17 +14,10 @@ class BlackJackController {
     fun start() {
         initBlackJack()
         setUpCard()
-        OutputView.printInterval()
-
         takeTurns()
-        OutputView.printInterval()
-
         takeDealerTurn()
-        OutputView.printInterval()
 
         OutputView.printScores(blackJack.getGameScores())
-        OutputView.printInterval()
-
         OutputView.printResults(blackJack.getGameResults())
     }
 
@@ -41,6 +34,7 @@ class BlackJackController {
     private fun setUpCard() {
         drawInitialCards(blackJack)
         OutputView.printInitialHands(blackJack.getInitialHands())
+        OutputView.printInterval()
     }
 
     private fun drawInitialCards(blackJack: BlackJack) {
@@ -50,23 +44,36 @@ class BlackJackController {
 
     private fun takeTurns() {
         blackJack.getPlayers().forEach(::takePlayerTurn)
+        OutputView.printInterval()
     }
 
     private fun takePlayerTurn(player: Player) {
         while (!player.isBust()) {
             val command = Command(InputView.inputDrawCommand(player.name))
-            if (command.value == "n") {
-                OutputView.printHand(player.getHand())
-                return
-            }
-            blackJack.drawPlayer(player)
-            OutputView.printHand(player.getHand())
+            val isStop = handleCommand(command, player)
+            if (isStop) return
         }
+    }
+
+    private fun handleCommand(command: Command, player: Player): Boolean {
+        if (command.value == "n") {
+            OutputView.printHand(player.getHand())
+            return IS_STOP
+        }
+        blackJack.drawPlayer(player)
+        OutputView.printHand(player.getHand())
+        return IS_CONTINUE
     }
 
     private fun takeDealerTurn() {
         blackJack.drawDealer { isHit ->
             if (isHit) OutputView.printDealerHit()
         }
+        OutputView.printInterval()
+    }
+
+    companion object {
+        private const val IS_STOP = true
+        private const val IS_CONTINUE = false
     }
 }
