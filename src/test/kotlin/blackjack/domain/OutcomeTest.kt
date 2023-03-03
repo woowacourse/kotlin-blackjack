@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import blackjack.domain.Outcome.Companion.winTo
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -14,7 +15,7 @@ class OutcomeTest {
         guest.draw(Card(CardMark.SPADE, CardValue.EIGHT))
         guest.draw(Card(CardMark.HEART, CardValue.SEVEN))
 
-        assertThat(Outcome.of(dealer, guest)).isEqualTo(Outcome.DRAW)
+        assertThat(guest.winTo(dealer)).isEqualTo(Outcome.DRAW)
     }
 
     @Test
@@ -29,11 +30,11 @@ class OutcomeTest {
         guest.draw(Card(CardMark.HEART, CardValue.SEVEN))
         guest.draw(Card(CardMark.CLOVER, CardValue.QUEEN))
 
-        assertThat(Outcome.of(dealer, guest)).isEqualTo(Outcome.DRAW)
+        assertThat(guest.winTo(dealer)).isEqualTo(Outcome.DRAW)
     }
 
     @Test
-    fun `딜러 점수가 유저 점수보다 크면 진다`() {
+    fun `딜러 점수가 유저 점수보다 크면 유저가 진다`() {
         val dealer = Dealer()
         val guest = Guest("아크")
         dealer.draw(Card(CardMark.CLOVER, CardValue.EIGHT))
@@ -44,11 +45,11 @@ class OutcomeTest {
         guest.draw(Card(CardMark.HEART, CardValue.SEVEN))
         guest.draw(Card(CardMark.CLOVER, CardValue.TWO))
 
-        assertThat(Outcome.of(dealer, guest)).isEqualTo(Outcome.LOSE)
+        assertThat(guest.winTo(dealer)).isEqualTo(Outcome.LOSE)
     }
 
     @Test
-    fun `유저 점수가 21을 넘으면 진다`() {
+    fun `유저 점수가 21을 넘으면 유저가 진다`() {
         val dealer = Dealer()
         val guest = Guest("아크")
         dealer.draw(Card(CardMark.CLOVER, CardValue.EIGHT))
@@ -59,11 +60,11 @@ class OutcomeTest {
         guest.draw(Card(CardMark.HEART, CardValue.SEVEN))
         guest.draw(Card(CardMark.CLOVER, CardValue.KING))
 
-        assertThat(Outcome.of(dealer, guest)).isEqualTo(Outcome.LOSE)
+        assertThat(guest.winTo(dealer)).isEqualTo(Outcome.LOSE)
     }
 
     @Test
-    fun `유저 점수가 딜러 점수보다 크면 이긴다`() {
+    fun `유저 점수가 딜러 점수보다 크면 유저가 이긴다`() {
         val dealer = Dealer()
         val guest = Guest("아크")
         dealer.draw(Card(CardMark.CLOVER, CardValue.EIGHT))
@@ -74,11 +75,11 @@ class OutcomeTest {
         guest.draw(Card(CardMark.HEART, CardValue.SEVEN))
         guest.draw(Card(CardMark.CLOVER, CardValue.THREE))
 
-        assertThat(Outcome.of(dealer, guest)).isEqualTo(Outcome.WIN)
+        assertThat(guest.winTo(dealer)).isEqualTo(Outcome.WIN)
     }
 
     @Test
-    fun `딜러 점수가 21을 넘으면 이긴다`() {
+    fun `딜러 점수가 21을 넘으면 유저가 이긴다`() {
         val dealer = Dealer()
         val guest = Guest("아크")
         dealer.draw(Card(CardMark.CLOVER, CardValue.EIGHT))
@@ -89,6 +90,6 @@ class OutcomeTest {
         guest.draw(Card(CardMark.HEART, CardValue.SEVEN))
         guest.draw(Card(CardMark.CLOVER, CardValue.THREE))
 
-        assertThat(Outcome.of(dealer, guest)).isEqualTo(Outcome.WIN)
+        assertThat(guest.winTo(dealer)).isEqualTo(Outcome.WIN)
     }
 }
