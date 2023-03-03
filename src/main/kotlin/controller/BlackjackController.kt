@@ -15,6 +15,17 @@ class BlackjackController() {
         OutputView.printParticipantsCards(blackjackGame.playersStates)
         requestPickCard(names, blackjackGame)
         dealerPickCard(blackjackGame)
+        printCardResult(blackjackGame)
+        printWinningResult(blackjackGame)
+    }
+
+    private fun printWinningResult(blackjackGame: BlackjackGame) {
+        val playerResult = blackjackGame.getPlayerWinningResult()
+        val dealerResult = blackjackGame.judgeDealerResult(playerResult)
+        OutputView.printWinningResult(dealerResult, playerResult)
+    }
+
+    private fun printCardResult(blackjackGame: BlackjackGame) {
         val cardResult = mutableMapOf<String, ParticipantState>("딜러" to blackjackGame.dealerState)
         blackjackGame.playersStates.map {
             cardResult.put(it.key, it.value)

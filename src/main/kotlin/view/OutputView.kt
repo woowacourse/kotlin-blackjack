@@ -3,6 +3,7 @@ package view
 import domain.card.Card
 import domain.gamer.state.ParticipantState
 import domain.gamer.state.PlayerState
+import domain.judge.Result
 
 object OutputView {
 
@@ -35,6 +36,27 @@ object OutputView {
     fun printCardResult(participants: Map<String, ParticipantState>) {
         participants.forEach { name, participant ->
             println("${name}카드: ${participant.cards.joinToString(", ") { printCardForm(it) }} - 결과: ${participant.calculateCardSum()}")
+        }
+    }
+
+    fun printWinningResult(dealerResult: List<Result>, playerStates: Map<String, Result>) {
+        println("## 최종 승패")
+        printDealerWinningResult(dealerResult)
+        printPlayerWinningResult(playerStates)
+    }
+
+    private fun printDealerWinningResult(dealerResult: List<Result>) {
+        val winCount = formatResultCount(dealerResult.count { it == Result.WIN }, Result.WIN)
+        val lossCount = formatResultCount(dealerResult.count { it == Result.LOSS }, Result.LOSS)
+        val drawCount = formatResultCount(dealerResult.count { it == Result.DRAW }, Result.DRAW)
+        println("딜러: $winCount $lossCount $drawCount")
+    }
+
+    private fun formatResultCount(count: Int, result: Result) = if (count == 0) "" else count.toString() + result.result
+
+    private fun printPlayerWinningResult(playerResult: Map<String, Result>) {
+        playerResult.forEach {
+            println("${it.key}: ${it.value.result}")
         }
     }
 }

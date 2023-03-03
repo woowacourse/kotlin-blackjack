@@ -5,6 +5,8 @@ import domain.card.CardMaker
 import domain.deck.Deck
 import domain.gamer.state.DealerState
 import domain.gamer.state.PlayerState
+import domain.judge.Referee
+import domain.judge.Result
 
 class BlackjackGame(private val names: List<String>) {
     private val deck: Deck = Deck(CardMaker().makeCards())
@@ -51,5 +53,13 @@ class BlackjackGame(private val names: List<String>) {
 
     fun checkDealerAvailableForPick(): Boolean {
         return dealerState.checkAvailableForPick()
+    }
+
+    fun getPlayerWinningResult() = Referee(dealerState, playersStates).judgePlayersResult()
+
+    fun judgeDealerResult(playersResult: Map<String, Result>) = mutableListOf<Result>().apply {
+        playersResult.forEach {
+            add(it.value.reverseResult())
+        }
     }
 }
