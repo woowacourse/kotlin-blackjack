@@ -20,9 +20,7 @@ class OutputView {
     }
 
     fun printPlayersStatus(players: List<Participant>) {
-        for (player in players) {
-            printPlayerStatus(player)
-        }
+        players.forEach { printPlayerStatus(it) }
         println()
     }
 
@@ -41,9 +39,9 @@ class OutputView {
 
     fun printAllPlayerStatusResult(participants: List<Participant>) {
         println()
-        for (participant in participants) {
-            print(MESSAGE_PARTICIPANT_STATUS.format(participant.name.value, participant.cards.toString()))
-            println(MESSAGE_POINT_RESULT.format(participant.cards.sum()))
+        participants.forEach {
+            print(MESSAGE_PARTICIPANT_STATUS.format(it.name.value, it.cards.toString()))
+            println(MESSAGE_POINT_RESULT.format(it.cards.sum()))
         }
     }
 
