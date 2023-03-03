@@ -1,14 +1,12 @@
 package view
 
-import model.Name
-
 class InputView {
-    fun readName(): List<Name> {
+    fun readName(): List<String> {
         val input = readln().replace(" ", "")
         require(input.isNotBlank()) { NULL_ERROR }
         val names = input.split(",")
         require(names.size <= 8) { PLAYER_COUNT_ERROR }
-        return names.map { Name(it) }
+        return names
     }
 
     fun readYesOrNo(): Boolean {

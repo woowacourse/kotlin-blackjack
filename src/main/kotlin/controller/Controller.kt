@@ -30,7 +30,7 @@ class Controller(private val inputView: InputView, private val outputView: Outpu
 
     private fun initNames(): List<Name> {
         outputView.printInputPlayerNames()
-        return inputView.readName()
+        return inputView.readName().map(::Name)
     }
 
     private fun printParticipants(participants: List<Participant>): List<Participant> {
