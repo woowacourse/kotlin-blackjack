@@ -5,17 +5,17 @@ class DslTest {
     @Test
     fun name() {
         val person = introduce {
-            name("송혜민")
+            name("윤인선")
             company("우아한테크코스")
         }
-        assertThat(person.name).isEqualTo("송혜민")
+        assertThat(person.name).isEqualTo("윤인선")
         assertThat(person.company).isEqualTo("우아한테크코스")
     }
 
     @Test
     fun skills() {
         val person = introduce {
-            name("송혜민")
+            name("윤인선")
             company("우아한테크코스")
             skills {
                 soft("A passion for problem solving")
@@ -27,7 +27,7 @@ class DslTest {
                 "English" level 3
             }
         }
-        assertThat(person.name).isEqualTo("송혜민")
+        assertThat(person.name).isEqualTo("윤인선")
         assertThat(person.company).isEqualTo("우아한테크코스")
         person.skills?.let {
             assertThat(it.soft.contains("A passion for problem solving"))
