@@ -6,14 +6,23 @@ import domain.gamer.state.PlayerState
 import domain.judge.Result
 
 object OutputView {
+    private const val SEPARATOR = ", "
+    private const val WITH_DEALER = "딜러와 "
+    private const val DIVIDE_TWO_CARDS = "에게 2장을 나누었습니다."
+
+    private const val DEALER = "딜러: "
+    private const val PARTICIPANT_CARD = "카드:"
+    private const val RESULT = " - 결과: "
+    private const val FINAL_RESULT = "\n## 최종 승패"
+    private const val PICK_CARD_OVER_SIXTEEN = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n"
 
     fun printDivideCard(names: List<String>) {
         println()
-        println(names.joinToString(", ", "딜러와 ", "에게 2장을 나누었습니다."))
+        println(names.joinToString(SEPARATOR, WITH_DEALER, DIVIDE_TWO_CARDS))
     }
 
     fun printDealerSettingCard(card: Card) {
-        println("딜러: ${printCardForm(card)}")
+        println(DEALER + printCardForm(card))
     }
 
     fun printParticipantsCards(participants: Map<String, PlayerState>) {
@@ -24,7 +33,7 @@ object OutputView {
     }
 
     fun printParticipantCards(name: String, cards: List<Card>) {
-        println("${name}카드: ${cards.joinToString(", ") { printCardForm(it) }}")
+        println("${name}$PARTICIPANT_CARD ${cards.joinToString(SEPARATOR) { printCardForm(it) }}")
     }
 
     private fun printCardForm(card: Card): String {
@@ -32,17 +41,17 @@ object OutputView {
     }
 
     fun printDealerUnder16() {
-        println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n")
+        println(PICK_CARD_OVER_SIXTEEN)
     }
 
     fun printCardResult(participants: Map<String, ParticipantState>) {
-        participants.forEach { name, participant ->
-            println("${name}카드: ${participant.cards.joinToString(", ") { printCardForm(it) }} - 결과: ${participant.calculateCardSum()}")
+        participants.forEach { (name, participant) ->
+            println("${name}$PARTICIPANT_CARD ${participant.cards.joinToString(SEPARATOR) { printCardForm(it) }}${RESULT}${participant.calculateCardSum()}")
         }
     }
 
     fun printWinningResult(dealerResult: List<Result>, playerStates: Map<String, Result>) {
-        println("\n## 최종 승패")
+        println(FINAL_RESULT)
         printDealerWinningResult(dealerResult)
         printPlayerWinningResult(playerStates)
     }
@@ -51,7 +60,7 @@ object OutputView {
         val winCount = formatResultCount(dealerResult.count { it == Result.WIN }, Result.WIN)
         val lossCount = formatResultCount(dealerResult.count { it == Result.LOSS }, Result.LOSS)
         val drawCount = formatResultCount(dealerResult.count { it == Result.DRAW }, Result.DRAW)
-        println("딜러: $winCount $lossCount $drawCount")
+        println("$DEALER$winCount $lossCount $drawCount")
     }
 
     private fun formatResultCount(count: Int, result: Result) = if (count == 0) "" else count.toString() + result.result

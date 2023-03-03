@@ -66,7 +66,7 @@ class BlackjackController() {
 
     companion object {
         private const val DEALER = "딜러"
-        private const val YES_ANSWER = "y"
-        private const val NO_ANSWER = "n"
+        const val YES_ANSWER = "y"
+        const val NO_ANSWER = "n"
     }
 }
