@@ -33,4 +33,16 @@ class NamesTest {
             )
         }
     }
+
+    @Test
+    fun `플레이어의 이름은 서로 중복되면 에러가 발생한다`() {
+        assertThrows<IllegalArgumentException> {
+            Names(
+                listOf(
+                    Name("pobi"),
+                    Name("pobi"),
+                )
+            )
+        }
+    }
 }
