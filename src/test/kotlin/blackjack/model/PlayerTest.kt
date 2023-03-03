@@ -26,7 +26,7 @@ class PlayerTest {
     }
 
     @Test
-    fun `카드의 합이 21이 넘지 않으면 burst이다`() {
+    fun `카드의 합이 21이 넘지 않으면 bust이다`() {
         val player = Player(
             Cards(
                 listOf(
@@ -35,13 +35,13 @@ class PlayerTest {
                     Card(Rank.ACE, Suit.HEART),
                 ),
             ),
-            Name("jason")
+            Name("jason"),
         )
         assertThat(player.isBust()).isFalse
     }
 
     @Test
-    fun `카드의 합이 21이 넘으면 burst이다`() {
+    fun `카드의 합이 21이 넘으면 bust이다`() {
         val player = Player(
             Cards(
                 listOf(
@@ -50,7 +50,7 @@ class PlayerTest {
                     Card(Rank.JACK, Suit.HEART),
                 ),
             ),
-            Name("jason")
+            Name("jason"),
         )
         assertThat(player.isBust()).isTrue
     }
@@ -64,7 +64,7 @@ class PlayerTest {
                     Card(Rank.JACK, Suit.CLOVER),
                 ),
             ),
-            Name("jason")
+            Name("jason"),
         )
         assertThat(player.isHit()).isTrue
     }

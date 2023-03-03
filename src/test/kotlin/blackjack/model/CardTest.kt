@@ -19,4 +19,14 @@ class CardTest {
         val card = Card(Rank.DEUCE, Suit.CLOVER)
         assertThat(card.rank.getScore(10)).isEqualTo(2)
     }
+    @Test
+    fun `ACE가 플레이어에게 11이 더 유리한 경우, 유리한 숫자로 반환된다`() {
+        val card = Card(Rank.ACE, Suit.CLOVER)
+        assertThat(card.rank.getScore(1)).isEqualTo(11)
+    }
+    @Test
+    fun `ACE가 플레이어에게 1이 더 유리한 경우 11이 더 유리한 숫자로 반환된다 `() {
+        val card = Card(Rank.ACE, Suit.CLOVER)
+        assertThat(card.rank.getScore(1)).isEqualTo(11)
+    }
 }

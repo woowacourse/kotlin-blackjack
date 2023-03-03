@@ -24,7 +24,7 @@ class GameResultTest {
             ),
         )
         val player1 = Player(Cards(listOf(Card(Rank.JACK, Suit.HEART), Card(Rank.NINE, Suit.DIAMOND))), Name("jason"))
-        val player2 = Player(Cards(listOf(Card(Rank.JACK, Suit.SPADE), Card(Rank.KING, Suit.DIAMOND))), Name("pobi"))
+        val player2 = Player(Cards(listOf(Card(Rank.JACK, Suit.SPADE), Card(Rank.KING, Suit.HEART))), Name("pobi"))
         val result = GameResult.of(dealer, listOf(player1, player2))
 
         assertThat(result.getDealerWinResult()).isEqualTo(2)
