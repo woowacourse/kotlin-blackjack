@@ -1,6 +1,9 @@
 package blackjack.domain
 
+import blackjack.domain.GameResult.Companion.judgePlayer
 import blackjack.dto.HandsDTO
+import blackjack.dto.ResultDTO
+import blackjack.dto.ResultsDTO
 import blackjack.dto.ScoresDTO
 
 class Participants(private val dealer: Dealer, private val players: Players) {
@@ -27,7 +30,10 @@ class Participants(private val dealer: Dealer, private val players: Players) {
         return ScoresDTO(dealerScore, playersScore)
     }
 
-    fun getGameResults(): Map<String, String> = players.toList().associate {
-        it.name to GameResult.judgePlayer(dealer.getTotalScore(), it.getTotalScore()).name
-    }
+    fun getGameResults(): ResultsDTO = ResultsDTO(
+        players.toList().map { player ->
+            val result = judgePlayer(dealer.getTotalScore(), player.getTotalScore()).name
+            ResultDTO(player.name, result)
+        }
+    )
 }

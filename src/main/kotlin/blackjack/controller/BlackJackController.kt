@@ -23,6 +23,8 @@ class BlackJackController {
 
         OutputView.printScores(blackJack.getGameScores())
         OutputView.printInterval()
+
+        OutputView.printResults(blackJack.getGameResults())
     }
 
     private fun initBlackJack() {
