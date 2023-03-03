@@ -24,24 +24,22 @@ class OutputView {
         outputOutcomes(blackJack)
     }
 
-    fun outputCardForDealer(user: User) {
-        print("\n${user.name}카드:")
-        print(" ${user.cards.toList()[0].value.pattern()}${user.cards.toList()[0].mark.name()}")
+    private fun outputCardForDealer(user: User) {
+        val cardText = user.cards.toList()[0].let { it.value.pattern() + it.mark.name() }
+        print("\n${user.name}카드: $cardText")
     }
 
     fun outputCard(user: User) {
-        print("\n${user.name}카드")
-        user.cards.toList().forEach {
-            print(" ${it.value.pattern()}${it.mark.name()}")
-        }
+        val cardText = user.cards.toList().joinToString(", ") { it.value.pattern() + it.mark.name() }
+        print("\n${user.name}카드: $cardText")
     }
 
     fun outputDealerDraw() {
-        println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.")
+        println("\n\n딜러는 16이하라 한장의 카드를 더 받았습니다.")
     }
 
     private fun outputScore(user: User) {
-        print("- 결과 ${user.score}")
+        print(" - 결과: ${user.score}")
     }
 
     private fun outputOutcomes(blackJack: BlackJack) {
