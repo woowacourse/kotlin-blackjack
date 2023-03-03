@@ -15,7 +15,7 @@ class CardMachine {
     }
 
     fun getCardPair(): List<Card> {
-        val pickedCard = cards.take(2)
+        val pickedCard = cards.take(PAIR)
         cards.removeAll(pickedCard)
         return pickedCard
     }
@@ -30,5 +30,9 @@ class CardMachine {
         Card.Value.values().map { value ->
             cards.add(Card(shape, value))
         }
+    }
+
+    companion object {
+        private const val PAIR = 2
     }
 }
