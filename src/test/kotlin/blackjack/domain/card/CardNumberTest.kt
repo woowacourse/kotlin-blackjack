@@ -15,7 +15,7 @@ class CardNumberTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "K", "Q", "J"])
+    @ValueSource(strings = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "K", "Q", "J"])
     fun `숫자에 해당하는 이름을 가진다`(expected: String) {
         val cardNames: List<String> =
             CardNumber.values().map { it.word }
