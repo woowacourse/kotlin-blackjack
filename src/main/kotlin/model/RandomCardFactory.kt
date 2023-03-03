@@ -14,5 +14,9 @@ class RandomCardFactory : CardFactory {
 
     private var index = 0
 
-    override fun generate(): Card = cards.value[index++]
+    private fun generateCard(): Card = cards.value[index++]
+
+    override fun generate(count: Int): Cards {
+        return Cards((0 until count).map { generateCard() })
+    }
 }

@@ -1,10 +1,15 @@
 package entity
 
 import misc.GameRule
-import model.CardDistributor
 
 class Player(val name: String, cards: Cards = Cards(listOf())) : User(cards) {
     override fun isDistributable(): Boolean = cardsNumberSum() < GameRule.WINNING_NUMBER
+
+    fun addMoreCards(condition: String, onDistribute: () -> Unit) {
+        if (condition == "y") {
+            onDistribute()
+        }
+    }
 
     fun determineGameResult(dealerCardNumberSum: Int): Pair<Player, GameResultType> {
         val playerCardNumberSum = cardsNumberSum()
@@ -17,21 +22,5 @@ class Player(val name: String, cards: Cards = Cards(listOf())) : User(cards) {
             GameResultType.DRAW
         )
         else Pair(this, GameResultType.LOSE)
-    }
-
-    fun requestReceiveMoreCard(
-        printMessage: (name: String) -> Unit,
-        response: () -> String,
-        printStatus: (player: Player) -> Unit,
-        cardDistributor: CardDistributor
-    ) {
-        while (isDistributable()) {
-            printMessage(name)
-            val response = response()
-            if (response == "y") {
-                cards.addCards(cardDistributor.distribute(SINGLE_DISTRIBUTE_COUNT))
-                printStatus(this)
-            }
-        }
     }
 }

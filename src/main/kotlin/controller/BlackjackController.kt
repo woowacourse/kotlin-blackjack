@@ -4,7 +4,6 @@ import entity.Dealer
 import entity.Player
 import entity.Players
 import model.BlackjackStage
-import model.CardDistributor
 import model.RandomCardFactory
 import view.GameView
 import view.InitView
@@ -25,20 +24,27 @@ class BlackjackController {
         val players = readPlayers()
         val dealer = Dealer()
         val cardFactory = RandomCardFactory()
-        val cardDistributor = CardDistributor(cardFactory)
-        val blackjackStage = BlackjackStage(dealer, players, cardDistributor)
+        val blackjackStage = BlackjackStage(dealer, players, cardFactory)
         blackjackStage.distributeAllUsers()
         gameView.printInitialUsersStatus(dealer, players)
         return blackjackStage
     }
 
-    private fun checkMoreCard(blackjackStage: BlackjackStage) {
-        blackjackStage.players.requestAllPlayerReceiveMoreCard(
-            { name -> gameView.printWhetherMoreCard(name) },
-            { gameView.readWhetherMoreCard() },
-            { player -> gameView.printPlayerStatus(player) }
-        )
-        blackjackStage.dealer.requestReceiveMoreCard(blackjackStage.cardDistributor)
+    private fun distributeMoreCardPlayer(blackjackStage: BlackjackStage) {
+        blackjackStage.distributePlayers {
+            gameView.printWhetherMoreCard(it.name)
+            it.addMoreCards(gameView.readWhetherMoreCard()) {
+                blackjackStage.distributePlayer(it)
+                gameView.printPlayerStatus(it)
+                distributeMoreCardPlayer(blackjackStage)
+            }
+        }
+    }
+
+    private fun distributeMoreCardDealer(blackjackStage: BlackjackStage) {
+        blackjackStage.distributeDealer {
+            gameView.printDealerMoreCard()
+        }
     }
 
     private fun displayGameStatus(blackjackStage: BlackjackStage) {
@@ -53,7 +59,8 @@ class BlackjackController {
 
     fun process() {
         val blackjackStage = initBlackjack()
-        checkMoreCard(blackjackStage)
+        distributeMoreCardPlayer(blackjackStage)
+        distributeMoreCardDealer(blackjackStage)
         displayGameStatus(blackjackStage)
         displayGameResult(blackjackStage)
     }

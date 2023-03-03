@@ -6,6 +6,10 @@ abstract class User(val cards: Cards) {
         return cards.sumOfNumbers()
     }
 
+    fun addCards(cards: Cards) {
+        this.cards.addCards(cards)
+    }
+
     companion object {
         const val SINGLE_DISTRIBUTE_COUNT = 1
     }

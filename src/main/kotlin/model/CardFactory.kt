@@ -1,7 +1,7 @@
 package model
 
-import entity.Card
+import entity.Cards
 
 interface CardFactory {
-    fun generate(): Card
+    fun generate(count: Int): Cards
 }
