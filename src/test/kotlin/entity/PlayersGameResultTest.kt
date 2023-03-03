@@ -7,9 +7,9 @@ class PlayersGameResultTest {
     @Test
     fun `플레이어의 게임 결과가 2승 1패이면 딜러의 게임 결과는 1승 2패이다`() {
         // given
-        val player1 = Player("", Cards(mutableListOf()))
-        val player2 = Player("", Cards(mutableListOf()))
-        val player3 = Player("", Cards(mutableListOf()))
+        val player1 = Player(Name(""), Cards(mutableListOf()))
+        val player2 = Player(Name(""), Cards(mutableListOf()))
+        val player3 = Player(Name(""), Cards(mutableListOf()))
         val playersGameResult = PlayersGameResult(mapOf(player1 to GameResultType.WIN, player2 to GameResultType.WIN, player3 to GameResultType.LOSE))
 
         // when
