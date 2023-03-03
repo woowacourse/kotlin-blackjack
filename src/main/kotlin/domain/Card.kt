@@ -1,6 +1,6 @@
 package domain
 
-class Card(val shape: Shape, val value: Value) {
+class Card(private val shape: Shape, val value: Value) {
     enum class Shape(val pattern: String) {
         HEARTS("하트"),
         DIAMONDS("다이아몬드"),
