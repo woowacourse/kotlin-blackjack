@@ -3,6 +3,7 @@ package blackjack.view
 import blackjack.domain.Card
 import blackjack.domain.CardBunch
 import blackjack.domain.CardNumber
+import blackjack.domain.Dealer
 import blackjack.domain.Player
 
 class OutputView {
@@ -17,7 +18,7 @@ class OutputView {
 
     fun printPlayerCards(player: Player) {
         val bunchString = makeBunchString(player.cardBunch)
-        println("${player.name}카드 : $bunchString ")
+        println("${player.name}카드 : $bunchString")
     }
 
     fun printDistributeScript(players: List<Player>) {
@@ -29,6 +30,15 @@ class OutputView {
             true -> println(CAN_GET_CARD_SCRIPT)
             false -> println(CANNOT_GET_CARD_SCRIPT)
         }
+    }
+
+    fun printPlayerCards(dealer: Dealer, players: List<Player>) {
+        println("딜러 카드 : ${makeBunchString(dealer.cardBunch)} - 결과: ${dealer.cardBunch.getTotalScore()}")
+        players.forEach { player ->
+            val bunchString = makeBunchString(player.cardBunch)
+            println("${player.name}카드 : $bunchString - 결과: ${player.cardBunch.getTotalScore()}")
+        }
+        println()
     }
 
     companion object {
