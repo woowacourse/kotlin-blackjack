@@ -20,16 +20,19 @@ object OutputView {
     private const val PLAYER_GAME_RESULT = "%s: %s"
 
     fun printCardDividingMessage(dealer: Dealer, players: List<Player>) {
+        println()
         println(CARD_DIVIDING_MSG.format(players.joinToString(SEPERATOR) { player -> player.name.value }))
         println(SHOW_DEALER_CARD.format(dealer.cards.cards.first()))
         players.forEach { player -> printCardResults(player) }
+        println()
     }
 
     fun printCardResults(player: Player) {
-        println(SHOW_PLAYER_CARDS.format(player.name, player.cards.cards.joinToString(SEPERATOR)))
+        println(SHOW_PLAYER_CARDS.format(player.name.value, player.cards.cards.joinToString(SEPERATOR)))
     }
 
     fun printIsDealerReceivedCard(drawResult: DrawResult) {
+        println()
         when (drawResult) {
             is DrawResult.Success -> println(DEALER_RECEIVED_CARD_MSG)
             is DrawResult.Failure -> println(DEALER_RECEIVED_NOTHING_MSG)
@@ -37,13 +40,15 @@ object OutputView {
     }
 
     fun printFinalCards(dealer: Dealer, players: List<Player>) {
+        println()
         println(SHOW_DEALER_CARD.format(dealer.cards.cards.joinToString(SEPERATOR)) + FINAL_SCORE.format(dealer.cards.getTotalCardsValue()))
         players.forEach { player ->
-            println(SHOW_PLAYER_CARDS.format(player.name, player.cards.cards.joinToString(SEPERATOR)) + FINAL_SCORE.format(player.cards.getTotalCardsValue()))
+            println(SHOW_PLAYER_CARDS.format(player.name.value, player.cards.cards.joinToString(SEPERATOR)) + FINAL_SCORE.format(player.cards.getTotalCardsValue()))
         }
     }
 
     fun printGameResults(playerGameResults: List<PlayerGameResult>, dealerGameResult: List<GameResult>) {
+        println()
         println(GAME_RESULTS)
         println(
             DEALER_GAME_RESULTS.format(

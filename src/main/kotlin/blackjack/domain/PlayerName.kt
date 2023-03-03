@@ -4,7 +4,7 @@ package blackjack.domain
 value class PlayerName(val value: String) {
 
     init {
-        require(value.length != 0) {
+        require(value.isNotEmpty()) {
             NAME_LENGTH_ERROR
         }
     }

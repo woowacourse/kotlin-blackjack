@@ -1,6 +1,7 @@
 package blackjack.controller
 
 import blackjack.domain.BlackJackReferee
+import blackjack.domain.Cards
 import blackjack.domain.Dealer
 import blackjack.domain.DrawState
 import blackjack.domain.Player
@@ -39,9 +40,9 @@ class BlackJackController(
     private fun askToDrawAdditionalCardForPlayer(player: Player) {
         do {
             val drawFlag = InputView.requestAdditionalDraw(player)
-        } while (drawFlag == "y" && drawAdditionalCardForPlayer(player) == DrawState.POSSIBLE)
+        } while (drawFlag && drawAdditionalCardForPlayer(player) == DrawState.POSSIBLE)
 
-        if (player.cards.cards.size == 2) {
+        if (player.cards.size == Cards.INITIAL_CARDS_SIZE) {
             OutputView.printCardResults(player)
         }
     }

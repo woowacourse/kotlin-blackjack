@@ -8,6 +8,9 @@ class Cards(
     val cards: List<Card>
         get() = _cards.toList()
 
+    val size: Int
+        get() = cards.size
+
     init {
         require(cards.size == INITIAL_CARDS_SIZE)
     }
@@ -39,7 +42,7 @@ class Cards(
     }
 
     companion object {
-        private const val INITIAL_CARDS_SIZE = 2
+        const val INITIAL_CARDS_SIZE = 2
         private const val SMALL_ACE_VALUE = 1
         private const val BIG_ACE_VALUE = 11
         private const val CURRENT_SUM_STANDARD = 11
