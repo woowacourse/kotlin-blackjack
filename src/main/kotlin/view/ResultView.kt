@@ -6,7 +6,7 @@ import domain.person.Player
 import domain.result.GameResult
 import domain.result.OutCome
 
-class ResultView {
+object ResultView {
     fun printPersonsCards(dealer: Dealer, players: List<Player>) {
         printPersonCards(dealer)
         players.forEach { printPersonCards(it) }
