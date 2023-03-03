@@ -13,13 +13,13 @@ class GameResult(private val playerResult: Map<Player, ResultType>) {
     operator fun get(player: Player): ResultType? = playerResult[player]
 
     companion object {
-        fun of(dealer: Player, players: List<Player>): GameResult {
+        fun of(dealer: Dealer, players: List<Player>): GameResult {
             val result = players.associateWith { it against dealer }
 
             return GameResult(result)
         }
 
-        private infix fun Player.against(dealer: Player): ResultType {
+        private infix fun Player.against(dealer: Dealer): ResultType {
             if (this.isBust()) return ResultType.LOSE
             if (dealer.isBust()) return ResultType.WIN
 
