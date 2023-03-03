@@ -33,19 +33,19 @@ class Controller(private val cardDeck: CardDeck) {
     }
 
     private fun askGetCard(player: Player) {
-        if (!player.cardBunch.isBurst()) {
-            if (InputView.getDecision(player)) {
-                player.cardBunch.addCard(cardDeck.drawCard())
-                OutputView.printPlayerCards(player)
-            } else {
-                OutputView.printPlayerCards(player)
-                return
-            }
+        while (!player.cardBunch.isBurst()) {
+            if (!addCardToPlayer(player)) return
         }
+    }
 
-        if (!player.cardBunch.isBurst()) {
-            askGetCard(player)
+    private fun addCardToPlayer(player: Player): Boolean {
+        if (InputView.getDecision(player)) {
+            player.cardBunch.addCard(cardDeck.drawCard())
+            OutputView.printPlayerCards(player)
+            return true
         }
+        OutputView.printPlayerCards(player)
+        return false
     }
 
     private fun showDealerState(dealer: Dealer) {
