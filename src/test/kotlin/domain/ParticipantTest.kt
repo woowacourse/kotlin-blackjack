@@ -51,8 +51,6 @@ class ParticipantTest {
         }
 
         val actual = participant.isBurst()
-        val expected = Cards.State.NoBurst(17)
-
-        assertThat(actual).isEqualTo(expected)
+        assertThat(actual).isFalse
     }
 }

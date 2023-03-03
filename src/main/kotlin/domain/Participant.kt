@@ -6,7 +6,8 @@ abstract class Participant(val name: Name, val cards: Cards) {
     fun getSumStateResult(): Cards.State {
         return cards.maxSumState()
     }
-    fun isBurst(): Cards.State {
-        return cards.minSumState()
+    fun isBurst(): Boolean = when (cards.minSumState()) {
+        is Cards.State.Burst -> true
+        is Cards.State.NoBurst -> false
     }
 }
