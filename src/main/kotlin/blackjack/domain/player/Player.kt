@@ -1,12 +1,12 @@
 package blackjack.domain.player
 
+import blackjack.domain.CardGenerator
 import blackjack.domain.RandomGenerator
 import blackjack.domain.card.Card
-import blackjack.domain.card.CardGenerator
 import blackjack.domain.card.Cards
 
 open class Player(
-    open val name: String,
+    val name: String,
     private val generator: CardGenerator = CardGenerator(
         RandomGenerator()
     )
