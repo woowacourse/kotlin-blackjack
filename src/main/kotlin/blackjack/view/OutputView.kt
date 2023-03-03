@@ -25,7 +25,7 @@ object OutputView {
         dto.playerHands.forEach(::printHand)
     }
 
-    private fun printHand(dto: HandDTO) {
+    fun printHand(dto: HandDTO) {
         println("${dto.name} 카드: ${dto.hand.joinToString(", ")}")
     }
 

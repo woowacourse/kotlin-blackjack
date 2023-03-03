@@ -6,8 +6,9 @@ object InputView {
 
     fun inputNames(): List<String> {
         println(REQUEST_PLAYER_NAMES)
+        val names = readln().split(",").map { it.trim() }
         printInterval()
-        return readln().split(",")
+        return names
     }
 
     fun inputDrawCommand(name: String): String {

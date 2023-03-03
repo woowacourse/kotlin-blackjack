@@ -2,6 +2,7 @@ package blackjack.controller
 
 import blackjack.domain.BlackJack
 import blackjack.domain.BlackJackBuilder
+import blackjack.domain.Player
 import blackjack.domain.RandomCardGenerator
 import blackjack.view.InputView
 import blackjack.view.OutputView
@@ -12,6 +13,7 @@ class BlackJackController {
     fun start() {
         initBlackJack()
         setUpCard()
+        takeTurns()
     }
 
     private fun initBlackJack() {
@@ -32,5 +34,21 @@ class BlackJackController {
     private fun drawInitialCards(blackJack: BlackJack) {
         blackJack.drawAll()
         blackJack.drawAll()
+    }
+
+    private fun takeTurns() {
+        blackJack.getPlayers().forEach(::takePlayerTurn)
+    }
+
+    private fun takePlayerTurn(player: Player) {
+        while (!player.isBust()) {
+            val command = InputView.inputDrawCommand(player.name)
+            if (command == "n") {
+                OutputView.printHand(player.getHand())
+                return
+            }
+            blackJack.draw(player)
+            OutputView.printHand(player.getHand())
+        }
     }
 }
