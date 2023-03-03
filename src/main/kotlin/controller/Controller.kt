@@ -14,7 +14,7 @@ import view.InputView
 import view.OutputView
 
 class Controller(private val inputView: InputView, private val outputView: OutputView) {
-    private val picker = CardPicker(Cards(CardPackGenerator().createCards().cards.shuffled()))
+    private val picker = CardPicker(CardPackGenerator().createCards().shuffled())
 
     fun run() {
         val cardGame = CardGame(picker)
@@ -59,5 +59,9 @@ class Controller(private val inputView: InputView, private val outputView: Outpu
             outputView.printDealerGetCard()
             dealer.cards.add(picker.pick())
         }
+    }
+
+    private fun Cards.shuffled(): Cards {
+        return Cards(cards.shuffled())
     }
 }
