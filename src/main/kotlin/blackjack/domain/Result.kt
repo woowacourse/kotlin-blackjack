@@ -18,5 +18,11 @@ enum class Result(val word: String) {
             }
             return WIN
         }
+
+        fun reverse(result: Result) = when (result) {
+            WIN -> LOSE
+            LOSE -> WIN
+            else -> DRAW
+        }
     }
 }
