@@ -16,9 +16,10 @@ class BlackJackGame {
     }
 
     private fun BlackJack.guestTurn(guest: Guest, output: (User) -> Unit) {
-        when (guest.getCommand()) {
+        when (getCommand(guest.name)) {
             in DRAW_COMMANDS -> draw(guest, output)
-            else -> output(guest)
+            in END_TURN_COMMANDS -> output(guest)
+            else -> this.guestTurn(guest, output)
         }
     }
 
@@ -30,10 +31,11 @@ class BlackJackGame {
         }
     }
 
-    private fun Guest.getCommand() = input(this.name.toString())
+    private fun getCommand(name: Name) = input(name.toString())
 
     companion object {
         const val BLACKJACK_NUMBER = 21
         private val DRAW_COMMANDS = listOf("Y", "y")
+        private val END_TURN_COMMANDS = listOf("N", "n")
     }
 }
