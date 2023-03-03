@@ -1,5 +1,6 @@
 package blackjack.view
 
+import blackjack.dto.HandDTO
 import blackjack.dto.HandsDTO
 import blackjack.dto.ScoreDTO
 import blackjack.dto.ScoresDTO
@@ -16,12 +17,12 @@ object OutputView {
     }
 
     private fun printSetUpCards(dto: HandsDTO) {
-        printHand(dto.dealerHand.name, dto.dealerHand.hand)
-        dto.playerHands.forEach { (name, hand) -> printHand(name, hand) }
+        printHand(dto.dealerHand)
+        dto.playerHands.forEach(::printHand)
     }
 
-    private fun printHand(name: String, hands: List<String>) {
-        println("$name: ${hands.joinToString(", ")}")
+    private fun printHand(dto: HandDTO) {
+        println("${dto.name}: ${dto.hand.joinToString(", ")}")
     }
 
     fun printDealerHit() {
