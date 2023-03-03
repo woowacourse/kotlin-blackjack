@@ -1,6 +1,12 @@
 import controller.BlackjackController
 
 fun main() {
-    val game = BlackjackController()
-    game.process()
+    runCatching {
+        val game = BlackjackController()
+        game.process()
+    }.onFailure {
+        print("[ERROR] : ")
+        println(it.message)
+        println(it.stackTraceToString())
+    }
 }
