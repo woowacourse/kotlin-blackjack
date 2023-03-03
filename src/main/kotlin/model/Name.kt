@@ -3,7 +3,7 @@ package model
 @JvmInline
 value class Name(val value: String) {
     init {
-        require(value.all { it != ' ' } && Regex("([a-z]|[A-Z]|[가-힣])+").matches(value)) { VALIDATE_ERROR }
+        require(Regex("([a-z]|[A-Z]|[가-힣])+").matches(value)) { VALIDATE_ERROR }
     }
 
     companion object {
