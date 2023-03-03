@@ -19,21 +19,24 @@ class BlackJackController(
     }
 
     fun run() {
-        showDividingCards()
-        drawAdditionalCards()
-        drawAdditionalCardForDealer()
-        showFinalCards()
-        judgeGameResults()
+        runCatching {
+            showDividingCards()
+            drawAdditionalCards()
+            drawAdditionalCardForDealer()
+            showFinalCards()
+            judgeGameResults()
+        }.onFailure { exception ->
+            OutputView.printErrorMessage(exception)
+        }
     }
 
     private fun showDividingCards() = OutputView.printCardDividingMessage(dealer, players)
 
     private fun drawAdditionalCards() = players.forEach { player ->
-        askToDrawAdditionalCard(player)
+        askToDrawAdditionalCardForPlayer(player)
     }
 
-    // TODO: 상수 분리
-    private fun askToDrawAdditionalCard(player: Player) {
+    private fun askToDrawAdditionalCardForPlayer(player: Player) {
         do {
             val drawFlag = InputView.requestAdditionalDraw(player)
         } while (drawFlag == "y" && drawAdditionalCardForPlayer(player) == DrawState.POSSIBLE)

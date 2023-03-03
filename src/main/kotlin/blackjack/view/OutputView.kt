@@ -56,4 +56,8 @@ object OutputView {
             println(PLAYER_GAME_RESULT.format(playerGameResult.playerName, playerGameResult.gameResult.description))
         }
     }
+
+    fun printErrorMessage(exception: Throwable) {
+        println(exception.message)
+    }
 }
