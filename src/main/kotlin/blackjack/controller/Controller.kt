@@ -13,10 +13,14 @@ class Controller(private val cardDeck: CardDeck) {
         val players = getPlayers(InputView.getPlayerNames())
         showInitialState(dealer, players)
         players.forEach { askGetCard(it) }
+        players.forEach { dealer.compareScore(it) }
+        printResult(dealer, players)
+    }
+
+    private fun printResult(dealer: Dealer, players: List<Player>) {
         showDealerState(dealer)
         printTotalScore(dealer, players)
-        players.forEach { dealer.compareScore(it) }
-        printResult(players)
+        printWinOrLose(players)
     }
 
     private fun getPlayers(names: List<String>): List<Player> =
@@ -58,7 +62,7 @@ class Controller(private val cardDeck: CardDeck) {
         OutputView.printTotalScore(dealer, players)
     }
 
-    private fun printResult(players: List<Player>) {
-        OutputView.printResult(players)
+    private fun printWinOrLose(players: List<Player>) {
+        OutputView.printWinOrLose(players)
     }
 }

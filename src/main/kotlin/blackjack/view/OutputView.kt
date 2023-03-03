@@ -50,7 +50,7 @@ object OutputView {
         println()
     }
 
-    fun printResult(players: List<Player>) {
+    fun printWinOrLose(players: List<Player>) {
         println("##최종 승패")
         printDealerResult(players)
         getResultString(players)
