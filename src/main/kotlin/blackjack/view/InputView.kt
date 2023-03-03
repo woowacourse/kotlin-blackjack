@@ -6,6 +6,7 @@ object InputView {
 
     fun inputNames(): List<String> {
         println(REQUEST_PLAYER_NAMES)
+        printInterval()
         return readln().split(",")
     }
 
@@ -13,4 +14,6 @@ object InputView {
         println(REQUEST_DRAW_COMMAND.format(name))
         return readln()
     }
+
+    private fun printInterval() = println()
 }

@@ -14,19 +14,19 @@ object OutputView {
     private const val SCORE_BOARD_MESSAGE = "%s 카드: %s - 결과: %d"
     private const val FINAL_RESULT_MESSAGE = "## 최종 승패"
 
-    fun printSetUp(dto: HandsDTO) {
+    fun printInitialHands(dto: HandsDTO) {
         println(GAME_SET_UP_MESSAGE.format(dto.dealerHand.name, dto.playerHands.joinToString(", ") { it.name }))
-        printSetUpCards(dto)
+        printHands(dto)
         printInterval()
     }
 
-    private fun printSetUpCards(dto: HandsDTO) {
+    private fun printHands(dto: HandsDTO) {
         printHand(dto.dealerHand)
         dto.playerHands.forEach(::printHand)
     }
 
     private fun printHand(dto: HandDTO) {
-        println("${dto.name}: ${dto.hand.joinToString(", ")}")
+        println("${dto.name} 카드: ${dto.hand.joinToString(", ")}")
     }
 
     fun printDealerHit() {

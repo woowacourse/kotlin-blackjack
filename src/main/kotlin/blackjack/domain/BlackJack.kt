@@ -5,5 +5,7 @@ class BlackJack(private val deck: CardDeck, private val participants: Participan
         participants.drawAll(deck)
     }
 
+    fun getInitialHands() = participants.getInitialHands()
+
     fun getGameResults(): Map<String, String> = participants.getGameResults()
 }

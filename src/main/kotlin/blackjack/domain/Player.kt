@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import blackjack.dto.HandDTO
+
 open class Player(val name: String) {
     val hand = PlayerHand()
 
@@ -11,5 +13,5 @@ open class Player(val name: String) {
 
     fun getTotalScore(): Int = hand.calculateTotalScore()
 
-    fun getCardNames(): List<String> = hand.cards.map(Card::toString)
+    fun getHand(): HandDTO = HandDTO(name, hand.cards.map(Card::toString))
 }
