@@ -6,7 +6,7 @@ import model.Cards
 class CardPicker(private val cards: Cards) {
     private var cursor = 0
     fun pick(): Card {
-        require(cursor < cards.cards.size) { OUT_OF_INDEX_CARDS_CURSOR }
+        require(cursor < cards.size) { OUT_OF_INDEX_CARDS_CURSOR }
         return cards.cards[cursor++]
     }
 
