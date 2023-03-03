@@ -10,16 +10,11 @@ enum class GameResult(val description: String) {
     } else {
         DRAW
     }
-    companion object {
-        private const val BLACK_JACK_VALUE = 21
 
-        // TODO: 결과값 반환 if 문 개선
-        fun valueOf(myScore: Int, otherScore: Int): GameResult = if (myScore == otherScore) {
-            DRAW
-        } else if ((myScore < otherScore) or (myScore > BLACK_JACK_VALUE)) {
-            LOSE
-        } else {
-            WIN
-        }
+    companion object {
+        fun valueOf(playerScore: Int, dealerScore: Int): GameResult =
+            GameResultCondition.values().find { gameResultCondition ->
+                gameResultCondition.condition(playerScore, dealerScore)
+            }?.gameResult ?: throw IllegalStateException("처리하지 못한 케이스입니다")
     }
 }

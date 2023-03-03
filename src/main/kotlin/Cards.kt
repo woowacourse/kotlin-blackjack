@@ -12,6 +12,7 @@ class Cards(
 
     fun draw(card: Card = Card.draw()) {
         _cards.add(card)
+        CardNumber.values()
     }
 
     fun getMinimumCardsValue(): Int = cards.sumOf { card -> card.number.value }
