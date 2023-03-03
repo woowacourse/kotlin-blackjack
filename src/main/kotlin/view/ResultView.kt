@@ -10,7 +10,7 @@ class ResultView {
     fun printGameStatus(dealer: Dealer, players: Players) {
         println(MESSAGE_DEALER_GAME_STATUS.format(ViewUtils.cardsToString(dealer.cards), dealer.cardsNumberSum()))
         players.value.forEach {
-            println(MESSAGE_PLAYERS_GAME_STATUS.format(it.name, ViewUtils.cardsToString(it.cards), it.cardsNumberSum()))
+            println(MESSAGE_PLAYERS_GAME_STATUS.format(it.name.value, ViewUtils.cardsToString(it.cards), it.cardsNumberSum()))
         }
     }
 
@@ -18,7 +18,7 @@ class ResultView {
         println(MESSAGE_GAME_RESULT)
         println(MESSAGE_DEALER_GAME_RESULT.format(formatDealerGameResult(dealerGameResult)))
         playersGameResult.value.forEach {
-            println(MESSAGE_PLAYERS_GAME_RESULT.format(it.key.name, gameResultTypeToString(it.value)))
+            println(MESSAGE_PLAYERS_GAME_RESULT.format(it.key.name.value, gameResultTypeToString(it.value)))
         }
     }
 

@@ -6,13 +6,13 @@ import entity.Player
 import entity.Players
 
 class GameView {
-    fun printDealerStatus(dealer: Dealer) {
+    private fun printDealerStatus(dealer: Dealer) {
         print(MESSAGE_DEALER_NAME)
         println(ViewUtils.cardsToString(dealer.cards.value.take(1).let { Cards(it) }))
     }
 
     fun printPlayerStatus(player: Player) {
-        print(player.name)
+        print(player.name.value)
         print(MESSAGE_PLAYER_NAME)
         println(ViewUtils.cardsToString(player.cards))
     }
