@@ -16,8 +16,4 @@ class Cards(value: List<Card>) {
     fun addCards(cards: Cards) {
         cards.value.forEach { _value.add(it) }
     }
-
-    fun addCard(card: Card) {
-        _value.add(card)
-    }
 }
