@@ -5,6 +5,7 @@ import domain.CardPackGenerator
 import domain.CardPicker
 import model.Cards
 import model.Dealer
+import model.Dealer.Companion.DEALER
 import model.GameResult
 import model.Name
 import model.Participant
@@ -17,9 +18,10 @@ class Controller(private val inputView: InputView, private val outputView: Outpu
 
     fun run() {
         val cardGame = CardGame(picker)
-        val players = initPlayers(initNames(), cardGame)
-        val dealer = initDealer(cardGame)
-        val participants = initParticipants(dealer, players)
+        val players = cardGame.initPlayers(initNames())
+        val dealer = cardGame.initDealer()
+        val participants = listOf(dealer as Participant) + (players as List<Participant>)
+        printParticipants(participants)
         askGetMorePlayersCard(players)
         getMoreDealerCard(dealer)
         outputView.printAllPlayerStatusResult(participants)
@@ -31,20 +33,8 @@ class Controller(private val inputView: InputView, private val outputView: Outpu
         return inputView.readName()
     }
 
-    private fun initPlayers(names: List<Name>, game: CardGame): List<Player> {
-        return names.map { Player(game.pickTwice(), it) }
-    }
-
-    private fun initDealer(game: CardGame): Dealer {
-        return Dealer(game.pickTwice())
-    }
-
-    private fun initParticipants(dealer: Dealer, player: List<Player>): List<Participant> {
-        val participants = buildList {
-            add(dealer as Participant)
-            addAll(player as List<Participant>)
-        }
-        outputView.printDistributeCards(player)
+    private fun printParticipants(participants: List<Participant>): List<Participant> {
+        outputView.printNoticeDistributeCards(participants.filter { it.name.value != DEALER }.map { it.name })
         outputView.printPlayersStatus(participants)
         return participants
     }

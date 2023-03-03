@@ -10,9 +10,9 @@ class OutputView {
         println(MESSAGE_INPUT_NAME)
     }
 
-    fun printDistributeCards(players: List<Player>) {
+    fun printNoticeDistributeCards(players: List<Name>) {
         println()
-        println(MESSAGE_DISTRIBUTE_CARD.format(players.joinToString(", ") { it.name.value }))
+        println(MESSAGE_DISTRIBUTE_CARD.format(players.joinToString(", ") { it.value }))
     }
 
     fun printGetCardMore(name: Name) {
