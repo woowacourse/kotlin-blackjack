@@ -12,7 +12,7 @@ class PlayersTest {
         players.drawAll(deck)
         players.drawAll(deck)
 
-        val actual = (0 until 3).flatMap { players[it].getCardNames() }
+        val actual = (0 until 3).flatMap { players[it].getHand().hand }
         assertEquals(
             actual,
             listOf("A스페이드", "K스페이드", "A다이아몬드", "2스페이드", "A하트", "8스페이드")

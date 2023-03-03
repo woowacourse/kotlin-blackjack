@@ -2,6 +2,7 @@ package blackjack.controller
 
 import blackjack.domain.BlackJack
 import blackjack.domain.BlackJackBuilder
+import blackjack.domain.Command
 import blackjack.domain.Player
 import blackjack.domain.RandomCardGenerator
 import blackjack.view.InputView
@@ -53,8 +54,8 @@ class BlackJackController {
 
     private fun takePlayerTurn(player: Player) {
         while (!player.isBust()) {
-            val command = InputView.inputDrawCommand(player.name)
-            if (command == "n") {
+            val command = Command(InputView.inputDrawCommand(player.name))
+            if (command.value == "n") {
                 OutputView.printHand(player.getHand())
                 return
             }

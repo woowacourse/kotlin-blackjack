@@ -57,6 +57,6 @@ class PlayerTest {
         player.addCard(Card.of(1))
         player.addCard(Card.of(24))
 
-        assertThat(player.getCardNames()).isEqualTo(listOf("A스페이드", "J다이아몬드"))
+        assertThat(player.getHand().hand).isEqualTo(listOf("A스페이드", "J다이아몬드"))
     }
 }
