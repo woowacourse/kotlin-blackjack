@@ -19,6 +19,7 @@ class GameResult(private val dealer: Dealer, private val players: List<Player>) 
         val differenceCardNumber = player.getTotalCardNumber() - dealer.getTotalCardNumber()
         return when {
             player.gameState == BUST -> player.name to LOSE
+            dealer.gameState == BUST -> player.name to WIN
             differenceCardNumber < 0 -> player.name to LOSE
             differenceCardNumber > 0 -> player.name to WIN
             else -> player.name to DRAW
