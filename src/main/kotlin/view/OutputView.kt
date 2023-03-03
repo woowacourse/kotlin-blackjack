@@ -8,6 +8,7 @@ import domain.judge.Result
 object OutputView {
 
     fun printDivideCard(names: List<String>) {
+        println()
         println(names.joinToString(", ", "딜러와 ", "에게 2장을 나누었습니다."))
     }
 
@@ -19,6 +20,7 @@ object OutputView {
         participants.forEach { it ->
             printParticipantCards(it.key, it.value.cards)
         }
+        println()
     }
 
     fun printParticipantCards(name: String, cards: List<Card>) {
@@ -30,7 +32,7 @@ object OutputView {
     }
 
     fun printDealerUnder16() {
-        println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+        println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n")
     }
 
     fun printCardResult(participants: Map<String, ParticipantState>) {
@@ -40,7 +42,7 @@ object OutputView {
     }
 
     fun printWinningResult(dealerResult: List<Result>, playerStates: Map<String, Result>) {
-        println("## 최종 승패")
+        println("\n## 최종 승패")
         printDealerWinningResult(dealerResult)
         printPlayerWinningResult(playerStates)
     }
