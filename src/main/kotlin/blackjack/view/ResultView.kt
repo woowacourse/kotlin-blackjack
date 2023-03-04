@@ -17,7 +17,7 @@ object ResultView {
     private const val DEALER_HIT_MESSAGE = "\n%s는 ${HIT_STANDARD_SCORE}이하라 한장의 카드를 더 받았습니다.\n"
     private const val SHOW_SCORE = " - 결과: %d"
     private const val FINAL_RESULT_MESSAGE = "\n## 최종 승패"
-    private const val FINAL_RESULT = "%s:%s"
+    private const val FINAL_RESULT = "%s: %s"
     private const val NOT_PARTICIPATE_PLAYER = "%s는 게임에 참여하지 않았습니다."
 
     fun printSetUp(dealer: Dealer, players: List<Player>) {
@@ -53,20 +53,22 @@ object ResultView {
 
     private fun printDealerResult(blackjackResult: BlackjackResult, dealer: Dealer) {
         val result = ResultType.values().fold("") { s, type ->
-            s + type.toKorean(blackjackResult.getCountOfDealer(type))
+            s + type.toTextWithCount(blackjackResult.getCountOfDealer(type))
         }
         println(FINAL_RESULT.format(dealer.name, result))
     }
 
     private fun printPlayerResult(player: Player, result: ResultType?) {
-        result?.let { println(FINAL_RESULT.format(player.name, result.toKorean())) }
+        result?.let { println(FINAL_RESULT.format(player.name, result.toText())) }
             ?: println(NOT_PARTICIPATE_PLAYER.format(player.name))
     }
 
     private fun Dealer.faceUpOnlyOne(): String = FACE_UP_CARDS.format(this.name, this.cards[0].name())
-    private fun Participant.faceUp(): String = FACE_UP_CARDS.format(this.name, this.cards.joinToString(", ") { it.name() })
+    private fun Participant.faceUp(): String =
+        FACE_UP_CARDS.format(this.name, this.cards.joinToString(", ") { it.name() })
+
     private fun Participant.showScore(): String = SHOW_SCORE.format(this.getScore())
-    private fun Card.name(): String = "${this.number.toMark()}${this.shape.toKorean()}"
+    private fun Card.name(): String = "${this.number.toMark()}${this.shape.toText()}"
 
     private fun CardNumber.toMark(): String =
         when (this) {
@@ -77,7 +79,7 @@ object ResultView {
             else -> this.value.toString()
         }
 
-    private fun CardShape.toKorean(): String =
+    private fun CardShape.toText(): String =
         when (this) {
             CardShape.DIAMOND -> "다이아몬드"
             CardShape.HEART -> "하트"
@@ -85,20 +87,20 @@ object ResultView {
             CardShape.SPADE -> "스페이드"
         }
 
-    private fun ResultType.toKorean(score: Int?): String {
-        if (score == null || score <= 0) return ""
+    private fun ResultType.toTextWithCount(count: Int?): String {
+        if (count == null || count <= 0) return ""
         return when (this) {
-            ResultType.WIN -> " ${score}승"
-            ResultType.TIE -> " ${score}무"
-            ResultType.LOSE -> " ${score}패"
+            ResultType.WIN -> " ${count}승"
+            ResultType.TIE -> " ${count}무"
+            ResultType.LOSE -> " ${count}패"
         }
     }
 
-    private fun ResultType.toKorean(): String {
+    private fun ResultType.toText(): String {
         return when (this) {
-            ResultType.WIN -> " 승"
-            ResultType.TIE -> " 무"
-            ResultType.LOSE -> " 패"
+            ResultType.WIN -> "승"
+            ResultType.TIE -> "무"
+            ResultType.LOSE -> "패"
         }
     }
 }
