@@ -1,9 +1,9 @@
 package blackjack.domain
 
-enum class GameResult(val description: String) {
-    WIN("승"),
-    LOSE("패"),
-    DRAW("무");
+enum class GameResult {
+    WIN,
+    LOSE,
+    DRAW;
 
     operator fun not(): GameResult = if (this == WIN) {
         LOSE

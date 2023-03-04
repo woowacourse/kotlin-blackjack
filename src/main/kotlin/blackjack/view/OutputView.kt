@@ -7,7 +7,6 @@ import blackjack.domain.Player
 import blackjack.domain.PlayerGameResult
 
 object OutputView {
-
     private const val CARD_DIVIDING_MSG = "딜러와 %s에게 2장의 카드를 나누었습니다."
     private const val SEPERATOR = ","
     private const val SHOW_DEALER_CARD = "딜러 카드: %s"
@@ -18,6 +17,9 @@ object OutputView {
     private const val GAME_RESULTS = "###최종 승패"
     private const val DEALER_GAME_RESULTS = "딜러: %d승 %d패 %d무"
     private const val PLAYER_GAME_RESULT = "%s: %s"
+    private const val WIN_DESCRIPTION = "승"
+    private const val DRAW_DESCRIPTION = "무"
+    private const val LOSE_DESCRIPTION = "패"
 
     fun printCardDividingMessage(dealer: Dealer, players: List<Player>) {
         println()
@@ -43,8 +45,19 @@ object OutputView {
         println()
         println(SHOW_DEALER_CARD.format(dealer.cards.cards.joinToString(SEPERATOR)) + FINAL_SCORE.format(dealer.cards.getTotalCardsScore()))
         players.forEach { player ->
-            println(SHOW_PLAYER_CARDS.format(player.name.value, player.cards.cards.joinToString(SEPERATOR)) + FINAL_SCORE.format(player.cards.getTotalCardsScore()))
+            println(
+                SHOW_PLAYER_CARDS.format(
+                    player.name.value,
+                    player.cards.cards.joinToString(SEPERATOR)
+                ) + FINAL_SCORE.format(player.cards.getTotalCardsScore())
+            )
         }
+    }
+
+    private fun GameResult.toDescription() = when (this) {
+        GameResult.WIN -> WIN_DESCRIPTION
+        GameResult.DRAW -> DRAW_DESCRIPTION
+        GameResult.LOSE -> LOSE_DESCRIPTION
     }
 
     fun printGameResults(playerGameResults: List<PlayerGameResult>, dealerGameResult: List<GameResult>) {
@@ -58,7 +71,7 @@ object OutputView {
             )
         )
         playerGameResults.forEach { playerGameResult ->
-            println(PLAYER_GAME_RESULT.format(playerGameResult.playerName, playerGameResult.gameResult.description))
+            println(PLAYER_GAME_RESULT.format(playerGameResult.playerName, playerGameResult.gameResult.toDescription()))
         }
     }
 
