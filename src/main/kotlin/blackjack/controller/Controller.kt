@@ -24,11 +24,11 @@ class Controller(private val cardDeck: CardDeck) {
     }
 
     private fun getPlayers(names: List<String>): List<Player> =
-        names.map { Player(it, makeCardBunch()) }
+        names.map { Player(it, makeInitialCardBunch()) }
 
-    private fun getDealer(): Dealer = Dealer(makeCardBunch())
+    private fun getDealer(): Dealer = Dealer(makeInitialCardBunch())
 
-    private fun makeCardBunch(): CardBunch = CardBunch(cardDeck.drawCard(), cardDeck.drawCard())
+    private fun makeInitialCardBunch(): CardBunch = CardBunch(cardDeck.drawCard(), cardDeck.drawCard())
 
     private fun showInitialState(dealer: Dealer, players: List<Player>) {
         OutputView.printDistributeScript(players)
