@@ -3,37 +3,39 @@ package blackjack.controller
 import blackjack.domain.CardBunch
 import blackjack.domain.Dealer
 import blackjack.domain.Player
+import blackjack.domain.Referee
 import blackjack.domain.carddeck.CardDeck
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
 class Controller(private val cardDeck: CardDeck) {
     fun runGame() {
-        val dealer = getDealer()
-        val players = getPlayers(InputView.getPlayerNames())
-        showInitialState(dealer, players)
-        players.forEach { askGetCard(it) }
-        players.forEach { dealer.compareScore(it) }
-        printResult(dealer, players)
+        val dealer = makeDealer()
+        val players = makePlayers(InputView.getPlayerNames())
+        val referee = Referee()
+        showInitialCard(dealer, players)
+        players.forEach { player -> askGetCard(player) }
+        players.forEach { player -> referee.chooseWinner(dealer, player) }
+        printCardAndScore(dealer, players)
+        printFinalWinOrLose(referee)
     }
 
-    private fun printResult(dealer: Dealer, players: List<Player>) {
+    private fun printCardAndScore(dealer: Dealer, players: List<Player>) {
         showDealerState(dealer)
-        printTotalScore(dealer, players)
-        printWinOrLose(players)
+        OutputView.printCardAndScore(dealer, players)
     }
 
-    private fun getPlayers(names: List<String>): List<Player> =
+    private fun makePlayers(names: List<String>): List<Player> =
         names.map { Player(it, makeInitialCardBunch()) }
 
-    private fun getDealer(): Dealer = Dealer(makeInitialCardBunch())
+    private fun makeDealer(): Dealer = Dealer(makeInitialCardBunch())
 
     private fun makeInitialCardBunch(): CardBunch = CardBunch(cardDeck.drawCard(), cardDeck.drawCard())
 
-    private fun showInitialState(dealer: Dealer, players: List<Player>) {
+    private fun showInitialCard(dealer: Dealer, players: List<Player>) {
         OutputView.printDistributeScript(players)
         OutputView.printDealerInitialCard(dealer.cardBunch)
-        players.forEach { OutputView.printPlayerCards(it) }
+        players.forEach { OutputView.printPlayerInitialCard(it) }
     }
 
     private fun askGetCard(player: Player) {
@@ -45,10 +47,10 @@ class Controller(private val cardDeck: CardDeck) {
     private fun isSuccessAddCardToPlayer(player: Player): Boolean {
         if (InputView.getDecision(player)) {
             player.cardBunch.addCard(cardDeck.drawCard())
-            OutputView.printPlayerCards(player)
+            OutputView.printPlayerInitialCard(player)
             return true
         }
-        OutputView.printPlayerCards(player)
+        OutputView.printPlayerInitialCard(player)
         return false
     }
 
@@ -58,11 +60,7 @@ class Controller(private val cardDeck: CardDeck) {
         if (condition) dealer.cardBunch.addCard(cardDeck.drawCard())
     }
 
-    private fun printTotalScore(dealer: Dealer, players: List<Player>) {
-        OutputView.printTotalScore(dealer, players)
-    }
-
-    private fun printWinOrLose(players: List<Player>) {
-        OutputView.printWinOrLose(players)
+    private fun printFinalWinOrLose(referee: Referee) {
+        OutputView.printWinOrLose(referee)
     }
 }
