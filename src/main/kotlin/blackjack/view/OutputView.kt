@@ -1,5 +1,6 @@
 package blackjack.view
 
+import blackjack.domain.Card
 import blackjack.domain.Dealer
 import blackjack.domain.DrawResult
 import blackjack.domain.GameResult
@@ -21,16 +22,31 @@ object OutputView {
     private const val DRAW_DESCRIPTION = "무"
     private const val LOSE_DESCRIPTION = "패"
 
+    fun Card.toDescription(): String {
+        var numberValue = number.name
+        if (numberValue.length != 1) {
+            numberValue = number.value.toString()
+        }
+        return numberValue + this.shape.description
+    }
+
     fun printCardDividingMessage(dealer: Dealer, players: List<Player>) {
         println()
         println(CARD_DIVIDING_MSG.format(players.joinToString(SEPERATOR) { player -> player.name.value }))
-        println(SHOW_DEALER_CARD.format(dealer.cards.cards.first()))
+        println(SHOW_DEALER_CARD.format(dealer.cards.cards.first().toDescription()))
         players.forEach { player -> printCardResults(player) }
         println()
     }
 
+    private fun Player.toCardsDescription(): String = SHOW_PLAYER_CARDS.format(
+        name.value,
+        cards.cards.joinToString(SEPERATOR) { card ->
+            card.toDescription()
+        }
+    )
+
     fun printCardResults(player: Player) {
-        println(SHOW_PLAYER_CARDS.format(player.name.value, player.cards.cards.joinToString(SEPERATOR)))
+        println(player.toCardsDescription())
     }
 
     fun printIsDealerReceivedCard(drawResult: DrawResult) {
@@ -43,14 +59,13 @@ object OutputView {
 
     fun printFinalCards(dealer: Dealer, players: List<Player>) {
         println()
-        println(SHOW_DEALER_CARD.format(dealer.cards.cards.joinToString(SEPERATOR)) + FINAL_SCORE.format(dealer.cards.getTotalCardsScore()))
+        println(
+            SHOW_DEALER_CARD.format(dealer.cards.cards.joinToString(SEPERATOR) { card -> card.toDescription() }) +
+                FINAL_SCORE.format(dealer.cards.getTotalCardsScore())
+        )
         players.forEach { player ->
-            println(
-                SHOW_PLAYER_CARDS.format(
-                    player.name.value,
-                    player.cards.cards.joinToString(SEPERATOR)
-                ) + FINAL_SCORE.format(player.cards.getTotalCardsScore())
-            )
+            print(player.toCardsDescription())
+            println(FINAL_SCORE.format(player.cards.getTotalCardsScore()))
         }
     }
 

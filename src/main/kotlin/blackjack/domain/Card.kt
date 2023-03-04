@@ -2,17 +2,8 @@ package blackjack.domain
 
 class Card(
     val number: CardNumber,
-    private val shape: Shape,
+    val shape: Shape,
 ) {
-
-    // TODO: UI로직 분리하기
-    override fun toString(): String {
-        var numberValue = number.name
-        if (numberValue.length != SPECIAL_CARDS_NAME_LENGTH) {
-            numberValue = number.value.toString()
-        }
-        return numberValue + shape.description
-    }
 
     companion object {
         private const val SPECIAL_CARDS_NAME_LENGTH = 1
