@@ -17,8 +17,8 @@ class CardBunch private constructor(cards: MutableList<Card>) {
         var result = 0
         val sortedCards = cards.sortedBy { it.cardNumber.value }.reversed()
 
-        sortedCards.forEach {
-            result += it.cardNumber.value ?: checkAceValue(result)
+        sortedCards.forEach { card ->
+            result += if (card.cardNumber == CardNumber.ACE) checkAceValue(result) else card.cardNumber.value
         }
         return result
     }

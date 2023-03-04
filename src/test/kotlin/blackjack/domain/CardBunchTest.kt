@@ -76,6 +76,8 @@ class CardBunchTest {
         cardBunch.addCard(card3)
         cardBunch.addCard(card4)
 
+        val totalScore = cardBunch.getTotalScore()
+        assertThat(totalScore).isEqualTo(23)
         assertThat(cardBunch.isBurst()).isTrue
     }
 
