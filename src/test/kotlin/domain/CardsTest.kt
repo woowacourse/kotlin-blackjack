@@ -14,14 +14,14 @@ class CardsTest {
     @Test
     fun `게임을 시작할때 카드가 두장이 아니면 예외를 발생시킨다`() {
         assertThrows<IllegalArgumentException> {
-            Cards(listOf(Card(CardNumber.SMALL_A, Shape.SPADE)))
+            Cards(listOf(Card(CardNumber.A, Shape.SPADE)))
         }
     }
 
     @Test
     fun `게임을 시작할때 카드가 두장이어야한다`() {
         assertDoesNotThrow {
-            Cards(listOf(Card(CardNumber.SMALL_A, Shape.SPADE), Card(CardNumber.SMALL_A, Shape.HEART)))
+            Cards(listOf(Card(CardNumber.A, Shape.SPADE), Card(CardNumber.A, Shape.HEART)))
         }
     }
 
@@ -31,7 +31,7 @@ class CardsTest {
             Cards(
                 listOf(
                     Card(CardNumber.K, Shape.HEART),
-                    Card(CardNumber.SMALL_A, Shape.SPADE)
+                    Card(CardNumber.A, Shape.SPADE)
                 )
             ).getMinimumCardsScore()
         ).isEqualTo(11)
@@ -42,7 +42,7 @@ class CardsTest {
         assertThat(
             Cards(
                 listOf(
-                    Card(CardNumber.SMALL_A, Shape.HEART),
+                    Card(CardNumber.A, Shape.HEART),
                     Card(CardNumber.SEVEN, Shape.SPADE)
                 )
             ).getTotalCardsScore()
@@ -54,8 +54,8 @@ class CardsTest {
         assertThat(
             Cards(
                 listOf(
-                    Card(CardNumber.SMALL_A, Shape.HEART),
-                    Card(CardNumber.SMALL_A, Shape.SPADE)
+                    Card(CardNumber.A, Shape.HEART),
+                    Card(CardNumber.A, Shape.SPADE)
                 )
             ).getTotalCardsScore()
         ).isEqualTo(12)
