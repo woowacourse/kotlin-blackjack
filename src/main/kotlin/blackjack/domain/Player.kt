@@ -15,11 +15,13 @@ class Player(
         return DrawState.POSSIBLE
     }
 
-    fun drawCard(): DrawState {
+    fun drawCard(): Boolean {
         cards.draw()
 
-        return isPossibleToDrawAdditionalCard()
+        return isPossibleToDrawAdditionalCard() == DrawState.POSSIBLE
     }
+
+    fun isDrawnNothing(): Boolean = cards.size == Cards.INITIAL_CARDS_SIZE
 
     companion object {
         private const val BLACK_JACK_SCORE = 21

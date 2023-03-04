@@ -1,9 +1,7 @@
 package blackjack.controller
 
 import blackjack.domain.BlackJackReferee
-import blackjack.domain.Cards
 import blackjack.domain.Dealer
-import blackjack.domain.DrawState
 import blackjack.domain.Player
 import blackjack.view.InputView
 import blackjack.view.OutputView
@@ -41,20 +39,20 @@ class BlackJackController(
     private fun askToDrawAdditionalCardForPlayer(player: Player) {
         do {
             val drawFlag = InputView.requestAdditionalDraw(player)
-        } while (drawFlag && drawAdditionalCardForPlayer(player) == DrawState.POSSIBLE)
+        } while (drawFlag && drawAdditionalCardForPlayer(player))
 
         // TODO: 외부에서 값을 꺼내쓰지말고 메세지를 던져 객체가 일하도록
-        if (player.cards.size == Cards.INITIAL_CARDS_SIZE) {
+        if (player.isDrawnNothing()) {
             OutputView.printCardResults(player)
         }
     }
 
-    private fun drawAdditionalCardForPlayer(player: Player): DrawState {
-        val drawState = player.drawCard()
+    private fun drawAdditionalCardForPlayer(player: Player): Boolean {
+        val isPossibleToAdditionalDraw = player.drawCard()
 
         OutputView.printCardResults(player)
 
-        return drawState
+        return isPossibleToAdditionalDraw
     }
 
     private fun drawAdditionalCardForDealer() {
