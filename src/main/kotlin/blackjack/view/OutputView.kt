@@ -6,10 +6,12 @@ import blackjack.domain.DrawResult
 import blackjack.domain.GameResult
 import blackjack.domain.Player
 import blackjack.domain.PlayerGameResult
+import blackjack.domain.Shape
 
 object OutputView {
+
     private const val CARD_DIVIDING_MSG = "딜러와 %s에게 2장의 카드를 나누었습니다."
-    private const val SEPERATOR = ","
+    private const val SEPARATOR = ","
     private const val SHOW_DEALER_CARD = "딜러 카드: %s"
     private const val SHOW_PLAYER_CARDS = "%s 카드: %s"
     private const val DEALER_RECEIVED_CARD_MSG = "딜러는 16이하라 한장의 카드를 더 받았습니다."
@@ -22,28 +24,41 @@ object OutputView {
     private const val DRAW_DESCRIPTION = "무"
     private const val LOSE_DESCRIPTION = "패"
 
-    fun Card.toDescription(): String {
+    private fun Player.toCardsDescription(): String = SHOW_PLAYER_CARDS.format(
+        name.value,
+        cards.cards.joinToString(SEPARATOR) { card ->
+            card.toDescription()
+        }
+    )
+
+    private fun Card.toDescription(): String {
         var numberValue = number.name
         if (numberValue.length != 1) {
             numberValue = number.value.toString()
         }
-        return numberValue + this.shape.description
+        return numberValue + this.shape.toDescription()
+    }
+
+    private fun Shape.toDescription(): String = when (this) {
+        Shape.HEART -> "하트"
+        Shape.CLOVER -> "클로버"
+        Shape.SPADE -> "스페이드"
+        Shape.DIAMOND -> "다이아몬드"
+    }
+
+    private fun GameResult.toDescription() = when (this) {
+        GameResult.WIN -> WIN_DESCRIPTION
+        GameResult.DRAW -> DRAW_DESCRIPTION
+        GameResult.LOSE -> LOSE_DESCRIPTION
     }
 
     fun printCardDividingMessage(dealer: Dealer, players: List<Player>) {
         println()
-        println(CARD_DIVIDING_MSG.format(players.joinToString(SEPERATOR) { player -> player.name.value }))
+        println(CARD_DIVIDING_MSG.format(players.joinToString(SEPARATOR) { player -> player.name.value }))
         println(SHOW_DEALER_CARD.format(dealer.cards.cards.first().toDescription()))
         players.forEach { player -> printCardResults(player) }
         println()
     }
-
-    private fun Player.toCardsDescription(): String = SHOW_PLAYER_CARDS.format(
-        name.value,
-        cards.cards.joinToString(SEPERATOR) { card ->
-            card.toDescription()
-        }
-    )
 
     fun printCardResults(player: Player) {
         println(player.toCardsDescription())
@@ -60,19 +75,13 @@ object OutputView {
     fun printFinalCards(dealer: Dealer, players: List<Player>) {
         println()
         println(
-            SHOW_DEALER_CARD.format(dealer.cards.cards.joinToString(SEPERATOR) { card -> card.toDescription() }) +
+            SHOW_DEALER_CARD.format(dealer.cards.cards.joinToString(SEPARATOR) { card -> card.toDescription() }) +
                 FINAL_SCORE.format(dealer.cards.getTotalCardsScore())
         )
         players.forEach { player ->
             print(player.toCardsDescription())
             println(FINAL_SCORE.format(player.cards.getTotalCardsScore()))
         }
-    }
-
-    private fun GameResult.toDescription() = when (this) {
-        GameResult.WIN -> WIN_DESCRIPTION
-        GameResult.DRAW -> DRAW_DESCRIPTION
-        GameResult.LOSE -> LOSE_DESCRIPTION
     }
 
     fun printGameResults(playerGameResults: List<PlayerGameResult>, dealerGameResult: List<GameResult>) {
