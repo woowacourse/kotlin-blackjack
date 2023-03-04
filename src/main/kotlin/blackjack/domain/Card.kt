@@ -16,14 +16,10 @@ class Card(
     companion object {
         private const val SPECIAL_CARDS_NAME_LENGTH = 1
 
-        //TODO: ENUM 값을 모두 가져올 수 있는 API, MAP 연산자를 활용하자
         private val ALL_CARDS: MutableSet<Card> = CardNumber.values().flatMap { cardNumber ->
-            listOf(
-                Card(cardNumber, Shape.CLOVER),
-                Card(cardNumber, Shape.HEART),
-                Card(cardNumber, Shape.DIAMOND),
-                Card(cardNumber, Shape.SPADE)
-            )
+            Shape.values().map{ shape ->
+                Card(cardNumber, shape)
+            }
         }.toMutableSet()
 
         fun draw(): Card {
