@@ -10,6 +10,7 @@ import blackjack.domain.Shape
 
 object OutputView {
 
+    private const val SPECIAL_CARDS_NAME_LENGTH = 1
     private const val CARD_DIVIDING_MSG = "딜러와 %s에게 2장의 카드를 나누었습니다."
     private const val SEPARATOR = ","
     private const val SHOW_DEALER_CARD = "딜러 카드: %s"
@@ -33,7 +34,7 @@ object OutputView {
 
     private fun Card.toDescription(): String {
         var numberValue = number.name
-        if (numberValue.length != 1) {
+        if (numberValue.length != SPECIAL_CARDS_NAME_LENGTH) {
             numberValue = number.value.toString()
         }
         return numberValue + this.shape.toDescription()
