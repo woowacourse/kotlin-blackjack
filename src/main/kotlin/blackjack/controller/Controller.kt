@@ -53,9 +53,9 @@ class Controller(private val cardDeck: CardDeck) {
     }
 
     private fun showDealerState(dealer: Dealer) {
-        val condition = dealer.isOverCondition()
-        OutputView.printDealerOverCondition(!condition)
-        if (!condition) dealer.cardBunch.addCard(cardDeck.drawCard())
+        val condition = dealer.canGetCard()
+        OutputView.printDealerOverCondition(condition)
+        if (condition) dealer.cardBunch.addCard(cardDeck.drawCard())
     }
 
     private fun printTotalScore(dealer: Dealer, players: List<Player>) {
