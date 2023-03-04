@@ -1,7 +1,7 @@
 package blackjack.domain
 
 enum class CardNumber(val value: Int) {
-    A(1),
+    SMALL_A(1),
     ONE(1),
     TWO(2),
     THREE(3),
@@ -14,5 +14,6 @@ enum class CardNumber(val value: Int) {
     TEN(10),
     J(10),
     Q(10),
-    K(10)
+    K(10),
+    BIG_A(11)
 }

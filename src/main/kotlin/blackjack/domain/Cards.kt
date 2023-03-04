@@ -4,8 +4,7 @@ class Cards(
     cards: List<Card> = listOf(Card.draw(), Card.draw())
 ) {
 
-    //TODO: 내가 왜 var로 했을까?
-    private var _cards: MutableList<Card> = cards.toMutableList()
+    private val _cards: MutableList<Card> = cards.toMutableList()
     val cards: List<Card>
         get() = _cards.toList()
 
@@ -24,8 +23,8 @@ class Cards(
     fun getMinimumCardsScore(): Int = cards.sumOf { card -> card.number.value }
 
     fun getTotalCardsScore(): Int {
-        val aceCardsCount = cards.count { card -> card.number == CardNumber.A }
-        var currentSum = cards.filter { card -> card.number != CardNumber.A }
+        val aceCardsCount = cards.count { card -> card.number == CardNumber.SMALL_A }
+        var currentSum = cards.filter { card -> card.number != CardNumber.SMALL_A }
             .sumOf { card -> card.number.value }
 
         repeat(aceCardsCount) {
@@ -34,19 +33,16 @@ class Cards(
         return currentSum
     }
 
-    fun decideAceCardsScore(currentSum: Int): Int {
+    private fun decideAceCardsScore(currentSum: Int): Int {
         if (currentSum >= CURRENT_SUM_STANDARD) {
-            return SMALL_ACE_VALUE
+            return CardNumber.SMALL_A.value
         }
 
-        return BIG_ACE_VALUE
+        return CardNumber.BIG_A.value
     }
 
     companion object {
         const val INITIAL_CARDS_SIZE = 2
-        //TODO: 이 친구들을 개선해보자
-        private const val SMALL_ACE_VALUE = 1
-        private const val BIG_ACE_VALUE = 11
         private const val CURRENT_SUM_STANDARD = 11
     }
 }
