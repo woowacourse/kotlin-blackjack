@@ -2,11 +2,11 @@ package blackjack.domain
 
 class BlackjackResult(private val player: Map<Player, ResultType>) {
 
-    private val dealer: Map<ResultType, Int> = ResultType.values().associate { type ->
+    private val dealer: Map<ResultType, Int> = ResultType.values().associateWith { type ->
         when (type) {
-            ResultType.WIN -> type to player.values.count { it == ResultType.LOSE }
-            ResultType.TIE -> type to player.values.count { it == ResultType.TIE }
-            ResultType.LOSE -> type to player.values.count { it == ResultType.WIN }
+            ResultType.WIN -> player.values.count { it == ResultType.LOSE }
+            ResultType.TIE -> player.values.count { it == ResultType.TIE }
+            ResultType.LOSE -> player.values.count { it == ResultType.WIN }
         }
     }
 
