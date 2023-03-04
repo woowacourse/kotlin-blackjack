@@ -7,7 +7,6 @@ class Card(
 
     companion object {
 
-        // TODO: filter를 사용하는 것이 좋은 방법이 아닌것 같다.
         private val ALL_CARDS: MutableSet<Card> = CardNumber
             .values()
             .filter { cardNumber -> CardNumber.BIG_A != cardNumber }

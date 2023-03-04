@@ -23,9 +23,9 @@ class Cards(
     fun getMinimumCardsScore(): Int = cards.sumOf { card -> card.number.value }
 
     fun getTotalCardsScore(): Int {
-        val aceCardsCount = cards.count { card -> card.number == CardNumber.SMALL_A }
+        val aceCardsCount = cards.count { card -> card.number == CardNumber.A }
         var currentSum = cards
-            .filter { card -> card.number != CardNumber.SMALL_A }
+            .filter { card -> card.number != CardNumber.A }
             .sumOf { card -> card.number.value }
 
         repeat(aceCardsCount) {
@@ -36,7 +36,7 @@ class Cards(
 
     private fun decideAceCardsScore(currentSum: Int): Int {
         if (currentSum >= CURRENT_SUM_STANDARD) {
-            return CardNumber.SMALL_A.value
+            return CardNumber.A.value
         }
 
         return CardNumber.BIG_A.value
