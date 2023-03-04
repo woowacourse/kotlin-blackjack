@@ -12,7 +12,8 @@ object InputView {
         println(INSERT_PLAYERS_NAME)
         val input = readln()
         val names = input.split(",").map { it.trim() }
-        return if (names.all { it.isNotBlank() }) names else getNames()
+        val allNamesAreNotBlank = names.all { it.isNotBlank() }
+        return if (allNamesAreNotBlank) names else getNames()
     }
 
     fun getAnswerOf(player: Player): String {
