@@ -1,4 +1,7 @@
-package blackjack.domain
+package blackjack.domain.dealer
+
+import blackjack.domain.card.Cards
+import blackjack.domain.player.DrawState
 
 class Dealer(val cards: Cards = Cards()) {
 

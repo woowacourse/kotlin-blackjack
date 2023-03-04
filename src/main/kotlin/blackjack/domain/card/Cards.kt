@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.card
 
 class Cards(
     cards: List<Card> = listOf(Card.draw(), Card.draw())

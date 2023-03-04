@@ -1,4 +1,6 @@
-package blackjack.domain
+package blackjack.domain.gameResult
+
+private const val BLACK_JACK_SCORE = 21
 
 enum class GameResultCondition(
     val gameResult: GameResult,
@@ -6,11 +8,11 @@ enum class GameResultCondition(
 ) {
 
     PLAYER_BURST_CONDITION(
-        condition = { playerScore, _ -> playerScore > BLACKJACK_SCORE },
+        condition = { playerScore, _ -> playerScore > BLACK_JACK_SCORE },
         gameResult = GameResult.LOSE
     ),
     DEALER_BURST_CONDITION(
-        condition = { playerScore, dealerScore -> dealerScore > 21 && playerScore <= 21 },
+        condition = { playerScore, dealerScore -> dealerScore > BLACK_JACK_SCORE && playerScore <= BLACK_JACK_SCORE },
         gameResult = GameResult.WIN
     ),
     DRAW_CONDITION(
@@ -25,8 +27,4 @@ enum class GameResultCondition(
         condition = { playerScore, dealerScore -> playerScore > dealerScore },
         gameResult = GameResult.WIN
     );
-
-    companion object {
-        private const val BLACKJACK_SCORE = 21
-    }
 }

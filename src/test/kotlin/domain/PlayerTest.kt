@@ -1,11 +1,11 @@
 package domain
 
-import blackjack.domain.Card
-import blackjack.domain.CardNumber
-import blackjack.domain.Cards
-import blackjack.domain.Player
-import blackjack.domain.PlayerName
-import blackjack.domain.Shape
+import blackjack.domain.card.Card
+import blackjack.domain.card.CardNumber
+import blackjack.domain.card.Cards
+import blackjack.domain.card.Shape
+import blackjack.domain.player.Player
+import blackjack.domain.player.PlayerName
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

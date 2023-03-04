@@ -1,6 +1,6 @@
 package domain
 
-import blackjack.domain.GameResult
+import blackjack.domain.gameResult.GameResult
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

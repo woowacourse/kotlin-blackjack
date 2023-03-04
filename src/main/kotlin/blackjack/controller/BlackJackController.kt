@@ -1,8 +1,8 @@
 package blackjack.controller
 
 import blackjack.domain.BlackJackReferee
-import blackjack.domain.Dealer
-import blackjack.domain.Player
+import blackjack.domain.dealer.Dealer
+import blackjack.domain.player.Player
 import blackjack.view.InputView
 import blackjack.view.OutputView
 

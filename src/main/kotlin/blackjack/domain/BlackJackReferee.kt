@@ -1,5 +1,11 @@
 package blackjack.domain
 
+import blackjack.domain.dealer.Dealer
+import blackjack.domain.gameResult.GameResult
+import blackjack.domain.gameResult.PlayerGameResult
+import blackjack.domain.gameResult.TotalGameResult
+import blackjack.domain.player.Player
+
 class BlackJackReferee {
 
     private fun judgePlayerGameResults(players: List<Player>, dealer: Dealer) = players.map { player ->

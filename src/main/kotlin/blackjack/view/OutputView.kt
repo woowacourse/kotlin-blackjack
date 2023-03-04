@@ -1,12 +1,12 @@
 package blackjack.view
 
-import blackjack.domain.Card
-import blackjack.domain.Dealer
-import blackjack.domain.DrawResult
-import blackjack.domain.GameResult
-import blackjack.domain.Player
-import blackjack.domain.Shape
-import blackjack.domain.TotalGameResult
+import blackjack.domain.card.Card
+import blackjack.domain.card.Shape
+import blackjack.domain.dealer.Dealer
+import blackjack.domain.dealer.DrawResult
+import blackjack.domain.gameResult.GameResult
+import blackjack.domain.gameResult.TotalGameResult
+import blackjack.domain.player.Player
 
 object OutputView {
 
