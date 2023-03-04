@@ -15,5 +15,5 @@ enum class CardNumber(val value: Int) {
     J(10),
     Q(10),
     K(10),
-    BIG_A(11)
+    BIG_A(11);
 }

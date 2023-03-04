@@ -25,7 +25,7 @@ enum class GameResultCondition(
         gameResult = GameResult.WIN
     );
 
-    companion object{
+    companion object {
         private const val BLACKJACK_SCORE = 21
     }
 }

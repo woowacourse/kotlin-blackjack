@@ -2,7 +2,7 @@ package blackjack.domain
 
 class Card(
     val number: CardNumber,
-    private val shape: Shape
+    private val shape: Shape,
 ) {
 
     override fun toString(): String {
@@ -16,11 +16,13 @@ class Card(
     companion object {
         private const val SPECIAL_CARDS_NAME_LENGTH = 1
 
-        private val ALL_CARDS: MutableSet<Card> = CardNumber.values().flatMap { cardNumber ->
-            Shape.values().map{ shape ->
-                Card(cardNumber, shape)
-            }
-        }.toMutableSet()
+        private val ALL_CARDS: MutableSet<Card> = CardNumber.values()
+            .filter { cardNumber -> CardNumber.BIG_A != cardNumber }
+            .flatMap { cardNumber ->
+                Shape.values().map { shape ->
+                    Card(cardNumber, shape)
+                }
+            }.toMutableSet()
 
         fun draw(): Card {
             val card = ALL_CARDS.random()

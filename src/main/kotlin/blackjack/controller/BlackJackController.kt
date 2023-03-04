@@ -37,13 +37,13 @@ class BlackJackController(
         askToDrawAdditionalCardForPlayer(player)
     }
 
-    //TODO: DrawState를 외부에서 판단하여 계산하지말고 메세지만 던지는 구조로
+    // TODO: DrawState를 외부에서 판단하여 계산하지말고 메세지만 던지는 구조로
     private fun askToDrawAdditionalCardForPlayer(player: Player) {
         do {
             val drawFlag = InputView.requestAdditionalDraw(player)
         } while (drawFlag && drawAdditionalCardForPlayer(player) == DrawState.POSSIBLE)
 
-        //TODO: 외부에서 값을 꺼내쓰지말고 메세지를 던져 객체가 일하도록
+        // TODO: 외부에서 값을 꺼내쓰지말고 메세지를 던져 객체가 일하도록
         if (player.cards.size == Cards.INITIAL_CARDS_SIZE) {
             OutputView.printCardResults(player)
         }
@@ -65,7 +65,7 @@ class BlackJackController(
 
     private fun showFinalCards() = OutputView.printFinalCards(dealer, players)
 
-    //TODO: 이 로직은 내가 생각했을때 도메인에 어울리는 것 같다!
+    // TODO: 이 로직은 내가 생각했을때 도메인에 어울리는 것 같다!
     private fun judgeGameResults() {
         val playersGameResult = blackJackReferee.judgePlayerGameResults(players, dealer)
         val dealerGameResult = playersGameResult.map { playerGameResult ->
