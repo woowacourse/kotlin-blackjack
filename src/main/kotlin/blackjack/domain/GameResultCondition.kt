@@ -4,6 +4,7 @@ enum class GameResultCondition(
     val gameResult: GameResult,
     val condition: (playerScore: Int, dealerScore: Int) -> Boolean
 ) {
+
     PLAYER_BURST_CONDITION(
         condition = { playerScore, _ -> playerScore > BLACKJACK_SCORE },
         gameResult = GameResult.LOSE

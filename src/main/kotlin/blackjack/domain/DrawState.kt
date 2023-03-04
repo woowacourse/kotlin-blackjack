@@ -1,5 +1,7 @@
 package blackjack.domain
 
 enum class DrawState {
-    POSSIBLE, IMPOSSIBLE
+
+    POSSIBLE,
+    IMPOSSIBLE
 }
