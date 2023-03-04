@@ -38,11 +38,11 @@ class Controller(private val cardDeck: CardDeck) {
 
     private fun askGetCard(player: Player) {
         while (!player.cardBunch.isBurst()) {
-            if (!addCardToPlayer(player)) return
+            if (!isSuccessAddCardToPlayer(player)) return
         }
     }
 
-    private fun addCardToPlayer(player: Player): Boolean {
+    private fun isSuccessAddCardToPlayer(player: Player): Boolean {
         if (InputView.getDecision(player)) {
             player.cardBunch.addCard(cardDeck.drawCard())
             OutputView.printPlayerCards(player)
