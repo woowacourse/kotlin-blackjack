@@ -3,7 +3,6 @@ package domain
 import blackjack.domain.Card
 import blackjack.domain.CardNumber
 import blackjack.domain.Cards
-import blackjack.domain.DrawState
 import blackjack.domain.Player
 import blackjack.domain.PlayerName
 import blackjack.domain.Shape
@@ -28,6 +27,6 @@ class PlayerTest {
 
         assertThat(
             player.drawCard()
-        ).isEqualTo(DrawState.IMPOSSIBLE)
+        ).isFalse
     }
 }
