@@ -5,7 +5,7 @@ import domain.constant.Decision
 import domain.person.Dealer
 import domain.person.Player
 import domain.result.GameResult
-import view.MainView
+import view.AdditionalCardView
 import view.OnboardingView
 import view.ResultView
 
@@ -42,10 +42,10 @@ class BlackJackController {
     private fun handOutCardToDealer(deck: Deck, dealer: Dealer) {
         if (dealer.isStateHit()) {
             dealer.receiveCard(deck.getCard())
-            MainView.printDealerGetMoreCard()
+            AdditionalCardView.printDealerGetMoreCard()
             return
         }
-        MainView.printDealerNoMoreCard()
+        AdditionalCardView.printDealerNoMoreCard()
     }
 
     private fun applyPlayerDecision(deck: Deck, player: Player) {
@@ -55,7 +55,7 @@ class BlackJackController {
             return
         }
         player.receiveCard(deck.getCard())
-        MainView.printPlayerCards(player)
+        AdditionalCardView.printPlayerCards(player)
     }
 
     private fun runResult(dealer: Dealer, players: List<Player>) {
