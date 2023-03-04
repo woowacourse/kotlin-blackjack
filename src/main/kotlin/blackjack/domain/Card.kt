@@ -16,7 +16,8 @@ class Card(
     companion object {
         private const val SPECIAL_CARDS_NAME_LENGTH = 1
 
-        private val ALL_CARDS: MutableSet<Card> = CardNumber.values()
+        private val ALL_CARDS: MutableSet<Card> = CardNumber
+            .values()
             .filter { cardNumber -> CardNumber.BIG_A != cardNumber }
             .flatMap { cardNumber ->
                 Shape.values().map { shape ->

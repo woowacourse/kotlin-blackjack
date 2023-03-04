@@ -24,7 +24,8 @@ class Cards(
 
     fun getTotalCardsScore(): Int {
         val aceCardsCount = cards.count { card -> card.number == CardNumber.SMALL_A }
-        var currentSum = cards.filter { card -> card.number != CardNumber.SMALL_A }
+        var currentSum = cards
+            .filter { card -> card.number != CardNumber.SMALL_A }
             .sumOf { card -> card.number.value }
 
         repeat(aceCardsCount) {
