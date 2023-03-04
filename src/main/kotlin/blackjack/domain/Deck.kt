@@ -8,15 +8,17 @@ object Deck {
         .shuffled()
         .toMutableList()
 
-    private fun refillDeck() {
-        cards.shuffle()
-        index = 0
-    }
-
     fun draw(): Card {
-        if (index == cards.size) {
+        if (isExhausted()) {
             refillDeck()
         }
         return cards[index++]
+    }
+
+    private fun isExhausted(): Boolean = index == cards.size
+
+    private fun refillDeck() {
+        cards.shuffle()
+        index = 0
     }
 }
