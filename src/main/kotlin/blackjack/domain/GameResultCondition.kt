@@ -5,7 +5,7 @@ enum class GameResultCondition(
     val condition: (playerScore: Int, dealerScore: Int) -> Boolean
 ) {
     PLAYER_BURST_CONDITION(
-        condition = { playerScore, _ -> playerScore > 21 },
+        condition = { playerScore, _ -> playerScore > BLACKJACK_SCORE },
         gameResult = GameResult.LOSE
     ),
     DEALER_BURST_CONDITION(
@@ -24,4 +24,8 @@ enum class GameResultCondition(
         condition = { playerScore, dealerScore -> playerScore > dealerScore },
         gameResult = GameResult.WIN
     );
+
+    companion object{
+        private const val BLACKJACK_SCORE = 21
+    }
 }
