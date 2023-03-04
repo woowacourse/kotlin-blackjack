@@ -18,9 +18,9 @@ abstract class Participant(val name: String) {
         return score
     }
 
-    fun isBust(): Boolean = getScore() > TARGET_SCORE
-
     private fun adjustAceValue(score: Int): Int = if (score > TARGET_SCORE) score - GAP_ACE else score
+
+    fun isBust(): Boolean = getScore() > TARGET_SCORE
 
     companion object {
         const val INIT_CARD_SIZE = 2
