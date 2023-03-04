@@ -30,7 +30,7 @@ private fun decideHitOrStand(players: List<Player>) {
 }
 
 private fun decideHitOrStand(player: Player) {
-    while (player.canHit() && InputView.doesPlayerWantHit(player.name)) {
+    while (player.canHit() && InputView.getAnswerOf(player) == ANSWER_YES) {
         player.receive(Deck.draw())
         ResultView.printCards(player)
     }
