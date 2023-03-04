@@ -3,12 +3,12 @@ package blackjack.view
 import blackjack.domain.Card
 import blackjack.domain.CardBunch
 import blackjack.domain.CardNumber
+import blackjack.domain.CardNumber.*
 import blackjack.domain.Consequence
 import blackjack.domain.Dealer
 import blackjack.domain.Player
 
 object OutputView {
-
     private const val DEALER_INITIAL_CARD_SCRIPT = "딜러: %s"
     private const val DISTRIBUTE_SCRIPT = "딜러와 %s에게 2장의 카드를 나누었습니다."
     private const val CAN_GET_CARD_SCRIPT = "딜러는 16이하라 한 장의 카드를 더 받았습니다."
@@ -16,17 +16,18 @@ object OutputView {
     private const val DEALER_WIN = 0
     private const val DEALER_LOSE = 1
     private const val DRAW = 2
-    private fun makeCardString(card: Card): String = CardNumber.valueOf(card.cardNumber) + card.shape.korean
 
-    private fun makeBunchString(bunch: CardBunch): String =
-        bunch.cards.joinToString(separator = ", ") { makeCardString(it) }
+    private fun makeCardToString(card: Card): String = stringOf(card.cardNumber) + card.shape.korean
+
+    private fun makeBunchToString(bunch: CardBunch): String =
+        bunch.cards.joinToString(separator = ", ") { makeCardToString(it) }
 
     fun printDealerInitialCard(cardBunch: CardBunch) {
-        println(DEALER_INITIAL_CARD_SCRIPT.format(makeCardString(cardBunch.cards.first())))
+        println(DEALER_INITIAL_CARD_SCRIPT.format(makeCardToString(cardBunch.cards.first())))
     }
 
     fun printPlayerCards(player: Player) {
-        val bunchString = makeBunchString(player.cardBunch)
+        val bunchString = makeBunchToString(player.cardBunch)
         println("${player.name}카드 : $bunchString")
     }
 
@@ -42,9 +43,9 @@ object OutputView {
     }
 
     fun printTotalScore(dealer: Dealer, players: List<Player>) {
-        println("딜러 카드 : ${makeBunchString(dealer.cardBunch)} - 결과: ${dealer.cardBunch.getTotalScore()}")
+        println("딜러 카드 : ${makeBunchToString(dealer.cardBunch)} - 결과: ${dealer.cardBunch.getTotalScore()}")
         players.forEach { player ->
-            val bunchString = makeBunchString(player.cardBunch)
+            val bunchString = makeBunchToString(player.cardBunch)
             println("${player.name}카드 : $bunchString - 결과: ${player.cardBunch.getTotalScore()}")
         }
         println()
@@ -83,5 +84,15 @@ object OutputView {
         Consequence.WIN -> "${player.name}: 승\n"
         Consequence.LOSE -> "${player.name}: 패\n"
         Consequence.DRAW -> "${player.name}: 무\n"
+    }
+
+    private fun stringOf(cardNumber: CardNumber): String {
+        return when (cardNumber) {
+            ACE -> "A"
+            TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN -> cardNumber.value.toString()
+            JACK -> "J"
+            QUEEN -> "Q"
+            KING -> "K"
+        }
     }
 }
