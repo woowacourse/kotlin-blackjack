@@ -5,8 +5,8 @@ import blackjack.domain.Dealer
 import blackjack.domain.DrawResult
 import blackjack.domain.GameResult
 import blackjack.domain.Player
-import blackjack.domain.PlayerGameResult
 import blackjack.domain.Shape
+import blackjack.domain.TotalGameResult
 
 object OutputView {
 
@@ -85,17 +85,17 @@ object OutputView {
         }
     }
 
-    fun printGameResults(playerGameResults: List<PlayerGameResult>, dealerGameResult: List<GameResult>) {
+    fun printGameResults(totalGameResult: TotalGameResult) {
         println()
         println(GAME_RESULTS)
         println(
             DEALER_GAME_RESULTS.format(
-                dealerGameResult.count { gameResult -> gameResult == GameResult.WIN },
-                dealerGameResult.count { gameResult -> gameResult == GameResult.LOSE },
-                dealerGameResult.count { gameResult -> gameResult == GameResult.DRAW }
+                totalGameResult.dealerGameResults.count { gameResult -> gameResult == GameResult.WIN },
+                totalGameResult.dealerGameResults.count { gameResult -> gameResult == GameResult.LOSE },
+                totalGameResult.dealerGameResults.count { gameResult -> gameResult == GameResult.DRAW }
             )
         )
-        playerGameResults.forEach { playerGameResult ->
+        totalGameResult.playersGameResult.forEach { playerGameResult ->
             println(PLAYER_GAME_RESULT.format(playerGameResult.playerName, playerGameResult.gameResult.toDescription()))
         }
     }

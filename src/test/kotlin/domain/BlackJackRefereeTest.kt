@@ -10,6 +10,7 @@ import blackjack.domain.Player
 import blackjack.domain.PlayerGameResult
 import blackjack.domain.PlayerName
 import blackjack.domain.Shape
+import blackjack.domain.TotalGameResult
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -58,13 +59,20 @@ class BlackJackRefereeTest {
 
         val blackJackReferee = BlackJackReferee()
 
-        val actual = blackJackReferee.judgePlayerGameResults(listOf(woogi, ring, sunny), dealer)
+        val actual = blackJackReferee.judgeTotalGameResults(listOf(woogi, ring, sunny), dealer)
 
         assertThat(actual).isEqualTo(
-            listOf(
-                PlayerGameResult("woogi", GameResult.WIN),
-                PlayerGameResult("ring", GameResult.LOSE),
-                PlayerGameResult("sunny", GameResult.DRAW)
+            TotalGameResult(
+                playersGameResult = listOf(
+                    PlayerGameResult("woogi", GameResult.WIN),
+                    PlayerGameResult("ring", GameResult.LOSE),
+                    PlayerGameResult("sunny", GameResult.DRAW)
+                ),
+                dealerGameResults = listOf(
+                    GameResult.LOSE,
+                    GameResult.WIN,
+                    GameResult.DRAW
+                )
             )
         )
     }

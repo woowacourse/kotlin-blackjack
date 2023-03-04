@@ -65,13 +65,9 @@ class BlackJackController(
 
     private fun showFinalCards() = OutputView.printFinalCards(dealer, players)
 
-    // TODO: 이 로직은 내가 생각했을때 도메인에 어울리는 것 같다!
     private fun judgeGameResults() {
-        val playersGameResult = blackJackReferee.judgePlayerGameResults(players, dealer)
-        val dealerGameResult = playersGameResult.map { playerGameResult ->
-            !playerGameResult.gameResult
-        }
+        val totalGameResult = blackJackReferee.judgeTotalGameResults(players, dealer)
 
-        OutputView.printGameResults(playersGameResult, dealerGameResult)
+        OutputView.printGameResults(totalGameResult)
     }
 }
