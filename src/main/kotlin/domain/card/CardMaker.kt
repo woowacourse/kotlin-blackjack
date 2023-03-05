@@ -10,11 +10,5 @@ class CardMaker {
         return cards.toList().shuffled()
     }
 
-    private fun makeCard(shape: Shape): List<Card> {
-        val result = mutableListOf<Card>()
-        CardValue.values().forEach {
-            result.add(Card(shape, it))
-        }
-        return result.toList()
-    }
+    private fun makeCard(shape: Shape): List<Card> = CardValue.values().map { Card(shape, it) }
 }
