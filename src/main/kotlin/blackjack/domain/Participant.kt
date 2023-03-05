@@ -21,6 +21,8 @@ abstract class Participant(name: ParticipantName) {
 
     private fun adjustAceValue(score: Int): Int = if (score > TARGET_SCORE) score - GAP_ACE else score
 
+    fun canHit(): Boolean = this.getScore() < TARGET_SCORE
+
     fun isBust(): Boolean = getScore() > TARGET_SCORE
 
     fun hasInitialCards(): Boolean = _cards.size >= INIT_CARD_SIZE

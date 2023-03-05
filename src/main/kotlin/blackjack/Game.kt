@@ -1,18 +1,14 @@
 package blackjack
 
-import blackjack.domain.BlackjackResult
-import blackjack.domain.Dealer
-import blackjack.domain.Deck
-import blackjack.domain.Participant
-import blackjack.domain.Player
+import blackjack.domain.*
 import blackjack.view.InputView
 import blackjack.view.ResultView
 
 fun main() {
-    val players = InputView.getNames().map(::Player)
+    val players = Players(InputView.getNames().map(::Player))
     val dealer = Dealer()
 
-    dealCards(players + dealer)
+    dealCards(players.toList() + dealer)
     ResultView.printSetUp(dealer, players)
 
     decideHitOrStand(players)
@@ -32,8 +28,8 @@ private fun tryToDraw(participant: Participant) {
     Deck.draw()?.let { card -> participant.receive(card) } ?: ResultView.printMessage(DECK_EXHAUSTED_MESSAGE)
 }
 
-private fun decideHitOrStand(players: List<Player>) {
-    players.forEach { decideHitOrStand(it) }
+private fun decideHitOrStand(players: Players) {
+    players.toList().forEach { decideHitOrStand(it) }
 }
 
 private fun decideHitOrStand(player: Player) {

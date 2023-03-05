@@ -1,13 +1,6 @@
 package blackjack.view
 
-import blackjack.domain.BlackjackResult
-import blackjack.domain.Card
-import blackjack.domain.CardNumber
-import blackjack.domain.CardShape
-import blackjack.domain.Dealer
-import blackjack.domain.Participant
-import blackjack.domain.Player
-import blackjack.domain.ResultType
+import blackjack.domain.*
 
 object ResultView {
     private const val SET_UP_MESSAGE = "\n%s와 %s에게 ${Participant.INIT_CARD_SIZE} 장의 카드를 나누었습니다."
@@ -18,11 +11,12 @@ object ResultView {
     private const val FINAL_RESULT = "%s:%s"
     private const val NOT_PARTICIPATE_PLAYER = "%s는 게임에 참여하지 않았습니다."
 
-    fun printSetUp(dealer: Dealer, players: List<Player>) {
-        val names = players.joinToString(", ") { it.name }
+    fun printSetUp(dealer: Dealer, players: Players) {
+        val playerList = players.toList()
+        val names = playerList.joinToString(", ") { it.name }
         println(SET_UP_MESSAGE.format(dealer.name, names))
         println(dealer.faceUpOnlyOne())
-        players.forEach { printCards(it) }
+        playerList.forEach { printCards(it) }
         println()
     }
 
@@ -34,13 +28,14 @@ object ResultView {
         println(DEALER_HIT_MESSAGE.format(name))
     }
 
-    fun printResult(dealer: Dealer, players: List<Player>, blackjackResult: BlackjackResult) {
+    fun printResult(dealer: Dealer, players: Players, blackjackResult: BlackjackResult) {
+        val playerList = players.toList()
         printCardsWithScore(dealer)
-        players.forEach { printCardsWithScore(it) }
+        playerList.forEach { printCardsWithScore(it) }
 
         println(FINAL_RESULT_MESSAGE)
         printDealerResult(dealer, blackjackResult)
-        players.forEach {
+        playerList.forEach {
             printPlayerResult(it, blackjackResult.getResultOf(it))
         }
     }

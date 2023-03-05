@@ -13,31 +13,21 @@ class BlackjackResultTest {
             receive(Card(CardNumber.NINE, CardShape.CLOVER))
             receive(Card(CardNumber.TWO, CardShape.CLOVER))
         }
-        val players = listOf(
-            Player("pobi").apply {
-                receive(Card(CardNumber.NINE, CardShape.CLOVER))
-                receive(Card(CardNumber.TWO, CardShape.CLOVER))
-            },
-            Player("thomas").apply {
-                receive(Card(CardNumber.NINE, CardShape.CLOVER))
-                receive(Card(CardNumber.TWO, CardShape.CLOVER))
-            },
+        val players = Players(
+            listOf(
+                Player("pobi").apply {
+                    receive(Card(CardNumber.NINE, CardShape.CLOVER))
+                    receive(Card(CardNumber.TWO, CardShape.CLOVER))
+                },
+                Player("thomas").apply {
+                    receive(Card(CardNumber.NINE, CardShape.CLOVER))
+                    receive(Card(CardNumber.TWO, CardShape.CLOVER))
+                },
+            ),
         )
 
         assertThatIllegalArgumentException().isThrownBy { BlackjackResult.of(dealer, players) }
             .withMessage("딜러가 히트해야 한다면 블랙잭 결과를 생성할 수 없습니다.")
-    }
-
-    @Test
-    fun `플레이어가 한 명도 없을 때 블랙잭 결과를 생성하려 하면 에러가 발생한다`() {
-        val dealer = Dealer().apply {
-            receive(Card(CardNumber.NINE, CardShape.CLOVER))
-            receive(Card(CardNumber.TEN, CardShape.CLOVER))
-        }
-        val players = listOf<Player>()
-
-        assertThatIllegalArgumentException().isThrownBy { BlackjackResult.of(dealer, players) }
-            .withMessage("플레이어가 없다면 블랙잭 결과를 생성할 수 없습니다.")
     }
 
     @Test
@@ -46,18 +36,20 @@ class BlackjackResultTest {
             receive(Card(CardNumber.NINE, CardShape.CLOVER))
             receive(Card(CardNumber.TEN, CardShape.CLOVER))
         }
-        val players = listOf(
-            Player("pobi").apply {
-                receive(Card(CardNumber.NINE, CardShape.CLOVER))
-            },
-            Player("thomas").apply {
-                receive(Card(CardNumber.KING, CardShape.CLOVER))
-                receive(Card(CardNumber.ACE, CardShape.CLOVER))
-            },
-            Player("jason").apply {
-                receive(Card(CardNumber.NINE, CardShape.CLOVER))
-                receive(Card(CardNumber.TEN, CardShape.CLOVER))
-            },
+        val players = Players(
+            listOf(
+                Player("pobi").apply {
+                    receive(Card(CardNumber.NINE, CardShape.CLOVER))
+                },
+                Player("thomas").apply {
+                    receive(Card(CardNumber.KING, CardShape.CLOVER))
+                    receive(Card(CardNumber.ACE, CardShape.CLOVER))
+                },
+                Player("jason").apply {
+                    receive(Card(CardNumber.NINE, CardShape.CLOVER))
+                    receive(Card(CardNumber.TEN, CardShape.CLOVER))
+                },
+            ),
         )
 
         assertThatIllegalArgumentException().isThrownBy { BlackjackResult.of(dealer, players) }
@@ -70,19 +62,21 @@ class BlackjackResultTest {
             receive(Card(CardNumber.NINE, CardShape.CLOVER))
             receive(Card(CardNumber.TEN, CardShape.CLOVER))
         }
-        val players = listOf(
-            Player("pobi").apply {
-                receive(Card(CardNumber.NINE, CardShape.CLOVER))
-                receive(Card(CardNumber.TWO, CardShape.CLOVER))
-            },
-            Player("thomas").apply {
-                receive(Card(CardNumber.KING, CardShape.CLOVER))
-                receive(Card(CardNumber.ACE, CardShape.CLOVER))
-            },
-            Player("jason").apply {
-                receive(Card(CardNumber.NINE, CardShape.CLOVER))
-                receive(Card(CardNumber.TEN, CardShape.CLOVER))
-            },
+        val players = Players(
+            listOf(
+                Player("pobi").apply {
+                    receive(Card(CardNumber.NINE, CardShape.CLOVER))
+                    receive(Card(CardNumber.TWO, CardShape.CLOVER))
+                },
+                Player("thomas").apply {
+                    receive(Card(CardNumber.KING, CardShape.CLOVER))
+                    receive(Card(CardNumber.ACE, CardShape.CLOVER))
+                },
+                Player("jason").apply {
+                    receive(Card(CardNumber.NINE, CardShape.CLOVER))
+                    receive(Card(CardNumber.TEN, CardShape.CLOVER))
+                },
+            ),
         )
 
         val result = BlackjackResult.of(dealer, players)
@@ -100,27 +94,29 @@ class BlackjackResultTest {
             receive(Card(CardNumber.NINE, CardShape.CLOVER))
             receive(Card(CardNumber.TEN, CardShape.CLOVER))
         }
-        val players = listOf(
-            Player("pobi").apply {
-                receive(Card(CardNumber.NINE, CardShape.CLOVER))
-                receive(Card(CardNumber.TWO, CardShape.CLOVER))
-            },
-            Player("thomas").apply {
-                receive(Card(CardNumber.KING, CardShape.CLOVER))
-                receive(Card(CardNumber.ACE, CardShape.CLOVER))
-            },
-            Player("jason").apply {
-                receive(Card(CardNumber.NINE, CardShape.CLOVER))
-                receive(Card(CardNumber.TEN, CardShape.CLOVER))
-            },
+        val players = Players(
+            listOf(
+                Player("pobi").apply {
+                    receive(Card(CardNumber.NINE, CardShape.CLOVER))
+                    receive(Card(CardNumber.TWO, CardShape.CLOVER))
+                },
+                Player("thomas").apply {
+                    receive(Card(CardNumber.KING, CardShape.CLOVER))
+                    receive(Card(CardNumber.ACE, CardShape.CLOVER))
+                },
+                Player("jason").apply {
+                    receive(Card(CardNumber.NINE, CardShape.CLOVER))
+                    receive(Card(CardNumber.TEN, CardShape.CLOVER))
+                },
+            ),
         )
 
         val result = BlackjackResult.of(dealer, players)
 
         assertAll(
-            { assertThat(result.getResultOf(players[0])).isEqualTo(ResultType.LOSE) },
-            { assertThat(result.getResultOf(players[1])).isEqualTo(ResultType.WIN) },
-            { assertThat(result.getResultOf(players[2])).isEqualTo(ResultType.TIE) },
+            { assertThat(result.getResultOf(players.toList()[0])).isEqualTo(ResultType.LOSE) },
+            { assertThat(result.getResultOf(players.toList()[1])).isEqualTo(ResultType.WIN) },
+            { assertThat(result.getResultOf(players.toList()[2])).isEqualTo(ResultType.TIE) },
         )
     }
 }

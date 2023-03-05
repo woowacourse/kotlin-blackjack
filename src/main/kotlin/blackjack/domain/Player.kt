@@ -2,8 +2,6 @@ package blackjack.domain
 
 class Player(name: ParticipantName) : Participant(name) {
     constructor(name: String) : this(ParticipantName(name))
-
-    fun canHit(): Boolean = this.getScore() < TARGET_SCORE
     infix fun against(dealer: Dealer): ResultType {
         if (this.isBust()) return ResultType.LOSE
         if (dealer.isBust()) return ResultType.WIN
@@ -16,4 +14,7 @@ class Player(name: ParticipantName) : Participant(name) {
             else -> ResultType.LOSE
         }
     }
+
+    override fun equals(other: Any?): Boolean = if (other is Player) name == other.name else false
+    override fun hashCode(): Int = this.name.hashCode()
 }

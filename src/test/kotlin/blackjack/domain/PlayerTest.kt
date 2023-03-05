@@ -2,6 +2,7 @@ package blackjack.domain
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
 
 class PlayerTest {
     @Test
@@ -117,5 +118,17 @@ class PlayerTest {
         }
 
         assertThat(player against dealer).isEqualTo(ResultType.WIN)
+    }
+
+    @Test
+    fun `플레이어는 이름으로 구분된다`() {
+        val player1 = Player("thomas")
+        val player2 = Player("pobi")
+        val player3 = Player("thomas")
+
+        assertAll(
+            { assertThat(player1).isNotEqualTo(player2) },
+            { assertThat(player1).isEqualTo(player3) },
+        )
     }
 }
