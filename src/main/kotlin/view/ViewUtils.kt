@@ -6,7 +6,7 @@ import entity.Cards
 
 class ViewUtils {
     companion object {
-        fun CardNumber.isString(): String {
+        private fun CardNumber.isString(): String {
             return when (this) {
                 CardNumber.ACE -> "A"
                 CardNumber.KING -> "K"
@@ -16,7 +16,7 @@ class ViewUtils {
             }
         }
 
-        fun CardType.isString(): String {
+        private fun CardType.isString(): String {
             return when (this) {
                 CardType.CLUB -> "클로버"
                 CardType.SPADE -> "하트"
