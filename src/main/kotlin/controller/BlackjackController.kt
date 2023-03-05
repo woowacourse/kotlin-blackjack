@@ -46,13 +46,12 @@ class BlackjackController() {
     private fun repeatPickCard(blackjackGame: BlackjackGame, name: String) {
         while (!blackjackGame.checkBurst(name)) {
             val answer = validatePickAnswer(name)
-            if (answer == YES_ANSWER) blackjackGame.pickPlayerCard(name)
-            if (answer == NO_ANSWER) return
+            if (answer) blackjackGame.pickPlayerCard(name) else return
             OutputView.printParticipantCards(name, blackjackGame.playersStates.getValue(name).cards)
         }
     }
 
-    private fun validatePickAnswer(name: String): String {
+    private fun validatePickAnswer(name: String): Boolean {
         val answer = InputView.inputRepeatGetCard(name)
         return answer ?: validatePickAnswer(name)
     }
@@ -66,7 +65,5 @@ class BlackjackController() {
 
     companion object {
         private const val DEALER = "딜러"
-        const val YES_ANSWER = "y"
-        const val NO_ANSWER = "n"
     }
 }
