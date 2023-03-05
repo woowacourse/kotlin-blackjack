@@ -1,27 +1,11 @@
 package domain
 
 class BlackJackCardDeck : CardDeck {
-    private val cards: MutableList<Card> = mutableListOf()
-
     val size: Int
-        get() = cards.size
-
-    init {
-        CardCategory.values().forEach { cardCategory ->
-            CardNumber.values().forEach { cardNumber ->
-                cards.add(Card(cardCategory, cardNumber))
-            }
-        }
-    }
-
-    fun contains(card: Card): Boolean {
-        return cards.contains(card)
-    }
+        get() = CARD_DECK.size
 
     override fun draw(): Card {
-        val drawCard = cards.shuffled()[0]
-        cards.remove(drawCard)
-        return drawCard
+        return CARD_DECK.shuffled()[0]
     }
 
     override fun drawInitCards(): Cards {
@@ -30,5 +14,16 @@ class BlackJackCardDeck : CardDeck {
 
     companion object {
         const val DRAW_INIT_CARD_COUNT = 2
+        private val CARD_DECK: List<Card>
+
+        init {
+            val cards = mutableListOf<Card>()
+            CardCategory.values().forEach { cardCategory ->
+                CardNumber.values().forEach { cardNumber ->
+                    cards.add(Card(cardCategory, cardNumber))
+                }
+            }
+            CARD_DECK = cards.toList()
+        }
     }
 }
