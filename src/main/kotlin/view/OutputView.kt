@@ -1,10 +1,14 @@
 package view
 
+import model.Card
+import model.Cards
 import model.Dealer.Companion.DEALER
 import model.GameResult
 import model.Name
 import model.Participant
 import model.Player
+import model.Rank
+import model.Suit
 
 class OutputView {
     fun printInputPlayerNames() {
@@ -32,16 +36,16 @@ class OutputView {
 
     fun printPlayerStatus(participant: Participant) {
         if (participant.name.value == DEALER) {
-            println(MESSAGE_DEALER_STATUS.format(participant.cards.cards[0].toString()))
+            println(MESSAGE_DEALER_STATUS.format(participant.cards.cards[0].getCardFormat()))
             return
         }
-        println(MESSAGE_PARTICIPANT_STATUS.format(participant.name.value, (participant as Player).cards.toString()))
+        println(MESSAGE_PARTICIPANT_STATUS.format(participant.name.value, (participant as Player).cards.getCardsFormat()))
     }
 
     fun printAllPlayerStatusResult(participants: List<Participant>) {
         println()
         participants.forEach {
-            print(MESSAGE_PARTICIPANT_STATUS.format(it.name.value, it.cards.toString()))
+            print(MESSAGE_PARTICIPANT_STATUS.format(it.name.value, it.cards.getCardsFormat()))
             println(MESSAGE_POINT_RESULT.format(it.cards.sum()))
         }
     }
@@ -54,6 +58,33 @@ class OutputView {
             println(MESSAGE_PLAYER_RESULT.format(it.key, if (it.value) "승" else "패"))
         }
     }
+
+    private fun Card.getCardFormat(): String {
+        return rankFormat(this.rank) + suitFormat(this.suit)
+    }
+
+    private fun Cards.getCardsFormat(): String {
+        return this.cards.joinToString(prefix = "", postfix = "", separator = ", ") {
+            rankFormat(it.rank) + suitFormat(it.suit)
+        }
+    }
+
+    private fun rankFormat(rank: Rank): String =
+        when (rank) {
+            Rank.ACE -> "A"
+            Rank.KING -> "K"
+            Rank.QUEEN -> "Q"
+            Rank.JACK -> "J"
+            else -> rank.getScore().toString()
+        }
+
+    private fun suitFormat(suit: Suit): String =
+        when (suit) {
+            Suit.CLOVER -> "클로버"
+            Suit.DIAMOND -> "다이아몬드"
+            Suit.SPADE -> "스페이드"
+            Suit.HEART -> "하트"
+        }
 
     companion object {
         private const val MESSAGE_INPUT_NAME = "게임에 참여할 플레이어의 이름을 입력하세요. (쉼표 기준으로 분리)"
