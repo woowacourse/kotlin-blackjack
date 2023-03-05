@@ -4,28 +4,26 @@ import model.Card
 import model.Cards
 import model.Dealer.Companion.DEALER
 import model.GameResult
-import model.Name
 import model.Participant
+import model.Participants
 import model.Player
 import model.Rank
 import model.Suit
 
 class OutputView {
-    fun printInputPlayerNames() {
-        println(MESSAGE_INPUT_NAME)
-    }
 
-    fun printNoticeDistributeCards(players: List<Name>) {
+    fun printNoticeDistributeCards(participants: Participants) {
         println()
-        println(MESSAGE_DISTRIBUTE_CARD.format(players.joinToString(", ") { it.value }))
+        println(noticeDistributeCardsNameFormat(participants))
+        printPlayersStatus(participants)
     }
 
-    fun printGetCardMore(name: Name) {
-        println(MESSAGE_INPUT_YES_OR_NO.format(name.value))
+    private fun noticeDistributeCardsNameFormat(participants: Participants): String {
+        return MESSAGE_DISTRIBUTE_CARD.format(participants.participants.filter { it.name.value != DEALER }.joinToString(", ") { it.name.value })
     }
 
-    fun printPlayersStatus(players: List<Participant>) {
-        players.forEach { printPlayerStatus(it) }
+    fun printPlayersStatus(players: Participants) {
+        players.participants.forEach { printPlayerStatus(it) }
         println()
     }
 
@@ -87,9 +85,7 @@ class OutputView {
         }
 
     companion object {
-        private const val MESSAGE_INPUT_NAME = "게임에 참여할 플레이어의 이름을 입력하세요. (쉼표 기준으로 분리)"
         private const val MESSAGE_DISTRIBUTE_CARD = "딜러와 %s에게 2장의 나누었습니다."
-        private const val MESSAGE_INPUT_YES_OR_NO = "%s는/은 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)"
         private const val MESSAGE_DEALER_STATUS = "딜러: %s"
         private const val MESSAGE_PARTICIPANT_STATUS = "%s카드: %s"
         private const val MESSAGE_POINT_RESULT = " - 결과: %d"
