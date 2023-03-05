@@ -1,5 +1,7 @@
 package domain
 
+import domain.card.Card
+
 class Dealer(name: String = DEALER_NAME, cards: MutableList<Card>) : Player(name, cards) {
     fun isOverSumCondition(): Boolean = (calculateCardValueSum() > SUM_CONDITION)
 

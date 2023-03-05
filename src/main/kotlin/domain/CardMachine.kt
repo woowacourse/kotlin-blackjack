@@ -1,5 +1,9 @@
 package domain
 
+import domain.card.Card
+import domain.card.CardShape
+import domain.card.CardValue
+
 class CardMachine {
     private val cards: MutableList<Card> = mutableListOf()
 
@@ -21,13 +25,13 @@ class CardMachine {
     }
 
     private fun addCards() {
-        for (shape in Card.Shape.values()) {
+        for (shape in CardShape.values()) {
             addCardValue(shape)
         }
     }
 
-    private fun addCardValue(shape: Card.Shape) {
-        Card.Value.values().map { value ->
+    private fun addCardValue(shape: CardShape) {
+        CardValue.values().map { value ->
             cards.add(Card(shape, value))
         }
     }

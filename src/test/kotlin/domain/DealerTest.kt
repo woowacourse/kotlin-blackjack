@@ -1,5 +1,8 @@
 package domain
 
+import domain.card.Card
+import domain.card.CardShape
+import domain.card.CardValue
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -10,8 +13,8 @@ class DealerTest {
         // given
         val dealer = Dealer(
             cards = mutableListOf<Card>(
-                Card(Card.Shape.CLUBS, Card.Value.FIVE),
-                Card(Card.Shape.DIAMONDS, Card.Value.THREE),
+                Card(CardShape.CLUBS, CardValue.FIVE),
+                Card(CardShape.DIAMONDS, CardValue.THREE),
             ),
         )
 
@@ -27,8 +30,8 @@ class DealerTest {
         // given
         val dealer = Dealer(
             cards = mutableListOf<Card>(
-                Card(Card.Shape.CLUBS, Card.Value.JACK),
-                Card(Card.Shape.DIAMONDS, Card.Value.EIGHT),
+                Card(CardShape.CLUBS, CardValue.JACK),
+                Card(CardShape.DIAMONDS, CardValue.EIGHT),
             ),
         )
 

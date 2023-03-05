@@ -1,5 +1,12 @@
-import domain.* // ktlint-disable no-wildcard-imports
+import domain.Answer
 import domain.Answer.Companion.YES
+import domain.CardMachine
+import domain.Dealer
+import domain.GameResult
+import domain.Referee
+import domain.User
+import domain.UserNameContainer
+import domain.card.Card
 import view.GameResultView
 import view.LoginView
 import view.PlayGameView

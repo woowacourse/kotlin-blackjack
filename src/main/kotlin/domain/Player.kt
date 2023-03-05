@@ -1,5 +1,8 @@
 package domain
 
+import domain.card.Card
+import domain.card.CardValue
+
 abstract class Player(
     val name: String,
     private val _cards: MutableList<Card>,
@@ -22,7 +25,7 @@ abstract class Player(
     }
 
     private fun countAce(): Int = _cards.filter { card ->
-        card.value == Card.Value.ACE
+        card.value == CardValue.ACE
     }.size
 
     companion object {

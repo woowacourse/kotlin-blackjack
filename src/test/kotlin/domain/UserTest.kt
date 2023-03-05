@@ -1,5 +1,8 @@
 package domain
 
+import domain.card.Card
+import domain.card.CardShape
+import domain.card.CardValue
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -9,8 +12,8 @@ class UserTest {
         // given
         val user = User.create(
             "산군" to listOf<Card>(
-                Card(Card.Shape.CLUBS, Card.Value.FIVE),
-                Card(Card.Shape.DIAMONDS, Card.Value.THREE),
+                Card(CardShape.CLUBS, CardValue.FIVE),
+                Card(CardShape.DIAMONDS, CardValue.THREE),
             ),
         )
 
@@ -27,8 +30,8 @@ class UserTest {
         val user = User.create(
             "산군" to
                 listOf<Card>(
-                    Card(Card.Shape.CLUBS, Card.Value.FIVE),
-                    Card(Card.Shape.DIAMONDS, Card.Value.FIVE),
+                    Card(CardShape.CLUBS, CardValue.FIVE),
+                    Card(CardShape.DIAMONDS, CardValue.FIVE),
                 ),
         )
 
