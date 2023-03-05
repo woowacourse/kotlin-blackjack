@@ -63,10 +63,7 @@ class GameResultTest {
                 listOf(
                     Card(Rank.JACK, Suit.SPADE),
                     Card(Rank.KING, Suit.DIAMOND),
-                    Card(
-                        Rank.ACE,
-                        Suit.DIAMOND,
-                    ),
+                    Card(Rank.ACE, Suit.DIAMOND),
                 ),
             ),
             Name("pobi"),

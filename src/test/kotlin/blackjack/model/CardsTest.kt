@@ -41,6 +41,14 @@ class CardsTest {
     }
 
     @Test
+    fun `카드를 한 장 지우고 반환할 수 있다`() {
+        val cards = Cards(listOf(Card(Rank.ACE, Suit.CLOVER), Card(Rank.ACE, Suit.DIAMOND)))
+        val card = cards.pop()
+        assertThat(cards.size).isEqualTo(1)
+        assertThat(card).isEqualTo(Card(Rank.ACE, Suit.CLOVER))
+    }
+
+    @Test
     fun `11클로버와 2다이아 카드의 합이 13이다`() {
         val cards = Cards(listOf(Card(Rank.ACE, Suit.CLOVER), Card(Rank.DEUCE, Suit.DIAMOND)))
         assertThat(cards.sum()).isEqualTo(13)

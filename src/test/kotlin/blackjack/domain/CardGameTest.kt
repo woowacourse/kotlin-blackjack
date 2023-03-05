@@ -2,7 +2,6 @@ package blackjack.domain
 
 import domain.CardGame
 import domain.CardPackGenerator
-import domain.CardPicker
 import model.Name
 import model.Player
 import org.assertj.core.api.Assertions.assertThat
@@ -13,7 +12,7 @@ class CardGameTest {
     private lateinit var game: CardGame
     @BeforeEach
     fun setUp() {
-        game = CardGame(CardPicker(CardPackGenerator().createCardPack()))
+        game = CardGame(CardPackGenerator().createCardPack())
     }
 
     @Test
@@ -26,7 +25,7 @@ class CardGameTest {
 
     @Test
     fun `플레이어 두 명의 정보를 생성한다`() {
-        val players = game.initPlayers(listOf(Name("jason"), Name("pobi")))
+        val players = game.initPlayers(listOf(Name("jason"), Name("pobi"))).toList()
         assertThat(players.size).isEqualTo(2)
         assertThat(players[0].name.value).isEqualTo("jason")
         assertThat(players[0].cards.size).isEqualTo(2)
