@@ -4,7 +4,7 @@ import domain.card.Card
 import domain.constant.BLACK_JACK
 import domain.constant.DEALER_STAND_CONDITION
 
-class Dealer : Person() {
+class Dealer(override val name: String = "딜러") : Person(name) {
     fun showOneCard(): List<Card> {
         return cards.subList(0, 1)
     }
@@ -17,6 +17,4 @@ class Dealer : Person() {
             gameState = GameState.BUST
         }
     }
-
-    override val name: String = "딜러"
 }

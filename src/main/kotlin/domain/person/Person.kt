@@ -7,8 +7,7 @@ import domain.constant.BLACK_JACK
 import domain.constant.NOTHING
 import domain.constant.SMALL_ACE
 
-abstract class Person {
-    abstract val name: String
+abstract class Person(open val name: String) {
     private val _cards = mutableListOf<Card>()
     val cards: List<Card> get() = _cards.toList()
     var gameState: GameState = GameState.HIT
