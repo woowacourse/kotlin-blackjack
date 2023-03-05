@@ -1,6 +1,8 @@
 package blackjack.domain
 
-class Player(name: String) : Participant(name) {
+class Player(name: ParticipantName) : Participant(name) {
+    constructor(name: String) : this(ParticipantName(name))
+
     fun canHit(): Boolean = this.getScore() < TARGET_SCORE
     infix fun against(dealer: Dealer): ResultType {
         if (this.isBust()) return ResultType.LOSE
