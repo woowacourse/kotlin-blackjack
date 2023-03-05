@@ -1,5 +1,6 @@
 package view
 
+import domain.card.Card
 import domain.constant.DEALER_STAND_CONDITION
 import domain.person.Dealer
 import domain.person.Person
@@ -16,16 +17,19 @@ object ResultView {
     private const val DEALER_ONE_MORE_CARD_SCRIPT = "딜러는 ${DEALER_STAND_CONDITION}이하라 한장의 카드를 더 받았습니다."
     private const val DEALER_NO_MORE_CARD_SCRIPT = "딜러는 ${DEALER_STAND_CONDITION}초과라 한장의 카드를 받지 않습니다."
 
+    private fun cardToString(card: Card) =
+        ViewUtils.cardNumberToText(card.number) + ViewUtils.cardShapeToText(card.shape)
+
     fun printInitialSetting(players: List<Player>, dealer: Dealer) {
         println()
         println(SHARE_TWO_CARDS_SCRIPT.format(dealer.name, players.joinToString(", ") { it.name }))
-        println(INITIAL_CARDS_SCRIPT.format(dealer.name, dealer.showOneCard().joinToString { it.toString() }))
+        println(INITIAL_CARDS_SCRIPT.format(dealer.name, dealer.showOneCard().joinToString { cardToString(it) }))
         players.forEach { printPlayerCards(it) }
         println()
     }
 
     fun printPlayerCards(person: Person) {
-        println(INITIAL_CARDS_SCRIPT.format(person.name, person.cards.joinToString(",") { it.toString() }))
+        println(INITIAL_CARDS_SCRIPT.format(person.name, person.cards.joinToString(", ") { cardToString(it) }))
     }
 
     fun printDealerGetMoreCard() = println(DEALER_ONE_MORE_CARD_SCRIPT + "\n")
@@ -42,7 +46,7 @@ object ResultView {
         println(
             RESULT_CARDS_SCRIPT.format(
                 person.name,
-                person.cards.joinToString(",") { it.toString() },
+                person.cards.joinToString(",") { cardToString(it) },
                 person.getTotalCardNumber(),
             ),
         )
