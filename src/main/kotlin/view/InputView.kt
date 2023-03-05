@@ -1,6 +1,7 @@
 package view
 
 class InputView {
+    private val regexAnswer = Regex("[$Y$y$N$n]")
     fun readName(): List<String> {
         val input = readln().replace(" ", "")
         require(input.isNotBlank()) { NULL_ERROR }
@@ -10,7 +11,7 @@ class InputView {
     fun readYesOrNo(): Boolean {
         val input = readln()
         require(input.isNotBlank()) { NULL_ERROR }
-        require(Regex("[$Y$y$N$n]").matches(input)) { IS_NOT_YES_OR_NO_ERROR }
+        require(regexAnswer.matches(input)) { IS_NOT_YES_OR_NO_ERROR }
         if (input == Y || input == y) return true
         return false
     }
