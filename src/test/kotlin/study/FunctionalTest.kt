@@ -6,11 +6,37 @@ import org.junit.jupiter.api.Test
 class FunctionalTest {
     private val numbers: List<Int> = listOf(1, 2, 3, 4, 5, 6)
 
-    private fun sumAll(numbers: List<Int>) = numbers.sum()
+    @Test
+    fun sumAll(numbers: List<Int>): Int {
+        return sumWithCondition(numbers) {
+            true
+        }
+    }
+    @Test
+    fun sumAllEven(numbers: List<Int>): Int {
+        return sumWithCondition(numbers) {
+            it % 2 == 0
+        }
+    }
+    @Test
+    fun sumAllOverThree(numbers: List<Int>): Int {
+        return sumWithCondition(numbers) {
+            it > 3
+        }
+    }
 
-    private fun sumAllEven(numbers: List<Int>): Int = numbers.filter { it % 2 == 0 }.sum()
+    private fun sumWithCondition(numbers: List<Int>, condition: SumCondition): Int {
+        var total = 0
+        for (number in numbers) {
+            if (condition.condition(number))
+                total += number
+        }
+        return total
+    }
 
-    private fun sumAllOverThree(numbers: List<Int>): Int = numbers.filter { it > 3 }.sum()
+    fun interface SumCondition {
+        fun condition(number: Int): Boolean
+    }
 
     @Test
     fun `1부터 6까지 합산 테스트`() {
