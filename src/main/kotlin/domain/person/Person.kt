@@ -10,18 +10,15 @@ import domain.constant.SMALL_ACE
 abstract class Person(open val name: String) {
     private val _cards = mutableListOf<Card>()
     val cards: List<Card> get() = _cards.toList()
-    var gameState: GameState = GameState.HIT
-        protected set
-
     fun receiveCard(vararg card: Card) {
         card.forEach { _cards.add(it) }
         checkState()
     }
 
-    protected abstract fun checkState()
+    protected abstract fun checkState(): GameState
 
-    fun isStateHit() = gameState == GameState.HIT
-    fun isStateBust() = gameState == GameState.BUST
+    fun isState(state: GameState) = checkState() == state
+
     fun getTotalCardNumber(): Int {
         val sumExceptAce: Int = calculateSumExceptAce()
         val aceCount: Int = countAce()

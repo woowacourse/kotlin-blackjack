@@ -40,7 +40,7 @@ class BlackJackController {
     }
 
     private fun handOutCardToDealer(deck: Deck, dealer: Dealer) {
-        if (dealer.isStateHit()) {
+        if (dealer.isState(HIT)) {
             dealer.receiveCard(deck.getCard())
             ResultView.printDealerGetMoreCard()
             return

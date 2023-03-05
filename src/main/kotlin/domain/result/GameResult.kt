@@ -1,6 +1,7 @@
 package domain.result
 
 import domain.person.Dealer
+import domain.person.GameState
 import domain.person.Player
 import domain.result.OutCome.DRAW
 import domain.result.OutCome.LOSE
@@ -17,8 +18,8 @@ class GameResult(private val dealer: Dealer, private val players: List<Player>) 
     private fun compareTotalNumbers(player: Player): Pair<String, OutCome> {
         val differenceCardNumber = player.getTotalCardNumber() - dealer.getTotalCardNumber()
         return when {
-            player.isStateBust() -> player.name to LOSE
-            dealer.isStateBust() -> player.name to WIN
+            player.isState(GameState.BUST) -> player.name to LOSE
+            dealer.isState(GameState.BUST) -> player.name to WIN
             differenceCardNumber < 0 -> player.name to LOSE
             differenceCardNumber > 0 -> player.name to WIN
             else -> player.name to DRAW

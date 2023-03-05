@@ -31,7 +31,7 @@ class DealerTest {
 
     @Test
     fun `딜러는 처음에 Hit 상태이다`() {
-        assertThat(dealer.gameState).isEqualTo(GameState.HIT)
+        assertThat(dealer.isState(GameState.HIT)).isTrue
     }
 
     @CsvSource(value = ["ACE,TEN,21", "TWO,THREE,5"])
@@ -81,6 +81,6 @@ class DealerTest {
         dealer.receiveCard(Card(CardShape.HEART, CardNumber.KING))
         dealer.receiveCard(Card(CardShape.HEART, CardNumber.QUEEN))
 
-        assertThat(dealer.gameState).isEqualTo(GameState.STAND)
+        assertThat(dealer.isState(GameState.STAND)).isTrue
     }
 }

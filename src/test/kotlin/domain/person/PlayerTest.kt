@@ -3,6 +3,8 @@ package domain.person
 import domain.card.Card
 import domain.card.CardNumber
 import domain.card.CardShape.HEART
+import domain.person.GameState.BUST
+import domain.person.GameState.HIT
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -33,7 +35,7 @@ class PlayerTest {
 
     @Test
     fun `플레이어는 처음에 Hit 상태이다`() {
-        assertThat(player.gameState).isEqualTo(GameState.HIT)
+        assertThat(player.isState(HIT)).isTrue
     }
 
     @CsvSource(value = ["ACE,TEN,21", "TWO,THREE,5"])
@@ -57,7 +59,7 @@ class PlayerTest {
     fun `ACE 를 1로 간주한 합계가 21을 넘으면 상태가 BUST 이다`(numbers: List<CardNumber>) {
         numbers.forEach { number -> player.receiveCard(Card(HEART, number)) }
 
-        assertThat(player.gameState).isEqualTo(GameState.BUST)
+        assertThat(player.isState(BUST)).isTrue
     }
 
     @MethodSource("provideCardsHit")
@@ -65,7 +67,7 @@ class PlayerTest {
     fun `ACE 를 1로 간주한 합계가 21 보다 작으면 상태가 HIT 이다`(numbers: List<CardNumber>) {
         numbers.forEach { number -> player.receiveCard(Card(HEART, number)) }
 
-        assertThat(player.gameState).isEqualTo(GameState.HIT)
+        assertThat(player.isState(HIT)).isTrue
     }
 
     companion object {
