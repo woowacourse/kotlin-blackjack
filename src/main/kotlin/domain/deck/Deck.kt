@@ -2,8 +2,7 @@ package domain.deck
 
 import domain.card.Card
 
-class Deck(private val deck: List<Card>) {
-    private val _deck = deck.toMutableList()
+class Deck(private val deck: MutableList<Card>) {
 
-    fun giveCard() = _deck.removeLast()
+    fun giveCard() = deck.removeLast()
 }

@@ -9,7 +9,7 @@ import domain.judge.Referee
 import domain.judge.Result
 
 class BlackjackGame(private val names: List<String>) {
-    private val deck: Deck = Deck(CardMaker().makeCards())
+    private val deck: Deck = Deck(CardMaker().makeCards().toMutableList())
     lateinit var dealerState: DealerState
     val playersStates = mutableMapOf<String, PlayerState>()
 
