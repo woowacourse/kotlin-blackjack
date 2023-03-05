@@ -13,10 +13,10 @@ class Controller(
 ) {
 
     fun run() {
-        val userNames = initUserName()
+        val userNames = readUserNames()
         val dealerCards = cardMachine.getCardPair()
         val userCards = cardMachine.getCardPairs(userNames.size)
-        val users = initUsers(userNames, userCards)
+        val users = createUsers(userNames, userCards)
         val dealer = Dealer.create(dealerCards)
 
         playGame(userNames, dealer, users)
@@ -54,12 +54,12 @@ class Controller(
         }
     }
 
-    private fun initUserName(): List<String> {
+    private fun readUserNames(): List<String> {
         val userNameContainer = repeatWithRunCatching { getUserNames() }
         return userNameContainer.names
     }
 
-    private fun initUsers(userNames: List<String>, userCards: List<List<Card>>): List<User> {
+    private fun createUsers(userNames: List<String>, userCards: List<List<Card>>): List<User> {
         val userNamesAndCards = userNames.zip(userCards)
         return userNamesAndCards.map { userNameAndCard ->
             User.create(userNameAndCard)
