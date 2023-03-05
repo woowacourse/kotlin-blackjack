@@ -1,6 +1,5 @@
 package controller
 
-import domain.Answer
 import domain.BlackJackCardDeck
 import domain.CardDeck
 import domain.Dealer
@@ -10,6 +9,7 @@ import domain.Participant
 import domain.Participants
 import domain.Player
 import domain.Players
+import view.Answer
 
 class BlackJackGame(names: Names, private val deck: CardDeck = BlackJackCardDeck()) {
     val participants: Participants

@@ -1,5 +1,8 @@
 package controller
 
+import domain.Name
+import domain.Names
+import view.Answer
 import view.InputView
 import view.ResultView
 
@@ -11,16 +14,23 @@ class BlackJackGameController(private val inputView: InputView, private val resu
     }
 
     private fun initGame(): BlackJackGame {
-        val names = inputView.readNames()
-        val blackJackGame = BlackJackGame(names)
+        val blackJackGame = BlackJackGame(getNames())
         resultView.printGameInit(blackJackGame.players)
         resultView.printInitCards(blackJackGame.participants)
         return blackJackGame
     }
 
+    private fun getNames(): Names {
+        return inputView.readNames() ?: getNames()
+    }
+
     private fun mainGame(blackJackGame: BlackJackGame) {
-        blackJackGame.playersSelectAddPhase(inputView::readChoiceOfAddCard, resultView::printPlayerCard)
+        blackJackGame.playersSelectAddPhase(::getChoiceOfAddCard, resultView::printPlayerCard)
         blackJackGame.dealerSelectPhase(resultView::printDealerAddCard)
+    }
+
+    private fun getChoiceOfAddCard(name: Name): Answer {
+        return inputView.readChoiceOfAddCard(name) ?: getChoiceOfAddCard(name)
     }
 
     private fun gameResult(blackJackGame: BlackJackGame) {

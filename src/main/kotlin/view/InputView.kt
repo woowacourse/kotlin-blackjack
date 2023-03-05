@@ -1,20 +1,25 @@
 package view
 
-import domain.Answer
 import domain.Name
 import domain.Names
 
 class InputView {
-    fun readNames(): Names {
+    fun readNames(): Names? {
         println(INPUT_PLAYERS_NAME)
         val input = readln()
-        return Names(input.split(NAME_DELIMITERS).map { Name(it.trim()) })
+        return runCatchingGetOrNull { Names(input.split(NAME_DELIMITERS).map { Name(it.trim()) }) }
     }
 
-    fun readChoiceOfAddCard(name: Name): Answer {
+    fun readChoiceOfAddCard(name: Name): Answer? {
         println(name.name + INPUT_ADDITIONAL_CARD)
         val input = readln()
-        return Answer.of(input)
+        return runCatchingGetOrNull { Answer.of(input) }
+    }
+
+    private fun <T> runCatchingGetOrNull(convertContent: () -> T): T? {
+        return runCatching { convertContent() }
+            .onFailure { println(it.message) }
+            .getOrNull()
     }
 
     companion object {

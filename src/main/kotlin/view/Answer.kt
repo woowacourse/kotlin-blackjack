@@ -1,4 +1,4 @@
-package domain
+package view
 
 enum class Answer(val value: String) {
     YES(value = "y"),
