@@ -8,16 +8,16 @@ import entity.Players
 import model.BlackjackStage
 import model.RandomCardFactory
 import view.GameView
-import view.InitView
+import view.GameSetView
 import view.ResultView
 
 class BlackjackController {
-    private val initView = InitView()
+    private val gameSetView = GameSetView()
     private val gameView = GameView()
     private val resultView = ResultView()
 
     private fun readPlayers(): Players {
-        return initView.readPlayerNames().map {
+        return gameSetView.readPlayerNames().map {
             Player(Name(it))
         }.let { Players(it) }
     }

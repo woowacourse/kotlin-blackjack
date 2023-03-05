@@ -1,6 +1,6 @@
 package view
 
-class InitView {
+class GameSetView {
     fun readPlayerNames(): List<String> {
         println(MESSAGE_READ_PLAYER_NAME)
         val input = readln().trim()
