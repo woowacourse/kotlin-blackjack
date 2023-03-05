@@ -5,26 +5,24 @@ import blackjack.domain.Card
 import blackjack.domain.CardNumber
 import blackjack.domain.CardShape
 import blackjack.domain.Dealer
-import blackjack.domain.Dealer.Companion.HIT_STANDARD_SCORE
 import blackjack.domain.Participant
-import blackjack.domain.Participant.Companion.INIT_CARD_SIZE
 import blackjack.domain.Player
 import blackjack.domain.ResultType
 
 object ResultView {
-    private const val SET_UP_MESSAGE = "\n%s와 %s에게 $INIT_CARD_SIZE 장의 카드를 나누었습니다."
+    private const val SET_UP_MESSAGE = "\n%s와 %s에게 ${Participant.INIT_CARD_SIZE} 장의 카드를 나누었습니다."
     private const val FACE_UP_CARDS = "%s 카드: %s"
-    private const val DEALER_HIT_MESSAGE = "\n%s는 ${HIT_STANDARD_SCORE}이하라 한장의 카드를 더 받았습니다.\n"
+    private const val DEALER_HIT_MESSAGE = "\n%s는 ${Dealer.HIT_STANDARD_SCORE}이하라 한장의 카드를 더 받았습니다.\n"
     private const val SHOW_SCORE = " - 결과: %d"
     private const val FINAL_RESULT_MESSAGE = "\n## 최종 승패"
-    private const val FINAL_RESULT = "%s: %s"
+    private const val FINAL_RESULT = "%s:%s"
     private const val NOT_PARTICIPATE_PLAYER = "%s는 게임에 참여하지 않았습니다."
 
     fun printSetUp(dealer: Dealer, players: List<Player>) {
         val names = players.joinToString(", ") { it.name }
         println(SET_UP_MESSAGE.format(dealer.name, names))
         println(dealer.faceUpOnlyOne())
-        players.forEach { println(it.faceUp()) }
+        players.forEach { printCards(it) }
         println()
     }
 
@@ -41,7 +39,7 @@ object ResultView {
         players.forEach { printCardsWithScore(it) }
 
         println(FINAL_RESULT_MESSAGE)
-        printDealerResult(blackjackResult, dealer)
+        printDealerResult(dealer, blackjackResult)
         players.forEach {
             printPlayerResult(it, blackjackResult.getResultOf(it))
         }
@@ -51,7 +49,7 @@ object ResultView {
         println(participant.faceUp() + participant.showScore())
     }
 
-    private fun printDealerResult(blackjackResult: BlackjackResult, dealer: Dealer) {
+    private fun printDealerResult(dealer: Dealer, blackjackResult: BlackjackResult) {
         val result = ResultType.values().fold("") { s, type ->
             s + type.toTextWithCount(blackjackResult.getCountOfDealer(type))
         }
@@ -98,9 +96,9 @@ object ResultView {
 
     private fun ResultType.toText(): String {
         return when (this) {
-            ResultType.WIN -> "승"
-            ResultType.TIE -> "무"
-            ResultType.LOSE -> "패"
+            ResultType.WIN -> " 승"
+            ResultType.TIE -> " 무"
+            ResultType.LOSE -> " 패"
         }
     }
 }
