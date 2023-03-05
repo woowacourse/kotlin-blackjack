@@ -14,8 +14,4 @@ class Player(override val name: String) : Person(name) {
     }
 
     private fun calculateMinTotal() = calculateSumExceptAce() + countAce()
-
-    fun rejectReceiveCard() {
-        gameState = GameState.STAND
-    }
 }

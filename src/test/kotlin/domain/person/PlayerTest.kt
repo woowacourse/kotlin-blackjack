@@ -46,14 +46,6 @@ class PlayerTest {
 
         assertThat(player.getTotalCardNumber()).isEqualTo(sum)
     }
-
-    @Test
-    fun `카드를 받기를 거부하면 게임 상태가 STAND 가 된다`() {
-        player.rejectReceiveCard()
-
-        assertThat(player.gameState).isEqualTo(GameState.STAND)
-    }
-
     @MethodSource("provideCardsBust")
     @ParameterizedTest
     fun `ACE 를 1로 간주한 합계가 21을 넘으면 상태가 BUST 이다`(numbers: List<CardNumber>) {

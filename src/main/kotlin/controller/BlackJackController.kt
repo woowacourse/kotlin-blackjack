@@ -4,6 +4,7 @@ import domain.card.CardsGenerator
 import domain.card.Deck
 import domain.constant.Decision
 import domain.person.Dealer
+import domain.person.GameState.HIT
 import domain.person.Player
 import domain.result.GameResult
 import view.RequestView
@@ -34,8 +35,9 @@ class BlackJackController {
     }
 
     private fun handOutCardsToPlayer(deck: Deck, player: Player) {
-        while (player.isStateHit()) {
-            applyPlayerDecision(deck, player)
+        var decision = Decision.YES
+        while (player.isState(HIT) && decision == Decision.YES) {
+            decision = applyPlayerDecision(deck, player)
         }
     }
 
@@ -48,14 +50,14 @@ class BlackJackController {
         ResultView.printDealerNoMoreCard()
     }
 
-    private fun applyPlayerDecision(deck: Deck, player: Player) {
+    private fun applyPlayerDecision(deck: Deck, player: Player): Decision {
         val decision = Decision.of(RequestView.requestPlayerDecision(player.name))
         if (decision == Decision.NO) {
-            player.rejectReceiveCard()
-            return
+            return decision
         }
         player.receiveCard(deck.getCard())
         ResultView.printPlayerCards(player)
+        return decision
     }
 
     private fun runResult(dealer: Dealer, players: List<Player>) {
