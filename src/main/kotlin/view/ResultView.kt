@@ -18,14 +18,14 @@ class ResultView {
     }
 
     fun printInitCards(participants: Participants) {
-        participants.participants.forEach { participant ->
+        participants.forEach { participant ->
             println(PRINT_NAME_AND_CARDS.format(participant.name.name, formatStringCards(participant.showInitCards())))
         }
         println()
     }
 
     fun printPlayerCard(player: Player) {
-        println(PRINT_NAME_AND_CARDS.format(player.name.name, formatStringCards(player.cards.cards)))
+        println(PRINT_NAME_AND_CARDS.format(player.name.name, formatStringCards(player.showAllCards())))
     }
 
     fun printDealerAddCard(dealer: Dealer) {
@@ -63,7 +63,7 @@ class ResultView {
 
     private fun formatStringPlayersResult(players: Players, dealer: Dealer) {
         players.players.forEach { player ->
-            val playerResult = player.getGameResult(dealer.getSumStateResult())
+            val playerResult = player.getGameResult(dealer)
             if (playerResult == GameResult.WIN)
                 println(PRINT_PLAYER_GAME_RESULT.format(player.name.name, GameResult.WIN.output))
             if (playerResult == GameResult.LOSE)
@@ -76,8 +76,8 @@ class ResultView {
             println(
                 PRINT_NAME_AND_CARDS_AND_SCORE.format(
                     participant.name.name,
-                    formatStringCards(participant.cards.cards),
-                    participant.getSumStateResult().sum
+                    formatStringCards(participant.showAllCards()),
+                    participant.resultSum()
                 )
             )
         }

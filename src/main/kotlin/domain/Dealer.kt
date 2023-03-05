@@ -5,15 +5,12 @@ class Dealer(cards: Cards) : Participant(Name("딜러"), cards) {
         return cards.cards.take(TAKE_ONE)
     }
 
-    override fun isPossibleDrawCard(): Boolean {
-        if (cards.maxSumState().sum <= DEALER_ADD_CARD_CONDITION) return true
-        return false
-    }
+    override fun isPossibleDrawCard(): Boolean = resultSum() <= DEALER_ADD_CARD_CONDITION
 
     fun getResult(players: Players): Map<GameResult, Int> {
         val result = GameResult.values().associateWith { INITIALIZE_TO_ZERO }.toMutableMap()
         players.players.forEach { player ->
-            val playerResult = player.getGameResult(getSumStateResult())
+            val playerResult = player.getGameResult(this)
             result[playerResult] = (result[playerResult] ?: INITIALIZE_TO_ZERO) + PLUS_ONE
         }
         val winCount = result[GameResult.WIN]

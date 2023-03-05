@@ -17,13 +17,11 @@ class ParticipantTest {
                 return cards.cards.take(2)
             }
 
-            override fun isPossibleDrawCard(): Boolean {
-                return true
-            }
+            override fun isPossibleDrawCard(): Boolean = true
         }
 
-        val actual = participant.getSumStateResult()
-        val expected = Cards.State.NoBurst(17)
+        val actual = participant.resultSum()
+        val expected = 17
         assertThat(actual).isEqualTo(expected)
     }
 
@@ -40,9 +38,7 @@ class ParticipantTest {
                 return cards.cards.take(2)
             }
 
-            override fun isPossibleDrawCard(): Boolean {
-                return true
-            }
+            override fun isPossibleDrawCard(): Boolean = true
         }
 
         val actual = participant.isBurst()

@@ -40,8 +40,14 @@ class PlayerTest {
                 Card(CardCategory.SPADE, CardNumber.NINE)
             )
         )
-        val compareState = Cards.State.NoBurst(18)
-        val result = player.getGameResult(compareState)
+        val dealer = Dealer(
+            Cards(
+                Card(CardCategory.CLOVER, CardNumber.EIGHT),
+                Card(CardCategory.SPADE, CardNumber.NINE),
+                Card(CardCategory.CLOVER, CardNumber.FOUR)
+            )
+        )
+        val result = player.getGameResult(dealer)
         val expected = GameResult.LOSE
         assertThat(result).isEqualTo(expected)
     }

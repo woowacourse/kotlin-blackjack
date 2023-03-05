@@ -3,7 +3,7 @@ package controller
 import view.InputView
 import view.ResultView
 
-class BlackJackGameController(private val inputView: InputView, private val resultView: ResultView):Runnable {
+class BlackJackGameController(private val inputView: InputView, private val resultView: ResultView) : Runnable {
     override fun run() {
         val blackJackGame = initGame()
         mainGame(blackJackGame)
@@ -13,7 +13,7 @@ class BlackJackGameController(private val inputView: InputView, private val resu
     private fun initGame(): BlackJackGame {
         val names = inputView.readNames()
         val blackJackGame = BlackJackGame(names)
-        resultView.printGameInit(blackJackGame.participants.players)
+        resultView.printGameInit(blackJackGame.players)
         resultView.printInitCards(blackJackGame.participants)
         return blackJackGame
     }
@@ -25,6 +25,6 @@ class BlackJackGameController(private val inputView: InputView, private val resu
 
     private fun gameResult(blackJackGame: BlackJackGame) {
         resultView.printScore(blackJackGame.participants)
-        resultView.printGameResult(blackJackGame.participants.players, blackJackGame.participants.dealer)
+        resultView.printGameResult(blackJackGame.players, blackJackGame.dealer)
     }
 }

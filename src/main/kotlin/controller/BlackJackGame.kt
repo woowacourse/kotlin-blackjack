@@ -13,9 +13,9 @@ import domain.Players
 
 class BlackJackGame(names: Names, private val deck: CardDeck = BlackJackCardDeck()) {
     val participants: Participants
-    private val players: Players
+    val players: Players
         get() = participants.players
-    private val dealer: Dealer
+    val dealer: Dealer
         get() = participants.dealer
 
     init {
@@ -25,7 +25,7 @@ class BlackJackGame(names: Names, private val deck: CardDeck = BlackJackCardDeck
     }
 
     private fun Participant.addCard() {
-        this.cards.add(deck.draw())
+        addCard(deck.draw())
     }
 
     private fun Player.playerSelectAdd(playerCardAddAnswer: (Name) -> Answer, printPlayerCards: (Player) -> Unit) {
@@ -43,9 +43,9 @@ class BlackJackGame(names: Names, private val deck: CardDeck = BlackJackCardDeck
     }
 
     fun dealerSelectPhase(printDealerAddCard: (Dealer) -> Unit) {
-        if (participants.dealer.isPossibleDrawCard()) {
+        if (dealer.isPossibleDrawCard()) {
             printDealerAddCard(dealer)
-            participants.dealer.addCard()
+            dealer.addCard()
         }
     }
 

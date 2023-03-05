@@ -10,39 +10,34 @@ class Cards(cards: List<Card>) {
     val size: Int
         get() = _cards.size
 
+    private val hasAce: Boolean
+        get() = cards.count { it.isAce } > NO_COUNT
+
+    val isBurst: Boolean
+        get() = minSum() > BlackJackGame.BLACKJACK_NUMBER
+
+    val resultSum: Int
+        get() {
+            if (maxSum() <= BlackJackGame.BLACKJACK_NUMBER) return maxSum()
+            if (minSum() <= BlackJackGame.BLACKJACK_NUMBER) return minSum()
+            return minSum()
+        }
+
     init {
         check(cards.size >= MINIMUM_CARDS_SIZE) { ERROR_CARDS_SIZE }
-    }
-
-    fun sum(): Int {
-        return cards.sumOf { it.cardNumber.value }
     }
 
     fun add(card: Card) {
         _cards.add(card)
     }
 
-    fun contains(card: Card): Boolean {
-        return _cards.contains(card)
+    private fun minSum(): Int {
+        return cards.sumOf { it.cardNumber.value }
     }
 
-    fun minSumState(): State {
-        val minSum = sum()
-        if (minSum > BlackJackGame.BLACKJACK_NUMBER) return State.Burst(minSum)
-        return State.NoBurst(minSum)
-    }
-
-    fun maxSumState(): State {
-        val minSumState = minSumState()
-        val aceCount = cards.count { it.isAce }
-        if (aceCount == NO_COUNT) return minSumState
-        if (minSumState.sum + ACE_ADDITIONAL_VALUE > BlackJackGame.BLACKJACK_NUMBER) return minSumState
-        return State.NoBurst(minSumState.sum + ACE_ADDITIONAL_VALUE)
-    }
-
-    sealed class State(open val sum: Int) {
-        data class Burst(override val sum: Int) : State(sum)
-        data class NoBurst(override val sum: Int) : State(sum)
+    private fun maxSum(): Int {
+        if (hasAce) return minSum() + ACE_ADDITIONAL_VALUE
+        return minSum()
     }
 
     companion object {
