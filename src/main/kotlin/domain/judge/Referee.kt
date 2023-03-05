@@ -1,13 +1,14 @@
 package domain.judge
 
+import domain.Player
 import domain.gamer.state.DealerState
 import domain.gamer.state.PlayerState
 
-class Referee(private val dealerState: DealerState, private val players: Map<String, PlayerState>) {
+class Referee(private val dealerState: DealerState, private val players: List<Player>) {
 
     fun judgePlayersResult(): Map<String, Result> = mutableMapOf<String, Result>().apply {
         players.forEach {
-            this[it.key] = judgePlayerResult(it.value)
+            this[it.name] = judgePlayerResult(it.state)
         }
     }
 

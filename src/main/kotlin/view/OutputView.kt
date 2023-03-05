@@ -1,8 +1,8 @@
 package view
 
+import domain.Player
 import domain.card.Card
 import domain.gamer.state.ParticipantState
-import domain.gamer.state.PlayerState
 import domain.judge.Result
 
 object OutputView {
@@ -25,9 +25,9 @@ object OutputView {
         println(DEALER + printCardForm(card))
     }
 
-    fun printParticipantsCards(participants: Map<String, PlayerState>) {
+    fun printParticipantsCards(participants: List<Player>) {
         participants.forEach { it ->
-            printParticipantCards(it.key, it.value.cards)
+            printParticipantCards(it.name, it.state.cards)
         }
         println()
     }
