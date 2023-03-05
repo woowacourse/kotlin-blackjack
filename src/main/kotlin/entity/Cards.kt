@@ -1,16 +1,16 @@
 package entity
 
+import model.NumberStrategy
+
 class Cards(value: List<Card>) {
     private val _value: MutableList<Card> = value.toMutableList()
     val value: List<Card>
         get() = _value.toList()
 
     fun sumOfNumbers(): Int {
-        return value.sumOf { it.cardNumber.numberStrategy(sumOfNumbersWithoutAce()) }
-    }
-
-    private fun sumOfNumbersWithoutAce(): Int {
-        return value.filter { it.cardNumber != CardNumber.ACE }.sumOf { it.cardNumber.numberStrategy(0) }
+        var sumNumber = value.filter { it.cardNumber != CardNumber.ACE }.sumOf { it.cardNumber.value }
+        sumNumber += value.filter { it.cardNumber == CardNumber.ACE }.sumOf { NumberStrategy().judgeAce(sumNumber) }
+        return sumNumber
     }
 
     fun addCards(cards: Cards) {
