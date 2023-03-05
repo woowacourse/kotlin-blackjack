@@ -1,6 +1,15 @@
 package controller
 
-import domain.*
+import domain.Answer
+import domain.CardDrawer
+import domain.Dealer
+import domain.Name
+import domain.Names
+import domain.Participant
+import domain.Participants
+import domain.Player
+import domain.Players
+import domain.RandomCardDrawer
 
 class BlackJackGame(names: Names, private val cardDrawer: CardDrawer = RandomCardDrawer()) {
     val participants: Participants
@@ -19,23 +28,23 @@ class BlackJackGame(names: Names, private val cardDrawer: CardDrawer = RandomCar
         this.cards.add(cardDrawer.draw())
     }
 
-    private fun Player.playerSelectAdd(input: (Name) -> Answer, output: (Player) -> Unit) {
+    private fun Player.playerSelectAdd(playerCardAddAnswer: (Name) -> Answer, printPlayerCards: (Player) -> Unit) {
         if (isBurst()) return
-        val choice = input(name)
-        if (choice == Answer.YES) addCard()
-        output(this)
-        if (choice == Answer.YES) playerSelectAdd(input, output)
+        val isAddCard = playerCardAddAnswer(name)
+        if (isAddCard == Answer.YES) addCard()
+        printPlayerCards(this)
+        if (isAddCard == Answer.YES) playerSelectAdd(playerCardAddAnswer, printPlayerCards)
     }
 
-    fun playersSelectAddPhase(input: (Name) -> Answer, output: (Player) -> Unit) {
+    fun playersSelectAddPhase(playerCardAddAnswer: (Name) -> Answer, printPlayerCards: (Player) -> Unit) {
         players.players.forEach { player ->
-            player.playerSelectAdd(input, output)
+            player.playerSelectAdd(playerCardAddAnswer, printPlayerCards)
         }
     }
 
-    fun dealerSelectPhase(output: (Dealer) -> Unit) {
+    fun dealerSelectPhase(printDealerAddCard: (Dealer) -> Unit) {
         if (participants.dealer.isPossibleDrawCard()) {
-            output(dealer)
+            printDealerAddCard(dealer)
             participants.dealer.addCard()
         }
     }
