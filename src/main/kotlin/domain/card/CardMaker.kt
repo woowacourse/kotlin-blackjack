@@ -1,20 +1,17 @@
 package domain.card
 
 class CardMaker {
-    fun makeCards(): List<Card> {
-        val cards = mutableListOf<Card>()
-
-        for (shape in Shape.values()) {
-            cards.addAll(makeCard(shape))
+    fun makeShuffledCards(): List<Card> {
+        val cards = Shape.values().flatMap {
+            makeCardWithValues(it)
         }
-        return cards.toList().shuffled()
+        return cards.shuffled()
     }
 
-    private fun makeCard(shape: Shape): List<Card> {
-        val result = mutableListOf<Card>()
-        CardValue.values().forEach {
-            result.add(Card(shape, it))
+    private fun makeCardWithValues(shape: Shape): List<Card> {
+        val result = CardValue.values().map {
+            Card(shape, it)
         }
-        return result.toList()
+        return result
     }
 }
