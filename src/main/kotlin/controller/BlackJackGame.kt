@@ -21,10 +21,10 @@ class BlackJackGame(names: Names, private val deck: CardDeck = BlackJackCardDeck
         get() = participants.all
 
     init {
-        setPlayers(names)
+        setGame(names)
     }
 
-    fun setPlayers(names: Names) {
+    fun setGame(names: Names) {
         val players = names.values.map { Player(it, deck.drawInitCards()) }
         val dealer = Dealer(deck.drawInitCards())
         participants = Participants(Players(players), dealer)
