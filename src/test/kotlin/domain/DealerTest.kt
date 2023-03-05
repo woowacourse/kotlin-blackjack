@@ -2,6 +2,7 @@ package domain
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
 
 class DealerTest {
     @Test
@@ -30,8 +31,7 @@ class DealerTest {
             )
         )
         val actual = dealer.isPossibleDrawCard()
-        val expected = true
-        assertThat(actual).isEqualTo(expected)
+        assertThat(actual).isTrue
     }
 
     @Test
@@ -44,11 +44,11 @@ class DealerTest {
                 )
             )
         )
-
         val players = Players(
             listOf(
                 Player(
-                    Name("pobi"), Cards(
+                    Name("pobi"),
+                    Cards(
                         listOf(
                             Card(CardCategory.CLOVER, CardNumber.EIGHT),
                             Card(CardCategory.SPADE, CardNumber.NINE)
@@ -56,7 +56,8 @@ class DealerTest {
                     )
                 ),
                 Player(
-                    Name("jason"), Cards(
+                    Name("jason"),
+                    Cards(
                         listOf(
                             Card(CardCategory.CLOVER, CardNumber.EIGHT),
                             Card(CardCategory.SPADE, CardNumber.TWO)
@@ -65,9 +66,11 @@ class DealerTest {
                 )
             )
         )
-
-        val result = dealer.getResult(players)
-        assertThat(result[GameResult.WIN]).isEqualTo(1)
-        assertThat(result[GameResult.LOSE]).isEqualTo(1)
+        val actual = dealer.getResult(players)
+        assertAll(
+            "check dealer gameResult",
+            { assertThat(actual[GameResult.WIN]).isEqualTo(1) },
+            { assertThat(actual[GameResult.LOSE]).isEqualTo(1) }
+        )
     }
 }
