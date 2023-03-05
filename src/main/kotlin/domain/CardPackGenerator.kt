@@ -6,16 +6,14 @@ import model.Rank
 import model.Suit
 
 class CardPackGenerator {
-    private val rankValues = Rank.values()
-    private val suitValues = Suit.values()
 
-    fun createCards(): Cards {
-        return Cards(
-            buildList {
-                rankValues.forEach { rank -> addAll(cardsBySuit(rank)) }
-            },
-        )
+    fun createCardPack(): Cards {
+        return Cards(createCards())
     }
 
-    private fun cardsBySuit(rank: Rank) = suitValues.map { suit -> Card(rank, suit) }
+    private fun createCards() = buildList {
+        Rank.values().forEach { rank -> addAll(createCardsBySuit(rank)) }
+    }
+
+    private fun createCardsBySuit(rank: Rank) = Suit.values().map { suit -> Card(rank, suit) }
 }

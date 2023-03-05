@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test
 class PlayerTest {
     @Test
     fun `플레이어는 카드 두 장을 받을 수 있다`() {
-        val cards = CardPackGenerator().createCards()
+        val cards = CardPackGenerator().createCardPack()
         val cardPicker = CardPicker(cards)
         val card = buildList {
             add(cardPicker.pick())

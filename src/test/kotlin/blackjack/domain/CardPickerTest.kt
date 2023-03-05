@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 class CardPickerTest {
     @Test
     fun `카드 한 장을 뽑는다`() {
-        val cardPack = CardPackGenerator().createCards()
+        val cardPack = CardPackGenerator().createCardPack()
         val card = CardPicker(cardPack).pick()
         assertThat(card.rank).isEqualTo(Rank.ACE)
         assertThat(card.suit).isEqualTo(Suit.DIAMOND)
