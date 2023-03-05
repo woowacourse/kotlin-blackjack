@@ -8,15 +8,15 @@ class DslTest {
     @Test
     fun introduce() {
         val person = introduce {
-            name("Corgan")
+            name("hyunji")
         }
-        assertThat(person.name).isEqualTo("Corgan")
+        assertThat(person.name).isEqualTo("hyunji")
     }
 
     @Test
     fun company() {
         val person = introduce {
-            name("Corgan")
+            name("hyunji")
             company("wooteco")
         }
         assertThat(person.company).isEqualTo("wooteco")
@@ -25,7 +25,7 @@ class DslTest {
     @Test
     fun skills() {
         val person = introduce {
-            name("Corgan")
+            name("hyunji")
             company("wooteco")
             skills {
                 soft("sss")
@@ -39,7 +39,7 @@ class DslTest {
     @Test
     fun languages() {
         val person = introduce {
-            name("Corgan")
+            name("hyunji")
             company("wooteco")
             skills {
                 soft("sss")
