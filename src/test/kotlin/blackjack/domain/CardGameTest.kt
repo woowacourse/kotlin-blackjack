@@ -6,10 +6,15 @@ import domain.CardPicker
 import model.Name
 import model.Player
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.BeforeAll
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class CardGameTest {
+    private lateinit var game: CardGame
+    @BeforeEach
+    fun setUp() {
+        game = CardGame(CardPicker(CardPackGenerator().createCardPack()))
+    }
 
     @Test
     fun `카드를 플레이어별로 2장씩 랜덤으로 지급한다`() {
@@ -33,15 +38,5 @@ class CardGameTest {
     fun `딜러의 정보를 생성한다`() {
         val dealer = game.initDealer()
         assertThat(dealer.cards.size).isEqualTo(2)
-    }
-
-    companion object {
-        private lateinit var game: CardGame
-
-        @BeforeAll
-        @JvmStatic
-        internal fun setUp() {
-            game = CardGame(CardPicker(CardPackGenerator().createCardPack()))
-        }
     }
 }
