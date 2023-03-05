@@ -6,18 +6,18 @@ import entity.Cards
 
 class ViewUtils {
     companion object {
-        fun cardNumberToString(cardNumber: CardNumber): String {
-            return when (cardNumber) {
+        fun CardNumber.isString(): String {
+            return when (this) {
                 CardNumber.ACE -> "A"
                 CardNumber.KING -> "K"
                 CardNumber.QUEEN -> "Q"
                 CardNumber.JACK -> "J"
-                else -> (cardNumber.ordinal + 1).toString()
+                else -> (this.ordinal + 1).toString()
             }
         }
 
-        fun cardTypeToString(cardType: CardType): String {
-            return when (cardType) {
+        fun CardType.isString(): String {
+            return when (this) {
                 CardType.CLUB -> "클로버"
                 CardType.SPADE -> "하트"
                 CardType.HEART -> "스페이드"
@@ -27,7 +27,7 @@ class ViewUtils {
 
         fun cardsToString(cards: Cards): String {
             return cards.value.joinToString(", ") {
-                cardNumberToString(it.cardNumber) + cardTypeToString(it.cardType)
+                it.cardNumber.isString() + it.cardType.isString()
             }
         }
     }
