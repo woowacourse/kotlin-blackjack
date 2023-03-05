@@ -101,4 +101,8 @@ object ResultView {
             ResultType.LOSE -> " 패"
         }
     }
+
+    fun printMessage(message: String) {
+        println(message)
+    }
 }

@@ -1,24 +1,19 @@
 package blackjack.domain
 
 object Deck {
-    private var index: Int = 0
-    private val cards: MutableList<Card> = CardNumber.values()
-        .flatMap { number -> CardShape.values().map { number to it } }
-        .map { Card(number = it.first, shape = it.second) }
+    private const val INIT_CARD_SET_SIZE = 6
+    private val cards: MutableList<Card> = (1..INIT_CARD_SET_SIZE).flatMap {
+        createCardSet()
+    }
         .shuffled()
         .toMutableList()
 
-    fun draw(): Card {
-        if (isExhausted()) {
-            refillDeck()
+    private fun createCardSet(): List<Card> = CardNumber.values()
+        .flatMap { cardNumber ->
+            CardShape.values().map { Card(number = cardNumber, shape = it) }
         }
-        return cards[index++]
-    }
 
-    private fun isExhausted(): Boolean = index == cards.size
+    fun draw(): Card? = cards.removeLastOrNull()
 
-    private fun refillDeck() {
-        cards.shuffle()
-        index = 0
-    }
+    fun isNotExhausted() = cards.isNotEmpty()
 }

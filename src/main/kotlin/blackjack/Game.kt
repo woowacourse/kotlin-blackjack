@@ -24,8 +24,12 @@ fun main() {
 
 private fun dealCards(participants: List<Participant>) {
     repeat(Participant.INIT_CARD_SIZE) {
-        participants.forEach { it.receive(Deck.draw()) }
+        participants.forEach { tryToDraw(it) }
     }
+}
+
+private fun tryToDraw(participant: Participant) {
+    Deck.draw()?.let { card -> participant.receive(card) } ?: ResultView.printMessage(DECK_EXHAUSTED_MESSAGE)
 }
 
 private fun decideHitOrStand(players: List<Player>) {
@@ -33,15 +37,15 @@ private fun decideHitOrStand(players: List<Player>) {
 }
 
 private fun decideHitOrStand(player: Player) {
-    while (player.canHit() && InputView.getAnswerOf(player) == ANSWER_YES) {
-        player.receive(Deck.draw())
+    while (Deck.isNotExhausted() && player.canHit() && InputView.getAnswerOf(player) == ANSWER_YES) {
+        tryToDraw(player)
         ResultView.printCards(player)
     }
 }
 
 private fun checkDealerHitOrStand(dealer: Dealer) {
-    if (dealer.shouldHit()) {
-        dealer.receive(Deck.draw())
+    if (Deck.isNotExhausted() && dealer.shouldHit()) {
+        tryToDraw(dealer)
         ResultView.printDealerHitMessage(dealer.name)
     }
 }
