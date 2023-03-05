@@ -7,7 +7,7 @@ import entity.Cards
 
 class RandomCardFactory : CardFactory {
     private val cards: Cards = CardType.values()
-        .flatMap { CardNumber.values().map { it2 -> Card(it, it2) } }
+        .flatMap { type -> CardNumber.values().map { number -> Card(type, number) } }
         .shuffled()
         .toMutableList()
         .let { Cards(it) }
