@@ -15,13 +15,8 @@ class BlackJackCardDeck : CardDeck {
         private val CARD_DECK: List<Card>
 
         init {
-            val cards = mutableListOf<Card>()
-            CardCategory.values().forEach { cardCategory ->
-                CardNumber.values().forEach { cardNumber ->
-                    cards.add(Card(cardCategory, cardNumber))
-                }
-            }
-            CARD_DECK = cards.toList()
+            CARD_DECK =
+                CardCategory.values().flatMap { cardCategory -> CardNumber.values().map { Card(cardCategory, it) } }
         }
     }
 }
