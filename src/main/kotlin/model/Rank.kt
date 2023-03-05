@@ -1,7 +1,7 @@
 package model
 
-enum class Rank(private val score: Int, val description: String? = null) {
-    ACE(1, "A"),
+enum class Rank(private val score: Int) {
+    ACE(1),
     DEUCE(2),
     THREE(3),
     FOUR(4),
@@ -11,9 +11,9 @@ enum class Rank(private val score: Int, val description: String? = null) {
     EIGHT(8),
     NINE(9),
     TEN(10),
-    KING(10, "K"),
-    QUEEN(10, "Q"),
-    JACK(10, "J"),
+    KING(10),
+    QUEEN(10),
+    JACK(10),
     ;
 
     fun getScore(score: Int = 0): Int {
