@@ -56,7 +56,7 @@ class GameResultTest {
 
     @Test
     fun `딜러 20점 1승1패 플레이어 19점 패배, 21점 승리`() {
-        val dealer = Dealer(Cards(listOf(Card(Rank.JACK, Suit.HEART), Card(Rank.JACK, Suit.HEART))))
+        val dealer = Dealer(Cards(listOf(Card(Rank.JACK, Suit.HEART), Card(Rank.KING, Suit.HEART))))
         val player1 = Player(Cards(listOf(Card(Rank.JACK, Suit.SPADE), Card(Rank.NINE, Suit.DIAMOND))), Name("jason"))
         val player2 = Player(
             Cards(
