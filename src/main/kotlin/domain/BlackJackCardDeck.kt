@@ -1,15 +1,13 @@
 package domain
 
 class BlackJackCardDeck : CardDeck {
-    val size: Int
-        get() = CARD_DECK.size
 
     override fun draw(): Card {
         return CARD_DECK.shuffled()[0]
     }
 
     override fun drawInitCards(): Cards {
-        return Cards(List(DRAW_INIT_CARD_COUNT) { draw() }.toSet())
+        return Cards(List(DRAW_INIT_CARD_COUNT) { draw() })
     }
 
     companion object {

@@ -9,7 +9,7 @@ class ParticipantTest {
         val participant = object : Participant(
             Name("Scott"),
             Cards(
-                setOf(
+                listOf(
                     Card(CardCategory.CLOVER, CardNumber.EIGHT),
                     Card(CardCategory.SPADE, CardNumber.NINE)
                 )
@@ -27,7 +27,6 @@ class ParticipantTest {
         val actual = participant.getSumStateResult()
         val expected = Cards.State.NoBurst(17)
         assertThat(actual).isEqualTo(expected)
-
     }
 
     @Test
@@ -35,7 +34,7 @@ class ParticipantTest {
         val participant = object : Participant(
             Name("Scott"),
             Cards(
-                setOf(
+                listOf(
                     Card(CardCategory.CLOVER, CardNumber.EIGHT),
                     Card(CardCategory.SPADE, CardNumber.NINE)
                 )

@@ -7,19 +7,14 @@ import org.junit.jupiter.api.assertThrows
 class CardsTest {
     @Test
     fun `카드의 개수는 2장 이상이어야 한다`() {
-        // given
-
-        // when
-
-        // then
-        assertThrows<IllegalStateException> { Cards(setOf<Card>(Card(CardCategory.CLOVER, CardNumber.ACE))) }
+        assertThrows<IllegalStateException> { Cards(listOf<Card>(Card(CardCategory.CLOVER, CardNumber.ACE))) }
     }
 
     @Test
     fun `카드 번호의 총합을 계산한다`() {
         val cards =
             Cards(
-                setOf<Card>(
+                listOf<Card>(
                     Card(CardCategory.CLOVER, CardNumber.TWO),
                     Card(CardCategory.CLOVER, CardNumber.KING)
                 )
@@ -34,7 +29,7 @@ class CardsTest {
         // given
         val cards =
             Cards(
-                setOf<Card>(
+                listOf<Card>(
                     Card(CardCategory.CLOVER, CardNumber.TWO),
                     Card(CardCategory.CLOVER, CardNumber.KING)
                 )
@@ -52,7 +47,7 @@ class CardsTest {
         // given
         val cards =
             Cards(
-                setOf<Card>(
+                listOf<Card>(
                     Card(CardCategory.CLOVER, CardNumber.TWO),
                     Card(CardCategory.CLOVER, CardNumber.KING)
                 )
@@ -61,15 +56,14 @@ class CardsTest {
 
         // when
         cards.add(card)
-        val expected = true
-        assertThat(cards.contains(card)).isEqualTo(expected)
+        assertThat(cards.contains(card)).isTrue
     }
 
     @Test
     fun `에이스가 있다면 모두 1로 보고 더한 최소 합을 구한다`() {
         val cards =
             Cards(
-                setOf<Card>(
+                listOf<Card>(
                     Card(CardCategory.CLOVER, CardNumber.TWO),
                     Card(CardCategory.CLOVER, CardNumber.KING),
                     Card(CardCategory.CLOVER, CardNumber.ACE)
@@ -85,7 +79,7 @@ class CardsTest {
     fun `에이스가 있다면 에이스 한 개를 11로 보고 더한 최대 합과 상태를 구한다`() {
         val cards =
             Cards(
-                setOf<Card>(
+                listOf<Card>(
                     Card(CardCategory.CLOVER, CardNumber.KING),
                     Card(CardCategory.CLOVER, CardNumber.EIGHT),
                     Card(CardCategory.SPADE, CardNumber.ACE),

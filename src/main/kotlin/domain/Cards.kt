@@ -2,7 +2,7 @@ package domain
 
 import controller.BlackJackGame
 
-class Cards(cards: Set<Card>) {
+class Cards(cards: List<Card>) {
     private val _cards = cards.toMutableList()
     val cards: List<Card>
         get() = _cards.toList()
@@ -44,7 +44,6 @@ class Cards(cards: Set<Card>) {
         data class Burst(override val sum: Int) : State(sum)
         data class NoBurst(override val sum: Int) : State(sum)
     }
-
 
     companion object {
         private const val MINIMUM_CARDS_SIZE = 2

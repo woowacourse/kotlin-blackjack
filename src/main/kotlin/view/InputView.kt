@@ -12,7 +12,7 @@ class InputView {
     }
 
     fun readChoiceOfAddCard(name: Name): Answer {
-        println("${name.name}" + INPUT_ADDITIONAL_CARD)
+        println(name.name + INPUT_ADDITIONAL_CARD)
         val input = readln()
         return Answer.of(input)
     }

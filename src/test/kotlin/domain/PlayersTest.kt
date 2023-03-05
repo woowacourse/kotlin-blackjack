@@ -11,7 +11,7 @@ class PlayersTest {
                 List(9) {
                     Player(
                         Name("pobi"), Cards(
-                            setOf(
+                            listOf(
                                 Card(CardCategory.CLOVER, CardNumber.EIGHT),
                                 Card(CardCategory.SPADE, CardNumber.NINE)
                             )
