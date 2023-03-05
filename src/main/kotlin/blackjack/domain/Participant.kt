@@ -23,6 +23,8 @@ abstract class Participant(name: ParticipantName) {
 
     fun isBust(): Boolean = getScore() > TARGET_SCORE
 
+    fun hasInitialCards(): Boolean = _cards.size >= INIT_CARD_SIZE
+
     companion object {
         const val INIT_CARD_SIZE = 2
         const val TARGET_SCORE = 21
