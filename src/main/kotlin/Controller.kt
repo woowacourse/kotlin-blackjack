@@ -9,7 +9,6 @@ class Controller(
     private val playGameView: PlayGameView = PlayGameView(),
     private val gameResultView: GameResultView = GameResultView(),
     private val cardMachine: CardMachine = CardMachine(),
-
 ) {
 
     fun run() {
@@ -23,47 +22,26 @@ class Controller(
         gameEnd(dealer, users)
     }
 
-    private fun playGame(userNames: List<String>, dealer: Dealer, users: List<User>) {
-        playGameView.printNoticeSplitCard(userNames)
-        playGameView.printPlayerCard(dealer, users)
-
-        requestGetCommand(users)
-        dealerPickNewCardIfNeeded(dealer)
-    }
-
-    private fun gameEnd(dealer: Dealer, users: List<User>) {
-        gameResultView.printCardResult(dealer, users)
-        gameResultView.printFinalResult(getGameResult(dealer, users), users)
-    }
-
-    private fun getGameResult(dealer: Dealer, users: List<User>): List<GameResult> {
-        val referee: Referee = Referee(
-            dealer.validPlayerSum(),
-            users.map { user ->
-                user.validPlayerSum()
-            },
-        )
-        return referee.getResult()
-    }
-
-    private fun dealerPickNewCardIfNeeded(dealer: Dealer) {
-        if (!dealer.isOverSumCondition()) {
-            playGameView.printDealerPickNewCard()
-            val newCard = cardMachine.getNewCard()
-            dealer.addCard(newCard)
-        }
-    }
-
     private fun readUserNames(): List<String> {
         val userNameContainer = repeatWithRunCatching { getUserNames() }
         return userNameContainer.names
     }
+
+    private fun getUserNames(): UserNameContainer = UserNameContainer(loginView.requestPlayerName())
 
     private fun createUsers(userNames: List<String>, userCards: List<List<Card>>): List<User> {
         val userNamesAndCards = userNames.zip(userCards)
         return userNamesAndCards.map { userNameAndCard ->
             User.create(userNameAndCard)
         }
+    }
+
+    private fun playGame(userNames: List<String>, dealer: Dealer, users: List<User>) {
+        playGameView.printNoticeSplitCard(userNames)
+        playGameView.printPlayerCard(dealer, users)
+
+        requestGetCommand(users)
+        dealerPickNewCardIfNeeded(dealer)
     }
 
     private fun requestGetCommand(users: List<User>) {
@@ -91,7 +69,28 @@ class Controller(
     private fun getAnswer(user: User): Answer =
         repeatWithRunCatching { Answer(playGameView.requestOneMoreCard(user)) }
 
-    private fun getUserNames(): UserNameContainer = UserNameContainer(loginView.requestPlayerName())
+    private fun dealerPickNewCardIfNeeded(dealer: Dealer) {
+        if (!dealer.isOverSumCondition()) {
+            playGameView.printDealerPickNewCard()
+            val newCard = cardMachine.getNewCard()
+            dealer.addCard(newCard)
+        }
+    }
+
+    private fun gameEnd(dealer: Dealer, users: List<User>) {
+        gameResultView.printCardResult(dealer, users)
+        gameResultView.printFinalResult(getGameResult(dealer, users), users)
+    }
+
+    private fun getGameResult(dealer: Dealer, users: List<User>): List<GameResult> {
+        val referee: Referee = Referee(
+            dealer.validPlayerSum(),
+            users.map { user ->
+                user.validPlayerSum()
+            },
+        )
+        return referee.getResult()
+    }
 
     private fun <T> repeatWithRunCatching(action: () -> T): T {
         return runCatching(action).getOrElse { error ->
