@@ -16,7 +16,7 @@ class BlackJackGameController(private val inputView: InputView, private val resu
     private fun initGame(): BlackJackGame {
         val blackJackGame = BlackJackGame(getNames())
         resultView.printGameInit(blackJackGame.players)
-        resultView.printInitCards(blackJackGame.participants)
+        resultView.printInitCards(blackJackGame.all)
         return blackJackGame
     }
 
@@ -41,7 +41,7 @@ class BlackJackGameController(private val inputView: InputView, private val resu
     }
 
     private fun gameResult(blackJackGame: BlackJackGame) {
-        resultView.printScore(blackJackGame.participants)
+        resultView.printScore(blackJackGame.all)
         resultView.printGameResult(blackJackGame.players, blackJackGame.dealer)
     }
 }

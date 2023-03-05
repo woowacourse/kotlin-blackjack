@@ -11,20 +11,29 @@ import domain.Player
 import domain.Players
 
 class BlackJackGame(names: Names, private val deck: CardDeck = BlackJackCardDeck()) {
-    val participants: Participants
+    private lateinit var participants: Participants
+
     val players: Players
         get() = participants.players
     val dealer: Dealer
         get() = participants.dealer
+    val all: List<Participant>
+        get() = participants.all
 
     init {
-        val players = names.names.map { Player(it, deck.drawInitCards()) }
+        setPlayers(names)
+    }
+
+    fun setPlayers(names: Names) {
+        val players = names.values.map { Player(it, deck.drawInitCards()) }
         val dealer = Dealer(deck.drawInitCards())
         participants = Participants(Players(players), dealer)
     }
 
-    private fun Participant.addCard() {
-        addCard(deck.draw())
+    fun playersSelectAddPhase(isPlayerCardAdd: (Name) -> Boolean, printPlayerCards: (Player) -> Unit) {
+        players.list.forEach { player ->
+            player.playerSelectAdd(isPlayerCardAdd, printPlayerCards)
+        }
     }
 
     private fun Player.playerSelectAdd(isPlayerCardAdd: (Name) -> Boolean, printPlayerCards: (Player) -> Unit) {
@@ -35,10 +44,8 @@ class BlackJackGame(names: Names, private val deck: CardDeck = BlackJackCardDeck
         if (isAddCard) playerSelectAdd(isPlayerCardAdd, printPlayerCards)
     }
 
-    fun playersSelectAddPhase(isPlayerCardAdd: (Name) -> Boolean, printPlayerCards: (Player) -> Unit) {
-        players.players.forEach { player ->
-            player.playerSelectAdd(isPlayerCardAdd, printPlayerCards)
-        }
+    private fun Participant.addCard() {
+        addCard(deck.draw())
     }
 
     fun dealerSelectPhase(printDealerAddCard: (Dealer) -> Unit) {

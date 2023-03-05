@@ -4,7 +4,7 @@ import domain.BlackJackCardDeck
 import domain.Card
 import domain.Dealer
 import domain.GameResult
-import domain.Participants
+import domain.Participant
 import domain.Player
 import domain.Players
 
@@ -14,22 +14,22 @@ class ResultView {
     }
 
     private fun formatStringName(players: Players): String {
-        return players.players.joinToString(SEPARATOR) { it.name.name }
+        return players.list.joinToString(SEPARATOR) { it.name.value }
     }
 
-    fun printInitCards(participants: Participants) {
+    fun printInitCards(participants: List<Participant>) {
         participants.forEach { participant ->
-            println(PRINT_NAME_AND_CARDS.format(participant.name.name, formatStringCards(participant.showInitCards())))
+            println(PRINT_NAME_AND_CARDS.format(participant.name.value, formatStringCards(participant.showInitCards())))
         }
         println()
     }
 
     fun printPlayerCard(player: Player) {
-        println(PRINT_NAME_AND_CARDS.format(player.name.name, formatStringCards(player.showAllCards())))
+        println(PRINT_NAME_AND_CARDS.format(player.name.value, formatStringCards(player.showAllCards())))
     }
 
     fun printDealerAddCard(dealer: Dealer) {
-        println(PRINT_DEALER_ADD_CARD.format(dealer.name.name))
+        println(PRINT_DEALER_ADD_CARD.format(dealer.name.value))
     }
 
     fun printGameResult(players: Players, dealer: Dealer) {
@@ -52,7 +52,7 @@ class ResultView {
         val dealerResult = dealer.getResult(players)
         println(
             PRINT_DEALER_GAME_RESULT.format(
-                dealer.name.name,
+                dealer.name.value,
                 dealerResult[GameResult.WIN],
                 GameResult.WIN.output,
                 dealerResult[GameResult.LOSE],
@@ -62,20 +62,20 @@ class ResultView {
     }
 
     private fun formatStringPlayersResult(players: Players, dealer: Dealer) {
-        players.players.forEach { player ->
+        players.list.forEach { player ->
             val playerResult = player.getGameResult(dealer)
             if (playerResult == GameResult.WIN)
-                println(PRINT_PLAYER_GAME_RESULT.format(player.name.name, GameResult.WIN.output))
+                println(PRINT_PLAYER_GAME_RESULT.format(player.name.value, GameResult.WIN.output))
             if (playerResult == GameResult.LOSE)
-                println(PRINT_PLAYER_GAME_RESULT.format(player.name.name, GameResult.LOSE.output))
+                println(PRINT_PLAYER_GAME_RESULT.format(player.name.value, GameResult.LOSE.output))
         }
     }
 
-    fun printScore(participants: Participants) {
-        participants.participants.forEach { participant ->
+    fun printScore(participants: List<Participant>) {
+        participants.forEach { participant ->
             println(
                 PRINT_NAME_AND_CARDS_AND_SCORE.format(
-                    participant.name.name,
+                    participant.name.value,
                     formatStringCards(participant.showAllCards()),
                     participant.resultSum()
                 )

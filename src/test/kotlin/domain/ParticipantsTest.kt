@@ -30,7 +30,7 @@ class ParticipantsTest {
                 )
             )
         )
-        val result = participants.participants.joinToString(", ") { it.name.name }
+        val result = participants.all.joinToString(", ") { it.name.value }
         assertThat(result).isEqualTo("딜러, pobi, jason")
     }
 }

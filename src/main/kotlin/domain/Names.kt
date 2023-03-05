@@ -1,8 +1,8 @@
 package domain
 
-class Names(val names: List<Name>) {
+class Names(val values: List<Name>) {
     init {
-        check(names.size <= MAXIMUM_NAME_COUNT) { MAXIMUM_NAME_COUNT_ERROR }
+        check(values.size <= MAXIMUM_NAME_COUNT) { MAXIMUM_NAME_COUNT_ERROR }
     }
 
     companion object {

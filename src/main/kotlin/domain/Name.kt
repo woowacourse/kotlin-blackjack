@@ -1,9 +1,9 @@
 package domain
 
 @JvmInline
-value class Name(val name: String) {
+value class Name(val value: String) {
     init {
-        check(name.matches(regex)) { ERROR_NAME_FORMAT }
+        check(value.matches(regex)) { ERROR_NAME_FORMAT }
     }
 
     companion object {
