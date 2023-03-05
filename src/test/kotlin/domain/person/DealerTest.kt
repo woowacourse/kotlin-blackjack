@@ -43,6 +43,30 @@ class DealerTest {
         assertThat(dealer.getTotalCardNumber()).isEqualTo(sum)
     }
 
+    @CsvSource(value = ["ACE,ACE,12", "ACE,FIVE,16", "ACE, KING,21"])
+    @ParameterizedTest
+    fun `카드가 두 장일 때 ACE 중 하나를 무조건 11 로 간주한다`(number1: CardNumber, number2: CardNumber, sum: Int) {
+        dealer.receiveCard(Card(CardShape.HEART, number1))
+        dealer.receiveCard(Card(CardShape.HEART, number2))
+
+        assertThat(dealer.getTotalCardNumber()).isEqualTo(sum)
+    }
+
+    @CsvSource(value = ["ACE,TEN,KING,21", "ACE,TWO,KING,13", "ACE,ACE,KING,12"])
+    @ParameterizedTest
+    fun `카드가 세 장일 때 ACE 하나를 11로 간주해서 21보다 커지면 ACE 를 모두 1로 간주한다`(
+        number1: CardNumber,
+        number2: CardNumber,
+        number3: CardNumber,
+        sum: Int,
+    ) {
+        dealer.receiveCard(Card(CardShape.HEART, number1))
+        dealer.receiveCard(Card(CardShape.HEART, number2))
+        dealer.receiveCard(Card(CardShape.HEART, number3))
+
+        assertThat(dealer.getTotalCardNumber()).isEqualTo(sum)
+    }
+
     @Test
     fun `딜러는 카드를 한 장만 보여준다`() {
         dealer.receiveCard(Card(CardShape.HEART, CardNumber.KING))
