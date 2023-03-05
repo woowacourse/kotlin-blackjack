@@ -41,7 +41,7 @@ class CardGameTest {
         @BeforeAll
         @JvmStatic
         internal fun setUp() {
-            game = CardGame(CardPicker(CardPackGenerator().createCards()))
+            game = CardGame(CardPicker(CardPackGenerator().createCardDeck()))
         }
     }
 }

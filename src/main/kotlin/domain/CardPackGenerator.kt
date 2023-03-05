@@ -1,13 +1,13 @@
 package domain
 
 import model.Card
-import model.Cards
+import model.CardDeck
 import model.Rank
 import model.Suit
 
 class CardPackGenerator {
-    fun createCards(): Cards {
-        return Cards(
+    fun createCardDeck(): CardDeck {
+        return CardDeck(
             Rank.values().flatMap { rank -> Suit.values().map { suit -> Card(rank, suit) } }
         )
     }

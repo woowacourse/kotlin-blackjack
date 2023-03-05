@@ -1,16 +1,9 @@
 package domain
 
 import model.Card
-import model.Cards
+import model.CardDeck
 
-class CardPicker(private val cards: Cards) {
+class CardPicker(private val cardDeck: CardDeck) {
     private var cursor = 0
-    fun pick(): Card {
-        require(cursor < cards.size) { OUT_OF_INDEX_CARDS_CURSOR }
-        return cards.cards[cursor++]
-    }
-
-    companion object {
-        private const val OUT_OF_INDEX_CARDS_CURSOR = "카드를 모두 사용했습니다."
-    }
+    fun pick(): Card = cardDeck[cursor++]
 }
