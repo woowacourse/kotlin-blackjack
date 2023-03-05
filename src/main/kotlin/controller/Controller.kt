@@ -26,8 +26,8 @@ class Controller(private val inputView: InputView, private val outputView: Outpu
         printParticipants(participants)
         askGetMorePlayersCard(players)
         getMoreDealerCard(dealer)
-        outputView.printAllPlayerStatusResult(participants)
-        outputView.printFinalResult(GameResult.of(dealer, players))
+        outputView.printAllPlayerStatusResult(participants.toList())
+        outputView.printFinalResult(GameResult.of(dealer, players.toList()))
     }
 
     private fun initNames(): Names {
@@ -36,12 +36,12 @@ class Controller(private val inputView: InputView, private val outputView: Outpu
     }
 
     private fun printParticipants(participants: Participants) {
-        outputView.printNoticeDistributeCards(participants.filter { it.name.value != DEALER }.map { it.name })
-        outputView.printPlayersStatus(participants)
+        outputView.printNoticeDistributeCards(participants.toList().filter { it.name.value != DEALER }.map { it.name })
+        outputView.printPlayersStatus(participants.toList())
     }
 
     private fun askGetMorePlayersCard(players: Players) {
-        players.filter { it.isHit() }.forEach {
+        players.toList().filter { it.isHit() }.forEach {
             outputView.printGetCardMore(it.name)
             askGetMorePlayerCard(it)
         }

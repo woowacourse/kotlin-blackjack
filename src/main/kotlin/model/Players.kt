@@ -1,3 +1,5 @@
 package model
 
-data class Players(val players: List<Player>) : List<Player> by players
+data class Players(private val players: List<Player>) {
+    fun toList(): List<Player> = players.toList()
+}

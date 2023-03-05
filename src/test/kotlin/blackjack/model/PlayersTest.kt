@@ -16,9 +16,11 @@ class PlayersTest {
                 Player(emptyCards(), Name("pobi"))
             )
         )
-        assertThat(players.toList().size).isEqualTo(2)
-        assertThat(players.toList()[0].name.value).isEqualTo("jason")
-        assertThat(players.toList()[1].name.value).isEqualTo("pobi")
+
+        val actual = players.toList()
+        assertThat(actual.size).isEqualTo(2)
+        assertThat(actual[0].name.value).isEqualTo("jason")
+        assertThat(actual[1].name.value).isEqualTo("pobi")
     }
 
     private fun emptyCards() = Cards(emptyList())

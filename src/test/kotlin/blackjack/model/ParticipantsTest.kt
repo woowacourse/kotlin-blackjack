@@ -20,12 +20,12 @@ class ParticipantsTest {
             )
         )
 
-        val actual = Participants.of(dealer, players)
+        val actual = Participants.of(dealer, players).toList()
 
         assertThat(actual.size).isEqualTo(3)
-        assertThat(actual.participants[0].name.value).isEqualTo("딜러")
-        assertThat(actual.participants[1].name.value).isEqualTo("jason")
-        assertThat(actual.participants[2].name.value).isEqualTo("pobi")
+        assertThat(actual[0].name.value).isEqualTo("딜러")
+        assertThat(actual[1].name.value).isEqualTo("jason")
+        assertThat(actual[2].name.value).isEqualTo("pobi")
     }
 
     private fun emptyCards() = Cards(emptyList())
