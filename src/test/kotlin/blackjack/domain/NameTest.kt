@@ -6,7 +6,6 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
 class NameTest {
-
     @ParameterizedTest
     @ValueSource(strings = ["아", "아크,로피,아크,로피,아크,로피,아크"])
     fun `이름은 1~20자 이하다`(name: String) {

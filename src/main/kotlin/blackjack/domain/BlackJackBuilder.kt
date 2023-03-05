@@ -16,11 +16,9 @@ class BlackJackBuilder {
         participants = ParticipantsBuilder().apply(block).build()
     }
 
-    fun draw() {
-        participants.all().map {
-            it.draw(cardDeck.nextCard())
-            it.draw(cardDeck.nextCard())
-        }
+    fun draw() = participants.all().map {
+        it.draw(cardDeck.nextCard())
+        it.draw(cardDeck.nextCard())
     }
 
     fun build(): BlackJack {

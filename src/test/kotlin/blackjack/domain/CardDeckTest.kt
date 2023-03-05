@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 class CardDeckTest {
-
     @Test
     fun `초기 카드 덱은 52장이다`() {
         val cardDeck = CardDeck(Cards.all())
