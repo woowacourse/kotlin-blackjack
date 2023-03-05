@@ -6,8 +6,7 @@ import domain.constant.Decision
 import domain.person.Dealer
 import domain.person.Player
 import domain.result.GameResult
-import view.MainView
-import view.OnboardingView
+import view.RequestView
 import view.ResultView
 
 class BlackJackController {
@@ -20,12 +19,12 @@ class BlackJackController {
     }
 
     private fun runOnboarding(deck: Deck, dealer: Dealer): List<Player> {
-        val players = OnboardingView.requestInputNames().map { name -> Player(name) }
+        val players = RequestView.requestInputNames().map { name -> Player(name) }
         dealer.receiveCard(deck.getCard(), deck.getCard())
         players.forEach {
             it.receiveCard(deck.getCard(), deck.getCard())
         }
-        OnboardingView.printInitialSetting(players, dealer)
+        ResultView.printInitialSetting(players, dealer)
         return players
     }
 
@@ -43,26 +42,26 @@ class BlackJackController {
     private fun handOutCardToDealer(deck: Deck, dealer: Dealer) {
         if (dealer.isStateHit()) {
             dealer.receiveCard(deck.getCard())
-            MainView.printDealerGetMoreCard()
+            ResultView.printDealerGetMoreCard()
             return
         }
-        MainView.printDealerNoMoreCard()
+        ResultView.printDealerNoMoreCard()
     }
 
     private fun applyPlayerDecision(deck: Deck, player: Player) {
-        val decision = Decision.of(MainView.requestPlayerDecision(player.name))
+        val decision = Decision.of(RequestView.requestPlayerDecision(player.name))
         if (decision == Decision.NO) {
             player.rejectReceiveCard()
             return
         }
         player.receiveCard(deck.getCard())
-        MainView.printPlayerCards(player)
+        ResultView.printPlayerCards(player)
     }
 
     private fun runResult(dealer: Dealer, players: List<Player>) {
         val gameResult = GameResult(dealer, players)
 
-        ResultView.printPersonsCards(dealer, players)
+        ResultView.printPersonsCardsResult(dealer, players)
         ResultView.printFinalResult(gameResult)
     }
 }
