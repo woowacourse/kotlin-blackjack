@@ -1,6 +1,6 @@
 package domain
 
-interface CardDrawer {
+interface CardDeck {
     fun draw(): Card
 
     fun drawInitCards(): Cards

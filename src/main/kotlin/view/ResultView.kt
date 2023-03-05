@@ -1,6 +1,12 @@
 package view
 
-import domain.*
+import domain.BlackJackCardDeck
+import domain.Card
+import domain.Dealer
+import domain.GameResult
+import domain.Participants
+import domain.Player
+import domain.Players
 
 class ResultView {
     fun printGameInit(players: Players) {
@@ -62,7 +68,6 @@ class ResultView {
                 println(PRINT_PLAYER_GAME_RESULT.format(player.name.name, GameResult.WIN.output))
             if (playerResult == GameResult.LOSE)
                 println(PRINT_PLAYER_GAME_RESULT.format(player.name.name, GameResult.LOSE.output))
-
         }
     }
 
@@ -79,7 +84,7 @@ class ResultView {
     }
 
     companion object {
-        private const val PRINT_GAME_INIT_MESSAGE = "\n딜러와 %s에게 ${RandomCardDrawer.DRAW_INIT_CARD_COUNT}장의 나누었습니다."
+        private const val PRINT_GAME_INIT_MESSAGE = "\n딜러와 %s에게 ${BlackJackCardDeck.DRAW_INIT_CARD_COUNT}장의 나누었습니다."
         private const val SEPARATOR = ", "
         private const val PRINT_NAME_AND_CARDS = "%s카드: %s"
         private const val PRINT_DEALER_ADD_CARD = "\n%s는 ${Dealer.DEALER_ADD_CARD_CONDITION}이하라 한장의 카드를 더 받았습니다."
@@ -89,4 +94,3 @@ class ResultView {
         private const val PRINT_NAME_AND_CARDS_AND_SCORE = "%s 카드: %s - 결과: %d"
     }
 }
-

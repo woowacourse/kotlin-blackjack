@@ -1,7 +1,7 @@
 package controller
 
 import domain.Answer
-import domain.CardDrawer
+import domain.CardDeck
 import domain.Dealer
 import domain.Name
 import domain.Names
@@ -9,9 +9,9 @@ import domain.Participant
 import domain.Participants
 import domain.Player
 import domain.Players
-import domain.RandomCardDrawer
+import domain.BlackJackCardDeck
 
-class BlackJackGame(names: Names, private val cardDrawer: CardDrawer = RandomCardDrawer()) {
+class BlackJackGame(names: Names, private val cardDeck: CardDeck = BlackJackCardDeck()) {
     val participants: Participants
     private val players: Players
         get() = participants.players
@@ -19,13 +19,13 @@ class BlackJackGame(names: Names, private val cardDrawer: CardDrawer = RandomCar
         get() = participants.dealer
 
     init {
-        val players = names.names.map { Player(it, cardDrawer.drawInitCards()) }
-        val dealer = Dealer(cardDrawer.drawInitCards())
+        val players = names.names.map { Player(it, cardDeck.drawInitCards()) }
+        val dealer = Dealer(cardDeck.drawInitCards())
         participants = Participants(Players(players), dealer)
     }
 
     private fun Participant.addCard() {
-        this.cards.add(cardDrawer.draw())
+        this.cards.add(cardDeck.draw())
     }
 
     private fun Player.playerSelectAdd(playerCardAddAnswer: (Name) -> Answer, printPlayerCards: (Player) -> Unit) {

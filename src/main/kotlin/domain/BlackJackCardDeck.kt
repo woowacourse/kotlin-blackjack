@@ -1,6 +1,6 @@
 package domain
 
-class RandomCardDrawer : CardDrawer {
+class BlackJackCardDeck : CardDeck {
     private val cards: MutableList<Card> = mutableListOf()
 
     val size: Int
