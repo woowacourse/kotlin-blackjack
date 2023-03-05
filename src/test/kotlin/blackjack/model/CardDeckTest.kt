@@ -1,9 +1,11 @@
 package blackjack.model
 
+import domain.CardPackGenerator
 import model.Card
 import model.CardDeck
 import model.Rank
 import model.Suit
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
@@ -29,5 +31,13 @@ class CardDeckTest {
                 )
             )
         }
+    }
+
+    @Test
+    fun `카드 덱에서 카드를 한장 뽑을 수 있다 `() {
+        val cardDeck = CardPackGenerator().createCardDeck()
+        val card = cardDeck.drawCard()
+        assertThat(card.rank).isEqualTo(Rank.ACE)
+        assertThat(card.suit).isEqualTo(Suit.DIAMOND)
     }
 }

@@ -1,7 +1,7 @@
 package model
 
 class CardDeck(value: List<Card>) {
-    private val _value: List<Card> = value
+    private val _value: MutableList<Card> = value.toMutableList()
 
     val value: List<Card>
         get() = _value
@@ -12,6 +12,8 @@ class CardDeck(value: List<Card>) {
         require(value.distinct().size == value.size) { CARD_DECK_DUPLICATE_ERROR }
         require(value.size == CARD_DECK_SIZE) { CARD_DECK_SIZE_ERROR }
     }
+
+    fun drawCard(): Card = _value.removeFirst()
 
     fun shuffled() = CardDeck(_value.shuffled())
 

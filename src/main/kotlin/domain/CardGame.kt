@@ -1,12 +1,13 @@
 package domain
 
+import model.CardDeck
 import model.Cards
 import model.Dealer
 import model.Name
 import model.Player
 import model.Players
 
-class CardGame(private val cardPicker: CardPicker) {
+class CardGame(private val cardDeck: CardDeck) {
     fun initPlayers(names: List<Name>): Players {
         return Players(names.map { Player(pickTwice(), it) })
     }
@@ -17,8 +18,8 @@ class CardGame(private val cardPicker: CardPicker) {
 
     fun pickTwice(): Cards = Cards(
         buildList {
-            add(cardPicker.pick())
-            add(cardPicker.pick())
+            add(cardDeck.drawCard())
+            add(cardDeck.drawCard())
         },
     )
 }

@@ -2,7 +2,6 @@ package controller
 
 import domain.CardGame
 import domain.CardPackGenerator
-import domain.CardPicker
 import model.Dealer
 import model.GameResult
 import model.Name
@@ -15,10 +14,9 @@ import view.OutputView
 
 class Controller(private val inputView: InputView, private val outputView: OutputView) {
     private val cardDeck = CardPackGenerator().createCardDeck().shuffled()
-    private val picker = CardPicker(cardDeck)
 
     fun run() {
-        val cardGame = CardGame(picker)
+        val cardGame = CardGame(cardDeck)
         val players = cardGame.initPlayers(initNames())
         val dealer = cardGame.initDealer()
         val participants = Participants(listOf(dealer) + players)
@@ -48,7 +46,7 @@ class Controller(private val inputView: InputView, private val outputView: Outpu
 
     private fun askGetMorePlayerCard(player: Player) {
         while (player.isHit() && inputView.readYesOrNo()) {
-            player.cards.add(picker.pick())
+            player.cards.add(cardDeck.drawCard())
             outputView.printPlayerStatus(player)
             if (player.isHit()) outputView.printGetCardMore(player.name)
         }
@@ -57,7 +55,7 @@ class Controller(private val inputView: InputView, private val outputView: Outpu
     private fun getMoreDealerCard(dealer: Dealer) {
         while (dealer.isHit()) {
             outputView.printDealerGetCard()
-            dealer.cards.add(picker.pick())
+            dealer.cards.add(cardDeck.drawCard())
         }
     }
 }
