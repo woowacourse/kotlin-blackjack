@@ -12,11 +12,7 @@ class BlackJackCardDeck : CardDeck {
 
     companion object {
         const val DRAW_INIT_CARD_COUNT = 2
-        private val CARD_DECK: List<Card>
-
-        init {
-            CARD_DECK =
-                CardCategory.values().flatMap { cardCategory -> CardNumber.values().map { Card(cardCategory, it) } }
-        }
+        private val CARD_DECK: List<Card> =
+            CardCategory.values().flatMap { cardCategory -> CardNumber.values().map { Card(cardCategory, it) } }
     }
 }

@@ -15,6 +15,10 @@ class Cards(cards: List<Card>) {
 
     val isBurst: Boolean
         get() = minSum() > BlackJackGame.BLACKJACK_NUMBER
+    val isBlackJack: Boolean
+        get() {
+            return ((maxSum() == BlackJackGame.BLACKJACK_NUMBER) && (size == 2))
+        }
 
     val resultSum: Int
         get() {

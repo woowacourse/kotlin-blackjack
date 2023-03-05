@@ -34,40 +34,36 @@ class ResultView {
 
     fun printGameResult(players: Players, dealer: Dealer) {
         println(PRINT_GAME_RESULT)
-        formatStringDealerResult(players, dealer)
-        formatStringPlayersResult(players, dealer)
+        println(formatToStringDealerResultType(players, dealer))
+        printPlayersResult(players, dealer)
     }
 
-    private fun formatStringCards(cards: List<Card>): String {
-        return cards.joinToString(SEPARATOR) { card ->
-            card.info()
-        }
-    }
-
-    private fun Card.info(): String {
-        return "${cardNumber.number}${cardCategory.pattern}"
-    }
-
-    private fun formatStringDealerResult(players: Players, dealer: Dealer) {
+    private fun formatToStringDealerResultType(players: Players, dealer: Dealer): String {
         val dealerResult = dealer.getResult(players)
-        println(
-            PRINT_DEALER_GAME_RESULT.format(
-                dealer.name.value,
-                dealerResult[GameResult.WIN],
-                GameResult.WIN.output,
-                dealerResult[GameResult.LOSE],
-                GameResult.LOSE.output
-            )
+        return PRINT_DEALER_GAME_RESULT.format(
+            dealer.name.value,
+            formatToStringDealerResultType(dealerResult[GameResult.WIN] ?: 0, PRINT_WIN),
+            formatToStringDealerResultType(dealerResult[GameResult.DRAW] ?: 0, PRINT_DRAW),
+            formatToStringDealerResultType(dealerResult[GameResult.LOSE] ?: 0, PRINT_LOSE),
         )
     }
 
-    private fun formatStringPlayersResult(players: Players, dealer: Dealer) {
+    private fun formatToStringDealerResultType(resultCount: Int, gameResultType: String): String {
+        if (resultCount == 0) return ""
+        return "$resultCount$gameResultType "
+    }
+
+    private fun printPlayersResult(players: Players, dealer: Dealer) {
         players.list.forEach { player ->
-            val playerResult = player.getGameResult(dealer)
-            if (playerResult == GameResult.WIN)
-                println(PRINT_PLAYER_GAME_RESULT.format(player.name.value, GameResult.WIN.output))
-            if (playerResult == GameResult.LOSE)
-                println(PRINT_PLAYER_GAME_RESULT.format(player.name.value, GameResult.LOSE.output))
+            println(formatToStringPlayerResult(player, dealer))
+        }
+    }
+
+    private fun formatToStringPlayerResult(player: Player, dealer: Dealer): String {
+        return when (player.getGameResult(dealer)) {
+            GameResult.WIN -> PRINT_PLAYER_GAME_RESULT.format(player.name.value, PRINT_WIN)
+            GameResult.DRAW -> PRINT_PLAYER_GAME_RESULT.format(player.name.value, PRINT_DRAW)
+            GameResult.LOSE -> PRINT_PLAYER_GAME_RESULT.format(player.name.value, PRINT_LOSE)
         }
     }
 
@@ -83,14 +79,28 @@ class ResultView {
         }
     }
 
+    private fun formatStringCards(cards: List<Card>): String {
+        return cards.joinToString(SEPARATOR) { card ->
+            card.info()
+        }
+    }
+
+    private fun Card.info(): String {
+        return "${cardNumber.number}${cardCategory.pattern}"
+    }
+
     companion object {
         private const val PRINT_GAME_INIT_MESSAGE = "\n딜러와 %s에게 ${BlackJackCardDeck.DRAW_INIT_CARD_COUNT}장의 나누었습니다."
         private const val SEPARATOR = ", "
         private const val PRINT_NAME_AND_CARDS = "%s카드: %s"
         private const val PRINT_DEALER_ADD_CARD = "\n%s는 ${Dealer.DEALER_ADD_CARD_CONDITION}이하라 한장의 카드를 더 받았습니다."
         private const val PRINT_GAME_RESULT = "\n## 최종승패"
-        private const val PRINT_DEALER_GAME_RESULT = "%s: %d%s %d%s"
+        private const val PRINT_DEALER_GAME_RESULT = "%s: %s%s%s"
         private const val PRINT_PLAYER_GAME_RESULT = "%s: %s"
         private const val PRINT_NAME_AND_CARDS_AND_SCORE = "%s 카드: %s - 결과: %d"
+
+        private const val PRINT_WIN = "승"
+        private const val PRINT_DRAW = "무"
+        private const val PRINT_LOSE = "패"
     }
 }

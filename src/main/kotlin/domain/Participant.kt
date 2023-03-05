@@ -7,4 +7,5 @@ abstract class Participant(val name: Name, protected val cards: Cards) {
     fun addCard(card: Card) = cards.add(card)
     fun resultSum(): Int = cards.resultSum
     fun isBurst(): Boolean = cards.isBurst
+    fun isBlackJack(): Boolean = cards.isBlackJack
 }

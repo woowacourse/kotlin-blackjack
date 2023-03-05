@@ -11,6 +11,7 @@ class Dealer(cards: Cards) : Participant(Name("딜러"), cards) {
         val playersResult = players.result(this)
         return mapOf(
             GameResult.WIN to (playersResult[GameResult.LOSE] ?: INITIALIZE_TO_ZERO),
+            GameResult.DRAW to (playersResult[GameResult.DRAW] ?: INITIALIZE_TO_ZERO),
             GameResult.LOSE to (playersResult[GameResult.WIN] ?: INITIALIZE_TO_ZERO)
         )
     }

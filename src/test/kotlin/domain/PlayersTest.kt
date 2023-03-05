@@ -47,6 +47,7 @@ class PlayersTest {
         val actual = players.result(dealer)
         val expected = mapOf(
             GameResult.WIN to 1,
+            GameResult.DRAW to 0,
             GameResult.LOSE to 1
         )
         assertThat(actual).isEqualTo(expected)
