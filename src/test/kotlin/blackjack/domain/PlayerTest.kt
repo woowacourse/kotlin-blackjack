@@ -45,4 +45,77 @@ class PlayerTest {
 
         assertThat(player.canHit()).isTrue
     }
+
+    @Test
+    fun `플레이어가 버스트가 아니고 딜러의 점수보다 높다면 승부에서 이긴다`() {
+        val player = Player("pobi").apply {
+            receive(Card(CardNumber.KING, CardShape.HEART))
+            receive(Card(CardNumber.KING, CardShape.DIAMOND))
+        }
+        val dealer = Dealer().apply {
+            receive(Card(CardNumber.KING, CardShape.HEART))
+            receive(Card(CardNumber.NINE, CardShape.DIAMOND))
+        }
+
+        assertThat(player against dealer).isEqualTo(ResultType.WIN)
+    }
+
+    @Test
+    fun `플레이어가 버스트가 아니고 딜러의 점수와 같다면 승부에서 비긴다`() {
+        val player = Player("pobi").apply {
+            receive(Card(CardNumber.KING, CardShape.HEART))
+            receive(Card(CardNumber.KING, CardShape.DIAMOND))
+        }
+        val dealer = Dealer().apply {
+            receive(Card(CardNumber.KING, CardShape.HEART))
+            receive(Card(CardNumber.KING, CardShape.DIAMOND))
+        }
+
+        assertThat(player against dealer).isEqualTo(ResultType.TIE)
+    }
+
+    @Test
+    fun `플레이어가 버스트가 아니고 딜러가 버스트가 아닐 때 딜러의 점수보다 낮다면 승부에서 진다`() {
+        val player = Player("pobi").apply {
+            receive(Card(CardNumber.KING, CardShape.HEART))
+            receive(Card(CardNumber.KING, CardShape.DIAMOND))
+        }
+        val dealer = Dealer().apply {
+            receive(Card(CardNumber.KING, CardShape.HEART))
+            receive(Card(CardNumber.ACE, CardShape.DIAMOND))
+        }
+
+        assertThat(player against dealer).isEqualTo(ResultType.LOSE)
+    }
+
+    @Test
+    fun `플레이어가 버스트라면 딜러의 점수와 상관없이 승부에서 진다`() {
+        val player = Player("pobi").apply {
+            receive(Card(CardNumber.KING, CardShape.HEART))
+            receive(Card(CardNumber.KING, CardShape.DIAMOND))
+            receive(Card(CardNumber.KING, CardShape.DIAMOND))
+        }
+        val dealer = Dealer().apply {
+            receive(Card(CardNumber.KING, CardShape.HEART))
+            receive(Card(CardNumber.KING, CardShape.DIAMOND))
+            receive(Card(CardNumber.KING, CardShape.DIAMOND))
+        }
+
+        assertThat(player against dealer).isEqualTo(ResultType.LOSE)
+    }
+
+    @Test
+    fun `딜러가 버스트일 때 플레이어가 버스트가 아니라면 승부에서 이긴다`() {
+        val player = Player("pobi").apply {
+            receive(Card(CardNumber.TWO, CardShape.HEART))
+            receive(Card(CardNumber.TWO, CardShape.DIAMOND))
+        }
+        val dealer = Dealer().apply {
+            receive(Card(CardNumber.KING, CardShape.HEART))
+            receive(Card(CardNumber.KING, CardShape.DIAMOND))
+            receive(Card(CardNumber.KING, CardShape.DIAMOND))
+        }
+
+        assertThat(player against dealer).isEqualTo(ResultType.WIN)
+    }
 }

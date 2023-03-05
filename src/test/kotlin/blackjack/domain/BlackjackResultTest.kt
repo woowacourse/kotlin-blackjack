@@ -1,83 +1,102 @@
 package blackjack.domain
 
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
 
 class BlackjackResultTest {
+
     @Test
-    fun `플레이어가 딜러를 이긴 경우 WIN을 반환한다`() {
-        val player = Player("pobi").apply {
-            receive(Card(CardNumber.KING, CardShape.CLOVER))
-            receive(Card(CardNumber.ACE, CardShape.CLOVER))
-        }
+    fun `딜러가 히트해야 할 때 블랙잭 결과를 생성하려 하면 에러가 발생한다`() {
         val dealer = Dealer().apply {
-            receive(Card(CardNumber.KING, CardShape.HEART))
-            receive(Card(CardNumber.QUEEN, CardShape.HEART))
-        }
-        val blackjackResult = BlackjackResult.of(dealer, listOf(player))
-
-        val actual = blackjackResult.getResultOf(player)
-
-        assertThat(actual).isEqualTo(ResultType.WIN)
-    }
-
-    @Test
-    fun `플레이어가 bust 하는 경우 딜러와 상관없이 무조건 LOSE를 반환한다`() {
-        val player = Player("pobi").apply {
-            receive(Card(CardNumber.KING, CardShape.CLOVER))
-            receive(Card(CardNumber.QUEEN, CardShape.CLOVER))
+            receive(Card(CardNumber.NINE, CardShape.CLOVER))
             receive(Card(CardNumber.TWO, CardShape.CLOVER))
         }
-        val dealer = Dealer().apply {
-            receive(Card(CardNumber.KING, CardShape.HEART))
-            receive(Card(CardNumber.QUEEN, CardShape.HEART))
-            receive(Card(CardNumber.TWO, CardShape.HEART))
-        }
-        val blackjackResult = BlackjackResult.of(dealer, listOf(player))
+        val players = listOf(
+            Player("pobi").apply {
+                receive(Card(CardNumber.NINE, CardShape.CLOVER))
+                receive(Card(CardNumber.TWO, CardShape.CLOVER))
+            },
+            Player("thomas").apply {
+                receive(Card(CardNumber.NINE, CardShape.CLOVER))
+                receive(Card(CardNumber.TWO, CardShape.CLOVER))
+            },
+        )
 
-        val actual = blackjackResult.getResultOf(player)
-
-        assertThat(actual).isEqualTo(ResultType.LOSE)
+        assertThatIllegalArgumentException().isThrownBy { BlackjackResult.of(dealer, players) }
+            .withMessage("딜러가 히트해야 한다면 블랙잭 결과를 생성할 수 없습니다.")
     }
 
     @Test
-    fun `딜러만 bust 하는 경우 WIN을 반환한다`() {
-        val player = Player("pobi").apply {
-            receive(Card(CardNumber.KING, CardShape.CLOVER))
-            receive(Card(CardNumber.TWO, CardShape.CLOVER))
-        }
+    fun `플레이어가 한 명도 없을 때 블랙잭 결과를 생성하려 하면 에러가 발생한다`() {
         val dealer = Dealer().apply {
-            receive(Card(CardNumber.KING, CardShape.HEART))
-            receive(Card(CardNumber.QUEEN, CardShape.HEART))
-            receive(Card(CardNumber.TWO, CardShape.HEART))
+            receive(Card(CardNumber.NINE, CardShape.CLOVER))
+            receive(Card(CardNumber.TEN, CardShape.CLOVER))
         }
-        val blackjackResult = BlackjackResult.of(dealer, listOf(player))
+        val players = listOf<Player>()
 
-        val actual = blackjackResult.getResultOf(player)
-
-        assertThat(actual).isEqualTo(ResultType.WIN)
+        assertThatIllegalArgumentException().isThrownBy { BlackjackResult.of(dealer, players) }
+            .withMessage("플레이어가 없다면 블랙잭 결과를 생성할 수 없습니다.")
     }
 
     @Test
-    fun `플레이어의 승패 여부로부터 딜러의 승패 여부를 계산한다`() {
-        val playerResult = mapOf(
-            Player("pobi") to ResultType.WIN,
-            Player("thomas") to ResultType.TIE,
-            Player("hatti") to ResultType.LOSE,
-            Player("jason") to ResultType.LOSE
+    fun `딜러와 플레이어들이 주어지면 딜러의 승무패 각각의 횟수를 알 수 있다`() {
+        val dealer = Dealer().apply {
+            receive(Card(CardNumber.NINE, CardShape.CLOVER))
+            receive(Card(CardNumber.TEN, CardShape.CLOVER))
+        }
+        val players = listOf(
+            Player("pobi").apply {
+                receive(Card(CardNumber.NINE, CardShape.CLOVER))
+                receive(Card(CardNumber.TWO, CardShape.CLOVER))
+            },
+            Player("thomas").apply {
+                receive(Card(CardNumber.KING, CardShape.CLOVER))
+                receive(Card(CardNumber.ACE, CardShape.CLOVER))
+            },
+            Player("jason").apply {
+                receive(Card(CardNumber.NINE, CardShape.CLOVER))
+                receive(Card(CardNumber.TEN, CardShape.CLOVER))
+            },
         )
 
-        val actual = mapOf(
-            ResultType.WIN to BlackjackResult(playerResult).getCountOfDealer(ResultType.WIN),
-            ResultType.TIE to BlackjackResult(playerResult).getCountOfDealer(ResultType.TIE),
-            ResultType.LOSE to BlackjackResult(playerResult).getCountOfDealer(ResultType.LOSE),
+        val result = BlackjackResult.of(dealer, players)
+
+        assertAll(
+            { assertThat(result.getCountOfDealer(ResultType.WIN)).isEqualTo(1) },
+            { assertThat(result.getCountOfDealer(ResultType.TIE)).isEqualTo(1) },
+            { assertThat(result.getCountOfDealer(ResultType.LOSE)).isEqualTo(1) },
         )
-        val expect = mapOf(
-            ResultType.WIN to 2,
-            ResultType.TIE to 1,
-            ResultType.LOSE to 1
+    }
+
+    @Test
+    fun `딜러와 플레이어들이 주어지면 플레이어의 딜러와의 승부 결과를 알 수 있다`() {
+        val dealer = Dealer().apply {
+            receive(Card(CardNumber.NINE, CardShape.CLOVER))
+            receive(Card(CardNumber.TEN, CardShape.CLOVER))
+        }
+        val players = listOf(
+            Player("pobi").apply {
+                receive(Card(CardNumber.NINE, CardShape.CLOVER))
+                receive(Card(CardNumber.TWO, CardShape.CLOVER))
+            },
+            Player("thomas").apply {
+                receive(Card(CardNumber.KING, CardShape.CLOVER))
+                receive(Card(CardNumber.ACE, CardShape.CLOVER))
+            },
+            Player("jason").apply {
+                receive(Card(CardNumber.NINE, CardShape.CLOVER))
+                receive(Card(CardNumber.TEN, CardShape.CLOVER))
+            },
         )
 
-        assertThat(actual).isEqualTo(expect)
+        val result = BlackjackResult.of(dealer, players)
+
+        assertAll(
+            { assertThat(result.getResultOf(players[0])).isEqualTo(ResultType.LOSE) },
+            { assertThat(result.getResultOf(players[1])).isEqualTo(ResultType.WIN) },
+            { assertThat(result.getResultOf(players[2])).isEqualTo(ResultType.TIE) },
+        )
     }
 }
