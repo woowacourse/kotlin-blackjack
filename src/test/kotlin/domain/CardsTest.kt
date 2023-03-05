@@ -79,11 +79,9 @@ class CardsTest {
     fun `에이스가 있다면 에이스 한 개를 11로 보고 더한 최대 합과 상태를 구한다`() {
         val cards =
             Cards(
-                listOf<Card>(
-                    Card(CardCategory.CLOVER, CardNumber.KING),
-                    Card(CardCategory.CLOVER, CardNumber.EIGHT),
-                    Card(CardCategory.SPADE, CardNumber.ACE),
-                )
+                Card(CardCategory.CLOVER, CardNumber.KING),
+                Card(CardCategory.CLOVER, CardNumber.EIGHT),
+                Card(CardCategory.SPADE, CardNumber.ACE)
             )
         val result = cards.maxSumState()
         val expected = Cards.State.NoBurst(19)

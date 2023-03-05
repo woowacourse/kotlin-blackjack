@@ -8,31 +8,25 @@ class ParticipantsTest {
     fun `딜러와 플레이어들을 모두 가져온다`() {
         val participants = Participants(
             Players(
-                listOf(
-                    Player(
-                        Name("pobi"), Cards(
-                            listOf(
-                                Card(CardCategory.CLOVER, CardNumber.EIGHT),
-                                Card(CardCategory.SPADE, CardNumber.NINE)
-                            )
-                        )
-                    ),
-                    Player(
-                        Name("jason"), Cards(
-                            listOf(
-                                Card(CardCategory.CLOVER, CardNumber.EIGHT),
-                                Card(CardCategory.SPADE, CardNumber.NINE)
-                            )
-                        )
+                Player(
+                    Name("pobi"),
+                    Cards(
+                        Card(CardCategory.CLOVER, CardNumber.EIGHT),
+                        Card(CardCategory.SPADE, CardNumber.NINE)
+                    )
+                ),
+                Player(
+                    Name("jason"),
+                    Cards(
+                        Card(CardCategory.CLOVER, CardNumber.EIGHT),
+                        Card(CardCategory.SPADE, CardNumber.NINE)
                     )
                 )
             ),
             Dealer(
                 Cards(
-                    listOf(
-                        Card(CardCategory.CLOVER, CardNumber.EIGHT),
-                        Card(CardCategory.SPADE, CardNumber.NINE)
-                    )
+                    Card(CardCategory.CLOVER, CardNumber.EIGHT),
+                    Card(CardCategory.SPADE, CardNumber.NINE)
                 )
             )
         )

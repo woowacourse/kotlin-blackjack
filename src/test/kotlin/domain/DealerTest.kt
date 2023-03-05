@@ -9,10 +9,8 @@ class DealerTest {
     fun `게임 시작 시 딜러의 처음 카드를 하나 보여준다`() {
         val dealer = Dealer(
             Cards(
-                listOf(
-                    Card(CardCategory.CLOVER, CardNumber.EIGHT),
-                    Card(CardCategory.SPADE, CardNumber.NINE)
-                )
+                Card(CardCategory.CLOVER, CardNumber.EIGHT),
+                Card(CardCategory.SPADE, CardNumber.NINE)
             )
         )
         val actual = dealer.showInitCards()
@@ -24,10 +22,8 @@ class DealerTest {
     fun `카드의 총합이 16이하면 카드를 더 받아야 한다`() {
         val dealer = Dealer(
             Cards(
-                listOf(
-                    Card(CardCategory.CLOVER, CardNumber.EIGHT),
-                    Card(CardCategory.SPADE, CardNumber.SIX)
-                )
+                Card(CardCategory.CLOVER, CardNumber.EIGHT),
+                Card(CardCategory.SPADE, CardNumber.SIX)
             )
         )
         val actual = dealer.isPossibleDrawCard()
@@ -38,31 +34,23 @@ class DealerTest {
     fun `자신의 종합 승패 결과를 반환한다`() {
         val dealer = Dealer(
             Cards(
-                listOf(
-                    Card(CardCategory.CLOVER, CardNumber.EIGHT),
-                    Card(CardCategory.SPADE, CardNumber.SIX)
-                )
+                Card(CardCategory.CLOVER, CardNumber.EIGHT),
+                Card(CardCategory.SPADE, CardNumber.SIX)
             )
         )
         val players = Players(
-            listOf(
-                Player(
-                    Name("pobi"),
-                    Cards(
-                        listOf(
-                            Card(CardCategory.CLOVER, CardNumber.EIGHT),
-                            Card(CardCategory.SPADE, CardNumber.NINE)
-                        )
-                    )
-                ),
-                Player(
-                    Name("jason"),
-                    Cards(
-                        listOf(
-                            Card(CardCategory.CLOVER, CardNumber.EIGHT),
-                            Card(CardCategory.SPADE, CardNumber.TWO)
-                        )
-                    )
+            Player(
+                Name("pobi"),
+                Cards(
+                    Card(CardCategory.CLOVER, CardNumber.EIGHT),
+                    Card(CardCategory.SPADE, CardNumber.NINE)
+                )
+            ),
+            Player(
+                Name("jason"),
+                Cards(
+                    Card(CardCategory.CLOVER, CardNumber.EIGHT),
+                    Card(CardCategory.SPADE, CardNumber.TWO)
                 )
             )
         )

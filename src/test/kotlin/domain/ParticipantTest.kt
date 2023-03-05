@@ -9,10 +9,8 @@ class ParticipantTest {
         val participant = object : Participant(
             Name("Scott"),
             Cards(
-                listOf(
-                    Card(CardCategory.CLOVER, CardNumber.EIGHT),
-                    Card(CardCategory.SPADE, CardNumber.NINE)
-                )
+                Card(CardCategory.CLOVER, CardNumber.EIGHT),
+                Card(CardCategory.SPADE, CardNumber.NINE)
             )
         ) {
             override fun showInitCards(): List<Card> {
@@ -34,10 +32,8 @@ class ParticipantTest {
         val participant = object : Participant(
             Name("Scott"),
             Cards(
-                listOf(
-                    Card(CardCategory.CLOVER, CardNumber.EIGHT),
-                    Card(CardCategory.SPADE, CardNumber.NINE)
-                )
+                Card(CardCategory.CLOVER, CardNumber.EIGHT),
+                Card(CardCategory.SPADE, CardNumber.NINE)
             )
         ) {
             override fun showInitCards(): List<Card> {
