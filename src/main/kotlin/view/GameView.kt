@@ -46,6 +46,6 @@ class GameView {
         private const val MESSAGE_PLAYER_NAME = "카드: "
         private const val MESSAGE_USERS_STATUS = "딜러와 %s에게 2장의 나누었습니다."
         private const val MESSAGE_MORE_CARD = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)"
-        private const val MESSAGE_DEALER_MORE_CARD = "딜러는 16이하라 한장의 카드를 더 받았습니다."
+        private const val MESSAGE_DEALER_MORE_CARD = "딜러는 16이하라 한장의 카드를 더 받았습니다.\n"
     }
 }
