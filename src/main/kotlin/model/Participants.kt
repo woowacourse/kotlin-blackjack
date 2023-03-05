@@ -1,6 +1,7 @@
 package model
-data class Participants(val participants: List<Participant>) : List<Participant> by participants {
-    companion object {
-        fun of(dealer: Dealer, players: Players) = Participants(listOf(dealer as Participant) + players as List<Participant>)
-    }
+
+import model.Dealer.Companion.DEALER
+
+data class Participants(val participants: List<Participant>) {
+    fun getPlayerNames(): Names = Names(participants.filter { it.name.value != DEALER }.map { it.name })
 }

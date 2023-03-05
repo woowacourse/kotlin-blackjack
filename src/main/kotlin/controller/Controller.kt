@@ -5,7 +5,6 @@ import domain.CardPackGenerator
 import domain.CardPicker
 import model.Cards
 import model.Dealer
-import model.Dealer.Companion.DEALER
 import model.GameResult
 import model.Name
 import model.Names
@@ -22,11 +21,11 @@ class Controller(private val inputView: InputView, private val outputView: Outpu
         val cardGame = CardGame(picker)
         val players = cardGame.initPlayers(initNames())
         val dealer = cardGame.initDealer()
-        val participants = Participants.of(dealer, players)
+        val participants = Participants(listOf(dealer) + players)
         printParticipants(participants)
         askGetMorePlayersCard(players)
         getMoreDealerCard(dealer)
-        outputView.printAllPlayerStatusResult(participants)
+        outputView.printAllPlayerStatusResult(participants.participants)
         outputView.printFinalResult(GameResult.of(dealer, players))
     }
 
@@ -36,8 +35,8 @@ class Controller(private val inputView: InputView, private val outputView: Outpu
     }
 
     private fun printParticipants(participants: Participants) {
-        outputView.printNoticeDistributeCards(participants.filter { it.name.value != DEALER }.map { it.name })
-        outputView.printPlayersStatus(participants)
+        outputView.printNoticeDistributeCards(participants.getPlayerNames())
+        outputView.printPlayersStatus(participants.participants)
     }
 
     private fun askGetMorePlayersCard(players: Players) {
