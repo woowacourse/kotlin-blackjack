@@ -1,7 +1,5 @@
 package blackjack.model
 
-import domain.CardPackGenerator
-import domain.CardPicker
 import model.Card
 import model.Cards
 import model.Name
@@ -14,14 +12,8 @@ import org.junit.jupiter.api.Test
 class PlayerTest {
     @Test
     fun `플레이어는 카드 두 장을 받을 수 있다`() {
-        val cards = CardPackGenerator().createCards()
-        val cardPicker = CardPicker(cards)
-        val card = buildList {
-            add(cardPicker.pick())
-            add(cardPicker.pick())
-        }
-
-        val player = Player(Cards(card), Name("jason"))
+        val cards = Cards(listOf(Card(Rank.ACE, Suit.DIAMOND), Card(Rank.ACE, Suit.CLOVER)))
+        val player = Player(cards, Name("jason"))
         assertThat(player.cards.cards).isEqualTo(listOf(Card(Rank.ACE, Suit.DIAMOND), Card(Rank.ACE, Suit.CLOVER)))
     }
 
