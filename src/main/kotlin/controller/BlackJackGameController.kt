@@ -29,8 +29,15 @@ class BlackJackGameController(private val inputView: InputView, private val resu
         blackJackGame.dealerSelectPhase(resultView::printDealerAddCard)
     }
 
-    private fun getChoiceOfAddCard(name: Name): Answer {
-        return inputView.readChoiceOfAddCard(name) ?: getChoiceOfAddCard(name)
+    private fun getChoiceOfAddCard(name: Name): Boolean {
+        return when (getAnswerOfAddCard(name)) {
+            Answer.YES -> true
+            Answer.NO -> false
+        }
+    }
+
+    private fun getAnswerOfAddCard(name: Name): Answer {
+        return inputView.readChoiceOfAddCard(name) ?: getAnswerOfAddCard(name)
     }
 
     private fun gameResult(blackJackGame: BlackJackGame) {

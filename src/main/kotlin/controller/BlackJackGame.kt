@@ -9,7 +9,6 @@ import domain.Participant
 import domain.Participants
 import domain.Player
 import domain.Players
-import view.Answer
 
 class BlackJackGame(names: Names, private val deck: CardDeck = BlackJackCardDeck()) {
     val participants: Participants
@@ -28,17 +27,17 @@ class BlackJackGame(names: Names, private val deck: CardDeck = BlackJackCardDeck
         addCard(deck.draw())
     }
 
-    private fun Player.playerSelectAdd(playerCardAddAnswer: (Name) -> Answer, printPlayerCards: (Player) -> Unit) {
+    private fun Player.playerSelectAdd(isPlayerCardAdd: (Name) -> Boolean, printPlayerCards: (Player) -> Unit) {
         if (isBurst()) return
-        val isAddCard = playerCardAddAnswer(name)
-        if (isAddCard == Answer.YES) addCard()
+        val isAddCard = isPlayerCardAdd(name)
+        if (isAddCard) addCard()
         printPlayerCards(this)
-        if (isAddCard == Answer.YES) playerSelectAdd(playerCardAddAnswer, printPlayerCards)
+        if (isAddCard) playerSelectAdd(isPlayerCardAdd, printPlayerCards)
     }
 
-    fun playersSelectAddPhase(playerCardAddAnswer: (Name) -> Answer, printPlayerCards: (Player) -> Unit) {
+    fun playersSelectAddPhase(isPlayerCardAdd: (Name) -> Boolean, printPlayerCards: (Player) -> Unit) {
         players.players.forEach { player ->
-            player.playerSelectAdd(playerCardAddAnswer, printPlayerCards)
+            player.playerSelectAdd(isPlayerCardAdd, printPlayerCards)
         }
     }
 
