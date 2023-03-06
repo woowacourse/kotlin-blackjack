@@ -72,7 +72,15 @@ object ResultView {
             CardNumber.JACK -> "J"
             CardNumber.QUEEN -> "Q"
             CardNumber.KING -> "K"
-            else -> this.value.toString()
+            CardNumber.TWO,
+            CardNumber.THREE,
+            CardNumber.FOUR,
+            CardNumber.FIVE,
+            CardNumber.SIX,
+            CardNumber.SEVEN,
+            CardNumber.EIGHT,
+            CardNumber.NINE,
+            CardNumber.TEN -> this.value.toString()
         }
 
     private fun CardShape.toKorean(): String =
