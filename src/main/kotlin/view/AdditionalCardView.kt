@@ -12,7 +12,7 @@ object AdditionalCardView {
     fun requestPlayerDecision(name: String): String {
         println(ONE_MORE_CARD_SCRIPT.format(name))
         val input = readln().trim()
-        if (Decision.of(input) != null) return requestPlayerDecision(name)
+        if (Decision.of(input) == null) return requestPlayerDecision(name)
         return input
     }
 
