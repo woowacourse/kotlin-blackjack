@@ -1,16 +1,11 @@
 package blackjack.domain.player
 
-import blackjack.domain.CardGenerator
-import blackjack.domain.RandomGenerator
 import blackjack.domain.Result
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
 
 abstract class Player(
-    val name: String,
-    private val generator: CardGenerator = CardGenerator(
-        RandomGenerator()
-    )
+    val name: String
 ) {
 
     val cards: Cards = Cards()
@@ -21,10 +16,6 @@ abstract class Player(
 
     fun addCard(card: Card) {
         cards.addCard(card)
-    }
-
-    fun generateCard() {
-        cards.addCard(generator.generateCard())
     }
 
     fun calculateResult(otherSum: Int): Result {
