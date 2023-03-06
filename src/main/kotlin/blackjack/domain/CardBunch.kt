@@ -9,9 +9,7 @@ class CardBunch private constructor(cards: MutableList<Card>) {
     constructor(vararg cards: Card) : this(cards.toMutableList())
 
     fun addCard(card: Card) {
-        val originSize = _cards.size
         _cards.add(card)
-        require(originSize != _cards.size) { DUPLICATE_ERROR }
     }
 
     fun getTotalScore(): Int {
