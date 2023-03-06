@@ -4,6 +4,8 @@ import model.Name
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 
 class NameTest {
     @Test
@@ -11,8 +13,9 @@ class NameTest {
         assertThat(Name("jason").value).isEqualTo("jason")
     }
 
-    @Test
-    fun `Name에 한글 영어 외 문자가 들어가면 예외가 발생한다`() {
-        assertThrows<IllegalArgumentException> { Name("ja-son") }
+    @ParameterizedTest
+    @CsvSource("ja-son", "123jason", "ja son", "ㄱㄴㄷㄹ")
+    fun `Name에 한글 영어 외 문자가 들어가면 예외가 발생한다`(name: String) {
+        assertThrows<IllegalArgumentException> { Name(name) }
     }
 }
