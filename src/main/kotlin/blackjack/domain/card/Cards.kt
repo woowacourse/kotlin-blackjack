@@ -11,7 +11,7 @@ class Cards(private val cards: Set<Card> = setOf()) {
 
     operator fun plus(card: Card): Cards = Cards(cards.plus(card))
 
-    fun isContainsACE(): Boolean = cards.map { it.value }.contains(CardValue.ACE)
+    fun isContainsACE(): Boolean = cards.any { it.isACE() }
 
     companion object {
         private val CARDS: List<Card> = CardMark.values().flatMap { mark ->
