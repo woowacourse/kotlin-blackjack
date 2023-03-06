@@ -1,8 +1,8 @@
 package domain.person
 
 import domain.card.Card
-import domain.constant.BLACK_JACK
-import domain.constant.DEALER_STAND_CONDITION
+import domain.constant.BlackJackConstants.BLACK_JACK
+import domain.constant.BlackJackConstants.DEALER_STAND_CONDITION
 import domain.person.GameState.BUST
 import domain.person.GameState.HIT
 import domain.person.GameState.STAND

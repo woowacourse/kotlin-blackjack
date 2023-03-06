@@ -2,10 +2,10 @@ package domain.person
 
 import domain.card.Card
 import domain.card.CardNumber
-import domain.constant.BIG_ACE
-import domain.constant.BLACK_JACK
-import domain.constant.NOTHING
-import domain.constant.SMALL_ACE
+import domain.constant.BlackJackConstants.BIG_ACE
+import domain.constant.BlackJackConstants.BLACK_JACK
+import domain.constant.BlackJackConstants.NOTHING
+import domain.constant.BlackJackConstants.SMALL_ACE
 
 abstract class Person(open val name: String) {
     private val _cards = mutableListOf<Card>()

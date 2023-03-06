@@ -1,6 +1,6 @@
 package domain.person
 
-import domain.constant.BLACK_JACK
+import domain.constant.BlackJackConstants.BLACK_JACK
 import domain.person.GameState.BUST
 import domain.person.GameState.HIT
 

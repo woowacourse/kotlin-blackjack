@@ -1,7 +1,7 @@
 package view
 
 import domain.card.Card
-import domain.constant.DEALER_STAND_CONDITION
+import domain.constant.BlackJackConstants.DEALER_STAND_CONDITION
 import domain.person.Dealer
 import domain.person.Person
 import domain.person.Player
