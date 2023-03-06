@@ -23,7 +23,7 @@ class Controller(
         val dealerCards = cardMachine.getCardPair()
         val userCards = cardMachine.getCardPairs(userNames.size)
         val users = createUsers(userNames, userCards)
-        val dealer = Dealer.create(dealerCards)
+        val dealer = Dealer(cards = dealerCards)
 
         playGame(userNames, dealer, users)
         gameEnd(dealer, users)

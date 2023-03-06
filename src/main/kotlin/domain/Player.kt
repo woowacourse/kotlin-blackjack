@@ -5,10 +5,10 @@ import domain.card.CardValue
 
 abstract class Player(
     val name: String,
-    private val _cards: MutableList<Card>,
+    val cards: List<Card>,
 ) {
 
-    val cards: List<Card> get() = _cards.toList()
+    private val _cards: MutableList<Card> get() = cards.toMutableList()
 
     fun validPlayerSum(): Int {
         if ((calculateCardValueSum() < SUM_CONDITION) and (countAce() != ZERO)) {

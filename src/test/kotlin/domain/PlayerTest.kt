@@ -32,7 +32,7 @@ class PlayerTest {
     @ParameterizedTest
     fun `A가 한 장인 경우`(cards: List<Card>, sum: Int) {
         // given
-        val dealer: Player = Dealer.create(cards)
+        val dealer: Player = Dealer(cards = cards)
         // when
         val actual = dealer.validPlayerSum()
         // then
@@ -43,7 +43,7 @@ class PlayerTest {
     @ParameterizedTest
     fun `A가 두 장인 경우`(cards: List<Card>, sum: Int) {
         // given
-        val dealer: Player = Dealer.create(cards)
+        val dealer: Player = Dealer(cards = cards)
         // when
         val actual = dealer.validPlayerSum()
         // then
@@ -54,7 +54,7 @@ class PlayerTest {
     @ParameterizedTest
     fun `A가 세 장인 경우`(cards: List<Card>, sum: Int) {
         // given
-        val dealer: Player = Dealer.create(cards)
+        val dealer: Player = Dealer(cards = cards)
         // when
         val actual = dealer.validPlayerSum()
         // then
