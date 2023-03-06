@@ -17,8 +17,16 @@ class Cards(cards: List<Card>) {
     }
 
     fun sum(): Int {
-        var sum = _cards.filter { it.rank != Rank.ACE }.sumOf { it.rank.getScore() }
-        sum += _cards.filter { it.rank == Rank.ACE }.sumOf { it.rank.getScore(sum) }
+        var sum = filterSum { it != Rank.ACE }
+        sum += filterSum { it == Rank.ACE }
+        return sum
+    }
+
+    private fun filterSum(condition: (Rank) -> Boolean): Int {
+        var sum = 0
+        _cards.filter { condition(it.rank) }.forEach {
+            sum += it.rank.getScore(sum)
+        }
         return sum
     }
 
