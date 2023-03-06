@@ -27,11 +27,11 @@ abstract class Participant(open val cards: Cards) {
 
     private fun getAceValue(value: Int) =
         if (countAce() >= ACE_COUNT_VALUE_CHANGE_CONDITION) {
-            CardValue.ACE.aceValue
-        } else if (value > Referee.CARD_SUM_MAX_VALUE - CardValue.ACE.value) {
-            CardValue.ACE.aceValue
-        } else {
             CardValue.ACE.value
+        } else if (value > Referee.CARD_SUM_MAX_VALUE - CardValue.ACE_ELEVEN_VALUE) {
+            CardValue.ACE.value
+        } else {
+            CardValue.ACE_ELEVEN_VALUE
         }
 
     private fun countAce() = cards.getCards().count { it.cardValue.title == "ACE" }
