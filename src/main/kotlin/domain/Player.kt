@@ -1,5 +1,5 @@
 package domain
 
-import domain.gamer.state.PlayerState
+import domain.gamer.cards.PlayerCards
 
-data class Player(val name: String, val state: PlayerState)
+data class Player(val name: String, val state: PlayerCards)

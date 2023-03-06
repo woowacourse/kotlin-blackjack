@@ -1,10 +1,10 @@
 package domain.judge
 
 import domain.Player
-import domain.gamer.state.DealerState
-import domain.gamer.state.PlayerState
+import domain.gamer.cards.DealerCards
+import domain.gamer.cards.PlayerCards
 
-class Referee(private val dealerState: DealerState, private val players: List<Player>) {
+class Referee(private val dealerState: DealerCards, private val players: List<Player>) {
 
     fun judgePlayersResult(): Map<String, Result> = mutableMapOf<String, Result>().apply {
         players.forEach {
@@ -12,7 +12,7 @@ class Referee(private val dealerState: DealerState, private val players: List<Pl
         }
     }
 
-    private fun judgePlayerResult(player: PlayerState): Result {
+    private fun judgePlayerResult(player: PlayerCards): Result {
         val playerSum = player.calculateCardSum()
         val dealerSum = dealerState.calculateCardSum()
 

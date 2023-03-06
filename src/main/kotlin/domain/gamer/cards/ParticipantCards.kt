@@ -1,10 +1,10 @@
-package domain.gamer.state
+package domain.gamer.cards
 
 import domain.card.Card
 import domain.card.CardValue
 import domain.judge.Referee
 
-abstract class ParticipantState(private val _cards: MutableList<Card>) {
+abstract class ParticipantCards(private val _cards: MutableList<Card>) {
     val cards: List<Card> get() = _cards.toList()
     open fun pickCard(card: Card) {
         _cards.add(card)
@@ -17,6 +17,8 @@ abstract class ParticipantState(private val _cards: MutableList<Card>) {
         }
         return value
     }
+
+    abstract fun checkOverCondition(): Boolean
 
     private fun getCardValue(card: Card, value: Int) =
         if (card.cardValue == CardValue.ACE) {

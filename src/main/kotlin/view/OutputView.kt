@@ -2,7 +2,7 @@ package view
 
 import domain.Player
 import domain.card.Card
-import domain.gamer.state.ParticipantState
+import domain.gamer.cards.ParticipantCards
 import domain.judge.Result
 
 object OutputView {
@@ -44,7 +44,7 @@ object OutputView {
         println(PICK_CARD_OVER_SIXTEEN)
     }
 
-    fun printCardResult(participants: Map<String, ParticipantState>) {
+    fun printCardResult(participants: Map<String, ParticipantCards>) {
         participants.forEach { (name, participant) ->
             println("${name}$PARTICIPANT_CARD ${participant.cards.joinToString(SEPARATOR) { printCardForm(it) }}${RESULT}${participant.calculateCardSum()}")
         }

@@ -1,4 +1,4 @@
-package domain.gamer.state
+package domain.gamer.cards
 
 import domain.card.Card
 import domain.card.CardValue
@@ -6,11 +6,11 @@ import domain.card.Shape
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class DealerStateTest {
+class DealerCardsTest {
     @Test
     fun `뽑은 카드를 저장한다`() {
         val card = Card(Shape.HEART, CardValue.EIGHT)
-        val dealerState = DealerState()
+        val dealerState = DealerCards()
         dealerState.pickCard(card)
         assertThat(dealerState.cards).isEqualTo(listOf(card))
     }
@@ -18,21 +18,21 @@ class DealerStateTest {
     @Test
     fun `카드 값의 합을 반환한다`() {
         val dealerState =
-            DealerState(mutableListOf(Card(Shape.SPADE, CardValue.JACK), Card(Shape.SPADE, CardValue.JACK)))
+            DealerCards(mutableListOf(Card(Shape.SPADE, CardValue.JACK), Card(Shape.SPADE, CardValue.JACK)))
         assertThat(dealerState.calculateCardSum()).isEqualTo(20)
     }
 
     @Test
     fun `A가 2개 포함되어 있는 카드 값의 합을 반환한다`() {
         val dealerState =
-            DealerState(mutableListOf(Card(Shape.SPADE, CardValue.ACE), Card(Shape.HEART, CardValue.ACE)))
+            DealerCards(mutableListOf(Card(Shape.SPADE, CardValue.ACE), Card(Shape.HEART, CardValue.ACE)))
         assertThat(dealerState.calculateCardSum()).isEqualTo(12)
     }
 
     @Test
     fun `A가 하나 있고 10 초과 있는 카드 값의 합을 반환한다`() {
         val dealerState =
-            DealerState(
+            DealerCards(
                 mutableListOf(
                     Card(Shape.SPADE, CardValue.JACK),
                     Card(Shape.HEART, CardValue.THREE),
@@ -45,7 +45,7 @@ class DealerStateTest {
     @Test
     fun `A가 두개 있고 10 초과 있는 카드 값의 합을 반환한다`() {
         val dealerState =
-            DealerState(
+            DealerCards(
                 mutableListOf(
                     Card(Shape.SPADE, CardValue.JACK),
                     Card(Shape.SPADE, CardValue.TWO),
@@ -57,15 +57,15 @@ class DealerStateTest {
     }
 
     @Test
-    fun `딜러 카드의 합이 16을 넘었을 경우 false를 반환한다`() {
+    fun `딜러 카드의 합이 16을 넘었을 경우 true를 반환한다`() {
         val dealerState =
-            DealerState(mutableListOf(Card(Shape.SPADE, CardValue.JACK), Card(Shape.SPADE, CardValue.JACK)))
-        assertThat(dealerState.checkAvailableForPick()).isFalse
+            DealerCards(mutableListOf(Card(Shape.SPADE, CardValue.JACK), Card(Shape.SPADE, CardValue.JACK)))
+        assertThat(dealerState.checkOverCondition()).isTrue
     }
 
     @Test
-    fun `딜러 카드의 합이 16을 넘지 않았을 경우 true를 반환한다`() {
-        val dealerState = DealerState(mutableListOf(Card(Shape.SPADE, CardValue.JACK)))
-        assertThat(dealerState.checkAvailableForPick()).isTrue
+    fun `딜러 카드의 합이 16을 넘지 않았을 경우 false를 반환한다`() {
+        val dealerState = DealerCards(mutableListOf(Card(Shape.SPADE, CardValue.JACK)))
+        assertThat(dealerState.checkOverCondition()).isFalse
     }
 }

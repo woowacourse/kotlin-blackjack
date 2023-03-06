@@ -1,7 +1,7 @@
 package controller
 
 import domain.BlackjackGame
-import domain.gamer.state.ParticipantState
+import domain.gamer.cards.ParticipantCards
 import view.InputView
 import view.OutputView
 
@@ -30,7 +30,7 @@ class BlackjackController() {
     }
 
     private fun printCardResult(blackjackGame: BlackjackGame) {
-        val cardResult = mutableMapOf<String, ParticipantState>(DEALER to blackjackGame.dealerState)
+        val cardResult = mutableMapOf<String, ParticipantCards>(DEALER to blackjackGame.dealerState)
         blackjackGame.players.map {
             cardResult.put(it.name, it.state)
         }
