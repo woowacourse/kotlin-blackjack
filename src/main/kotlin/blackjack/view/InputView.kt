@@ -16,8 +16,8 @@ object InputView {
     fun doesPlayerWantHit(name: String): Boolean {
         println(INSERT_GET_ONE_MORE_CARD.format(name))
         return when (readln().lowercase()) {
-            "y" -> true
-            "n" -> false
+            ANSWER_YES -> true
+            ANSWER_NO -> false
             else -> doesPlayerWantHit(name)
         }
     }

@@ -5,16 +5,14 @@ import blackjack.domain.Card
 import blackjack.domain.CardNumber
 import blackjack.domain.CardShape
 import blackjack.domain.Dealer
-import blackjack.domain.Dealer.Companion.HIT_STANDARD_SCORE
 import blackjack.domain.Participant
-import blackjack.domain.Participant.Companion.INIT_CARD_SIZE
 import blackjack.domain.Player
 import blackjack.domain.ResultType
 
 object ResultView {
-    private const val SET_UP_MESSAGE = "\n%s와 %s에게 $INIT_CARD_SIZE 장의 카드를 나누었습니다."
+    private const val SET_UP_MESSAGE = "\n%s와 %s에게 ${Participant.INIT_CARD_SIZE} 장의 카드를 나누었습니다."
     private const val FACE_UP_CARDS = "%s 카드: %s"
-    private const val DEALER_HIT_MESSAGE = "\n%s는 ${HIT_STANDARD_SCORE}이하라 한장의 카드를 더 받았습니다.\n"
+    private const val DEALER_HIT_MESSAGE = "\n%s는 ${Dealer.HIT_STANDARD_SCORE}이하라 한장의 카드를 더 받았습니다.\n"
     private const val SHOW_SCORE = " - 결과: %d"
     private const val FINAL_RESULT_MESSAGE = "\n## 최종 승패"
     private const val FINAL_RESULT = "%s:%s"
