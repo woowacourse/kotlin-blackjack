@@ -1,6 +1,6 @@
 package domain.person
 
-import constant.BlackJackRule.BLACK_JACK
+import constant.BlackJackConstants.BLACK_JACK
 import domain.card.HandOfCards
 import domain.card.strategy.GetMinSum
 

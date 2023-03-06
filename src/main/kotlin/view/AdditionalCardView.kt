@@ -1,6 +1,6 @@
 package view
 
-import constant.BlackJackRule.DEALER_STAND_CONDITION
+import constant.BlackJackConstants.DEALER_STAND_CONDITION
 import domain.Decision
 import domain.person.Player
 

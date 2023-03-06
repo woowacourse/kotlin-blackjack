@@ -1,8 +1,8 @@
 package domain.card.strategy
 
-import constant.BlackJackRule.BIG_ACE
-import constant.BlackJackRule.BLACK_JACK
-import constant.BlackJackRule.SMALL_ACE
+import constant.BlackJackConstants.BIG_ACE
+import constant.BlackJackConstants.BLACK_JACK
+import constant.BlackJackConstants.SMALL_ACE
 import domain.card.HandOfCards
 
 class GetAppropriateSum : SumStrategy {

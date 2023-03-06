@@ -1,6 +1,6 @@
 package domain.person
 
-import constant.BlackJackRule.DEALER_STAND_CONDITION
+import constant.BlackJackConstants.DEALER_STAND_CONDITION
 import domain.card.Card
 import domain.card.HandOfCards
 import domain.card.strategy.GetAppropriateSum

@@ -1,6 +1,6 @@
 package constant
 
-object BlackJackRule {
+object BlackJackConstants {
     const val BLACK_JACK = 21
     const val BIG_ACE = 11
     const val SMALL_ACE = 1
