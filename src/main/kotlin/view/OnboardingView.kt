@@ -22,12 +22,12 @@ object OnboardingView {
     fun printInitialSetting(players: List<Player>, dealer: Dealer) {
         println()
         println(SHARE_TWO_CARDS_SCRIPT.format(dealer.name, players.joinToString(", ") { it.name }))
-        println(INITIAL_CARDS_SCRIPT.format(dealer.name, dealer.showOneCard().joinToString { it.toString() }))
+        println(INITIAL_CARDS_SCRIPT.format(dealer.name, dealer.showFirstCard().joinToString { it.toString() }))
         players.forEach { printInitialCards(it) }
         println()
     }
 
     private fun printInitialCards(player: Player) {
-        println(INITIAL_CARDS_SCRIPT.format(player.name, player.cards.joinToString(",") { it.toString() }))
+        println(INITIAL_CARDS_SCRIPT.format(player.name, player.showHandOfCards().joinToString(",") { it.toString() }))
     }
 }

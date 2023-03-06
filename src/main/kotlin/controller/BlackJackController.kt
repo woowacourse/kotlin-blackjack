@@ -45,7 +45,7 @@ class BlackJackController {
     }
 
     private fun handOutCardToDealer(deck: Deck, dealer: Dealer) {
-        if (dealer.isStateHit()) {
+        if (dealer.canReceiveMoreCard()) {
             dealer.receiveCard(deck.getCard())
             AdditionalCardView.printDealerGetMoreCard()
             return
@@ -62,6 +62,8 @@ class BlackJackController {
         }
         player.receiveCard(deck.getCard())
         AdditionalCardView.printPlayerCards(player)
+        if (player.isBust()) return
+        handOutCardsToPlayer(deck, player)
     }
 
     private fun runResult(dealer: Dealer, players: List<Player>) {

@@ -1,22 +1,20 @@
 package domain.person
 
 import domain.card.Card
-import domain.constant.BLACK_JACK
+import domain.card.HandOfCards
+import domain.card.strategy.GetAppropriateSum
 import domain.constant.DEALER_STAND_CONDITION
 
-class Dealer : Person() {
-    fun showOneCard(): List<Card> {
-        return cards.subList(0, 1)
-    }
+class Dealer(
+    override val handOfCards: HandOfCards,
+) : Person() {
+    override val name: String = DEALER
 
-    override fun checkState() {
-        if (getTotalCardNumber() > DEALER_STAND_CONDITION) {
-            gameState = GameState.STAND
-        }
-        if (getTotalCardNumber() > BLACK_JACK) {
-            gameState = GameState.BUST
-        }
-    }
+    fun showFirstCard(): List<Card> = handOfCards.showFirstCard()
 
-    override val name: String = "딜러"
+    override fun canReceiveMoreCard(): Boolean = getTotalCardNumber(GetAppropriateSum()) <= DEALER_STAND_CONDITION
+
+    companion object {
+        const val DEALER = "딜러"
+    }
 }

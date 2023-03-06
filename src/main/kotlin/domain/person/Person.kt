@@ -1,42 +1,26 @@
 package domain.person
 
 import domain.card.Card
-import domain.card.CardNumber
-import domain.constant.BIG_ACE
+import domain.card.HandOfCards
+import domain.card.strategy.GetMinSum
+import domain.card.strategy.SumStrategy
 import domain.constant.BLACK_JACK
-import domain.constant.NOTHING
-import domain.constant.SMALL_ACE
 
-abstract class Person {
+abstract class Person() {
     abstract val name: String
-    private val _cards = mutableListOf<Card>()
-    val cards: List<Card> get() = _cards.toList()
-    var gameState: GameState = GameState.HIT
-        protected set
+    protected abstract val handOfCards: HandOfCards
 
     fun receiveCard(vararg card: Card) {
-        card.forEach { _cards.add(it) }
-        checkState()
+        card.forEach { handOfCards.addCard(it) }
     }
 
-    protected abstract fun checkState()
+    fun showHandOfCards(): List<Card> = handOfCards.cards
 
-    fun isStateHit() = gameState == GameState.HIT
-    fun isStateBust() = gameState == GameState.BUST
-    fun getTotalCardNumber(): Int {
-        val sumExceptAce: Int = calculateSumExceptAce()
-        val aceCount: Int = countAce()
-        return sumExceptAce + calculateSumAce(BLACK_JACK - sumExceptAce, aceCount)
+    fun getTotalCardNumber(sumStrategy: SumStrategy): Int {
+        return handOfCards.getTotalCardSum(sumStrategy)
     }
 
-    protected fun countAce() = cards.count { it.number == CardNumber.ACE }
-    protected fun calculateSumExceptAce() = cards
-        .filter { it.number != CardNumber.ACE }
-        .sumOf { it.number.value }
+    abstract fun canReceiveMoreCard(): Boolean
 
-    private fun calculateSumAce(availableMax: Int, aceCount: Int) = when {
-        aceCount == NOTHING -> NOTHING
-        availableMax >= BIG_ACE + aceCount - 1 -> BIG_ACE + (aceCount - 1) * SMALL_ACE
-        else -> aceCount * SMALL_ACE
-    }
+    fun isBust(): Boolean = getTotalCardNumber(GetMinSum()) > BLACK_JACK
 }
