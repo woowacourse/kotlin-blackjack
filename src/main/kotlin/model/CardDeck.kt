@@ -17,8 +17,6 @@ class CardDeck(value: List<Card>) {
 
     fun shuffled() = CardDeck(_value.shuffled())
 
-    operator fun get(index: Int): Card = _value[index]
-
     companion object {
         private const val CARD_DECK_SIZE = 52
         private const val CARD_DECK_DUPLICATE_ERROR = "카드덱은 중복될 수 없습니다"
