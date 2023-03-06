@@ -1,5 +1,8 @@
 package domain
 
+import domain.card.Card
+import domain.card.CardNumber
+
 abstract class Player(
     val name: String,
     private val _cards: MutableList<Card>,
@@ -17,12 +20,12 @@ abstract class Player(
 
     fun calculateCardValueSum(): Int = _cards.sumOf { Card.valueOf(it) }
 
-    fun addCard(card: Card) {
-        _cards.add(card)
+    fun addCard(card: List<Card>) {
+        _cards.add(card.first())
     }
 
     private fun countAce(): Int = _cards.filter { card ->
-        card.value == Card.Value.ACE
+        card.cardNumber == CardNumber.ACE
     }.size
 
     companion object {

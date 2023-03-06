@@ -1,5 +1,8 @@
 package domain
 
+import domain.card.Card
+import domain.card.CardNumber
+import domain.card.Shape
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -13,8 +16,8 @@ class PlayerTest {
         // given
         val dealer: Player = Dealer(
             cards = mutableListOf<Card>(
-                Card(Card.Shape.CLUBS, Card.Value.FIVE),
-                Card(Card.Shape.DIAMONDS, Card.Value.THREE),
+                Card(Shape.CLUBS, CardNumber.FIVE),
+                Card(Shape.DIAMONDS, CardNumber.THREE),
             ),
         )
 
@@ -59,30 +62,30 @@ class PlayerTest {
     }
 
     companion object {
-        private val ACE = Card(Card.Shape.DIAMONDS, Card.Value.ACE)
+        private val ACE = Card(Shape.DIAMONDS, CardNumber.ACE)
 
         @JvmStatic
         fun provideOneAceCards(): List<Arguments> = listOf(
             Arguments.of(
                 listOf(
                     ACE,
-                    Card(Card.Shape.DIAMONDS, Card.Value.NINE),
-                    Card(Card.Shape.DIAMONDS, Card.Value.FIVE),
+                    Card(Shape.DIAMONDS, CardNumber.NINE),
+                    Card(Shape.DIAMONDS, CardNumber.FIVE),
                 ),
                 15,
             ),
             Arguments.of(
                 listOf(
-                    Card(Card.Shape.DIAMONDS, Card.Value.TWO),
-                    Card(Card.Shape.DIAMONDS, Card.Value.THREE),
+                    Card(Shape.DIAMONDS, CardNumber.TWO),
+                    Card(Shape.DIAMONDS, CardNumber.THREE),
                     ACE,
                 ),
                 16,
             ),
             Arguments.of(
                 listOf(
-                    Card(Card.Shape.DIAMONDS, Card.Value.THREE),
-                    Card(Card.Shape.DIAMONDS, Card.Value.JACK),
+                    Card(Shape.DIAMONDS, CardNumber.THREE),
+                    Card(Shape.DIAMONDS, CardNumber.JACK),
                     ACE,
                 ),
                 14,
@@ -94,7 +97,7 @@ class PlayerTest {
             Arguments.of(
                 listOf(
                     ACE,
-                    Card(Card.Shape.DIAMONDS, Card.Value.TEN),
+                    Card(Shape.DIAMONDS, CardNumber.TEN),
                     ACE,
                 ),
                 12,
@@ -102,7 +105,7 @@ class PlayerTest {
             Arguments.of(
                 listOf(
                     ACE,
-                    Card(Card.Shape.DIAMONDS, Card.Value.THREE),
+                    Card(Shape.DIAMONDS, CardNumber.THREE),
                     ACE,
                 ),
                 15,
@@ -111,7 +114,7 @@ class PlayerTest {
                 listOf(
                     ACE,
                     ACE,
-                    Card(Card.Shape.DIAMONDS, Card.Value.FOUR),
+                    Card(Shape.DIAMONDS, CardNumber.FOUR),
                 ),
                 16,
             ),

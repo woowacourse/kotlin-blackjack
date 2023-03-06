@@ -1,5 +1,7 @@
 package domain
 
+import domain.card.Card
+
 class User(
     name: String,
     _cards: MutableList<Card>,
