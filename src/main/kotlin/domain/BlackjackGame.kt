@@ -5,6 +5,7 @@ import domain.card.CardMaker
 import domain.deck.Deck
 import domain.gamer.cards.DealerCards
 import domain.gamer.cards.PlayerCards
+import domain.judge.ParticipantResult
 import domain.judge.Referee
 import domain.judge.Result
 import domain.player.Names
@@ -49,11 +50,11 @@ class BlackjackGame(val names: Names) {
         return !dealerState.checkOverCondition()
     }
 
-    fun getPlayerWinningResult() = Referee(dealerState, players).judgePlayersResult()
+    fun getPlayerWinningResult(): List<ParticipantResult> = Referee(dealerState, players).judgePlayersResult()
 
-    fun judgeDealerResult(playersResult: Map<String, Result>) = mutableListOf<Result>().apply {
+    fun judgeDealerResult(playersResult: List<ParticipantResult>) = mutableListOf<Result>().apply {
         playersResult.forEach {
-            add(it.value.reverseResult())
+            add(it.result.reverseResult())
         }
     }
 }

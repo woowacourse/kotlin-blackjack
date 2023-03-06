@@ -22,7 +22,7 @@ class RefereeTest() {
         )
         val playerState = PlayerCards(mutableListOf(Card(Shape.HEART, CardValue.JACK)))
         val referee = Referee(dealerState, listOf(Player("jack", playerState))).judgePlayersResult()
-        assertThat(referee).isEqualTo(mapOf("jack" to Result.WIN))
+        assertThat(referee).isEqualTo(listOf(ParticipantResult("jack", Result.WIN)))
     }
 
     @Test
@@ -42,7 +42,9 @@ class RefereeTest() {
             )
         )
         val referee = Referee(dealerState, listOf(Player("jack", playerState))).judgePlayersResult()
-        assertThat(referee).isEqualTo(mapOf("jack" to Result.LOSS))
+        assertThat(referee).isEqualTo(
+            listOf(ParticipantResult("jack", Result.LOSS))
+        )
     }
 
     @Test
@@ -56,7 +58,7 @@ class RefereeTest() {
             )
         )
         val referee = Referee(dealerState, listOf(Player("jack", playerState))).judgePlayersResult()
-        assertThat(referee).isEqualTo(mapOf("jack" to Result.LOSS))
+        assertThat(referee).isEqualTo(listOf(ParticipantResult("jack", Result.LOSS)))
     }
 
     @Test
@@ -80,7 +82,9 @@ class RefereeTest() {
             dealerState,
             listOf(Player("jack", playerState1), Player("king", playerState2))
         ).judgePlayersResult()
-        assertThat(referee).isEqualTo(mapOf("jack" to Result.LOSS, "king" to Result.WIN))
+        assertThat(referee).isEqualTo(
+            listOf(ParticipantResult("jack", Result.LOSS), ParticipantResult("king", Result.WIN))
+        )
     }
 
     @Test
@@ -110,6 +114,13 @@ class RefereeTest() {
             dealerState,
             listOf(Player("jack", playerState1), Player("king", playerState2), Player("queen", playerState3))
         ).judgePlayersResult()
-        assertThat(referee).isEqualTo(mapOf("jack" to Result.LOSS, "king" to Result.LOSS, "queen" to Result.DRAW))
+
+        assertThat(referee).isEqualTo(
+            listOf(
+                ParticipantResult("jack", Result.LOSS),
+                ParticipantResult("king", Result.LOSS),
+                ParticipantResult("queen", Result.DRAW)
+            )
+        )
     }
 }
