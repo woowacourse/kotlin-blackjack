@@ -11,6 +11,8 @@ import model.Rank
 import model.Suit
 
 class OutputView {
+    private val suitModel = SuitModel()
+    private val rankModel = RankModel()
     fun printInputPlayerNames() {
         println(MESSAGE_INPUT_NAME)
     }
@@ -59,30 +61,11 @@ class OutputView {
         }
     }
 
-    private fun rankToString(rank: Rank): String {
-        return when (rank) {
-            Rank.ACE -> ACE
-            Rank.KING -> KING
-            Rank.JACK -> JACK
-            Rank.QUEEN -> QUEEN
-            else -> rank.getScore().toString()
-        }
-    }
-
-    private fun suitToString(suit: Suit): String {
-        return when (suit) {
-            Suit.DIAMOND -> DIAMOND
-            Suit.CLOVER -> CLOVER
-            Suit.SPADE -> SPADE
-            Suit.HEART -> HEART
-        }
-    }
-
     private fun cardsToString(cards: Cards): String = cards.cards.joinToString(separator = ", ") {
-        rankToString(it.rank) + suitToString(it.suit)
+        rankModel.getString(it.rank) + suitModel.getString(it.suit)
     }
 
-    private fun cardToString(card: Card): String = rankToString(card.rank) + suitToString(card.suit)
+    private fun cardToString(card: Card): String = rankModel.getString(card.rank) + suitModel.getString(card.suit)
 
     companion object {
         private const val MESSAGE_INPUT_NAME = "게임에 참여할 플레이어의 이름을 입력하세요. (쉼표 기준으로 분리)"
@@ -95,13 +78,5 @@ class OutputView {
         private const val MESSAGE_RESULT_TITLE = "## 최종 승패"
         private const val MESSAGE_DEALER_RESULT = "딜러: %d승 %d패"
         private const val MESSAGE_PLAYER_RESULT = "%s: %s"
-        private const val DIAMOND = "다이아몬드"
-        private const val CLOVER = "클로버"
-        private const val SPADE = "스페이드"
-        private const val HEART = "하트"
-        private const val ACE = "A"
-        private const val KING = "K"
-        private const val JACK = "J"
-        private const val QUEEN = "Q"
     }
 }
