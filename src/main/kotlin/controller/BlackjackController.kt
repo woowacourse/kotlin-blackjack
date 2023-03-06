@@ -10,15 +10,15 @@ class BlackjackController() {
     fun startGame() {
         val names = InputView.inputPlayerNames()
         val blackjackGame = BlackjackGame(names)
-        printBlackjackSetting(names, blackjackGame)
-        requestPickCard(names, blackjackGame)
+        printBlackjackSetting(blackjackGame)
+        requestPickCard(blackjackGame)
         dealerPickCard(blackjackGame)
         printCardResult(blackjackGame)
         printWinningResult(blackjackGame)
     }
 
-    private fun printBlackjackSetting(names: List<String>, blackjackGame: BlackjackGame) {
-        OutputView.printDivideCard(names)
+    private fun printBlackjackSetting(blackjackGame: BlackjackGame) {
+        OutputView.printDivideCard(blackjackGame.names)
         OutputView.printDealerSettingCard(blackjackGame.dealerState.cards[0])
         OutputView.printParticipantsCards(blackjackGame.players)
     }
@@ -37,8 +37,8 @@ class BlackjackController() {
         OutputView.printCardResult(cardResult)
     }
 
-    private fun requestPickCard(names: List<String>, blackjackGame: BlackjackGame) {
-        names.forEach { name ->
+    private fun requestPickCard(blackjackGame: BlackjackGame) {
+        blackjackGame.names.forEach { name ->
             repeatPickCard(blackjackGame, name)
         }
     }
@@ -47,7 +47,12 @@ class BlackjackController() {
         while (!blackjackGame.checkBurst(name)!!) {
             val answer = validatePickAnswer(name)
             if (answer) blackjackGame.pickPlayerCard(name) else return
-            blackjackGame.players.find { it.name == name }?.state?.let { OutputView.printParticipantCards(name, it.cards) }
+            blackjackGame.players.find { it.name == name }?.state?.let {
+                OutputView.printParticipantCards(
+                    name,
+                    it.cards
+                )
+            }
         }
     }
 
