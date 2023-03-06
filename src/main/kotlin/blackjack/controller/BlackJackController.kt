@@ -12,13 +12,13 @@ class BlackJackController(
     private val outputView: OutputView,
 ) {
     fun run() {
-        val blackJack = setBlackJack()
+        val blackJack = setUpBlackJack()
         outputView.outputInitState(blackJack)
         startBlackJack(blackJack)
         outputView.outputResult(blackJack)
     }
 
-    private fun setBlackJack(): BlackJack = introduce {
+    private fun setUpBlackJack(): BlackJack = introduce {
         cardDeck(Cards.all())
         participants {
             dealer()
