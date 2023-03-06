@@ -12,12 +12,12 @@ class Player(name: Name, cards: Cards) : Participant(name, cards) {
         }
     }
 
-    fun getGameResult(compareState: Cards.State): GameResult {
+    fun getGameResult(compareState: Cards.State): GameResultType {
         val myState = getSumStateResult()
-        if (myState is Cards.State.Burst) return GameResult.LOSE
-        if (compareState is Cards.State.Burst) return GameResult.WIN
-        if (myState.sum > compareState.sum) return GameResult.WIN
-        return GameResult.LOSE
+        if (myState is Cards.State.Burst) return GameResultType.LOSE
+        if (compareState is Cards.State.Burst) return GameResultType.WIN
+        if (myState.sum > compareState.sum) return GameResultType.WIN
+        return GameResultType.LOSE
     }
 
     companion object {

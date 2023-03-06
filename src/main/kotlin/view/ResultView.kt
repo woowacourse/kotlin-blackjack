@@ -8,7 +8,7 @@ class ResultView {
     }
 
     private fun formatStringName(players: Players): String {
-        return players.players.joinToString(SEPARATOR) { it.name.name }
+        return players.list.joinToString(SEPARATOR) { it.name.name }
     }
 
     fun printInitCards(participants: Participants) {
@@ -47,21 +47,21 @@ class ResultView {
         println(
             PRINT_DEALER_GAME_RESULT.format(
                 dealer.name.name,
-                dealerResult[GameResult.WIN],
-                GameResult.WIN.output,
-                dealerResult[GameResult.LOSE],
-                GameResult.LOSE.output
+                dealerResult[GameResultType.WIN],
+                GameResultType.WIN.name,
+                dealerResult[GameResultType.LOSE],
+                GameResultType.LOSE.name
             )
         )
     }
 
     private fun formatStringPlayersResult(players: Players, dealer: Dealer) {
-        players.players.forEach { player ->
+        players.list.forEach { player ->
             val playerResult = player.getGameResult(dealer.getSumStateResult())
-            if (playerResult == GameResult.WIN)
-                println(PRINT_PLAYER_GAME_RESULT.format(player.name.name, GameResult.WIN.output))
-            if (playerResult == GameResult.LOSE)
-                println(PRINT_PLAYER_GAME_RESULT.format(player.name.name, GameResult.LOSE.output))
+            if (playerResult == GameResultType.WIN)
+                println(PRINT_PLAYER_GAME_RESULT.format(player.name.name, GameResultType.WIN.name))
+            if (playerResult == GameResultType.LOSE)
+                println(PRINT_PLAYER_GAME_RESULT.format(player.name.name, GameResultType.LOSE.name))
 
         }
     }

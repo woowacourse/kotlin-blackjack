@@ -7,15 +7,15 @@ class Dealer(cards: Cards) : Participant(Name("딜러"), cards) {
 
     override fun isPossibleDrawCard(): Boolean = cards.maxSumState().sum <= DEALER_ADD_CARD_CONDITION
 
-    fun getResult(players: Players): Map<GameResult, Int> {
-        val result = GameResult.values().associateWith { INITIALIZE_TO_ZERO }.toMutableMap()
-        players.players.forEach { player ->
+    fun getResult(players: Players): Map<GameResultType, Int> {
+        val result = GameResultType.values().associateWith { INITIALIZE_TO_ZERO }.toMutableMap()
+        players.list.forEach { player ->
             val playerResult = player.getGameResult(getSumStateResult())
             result[playerResult] = (result[playerResult] ?: INITIALIZE_TO_ZERO) + PLUS_ONE
         }
-        val winCount = result[GameResult.WIN]
-        result[GameResult.WIN] = result[GameResult.LOSE] ?: INITIALIZE_TO_ZERO
-        result[GameResult.LOSE] = winCount ?: INITIALIZE_TO_ZERO
+        val winCount = result[GameResultType.WIN]
+        result[GameResultType.WIN] = result[GameResultType.LOSE] ?: INITIALIZE_TO_ZERO
+        result[GameResultType.LOSE] = winCount ?: INITIALIZE_TO_ZERO
         return result
     }
 

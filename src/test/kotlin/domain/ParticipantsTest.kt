@@ -11,7 +11,7 @@ class ParticipantsTest {
                 listOf(
                     Player(
                         Name("pobi"), Cards(
-                            setOf(
+                            listOf(
                                 Card(CardCategory.CLOVER, CardNumber.EIGHT),
                                 Card(CardCategory.SPADE, CardNumber.NINE)
                             )
@@ -19,7 +19,7 @@ class ParticipantsTest {
                     ),
                     Player(
                         Name("jason"), Cards(
-                            setOf(
+                            listOf(
                                 Card(CardCategory.CLOVER, CardNumber.EIGHT),
                                 Card(CardCategory.SPADE, CardNumber.NINE)
                             )
@@ -29,7 +29,7 @@ class ParticipantsTest {
             ),
             Dealer(
                 Cards(
-                    setOf(
+                    listOf(
                         Card(CardCategory.CLOVER, CardNumber.EIGHT),
                         Card(CardCategory.SPADE, CardNumber.NINE)
                     )

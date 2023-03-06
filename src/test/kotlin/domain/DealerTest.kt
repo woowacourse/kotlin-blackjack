@@ -8,7 +8,7 @@ class DealerTest {
     fun `게임 시작 시 딜러의 처음 카드를 하나 보여준다`() {
         val dealer = Dealer(
             Cards(
-                setOf(
+                listOf(
                     Card(CardCategory.CLOVER, CardNumber.EIGHT),
                     Card(CardCategory.SPADE, CardNumber.NINE)
                 )
@@ -23,7 +23,7 @@ class DealerTest {
     fun `카드의 총합이 16이하면 카드를 더 받아야 한다`() {
         val dealer = Dealer(
             Cards(
-                setOf(
+                listOf(
                     Card(CardCategory.CLOVER, CardNumber.EIGHT),
                     Card(CardCategory.SPADE, CardNumber.SIX)
                 )
@@ -38,7 +38,7 @@ class DealerTest {
     fun `자신의 종합 승패 결과를 반환한다`() {
         val dealer = Dealer(
             Cards(
-                setOf(
+                listOf(
                     Card(CardCategory.CLOVER, CardNumber.EIGHT),
                     Card(CardCategory.SPADE, CardNumber.SIX)
                 )
@@ -49,7 +49,7 @@ class DealerTest {
             listOf(
                 Player(
                     Name("pobi"), Cards(
-                        setOf(
+                        listOf(
                             Card(CardCategory.CLOVER, CardNumber.EIGHT),
                             Card(CardCategory.SPADE, CardNumber.NINE)
                         )
@@ -57,7 +57,7 @@ class DealerTest {
                 ),
                 Player(
                     Name("jason"), Cards(
-                        setOf(
+                        listOf(
                             Card(CardCategory.CLOVER, CardNumber.EIGHT),
                             Card(CardCategory.SPADE, CardNumber.TWO)
                         )
@@ -67,7 +67,7 @@ class DealerTest {
         )
 
         val result = dealer.getResult(players)
-        assertThat(result[GameResult.WIN]).isEqualTo(1)
-        assertThat(result[GameResult.LOSE]).isEqualTo(1)
+        assertThat(result[GameResultType.WIN]).isEqualTo(1)
+        assertThat(result[GameResultType.LOSE]).isEqualTo(1)
     }
 }

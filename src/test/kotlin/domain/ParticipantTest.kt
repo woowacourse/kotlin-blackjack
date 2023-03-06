@@ -9,7 +9,7 @@ class ParticipantTest {
         val participant = object : Participant(
             Name("Scott"),
             Cards(
-                setOf(
+                listOf(
                     Card(CardCategory.CLOVER, CardNumber.EIGHT),
                     Card(CardCategory.SPADE, CardNumber.NINE)
                 )
@@ -35,7 +35,7 @@ class ParticipantTest {
         val participant = object : Participant(
             Name("Scott"),
             Cards(
-                setOf(
+                listOf(
                     Card(CardCategory.CLOVER, CardNumber.EIGHT),
                     Card(CardCategory.SPADE, CardNumber.NINE)
                 )
