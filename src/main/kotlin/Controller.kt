@@ -93,9 +93,9 @@ class Controller(
 
     private fun getGameResult(dealer: Dealer, users: List<User>): List<GameResult> {
         val referee: Referee = Referee(
-            Score(dealer.cards.actualCardValueSum()),
+            Score.valueOf(dealer.cards.actualCardValueSum()),
             users.map { user ->
-                Score(user.cards.actualCardValueSum())
+                Score.valueOf(user.cards.actualCardValueSum())
             },
         )
         return referee.getResult()

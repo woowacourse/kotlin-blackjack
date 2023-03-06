@@ -7,8 +7,8 @@ class RefereeTest {
     @Test
     fun `딜러는 18점, 유저1, 유저2의 점수는 19, 15점이다`() {
         // given
-        val dealerScore = Score(18)
-        val userScore = listOf(Score(19), Score(15))
+        val dealerScore = Score.valueOf(18)
+        val userScore = listOf(Score.valueOf(19), Score.valueOf(15))
 
         // when
         val actual = Referee(dealerScore, userScore).getResult()
@@ -21,8 +21,8 @@ class RefereeTest {
     @Test
     fun `딜러는 22점, 유저1, 유저2의 점수는 19, 15점이다`() {
         // given
-        val dealerScore = Score(22)
-        val userScore = listOf(Score(19), Score(15))
+        val dealerScore = Score.valueOf(22)
+        val userScore = listOf(Score.valueOf(19), Score.valueOf(15))
 
         // when
         val actual = Referee(dealerScore, userScore).getResult()
@@ -35,8 +35,8 @@ class RefereeTest {
     @Test
     fun `딜러는 22점, 유저1, 유저2의 점수는 119, 15점이다`() {
         // given
-        val dealerScore = Score(22)
-        val userScore = listOf(Score(119), Score(15))
+        val dealerScore = Score.valueOf(22)
+        val userScore = listOf(Score.valueOf(119), Score.valueOf(15))
 
         // when
         val actual = Referee(dealerScore, userScore).getResult()
