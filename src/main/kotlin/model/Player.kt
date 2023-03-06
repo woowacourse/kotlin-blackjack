@@ -1,7 +1,7 @@
 package model
 
 class Player(cards: Cards, name: Name) : Participant(cards, name) {
-    override fun isHit(): Boolean = !isBust()
+    override fun isPossibleDrawCard(): Boolean = !isBust()
 
     fun getGameResult(other: Participant): Result {
         if (isBust()) return Result.LOSE

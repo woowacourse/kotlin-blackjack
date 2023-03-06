@@ -23,7 +23,7 @@ class DealerTest {
                 ),
             ),
         )
-        assertThat(dealer.isHit()).isTrue
+        assertThat(dealer.isPossibleDrawCard()).isTrue
     }
 
     @Test
@@ -36,7 +36,7 @@ class DealerTest {
                 ),
             ),
         )
-        assertThat(dealer.isHit()).isFalse
+        assertThat(dealer.isPossibleDrawCard()).isFalse
     }
 
     @Test

@@ -25,20 +25,20 @@ class CardGame(private val cardDeck: CardDeck) {
     )
 
     fun drawPlayersCard(players: Players, input: (String) -> Boolean, output: (Participant) -> Unit) {
-        players.filter { it.isHit() }.forEach {
+        players.filter { it.isPossibleDrawCard() }.forEach {
             drawPlayerCard(it, input, output)
         }
     }
 
     private fun drawPlayerCard(participant: Participant, input: (String) -> Boolean, output: (Participant) -> Unit) {
-        while (participant.isHit() && input(participant.name.value)) {
+        while (participant.isPossibleDrawCard() && input(participant.name.value)) {
             participant.cards.add(cardDeck.drawCard())
             output(participant)
         }
     }
 
     fun drawDealerCard(participant: Participant, output: () -> Unit) {
-        while (participant.isHit()) {
+        while (participant.isPossibleDrawCard()) {
             output()
             participant.cards.add(cardDeck.drawCard())
         }

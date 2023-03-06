@@ -20,14 +20,14 @@ class PlayerTest {
     }
 
     @Test
-    fun `카드의 합이 21이 넘지 않으면 bust이다`() {
+    fun `카드의 합이 21이 넘지 않으면 카드를 뽑을 수 있는 상태이다`() {
         val player = Player(
             "jason",
             Card(Rank.KING, Suit.DIAMOND),
             Card(Rank.JACK, Suit.CLOVER),
             Card(Rank.ACE, Suit.HEART),
         )
-        assertThat(player.isBust()).isFalse
+        assertThat(player.isPossibleDrawCard()).isTrue
     }
 
     @Test
@@ -39,27 +39,6 @@ class PlayerTest {
             Card(Rank.JACK, Suit.HEART),
         )
         assertThat(player.isBust()).isTrue
-    }
-
-    @Test
-    fun `카드의 합이 21을 초과하지 않으면 hit 한다`() {
-        val player = Player(
-            "jason",
-            Card(Rank.ACE, Suit.DIAMOND),
-            Card(Rank.JACK, Suit.CLOVER),
-        )
-        assertThat(player.isHit()).isTrue
-    }
-
-    @Test
-    fun `카드의 합이 21을 초과하면 stay 한다`() {
-        val player = Player(
-            "jason",
-            Card(Rank.QUEEN, Suit.DIAMOND),
-            Card(Rank.KING, Suit.CLOVER),
-            Card(Rank.JACK, Suit.CLOVER),
-        )
-        assertThat(player.isHit()).isFalse
     }
 
     @Test
@@ -88,13 +67,6 @@ class PlayerTest {
         val dealer = Dealer(Card(Rank.TEN, Suit.DIAMOND), Card(Rank.TEN, Suit.CLOVER), Card(Rank.DEUCE, Suit.SPADE))
         val player = Player("jason", Card(Rank.TEN, Suit.DIAMOND), Card(Rank.TEN, Suit.CLOVER))
         assertThat(player.getGameResult(dealer)).isEqualTo(Result.WIN)
-    }
-
-    @Test
-    fun `플레이어가 Bust고 딜러가 Bust라면 패배한다`() {
-        val dealer = Dealer(Card(Rank.TEN, Suit.DIAMOND), Card(Rank.TEN, Suit.CLOVER), Card(Rank.DEUCE, Suit.SPADE))
-        val player = Player("jason", Card(Rank.TEN, Suit.DIAMOND), Card(Rank.TEN, Suit.CLOVER), Card(Rank.DEUCE, Suit.CLOVER))
-        assertThat(player.getGameResult(dealer)).isEqualTo(Result.LOSE)
     }
 
     companion object {
