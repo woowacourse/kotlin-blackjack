@@ -1,7 +1,7 @@
 package controller
 
 import domain.CardGame
-import domain.CardPackGenerator
+import model.CardDeck
 import model.Name
 import model.Names
 import model.Participants
@@ -9,7 +9,7 @@ import view.InputView
 import view.OutputView
 
 class Controller(private val inputView: InputView, private val outputView: OutputView) {
-    private val cardDeck = CardPackGenerator().createCardDeck().shuffled()
+    private val cardDeck = CardDeck.createCardDeck().shuffled()
     fun run() {
         val cardGame = CardGame(cardDeck)
         val players = cardGame.initPlayers(initNames())

@@ -1,6 +1,5 @@
 package blackjack.model
 
-import domain.CardPackGenerator
 import model.Card
 import model.CardDeck
 import model.Rank
@@ -34,16 +33,16 @@ class CardDeckTest {
     }
 
     @Test
-    fun `카드 덱에서 카드를 한장 뽑을 수 있다 `() {
-        val cardDeck = CardPackGenerator().createCardDeck()
+    fun `카드덱에서 카드를 A다이아몬드 카드를 뽑을 수 있다 `() {
+        val cardDeck = CardDeck.createCardDeck()
         val card = cardDeck.drawCard()
         assertThat(card.rank).isEqualTo(Rank.ACE)
         assertThat(card.suit).isEqualTo(Suit.DIAMOND)
     }
 
     @Test
-    fun `카드 덱의 사이즈를 확인할 수 있다`() {
-        val cardDeck = CardPackGenerator().createCardDeck()
+    fun `생성한 카드덱의 사이즈는 52이다`() {
+        val cardDeck = CardDeck.createCardDeck()
         assertThat(cardDeck.size).isEqualTo(52)
     }
 }

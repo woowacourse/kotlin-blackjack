@@ -1,7 +1,7 @@
 package blackjack.domain
 
 import domain.CardGame
-import domain.CardPackGenerator
+import model.CardDeck
 import model.Name
 import model.Player
 import org.assertj.core.api.Assertions.assertThat
@@ -40,7 +40,7 @@ class CardGameTest {
         @BeforeAll
         @JvmStatic
         internal fun setUp() {
-            game = CardGame(CardPackGenerator().createCardDeck())
+            game = CardGame(CardDeck.createCardDeck())
         }
     }
 }
