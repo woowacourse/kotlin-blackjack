@@ -15,7 +15,7 @@ class PlayerTest {
     }
 
     @Test
-    fun `플레이어가 A를 갖고있고 합이 21을 초과하는 경우 A 중 일부의 가치가 1이 될 수 있다`() {
+    fun `A가 3장이면 한 장은 11점으로, 두 장은 1점으로 계산이 된다`() {
         val player = Player("pobi").apply {
             receive(Card(CardNumber.ACE, CardShape.DIAMOND))
             receive(Card(CardNumber.ACE, CardShape.CLOVER))

@@ -5,11 +5,10 @@ import org.junit.jupiter.api.Test
 
 class DeckTest {
     @Test
-    fun `덱에서 카드 넘버와 카드 모양을 조합한 모든 경우의 카드를 뽑을 수 있다`() {
+    fun `덱은 중복없이 52장의 카드를 갖고 있고, 52장을 모두 뽑은 후에 다시 한 장을 추가로 뽑을 수 있다`() {
         val cards = mutableSetOf<Card>()
-        repeat(52) {
-            val card = Deck.draw()
-            cards.add(card)
+        repeat(53) {
+            cards.add(Deck.draw())
         }
 
         assertThat(cards.size).isEqualTo(52)
