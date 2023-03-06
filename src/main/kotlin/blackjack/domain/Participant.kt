@@ -11,7 +11,7 @@ abstract class Participant(val name: String) {
     }
 
     fun getScore(): Int {
-        var score = _cards.sumOf { it.value }
+        var score = _cards.sumOf { it.number.value }
 
         val aceCount = _cards.count { it.number.isAce() }
         repeat(aceCount) { score = adjustAceValue(score) }
