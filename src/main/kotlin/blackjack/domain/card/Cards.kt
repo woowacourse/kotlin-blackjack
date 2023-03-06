@@ -1,6 +1,10 @@
 package blackjack.domain.card
 
+import blackjack.domain.participants.Score
+
 class Cards(private val cards: Set<Card> = setOf()) {
+    val result = Score(this)
+
     val size: Int
         get() = cards.size
 
