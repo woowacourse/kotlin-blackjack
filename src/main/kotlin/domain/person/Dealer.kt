@@ -12,13 +12,10 @@ class Dealer(override val name: String = "딜러") : Person(name) {
         return cards.subList(0, 1)
     }
 
-    override fun checkState(): GameState {
-        if (getTotalCardNumber() > DEALER_STAND_CONDITION) {
-            return STAND
-        }
-        if (getTotalCardNumber() > BLACK_JACK) {
-            return BUST
-        }
-        return HIT
+    override fun checkState() = when {
+        getTotalCardNumber() > DEALER_STAND_CONDITION -> STAND
+        getTotalCardNumber() > BLACK_JACK -> BUST
+        getTotalCardNumber() <= BLACK_JACK -> HIT
+        else -> throw IllegalStateException()
     }
 }
