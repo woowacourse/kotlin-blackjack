@@ -2,10 +2,12 @@ package blackjack.model
 
 import domain.CardPackGenerator
 import model.Card
+import model.Dealer
 import model.Hand
 import model.Name
 import model.Player
 import model.Rank
+import model.Result
 import model.Suit
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -66,7 +68,86 @@ class PlayerTest {
         assertThat(player.isHit()).isFalse
     }
 
+    @Test
+    fun `딜러와 플레이어가 동시에 블랙잭인 경우 무승부이다`() {
+        val player = player(
+            Name("jason"),
+            Rank.ACE,
+            Rank.JACK,
+            Rank.KING
+        )
+        val dealer = dealer(
+            Rank.ACE,
+            Rank.JACK,
+            Rank.KING
+        )
+        assertThat(player.judge(dealer)).isEqualTo(Result.PUSH)
+    }
+
+    @Test
+    fun `딜러 버스트, 플레이어는 버스트가 아닌 경우 승리한다`() {
+        val player = player(
+            Name("jason"),
+            Rank.DEUCE,
+            Rank.JACK,
+            Rank.KING
+        )
+        val dealer = dealer(
+            Rank.ACE,
+            Rank.NINE,
+            Rank.KING
+        )
+        assertThat(player.judge(dealer)).isEqualTo(Result.WIN)
+    }
+
+    @Test
+    fun `둘 다 버스트되지 않고 딜러보다 높은 점수인 경우 승리한다`() {
+        val player = player(
+            Name("jason"),
+            Rank.JACK,
+            Rank.KING
+        )
+        val dealer = dealer(
+            Rank.ACE,
+            Rank.DEUCE,
+            Rank.KING
+        )
+        assertThat(player.judge(dealer)).isEqualTo(Result.WIN)
+    }
+
+    @Test
+    fun `둘 다 버스트되지 않고 딜러와 점수가 같은 경우 무승부이다`() {
+        val player = player(
+            Name("jason"),
+            Rank.JACK,
+            Rank.KING
+        )
+        val dealer = dealer(
+            Rank.JACK,
+            Rank.KING
+        )
+        assertThat(player.judge(dealer)).isEqualTo(Result.PUSH)
+    }
+
+    @Test
+    fun `둘 다 버스트되지 않고 딜러보다 낮은 점수인 경우 패배한다`() {
+        val player = player(
+            Name("jason"),
+            Rank.NINE,
+            Rank.KING
+        )
+        val dealer = dealer(
+            Rank.JACK,
+            Rank.KING
+        )
+        assertThat(player.judge(dealer)).isEqualTo(Result.LOSE)
+    }
+
     private fun player(name: Name, vararg ranks: Rank): Player = Player(
         Hand(ranks.map { Card(it, Suit.DIAMOND) }), name
+    )
+
+    private fun dealer(vararg ranks: Rank): Dealer = Dealer(
+        Hand(ranks.map { Card(it, Suit.HEART) })
     )
 }
