@@ -47,18 +47,22 @@ class OutputView {
         }
     }
 
-    private fun printFirstRoundDealerCard(dealer: Dealer) {
-        val dealerCard = dealer.cards.values[0]
-        print(DEALER_CARD_MENT.format(dealerCard.number.word + dealerCard.shape.word))
-    }
-
     fun printParticipantCards(participant: Participant) {
         val cardsWord: String = participant.cards.values.map {
             it.number.word + it.shape.word
         }.joinToString(", ")
         println("${participant.name} 카드: $cardsWord")
     }
-    fun printParticipantCardsSumResult(participant: Participant) {
+
+    fun printNoCardMessage() {
+        println(NO_CARD_MESSAGE)
+    }
+
+    private fun printFirstRoundDealerCard(dealer: Dealer) {
+        val dealerCard = dealer.cards.values[0]
+        print(DEALER_CARD_MENT.format(dealerCard.number.word + dealerCard.shape.word))
+    }
+    private fun printParticipantCardsSumResult(participant: Participant) {
         val cardsWord: String = participant.cards.values.map {
             it.number.word + it.shape.word
         }.joinToString(", ")
@@ -66,7 +70,7 @@ class OutputView {
     }
 
     companion object {
-        private const val SETTING_CARD_MENT = "딜러와 %s에게 2장의 나누었습니다."
+        private const val SETTING_CARD_MENT = "딜러와 %s에게 2장의 카드를 나누었습니다."
         private const val DEALER_CARD_MENT = "딜러 카드: %s"
         private const val DEALER_HIT_CARD_MENT = "딜러는 16 이하라 한장의 카드를 더 받았습니다."
         private const val DEALER_NOT_HIT_CARD_MENT = "딜러는 16 초과라 한장의 카드를 더 받지않았습니다."
@@ -74,5 +78,6 @@ class OutputView {
         private const val FINAL_RESULT_MENT = "## 최종 승패"
         private const val FINAL_DEALER_RESULT_MENT = "딜러: "
         private const val FINAL_PARTICIPANT_RESULT_MENT = "%s: %s"
+        private const val NO_CARD_MESSAGE = "더 이상 발급할 수 있는 카드가 없습니다."
     }
 }

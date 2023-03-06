@@ -1,17 +1,17 @@
 package blackjack.controller
 
-import blackjack.domain.CardGenerator
-import blackjack.domain.RandomGenerator
+import blackjack.domain.card.CardDeck
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Participant
 import blackjack.domain.player.Participants
+import blackjack.domain.player.Player
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
 class BlackjackController(
     private val inputView: InputView = InputView(),
     private val outputView: OutputView = OutputView(),
-    private val cardGenerator: CardGenerator = CardGenerator(RandomGenerator())
+    private val cardDeck: CardDeck = CardDeck()
 ) {
 
     fun run() {
@@ -32,12 +32,23 @@ class BlackjackController(
         Participants(inputView.readParticipantsName().map { Participant(it) })
 
     private fun settingPlayersCards(dealer: Dealer, participants: Participants) {
-        repeat(CARD_SETTING_COUNT) { dealer.addCard(cardGenerator.generateCard()) }
+        repeat(CARD_SETTING_COUNT) {
+            provideCard(dealer)
+        }
         participants.values.forEach { participant ->
-            repeat(CARD_SETTING_COUNT) { participant.addCard(cardGenerator.generateCard()) }
+            repeat(CARD_SETTING_COUNT) {
+                provideCard(participant)
+            }
         }
 
         outputView.printSettingCard(dealer, participants)
+    }
+
+    private fun provideCard(player: Player) {
+        cardDeck.apply {
+            if (checkProvidePossible()) player.addCard(provide())
+            else outputView.printNoCardMessage()
+        }
     }
 
     private fun readParticipantsMoreCard(participants: Participants) {
@@ -52,7 +63,7 @@ class BlackjackController(
             if (check) {
                 val answer = inputView.readMoreCard(participant.name)
                 if (answer == ANSWER_MORE_CARD) {
-                    participant.addCard(cardGenerator.generateCard())
+                    provideCard(participant)
                 }
                 outputView.printParticipantCards(participant)
                 if (answer == ANSWER_NOT_MORE_CARD) break
@@ -64,7 +75,7 @@ class BlackjackController(
     private fun giveDealerMoreCard(dealer: Dealer) {
         val check = dealer.checkMustGenerateCard()
         if (check) {
-            dealer.addCard(cardGenerator.generateCard())
+            provideCard(dealer)
             outputView.printDealerHitCardMent()
         }
         if (!check) outputView.printDealerNotHitCardMent()
