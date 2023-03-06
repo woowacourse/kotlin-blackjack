@@ -5,6 +5,7 @@ import blackjack.domain.CardBunch
 import blackjack.domain.CardNumber
 import blackjack.domain.Consequence
 import blackjack.domain.Dealer
+import blackjack.domain.Participants
 import blackjack.domain.Player
 
 object OutputView {
@@ -41,9 +42,9 @@ object OutputView {
         }
     }
 
-    fun printTotalScore(dealer: Dealer, players: List<Player>) {
-        println("딜러 카드 : ${makeBunchString(dealer.cardBunch)} - 결과: ${dealer.cardBunch.getTotalScore()}")
-        players.forEach { player ->
+    fun printTotalScore(participants: Participants) {
+        println("딜러 카드 : ${makeBunchString(participants.dealer.cardBunch)} - 결과: ${participants.dealer.cardBunch.getTotalScore()}")
+        participants.players.forEach { player ->
             val bunchString = makeBunchString(player.cardBunch)
             println("${player.name}카드 : $bunchString - 결과: ${player.cardBunch.getTotalScore()}")
         }
