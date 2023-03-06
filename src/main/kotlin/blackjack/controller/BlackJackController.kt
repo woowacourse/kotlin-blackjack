@@ -2,7 +2,6 @@ package blackjack.controller
 
 import blackjack.domain.BlackJack
 import blackjack.domain.BlackJackBuilder
-import blackjack.domain.Command
 import blackjack.domain.Player
 import blackjack.view.InputView
 import blackjack.view.OutputView
@@ -22,7 +21,7 @@ class BlackJackController {
 
     private fun initBlackJack() {
         blackJack = BlackJackBuilder {
-            // cardDeck()
+            cardDeck()
             participants {
                 dealer()
                 players(InputView.inputNames())
@@ -47,21 +46,22 @@ class BlackJackController {
     }
 
     private fun takePlayerTurn(player: Player) {
-        while (!player.isBust()) {
-            val command = Command(InputView.inputDrawCommand(player.name))
-            val isStop = handleCommand(command, player)
-            if (isStop) return
+        if (!player.isBust()) {
+            val isDraw = InputView.inputDrawCommand(player.name)
+            if (!isDraw) return printPlayerHand(player)
+
+            drawCard(player)
+            takePlayerTurn(player)
         }
     }
 
-    private fun handleCommand(command: Command, player: Player): Boolean {
-        if (command.value == "n") {
-            OutputView.printHand(player.getHand())
-            return IS_STOP
-        }
+    private fun drawCard(player: Player) {
         blackJack.drawPlayer(player)
+        printPlayerHand(player)
+    }
+
+    private fun printPlayerHand(player: Player) {
         OutputView.printHand(player.getHand())
-        return IS_CONTINUE
     }
 
     private fun takeDealerTurn() {
@@ -69,10 +69,5 @@ class BlackJackController {
             if (isHit) OutputView.printDealerHit()
         }
         OutputView.printInterval()
-    }
-
-    companion object {
-        private const val IS_STOP = true
-        private const val IS_CONTINUE = false
     }
 }

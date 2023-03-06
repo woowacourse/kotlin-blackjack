@@ -4,9 +4,9 @@ object BlackJackBuilder {
     private lateinit var participants: Participants
     private lateinit var cardDeck: CardDeck
 
-    // fun cardDeck(generator: CardGenerator) {
-    // cardDeck = CardDeck(generator)
-    // }
+    fun cardDeck() {
+        cardDeck = CardDeck()
+    }
 
     fun participants(block: ParticipantsBuilder.() -> Unit) {
         participants = ParticipantsBuilder(block)
