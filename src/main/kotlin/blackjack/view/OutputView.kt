@@ -3,6 +3,7 @@ package blackjack.view
 import blackjack.domain.blackjack.BlackJack
 import blackjack.domain.card.CardMark
 import blackjack.domain.card.CardValue
+import blackjack.domain.participants.Guest
 import blackjack.domain.participants.User
 import blackjack.domain.result.Outcome
 
@@ -34,29 +35,20 @@ class OutputView {
         print("\n${user.name}카드: $cardText")
     }
 
-    fun outputDealerDraw() {
-        println("\n\n딜러는 16이하라 한장의 카드를 더 받았습니다.")
-    }
+    fun outputDealerDraw() { println("\n\n딜러는 16이하라 한장의 카드를 더 받았습니다.") }
 
-    private fun outputScore(user: User) {
-        print(" - 결과: ${user.score}")
-    }
+    private fun outputScore(user: User) { print(" - 결과: ${user.score}") }
 
     private fun outputOutcomes(blackJack: BlackJack) {
         blackJack.run {
             println("\n## 최종 승패")
-            println("${dealer.name}: ${getResult().count { it == Outcome.LOSE }}승 ${getResult().count { it == Outcome.WIN }}패")
-            guests.forEachIndexed { index, user -> outputOutcome(user, getResult()[index]) }
+            println("${dealer.name}: ${guests.indices.sumOf { (guests[it].bettingMoney.toInt() * getResult()[it].rate).toInt() * -1 }}")
+            guests.indices.forEach { outputOutcome(guests[it], getResult()[it]) }
         }
     }
 
-    private fun outputOutcome(user: User, outcome: Outcome) {
-        when (outcome) {
-            Outcome.WIN -> "승"
-            Outcome.DRAW -> "무"
-            Outcome.LOSE -> "패"
-            Outcome.WIN_WITH_BLACKJACK -> "승"
-        }.let { println("${user.name}: $it") }
+    private fun outputOutcome(user: Guest, outcome: Outcome) {
+        println("${user.name}: ${(user.bettingMoney.toInt() * outcome.rate).toInt()}")
     }
 
     private fun CardMark.name(): String =
