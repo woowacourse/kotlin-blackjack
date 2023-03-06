@@ -2,7 +2,6 @@ package controller
 
 import domain.CardGame
 import domain.CardPackGenerator
-import model.Cards
 import model.Dealer
 import model.Dealer.Companion.DEALER
 import model.GameResult
@@ -25,7 +24,7 @@ class Controller(private val inputView: InputView, private val outputView: Outpu
         printParticipants(participants)
         askGetMorePlayersCard(players)
         getMoreDealerCard(dealer)
-        outputView.printAllPlayerStatusResult(participants.toList())
+        outputView.printAllPlayerStatusResult(participants)
         outputView.printFinalResult(GameResult.of(dealer, players.toList()))
     }
 
@@ -35,8 +34,8 @@ class Controller(private val inputView: InputView, private val outputView: Outpu
     }
 
     private fun printParticipants(participants: Participants) {
-        outputView.printNoticeDistributeCards(participants.toList().filter { it.name.value != DEALER }.map { it.name })
-        outputView.printPlayersStatus(participants.toList())
+        outputView.printNoticeDistributeCards(Names(participants.toList().filter { it.name.value != DEALER }.map { it.name }))
+        outputView.printPlayersStatus(participants)
     }
 
     private fun askGetMorePlayersCard(players: Players) {
@@ -59,9 +58,5 @@ class Controller(private val inputView: InputView, private val outputView: Outpu
             outputView.printDealerGetCard()
             dealer.pick(cardPack)
         }
-    }
-
-    private fun Cards.shuffled(): Cards {
-        return Cards(cards.shuffled())
     }
 }
