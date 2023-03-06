@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 
 class RefereeTest {
     @Test
-    fun `플레이어 합계가 13이고, 딜러 합계가 7이면 딜러가 진다`() {
+    fun `플레이어 합계가 딜러 합계보다 크면 플레이어가 이긴다`() {
         // given
         val card1 = Card(Shape.HEART, CardNumber.ACE)
         val card2 = Card(Shape.HEART, CardNumber.TWO)
@@ -30,7 +30,7 @@ class RefereeTest {
     }
 
     @Test
-    fun `플레이어 합계가 7이고, 딜러 합계가 13이면 딜러가 이긴다`() {
+    fun `플레이어 합계가 딜러 합계보다 작으면 딜러가 이긴다`() {
         // given
         val card1 = Card(Shape.HEART, CardNumber.THREE)
         val card2 = Card(Shape.HEART, CardNumber.FOUR)
@@ -54,7 +54,7 @@ class RefereeTest {
     }
 
     @Test
-    fun `플레이어 합계가 7이고, 딜러 합계가 7이면 비긴다`() {
+    fun `플레이어와 딜러의 합계가 같으면 비긴다`() {
         // given
         val card1 = Card(Shape.HEART, CardNumber.THREE)
         val card2 = Card(Shape.HEART, CardNumber.FOUR)
@@ -76,11 +76,12 @@ class RefereeTest {
     }
 
     @Test
-    fun `플레이어 합계가 21이고, 딜러 합계가 21이면 딜러가 이긴다`() {
+    fun `딜러 합계가 21일 때, 플레이어의 합계가 21이 아니면 딜러가 이긴다`() {
         // given
         val card1 = Card(Shape.HEART, CardNumber.ACE)
         val card2 = Card(Shape.HEART, CardNumber.JACK)
-        val playerCardBunch = CardBunch(card1, card2)
+        val card3 = Card(Shape.HEART, CardNumber.KING)
+        val playerCardBunch = CardBunch(card1, card3)
         val player = Player("krrong", playerCardBunch)
 
         val dealerCardBunch = CardBunch(card1, card2)
