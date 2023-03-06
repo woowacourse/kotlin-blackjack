@@ -1,17 +1,15 @@
 package blackjack.controller
 
 import blackjack.domain.card.CardDeck
-import blackjack.domain.player.Dealer
-import blackjack.domain.player.Participant
-import blackjack.domain.player.Participants
-import blackjack.domain.player.Player
+import blackjack.domain.player.*
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
 class BlackjackController(
     private val inputView: InputView = InputView(),
     private val outputView: OutputView = OutputView(),
-    private val cardDeck: CardDeck = CardDeck()
+    private val cardDeck: CardDeck = CardDeck(),
+    private val playersManager: PlayersManager = PlayersManager()
 ) {
 
     fun run() {
@@ -32,15 +30,7 @@ class BlackjackController(
         Participants(inputView.readParticipantsName().map { Participant(it) })
 
     private fun settingPlayersCards(dealer: Dealer, participants: Participants) {
-        repeat(CARD_SETTING_COUNT) {
-            provideCard(dealer)
-        }
-        participants.values.forEach { participant ->
-            repeat(CARD_SETTING_COUNT) {
-                provideCard(participant)
-            }
-        }
-
+        playersManager.settingPlayersCards(dealer, participants)
         outputView.printSettingCard(dealer, participants)
     }
 
@@ -85,9 +75,5 @@ class BlackjackController(
 
     private fun printFinalResult(dealer: Dealer, participants: Participants) {
         outputView.printFinalResult(dealer, participants)
-    }
-
-    companion object {
-        private const val CARD_SETTING_COUNT = 2
     }
 }
