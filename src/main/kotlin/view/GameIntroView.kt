@@ -1,6 +1,6 @@
 package view
 
-class LoginView {
+class GameIntroView {
 
     fun requestPlayerName(): List<String> {
         printRequestPlayerName()

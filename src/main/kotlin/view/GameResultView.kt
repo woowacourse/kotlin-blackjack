@@ -28,7 +28,7 @@ class GameResultView {
             player.cards.joinToString(SEPARATOR) { card ->
                 card.toString()
             },
-            player.validPlayerSum(),
+            player.addScoreTenIfHasAce(),
         )
 
     private fun formatDealerResult(gameResult: List<GameResult>) = DEALER_RESULT_FORMAT.format(
