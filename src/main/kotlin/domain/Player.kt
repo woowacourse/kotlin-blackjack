@@ -6,18 +6,7 @@ class Player(name: Name, cards: Cards) : Participant(name, cards) {
     }
 
     override fun isPossibleDrawCard(): Boolean {
-        return when (cards.minSumState()) {
-            is Cards.State.Burst -> false
-            is Cards.State.NoBurst -> true
-        }
-    }
-
-    fun getGameResult(compareState: Cards.State): GameResultType {
-        val myState = getSumStateResult()
-        if (myState is Cards.State.Burst) return GameResultType.LOSE
-        if (compareState is Cards.State.Burst) return GameResultType.WIN
-        if (myState.sum > compareState.sum) return GameResultType.WIN
-        return GameResultType.LOSE
+       return !cards.getScore().isBurst()
     }
 
     companion object {

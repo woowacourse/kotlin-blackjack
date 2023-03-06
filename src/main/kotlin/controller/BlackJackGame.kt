@@ -24,13 +24,13 @@ class BlackJackGame(names: Names, private val cardDrawer: CardDrawer = RandomCar
         if (isGetCard) {
             addCard()
         }
-        if(isBurst()) return
+        if (!isPossibleDrawCard()) return
         result(this)
         if (isGetCard) playerSelectAdd(getChoiceOfAddCard, result)
     }
 
     fun playersSelectAddPhase(isGetCard: (Player) -> Boolean, output: (Player) -> Unit) {
-        players.players.forEach { player ->
+        players.list.forEach { player ->
             player.playerSelectAdd(isGetCard, output)
         }
     }
@@ -42,7 +42,7 @@ class BlackJackGame(names: Names, private val cardDrawer: CardDrawer = RandomCar
         }
     }
 
-    companion object {
-        const val BLACKJACK_NUMBER = 21
+    fun getGameResult(): GameResult {
+        return GameResult(participants)
     }
 }

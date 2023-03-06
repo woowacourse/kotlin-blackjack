@@ -26,10 +26,10 @@ class ResultView {
         println(PRINT_DEALER_ADD_CARD.format(dealer.name.name))
     }
 
-    fun printGameResult(players: Players, dealer: Dealer) {
+    fun printGameResult(gameResult: GameResult) {
         println(PRINT_GAME_RESULT)
-        formatStringDealerResult(players, dealer)
-        formatStringPlayersResult(players, dealer)
+        formatStringDealerResult(gameResult)
+        formatStringPlayersResult(gameResult)
     }
 
     private fun formatStringCards(cards: List<Card>): String {
@@ -42,27 +42,17 @@ class ResultView {
         return "${cardNumber.number}${cardCategory.pattern}"
     }
 
-    private fun formatStringDealerResult(players: Players, dealer: Dealer) {
-        val dealerResult = dealer.getResult(players)
-        println(
-            PRINT_DEALER_GAME_RESULT.format(
-                dealer.name.name,
-                dealerResult[GameResultType.WIN],
-                GameResultType.WIN.name,
-                dealerResult[GameResultType.LOSE],
-                GameResultType.LOSE.name
-            )
-        )
+    private fun formatStringDealerResult(gameResult: GameResult) {
+        print("딜러: ")
+        gameResult.getDealerGameResult().forEach { (gameResult, count) ->
+            print(PRINT_DEALER_GAME_RESULT.format(count, gameResult.name))
+        }
+        println()
     }
 
-    private fun formatStringPlayersResult(players: Players, dealer: Dealer) {
-        players.list.forEach { player ->
-            val playerResult = player.getGameResult(dealer.getSumStateResult())
-            if (playerResult == GameResultType.WIN)
-                println(PRINT_PLAYER_GAME_RESULT.format(player.name.name, GameResultType.WIN.name))
-            if (playerResult == GameResultType.LOSE)
-                println(PRINT_PLAYER_GAME_RESULT.format(player.name.name, GameResultType.LOSE.name))
-
+    private fun formatStringPlayersResult(gameResult: GameResult) {
+        gameResult.getPlayersGameResult().forEach { (name, gameResult) ->
+            println(PRINT_PLAYER_GAME_RESULT.format(name.name, gameResult.name))
         }
     }
 
@@ -72,7 +62,7 @@ class ResultView {
                 PRINT_NAME_AND_CARDS_AND_SCORE.format(
                     participant.name.name,
                     formatStringCards(participant.cards.list),
-                    participant.getSumStateResult().sum
+                    participant.getScore().getValue()
                 )
             )
         }
@@ -84,7 +74,7 @@ class ResultView {
         private const val PRINT_NAME_AND_CARDS = "%s카드: %s"
         private const val PRINT_DEALER_ADD_CARD = "\n%s는 ${Dealer.DEALER_ADD_CARD_CONDITION}이하라 한장의 카드를 더 받았습니다."
         private const val PRINT_GAME_RESULT = "\n## 최종승패"
-        private const val PRINT_DEALER_GAME_RESULT = "%s: %d%s %d%s"
+        private const val PRINT_DEALER_GAME_RESULT = "%d%s "
         private const val PRINT_PLAYER_GAME_RESULT = "%s: %s"
         private const val PRINT_NAME_AND_CARDS_AND_SCORE = "%s 카드: %s - 결과: %d"
     }

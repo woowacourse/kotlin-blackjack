@@ -2,7 +2,6 @@ package controller
 
 import domain.Answer
 import domain.Player
-import domain.Players
 import view.InputView
 import view.ResultView
 
@@ -28,7 +27,7 @@ class BlackJackGameController(private val inputView: InputView, private val resu
 
     private fun gameResult(blackJackGame: BlackJackGame) {
         resultView.printScore(blackJackGame.participants)
-        resultView.printGameResult(blackJackGame.participants.players, blackJackGame.participants.dealer)
+        resultView.printGameResult(blackJackGame.getGameResult())
     }
 
     private fun getChoiceOfAddCard(player: Player): Boolean {
