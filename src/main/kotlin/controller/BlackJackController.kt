@@ -1,6 +1,5 @@
 package controller
 
-import domain.card.CardsGenerator
 import domain.card.Deck
 import domain.constant.Decision
 import domain.person.Dealer
@@ -12,7 +11,7 @@ import view.ResultView
 
 class BlackJackController {
     fun runBlackJack() {
-        val deck = Deck(CardsGenerator().createCards())
+        val deck = Deck.create()
         val dealer = Dealer()
         val players = runOnboarding(deck, dealer)
         runMain(deck, dealer, players)
