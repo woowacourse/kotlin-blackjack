@@ -21,7 +21,7 @@ class BlackjackResult private constructor(private val player: Map<Player, Result
             require(dealer.hasInitialCards() && players.haveInitialCards()) { PARTICIPANTS_SHOULD_HAVE_INITIAL_CARDS }
             require(dealer.shouldHit().not()) { DEALER_SHOULD_HIT_ERROR }
 
-            val result = players.toList().associateWith { it against dealer }
+            val result = players.associateWith { it against dealer }
 
             return BlackjackResult(result)
         }

@@ -9,6 +9,9 @@ class Players(private val players: List<Player>) {
     private fun List<Player>.isNotDuplicated(): Boolean = this.distinct().size == this.size
     fun haveInitialCards() = players.all { it.hasInitialCards() }
     fun toList(): List<Player> = players.toList()
+    fun <V> associateWith(valueSelector: (Player) -> V): Map<Player, V> {
+        return players.associateWith { valueSelector(it) }
+    }
 
     companion object {
         private const val MIN_PLAYER_COUNT = 2
