@@ -38,6 +38,8 @@ abstract class Participant(open val cards: Cards) {
 
     fun checkBurst(): Boolean = calculateCardSum() > Referee.CARD_SUM_MAX_VALUE
 
+    fun checkBlackjack(): Boolean = calculateCardSum() == 21 && cards.getCards().size == 2
+
     companion object {
         private const val ACE_COUNT_VALUE_CHANGE_CONDITION = 2
     }

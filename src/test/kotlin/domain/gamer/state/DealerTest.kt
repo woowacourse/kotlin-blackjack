@@ -76,4 +76,30 @@ class DealerTest {
         val dealer = Dealer(Cards(listOf(Card(Shape.SPADE, CardValue.JACK))))
         assertThat(dealer.checkAvailableForPick()).isTrue
     }
+
+    @Test
+    fun `카드가 2개이고 합이 21이면 블랙잭이다`() {
+        val dealer = Dealer(Cards(listOf(Card(Shape.SPADE, CardValue.JACK), (Card(Shape.SPADE, CardValue.ACE)))))
+        assertThat(dealer.checkBlackjack()).isEqualTo(true)
+    }
+
+    @Test
+    fun `카드가 3개이고 합이 21이면 블랙잭이 아니다`() {
+        val dealer = Dealer(
+            Cards(
+                listOf(
+                    Card(Shape.SPADE, CardValue.JACK),
+                    Card(Shape.SPADE, CardValue.FIVE),
+                    Card(Shape.SPADE, CardValue.SIX)
+                )
+            )
+        )
+        assertThat(dealer.checkBlackjack()).isEqualTo(false)
+    }
+
+    @Test
+    fun `카드가 2개이고 합이 21이 아니면 블랙잭이 아니다`() {
+        val dealer = Dealer(Cards(listOf(Card(Shape.SPADE, CardValue.JACK), Card(Shape.SPADE, CardValue.FIVE))))
+        assertThat(dealer.checkBlackjack()).isEqualTo(false)
+    }
 }
