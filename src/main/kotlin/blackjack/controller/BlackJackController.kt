@@ -4,7 +4,6 @@ import blackjack.domain.BlackJack
 import blackjack.domain.BlackJackBuilder
 import blackjack.domain.Command
 import blackjack.domain.Player
-import blackjack.domain.RandomCardGenerator
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -23,7 +22,7 @@ class BlackJackController {
 
     private fun initBlackJack() {
         blackJack = BlackJackBuilder {
-            cardDeck(RandomCardGenerator())
+            // cardDeck()
             participants {
                 dealer()
                 players(InputView.inputNames())
