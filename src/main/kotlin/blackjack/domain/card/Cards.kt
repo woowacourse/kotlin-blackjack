@@ -1,23 +1,36 @@
 package blackjack.domain.card
 
 class Cards(
-    cards: List<Card> = listOf(Card.draw(), Card.draw())
+    cards: List<Card> = listOf(Card.draw(), Card.draw()),
 ) {
 
     private val _cards: MutableList<Card> = cards.toMutableList()
     val cards: List<Card>
         get() = _cards.toList()
 
+    var state: CardsState = CardsState.RUNNING
+        private set
+
     val size: Int
         get() = cards.size
 
     init {
         require(cards.size == INITIAL_CARDS_SIZE)
+        if (getTotalCardsScore() == 21) {
+            state = CardsState.BLACKJACK
+        }
     }
 
     fun draw(card: Card = Card.draw()) {
         _cards.add(card)
-        CardNumber.values()
+
+        initCardsState()
+    }
+
+    private fun initCardsState() {
+        if (getMinimumCardsScore() > 21) {
+            state = CardsState.BURST
+        }
     }
 
     fun getMinimumCardsScore(): Int = cards.sumOf { card -> card.number.value }
