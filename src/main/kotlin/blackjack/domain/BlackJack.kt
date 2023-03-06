@@ -1,6 +1,5 @@
 package blackjack.domain
 
-import blackjack.dto.HandsDTO
 import blackjack.dto.ResultsDTO
 import blackjack.dto.ScoresDTO
 
@@ -9,7 +8,7 @@ class BlackJack(private val deck: CardDeck, private val participants: Participan
         participants.drawAll(deck)
     }
 
-    fun getInitialHands(): HandsDTO = participants.getInitialHands()
+    // fun getInitialHands(): HandsDTO = participants.getInitialHands()
 
     fun getPlayers(): List<Player> = participants.getPlayers()
 

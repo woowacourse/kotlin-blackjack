@@ -2,7 +2,7 @@ package blackjack.domain
 
 import blackjack.domain.BlackJack.Companion.blackjackScore
 
-class PlayerHand {
+class ParticipantHand {
     private val _cards: MutableList<Card> by lazy { mutableListOf() }
     val cards: List<Card>
         get() = _cards.toList()
@@ -17,7 +17,7 @@ class PlayerHand {
     }
 
     private fun calculateAceScore(score: Int): Int =
-        if (hasAce() && (score + BONUS_SCORE) < blackjackScore()) score + BONUS_SCORE else score
+        if (hasAce() && (score + BONUS_SCORE) <= blackjackScore()) score + BONUS_SCORE else score
 
     private fun hasAce(): Boolean = _cards.any(Card::isAce)
 

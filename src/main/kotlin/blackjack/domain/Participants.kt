@@ -1,7 +1,6 @@
 package blackjack.domain
 
 import blackjack.domain.GameResult.Companion.judgePlayer
-import blackjack.dto.HandsDTO
 import blackjack.dto.ResultDTO
 import blackjack.dto.ResultsDTO
 import blackjack.dto.ScoresDTO
@@ -12,12 +11,12 @@ class Participants(private val dealer: Dealer, private val players: Players) {
         players.drawAll(deck)
     }
 
-    fun getInitialHands(): HandsDTO = HandsDTO(dealer.getFirstCardHand(), players.getHands())
+    // fun getInitialHands(): HandsDTO = HandsDTO(dealer.getFirstCardHand(), players.getHands())
 
     fun getPlayers(): List<Player> = players.toList()
 
     fun drawDealerCard(deck: CardDeck, block: (Boolean) -> Unit) {
-        while (!dealer.isStay()) {
+        while (dealer.canDraw()) {
             dealer.addCard(deck.draw())
             block(true)
         }
