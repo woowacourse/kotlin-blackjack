@@ -12,10 +12,15 @@ import view.ResultView
 class BlackJackController {
     fun runBlackJack() {
         val deck = Deck()
-        val dealer = Dealer()
-        val players = runOnboarding(deck, dealer)
-        runMain(deck, dealer, players)
-        runResult(dealer, players)
+        val persons = runOnboarding(deck)
+        runMain(deck, persons)
+        runResult(persons)
+    }
+
+    private fun runOnboarding(deck: Deck): Persons {
+        val persons = PersonGenerator.getPersons(OnboardingView.requestInputNames(), deck)
+        OnboardingView.printInitialSetting(persons)
+        return persons
     }
 
     private fun runOnboarding(deck: Deck, dealer: Dealer): List<Player> {
