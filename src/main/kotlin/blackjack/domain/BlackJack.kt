@@ -22,4 +22,9 @@ class BlackJack(private val deck: CardDeck, private val participants: Participan
     fun getGameScores(): ScoresDTO = participants.getGameScores()
 
     fun getGameResults(): ResultsDTO = participants.getGameResults()
+
+    companion object {
+        private const val BLACKJACK_SCORE = 21
+        fun blackjackScore(): Int = BLACKJACK_SCORE
+    }
 }

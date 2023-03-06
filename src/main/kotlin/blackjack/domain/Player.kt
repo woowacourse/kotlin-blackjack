@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import blackjack.domain.BlackJack.Companion.blackjackScore
 import blackjack.dto.HandDTO
 import blackjack.dto.ScoreDTO
 
@@ -10,7 +11,7 @@ open class Player(val name: String) {
         hand.add(card)
     }
 
-    fun isBust(): Boolean = hand.calculateTotalScore() > GameResult.blackjackScore()
+    fun isBust(): Boolean = hand.calculateTotalScore() > blackjackScore()
 
     fun getTotalScore(): Int = hand.calculateTotalScore()
 

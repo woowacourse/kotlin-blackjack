@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import blackjack.domain.BlackJack.Companion.blackjackScore
+
 class PlayerHand {
     private val _cards: MutableList<Card> by lazy { mutableListOf() }
     val cards: List<Card>
@@ -9,20 +11,17 @@ class PlayerHand {
         _cards.add(card)
     }
 
-    fun calculateTotalScore(): Int = 0 // cards.map { it.number.value }.fold(0) { total, number -> total + calculateEachScore(total, number) }
-
-    private fun calculateEachScore(score: Int, number: Int): Int = when (number) {
-        // CardNumber.ace() -> calculateAceScore(score)
-        // CardNumber.jack(), CardNumber.queen(), CardNumber.king() -> JQK_SCORE
-        else -> number
+    fun calculateTotalScore(): Int {
+        val score = _cards.fold(0) { total, card -> total + card.getScore() }
+        return calculateAceScore(score)
     }
 
     private fun calculateAceScore(score: Int): Int =
-        if (score + ACE_MAX_SCORE > GameResult.blackjackScore()) ACE_MIN_SCORE else ACE_MAX_SCORE
+        if (hasAce() && (score + BONUS_SCORE) < blackjackScore()) score + BONUS_SCORE else score
+
+    private fun hasAce(): Boolean = _cards.any(Card::isAce)
 
     companion object {
-        private const val ACE_MIN_SCORE = 1
-        private const val ACE_MAX_SCORE = 11
-        private const val JQK_SCORE = 10
+        private const val BONUS_SCORE = 10
     }
 }
