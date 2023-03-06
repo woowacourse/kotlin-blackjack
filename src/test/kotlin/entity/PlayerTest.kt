@@ -25,19 +25,26 @@ class PlayerTest {
 
     @Test
     fun `플레이어가 가진 카드의 숫자 합이 21 미만이면 한장의 카드를 더 받을 수 있다`() {
+        // given
         val dealer = Dealer(generateCardsByNumber(10))
-        val isDistributable = dealer.isDistributable()
 
-        assertThat(isDistributable).isTrue
+        // when
+        val actual = dealer.isDistributable()
+
+        // then
+        assertThat(actual).isTrue
     }
 
     @Test
     fun `플레이어가 가진 카드의 숫자 합이 21 이상이면 한장의 카드를 더 받을 수 없다`() {
+        // given
         val dealer = Dealer(generateCardsByNumber(22))
 
-        val isDistributable = dealer.isDistributable()
+        // when
+        val actual = dealer.isDistributable()
 
-        assertThat(isDistributable).isFalse
+        // then
+        assertThat(actual).isFalse
     }
 
     @Test
@@ -46,13 +53,13 @@ class PlayerTest {
         val player1 = Player(
             Name("test"), generateCardsByNumber(21)
         )
-        val results = player1.determineGameResult(21)
 
         // when
-        val except = player1 to GameResultType.DRAW
+        val actual = player1.determineGameResult(21)
 
         // then
-        assertThat(results).isEqualTo(except)
+        val except = player1 to GameResultType.DRAW
+        assertThat(actual).isEqualTo(except)
     }
 
     @Test
@@ -61,13 +68,13 @@ class PlayerTest {
         val player1 = Player(
             Name("test"), generateCardsByNumber(22)
         )
-        val results = player1.determineGameResult(22)
 
         // when
-        val except = player1 to GameResultType.DRAW
+        val actual = player1.determineGameResult(22)
 
         // then
-        assertThat(results).isEqualTo(except)
+        val except = player1 to GameResultType.DRAW
+        assertThat(actual).isEqualTo(except)
     }
 
     @Test
@@ -77,13 +84,12 @@ class PlayerTest {
             Name("test"), generateCardsByNumber(19)
         )
 
-        val results = player1.determineGameResult(22)
-
         // when
-        val except = player1 to GameResultType.WIN
+        val actual = player1.determineGameResult(22)
 
         // then
-        assertThat(results).isEqualTo(except)
+        val except = player1 to GameResultType.WIN
+        assertThat(actual).isEqualTo(except)
     }
 
     @Test
@@ -92,13 +98,13 @@ class PlayerTest {
         val player1 = Player(
             Name("test"), generateCardsByNumber(21)
         )
-        val results = player1.determineGameResult(20)
 
         // when
-        val except = player1 to GameResultType.WIN
+        val actual = player1.determineGameResult(20)
 
         // then
-        assertThat(results).isEqualTo(except)
+        val except = player1 to GameResultType.WIN
+        assertThat(actual).isEqualTo(except)
     }
 
     @Test
@@ -107,13 +113,13 @@ class PlayerTest {
         val player1 = Player(
             Name("test"), generateCardsByNumber(20)
         )
-        val results = player1.determineGameResult(21)
 
         // when
-        val except = player1 to GameResultType.LOSE
+        val actual = player1.determineGameResult(21)
 
         // then
-        assertThat(results).isEqualTo(except)
+        val except = player1 to GameResultType.LOSE
+        assertThat(actual).isEqualTo(except)
     }
 
     @Test
@@ -122,12 +128,12 @@ class PlayerTest {
         val player1 = Player(
             Name("test"), generateCardsByNumber(22)
         )
-        val results = player1.determineGameResult(21)
 
         // when
-        val except = player1 to GameResultType.LOSE
+        val actual = player1.determineGameResult(21)
 
         // then
-        assertThat(results).isEqualTo(except)
+        val except = player1 to GameResultType.LOSE
+        assertThat(actual).isEqualTo(except)
     }
 }
