@@ -1,7 +1,9 @@
 package model
 
+import java.util.LinkedList
+
 class Cards(cards: List<Card>) {
-    private val _cards = cards.toMutableList()
+    private val _cards = LinkedList(cards)
     val cards: List<Card>
         get() = _cards.toList()
     val size: Int
@@ -18,12 +20,12 @@ class Cards(cards: List<Card>) {
 
     fun sum(): Int {
         var sum = filterSum { it != Rank.ACE }
-        sum += filterSum { it == Rank.ACE }
+        sum = filterSum(sum) { it == Rank.ACE }
         return sum
     }
 
-    private fun filterSum(condition: (Rank) -> Boolean): Int {
-        var sum = 0
+    private fun filterSum(score: Int = 0, condition: (Rank) -> Boolean): Int {
+        var sum = score
         _cards.filter { condition(it.rank) }.forEach {
             sum += it.rank.getScore(sum)
         }
@@ -32,9 +34,7 @@ class Cards(cards: List<Card>) {
 
     fun pop(): Card {
         require(_cards.isNotEmpty()) { OUT_OF_INDEX_CARDS_CURSOR }
-        val card = _cards[0]
-        _cards.removeAt(0)
-        return card
+        return _cards.pop()
     }
 
     companion object {
