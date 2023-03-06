@@ -2,6 +2,7 @@ package domain.person
 
 import domain.card.Card
 import domain.card.Cards
+import domain.constant.GameState
 
 abstract class Person(open val name: String) {
     val cards = Cards()

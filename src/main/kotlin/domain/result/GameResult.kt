@@ -1,7 +1,7 @@
 package domain.result
 
+import domain.constant.GameState
 import domain.person.Dealer
-import domain.person.GameState
 import domain.person.Player
 import domain.result.OutCome.DRAW
 import domain.result.OutCome.LOSE

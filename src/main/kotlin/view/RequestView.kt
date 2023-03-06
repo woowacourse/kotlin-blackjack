@@ -1,6 +1,6 @@
 package view
 
-import domain.constant.Decision
+import domain.Decision
 
 object RequestView {
     private const val ERROR_INPUT_BLACK = "공백은 입력할 수 없습니다."

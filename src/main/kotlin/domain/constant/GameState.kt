@@ -1,4 +1,4 @@
-package domain.person
+package domain.constant
 
 enum class GameState {
     HIT,

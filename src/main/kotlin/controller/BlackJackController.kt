@@ -1,9 +1,9 @@
 package controller
 
+import domain.Decision
 import domain.card.Deck
-import domain.constant.Decision
+import domain.constant.GameState.HIT
 import domain.person.Dealer
-import domain.person.GameState.HIT
 import domain.person.Player
 import domain.result.GameResult
 import view.RequestView

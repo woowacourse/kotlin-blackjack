@@ -1,8 +1,9 @@
 package domain.person
 
 import domain.constant.BlackJackConstants.BLACK_JACK
-import domain.person.GameState.BUST
-import domain.person.GameState.HIT
+import domain.constant.GameState
+import domain.constant.GameState.BUST
+import domain.constant.GameState.HIT
 import domain.result.CardsScore
 
 class Player(override val name: String) : Person(name) {

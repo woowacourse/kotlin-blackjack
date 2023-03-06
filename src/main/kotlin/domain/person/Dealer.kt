@@ -3,9 +3,10 @@ package domain.person
 import domain.card.Card
 import domain.constant.BlackJackConstants.BLACK_JACK
 import domain.constant.BlackJackConstants.DEALER_STAND_CONDITION
-import domain.person.GameState.BUST
-import domain.person.GameState.HIT
-import domain.person.GameState.STAND
+import domain.constant.GameState
+import domain.constant.GameState.BUST
+import domain.constant.GameState.HIT
+import domain.constant.GameState.STAND
 import domain.result.CardsScore
 
 class Dealer(override val name: String = "딜러") : Person(name) {

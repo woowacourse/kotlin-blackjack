@@ -3,8 +3,8 @@ package domain.person
 import domain.card.Card
 import domain.card.CardNumber
 import domain.card.CardShape.HEART
-import domain.person.GameState.BUST
-import domain.person.GameState.HIT
+import domain.constant.GameState.BUST
+import domain.constant.GameState.HIT
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test

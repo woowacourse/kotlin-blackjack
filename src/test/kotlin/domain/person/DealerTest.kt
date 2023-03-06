@@ -3,6 +3,7 @@ package domain.person
 import domain.card.Card
 import domain.card.CardNumber
 import domain.card.CardShape
+import domain.constant.GameState
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
