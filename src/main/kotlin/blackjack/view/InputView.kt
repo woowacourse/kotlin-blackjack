@@ -2,9 +2,7 @@ package blackjack.view
 
 import blackjack.domain.player.Participant
 import blackjack.domain.player.Participants
-import java.util.Locale
 
-@Suppress("UNUSED_EXPRESSION")
 class InputView {
 
     fun readParticipants(): Participants? {
@@ -20,11 +18,11 @@ class InputView {
     fun readHitOrNot(name: String): Boolean? {
         println(ASK_MORE_CARD.format(name))
 
-        when (readln().lowercase(Locale.getDefault())) {
+        return when (readln().lowercase()) {
             ANSWER_HIT -> true
             ANSWER_NOT_HIT -> false
+            else -> null
         }
-        return null
     }
 
     companion object {
