@@ -21,19 +21,16 @@ abstract class ParticipantCards(private val _cards: MutableList<Card>) {
     abstract fun checkOverCondition(): Boolean
 
     private fun getCardValue(card: Card, value: Int) =
-        if (card.cardValue == CardValue.ACE) {
+        if (card.cardValue == CardValue.ACE)
             getAceValue(value)
-        } else {
+        else
             card.cardValue.value
-        }
 
-    private fun getAceValue(value: Int) =
-        if (countAce() >= ACE_COUNT_VALUE_CHANGE_CONDITION) {
-            CardValue.ACE.aceValue
-        } else if (value > Referee.CARD_SUM_MAX_VALUE - CardValue.ACE.value) {
-            CardValue.ACE.aceValue
-        } else {
-            CardValue.ACE.value
+    private fun getAceValue(value: Int): Int =
+        when {
+            countAce() >= ACE_COUNT_VALUE_CHANGE_CONDITION -> CardValue.ACE.aceValue
+            value > Referee.CARD_SUM_MAX_VALUE - CardValue.ACE.value -> CardValue.ACE.aceValue
+            else -> CardValue.ACE.value
         }
 
     private fun countAce() = _cards.count { it.cardValue.title == "ACE" }
