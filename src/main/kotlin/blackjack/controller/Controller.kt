@@ -3,7 +3,6 @@ package blackjack.controller
 import blackjack.domain.CardBunch
 import blackjack.domain.Dealer
 import blackjack.domain.Player
-import blackjack.domain.Referee
 import blackjack.domain.carddeck.CardDeck
 import blackjack.view.InputView
 import blackjack.view.OutputView
@@ -12,12 +11,10 @@ class Controller(private val cardDeck: CardDeck) {
     fun runGame() {
         val dealer = makeDealer()
         val players = makePlayers(InputView.getPlayerNames())
-        val referee = Referee()
         showInitialCard(dealer, players)
         players.forEach { player -> askGetCard(player) }
-        players.forEach { player -> referee.chooseWinner(dealer, player) }
         printCardAndScore(dealer, players)
-        printFinalWinOrLose(referee)
+        printFinalWinOrLose(dealer, players)
     }
 
     private fun printCardAndScore(dealer: Dealer, players: List<Player>) {
@@ -60,7 +57,8 @@ class Controller(private val cardDeck: CardDeck) {
         if (condition) dealer.receiveCard(cardDeck.drawCard())
     }
 
-    private fun printFinalWinOrLose(referee: Referee) {
-        OutputView.printWinOrLose(referee)
+    private fun printFinalWinOrLose(dealer: Dealer, players: List<Player>) {
+        val gameResult = dealer.versusPlayers(players)
+        OutputView.printWinOrLose(gameResult)
     }
 }

@@ -10,7 +10,7 @@ class CardBunch private constructor(cards: MutableList<Card>) {
 
     fun addCard(card: Card) = _cards.add(card)
 
-    fun getTotalScore(): Int {
+    fun getSumOfCards(): Int {
         var result = 0
         cards.forEach { card ->
             result += card.cardNumber.value
@@ -35,7 +35,7 @@ class CardBunch private constructor(cards: MutableList<Card>) {
         }
     }
 
-    fun isBurst(): Boolean = getTotalScore() > MAX_SCORE_CONDITION
+    fun isBurst(): Boolean = getSumOfCards() > MAX_SCORE_CONDITION
 
     companion object {
         private const val ZERO = 0

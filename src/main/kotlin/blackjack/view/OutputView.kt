@@ -6,7 +6,6 @@ import blackjack.domain.CardNumber
 import blackjack.domain.Consequence
 import blackjack.domain.Dealer
 import blackjack.domain.Player
-import blackjack.domain.Referee
 
 object OutputView {
     private const val DEALER_INITIAL_CARD_SCRIPT = "딜러: %s"
@@ -43,31 +42,29 @@ object OutputView {
     }
 
     fun printCardAndScore(dealer: Dealer, players: List<Player>) {
-        println("딜러 카드 : ${makeBunchToString(dealer.cardBunch)} - 결과: ${dealer.cardBunch.getTotalScore()}")
+        println("딜러 카드 : ${makeBunchToString(dealer.cardBunch)} - 결과: ${dealer.getScore()}")
         players.forEach { player ->
             val bunchString = makeBunchToString(player.cardBunch)
-            println("${player.name}카드 : $bunchString - 결과: ${player.cardBunch.getTotalScore()}")
+            println("${player.name}카드 : $bunchString - 결과: ${player.getScore()}")
         }
         println()
     }
 
-    fun printWinOrLose(referee: Referee) {
+    fun printWinOrLose(gameResult: Map<String, Consequence>) {
         println("##최종 승패")
-        printPlayerResult(referee)
+        printPlayerResult(gameResult)
     }
 
-    private fun printPlayerResult(referee: Referee) {
-        val gameResult = referee.gameResult
-        val dealerResult = makeDealerResult(referee)
+    private fun printPlayerResult(gameResult: Map<String, Consequence>) {
+        val dealerResult = makeDealerResult(gameResult)
         println("딜러: ${dealerResult[DEALER_WIN]}승 ${dealerResult[DEALER_LOSE]}패 ${dealerResult[DRAW]}무")
-        gameResult.forEach {
-            println("${it.key}: ${it.value.value}")
+        gameResult.keys.forEach { name ->
+            println("$name: ${gameResult[name]?.value}")
         }
     }
 
-    private fun makeDealerResult(referee: Referee): List<Int> {
+    private fun makeDealerResult(gameResult: Map<String, Consequence>): List<Int> {
         val dealerResult = mutableListOf(0, 0, 0)
-        val gameResult = referee.gameResult
         gameResult.forEach {
             when (it.value) {
                 Consequence.WIN -> dealerResult[DEALER_LOSE]++

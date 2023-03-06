@@ -8,4 +8,6 @@ interface Participant {
     }
 
     fun canGetCard(): Boolean
+
+    fun getScore(): Int
 }

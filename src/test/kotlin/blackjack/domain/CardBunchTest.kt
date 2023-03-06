@@ -34,7 +34,7 @@ class CardBunchTest {
 
         val cardBunch = CardBunch(card1, card2, card3)
 
-        val totalScore = cardBunch.getTotalScore()
+        val totalScore = cardBunch.getSumOfCards()
         assertThat(totalScore).isEqualTo(22)
     }
 
@@ -46,7 +46,7 @@ class CardBunchTest {
 
         val cardBunch = CardBunch(card1, card2, card3)
 
-        val totalScore = cardBunch.getTotalScore()
+        val totalScore = cardBunch.getSumOfCards()
         assertThat(totalScore).isEqualTo(16)
     }
 
@@ -58,7 +58,7 @@ class CardBunchTest {
 
         val cardBunch = CardBunch(card1, card2, card3)
 
-        val totalScore = cardBunch.getTotalScore()
+        val totalScore = cardBunch.getSumOfCards()
         assertThat(totalScore).isEqualTo(21)
     }
 
@@ -71,7 +71,7 @@ class CardBunchTest {
 
         val cardBunch = CardBunch(card1, card2, card3, card4)
 
-        val totalScore = cardBunch.getTotalScore()
+        val totalScore = cardBunch.getSumOfCards()
         assertThat(totalScore).isEqualTo(23)
         assertThat(cardBunch.isBurst()).isTrue
     }
@@ -96,7 +96,7 @@ class CardBunchTest {
 
         val cardBunch = CardBunch(card1, card2, card3, card4)
 
-        assertThat(cardBunch.getTotalScore()).isEqualTo(14)
+        assertThat(cardBunch.getSumOfCards()).isEqualTo(14)
     }
 
     @Test
@@ -106,6 +106,6 @@ class CardBunchTest {
 
         val cardBunch = CardBunch(card1, card2)
 
-        assertThat(cardBunch.getTotalScore()).isEqualTo(12)
+        assertThat(cardBunch.getSumOfCards()).isEqualTo(12)
     }
 }
