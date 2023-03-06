@@ -5,12 +5,12 @@ enum class GameResult(val description: String) {
     LOSE("패"),
     DRAW("무");
 
-    operator fun not(): GameResult = if (this == WIN) {
-        LOSE
-    } else if (this == LOSE) {
-        WIN
-    } else {
-        DRAW
+    operator fun not(): GameResult {
+        return when (this) {
+            WIN -> LOSE
+            LOSE -> WIN
+            DRAW -> DRAW
+        }
     }
 
     companion object {
