@@ -8,7 +8,7 @@ class Referee(private val dealerState: DealerCards, private val players: List<Pl
 
     fun judgePlayersResult(): List<ParticipantResult> = mutableListOf<ParticipantResult>().apply {
         players.forEach {
-            this.add(ParticipantResult(it.name, judgePlayerResult(it.cards)))
+            this.add(ParticipantResult(it.name, judgePlayerResult(it.ownCards as PlayerCards)))
         }
     }
 
@@ -23,7 +23,7 @@ class Referee(private val dealerState: DealerCards, private val players: List<Pl
         return when {
             playerSum > CARD_SUM_MAX_VALUE -> Result.LOSS
             dealerSum.checkPlayerLossCondition(playerSum) -> Result.LOSS
-            playerSum == 21 && dealerSum == 21 -> Result.LOSS
+            playerSum == CARD_SUM_MAX_VALUE && dealerSum == CARD_SUM_MAX_VALUE -> Result.LOSS
             playerSum > dealerSum -> Result.WIN
             dealerSum > CARD_SUM_MAX_VALUE -> Result.WIN
             else -> Result.DRAW

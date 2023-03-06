@@ -1,12 +1,12 @@
 package controller
 
 import domain.BlackjackGame
-import domain.gamer.cards.ParticipantCards
 import domain.player.Names
+import domain.player.Player
 import view.InputView
 import view.OutputView
 
-class BlackjackController() {
+class BlackjackController {
 
     fun startGame() {
         val names = insertNames()
@@ -27,7 +27,7 @@ class BlackjackController() {
 
     private fun printBlackjackSetting(blackjackGame: BlackjackGame) {
         OutputView.printDivideCard(blackjackGame.names)
-        OutputView.printDealerSettingCard(blackjackGame.dealerState.cards[0])
+        OutputView.printDealerSettingCard(blackjackGame.dealerState.cards.first())
         OutputView.printParticipantsCards(blackjackGame.players)
     }
 
@@ -38,9 +38,9 @@ class BlackjackController() {
     }
 
     private fun printCardResult(blackjackGame: BlackjackGame) {
-        val cardResult = mutableMapOf<String, ParticipantCards>(DEALER to blackjackGame.dealerState)
-        blackjackGame.players.map {
-            cardResult.put(it.name, it.cards)
+        val cardResult = mutableListOf(Player(DEALER, blackjackGame.dealerState))
+        blackjackGame.players.forEach {
+            cardResult.add(Player(it.name, it.ownCards))
         }
         OutputView.printCardResult(cardResult)
     }
@@ -52,15 +52,13 @@ class BlackjackController() {
     }
 
     private fun repeatPickCard(blackjackGame: BlackjackGame, name: String) {
-        while (!blackjackGame.checkBurst(name)!!) {
+        while (!blackjackGame.checkBurst(name)) {
             val answer = validatePickAnswer(name)
             if (answer) blackjackGame.pickPlayerCard(name) else return
-            blackjackGame.players.find { it.name == name }?.cards?.let {
-                OutputView.printParticipantCards(
-                    name,
-                    it.cards
-                )
-            }
+            OutputView.printParticipantCards(
+                name,
+                blackjackGame.findPlayer(name).ownCards.cards
+            )
         }
     }
 

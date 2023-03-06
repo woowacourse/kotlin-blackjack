@@ -14,17 +14,16 @@ import domain.player.Player
 class BlackjackGame(val names: Names) {
     private val deck: Deck = Deck(CardMaker().makeShuffledCards())
     val dealerState: DealerCards
-    val players = mutableListOf<Player>()
+    val players: List<Player>
 
     init {
         dealerState = DealerCards(makeStartDeck())
-        makePlayer(names)
+        players = makePlayer(names)
     }
 
-    private fun makePlayer(names: Names) {
-        names.userNames.forEach {
-            val startDeck = makeStartDeck()
-            players.add(Player(it, PlayerCards(startDeck)))
+    private fun makePlayer(names: Names): List<Player> {
+        return names.userNames.map {
+            Player(it, PlayerCards(makeStartDeck()))
         }
     }
 
@@ -37,14 +36,18 @@ class BlackjackGame(val names: Names) {
     }
 
     fun pickPlayerCard(name: String) {
-        players.find { it.name == name }?.cards?.pickCard(deck.giveCard())
+        findPlayer(name).ownCards.pickCard(deck.giveCard())
+    }
+
+    fun findPlayer(name: String): Player {
+        return players.first { it.name == name }
     }
 
     fun pickDealerCard() {
         dealerState.pickCard(deck.giveCard())
     }
 
-    fun checkBurst(name: String) = players.find { it.name == name }?.cards?.checkOverCondition()
+    fun checkBurst(name: String) = findPlayer(name).ownCards.checkOverCondition()
 
     fun checkDealerAvailableForPick(): Boolean {
         return !dealerState.checkOverCondition()
@@ -52,9 +55,9 @@ class BlackjackGame(val names: Names) {
 
     fun getPlayerWinningResult(): List<ParticipantResult> = Referee(dealerState, players).judgePlayersResult()
 
-    fun judgeDealerResult(playersResult: List<ParticipantResult>) = mutableListOf<Result>().apply {
-        playersResult.forEach {
-            add(it.result.reverseResult())
+    fun judgeDealerResult(playersResult: List<ParticipantResult>): List<Result> {
+        return playersResult.map {
+            it.result.reverseResult()
         }
     }
 }
