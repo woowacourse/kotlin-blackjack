@@ -5,16 +5,21 @@ import domain.card.CardMaker
 
 object Deck {
     private const val ERROR_EMPTY_DECK = "[ERROR] 카드가 존재하지 않습니다."
-    private lateinit var deck: List<Card>
-
-    fun giveCard(): Card {
-        check(deck.isNotEmpty()) { println(ERROR_EMPTY_DECK) }
-        val card = deck.last()
-        deck = deck.minus(card)
-        return card
-    }
+    private const val MAX_DECK_COUNT = 52
+    private var deck = CardMaker().makeCards()
+    private var cardPosition = 0
 
     fun makeDeck() {
-        deck = CardMaker().makeCards()
+        cardPosition = 0
+        deck = deck.shuffled()
+    }
+
+    fun giveCard(): Card {
+        checkDeckEmpty()
+        return deck[cardPosition++]
+    }
+
+    private fun checkDeckEmpty() {
+        check(deck.isNotEmpty()) { println(ERROR_EMPTY_DECK) }
     }
 }

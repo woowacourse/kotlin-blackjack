@@ -8,7 +8,7 @@ class BlackjackGameTest {
     @Test
     fun `플레이어 3명이 승,패,패 일 때 딜러는 2승 1패이다`() {
         val actual =
-            BlackjackGame().judgeDealerResult(
+            BlackjackGame(listOf("jack", "king", "queen")).judgeDealerResult(
                 mapOf(
                     "jack" to Result.WIN,
                     "king" to Result.LOSS,
