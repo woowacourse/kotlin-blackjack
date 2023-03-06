@@ -17,8 +17,8 @@ class BlackJackRefereeTest {
 
     @Test
     fun `카드 합이 10인 딜러를 상대로 카드 합이 9인 링링은 패배하고 카드 합이 17인 우기는 승리하고 카드 합이 10인 써니는 무승부`() {
-        val woogi = Player(
-            name = PlayerName("woogi"),
+        val player1 = Player(
+            name = PlayerName("player1"),
             cards = Cards(
                 listOf(
                     Card(CardNumber.SEVEN, Shape.SPADE),
@@ -27,8 +27,8 @@ class BlackJackRefereeTest {
             )
         )
 
-        val ring = Player(
-            name = PlayerName("ring"),
+        val player2 = Player(
+            name = PlayerName("player2"),
             cards = Cards(
                 listOf(
                     Card(CardNumber.EIGHT, Shape.HEART),
@@ -37,8 +37,8 @@ class BlackJackRefereeTest {
             )
         )
 
-        val sunny = Player(
-            name = PlayerName("sunny"),
+        val player3 = Player(
+            name = PlayerName("player3"),
             cards = Cards(
                 listOf(
                     Card(CardNumber.EIGHT, Shape.HEART),
@@ -58,13 +58,13 @@ class BlackJackRefereeTest {
 
         val blackJackReferee = BlackJackReferee()
 
-        val actual = blackJackReferee.judgeGameResult(listOf(woogi, ring, sunny), dealer)
+        val actual = blackJackReferee.judgeGameResult(listOf(player1, player2, player3), dealer)
 
         assertThat(actual).isEqualTo(
             listOf(
-                PlayerGameResult("woogi", GameResult.WIN),
-                PlayerGameResult("ring", GameResult.LOSE),
-                PlayerGameResult("sunny", GameResult.DRAW)
+                PlayerGameResult("player1", GameResult.WIN),
+                PlayerGameResult("player2", GameResult.LOSE),
+                PlayerGameResult("player3", GameResult.DRAW)
             )
         )
     }

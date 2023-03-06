@@ -8,20 +8,13 @@ class Card(
     companion object {
         const val SPECIAL_CARDS_NAME_LENGTH = 1
 
-        private val ALL_CARDS: MutableSet<Card> = CardNumber.values().flatMap { cardNumber ->
-            listOf(
-                Card(cardNumber, Shape.CLOVER),
-                Card(cardNumber, Shape.HEART),
-                Card(cardNumber, Shape.DIAMOND),
-                Card(cardNumber, Shape.SPADE)
-            )
-        }.toMutableSet()
+        private val ALL_CARDS: Set<Card> = CardNumber.values().flatMap { cardNumber ->
+            Shape.values().map {
+                shape ->
+                Card(cardNumber, shape)
+            }
+        }.toSet()
 
-        fun draw(): Card {
-            val card = ALL_CARDS.random()
-            ALL_CARDS.remove(card)
-
-            return card
-        }
+        fun draw(): Card = ALL_CARDS.random()
     }
 }
