@@ -17,29 +17,18 @@ class ParticipantsTest {
     fun `딜러와 플레이어의 참가자 정보를 생성할 수 있다`() {
         val dealer = Dealer(Cards(setOf(Card(Rank.KING, Suit.HEART))))
         val players = Players(
-            listOf(
-                Player(
-                    Cards(
-                        setOf(
-                            Card(Rank.ACE, Suit.HEART)
-                        )
-                    ),
-                    Name("jason")
-                ),
-                Player(
-                    Cards(
-                        setOf(
-                            Card(Rank.DEUCE, Suit.HEART)
-                        )
-                    ),
-                    Name("pobi")
-                )
-            )
+            Player("jason", Card(Rank.ACE, Suit.HEART)),
+            Player("pobi", Card(Rank.DEUCE, Suit.HEART))
         )
         val actual = Participants(listOf(dealer) + players)
         assertThat(actual.participants.size).isEqualTo(3)
         assertThat(actual.participants[0].name.value).isEqualTo("딜러")
         assertThat(actual.participants[1].name.value).isEqualTo("jason")
         assertThat(actual.participants[2].name.value).isEqualTo("pobi")
+    }
+
+    companion object {
+        private fun Player(name: String, vararg card: Card): Player = Player(Cards(card.toSet()), Name(name))
+        private fun Players(vararg player: Player): Players = Players(player.toList())
     }
 }
