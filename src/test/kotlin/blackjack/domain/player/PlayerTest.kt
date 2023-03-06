@@ -71,5 +71,21 @@ class PlayerTest {
         assertThat(actual).isEqualTo(expected)
     }
 
-    class TestPlayer(name: String) : Player(name)
+    @Test
+    fun `카드 추가 발급 가능 여부를 판단한다`() {
+        // given
+        val testPlayer = TestPlayer("aaa")
+        testPlayer.addCard(Card(CardNumber.EIGHT, CardShape.CLOVER))
+        testPlayer.addCard(Card(CardNumber.FOUR, CardShape.CLOVER))
+
+        // when
+        val actual = testPlayer.checkProvideCardPossible()
+
+        // then
+        assertThat(actual).isFalse
+    }
+
+    class TestPlayer(name: String) : Player(name) {
+        override val cardProvideCriteria = 11
+    }
 }

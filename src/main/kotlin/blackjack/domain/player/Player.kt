@@ -9,6 +9,7 @@ abstract class Player(
 ) {
 
     val cards: Cards = Cards()
+    abstract val cardProvideCriteria: Int
 
     init {
         require(name.length in 2..10) { ERROR_NAME_LENGTH }
@@ -28,6 +29,11 @@ abstract class Player(
             (otherSum == mySum) -> Result.DRAW
             else -> Result.WIN
         }
+    }
+
+    fun checkProvideCardPossible(): Boolean {
+        if (cards.sumCardsNumber() <= cardProvideCriteria) return true
+        return false
     }
 
     companion object {

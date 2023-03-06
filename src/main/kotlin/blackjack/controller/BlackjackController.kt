@@ -59,7 +59,7 @@ class BlackjackController(
 
     private fun readParticipantMoreCard(participant: Participant) {
         while (true) {
-            val check = participant.isGenerateCardPossible()
+            val check = participant.checkProvideCardPossible()
             if (check) {
                 val answer = inputView.readMoreCard(participant.name)
                 if (answer) provideCard(participant)
@@ -71,7 +71,7 @@ class BlackjackController(
     }
 
     private fun giveDealerMoreCard(dealer: Dealer) {
-        val check = dealer.checkMustGenerateCard()
+        val check = dealer.checkProvideCardPossible()
         if (check) {
             provideCard(dealer)
             outputView.printDealerHitCardMent()

@@ -12,7 +12,7 @@ class DealerTest {
     fun `카드를 더 받아야 하는 상태인지 확인한다`() {
         val dealer = Dealer("aaa")
         dealer.addCard(Card(CardNumber.EIGHT, CardShape.CLOVER))
-        val actual = dealer.checkMustGenerateCard()
+        val actual = dealer.checkProvideCardPossible()
         assertThat(actual).isEqualTo(true)
     }
 

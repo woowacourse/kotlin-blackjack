@@ -5,11 +5,7 @@ import blackjack.domain.Result
 class Dealer(name: String = "딜러") : Player(name) {
 
     val results: MutableMap<Result, Int> = Result.values().associateWith { 0 }.toMutableMap()
-
-    fun checkMustGenerateCard(): Boolean {
-        if (cards.sumCardsNumber() <= MIN_SUM_NUMBER) return true
-        return false
-    }
+    override val cardProvideCriteria = MIN_SUM_NUMBER
 
     fun updateResults(othersSum: List<Int>) {
         othersSum.forEach {
