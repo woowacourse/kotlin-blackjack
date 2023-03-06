@@ -12,25 +12,33 @@ class CardBunch private constructor(cards: MutableList<Card>) {
 
     fun getTotalScore(): Int {
         var result = 0
-        val sortedCards = cards.sortedBy { it.cardNumber.value }.reversed()
-
-        sortedCards.forEach { card ->
-            result += if (card.cardNumber == CardNumber.ACE) checkAceValue(result) else card.cardNumber.value
+        cards.forEach { card ->
+            result += card.cardNumber.value
+        }
+        if (containAce()) {
+            result += checkAceValue(result)
         }
         return result
     }
 
+    private fun containAce(): Boolean {
+        _cards.forEach { card ->
+            if (card.cardNumber == CardNumber.ACE) return true
+        }
+        return false
+    }
+
     private fun checkAceValue(result: Int): Int {
-        return when (result + BIG_ACE_SCORE > MAX_SCORE_CONDITION) {
-            true -> SMALL_ACE_SCORE
-            false -> BIG_ACE_SCORE
+        return when (result + TEN > MAX_SCORE_CONDITION) {
+            true -> ZERO
+            false -> TEN
         }
     }
 
     fun isBurst(): Boolean = getTotalScore() > MAX_SCORE_CONDITION
 
     companion object {
-        private const val BIG_ACE_SCORE = 11
-        private const val SMALL_ACE_SCORE = 1
+        private const val ZERO = 0
+        private const val TEN = 10
     }
 }
