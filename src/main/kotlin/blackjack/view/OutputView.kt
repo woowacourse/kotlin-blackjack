@@ -9,13 +9,10 @@ import blackjack.dto.ScoreDTO
 import blackjack.dto.ScoresDTO
 
 object OutputView {
-    private const val GAME_SET_UP_MESSAGE = "%s와 %s에게 2장의 카드를 나누었습니다."
-    private const val DEALER_HIT_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다."
-    private const val SCORE_BOARD_MESSAGE = "%s 카드: %s - 결과: %d"
-    private const val FINAL_RESULT_MESSAGE = "## 최종 승패"
+    private const val SEPARATOR = ", "
 
     fun printInitialHands(dto: HandsDTO) {
-        println(GAME_SET_UP_MESSAGE.format(dto.dealerHand.name, dto.playerHands.joinToString(", ") { it.name }))
+        println("${dto.dealerHand.name}와 ${dto.playerHands.joinToString(SEPARATOR) { it.name }}에게 2장의 카드를 나누었습니다.")
         printHands(dto)
     }
 
@@ -25,11 +22,11 @@ object OutputView {
     }
 
     fun printHand(dto: HandDTO) {
-        println("${dto.name} 카드: ${dto.hand.joinToString(", ")}")
+        println("${dto.name} 카드: ${dto.hand.joinToString(SEPARATOR)}")
     }
 
     fun printDealerHit() {
-        println(DEALER_HIT_MESSAGE)
+        println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
     }
 
     fun printScores(dto: ScoresDTO) {
@@ -39,11 +36,11 @@ object OutputView {
     }
 
     private fun printScore(dto: ScoreDTO) {
-        println(SCORE_BOARD_MESSAGE.format(dto.handDTO.name, dto.handDTO.hand.joinToString(", "), dto.score))
+        println("${dto.handDTO.name} 카드: ${dto.handDTO.hand.joinToString(SEPARATOR)} - 결과: ${dto.score}")
     }
 
     fun printResults(dto: ResultsDTO) {
-        println(FINAL_RESULT_MESSAGE)
+        println("## 최종 승패")
         printDealerResult(dto)
         dto.results.forEach(::printPlayerResult)
     }
