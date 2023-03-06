@@ -34,11 +34,19 @@ object ResultView {
 
     private fun printDealerResult(dealerResult: Map<OutCome, Int>) {
         print(DEALER_SCRIPT)
-        dealerResult.entries.forEach { print(" ${it.value}${it.key.text}") }
+        dealerResult.entries.forEach { print(" ${it.value}${getOutComeText(it.key)}") }
         println()
     }
 
     private fun printPlayerResult(playerResult: Map<String, OutCome>) {
-        playerResult.entries.forEach { println("${it.key}: ${it.value.text}") }
+        playerResult.entries.forEach { println("${it.key}: ${getOutComeText(it.value)}") }
+    }
+
+    private fun getOutComeText(outCome: OutCome): String {
+        return when (outCome) {
+            OutCome.WIN -> "승"
+            OutCome.LOSE -> "패"
+            OutCome.DRAW -> "무"
+        }
     }
 }

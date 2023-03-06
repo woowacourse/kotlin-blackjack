@@ -1,13 +1,13 @@
 package domain.result
 
-enum class OutCome(val text: String) {
-    WIN("승") {
+enum class OutCome {
+    WIN {
         override fun convertOutCome() = LOSE
     },
-    DRAW("무") {
+    DRAW {
         override fun convertOutCome() = DRAW
     },
-    LOSE("패") {
+    LOSE {
         override fun convertOutCome() = WIN
     }, ;
 
