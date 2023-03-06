@@ -8,7 +8,7 @@ class Referee(private val dealerState: DealerCards, private val players: List<Pl
 
     fun judgePlayersResult(): List<ParticipantResult> = mutableListOf<ParticipantResult>().apply {
         players.forEach {
-            this.add(ParticipantResult(it.name, judgePlayerResult(it.state)))
+            this.add(ParticipantResult(it.name, judgePlayerResult(it.cards)))
         }
     }
 

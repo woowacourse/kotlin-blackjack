@@ -29,7 +29,7 @@ object OutputView {
 
     fun printParticipantsCards(participants: List<Player>) {
         participants.forEach { it ->
-            printParticipantCards(it.name, it.state.cards)
+            printParticipantCards(it.name, it.cards.cards)
         }
         println()
     }

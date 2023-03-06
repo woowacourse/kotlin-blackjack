@@ -37,14 +37,14 @@ class BlackjackGame(val names: Names) {
     }
 
     fun pickPlayerCard(name: String) {
-        players.find { it.name == name }?.state?.pickCard(deck.giveCard())
+        players.find { it.name == name }?.cards?.pickCard(deck.giveCard())
     }
 
     fun pickDealerCard() {
         dealerState.pickCard(deck.giveCard())
     }
 
-    fun checkBurst(name: String) = players.find { it.name == name }?.state?.checkOverCondition()
+    fun checkBurst(name: String) = players.find { it.name == name }?.cards?.checkOverCondition()
 
     fun checkDealerAvailableForPick(): Boolean {
         return !dealerState.checkOverCondition()

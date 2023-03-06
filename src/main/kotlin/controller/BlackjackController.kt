@@ -40,7 +40,7 @@ class BlackjackController() {
     private fun printCardResult(blackjackGame: BlackjackGame) {
         val cardResult = mutableMapOf<String, ParticipantCards>(DEALER to blackjackGame.dealerState)
         blackjackGame.players.map {
-            cardResult.put(it.name, it.state)
+            cardResult.put(it.name, it.cards)
         }
         OutputView.printCardResult(cardResult)
     }
@@ -55,7 +55,7 @@ class BlackjackController() {
         while (!blackjackGame.checkBurst(name)!!) {
             val answer = validatePickAnswer(name)
             if (answer) blackjackGame.pickPlayerCard(name) else return
-            blackjackGame.players.find { it.name == name }?.state?.let {
+            blackjackGame.players.find { it.name == name }?.cards?.let {
                 OutputView.printParticipantCards(
                     name,
                     it.cards
