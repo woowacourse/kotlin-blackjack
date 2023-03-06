@@ -2,11 +2,13 @@ package blackjack.domain.participants
 
 class ParticipantsBuilder {
     private lateinit var dealer: Dealer
-    private lateinit var guests: List<Guest>
+    private val guests = MutableList(0) { Guest("") }
 
     fun dealer() { dealer = Dealer() }
 
-    fun guests(names: List<String>) { guests = names.map { Guest(it) } }
+    fun guest(name: String, bettingMoney: Int) {
+        guests += Guest(name, bettingMoney)
+    }
 
     fun build(): Participants = Participants(dealer, guests)
 }

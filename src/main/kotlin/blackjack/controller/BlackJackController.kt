@@ -22,7 +22,7 @@ class BlackJackController(
         cardDeck(Cards.all())
         participants {
             dealer()
-            guests(inputView.inputParticipants())
+            inputView.inputParticipants().forEach { guest(it, 10) }
         }
         draw()
     }

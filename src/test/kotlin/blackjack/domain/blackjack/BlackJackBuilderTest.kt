@@ -12,7 +12,8 @@ class BlackJackBuilderTest {
             cardDeck(Cards.all())
             participants {
                 dealer()
-                guests(listOf("아크", "로피"))
+                guest("아크", 10)
+                guest("로피", 10)
             }
             draw()
         }
