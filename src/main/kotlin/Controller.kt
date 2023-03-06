@@ -1,5 +1,6 @@
 import domain.Answer
 import domain.Answer.Companion.YES
+import domain.Cards
 import domain.Dealer
 import domain.Deck
 import domain.GameResult
@@ -23,7 +24,7 @@ class Controller(
         val dealerCards = deck.getCardPair()
         val userCards = deck.getCardPairs(userNames.size)
         val users = createUsers(userNames, userCards)
-        val dealer = Dealer(cards = dealerCards)
+        val dealer = Dealer(cards = Cards(dealerCards))
 
         playGame(userNames, dealer, users)
         gameEnd(dealer, users)
@@ -64,7 +65,7 @@ class Controller(
     }
 
     private fun userPickNewCard(user: User) {
-        user.addCard(deck.getNewCard())
+        user.cards.addCard(deck.getNewCard())
         playGameView.printUserCard(user)
         repeatGetCommand(user)
     }
@@ -80,7 +81,7 @@ class Controller(
         if (!dealer.isOverSumCondition()) {
             playGameView.printDealerPickNewCard()
             val newCard = deck.getNewCard()
-            dealer.addCard(newCard)
+            dealer.cards.addCard(newCard)
         }
     }
 
@@ -91,9 +92,9 @@ class Controller(
 
     private fun getGameResult(dealer: Dealer, users: List<User>): List<GameResult> {
         val referee: Referee = Referee(
-            dealer.actualCardValueSum(),
+            dealer.cards.actualCardValueSum(),
             users.map { user ->
-                user.actualCardValueSum()
+                user.cards.actualCardValueSum()
             },
         )
         return referee.getResult()

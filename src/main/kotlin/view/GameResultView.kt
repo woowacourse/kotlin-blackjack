@@ -10,18 +10,18 @@ class GameResultView {
         println(
             PLAYER_CARD.format(
                 dealer.name,
-                dealer.cards.map { it.toString() }.joinToString(SEPARATOR),
-                dealer.actualCardValueSum(),
+                dealer.cards.value.joinToString(SEPARATOR) { it.toString() },
+                dealer.cards.actualCardValueSum(),
             ),
         )
         users.forEach { user ->
             println(
                 PLAYER_CARD.format(
                     user.name,
-                    (user.cards.map { it.toString() }).joinToString(
+                    (user.cards.value.map { it.toString() }).joinToString(
                         SEPARATOR,
                     ),
-                    user.actualCardValueSum(),
+                    user.cards.actualCardValueSum(),
                 ),
             )
         }

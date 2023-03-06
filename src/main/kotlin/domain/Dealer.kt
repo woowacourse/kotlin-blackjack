@@ -1,9 +1,7 @@
 package domain
 
-import domain.card.Card
-
-class Dealer(name: String = DEALER_NAME, cards: List<Card>) : Player(name, cards) {
-    fun isOverSumCondition(): Boolean = (actualCardValueSum() > SUM_CONDITION)
+class Dealer(name: String = DEALER_NAME, cards: Cards) : Player(name, cards) {
+    fun isOverSumCondition(): Boolean = (cards.actualCardValueSum() > SUM_CONDITION)
 
     companion object {
         private const val SUM_CONDITION = 16
