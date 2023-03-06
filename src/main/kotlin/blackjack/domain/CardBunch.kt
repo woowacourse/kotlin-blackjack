@@ -15,27 +15,20 @@ class CardBunch private constructor(cards: MutableList<Card>) {
     }
 
     fun getTotalScore(): Int {
-        var result = 0
-        val sortedCards = cards.sortedBy { it.cardNumber.value }.reversed()
-
-        sortedCards.forEach {
-            result += it.cardNumber.value ?: checkAceValue(result)
+        val aceCount = cards.count { it.cardNumber == CardNumber.ACE }
+        var result = cards.sumOf { it.cardNumber.value }
+        if (result > MAX_SCORE_CONDITION) return result
+        repeat(aceCount) {
+            if ((result + ACE_SCORE_GAP) > MAX_SCORE_CONDITION) return result
+            result += ACE_SCORE_GAP
         }
         return result
-    }
-
-    private fun checkAceValue(result: Int): Int {
-        return when (result + BIG_ACE_SCORE > MAX_SCORE_CONDITION) {
-            true -> SMALL_ACE_SCORE
-            false -> BIG_ACE_SCORE
-        }
     }
 
     fun isBurst(): Boolean = getTotalScore() > MAX_SCORE_CONDITION
 
     companion object {
         private const val DUPLICATE_ERROR = "중복된 카드는 추가할 수 없습니다."
-        private const val BIG_ACE_SCORE = 11
-        private const val SMALL_ACE_SCORE = 1
+        private const val ACE_SCORE_GAP = 10
     }
 }
