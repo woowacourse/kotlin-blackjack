@@ -1,8 +1,8 @@
 package blackjack.model
 
 import model.Card
-import model.Cards
 import model.Dealer
+import model.Hand
 import model.Rank
 import model.Suit
 import org.assertj.core.api.Assertions.assertThat
@@ -22,6 +22,6 @@ class DealerTest {
     }
 
     private fun dealer(vararg ranks: Rank): Dealer = Dealer(
-        Cards(ranks.map { Card(it, Suit.DIAMOND) })
+        Hand(ranks.map { Card(it, Suit.DIAMOND) })
     )
 }

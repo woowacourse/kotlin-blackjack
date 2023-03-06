@@ -2,7 +2,7 @@ package blackjack.model
 
 import domain.CardPackGenerator
 import model.Card
-import model.Cards
+import model.Hand
 import model.Name
 import model.Player
 import model.Rank
@@ -19,14 +19,19 @@ class PlayerTest {
             add(cardPack.pop())
         }
 
-        val player = Player(Cards(card), Name("jason"))
-        assertThat(player.cards.cards).isEqualTo(listOf(Card(Rank.ACE, Suit.DIAMOND), Card(Rank.ACE, Suit.CLOVER)))
+        val player = Player(Hand(card), Name("jason"))
+        assertThat(player.hand.toList()).isEqualTo(listOf(Card(Rank.ACE, Suit.DIAMOND), Card(Rank.ACE, Suit.CLOVER)))
+    }
+
+    @Test
+    fun `플레이어는 배팅 금액을 가진다`() {
+        val player = Player(Hand(emptyList()), Name("jason"))
     }
 
     @Test
     fun `카드의 합이 21이 넘지 않으면 bust이다`() {
         val player = Player(
-            Cards(
+            Hand(
                 listOf(
                     Card(Rank.KING, Suit.DIAMOND),
                     Card(Rank.JACK, Suit.CLOVER),
@@ -41,7 +46,7 @@ class PlayerTest {
     @Test
     fun `카드의 합이 21이 넘으면 bust이다`() {
         val player = Player(
-            Cards(
+            Hand(
                 listOf(
                     Card(Rank.KING, Suit.DIAMOND),
                     Card(Rank.JACK, Suit.CLOVER),
@@ -56,7 +61,7 @@ class PlayerTest {
     @Test
     fun `카드의 합이 21을 초과하지 않으면 hit 한다`() {
         val player = Player(
-            Cards(
+            Hand(
                 listOf(
                     Card(Rank.ACE, Suit.DIAMOND),
                     Card(Rank.JACK, Suit.CLOVER),
@@ -70,7 +75,7 @@ class PlayerTest {
     @Test
     fun `카드의 합이 21을 초과하면 stay 한다`() {
         val player = Player(
-            Cards(
+            Hand(
                 listOf(
                     Card(Rank.ACE, Suit.DIAMOND),
                     Card(Rank.ACE, Suit.CLOVER),

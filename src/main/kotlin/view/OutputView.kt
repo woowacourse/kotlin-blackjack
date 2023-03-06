@@ -1,14 +1,14 @@
 package view
 
 import model.Card
-import model.Cards
 import model.Dealer.Companion.DEALER
 import model.GameResult
+import model.Hand
 import model.Name
+import model.Names
 import model.Participant
+import model.Participants
 import model.Player
-import model.Rank
-import model.Suit
 
 class OutputView {
     private val suitModel = SuitModel()
@@ -17,7 +17,7 @@ class OutputView {
         println(MESSAGE_INPUT_NAME)
     }
 
-    fun printNoticeDistributeCards(players: List<Name>) {
+    fun printNoticeDistributeCards(players: Names) {
         println()
         println(MESSAGE_DISTRIBUTE_CARD.format(players.joinToString(", ") { it.value }))
     }
@@ -26,8 +26,8 @@ class OutputView {
         println(MESSAGE_INPUT_YES_OR_NO.format(name.value))
     }
 
-    fun printPlayersStatus(players: List<Participant>) {
-        players.forEach { printPlayerStatus(it) }
+    fun printPlayersStatus(players: Participants) {
+        players.toList().forEach { printPlayerStatus(it) }
         println()
     }
 
@@ -38,17 +38,17 @@ class OutputView {
 
     fun printPlayerStatus(participant: Participant) {
         if (participant.name.value == DEALER) {
-            println(MESSAGE_DEALER_STATUS.format(cardToString(participant.cards.cards[0])))
+            println(MESSAGE_DEALER_STATUS.format(cardToString(participant.hand.toList()[0])))
             return
         }
-        println(MESSAGE_PARTICIPANT_STATUS.format(participant.name.value, cardsToString((participant as Player).cards)))
+        println(MESSAGE_PARTICIPANT_STATUS.format(participant.name.value, cardsToString((participant as Player).hand)))
     }
 
-    fun printAllPlayerStatusResult(participants: List<Participant>) {
+    fun printAllPlayerStatusResult(participants: Participants) {
         println()
-        participants.forEach {
-            print(MESSAGE_PARTICIPANT_STATUS.format(it.name.value, cardsToString(it.cards)))
-            println(MESSAGE_POINT_RESULT.format(it.cards.sum()))
+        participants.toList().forEach {
+            print(MESSAGE_PARTICIPANT_STATUS.format(it.name.value, cardsToString(it.hand)))
+            println(MESSAGE_POINT_RESULT.format(it.hand.sum()))
         }
     }
 
@@ -61,7 +61,7 @@ class OutputView {
         }
     }
 
-    private fun cardsToString(cards: Cards): String = cards.cards.joinToString(separator = ", ") {
+    private fun cardsToString(hand: Hand): String = hand.toList().joinToString(separator = ", ") {
         rankModel.getString(it.rank) + suitModel.getString(it.suit)
     }
 

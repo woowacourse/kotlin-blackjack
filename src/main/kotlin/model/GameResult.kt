@@ -10,7 +10,7 @@ class GameResult private constructor(val playersResult: Map<String, Boolean>) {
         private fun match(dealer: Dealer, player: Player): Boolean {
             if (player.isBust()) return false
             if (dealer.isBust()) return true
-            return (BLACKJACK_POINT - dealer.cards.sum()) > (BLACKJACK_POINT - player.cards.sum())
+            return (BLACKJACK_POINT - dealer.hand.sum()) > (BLACKJACK_POINT - player.hand.sum())
         }
 
         fun of(dealer: Dealer, players: List<Player>): GameResult =

@@ -1,7 +1,7 @@
 package model
 
-class Dealer(cards: Cards, name: Name = Name(DEALER)) : Participant(cards, name) {
-    override fun isHit(): Boolean = cards.sum() < HIT_STANDARD_POINT
+class Dealer(hand: Hand, name: Name = Name(DEALER)) : Participant(hand, name) {
+    override fun isHit(): Boolean = hand.sum() < HIT_STANDARD_POINT
 
     companion object {
         const val DEALER = "딜러"
