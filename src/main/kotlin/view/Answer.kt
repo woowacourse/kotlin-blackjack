@@ -1,4 +1,4 @@
-package domain
+package view
 
 class Answer(
     val value: String,
