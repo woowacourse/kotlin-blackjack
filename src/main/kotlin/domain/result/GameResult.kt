@@ -16,7 +16,7 @@ class GameResult(private val dealer: Dealer, private val players: List<Player>) 
     }
 
     private fun compareTotalNumbers(player: Player): Pair<String, OutCome> {
-        val differenceCardNumber = player.getTotalCardNumber() - dealer.getTotalCardNumber()
+        val differenceCardNumber = player.cards.getTotalCardNumber() - dealer.cards.getTotalCardNumber()
         return when {
             player.isState(GameState.BUST) -> player.name to LOSE
             dealer.isState(GameState.BUST) -> player.name to WIN

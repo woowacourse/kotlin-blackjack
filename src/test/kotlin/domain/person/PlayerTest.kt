@@ -10,7 +10,6 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
-import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.MethodSource
 
 class PlayerTest {
@@ -30,7 +29,7 @@ class PlayerTest {
     @Test
     fun `플레이어는 카드를 받아서 패에 추가할 수 있다`() {
         player.receiveCard(Card(HEART, CardNumber.ACE))
-        assertThat(player.cards.size).isEqualTo(1)
+        assertThat(player.cards.value.size).isEqualTo(1)
     }
 
     @Test
@@ -38,14 +37,6 @@ class PlayerTest {
         assertThat(player.isState(HIT)).isTrue
     }
 
-    @CsvSource(value = ["ACE,TEN,21", "TWO,THREE,5"])
-    @ParameterizedTest
-    fun `카드 패의 총합을 계산한다`(number1: CardNumber, number2: CardNumber, sum: Int) {
-        player.receiveCard(Card(HEART, number1))
-        player.receiveCard(Card(HEART, number2))
-
-        assertThat(player.getTotalCardNumber()).isEqualTo(sum)
-    }
     @MethodSource("provideCardsBust")
     @ParameterizedTest
     fun `ACE 를 1로 간주한 합계가 21을 넘으면 상태가 BUST 이다`(numbers: List<CardNumber>) {

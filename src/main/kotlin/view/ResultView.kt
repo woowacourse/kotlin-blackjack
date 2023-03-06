@@ -29,7 +29,7 @@ object ResultView {
     }
 
     fun printPlayerCards(person: Person) {
-        println(INITIAL_CARDS_SCRIPT.format(person.name, person.cards.joinToString(", ") { cardToString(it) }))
+        println(INITIAL_CARDS_SCRIPT.format(person.name, person.cards.value.joinToString(", ") { cardToString(it) }))
     }
 
     fun printDealerGetMoreCard() = println(DEALER_ONE_MORE_CARD_SCRIPT + "\n")
@@ -46,8 +46,8 @@ object ResultView {
         println(
             RESULT_CARDS_SCRIPT.format(
                 person.name,
-                person.cards.joinToString(",") { cardToString(it) },
-                person.getTotalCardNumber(),
+                person.cards.value.joinToString(", ") { cardToString(it) },
+                person.cards.getTotalCardNumber(),
             ),
         )
     }

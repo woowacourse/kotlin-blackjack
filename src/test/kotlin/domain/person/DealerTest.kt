@@ -6,8 +6,6 @@ import domain.card.CardShape
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.CsvSource
 
 class DealerTest {
 
@@ -26,45 +24,12 @@ class DealerTest {
     @Test
     fun `딜러는 카드를 받아서 패에 추가할 수 있다`() {
         dealer.receiveCard(Card(CardShape.HEART, CardNumber.ACE))
-        assertThat(dealer.cards.size).isEqualTo(1)
+        assertThat(dealer.cards.value.size).isEqualTo(1)
     }
 
     @Test
     fun `딜러는 처음에 Hit 상태이다`() {
         assertThat(dealer.isState(GameState.HIT)).isTrue
-    }
-
-    @CsvSource(value = ["ACE,TEN,21", "TWO,THREE,5"])
-    @ParameterizedTest
-    fun `카드 패의 총합을 계산한다`(number1: CardNumber, number2: CardNumber, sum: Int) {
-        dealer.receiveCard(Card(CardShape.HEART, number1))
-        dealer.receiveCard(Card(CardShape.HEART, number2))
-
-        assertThat(dealer.getTotalCardNumber()).isEqualTo(sum)
-    }
-
-    @CsvSource(value = ["ACE,ACE,12", "ACE,FIVE,16", "ACE, KING,21"])
-    @ParameterizedTest
-    fun `카드가 두 장일 때 ACE 중 하나를 무조건 11 로 간주한다`(number1: CardNumber, number2: CardNumber, sum: Int) {
-        dealer.receiveCard(Card(CardShape.HEART, number1))
-        dealer.receiveCard(Card(CardShape.HEART, number2))
-
-        assertThat(dealer.getTotalCardNumber()).isEqualTo(sum)
-    }
-
-    @CsvSource(value = ["ACE,TEN,KING,21", "ACE,TWO,KING,13", "ACE,ACE,KING,12"])
-    @ParameterizedTest
-    fun `카드가 세 장일 때 ACE 하나를 11로 간주해서 21보다 커지면 ACE 를 모두 1로 간주한다`(
-        number1: CardNumber,
-        number2: CardNumber,
-        number3: CardNumber,
-        sum: Int,
-    ) {
-        dealer.receiveCard(Card(CardShape.HEART, number1))
-        dealer.receiveCard(Card(CardShape.HEART, number2))
-        dealer.receiveCard(Card(CardShape.HEART, number3))
-
-        assertThat(dealer.getTotalCardNumber()).isEqualTo(sum)
     }
 
     @Test
