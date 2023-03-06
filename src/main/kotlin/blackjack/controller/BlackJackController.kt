@@ -7,29 +7,28 @@ import blackjack.view.InputView
 import blackjack.view.OutputView
 
 class BlackJackController {
-    private lateinit var blackJack: BlackJack
 
     fun start() {
-        initBlackJack()
-        setUpCard()
-        takeTurns()
-        takeDealerTurn()
+        with(initBlackJack()) {
+            setUpCard(this)
+            takeTurns(this)
+            takeDealerTurn(this)
 
-        OutputView.printScores(blackJack.getGameScores())
-        OutputView.printResults(blackJack.getGameResults())
+            OutputView.printScores(getGameScores())
+            OutputView.printResults(getGameResults())
+        }
     }
 
-    private fun initBlackJack() {
-        blackJack = BlackJackBuilder {
+    private fun initBlackJack(): BlackJack =
+        BlackJackBuilder {
             cardDeck()
             participants {
                 dealer()
                 players(InputView.inputNames())
             }
         }
-    }
 
-    private fun setUpCard() {
+    private fun setUpCard(blackJack: BlackJack) {
         drawInitialCards(blackJack)
         OutputView.printInitialHands(blackJack.getInitialHands())
         OutputView.printInterval()
@@ -40,22 +39,24 @@ class BlackJackController {
         blackJack.drawAll()
     }
 
-    private fun takeTurns() {
-        blackJack.getPlayers().forEach(::takePlayerTurn)
+    private fun takeTurns(blackJack: BlackJack) {
+        blackJack.getPlayers().forEach { player ->
+            takePlayerTurn(blackJack, player)
+        }
         OutputView.printInterval()
     }
 
-    private fun takePlayerTurn(player: Player) {
+    private fun takePlayerTurn(blackJack: BlackJack, player: Player) {
         if (!player.isBust()) {
             val isDraw = InputView.inputDrawCommand(player.name)
             if (!isDraw) return printPlayerHand(player)
 
-            drawCard(player)
-            takePlayerTurn(player)
+            drawCard(blackJack, player)
+            takePlayerTurn(blackJack, player)
         }
     }
 
-    private fun drawCard(player: Player) {
+    private fun drawCard(blackJack: BlackJack, player: Player) {
         blackJack.drawPlayer(player)
         printPlayerHand(player)
     }
@@ -64,7 +65,7 @@ class BlackJackController {
         OutputView.printHand(player.getHand())
     }
 
-    private fun takeDealerTurn() {
+    private fun takeDealerTurn(blackJack: BlackJack) {
         blackJack.drawDealer { isHit ->
             if (isHit) OutputView.printDealerHit()
         }
