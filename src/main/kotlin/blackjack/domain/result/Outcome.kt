@@ -1,5 +1,6 @@
 package blackjack.domain.result
-import blackjack.domain.participants.User
+import blackjack.domain.participants.Dealer
+import blackjack.domain.participants.Guest
 import java.lang.IllegalStateException
 
 enum class Outcome(val rate: Double) {
@@ -10,30 +11,30 @@ enum class Outcome(val rate: Double) {
     ;
 
     companion object {
-        fun User.winTo(other: User): Outcome = matchBlackJack(this, other)
+        fun calculateGuestWin(guest: Guest, dealer: Dealer): Outcome = matchBlackJack(guest, dealer)
 
-        private fun matchBlackJack(a: User, b: User): Outcome =
+        private fun matchBlackJack(guest: Guest, dealer: Dealer): Outcome =
             when {
-                a.isBlackJack() && a.cards.size == 2 -> WIN_WITH_BLACKJACK
-                a.isBlackJack() && b.isBlackJack() -> DRAW
-                a.isBlackJack() -> WIN
-                b.isBlackJack() -> LOSE
-                else -> matchBust(a, b)
+                guest.isBlackJack() && guest.cards.size == 2 -> WIN_WITH_BLACKJACK
+                guest.isBlackJack() && dealer.isBlackJack() -> DRAW
+                guest.isBlackJack() -> WIN
+                dealer.isBlackJack() -> LOSE
+                else -> matchBust(guest, dealer)
             }
 
-        private fun matchBust(a: User, b: User): Outcome =
+        private fun matchBust(guest: Guest, dealer: Dealer): Outcome =
             when {
-                a.isBust() && b.isBust() -> DRAW
-                a.isBust() -> LOSE
-                b.isBust() -> WIN
-                else -> matchScore(a, b)
+                guest.isBust() && dealer.isBust() -> DRAW
+                guest.isBust() -> LOSE
+                dealer.isBust() -> WIN
+                else -> matchScore(guest, dealer)
             }
 
-        private fun matchScore(a: User, b: User): Outcome =
+        private fun matchScore(guest: Guest, dealer: Dealer): Outcome =
             when {
-                a.score() > b.score() -> WIN
-                a.score() == b.score() -> DRAW
-                a.score() < b.score() -> LOSE
+                guest.score() > dealer.score() -> WIN
+                guest.score() == dealer.score() -> DRAW
+                guest.score() < dealer.score() -> LOSE
                 else -> throw IllegalStateException()
             }
     }
