@@ -1,4 +1,4 @@
-package domain.constant
+package constant
 
 enum class Decision(val text: String) {
     YES("y"),

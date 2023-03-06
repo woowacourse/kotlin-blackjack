@@ -1,9 +1,9 @@
 package domain.person
 
+import constant.BlackJackRule.DEALER_STAND_CONDITION
 import domain.card.Card
 import domain.card.HandOfCards
 import domain.card.strategy.GetAppropriateSum
-import domain.constant.DEALER_STAND_CONDITION
 
 class Dealer(
     override val handOfCards: HandOfCards,

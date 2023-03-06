@@ -1,9 +1,9 @@
 package domain.card.strategy
 
+import constant.BlackJackRule.BIG_ACE
+import constant.BlackJackRule.BLACK_JACK
+import constant.BlackJackRule.SMALL_ACE
 import domain.card.HandOfCards
-import domain.constant.BIG_ACE
-import domain.constant.BLACK_JACK
-import domain.constant.SMALL_ACE
 
 class GetAppropriateSum : SumStrategy {
     override fun getSum(handOfCards: HandOfCards): Int {

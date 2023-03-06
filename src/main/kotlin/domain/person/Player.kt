@@ -1,8 +1,8 @@
 package domain.person
 
+import constant.BlackJackRule.BLACK_JACK
 import domain.card.HandOfCards
 import domain.card.strategy.GetMinSum
-import domain.constant.BLACK_JACK
 
 class Player(
     override val name: String,

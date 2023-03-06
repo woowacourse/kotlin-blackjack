@@ -1,10 +1,10 @@
 package domain.person
 
+import constant.BlackJackRule.BLACK_JACK
 import domain.card.Card
 import domain.card.HandOfCards
 import domain.card.strategy.GetMinSum
 import domain.card.strategy.SumStrategy
-import domain.constant.BLACK_JACK
 
 abstract class Person() {
     abstract val name: String

@@ -1,7 +1,7 @@
 package view
 
-import domain.constant.DEALER_STAND_CONDITION
-import domain.constant.Decision
+import constant.BlackJackRule.DEALER_STAND_CONDITION
+import constant.Decision
 import domain.person.Player
 
 object AdditionalCardView {
