@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test
 class BlackJackRefereeTest {
 
     @Test
-    fun `카드 합이 10인 딜러를 상대로 카드 합이 9인 링링은 패배하고 카드 합이 17인 우기는 승리하고 카드 합이 10인 써니는 무승부`() {
+    fun `카드 합이 10인 딜러를 상대로 카드 합이 9인 플레이어는 패배하고 카드 합이 17인 플레이어는 승리하고 카드 합이 10인 플레이어는 무승부`() {
         val player1 = Player(
             name = PlayerName("player1"),
             cards = Cards(
