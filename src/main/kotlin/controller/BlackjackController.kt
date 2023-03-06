@@ -10,6 +10,7 @@ class BlackjackController() {
     fun startGame() {
         val names = InputView.inputPlayerNames()
         val blackjackGame = BlackjackGame(names)
+        blackjackGame.startGame()
         printBlackjackSetting(names, blackjackGame)
         requestPickCard(names, blackjackGame)
         dealerPickCard(blackjackGame)

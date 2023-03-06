@@ -2,10 +2,18 @@ package domain.gamer
 
 import domain.card.Card
 import domain.card.CardValue
+import domain.deck.Deck
 import domain.gamer.cards.Cards
 import domain.judge.Referee
 
 abstract class Participant(open val cards: Cards) {
+
+    fun makeStartDeck() {
+        repeat(2) {
+            pickCard(Deck.giveCard())
+        }
+    }
+
     open fun pickCard(card: Card) {
         cards.addCard(card)
     }

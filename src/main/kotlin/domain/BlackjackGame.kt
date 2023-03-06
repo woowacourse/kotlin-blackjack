@@ -1,7 +1,5 @@
 package domain
 
-import domain.card.Card
-import domain.card.CardMaker
 import domain.deck.Deck
 import domain.gamer.Dealer
 import domain.gamer.Player
@@ -10,44 +8,23 @@ import domain.judge.Referee
 import domain.judge.Result
 
 class BlackjackGame(private val names: List<String>) {
-    private val deck: Deck = Deck(CardMaker().makeCards())
-    lateinit var dealer: Dealer
-    val players = mutableListOf<Player>()
+    val dealer = Dealer(Cards(listOf()))
+    val players: List<Player> = names.map { Player(it, Cards(listOf())) }
 
-    init {
-        makeParticipants()
-    }
-
-    private fun makeParticipants() {
-        makeDealer()
-        makePlayer(names)
-    }
-
-    private fun makeDealer() {
-        dealer = Dealer(Cards(makeStartDeck()))
-    }
-
-    private fun makePlayer(names: List<String>) {
-        names.forEach { name ->
-            val startDeck = makeStartDeck()
-            players.add(Player(name, Cards(startDeck)))
+    fun startGame() {
+        Deck.makeDeck()
+        dealer.makeStartDeck()
+        players.forEach {
+            it.makeStartDeck()
         }
-    }
-
-    private fun makeStartDeck(): MutableList<Card> {
-        val startDeck = mutableListOf<Card>()
-        repeat(2) {
-            startDeck.add(deck.giveCard())
-        }
-        return startDeck
     }
 
     fun pickPlayerCard(name: String) {
-        players.find { it.name == name }!!.pickCard(deck.giveCard())
+        players.find { it.name == name }?.pickCard(Deck.giveCard())
     }
 
     fun pickDealerCard() {
-        dealer.pickCard(deck.giveCard())
+        dealer.pickCard(Deck.giveCard())
     }
 
     fun checkBurst(name: String) = players.find { it.name == name }!!.checkBurst()

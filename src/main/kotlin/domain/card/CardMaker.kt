@@ -1,6 +1,6 @@
 package domain.card
 
-class CardMaker { // object
+class CardMaker {
     fun makeCards(): List<Card> = Shape.values()
         .map { makeCard(it) }
         .flatten()
