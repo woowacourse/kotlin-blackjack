@@ -4,7 +4,7 @@ import domain.card.Card
 import domain.card.CardShape
 import domain.card.CardValue
 
-class Deck(cards: List<Card>) {
+class Deck private constructor(cards: List<Card>) {
     private val _cards: MutableList<Card> = cards.toMutableList()
 
     fun getOneCard() = _cards.removeFirst()
@@ -25,6 +25,9 @@ class Deck(cards: List<Card>) {
         private fun mapCardValue(shape: CardShape): List<Card> =
             CardValue.values().map { value -> Card(shape, value) }
 
-        fun create(count: Int): Deck = Deck(List(count) { CARDS }.flatten().shuffled())
+        fun create(
+            count: Int,
+            generateCards: () -> List<Card> = { List(count) { CARDS }.flatten().shuffled() }
+        ): Deck = Deck(generateCards())
     }
 }

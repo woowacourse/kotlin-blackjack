@@ -15,7 +15,9 @@ class Cards(cards: List<Card>) {
         return calculateCardValueSum()
     }
 
-    private fun calculateCardValueSum(): Int = _value.sumOf { Card.valueOf(it) }
+    private fun calculateCardValueSum(): Int = _value.sumOf { card ->
+        card.value.number
+    }
 
     fun addCard(card: Card) {
         _value.add(card)
