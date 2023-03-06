@@ -1,10 +1,10 @@
 package blackjack.domain
 
-class Card private constructor(private val shape: Shape, val number: CardNumber) {
-    override fun toString(): String = "${number.toLetter()}${shape.name}"
+class Card private constructor(private val suit: Suit, val number: CardNumber) {
+    override fun toString(): String = "${number.toLetter()}${suit.name}"
 
     companion object {
-        private val CARDS = Shape.values().map { shape ->
+        private val CARDS = Suit.values().map { shape ->
             (CardNumber.min()..CardNumber.max()).map { Card(shape, CardNumber(it)) }
         }.flatten()
 
