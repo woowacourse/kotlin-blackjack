@@ -1,7 +1,7 @@
 package blackjack.domain
 
-object Deck {
-    private const val INIT_CARD_SET_SIZE = 6
+class Deck {
+
     private val cards: MutableList<Card> = (1..INIT_CARD_SET_SIZE).flatMap {
         createCardSet()
     }
@@ -16,4 +16,8 @@ object Deck {
     fun draw(): Card? = cards.removeLastOrNull()
 
     fun isNotExhausted() = cards.isNotEmpty()
+
+    companion object {
+        private const val INIT_CARD_SET_SIZE = 6
+    }
 }
