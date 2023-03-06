@@ -17,32 +17,17 @@ class DealerTest {
     }
 
     @Test
-    fun `참가자들을 받아 각각의 승패를 결정하도록 전달한다`() {
-        val participant1 = Participant("aa")
-        val participant2 = Participant("bb")
-        participant1.addCard(Card(CardNumber.FIVE, CardShape.HEART))
-        participant2.addCard(Card(CardNumber.QUEEN, CardShape.DIAMOND))
-        val participants = Participants(listOf(participant1, participant2))
-        val dealer = Dealer("dealer")
-        dealer.addCard(Card(CardNumber.SEVEN, CardShape.DIAMOND))
-        dealer.decideParticipantsResult(participants)
-        assertThat(participant1.result).isEqualTo(Result.LOSE)
-        assertThat(participant2.result).isEqualTo(Result.WIN)
-    }
+    fun `다른 플레이어들의 카드 숫자 합을 받아 자신의 승패 결과들을 업데이트한다`() {
+        // given
+        val dealer = Dealer()
+        dealer.addCard(Card(CardNumber.EIGHT, CardShape.DIAMOND))
+        dealer.addCard(Card(CardNumber.SEVEN, CardShape.HEART))
+        val othersSum = listOf(15, 21, 8)
 
-    @Test
-    fun `딜러는 각 참가자들의 승패와 상반되는 승패 결과를 모두 더한다`() {
-        val participant1 = Participant("aa")
-        val participant2 = Participant("bb")
-        participant1.addCard(Card(CardNumber.FIVE, CardShape.HEART))
-        participant2.addCard(Card(CardNumber.QUEEN, CardShape.DIAMOND))
-        val participants = Participants(listOf(participant1, participant2))
-        val dealer = Dealer("dealer")
-        dealer.addCard(Card(CardNumber.SEVEN, CardShape.DIAMOND))
-        dealer.decideParticipantsResult(participants)
-        dealer.decideDealerResult(participants)
-        assertThat(dealer.results).isEqualTo(
-            mapOf(Result.WIN to 1, Result.DRAW to 0, Result.LOSE to 1)
-        )
+        // when
+        dealer.updateResults(othersSum)
+
+        // then
+        assertThat(dealer.results).isEqualTo(mapOf(Result.WIN to 1, Result.LOSE to 1, Result.DRAW to 1))
     }
 }

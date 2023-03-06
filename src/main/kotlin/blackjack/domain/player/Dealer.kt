@@ -11,16 +11,10 @@ class Dealer(name: String = "딜러") : Player(name) {
         return false
     }
 
-    fun decideParticipantsResult(participants: Participants) {
-        participants.values.forEach {
-            it.updateResult(cards.sumCardsNumber())
-        }
-    }
-
-    fun decideDealerResult(participants: Participants) {
-        participants.values.forEach {
-            val dealerResult = Result.reverse(it.result)
-            results[dealerResult] = results[dealerResult]?.plus(1) ?: throw IllegalArgumentException()
+    fun updateResults(othersSum: List<Int>) {
+        othersSum.forEach {
+            val result = calculateResult(it)
+            results[result] = results[result]?.plus(1) ?: throw IllegalArgumentException()
         }
     }
 

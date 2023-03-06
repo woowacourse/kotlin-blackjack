@@ -15,13 +15,15 @@ class BlackjackController(
 ) {
 
     fun run() {
-        val dealer: Dealer = Dealer()
+        val dealer = Dealer()
         val participants = readParticipants()
         settingPlayersCards(dealer, participants)
         readParticipantsMoreCard(participants)
         giveDealerMoreCard(dealer)
-        dealer.decideParticipantsResult(participants)
-        dealer.decideDealerResult(participants)
+        participants.values.forEach {
+            it.updateResult(dealer.cards.sumCardsNumber())
+        }
+        dealer.updateResults(participants.values.map { it.cards.sumCardsNumber() })
         printSumResult(dealer, participants)
         printFinalResult(dealer, participants)
     }

@@ -18,13 +18,17 @@ class ParticipantTest {
     }
 
     @Test
-    fun `승패 결과를 결정하여 상태를 변경한다`() {
+    fun `딜러의 카드 합을 받아 자신의 승패를 결정한다`() {
+        // given
         val participant = Participant("aaa")
-
         participant.addCard(Card(CardNumber.ONE, CardShape.CLOVER))
         participant.addCard(Card(CardNumber.JACK, CardShape.HEART))
-        participant.updateResult(21)
+        val dealerSum = 15
 
-        assertThat(participant.result).isEqualTo(Result.DRAW)
+        // when
+        participant.updateResult(dealerSum)
+
+        // then
+        assertThat(participant.result).isEqualTo(Result.WIN)
     }
 }
