@@ -22,28 +22,30 @@ class Cards(list: List<Card>) {
         _cards.add(card)
     }
 
-    fun contains(card: Card): Boolean {
-        return _cards.contains(card)
+    private fun isContainAce(): Boolean {
+        return _cards.count { it.isAce } == NO_COUNT
     }
 
-    fun minSumState(): State {
-        val minSum = sum()
-        if (minSum > BlackJackGame.BLACKJACK_NUMBER) return State.Burst(minSum)
-        return State.NoBurst(minSum)
-    }
-
-    fun maxSumState(): State {
-        val minSumState = minSumState()
-        val aceCount = list.count { it.isAce }
-        if (aceCount == NO_COUNT) return minSumState
-        if (minSumState.sum + ACE_ADDITIONAL_VALUE > BlackJackGame.BLACKJACK_NUMBER) return minSumState
-        return State.NoBurst(minSumState.sum + ACE_ADDITIONAL_VALUE)
-    }
-
-    sealed class State(open val sum: Int) {
-        data class Burst(override val sum: Int) : State(sum)
-        data class NoBurst(override val sum: Int) : State(sum)
-    }
+    fun getScore(): Score = Score(sum(), isContainAce())
+//
+//    fun minSumState(): State {
+//        val minSum = sum()
+//        if (minSum > BlackJackGame.BLACKJACK_NUMBER) return State.Burst(minSum)
+//        return State.NoBurst(minSum)
+//    }
+//
+//    fun maxSumState(): State {
+//        val minSumState = minSumState()
+//        val aceCount = list.count { it.isAce }
+//        if (aceCount == NO_COUNT) return minSumState
+//        if (minSumState.sum + ACE_ADDITIONAL_VALUE > BlackJackGame.BLACKJACK_NUMBER) return minSumState
+//        return State.NoBurst(minSumState.sum + ACE_ADDITIONAL_VALUE)
+//    }
+//
+//    sealed class State(open val sum: Int) {
+//        data class Burst(override val sum: Int) : State(sum)
+//        data class NoBurst(override val sum: Int) : State(sum)
+//    }
 
 
     companion object {
