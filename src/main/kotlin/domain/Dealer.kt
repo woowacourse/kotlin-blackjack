@@ -2,7 +2,7 @@ package domain
 
 class Dealer(cards: Cards) : Participant(Name("딜러"), cards) {
     override fun showInitCards(): List<Card> {
-        return cards.cards.take(TAKE_ONE)
+        return cards.list.take(TAKE_ONE)
     }
 
     override fun isPossibleDrawCard(): Boolean = cards.maxSumState().sum <= DEALER_ADD_CARD_CONDITION

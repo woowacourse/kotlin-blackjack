@@ -2,20 +2,20 @@ package domain
 
 import controller.BlackJackGame
 
-class Cards(cards: List<Card>) {
-    private val _cards = cards.toMutableList()
-    val cards: List<Card>
+class Cards(list: List<Card>) {
+    private val _cards = list.toMutableList()
+    val list: List<Card>
         get() = _cards.toList()
 
     val size: Int
         get() = _cards.size
 
     init {
-        check(cards.size >= MINIMUM_CARDS_SIZE) { ERROR_CARDS_SIZE }
+        check(list.size >= MINIMUM_CARDS_SIZE) { ERROR_CARDS_SIZE }
     }
 
     fun sum(): Int {
-        return cards.sumOf { it.cardNumber.value }
+        return list.sumOf { it.cardNumber.value }
     }
 
     fun add(card: Card) {
@@ -34,7 +34,7 @@ class Cards(cards: List<Card>) {
 
     fun maxSumState(): State {
         val minSumState = minSumState()
-        val aceCount = cards.count { it.isAce }
+        val aceCount = list.count { it.isAce }
         if (aceCount == NO_COUNT) return minSumState
         if (minSumState.sum + ACE_ADDITIONAL_VALUE > BlackJackGame.BLACKJACK_NUMBER) return minSumState
         return State.NoBurst(minSumState.sum + ACE_ADDITIONAL_VALUE)

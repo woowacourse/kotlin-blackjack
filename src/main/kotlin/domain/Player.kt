@@ -2,7 +2,7 @@ package domain
 
 class Player(name: Name, cards: Cards) : Participant(name, cards) {
     override fun showInitCards(): List<Card> {
-        return cards.cards.take(TAKE_TWO)
+        return cards.list.take(TAKE_TWO)
     }
 
     override fun isPossibleDrawCard(): Boolean {

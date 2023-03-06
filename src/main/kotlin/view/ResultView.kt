@@ -19,7 +19,7 @@ class ResultView {
     }
 
     fun printPlayerCard(player: Player) {
-        println(PRINT_NAME_AND_CARDS.format(player.name.name, formatStringCards(player.cards.cards)))
+        println(PRINT_NAME_AND_CARDS.format(player.name.name, formatStringCards(player.cards.list)))
     }
 
     fun printDealerAddCard(dealer: Dealer) {
@@ -71,7 +71,7 @@ class ResultView {
             println(
                 PRINT_NAME_AND_CARDS_AND_SCORE.format(
                     participant.name.name,
-                    formatStringCards(participant.cards.cards),
+                    formatStringCards(participant.cards.list),
                     participant.getSumStateResult().sum
                 )
             )

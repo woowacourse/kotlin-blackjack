@@ -16,7 +16,7 @@ class ParticipantTest {
             )
         ) {
             override fun showInitCards(): List<Card> {
-                return cards.cards.take(2)
+                return cards.list.take(2)
             }
 
             override fun isPossibleDrawCard(): Boolean {
@@ -42,7 +42,7 @@ class ParticipantTest {
             )
         ) {
             override fun showInitCards(): List<Card> {
-                return cards.cards.take(2)
+                return cards.list.take(2)
             }
 
             override fun isPossibleDrawCard(): Boolean {
