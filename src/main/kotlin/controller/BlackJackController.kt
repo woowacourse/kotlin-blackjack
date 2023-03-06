@@ -1,6 +1,6 @@
 package controller
 
-import constant.Decision
+import domain.Decision
 import domain.card.Deck
 import domain.person.Dealer
 import domain.person.PersonGenerator
