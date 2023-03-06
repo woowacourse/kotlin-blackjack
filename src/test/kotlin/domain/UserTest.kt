@@ -8,37 +8,15 @@ import org.junit.jupiter.api.Test
 
 class UserTest {
     @Test
-    fun `플레이어는 소지한 카드의 합은 8이다`() {
-        // given
+    fun `이름이 해시, 카드 2장을 가진 유저를 생성한다`() {
         val user = User.create(
-            "산군" to listOf<Card>(
-                Card(CardShape.CLUBS, CardValue.FIVE),
-                Card(CardShape.DIAMONDS, CardValue.THREE),
-            ),
+            "해시" to
+                listOf(
+                    Card(CardShape.DIAMONDS, CardValue.ACE),
+                    Card(CardShape.HEARTS, CardValue.TWO)
+                )
         )
-
-        // when
-        val actual = user.calculateCardValueSum()
-
-        // then
-        assertThat(actual).isEqualTo(8)
-    }
-
-    @Test
-    fun `플레이어는 소지한 카드의 합은 10이다`() {
-        // given
-        val user = User.create(
-            "산군" to
-                listOf<Card>(
-                    Card(CardShape.CLUBS, CardValue.FIVE),
-                    Card(CardShape.DIAMONDS, CardValue.FIVE),
-                ),
-        )
-
-        // when
-        val actual = user.calculateCardValueSum()
-
-        // then
-        assertThat(actual).isEqualTo(10)
+        assertThat(user.name).isEqualTo("해시")
+        assertThat(user.cards.value.size).isEqualTo(2)
     }
 }
