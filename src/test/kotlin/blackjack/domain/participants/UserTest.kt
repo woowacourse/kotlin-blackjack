@@ -21,4 +21,20 @@ class UserTest {
         user.draw(Card(CardMark.SPADE, CardValue.EIGHT))
         assertThat(user.score()).isEqualTo(16)
     }
+
+    @Test
+    fun `ACE를 2장 뽑아도 버스트가 아니다`() {
+        val user = Guest("아크")
+        user.draw(Card(CardMark.CLOVER, CardValue.ACE))
+        user.draw(Card(CardMark.SPADE, CardValue.ACE))
+        assertThat(user.isBust()).isFalse
+    }
+
+    @Test
+    fun `ACE한장과 10이 나오면 블랙잭이다`() {
+        val user = Guest("아크")
+        user.draw(Card(CardMark.CLOVER, CardValue.ACE))
+        user.draw(Card(CardMark.SPADE, CardValue.KING))
+        assertThat(user.isBlackJack()).isTrue
+    }
 }
