@@ -1,18 +1,20 @@
 package domain.card
 
-class Deck(private val cards: MutableList<Card>) {
+class Deck(cards: List<Card>) {
+    private val _cards = cards.toMutableList()
+
     init {
         checkDeckSize()
     }
 
     private fun checkDeckSize() {
-        require(cards.size == DECK_SIZE) { ERROR_DECK_SIZE }
+        require(_cards.size == DECK_SIZE) { ERROR_DECK_SIZE }
     }
 
-    fun getCard() = cards.removeFirst()
+    fun getCard() = _cards.removeFirst()
 
-    fun shuffleDeck() {
-        cards.shuffle()
+    private fun shuffleDeck() {
+        _cards.shuffle()
     }
 
     companion object {

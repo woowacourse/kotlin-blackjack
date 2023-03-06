@@ -12,7 +12,7 @@ import view.ResultView
 
 class BlackJackController {
     fun runBlackJack() {
-        val deck = Deck(CardsGenerator().createCards()).apply { this.shuffleDeck() }
+        val deck = Deck(CardsGenerator().createCards())
         val dealer = Dealer()
         val players = runOnboarding(deck, dealer)
         runMain(deck, dealer, players)
