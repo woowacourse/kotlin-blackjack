@@ -1,5 +1,6 @@
-package domain.card
+package domain.card.strategy
 
+import domain.card.HandOfCards
 import domain.constant.BIG_ACE
 import domain.constant.BLACK_JACK
 import domain.constant.SMALL_ACE
@@ -13,6 +14,7 @@ class GetAppropriateSum : SumStrategy {
     }
 
     private fun calculateAceSum(availableMax: Int, aceCount: Int, currentSum: Int = 0): Int {
+        if (availableMax <= aceCount * SMALL_ACE) return aceCount * SMALL_ACE
         val max = currentSum + aceCount * BIG_ACE
         if (max > availableMax) {
             return calculateAceSum(availableMax - SMALL_ACE, aceCount - 1, currentSum + SMALL_ACE)
