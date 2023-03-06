@@ -1,6 +1,6 @@
 package entity
 
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class PlayerTest {
@@ -9,7 +9,7 @@ class PlayerTest {
         val dealer = Dealer(Cards(listOf(Card(CardType.SPADE, CardNumber.TEN))))
         val isDistributable = dealer.isDistributable()
 
-        Assertions.assertThat(isDistributable).isTrue
+        assertThat(isDistributable).isTrue
     }
 
     @Test
@@ -17,7 +17,7 @@ class PlayerTest {
         val dealer = Dealer(Cards(listOf(Card(CardType.SPADE, CardNumber.TEN), Card(CardType.SPADE, CardNumber.TEN), Card(CardType.SPADE, CardNumber.TWO))))
         val isDistributable = dealer.isDistributable()
 
-        Assertions.assertThat(isDistributable).isFalse
+        assertThat(isDistributable).isFalse
     }
 
     @Test
@@ -48,7 +48,7 @@ class PlayerTest {
         val except = player1 to GameResultType.DRAW
 
         // then
-        Assertions.assertThat(results).isEqualTo(except)
+        assertThat(results).isEqualTo(except)
     }
 
     @Test
@@ -79,7 +79,7 @@ class PlayerTest {
         val except = player1 to GameResultType.DRAW
 
         // then
-        Assertions.assertThat(results).isEqualTo(except)
+        assertThat(results).isEqualTo(except)
     }
 
     @Test
@@ -108,7 +108,7 @@ class PlayerTest {
         val except = player1 to GameResultType.WIN
 
         // then
-        Assertions.assertThat(results).isEqualTo(except)
+        assertThat(results).isEqualTo(except)
     }
 
     @Test
@@ -137,7 +137,7 @@ class PlayerTest {
         val except = player1 to GameResultType.WIN
 
         // then
-        Assertions.assertThat(results).isEqualTo(except)
+        assertThat(results).isEqualTo(except)
     }
 
     @Test
@@ -166,7 +166,7 @@ class PlayerTest {
         val except = player1 to GameResultType.LOSE
 
         // then
-        Assertions.assertThat(results).isEqualTo(except)
+        assertThat(results).isEqualTo(except)
     }
 
     @Test
@@ -197,6 +197,6 @@ class PlayerTest {
         val except = player1 to GameResultType.LOSE
 
         // then
-        Assertions.assertThat(results).isEqualTo(except)
+        assertThat(results).isEqualTo(except)
     }
 }
