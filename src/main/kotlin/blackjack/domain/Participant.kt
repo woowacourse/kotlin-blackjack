@@ -6,4 +6,6 @@ interface Participant {
     fun receiveCard(card: Card) {
         cardBunch.addCard(card)
     }
+
+    fun isOverCondition(): Boolean
 }

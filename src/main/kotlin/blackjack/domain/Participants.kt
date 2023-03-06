@@ -17,7 +17,7 @@ class Participants(names: List<String>, private val cardDeck: CardDeck) {
         getDecision: (Player) -> Boolean,
         printPlayerCard: (Player) -> Unit,
     ) {
-        while (!player.isBurst()) {
+        while (!player.isOverCondition()) {
             if (!progressEachTurn(player, getDecision, printPlayerCard)) return
         }
     }

@@ -3,7 +3,7 @@ package blackjack.domain
 import blackjack.const.MAX_SCORE_CONDITION
 
 class Dealer(override val cardBunch: CardBunch) : Participant {
-    fun isOverCondition(): Boolean = cardBunch.getTotalScore() > ADD_CARD_CONDITION
+    override fun isOverCondition(): Boolean = cardBunch.getTotalScore() > ADD_CARD_CONDITION
 
     fun compareScore(playerScore: Int): Consequence {
         val dealerScore = cardBunch.getTotalScore()
