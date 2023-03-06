@@ -12,15 +12,15 @@ class BlackJackGame {
         guests.forEach { guest -> guestTurn(guest, cardDeck, output) }
 
     fun dealerTurn(dealer: Dealer, cardDeck: CardDeck, output: () -> Unit) {
-        if (dealer.isBlackJack) return
-        if (dealer.isContinue) {
+        if (dealer.isBlackJack()) return
+        if (dealer.isContinue()) {
             dealer.draw(cardDeck.nextCard())
             output()
         }
     }
 
     private fun guestTurn(guest: Guest, cardDeck: CardDeck, output: (User) -> Unit) {
-        if (guest.isBlackJack) return
+        if (guest.isBlackJack()) return
         when (getCommand(guest.name.toString())) {
             in DRAW_COMMANDS -> draw(guest, cardDeck, output)
             in END_TURN_COMMANDS -> output(guest)
@@ -31,7 +31,7 @@ class BlackJackGame {
     private fun draw(guest: Guest, cardDeck: CardDeck, output: (User) -> Unit) {
         guest.draw(cardDeck.nextCard())
         output(guest)
-        if (guest.isContinue) {
+        if (guest.isContinue()) {
             guestTurn(guest, cardDeck, output)
         }
     }

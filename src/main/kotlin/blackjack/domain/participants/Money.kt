@@ -5,7 +5,9 @@ value class Money(private val money: Int) {
     init {
         require(money in MIN_MONEY..MAX_MONEY) { ERROR_MONEY_RANGE }
     }
+
     fun toInt() = money
+
     companion object {
         private const val MIN_MONEY = 10
         private const val MAX_MONEY = 1_000_000

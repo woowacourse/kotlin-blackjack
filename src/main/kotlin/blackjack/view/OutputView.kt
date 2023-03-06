@@ -37,7 +37,7 @@ class OutputView {
 
     fun outputDealerDraw() { println("\n\n딜러는 16이하라 한장의 카드를 더 받았습니다.") }
 
-    private fun outputScore(user: User) { print(" - 결과: ${user.score}") }
+    private fun outputScore(user: User) { print(" - 결과: ${user.score()}") }
 
     private fun outputOutcomes(blackJack: BlackJack) {
         blackJack.run {
