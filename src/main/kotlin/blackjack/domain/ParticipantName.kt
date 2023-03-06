@@ -1,10 +1,12 @@
 package blackjack.domain
 
-data class ParticipantName(val value: String) {
+data class ParticipantName(private val value: String) {
 
     init {
         require(value.matches(NAME_REGEX)) { PARTICIPANT_NAME_LENGTH_ERROR.format(value) }
     }
+
+    override fun toString(): String = value
 
     companion object {
         private const val MIN_NAME_LENGTH = 2

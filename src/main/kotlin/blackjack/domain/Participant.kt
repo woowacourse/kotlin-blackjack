@@ -2,7 +2,7 @@ package blackjack.domain
 
 abstract class Participant(name: ParticipantName) {
     private val _name = name
-    val name = _name.value
+    val name = _name.toString()
     private val _cards = mutableListOf<Card>()
     val cards: List<Card>
         get() = _cards.toList()
