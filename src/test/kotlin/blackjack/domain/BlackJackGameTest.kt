@@ -17,9 +17,9 @@ class BlackJackGameTest {
 
         assertDoesNotThrow {
             BlackJackGame().apply {
-                input(::inputDrawMore)
-                blackJack.guestsTurn(::outputCard)
-                blackJack.dealerTurn(::outputDealer)
+                getCommand = ::inputDrawMore
+                guestsTurn(blackJack.guests, blackJack.cardDeck, ::outputCard)
+                dealerTurn(blackJack.dealer, blackJack.cardDeck, ::outputDealer)
             }
         }
     }

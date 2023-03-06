@@ -1,14 +1,12 @@
 package blackjack.domain
 
 class BlackJackGame {
-    private lateinit var input: (String) -> String
+    lateinit var getCommand: (String) -> String
 
-    fun input(func: (String) -> String) { input = func }
+    fun guestsTurn(guests: List<Guest>, cardDeck: CardDeck, output: (User) -> Unit) =
+        guests.forEach { guest -> guestTurn(guest, cardDeck, output) }
 
-    fun BlackJack.guestsTurn(output: (User) -> Unit) =
-        guests.forEach { guest -> guestTurn(guest, output) }
-
-    fun BlackJack.dealerTurn(output: () -> Unit) {
+    fun dealerTurn(dealer: Dealer, cardDeck: CardDeck, output: () -> Unit) {
         if (dealer.isBlackJack) return
         if (dealer.isContinue) {
             dealer.draw(cardDeck.nextCard())
@@ -16,27 +14,24 @@ class BlackJackGame {
         }
     }
 
-    private fun BlackJack.guestTurn(guest: Guest, output: (User) -> Unit) {
+    private fun guestTurn(guest: Guest, cardDeck: CardDeck, output: (User) -> Unit) {
         if (guest.isBlackJack) return
-        when (getCommand(guest.name)) {
-            in DRAW_COMMANDS -> draw(guest, output)
+        when (getCommand(guest.name.toString())) {
+            in DRAW_COMMANDS -> draw(guest, cardDeck, output)
             in END_TURN_COMMANDS -> output(guest)
-            else -> this.guestTurn(guest, output)
+            else -> this.guestTurn(guest, cardDeck, output)
         }
     }
 
-    private fun BlackJack.draw(guest: Guest, output: (User) -> Unit) {
+    private fun draw(guest: Guest, cardDeck: CardDeck, output: (User) -> Unit) {
         guest.draw(cardDeck.nextCard())
         output(guest)
         if (guest.isContinue) {
-            guestTurn(guest, output)
+            guestTurn(guest, cardDeck, output)
         }
     }
 
-    private fun getCommand(name: Name) = input(name.toString())
-
     companion object {
-        const val BLACKJACK_NUMBER = 21
         private val DRAW_COMMANDS = listOf("Y", "y")
         private val END_TURN_COMMANDS = listOf("N", "n")
     }

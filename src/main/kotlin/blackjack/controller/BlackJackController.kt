@@ -29,8 +29,8 @@ class BlackJackController(
 
     private fun startBlackJack(blackJack: BlackJack) =
         BlackJackGame().apply {
-            input(inputView::inputDrawMore)
-            blackJack.guestsTurn(outputView::outputCard)
-            blackJack.dealerTurn(outputView::outputDealerDraw)
+            getCommand = inputView::inputDrawMore
+            guestsTurn(blackJack.guests, blackJack.cardDeck, outputView::outputCard)
+            dealerTurn(blackJack.dealer, blackJack.cardDeck, outputView::outputDealerDraw)
         }
 }
