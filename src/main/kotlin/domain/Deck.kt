@@ -25,6 +25,6 @@ class Deck(cards: List<Card>) {
         private fun mapCardValue(shape: CardShape): List<Card> =
             CardValue.values().map { value -> Card(shape, value) }
 
-        fun create(count: Int): Deck = Deck(List(count) { CARDS }.flatten())
+        fun create(count: Int): Deck = Deck(List(count) { CARDS }.flatten().shuffled())
     }
 }
