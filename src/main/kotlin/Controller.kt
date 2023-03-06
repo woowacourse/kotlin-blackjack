@@ -1,7 +1,7 @@
 import domain.Answer
 import domain.Answer.Companion.YES
-import domain.CardMachine
 import domain.Dealer
+import domain.Deck
 import domain.GameResult
 import domain.Referee
 import domain.User
@@ -15,13 +15,13 @@ class Controller(
     private val loginView: LoginView = LoginView(),
     private val playGameView: PlayGameView = PlayGameView(),
     private val gameResultView: GameResultView = GameResultView(),
-    private val cardMachine: CardMachine = CardMachine(),
+    private val deck: Deck = Deck.create(NUMBER_OF_CARD_SET),
 ) {
 
     fun run() {
         val userNames = readUserNames()
-        val dealerCards = cardMachine.getCardPair()
-        val userCards = cardMachine.getCardPairs(userNames.size)
+        val dealerCards = deck.getCardPair()
+        val userCards = deck.getCardPairs(userNames.size)
         val users = createUsers(userNames, userCards)
         val dealer = Dealer(cards = dealerCards)
 
@@ -64,7 +64,7 @@ class Controller(
     }
 
     private fun userPickNewCard(user: User) {
-        user.addCard(cardMachine.getNewCard())
+        user.addCard(deck.getNewCard())
         playGameView.printUserCard(user)
         repeatGetCommand(user)
     }
@@ -79,7 +79,7 @@ class Controller(
     private fun dealerPickNewCardIfNeeded(dealer: Dealer) {
         if (!dealer.isOverSumCondition()) {
             playGameView.printDealerPickNewCard()
-            val newCard = cardMachine.getNewCard()
+            val newCard = deck.getNewCard()
             dealer.addCard(newCard)
         }
     }
@@ -104,5 +104,9 @@ class Controller(
             println(error.message.toString())
             repeatWithRunCatching(action)
         }
+    }
+
+    companion object {
+        private const val NUMBER_OF_CARD_SET = 1
     }
 }
