@@ -1,14 +1,13 @@
 package blackjack.domain
 
 class Player(name: String) : Participant(name) {
-    fun canHit(): Boolean = this.getScore() < TARGET_SCORE
+    fun canHit(): Boolean = this.score < TARGET_SCORE
 
     fun against(dealer: Dealer): ResultType {
         if (this.isBust()) return ResultType.LOSE
         if (dealer.isBust()) return ResultType.WIN
 
-        val score = this.getScore()
-        val dealerScore = dealer.getScore()
+        val dealerScore = dealer.score
         return when {
             score > dealerScore -> ResultType.WIN
             score == dealerScore -> ResultType.TIE

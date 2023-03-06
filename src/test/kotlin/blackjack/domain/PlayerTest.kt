@@ -11,7 +11,7 @@ class PlayerTest {
             receive(Card(CardNumber.KING, CardShape.CLOVER))
         }
 
-        assertThat(player.getScore()).isEqualTo(21)
+        assertThat(player.score).isEqualTo(21)
     }
 
     @Test
@@ -22,7 +22,7 @@ class PlayerTest {
             receive(Card(CardNumber.ACE, CardShape.HEART))
         }
 
-        assertThat(player.getScore()).isEqualTo(13)
+        assertThat(player.score).isEqualTo(13)
     }
 
     @Test

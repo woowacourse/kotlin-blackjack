@@ -63,7 +63,7 @@ object ResultView {
 
     private fun Dealer.faceUpOnlyOne(): String = FACE_UP_CARDS.format(this.name, this.cards[0].name())
     private fun Participant.faceUp(): String = FACE_UP_CARDS.format(this.name, this.cards.joinToString(", ") { it.name() })
-    private fun Participant.showScore(): String = SHOW_SCORE.format(this.getScore())
+    private fun Participant.showScore(): String = SHOW_SCORE.format(this.score)
     private fun Card.name(): String = "${this.number.toMark()}${this.shape.toKorean()}"
 
     private fun CardNumber.toMark(): String =
