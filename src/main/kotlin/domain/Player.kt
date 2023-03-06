@@ -10,7 +10,7 @@ abstract class Player(
 
     val cards: List<Card> get() = _cards.toList()
 
-    fun validPlayerSum(): Int {
+    fun addScoreTenIfHasAce(): Int {
         if ((calculateCardValueSum() < ACE_CARD_PLUS_TEN) and (countAce() != NO_ACE)) {
             return calculateCardValueSum() + ACE_CARD_PLUS_TEN
         }
