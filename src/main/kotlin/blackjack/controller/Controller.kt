@@ -23,11 +23,14 @@ class Controller(private val cardDeck: CardDeck) {
         printWinOrLose(players)
     }
 
+    // 옮김
     private fun getPlayers(names: List<String>): List<Player> =
         names.map { Player(it, makeCardBunch()) }
 
+    // 옮김
     private fun getDealer(): Dealer = Dealer(makeCardBunch())
 
+    // 옮김
     private fun makeCardBunch(): CardBunch = CardBunch(cardDeck.drawCard(), cardDeck.drawCard())
 
     private fun showInitialState(dealer: Dealer, players: List<Player>) {

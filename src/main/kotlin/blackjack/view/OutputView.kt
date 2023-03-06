@@ -79,7 +79,7 @@ object OutputView {
         println(resultString)
     }
 
-    private fun decidePlayerResult(player: Player) = when (player.consequence) {
+    private fun decidePlayerResult(player: Player) = when (player.chooseWinner()) {
         Consequence.WIN -> "${player.name}: 승\n"
         Consequence.LOSE -> "${player.name}: 패\n"
         Consequence.DRAW -> "${player.name}: 무\n"
