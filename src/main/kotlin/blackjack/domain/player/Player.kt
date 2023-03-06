@@ -1,17 +1,9 @@
 package blackjack.domain.player
 
-import blackjack.domain.CardGenerator
-import blackjack.domain.RandomGenerator
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
 
-abstract class Player(
-    val name: String,
-    private val generator: CardGenerator = CardGenerator(
-        RandomGenerator()
-    )
-) {
-
+abstract class Player(val name: String) {
     val cards: Cards = Cards()
 
     init {
@@ -22,11 +14,7 @@ abstract class Player(
         cards.addCard(card)
     }
 
-    fun generateCard() {
-        cards.addCard(generator.generateCard())
-    }
-
     companion object {
-        const val ERROR_NAME_LENGTH = "이름은 2글자 이상 10글자 이하여야 합니다."
+        private const val ERROR_NAME_LENGTH = "이름은 2글자 이상 10글자 이하여야 합니다."
     }
 }

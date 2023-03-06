@@ -6,10 +6,7 @@ class Dealer(name: String = "딜러") : Player(name) {
 
     val results: MutableMap<Result, Int> = Result.values().associateWith { 0 }.toMutableMap()
 
-    fun checkMustGenerateCard(): Boolean {
-        if (cards.sumCardsNumber() <= MIN_SUM_NUMBER) return true
-        return false
-    }
+    fun isDrawable(): Boolean = cards.sumCardsNumber() <= MIN_SUM_NUMBER
 
     fun decideParticipantsResult(participants: Participants) {
         participants.values.forEach {

@@ -1,7 +1,6 @@
 package blackjack.controller
 
-import blackjack.domain.CardGenerator
-import blackjack.domain.RandomGenerator
+import blackjack.domain.card.Deck
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Participant
 import blackjack.domain.player.Participants
@@ -11,15 +10,15 @@ import blackjack.view.OutputView
 class BlackjackController(
     private val inputView: InputView = InputView(),
     private val outputView: OutputView = OutputView(),
-    private val cardGenerator: CardGenerator = CardGenerator(RandomGenerator())
+    private val deck: Deck = Deck()
 ) {
 
     fun run() {
         val dealer: Dealer = Dealer()
-        val participants = readParticipants()
+        val participants: Participants = readParticipants()
         settingPlayersCards(dealer, participants)
         readParticipantsMoreCard(participants)
-        giveDealerMoreCard(dealer)
+        drawCard(dealer)
         dealer.decideParticipantsResult(participants)
         dealer.decideDealerResult(participants)
         printSumResult(dealer, participants)
@@ -31,9 +30,9 @@ class BlackjackController(
     private fun readHitOrNot(name: String): Boolean = inputView.readHitOrNot(name) ?: readHitOrNot(name)
 
     private fun settingPlayersCards(dealer: Dealer, participants: Participants) {
-        repeat(CARD_SETTING_COUNT) { dealer.addCard(cardGenerator.generateCard()) }
+        repeat(CARD_SETTING_COUNT) { dealer.addCard(deck.draw()) }
         participants.values.forEach { participant ->
-            repeat(CARD_SETTING_COUNT) { participant.addCard(cardGenerator.generateCard()) }
+            repeat(CARD_SETTING_COUNT) { participant.addCard(deck.draw()) }
         }
 
         outputView.printSettingCard(dealer, participants)
@@ -50,7 +49,7 @@ class BlackjackController(
             val check = participant.isGenerateCardPossible()
             if (check) {
                 val answer: Boolean = readHitOrNot(participant.name)
-                if (answer) participant.addCard(cardGenerator.generateCard())
+                if (answer) participant.addCard(deck.draw())
                 outputView.printParticipantCards(participant)
                 if (!answer) break
             }
@@ -58,13 +57,13 @@ class BlackjackController(
         }
     }
 
-    private fun giveDealerMoreCard(dealer: Dealer) {
-        val check = dealer.checkMustGenerateCard()
-        if (check) {
-            dealer.addCard(cardGenerator.generateCard())
+    private fun drawCard(dealer: Dealer) {
+        if (dealer.isDrawable()) {
+            dealer.addCard(deck.draw())
             outputView.printDealerHitCardMent()
+            return
         }
-        if (!check) outputView.printDealerNotHitCardMent()
+        outputView.printDealerNotHitCardMent()
     }
 
     private fun printSumResult(dealer: Dealer, participants: Participants) {
