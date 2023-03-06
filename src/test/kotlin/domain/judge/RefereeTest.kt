@@ -140,4 +140,64 @@ class RefereeTest() {
         ).judgePlayersResult()
         assertThat(referee).isEqualTo(mapOf("jack" to Result.LOSS, "king" to Result.LOSS, "queen" to Result.DRAW))
     }
+
+    @Test
+    fun `참가자가 한명일 때 딜러가 블랙잭이고, 플레이어가 3장 합이 21일 때 플레이어가 진다`() {
+        val dealer = Dealer(Cards(listOf(Card(Shape.HEART, CardValue.JACK), Card(Shape.HEART, CardValue.ACE))))
+        val player = Player(
+            "jack",
+            Cards(
+                listOf(
+                    Card(Shape.SPADE, CardValue.JACK),
+                    Card(Shape.SPADE, CardValue.JACK),
+                    Card(Shape.SPADE, CardValue.ACE)
+                )
+            )
+
+        )
+        val referee = Referee(dealer, listOf(player)).judgePlayersResult()
+        assertThat(referee).isEqualTo(mapOf("jack" to Result.LOSS))
+    }
+
+    @Test
+    fun `참가자가 한명일 때 딜러가 블랙잭이고, 플레이어가 블랙잭일 때 무승부이다`() {
+        val dealer = Dealer(Cards(listOf(Card(Shape.HEART, CardValue.JACK), Card(Shape.HEART, CardValue.ACE))))
+        val player = Player(
+            "jack",
+            Cards(
+                listOf(
+                    Card(Shape.SPADE, CardValue.JACK),
+                    Card(Shape.SPADE, CardValue.ACE)
+                )
+            )
+
+        )
+        val referee = Referee(dealer, listOf(player)).judgePlayersResult()
+        assertThat(referee).isEqualTo(mapOf("jack" to Result.DRAW))
+    }
+
+    @Test
+    fun `참가자가 한명일 때 딜러가 3장 합이 21이고, 플레이어가 블랙잭일 때 플레이어가 이긴다`() {
+        val dealer = Dealer(
+            Cards(
+                listOf(
+                    Card(Shape.HEART, CardValue.JACK),
+                    Card(Shape.HEART, CardValue.FIVE),
+                    Card(Shape.HEART, CardValue.SIX)
+                )
+            )
+        )
+        val player = Player(
+            "jack",
+            Cards(
+                listOf(
+                    Card(Shape.SPADE, CardValue.JACK),
+                    Card(Shape.SPADE, CardValue.ACE)
+                )
+            )
+
+        )
+        val referee = Referee(dealer, listOf(player)).judgePlayersResult()
+        assertThat(referee).isEqualTo(mapOf("jack" to Result.WIN))
+    }
 }
