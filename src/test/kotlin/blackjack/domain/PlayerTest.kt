@@ -45,4 +45,44 @@ class PlayerTest {
 
         assertThat(player.canHit()).isTrue
     }
+
+    @Test
+    fun `딜러와 플레이어 둘 다 21을 넘지 않는 경우 숫자가 큰 플레이어가 이긴다`() {
+        val player = Player("hatti").apply {
+            receive(Card(CardNumber.KING, CardShape.HEART))
+        }
+        val dealer = Dealer().apply {
+            receive(Card(CardNumber.NINE, CardShape.HEART))
+        }
+
+        assertThat(player.against(dealer)).isEqualTo(ResultType.WIN)
+    }
+
+    @Test
+    fun `플레이어가 bust된 경우 딜러와 상관없이 무조건 진다`() {
+        val player = Player("hatti").apply {
+            receive(Card(CardNumber.KING, CardShape.HEART))
+            receive(Card(CardNumber.QUEEN, CardShape.HEART))
+            receive(Card(CardNumber.FIVE, CardShape.HEART))
+        }
+        val dealer = Dealer().apply {
+            receive(Card(CardNumber.KING, CardShape.HEART))
+            receive(Card(CardNumber.QUEEN, CardShape.HEART))
+            receive(Card(CardNumber.FIVE, CardShape.HEART))
+        }
+
+        assertThat(player.against(dealer)).isEqualTo(ResultType.LOSE)
+    }
+
+    @Test
+    fun `딜러와 플레이어 둘 다 21 이하인 경우 점수가 같으면 무승부이다`() {
+        val player = Player("hatti").apply {
+            receive(Card(CardNumber.KING, CardShape.HEART))
+        }
+        val dealer = Dealer().apply {
+            receive(Card(CardNumber.KING, CardShape.DIAMOND))
+        }
+
+        assertThat(player.against(dealer)).isEqualTo(ResultType.TIE)
+    }
 }

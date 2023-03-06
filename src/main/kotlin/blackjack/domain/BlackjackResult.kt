@@ -15,22 +15,9 @@ class BlackjackResult(private val player: Map<Player, ResultType>) {
 
     companion object {
         fun of(dealer: Dealer, players: List<Player>): BlackjackResult {
-            val result = players.associateWith { it against dealer }
+            val result = players.associateWith { it.against(dealer) }
 
             return BlackjackResult(result)
-        }
-
-        private infix fun Player.against(dealer: Dealer): ResultType {
-            if (this.isBust()) return ResultType.LOSE
-            if (dealer.isBust()) return ResultType.WIN
-
-            val score = this.getScore()
-            val dealerScore = dealer.getScore()
-            return when {
-                score > dealerScore -> ResultType.WIN
-                score == dealerScore -> ResultType.TIE
-                else -> ResultType.LOSE
-            }
         }
     }
 }
