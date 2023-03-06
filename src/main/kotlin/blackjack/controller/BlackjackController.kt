@@ -26,8 +26,9 @@ class BlackjackController(
         printFinalResult(dealer, participants)
     }
 
-    private fun readParticipants(): Participants =
-        Participants(inputView.readParticipantsName().map { Participant(it) })
+    private fun readParticipants(): Participants = inputView.readParticipants() ?: readParticipants()
+
+    private fun readHitOrNot(name: String): Boolean = inputView.readHitOrNot(name) ?: readHitOrNot(name)
 
     private fun settingPlayersCards(dealer: Dealer, participants: Participants) {
         repeat(CARD_SETTING_COUNT) { dealer.addCard(cardGenerator.generateCard()) }
@@ -48,12 +49,10 @@ class BlackjackController(
         while (true) {
             val check = participant.isGenerateCardPossible()
             if (check) {
-                val answer = inputView.readHitOrNot(participant.name)
-                if (answer == InputView.ANSWER_HIT) {
-                    participant.addCard(cardGenerator.generateCard())
-                }
+                val answer: Boolean = readHitOrNot(participant.name)
+                if (answer) participant.addCard(cardGenerator.generateCard())
                 outputView.printParticipantCards(participant)
-                if (answer == InputView.ANSWER_NOT_HIT) break
+                if (!answer) break
             }
             if (!check) break
         }
