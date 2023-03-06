@@ -62,11 +62,9 @@ class BlackjackController(
             val check = participant.isGenerateCardPossible()
             if (check) {
                 val answer = inputView.readMoreCard(participant.name)
-                if (answer == ANSWER_MORE_CARD) {
-                    provideCard(participant)
-                }
+                if (answer) provideCard(participant)
                 outputView.printParticipantCards(participant)
-                if (answer == ANSWER_NOT_MORE_CARD) break
+                if (!answer) break
             }
             if (!check) break
         }
@@ -91,7 +89,5 @@ class BlackjackController(
 
     companion object {
         private const val CARD_SETTING_COUNT = 2
-        private const val ANSWER_MORE_CARD = "y"
-        private const val ANSWER_NOT_MORE_CARD = "n"
     }
 }
