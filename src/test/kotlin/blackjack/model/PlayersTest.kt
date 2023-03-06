@@ -17,7 +17,7 @@ class PlayersTest {
             listOf(
                 Player(
                     Cards(
-                        listOf(
+                        setOf(
                             Card(Rank.ACE, Suit.HEART)
                         )
                     ),
@@ -25,7 +25,7 @@ class PlayersTest {
                 ),
                 Player(
                     Cards(
-                        listOf(
+                        setOf(
                             Card(Rank.DEUCE, Suit.HEART)
                         )
                     ),

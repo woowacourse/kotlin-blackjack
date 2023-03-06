@@ -18,7 +18,7 @@ class CardGame(private val cardDeck: CardDeck) {
     }
 
     fun pickTwice(): Cards = Cards(
-        buildList {
+        buildSet {
             add(cardDeck.drawCard())
             add(cardDeck.drawCard())
         },

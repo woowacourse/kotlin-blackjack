@@ -15,12 +15,12 @@ import org.junit.jupiter.api.Test
 class ParticipantsTest {
     @Test
     fun `딜러와 플레이어의 참가자 정보를 생성할 수 있다`() {
-        val dealer = Dealer(Cards(listOf(Card(Rank.KING, Suit.HEART))))
+        val dealer = Dealer(Cards(setOf(Card(Rank.KING, Suit.HEART))))
         val players = Players(
             listOf(
                 Player(
                     Cards(
-                        listOf(
+                        setOf(
                             Card(Rank.ACE, Suit.HEART)
                         )
                     ),
@@ -28,7 +28,7 @@ class ParticipantsTest {
                 ),
                 Player(
                     Cards(
-                        listOf(
+                        setOf(
                             Card(Rank.DEUCE, Suit.HEART)
                         )
                     ),

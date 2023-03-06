@@ -34,7 +34,7 @@ class OutputView {
 
     fun printPlayerStatus(participant: Participant) {
         if (participant.name.value == DEALER) {
-            println(MESSAGE_DEALER_STATUS.format(participant.cards.cards[0].getCardFormat()))
+            println(MESSAGE_DEALER_STATUS.format(participant.cards.cards.elementAt(0).getCardFormat()))
             return
         }
         println(MESSAGE_PARTICIPANT_STATUS.format(participant.name.value, (participant as Player).cards.getCardsFormat()))
