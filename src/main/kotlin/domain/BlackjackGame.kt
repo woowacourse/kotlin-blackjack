@@ -11,8 +11,10 @@ import domain.judge.Result
 import domain.player.Names
 import domain.player.Player
 
-class BlackjackGame(val names: Names) {
+class BlackjackGame(
+    val names: Names,
     private val deck: Deck = Deck(CardMaker().makeShuffledCards())
+) {
     val dealerState: DealerCards
     val players: List<Player>
 
