@@ -4,8 +4,11 @@ import misc.GameRule
 
 enum class CardNumber(val numberStrategy: (sumOfCardNumbers: Int) -> Int) {
     ACE({ sumOfCards ->
-        if (sumOfCards + 11 > GameRule.WINNING_NUMBER) 1
-        else 11
+        if (sumOfCards + 11 > GameRule.WINNING_NUMBER) {
+            1
+        } else {
+            11
+        }
     }),
     TWO({ _ -> 2 }),
     THREE({ _ -> 3 }),
