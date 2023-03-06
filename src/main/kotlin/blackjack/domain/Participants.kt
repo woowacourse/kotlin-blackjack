@@ -42,4 +42,8 @@ class Participants(names: List<String>, private val cardDeck: CardDeck) {
         player.cardBunch.addCard(cardDeck.drawCard())
         printPlayerCard(player)
     }
+
+    fun judgmentDealerAddCard() {
+        if (!dealer.isOverCondition()) dealer.addCard(cardDeck.drawCard())
+    }
 }

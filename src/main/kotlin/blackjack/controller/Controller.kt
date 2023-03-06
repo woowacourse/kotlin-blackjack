@@ -1,6 +1,5 @@
 package blackjack.controller
 
-import blackjack.domain.Dealer
 import blackjack.domain.Participants
 import blackjack.domain.Player
 import blackjack.domain.carddeck.CardDeck
@@ -20,7 +19,7 @@ class Controller() {
     }
 
     private fun printResult(participants: Participants) {
-        showDealerState(participants.dealer)
+        progressDealerAddCard(participants)
         printTotalScore(participants)
         printWinOrLose(participants.players)
     }
@@ -31,10 +30,9 @@ class Controller() {
         participants.players.forEach { OutputView.printPlayerCards(it) }
     }
 
-    private fun showDealerState(dealer: Dealer) {
-        val condition = dealer.isOverCondition()
-        OutputView.printDealerOverCondition(!condition)
-        if (!condition) dealer.cardBunch.addCard(cardDeck.drawCard())
+    private fun progressDealerAddCard(participants: Participants) {
+        OutputView.printDealerOverCondition(participants.dealer.isOverCondition())
+        participants.judgmentDealerAddCard()
     }
 
     private fun printTotalScore(participants: Participants) {

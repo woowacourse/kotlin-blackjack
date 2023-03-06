@@ -14,6 +14,10 @@ class Dealer(override val cardBunch: CardBunch) : Participant {
         return Consequence.LOSE
     }
 
+    fun addCard(card: Card) {
+        cardBunch.addCard(card)
+    }
+
     companion object {
         private const val ADD_CARD_CONDITION = 16
     }
