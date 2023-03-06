@@ -2,11 +2,13 @@ package domain.deck
 
 import domain.card.Card
 
-class Deck(private val deck: MutableList<Card>) {
+class Deck(private var deck: List<Card>) {
 
     fun giveCard(): Card {
-        check(deck.size > 0) { println(ERROR_EMPTY_DECK) }
-        return deck.removeLast()
+        check(deck.isNotEmpty()) { println(ERROR_EMPTY_DECK) }
+        val card = deck.last()
+        deck = deck.minus(card)
+        return card
     }
 
     companion object {

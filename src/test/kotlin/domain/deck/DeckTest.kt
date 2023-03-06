@@ -10,7 +10,7 @@ import org.junit.jupiter.api.assertThrows
 class DeckTest {
     @Test
     fun `덱에서 마지막 카드를 준다`() {
-        val deck = Deck(mutableListOf(Card(Shape.SPADE, CardValue.TWO), Card(Shape.SPADE, CardValue.THREE)))
+        val deck = Deck(listOf(Card(Shape.SPADE, CardValue.TWO), Card(Shape.SPADE, CardValue.THREE)))
         assertThat(deck.giveCard()).isEqualTo(Card(Shape.SPADE, CardValue.THREE))
     }
 
