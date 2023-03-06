@@ -4,19 +4,12 @@ import blackjack.const.MAX_SCORE_CONDITION
 
 class Player(val name: String, override val cardBunch: CardBunch) : Participant {
 
-    lateinit var consequence: Consequence
-    fun chooseWinner(score: Int) {
+    fun chooseWinner(dealerScore: Int): Consequence {
         val playerScore = cardBunch.getTotalScore()
-        consequence = if (playerScore > MAX_SCORE_CONDITION) {
-            Consequence.LOSE
-        } else if (playerScore > score) {
-            Consequence.WIN
-        } else if (playerScore == score) {
-            Consequence.DRAW
-        } else if (score > MAX_SCORE_CONDITION) {
-            Consequence.WIN
-        } else {
-            Consequence.LOSE
-        }
+        if (playerScore > MAX_SCORE_CONDITION) return Consequence.LOSE
+        if (playerScore > dealerScore) return Consequence.WIN
+        if (playerScore == dealerScore) return Consequence.DRAW
+        if (dealerScore > MAX_SCORE_CONDITION) return Consequence.WIN
+        return Consequence.LOSE
     }
 }
