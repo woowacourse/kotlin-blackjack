@@ -1,5 +1,6 @@
 package view
 
+import domain.card.strategy.GetAppropriateSum
 import domain.person.Dealer
 import domain.person.Person
 import domain.person.Player
