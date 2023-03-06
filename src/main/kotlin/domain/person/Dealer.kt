@@ -6,6 +6,7 @@ import domain.constant.BlackJackConstants.DEALER_STAND_CONDITION
 import domain.person.GameState.BUST
 import domain.person.GameState.HIT
 import domain.person.GameState.STAND
+import domain.result.CardsScore
 
 class Dealer(override val name: String = "딜러") : Person(name) {
     fun showOneCard(): List<Card> {
@@ -13,7 +14,7 @@ class Dealer(override val name: String = "딜러") : Person(name) {
     }
 
     override fun checkState(): GameState {
-        val totalNumber = cards.getTotalCardNumber()
+        val totalNumber = CardsScore.getTotalCardNumber(cards)
         return when {
             totalNumber > BLACK_JACK -> BUST
             totalNumber > DEALER_STAND_CONDITION -> STAND

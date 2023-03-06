@@ -5,6 +5,7 @@ import domain.constant.BlackJackConstants.DEALER_STAND_CONDITION
 import domain.person.Dealer
 import domain.person.Person
 import domain.person.Player
+import domain.result.CardsScore
 import domain.result.GameResult
 import domain.result.OutCome
 
@@ -47,7 +48,7 @@ object ResultView {
             RESULT_CARDS_SCRIPT.format(
                 person.name,
                 person.cards.value.joinToString(", ") { cardToString(it) },
-                person.cards.getTotalCardNumber(),
+                CardsScore.getTotalCardNumber(person.cards),
             ),
         )
     }
