@@ -32,13 +32,13 @@ class BlackjackController {
     }
 
     private fun distributeMoreCardPlayer(blackjackStage: BlackjackStage) {
-        blackjackStage.distributePlayers {
+        val player = blackjackStage.distributePlayers {
             gameView.printWhetherMoreCard(it.name.value)
-            it.addMoreCards(gameView.readWhetherMoreCard()) {
-                blackjackStage.distributePlayer(it)
-                gameView.printPlayerStatus(it)
-                distributeMoreCardPlayer(blackjackStage)
-            }
+            gameView.readWhetherMoreCard()
+        }
+        if (player != null) {
+            gameView.printPlayerStatus(player)
+            distributeMoreCardPlayer(blackjackStage)
         }
     }
 
