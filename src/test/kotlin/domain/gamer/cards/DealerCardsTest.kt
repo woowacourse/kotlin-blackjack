@@ -30,7 +30,7 @@ class DealerCardsTest {
     }
 
     @Test
-    fun `A가 하나 있고 10 초과 있는 카드 값의 합을 반환한다`() {
+    fun `10 초과의 값을 갖고 있는 상태에 A가 포함될 경우의 카드 값 합을 반환한다`() {
         val dealerState =
             DealerCards(
                 mutableListOf(
@@ -43,17 +43,30 @@ class DealerCardsTest {
     }
 
     @Test
-    fun `A가 두개 있고 10 초과 있는 카드 값의 합을 반환한다`() {
+    fun `A가 하나 있고 10 초과 있는 카드 값의 합을 반환한다`() {
         val dealerState =
             DealerCards(
                 mutableListOf(
-                    Card(Shape.SPADE, CardValue.JACK),
-                    Card(Shape.SPADE, CardValue.TWO),
                     Card(Shape.HEART, CardValue.ACE),
-                    Card(Shape.SPADE, CardValue.ACE)
+                    Card(Shape.SPADE, CardValue.JACK),
+                    Card(Shape.SPADE, CardValue.TWO)
                 )
             )
-        assertThat(dealerState.calculateCardSum()).isEqualTo(14)
+        assertThat(dealerState.calculateCardSum()).isEqualTo(23)
+    }
+
+    @Test
+    fun `A와 다른 값을 교차로 갖는 카드 값의 합을 반환한다`() {
+        val dealerState =
+            DealerCards(
+                mutableListOf(
+                    Card(Shape.HEART, CardValue.THREE),
+                    Card(Shape.SPADE, CardValue.ACE),
+                    Card(Shape.SPADE, CardValue.FOUR),
+                    Card(Shape.DIAMOND, CardValue.ACE)
+                )
+            )
+        assertThat(dealerState.calculateCardSum()).isEqualTo(19)
     }
 
     @Test
