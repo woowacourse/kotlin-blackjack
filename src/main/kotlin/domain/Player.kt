@@ -24,9 +24,9 @@ abstract class Player(
         _cards.add(card.first())
     }
 
-    private fun countAce(): Int = _cards.filter { card ->
+    private fun countAce(): Int = _cards.count { card ->
         card.cardNumber == CardNumber.ACE
-    }.size
+    }
 
     companion object {
         private const val ACE_CARD_PLUS_TEN = 10
