@@ -13,9 +13,9 @@ class BlackjackStage(val dealer: Dealer, val players: Players, private val cardF
         }
     }
 
-    fun distributePlayers(onDistribute: (player: Player) -> Boolean): Player? {
+    fun distributePlayers(distributeCondition: (player: Player) -> Boolean): Player? {
         players.value.forEach { it ->
-            if (it.addMoreCards(cardFactory) { onDistribute(it) })
+            if (it.addMoreCards(cardFactory) { distributeCondition(it) })
                 return it
         }
         return null
