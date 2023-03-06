@@ -1,13 +1,15 @@
 package model
 
-class Hand(cards: List<Card>) : Cards(cards) {
-    init {
-        require(cards.distinct().size == cards.size) { CARD_DUPLICATE_ERROR }
-    }
+class Hand(private val cards: Cards) {
+    val size
+        get() = cards.cards.size
+    constructor(cards: List<Card>) : this(Cards(cards))
+
+    fun toList() = cards.cards.toList()
 
     fun add(card: Card) {
-        require(!cards.contains(card)) { CARD_DUPLICATE_ERROR }
-        cards.add(card)
+        require(!cards.cards.contains(card)) { CARD_DUPLICATE_ERROR }
+        cards.cards.add(card)
     }
 
     fun sum(): Int {
@@ -18,7 +20,7 @@ class Hand(cards: List<Card>) : Cards(cards) {
 
     private fun filterSum(score: Int = 0, condition: (Rank) -> Boolean): Int {
         var sum = score
-        cards.filter { condition(it.rank) }.forEach {
+        cards.cards.filter { condition(it.rank) }.forEach {
             sum += it.rank.getScore(sum)
         }
         return sum

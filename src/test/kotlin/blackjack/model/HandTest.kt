@@ -14,7 +14,7 @@ class HandTest {
     fun `카드를 한 장 추가할 수 있다`() {
         val hand = Hand(listOf(Card(Rank.ACE, Suit.CLOVER), Card(Rank.ACE, Suit.DIAMOND)))
         hand.add(Card(Rank.DEUCE, Suit.DIAMOND))
-        assertThat(hand.size()).isEqualTo(3)
+        assertThat(hand.size).isEqualTo(3)
     }
 
     @Test
