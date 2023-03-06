@@ -2,7 +2,6 @@ package controller
 
 import domain.CardGame
 import domain.CardPackGenerator
-import model.GameResult
 import model.Name
 import model.Names
 import model.Participants
@@ -20,7 +19,7 @@ class Controller(private val inputView: InputView, private val outputView: Outpu
         cardGame.drawPlayersCard(players, inputView::readYesOrNo, outputView::printPlayerStatus)
         cardGame.drawDealerCard(dealer) { outputView.printDealerGetCard() }
         outputView.printAllPlayerStatusResult(participants.participants)
-        outputView.printFinalResult(GameResult.of(dealer, players))
+        outputView.printGameResult(dealer, players)
     }
 
     private fun initNames(): Names {

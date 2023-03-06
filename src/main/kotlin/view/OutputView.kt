@@ -2,12 +2,14 @@ package view
 
 import model.Card
 import model.Cards
+import model.Dealer
 import model.Dealer.Companion.DEALER
-import model.GameResult
 import model.Participant
 import model.Participants
 import model.Player
+import model.Players
 import model.Rank
+import model.Result
 import model.Suit
 
 class OutputView {
@@ -19,7 +21,10 @@ class OutputView {
     }
 
     private fun noticeDistributeCardsNameFormat(participants: Participants): String {
-        return MESSAGE_DISTRIBUTE_CARD.format(participants.participants.filter { it.name.value != DEALER }.joinToString(", ") { it.name.value })
+        return MESSAGE_DISTRIBUTE_CARD.format(
+            participants.participants.filter { it.name.value != DEALER }
+                .joinToString(", ") { it.name.value }
+        )
     }
 
     fun printPlayersStatus(players: Participants) {
@@ -37,7 +42,12 @@ class OutputView {
             println(MESSAGE_DEALER_STATUS.format(participant.cards.cards.elementAt(0).getCardFormat()))
             return
         }
-        println(MESSAGE_PARTICIPANT_STATUS.format(participant.name.value, (participant as Player).cards.getCardsFormat()))
+        println(
+            MESSAGE_PARTICIPANT_STATUS.format(
+                participant.name.value,
+                (participant as Player).cards.getCardsFormat()
+            )
+        )
     }
 
     fun printAllPlayerStatusResult(participants: List<Participant>) {
@@ -48,12 +58,14 @@ class OutputView {
         }
     }
 
-    fun printFinalResult(gameResult: GameResult) {
+    fun printGameResult(dealer: Dealer, players: Players) {
+        val dealerResult = dealer.getGameResult(players)
+        val playerResult = players.getGameResult(dealer)
         println()
         println(MESSAGE_RESULT_TITLE)
-        println(MESSAGE_DEALER_RESULT.format(gameResult.getDealerWinResult(), gameResult.getDealerLoseResult()))
-        gameResult.playersResult.forEach {
-            println(MESSAGE_PLAYER_RESULT.format(it.key, if (it.value) "승" else "패"))
+        println(MESSAGE_DEALER_RESULT.format(dealerResult[Result.WIN], dealerResult[Result.LOSE]))
+        players.forEach {
+            println(MESSAGE_PLAYER_RESULT.format(it.name.value, if (playerResult[it.name] == Result.WIN) "승" else "패"))
         }
     }
 

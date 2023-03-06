@@ -2,9 +2,11 @@ package blackjack.model
 
 import model.Card
 import model.Cards
+import model.Dealer
 import model.Name
 import model.Player
 import model.Rank
+import model.Result
 import model.Suit
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -60,7 +62,43 @@ class PlayerTest {
         assertThat(player.isHit()).isFalse
     }
 
+    @Test
+    fun `딜러와 비교하여 점수가 딜러보다 높으면 승리한다`() {
+        val dealer = Dealer(Card(Rank.SEVEN, Suit.DIAMOND), Card(Rank.TEN, Suit.CLOVER))
+        val player = Player("jason", Card(Rank.ACE, Suit.CLOVER), Card(Rank.TEN, Suit.DIAMOND))
+        assertThat(player.getGameResult(dealer)).isEqualTo(Result.WIN)
+    }
+
+    @Test
+    fun `점수가 딜러와 같다면 패배한다`() {
+        val dealer = Dealer(Card(Rank.SEVEN, Suit.DIAMOND), Card(Rank.TEN, Suit.CLOVER))
+        val player = Player("jason", Card(Rank.SEVEN, Suit.DIAMOND), Card(Rank.TEN, Suit.CLOVER))
+        assertThat(player.getGameResult(dealer)).isEqualTo(Result.LOSE)
+    }
+
+    @Test
+    fun `점수가 딜러와 상관 없이 Bust라면 패배한다`() {
+        val dealer = Dealer(Card(Rank.SEVEN, Suit.DIAMOND), Card(Rank.TEN, Suit.CLOVER))
+        val player = Player("jason", Card(Rank.TEN, Suit.DIAMOND), Card(Rank.TEN, Suit.CLOVER), Card(Rank.DEUCE, Suit.SPADE))
+        assertThat(player.getGameResult(dealer)).isEqualTo(Result.LOSE)
+    }
+
+    @Test
+    fun `플레이어가 21점 이하고 딜러가 Bust라면 승리한다`() {
+        val dealer = Dealer(Card(Rank.TEN, Suit.DIAMOND), Card(Rank.TEN, Suit.CLOVER), Card(Rank.DEUCE, Suit.SPADE))
+        val player = Player("jason", Card(Rank.TEN, Suit.DIAMOND), Card(Rank.TEN, Suit.CLOVER))
+        assertThat(player.getGameResult(dealer)).isEqualTo(Result.WIN)
+    }
+
+    @Test
+    fun `플레이어가 Bust고 딜러가 Bust라면 패배한다`() {
+        val dealer = Dealer(Card(Rank.TEN, Suit.DIAMOND), Card(Rank.TEN, Suit.CLOVER), Card(Rank.DEUCE, Suit.SPADE))
+        val player = Player("jason", Card(Rank.TEN, Suit.DIAMOND), Card(Rank.TEN, Suit.CLOVER), Card(Rank.DEUCE, Suit.CLOVER))
+        assertThat(player.getGameResult(dealer)).isEqualTo(Result.LOSE)
+    }
+
     companion object {
+        private fun Dealer(vararg card: Card): Dealer = Dealer(Cards(card.toSet()))
         private fun Player(name: String, vararg card: Card): Player = Player(Cards(card.toSet()), Name(name))
     }
 }
