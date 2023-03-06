@@ -1,31 +1,22 @@
 package domain
 
 class RandomCardDrawer : CardDrawer {
-    private val cards: MutableList<Card> = mutableListOf()
+    private val cards =
+        CardCategory.values().flatMap { cardCategory -> CardNumber.values().map { Card(cardCategory, it) } }
 
     val size: Int
         get() = cards.size
-
-    init {
-        CardCategory.values().forEach { cardCategory ->
-            CardNumber.values().forEach { cardNumber ->
-                cards.add(Card(cardCategory, cardNumber))
-            }
-        }
-    }
 
     fun contains(card: Card): Boolean {
         return cards.contains(card)
     }
 
     override fun draw(): Card {
-        val drawCard = cards.shuffled()[0]
-        cards.remove(drawCard)
-        return drawCard
+        return cards.shuffled()[0]
     }
 
     override fun drawInitCards(): Cards {
-        return Cards(List(DRAW_INIT_CARD_COUNT) { draw() }.toSet())
+        return Cards(List(DRAW_INIT_CARD_COUNT) { draw() })
     }
 
     companion object {

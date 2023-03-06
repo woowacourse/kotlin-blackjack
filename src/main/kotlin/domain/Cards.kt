@@ -2,7 +2,7 @@ package domain
 
 import controller.BlackJackGame
 
-class Cards(cards: Set<Card>) {
+class Cards(cards: List<Card>) {
     private val _cards = cards.toMutableList()
     val cards: List<Card>
         get() = _cards.toList()
