@@ -2,17 +2,11 @@ package blackjack.domain
 
 import blackjack.const.MAX_SCORE_CONDITION
 
-class CardBunch private constructor(cards: MutableSet<Card>) {
-    private val _cards: MutableSet<Card> = cards
-    val cards: Set<Card> get() = _cards.toSet()
+class CardBunch private constructor(cards: MutableList<Card>) {
+    private val _cards: MutableList<Card> = cards
+    val cards: List<Card> get() = _cards.toList()
 
-    constructor(vararg cards: Card) : this(cards.toMutableSet()) {
-        validateSize()
-    }
-
-    private fun validateSize() {
-        require(_cards.size == INITIAL_CARD_SIZE) { INITIAL_SIZE_ERROR }
-    }
+    constructor(vararg cards: Card) : this(cards.toMutableList())
 
     fun addCard(card: Card) {
         val originSize = _cards.size
