@@ -1,10 +1,10 @@
 package blackjack.view
 
-import blackjack.domain.BlackJack
-import blackjack.domain.CardMark
-import blackjack.domain.CardValue
-import blackjack.domain.Outcome
-import blackjack.domain.User
+import blackjack.domain.blackjack.BlackJack
+import blackjack.domain.card.CardMark
+import blackjack.domain.card.CardValue
+import blackjack.domain.participants.User
+import blackjack.domain.result.Outcome
 
 class OutputView {
     fun outputInitState(blackJack: BlackJack) {

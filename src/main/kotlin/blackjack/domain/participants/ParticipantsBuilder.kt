@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.participants
 
 class ParticipantsBuilder {
     private lateinit var dealer: Dealer

@@ -1,4 +1,6 @@
-package blackjack.domain
+package blackjack.domain.participants
+
+import blackjack.domain.card.Cards
 
 class Score(val cards: Cards) {
     val score: Int

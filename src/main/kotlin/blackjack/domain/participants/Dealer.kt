@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.participants
 
 class Dealer(name: String = "딜러") : User(name) {
     override val isContinue: Boolean
