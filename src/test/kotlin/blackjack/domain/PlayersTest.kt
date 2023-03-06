@@ -6,7 +6,13 @@ import org.junit.jupiter.api.Test
 class PlayersTest {
     @Test
     fun `모든 플레이어의 카드를 2장씩 뽑는다`() {
-        val deck = CardDeck(listOf(1, 14, 27, 13, 2, 8).map(Card::of))
+        val deck = CardDeck(
+            listOf(
+                Card(Suit.SPADE, CardNumber.ACE), Card(Suit.HEART, CardNumber.ACE),
+                Card(Suit.DIAMOND, CardNumber.ACE), Card(Suit.SPADE, CardNumber.KING),
+                Card(Suit.SPADE, CardNumber.TWO), Card(Suit.SPADE, CardNumber.EIGHT)
+            )
+        )
         val players = Players(listOf(Player("buna"), Player("glo"), Player("bandal")))
 
         players.drawAll(deck)

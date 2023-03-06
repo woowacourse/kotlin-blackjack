@@ -1,6 +1,6 @@
 package blackjack.domain
 
-class Card private constructor(private val suit: Suit, val number: CardNumber) {
+class Card(private val suit: Suit, private val number: CardNumber) {
     companion object {
         private val CARDS = Suit.values().flatMap { suit ->
             CardNumber.values().map { cardNumber ->
@@ -8,7 +8,6 @@ class Card private constructor(private val suit: Suit, val number: CardNumber) {
             }
         }
 
-        fun of(id: Int): Card = CARDS[id - 1]
         fun all(): List<Card> = CARDS.toList()
     }
 }

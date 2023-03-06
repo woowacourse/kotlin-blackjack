@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 class CardDeckTest {
     @Test
     fun `카드를 하나 뽑는다`() {
-        val cardDeck = CardDeck(listOf(Card.of(13), Card.of(2)))
-        assertThat(cardDeck.draw()).isEqualTo(Card.of(13))
+        val cardDeck = CardDeck(listOf(Card(Suit.SPADE, CardNumber.KING), Card(Suit.DIAMOND, CardNumber.EIGHT)))
+        assertThat(cardDeck.draw()).isEqualTo(Card(Suit.SPADE, CardNumber.KING))
     }
 }
