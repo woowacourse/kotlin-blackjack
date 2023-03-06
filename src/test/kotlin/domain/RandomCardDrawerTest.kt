@@ -10,8 +10,8 @@ class RandomCardDrawerTest {
         val cachingCards = RandomCardDrawer()
         val curSize = cachingCards.size
         val popCard = cachingCards.draw()
-        val result = cachingCards.contains(popCard!!)
+        val result = cachingCards.contains(popCard)
         assertThat(result).isFalse
-        assertThat(cachingCards.size).isEqualTo(curSize-1)
+        assertThat(cachingCards.size).isEqualTo(curSize - 1)
     }
 }

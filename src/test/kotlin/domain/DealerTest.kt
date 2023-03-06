@@ -33,41 +33,4 @@ class DealerTest {
         val expected = true
         assertThat(actual).isEqualTo(expected)
     }
-
-    @Test
-    fun `자신의 종합 승패 결과를 반환한다`() {
-        val dealer = Dealer(
-            Cards(
-                listOf(
-                    Card(CardCategory.CLOVER, CardNumber.EIGHT),
-                    Card(CardCategory.SPADE, CardNumber.SIX)
-                )
-            )
-        )
-
-        val players = Players(
-            listOf(
-                Player(
-                    Name("pobi"), Cards(
-                        listOf(
-                            Card(CardCategory.CLOVER, CardNumber.EIGHT),
-                            Card(CardCategory.SPADE, CardNumber.NINE)
-                        )
-                    )
-                ),
-                Player(
-                    Name("jason"), Cards(
-                        listOf(
-                            Card(CardCategory.CLOVER, CardNumber.EIGHT),
-                            Card(CardCategory.SPADE, CardNumber.TWO)
-                        )
-                    )
-                )
-            )
-        )
-
-        val result = dealer.getResult(players)
-        assertThat(result[GameResultType.WIN]).isEqualTo(1)
-        assertThat(result[GameResultType.LOSE]).isEqualTo(1)
-    }
 }

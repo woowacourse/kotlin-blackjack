@@ -44,9 +44,9 @@ class PlayerTest {
                 )
             )
         )
-        val compareState = Cards.State.NoBurst(18)
-        val result = player.getGameResult(compareState)
-        val expected = GameResultType.LOSE
+        val opponentScore = Score(17,false)
+        val result = player.getGameResult(opponentScore)
+        val expected = GameResultType.무
         assertThat(result).isEqualTo(expected)
     }
 }
