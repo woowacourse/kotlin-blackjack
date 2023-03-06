@@ -73,7 +73,7 @@ class OutputView {
             Rank.KING -> "K"
             Rank.QUEEN -> "Q"
             Rank.JACK -> "J"
-            else -> rank.getScore().toString()
+            else -> rank.score.toString()
         }
 
     private fun suitFormat(suit: Suit): String =

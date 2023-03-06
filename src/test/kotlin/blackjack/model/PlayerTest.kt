@@ -66,8 +66,8 @@ class PlayerTest {
         val player = Player(
             Cards(
                 setOf(
-                    Card(Rank.ACE, Suit.DIAMOND),
-                    Card(Rank.ACE, Suit.CLOVER),
+                    Card(Rank.QUEEN, Suit.DIAMOND),
+                    Card(Rank.KING, Suit.CLOVER),
                     Card(Rank.JACK, Suit.CLOVER),
                 ),
             ),

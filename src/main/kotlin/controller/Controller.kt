@@ -11,7 +11,6 @@ import view.OutputView
 
 class Controller(private val inputView: InputView, private val outputView: OutputView) {
     private val cardDeck = CardPackGenerator().createCardDeck().shuffled()
-
     fun run() {
         val cardGame = CardGame(cardDeck)
         val players = cardGame.initPlayers(initNames())

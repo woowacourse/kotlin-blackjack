@@ -12,8 +12,15 @@ class Cards(cards: Set<Card>) {
     }
 
     fun sum(): Int {
-        var sum = _cards.filter { it.rank != Rank.ACE }.sumOf { it.rank.getScore() }
-        sum += _cards.filter { it.rank == Rank.ACE }.sumOf { it.rank.getScore(sum) }
+        var sum = _cards.sumOf { it.rank.score }
+        repeat(_cards.filter { it.rank == Rank.ACE }.size) {
+            if (sum + ACE_BONUS_TEN <= 21)
+                sum += ACE_BONUS_TEN
+        }
         return sum
+    }
+
+    companion object {
+        private const val ACE_BONUS_TEN = 10
     }
 }
