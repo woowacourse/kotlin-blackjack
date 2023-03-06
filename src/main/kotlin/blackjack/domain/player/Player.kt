@@ -2,10 +2,11 @@ package blackjack.domain.player
 
 import blackjack.domain.CardGenerator
 import blackjack.domain.RandomGenerator
+import blackjack.domain.Result
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
 
-open class Player(
+abstract class Player(
     val name: String,
     private val generator: CardGenerator = CardGenerator(
         RandomGenerator()
@@ -24,6 +25,18 @@ open class Player(
 
     fun generateCard() {
         cards.addCard(generator.generateCard())
+    }
+
+    fun calculateResult(otherSum: Int): Result {
+        val mySum = cards.sumCardsNumber()
+        return when {
+            ((otherSum > Cards.MAX_SUM_NUMBER) and (mySum > Cards.MAX_SUM_NUMBER)) -> Result.DRAW
+            (mySum > Cards.MAX_SUM_NUMBER) -> Result.LOSE
+            (otherSum > Cards.MAX_SUM_NUMBER) -> Result.WIN
+            (otherSum > mySum) -> Result.LOSE
+            (otherSum == mySum) -> Result.DRAW
+            else -> Result.WIN
+        }
     }
 
     companion object {

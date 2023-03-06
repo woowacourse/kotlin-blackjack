@@ -1,5 +1,6 @@
 package blackjack.domain.player
 
+import blackjack.domain.Result
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
 import blackjack.domain.card.CardShape
@@ -9,6 +10,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.ValueSource
 
 class PlayerTest {
@@ -54,10 +56,27 @@ class PlayerTest {
 
     @Test
     fun `카드를 발급받아 카드의 개수가 늘었는지 확인한다`() {
-        val player = Player("aaa")
-        player.addCard(Card(CardNumber.EIGHT, CardShape.CLOVER))
-        player.generateCard()
-        assertThat(player.cards.values.size).isEqualTo(2)
+        val testPlayer = TestPlayer("aaa")
+        testPlayer.addCard(Card(CardNumber.EIGHT, CardShape.CLOVER))
+        testPlayer.generateCard()
+        assertThat(testPlayer.cards.values.size).isEqualTo(2)
+    }
+
+    @ParameterizedTest
+    @CsvSource(
+        value = ["20,LOSE", "8,WIN", "12,DRAW"]
+    )
+    fun `다른 플레이어의 숫자의 합을 받아 자신의 승패를 판단한다`(otherSum: Int, expected: Result) {
+        // given
+        val testPlayer = TestPlayer("aaa")
+        testPlayer.addCard(Card(CardNumber.EIGHT, CardShape.CLOVER))
+        testPlayer.addCard(Card(CardNumber.FOUR, CardShape.CLOVER))
+
+        // when
+        val actual = testPlayer.calculateResult(otherSum)
+
+        // then
+        assertThat(actual).isEqualTo(expected)
     }
 
     class TestPlayer(name: String) : Player(name)
