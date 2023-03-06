@@ -27,8 +27,6 @@ class DealerTest {
         val cardBunch2 = CardBunch(card3, card4)
         val player = Player("krrong", cardBunch2)
 
-        dealer.compareScore(player)
-
-        assertThat(player.consequence).isEqualTo(Consequence.LOSE)
+        assertThat(player.chooseWinner(dealer)).isEqualTo(Consequence.LOSE)
     }
 }

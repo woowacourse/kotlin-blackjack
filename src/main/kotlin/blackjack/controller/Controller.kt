@@ -1,7 +1,6 @@
 package blackjack.controller
 
 import blackjack.domain.Participants
-import blackjack.domain.Player
 import blackjack.domain.carddeck.CardDeck
 import blackjack.domain.carddeck.cardnumbergenerator.RandomCardNumberGenerator
 import blackjack.domain.carddeck.shapegenerator.RandomShapeGenerator
@@ -14,14 +13,13 @@ class Controller() {
             Participants(InputView.getPlayerNames(), CardDeck(RandomShapeGenerator(), RandomCardNumberGenerator()))
         showInitialState(participants)
         participants.progressPlayersAddCard(InputView::getDecision, OutputView::printPlayerCards)
-        players.forEach { dealer.compareScore(it) }
         printResult(participants)
     }
 
     private fun printResult(participants: Participants) {
         progressDealerAddCard(participants)
         printTotalScore(participants)
-        printWinOrLose(participants.players)
+        printWinOrLose(participants)
     }
 
     private fun showInitialState(participants: Participants) {
@@ -31,7 +29,7 @@ class Controller() {
     }
 
     private fun progressDealerAddCard(participants: Participants) {
-        OutputView.printDealerOverCondition(participants.dealer.isOverCondition())
+        OutputView.printDealerOverCondition(!participants.dealer.isOverCondition())
         participants.judgmentDealerAddCard()
     }
 
@@ -39,7 +37,7 @@ class Controller() {
         OutputView.printTotalScore(participants)
     }
 
-    private fun printWinOrLose(players: List<Player>) {
-        OutputView.printWinOrLose(players)
+    private fun printWinOrLose(participants: Participants) {
+        OutputView.printWinOrLose(participants)
     }
 }

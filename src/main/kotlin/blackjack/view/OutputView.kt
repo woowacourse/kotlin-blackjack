@@ -4,7 +4,6 @@ import blackjack.domain.Card
 import blackjack.domain.CardBunch
 import blackjack.domain.CardNumber
 import blackjack.domain.Consequence
-import blackjack.domain.Dealer
 import blackjack.domain.Participants
 import blackjack.domain.Player
 
@@ -51,36 +50,36 @@ object OutputView {
         println()
     }
 
-    fun printWinOrLose(players: List<Player>) {
+    fun printWinOrLose(participants: Participants) {
         println("##최종 승패")
-        printDealerResult(players)
-        getResultString(players)
+        printDealerResult(participants)
+        getResultString(participants)
     }
 
-    private fun printDealerResult(players: List<Player>) {
+    private fun printDealerResult(participants: Participants) {
         val result = mutableListOf(0, 0, 0)
-        players.forEach { player ->
-            result[decideDealerResult(player)]++
+        participants.players.forEach { player ->
+            result[decideDealerResult(participants.getConsequence(player))]++
         }
         println("딜러: ${result[DEALER_WIN]}승 ${result[DEALER_LOSE]}패 ${result[DRAW]}무")
     }
 
-    private fun decideDealerResult(player: Player): Int =
-        when (player.consequence) {
+    private fun decideDealerResult(consequence: Consequence): Int =
+        when (consequence) {
             Consequence.WIN -> DEALER_LOSE
             Consequence.LOSE -> DEALER_WIN
             Consequence.DRAW -> DRAW
         }
 
-    private fun getResultString(players: List<Player>) {
+    private fun getResultString(participants: Participants) {
         var resultString = ""
-        players.forEach { player ->
-            resultString += decidePlayerResult(player)
+        participants.players.forEach { player ->
+            resultString += decidePlayerResult(participants.getConsequence(player), player)
         }
         println(resultString)
     }
 
-    private fun decidePlayerResult(player: Player) = when (player.chooseWinner()) {
+    private fun decidePlayerResult(consequence: Consequence, player: Player) = when (consequence) {
         Consequence.WIN -> "${player.name}: 승\n"
         Consequence.LOSE -> "${player.name}: 패\n"
         Consequence.DRAW -> "${player.name}: 무\n"
