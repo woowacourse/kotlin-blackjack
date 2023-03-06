@@ -17,6 +17,6 @@ class BlackJackTest {
             guests[1].draw(Card(CardMark.CLOVER, CardValue.ACE))
             guests[1].draw(Card(CardMark.CLOVER, CardValue.QUEEN))
         }
-        assertThat(blackJack.result).isEqualTo(listOf(Outcome.LOSE, Outcome.WIN))
+        assertThat(blackJack.getResult()).isEqualTo(listOf(Outcome.LOSE, Outcome.WIN))
     }
 }

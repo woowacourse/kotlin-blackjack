@@ -45,8 +45,8 @@ class OutputView {
     private fun outputOutcomes(blackJack: BlackJack) {
         blackJack.run {
             println("\n## 최종 승패")
-            println("${dealer.name}: ${result.count { it == Outcome.LOSE }}승 ${result.count { it == Outcome.WIN }}패")
-            guests.forEachIndexed { index, user -> outputOutcome(user, result[index]) }
+            println("${dealer.name}: ${getResult().count { it == Outcome.LOSE }}승 ${getResult().count { it == Outcome.WIN }}패")
+            guests.forEachIndexed { index, user -> outputOutcome(user, getResult()[index]) }
         }
     }
 
