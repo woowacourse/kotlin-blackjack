@@ -7,7 +7,7 @@ import org.junit.jupiter.api.assertAll
 class BlackJackBuilderTest {
     @Test
     fun `세팅이 된다`() {
-        val blackJack = introduce {
+        val blackJack = blackJack {
             cardDeck(Cards.all())
             participants {
                 dealer()

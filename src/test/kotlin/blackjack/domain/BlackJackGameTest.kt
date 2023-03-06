@@ -6,7 +6,7 @@ import org.junit.jupiter.api.assertDoesNotThrow
 class BlackJackGameTest {
     @Test
     fun `게임을 실행한다`() {
-        val blackJack = introduce {
+        val blackJack = blackJack {
             cardDeck(Cards.all())
             participants {
                 dealer()

@@ -1,6 +1,6 @@
 package blackjack.domain
 
-fun introduce(block: BlackJackBuilder.() -> Unit): BlackJack {
+fun blackJack(block: BlackJackBuilder.() -> Unit): BlackJack {
     return BlackJackBuilder().apply(block).build()
 }
 
