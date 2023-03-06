@@ -3,15 +3,16 @@ package domain
 import domain.card.Card
 import domain.card.CardMaker
 import domain.deck.Deck
-import domain.gamer.state.DealerState
-import domain.gamer.state.PlayerState
+import domain.gamer.Dealer
+import domain.gamer.Player
+import domain.gamer.cards.Cards
 import domain.judge.Referee
 import domain.judge.Result
 
 class BlackjackGame(private val names: List<String>) {
     private val deck: Deck = Deck(CardMaker().makeCards())
-    lateinit var dealerState: DealerState
-    val playersStates = mutableMapOf<String, PlayerState>()
+    lateinit var dealer: Dealer
+    val players = mutableListOf<Player>()
 
     init {
         makeParticipants()
@@ -23,13 +24,13 @@ class BlackjackGame(private val names: List<String>) {
     }
 
     private fun makeDealer() {
-        dealerState = DealerState(makeStartDeck())
+        dealer = Dealer(Cards(makeStartDeck()))
     }
 
     private fun makePlayer(names: List<String>) {
-        names.forEach {
+        names.forEach { name ->
             val startDeck = makeStartDeck()
-            playersStates[it] = PlayerState(startDeck)
+            players.add(Player(name, Cards(startDeck)))
         }
     }
 
@@ -42,20 +43,20 @@ class BlackjackGame(private val names: List<String>) {
     }
 
     fun pickPlayerCard(name: String) {
-        playersStates.getValue(name).pickCard(deck.giveCard())
+        players.find { it.name == name }!!.pickCard(deck.giveCard())
     }
 
     fun pickDealerCard() {
-        dealerState.pickCard(deck.giveCard())
+        dealer.pickCard(deck.giveCard())
     }
 
-    fun checkBurst(name: String) = playersStates.getValue(name).checkBurst()
+    fun checkBurst(name: String) = players.find { it.name == name }!!.checkBurst()
 
     fun checkDealerAvailableForPick(): Boolean {
-        return dealerState.checkAvailableForPick()
+        return dealer.checkAvailableForPick()
     }
 
-    fun getPlayerWinningResult() = Referee(dealerState, playersStates).judgePlayersResult()
+    fun getPlayerWinningResult() = Referee(dealer, players).judgePlayersResult()
 
     fun judgeDealerResult(playersResult: Map<String, Result>) = mutableListOf<Result>().apply {
         playersResult.forEach {

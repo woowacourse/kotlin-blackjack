@@ -1,8 +1,9 @@
 package view
 
 import domain.card.Card
-import domain.gamer.state.ParticipantState
-import domain.gamer.state.PlayerState
+import domain.gamer.Participant
+import domain.gamer.Player
+import domain.gamer.cards.Cards
 import domain.judge.Result
 
 object OutputView {
@@ -25,15 +26,15 @@ object OutputView {
         println(DEALER + printCardForm(card))
     }
 
-    fun printParticipantsCards(participants: Map<String, PlayerState>) {
+    fun printParticipantsCards(participants: List<Player>) {
         participants.forEach { it ->
-            printParticipantCards(it.key, it.value.cards)
+            printParticipantCards(it.name, it.cards)
         }
         println()
     }
 
-    fun printParticipantCards(name: String, cards: List<Card>) {
-        println("${name}$PARTICIPANT_CARD ${cards.joinToString(SEPARATOR) { printCardForm(it) }}")
+    fun printParticipantCards(name: String, cards: Cards) {
+        println("${name}$PARTICIPANT_CARD ${cards.getCards().joinToString(SEPARATOR) { printCardForm(it) }}")
     }
 
     private fun printCardForm(card: Card): String {
@@ -44,9 +45,13 @@ object OutputView {
         println(PICK_CARD_OVER_SIXTEEN)
     }
 
-    fun printCardResult(participants: Map<String, ParticipantState>) {
+    fun printCardResult(participants: Map<String, Participant>) {
         participants.forEach { (name, participant) ->
-            println("${name}$PARTICIPANT_CARD ${participant.cards.joinToString(SEPARATOR) { printCardForm(it) }}${RESULT}${participant.calculateCardSum()}")
+            println(
+                "${name}$PARTICIPANT_CARD ${
+                    participant.cards.getCards().joinToString(SEPARATOR) { printCardForm(it) }
+                }${RESULT}${participant.calculateCardSum()}"
+            )
         }
     }
 

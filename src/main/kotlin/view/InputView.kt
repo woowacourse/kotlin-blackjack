@@ -20,5 +20,6 @@ object InputView {
         return if (validateAnswer(input)) input else null
     }
 
-    private fun validateAnswer(answer: String) = (answer == BlackjackController.YES_ANSWER || answer == BlackjackController.NO_ANSWER)
+    private fun validateAnswer(answer: String) =
+        (answer == BlackjackController.YES_ANSWER || answer == BlackjackController.NO_ANSWER)
 }

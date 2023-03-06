@@ -1,18 +1,18 @@
-package domain.gamer.state
+package domain.gamer
 
 import domain.card.Card
 import domain.card.CardValue
+import domain.gamer.cards.Cards
 import domain.judge.Referee
 
-abstract class ParticipantState(private val _cards: MutableList<Card>) {
-    val cards: List<Card> get() = _cards.toList()
+abstract class Participant(open val cards: Cards) {
     open fun pickCard(card: Card) {
-        _cards.add(card)
+        cards.addCard(card)
     }
 
     fun calculateCardSum(): Int {
         var value = 0
-        _cards.forEach {
+        cards.getCards().forEach {
             value += getCardValue(it, value)
         }
         return value
@@ -34,7 +34,9 @@ abstract class ParticipantState(private val _cards: MutableList<Card>) {
             CardValue.ACE.value
         }
 
-    private fun countAce() = _cards.count { it.cardValue.title == "ACE" }
+    private fun countAce() = cards.getCards().count { it.cardValue.title == "ACE" }
+
+    fun checkBurst(): Boolean = calculateCardSum() > Referee.CARD_SUM_MAX_VALUE
 
     companion object {
         private const val ACE_COUNT_VALUE_CHANGE_CONDITION = 2

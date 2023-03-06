@@ -1,19 +1,19 @@
 package domain.judge
 
-import domain.gamer.state.DealerState
-import domain.gamer.state.PlayerState
+import domain.gamer.Dealer
+import domain.gamer.Player
 
-class Referee(private val dealerState: DealerState, private val players: Map<String, PlayerState>) {
+class Referee(private val dealer: Dealer, private val players: List<Player>) {
 
     fun judgePlayersResult(): Map<String, Result> = mutableMapOf<String, Result>().apply {
         players.forEach {
-            this[it.key] = judgePlayerResult(it.value)
+            this[it.name] = judgePlayerResult(it)
         }
     }
 
-    private fun judgePlayerResult(player: PlayerState): Result {
+    private fun judgePlayerResult(player: Player): Result {
         val playerSum = player.calculateCardSum()
-        val dealerSum = dealerState.calculateCardSum()
+        val dealerSum = dealer.calculateCardSum()
 
         return when {
             playerSum > CARD_SUM_MAX_VALUE || dealerSum.checkPlayerLossCondition(playerSum) -> Result.LOSS
