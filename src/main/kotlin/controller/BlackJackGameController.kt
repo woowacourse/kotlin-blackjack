@@ -1,9 +1,12 @@
 package controller
 
+import domain.Answer
+import domain.Player
+import domain.Players
 import view.InputView
 import view.ResultView
 
-class BlackJackGameController(private val inputView: InputView, private val resultView: ResultView):Runnable {
+class BlackJackGameController(private val inputView: InputView, private val resultView: ResultView) : Runnable {
     override fun run() {
         val blackJackGame = initGame()
         mainGame(blackJackGame)
@@ -19,12 +22,17 @@ class BlackJackGameController(private val inputView: InputView, private val resu
     }
 
     private fun mainGame(blackJackGame: BlackJackGame) {
-        blackJackGame.playersSelectAddPhase(inputView::readChoiceOfAddCard, resultView::printPlayerCard)
+        blackJackGame.playersSelectAddPhase(::getChoiceOfAddCard, resultView::printPlayerCard)
         blackJackGame.dealerSelectPhase(resultView::printDealerAddCard)
     }
 
     private fun gameResult(blackJackGame: BlackJackGame) {
         resultView.printScore(blackJackGame.participants)
         resultView.printGameResult(blackJackGame.participants.players, blackJackGame.participants.dealer)
+    }
+
+    private fun getChoiceOfAddCard(player: Player): Boolean {
+        val choice = inputView.readChoiceOfAddCard(player.name)
+        return choice == Answer.YES
     }
 }

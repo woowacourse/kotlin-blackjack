@@ -19,23 +19,25 @@ class BlackJackGame(names: Names, private val cardDrawer: CardDrawer = RandomCar
         this.cards.add(cardDrawer.draw())
     }
 
-    private fun Player.playerSelectAdd(input: (Name) -> Answer, output: (Player) -> Unit) {
-        if (isBurst()) return
-        val choice = input(name)
-        if (choice == Answer.YES) addCard()
-        output(this)
-        if (choice == Answer.YES) playerSelectAdd(input, output)
+    private fun Player.playerSelectAdd(getChoiceOfAddCard: (Player) -> Boolean, result: (Player) -> Unit) {
+        val isGetCard = getChoiceOfAddCard(this)
+        if (isGetCard) {
+            addCard()
+        }
+        if(isBurst()) return
+        result(this)
+        if (isGetCard) playerSelectAdd(getChoiceOfAddCard, result)
     }
 
-    fun playersSelectAddPhase(input: (Name) -> Answer, output: (Player) -> Unit) {
+    fun playersSelectAddPhase(isGetCard: (Player) -> Boolean, output: (Player) -> Unit) {
         players.players.forEach { player ->
-            player.playerSelectAdd(input, output)
+            player.playerSelectAdd(isGetCard, output)
         }
     }
 
-    fun dealerSelectPhase(output: (Dealer) -> Unit) {
+    fun dealerSelectPhase(result: (Dealer) -> Unit) {
         if (participants.dealer.isPossibleDrawCard()) {
-            output(dealer)
+            result(dealer)
             participants.dealer.addCard()
         }
     }
