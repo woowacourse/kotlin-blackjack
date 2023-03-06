@@ -19,9 +19,9 @@ class CardsTest {
     fun `ACE 카드가 있는지 확인 할 수 있다`() {
         var cards = Cards()
         cards += Card(CLOVER, EIGHT)
-        assertThat(cards.containsACE()).isFalse
+        assertThat(cards.isContainsACE()).isFalse
         cards += Card(CLOVER, ACE)
-        assertThat(cards.containsACE()).isTrue
+        assertThat(cards.isContainsACE()).isTrue
     }
 
     @Test
