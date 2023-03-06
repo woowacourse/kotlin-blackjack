@@ -39,13 +39,10 @@ class BlackJackController {
         AdditionalCardView.printDealerNoMoreCard()
     }
 
-    private fun applyPlayerDecision(deck: Deck, player: Player) {
+    private fun handOutCardsToPlayer(deck: Deck, player: Player) {
         val decision = Decision.of(AdditionalCardView.requestPlayerDecision(player.name))
             ?: throw IllegalArgumentException("y 또는 n 을 입력해야 합니다.")
-        if (decision == Decision.NO) {
-            player.rejectReceiveCard()
-            return
-        }
+        if (decision == Decision.NO) return
         player.receiveCard(deck.getCard())
         AdditionalCardView.printPlayerCards(player)
         if (player.isBust()) return
