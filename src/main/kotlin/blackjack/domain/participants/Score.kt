@@ -2,15 +2,14 @@ package blackjack.domain.participants
 
 import blackjack.domain.card.Cards
 
-class Score(val cards: Cards) {
-    val score: Int
-        get() = if (isMaxScoreInRange) maxScore else minScore
+class Score(cards: Cards) {
 
-    val minScore: Int
-        get() = cards.toList().sumOf { it.value.value }
+    val minScore: Int = cards.toList().sumOf { it.value.value }
 
-    val maxScore: Int
-        get() = minScore + if (cards.containsACE() && validateAceCondition) ACE_OTHER_NUMBER_DIFF else 0
+    val maxScore: Int =
+        minScore + if (cards.containsACE() && validateAceCondition) ACE_OTHER_NUMBER_DIFF else 0
+
+    fun score(): Int = if (isMaxScoreInRange) maxScore else minScore
 
     private val validateAceCondition: Boolean
         get() = minScore + ACE_OTHER_NUMBER_DIFF <= BLACKJACK_NUMBER

@@ -23,4 +23,12 @@ class CardsTest {
         cards += Card(CLOVER, ACE)
         assertThat(cards.containsACE()).isTrue
     }
+
+    @Test
+    fun `점수의 합을 반환한다`() {
+        var cards = Cards()
+        cards += Card(CLOVER, EIGHT)
+        cards += Card(CardMark.SPADE, CardValue.EIGHT)
+        assertThat(cards.result.score()).isEqualTo(16)
+    }
 }
