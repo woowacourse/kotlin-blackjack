@@ -1,8 +1,8 @@
 package domain.judge
 
-import domain.Player
 import domain.gamer.cards.DealerCards
 import domain.gamer.cards.PlayerCards
+import domain.player.Player
 
 class Referee(private val dealerState: DealerCards, private val players: List<Player>) {
 

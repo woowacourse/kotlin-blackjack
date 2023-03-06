@@ -7,8 +7,10 @@ import domain.gamer.cards.DealerCards
 import domain.gamer.cards.PlayerCards
 import domain.judge.Referee
 import domain.judge.Result
+import domain.player.Names
+import domain.player.Player
 
-class BlackjackGame(val names: List<String>) {
+class BlackjackGame(val names: Names) {
     private val deck: Deck = Deck(CardMaker().makeShuffledCards())
     val dealerState: DealerCards
     val players = mutableListOf<Player>()
@@ -18,8 +20,8 @@ class BlackjackGame(val names: List<String>) {
         makePlayer(names)
     }
 
-    private fun makePlayer(names: List<String>) {
-        names.forEach {
+    private fun makePlayer(names: Names) {
+        names.userNames.forEach {
             val startDeck = makeStartDeck()
             players.add(Player(it, PlayerCards(startDeck)))
         }

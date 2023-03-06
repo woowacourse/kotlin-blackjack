@@ -1,9 +1,10 @@
 package view
 
-import domain.Player
 import domain.card.Card
 import domain.gamer.cards.ParticipantCards
 import domain.judge.Result
+import domain.player.Names
+import domain.player.Player
 
 object OutputView {
     private const val SEPARATOR = ", "
@@ -16,9 +17,9 @@ object OutputView {
     private const val FINAL_RESULT = "\n## 최종 승패"
     private const val PICK_CARD_OVER_SIXTEEN = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n"
 
-    fun printDivideCard(names: List<String>) {
+    fun printDivideCard(names: Names) {
         println()
-        println(names.joinToString(SEPARATOR, WITH_DEALER, DIVIDE_TWO_CARDS))
+        println(names.userNames.joinToString(SEPARATOR, WITH_DEALER, DIVIDE_TWO_CARDS))
     }
 
     fun printDealerSettingCard(card: Card) {

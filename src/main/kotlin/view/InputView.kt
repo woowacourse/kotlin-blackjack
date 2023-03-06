@@ -9,8 +9,13 @@ object InputView {
 
     fun inputPlayerNames(): List<String> {
         println(PRINT_PARTICIPANT_NAMES)
-        val input = readln().trim()
-        return input.split(SEPARATOR)
+        val input = readln().trim().split(SEPARATOR)
+
+        return input.isAvailable()
+    }
+
+    private fun List<String>.isAvailable(): List<String> {
+        return this.filter { it.isNotBlank() }
     }
 
     fun inputRepeatGetCard(name: String): Boolean? {

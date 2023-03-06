@@ -1,11 +1,11 @@
 package domain.judge
 
-import domain.Player
 import domain.card.Card
 import domain.card.CardValue
 import domain.card.Shape
 import domain.gamer.cards.DealerCards
 import domain.gamer.cards.PlayerCards
+import domain.player.Player
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
