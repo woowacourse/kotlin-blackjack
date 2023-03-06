@@ -14,7 +14,7 @@ class Controller() {
         val participants =
             Participants(InputView.getPlayerNames(), CardDeck(RandomShapeGenerator(), RandomCardNumberGenerator()))
         showInitialState(participants)
-        players.forEach { askGetCard(it) }
+        participants.progressPlayersAddCard(InputView::getDecision, OutputView::printPlayerCards)
         players.forEach { dealer.compareScore(it) }
         printResult(participants)
     }
@@ -29,22 +29,6 @@ class Controller() {
         OutputView.printDistributeScript(participants.players)
         OutputView.printDealerInitialCard(participants.dealer.cardBunch)
         participants.players.forEach { OutputView.printPlayerCards(it) }
-    }
-
-    private fun askGetCard(player: Player) {
-        while (!player.cardBunch.isBurst()) {
-            if (!addCardToPlayer(player)) return
-        }
-    }
-
-    private fun addCardToPlayer(player: Player): Boolean {
-        if (InputView.getDecision(player)) {
-            player.cardBunch.addCard(cardDeck.drawCard())
-            OutputView.printPlayerCards(player)
-            return true
-        }
-        OutputView.printPlayerCards(player)
-        return false
     }
 
     private fun showDealerState(dealer: Dealer) {
