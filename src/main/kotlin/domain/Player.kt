@@ -6,7 +6,7 @@ class Player(name: Name, cards: Cards) : Participant(name, cards) {
     }
 
     override fun isPossibleDrawCard(): Boolean {
-       return !cards.getScore().isBurst()
+        return !cards.getScore().isBurst()
     }
 
     companion object {

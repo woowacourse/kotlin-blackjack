@@ -1,6 +1,6 @@
 package domain
 
-class RandomCardDrawer : CardDrawer {
+class RandomCardPicker : CardDrawer {
     private val cards =
         CardCategory.values().flatMap { cardCategory -> CardNumber.values().map { Card(cardCategory, it) } }
 

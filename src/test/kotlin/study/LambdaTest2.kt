@@ -33,8 +33,9 @@ class LambdaTest2 {
     fun sum(numbers: List<Int>, block: (Int) -> Boolean): Int {
         var total = 0
         for (number in numbers) {
-            if (block(number))
+            if (block(number)) {
                 total += number
+            }
         }
         return total
     }
@@ -45,6 +46,3 @@ class LambdaTest2 {
         assertThat(actual).isEqualTo(sumAllEven(numbers))
     }
 }
-
-
-

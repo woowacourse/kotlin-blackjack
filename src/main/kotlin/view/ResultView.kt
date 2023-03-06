@@ -1,6 +1,12 @@
 package view
 
-import domain.*
+import domain.Card
+import domain.Dealer
+import domain.GameResult
+import domain.Participants
+import domain.Player
+import domain.Players
+import domain.RandomCardPicker
 
 class ResultView {
     fun printGameInit(players: Players) {
@@ -8,22 +14,22 @@ class ResultView {
     }
 
     private fun formatStringName(players: Players): String {
-        return players.list.joinToString(SEPARATOR) { it.name.name }
+        return players.list.joinToString(SEPARATOR) { it.name.value }
     }
 
     fun printInitCards(participants: Participants) {
         participants.participants.forEach { participant ->
-            println(PRINT_NAME_AND_CARDS.format(participant.name.name, formatStringCards(participant.showInitCards())))
+            println(PRINT_NAME_AND_CARDS.format(participant.name.value, formatStringCards(participant.showInitCards())))
         }
         println()
     }
 
     fun printPlayerCard(player: Player) {
-        println(PRINT_NAME_AND_CARDS.format(player.name.name, formatStringCards(player.cards.list)))
+        println(PRINT_NAME_AND_CARDS.format(player.name.value, formatStringCards(player.cards.list)))
     }
 
     fun printDealerAddCard(dealer: Dealer) {
-        println(PRINT_DEALER_ADD_CARD.format(dealer.name.name))
+        println(PRINT_DEALER_ADD_CARD.format(dealer.name.value))
     }
 
     fun printGameResult(gameResult: GameResult) {
@@ -52,7 +58,7 @@ class ResultView {
 
     private fun formatStringPlayersResult(gameResult: GameResult) {
         gameResult.getPlayersGameResult().forEach { (name, gameResult) ->
-            println(PRINT_PLAYER_GAME_RESULT.format(name.name, gameResult.name))
+            println(PRINT_PLAYER_GAME_RESULT.format(name.value, gameResult.name))
         }
     }
 
@@ -60,16 +66,16 @@ class ResultView {
         participants.participants.forEach { participant ->
             println(
                 PRINT_NAME_AND_CARDS_AND_SCORE.format(
-                    participant.name.name,
+                    participant.name.value,
                     formatStringCards(participant.cards.list),
-                    participant.getScore().getValue()
-                )
+                    participant.getScore().getValue(),
+                ),
             )
         }
     }
 
     companion object {
-        private const val PRINT_GAME_INIT_MESSAGE = "\n딜러와 %s에게 ${RandomCardDrawer.DRAW_INIT_CARD_COUNT}장의 나누었습니다."
+        private const val PRINT_GAME_INIT_MESSAGE = "\n딜러와 %s에게 ${RandomCardPicker.DRAW_INIT_CARD_COUNT}장의 나누었습니다."
         private const val SEPARATOR = ", "
         private const val PRINT_NAME_AND_CARDS = "%s카드: %s"
         private const val PRINT_DEALER_ADD_CARD = "\n%s는 ${Dealer.DEALER_ADD_CARD_CONDITION}이하라 한장의 카드를 더 받았습니다."
@@ -79,4 +85,3 @@ class ResultView {
         private const val PRINT_NAME_AND_CARDS_AND_SCORE = "%s 카드: %s - 결과: %d"
     }
 }
-

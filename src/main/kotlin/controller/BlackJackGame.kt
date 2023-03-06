@@ -1,8 +1,16 @@
 package controller
 
-import domain.*
+import domain.CardDrawer
+import domain.Dealer
+import domain.GameResult
+import domain.Names
+import domain.Participant
+import domain.Participants
+import domain.Player
+import domain.Players
+import domain.RandomCardPicker
 
-class BlackJackGame(names: Names, private val cardDrawer: CardDrawer = RandomCardDrawer()) {
+class BlackJackGame(names: Names, private val cardDrawer: CardDrawer = RandomCardPicker()) {
     val participants: Participants
     private val players: Players
         get() = participants.players
@@ -10,7 +18,7 @@ class BlackJackGame(names: Names, private val cardDrawer: CardDrawer = RandomCar
         get() = participants.dealer
 
     init {
-        val players = names.names.map { Player(it, cardDrawer.drawInitCards()) }
+        val players = names.values.map { Player(it, cardDrawer.drawInitCards()) }
         val dealer = Dealer(cardDrawer.drawInitCards())
         participants = Participants(Players(players), dealer)
     }
