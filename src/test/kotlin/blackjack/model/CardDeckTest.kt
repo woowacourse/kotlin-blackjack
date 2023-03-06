@@ -40,4 +40,10 @@ class CardDeckTest {
         assertThat(card.rank).isEqualTo(Rank.ACE)
         assertThat(card.suit).isEqualTo(Suit.DIAMOND)
     }
+
+    @Test
+    fun `카드 덱의 사이즈를 확인할 수 있다`() {
+        val cardDeck = CardPackGenerator().createCardDeck()
+        assertThat(cardDeck.size).isEqualTo(52)
+    }
 }
