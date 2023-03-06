@@ -5,8 +5,8 @@ import misc.GameRule
 class Player(val name: Name, cards: Cards = Cards(listOf())) : User(cards) {
     override fun isDistributable(): Boolean = cardsNumberSum() < GameRule.WINNING_NUMBER
 
-    fun addMoreCards(condition: CardDistributeCondition, onDistribute: () -> Unit) {
-        if (condition.toBoolean()) {
+    fun addMoreCards(condition: Boolean, onDistribute: () -> Unit) {
+        if (condition) {
             onDistribute()
         }
     }
