@@ -1,9 +1,9 @@
 package blackjack.controller
 
 import blackjack.domain.CardBunch
+import blackjack.domain.CardDeck
 import blackjack.domain.Dealer
 import blackjack.domain.Player
-import blackjack.domain.carddeck.CardDeck
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
