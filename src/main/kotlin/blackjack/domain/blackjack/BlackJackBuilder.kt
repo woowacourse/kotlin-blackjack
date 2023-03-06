@@ -1,4 +1,9 @@
-package blackjack.domain
+package blackjack.domain.blackjack
+
+import blackjack.domain.card.Card
+import blackjack.domain.card.CardDeck
+import blackjack.domain.participants.Participants
+import blackjack.domain.participants.ParticipantsBuilder
 
 fun blackJack(block: BlackJackBuilder.() -> Unit): BlackJack {
     return BlackJackBuilder().apply(block).build()
@@ -18,7 +23,5 @@ class BlackJackBuilder {
         it.draw(cardDeck.nextCard())
     }
 
-    fun build(): BlackJack {
-        return BlackJack(cardDeck, participants)
-    }
+    fun build(): BlackJack = BlackJack(cardDeck, participants)
 }

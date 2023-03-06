@@ -1,4 +1,5 @@
-package blackjack.domain
+package blackjack.domain.result
+import blackjack.domain.participants.User
 import java.lang.IllegalStateException
 
 enum class Outcome {

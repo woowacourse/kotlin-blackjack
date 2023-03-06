@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.participants
 
 data class Participants(
     val dealer: Dealer,

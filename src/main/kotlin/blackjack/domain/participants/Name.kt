@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.participants
 
 @JvmInline
 value class Name(private val value: String) {

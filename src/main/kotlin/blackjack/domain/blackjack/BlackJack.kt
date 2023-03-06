@@ -1,6 +1,11 @@
-package blackjack.domain
+package blackjack.domain.blackjack
 
-import blackjack.domain.Outcome.Companion.winTo
+import blackjack.domain.card.CardDeck
+import blackjack.domain.participants.Dealer
+import blackjack.domain.participants.Guest
+import blackjack.domain.participants.Participants
+import blackjack.domain.result.Outcome
+import blackjack.domain.result.Outcome.Companion.winTo
 
 data class BlackJack(
     val cardDeck: CardDeck,

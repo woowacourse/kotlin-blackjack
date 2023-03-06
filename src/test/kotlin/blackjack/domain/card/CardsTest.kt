@@ -1,8 +1,8 @@
-package blackjack.domain
+package blackjack.domain.card
 
-import blackjack.domain.CardMark.CLOVER
-import blackjack.domain.CardValue.ACE
-import blackjack.domain.CardValue.EIGHT
+import blackjack.domain.card.CardMark.CLOVER
+import blackjack.domain.card.CardValue.ACE
+import blackjack.domain.card.CardValue.EIGHT
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

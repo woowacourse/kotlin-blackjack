@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.card
 
 class Cards(private val cards: Set<Card> = setOf()) {
     val size: Int
