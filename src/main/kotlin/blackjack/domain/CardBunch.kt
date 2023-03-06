@@ -8,10 +8,8 @@ class CardBunch private constructor(cards: MutableList<Card>) {
 
     constructor(vararg cards: Card) : this(cards.toMutableList())
 
-    fun addCard(card: Card) {
-        _cards.add(card)
-        require(_cards.contains(card)) { ADD_ERROR }
-    }
+    fun addCard(card: Card) = _cards.add(card)
+
 
     fun getTotalScore(): Int {
         var result = 0
@@ -33,7 +31,6 @@ class CardBunch private constructor(cards: MutableList<Card>) {
     fun isBurst(): Boolean = getTotalScore() > MAX_SCORE_CONDITION
 
     companion object {
-        private const val ADD_ERROR = "카드가 추가되지 않았습니다!"
         private const val BIG_ACE_SCORE = 11
         private const val SMALL_ACE_SCORE = 1
     }
