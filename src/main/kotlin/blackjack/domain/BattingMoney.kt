@@ -1,6 +1,9 @@
 package blackjack.domain
 
-class BattingMoney(val value: Int) {
+class BattingMoney(value: Int) {
+
+    var value = value
+        private set
 
     init {
         require(value > 0) {

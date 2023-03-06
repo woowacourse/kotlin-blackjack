@@ -1,5 +1,6 @@
 package domain
 
+import blackjack.domain.BattingMoney
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
 import blackjack.domain.card.Cards
@@ -14,7 +15,8 @@ class DealerTest {
     @Test
     fun `딜러는 들고있는 카드의 총합이 16이하라면 카드를 추가로 받는다`() {
         val dealer = Dealer(
-            Cards(
+            battingMoney = BattingMoney(1000),
+            cards = Cards(
                 listOf(
                     Card(CardNumber.TEN, Shape.DIAMOND),
                     Card(CardNumber.FIVE, Shape.SPADE)
@@ -30,7 +32,8 @@ class DealerTest {
     @Test
     fun `딜러는 들고있는 카드의 총합이 17이상이라면 카드를 추가로 받지 못한다`() {
         val dealer = Dealer(
-            Cards(
+            battingMoney = BattingMoney(1000),
+            cards = Cards(
                 listOf(
                     Card(CardNumber.TEN, Shape.DIAMOND),
                     Card(CardNumber.SEVEN, Shape.SPADE)

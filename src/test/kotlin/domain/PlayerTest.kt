@@ -1,5 +1,6 @@
 package domain
 
+import blackjack.domain.BattingMoney
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
 import blackjack.domain.card.Cards
@@ -22,6 +23,7 @@ class PlayerTest {
 
         val player = Player(
             PlayerName("우기"),
+            BattingMoney(1000),
             cards
         )
 

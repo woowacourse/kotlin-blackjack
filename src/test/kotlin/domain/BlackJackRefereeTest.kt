@@ -1,5 +1,6 @@
 package domain
 
+import blackjack.domain.BattingMoney
 import blackjack.domain.BlackJackReferee
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
@@ -20,6 +21,7 @@ class BlackJackRefereeTest {
     fun `딜러를 상대로 링링은 패배하고 우기는 승리하고 써니는 무승부`() {
         val woogi = Player(
             name = PlayerName("woogi"),
+            battingMoney = BattingMoney(1000),
             cards = Cards(
                 listOf(
                     Card(CardNumber.SEVEN, Shape.SPADE),
@@ -30,6 +32,7 @@ class BlackJackRefereeTest {
 
         val ring = Player(
             name = PlayerName("ring"),
+            battingMoney = BattingMoney(1000),
             cards = Cards(
                 listOf(
                     Card(CardNumber.EIGHT, Shape.HEART),
@@ -40,6 +43,7 @@ class BlackJackRefereeTest {
 
         val sunny = Player(
             name = PlayerName("sunny"),
+            battingMoney = BattingMoney(1000),
             cards = Cards(
                 listOf(
                     Card(CardNumber.EIGHT, Shape.HEART),
@@ -49,6 +53,7 @@ class BlackJackRefereeTest {
         )
 
         val dealer = Dealer(
+            battingMoney = BattingMoney(1000),
             Cards(
                 listOf(
                     Card(CardNumber.SIX, Shape.DIAMOND),

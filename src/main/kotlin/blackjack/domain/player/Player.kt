@@ -1,13 +1,18 @@
 package blackjack.domain.player
 
+import blackjack.domain.BattingMoney
 import blackjack.domain.card.Cards
 
 class Player(
     val name: PlayerName,
-    val cards: Cards = Cards()
+    val battingMoney: BattingMoney,
+    val cards: Cards = Cards(),
 ) {
 
-    constructor(name: String) : this(PlayerName(name))
+    constructor(
+        name: String,
+        battingMoney: Int,
+    ) : this(PlayerName(name), BattingMoney(battingMoney))
 
     private fun isPossibleToDrawAdditionalCard(): DrawState {
         if (cards.getMinimumCardsScore() >= BLACK_JACK_SCORE) {
