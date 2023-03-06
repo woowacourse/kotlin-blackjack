@@ -22,8 +22,8 @@ class Dealer(override val cardBunch: CardBunch) : Participant {
     }
 
     private fun getPlayerConsequence(dealerScore: Int, playerScore: Int): Consequence {
-        if (dealerScore > MAX_SCORE_CONDITION) return Consequence.WIN
         if (playerScore > MAX_SCORE_CONDITION) return Consequence.LOSE
+        if (dealerScore > MAX_SCORE_CONDITION) return Consequence.WIN
         if (dealerScore == MAX_SCORE_CONDITION && playerScore != MAX_SCORE_CONDITION) return Consequence.LOSE
         if (playerScore > dealerScore) return Consequence.WIN
         if (playerScore == dealerScore) return Consequence.DRAW
