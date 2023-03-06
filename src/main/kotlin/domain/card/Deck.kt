@@ -4,20 +4,20 @@ class Deck {
     private val cards = mutableListOf<Card>()
 
     init {
-        initCards()
+        cards.addAll(initCards())
         cards.shuffle()
         checkDeckSize()
     }
 
-    private fun initCards() {
-        CardShape.values().forEach { shape ->
-            addNumbers(shape)
+    private fun initCards(): List<Card> {
+        return CardShape.values().flatMap { shape ->
+            initNumber(shape)
         }
     }
 
-    private fun addNumbers(shape: CardShape) {
-        CardNumber.values().forEach { number ->
-            cards.add(Card(shape, number))
+    private fun initNumber(shape: CardShape): List<Card> {
+        return CardNumber.values().map { number ->
+            Card(shape, number)
         }
     }
 
