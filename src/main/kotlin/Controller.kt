@@ -5,6 +5,7 @@ import domain.Dealer
 import domain.Deck
 import domain.GameResult
 import domain.Referee
+import domain.Score
 import domain.User
 import domain.UserNameContainer
 import domain.card.Card
@@ -92,9 +93,9 @@ class Controller(
 
     private fun getGameResult(dealer: Dealer, users: List<User>): List<GameResult> {
         val referee: Referee = Referee(
-            dealer.cards.actualCardValueSum(),
+            Score(dealer.cards.actualCardValueSum()),
             users.map { user ->
-                user.cards.actualCardValueSum()
+                Score(user.cards.actualCardValueSum())
             },
         )
         return referee.getResult()
