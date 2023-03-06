@@ -21,7 +21,7 @@ object ResultView {
         println(
             INITIAL_CARDS_SCRIPT.format(
                 person.name,
-                person.showHandOfCards().joinToString(",") { it.toString() },
+                person.showHandOfCards().joinToString(",") { ViewCommon.cardToString(it) },
                 person.getTotalCardNumber(GetAppropriateSum()),
             ),
         )

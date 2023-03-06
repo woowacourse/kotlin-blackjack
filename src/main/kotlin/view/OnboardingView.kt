@@ -2,6 +2,7 @@ package view
 
 import domain.person.Persons
 import domain.person.Player
+import view.ViewCommon.cardToString
 
 object OnboardingView {
     private const val ERROR_INPUT_BLACK = "공백은 입력할 수 없습니다."
@@ -24,12 +25,22 @@ object OnboardingView {
         val players = persons.players
         println()
         println(SHARE_TWO_CARDS_SCRIPT.format(dealer.name, players.joinToString(", ") { it.name }))
-        println(INITIAL_CARDS_SCRIPT.format(dealer.name, dealer.showFirstCard().joinToString { it.toString() }))
+        println(
+            INITIAL_CARDS_SCRIPT.format(
+                dealer.name,
+                dealer.showFirstCard().joinToString { cardToString(it) },
+            ),
+        )
         players.forEach { printInitialCards(it) }
         println()
     }
 
     private fun printInitialCards(player: Player) {
-        println(INITIAL_CARDS_SCRIPT.format(player.name, player.showHandOfCards().joinToString(",") { it.toString() }))
+        println(
+            INITIAL_CARDS_SCRIPT.format(
+                player.name,
+                player.showHandOfCards().joinToString(",") { cardToString(it) },
+            ),
+        )
     }
 }

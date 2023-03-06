@@ -17,7 +17,12 @@ object AdditionalCardView {
     }
 
     fun printPlayerCards(player: Player) {
-        println(INITIAL_CARDS_SCRIPT.format(player.name, player.showHandOfCards().joinToString(",") { it.toString() }))
+        println(
+            INITIAL_CARDS_SCRIPT.format(
+                player.name,
+                player.showHandOfCards().joinToString(",") { ViewCommon.cardToString(it) },
+            ),
+        )
     }
 
     fun printDealerGetMoreCard() {
