@@ -5,8 +5,8 @@ import domain.card.CardNumber
 import domain.card.CardShape.CLOVER
 import domain.card.CardShape.DIAMOND
 import domain.card.CardShape.HEART
+import domain.card.HandOfCards
 import domain.card.strategy.GetAppropriateSum
-import domain.person.PersonGenerator.makeDealer
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -20,9 +20,7 @@ class DealerTest {
 
     @BeforeEach
     private fun setUp() {
-        dealer = makeDealer {
-            addTwoCards(Card(HEART, CardNumber.TWO), Card(DIAMOND, CardNumber.TWO))
-        }
+        dealer = Dealer(HandOfCards(Card(HEART, CardNumber.TWO), Card(DIAMOND, CardNumber.TWO)))
     }
 
     @Test

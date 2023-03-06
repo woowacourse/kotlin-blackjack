@@ -3,13 +3,12 @@ package controller
 import domain.Decision
 import domain.card.Deck
 import domain.person.Dealer
-import domain.person.PersonGenerator
 import domain.person.Persons
 import domain.person.Player
 import domain.result.GameResult
-import view.AdditionalCardView
-import view.OnboardingView
-import view.ResultView
+import view.additional.AdditionalCardView
+import view.onboarding.OnboardingView
+import view.result.ResultView
 
 class BlackJackController {
     fun runBlackJack() {
@@ -20,7 +19,7 @@ class BlackJackController {
     }
 
     private fun runOnboarding(deck: Deck): Persons {
-        val persons = PersonGenerator.getPersons(OnboardingView.requestInputNames(), deck)
+        val persons = Persons.getPersons(OnboardingView.requestInputNames(), deck)
         OnboardingView.printInitialSetting(persons)
         return persons
     }

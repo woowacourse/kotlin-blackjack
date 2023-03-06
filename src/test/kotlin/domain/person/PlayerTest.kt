@@ -5,9 +5,9 @@ import domain.card.CardNumber
 import domain.card.CardShape.CLOVER
 import domain.card.CardShape.DIAMOND
 import domain.card.CardShape.HEART
+import domain.card.HandOfCards
 import domain.card.strategy.GetAppropriateSum
 import domain.card.strategy.GetMinSum
-import domain.person.PersonGenerator.makePlayer
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -21,10 +21,7 @@ class PlayerTest {
 
     @BeforeEach
     private fun setUp() {
-        player = makePlayer {
-            name("베르")
-            addTwoCards(Card(HEART, CardNumber.TWO), Card(DIAMOND, CardNumber.TWO))
-        }
+        player = Player("베르", HandOfCards(Card(HEART, CardNumber.TWO), Card(DIAMOND, CardNumber.TWO)))
     }
 
     @Test
