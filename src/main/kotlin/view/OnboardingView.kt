@@ -1,6 +1,6 @@
 package view
 
-import domain.person.Dealer
+import domain.person.Persons
 import domain.person.Player
 
 object OnboardingView {
@@ -19,7 +19,9 @@ object OnboardingView {
         return input.split(',').map { it.trim() }
     }
 
-    fun printInitialSetting(players: List<Player>, dealer: Dealer) {
+    fun printInitialSetting(persons: Persons) {
+        val dealer = persons.dealer
+        val players = persons.players
         println()
         println(SHARE_TWO_CARDS_SCRIPT.format(dealer.name, players.joinToString(", ") { it.name }))
         println(INITIAL_CARDS_SCRIPT.format(dealer.name, dealer.showFirstCard().joinToString { it.toString() }))

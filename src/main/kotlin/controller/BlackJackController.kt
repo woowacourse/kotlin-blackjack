@@ -3,6 +3,8 @@ package controller
 import domain.card.Deck
 import domain.constant.Decision
 import domain.person.Dealer
+import domain.person.PersonGenerator
+import domain.person.Persons
 import domain.person.Player
 import domain.result.GameResult
 import view.AdditionalCardView
@@ -23,25 +25,9 @@ class BlackJackController {
         return persons
     }
 
-    private fun runOnboarding(deck: Deck, dealer: Dealer): List<Player> {
-        val players = OnboardingView.requestInputNames().map { name -> Player(name) }
-        dealer.receiveCard(deck.getCard(), deck.getCard())
-        players.forEach {
-            it.receiveCard(deck.getCard(), deck.getCard())
-        }
-        OnboardingView.printInitialSetting(players, dealer)
-        return players
-    }
-
-    private fun runMain(deck: Deck, dealer: Dealer, players: List<Player>) {
-        players.forEach { player -> handOutCardsToPlayer(deck, player) }
-        handOutCardToDealer(deck, dealer)
-    }
-
-    private fun handOutCardsToPlayer(deck: Deck, player: Player) {
-        while (player.isStateHit()) {
-            applyPlayerDecision(deck, player)
-        }
+    private fun runMain(deck: Deck, persons: Persons) {
+        persons.players.forEach { player -> handOutCardsToPlayer(deck, player) }
+        handOutCardToDealer(deck, persons.dealer)
     }
 
     private fun handOutCardToDealer(deck: Deck, dealer: Dealer) {
@@ -66,10 +52,10 @@ class BlackJackController {
         handOutCardsToPlayer(deck, player)
     }
 
-    private fun runResult(dealer: Dealer, players: List<Player>) {
-        val gameResult = GameResult(dealer, players)
+    private fun runResult(persons: Persons) {
+        val gameResult = GameResult(persons)
 
-        ResultView.printPersonsCards(dealer, players)
+        ResultView.printPersonsCards(persons.dealer, persons.players)
         ResultView.printFinalResult(gameResult)
     }
 }
