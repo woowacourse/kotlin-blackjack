@@ -8,9 +8,9 @@ import entity.PlayersGameResult
 
 class ResultView {
     fun printGameStatus(dealer: Dealer, players: Players) {
-        println(MESSAGE_DEALER_GAME_STATUS.format(ViewUtils.cardsToString(dealer.cards), dealer.cardsNumberSum()))
+        println(MESSAGE_DEALER_GAME_STATUS.format(ViewUtils.cardsToString(dealer.cards), dealer.cards.sumOfNumbers()))
         players.value.forEach {
-            println(MESSAGE_PLAYERS_GAME_STATUS.format(it.name.value, ViewUtils.cardsToString(it.cards), it.cardsNumberSum()))
+            println(MESSAGE_PLAYERS_GAME_STATUS.format(it.name.value, ViewUtils.cardsToString(it.cards), it.cards.sumOfNumbers()))
         }
     }
 

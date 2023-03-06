@@ -3,19 +3,19 @@ package entity
 import misc.GameRule
 import model.CardFactory
 
-class Player(val name: Name, cards: Cards = Cards(listOf())) : User(cards) {
-    override fun isDistributable(): Boolean = cardsNumberSum() < GameRule.WINNING_NUMBER
+class Player(val name: Name, val cards: Cards = Cards(listOf())) : User {
+    override fun isDistributable(): Boolean = cards.sumOfNumbers() < GameRule.WINNING_NUMBER
 
     fun addMoreCards(cardFactory: CardFactory, condition: (player: Player) -> Boolean): Boolean {
         if (isDistributable() && condition(this)) {
-            addCards(cardFactory.generate(SINGLE_DISTRIBUTE_COUNT))
+            cards.addCards(cardFactory.generate(User.SINGLE_DISTRIBUTE_COUNT))
             return true
         }
         return false
     }
 
     fun determineGameResult(dealerCardNumberSum: Int): Pair<Player, GameResultType> {
-        val playerCardNumberSum = cardsNumberSum()
+        val playerCardNumberSum = cards.sumOfNumbers()
 
         return when {
             playerCardNumberSum in (dealerCardNumberSum + 1)..GameRule.WINNING_NUMBER ||
