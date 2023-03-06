@@ -8,7 +8,6 @@ import domain.Referee
 import domain.Score
 import domain.User
 import domain.UserNameContainer
-import domain.card.Card
 import view.GameResultView
 import view.LoginView
 import view.PlayGameView
@@ -22,10 +21,8 @@ class Controller(
 
     fun run() {
         val userNames = readUserNames()
-        val dealerCards = deck.getCardPair()
-        val userCards = deck.getCardPairs(userNames.size)
-        val users = createUsers(userNames, userCards)
-        val dealer = Dealer(cards = Cards(dealerCards))
+        val users = createUsers(userNames)
+        val dealer = Dealer(cards = Cards(deck.getCards(2)))
 
         playGame(userNames, dealer, users)
         gameEnd(dealer, users)
@@ -38,10 +35,9 @@ class Controller(
 
     private fun getUserNames(): UserNameContainer = UserNameContainer(loginView.requestPlayerName())
 
-    private fun createUsers(userNames: List<String>, userCards: List<List<Card>>): List<User> {
-        val userNamesAndCards = userNames.zip(userCards)
-        return userNamesAndCards.map { userNameAndCard ->
-            User.create(userNameAndCard)
+    private fun createUsers(userNames: List<String>): List<User> {
+        return userNames.map { name ->
+            User(name, Cards(deck.getCards(2)))
         }
     }
 
@@ -66,7 +62,7 @@ class Controller(
     }
 
     private fun userPickNewCard(user: User) {
-        user.cards.addCard(deck.getNewCard())
+        user.cards.addCard(deck.getOneCard())
         playGameView.printUserCard(user)
         repeatGetCommand(user)
     }
@@ -81,7 +77,7 @@ class Controller(
     private fun dealerPickNewCardIfNeeded(dealer: Dealer) {
         if (!dealer.isOverSumCondition()) {
             playGameView.printDealerPickNewCard()
-            val newCard = deck.getNewCard()
+            val newCard = deck.getOneCard()
             dealer.cards.addCard(newCard)
         }
     }

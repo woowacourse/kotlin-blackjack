@@ -7,16 +7,10 @@ import domain.card.CardValue
 class Deck(cards: List<Card>) {
     private val _cards: MutableList<Card> = cards.toMutableList()
 
-    fun getNewCard() = _cards.removeFirst()
+    fun getOneCard() = _cards.removeFirst()
 
-    fun getCardPairs(count: Int): List<List<Card>> {
-        return List(count) { getCardPair() }
-    }
-
-    fun getCardPair(): List<Card> {
-        val pickedCard = _cards.take(2)
-        _cards.removeAll(pickedCard)
-        return pickedCard
+    fun getCards(count: Int): List<Card> {
+        return List(count) { getOneCard() }
     }
 
     companion object {
