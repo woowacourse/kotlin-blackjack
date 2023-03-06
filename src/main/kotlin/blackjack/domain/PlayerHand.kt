@@ -9,11 +9,11 @@ class PlayerHand {
         _cards.add(card)
     }
 
-    fun calculateTotalScore(): Int = cards.map { it.number.toInt() }.fold(0) { total, number -> total + calculateEachScore(total, number) }
+    fun calculateTotalScore(): Int = 0 // cards.map { it.number.value }.fold(0) { total, number -> total + calculateEachScore(total, number) }
 
     private fun calculateEachScore(score: Int, number: Int): Int = when (number) {
-        CardNumber.ace() -> calculateAceScore(score)
-        CardNumber.jack(), CardNumber.queen(), CardNumber.king() -> JQK_SCORE
+        // CardNumber.ace() -> calculateAceScore(score)
+        // CardNumber.jack(), CardNumber.queen(), CardNumber.king() -> JQK_SCORE
         else -> number
     }
 

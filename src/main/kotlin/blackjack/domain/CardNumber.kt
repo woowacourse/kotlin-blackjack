@@ -1,37 +1,17 @@
 package blackjack.domain
 
-@JvmInline
-value class CardNumber(private val number: Int) {
-    init {
-        require(number in MIN_CARD_NUMBER..MAX_CARD_NUMBER) { NUMBER_RANGE_ERROR }
-    }
-
-    fun toLetter() = when (number) {
-        ACE_NUMBER -> "A"
-        JACK_NUMBER -> "J"
-        QUEEN_NUMBER -> "Q"
-        KING_NUMBER -> "K"
-        else -> number.toString()
-    }
-
-    fun toInt(): Int = number
-
-    companion object {
-        private const val MIN_CARD_NUMBER = 1
-        private const val MAX_CARD_NUMBER = 13
-        private const val NUMBER_RANGE_ERROR = "카드 숫자의 범위는 1부터 13이어야 합니다."
-
-        private const val ACE_NUMBER = 1
-        private const val JACK_NUMBER = 11
-        private const val QUEEN_NUMBER = 12
-        private const val KING_NUMBER = 13
-
-        fun min(): Int = MIN_CARD_NUMBER
-        fun max(): Int = MAX_CARD_NUMBER
-
-        fun ace(): Int = ACE_NUMBER
-        fun jack(): Int = JACK_NUMBER
-        fun queen(): Int = QUEEN_NUMBER
-        fun king(): Int = KING_NUMBER
-    }
+enum class CardNumber(val score: Int) {
+    ACE(1),
+    TWO(2),
+    THREE(3),
+    FOUR(4),
+    FIVE(5),
+    SIX(6),
+    SEVEN(7),
+    EIGHT(8),
+    NINE(9),
+    TEN(10),
+    JACK(10),
+    QUEEN(10),
+    KING(10);
 }
