@@ -2,7 +2,7 @@ package blackjack.domain
 
 abstract class User(name: String) {
     val name = Name(name)
-    val cards = Cards()
+    var cards = Cards()
     val score: Int
         get() = Score(cards).score
 
@@ -11,7 +11,7 @@ abstract class User(name: String) {
 
     abstract val isContinue: Boolean
 
-    fun draw(card: Card) { cards.add(card) }
+    fun draw(card: Card) { cards += card }
 
     companion object {
         private const val BLACKJACK_NUMBER = 21

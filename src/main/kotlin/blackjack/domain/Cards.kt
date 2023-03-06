@@ -1,12 +1,12 @@
 package blackjack.domain
 
-class Cards(private val cards: MutableSet<Card> = mutableSetOf()) {
+class Cards(private val cards: Set<Card> = setOf()) {
     val size: Int
         get() = cards.size
 
     fun toList() = cards.toList()
 
-    fun add(card: Card) = cards.add(card)
+    operator fun plus(card: Card): Cards = Cards(cards.plus(card))
 
     fun containsACE() = cards.map { it.value }.contains(CardValue.ACE)
 
