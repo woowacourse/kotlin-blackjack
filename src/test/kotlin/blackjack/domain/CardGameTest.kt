@@ -5,7 +5,6 @@ import model.CardDeck
 import model.Name
 import model.Player
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 
 class CardGameTest {
@@ -35,12 +34,6 @@ class CardGameTest {
     }
 
     companion object {
-        private lateinit var game: CardGame
-
-        @BeforeAll
-        @JvmStatic
-        internal fun setUp() {
-            game = CardGame(CardDeck.createCardDeck())
-        }
+        private val game = CardGame(CardDeck.createCardDeck())
     }
 }
