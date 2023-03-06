@@ -10,7 +10,7 @@ abstract class Player(
 
     private val _cards: MutableList<Card> get() = cards.toMutableList()
 
-    fun validPlayerSum(): Int {
+    fun actualCardValueSum(): Int {
         if ((calculateCardValueSum() < SUM_CONDITION) and (countAce() != ZERO)) {
             return calculateCardValueSum() + ACE_EXTRA_SCORE
         }

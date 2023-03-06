@@ -34,7 +34,7 @@ class PlayerTest {
         // given
         val dealer: Player = Dealer(cards = cards)
         // when
-        val actual = dealer.validPlayerSum()
+        val actual = dealer.actualCardValueSum()
         // then
         Assertions.assertThat(actual).isEqualTo(sum)
     }
@@ -45,7 +45,7 @@ class PlayerTest {
         // given
         val dealer: Player = Dealer(cards = cards)
         // when
-        val actual = dealer.validPlayerSum()
+        val actual = dealer.actualCardValueSum()
         // then
         Assertions.assertThat(actual).isEqualTo(sum)
     }
@@ -56,7 +56,7 @@ class PlayerTest {
         // given
         val dealer: Player = Dealer(cards = cards)
         // when
-        val actual = dealer.validPlayerSum()
+        val actual = dealer.actualCardValueSum()
         // then
         Assertions.assertThat(actual).isEqualTo(sum)
     }
