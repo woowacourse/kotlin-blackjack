@@ -1,7 +1,12 @@
 package blackjack.view
 
-import blackjack.domain.*
-import blackjack.domain.CardNumber.*
+import blackjack.domain.Card
+import blackjack.domain.CardBunch
+import blackjack.domain.CardNumber
+import blackjack.domain.Consequence
+import blackjack.domain.Dealer
+import blackjack.domain.Player
+import blackjack.domain.Referee
 
 object OutputView {
     private const val DEALER_INITIAL_CARD_SCRIPT = "딜러: %s"
@@ -21,7 +26,7 @@ object OutputView {
         println(DEALER_INITIAL_CARD_SCRIPT.format(makeCardToString(cardBunch.cards.first())))
     }
 
-    fun printPlayerInitialCard(player: Player) {
+    fun printPlayerCard(player: Player) {
         val bunchString = makeBunchToString(player.cardBunch)
         println("${player.name}카드 : $bunchString")
     }
@@ -75,11 +80,11 @@ object OutputView {
 
     private fun stringOf(cardNumber: CardNumber): String {
         return when (cardNumber) {
-            ACE -> "A"
-            TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN -> cardNumber.value.toString()
-            JACK -> "J"
-            QUEEN -> "Q"
-            KING -> "K"
+            CardNumber.ACE -> "A"
+            CardNumber.JACK -> "J"
+            CardNumber.QUEEN -> "Q"
+            CardNumber.KING -> "K"
+            else -> cardNumber.value.toString()
         }
     }
 }

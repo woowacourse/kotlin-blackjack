@@ -35,29 +35,29 @@ class Controller(private val cardDeck: CardDeck) {
     private fun showInitialCard(dealer: Dealer, players: List<Player>) {
         OutputView.printDistributeScript(players)
         OutputView.printDealerInitialCard(dealer.cardBunch)
-        players.forEach { OutputView.printPlayerInitialCard(it) }
+        players.forEach { OutputView.printPlayerCard(it) }
     }
 
     private fun askGetCard(player: Player) {
-        while (!player.cardBunch.isBurst()) {
+        while (player.canGetCard()) {
             if (!isSuccessAddCardToPlayer(player)) return
         }
     }
 
     private fun isSuccessAddCardToPlayer(player: Player): Boolean {
         if (InputView.getDecision(player)) {
-            player.cardBunch.addCard(cardDeck.drawCard())
-            OutputView.printPlayerInitialCard(player)
+            player.receiveCard(cardDeck.drawCard())
+            OutputView.printPlayerCard(player)
             return true
         }
-        OutputView.printPlayerInitialCard(player)
+        OutputView.printPlayerCard(player)
         return false
     }
 
     private fun showDealerState(dealer: Dealer) {
         val condition = dealer.canGetCard()
         OutputView.printDealerOverCondition(condition)
-        if (condition) dealer.cardBunch.addCard(cardDeck.drawCard())
+        if (condition) dealer.receiveCard(cardDeck.drawCard())
     }
 
     private fun printFinalWinOrLose(referee: Referee) {

@@ -10,7 +10,6 @@ class CardBunch private constructor(cards: MutableList<Card>) {
 
     fun addCard(card: Card) = _cards.add(card)
 
-
     fun getTotalScore(): Int {
         var result = 0
         val sortedCards = cards.sortedBy { it.cardNumber.value }.reversed()
