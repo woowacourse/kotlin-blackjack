@@ -55,6 +55,7 @@ class OutputView {
             Outcome.WIN -> "승"
             Outcome.DRAW -> "무"
             Outcome.LOSE -> "패"
+            Outcome.WIN_WITH_BLACKJACK -> "승"
         }.let { println("${user.name}: $it") }
     }
 

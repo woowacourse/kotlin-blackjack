@@ -19,11 +19,11 @@ class BlackJackTest {
             participants = Participants(Dealer(), listOf(Guest("아크"), Guest("로피"))),
             cardDeck = CardDeck(Cards.all()),
         ).apply {
-            dealer.draw(Card(CardMark.CLOVER, CardValue.QUEEN))
+            dealer.draw(Card(CardMark.CLOVER, CardValue.NINE))
             dealer.draw(Card(CardMark.CLOVER, CardValue.QUEEN))
             guests[0].draw(Card(CardMark.CLOVER, CardValue.NINE))
             guests[0].draw(Card(CardMark.CLOVER, CardValue.NINE))
-            guests[1].draw(Card(CardMark.CLOVER, CardValue.ACE))
+            guests[1].draw(Card(CardMark.CLOVER, CardValue.KING))
             guests[1].draw(Card(CardMark.CLOVER, CardValue.QUEEN))
         }
         assertThat(blackJack.getResult()).isEqualTo(listOf(Outcome.LOSE, Outcome.WIN))
