@@ -22,8 +22,8 @@ class PlayerTest {
     @Test
     fun `플레이어가 처음 공개할 카드는 2장이다`() {
         with(player) {
-            addCard(Card(Suit.SPADE, CardNumber.JACK))
-            addCard(Card(Suit.SPADE, CardNumber.QUEEN))
+            addCard(Card(CardNumber.JACK, Suit.SPADE))
+            addCard(Card(CardNumber.QUEEN, Suit.SPADE))
         }
 
         assertThat(player.getFirstOpenCards().size).isEqualTo(2)
@@ -31,50 +31,50 @@ class PlayerTest {
 
     @Test
     fun `플레이어는 자신이 처음 공개할 카드를 반환한다`() {
-        player.addCard(Card(Suit.SPADE, CardNumber.ACE))
-        player.addCard(Card(Suit.SPADE, CardNumber.FIVE))
+        player.addCard(Card(CardNumber.ACE, Suit.SPADE))
+        player.addCard(Card(CardNumber.FIVE, Suit.SPADE))
 
         assertThat(player.getFirstOpenCards()).isEqualTo(
             listOf(
-                Card(Suit.SPADE, CardNumber.ACE),
-                Card(Suit.SPADE, CardNumber.FIVE)
+                Card(CardNumber.ACE, Suit.SPADE),
+                Card(CardNumber.FIVE, Suit.SPADE)
             )
         )
     }
 
     @Test
     fun `카드의 합이 21을 초과하지 않으면 카드를 뽑을 수 있다`() {
-        player.addCard(Card(Suit.SPADE, CardNumber.ACE))
-        player.addCard(Card(Suit.SPADE, CardNumber.KING))
+        player.addCard(Card(CardNumber.ACE, Suit.SPADE))
+        player.addCard(Card(CardNumber.KING, Suit.SPADE))
 
         assertThat(player.canDraw()).isFalse
     }
 
     @Test
     fun `카드의 합이 21을 초과하면 더 이상 카드를 뽑을 수 없다`() {
-        player.addCard(Card(Suit.SPADE, CardNumber.FOUR))
-        player.addCard(Card(Suit.SPADE, CardNumber.EIGHT))
-        player.addCard(Card(Suit.SPADE, CardNumber.KING))
+        player.addCard(Card(CardNumber.FOUR, Suit.SPADE))
+        player.addCard(Card(CardNumber.EIGHT, Suit.SPADE))
+        player.addCard(Card(CardNumber.KING, Suit.SPADE))
 
         assertThat(player.canDraw()).isTrue
     }
 
     @Test
     fun `플레이어는 카드 목록에 카드를 추가한다`() {
-        player.addCard(Card(Suit.SPADE, CardNumber.TWO))
+        player.addCard(Card(CardNumber.TWO, Suit.SPADE))
 
-        assertThat(player.getCards()).containsExactly(Card(Suit.SPADE, CardNumber.TWO))
+        assertThat(player.getCards()).containsExactly(Card(CardNumber.TWO, Suit.SPADE))
     }
 
     @Test
     fun `플레이어가 보유한 카드를 반환한다`() {
-        player.addCard(Card(Suit.SPADE, CardNumber.ACE))
-        player.addCard(Card(Suit.SPADE, CardNumber.JACK))
+        player.addCard(Card(CardNumber.ACE, Suit.SPADE))
+        player.addCard(Card(CardNumber.JACK, Suit.SPADE))
 
         assertThat(player.getCards()).isEqualTo(
             listOf(
-                Card(Suit.SPADE, CardNumber.ACE),
-                Card(Suit.SPADE, CardNumber.JACK)
+                Card(CardNumber.ACE, Suit.SPADE),
+                Card(CardNumber.JACK, Suit.SPADE)
             )
         )
     }
@@ -92,8 +92,8 @@ class PlayerTest {
         secondCardNumber: CardNumber,
         expected: Int
     ) {
-        player.addCard(Card(firstCardSuit, firstCardNumber))
-        player.addCard(Card(secondCardSuit, secondCardNumber))
+        player.addCard(Card(firstCardNumber, firstCardSuit))
+        player.addCard(Card(secondCardNumber, secondCardSuit))
 
         assertThat(player.getTotalScore()).isEqualTo(expected)
     }

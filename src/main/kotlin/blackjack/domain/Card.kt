@@ -1,6 +1,6 @@
 package blackjack.domain
 
-data class Card(private val suit: Suit, private val number: CardNumber) {
+data class Card(val number: CardNumber, val suit: Suit) {
     fun getScore(): Int = number.score
 
     fun isAce(): Boolean = number == CardNumber.ACE
@@ -8,7 +8,7 @@ data class Card(private val suit: Suit, private val number: CardNumber) {
     companion object {
         private val CARDS = Suit.values().flatMap { suit ->
             CardNumber.values().map { cardNumber ->
-                Card(suit, cardNumber)
+                Card(cardNumber, suit)
             }
         }
 

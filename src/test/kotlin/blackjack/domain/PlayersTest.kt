@@ -31,9 +31,9 @@ class PlayersTest {
     fun `모든 플레이어의 카드를 2장씩 뽑는다`() {
         val deck = CardDeck(
             listOf(
-                Card(Suit.SPADE, CardNumber.ACE), Card(Suit.HEART, CardNumber.ACE),
-                Card(Suit.DIAMOND, CardNumber.ACE), Card(Suit.SPADE, CardNumber.KING),
-                Card(Suit.SPADE, CardNumber.TWO), Card(Suit.SPADE, CardNumber.EIGHT)
+                Card(CardNumber.ACE, Suit.SPADE), Card(CardNumber.ACE, Suit.HEART),
+                Card(CardNumber.ACE, Suit.DIAMOND), Card(CardNumber.KING, Suit.SPADE),
+                Card(CardNumber.TWO, Suit.SPADE), Card(CardNumber.EIGHT, Suit.SPADE)
             )
         )
         val players = Players(listOf(Player("buna"), Player("glo"), Player("bandal")))
@@ -44,9 +44,9 @@ class PlayersTest {
         val actual = players.getCards()
         assertThat(actual).isEqualTo(
             mapOf(
-                "buna" to listOf(Card(Suit.SPADE, CardNumber.ACE), Card(Suit.SPADE, CardNumber.KING)),
-                "glo" to listOf(Card(Suit.HEART, CardNumber.ACE), Card(Suit.SPADE, CardNumber.TWO)),
-                "bandal" to listOf(Card(Suit.DIAMOND, CardNumber.ACE), Card(Suit.SPADE, CardNumber.EIGHT))
+                "buna" to listOf(Card(CardNumber.ACE, Suit.SPADE), Card(CardNumber.KING, Suit.SPADE)),
+                "glo" to listOf(Card(CardNumber.ACE, Suit.HEART), Card(CardNumber.TWO, Suit.SPADE)),
+                "bandal" to listOf(Card(CardNumber.ACE, Suit.DIAMOND), Card(CardNumber.EIGHT, Suit.SPADE))
             )
         )
     }
