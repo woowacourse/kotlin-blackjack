@@ -1,7 +1,7 @@
 package domain.card
 
-class Cards {
-    private val _value = mutableListOf<Card>()
+class Cards(cards: List<Card>) {
+    private val _value = cards.toMutableList()
     val value: List<Card>
         get() = _value.toList()
 

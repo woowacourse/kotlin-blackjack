@@ -9,14 +9,19 @@ class CardsTest {
 
     @BeforeEach
     fun setUp() {
-        cards = Cards()
+        cards = Cards(
+            listOf(
+                Card(CardShape.HEART, CardNumber.KING),
+                Card(CardShape.HEART, CardNumber.TWO),
+            ),
+        )
     }
 
     @Test
     fun `카드 하나를 추가할 수 있다`() {
         cards.add(Card(CardShape.HEART, CardNumber.KING))
 
-        assertThat(cards.value.size).isEqualTo(1)
+        assertThat(cards.value.size).isEqualTo(3)
     }
 
     @Test
