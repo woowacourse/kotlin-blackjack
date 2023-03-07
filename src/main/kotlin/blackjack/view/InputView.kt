@@ -11,6 +11,7 @@ class InputView {
         return kotlin.runCatching {
             val participantsName = readln().split(",")
             val participants = participantsName.map { Participant(it) }.toList()
+            println()
             Participants(participants)
         }.getOrNull()
     }

@@ -34,7 +34,7 @@ class Dealer(name: String = "딜러") : Player(name) {
 
     fun drawCard(): Card = deck.draw()
 
-    fun isDrawable(): Boolean = cards.sumCardsNumber() <= MIN_SUM_NUMBER
+    fun canHit(): Boolean = cards.sumCardsNumber() <= MIN_SUM_NUMBER
 
     private fun setInitialParticipantCards(participant: Participant) =
         repeat(CARD_SETTING_COUNT) { participant.addCard(deck.draw()) }
