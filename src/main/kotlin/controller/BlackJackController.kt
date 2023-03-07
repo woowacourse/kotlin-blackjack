@@ -12,18 +12,14 @@ import view.ResultView
 class BlackJackController {
     fun runBlackJack() {
         val deck = Deck.create()
-        val dealer = Dealer()
+        val dealer = Dealer(deck.getCards(2))
         val players = runOnboarding(deck, dealer)
         runMain(deck, dealer, players)
         runResult(dealer, players)
     }
 
     private fun runOnboarding(deck: Deck, dealer: Dealer): List<Player> {
-        val players = RequestView.requestInputNames().map { name -> Player(name) }
-        dealer.receiveCard(deck.getCard(), deck.getCard())
-        players.forEach {
-            it.receiveCard(deck.getCard(), deck.getCard())
-        }
+        val players = RequestView.requestInputNames().map { name -> Player(deck.getCards(2), name) }
         ResultView.printInitialSetting(players, dealer)
         return players
     }
@@ -42,7 +38,7 @@ class BlackJackController {
 
     private fun handOutCardToDealer(deck: Deck, dealer: Dealer) {
         if (dealer.isState(HIT)) {
-            dealer.receiveCard(deck.getCard())
+            dealer.receiveCard(deck.getCards(1))
             ResultView.printDealerGetMoreCard()
             return
         }
@@ -54,7 +50,7 @@ class BlackJackController {
         if (decision == Decision.NO) {
             return decision
         }
-        player.receiveCard(deck.getCard())
+        player.receiveCard(deck.getCards(1))
         ResultView.printPlayerCards(player)
         return decision
     }
