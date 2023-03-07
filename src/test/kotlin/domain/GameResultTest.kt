@@ -12,8 +12,8 @@ class GameResultTest {
                     Name("pobi"),
                     Cards(
                         listOf(
-                            Card(CardCategory.CLOVER, CardNumber.NINE),
-                            Card(CardCategory.SPADE, CardNumber.NINE),
+                            Card.of(CardCategory.CLOVER, CardNumber.NINE),
+                            Card.of(CardCategory.SPADE, CardNumber.NINE),
                         ),
                     ),
                 ),
@@ -21,8 +21,8 @@ class GameResultTest {
                     Name("jason"),
                     Cards(
                         listOf(
-                            Card(CardCategory.CLOVER, CardNumber.SEVEN),
-                            Card(CardCategory.SPADE, CardNumber.NINE),
+                            Card.of(CardCategory.CLOVER, CardNumber.SEVEN),
+                            Card.of(CardCategory.SPADE, CardNumber.NINE),
                         ),
                     ),
                 ),
@@ -31,8 +31,8 @@ class GameResultTest {
         Dealer(
             Cards(
                 listOf(
-                    Card(CardCategory.CLOVER, CardNumber.EIGHT),
-                    Card(CardCategory.SPADE, CardNumber.NINE),
+                    Card.of(CardCategory.CLOVER, CardNumber.EIGHT),
+                    Card.of(CardCategory.SPADE, CardNumber.NINE),
                 ),
             ),
         ),

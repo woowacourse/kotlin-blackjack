@@ -9,13 +9,13 @@ class DealerTest {
         val dealer = Dealer(
             Cards(
                 listOf(
-                    Card(CardCategory.CLOVER, CardNumber.EIGHT),
-                    Card(CardCategory.SPADE, CardNumber.NINE)
-                )
-            )
+                    Card.of(CardCategory.CLOVER, CardNumber.EIGHT),
+                    Card.of(CardCategory.SPADE, CardNumber.NINE),
+                ),
+            ),
         )
         val actual = dealer.showInitCards()
-        val expected = listOf(Card(CardCategory.CLOVER, CardNumber.EIGHT))
+        val expected = listOf(Card.of(CardCategory.CLOVER, CardNumber.EIGHT))
         assertThat(actual).isEqualTo(expected)
     }
 
@@ -24,10 +24,10 @@ class DealerTest {
         val dealer = Dealer(
             Cards(
                 listOf(
-                    Card(CardCategory.CLOVER, CardNumber.EIGHT),
-                    Card(CardCategory.SPADE, CardNumber.SIX)
-                )
-            )
+                    Card.of(CardCategory.CLOVER, CardNumber.EIGHT),
+                    Card.of(CardCategory.SPADE, CardNumber.SIX),
+                ),
+            ),
         )
         val actual = dealer.isPossibleDrawCard()
         val expected = true

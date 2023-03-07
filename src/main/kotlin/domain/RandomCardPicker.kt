@@ -1,18 +1,10 @@
 package domain
 
 class RandomCardPicker : CardDrawer {
-    private val cards =
-        CardCategory.values().flatMap { cardCategory -> CardNumber.values().map { Card(cardCategory, it) } }
-
-    val size: Int
-        get() = cards.size
-
-    fun contains(card: Card): Boolean {
-        return cards.contains(card)
-    }
-
     override fun draw(): Card {
-        return cards.shuffled()[0]
+        val randomCardCategory = CardCategory.values().random()
+        val randomCardNumber = CardNumber.values().random()
+        return Card.of(cardCategory = randomCardCategory, cardNumber = randomCardNumber)
     }
 
     override fun drawInitCards(): Cards {

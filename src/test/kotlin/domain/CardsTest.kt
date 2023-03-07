@@ -7,7 +7,7 @@ import org.junit.jupiter.api.assertThrows
 class CardsTest {
     @Test
     fun `카드의 개수는 2장 이상이어야 한다`() {
-        assertThrows<IllegalStateException> { Cards(listOf(Card(CardCategory.CLOVER, CardNumber.ACE))) }
+        assertThrows<IllegalStateException> { Cards(listOf(Card.of(CardCategory.CLOVER, CardNumber.ACE))) }
     }
 
     @Test
@@ -16,9 +16,9 @@ class CardsTest {
         val cards =
             Cards(
                 listOf(
-                    Card(CardCategory.CLOVER, CardNumber.TWO),
-                    Card(CardCategory.CLOVER, CardNumber.KING)
-                )
+                    Card.of(CardCategory.CLOVER, CardNumber.TWO),
+                    Card.of(CardCategory.CLOVER, CardNumber.KING),
+                ),
             )
 
         // when
@@ -35,11 +35,11 @@ class CardsTest {
         val cards =
             Cards(
                 listOf(
-                    Card(CardCategory.CLOVER, CardNumber.TWO),
-                    Card(CardCategory.CLOVER, CardNumber.KING)
-                )
+                    Card.of(CardCategory.CLOVER, CardNumber.TWO),
+                    Card.of(CardCategory.CLOVER, CardNumber.KING),
+                ),
             )
-        val card = Card(CardCategory.DIAMOND, CardNumber.FIVE)
+        val card = Card.of(CardCategory.DIAMOND, CardNumber.FIVE)
 
         // when
         cards.add(card)

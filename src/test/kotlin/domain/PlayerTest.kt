@@ -10,8 +10,8 @@ class PlayerTest {
             Name("scott"),
             Cards(
                 listOf(
-                    Card(CardCategory.CLOVER, CardNumber.EIGHT),
-                    Card(CardCategory.SPADE, CardNumber.NINE),
+                    Card.of(CardCategory.CLOVER, CardNumber.EIGHT),
+                    Card.of(CardCategory.SPADE, CardNumber.NINE),
                 ),
             ),
         )
@@ -27,8 +27,8 @@ class PlayerTest {
             Name("scott"),
             Cards(
                 listOf(
-                    Card(CardCategory.CLOVER, CardNumber.EIGHT),
-                    Card(CardCategory.SPADE, CardNumber.NINE),
+                    Card.of(CardCategory.CLOVER, CardNumber.EIGHT),
+                    Card.of(CardCategory.SPADE, CardNumber.NINE),
                 ),
             ),
         )
@@ -42,8 +42,8 @@ class PlayerTest {
             Name("scott"),
             Cards(
                 listOf(
-                    Card(CardCategory.CLOVER, CardNumber.EIGHT),
-                    Card(CardCategory.SPADE, CardNumber.NINE),
+                    Card.of(CardCategory.CLOVER, CardNumber.EIGHT),
+                    Card.of(CardCategory.SPADE, CardNumber.NINE),
                 ),
             ),
         )

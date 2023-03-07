@@ -13,30 +13,30 @@ class ParticipantsTest {
                         Name("pobi"),
                         Cards(
                             listOf(
-                                Card(CardCategory.CLOVER, CardNumber.EIGHT),
-                                Card(CardCategory.SPADE, CardNumber.NINE)
-                            )
-                        )
+                                Card.of(CardCategory.CLOVER, CardNumber.EIGHT),
+                                Card.of(CardCategory.SPADE, CardNumber.NINE),
+                            ),
+                        ),
                     ),
                     Player(
                         Name("jason"),
                         Cards(
                             listOf(
-                                Card(CardCategory.CLOVER, CardNumber.EIGHT),
-                                Card(CardCategory.SPADE, CardNumber.NINE)
-                            )
-                        )
-                    )
-                )
+                                Card.of(CardCategory.CLOVER, CardNumber.EIGHT),
+                                Card.of(CardCategory.SPADE, CardNumber.NINE),
+                            ),
+                        ),
+                    ),
+                ),
             ),
             Dealer(
                 Cards(
                     listOf(
-                        Card(CardCategory.CLOVER, CardNumber.EIGHT),
-                        Card(CardCategory.SPADE, CardNumber.NINE)
-                    )
-                )
-            )
+                        Card.of(CardCategory.CLOVER, CardNumber.EIGHT),
+                        Card.of(CardCategory.SPADE, CardNumber.NINE),
+                    ),
+                ),
+            ),
         )
         val result = participants.participants.joinToString(", ") { it.name.value }
         assertThat(result).isEqualTo("딜러, pobi, jason")

@@ -11,10 +11,10 @@ class ParticipantTest {
             Name("Scott"),
             Cards(
                 listOf(
-                    Card(CardCategory.CLOVER, CardNumber.EIGHT),
-                    Card(CardCategory.SPADE, CardNumber.NINE)
-                )
-            )
+                    Card.of(CardCategory.CLOVER, CardNumber.EIGHT),
+                    Card.of(CardCategory.SPADE, CardNumber.NINE),
+                ),
+            ),
         ) {
             override fun showInitCards(): List<Card> {
                 return cards.list.take(2)
@@ -31,6 +31,5 @@ class ParticipantTest {
 
         // then
         assertThat(actual).isEqualTo(expected)
-
     }
 }

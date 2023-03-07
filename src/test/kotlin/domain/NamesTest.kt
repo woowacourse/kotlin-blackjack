@@ -22,7 +22,7 @@ class NamesTest {
                 "hhhh",
                 "i",
                 "j",
-                "k"
+                "k",
             )
         }
     }

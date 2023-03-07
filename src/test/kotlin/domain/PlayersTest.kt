@@ -10,14 +10,15 @@ class PlayersTest {
             Players(
                 List(9) {
                     Player(
-                        Name("pobi"), Cards(
+                        Name("pobi"),
+                        Cards(
                             listOf(
-                                Card(CardCategory.CLOVER, CardNumber.EIGHT),
-                                Card(CardCategory.SPADE, CardNumber.NINE)
-                            )
-                        )
+                                Card.of(CardCategory.CLOVER, CardNumber.EIGHT),
+                                Card.of(CardCategory.SPADE, CardNumber.NINE),
+                            ),
+                        ),
                     )
-                }
+                },
             )
         }
     }
