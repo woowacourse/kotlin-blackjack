@@ -1,30 +1,53 @@
 package blackjack.domain.gameResult
 
-private const val BLACK_JACK_SCORE = 21
+import blackjack.domain.card.Cards
+import blackjack.domain.card.CardsState
 
 enum class GameResultCondition(
+    val condition: (playerCards: Cards, dealerCards: Cards) -> Boolean,
     val gameResult: GameResult,
-    val condition: (playerScore: Int, dealerScore: Int) -> Boolean
 ) {
 
-    PLAYER_BURST_CONDITION(
-        condition = { playerScore, _ -> playerScore > BLACK_JACK_SCORE },
-        gameResult = GameResult.LOSE
+    BLACKJACK_WIN(
+        condition = { playerCards, dealerCards ->
+            playerCards.state == CardsState.BlackJack &&
+                    dealerCards.state != CardsState.BlackJack
+        },
+        gameResult = GameResult.BLACKJACK_WIN
     ),
-    DEALER_BURST_CONDITION(
-        condition = { playerScore, dealerScore -> dealerScore > BLACK_JACK_SCORE && playerScore <= BLACK_JACK_SCORE },
+
+    DEALER_BURST(
+        condition = { _, dealerCards ->
+            dealerCards.state == CardsState.Burst
+        },
         gameResult = GameResult.WIN
     ),
-    DRAW_CONDITION(
-        condition = { playerScore, dealerScore -> playerScore == dealerScore },
-        gameResult = GameResult.DRAW
-    ),
-    PLAYER_LOSE_CONDITION(
-        condition = { playerScore, dealerScore -> playerScore < dealerScore },
+
+    PLAYER_BURST(
+        condition = { playerCards, _ ->
+            playerCards.state == CardsState.Burst
+        },
         gameResult = GameResult.LOSE
     ),
-    PLAYER_WIN_CONDITION(
-        condition = { playerScore, dealerScore -> playerScore > dealerScore },
+
+    DRAW(
+        condition = { playerCards, dealerCards ->
+            (playerCards.getTotalCardsScore() == dealerCards.getTotalCardsScore())
+        },
+        gameResult = GameResult.LOSE
+    ),
+
+    WIN(
+        condition = { playerCards, dealerCards ->
+            playerCards.getTotalCardsScore() > dealerCards.getTotalCardsScore()
+        },
+        gameResult = GameResult.DRAW
+    ),
+
+    LOSE(
+        condition = { playerCards, dealerCards ->
+            playerCards.getTotalCardsScore() < dealerCards.getTotalCardsScore()
+        },
         gameResult = GameResult.WIN
     );
 }

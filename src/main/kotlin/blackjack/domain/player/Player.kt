@@ -4,6 +4,7 @@ import blackjack.domain.BattingMoney
 import blackjack.domain.card.Cards
 
 class Player(
+    //TODO: 딜러와 플레이어가 공통적으로 나타나는 부분을 찾고 코드 재사용 할 수 있게
     val name: PlayerName,
     val battingMoney: BattingMoney,
     val checkCards: (player: Player) -> Unit,

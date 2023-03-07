@@ -1,11 +1,18 @@
 package blackjack.domain.gameResult
 
-enum class GameResult {
-    WIN,
-    LOSE,
-    DRAW;
+import blackjack.domain.card.Cards
+import blackjack.domain.dealer.Dealer
+import blackjack.domain.player.Player
+
+enum class GameResult(val profitRate: Double) {
+
+    BLACKJACK_WIN(1.5),
+    WIN(1.0),
+    LOSE(-1.0),
+    DRAW(0.0);
 
     operator fun not(): GameResult = when (this) {
+        BLACKJACK_WIN -> LOSE
         WIN -> LOSE
         LOSE -> WIN
         DRAW -> DRAW
@@ -14,10 +21,10 @@ enum class GameResult {
     companion object {
         private const val EXCEPTION_CASE = "[ERROR] 처리하지 못한 케이스입니다"
 
-        fun valueOf(playerScore: Int, dealerScore: Int): GameResult = GameResultCondition
+        fun valueOf(playerCards: Cards, dealerCards: Cards): GameResult = GameResultCondition
             .values()
             .find { gameResultCondition ->
-                gameResultCondition.condition(playerScore, dealerScore)
+                gameResultCondition.condition(playerCards, dealerCards)
             }?.gameResult ?: throw IllegalStateException(EXCEPTION_CASE)
     }
 }

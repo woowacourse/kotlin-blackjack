@@ -11,7 +11,7 @@ class BlackJackReferee {
     private fun judgePlayerGameResults(players: List<Player>, dealer: Dealer) = players.map { player ->
         PlayerGameResult(
             playerName = player.name.value,
-            gameResult = GameResult.valueOf(player.cards.getTotalCardsScore(), dealer.cards.getTotalCardsScore())
+            gameResult = GameResult.valueOf(player.cards, dealer.cards)
         )
     }
 

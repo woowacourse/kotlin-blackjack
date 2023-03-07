@@ -8,7 +8,7 @@ class Cards(
     val cards: List<Card>
         get() = _cards.toList()
 
-    var state: CardsState = CardsState.RUNNING
+    var state: CardsState = CardsState.Running
         private set
 
     val size: Int
@@ -16,8 +16,9 @@ class Cards(
 
     init {
         require(cards.size == INITIAL_CARDS_SIZE)
+
         if (getTotalCardsScore() == 21) {
-            state = CardsState.BLACKJACK
+            state = CardsState.BlackJack
         }
     }
 
@@ -29,7 +30,7 @@ class Cards(
 
     private fun initCardsState() {
         if (getMinimumCardsScore() > 21) {
-            state = CardsState.BURST
+            state = CardsState.Burst
         }
     }
 

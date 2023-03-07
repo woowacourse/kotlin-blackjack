@@ -67,7 +67,7 @@ class CardsTest {
             )
         )
 
-        assertThat(cards.state).isEqualTo(CardsState.BLACKJACK)
+        assertThat(cards.state).isEqualTo(CardsState.BlackJack)
     }
 
     @Test
@@ -81,7 +81,7 @@ class CardsTest {
 
         cards.draw(Card(CardNumber.FOUR, Shape.SPADE))
 
-        assertThat(cards.state).isEqualTo(CardsState.RUNNING)
+        assertThat(cards.state).isEqualTo(CardsState.Running)
     }
 
     @Test
@@ -94,6 +94,6 @@ class CardsTest {
         )
         cards.draw(Card(CardNumber.FOUR, Shape.HEART))
 
-        assertThat(cards.state).isEqualTo(CardsState.BURST)
+        assertThat(cards.state).isEqualTo(CardsState.Burst)
     }
 }

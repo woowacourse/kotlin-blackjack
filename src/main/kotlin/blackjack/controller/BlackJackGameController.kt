@@ -6,7 +6,7 @@ import blackjack.view.InputView.requestAdditionalDraw
 import blackjack.view.OutputView
 
 class BlackJackGameController(
-    val blackJackGame: BlackJackGame = BlackJackGame(),
+    private val blackJackGame: BlackJackGame = BlackJackGame(),
 ) {
 
     fun run() {

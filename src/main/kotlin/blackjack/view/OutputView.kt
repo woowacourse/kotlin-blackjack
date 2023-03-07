@@ -48,6 +48,7 @@ object OutputView {
     }
 
     private fun GameResult.toDescription() = when (this) {
+        GameResult.BLACKJACK_WIN -> WIN_DESCRIPTION
         GameResult.WIN -> WIN_DESCRIPTION
         GameResult.DRAW -> DRAW_DESCRIPTION
         GameResult.LOSE -> LOSE_DESCRIPTION
