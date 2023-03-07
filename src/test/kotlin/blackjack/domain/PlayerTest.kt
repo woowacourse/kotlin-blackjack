@@ -20,10 +20,26 @@ class PlayerTest {
     }
 
     @Test
-    fun `플레이어는 카드 목록에 카드를 추가한다`() {
-        player.addCard(Card(Suit.SPADE, CardNumber.TWO))
+    fun `플레이어가 처음 공개할 카드는 2장이다`() {
+        with(player) {
+            addCard(Card(Suit.SPADE, CardNumber.JACK))
+            addCard(Card(Suit.SPADE, CardNumber.QUEEN))
+        }
 
-        // Assertions.assertThat(player.hand.cards).containsExactly(Card(Suit.SPADE, CardNumber.TWO))
+        assertThat(player.getFirstOpenCards().size).isEqualTo(2)
+    }
+
+    @Test
+    fun `플레이어는 자신이 처음 공개할 카드를 반환한다`() {
+        player.addCard(Card(Suit.SPADE, CardNumber.ACE))
+        player.addCard(Card(Suit.SPADE, CardNumber.FIVE))
+
+        assertThat(player.getFirstOpenCards()).isEqualTo(
+            listOf(
+                Card(Suit.SPADE, CardNumber.ACE),
+                Card(Suit.SPADE, CardNumber.FIVE)
+            )
+        )
     }
 
     @Test
@@ -43,6 +59,26 @@ class PlayerTest {
         assertThat(player.canDraw()).isTrue
     }
 
+    @Test
+    fun `플레이어는 카드 목록에 카드를 추가한다`() {
+        player.addCard(Card(Suit.SPADE, CardNumber.TWO))
+
+        assertThat(player.getCards()).containsExactly(Card(Suit.SPADE, CardNumber.TWO))
+    }
+
+    @Test
+    fun `플레이어가 보유한 카드를 반환한다`() {
+        player.addCard(Card(Suit.SPADE, CardNumber.ACE))
+        player.addCard(Card(Suit.SPADE, CardNumber.JACK))
+
+        assertThat(player.getCards()).isEqualTo(
+            listOf(
+                Card(Suit.SPADE, CardNumber.ACE),
+                Card(Suit.SPADE, CardNumber.JACK)
+            )
+        )
+    }
+
     @ParameterizedTest
     @CsvSource(
         "SPADE, ACE, HEART, ACE, 12",
@@ -60,35 +96,5 @@ class PlayerTest {
         player.addCard(Card(secondCardSuit, secondCardNumber))
 
         assertThat(player.getTotalScore()).isEqualTo(expected)
-    }
-
-    @Test
-    fun `자신이 가진 카드를 반환한다`() {
-        player.addCard(Card(Suit.SPADE, CardNumber.ACE))
-        player.addCard(Card(Suit.SPADE, CardNumber.JACK))
-
-        // Assertions.assertThat(player.getHand().hand).isEqualTo(listOf("A스페이드", "J다이아몬드"))
-    }
-
-    @Test
-    fun `플레이어가 처음 공개할 카드는 2장이다`() {
-        with(player) {
-            addCard(Card(Suit.SPADE, CardNumber.JACK))
-            addCard(Card(Suit.SPADE, CardNumber.QUEEN))
-        }
-
-        assertThat(player.getFirstOpenCards().size).isEqualTo(2)
-    }
-
-    @Test
-    fun `플레이어가 보유한 카드를 반환한다`() {
-        with(player) {
-            addCard(Card(Suit.SPADE, CardNumber.JACK))
-            addCard(Card(Suit.SPADE, CardNumber.QUEEN))
-        }
-
-        assertThat(player.getCards()).isEqualTo(
-            listOf(Card(Suit.SPADE, CardNumber.JACK), Card(Suit.SPADE, CardNumber.QUEEN))
-        )
     }
 }

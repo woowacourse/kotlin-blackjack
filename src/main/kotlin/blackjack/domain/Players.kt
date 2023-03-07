@@ -15,6 +15,8 @@ class Players(private val players: List<Player>) {
 
     fun getCards(): Map<String, List<Card>> = players.associate { it.name to it.getCards() }
 
+    fun getTotalScores(): Map<String, Int> = players.associate { it.name to it.getTotalScore() }
+
     fun toList(): List<Player> = players.toList()
 
     operator fun get(index: Int): Player = players[index]

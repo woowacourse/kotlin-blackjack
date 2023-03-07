@@ -20,10 +20,21 @@ class DealerTest {
     }
 
     @Test
-    fun `딜러는 카드 목록에 카드를 추가한다`() {
-        dealer.addCard(Card(Suit.SPADE, CardNumber.TWO))
+    fun `딜러가 처음 공개할 카드는 1장이다`() {
+        with(dealer) {
+            addCard(Card(Suit.SPADE, CardNumber.JACK))
+            addCard(Card(Suit.SPADE, CardNumber.QUEEN))
+        }
 
-        // assertThat(dealer.hand.cards).containsExactly(Card(Suit.SPADE, CardNumber.TWO))
+        assertThat(dealer.getFirstOpenCards().size).isEqualTo(1)
+    }
+
+    @Test
+    fun `딜러는 자신이 처음 공개할 카드를 반환한다`() {
+        dealer.addCard(Card(Suit.SPADE, CardNumber.ACE))
+        dealer.addCard(Card(Suit.SPADE, CardNumber.FIVE))
+
+        assertThat(dealer.getFirstOpenCards()).isEqualTo(listOf(Card(Suit.SPADE, CardNumber.ACE)))
     }
 
     @Test
@@ -31,7 +42,7 @@ class DealerTest {
         dealer.addCard(Card(Suit.SPADE, CardNumber.ACE))
         dealer.addCard(Card(Suit.SPADE, CardNumber.FIVE))
 
-        assertThat(dealer.canDraw()).isFalse
+        assertThat(dealer.canDraw()).isTrue
     }
 
     @Test
@@ -39,7 +50,27 @@ class DealerTest {
         dealer.addCard(Card(Suit.SPADE, CardNumber.ACE))
         dealer.addCard(Card(Suit.SPADE, CardNumber.SIX))
 
-        assertThat(dealer.canDraw()).isTrue
+        assertThat(dealer.canDraw()).isFalse
+    }
+
+    @Test
+    fun `딜러는 카드 목록에 카드를 추가한다`() {
+        dealer.addCard(Card(Suit.SPADE, CardNumber.TWO))
+
+        assertThat(dealer.getCards()).containsExactly(Card(Suit.SPADE, CardNumber.TWO))
+    }
+
+    @Test
+    fun `딜러가 보유한 카드를 반환한다`() {
+        dealer.addCard(Card(Suit.SPADE, CardNumber.ACE))
+        dealer.addCard(Card(Suit.SPADE, CardNumber.JACK))
+
+        assertThat(dealer.getCards()).isEqualTo(
+            listOf(
+                Card(Suit.SPADE, CardNumber.ACE),
+                Card(Suit.SPADE, CardNumber.JACK)
+            )
+        )
     }
 
     @ParameterizedTest
@@ -59,22 +90,6 @@ class DealerTest {
         dealer.addCard(Card(secondCardSuit, secondCardNumber))
 
         assertThat(dealer.getTotalScore()).isEqualTo(expected)
-    }
-
-    @Test
-    fun `자신이 가진 카드를 반환한다`() {
-        dealer.addCard(Card(Suit.SPADE, CardNumber.ACE))
-        dealer.addCard(Card(Suit.SPADE, CardNumber.JACK))
-
-        // assertThat(dealer.getHand().hand).isEqualTo(listOf("A스페이드", "J다이아몬드"))
-    }
-
-    @Test
-    fun `딜러는 자신이 보유한 첫번째 카드를 반환한다`() {
-        dealer.addCard(Card(Suit.SPADE, CardNumber.ACE))
-        dealer.addCard(Card(Suit.SPADE, CardNumber.FIVE))
-
-        // assertThat(dealer.getFirstCardHand().hand.first()).isEqualTo(Card(Suit.SPADE, CardNumber.ACE))
     }
 
     @Test
@@ -127,27 +142,5 @@ class DealerTest {
         }
 
         assertThat(dealer judge 20).isEqualTo(GameResult.LOSE)
-    }
-
-    @Test
-    fun `딜러가 처음 공개할 카드는 1장이다`() {
-        with(dealer) {
-            addCard(Card(Suit.SPADE, CardNumber.JACK))
-            addCard(Card(Suit.SPADE, CardNumber.QUEEN))
-        }
-
-        assertThat(dealer.getFirstOpenCards().size).isEqualTo(1)
-    }
-
-    @Test
-    fun `딜러가 보유한 카드를 반환한다`() {
-        with(dealer) {
-            addCard(Card(Suit.SPADE, CardNumber.JACK))
-            addCard(Card(Suit.SPADE, CardNumber.QUEEN))
-        }
-
-        assertThat(dealer.getCards()).isEqualTo(
-            listOf(Card(Suit.SPADE, CardNumber.JACK), Card(Suit.SPADE, CardNumber.QUEEN))
-        )
     }
 }

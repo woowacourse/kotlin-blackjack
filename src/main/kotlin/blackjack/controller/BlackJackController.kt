@@ -14,7 +14,7 @@ class BlackJackController {
             takeTurns(this)
             takeDealerTurn(this)
 
-            // OutputView.printScores(getGameScores())
+            OutputView.printScores(getCards(), getTotalScores())
             OutputView.printResults(getGameResults())
         }
     }

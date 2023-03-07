@@ -17,7 +17,7 @@ class BlackJack(private val deck: CardDeck, private val participants: Participan
 
     fun getCards(): Map<String, List<Card>> = participants.getCards()
 
-    // fun getGameScores(): ScoresDTO = participants.getGameScores()
+    fun getTotalScores(): Map<String, Int> = participants.getTotalScores()
 
     fun getGameResults(): PlayerResults = participants.judgePlayers()
 

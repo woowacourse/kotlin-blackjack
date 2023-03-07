@@ -20,12 +20,7 @@ class Participants(private val dealer: Dealer, private val players: Players) {
 
     fun getCards(): Map<String, List<Card>> = mapOf(dealer.name to dealer.getCards()) + players.getCards()
 
-    //
-    // fun getGameScores(): ScoresDTO {
-    //     val dealerScore = dealer.getScore()
-    //     val playersScore = players.toList().map(Player::getScore)
-    //     return ScoresDTO(dealerScore, playersScore)
-    // }
+    fun getTotalScores(): Map<String, Int> = mapOf(dealer.name to dealer.getTotalScore()) + players.getTotalScores()
 
     fun judgePlayers(): PlayerResults = PlayerResults(
         players.toList().associate { player ->
