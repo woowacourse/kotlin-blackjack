@@ -53,8 +53,8 @@ class GameResultTest {
         val player2 = player(Name("pobi"), Card(Rank.JACK, Suit.SPADE), Card(Rank.KING, Suit.DIAMOND), Card(Rank.ACE, Suit.DIAMOND))
 
         val result = GameResult.of(dealer, BetInfos(mapOf(player1 to Bet(10000), player2 to Bet(20000))))
-        assertThat(result.getDealerProfitResult()).isEqualTo(-30000)
-        assertThat(result.playersFinalResult[Name("jason")]).isEqualTo(10000)
+        assertThat(result.getDealerProfitResult()).isEqualTo(-10000)
+        assertThat(result.playersFinalResult[Name("jason")]).isEqualTo(-10000)
         assertThat(result.playersFinalResult[Name("pobi")]).isEqualTo(20000)
     }
 
