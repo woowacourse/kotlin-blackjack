@@ -12,7 +12,7 @@ class CardsTest {
         var cards = Cards()
         cards += Card(CLOVER, EIGHT)
         assertThat(cards.size).isEqualTo(1)
-        assertThat(cards.toList()[0]).isEqualTo(Card(CLOVER, EIGHT))
+        assertThat(cards.cards.toList()[0]).isEqualTo(Card(CLOVER, EIGHT))
     }
 
     @Test

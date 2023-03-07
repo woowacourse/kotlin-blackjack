@@ -25,12 +25,12 @@ class OutputView {
     }
 
     private fun outputCardForDealer(user: User) {
-        val cardText = user.cards.toList()[0].let { it.value.pattern() + it.mark.name() }
+        val cardText = user.cards.cards.toList()[0].let { it.value.pattern() + it.mark.name() }
         print("\n${user.name}카드: $cardText")
     }
 
     fun outputCard(user: User) {
-        val cardText = user.cards.toList().joinToString(", ") { it.value.pattern() + it.mark.name() }
+        val cardText = user.cards.cards.joinToString(", ") { it.value.pattern() + it.mark.name() }
         print("\n${user.name}카드: $cardText")
     }
 

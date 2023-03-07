@@ -4,7 +4,7 @@ import blackjack.domain.card.Cards
 
 class Score(cards: Cards) {
 
-    val minScore: Int = cards.toList().sumOf { it.value.value }
+    val minScore: Int = cards.cards.sumOf { it.value.value }
 
     val maxScore: Int =
         minScore + if (cards.containsACE() && validateAceCondition) ACE_OTHER_NUMBER_DIFF else 0
