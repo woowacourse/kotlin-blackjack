@@ -17,10 +17,9 @@ class BlackJackGame(
     fun initPlayers(
         playerNames: List<String>,
         battingMoneys: List<Int>,
-        checkCurrentCards: (player: Player) -> Unit = { },
     ) {
         players = playerNames.mapIndexed { playerIndex, playerName ->
-            Player(playerName, battingMoneys[playerIndex], checkCurrentCards)
+            Player(playerName, battingMoneys[playerIndex])
         }
     }
 

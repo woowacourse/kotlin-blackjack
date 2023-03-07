@@ -19,10 +19,10 @@ enum class GameResult(val profitRate: Double) {
     companion object {
         private const val EXCEPTION_CASE = "[ERROR] 처리하지 못한 케이스입니다"
 
-        fun valueOf(playerCards: Cards, dealerCards: Cards): GameResult = GameResultCondition
+        fun valueOf(playerCards: Cards, dealerCards: Cards): GameResult = GameResultCase
             .values()
-            .find { gameResultCondition ->
-                gameResultCondition.condition(playerCards, dealerCards)
+            .find { GameResultCase ->
+                GameResultCase.condition(playerCards, dealerCards)
             }?.gameResult ?: throw IllegalStateException(EXCEPTION_CASE)
     }
 }
