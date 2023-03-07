@@ -51,14 +51,14 @@ class ResultView {
     private fun formatStringDealerResult(gameResult: GameResult) {
         print("딜러: ")
         gameResult.getDealerGameResult().forEach { (gameResult, count) ->
-            print(PRINT_DEALER_GAME_RESULT.format(count, gameResult.name))
+            print(PRINT_DEALER_GAME_RESULT.format(count, gameResult.value))
         }
         println()
     }
 
     private fun formatStringPlayersResult(gameResult: GameResult) {
         gameResult.getPlayersGameResult().forEach { (name, gameResult) ->
-            println(PRINT_PLAYER_GAME_RESULT.format(name.value, gameResult.name))
+            println(PRINT_PLAYER_GAME_RESULT.format(name.value, gameResult.value))
         }
     }
 

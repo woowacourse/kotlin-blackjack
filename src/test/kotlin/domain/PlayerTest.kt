@@ -7,12 +7,13 @@ class PlayerTest {
     @Test
     fun `처음에 패를 두 장 보여준다`() {
         val player = Player(
-            Name("scott"), Cards(
+            Name("scott"),
+            Cards(
                 listOf(
                     Card(CardCategory.CLOVER, CardNumber.EIGHT),
-                    Card(CardCategory.SPADE, CardNumber.NINE)
-                )
-            )
+                    Card(CardCategory.SPADE, CardNumber.NINE),
+                ),
+            ),
         )
 
         val actual = player.showInitCards().size
@@ -23,12 +24,13 @@ class PlayerTest {
     @Test
     fun `21보다 작으면 더 받을 수 있도록 true를 반환한다`() {
         val player = Player(
-            Name("scott"), Cards(
+            Name("scott"),
+            Cards(
                 listOf(
                     Card(CardCategory.CLOVER, CardNumber.EIGHT),
-                    Card(CardCategory.SPADE, CardNumber.NINE)
-                )
-            )
+                    Card(CardCategory.SPADE, CardNumber.NINE),
+                ),
+            ),
         )
         val actual = player.isPossibleDrawCard()
         assertThat(actual).isTrue
@@ -37,16 +39,17 @@ class PlayerTest {
     @Test
     fun `게임 승패를 알 수 있다`() {
         val player = Player(
-            Name("scott"), Cards(
+            Name("scott"),
+            Cards(
                 listOf(
                     Card(CardCategory.CLOVER, CardNumber.EIGHT),
-                    Card(CardCategory.SPADE, CardNumber.NINE)
-                )
-            )
+                    Card(CardCategory.SPADE, CardNumber.NINE),
+                ),
+            ),
         )
-        val opponentScore = Score(17,false)
+        val opponentScore = Score(17, false)
         val result = player.getGameResult(opponentScore)
-        val expected = GameResultType.무
+        val expected = GameResultType.DRAW
         assertThat(result).isEqualTo(expected)
     }
 }
