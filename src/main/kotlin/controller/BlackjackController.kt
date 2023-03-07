@@ -10,8 +10,8 @@ class BlackjackController() {
 
     fun startGame() {
         val names = InputView.inputPlayerNames()
-        val blackjackGame = BlackjackGame(names)
-        blackjackGame.startGame()
+        val blackjackGame = BlackjackGame()
+        blackjackGame.startGame(names)
         printBlackjackSetting(names, blackjackGame)
         requestPickCard(blackjackGame)
         dealerPickCard(blackjackGame)
@@ -22,7 +22,7 @@ class BlackjackController() {
     private fun printBlackjackSetting(names: List<String>, blackjackGame: BlackjackGame) {
         OutputView.printDivideCard(names)
         OutputView.printDealerSettingCard(blackjackGame.dealer.cards.getCards()[0])
-        OutputView.printParticipantsCards(blackjackGame.players)
+        OutputView.printParticipantsCards(blackjackGame.players.getPlayers())
     }
 
     private fun printWinningResult(blackjackGame: BlackjackGame) {
@@ -33,14 +33,14 @@ class BlackjackController() {
 
     private fun printCardResult(blackjackGame: BlackjackGame) {
         val cardResult = mutableMapOf<String, Participant>(DEALER to blackjackGame.dealer)
-        blackjackGame.players.map {
+        blackjackGame.players.getPlayers().map {
             cardResult.put(it.name, it)
         }
         OutputView.printCardResult(cardResult)
     }
 
     private fun requestPickCard(blackjackGame: BlackjackGame) {
-        blackjackGame.players.forEach {
+        blackjackGame.players.getPlayers().forEach {
             repeatPickCard(blackjackGame, it)
         }
     }
