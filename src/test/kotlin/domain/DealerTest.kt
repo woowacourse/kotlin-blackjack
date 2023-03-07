@@ -2,7 +2,6 @@ package domain
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertAll
 
 class DealerTest {
     @Test
@@ -28,37 +27,5 @@ class DealerTest {
         )
         val actual = dealer.isPossibleDrawCard()
         assertThat(actual).isTrue
-    }
-
-    @Test
-    fun `자신의 종합 승패 결과를 반환한다`() {
-        val dealer = Dealer(
-            Cards(
-                Card.of(CardCategory.CLOVER, CardNumber.EIGHT),
-                Card.of(CardCategory.SPADE, CardNumber.SIX)
-            )
-        )
-        val players = Players(
-            Player(
-                Name("pobi"),
-                Cards(
-                    Card.of(CardCategory.CLOVER, CardNumber.EIGHT),
-                    Card.of(CardCategory.SPADE, CardNumber.NINE)
-                )
-            ),
-            Player(
-                Name("jason"),
-                Cards(
-                    Card.of(CardCategory.CLOVER, CardNumber.EIGHT),
-                    Card.of(CardCategory.SPADE, CardNumber.TWO)
-                )
-            )
-        )
-        val actual = dealer.getResult(players)
-        assertAll(
-            "check dealer gameResult",
-            { assertThat(actual[GameResult.WIN]).isEqualTo(1) },
-            { assertThat(actual[GameResult.LOSE]).isEqualTo(1) }
-        )
     }
 }

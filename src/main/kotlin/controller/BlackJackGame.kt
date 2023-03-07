@@ -10,13 +10,13 @@ import domain.Player
 import domain.Players
 import domain.phase.Phases
 
-class BlackJackGame(private val phase: Phases, private val deck: CardDeck = BlackJackCardDeck()) {
+class BlackJackGame(private val phases: Phases, private val deck: CardDeck = BlackJackCardDeck()) {
 
     fun runGame(names: Names): BlackJackGameResult {
         val players = names.values.map { Player(it, deck.drawInitCards()) }
         val dealer = Dealer(deck.drawInitCards())
         val participants = Participants(Players(players), dealer)
-        phase.run(participants, deck)
+        phases.run(participants, deck)
         return BlackJackGameResult(participants)
     }
 
