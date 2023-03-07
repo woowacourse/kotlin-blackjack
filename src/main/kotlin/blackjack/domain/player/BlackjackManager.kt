@@ -14,7 +14,7 @@ class BlackjackManager(cardsGenerator: CardsGenerator) {
         participants = Participants(getNames().map { Participant(it) })
     }
 
-    fun settingPlayersCards() {
+    fun settingPlayersCards(printResult: (Dealer, Participants) -> Unit) {
         repeat(CARD_SETTING_COUNT) {
             provideCard(dealer)
         }
@@ -23,20 +23,31 @@ class BlackjackManager(cardsGenerator: CardsGenerator) {
                 provideCard(participant)
             }
         }
+        printResult(dealer, participants)
     }
 
-    fun provideParticipantMoreCard(participant: Participant, readMoreCard: () -> Boolean) {
-        val check = participant.checkProvideCardPossible()
-        if (!check) return
-        val answer = readMoreCard()
-        if (!answer) return
-        provideCard(participant)
+    fun provideParticipantMoreCard(
+        participant: Participant,
+        requestMoreCard: (String) -> Boolean,
+        printResult: (Participant) -> Unit
+    ) {
+        while (true) {
+            val check = participant.checkProvideCardPossible()
+            if (check) {
+                val answer = requestMoreCard(participant.name)
+                if (answer) provideCard(participant)
+                printResult(participant)
+                if (!answer) break
+            }
+            if (!check) break
+        }
     }
 
-    fun provideDealerMoreCard() {
+    fun provideDealerMoreCard(printResult: () -> Unit) {
         while (true) {
             if (!dealer.checkProvideCardPossible()) break
             provideCard(dealer)
+            printResult()
         }
     }
 
