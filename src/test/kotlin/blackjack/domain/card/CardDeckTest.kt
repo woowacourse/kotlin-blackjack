@@ -2,15 +2,19 @@ package blackjack.domain.card
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertDoesNotThrow
 
 class CardDeckTest {
 
     @Test
-    fun `초기에 카드 52장을 가진다`() {
-        assertDoesNotThrow {
-            CardDeck()
-        }
+    fun `블랙잭 게임은 초기에 카드 52장을 가진다`() {
+        // given
+        val cardDeck = CardDeck(RandomCardsGenerator())
+
+        // when
+        val actual = cardDeck.cards.size
+
+        // then
+        assertThat(actual).isEqualTo(52)
     }
 
     @Test
@@ -31,12 +35,10 @@ class CardDeckTest {
         val cardDeck = CardDeck(RandomCardsGenerator())
 
         // when
-        repeat(52) {
-            cardDeck.provide()
-        }
-        val actual = cardDeck.checkProvidePossible()
+        cardDeck.provide()
+        val actual = cardDeck.cards.size
 
         // then
-        assertThat(actual).isFalse
+        assertThat(actual).isEqualTo(51)
     }
 }
