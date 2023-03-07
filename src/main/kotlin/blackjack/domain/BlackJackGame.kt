@@ -37,7 +37,6 @@ class BlackJackGame(
     ) {
         do {
             val isPlayerWanted = isPlayerWantedAdditionalCards(player)
-
         } while (isPlayerWanted && player.drawCard())
 
         player.checkIsDrawnNothing()

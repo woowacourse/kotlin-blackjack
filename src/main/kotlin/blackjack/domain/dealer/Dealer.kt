@@ -1,6 +1,5 @@
 package blackjack.domain.dealer
 
-import blackjack.domain.BattingMoney
 import blackjack.domain.card.Cards
 import blackjack.domain.player.DrawState
 
