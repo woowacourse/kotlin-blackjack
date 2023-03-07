@@ -2,6 +2,8 @@ package view
 
 import domain.BlackJackCardDeck
 import domain.Card
+import domain.CardCategory
+import domain.CardNumber
 import domain.Dealer
 import domain.GameResult
 import domain.Participant
@@ -86,7 +88,26 @@ class ResultView {
     }
 
     private fun Card.info(): String {
-        return "${cardNumber.number}${cardCategory.pattern}"
+        return "${numberInfo()}${categoryInfo()}"
+    }
+
+    private fun Card.numberInfo(): String {
+        return when (cardNumber) {
+            CardNumber.ACE -> ACE
+            CardNumber.KING -> KING
+            CardNumber.QUEEN -> QUEEN
+            CardNumber.JACK -> JACK
+            else -> cardNumber.value.toString()
+        }
+    }
+
+    private fun Card.categoryInfo(): String {
+        return when (cardCategory) {
+            CardCategory.CLOVER -> CLOVER_SHAPE
+            CardCategory.DIAMOND -> DIAMOND_SHAPE
+            CardCategory.HEART -> HEART_SHAPE
+            CardCategory.SPADE -> SPADE_SHAPE
+        }
     }
 
     companion object {
@@ -102,5 +123,15 @@ class ResultView {
         private const val PRINT_WIN = "승"
         private const val PRINT_DRAW = "무"
         private const val PRINT_LOSE = "패"
+
+        private const val ACE = "A"
+        private const val KING = "K"
+        private const val QUEEN = "Q"
+        private const val JACK = "J"
+
+        private const val CLOVER_SHAPE = "클로버"
+        private const val DIAMOND_SHAPE = "다이아"
+        private const val HEART_SHAPE = "하트"
+        private const val SPADE_SHAPE = "스페이드"
     }
 }
