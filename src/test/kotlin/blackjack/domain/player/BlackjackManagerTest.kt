@@ -32,7 +32,7 @@ class BlackjackManagerTest {
         blackjackManager.generateParticipants { listOf("aaa", "bbb") }
 
         // when
-        blackjackManager.settingPlayersCards()
+        blackjackManager.settingPlayersCards { _, _ -> }
         val actual1 = blackjackManager.dealer.cards.values.size
         val actual2 = blackjackManager.participants.values.map { it.cards.values.size }
 
@@ -46,13 +46,13 @@ class BlackjackManagerTest {
         // given
         val blackjackManager = BlackjackManager(TestCardsGenerator())
         blackjackManager.generateParticipants { listOf("aaa", "bbb") }
-        blackjackManager.settingPlayersCards()
+        blackjackManager.settingPlayersCards { _, _ -> }
 
         // when
         val participant1 = blackjackManager.participants.values[0]
         val participant2 = blackjackManager.participants.values[1]
-        blackjackManager.provideParticipantMoreCard(participant1) { true }
-        blackjackManager.provideParticipantMoreCard(participant2) { false }
+        blackjackManager.provideParticipantMoreCard(participant1, { true }, {})
+        blackjackManager.provideParticipantMoreCard(participant2, { false }, {})
         val actual1 = participant1.cards.values.size
         val actual2 = participant2.cards.values.size
 
@@ -66,10 +66,10 @@ class BlackjackManagerTest {
         // given
         val blackjackManager = BlackjackManager(TestCardsGenerator())
         blackjackManager.generateParticipants { listOf("aaa", "bbb") }
-        blackjackManager.settingPlayersCards()
+        blackjackManager.settingPlayersCards { _, _ -> }
 
         // when
-        blackjackManager.provideDealerMoreCard()
+        blackjackManager.provideDealerMoreCard {}
         val actual = blackjackManager.dealer.cards.values.size
 
         // then
@@ -81,7 +81,7 @@ class BlackjackManagerTest {
         // given
         val blackjackManager = BlackjackManager(TestCardsGenerator())
         blackjackManager.generateParticipants { listOf("aaa", "bbb") }
-        blackjackManager.settingPlayersCards()
+        blackjackManager.settingPlayersCards { _, _ -> }
 
         // when
         blackjackManager.updatePlayersResult()
