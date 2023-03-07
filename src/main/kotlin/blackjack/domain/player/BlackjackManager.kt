@@ -2,7 +2,7 @@ package blackjack.domain.player
 
 import blackjack.domain.card.CardDeck
 
-class PlayersManager {
+class BlackjackManager {
 
     private val cardDeck = CardDeck()
 
@@ -17,7 +17,7 @@ class PlayersManager {
         }
     }
 
-    private fun provideCard(player: Player) {
+    fun provideCard(player: Player) {
         cardDeck.apply {
             if (checkProvidePossible()) {
                 player.addCard(provide())
