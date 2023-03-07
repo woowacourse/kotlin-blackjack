@@ -1,7 +1,6 @@
 package view.result
 
-import domain.person.Dealer
-import domain.person.Player
+import domain.person.Persons
 import domain.result.GameResult
 import view.result.ResultOutput.printDealerResult
 import view.result.ResultOutput.printFinalOutcome
@@ -9,9 +8,9 @@ import view.result.ResultOutput.printPersonCards
 import view.result.ResultOutput.printPlayerResult
 
 object ResultView {
-    fun printPersonsCards(dealer: Dealer, players: List<Player>) {
-        printPersonCards(dealer)
-        players.forEach { printPersonCards(it) }
+    fun printPersonsCards(persons: Persons) {
+        printPersonCards(persons.dealer)
+        persons.players.forEach { printPersonCards(it) }
         println()
     }
 
