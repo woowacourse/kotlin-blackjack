@@ -13,11 +13,14 @@ class Referee(private val dealerScore: Int, private val userScore: List<Int>) {
         val playerOverMaxScore = userScore > GAME_MAX_SCORE
 
         return when {
+            isDealerBlackJack() -> GameResult.LOSE
             (dealerOverMaxScore and playerOverMaxScore) or (dealerScore == userScore) -> GameResult.DRAW
-            ((dealerScore > userScore) and !dealerOverMaxScore) or playerOverMaxScore -> GameResult.LOSE
+            ((dealerScore > userScore) and !dealerOverMaxScore or playerOverMaxScore) -> GameResult.LOSE
             else -> GameResult.WIN
         }
     }
+
+    private fun isDealerBlackJack(): Boolean = dealerScore == GAME_MAX_SCORE
 
     companion object {
         private const val GAME_MAX_SCORE = 21
