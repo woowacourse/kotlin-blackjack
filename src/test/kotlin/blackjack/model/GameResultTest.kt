@@ -1,8 +1,9 @@
 package blackjack.model
 
+import model.Bet
+import model.BetInfos
 import model.Card
 import model.Dealer
-import model.FinalResult
 import model.GameResult
 import model.Hand
 import model.Name
@@ -14,7 +15,7 @@ import org.junit.jupiter.api.Test
 
 class GameResultTest {
     @Test
-    fun `딜러 21점 승리 플레이어 19점, 20점 패배`() {
+    fun `딜러 21점 2승 플레이어1 19점 패배, 플레이어2 20점 패배`() {
         val dealer = dealer(
             Card(Rank.JACK, Suit.HEART),
             Card(Rank.JACK, Suit.DIAMOND),
@@ -22,17 +23,14 @@ class GameResultTest {
         )
         val player1 = player(Name("jason"), Card(Rank.JACK, Suit.HEART), Card(Rank.NINE, Suit.DIAMOND))
         val player2 = player(Name("pobi"), Card(Rank.JACK, Suit.SPADE), Card(Rank.KING, Suit.HEART))
-        val result = GameResult.of(dealer, listOf(player1, player2))
-
-        assertThat(result.getDealerWinResult()).isEqualTo(2)
-        assertThat(result.getDealerPushResult()).isEqualTo(0)
-        assertThat(result.getDealerLoseResult()).isEqualTo(0)
-        assertThat(result.playersFinalResult["jason"]).isEqualTo(FinalResult.LOSE)
-        assertThat(result.playersFinalResult["pobi"]).isEqualTo(FinalResult.LOSE)
+        val result = GameResult.of(dealer, BetInfos(mapOf(player1 to Bet(1000), player2 to Bet(2000))))
+        assertThat(result.getDealerProfitResult()).isEqualTo(3000)
+        assertThat(result.playersFinalResult[Name("jason")]).isEqualTo(-1000)
+        assertThat(result.playersFinalResult[Name("pobi")]).isEqualTo(-2000)
     }
 
     @Test
-    fun `딜러 22점 패배 플레이어 19점, 20점 승리`() {
+    fun `딜러 버스트 2패 플레이어1 19점 승리, 플레이어2 20점 승리`() {
         val dealer = dealer(
             Card(Rank.JACK, Suit.HEART),
             Card(Rank.JACK, Suit.DIAMOND),
@@ -41,13 +39,11 @@ class GameResultTest {
         val player1 = player(Name("jason"), Card(Rank.JACK, Suit.HEART), Card(Rank.NINE, Suit.DIAMOND))
         val player2 = player(Name("pobi"), Card(Rank.JACK, Suit.SPADE), Card(Rank.KING, Suit.SPADE))
 
-        val result = GameResult.of(dealer, listOf(player1, player2))
+        val result = GameResult.of(dealer, BetInfos(mapOf(player1 to Bet(10000), player2 to Bet(20000))))
 
-        assertThat(result.getDealerWinResult()).isEqualTo(0)
-        assertThat(result.getDealerPushResult()).isEqualTo(0)
-        assertThat(result.getDealerLoseResult()).isEqualTo(2)
-        assertThat(result.playersFinalResult["jason"]).isEqualTo(FinalResult.WIN)
-        assertThat(result.playersFinalResult["pobi"]).isEqualTo(FinalResult.WIN)
+        assertThat(result.getDealerProfitResult()).isEqualTo(-30000)
+        assertThat(result.playersFinalResult[Name("jason")]).isEqualTo(10000)
+        assertThat(result.playersFinalResult[Name("pobi")]).isEqualTo(20000)
     }
 
     @Test
@@ -56,39 +52,33 @@ class GameResultTest {
         val player1 = player(Name("jason"), Card(Rank.JACK, Suit.SPADE), Card(Rank.NINE, Suit.DIAMOND))
         val player2 = player(Name("pobi"), Card(Rank.JACK, Suit.SPADE), Card(Rank.KING, Suit.DIAMOND), Card(Rank.ACE, Suit.DIAMOND))
 
-        val result = GameResult.of(dealer, listOf(player1, player2))
-        assertThat(result.getDealerWinResult()).isEqualTo(1)
-        assertThat(result.getDealerPushResult()).isEqualTo(0)
-        assertThat(result.getDealerLoseResult()).isEqualTo(1)
-        assertThat(result.playersFinalResult["jason"]).isEqualTo(FinalResult.LOSE)
-        assertThat(result.playersFinalResult["pobi"]).isEqualTo(FinalResult.WIN)
+        val result = GameResult.of(dealer, BetInfos(mapOf(player1 to Bet(10000), player2 to Bet(20000))))
+        assertThat(result.getDealerProfitResult()).isEqualTo(-30000)
+        assertThat(result.playersFinalResult[Name("jason")]).isEqualTo(10000)
+        assertThat(result.playersFinalResult[Name("pobi")]).isEqualTo(20000)
     }
 
     @Test
-    fun `딜러 21점 1승1무, 플레이어 21점 무승부, 20점 패배`() {
+    fun `딜러 블랙잭 1승1무, 플레이어 블랙잭 무승부, 플레이어2 20점 패배`() {
         val dealer = dealer(Card(Rank.JACK, Suit.HEART), Card(Rank.ACE, Suit.DIAMOND))
         val player1 = player(Name("jason"), Card(Rank.JACK, Suit.SPADE), Card(Rank.ACE, Suit.CLOVER))
         val player2 = player(Name("pobi"), Card(Rank.JACK, Suit.SPADE), Card(Rank.NINE, Suit.DIAMOND), Card(Rank.ACE, Suit.DIAMOND))
 
-        val result = GameResult.of(dealer, listOf(player1, player2))
-        assertThat(result.getDealerWinResult()).isEqualTo(1)
-        assertThat(result.getDealerPushResult()).isEqualTo(1)
-        assertThat(result.getDealerLoseResult()).isEqualTo(0)
-        assertThat(result.playersFinalResult["jason"]).isEqualTo(FinalResult.PUSH)
-        assertThat(result.playersFinalResult["pobi"]).isEqualTo(FinalResult.LOSE)
+        val result = GameResult.of(dealer, BetInfos(mapOf(player1 to Bet(20000), player2 to Bet(20000))))
+        assertThat(result.getDealerProfitResult()).isEqualTo(20000)
+        assertThat(result.playersFinalResult[Name("jason")]).isEqualTo(0)
+        assertThat(result.playersFinalResult[Name("pobi")]).isEqualTo(-20000)
     }
     @Test
-    fun `딜러 20점 1승1패, 플레이어 21점 블랙잭 승리, 20점 패배`() {
+    fun `딜러 20점 1승1무, 플레이어1 블랙잭 승리, 플레이어2 20점 무승부`() {
         val dealer = dealer(Card(Rank.JACK, Suit.HEART), Card(Rank.JACK, Suit.DIAMOND))
         val player1 = player(Name("jason"), Card(Rank.JACK, Suit.SPADE), Card(Rank.ACE, Suit.CLOVER))
         val player2 = player(Name("pobi"), Card(Rank.JACK, Suit.SPADE), Card(Rank.NINE, Suit.DIAMOND), Card(Rank.ACE, Suit.DIAMOND))
 
-        val result = GameResult.of(dealer, listOf(player1, player2))
-        assertThat(result.getDealerWinResult()).isEqualTo(1)
-        assertThat(result.getDealerPushResult()).isEqualTo(1)
-        assertThat(result.getDealerLoseResult()).isEqualTo(0)
-        assertThat(result.playersFinalResult["jason"]).isEqualTo(FinalResult.BLACKJACK_WIN)
-        assertThat(result.playersFinalResult["pobi"]).isEqualTo(FinalResult.LOSE)
+        val result = GameResult.of(dealer, BetInfos(mapOf(player1 to Bet(100000), player2 to Bet(100000))))
+        assertThat(result.getDealerProfitResult()).isEqualTo(-50000)
+        assertThat(result.playersFinalResult[Name("jason")]).isEqualTo(50000)
+        assertThat(result.playersFinalResult[Name("pobi")]).isEqualTo(0)
     }
 
     private fun dealer(vararg cards: Card) = Dealer(Hand(cards.toList()))

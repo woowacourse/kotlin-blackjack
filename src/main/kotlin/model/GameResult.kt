@@ -1,13 +1,26 @@
 package model
 
-class GameResult private constructor(val playersFinalResult: Map<String, FinalResult>) {
+class GameResult private constructor(val playersFinalResult: Map<Name, Int>) {
+    fun getDealerProfitResult(): Int = filterSum { it < 0 } + filterSum { it > 0 }
 
-    fun getDealerWinResult(): Int = playersFinalResult.count { it.value == FinalResult.LOSE }
-    fun getDealerLoseResult(): Int = playersFinalResult.count { it.value == FinalResult.WIN || it.value == FinalResult.BLACKJACK_WIN }
-    fun getDealerPushResult(): Int = playersFinalResult.count { it.value == FinalResult.PUSH }
+    private fun filterSum(fn: (Int) -> Boolean): Int = playersFinalResult.values.filter { fn(it) }.sum() * -1
 
     companion object {
-        fun of(dealer: Dealer, players: List<Player>): GameResult =
-            GameResult(buildMap { players.forEach { put(it.name.value, it.judge(dealer)) } })
+        private const val ZERO = 0
+        private fun calculate(bet: Bet, result: FinalResult) = when (result) {
+            FinalResult.WIN -> bet.amount
+            FinalResult.BLACKJACK_WIN -> (bet.amount * 0.5).toInt()
+            FinalResult.LOSE -> (bet.amount * -1)
+            FinalResult.PUSH -> (ZERO)
+        }
+
+        fun of(dealer: Dealer, betInfos: BetInfos): GameResult =
+            GameResult(
+                buildMap {
+                    betInfos.infos.forEach {
+                        put(it.key.name, calculate(it.value, it.key.judge(dealer)))
+                    }
+                }
+            )
     }
 }
