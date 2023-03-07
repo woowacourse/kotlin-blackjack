@@ -9,7 +9,7 @@ value class ProfitMoney(val value: Int) {
     constructor(
         battingMoney: BattingMoney,
         gameResult: GameResult,
-    ) : this(battingMoney.value * gameResult.profitRate.toInt())
+    ) : this((battingMoney.value * gameResult.profitRate).toInt())
 
     operator fun not(): ProfitMoney {
         return ProfitMoney(-value)
