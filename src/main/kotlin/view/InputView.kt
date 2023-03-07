@@ -2,10 +2,18 @@ package view
 
 class InputView {
     private val regexAnswer = Regex("[$Y$y$N$n]")
+    private val regexNumber = Regex("\\d+")
     fun readName(): List<String> {
         val input = readln().replace(" ", "")
         require(input.isNotBlank()) { NULL_ERROR }
         return input.split(",")
+    }
+
+    fun readBet(): Int {
+        val input = readln()
+        require(input.isNotBlank()) { NULL_ERROR }
+        require(regexNumber.matches(input)) { IS_NOT_NUMBER }
+        return input.toInt()
     }
 
     fun readYesOrNo(): Boolean {
@@ -24,5 +32,6 @@ class InputView {
 
         private const val NULL_ERROR = "입력 값이 비었습니다"
         private const val IS_NOT_YES_OR_NO_ERROR = "입력 값은 y 혹은 n이 아닙니다"
+        private const val IS_NOT_NUMBER = "입력 값이 숫자가 아닙니다"
     }
 }
