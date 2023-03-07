@@ -5,15 +5,15 @@ import org.junit.jupiter.api.Test
 
 class CardMachineTest {
     @Test
-    fun `3명일 경우, 카드 세 쌍을 뽑는다`() {
+    fun `카드 6장을 뽑는다`() {
         // given
-        val count = 3
+        val count = 6
         val cardMachine = CardMachine()
 
         // when
-        val actual = cardMachine.getCardPairs(count)
+        val actual = cardMachine.getCard(count)
 
         // then
-        assertThat(actual).hasSize(3)
+        assertThat(actual).hasSize(count)
     }
 }
