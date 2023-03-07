@@ -26,7 +26,6 @@ class CardBunch private constructor(cards: MutableList<Card>) {
     fun isBurst(): Boolean = getTotalScore() > MAX_SCORE_CONDITION
 
     companion object {
-        private const val DUPLICATE_ERROR = "중복된 카드는 추가할 수 없습니다."
         private const val ACE_SCORE_GAP = 10
     }
 }
