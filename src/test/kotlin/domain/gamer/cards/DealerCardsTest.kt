@@ -18,8 +18,8 @@ class DealerCardsTest {
     @Test
     fun `카드 값의 합을 반환한다`() {
         val dealerState =
-            DealerCards(mutableListOf(Card(Shape.SPADE, CardValue.JACK), Card(Shape.SPADE, CardValue.JACK)))
-        assertThat(dealerState.calculateCardSum()).isEqualTo(20)
+            DealerCards(mutableListOf(Card(Shape.SPADE, CardValue.JACK), Card(Shape.SPADE, CardValue.ACE)))
+        assertThat(dealerState.calculateCardSum()).isEqualTo(21)
     }
 
     @Test
@@ -52,7 +52,7 @@ class DealerCardsTest {
                     Card(Shape.SPADE, CardValue.TWO)
                 )
             )
-        assertThat(dealerState.calculateCardSum()).isEqualTo(23)
+        assertThat(dealerState.calculateCardSum()).isEqualTo(13)
     }
 
     @Test

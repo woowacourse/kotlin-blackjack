@@ -1,7 +1,7 @@
 package domain.card
 
-enum class CardValue(val title: String, val value: Int, val aceValue: Int = 0) {
-    ACE("A", 11, 1),
+enum class CardValue(val title: String, val value: Int) {
+    ACE("A", 1),
     TWO("2", 2),
     THREE("3", 3),
     FOUR("4", 4),

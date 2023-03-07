@@ -11,32 +11,20 @@ abstract class ParticipantCards(private val _cards: MutableList<Card>) {
     }
 
     fun calculateCardSum(): Int {
-        var value = 0
-        _cards.forEach {
-            value += getCardValue(it, value)
-        }
-        return value
+        val value = _cards.sumOf { it.cardValue.value }
+        return value + checkAceValue(value)
     }
 
     abstract fun checkOverCondition(): Boolean
 
-    private fun getCardValue(card: Card, value: Int) =
-        if (card.cardValue == CardValue.ACE) {
-            getAceValue(value)
-        } else {
-            card.cardValue.value
-        }
-
-    private fun getAceValue(value: Int): Int =
-        when {
-            countAce() >= ACE_COUNT_VALUE_CHANGE_CONDITION -> CardValue.ACE.aceValue
-            value > Referee.CARD_SUM_MAX_VALUE - CardValue.ACE.value -> CardValue.ACE.aceValue
-            else -> CardValue.ACE.value
-        }
-
-    private fun countAce() = _cards.count { it.cardValue.title == "ACE" }
+    private fun checkAceValue(value: Int): Int {
+        if (cards.any { it.cardValue == CardValue.ACE } && value <= ANOTHER_ACE_VALUE)
+            return Referee.CARD_SUM_MAX_VALUE - ANOTHER_ACE_VALUE
+        return ZERO
+    }
 
     companion object {
-        private const val ACE_COUNT_VALUE_CHANGE_CONDITION = 2
+        private const val ANOTHER_ACE_VALUE = 11
+        private const val ZERO = 0
     }
 }
