@@ -1,8 +1,11 @@
 package blackjack.controller
 
 import blackjack.domain.BlackJack
-import blackjack.domain.BlackJackBuilder
+import blackjack.domain.CardDeck
+import blackjack.domain.Dealer
+import blackjack.domain.Participants
 import blackjack.domain.Player
+import blackjack.domain.Players
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -19,14 +22,9 @@ class BlackJackController {
         }
     }
 
-    private fun initBlackJack(): BlackJack =
-        BlackJackBuilder {
-            cardDeck()
-            participants {
-                dealer()
-                players(InputView.inputNames())
-            }
-        }
+    private fun initBlackJack(): BlackJack = BlackJack(CardDeck(), Participants(Dealer(), enrollPlayers()))
+
+    private fun enrollPlayers(): Players = Players(InputView.inputNames().map(::Player))
 
     private fun setUpCard(blackJack: BlackJack) {
         drawInitialCards(blackJack)
