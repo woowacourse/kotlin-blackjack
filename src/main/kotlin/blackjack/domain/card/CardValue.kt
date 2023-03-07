@@ -14,4 +14,9 @@ enum class CardValue(val value: Int) {
     FOUR(4),
     THREE(3),
     TWO(2),
+    ;
+
+    companion object {
+        fun containsAce(values: List<CardValue>): Boolean = values.contains(ACE)
+    }
 }

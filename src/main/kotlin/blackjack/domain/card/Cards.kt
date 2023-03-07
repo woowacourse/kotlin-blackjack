@@ -10,7 +10,7 @@ class Cards(val cards: Set<Card> = setOf()) {
 
     operator fun plus(card: Card): Cards = Cards(cards.plus(card))
 
-    fun containsACE() = cards.map { it.value }.contains(CardValue.ACE)
+    fun containsACE(): Boolean = CardValue.containsAce(cards.map { it.value })
 
     companion object {
         private val CARDS: List<Card> = CardMark.values().flatMap { mark ->
