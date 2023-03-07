@@ -1,5 +1,6 @@
 package blackjack.domain.player
 
+import blackjack.domain.Result
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
 import blackjack.domain.card.CardShape
@@ -75,18 +76,41 @@ class BlackjackManagerTest {
         assertThat(actual).isEqualTo(4)
     }
 
+    @Test
+    fun `플레이어들의 게임 결과를 업데이트한다`() {
+        // given
+        val blackjackManager = BlackjackManager(TestCardsGenerator())
+        blackjackManager.generateParticipants { listOf("aaa", "bbb") }
+        blackjackManager.settingPlayersCards()
+
+        // when
+        blackjackManager.updatePlayersResult()
+        val actual1 = blackjackManager.dealer.results
+        val actual2 = blackjackManager.participants.values[0].result
+        val actual3 = blackjackManager.participants.values[1].result
+
+        // then
+        assertThat(actual1).isEqualTo(mapOf(Result.WIN to 1, Result.LOSE to 1, Result.DRAW to 0))
+        assertThat(actual2).isEqualTo(Result.WIN)
+        assertThat(actual3).isEqualTo(Result.LOSE)
+    }
+
     class TestCardsGenerator : CardsGenerator {
         override fun generate(): List<Card> =
             listOf(
+                // dealer
                 Card(CardNumber.FOUR, CardShape.HEART),
                 Card(CardNumber.FIVE, CardShape.HEART),
 
-                Card(CardNumber.FOUR, CardShape.DIAMOND),
-                Card(CardNumber.FIVE, CardShape.DIAMOND),
+                // player1
+                Card(CardNumber.SIX, CardShape.DIAMOND),
+                Card(CardNumber.EIGHT, CardShape.DIAMOND),
 
+                // player2
+                Card(CardNumber.THREE, CardShape.CLOVER),
                 Card(CardNumber.FOUR, CardShape.CLOVER),
-                Card(CardNumber.FIVE, CardShape.CLOVER),
 
+                // 추가
                 Card(CardNumber.FOUR, CardShape.SPADE),
                 Card(CardNumber.FIVE, CardShape.SPADE),
                 Card(CardNumber.SIX, CardShape.SPADE)

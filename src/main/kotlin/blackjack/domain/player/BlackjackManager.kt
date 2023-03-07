@@ -40,6 +40,14 @@ class BlackjackManager(cardsGenerator: CardsGenerator) {
         }
     }
 
+    fun updatePlayersResult() {
+        participants.values.forEach {
+            it.updateResult(dealer.cards.sumCardsNumber())
+        }
+
+        dealer.updateResults(participants.values.map { it.cards.sumCardsNumber() })
+    }
+
     private fun provideCard(player: Player) {
         cardDeck.apply {
             if (checkProvidePossible()) {
