@@ -8,15 +8,18 @@ import org.junit.jupiter.api.Test
 
 class UserTest {
     @Test
-    fun `이름이 해시, 카드 2장을 가진 유저를 생성한다`() {
+    fun `이름이 해시, 배팅금액이 1000, 카드 2장을 가진 유저를 생성한다`() {
         val user = User.create(
-            "해시" to
+            "해시" to 1000,
+            Cards(
                 listOf(
                     Card(CardShape.DIAMONDS, CardValue.ACE),
                     Card(CardShape.HEARTS, CardValue.TWO)
                 )
+            )
         )
         assertThat(user.name).isEqualTo("해시")
         assertThat(user.cards.value.size).isEqualTo(2)
+        assertThat(user.betAmount).isEqualTo(1000)
     }
 }

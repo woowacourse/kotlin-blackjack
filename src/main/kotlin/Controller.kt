@@ -13,7 +13,7 @@ class Controller(
 
     fun run() {
         val blackJackGame = BlackJackGame()
-        blackJackGame.setUpBlackJackGame { readUserNames() }
+        blackJackGame.setUpBlackJackGame(::readUserNames, ::readBetAmount)
         playGameView.printPlayers(players = blackJackGame.players)
         blackJackGame.playDealerTurn { printDealerPickNewCard() }
         blackJackGame.playUserTurn(::readMoreCardCommand, ::printUserCards)
@@ -28,6 +28,8 @@ class Controller(
     }
 
     private fun getUserNames(): UserNameContainer = UserNameContainer(loginView.requestPlayerName())
+
+    private fun readBetAmount(userName: String) = loginView.requestBetAmount(userName)
 
     private fun printUserCards(user: User) = playGameView.printUserCard(user)
 

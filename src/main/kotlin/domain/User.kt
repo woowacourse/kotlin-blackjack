@@ -1,10 +1,8 @@
 package domain
 
-import domain.card.Card
-
-class User(val name: String, val cards: Cards) {
+class User(val name: String, val cards: Cards, val betAmount: Int) {
     companion object {
-        fun create(userNameAndCard: Pair<String, List<Card>>): User =
-            User(userNameAndCard.first, Cards(userNameAndCard.second))
+        fun create(nameAndBetAmount: Pair<String, Int>, cards: Cards): User =
+            User(nameAndBetAmount.first, cards, nameAndBetAmount.second)
     }
 }

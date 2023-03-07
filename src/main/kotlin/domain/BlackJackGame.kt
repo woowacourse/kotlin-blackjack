@@ -8,18 +8,20 @@ class BlackJackGame {
 
     fun setUpBlackJackGame(
         readUserNames: () -> List<String>,
+        readBetAmount: (String) -> Int
     ) {
         val userNames = readUserNames()
+        val betAmounts = userNames.map { userName ->
+            readBetAmount(userName)
+        }
         players = Players(
             dealer = Dealer(cards = Cards(deck.getCards(CARD_PAIR))),
-            users = createUsers(userNames)
+            users = createUsers(userNames.zip(betAmounts))
         )
     }
 
-    private fun createUsers(userNames: List<String>): List<User> {
-        return userNames.map { name ->
-            User(name, Cards(deck.getCards(CARD_PAIR)))
-        }
+    private fun createUsers(userInitialValues: List<Pair<String, Int>>): List<User> {
+        return userInitialValues.map { User.create(it, Cards(deck.getCards(CARD_PAIR))) }
     }
 
     fun playDealerTurn(
