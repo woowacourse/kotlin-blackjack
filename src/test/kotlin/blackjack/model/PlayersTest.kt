@@ -11,6 +11,7 @@ import model.Result
 import model.Suit
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 class PlayersTest {
     @Test
@@ -22,6 +23,28 @@ class PlayersTest {
         assertThat(players.size).isEqualTo(2)
         assertThat(players.players[0].name.value).isEqualTo("jason")
         assertThat(players.players[1].name.value).isEqualTo("pobi")
+    }
+
+    @Test
+    fun `players가 아무도 없으면 예외가 발생한다`() {
+        assertThrows<IllegalArgumentException> { Players() }
+    }
+
+    @Test
+    fun `players가 9명이면 예외가 발생한다`() {
+        assertThrows<IllegalArgumentException> {
+            Players(
+                Player("Jason", Card(Rank.ACE, Suit.HEART)),
+                Player("Pobi", Card(Rank.DEUCE, Suit.CLOVER)),
+                Player("Sunny", Card(Rank.THREE, Suit.HEART)),
+                Player("Scot", Card(Rank.FOUR, Suit.HEART)),
+                Player("Dooly", Card(Rank.FIVE, Suit.HEART)),
+                Player("Sudal", Card(Rank.SIX, Suit.HEART)),
+                Player("Mendel", Card(Rank.SEVEN, Suit.HEART)),
+                Player("Met", Card(Rank.EIGHT, Suit.HEART)),
+                Player("Ring", Card(Rank.NINE, Suit.HEART)),
+            )
+        }
     }
 
     @Test
