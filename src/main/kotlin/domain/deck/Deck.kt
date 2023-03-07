@@ -5,7 +5,6 @@ import domain.card.CardMaker
 
 object Deck {
     private const val ERROR_EMPTY_DECK = "[ERROR] 카드가 존재하지 않습니다."
-    private const val MAX_DECK_COUNT = 52
     private var deck = CardMaker().makeCards()
     private var cardPosition = 0
 

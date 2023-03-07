@@ -9,7 +9,7 @@ import domain.judge.Referee
 abstract class Participant(open val cards: Cards) {
 
     fun makeStartDeck() {
-        repeat(2) {
+        repeat(START_DECK_CARD_COUNT) {
             pickCard(Deck.giveCard())
         }
     }
@@ -46,9 +46,11 @@ abstract class Participant(open val cards: Cards) {
 
     fun checkBurst(): Boolean = calculateCardSum() > Referee.CARD_SUM_MAX_VALUE
 
-    fun checkBlackjack(): Boolean = calculateCardSum() == 21 && cards.getCards().size == 2
+    fun checkBlackjack(): Boolean =
+        calculateCardSum() == Referee.CARD_SUM_MAX_VALUE && cards.getCards().size == START_DECK_CARD_COUNT
 
     companion object {
         private const val ACE_COUNT_VALUE_CHANGE_CONDITION = 2
+        private const val START_DECK_CARD_COUNT = 2
     }
 }
