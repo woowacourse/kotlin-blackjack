@@ -8,6 +8,7 @@ enum class GameResultCondition(
     val gameResult: GameResult,
 ) {
 
+    //TODO: Cards객체를 너무 잘 알고 있는 것이 아닐까?
     BLACKJACK_WIN(
         condition = { playerCards, dealerCards ->
             playerCards.state == CardsState.BlackJack &&
@@ -41,7 +42,7 @@ enum class GameResultCondition(
         condition = { playerCards, dealerCards ->
             playerCards.getTotalCardsScore() > dealerCards.getTotalCardsScore()
         },
-        gameResult = GameResult.DRAW
+        gameResult = GameResult.WIN
     ),
 
     LOSE(

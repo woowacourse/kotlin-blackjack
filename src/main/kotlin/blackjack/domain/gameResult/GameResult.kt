@@ -1,8 +1,6 @@
 package blackjack.domain.gameResult
 
 import blackjack.domain.card.Cards
-import blackjack.domain.dealer.Dealer
-import blackjack.domain.player.Player
 
 enum class GameResult(val profitRate: Double) {
 

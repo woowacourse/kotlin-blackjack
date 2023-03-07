@@ -19,8 +19,8 @@ object OutputView {
     private const val DEALER_RECEIVED_NOTHING_MSG = "딜러는 17이상이라 한장의 카드를 더 받지 않았습니다."
     private const val FINAL_SCORE = " - 결과: %d"
     private const val GAME_RESULTS = "###최종 승패"
-    private const val DEALER_GAME_RESULTS = "딜러: %d승 %d패 %d무"
-    private const val PLAYER_GAME_RESULT = "%s: %s"
+    private const val DEALER_GAME_RESULTS = "딜러: %d"
+    private const val PLAYER_GAME_RESULT = "%s: %d"
     private const val WIN_DESCRIPTION = "승"
     private const val DRAW_DESCRIPTION = "무"
     private const val LOSE_DESCRIPTION = "패"
@@ -82,7 +82,7 @@ object OutputView {
         println()
         println(
             SHOW_DEALER_CARD.format(dealer.cards.cards.joinToString(SEPARATOR) { card -> card.toDescription() }) +
-                FINAL_SCORE.format(dealer.cards.getTotalCardsScore())
+                    FINAL_SCORE.format(dealer.cards.getTotalCardsScore())
         )
         players.forEach { player ->
             print(player.toCardsDescription())
@@ -94,14 +94,10 @@ object OutputView {
         println()
         println(GAME_RESULTS)
         println(
-            DEALER_GAME_RESULTS.format(
-                totalGameResult.dealerGameResults.count { gameResult -> gameResult == GameResult.WIN },
-                totalGameResult.dealerGameResults.count { gameResult -> gameResult == GameResult.LOSE },
-                totalGameResult.dealerGameResults.count { gameResult -> gameResult == GameResult.DRAW }
-            )
+            DEALER_GAME_RESULTS.format(totalGameResult.dealerGameResults.value)
         )
-        totalGameResult.playersGameResult.forEach { playerGameResult ->
-            println(PLAYER_GAME_RESULT.format(playerGameResult.playerName, playerGameResult.gameResult.toDescription()))
+        totalGameResult.playerGameResults.forEach { playerGameResult ->
+            println(PLAYER_GAME_RESULT.format(playerGameResult.playerName, playerGameResult.profitMoney.value))
         }
     }
 
