@@ -6,6 +6,7 @@ abstract class Participant(val cards: Cards, val name: Name) {
     abstract fun getFirstOpenCards(): Cards
     abstract fun isPossibleDrawCard(): Boolean
     abstract fun getGameResult(other: Participant): Result
+    abstract fun isHit(needToDraw: (String) -> Boolean): Boolean
     fun drawFirst(cardDeck: CardDeck) {
         cards.add(cardDeck.drawCard())
         cards.add(cardDeck.drawCard())

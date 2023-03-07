@@ -23,6 +23,22 @@ class CardGameTest {
         assertThat(player2.cards.size).isEqualTo(2)
     }
 
+    @Test
+    fun `플레이어는 bust가 아닐 때 계속해서 draw 의사가 있다면 bust 될 때까지 카드를 뽑는다`() {
+        val player = Player.from("jason")
+        val cardGame = CardGame(cardDeck, Participants(player))
+        cardGame.drawCard(player, {}) { true }
+        assertThat(player.isBust()).isTrue
+    }
+
+    @Test
+    fun `딜러의 카드 합이 16 이하일 때 딜러는 16 초과가 될 때까지 카드를 뽑는다`() {
+        val dealer = Dealer()
+        val cardGame = CardGame(cardDeck, Participants(dealer))
+        cardGame.drawCard(dealer, {}) { true }
+        assertThat(dealer.isHit { true }).isFalse
+    }
+
     companion object {
         private val cardDeck = CardDeck.createCardDeck()
         private fun Participants(vararg participant: Participant): Participants = Participants(participant.toList())

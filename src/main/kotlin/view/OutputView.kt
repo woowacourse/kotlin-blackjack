@@ -27,9 +27,9 @@ class OutputView {
         )
     }
 
-    fun printDealerGetCard() {
+    fun printDealerGetCard(participant: Participant) {
         println()
-        println(MESSAGE_DEALER_GET_CARD)
+        println(MESSAGE_DEALER_GET_CARD.format(participant.name.value))
     }
 
     fun printPlayerStatus(participant: Participant) {
@@ -87,7 +87,7 @@ class OutputView {
         private const val MESSAGE_DISTRIBUTE_CARD = "딜러와 %s에게 2장의 나누었습니다."
         private const val MESSAGE_PARTICIPANT_STATUS = "%s카드: %s"
         private const val MESSAGE_POINT_RESULT = " - 결과: %d"
-        private const val MESSAGE_DEALER_GET_CARD = "딜러는 16이하라 한장의 카드를 더 받았습니다."
+        private const val MESSAGE_DEALER_GET_CARD = "%s는 16이하라 한장의 카드를 더 받았습니다."
         private const val MESSAGE_RESULT_TITLE = "## 최종 승패"
         private const val MESSAGE_DEALER_RESULT = "딜러: %d승 %d패"
         private const val MESSAGE_PLAYER_RESULT = "%s: %s"

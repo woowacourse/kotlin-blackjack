@@ -12,14 +12,12 @@ import view.OutputView
 class Controller(private val inputView: InputView, private val outputView: OutputView) {
     private val cardDeck = CardDeck.createCardDeck().shuffled()
     fun run() {
-        val players = Players.from(inputView.readName())
-        val dealer = Dealer(Cards(setOf()))
-        val participants = Participants(listOf(dealer) + players)
+        val participants = Participants(listOf(Dealer(Cards(setOf()))) + Players.from(inputView.readName()))
         val cardGame = CardGame(cardDeck, participants)
         cardGame.readyToStart()
         outputView.printNoticeDistributeCards(participants)
-        cardGame.drawPlayersCard(players, inputView::readYesOrNo, outputView::printPlayerStatus)
-        cardGame.drawDealerCard(dealer) { outputView.printDealerGetCard() }
+        participants.players.forEach { cardGame.drawCard(it, outputView::printPlayerStatus, inputView::readYesOrNo) }
+        cardGame.drawCard(participants.dealer, outputView::printDealerGetCard) { true }
         outputView.printAllPlayerStatusResult(participants.participants)
         outputView.printGameResult(participants)
     }

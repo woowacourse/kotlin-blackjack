@@ -9,6 +9,8 @@ class Dealer(cards: Cards, name: Name = Name(DEALER)) : Participant(cards, name)
 
     override fun getGameResult(other: Participant): Result = other.getGameResult(this)
 
+    override fun isHit(needToDraw: (String) -> Boolean): Boolean = isPossibleDrawCard()
+
     fun getFinalResult(participants: Participants): Map<Result, Int> {
         return mapOf(
             Result.WIN to participants.participants.count { getGameResult(it) == Result.LOSE },
