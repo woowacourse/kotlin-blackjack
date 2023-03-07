@@ -5,7 +5,7 @@ import entity.Player
 import entity.Players
 import entity.User
 
-class BlackjackStage(val dealer: Dealer, val players: Players, val cardFactory: CardFactory) {
+class BlackjackStage(val dealer: Dealer, val players: Players, private val cardFactory: CardFactory) {
     fun distributeAllUsers() {
         dealer.addCards(cardFactory.generate(INITIAL_CARD_DISTRIBUTE_COUNT))
         players.value.forEach {
@@ -13,15 +13,13 @@ class BlackjackStage(val dealer: Dealer, val players: Players, val cardFactory: 
         }
     }
 
-    fun distributePlayers(onDistribute: (player: Player) -> Unit) {
-        players.value.forEach {
-            if (it.isDistributable()) {
-                onDistribute(it)
-            }
+    fun distributePlayers(player: Player) {
+        if (player.isDistributable()) {
+            distributePlayer(player)
         }
     }
 
-    fun distributePlayer(player: Player) {
+    private fun distributePlayer(player: Player) {
         player.addCards(cardFactory.generate(User.SINGLE_DISTRIBUTE_COUNT))
     }
 

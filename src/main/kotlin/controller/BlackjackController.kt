@@ -33,13 +33,18 @@ class BlackjackController {
     }
 
     private fun distributeMoreCardPlayer(blackjackStage: BlackjackStage) {
-        blackjackStage.distributePlayers {
-            gameView.printWhetherMoreCard(it.name.value)
-            it.addMoreCards(CardDistributeCondition(gameView.readWhetherMoreCard())) {
-                blackjackStage.distributePlayer(it)
-                gameView.printPlayerStatus(it)
-                distributeMoreCardPlayer(blackjackStage)
-            }
+        blackjackStage.players.value.forEach { player ->
+            distributeMoreCardPlayerProcess(player, blackjackStage)
+        }
+    }
+
+    private fun distributeMoreCardPlayerProcess(player: Player, blackjackStage: BlackjackStage) {
+        while (true) {
+            gameView.printWhetherMoreCard(player.name.value)
+            if (!player.isDistributable() || !CardDistributeCondition(gameView.readWhetherMoreCard()).toBoolean()) break
+            blackjackStage.distributePlayers(player)
+            gameView.printPlayerStatus(player)
+            if (!player.isDistributable()) break
         }
     }
 
