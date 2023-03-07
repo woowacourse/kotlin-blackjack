@@ -4,12 +4,11 @@ import domain.card.Card
 import domain.card.Cards
 import domain.constant.GameState
 
-abstract class Person(open val name: String) {
-    val cards = Cards()
+abstract class Person(value: List<Card>, open val name: String) {
+    val cards: Cards = Cards(value)
 
-    fun receiveCard(vararg card: Card) {
-        card.forEach { cards.add(it) }
-        checkState()
+    fun receiveCard(values: List<Card>) {
+        values.forEach { cards.add(it) }
     }
 
     protected abstract fun checkState(): GameState
