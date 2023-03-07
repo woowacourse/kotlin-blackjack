@@ -48,7 +48,7 @@ class PlayerTest {
     }
 
     @Test
-    fun `카드의 합이 21을 초과하지 않으면 hit 한다`() {
+    fun `카드의 합이 21을 초과하지 않고 블랙잭이 아니면 hit 한다`() {
         val player = player(
             Name("jason"),
             Rank.ACE,
