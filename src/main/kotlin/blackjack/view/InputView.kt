@@ -23,6 +23,7 @@ class InputView {
             else -> inputDrawMore(name)
         }
     }
+
     companion object {
         private val DRAW_COMMANDS = listOf("Y", "y")
         private val END_TURN_COMMANDS = listOf("N", "n")

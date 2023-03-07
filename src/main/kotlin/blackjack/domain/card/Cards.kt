@@ -8,13 +8,12 @@ class Cards(private val cards: Set<Card> = setOf()) {
     val size: Int = cards.size
 
     fun toList() = cards.toList()
+    fun isContainsACE(): Boolean = cards.any { it.isACE() }
 
     operator fun plus(card: Card): Cards {
         require(card !in cards) { ERROR_EXIST_DUPLICATE_CARD }
         return Cards(cards.plus(card))
     }
-
-    fun isContainsACE(): Boolean = cards.any { it.isACE() }
 
     companion object {
         private const val ERROR_EXIST_DUPLICATE_CARD = "카드는 중복될 수 없습니다."

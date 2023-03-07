@@ -25,17 +25,17 @@ class OutputView {
         outputOutcomes(BlackJackResult(blackJack.participants))
     }
 
-    private fun outputCardForDealer(user: User) {
-        val cardText = user.cards.toList()[0].let { it.value.pattern() + it.mark.name() }
-        print("\n${user.name}카드: $cardText")
-    }
-
     fun outputCard(user: User) {
         val cardText = user.cards.toList().joinToString(", ") { it.value.pattern() + it.mark.name() }
         print("\n${user.name}카드: $cardText")
     }
 
     fun outputDealerDraw() { println("\n\n딜러는 16이하라 한장의 카드를 더 받았습니다.") }
+
+    private fun outputCardForDealer(user: User) {
+        val cardText = user.cards.toList()[0].let { it.value.pattern() + it.mark.name() }
+        print("\n${user.name}카드: $cardText")
+    }
 
     private fun outputScore(user: User) { print(" - 결과: ${user.score()}") }
 
