@@ -1,8 +1,8 @@
 package blackjack.view
 
+import blackjack.domain.Card
 import blackjack.domain.GameResult
 import blackjack.domain.PlayerResults
-import blackjack.dto.HandDTO
 import blackjack.dto.HandsDTO
 import blackjack.dto.ScoreDTO
 import blackjack.dto.ScoresDTO
@@ -16,12 +16,14 @@ object OutputView {
     }
 
     private fun printHands(dto: HandsDTO) {
-        printHand(dto.dealerHand)
-        dto.playerHands.forEach(::printHand)
+        // printHand(dto.dealerHand)
+        // dto.playerHands.forEach(::printHand)
     }
 
-    fun printHand(dto: HandDTO) {
-        println("${dto.name} 카드: ${dto.hand.joinToString(SEPARATOR)}")
+    fun printCards(cards: Map<String, List<Card>>) {
+        cards.forEach { (name, cards) ->
+            println("$name 카드: ${cards.joinToString(SEPARATOR)}")
+        }
     }
 
     fun printDealerHit() {

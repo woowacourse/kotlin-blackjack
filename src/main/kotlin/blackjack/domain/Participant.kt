@@ -1,22 +1,19 @@
 package blackjack.domain
 
-import blackjack.dto.HandDTO
-import blackjack.dto.ScoreDTO
-
 abstract class Participant(val name: String) {
-    val hand = ParticipantHand()
+    val cards = Cards()
 
     abstract fun getFirstOpenCards(): List<Card>
 
     abstract fun canDraw(): Boolean
 
     fun addCard(card: Card) {
-        hand.add(card)
+        cards.add(card)
     }
 
-    fun getTotalScore(): Int = hand.calculateTotalScore()
+    fun getTotalScore(): Int = cards.calculateTotalScore()
 
-    fun getHand(): HandDTO = HandDTO(name, hand.cards.map(Card::toString))
+    fun getCards(): List<Card> = cards.items
 
-    fun getScore(): ScoreDTO = ScoreDTO(getHand(), getTotalScore())
+    // fun getScore(): ScoreDTO = ScoreDTO(getHand(), getTotalScore())
 }

@@ -1,6 +1,6 @@
 package blackjack.domain
 
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -16,7 +16,7 @@ class PlayerTest {
 
     @Test
     fun `플레이어는 이름을 갖는다`() {
-        Assertions.assertThat(player.name).isEqualTo("pobi")
+        assertThat(player.name).isEqualTo("pobi")
     }
 
     @Test
@@ -31,7 +31,7 @@ class PlayerTest {
         player.addCard(Card(Suit.SPADE, CardNumber.ACE))
         player.addCard(Card(Suit.SPADE, CardNumber.KING))
 
-        Assertions.assertThat(player.canDraw()).isFalse
+        assertThat(player.canDraw()).isFalse
     }
 
     @Test
@@ -40,7 +40,7 @@ class PlayerTest {
         player.addCard(Card(Suit.SPADE, CardNumber.EIGHT))
         player.addCard(Card(Suit.SPADE, CardNumber.KING))
 
-        Assertions.assertThat(player.canDraw()).isTrue
+        assertThat(player.canDraw()).isTrue
     }
 
     @ParameterizedTest
@@ -59,7 +59,7 @@ class PlayerTest {
         player.addCard(Card(firstCardSuit, firstCardNumber))
         player.addCard(Card(secondCardSuit, secondCardNumber))
 
-        Assertions.assertThat(player.getTotalScore()).isEqualTo(expected)
+        assertThat(player.getTotalScore()).isEqualTo(expected)
     }
 
     @Test
@@ -77,6 +77,18 @@ class PlayerTest {
             addCard(Card(Suit.SPADE, CardNumber.QUEEN))
         }
 
-        Assertions.assertThat(player.getFirstOpenCards().size).isEqualTo(2)
+        assertThat(player.getFirstOpenCards().size).isEqualTo(2)
+    }
+
+    @Test
+    fun `플레이어가 보유한 카드를 반환한다`() {
+        with(player) {
+            addCard(Card(Suit.SPADE, CardNumber.JACK))
+            addCard(Card(Suit.SPADE, CardNumber.QUEEN))
+        }
+
+        assertThat(player.getCards()).isEqualTo(
+            listOf(Card(Suit.SPADE, CardNumber.JACK), Card(Suit.SPADE, CardNumber.QUEEN))
+        )
     }
 }

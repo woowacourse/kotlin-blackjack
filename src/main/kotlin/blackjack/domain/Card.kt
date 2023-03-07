@@ -1,6 +1,6 @@
 package blackjack.domain
 
-class Card(private val suit: Suit, private val number: CardNumber) {
+data class Card(private val suit: Suit, private val number: CardNumber) {
     fun getScore(): Int = number.score
 
     fun isAce(): Boolean = number == CardNumber.ACE

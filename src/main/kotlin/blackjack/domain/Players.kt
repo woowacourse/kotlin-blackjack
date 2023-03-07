@@ -1,7 +1,5 @@
 package blackjack.domain
 
-import blackjack.dto.HandDTO
-
 class Players(private val players: List<Player>) {
     init {
         require(players.size in MINIMUM_PLAYER..MAXIMUM_PLAYER) {
@@ -13,7 +11,7 @@ class Players(private val players: List<Player>) {
         players.forEach { it.addCard(deck.draw()) }
     }
 
-    fun getHands(): List<HandDTO> = players.map(Player::getHand)
+    fun getCards(): Map<String, List<Card>> = players.associate { it.name to it.getCards() }
 
     fun toList(): List<Player> = players.toList()
 

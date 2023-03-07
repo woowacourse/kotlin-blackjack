@@ -138,4 +138,16 @@ class DealerTest {
 
         assertThat(dealer.getFirstOpenCards().size).isEqualTo(1)
     }
+
+    @Test
+    fun `딜러가 보유한 카드를 반환한다`() {
+        with(dealer) {
+            addCard(Card(Suit.SPADE, CardNumber.JACK))
+            addCard(Card(Suit.SPADE, CardNumber.QUEEN))
+        }
+
+        assertThat(dealer.getCards()).isEqualTo(
+            listOf(Card(Suit.SPADE, CardNumber.JACK), Card(Suit.SPADE, CardNumber.QUEEN))
+        )
+    }
 }

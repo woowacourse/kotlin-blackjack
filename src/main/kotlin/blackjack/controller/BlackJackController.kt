@@ -14,7 +14,7 @@ class BlackJackController {
             takeTurns(this)
             takeDealerTurn(this)
 
-            OutputView.printScores(getGameScores())
+            // OutputView.printScores(getGameScores())
             OutputView.printResults(getGameResults())
         }
     }
@@ -49,7 +49,7 @@ class BlackJackController {
     private fun takePlayerTurn(blackJack: BlackJack, player: Player) {
         if (!player.canDraw()) {
             val isDraw = InputView.inputDrawCommand(player.name)
-            if (!isDraw) return printPlayerHand(player)
+            if (!isDraw) return printPlayerCards(player)
 
             drawCard(blackJack, player)
             takePlayerTurn(blackJack, player)
@@ -58,11 +58,11 @@ class BlackJackController {
 
     private fun drawCard(blackJack: BlackJack, player: Player) {
         blackJack.drawPlayer(player)
-        printPlayerHand(player)
+        printPlayerCards(player)
     }
 
-    private fun printPlayerHand(player: Player) {
-        OutputView.printHand(player.getHand())
+    private fun printPlayerCards(player: Player) {
+        OutputView.printCards(mapOf(player.name to player.getCards()))
     }
 
     private fun takeDealerTurn(blackJack: BlackJack) {

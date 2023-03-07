@@ -1,9 +1,9 @@
 package blackjack.domain
 
 class Dealer : Participant(DEALER_NAME) {
-    override fun getFirstOpenCards(): List<Card> = hand.getFirstCard()
+    override fun getFirstOpenCards(): List<Card> = cards.getFirstCard()
 
-    override fun canDraw(): Boolean = hand.calculateTotalScore() >= STAY_SCORE
+    override fun canDraw(): Boolean = cards.calculateTotalScore() < STAY_SCORE
 
     infix fun judge(playerScore: Int): GameResult {
         val dealerScore = getTotalScore()

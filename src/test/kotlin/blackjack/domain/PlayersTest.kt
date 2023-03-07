@@ -1,7 +1,7 @@
 package blackjack.domain
 
+import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
-import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 class PlayersTest {
@@ -41,10 +41,13 @@ class PlayersTest {
         players.drawAll(deck)
         players.drawAll(deck)
 
-        val actual = (0 until 3).flatMap { players[it].getHand().hand }
-        assertEquals(
-            actual,
-            listOf("A스페이드", "K스페이드", "A다이아몬드", "2스페이드", "A하트", "8스페이드")
+        val actual = players.getCards()
+        assertThat(actual).isEqualTo(
+            mapOf(
+                "buna" to listOf(Card(Suit.SPADE, CardNumber.ACE), Card(Suit.SPADE, CardNumber.KING)),
+                "glo" to listOf(Card(Suit.HEART, CardNumber.ACE), Card(Suit.SPADE, CardNumber.TWO)),
+                "bandal" to listOf(Card(Suit.DIAMOND, CardNumber.ACE), Card(Suit.SPADE, CardNumber.EIGHT))
+            )
         )
     }
 }
