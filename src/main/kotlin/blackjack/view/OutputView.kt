@@ -7,7 +7,7 @@ import blackjack.domain.player.Participants
 
 class OutputView {
 
-    fun printSettingCard(dealer: Dealer, participants: Participants) {
+    fun printInitialSettingCard(dealer: Dealer, participants: Participants) {
         val participantsNames: List<String> = participants.values.map { it.name }
         println(SETTING_CARD_MENT.format(participantsNames.joinToString(", ")))
         printFirstRoundDealerCard(dealer)
