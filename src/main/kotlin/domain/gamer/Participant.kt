@@ -18,12 +18,16 @@ abstract class Participant(val cards: Cards) {
         cards.addCard(card)
     }
 
-    fun calculateCardSum(): Int = cards.getCards()
-        .sumOf { it.cardValue.value } +
-        if (isAceValueToEleven()) CardValue.ACE_ELEVEN_VALUE - CardValue.ACE.value else 0
+    fun calculateCardSum(): Int {
+        return cards.getCards()
+            .sumOf { it.cardValue.value } +
+            if (isAceValueToEleven()) CardValue.ACE_ELEVEN_VALUE - CardValue.ACE.value else 0
+    }
 
-    private fun isAceValueToEleven() = countAce() >= 1 && cards.getCards()
-        .sumOf { it.cardValue.value } <= CardValue.ACE_ELEVEN_VALUE
+    private fun isAceValueToEleven(): Boolean {
+        return countAce() >= 1 && cards.getCards()
+            .sumOf { it.cardValue.value } <= CardValue.ACE_ELEVEN_VALUE
+    }
 
     private fun countAce() = cards.getCards().count { it.cardValue.title == CardValue.ACE.title }
 
