@@ -18,10 +18,10 @@ class ViewUtils {
 
         private fun CardType.toKoreanString(): String {
             return when (this) {
-                CardType.CLUB -> "클로버"
-                CardType.HEART -> "하트"
-                CardType.SPADE -> "스페이드"
-                CardType.DIAMOND -> "다이아몬드"
+                CardType.CLUB -> "♣️"
+                CardType.HEART -> "❤️"
+                CardType.SPADE -> "♠️"
+                CardType.DIAMOND -> "♦️"
             }
         }
 
