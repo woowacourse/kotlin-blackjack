@@ -12,7 +12,7 @@ class CardDistributeConditionTest {
             CardDistributeCondition("k")
         }.message
 
-        assertThat(message).isEqualTo("y나 n을 입력하여야 합니다. 입력된 값 : k")
+        assertThat(message).isEqualTo("y나 n을 입력하여야 합니다.")
     }
 
     @Test
