@@ -13,14 +13,14 @@ import model.Player
 class OutputView {
     private val suitModel = SuitModel()
     private val rankModel = RankModel()
-    private val resultModel = ResultModel()
+
     fun printInputPlayerNames() {
         println(MESSAGE_INPUT_NAME)
     }
 
     fun printHowMuchBet(name: Name) {
-        println(MESSAGE_HOW_MUCH_BET.format(name.value))
         println()
+        println(MESSAGE_HOW_MUCH_BET.format(name.value))
     }
 
     fun printNoticeDistributeCards(players: Names) {
