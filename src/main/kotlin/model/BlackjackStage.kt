@@ -7,27 +7,27 @@ import entity.User
 
 class BlackjackStage(val dealer: Dealer, val players: Players, private val cardFactory: CardFactory) {
     fun distributeAllUsers() {
-        dealer.addCards(cardFactory.generate(INITIAL_CARD_DISTRIBUTE_COUNT))
+        distributeUser(dealer, INITIAL_CARD_DISTRIBUTE_COUNT)
         players.value.forEach {
-            it.addCards(cardFactory.generate(INITIAL_CARD_DISTRIBUTE_COUNT))
+            distributeUser(it, INITIAL_CARD_DISTRIBUTE_COUNT)
         }
     }
 
     fun distributePlayers(player: Player) {
         if (player.isDistributable()) {
-            distributePlayer(player)
+            distributeUser(player, User.SINGLE_DISTRIBUTE_COUNT)
         }
-    }
-
-    private fun distributePlayer(player: Player) {
-        player.addCards(cardFactory.generate(User.SINGLE_DISTRIBUTE_COUNT))
     }
 
     fun distributeDealer(printDealerStatus: () -> Unit) {
         if (dealer.isDistributable()) {
-            dealer.addCards(cardFactory.generate(User.SINGLE_DISTRIBUTE_COUNT))
+            distributeUser(dealer, User.SINGLE_DISTRIBUTE_COUNT)
             printDealerStatus()
         }
+    }
+
+    private fun distributeUser(user: User, count: Int) {
+        user.addCards(cardFactory.generate(count))
     }
 
     companion object {
