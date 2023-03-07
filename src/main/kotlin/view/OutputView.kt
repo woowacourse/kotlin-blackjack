@@ -5,6 +5,7 @@ import model.Dealer
 import model.Dealer.Companion.DEALER
 import model.Participant
 import model.Participants
+import model.Player
 import model.Players
 import model.Rank
 import model.Result
@@ -48,13 +49,13 @@ class OutputView {
         }
     }
 
-    fun printGameResult(dealer: Dealer, players: Players) {
-        val dealerResult = dealer.getGameResult(players)
-        val playerResult = players.getGameResult(dealer)
+    fun printGameResult(participants: Participants) {
+        val dealerResult = (participants.dealer as Dealer).getFinalResult(Participants(participants.players))
+        val playerResult = Players(participants.players.map { it as Player }).getGameResult(participants.dealer as Dealer)
         println()
         println(MESSAGE_RESULT_TITLE)
         println(MESSAGE_DEALER_RESULT.format(dealerResult[Result.WIN], dealerResult[Result.LOSE]))
-        players.forEach {
+        participants.players.forEach {
             println(MESSAGE_PLAYER_RESULT.format(it.name.value, if (playerResult[it.name] == Result.WIN) "승" else "패"))
         }
     }

@@ -21,6 +21,6 @@ class Controller(private val inputView: InputView, private val outputView: Outpu
         cardGame.drawPlayersCard(players, inputView::readYesOrNo, outputView::printPlayerStatus)
         cardGame.drawDealerCard(dealer) { outputView.printDealerGetCard() }
         outputView.printAllPlayerStatusResult(participants.participants)
-        outputView.printGameResult(dealer, players)
+        outputView.printGameResult(participants)
     }
 }

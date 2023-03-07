@@ -4,6 +4,7 @@ import model.Card
 import model.Cards
 import model.Dealer
 import model.Name
+import model.Participants
 import model.Player
 import model.Players
 import model.Rank
@@ -53,7 +54,7 @@ class DealerTest {
             Player("jason", Card(Rank.TEN, Suit.DIAMOND), Card(Rank.KING, Suit.DIAMOND)),
             Player("pobi", Card(Rank.ACE, Suit.HEART), Card(Rank.JACK, Suit.CLOVER))
         )
-        val dealerResult = dealer.getGameResult(players)
+        val dealerResult = dealer.getFinalResult(Participants(players))
         assertThat(dealerResult[Result.WIN]).isEqualTo(0)
         assertThat(dealerResult[Result.LOSE]).isEqualTo(2)
     }
