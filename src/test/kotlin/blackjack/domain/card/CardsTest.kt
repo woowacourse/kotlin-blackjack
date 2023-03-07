@@ -7,6 +7,7 @@ import blackjack.domain.card.CardValue.EIGHT
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
+import org.junit.jupiter.api.assertThrows
 
 class CardsTest {
     @Test
@@ -39,5 +40,12 @@ class CardsTest {
         cards += Card(CLOVER, EIGHT)
         cards += Card(SPADE, EIGHT)
         assertThat(cards.result.score()).isEqualTo(16)
+    }
+
+    @Test
+    fun `들어오는 카드가 이미 있으면 에러를 낸다`() {
+        var cards = Cards()
+        cards += Card(CLOVER, EIGHT)
+        assertThrows<IllegalArgumentException> { cards += Card(CLOVER, EIGHT) }
     }
 }

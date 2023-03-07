@@ -22,7 +22,7 @@ class BlackJackTest {
             dealer.draw(Card(CardMark.CLOVER, CardValue.NINE))
             dealer.draw(Card(CardMark.CLOVER, CardValue.QUEEN))
             guests[0].draw(Card(CardMark.CLOVER, CardValue.NINE))
-            guests[0].draw(Card(CardMark.CLOVER, CardValue.NINE))
+            guests[0].draw(Card(CardMark.SPADE, CardValue.NINE))
             guests[1].draw(Card(CardMark.CLOVER, CardValue.KING))
             guests[1].draw(Card(CardMark.CLOVER, CardValue.QUEEN))
         }

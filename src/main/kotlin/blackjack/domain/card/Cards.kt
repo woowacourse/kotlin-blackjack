@@ -9,11 +9,15 @@ class Cards(private val cards: Set<Card> = setOf()) {
 
     fun toList() = cards.toList()
 
-    operator fun plus(card: Card): Cards = Cards(cards.plus(card))
+    operator fun plus(card: Card): Cards {
+        require(card !in cards) { ERROR_EXIST_DUPLICATE_CARD }
+        return Cards(cards.plus(card))
+    }
 
     fun isContainsACE(): Boolean = cards.any { it.isACE() }
 
     companion object {
+        private const val ERROR_EXIST_DUPLICATE_CARD = "카드는 중복될 수 없습니다."
         private val CARDS: List<Card> = CardMark.values().flatMap { mark ->
             CardValue.values().map { value -> Card(mark, value) }
         }

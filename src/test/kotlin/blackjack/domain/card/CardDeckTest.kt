@@ -31,4 +31,11 @@ class CardDeckTest {
             CardDeck(Cards.all().take(26) + Cards.all().take(26))
         }
     }
+
+    @Test
+    fun `덱에 카드가 없으면 에러난다`() {
+        val cardDeck = CardDeck(Cards.all())
+        repeat(52) { cardDeck.nextCard() }
+        assertThrows<IllegalArgumentException> { cardDeck.nextCard() }
+    }
 }
