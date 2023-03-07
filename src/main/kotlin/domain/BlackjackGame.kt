@@ -37,22 +37,34 @@ class BlackjackGame(
         return startDeck
     }
 
-    fun pickPlayerCard(name: String) {
+    private fun pickPlayerCard(name: String) {
         findPlayer(name).ownCards.pickCard(deck.giveCard())
     }
 
-    fun findPlayer(name: String): Player {
+    private fun findPlayer(name: String): Player {
         return players.first { it.name == name }
     }
 
-    fun pickDealerCard() {
+    private fun pickDealerCard() {
         dealerState.pickCard(deck.giveCard())
     }
 
-    fun checkBurst(name: String) = findPlayer(name).ownCards.checkOverCondition()
+    fun repeatPickCard(name: String, validatePickAnswer: () -> Boolean, printCards: () -> Unit) {
+        while (!checkBurst(name)) {
+            val answer = validatePickAnswer()
+            if (answer) pickPlayerCard(name) else return
+            printCards()
+        }
+    }
 
-    fun checkDealerAvailableForPick(): Boolean {
-        return !dealerState.checkOverCondition()
+    private fun checkBurst(name: String) = findPlayer(name).ownCards.checkOverCondition()
+
+    fun pickDealerCardIfPossible(): Boolean {
+        if (!dealerState.checkOverCondition()) {
+            pickDealerCard()
+            return true
+        }
+        return false
     }
 
     fun getPlayerWinningResult(): List<ParticipantResult> = Referee(dealerState, players).judgePlayersResult()

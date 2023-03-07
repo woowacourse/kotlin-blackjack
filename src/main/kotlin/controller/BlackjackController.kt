@@ -32,19 +32,11 @@ class BlackjackController {
     }
 
     private fun requestPickCard(blackjackGame: BlackjackGame) {
-        val names = blackjackGame.players.map { it.name }
-        names.forEach { name ->
-            repeatPickCard(blackjackGame, name)
-        }
-    }
-
-    private fun repeatPickCard(blackjackGame: BlackjackGame, name: String) {
-        while (!blackjackGame.checkBurst(name)) {
-            val answer = validatePickAnswer(name)
-            if (answer) blackjackGame.pickPlayerCard(name) else return
-            OutputView.printParticipantCards(
-                name,
-                blackjackGame.findPlayer(name).ownCards.cards
+        blackjackGame.players.forEach { player ->
+            blackjackGame.repeatPickCard(
+                player.name,
+                { validatePickAnswer(player.name) },
+                { OutputView.printParticipantCards(player.name, player.ownCards.cards) }
             )
         }
     }
@@ -55,10 +47,8 @@ class BlackjackController {
     }
 
     private fun dealerPickCard(blackjackGame: BlackjackGame) {
-        if (blackjackGame.checkDealerAvailableForPick()) {
+        if (blackjackGame.pickDealerCardIfPossible())
             OutputView.printDealerUnder16()
-            blackjackGame.pickDealerCard()
-        }
     }
 
     private fun printCardResult(blackjackGame: BlackjackGame) {
