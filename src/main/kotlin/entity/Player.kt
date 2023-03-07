@@ -3,7 +3,7 @@ package entity
 import misc.GameRule
 import model.CardFactory
 
-class Player(val name: Name, val cards: Cards = Cards(listOf())) : User {
+class Player(val name: Name, val money: Money, val cards: Cards = Cards(listOf())) : User {
     override fun isDistributable(): Boolean = cards.sumOfNumbers() < GameRule.WINNING_NUMBER
 
     fun addMoreCards(cardFactory: CardFactory, condition: (player: Player) -> Boolean): Boolean {

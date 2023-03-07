@@ -4,6 +4,7 @@ import entity.Card
 import entity.CardNumber
 import entity.CardType
 import entity.Dealer
+import entity.Money
 import entity.Name
 import entity.Player
 import entity.Players
@@ -13,7 +14,7 @@ import org.junit.jupiter.api.Test
 class BlackjackStageTest {
 
     private fun Players(): Players {
-        return Players(listOf(Player(Name("test"))))
+        return Players(listOf(Player(Name("test"), Money(0))))
     }
 
     @Test

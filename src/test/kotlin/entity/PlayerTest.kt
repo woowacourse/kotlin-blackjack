@@ -51,7 +51,7 @@ class PlayerTest {
     fun `플레이어 카드 숫자의 합이 21이고 딜러 카드 숫자의 합이 21이면 무승부이다`() {
         // given
         val player1 = Player(
-            Name("test"), generateCardsByNumber(21)
+            Name("test"), Money(0), generateCardsByNumber(21)
         )
 
         // when
@@ -66,7 +66,7 @@ class PlayerTest {
     fun `플레이어 카드 숫자의 합이 22이고 딜러 카드 숫자의 합이 22이면 무승부이다`() {
         // given
         val player1 = Player(
-            Name("test"), generateCardsByNumber(22)
+            Name("test"), Money(0), generateCardsByNumber(22)
         )
 
         // when
@@ -81,7 +81,7 @@ class PlayerTest {
     fun `플레이어 카드 숫자의 합이 19이고 딜러 카드 숫자의 합이 22이면 플레이어의 승리이다`() {
         // given
         val player1 = Player(
-            Name("test"), generateCardsByNumber(19)
+            Name("test"), Money(0), generateCardsByNumber(19)
         )
 
         // when
@@ -96,7 +96,7 @@ class PlayerTest {
     fun `플레이어 카드 숫자의 합이 21이고 딜러 카드 숫자의 합이 20이면 플레이어의 승리이다`() {
         // given
         val player1 = Player(
-            Name("test"), generateCardsByNumber(21)
+            Name("test"), Money(0), generateCardsByNumber(21)
         )
 
         // when
@@ -111,7 +111,7 @@ class PlayerTest {
     fun `플레이어 카드 숫자의 합이 20이고 딜러 카드 숫자의 합이 21이면 플레이어의 패배이다`() {
         // given
         val player1 = Player(
-            Name("test"), generateCardsByNumber(20)
+            Name("test"), Money(0), generateCardsByNumber(20)
         )
 
         // when
@@ -126,7 +126,7 @@ class PlayerTest {
     fun `플레이어 카드 숫자의 합이 22이고 딜러 카드 숫자의 합이 21이면 플레이어의 패배이다`() {
         // given
         val player1 = Player(
-            Name("test"), generateCardsByNumber(22)
+            Name("test"), Money(0), generateCardsByNumber(22)
         )
 
         // when
