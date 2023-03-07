@@ -47,11 +47,7 @@ object OutputView {
 
     fun printCardResult(participants: Map<String, Participant>) {
         participants.forEach { (name, participant) ->
-            println(
-                "${name}$PARTICIPANT_CARD ${
-                    participant.cards.getCards().joinToString(SEPARATOR) { printCardForm(it) }
-                }${RESULT}${participant.calculateCardSum()}"
-            )
+            println("${name}$PARTICIPANT_CARD ${participant.cards.getCards().joinToString(SEPARATOR) { printCardForm(it) }}${RESULT}${participant.calculateCardSum()}")
         }
     }
 

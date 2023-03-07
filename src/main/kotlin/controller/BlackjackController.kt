@@ -2,6 +2,7 @@ package controller
 
 import domain.BlackjackGame
 import domain.gamer.Participant
+import domain.gamer.Player
 import view.InputView
 import view.OutputView
 
@@ -12,7 +13,7 @@ class BlackjackController() {
         val blackjackGame = BlackjackGame(names)
         blackjackGame.startGame()
         printBlackjackSetting(names, blackjackGame)
-        requestPickCard(names, blackjackGame)
+        requestPickCard(blackjackGame)
         dealerPickCard(blackjackGame)
         printCardResult(blackjackGame)
         printWinningResult(blackjackGame)
@@ -38,18 +39,18 @@ class BlackjackController() {
         OutputView.printCardResult(cardResult)
     }
 
-    private fun requestPickCard(names: List<String>, blackjackGame: BlackjackGame) {
-        names.forEach { name ->
-            repeatPickCard(blackjackGame, name)
+    private fun requestPickCard(blackjackGame: BlackjackGame) {
+        blackjackGame.players.forEach {
+            repeatPickCard(blackjackGame, it)
         }
     }
 
-    private fun repeatPickCard(blackjackGame: BlackjackGame, name: String) {
-        while (!blackjackGame.checkBurst(name)) {
-            val answer = validatePickAnswer(name)
-            if (answer == YES_ANSWER) blackjackGame.pickPlayerCard(name)
+    private fun repeatPickCard(blackjackGame: BlackjackGame, player: Player) {
+        while (!blackjackGame.checkBurst(player)) {
+            val answer = validatePickAnswer(player.name)
+            if (answer == YES_ANSWER) blackjackGame.pickPlayerCard(player)
             if (answer == NO_ANSWER) return
-            OutputView.printParticipantCards(name, blackjackGame.players.findLast { it.name == name }!!.cards)
+            OutputView.printParticipantCards(player.name, player.cards)
         }
     }
 

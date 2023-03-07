@@ -19,15 +19,15 @@ class BlackjackGame(private val names: List<String>) {
         }
     }
 
-    fun pickPlayerCard(name: String) {
-        players.find { it.name == name }?.pickCard(Deck.giveCard())
+    fun pickPlayerCard(player: Player) {
+        player.pickCard(Deck.giveCard())
     }
 
     fun pickDealerCard() {
         dealer.pickCard(Deck.giveCard())
     }
 
-    fun checkBurst(name: String) = players.find { it.name == name }!!.checkBurst()
+    fun checkBurst(player: Player) = player.checkBurst()//players.find { it.name == name }!!.checkBurst()
 
     fun checkDealerAvailableForPick(): Boolean {
         return dealer.checkAvailableForPick()
