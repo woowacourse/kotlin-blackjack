@@ -1,6 +1,5 @@
 package entity
 
-import model.NumberStrategy
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -11,7 +10,7 @@ class CardNumberTest {
         val cardSumOfNumber = 13
 
         // when
-        val number = NumberStrategy().judgeAce(cardSumOfNumber)
+        val number = Cards(listOf()).judgeAce(cardSumOfNumber)
 
         // then
         assertThat(number).isEqualTo(1)
@@ -23,7 +22,7 @@ class CardNumberTest {
         val cardSumOfNumber = 2
 
         // when
-        val number = NumberStrategy().judgeAce(cardSumOfNumber)
+        val number = Cards(listOf()).judgeAce(cardSumOfNumber)
 
         // then
         assertThat(number).isEqualTo(11)
