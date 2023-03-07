@@ -2,12 +2,13 @@ package domain
 
 import domain.card.Card
 
-class User(
+class User private constructor(
     name: String,
-    _cards: MutableList<Card>,
-) : Player(name, _cards) {
+    deck: Deck,
+) : Player(name, deck) {
+
     companion object {
         fun create(userNameAndCard: Pair<String, List<Card>>): User =
-            User(userNameAndCard.first, userNameAndCard.second.toMutableList())
+            User(userNameAndCard.first, Deck(userNameAndCard.second.toMutableList()))
     }
 }

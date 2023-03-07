@@ -5,30 +5,33 @@ import domain.card.CardNumber
 
 abstract class Player(
     val name: String,
-    private val _cards: MutableList<Card>,
+    private val deck: Deck,
 ) {
 
-    val cards: List<Card> get() = _cards.toList()
+    val cards: List<Card> get() = deck.cards.toList()
 
     fun addScoreTenIfHasAce(): Int {
-        if ((calculateCardValueSum() < ACE_CARD_PLUS_TEN) and (countAce() != NO_ACE)) {
+        if ((calculateCardValueSum() < BLACK_JACK_LESS_TEN) and (countAce() != NO_ACE)) {
             return calculateCardValueSum() + ACE_CARD_PLUS_TEN
         }
 
         return calculateCardValueSum()
     }
 
-    fun calculateCardValueSum(): Int = _cards.sumOf { Card.valueOf(it) }
-
-    fun addCard(card: List<Card>) {
-        _cards.add(card.first())
+    fun calculateCardValueSum(): Int = deck.cards.sumOf { card ->
+        Card.valueOf(card).number
     }
 
-    private fun countAce(): Int = _cards.count { card ->
-        card.cardNumber == CardNumber.ACE
+    fun addCard(card: List<Card>) {
+        deck.addCard(card)
+    }
+
+    private fun countAce(): Int = deck.cards.count { card ->
+        Card.valueOf(card) == CardNumber.ACE
     }
 
     companion object {
+        private const val BLACK_JACK_LESS_TEN = 12
         private const val ACE_CARD_PLUS_TEN = 10
         private const val NO_ACE = 0
     }
