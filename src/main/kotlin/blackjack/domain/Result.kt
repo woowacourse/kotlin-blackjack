@@ -2,10 +2,8 @@ package blackjack.domain
 
 import blackjack.domain.card.Cards
 
-enum class Result(val word: String) {
-    WIN("승"),
-    LOSE("패"),
-    DRAW("무");
+enum class Result {
+    WIN, LOSE, DRAW;
 
     companion object {
         fun valueOf(dealerSum: Int, participantSum: Int): Result {

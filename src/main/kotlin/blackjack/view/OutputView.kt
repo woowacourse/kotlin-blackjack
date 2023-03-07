@@ -1,6 +1,8 @@
 package blackjack.view
 
 import blackjack.domain.Result
+import blackjack.domain.card.CardNumber
+import blackjack.domain.card.CardShape
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Participants
 import blackjack.domain.player.Player
@@ -9,7 +11,7 @@ class OutputView {
 
     fun printCurrentPlayerCards(player: Player, sumResultMessage: String = "") {
         val cardsWord: String = player.cards.values.joinToString(", ") {
-            it.number.word + it.shape.word
+            it.number.toText() + it.shape.toEmoji()
         }
         println("${player.name} 카드: $cardsWord $sumResultMessage")
     }
@@ -38,12 +40,12 @@ class OutputView {
         println(FINAL_RESULT_MESSAGE)
 
         val dealerResultMessage: StringBuilder = StringBuilder("${dealer.name}: ")
-        if (dealer.results[Result.WIN] != 0) dealerResultMessage.append("${dealer.results[Result.WIN]}${Result.WIN.word} ")
-        if (dealer.results[Result.LOSE] != 0) dealerResultMessage.append("${dealer.results[Result.LOSE]}${Result.LOSE.word} ")
-        if (dealer.results[Result.DRAW] != 0) dealerResultMessage.append("${dealer.results[Result.DRAW]}${Result.DRAW.word} ")
+        if (dealer.results[Result.WIN] != 0) dealerResultMessage.append("${dealer.results[Result.WIN]}${Result.WIN.toText()} ")
+        if (dealer.results[Result.LOSE] != 0) dealerResultMessage.append("${dealer.results[Result.LOSE]}${Result.LOSE.toText()} ")
+        if (dealer.results[Result.DRAW] != 0) dealerResultMessage.append("${dealer.results[Result.DRAW]}${Result.DRAW.toText()} ")
         println(dealerResultMessage.toString())
 
-        participants.values.forEach { println("${it.name}: ${it.result.word}") }
+        participants.values.forEach { println("${it.name}: ${it.result.toText()}") }
     }
 
     fun printSumResult(dealer: Dealer, participants: Participants) {
@@ -60,7 +62,42 @@ class OutputView {
 
     private fun printFirstRoundDealerCards(dealer: Dealer) {
         val dealerFirstCard = dealer.cards.values[0]
-        println("${dealer.name} 카드: ${dealerFirstCard.number.word}${dealerFirstCard.shape.word}")
+        println("${dealer.name} 카드: ${dealerFirstCard.number.toText()}${dealerFirstCard.shape.toEmoji()}")
+    }
+
+    private fun CardShape.toEmoji(): String {
+        return when (this) {
+            CardShape.HEART -> "♥️"
+            CardShape.DIAMOND -> "♦️"
+            CardShape.SPADE -> "♠️"
+            CardShape.CLOVER -> "♣️"
+        }
+    }
+
+    private fun CardNumber.toText(): String {
+        return when (this) {
+            CardNumber.ONE -> "A"
+            CardNumber.TWO -> "2"
+            CardNumber.THREE -> "3"
+            CardNumber.FOUR -> "4"
+            CardNumber.FIVE -> "5"
+            CardNumber.SIX -> "6"
+            CardNumber.SEVEN -> "7"
+            CardNumber.EIGHT -> "8"
+            CardNumber.NINE -> "9"
+            CardNumber.TEN -> "10"
+            CardNumber.KING -> "K"
+            CardNumber.QUEEN -> "Q"
+            CardNumber.JACK -> "J"
+        }
+    }
+
+    private fun Result.toText(): String {
+        return when (this) {
+            Result.WIN -> "승"
+            Result.DRAW -> "무"
+            Result.LOSE -> "패"
+        }
     }
 
     companion object {
