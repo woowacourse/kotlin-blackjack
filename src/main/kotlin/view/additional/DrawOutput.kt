@@ -4,7 +4,7 @@ import constant.BlackJackConstants
 import domain.person.Player
 import view.ViewCommon
 
-object AddOutput {
+object DrawOutput {
     private const val ONE_MORE_CARD_SCRIPT = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)"
     private const val INITIAL_CARDS_SCRIPT = "%s 카드: %s"
     private const val SEPARATOR = ","
