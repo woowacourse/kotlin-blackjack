@@ -9,6 +9,7 @@ enum class GameResultCase(
 ) {
 
     // TODO: Cards객체를 너무 잘 알고 있는 것이 아닐까?
+    // TODO: state 막 갖다 써도 될까?
     BLACKJACK_WIN(
         condition = { playerCards, dealerCards ->
             playerCards.state == CardsState.BlackJack &&

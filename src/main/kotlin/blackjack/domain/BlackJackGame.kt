@@ -23,14 +23,16 @@ class BlackJackGame(
         }
     }
 
+    // TODO: List<Player>가 Controller에 존재하는 것이 아니라 domain에 존재해야 하기 떄문에 메소드를 넘겨 넘겨줘야하는 상황
     fun drawAdditionalCardsForPlayers(
         isPlayerWantedAdditionalCards: (player: Player) -> Boolean,
-    ) {
+    ){
         players.forEach { player ->
             drawCardsRepeatedly(player) { isPlayerWantedAdditionalCards(player) }
         }
     }
 
+    // TODO: 카드 뽑고 보여주는 과정은 어떻게? 메소드 넘겨서?
     private fun drawCardsRepeatedly(
         player: Player,
         isPlayerWantedAdditionalCards: (player: Player) -> Boolean,
@@ -48,9 +50,5 @@ class BlackJackGame(
         return isDealerDrawn
     }
 
-    fun judgeGameResults(): TotalGameResult {
-        val totalGameResult = blackJackReferee.judgeTotalGameResults(players, dealer)
-
-        return totalGameResult
-    }
+    fun judgeGameResults(): TotalGameResult = blackJackReferee.judgeTotalGameResults(players, dealer)
 }

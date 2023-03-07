@@ -1,5 +1,6 @@
 package blackjack.domain.card
 
+// TODO: value를 쓰지 않고 어떻게 해야할까?
 enum class CardNumber(val value: Int) {
 
     A(1),

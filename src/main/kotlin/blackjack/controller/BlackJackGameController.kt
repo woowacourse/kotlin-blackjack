@@ -8,6 +8,15 @@ import blackjack.view.OutputView
 class BlackJackGameController(
     private val blackJackGame: BlackJackGame = BlackJackGame(),
 ) {
+    fun start(){
+        val playersName = InputView.requestPlayersName()
+        val battingMoneys = InputView.requestPlayersBattingMoney(playersName)
+
+        blackJackGame.initPlayers(
+           playerNames = playersName,
+            battingMoneys = battingMoneys
+        )
+    }
 
     fun run() {
         val playerNames = InputView.requestPlayersName()
@@ -16,7 +25,6 @@ class BlackJackGameController(
         blackJackGame.initPlayers(
             playerNames,
             battingMoneys,
-            OutputView::printPlayerCurrentCards
         )
 
         OutputView.printCardDividingMessage(blackJackGame.dealer, blackJackGame.players)

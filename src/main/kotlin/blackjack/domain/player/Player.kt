@@ -3,6 +3,7 @@ package blackjack.domain.player
 import blackjack.domain.BattingMoney
 import blackjack.domain.card.Cards
 
+//TODO: 인자 갯수를 어떻게 줄여야 할까
 data class Player(
     val name: PlayerName,
     val battingMoney: BattingMoney,
