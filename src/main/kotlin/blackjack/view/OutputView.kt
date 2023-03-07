@@ -3,9 +3,9 @@ package blackjack.view
 import blackjack.domain.blackjack.BlackJack
 import blackjack.domain.card.CardMark
 import blackjack.domain.card.CardValue
-import blackjack.domain.participants.Guest
 import blackjack.domain.participants.User
-import blackjack.domain.result.Outcome
+import blackjack.domain.result.BlackJackResult
+import blackjack.domain.result.BlackJackResultUser
 
 class OutputView {
     fun outputInitState(blackJack: BlackJack) {
@@ -22,7 +22,7 @@ class OutputView {
             outputScore(user)
         }
         println("")
-        outputOutcomes(blackJack)
+        outputOutcomes(BlackJackResult(blackJack.participants))
     }
 
     private fun outputCardForDealer(user: User) {
@@ -39,17 +39,15 @@ class OutputView {
 
     private fun outputScore(user: User) { print(" - 결과: ${user.score()}") }
 
-    private fun outputOutcomes(blackJack: BlackJack) {
-        blackJack.run {
+    private fun outputOutcomes(blackJackResult: BlackJackResult) {
+        blackJackResult.run {
             println("\n## 최종 승패")
-            println("${dealer.name}: ${guests.indices.sumOf { (guests[it].bettingMoney.toInt() * getResult()[it].rate).toInt() * -1 }}")
-            guests.indices.forEach { outputOutcome(guests[it], getResult()[it]) }
+            outputOutcome(dealer)
+            guests.forEach { guest -> outputOutcome(guest) }
         }
     }
 
-    private fun outputOutcome(user: Guest, outcome: Outcome) {
-        println("${user.name}: ${(user.bettingMoney.toInt() * outcome.rate).toInt()}")
-    }
+    private fun outputOutcome(result: BlackJackResultUser) { println("${result.name}: ${result.rateOfReturn}") }
 
     private fun CardMark.name(): String =
         when (this) {
