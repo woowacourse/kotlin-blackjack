@@ -21,10 +21,11 @@ abstract class ParticipantCards(private val _cards: MutableList<Card>) {
     abstract fun checkOverCondition(): Boolean
 
     private fun getCardValue(card: Card, value: Int) =
-        if (card.cardValue == CardValue.ACE)
+        if (card.cardValue == CardValue.ACE) {
             getAceValue(value)
-        else
+        } else {
             card.cardValue.value
+        }
 
     private fun getAceValue(value: Int): Int =
         when {
