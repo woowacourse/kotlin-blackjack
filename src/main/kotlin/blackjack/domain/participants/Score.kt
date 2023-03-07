@@ -17,6 +17,6 @@ class Score(cards: Cards) {
 
     companion object {
         private const val ACE_OTHER_NUMBER_DIFF = 10
-        private const val BLACKJACK_NUMBER = 21
+        const val BLACKJACK_NUMBER = 21
     }
 }

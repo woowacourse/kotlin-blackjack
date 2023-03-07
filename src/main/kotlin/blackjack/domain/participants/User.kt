@@ -2,6 +2,7 @@ package blackjack.domain.participants
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
+import blackjack.domain.participants.Score.Companion.BLACKJACK_NUMBER
 
 abstract class User(name: String) {
     val name = Name(name)
@@ -16,8 +17,4 @@ abstract class User(name: String) {
     fun draw(card: Card) { cards += card }
 
     abstract fun isContinue(): Boolean
-
-    companion object {
-        private const val BLACKJACK_NUMBER = 21
-    }
 }
