@@ -21,7 +21,12 @@ class BlackjackStageTest {
     fun `딜러와 모든 플레이어에게 카드 2장씩 분배한다`() {
         // given
         val cardFactory = ManualCardFactory(
-            listOf(CardType.CLUB, CardType.SPADE, CardType.DIAMOND, CardType.CLUB), listOf(CardNumber.THREE, CardNumber.QUEEN, CardNumber.TWO, CardNumber.FOUR)
+            listOf(
+                CardType.CLUB to CardNumber.THREE,
+                CardType.SPADE to CardNumber.QUEEN,
+                CardType.DIAMOND to CardNumber.TWO,
+                CardType.CLUB to CardNumber.FOUR
+            )
         )
         val players = Players()
         val dealer = Dealer()
@@ -46,8 +51,9 @@ class BlackjackStageTest {
     @Test
     fun `모든 플레이어에게 카드 한장 분배한다`() {
         // given
-        val cardFactory = ManualCardFactory(
-            listOf(CardType.CLUB, CardType.SPADE), listOf(CardNumber.THREE, CardNumber.QUEEN)
+        val cardFactory = ManualCardFactory(listOf(
+            CardType.CLUB to CardNumber.THREE,
+            CardType.SPADE to CardNumber.QUEEN)
         )
         val players = Players()
         val dealer = Dealer()
@@ -66,8 +72,9 @@ class BlackjackStageTest {
     @Test
     fun `딜러에게 카드 한장 분배한다`() {
         // given
-        val cardFactory = ManualCardFactory(
-            listOf(CardType.CLUB, CardType.SPADE), listOf(CardNumber.THREE, CardNumber.QUEEN)
+        val cardFactory = ManualCardFactory(listOf(
+                CardType.CLUB to CardNumber.THREE,
+                CardType.SPADE to CardNumber.QUEEN)
         )
         val players = Players()
         val dealer = Dealer()

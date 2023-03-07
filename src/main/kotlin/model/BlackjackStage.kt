@@ -6,10 +6,6 @@ import entity.Players
 import entity.User
 
 class BlackjackStage(val dealer: Dealer = Dealer(), val players: Players, private val cardFactory: CardFactory) {
-    init {
-        distributeAllUsers()
-    }
-
     fun distributeAllUsers() {
         dealer.cards.addCards(cardFactory.generate(INITIAL_CARD_DISTRIBUTE_COUNT))
         players.value.forEach {

@@ -58,6 +58,7 @@ class BlackjackController {
 
     fun process() {
         val blackjackStage = initBlackjack()
+        blackjackStage.distributeAllUsers()
         displayUserStatus(blackjackStage)
         distributeMoreCardPlayer(blackjackStage)
         distributeMoreCardDealer(blackjackStage)
