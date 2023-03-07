@@ -52,10 +52,7 @@ class Controller(private val inputView: InputView, private val outputView: Outpu
 
     private fun printParticipants(participants: Participants) {
         outputView.printNoticeDistributeCards(
-            Names(
-                participants.toList().filter { it.name.value != DEALER }
-                    .map { it.name }
-            )
+            Names(participants.toList().filter { it.name.value != DEALER }.map { it.name })
         )
         outputView.printPlayersStatus(participants)
     }
