@@ -35,9 +35,6 @@ class BlackjackGame(private val names: List<String>) {
 
     fun getPlayerWinningResult() = Referee(dealer, players).judgePlayersResult()
 
-    fun judgeDealerResult(playersResult: Map<String, Result>) = mutableListOf<Result>().apply {
-        playersResult.forEach {
-            add(it.value.reverseResult())
-        }
-    }
+    fun judgeDealerResult(playersResult: Map<String, Result>): List<Result> =
+        playersResult.map { it.value.reverseResult() }
 }
