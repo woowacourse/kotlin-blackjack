@@ -25,6 +25,14 @@ class BlackjackManager(cardsGenerator: CardsGenerator) {
         }
     }
 
+    fun provideParticipantMoreCard(participant: Participant, readMoreCard: () -> Boolean) {
+        val check = participant.checkProvideCardPossible()
+        if (!check) return
+        val answer = readMoreCard()
+        if (!answer) return
+        provideCard(participant)
+    }
+
     private fun provideCard(player: Player) {
         cardDeck.apply {
             if (checkProvidePossible()) {
