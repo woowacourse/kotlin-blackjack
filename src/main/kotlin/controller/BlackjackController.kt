@@ -31,20 +31,6 @@ class BlackjackController {
         OutputView.printParticipantsCards(blackjackGame.players)
     }
 
-    private fun printWinningResult(blackjackGame: BlackjackGame) {
-        val playerResult = blackjackGame.getPlayerWinningResult()
-        val dealerResult = blackjackGame.judgeDealerResult(playerResult)
-        OutputView.printWinningResult(dealerResult, playerResult)
-    }
-
-    private fun printCardResult(blackjackGame: BlackjackGame) {
-        val cardResult = mutableListOf(Player(DEALER, blackjackGame.dealerState))
-        blackjackGame.players.forEach {
-            cardResult.add(Player(it.name, it.ownCards))
-        }
-        OutputView.printCardResult(cardResult)
-    }
-
     private fun requestPickCard(blackjackGame: BlackjackGame) {
         blackjackGame.names.userNames.forEach { name ->
             repeatPickCard(blackjackGame, name)
@@ -72,6 +58,20 @@ class BlackjackController {
             OutputView.printDealerUnder16()
             blackjackGame.pickDealerCard()
         }
+    }
+
+    private fun printCardResult(blackjackGame: BlackjackGame) {
+        val cardResult = mutableListOf(Player(DEALER, blackjackGame.dealerState))
+        blackjackGame.players.forEach {
+            cardResult.add(Player(it.name, it.ownCards))
+        }
+        OutputView.printCardResult(cardResult)
+    }
+
+    private fun printWinningResult(blackjackGame: BlackjackGame) {
+        val playerResult = blackjackGame.getPlayerWinningResult()
+        val dealerResult = blackjackGame.judgeDealerResult(playerResult)
+        OutputView.printWinningResult(dealerResult, playerResult)
     }
 
     companion object {
