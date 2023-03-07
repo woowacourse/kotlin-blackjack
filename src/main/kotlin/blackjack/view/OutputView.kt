@@ -82,7 +82,7 @@ object OutputView {
         println()
         println(
             SHOW_DEALER_CARD.format(dealer.cards.cards.joinToString(SEPARATOR) { card -> card.toDescription() }) +
-                    FINAL_SCORE.format(dealer.cards.getTotalCardsScore())
+                FINAL_SCORE.format(dealer.cards.getTotalCardsScore())
         )
         players.forEach { player ->
             print(player.toCardsDescription())

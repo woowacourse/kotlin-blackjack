@@ -4,10 +4,9 @@ import blackjack.domain.BattingMoney
 import blackjack.domain.card.Cards
 
 class Player(
-    //TODO: 딜러와 플레이어가 공통적으로 나타나는 부분을 찾고 코드 재사용 할 수 있게
     val name: PlayerName,
     val battingMoney: BattingMoney,
-    val checkCards: (player: Player) -> Unit,
+    val checkCurrentCards: (player: Player) -> Unit = { },
     val cards: Cards = Cards(),
 ) {
 
@@ -27,14 +26,14 @@ class Player(
 
     fun drawCard(): Boolean {
         cards.draw()
-        checkCards(this)
+        checkCurrentCards(this)
 
         return isPossibleToDrawAdditionalCard() == DrawState.POSSIBLE
     }
 
     fun checkIsDrawnNothing() {
         if (cards.size == Cards.INITIAL_CARDS_SIZE) {
-            checkCards(this)
+            checkCurrentCards(this)
         }
     }
 

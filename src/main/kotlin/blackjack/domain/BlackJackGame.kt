@@ -13,13 +13,14 @@ class BlackJackGame(
     lateinit var players: List<Player>
         private set
 
+    // TODO: mapIndex 맘에 안듦...
     fun initPlayers(
         playerNames: List<String>,
         battingMoneys: List<Int>,
-        checkCards: (player: Player) -> Unit,
+        checkCurrentCards: (player: Player) -> Unit,
     ) {
         players = playerNames.mapIndexed { playerIndex, playerName ->
-            Player(playerName, battingMoneys[playerIndex], checkCards)
+            Player(playerName, battingMoneys[playerIndex], checkCurrentCards)
         }
     }
 

@@ -2,7 +2,7 @@ package blackjack.domain.gameResult
 
 import blackjack.domain.BattingMoney
 
-class ProfitMoney(val value: Int) {
+data class ProfitMoney(val value: Int) {
 
     operator fun not(): ProfitMoney {
         return ProfitMoney(-value)

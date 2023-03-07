@@ -111,7 +111,7 @@ class GameResultTest {
     }
 
     @Test
-    fun `dealer와 player의 점수가 21점이 넘지 않고, dealer의 점수가 더 높은 경우 dealer는 승리한다`(){
+    fun `dealer와 player의 점수가 21점이 넘지 않고, dealer의 점수가 더 높은 경우 dealer는 승리한다`() {
         assertThat(
             GameResult.valueOf(
                 playerCards = Cards(
