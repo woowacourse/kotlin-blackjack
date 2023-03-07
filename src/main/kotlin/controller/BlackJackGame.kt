@@ -27,19 +27,19 @@ class BlackJackGame(names: Names, private val cardDrawer: CardDrawer = RandomCar
         this.cards.add(cardDrawer.draw())
     }
 
-    private fun Player.playerSelectAdd(getChoiceOfAddCard: (Player) -> Boolean, result: (Player) -> Unit) {
+    private fun Player.playerSelectAdd(getChoiceOfAddCard: (Player) -> Boolean, showPlayerCards: (Player) -> Unit) {
         val isGetCard = getChoiceOfAddCard(this)
         if (isGetCard) {
             addCard()
         }
         if (!isPossibleDrawCard()) return
-        result(this)
-        if (isGetCard) playerSelectAdd(getChoiceOfAddCard, result)
+        showPlayerCards(this)
+        if (isGetCard) playerSelectAdd(getChoiceOfAddCard, showPlayerCards)
     }
 
-    fun playersSelectAddPhase(isGetCard: (Player) -> Boolean, output: (Player) -> Unit) {
+    fun playersSelectAddPhase(isGetCard: (Player) -> Boolean, showPlayerCards: (Player) -> Unit) {
         players.list.forEach { player ->
-            player.playerSelectAdd(isGetCard, output)
+            player.playerSelectAdd(isGetCard, showPlayerCards)
         }
     }
 
