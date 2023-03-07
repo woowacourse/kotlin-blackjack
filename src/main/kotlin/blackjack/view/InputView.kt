@@ -7,7 +7,7 @@ object InputView {
 
     private fun List<String>.areNotContainBlank(): Boolean = this.all { it.isNotBlank() }
 
-    fun readCharacter(): Char? {
-        return readln().let { it.ifBlank { null } }?.get(0)
+    fun readCharacter(): String? {
+        return readlnOrNull()
     }
 }
