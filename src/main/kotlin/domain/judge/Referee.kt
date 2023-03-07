@@ -1,6 +1,7 @@
 package domain.judge
 
 import domain.gamer.cards.DealerCards
+import domain.gamer.cards.ParticipantCards
 import domain.gamer.cards.PlayerCards
 import domain.player.Player
 
@@ -15,8 +16,15 @@ class Referee(private val dealerState: DealerCards, private val players: List<Pl
         val playerSum = player.calculateCardSum()
         val dealerSum = dealerState.calculateCardSum()
 
-        return judgeWithConditions(playerSum, dealerSum)
+        return when {
+            checkBlackJack(player) && checkBlackJack(dealerState) -> Result.DRAW
+            checkBlackJack(player) -> Result.WIN
+            else -> judgeWithConditions(playerSum, dealerSum)
+        }
     }
+
+    private fun checkBlackJack(participant: ParticipantCards): Boolean =
+        participant.cards.size == BLACKJACK_SIZE && participant.calculateCardSum() == CARD_SUM_MAX_VALUE
 
     private fun judgeWithConditions(playerSum: Int, dealerSum: Int): Result {
         return when {
@@ -30,6 +38,7 @@ class Referee(private val dealerState: DealerCards, private val players: List<Pl
     }
 
     companion object {
+        private const val BLACKJACK_SIZE = 2
         const val CARD_SUM_MAX_VALUE = 21
     }
 }

@@ -12,6 +12,55 @@ import org.junit.jupiter.api.Test
 class RefereeTest() {
 
     @Test
+    fun `참가자가 블랙잭이고 딜러가 합이 21일 경우, 플레이어가 이긴다`() {
+        val dealerState = DealerCards(
+            mutableListOf(
+                Card(Shape.SPADE, CardValue.JACK),
+                Card(Shape.SPADE, CardValue.QUEEN),
+                Card(Shape.SPADE, CardValue.ACE)
+            )
+        )
+        val playerState =
+            PlayerCards(mutableListOf(Card(Shape.HEART, CardValue.JACK), Card(Shape.HEART, CardValue.ACE)))
+        val referee = Referee(dealerState, listOf(Player("jack", playerState))).judgePlayersResult()
+        assertThat(referee).isEqualTo(listOf(ParticipantResult("jack", Result.WIN)))
+    }
+
+    @Test
+    fun `참가자와 딜러 모두 블랙잭인 경우, 비긴다`() {
+        val dealerState = DealerCards(
+            mutableListOf(
+                Card(Shape.SPADE, CardValue.JACK),
+                Card(Shape.SPADE, CardValue.ACE)
+            )
+        )
+        val playerState =
+            PlayerCards(mutableListOf(Card(Shape.HEART, CardValue.JACK), Card(Shape.HEART, CardValue.ACE)))
+        val referee = Referee(dealerState, listOf(Player("jack", playerState))).judgePlayersResult()
+        assertThat(referee).isEqualTo(listOf(ParticipantResult("jack", Result.DRAW)))
+    }
+
+    @Test
+    fun `참가자가 합이 21이고 딜러가 블랙잭인 경우, 플레이어가 진다`() {
+        val dealerState = DealerCards(
+            mutableListOf(
+                Card(Shape.SPADE, CardValue.JACK),
+                Card(Shape.SPADE, CardValue.ACE)
+            )
+        )
+        val playerState =
+            PlayerCards(
+                mutableListOf(
+                    Card(Shape.HEART, CardValue.JACK),
+                    Card(Shape.HEART, CardValue.QUEEN),
+                    Card(Shape.HEART, CardValue.ACE)
+                )
+            )
+        val referee = Referee(dealerState, listOf(Player("jack", playerState))).judgePlayersResult()
+        assertThat(referee).isEqualTo(listOf(ParticipantResult("jack", Result.LOSS)))
+    }
+
+    @Test
     fun `참가자가 한명일 때 딜러가 버스트이고, 플레이어가 21 이하 일 때 플레이어가 이긴다`() {
         val dealerState = DealerCards(
             mutableListOf(
