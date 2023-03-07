@@ -3,10 +3,10 @@ package view
 import entity.Cards
 import entity.Dealer
 import entity.Player
-import entity.Players
+import model.BlackjackStage
 
 class GameView {
-    fun printDealerStatus(dealer: Dealer) {
+    private fun printDealerStatus(dealer: Dealer) {
         print(MESSAGE_DEALER_NAME)
         println(ViewUtils.cardsToString(dealer.cards.value.take(1).let { Cards(it) }))
     }
@@ -17,16 +17,16 @@ class GameView {
         println(ViewUtils.cardsToString(player.cards))
     }
 
-    fun printInitialUsersStatus(dealer: Dealer, players: Players) {
+    fun printInitialUsersStatus(blackjackStage: BlackjackStage) {
         println(
             MESSAGE_USERS_STATUS.format(
-                players.value.joinToString(", ") {
+                blackjackStage.players.value.joinToString(", ") {
                     it.name.value
                 }
             )
         )
-        printDealerStatus(dealer)
-        players.value.forEach { printPlayerStatus(it) }
+        printDealerStatus(blackjackStage.dealer)
+        blackjackStage.players.value.forEach { printPlayerStatus(it) }
     }
 
     fun printWhetherMoreCard(name: String) {

@@ -1,6 +1,6 @@
 package controller
 
-import entity.Dealer
+import entity.Money
 import entity.Name
 import entity.Player
 import entity.Players
@@ -17,19 +17,13 @@ class BlackjackController {
 
     private fun readPlayers(): Players {
         return initView.readPlayerNames().map {
-            Player(Name(it))
+            val money = initView.readPlayerMoney(it)
+            Player(Name(it), Money(money))
         }.let { Players(it) }
     }
 
-    private fun initBlackjack(): BlackjackStage {
-        val players = readPlayers()
-        val dealer = Dealer()
-        val cardFactory = RandomCardFactory()
-        val blackjackStage = BlackjackStage(dealer, players, cardFactory)
-        blackjackStage.distributeAllUsers()
-        gameView.printInitialUsersStatus(dealer, players)
-        return blackjackStage
-    }
+    private fun initBlackjack(): BlackjackStage =
+        BlackjackStage(players = readPlayers(), cardFactory = RandomCardFactory())
 
     private fun distributeMoreCardPlayer(blackjackStage: BlackjackStage) {
         val player = blackjackStage.distributePlayers {
@@ -48,6 +42,10 @@ class BlackjackController {
         }
     }
 
+    private fun displayUserStatus(blackjackStage: BlackjackStage) {
+        gameView.printInitialUsersStatus(blackjackStage)
+    }
+
     private fun displayGameStatus(blackjackStage: BlackjackStage) {
         resultView.printGameStatus(blackjackStage.dealer, blackjackStage.players)
     }
@@ -60,6 +58,7 @@ class BlackjackController {
 
     fun process() {
         val blackjackStage = initBlackjack()
+        displayUserStatus(blackjackStage)
         distributeMoreCardPlayer(blackjackStage)
         distributeMoreCardDealer(blackjackStage)
         displayGameStatus(blackjackStage)
