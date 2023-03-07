@@ -8,15 +8,15 @@ enum class Outcome {
     companion object {
         private const val BLACKJACK_NUMBER = 21
 
-        fun User.winTo(other: User): Outcome =
+        fun gameResult(user: User, other: User): Outcome =
             when {
-                other.getScore() > BLACKJACK_NUMBER && this.getScore() > BLACKJACK_NUMBER -> DRAW
+                other.getScore() > BLACKJACK_NUMBER && user.getScore() > BLACKJACK_NUMBER -> DRAW
                 other.getScore() > BLACKJACK_NUMBER -> WIN
-                this.getScore() > BLACKJACK_NUMBER -> LOSE
+                user.getScore() > BLACKJACK_NUMBER -> LOSE
 
-                other.getScore() == this.getScore() -> DRAW
-                this.getScore() > other.getScore() -> WIN
-                other.getScore() > this.getScore() -> LOSE
+                other.getScore() == user.getScore() -> DRAW
+                user.getScore() > other.getScore() -> WIN
+                other.getScore() > user.getScore() -> LOSE
 
                 else -> throw IllegalStateException()
             }

@@ -5,7 +5,7 @@ import blackjack.domain.card.CardMark
 import blackjack.domain.card.CardValue
 import blackjack.domain.participants.Dealer
 import blackjack.domain.participants.Guest
-import blackjack.domain.result.Outcome.Companion.winTo
+import blackjack.domain.result.Outcome.Companion.gameResult
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -20,7 +20,7 @@ class OutcomeTest {
         guest.draw(Card(CardMark.SPADE, CardValue.EIGHT))
         guest.draw(Card(CardMark.HEART, CardValue.SEVEN))
 
-        assertThat(guest.winTo(dealer)).isEqualTo(Outcome.DRAW)
+        assertThat(gameResult(guest, dealer)).isEqualTo(Outcome.DRAW)
     }
 
     @Test
@@ -35,7 +35,7 @@ class OutcomeTest {
         guest.draw(Card(CardMark.HEART, CardValue.SEVEN))
         guest.draw(Card(CardMark.CLOVER, CardValue.QUEEN))
 
-        assertThat(guest.winTo(dealer)).isEqualTo(Outcome.DRAW)
+        assertThat(gameResult(guest, dealer)).isEqualTo(Outcome.DRAW)
     }
 
     @Test
@@ -50,7 +50,7 @@ class OutcomeTest {
         guest.draw(Card(CardMark.HEART, CardValue.SEVEN))
         guest.draw(Card(CardMark.CLOVER, CardValue.TWO))
 
-        assertThat(guest.winTo(dealer)).isEqualTo(Outcome.LOSE)
+        assertThat(gameResult(guest, dealer)).isEqualTo(Outcome.LOSE)
     }
 
     @Test
@@ -65,7 +65,7 @@ class OutcomeTest {
         guest.draw(Card(CardMark.HEART, CardValue.SEVEN))
         guest.draw(Card(CardMark.CLOVER, CardValue.KING))
 
-        assertThat(guest.winTo(dealer)).isEqualTo(Outcome.LOSE)
+        assertThat(gameResult(guest, dealer)).isEqualTo(Outcome.LOSE)
     }
 
     @Test
@@ -80,7 +80,7 @@ class OutcomeTest {
         guest.draw(Card(CardMark.HEART, CardValue.SEVEN))
         guest.draw(Card(CardMark.CLOVER, CardValue.THREE))
 
-        assertThat(guest.winTo(dealer)).isEqualTo(Outcome.WIN)
+        assertThat(gameResult(guest, dealer)).isEqualTo(Outcome.WIN)
     }
 
     @Test
@@ -95,6 +95,6 @@ class OutcomeTest {
         guest.draw(Card(CardMark.HEART, CardValue.SEVEN))
         guest.draw(Card(CardMark.CLOVER, CardValue.THREE))
 
-        assertThat(guest.winTo(dealer)).isEqualTo(Outcome.WIN)
+        assertThat(gameResult(guest, dealer)).isEqualTo(Outcome.WIN)
     }
 }
