@@ -4,6 +4,8 @@ import domain.CardGame
 import domain.CardPackGenerator
 import model.Bet
 import model.BetInfos
+import model.BetInfosBuilder
+import model.CardPack
 import model.Dealer
 import model.Dealer.Companion.DEALER
 import model.GameResult
@@ -16,17 +18,15 @@ import view.InputView
 import view.OutputView
 
 class Controller(private val inputView: InputView, private val outputView: OutputView) {
-    private val cardPack = CardPackGenerator().createCardPack().shuffled()
-
     fun run() {
-        val cardGame = CardGame(cardPack)
+        val cardGame = CardGame(CardPackGenerator().createCardPack().shuffled())
         val players = cardGame.initPlayers(initNames())
         val dealer = cardGame.initDealer()
-        val betInfos = initBetInfo(players)
+        val betInfos = askHowMuchBets(players)
         val participants = Participants.of(dealer, players)
         printParticipants(participants)
-        askGetMorePlayersCard(players)
-        getMoreDealerCard(dealer)
+        askGetMorePlayersCard(players, cardGame.cardPack)
+        getMoreDealerCard(dealer, cardGame.cardPack)
         outputView.printAllPlayerStatusResult(participants)
         outputView.printFinalResult(GameResult.of(dealer, betInfos))
     }
@@ -36,14 +36,13 @@ class Controller(private val inputView: InputView, private val outputView: Outpu
         return Names(inputView.readName().map(::Name))
     }
 
-    private fun initBetInfo(players: Players): BetInfos =
-        BetInfos(
-            buildMap {
-                players.toList().forEach {
-                    put(it, askHowMuchBet(it.name))
-                }
-            }
-        )
+    private fun initBets(block: BetInfosBuilder.() -> Unit): BetInfos {
+        return BetInfosBuilder().apply(block).build()
+    }
+
+    private fun askHowMuchBets(players: Players) = initBets {
+        players.toList().forEach { bet(it, askHowMuchBet(it.name)) }
+    }
 
     private fun askHowMuchBet(name: Name): Bet {
         outputView.printHowMuchBet(name)
@@ -57,14 +56,14 @@ class Controller(private val inputView: InputView, private val outputView: Outpu
         outputView.printPlayersStatus(participants)
     }
 
-    private fun askGetMorePlayersCard(players: Players) {
+    private fun askGetMorePlayersCard(players: Players, cardPack: CardPack) {
         players.toList().filter { it.isHit() }.forEach {
             outputView.printGetCardMore(it.name)
-            askGetMorePlayerCard(it)
+            askGetMorePlayerCard(it, cardPack)
         }
     }
 
-    private fun askGetMorePlayerCard(player: Player) {
+    private fun askGetMorePlayerCard(player: Player, cardPack: CardPack) {
         while (player.isHit() && inputView.readYesOrNo()) {
             player.pick(cardPack)
             outputView.printPlayerStatus(player)
@@ -72,7 +71,7 @@ class Controller(private val inputView: InputView, private val outputView: Outpu
         }
     }
 
-    private fun getMoreDealerCard(dealer: Dealer) {
+    private fun getMoreDealerCard(dealer: Dealer, cardPack: CardPack) {
         while (dealer.isHit()) {
             outputView.printDealerGetCard()
             dealer.pick(cardPack)
