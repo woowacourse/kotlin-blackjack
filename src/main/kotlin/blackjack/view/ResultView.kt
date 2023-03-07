@@ -100,4 +100,8 @@ object ResultView {
     fun printMessage(message: String) {
         println(message)
     }
+
+    fun printErrorMessage(error: Throwable) {
+        println(error.message)
+    }
 }
