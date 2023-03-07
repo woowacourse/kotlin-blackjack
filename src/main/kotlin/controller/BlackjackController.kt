@@ -26,13 +26,14 @@ class BlackjackController {
     }
 
     private fun printBlackjackSetting(blackjackGame: BlackjackGame) {
-        OutputView.printDivideCard(blackjackGame.names)
+        OutputView.printDivideCard(blackjackGame.players)
         OutputView.printDealerSettingCard(blackjackGame.dealerState.cards.first())
         OutputView.printParticipantsCards(blackjackGame.players)
     }
 
     private fun requestPickCard(blackjackGame: BlackjackGame) {
-        blackjackGame.names.userNames.forEach { name ->
+        val names = blackjackGame.players.map { it.name }
+        names.forEach { name ->
             repeatPickCard(blackjackGame, name)
         }
     }

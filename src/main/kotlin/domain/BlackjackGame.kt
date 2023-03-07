@@ -12,7 +12,7 @@ import domain.player.Names
 import domain.player.Player
 
 class BlackjackGame(
-    val names: Names,
+    names: Names,
     private val deck: Deck = Deck(CardMaker().makeShuffledCards())
 ) {
     val dealerState: DealerCards
@@ -31,7 +31,7 @@ class BlackjackGame(
 
     private fun makeStartDeck(): MutableList<Card> {
         val startDeck = mutableListOf<Card>()
-        repeat(2) {
+        repeat(START_NUMBER_OF_CARDS) {
             startDeck.add(deck.giveCard())
         }
         return startDeck
@@ -61,5 +61,9 @@ class BlackjackGame(
         return playersResult.map {
             it.result.reverseResult()
         }
+    }
+
+    companion object {
+        private const val START_NUMBER_OF_CARDS = 2
     }
 }

@@ -3,7 +3,6 @@ package view
 import domain.card.Card
 import domain.judge.ParticipantResult
 import domain.judge.Result
-import domain.player.Names
 import domain.player.Player
 
 object OutputView {
@@ -17,9 +16,10 @@ object OutputView {
     private const val FINAL_RESULT = "\n## 최종 승패"
     private const val PICK_CARD_OVER_SIXTEEN = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n"
 
-    fun printDivideCard(names: Names) {
+    fun printDivideCard(players: List<Player>) {
         println()
-        println(names.userNames.joinToString(SEPARATOR, WITH_DEALER, DIVIDE_TWO_CARDS))
+        val names = players.map { it.name }
+        println(names.joinToString(SEPARATOR, WITH_DEALER, DIVIDE_TWO_CARDS))
     }
 
     fun printDealerSettingCard(card: Card) {
