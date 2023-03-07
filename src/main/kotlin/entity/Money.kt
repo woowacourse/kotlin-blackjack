@@ -1,4 +1,4 @@
 package entity
 
-class Money(val value: Int) {
-}
+@JvmInline
+value class Money(val value: Int)

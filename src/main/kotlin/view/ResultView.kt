@@ -18,7 +18,15 @@ class ResultView {
         println(MESSAGE_GAME_RESULT)
         println(MESSAGE_DEALER_GAME_RESULT.format(formatDealerGameResult(dealerGameResult)))
         playersGameResult.value.forEach {
-            println(MESSAGE_PLAYERS_GAME_RESULT.format(it.key.name.value, gameResultTypeToString(it.value)))
+            println(MESSAGE_PLAYERS_GAME_RESULT.format(it.key.name.value, gameResultTypeToString(it.value.type)))
+        }
+    }
+
+    fun printProfitResult(dealerGameResult: DealerGameResult, playersGameResult: PlayersGameResult) {
+        println(MESSAGE_PROFIT_RESULT)
+        println(MESSAGE_DEALER_PROFIT_RESULT.format(dealerGameResult.profit.value))
+        playersGameResult.value.forEach {
+            println(MESSAGE_PLAYERS_PROFIT_RESULT.format(it.key.name.value, it.value.profit.value))
         }
     }
 
@@ -40,8 +48,11 @@ class ResultView {
         private const val MESSAGE_DEALER_GAME_STATUS = "딜러 카드: %s - 결과: %d"
         private const val MESSAGE_PLAYERS_GAME_STATUS = "%s카드: %s - 결과: %d"
         private const val MESSAGE_GAME_RESULT = "## 최종 승패"
+        private const val MESSAGE_PROFIT_RESULT = "## 최종 수익"
         private const val MESSAGE_DEALER_GAME_RESULT = "딜러: %s"
         private const val MESSAGE_PLAYERS_GAME_RESULT = "%s: %s"
+        private const val MESSAGE_DEALER_PROFIT_RESULT = "딜러: %d"
+        private const val MESSAGE_PLAYERS_PROFIT_RESULT = "%s: %d"
         private const val MESSAGE_GAME_RESULT_TYPE = "%d%s"
     }
 }

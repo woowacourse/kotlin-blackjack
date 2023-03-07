@@ -1,6 +1,6 @@
 package entity
 
-class DealerGameResult(val value: Map<GameResultType, Int>) {
+class DealerGameResult(val value: Map<GameResultType, Int>, val profit: Money) {
     init {
         check(value.none { it.value == 0 }) { GAME_RESULT_COUNT_ERROR_MESSAGE }
     }

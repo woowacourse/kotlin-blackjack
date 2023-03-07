@@ -54,6 +54,7 @@ class BlackjackController {
         val playersGameResult = blackjackStage.players.determineAllPlayerGameResult(blackjackStage.dealer)
         val dealerGameResult = playersGameResult.makeDealerGameResult()
         resultView.printGameResult(dealerGameResult, playersGameResult)
+        resultView.printProfitResult(dealerGameResult, playersGameResult)
     }
 
     fun process() {
