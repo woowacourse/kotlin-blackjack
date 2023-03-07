@@ -12,8 +12,8 @@ class PlayersTest {
                 Player(
                     Name("pobi"),
                     Cards(
-                        Card(CardCategory.CLOVER, CardNumber.EIGHT),
-                        Card(CardCategory.SPADE, CardNumber.NINE)
+                        Card.of(CardCategory.CLOVER, CardNumber.EIGHT),
+                        Card.of(CardCategory.SPADE, CardNumber.NINE)
                     )
                 )
             }
@@ -26,22 +26,22 @@ class PlayersTest {
             Player(
                 Name("pobi"),
                 Cards(
-                    Card(CardCategory.CLOVER, CardNumber.EIGHT),
-                    Card(CardCategory.SPADE, CardNumber.NINE)
+                    Card.of(CardCategory.CLOVER, CardNumber.EIGHT),
+                    Card.of(CardCategory.SPADE, CardNumber.NINE)
                 )
             ),
             Player(
                 Name("jason"),
                 Cards(
-                    Card(CardCategory.CLOVER, CardNumber.EIGHT),
-                    Card(CardCategory.SPADE, CardNumber.TWO)
+                    Card.of(CardCategory.CLOVER, CardNumber.EIGHT),
+                    Card.of(CardCategory.SPADE, CardNumber.TWO)
                 )
             )
         )
         val dealer = Dealer(
             Cards(
-                Card(CardCategory.CLOVER, CardNumber.EIGHT),
-                Card(CardCategory.SPADE, CardNumber.FOUR)
+                Card.of(CardCategory.CLOVER, CardNumber.EIGHT),
+                Card.of(CardCategory.SPADE, CardNumber.FOUR)
             )
         )
         val actual = players.result(dealer)

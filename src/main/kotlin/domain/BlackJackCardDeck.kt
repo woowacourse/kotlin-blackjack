@@ -3,7 +3,7 @@ package domain
 class BlackJackCardDeck : CardDeck {
 
     override fun draw(): Card {
-        return CARD_DECK.shuffled()[0]
+        return cards.shuffled()[0]
     }
 
     override fun drawInitCards(): Cards {
@@ -12,7 +12,7 @@ class BlackJackCardDeck : CardDeck {
 
     companion object {
         const val DRAW_INIT_CARD_COUNT = 2
-        private val CARD_DECK: List<Card> =
-            CardCategory.values().flatMap { cardCategory -> CardNumber.values().map { Card(cardCategory, it) } }
+        private val cards: List<Card> =
+            CardCategory.values().flatMap { cardCategory -> CardNumber.values().map { Card.of(cardCategory, it) } }
     }
 }

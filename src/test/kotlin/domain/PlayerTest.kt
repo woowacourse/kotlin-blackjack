@@ -9,8 +9,8 @@ class PlayerTest {
         val player = Player(
             Name("scott"),
             Cards(
-                Card(CardCategory.CLOVER, CardNumber.EIGHT),
-                Card(CardCategory.SPADE, CardNumber.NINE)
+                Card.of(CardCategory.CLOVER, CardNumber.EIGHT),
+                Card.of(CardCategory.SPADE, CardNumber.NINE)
             )
         )
         val actual = player.showInitCards().size
@@ -23,8 +23,8 @@ class PlayerTest {
         val player = Player(
             Name("scott"),
             Cards(
-                Card(CardCategory.CLOVER, CardNumber.EIGHT),
-                Card(CardCategory.SPADE, CardNumber.NINE)
+                Card.of(CardCategory.CLOVER, CardNumber.EIGHT),
+                Card.of(CardCategory.SPADE, CardNumber.NINE)
             )
         )
         val actual = player.isPossibleDrawCard()
@@ -36,15 +36,15 @@ class PlayerTest {
         val player = Player(
             Name("scott"),
             Cards(
-                Card(CardCategory.CLOVER, CardNumber.EIGHT),
-                Card(CardCategory.SPADE, CardNumber.NINE)
+                Card.of(CardCategory.CLOVER, CardNumber.EIGHT),
+                Card.of(CardCategory.SPADE, CardNumber.NINE)
             )
         )
         val dealer = Dealer(
             Cards(
-                Card(CardCategory.CLOVER, CardNumber.EIGHT),
-                Card(CardCategory.SPADE, CardNumber.NINE),
-                Card(CardCategory.CLOVER, CardNumber.FOUR)
+                Card.of(CardCategory.CLOVER, CardNumber.EIGHT),
+                Card.of(CardCategory.SPADE, CardNumber.NINE),
+                Card.of(CardCategory.CLOVER, CardNumber.FOUR)
             )
         )
         val result = player.getGameResult(dealer)
