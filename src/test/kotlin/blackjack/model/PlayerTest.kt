@@ -74,27 +74,39 @@ class PlayerTest {
             Name("jason"),
             Rank.ACE,
             Rank.JACK,
-            Rank.KING
         )
         val dealer = dealer(
             Rank.ACE,
             Rank.JACK,
-            Rank.KING
         )
         assertThat(player.judge(dealer)).isEqualTo(FinalResult.PUSH)
+    }
+
+    @Test
+    fun `딜러가 블랙잭이 아니고 플레이어가 블랙잭인 경우 승리한다`() {
+        val player = player(
+            Name("jason"),
+            Rank.ACE,
+            Rank.JACK,
+        )
+        val dealer = dealer(
+            Rank.ACE,
+            Rank.NINE,
+        )
+        assertThat(player.judge(dealer)).isEqualTo(FinalResult.BLACKJACK_WIN)
     }
 
     @Test
     fun `딜러 버스트, 플레이어는 버스트가 아닌 경우 승리한다`() {
         val player = player(
             Name("jason"),
+            Rank.NINE,
             Rank.DEUCE,
-            Rank.JACK,
-            Rank.KING
+            Rank.EIGHT
         )
         val dealer = dealer(
-            Rank.ACE,
-            Rank.NINE,
+            Rank.DEUCE,
+            Rank.JACK,
             Rank.KING
         )
         assertThat(player.judge(dealer)).isEqualTo(FinalResult.WIN)
