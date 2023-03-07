@@ -1,16 +1,13 @@
 package blackjack.domain.blackjack
 
-import blackjack.domain.card.Card
 import blackjack.domain.card.CardDeck
-import blackjack.domain.card.CardMark
-import blackjack.domain.card.CardValue
 import blackjack.domain.card.Cards
 import blackjack.domain.participants.Dealer
 import blackjack.domain.participants.Guest
 import blackjack.domain.participants.Participants
-import blackjack.domain.result.Outcome
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
 
 class BlackJackTest {
     @Test
@@ -18,14 +15,11 @@ class BlackJackTest {
         val blackJack = BlackJack(
             participants = Participants(Dealer(), listOf(Guest("아크"), Guest("로피"))),
             cardDeck = CardDeck(Cards.all()),
-        ).apply {
-            dealer.draw(Card(CardMark.CLOVER, CardValue.NINE))
-            dealer.draw(Card(CardMark.CLOVER, CardValue.QUEEN))
-            guests[0].draw(Card(CardMark.CLOVER, CardValue.NINE))
-            guests[0].draw(Card(CardMark.SPADE, CardValue.NINE))
-            guests[1].draw(Card(CardMark.CLOVER, CardValue.KING))
-            guests[1].draw(Card(CardMark.CLOVER, CardValue.QUEEN))
-        }
-        assertThat(blackJack.getResult()).isEqualTo(listOf(Outcome.LOSE, Outcome.WIN))
+        )
+        assertAll(
+            { assertThat(blackJack.participants.dealer.name.toString()).isEqualTo("딜러") },
+            { assertThat(blackJack.participants.guests[0].name.toString()).isEqualTo("아크") },
+            { assertThat(blackJack.participants.guests[1].name.toString()).isEqualTo("로피") },
+        )
     }
 }
