@@ -25,11 +25,11 @@ abstract class Participant(val cards: Cards) {
     }
 
     private fun isAceValueToEleven(): Boolean {
-        return countAce() >= 1 && cards.getCards()
+        return checkAceContained() && cards.getCards()
             .sumOf { it.cardValue.value } <= CardValue.ACE_ELEVEN_VALUE
     }
 
-    private fun countAce() = cards.getCards().count { it.cardValue.title == CardValue.ACE.title }
+    private fun checkAceContained() = cards.getCards().any { it.cardValue.title == CardValue.ACE.title }
 
     fun checkBurst(): Boolean = calculateCardSum() > Referee.CARD_SUM_MAX_VALUE
 
