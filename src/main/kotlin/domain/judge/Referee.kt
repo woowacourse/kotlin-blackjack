@@ -6,11 +6,10 @@ import domain.player.Player
 
 class Referee(private val dealerState: DealerCards, private val players: List<Player>) {
 
-    fun judgePlayersResult(): List<ParticipantResult> = mutableListOf<ParticipantResult>().apply {
-        players.forEach {
-            this.add(ParticipantResult(it.name, judgePlayerResult(it.ownCards as PlayerCards)))
+    fun judgePlayersResult(): List<ParticipantResult> =
+        players.map {
+            ParticipantResult(it.name, judgePlayerResult(it.ownCards as PlayerCards))
         }
-    }
 
     private fun judgePlayerResult(player: PlayerCards): Result {
         val playerSum = player.calculateCardSum()
@@ -22,15 +21,13 @@ class Referee(private val dealerState: DealerCards, private val players: List<Pl
     private fun judgeWithConditions(playerSum: Int, dealerSum: Int): Result {
         return when {
             playerSum > CARD_SUM_MAX_VALUE -> Result.LOSS
-            dealerSum.checkPlayerLossCondition(playerSum) -> Result.LOSS
+            dealerSum > CARD_SUM_MAX_VALUE -> Result.WIN
+            dealerSum > playerSum -> Result.LOSS
             playerSum == CARD_SUM_MAX_VALUE && dealerSum == CARD_SUM_MAX_VALUE -> Result.LOSS
             playerSum > dealerSum -> Result.WIN
-            dealerSum > CARD_SUM_MAX_VALUE -> Result.WIN
             else -> Result.DRAW
         }
     }
-
-    private fun Int.checkPlayerLossCondition(playerSum: Int) = this > playerSum && this <= CARD_SUM_MAX_VALUE
 
     companion object {
         const val CARD_SUM_MAX_VALUE = 21
