@@ -7,7 +7,7 @@ class CardTest {
 
     @Test
     fun `카드는 숫자를 생성할 수 있다`() {
-        assertDoesNotThrow { Card(CardNumber.ONE, CardShape.CLOVER) }
+        assertDoesNotThrow { Card(CardNumber.ACE, CardShape.CLOVER) }
     }
 
     @Test

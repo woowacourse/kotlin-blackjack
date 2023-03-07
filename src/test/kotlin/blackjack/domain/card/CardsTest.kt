@@ -13,11 +13,21 @@ class CardsTest {
     }
 
     @Test
-    fun `갖고 있는 카드 숫자의 합을 계산해 반환한다`() {
+    fun `갖고 있는 카드에 Ace가 포함된 경우 Ace를 11로 계산해 숫자의 합을 반환한다`() {
         val cards = Cards()
-        cards.addCard(Card(CardNumber.ONE, CardShape.DIAMOND))
-        cards.addCard(Card(CardNumber.JACK, CardShape.CLOVER))
+        cards.addCard(Card(CardNumber.ACE, CardShape.DIAMOND))
+        cards.addCard(Card(CardNumber.SEVEN, CardShape.CLOVER))
         val actual = cards.sumCardsNumber()
-        assertThat(actual).isEqualTo(21)
+        assertThat(actual).isEqualTo(18)
+    }
+
+    @Test
+    fun `갖고 있는 카드에 Ace가 포함된 경우 Ace를 1로 계산해 숫자의 합을 반환한다`() {
+        val cards = Cards()
+        cards.addCard(Card(CardNumber.ACE, CardShape.DIAMOND))
+        cards.addCard(Card(CardNumber.JACK, CardShape.CLOVER))
+        cards.addCard(Card(CardNumber.EIGHT, CardShape.CLOVER))
+        val actual = cards.sumCardsNumber()
+        assertThat(actual).isEqualTo(19)
     }
 }

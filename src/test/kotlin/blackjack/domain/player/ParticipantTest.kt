@@ -21,7 +21,7 @@ class ParticipantTest {
     fun `딜러의 카드 합을 받아 자신의 승패를 결정한다`() {
         // given
         val participant = Participant("aaa")
-        participant.addCard(Card(CardNumber.ONE, CardShape.CLOVER))
+        participant.addCard(Card(CardNumber.ACE, CardShape.CLOVER))
         participant.addCard(Card(CardNumber.JACK, CardShape.HEART))
         val dealerSum = 15
 

@@ -12,22 +12,26 @@ class Cards() {
 
     fun sumCardsNumber(): Int {
         if (isBlackjack()) return MAX_SUM_NUMBER
-        val result = _cards.sumOf { it.number.value }
-        return result
+        if (_cards.any { it.number == CardNumber.ACE }) return calculateAceSum()
+        return _cards.sumOf { it.number.value }
     }
 
     private fun isBlackjack(): Boolean {
         if (_cards.size != 2) return false
 
-        val condition1 = _cards.filter { it.number == CardNumber.ONE }.size
+        val condition1 = _cards.filter { it.number == CardNumber.ACE }.size
         val condition2 = _cards.filter {
-            it.number == CardNumber.KING ||
-                it.number == CardNumber.QUEEN ||
-                it.number == CardNumber.JACK
+            listOf(CardNumber.KING, CardNumber.QUEEN, CardNumber.JACK).contains(it.number)
         }.size
-        if (condition1 == 1 && condition2 == 1) return true
 
+        if (condition1 == 1 && condition2 == 1) return true
         return false
+    }
+
+    private fun calculateAceSum(): Int {
+        var result = _cards.sumOf { it.number.value }
+        if ((MAX_SUM_NUMBER - result) >= 10) result += 10
+        return result
     }
 
     companion object {
