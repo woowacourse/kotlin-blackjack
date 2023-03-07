@@ -1,8 +1,9 @@
 package domain
 
 import blackjack.domain.Card
+import blackjack.domain.CardHand
 import blackjack.domain.CardNumber
-import blackjack.domain.Cards
+import blackjack.domain.CardPack
 import blackjack.domain.Dealer
 import blackjack.domain.DrawResult
 import blackjack.domain.Shape
@@ -11,7 +12,7 @@ import org.junit.jupiter.api.Test
 
 class DealerTest {
     private fun createDealer(firstCardNumber: CardNumber, secondCardNumber: CardNumber): Dealer {
-        return Dealer(Cards(listOf(Card(firstCardNumber, Shape.SPADE), Card(secondCardNumber, Shape.SPADE))))
+        return Dealer(CardPack(), CardHand(listOf(Card(firstCardNumber, Shape.SPADE), Card(secondCardNumber, Shape.SPADE))))
     }
 
     @Test

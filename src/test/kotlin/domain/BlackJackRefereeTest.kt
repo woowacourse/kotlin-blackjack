@@ -2,8 +2,9 @@ package domain
 
 import blackjack.domain.BlackJackReferee
 import blackjack.domain.Card
+import blackjack.domain.CardHand
 import blackjack.domain.CardNumber
-import blackjack.domain.Cards
+import blackjack.domain.CardPack
 import blackjack.domain.Dealer
 import blackjack.domain.GameResult
 import blackjack.domain.Player
@@ -14,11 +15,11 @@ import org.junit.jupiter.api.Test
 
 class BlackJackRefereeTest {
     private fun createPlayer(firstCardNumber: CardNumber, secondCardNumber: CardNumber): Player {
-        return Player(PlayerName("name"), Cards(listOf(Card(firstCardNumber, Shape.SPADE), Card(secondCardNumber, Shape.SPADE))))
+        return Player(PlayerName("name"), CardPack(), CardHand(listOf(Card(firstCardNumber, Shape.SPADE), Card(secondCardNumber, Shape.SPADE))))
     }
 
     private fun createDealer(firstCardNumber: CardNumber, secondCardNumber: CardNumber): Dealer {
-        return Dealer(Cards(listOf(Card(firstCardNumber, Shape.SPADE), Card(secondCardNumber, Shape.SPADE))))
+        return Dealer(CardPack(), CardHand(listOf(Card(firstCardNumber, Shape.SPADE), Card(secondCardNumber, Shape.SPADE))))
     }
 
     @Test

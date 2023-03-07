@@ -1,21 +1,24 @@
 package blackjack.controller
 
 import blackjack.domain.BlackJackReferee
-import blackjack.domain.Cards
+import blackjack.domain.CardHand
+import blackjack.domain.CardPack
 import blackjack.domain.Dealer
 import blackjack.domain.DrawState
 import blackjack.domain.Player
+import blackjack.domain.PlayerName
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
 class BlackJackController(
-    private val dealer: Dealer = Dealer(),
+    private val cardPack: CardPack = CardPack(),
+    private val dealer: Dealer = Dealer(cardPack),
     private val blackJackReferee: BlackJackReferee = BlackJackReferee()
 ) {
 
     private val players: List<Player> by lazy {
         InputView.requestPlayersName().map { name ->
-            Player(name)
+            Player(name = PlayerName(name), cardPack)
         }
     }
 
@@ -42,7 +45,7 @@ class BlackJackController(
             val drawFlag = InputView.requestAdditionalDraw(player)
         } while (drawFlag && drawAdditionalCardForPlayer(player) == DrawState.POSSIBLE)
 
-        if (player.cards.size == Cards.INITIAL_CARDS_SIZE) {
+        if (player.cardHand.size == CardHand.INITIAL_CARDS_SIZE) {
             OutputView.printCardResults(player)
         }
     }

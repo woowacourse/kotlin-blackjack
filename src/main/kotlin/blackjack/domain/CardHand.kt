@@ -1,9 +1,6 @@
 package blackjack.domain
 
-class Cards(
-    cards: List<Card> = listOf(Card.draw(), Card.draw())
-) {
-
+class CardHand(cards: List<Card>) {
     private var _cards: MutableList<Card> = cards.toMutableList()
     val cards: List<Card>
         get() = _cards.toList()
@@ -15,7 +12,7 @@ class Cards(
         require(cards.size == INITIAL_CARDS_SIZE)
     }
 
-    fun draw(card: Card = Card.draw()) {
+    fun draw(card: Card) {
         _cards.add(card)
         CardNumber.values()
     }
@@ -33,7 +30,7 @@ class Cards(
         return currentSum
     }
 
-    fun decideAceCardsScore(currentSum: Int): Int {
+    private fun decideAceCardsScore(currentSum: Int): Int {
         if (currentSum >= CURRENT_SUM_STANDARD) {
             return SMALL_ACE_VALUE
         }

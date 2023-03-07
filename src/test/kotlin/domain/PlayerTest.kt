@@ -1,8 +1,9 @@
 package domain
 
 import blackjack.domain.Card
+import blackjack.domain.CardHand
 import blackjack.domain.CardNumber
-import blackjack.domain.Cards
+import blackjack.domain.CardPack
 import blackjack.domain.DrawState
 import blackjack.domain.Player
 import blackjack.domain.PlayerName
@@ -12,7 +13,7 @@ import org.junit.jupiter.api.Test
 
 class PlayerTest {
     private fun createPlayer(firstCardNumber: CardNumber, secondCardNumber: CardNumber): Player {
-        return Player(PlayerName("name"), Cards(listOf(Card(firstCardNumber, Shape.SPADE), Card(secondCardNumber, Shape.SPADE))))
+        return Player(PlayerName("name"), CardPack(), CardHand(listOf(Card(firstCardNumber, Shape.SPADE), Card(secondCardNumber, Shape.SPADE))))
     }
 
     @Test

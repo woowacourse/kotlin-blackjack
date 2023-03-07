@@ -1,9 +1,12 @@
 package blackjack.domain
 
-class Dealer(val cards: Cards = Cards()) {
+class Dealer(
+    private val cardPack: CardPack,
+    val cardHand: CardHand = CardHand(listOf(cardPack.draw(), cardPack.draw()))
+) {
 
     private fun isPossibleToDraw(): DrawState {
-        if (cards.getTotalCardsScore() >= DEALER_UPPER_DRAW_CONDITION) {
+        if (cardHand.getTotalCardsScore() >= DEALER_UPPER_DRAW_CONDITION) {
             return DrawState.IMPOSSIBLE
         }
 
@@ -12,7 +15,7 @@ class Dealer(val cards: Cards = Cards()) {
 
     fun drawCard(): DrawResult {
         if (isPossibleToDraw() == DrawState.POSSIBLE) {
-            cards.draw()
+            cardHand.draw(cardPack.draw())
 
             return DrawResult.Success
         }

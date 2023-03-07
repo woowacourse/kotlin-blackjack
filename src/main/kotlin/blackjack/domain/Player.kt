@@ -2,13 +2,12 @@ package blackjack.domain
 
 class Player(
     val name: PlayerName,
-    val cards: Cards = Cards()
+    private val cardPack: CardPack,
+    val cardHand: CardHand = CardHand(listOf(cardPack.draw(), cardPack.draw()))
 ) {
 
-    constructor(name: String) : this(PlayerName(name))
-
     private fun isPossibleToDrawAdditionalCard(): DrawState {
-        if (cards.getMinimumCardsScore() >= BLACK_JACK_SCORE) {
+        if (cardHand.getMinimumCardsScore() >= BLACK_JACK_SCORE) {
             return DrawState.IMPOSSIBLE
         }
 
@@ -16,7 +15,7 @@ class Player(
     }
 
     fun drawCard(): DrawState {
-        cards.draw()
+        cardHand.draw(cardPack.draw())
 
         return isPossibleToDrawAdditionalCard()
     }

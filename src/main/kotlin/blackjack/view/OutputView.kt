@@ -32,7 +32,7 @@ object OutputView {
     fun printCardDividingMessage(dealer: Dealer, players: List<Player>) {
         println()
         println(CARD_DIVIDING_MSG.format(players.joinToString(SEPARATOR) { player -> player.name.value }))
-        println(SHOW_DEALER_CARD.format(makeToString(dealer.cards.cards.first())))
+        println(SHOW_DEALER_CARD.format(makeToString(dealer.cardHand.cards.first())))
         players.forEach { player -> printCardResults(player) }
         println()
     }
@@ -41,7 +41,7 @@ object OutputView {
         println(
             SHOW_PLAYER_CARDS.format(
                 player.name.value,
-                player.cards.cards.joinToString(SEPARATOR) { card -> makeToString(card) }
+                player.cardHand.cards.joinToString(SEPARATOR) { card -> makeToString(card) }
             )
         )
     }
@@ -74,17 +74,17 @@ object OutputView {
     fun printFinalCards(dealer: Dealer, players: List<Player>) {
         println()
         println(
-            SHOW_DEALER_CARD.format(dealer.cards.cards.joinToString(SEPARATOR) { card -> makeToString(card) }) + FINAL_SCORE.format(
-                dealer.cards.getTotalCardsScore()
+            SHOW_DEALER_CARD.format(dealer.cardHand.cards.joinToString(SEPARATOR) { card -> makeToString(card) }) + FINAL_SCORE.format(
+                dealer.cardHand.getTotalCardsScore()
             )
         )
         players.forEach { player ->
             println(
                 SHOW_PLAYER_CARDS.format(
                     player.name.value,
-                    player.cards.cards.joinToString(SEPARATOR) { card -> makeToString(card) }
+                    player.cardHand.cards.joinToString(SEPARATOR) { card -> makeToString(card) }
                 ) + FINAL_SCORE.format(
-                    player.cards.getTotalCardsScore()
+                    player.cardHand.getTotalCardsScore()
                 )
             )
         }
