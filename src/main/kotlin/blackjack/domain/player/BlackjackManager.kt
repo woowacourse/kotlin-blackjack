@@ -5,25 +5,19 @@ import blackjack.domain.card.CardsGenerator
 
 class BlackjackManager(cardsGenerator: CardsGenerator) {
 
+    private val cardDeck = CardDeck(cardsGenerator)
     val dealer = Dealer()
     lateinit var participants: Participants
         private set
-    private val cardDeck = CardDeck(cardsGenerator)
 
-    fun generateParticipants(getNames: () -> List<String>) {
+    fun setup(getNames: () -> List<String>) {
         participants = Participants(getNames().map { Participant(it) })
-    }
-
-    fun settingPlayersCards(printResult: (Dealer, Participants) -> Unit) {
-        repeat(CARD_SETTING_COUNT) {
-            provideCard(dealer)
-        }
+        repeat(CARD_SETTING_COUNT) { provideCard(dealer) }
         participants.values.forEach { participant ->
             repeat(CARD_SETTING_COUNT) {
                 provideCard(participant)
             }
         }
-        printResult(dealer, participants)
     }
 
     fun provideParticipantMoreCard(

@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 class DealerTest {
     @Test
     fun `카드를 더 받아야 하는 상태인지 확인한다`() {
-        val dealer = Dealer("aaa")
+        val dealer = Dealer()
         dealer.addCard(Card(CardNumber.EIGHT, CardShape.CLOVER))
         val actual = dealer.checkProvideCardPossible()
         assertThat(actual).isEqualTo(true)

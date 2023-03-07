@@ -15,8 +15,8 @@ class BlackjackController(
     private var blackjackManager: BlackjackManager = BlackjackManager(cardsGenerator)
 
     fun run() {
-        blackjackManager.generateParticipants(inputView::readParticipantsName)
-        blackjackManager.settingPlayersCards(outputView::printSettingCard)
+        blackjackManager.setup(inputView::readParticipantsName)
+        outputView.printSettingCard(blackjackManager.dealer, blackjackManager.participants)
         provideParticipantsMoreCard()
         blackjackManager.provideDealerMoreCard(outputView::printDealerHitCardMent)
         blackjackManager.updatePlayersResult()
