@@ -17,7 +17,8 @@ class OutputView {
     fun printNoticeDistributeCards(participants: Participants) {
         println()
         println(noticeDistributeCardsNameFormat(participants))
-        printPlayersStatus(participants)
+        participants.participants.forEach { printPlayerStatus(it) }
+        println()
     }
 
     private fun noticeDistributeCardsNameFormat(participants: Participants): String {
@@ -25,11 +26,6 @@ class OutputView {
             participants.participants.filter { it.name.value != DEALER }
                 .joinToString(", ") { it.name.value }
         )
-    }
-
-    fun printPlayersStatus(players: Participants) {
-        players.participants.forEach { printPlayerStatus(it) }
-        println()
     }
 
     fun printDealerGetCard() {
