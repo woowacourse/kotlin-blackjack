@@ -3,22 +3,24 @@ package blackjack.view
 class InputView {
     fun inputParticipants(): List<String> {
         println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
-        return readln().split(",").map { it.trim() }
+        val participants = readln().split(",").map { it.trim() }.filter { it.isNotBlank() }
+        return when (participants.size) {
+            0 -> inputParticipants()
+            else -> participants
+        }
     }
 
     fun inputBettingMoney(name: String): Int {
         println("\n${name}의 배팅 금액은?")
-        return readln().toInt()
+        return readln().toIntOrNull() ?: inputBettingMoney(name)
     }
 
-    fun inputDrawMore(name: String): Boolean = getDrawMore(name)
-
-    private fun getDrawMore(name: String): Boolean {
+    fun inputDrawMore(name: String): Boolean {
         println("\n${name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
         return when (readln()) {
             in DRAW_COMMANDS -> true
             in END_TURN_COMMANDS -> false
-            else -> getDrawMore(name)
+            else -> inputDrawMore(name)
         }
     }
     companion object {
