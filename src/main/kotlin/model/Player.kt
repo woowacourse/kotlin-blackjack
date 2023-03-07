@@ -1,7 +1,7 @@
 package model
 
 class Player(hand: Hand, name: Name) : Participant(hand, name) {
-    override fun isHit(): Boolean = !isBust()
+    override fun isHit(): Boolean = !isBust() && (hand.sum() != BLACKJACK_POINT)
 
     fun judge(dealer: Dealer): FinalResult {
         val playerPoint = hand.sum()
