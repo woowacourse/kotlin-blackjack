@@ -1,12 +1,23 @@
 package blackjack.domain.blackjack
 
 import blackjack.domain.card.CardDeck
+import blackjack.domain.card.Cards
 import blackjack.domain.participants.Dealer
 import blackjack.domain.participants.Guest
 import blackjack.domain.participants.User
 
 class BlackJackGame {
     lateinit var getCommand: (String) -> Boolean
+
+    fun setUp(getNames: () -> List<String>, getBettingMoney: (String) -> Int): BlackJack =
+        blackJack {
+            cardDeck(Cards.all())
+            participants {
+                dealer()
+                getNames().forEach { name -> guest(name, getBettingMoney(name)) }
+            }
+            draw()
+        }
 
     fun dealerTurn(dealer: Dealer, cardDeck: CardDeck, output: () -> Unit) {
         if (dealer.isBlackJack()) return

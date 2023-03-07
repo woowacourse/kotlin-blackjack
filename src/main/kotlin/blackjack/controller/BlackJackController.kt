@@ -1,9 +1,6 @@
 package blackjack.controller
 
-import blackjack.domain.blackjack.BlackJack
 import blackjack.domain.blackjack.BlackJackGame
-import blackjack.domain.blackjack.blackJack
-import blackjack.domain.card.Cards
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -12,25 +9,13 @@ class BlackJackController(
     private val outputView: OutputView,
 ) {
     fun run() {
-        val blackJack = setUpBlackJack()
+        val blackJack = BlackJackGame().setUp(inputView::inputParticipants, inputView::inputBettingMoney)
         outputView.outputInitState(blackJack)
-        startBlackJack(blackJack)
-        outputView.outputResult(blackJack)
-    }
-
-    private fun setUpBlackJack(): BlackJack = blackJack {
-        cardDeck(Cards.all())
-        participants {
-            dealer()
-            inputView.inputParticipants().forEach { name -> guest(name, inputView.inputBettingMoney(name)) }
-        }
-        draw()
-    }
-
-    private fun startBlackJack(blackJack: BlackJack) =
         BlackJackGame().apply {
             getCommand = inputView::inputDrawMore
             guestsTurn(blackJack.guests, blackJack.cardDeck, outputView::outputCard)
             dealerTurn(blackJack.dealer, blackJack.cardDeck, outputView::outputDealerDraw)
         }
+        outputView.outputResult(blackJack)
+    }
 }
