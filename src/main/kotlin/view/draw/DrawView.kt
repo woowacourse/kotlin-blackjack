@@ -1,4 +1,4 @@
-package view.additional
+package view.draw
 
 import domain.person.Player
 

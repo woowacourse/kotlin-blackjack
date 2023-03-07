@@ -1,4 +1,4 @@
-package view.additional
+package view.draw
 
 object DrawInput {
 

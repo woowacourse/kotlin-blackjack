@@ -1,4 +1,4 @@
-package view.additional
+package view.draw
 
 import constant.BlackJackConstants
 import domain.person.Player
