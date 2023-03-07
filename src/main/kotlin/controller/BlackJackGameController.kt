@@ -1,9 +1,9 @@
 package controller
 
-import domain.BlackJackGameResult
 import domain.Name
 import domain.Names
 import domain.phase.DealerAddPhase
+import domain.phase.GameScorePrintPhase
 import domain.phase.InitPrintPhase
 import domain.phase.Phases
 import domain.phase.PlayersSelectAddPhase
@@ -15,14 +15,14 @@ class BlackJackGameController(private val inputView: InputView, private val resu
     override fun run() {
         val blackJackGame = initGame()
         val result = blackJackGame.runGame(getNames())
-        printGameResult(result)
     }
 
     private fun initGame(): BlackJackGame {
         val initPrintPhase = InitPrintPhase(resultView::printGameInit, resultView::printInitCards)
         val playersSelectAddPhase = PlayersSelectAddPhase(::getChoiceOfAddCard, resultView::printPlayerCard)
         val dealerSelectAddPhase = DealerAddPhase(resultView::printDealerAddCard)
-        val phases = Phases(initPrintPhase, playersSelectAddPhase, dealerSelectAddPhase)
+        val gameScorePrintPhase = GameScorePrintPhase(resultView::printScore, resultView::printGameResult)
+        val phases = Phases(initPrintPhase, playersSelectAddPhase, dealerSelectAddPhase, gameScorePrintPhase)
         return BlackJackGame(phases)
     }
 
@@ -39,10 +39,5 @@ class BlackJackGameController(private val inputView: InputView, private val resu
 
     private fun getAnswerOfAddCard(name: Name): Answer {
         return inputView.readChoiceOfAddCard(name) ?: getAnswerOfAddCard(name)
-    }
-
-    private fun printGameResult(result: BlackJackGameResult) {
-        resultView.printScore(result.participants.all)
-        resultView.printGameResult(result.participants.players, result.participants.dealer)
     }
 }

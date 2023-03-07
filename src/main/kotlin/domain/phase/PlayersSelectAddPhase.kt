@@ -9,8 +9,7 @@ import domain.Players
 class PlayersSelectAddPhase(
     private val isPlayerCardAdd: (Name) -> Boolean,
     private val printPlayerCards: (Player) -> Unit
-) :
-    Phase {
+) : Phase {
     override fun runPhase(participants: Participants, deck: CardDeck) {
         playersSelectAddPhase(participants.players, deck)
     }

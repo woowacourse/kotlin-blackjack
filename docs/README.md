@@ -56,3 +56,15 @@
     - [x] 딜러와 플레이어들을 생성한다
     - [x] 플레이어가 카드를 더 받을 수 있을지 판단하고 원한다면 카드를 제공해준다.
     - [x] 딜러가 카드를 더 받을 수 있는지 판단하고 카드를 제공해준다.
+- bettingPhase
+    - [] 플레이어들이 베팅을 할 수 있도록 해준다. 
+- InitPrintPhase
+    - [x] 게임 초기에 출력해서 보여줘야 할 내용을 출력한다.
+- PlayerSelectAddPhase
+    - [x] 플레이어들이 원한다면 카드를 더 받을수 있도록 해준다.
+- DealerAddPhase
+    - [x] 딜러가 카드를 더 받아야 한다면 더 받도록 해준다.
+- GameScorePrintPhase
+    - [x] 게임 점수의 결과를 출력해준다. 
+- BettingAmountCalculationPhase
+    - [ ] 베팅 금액과 게임결과를 비교해서 각자 투자비용 대비 금액을 계산해준다.
