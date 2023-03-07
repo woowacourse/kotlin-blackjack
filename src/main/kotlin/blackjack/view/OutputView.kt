@@ -25,12 +25,12 @@ class OutputView {
     }
 
     private fun outputCardForDealer(user: User) {
-        val cardText = user.cards.cards.toList()[0].let { it.value.pattern() + it.mark.name() }
+        val cardText = user.cards.cards.toList()[0].let { card -> pattern(card.value) + name(card.mark) }
         print("\n${user.name}카드: $cardText")
     }
 
     fun outputCard(user: User) {
-        val cardText = user.cards.cards.joinToString(", ") { it.value.pattern() + it.mark.name() }
+        val cardText = user.cards.cards.joinToString(", ") { card -> pattern(card.value) + name(card.mark) }
         print("\n${user.name}카드: $cardText")
     }
 
@@ -58,20 +58,20 @@ class OutputView {
         }.let { println("${user.name}: $it") }
     }
 
-    private fun CardMark.name(): String =
-        when (this) {
+    private fun name(mark: CardMark): String =
+        when (mark) {
             CardMark.CLOVER -> "클로버"
             CardMark.DIA -> "다이아몬드"
             CardMark.HEART -> "하트"
             CardMark.SPADE -> "스페이드"
         }
 
-    private fun CardValue.pattern(): String =
-        when (this) {
+    private fun pattern(value: CardValue): String =
+        when (value) {
             CardValue.ACE -> "A"
             CardValue.KING -> "K"
             CardValue.QUEEN -> "Q"
             CardValue.JACK -> "J"
-            else -> this.value.toString()
+            else -> value.toString()
         }
 }
