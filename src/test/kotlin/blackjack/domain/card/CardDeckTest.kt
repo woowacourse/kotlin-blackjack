@@ -16,7 +16,7 @@ class CardDeckTest {
     @Test
     fun `카드 발행이 가능한지 확인한다`() {
         // given
-        val cardDeck = CardDeck()
+        val cardDeck = CardDeck(RandomCardsGenerator())
 
         // when
         val actual = cardDeck.checkProvidePossible()
@@ -28,7 +28,7 @@ class CardDeckTest {
     @Test
     fun `카드를 한 장 발행하고 해당 카드를 삭제한다`() {
         // given
-        val cardDeck = CardDeck()
+        val cardDeck = CardDeck(RandomCardsGenerator())
 
         // when
         repeat(52) {

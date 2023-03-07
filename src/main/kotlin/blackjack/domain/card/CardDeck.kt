@@ -1,6 +1,6 @@
 package blackjack.domain.card
 
-class CardDeck {
+class CardDeck(cardsGenerator: CardsGenerator) {
 
     private val cards: MutableList<Card> = RandomCardsGenerator().generate().toMutableList()
 

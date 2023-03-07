@@ -12,9 +12,11 @@ import blackjack.view.OutputView
 class BlackjackController(
     private val inputView: InputView = InputView(),
     private val outputView: OutputView = OutputView(),
-    private val cardDeck: CardDeck = CardDeck(),
-    private val blackjackManager: BlackjackManager = BlackjackManager()
+    private val cardsGenerator: CardsGenerator = RandomCardsGenerator()
 ) {
+
+    private var blackjackManager: BlackjackManager = BlackjackManager(cardsGenerator)
+    private var cardDeck: CardDeck = CardDeck(cardsGenerator)
 
     fun run() {
         val dealer = Dealer()
