@@ -11,6 +11,8 @@ class Players(private val players: List<Player>) {
         players.forEach { it.addCard(deck.draw()) }
     }
 
+    fun getFirstOpenCards(): Map<String, List<Card>> = players.associate { it.name to it.getFirstOpenCards() }
+
     fun getCards(): Map<String, List<Card>> = players.associate { it.name to it.getCards() }
 
     fun toList(): List<Player> = players.toList()

@@ -3,21 +3,15 @@ package blackjack.view
 import blackjack.domain.Card
 import blackjack.domain.GameResult
 import blackjack.domain.PlayerResults
-import blackjack.dto.HandsDTO
 import blackjack.dto.ScoreDTO
 import blackjack.dto.ScoresDTO
 
 object OutputView {
     private const val SEPARATOR = ", "
 
-    fun printInitialHands(dto: HandsDTO) {
-        println("${dto.dealerHand.name}와 ${dto.playerHands.joinToString(SEPARATOR) { it.name }}에게 2장의 카드를 나누었습니다.")
-        printHands(dto)
-    }
-
-    private fun printHands(dto: HandsDTO) {
-        // printHand(dto.dealerHand)
-        // dto.playerHands.forEach(::printHand)
+    fun printFirstOpenCards(cards: Map<String, List<Card>>) {
+        println("${cards.keys.first()}와 ${cards.keys.drop(1).joinToString(SEPARATOR)}에게 2장의 카드를 나누었습니다.")
+        printCards(cards)
     }
 
     fun printCards(cards: Map<String, List<Card>>) {

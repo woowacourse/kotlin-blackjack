@@ -30,7 +30,7 @@ class BlackJackController {
 
     private fun setUpCard(blackJack: BlackJack) {
         drawInitialCards(blackJack)
-        // OutputView.printInitialHands(blackJack.getInitialHands())
+        OutputView.printFirstOpenCards(blackJack.getFirstOpenCards())
         OutputView.printInterval()
     }
 

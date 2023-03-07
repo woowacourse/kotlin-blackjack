@@ -6,7 +6,7 @@ class Participants(private val dealer: Dealer, private val players: Players) {
         players.drawAll(deck)
     }
 
-    // fun getInitialHands(): HandsDTO = HandsDTO(dealer.getFirstCardHand(), players.getHands())
+    fun getFirstOpenCards(): Map<String, List<Card>> = mapOf(dealer.name to dealer.getFirstOpenCards()) + players.getFirstOpenCards()
 
     fun getPlayers(): List<Player> = players.toList()
 
