@@ -3,7 +3,7 @@ package blackjack.domain.player
 import blackjack.domain.BattingMoney
 import blackjack.domain.card.Cards
 
-class Player(
+data class Player(
     val name: PlayerName,
     val battingMoney: BattingMoney,
     val checkCurrentCards: (player: Player) -> Unit = { },

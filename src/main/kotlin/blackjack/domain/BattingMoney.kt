@@ -1,6 +1,7 @@
 package blackjack.domain
 
-class BattingMoney(val value: Int) {
+@JvmInline
+value class BattingMoney(val value: Int) {
 
     init {
         require(value > 0) {
