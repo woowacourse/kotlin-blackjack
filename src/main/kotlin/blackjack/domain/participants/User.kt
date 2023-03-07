@@ -7,11 +7,9 @@ abstract class User(name: String) {
     val name = Name(name)
     var cards = Cards()
 
-    val score: Int
-        get() = cards.result.score()
+    fun getScore(): Int = cards.result.score()
 
-    val isBlackJack: Boolean
-        get() = cards.result.score() == BLACKJACK_NUMBER
+    fun isBlackJack(): Boolean = cards.result.score() == BLACKJACK_NUMBER
 
     abstract val isContinue: Boolean
 

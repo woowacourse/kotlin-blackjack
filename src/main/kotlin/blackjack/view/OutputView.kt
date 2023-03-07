@@ -39,7 +39,7 @@ class OutputView {
     }
 
     private fun outputScore(user: User) {
-        print(" - 결과: ${user.score}")
+        print(" - 결과: ${user.getScore()}")
     }
 
     private fun outputOutcomes(blackJack: BlackJack) {

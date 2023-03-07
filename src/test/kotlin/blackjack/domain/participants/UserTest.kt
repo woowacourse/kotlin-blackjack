@@ -19,6 +19,6 @@ class UserTest {
         val user = Guest("아크")
         user.draw(Card(CardMark.CLOVER, CardValue.EIGHT))
         user.draw(Card(CardMark.SPADE, CardValue.EIGHT))
-        assertThat(user.score).isEqualTo(16)
+        assertThat(user.getScore()).isEqualTo(16)
     }
 }

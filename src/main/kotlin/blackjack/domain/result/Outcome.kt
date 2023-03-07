@@ -1,6 +1,6 @@
 package blackjack.domain.result
+
 import blackjack.domain.participants.User
-import java.lang.IllegalStateException
 
 enum class Outcome {
     WIN, DRAW, LOSE;
@@ -10,13 +10,13 @@ enum class Outcome {
 
         fun User.winTo(other: User): Outcome =
             when {
-                other.score > BLACKJACK_NUMBER && this.score > BLACKJACK_NUMBER -> DRAW
-                other.score > BLACKJACK_NUMBER -> WIN
-                this.score > BLACKJACK_NUMBER -> LOSE
+                other.getScore() > BLACKJACK_NUMBER && this.getScore() > BLACKJACK_NUMBER -> DRAW
+                other.getScore() > BLACKJACK_NUMBER -> WIN
+                this.getScore() > BLACKJACK_NUMBER -> LOSE
 
-                other.score == this.score -> DRAW
-                this.score > other.score -> WIN
-                other.score > this.score -> LOSE
+                other.getScore() == this.getScore() -> DRAW
+                this.getScore() > other.getScore() -> WIN
+                other.getScore() > this.getScore() -> LOSE
 
                 else -> throw IllegalStateException()
             }
