@@ -76,4 +76,56 @@ class DealerTest {
 
         // assertThat(dealer.getFirstCardHand().hand.first()).isEqualTo(Card(Suit.SPADE, CardNumber.ACE))
     }
+
+    @Test
+    fun `플레이어가 21점을 초과하면 패배한다`() {
+        with(dealer) {
+            addCard(Card(Suit.SPADE, CardNumber.JACK))
+            addCard(Card(Suit.SPADE, CardNumber.QUEEN))
+            addCard(Card(Suit.SPADE, CardNumber.KING))
+        }
+
+        assertThat(dealer judge 22).isEqualTo(GameResult.LOSE)
+    }
+
+    @Test
+    fun `딜러만 21점을 초과하면 플레이어가 승리한다`() {
+        with(dealer) {
+            addCard(Card(Suit.SPADE, CardNumber.JACK))
+            addCard(Card(Suit.SPADE, CardNumber.QUEEN))
+            addCard(Card(Suit.SPADE, CardNumber.KING))
+        }
+
+        assertThat(dealer judge 21).isEqualTo(GameResult.WIN)
+    }
+
+    @Test
+    fun `딜러와 플레이어 모두 21점을 초과하지 않고 플레이어가 딜러보다 점수가 높으면 플레이어가 승리한다`() {
+        with(dealer) {
+            addCard(Card(Suit.SPADE, CardNumber.JACK))
+            addCard(Card(Suit.SPADE, CardNumber.QUEEN))
+        }
+
+        assertThat(dealer judge 21).isEqualTo(GameResult.WIN)
+    }
+
+    @Test
+    fun `딜러와 플레이어 모두 21점을 초과하지 않고 플레이어와 딜러의 점수가 같으면 무승부이다`() {
+        with(dealer) {
+            addCard(Card(Suit.SPADE, CardNumber.ACE))
+            addCard(Card(Suit.SPADE, CardNumber.QUEEN))
+        }
+
+        assertThat(dealer judge 21).isEqualTo(GameResult.DRAW)
+    }
+
+    @Test
+    fun `딜러와 플레이어 모두 21점을 초과하지 않고 딜러가 플레이어보다 점수가 높으면 플레이어가 패배한다`() {
+        with(dealer) {
+            addCard(Card(Suit.SPADE, CardNumber.ACE))
+            addCard(Card(Suit.SPADE, CardNumber.QUEEN))
+        }
+
+        assertThat(dealer judge 20).isEqualTo(GameResult.LOSE)
+    }
 }

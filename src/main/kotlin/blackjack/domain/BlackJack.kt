@@ -1,6 +1,5 @@
 package blackjack.domain
 
-import blackjack.dto.ResultsDTO
 import blackjack.dto.ScoresDTO
 
 class BlackJack(private val deck: CardDeck, private val participants: Participants) {
@@ -20,7 +19,7 @@ class BlackJack(private val deck: CardDeck, private val participants: Participan
 
     fun getGameScores(): ScoresDTO = participants.getGameScores()
 
-    fun getGameResults(): ResultsDTO = participants.getGameResults()
+    fun getGameResults(): PlayerResults = participants.judgePlayers()
 
     companion object {
         private const val BLACKJACK_SCORE = 21
