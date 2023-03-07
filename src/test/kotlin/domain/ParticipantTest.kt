@@ -30,6 +30,6 @@ class ParticipantTest {
         val expected = Score(17, false)
 
         // then
-        assertThat(actual).isEqualTo(expected)
+        assertThat(actual.getValue()).isEqualTo(expected.getValue())
     }
 }

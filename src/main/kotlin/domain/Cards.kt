@@ -21,7 +21,7 @@ class Cards(list: List<Card>) {
     }
 
     private fun isContainAce(): Boolean {
-        return _cards.count { it.isAce } == NO_COUNT
+        return _cards.count { it.isAce } == HAS_ACE
     }
 
     fun getScore(): Score = Score(sum(), isContainAce())
@@ -29,6 +29,6 @@ class Cards(list: List<Card>) {
     companion object {
         private const val MINIMUM_CARDS_SIZE = 2
         private const val ERROR_CARDS_SIZE = "[ERROR] 초기 카드는 ${MINIMUM_CARDS_SIZE}장 이상이어야 합니다."
-        private const val NO_COUNT = 0
+        private const val HAS_ACE = 1
     }
 }
