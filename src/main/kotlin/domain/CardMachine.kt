@@ -1,38 +1,24 @@
 package domain
 
+import domain.card.Card
+import domain.card.CardNumber
+import domain.card.Shape
+
 class CardMachine {
     private val cards: MutableList<Card> = mutableListOf()
 
     init {
-        addCards()
+        createDeckOfCard()
         cards.shuffle()
     }
 
-    fun getNewCard() = cards.removeFirst()
+    fun getCard(count: Int): List<Card> = List(count) { cards.removeFirst() }
 
-    fun getCardPairs(count: Int): List<List<Card>> {
-        return List(count) { getCardPair() }
-    }
+    private fun createDeckOfCard() = Shape.values().forEach { shape -> matchCardValueAndShape(shape) }
 
-    fun getCardPair(): List<Card> {
-        val pickedCard = cards.take(PAIR)
-        cards.removeAll(pickedCard)
-        return pickedCard
-    }
-
-    private fun addCards() {
-        for (shape in Card.Shape.values()) {
-            addCardValue(shape)
+    private fun matchCardValueAndShape(shape: Shape) {
+        CardNumber.values().map { value ->
+            cards.add(Card.of(shape, value))
         }
-    }
-
-    private fun addCardValue(shape: Card.Shape) {
-        Card.Value.values().map { value ->
-            cards.add(Card(shape, value))
-        }
-    }
-
-    companion object {
-        private const val PAIR = 2
     }
 }
