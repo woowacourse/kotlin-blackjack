@@ -3,8 +3,9 @@ package controller
 import domain.Name
 import domain.Names
 import domain.phase.DealerAddPhase
-import domain.phase.GameScorePrintPhase
-import domain.phase.InitPrintPhase
+import domain.phase.GameResultMoneyPhase
+import domain.phase.GameScorePhase
+import domain.phase.InitPhase
 import domain.phase.Phases
 import domain.phase.PlayersSelectAddPhase
 import view.Answer
@@ -18,11 +19,13 @@ class BlackJackGameController(private val inputView: InputView, private val resu
     }
 
     private fun initGame(): BlackJackGame {
-        val initPrintPhase = InitPrintPhase(resultView::printGameInit, resultView::printInitCards)
+        val initPhase = InitPhase(resultView::printGameInit, resultView::printInitCards)
         val playersSelectAddPhase = PlayersSelectAddPhase(::getChoiceOfAddCard, resultView::printPlayerCard)
         val dealerSelectAddPhase = DealerAddPhase(resultView::printDealerAddCard)
-        val gameScorePrintPhase = GameScorePrintPhase(resultView::printScore, resultView::printGameResult)
-        val phases = Phases(initPrintPhase, playersSelectAddPhase, dealerSelectAddPhase, gameScorePrintPhase)
+        val gameScorePhase = GameScorePhase(resultView::printScore)
+        val gameResultMoneyPhase = GameResultMoneyPhase(resultView::printGameResult)
+        val phases =
+            Phases(initPhase, playersSelectAddPhase, dealerSelectAddPhase, gameScorePhase, gameResultMoneyPhase)
         return BlackJackGame(phases)
     }
 
