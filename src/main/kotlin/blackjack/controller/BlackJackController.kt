@@ -19,12 +19,11 @@ class BlackJackController(
     }
 
     private fun setUpBlackJack(): BlackJack = blackJack {
-        cardDeck(Cards.all())
         participants {
             dealer()
             guests(inputView.inputParticipants())
         }
-        draw()
+        initDraw(Cards.all())
     }
 
     private fun startBlackJack(blackJack: BlackJack) =
