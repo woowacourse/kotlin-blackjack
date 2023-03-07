@@ -11,10 +11,10 @@ class DealerTest {
     @Test
     fun `2장의 합이 16이하일 경우, false 반환한다`() {
         // given
-        val dealer = Dealer(
+        val dealer = Dealer.create(
             cards = mutableListOf<Card>(
-                Card(Shape.CLUBS, CardNumber.FIVE),
-                Card(Shape.DIAMONDS, CardNumber.THREE),
+                Card.of(Shape.CLUBS, CardNumber.FIVE),
+                Card.of(Shape.DIAMONDS, CardNumber.THREE),
             ),
         )
 
@@ -28,10 +28,10 @@ class DealerTest {
     @Test
     fun `2장의 합이 17이상인 경우, true를 반환한다`() {
         // given
-        val dealer = Dealer(
+        val dealer = Dealer.create(
             cards = mutableListOf<Card>(
-                Card(Shape.CLUBS, CardNumber.JACK),
-                Card(Shape.DIAMONDS, CardNumber.EIGHT),
+                Card.of(Shape.CLUBS, CardNumber.JACK),
+                Card.of(Shape.DIAMONDS, CardNumber.EIGHT),
             ),
         )
 

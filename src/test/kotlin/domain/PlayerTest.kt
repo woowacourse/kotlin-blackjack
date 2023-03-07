@@ -12,20 +12,20 @@ import org.junit.jupiter.params.provider.MethodSource
 class PlayerTest {
 
     @Test
-    fun `딜러가 소지한 카드의 합은 8이다`() {
+    fun `딜러는 A와 J를 들고 있다`() {
         // given
-        val dealer: Player = Dealer(
+        val dealer: Player = Dealer.create(
             cards = mutableListOf<Card>(
-                Card(Shape.CLUBS, CardNumber.FIVE),
-                Card(Shape.DIAMONDS, CardNumber.THREE),
+                Card.of(Shape.CLUBS, CardNumber.ACE),
+                Card.of(Shape.DIAMONDS, CardNumber.JACK),
             ),
         )
 
         // when
-        val actual = dealer.calculateCardValueSum()
+        val actual = dealer.addScoreTenIfHasAce()
 
         // then
-        Assertions.assertThat(actual).isEqualTo(8)
+        Assertions.assertThat(actual).isEqualTo(21)
     }
 
     @MethodSource("provideOneAceCards")
@@ -62,30 +62,30 @@ class PlayerTest {
     }
 
     companion object {
-        private val ACE = Card(Shape.DIAMONDS, CardNumber.ACE)
+        private val ACE = Card.of(Shape.DIAMONDS, CardNumber.ACE)
 
         @JvmStatic
         fun provideOneAceCards(): List<Arguments> = listOf(
             Arguments.of(
                 listOf(
                     ACE,
-                    Card(Shape.DIAMONDS, CardNumber.NINE),
-                    Card(Shape.DIAMONDS, CardNumber.FIVE),
+                    Card.of(Shape.DIAMONDS, CardNumber.NINE),
+                    Card.of(Shape.DIAMONDS, CardNumber.FIVE),
                 ),
                 15,
             ),
             Arguments.of(
                 listOf(
-                    Card(Shape.DIAMONDS, CardNumber.TWO),
-                    Card(Shape.DIAMONDS, CardNumber.THREE),
+                    Card.of(Shape.DIAMONDS, CardNumber.TWO),
+                    Card.of(Shape.DIAMONDS, CardNumber.THREE),
                     ACE,
                 ),
                 16,
             ),
             Arguments.of(
                 listOf(
-                    Card(Shape.DIAMONDS, CardNumber.THREE),
-                    Card(Shape.DIAMONDS, CardNumber.JACK),
+                    Card.of(Shape.DIAMONDS, CardNumber.THREE),
+                    Card.of(Shape.DIAMONDS, CardNumber.JACK),
                     ACE,
                 ),
                 14,
@@ -97,7 +97,7 @@ class PlayerTest {
             Arguments.of(
                 listOf(
                     ACE,
-                    Card(Shape.DIAMONDS, CardNumber.TEN),
+                    Card.of(Shape.DIAMONDS, CardNumber.TEN),
                     ACE,
                 ),
                 12,
@@ -105,7 +105,7 @@ class PlayerTest {
             Arguments.of(
                 listOf(
                     ACE,
-                    Card(Shape.DIAMONDS, CardNumber.THREE),
+                    Card.of(Shape.DIAMONDS, CardNumber.THREE),
                     ACE,
                 ),
                 15,
@@ -114,7 +114,7 @@ class PlayerTest {
                 listOf(
                     ACE,
                     ACE,
-                    Card(Shape.DIAMONDS, CardNumber.FOUR),
+                    Card.of(Shape.DIAMONDS, CardNumber.FOUR),
                 ),
                 16,
             ),

@@ -12,8 +12,8 @@ class UserTest {
         // given
         val user = User.create(
             "산군" to listOf<Card>(
-                Card(Shape.CLUBS, CardNumber.FIVE),
-                Card(Shape.DIAMONDS, CardNumber.THREE),
+                Card.of(Shape.CLUBS, CardNumber.FIVE),
+                Card.of(Shape.DIAMONDS, CardNumber.THREE),
             ),
         )
 
@@ -25,18 +25,18 @@ class UserTest {
     }
 
     @Test
-    fun `플레이어는 소지한 카드의 합은 10이다`() {
+    fun `플레이어가 소지한 카드의 합은 10이다`() {
         // given
         val user = User.create(
             "산군" to
                 listOf<Card>(
-                    Card(Shape.CLUBS, CardNumber.FIVE),
-                    Card(Shape.DIAMONDS, CardNumber.FIVE),
+                    Card.of(Shape.CLUBS, CardNumber.FIVE),
+                    Card.of(Shape.DIAMONDS, CardNumber.FIVE),
                 ),
         )
 
         // when
-        val actual = user.calculateCardValueSum()
+        val actual = user.addScoreTenIfHasAce()
 
         // then
         assertThat(actual).isEqualTo(10)
