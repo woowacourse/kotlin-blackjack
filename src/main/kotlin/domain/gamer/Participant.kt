@@ -18,31 +18,14 @@ abstract class Participant(open val cards: Cards) {
         cards.addCard(card)
     }
 
-    fun calculateCardSum(): Int {
-        var value = 0
-        cards.getCards().forEach {
-            value += getCardValue(it, value)
-        }
-        return value
-    }
+    fun calculateCardSum(): Int = cards.getCards()
+        .sumOf { it.cardValue.value } +
+        if (isAceValueToEleven()) CardValue.ACE_ELEVEN_VALUE - CardValue.ACE.value else 0
 
-    private fun getCardValue(card: Card, value: Int) =
-        if (card.cardValue == CardValue.ACE) {
-            getAceValue(value)
-        } else {
-            card.cardValue.value
-        }
+    private fun isAceValueToEleven() = countAce() >= 1 && cards.getCards()
+        .sumOf { it.cardValue.value } <= CardValue.ACE_ELEVEN_VALUE
 
-    private fun getAceValue(value: Int) =
-        if (countAce() >= ACE_COUNT_VALUE_CHANGE_CONDITION) {
-            CardValue.ACE.value
-        } else if (value > Referee.CARD_SUM_MAX_VALUE - CardValue.ACE_ELEVEN_VALUE) {
-            CardValue.ACE.value
-        } else {
-            CardValue.ACE_ELEVEN_VALUE
-        }
-
-    private fun countAce() = cards.getCards().count { it.cardValue.title == "ACE" }
+    private fun countAce() = cards.getCards().count { it.cardValue.title == CardValue.ACE.title }
 
     fun checkBurst(): Boolean = calculateCardSum() > Referee.CARD_SUM_MAX_VALUE
 
