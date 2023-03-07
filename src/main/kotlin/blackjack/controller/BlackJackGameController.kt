@@ -2,7 +2,6 @@ package blackjack.controller
 
 import blackjack.domain.BlackJackGame
 import blackjack.view.InputView
-import blackjack.view.InputView.requestAdditionalDraw
 import blackjack.view.OutputView
 
 class BlackJackGameController(
@@ -29,7 +28,10 @@ class BlackJackGameController(
 
         OutputView.printCardDividingMessage(blackJackGame.dealer, blackJackGame.players)
 
-        blackJackGame.drawAdditionalCardsForPlayers(::requestAdditionalDraw)
+        blackJackGame.drawAdditionalCardsForPlayers(
+            isPlayerWantedAdditionalCards = InputView::requestAdditionalDraw,
+            checkCurrentCards = OutputView::printPlayerCurrentCards
+        )
 
         OutputView.printIsDealerReceivedCard(blackJackGame.drawAdditionalCardsForDealer())
 

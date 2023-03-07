@@ -4,6 +4,7 @@ import blackjack.domain.dealer.Dealer
 import blackjack.domain.dealer.DrawResult
 import blackjack.domain.gameResult.TotalGameResult
 import blackjack.domain.player.Player
+import blackjack.domain.player.PlayerName
 
 class BlackJackGame(
     val dealer: Dealer = Dealer(),
@@ -13,22 +14,25 @@ class BlackJackGame(
     lateinit var players: List<Player>
         private set
 
-    // TODO: mapIndex 맘에 안듦...
     fun initPlayers(
         playerNames: List<String>,
         battingMoneys: List<Int>,
     ) {
         players = playerNames.mapIndexed { playerIndex, playerName ->
-            Player(playerName, battingMoneys[playerIndex])
+            Player(PlayerName(playerName), BattingMoney(battingMoneys[playerIndex]))
         }
     }
 
-    // TODO: List<Player>가 Controller에 존재하는 것이 아니라 domain에 존재해야 하기 떄문에 메소드를 넘겨 넘겨줘야하는 상황
     fun drawAdditionalCardsForPlayers(
         isPlayerWantedAdditionalCards: (player: Player) -> Boolean,
-    ){
+        checkCurrentCards: (player: Player) -> Unit = { },
+    ) {
         players.forEach { player ->
-            drawCardsRepeatedly(player) { isPlayerWantedAdditionalCards(player) }
+            drawCardsRepeatedly(
+                player = player,
+                isPlayerWantedAdditionalCards = { isPlayerWantedAdditionalCards(player) },
+                checkCurrentCards = { checkCurrentCards(player) }
+            )
         }
     }
 
@@ -36,12 +40,13 @@ class BlackJackGame(
     private fun drawCardsRepeatedly(
         player: Player,
         isPlayerWantedAdditionalCards: (player: Player) -> Boolean,
+        checkCurrentCards: (player: Player) -> Unit = { },
     ) {
         do {
             val isPlayerWanted = isPlayerWantedAdditionalCards(player)
-        } while (isPlayerWanted && player.drawCard())
+        } while (isPlayerWanted && player.drawCard { checkCurrentCards(player) })
 
-        player.checkIsDrawnNothing()
+        player.checkIsDrawnNothing { checkCurrentCards(player) }
     }
 
     fun drawAdditionalCardsForDealer(): DrawResult {
