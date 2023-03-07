@@ -2,6 +2,8 @@ package controller
 
 import domain.CardGame
 import domain.CardPackGenerator
+import model.Bet
+import model.BetInfos
 import model.Dealer
 import model.Dealer.Companion.DEALER
 import model.GameResult
@@ -20,12 +22,13 @@ class Controller(private val inputView: InputView, private val outputView: Outpu
         val cardGame = CardGame(cardPack)
         val players = cardGame.initPlayers(initNames())
         val dealer = cardGame.initDealer()
+        val betInfos = initBetInfo(players)
         val participants = Participants.of(dealer, players)
         printParticipants(participants)
         askGetMorePlayersCard(players)
         getMoreDealerCard(dealer)
         outputView.printAllPlayerStatusResult(participants)
-        outputView.printFinalResult(GameResult.of(dealer, players.toList()))
+        outputView.printFinalResult(GameResult.of(dealer, betInfos))
     }
 
     private fun initNames(): Names {
@@ -33,8 +36,27 @@ class Controller(private val inputView: InputView, private val outputView: Outpu
         return Names(inputView.readName().map(::Name))
     }
 
+    private fun initBetInfo(players: Players): BetInfos =
+        BetInfos(
+            buildMap {
+                players.toList().forEach {
+                    put(it, askHowMuchBet(it.name))
+                }
+            }
+        )
+
+    private fun askHowMuchBet(name: Name): Bet {
+        outputView.printHowMuchBet(name)
+        return Bet(inputView.readBet())
+    }
+
     private fun printParticipants(participants: Participants) {
-        outputView.printNoticeDistributeCards(Names(participants.toList().filter { it.name.value != DEALER }.map { it.name }))
+        outputView.printNoticeDistributeCards(
+            Names(
+                participants.toList().filter { it.name.value != DEALER }
+                    .map { it.name }
+            )
+        )
         outputView.printPlayersStatus(participants)
     }
 
