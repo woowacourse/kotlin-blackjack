@@ -47,9 +47,9 @@ class OutputView {
     }
 
     fun printSumResult(dealer: Dealer, participants: Participants) {
-        printCurrentPlayerCards(dealer, "- 결과: ${dealer.cards.sumCardsNumber()}")
+        printCurrentPlayerCards(dealer, "- 결과: ${dealer.cards.sum()}")
         participants.values.forEach {
-            printCurrentPlayerCards(it, "- 결과: ${it.cards.sumCardsNumber()}")
+            printCurrentPlayerCards(it, "- 결과: ${it.cards.sum()}")
         }
     }
 

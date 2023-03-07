@@ -10,10 +10,9 @@ class Cards() {
         _cards.add(card)
     }
 
-    fun sumCardsNumber(): Int {
+    fun sum(): Int {
         if (isBlackjack()) return MAX_SUM_NUMBER
-        val result = _cards.sumOf { it.number.value }
-        return result
+        return _cards.sumOf { it.number.value }
     }
 
     private fun isBlackjack(): Boolean {

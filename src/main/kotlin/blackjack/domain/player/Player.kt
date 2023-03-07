@@ -9,6 +9,7 @@ abstract class Player(val name: String) {
     init {
         require(name.length in 2..10) { ERROR_NAME_LENGTH }
     }
+    abstract fun canHit(): Boolean
 
     fun addCard(card: Card) {
         cards.addCard(card)

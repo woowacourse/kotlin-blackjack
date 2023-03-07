@@ -49,7 +49,7 @@ class PlayerTest {
         val player = TestPlayer("aa")
         player.addCard(Card(CardNumber.FOUR, CardShape.HEART))
         player.addCard(Card(CardNumber.EIGHT, CardShape.CLOVER))
-        val actual = player.cards.sumCardsNumber()
+        val actual = player.cards.sum()
         assertThat(actual).isEqualTo(12)
     }
 
@@ -61,5 +61,9 @@ class PlayerTest {
         assertThat(player.cards.values.size).isEqualTo(1)
     }
 
-    class TestPlayer(name: String) : Player(name)
+    class TestPlayer(name: String) : Player(name) {
+        override fun canHit(): Boolean {
+            TODO("Not yet implemented")
+        }
+    }
 }

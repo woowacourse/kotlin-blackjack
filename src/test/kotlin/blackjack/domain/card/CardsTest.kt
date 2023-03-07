@@ -17,7 +17,7 @@ class CardsTest {
         val cards = Cards()
         cards.addCard(Card(CardNumber.ONE, CardShape.DIAMOND))
         cards.addCard(Card(CardNumber.JACK, CardShape.CLOVER))
-        val actual = cards.sumCardsNumber()
+        val actual = cards.sum()
         assertThat(actual).isEqualTo(21)
     }
 }

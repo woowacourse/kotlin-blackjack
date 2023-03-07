@@ -9,11 +9,8 @@ class Participant(name: String) : Player(name) {
         private set
 
     fun updateResult(dealerSum: Int) {
-        result = Result.valueOf(dealerSum, cards.sumCardsNumber())
+        result = Result.valueOf(dealerSum, cards.sum())
     }
 
-    fun isGenerateCardPossible(): Boolean {
-        if (cards.sumCardsNumber() > MAX_SUM_NUMBER) return false
-        return true
-    }
+    override fun canHit(): Boolean = cards.sum() < MAX_SUM_NUMBER
 }

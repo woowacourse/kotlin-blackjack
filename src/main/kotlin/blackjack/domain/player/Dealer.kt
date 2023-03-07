@@ -16,7 +16,7 @@ class Dealer(name: String = "딜러") : Player(name) {
 
     fun decideParticipantsResult(participants: Participants) {
         participants.values.forEach {
-            it.updateResult(cards.sumCardsNumber())
+            it.updateResult(cards.sum())
         }
     }
 
@@ -34,7 +34,7 @@ class Dealer(name: String = "딜러") : Player(name) {
 
     fun drawCard(): Card = deck.draw()
 
-    fun canHit(): Boolean = cards.sumCardsNumber() <= MIN_SUM_NUMBER
+    override fun canHit(): Boolean = cards.sum() <= MIN_SUM_NUMBER
 
     private fun setInitialParticipantCards(participant: Participant) =
         repeat(CARD_SETTING_COUNT) { participant.addCard(deck.draw()) }

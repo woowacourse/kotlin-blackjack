@@ -41,7 +41,7 @@ class BlackjackController(
 
     private fun drawParticipantCard(dealer: Dealer, participant: Participant) {
         while (true) {
-            val check = participant.isGenerateCardPossible()
+            val check = participant.canHit()
             if (check) {
                 val answer: Boolean = readHitOrNot(participant.name)
                 if (answer) participant.addCard(dealer.drawCard())
