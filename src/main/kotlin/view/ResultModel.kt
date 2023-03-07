@@ -5,6 +5,7 @@ import model.FinalResult
 class ResultModel {
     fun getString(result: FinalResult) = when (result) {
         FinalResult.WIN -> WIN
+        FinalResult.BLACKJACK_WIN -> WIN
         FinalResult.LOSE -> LOSE
         FinalResult.PUSH -> PUSH
     }

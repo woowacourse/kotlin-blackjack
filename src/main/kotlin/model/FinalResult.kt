@@ -1,5 +1,5 @@
 package model
 
 enum class FinalResult {
-    WIN, PUSH, LOSE
+    BLACKJACK_WIN, WIN, PUSH, LOSE
 }
