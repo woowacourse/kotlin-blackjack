@@ -18,8 +18,7 @@ class Controller(
         blackJackGame.playDealerTurn { printDealerPickNewCard() }
         blackJackGame.playUserTurn(::readMoreCardCommand, ::printUserCards)
         gameResultView.printCardResult(blackJackGame.players)
-        blackJackGame.calculateGameResult()
-        gameResultView.printFinalResult(blackJackGame.gameResults, blackJackGame.players)
+        blackJackGame.judgeGameResult(gameResultView::printFinalResult)
     }
 
     private fun readUserNames(): List<String> {

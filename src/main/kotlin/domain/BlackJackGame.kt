@@ -4,7 +4,6 @@ class BlackJackGame {
 
     private val deck: Deck = Deck.create(NUMBER_OF_CARD_SET)
     lateinit var players: Players
-    lateinit var gameResults: List<GameResult>
 
     fun setUpBlackJackGame(
         readUserNames: () -> List<String>,
@@ -58,14 +57,17 @@ class BlackJackGame {
         return
     }
 
-    fun calculateGameResult() {
+    fun judgeGameResult(
+        printGameResult: (List<GameResult>, Players) -> Unit
+    ) {
         val referee: Referee = Referee(
             Score.valueOf(players.dealer.cards.actualCardValueSum()),
             players.users.map { user ->
                 Score.valueOf(user.cards.actualCardValueSum())
             },
         )
-        gameResults = referee.getResult()
+        val userGameResults = referee.getResult()
+        printGameResult(userGameResults, players)
     }
 
     companion object {
