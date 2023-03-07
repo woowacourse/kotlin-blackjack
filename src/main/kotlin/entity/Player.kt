@@ -6,12 +6,8 @@ import model.CardFactory
 class Player(val name: Name, private val bet: Money, val cards: Cards = Cards(listOf())) : User {
     override fun isDistributable(): Boolean = cards.sumOfNumbers() < GameRule.WINNING_NUMBER
 
-    fun addMoreCards(cardFactory: CardFactory, condition: (player: Player) -> Boolean): Boolean {
-        if (isDistributable() && condition(this)) {
-            cards.addCards(cardFactory.generate(User.SINGLE_DISTRIBUTE_COUNT))
-            return true
-        }
-        return false
+    fun addMoreCards(cardFactory: CardFactory) {
+        cards.addCards(cardFactory.generate(User.SINGLE_DISTRIBUTE_COUNT))
     }
 
     fun determineGameResult(dealerCardNumberSum: Int): Pair<Player, GameResult> {
@@ -20,9 +16,11 @@ class Player(val name: Name, private val bet: Money, val cards: Cards = Cards(li
             isWin(playerCardNumberSum, dealerCardNumberSum) -> Pair(
                 this, GameResult(GameResultType.WIN, calculateWinMoney(GameResultType.WIN))
             )
+
             isDraw(playerCardNumberSum, dealerCardNumberSum) -> Pair(
                 this, GameResult(GameResultType.DRAW, calculateWinMoney(GameResultType.DRAW))
             )
+
             else -> Pair(this, GameResult(GameResultType.LOSE, calculateWinMoney(GameResultType.LOSE)))
         }
     }

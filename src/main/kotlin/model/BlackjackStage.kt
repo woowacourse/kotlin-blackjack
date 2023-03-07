@@ -13,12 +13,17 @@ class BlackjackStage(val dealer: Dealer = Dealer(), val players: Players, privat
         }
     }
 
-    fun distributePlayers(distributeCondition: (player: Player) -> Boolean): Player? {
-        players.value.forEach { it ->
-            if (it.addMoreCards(cardFactory) { distributeCondition(it) })
-                return it
+    fun distributePlayers(distributeCondition: (player: Player) -> Boolean, printPlayerStatus: (player: Player) -> Unit) {
+        for (player in players.value) {
+            distributePlayer(player, distributeCondition, printPlayerStatus)
         }
-        return null
+    }
+
+    private fun distributePlayer(player: Player, distributeCondition: (player: Player) -> Boolean, printPlayerStatus: (player: Player) -> Unit) {
+        while (player.isDistributable() && distributeCondition(player)) {
+            player.addMoreCards(cardFactory)
+            printPlayerStatus(player)
+        }
     }
 
     fun distributeDealer(printDealerStatus: () -> Unit) {

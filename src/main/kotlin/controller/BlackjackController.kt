@@ -26,13 +26,11 @@ class BlackjackController {
         BlackjackStage(players = readPlayers(), cardFactory = RandomCardFactory())
 
     private fun distributeMoreCardPlayer(blackjackStage: BlackjackStage) {
-        val player = blackjackStage.distributePlayers {
+        blackjackStage.distributePlayers({
             gameView.printWhetherMoreCard(it.name.value)
             gameView.readWhetherMoreCard()
-        }
-        if (player != null) {
-            gameView.printPlayerStatus(player)
-            distributeMoreCardPlayer(blackjackStage)
+        }) {
+            gameView.printPlayerStatus(it)
         }
     }
 
