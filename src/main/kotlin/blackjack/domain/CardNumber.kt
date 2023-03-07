@@ -14,17 +14,4 @@ enum class CardNumber(val value: Int) {
     JACK(10),
     QUEEN(10),
     KING(10),
-    ;
-
-    companion object {
-        fun valueOf(cardNumber: CardNumber): String {
-            return when (cardNumber) {
-                ACE -> "A"
-                TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN -> cardNumber.value.toString()
-                JACK -> "J"
-                QUEEN -> "Q"
-                KING -> "K"
-            }
-        }
-    }
 }

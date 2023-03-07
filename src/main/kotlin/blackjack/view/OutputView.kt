@@ -16,7 +16,7 @@ object OutputView {
     private const val DEALER_WIN = 0
     private const val DEALER_LOSE = 1
     private const val DRAW = 2
-    private fun makeCardString(card: Card): String = CardNumber.valueOf(card.cardNumber) + card.shape.korean
+    private fun makeCardString(card: Card): String = getCardNumberString(card.cardNumber) + card.shape.korean
 
     private fun makeBunchString(bunch: CardBunch): String =
         bunch.cards.joinToString(separator = ", ") { makeCardString(it) }
@@ -83,5 +83,15 @@ object OutputView {
         Consequence.WIN -> "${player.name}: 승\n"
         Consequence.LOSE -> "${player.name}: 패\n"
         Consequence.DRAW -> "${player.name}: 무\n"
+    }
+
+    private fun getCardNumberString(cardNumber: CardNumber): String {
+        return when (cardNumber) {
+            CardNumber.ACE -> "A"
+            CardNumber.TWO, CardNumber.THREE, CardNumber.FOUR, CardNumber.FIVE, CardNumber.SIX, CardNumber.SEVEN, CardNumber.EIGHT, CardNumber.NINE, CardNumber.TEN -> cardNumber.value.toString()
+            CardNumber.JACK -> "J"
+            CardNumber.QUEEN -> "Q"
+            CardNumber.KING -> "K"
+        }
     }
 }
