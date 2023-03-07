@@ -7,7 +7,7 @@ class Player(hand: Hand, name: Name) : Participant(hand, name) {
         val playerPoint = hand.sum()
         val dealerPoint = dealer.hand.sum()
 
-        if (isBust()) FinalResult.LOSE // 플레이어 버스트
+        if (isBust()) return FinalResult.LOSE // 플레이어 버스트
         if (dealer.isBust()) return FinalResult.WIN // 딜러 버스트
         if (isBlackJack() && dealer.isBlackJack()) return FinalResult.PUSH // 둘 다 블랙잭
         if (isBlackJack()) return FinalResult.BLACKJACK_WIN // 플레이어만 블랙잭
