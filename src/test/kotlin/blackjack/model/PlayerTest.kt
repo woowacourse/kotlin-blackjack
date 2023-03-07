@@ -3,11 +3,11 @@ package blackjack.model
 import domain.CardPackGenerator
 import model.Card
 import model.Dealer
+import model.FinalResult
 import model.Hand
 import model.Name
 import model.Player
 import model.Rank
-import model.Result
 import model.Suit
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -81,7 +81,7 @@ class PlayerTest {
             Rank.JACK,
             Rank.KING
         )
-        assertThat(player.judge(dealer)).isEqualTo(Result.PUSH)
+        assertThat(player.judge(dealer)).isEqualTo(FinalResult.PUSH)
     }
 
     @Test
@@ -97,7 +97,7 @@ class PlayerTest {
             Rank.NINE,
             Rank.KING
         )
-        assertThat(player.judge(dealer)).isEqualTo(Result.WIN)
+        assertThat(player.judge(dealer)).isEqualTo(FinalResult.WIN)
     }
 
     @Test
@@ -112,7 +112,7 @@ class PlayerTest {
             Rank.DEUCE,
             Rank.KING
         )
-        assertThat(player.judge(dealer)).isEqualTo(Result.WIN)
+        assertThat(player.judge(dealer)).isEqualTo(FinalResult.WIN)
     }
 
     @Test
@@ -126,7 +126,7 @@ class PlayerTest {
             Rank.JACK,
             Rank.KING
         )
-        assertThat(player.judge(dealer)).isEqualTo(Result.PUSH)
+        assertThat(player.judge(dealer)).isEqualTo(FinalResult.PUSH)
     }
 
     @Test
@@ -140,7 +140,7 @@ class PlayerTest {
             Rank.JACK,
             Rank.KING
         )
-        assertThat(player.judge(dealer)).isEqualTo(Result.LOSE)
+        assertThat(player.judge(dealer)).isEqualTo(FinalResult.LOSE)
     }
 
     private fun player(name: Name, vararg ranks: Rank): Player = Player(
