@@ -1,11 +1,13 @@
 import domain.* // ktlint-disable no-wildcard-imports
-import domain.Answer.Companion.YES
+import domain.card.Card
+import view.Answer
+import view.Answer.Companion.YES
+import view.GameIntroView
 import view.GameResultView
-import view.LoginView
 import view.PlayGameView
 
 class Controller(
-    private val loginView: LoginView = LoginView(),
+    private val gameIntroView: GameIntroView = GameIntroView(),
     private val playGameView: PlayGameView = PlayGameView(),
     private val gameResultView: GameResultView = GameResultView(),
     private val cardMachine: CardMachine = CardMachine(),
@@ -13,8 +15,10 @@ class Controller(
 
     fun run() {
         val userNames = initUserName()
-        val dealerCards = cardMachine.getCardPair()
-        val userCards = cardMachine.getCardPairs(userNames.size)
+        val dealerCards = cardMachine.getCard(PAIR)
+        val userCards = List(userNames.size) {
+            cardMachine.getCard(PAIR)
+        }
         val users = initUsers(userNames, userCards)
         val dealer = Dealer.create(dealerCards)
 
@@ -27,7 +31,7 @@ class Controller(
         playGameView.printPlayerCard(dealer, users)
 
         requestGetCommand(users)
-        dealerPickNewCardIfNeeded(dealer)
+        dealerPickNewCardIfNeed(dealer)
     }
 
     private fun gameEnd(dealer: Dealer, users: List<User>) {
@@ -37,19 +41,21 @@ class Controller(
 
     private fun getGameResult(dealer: Dealer, users: List<User>): List<GameResult> {
         val referee: Referee = Referee(
-            dealer.validPlayerSum(),
+            dealer.addScoreTenIfHasAce(),
             users.map { user ->
-                user.validPlayerSum()
+                user.addScoreTenIfHasAce()
             },
         )
         return referee.getResult()
     }
 
-    private fun dealerPickNewCardIfNeeded(dealer: Dealer) {
+    private fun dealerPickNewCardIfNeed(dealer: Dealer) {
         if (!dealer.isOverSumCondition()) {
-            playGameView.printDealerPickNewCard()
-            val newCard = cardMachine.getNewCard()
-            dealer.addCard(newCard)
+            if (dealer.addScoreTenIfHasAce() != 21) {
+                playGameView.printDealerPickNewCard()
+                val newCard = cardMachine.getCard(1)
+                dealer.addCard(newCard)
+            }
         }
     }
 
@@ -78,7 +84,7 @@ class Controller(
     }
 
     private fun userPickNewCard(user: User) {
-        user.addCard(cardMachine.getNewCard())
+        user.addCard(cardMachine.getCard(1))
         playGameView.printUserCard(user)
         repeatGetCommand(user)
     }
@@ -90,12 +96,16 @@ class Controller(
     private fun getAnswer(user: User): Answer =
         repeatWithRunCatching { Answer(playGameView.requestOneMoreCard(user)) }
 
-    private fun getUserNames(): UserNameContainer = UserNameContainer(loginView.requestPlayerName())
+    private fun getUserNames(): UserNameContainer = UserNameContainer(gameIntroView.requestPlayerName())
 
     private fun <T> repeatWithRunCatching(action: () -> T): T {
         return runCatching(action).getOrElse { error ->
             println(error.message.toString())
             repeatWithRunCatching(action)
         }
+    }
+
+    companion object {
+        private const val PAIR = 2
     }
 }
