@@ -46,8 +46,8 @@ class BlackJackGame {
         readMoreCardCommand: (User) -> Boolean,
         printUserCards: (User) -> Unit
     ) {
-        val isNotBurst = !Score.valueOf(user.cards.calculateCardValueSum()).isBurst()
-        if (readMoreCardCommand(user) && isNotBurst) {
+        val userScore = Score.valueOf(user.cards.calculateCardValueSum())
+        if (readMoreCardCommand(user) && (!userScore.isBurst() && !userScore.isBlackJack())) {
             user.cards.addCard(deck.getOneCard())
             printUserCards(user)
             return repeatGetCommand(user, readMoreCardCommand, printUserCards)
