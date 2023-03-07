@@ -37,12 +37,12 @@ class OutputView {
         println()
         println(FINAL_RESULT_MESSAGE)
 
-        var dealerResultMessage: String = "${dealer.name}: "
-        if (dealer.results[Result.WIN] != 0) dealerResultMessage += "${dealer.results[Result.WIN]}${Result.WIN.word} "
-        if (dealer.results[Result.LOSE] != 0) dealerResultMessage += "${dealer.results[Result.LOSE]}${Result.LOSE.word} "
-        if (dealer.results[Result.DRAW] != 0) dealerResultMessage += "${dealer.results[Result.DRAW]}${Result.DRAW.word} "
+        val dealerResultMessage: StringBuilder = StringBuilder("${dealer.name}: ")
+        if (dealer.results[Result.WIN] != 0) dealerResultMessage.append("${dealer.results[Result.WIN]}${Result.WIN.word} ")
+        if (dealer.results[Result.LOSE] != 0) dealerResultMessage.append("${dealer.results[Result.LOSE]}${Result.LOSE.word} ")
+        if (dealer.results[Result.DRAW] != 0) dealerResultMessage.append("${dealer.results[Result.DRAW]}${Result.DRAW.word} ")
+        println(dealerResultMessage.toString())
 
-        println(dealerResultMessage)
         participants.values.forEach { println("${it.name}: ${it.result.word}") }
     }
 
