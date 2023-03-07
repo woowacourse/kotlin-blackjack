@@ -7,7 +7,7 @@ import model.Names
 import model.Player
 import model.Players
 
-class CardGame(private val cardPack: CardPack) {
+class CardGame(val cardPack: CardPack) {
     fun initPlayers(names: Names): Players {
         return Players(names.map { Player(pickTwice(), it) })
     }
