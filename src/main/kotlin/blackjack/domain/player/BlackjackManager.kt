@@ -14,7 +14,7 @@ class BlackjackManager(cardsGenerator: CardsGenerator) {
         participants = Participants(getNames().map { Participant(it) })
     }
 
-    fun settingPlayersCards(dealer: Dealer, participants: Participants) {
+    fun settingPlayersCards() {
         repeat(CARD_SETTING_COUNT) {
             provideCard(dealer)
         }
@@ -31,6 +31,13 @@ class BlackjackManager(cardsGenerator: CardsGenerator) {
         val answer = readMoreCard()
         if (!answer) return
         provideCard(participant)
+    }
+
+    fun provideDealerMoreCard() {
+        while (true) {
+            if (!dealer.checkProvideCardPossible()) break
+            provideCard(dealer)
+        }
     }
 
     private fun provideCard(player: Player) {

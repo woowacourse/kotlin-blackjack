@@ -28,34 +28,51 @@ class BlackjackManagerTest {
     fun `초기에 모든 플레이어에게 카드 두장을 나누어준다`() {
         // given
         val blackjackManager = BlackjackManager(RandomCardsGenerator())
-        val dealer = Dealer()
-        val participant1 = Participant("aaa")
-        val participant2 = Participant("bbb")
+        blackjackManager.generateParticipants { listOf("aaa", "bbb") }
 
         // when
-        blackjackManager.settingPlayersCards(dealer, Participants(listOf(participant1, participant2)))
-        val actual = listOf(dealer.cards.values.size, participant1.cards.values.size, participant2.cards.values.size)
+        blackjackManager.settingPlayersCards()
+        val actual1 = blackjackManager.dealer.cards.values.size
+        val actual2 = blackjackManager.participants.values.map { it.cards.values.size }
 
         // then
-        assertThat(actual).isEqualTo(listOf(2, 2, 2))
+        assertThat(actual1).isEqualTo(2)
+        assertThat(actual2).isEqualTo(listOf(2, 2))
     }
 
     @Test
-    fun `추가 발행 여부에 따라 플레이어에게 카드를 나누어준다`() {
+    fun `카드 발행 가능 상태이고 추가 발행을 원한다면 참가자에게 카드를 나눠준다`() {
         // given
         val blackjackManager = BlackjackManager(TestCardsGenerator())
-        val dealer = Dealer()
-        val participant1 = Participant("aaa")
-        val participant2 = Participant("bbb")
-        blackjackManager.settingPlayersCards(dealer, Participants(listOf(participant1, participant2)))
+        blackjackManager.generateParticipants { listOf("aaa", "bbb") }
+        blackjackManager.settingPlayersCards()
 
         // when
+        val participant1 = blackjackManager.participants.values[0]
+        val participant2 = blackjackManager.participants.values[1]
         blackjackManager.provideParticipantMoreCard(participant1) { true }
         blackjackManager.provideParticipantMoreCard(participant2) { false }
+        val actual1 = participant1.cards.values.size
+        val actual2 = participant2.cards.values.size
 
         // then
-        assertThat(participant1.cards.values.size).isEqualTo(3)
-        assertThat(participant2.cards.values.size).isEqualTo(2)
+        assertThat(actual1).isEqualTo(3)
+        assertThat(actual2).isEqualTo(2)
+    }
+
+    @Test
+    fun `카드 발행 가능 상태인 동안 딜러에게 계속 카드를 발행한다`() {
+        // given
+        val blackjackManager = BlackjackManager(TestCardsGenerator())
+        blackjackManager.generateParticipants { listOf("aaa", "bbb") }
+        blackjackManager.settingPlayersCards()
+
+        // when
+        blackjackManager.provideDealerMoreCard()
+        val actual = blackjackManager.dealer.cards.values.size
+
+        // then
+        assertThat(actual).isEqualTo(4)
     }
 
     class TestCardsGenerator : CardsGenerator {
@@ -72,7 +89,7 @@ class BlackjackManagerTest {
 
                 Card(CardNumber.FOUR, CardShape.SPADE),
                 Card(CardNumber.FIVE, CardShape.SPADE),
-                Card(CardNumber.SIX, CardShape.SPADE),
+                Card(CardNumber.SIX, CardShape.SPADE)
             )
     }
 }
