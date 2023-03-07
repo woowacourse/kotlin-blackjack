@@ -1,7 +1,9 @@
-package domain.person
+package study.self
 
 import domain.card.Card
 import domain.card.HandOfCards
+import domain.person.Dealer
+import domain.person.Player
 
 class DefaultPersonBuilder : PersonBuilder {
     private var name: String? = null

@@ -1,6 +1,9 @@
-package domain.person
+package study.self
 
 import domain.card.Deck
+import domain.person.Dealer
+import domain.person.Persons
+import domain.person.Player
 
 object PersonGenerator {
     fun getPersons(names: List<String>, deck: Deck): Persons {

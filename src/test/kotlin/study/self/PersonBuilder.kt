@@ -1,6 +1,8 @@
-package domain.person
+package study.self
 
 import domain.card.Card
+import domain.person.Dealer
+import domain.person.Player
 
 interface PersonBuilder {
     fun name(name: String)
