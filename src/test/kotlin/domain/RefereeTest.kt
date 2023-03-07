@@ -45,4 +45,18 @@ class RefereeTest {
         // then
         assertThat(actual).isEqualTo(expected)
     }
+
+    @Test
+    fun `딜러, 유저1, 유저2가 블랙잭일 경우, 딜러가 승리한다`() {
+        // given
+        val dealerScore = 21
+        val userScore = listOf(21, 21)
+
+        // when
+        val actual = Referee(dealerScore, userScore).getResult()
+        val expected = listOf<GameResult>(GameResult.LOSE, GameResult.LOSE)
+
+        // then
+        assertThat(actual).isEqualTo(expected)
+    }
 }
