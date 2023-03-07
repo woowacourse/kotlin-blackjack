@@ -27,7 +27,7 @@ class CardBunchTest {
     }
 
     @Test
-    fun `6,7,9 카드의 총합을 계산한다`() {
+    fun `6,7,9 카드의 총합을 계산하면 22가 되어야한다`() {
         val card1 = Card(Shape.HEART, CardNumber.SEVEN)
         val card2 = Card(Shape.HEART, CardNumber.SIX)
         val card3 = Card(Shape.HEART, CardNumber.NINE)
@@ -40,7 +40,7 @@ class CardBunchTest {
     }
 
     @Test
-    fun `Ace,2,3 카드의 총합을 계산한다`() {
+    fun `Ace,2,3 카드의 총합을 계산하면 16이 되어야한다`() {
         val card1 = Card(Shape.HEART, CardNumber.ACE)
         val card2 = Card(Shape.HEART, CardNumber.TWO)
         val card3 = Card(Shape.HEART, CardNumber.THREE)
@@ -53,7 +53,7 @@ class CardBunchTest {
     }
 
     @Test
-    fun `Ace,Jack,King 카드의 총합을 계산한다`() {
+    fun `Ace,Jack,King 카드의 총합을 계산하면 21이 되어야한다`() {
         val card1 = Card(Shape.HEART, CardNumber.ACE)
         val card2 = Card(Shape.HEART, CardNumber.JACK)
         val card3 = Card(Shape.HEART, CardNumber.KING)
