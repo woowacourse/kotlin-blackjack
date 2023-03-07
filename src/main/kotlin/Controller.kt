@@ -1,5 +1,3 @@
-import domain.Answer
-import domain.Answer.Companion.YES
 import domain.Cards
 import domain.Dealer
 import domain.Deck
@@ -56,8 +54,7 @@ class Controller(
     }
 
     private fun repeatGetCommand(user: User) {
-        val answer = getAnswer(user)
-        if (answer.value == YES) return userPickNewCard(user)
+        if (getAnswer(user)) return userPickNewCard(user)
         return userPickNoCard(user)
     }
 
@@ -71,8 +68,7 @@ class Controller(
         playGameView.printUserCard(user)
     }
 
-    private fun getAnswer(user: User): Answer =
-        repeatWithRunCatching { Answer(playGameView.requestOneMoreCard(user)) }
+    private fun getAnswer(user: User): Boolean = playGameView.isOneMoreCard(user)
 
     private fun dealerPickNewCardIfNeeded(dealer: Dealer) {
         if (!dealer.isOverSumCondition()) {

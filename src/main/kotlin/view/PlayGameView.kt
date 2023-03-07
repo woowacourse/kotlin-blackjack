@@ -21,9 +21,13 @@ class PlayGameView {
         println(PLAYER_CARD.format(user.name, (user.cards.value.map { it.toString() }).joinToString(SEPARATOR)))
     }
 
-    fun requestOneMoreCard(user: User): String {
+    fun isOneMoreCard(user: User): Boolean {
         println(REQUEST_MORE_CARD.format(user.name))
-        return readLine() ?: requestOneMoreCard(user)
+        return when (readln()) {
+            Answer.YES.value -> true
+            Answer.NO.value -> false
+            else -> isOneMoreCard(user)
+        }
     }
 
     fun printDealerPickNewCard() = println(NOTICE_DEALER_PICK_NEW_CARD)
