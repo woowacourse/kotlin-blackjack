@@ -1,6 +1,6 @@
 package domain
 
-class Dealer(name: String = DEALER_NAME, cards: Cards) : Player(name, cards) {
+class Dealer(val name: String = DEALER_NAME, val cards: Cards) {
     fun isOverSumCondition(): Boolean = (cards.actualCardValueSum() > SUM_CONDITION)
 
     companion object {

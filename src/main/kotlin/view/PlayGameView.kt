@@ -1,16 +1,22 @@
 package view
 
 import domain.Dealer
+import domain.Players
 import domain.User
 
 class PlayGameView {
 
-    fun printNoticeSplitCard(userNames: List<String>) {
-        val names = userNames.joinToString(SEPARATOR)
+    fun printPlayers(players: Players) {
+        printNoticeSplitCard(players.users)
+        printPlayerCard(players.dealer, players.users)
+    }
+
+    private fun printNoticeSplitCard(users: List<User>) {
+        val names = users.joinToString(SEPARATOR) { it.name }
         println(NOTICE_SPLIT_CARD.format(names))
     }
 
-    fun printPlayerCard(dealer: Dealer, users: List<User>) {
+    private fun printPlayerCard(dealer: Dealer, users: List<User>) {
         println(PLAYER_CARD.format(dealer.name, dealer.cards.value.first()))
         users.forEach { user ->
             println(PLAYER_CARD.format(user.name, (user.cards.value.map { it.toString() }).joinToString(SEPARATOR)))

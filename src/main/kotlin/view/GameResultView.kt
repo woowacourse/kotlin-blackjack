@@ -1,12 +1,13 @@
 package view
 
-import domain.Dealer
 import domain.GameResult
-import domain.User
+import domain.Players
 
 class GameResultView {
 
-    fun printCardResult(dealer: Dealer, users: List<User>) {
+    fun printCardResult(players: Players) {
+        val dealer = players.dealer
+        val users = players.users
         println(
             PLAYER_CARD.format(
                 dealer.name,
@@ -27,7 +28,7 @@ class GameResultView {
         }
     }
 
-    fun printFinalResult(gameResult: List<GameResult>, users: List<User>) {
+    fun printFinalResult(gameResult: List<GameResult>, players: Players) {
         println(FINAL_RESULT)
         println(
             DEALER_RESULT_FORMAT.format(
@@ -39,7 +40,7 @@ class GameResultView {
                 GameResult.LOSE.label,
             ),
         )
-        users.forEachIndexed { index, user ->
+        players.users.forEachIndexed { index, user ->
             println(USER_RESULT_FORMAT.format(user.name, gameResult[index].label))
         }
     }
