@@ -2,9 +2,9 @@ package view
 
 import entity.Dealer
 import entity.DealerGameResult
-import entity.GameResultType
 import entity.Players
 import entity.PlayersGameResult
+import view.ViewUtils.Companion.isString
 
 class ResultView {
     fun printGameStatus(dealer: Dealer, players: Players) {
@@ -18,21 +18,13 @@ class ResultView {
         println(MESSAGE_GAME_RESULT)
         println(MESSAGE_DEALER_GAME_RESULT.format(formatDealerGameResult(dealerGameResult)))
         playersGameResult.value.forEach {
-            println(MESSAGE_PLAYERS_GAME_RESULT.format(it.key.name.value, gameResultTypeToString(it.value)))
+            println(MESSAGE_PLAYERS_GAME_RESULT.format(it.key.name.value, it.value.isString()))
         }
     }
 
     private fun formatDealerGameResult(dealerGameResult: DealerGameResult): String {
         return dealerGameResult.value.asSequence().joinToString(" ") {
-            MESSAGE_GAME_RESULT_TYPE.format(it.value, gameResultTypeToString(it.key))
-        }
-    }
-
-    private fun gameResultTypeToString(gameResultType: GameResultType): String {
-        return when (gameResultType) {
-            GameResultType.WIN -> "승"
-            GameResultType.LOSE -> "패"
-            GameResultType.DRAW -> "무"
+            MESSAGE_GAME_RESULT_TYPE.format(it.value, it.key.isString())
         }
     }
 
