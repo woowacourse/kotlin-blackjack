@@ -11,10 +11,11 @@ class Cards(cards: List<Card>) {
         get() = _cards.size
 
     private val hasAce: Boolean
-        get() = cards.count { it.isAce } > NO_COUNT
+        get() = cards.any { it.isAce }
 
     val isBurst: Boolean
         get() = minSum() > BlackJackGame.BLACKJACK_NUMBER
+
     val isBlackJack: Boolean
         get() {
             return ((maxSum() == BlackJackGame.BLACKJACK_NUMBER) && (size == 2))
@@ -22,9 +23,8 @@ class Cards(cards: List<Card>) {
 
     val resultSum: Int
         get() {
-            if (maxSum() <= BlackJackGame.BLACKJACK_NUMBER) return maxSum()
-            if (minSum() <= BlackJackGame.BLACKJACK_NUMBER) return minSum()
-            return minSum()
+            return if (maxSum() <= BlackJackGame.BLACKJACK_NUMBER) maxSum()
+            else minSum()
         }
 
     init {
@@ -48,6 +48,5 @@ class Cards(cards: List<Card>) {
         private const val MINIMUM_CARDS_SIZE = 2
         private const val ERROR_CARDS_SIZE = "[ERROR] 초기 카드는 ${MINIMUM_CARDS_SIZE}장 이상이어야 합니다."
         private const val ACE_ADDITIONAL_VALUE = 10
-        private const val NO_COUNT = 0
     }
 }
