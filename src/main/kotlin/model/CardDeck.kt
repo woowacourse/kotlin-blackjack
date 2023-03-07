@@ -3,8 +3,6 @@ package model
 class CardDeck(value: List<Card>) {
     private val _value: MutableList<Card> = value.toMutableList()
 
-    val value: List<Card>
-        get() = _value
     val size: Int
         get() = _value.size
 
