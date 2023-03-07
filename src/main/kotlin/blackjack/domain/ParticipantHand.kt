@@ -11,6 +11,8 @@ class ParticipantHand {
         _cards.add(card)
     }
 
+    fun getFirstCard(): List<Card> = listOf(_cards.first())
+
     fun calculateTotalScore(): Int {
         val score = _cards.fold(0) { total, card -> total + card.getScore() }
         return calculateAceScore(score)

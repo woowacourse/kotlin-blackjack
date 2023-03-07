@@ -1,11 +1,9 @@
 package blackjack.domain
 
-import blackjack.dto.HandDTO
-
 class Dealer : Participant(DEALER_NAME) {
-    override fun canDraw(): Boolean = hand.calculateTotalScore() >= STAY_SCORE
+    override fun getFirstOpenCards(): List<Card> = hand.getFirstCard()
 
-    fun getFirstCardHand(): HandDTO = HandDTO(name, listOf(hand.cards.first().toString()))
+    override fun canDraw(): Boolean = hand.calculateTotalScore() >= STAY_SCORE
 
     infix fun judge(playerScore: Int): GameResult {
         val dealerScore = getTotalScore()

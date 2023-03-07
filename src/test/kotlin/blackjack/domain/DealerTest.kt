@@ -128,4 +128,14 @@ class DealerTest {
 
         assertThat(dealer judge 20).isEqualTo(GameResult.LOSE)
     }
+
+    @Test
+    fun `딜러가 처음 공개할 카드는 1장이다`() {
+        with(dealer) {
+            addCard(Card(Suit.SPADE, CardNumber.JACK))
+            addCard(Card(Suit.SPADE, CardNumber.QUEEN))
+        }
+
+        assertThat(dealer.getFirstOpenCards().size).isEqualTo(1)
+    }
 }

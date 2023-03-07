@@ -6,6 +6,8 @@ import blackjack.dto.ScoreDTO
 abstract class Participant(val name: String) {
     val hand = ParticipantHand()
 
+    abstract fun getFirstOpenCards(): List<Card>
+
     abstract fun canDraw(): Boolean
 
     fun addCard(card: Card) {

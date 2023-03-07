@@ -69,4 +69,14 @@ class PlayerTest {
 
         // Assertions.assertThat(player.getHand().hand).isEqualTo(listOf("A스페이드", "J다이아몬드"))
     }
+
+    @Test
+    fun `플레이어가 처음 공개할 카드는 2장이다`() {
+        with(player) {
+            addCard(Card(Suit.SPADE, CardNumber.JACK))
+            addCard(Card(Suit.SPADE, CardNumber.QUEEN))
+        }
+
+        Assertions.assertThat(player.getFirstOpenCards().size).isEqualTo(2)
+    }
 }
