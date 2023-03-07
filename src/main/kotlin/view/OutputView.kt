@@ -27,7 +27,7 @@ object OutputView {
     }
 
     fun printParticipantsCards(participants: List<Player>) {
-        participants.forEach { it ->
+        participants.forEach {
             printParticipantCards(it.name, it.ownCards.cards)
         }
         println()
@@ -58,13 +58,16 @@ object OutputView {
     }
 
     private fun printDealerWinningResult(dealerResult: List<Result>) {
-        val winCount = formatResultCount(dealerResult.count { it == Result.WIN }, Result.WIN)
-        val lossCount = formatResultCount(dealerResult.count { it == Result.LOSS }, Result.LOSS)
-        val drawCount = formatResultCount(dealerResult.count { it == Result.DRAW }, Result.DRAW)
-        println("$DEALER$winCount $lossCount $drawCount")
+        println("$DEALER${countResult(dealerResult).joinToString()}")
     }
 
-    private fun formatResultCount(count: Int, result: Result) = if (count == 0) "" else count.toString() + result.result
+    private fun countResult(dealerResult: List<Result>): List<String> {
+        return Result.values().map { result ->
+            formatResultCount(dealerResult.count { it == result }, result)
+        }
+    }
+
+    private fun formatResultCount(count: Int, result: Result) = if (count == 0) "" else "$count${result.result} "
 
     private fun printPlayerWinningResult(playerResult: List<ParticipantResult>) {
         playerResult.forEach {
