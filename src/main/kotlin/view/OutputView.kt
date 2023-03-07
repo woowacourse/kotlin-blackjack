@@ -13,6 +13,7 @@ import model.Player
 class OutputView {
     private val suitModel = SuitModel()
     private val rankModel = RankModel()
+    private val resultModel = ResultModel()
     fun printInputPlayerNames() {
         println(MESSAGE_INPUT_NAME)
     }
@@ -56,8 +57,8 @@ class OutputView {
         println()
         println(MESSAGE_RESULT_TITLE)
         println(MESSAGE_DEALER_RESULT.format(gameResult.getDealerWinResult(), gameResult.getDealerLoseResult()))
-        gameResult.playersResult.forEach {
-            println(MESSAGE_PLAYER_RESULT.format(it.key, if (it.value) "승" else "패"))
+        gameResult.playersFinalResult.forEach {
+            println(MESSAGE_PLAYER_RESULT.format(it.key, resultModel.getString(it.value)))
         }
     }
 

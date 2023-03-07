@@ -1,5 +1,5 @@
 package model
 
-enum class Result {
+enum class FinalResult {
     WIN, PUSH, LOSE
 }

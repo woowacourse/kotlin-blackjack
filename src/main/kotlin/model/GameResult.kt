@@ -1,19 +1,13 @@
 package model
 
-class GameResult private constructor(val playersResult: Map<String, Boolean>) {
+class GameResult private constructor(val playersFinalResult: Map<String, FinalResult>) {
 
-    fun getDealerWinResult(): Int = playersResult.count { !it.value }
-    fun getDealerLoseResult(): Int = playersResult.count { it.value }
+    fun getDealerWinResult(): Int = playersFinalResult.count { it.value == FinalResult.LOSE }
+    fun getDealerLoseResult(): Int = playersFinalResult.count { it.value == FinalResult.WIN }
+    fun getDealerPushResult(): Int = playersFinalResult.count { it.value == FinalResult.PUSH }
 
     companion object {
-        private const val BLACKJACK_POINT = 21
-        private fun match(dealer: Dealer, player: Player): Boolean {
-            if (player.isBust()) return false
-            if (dealer.isBust()) return true
-            return (BLACKJACK_POINT - dealer.hand.sum()) > (BLACKJACK_POINT - player.hand.sum())
-        }
-
         fun of(dealer: Dealer, players: List<Player>): GameResult =
-            GameResult(buildMap { players.forEach { put(it.name.value, match(dealer, it)) } })
+            GameResult(buildMap { players.forEach { put(it.name.value, it.judge(dealer)) } })
     }
 }
