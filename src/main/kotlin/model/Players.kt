@@ -16,5 +16,6 @@ data class Players(val players: List<Player>) : List<Player> by players {
         private const val PLAYER_MIN = 1
         private const val PLAYER_MAX = 8
         private const val PLAYER_COUNT_ERROR = "플레이어는 최소 1명 최대 8명까지 가능합니다"
+        fun from(names: List<String>): Players = Players(names.map { Player.from(it) })
     }
 }

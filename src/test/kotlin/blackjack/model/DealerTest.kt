@@ -14,6 +14,13 @@ import org.junit.jupiter.api.Test
 
 class DealerTest {
     @Test
+    fun `딜러의 처음 보여지는 카드는 한 장이다`() {
+        val dealer = Dealer(Card(Rank.ACE, Suit.SPADE), Card(Rank.KING, Suit.CLOVER))
+        val expected = setOf(Card(Rank.ACE, Suit.SPADE))
+        assertThat(dealer.getFirstOpenCards().cards).isEqualTo(expected)
+    }
+
+    @Test
     fun `카드의 합이 16을 초과하지 않으면 hit 한다`() {
         val dealer = Dealer(
             Cards(

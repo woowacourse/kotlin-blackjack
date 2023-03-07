@@ -1,8 +1,12 @@
 package blackjack.domain
 
 import domain.CardGame
+import model.Card
 import model.CardDeck
-import model.Name
+import model.Cards
+import model.Dealer
+import model.Participant
+import model.Participants
 import model.Player
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -10,30 +14,18 @@ import org.junit.jupiter.api.Test
 class CardGameTest {
 
     @Test
-    fun `카드를 플레이어별로 2장씩 랜덤으로 지급한다`() {
-        val player1 = Player(game.pickTwice(), Name("jason"))
-        val player2 = Player(game.pickTwice(), Name("pobi"))
+    fun `카드를 참가자별로 2장씩 지급한다`() {
+        val player1 = Player.from("jason")
+        val player2 = Player.from("pobi")
+        val cardGame = CardGame(cardDeck, Participants(Dealer(), player1, player2))
+        cardGame.readyToStart()
         assertThat(player1.cards.size).isEqualTo(2)
         assertThat(player2.cards.size).isEqualTo(2)
     }
 
-    @Test
-    fun `플레이어 두 명의 정보를 생성한다`() {
-        val players = game.initPlayers(listOf(Name("jason"), Name("pobi")))
-        assertThat(players.size).isEqualTo(2)
-        assertThat(players[0].name.value).isEqualTo("jason")
-        assertThat(players[0].cards.size).isEqualTo(2)
-        assertThat(players[1].name.value).isEqualTo("pobi")
-        assertThat(players[1].cards.size).isEqualTo(2)
-    }
-
-    @Test
-    fun `딜러의 정보를 생성한다`() {
-        val dealer = game.initDealer()
-        assertThat(dealer.cards.size).isEqualTo(2)
-    }
-
     companion object {
-        private val game = CardGame(CardDeck.createCardDeck())
+        private val cardDeck = CardDeck.createCardDeck()
+        private fun Participants(vararg participant: Participant): Participants = Participants(participant.toList())
+        private fun Dealer(vararg card: Card): Dealer = Dealer(Cards(card.toSet()))
     }
 }

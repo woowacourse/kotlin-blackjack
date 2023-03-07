@@ -1,12 +1,10 @@
 package view
 
-import model.Card
 import model.Cards
 import model.Dealer
 import model.Dealer.Companion.DEALER
 import model.Participant
 import model.Participants
-import model.Player
 import model.Players
 import model.Rank
 import model.Result
@@ -34,14 +32,10 @@ class OutputView {
     }
 
     fun printPlayerStatus(participant: Participant) {
-        if (participant.name.value == DEALER) {
-            println(MESSAGE_DEALER_STATUS.format(participant.cards.cards.elementAt(0).getCardFormat()))
-            return
-        }
         println(
             MESSAGE_PARTICIPANT_STATUS.format(
                 participant.name.value,
-                (participant as Player).cards.getCardsFormat()
+                participant.getFirstOpenCards().getCardsFormat()
             )
         )
     }
@@ -63,10 +57,6 @@ class OutputView {
         players.forEach {
             println(MESSAGE_PLAYER_RESULT.format(it.name.value, if (playerResult[it.name] == Result.WIN) "승" else "패"))
         }
-    }
-
-    private fun Card.getCardFormat(): String {
-        return rankFormat(this.rank) + suitFormat(this.suit)
     }
 
     private fun Cards.getCardsFormat(): String {
@@ -94,7 +84,6 @@ class OutputView {
 
     companion object {
         private const val MESSAGE_DISTRIBUTE_CARD = "딜러와 %s에게 2장의 나누었습니다."
-        private const val MESSAGE_DEALER_STATUS = "딜러: %s"
         private const val MESSAGE_PARTICIPANT_STATUS = "%s카드: %s"
         private const val MESSAGE_POINT_RESULT = " - 결과: %d"
         private const val MESSAGE_DEALER_GET_CARD = "딜러는 16이하라 한장의 카드를 더 받았습니다."

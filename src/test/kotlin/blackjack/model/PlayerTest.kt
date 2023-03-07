@@ -20,6 +20,13 @@ class PlayerTest {
     }
 
     @Test
+    fun `플레이어의 처음 보여지는 카드는 두 장이다 `() {
+        val player = Player("jason", Card(Rank.ACE, Suit.SPADE), Card(Rank.KING, Suit.CLOVER))
+        val expected = setOf(Card(Rank.ACE, Suit.SPADE), Card(Rank.KING, Suit.CLOVER))
+        assertThat(player.getFirstOpenCards().cards).isEqualTo(expected)
+    }
+
+    @Test
     fun `카드의 합이 21이 넘지 않으면 카드를 뽑을 수 있는 상태이다`() {
         val player = Player(
             "jason",

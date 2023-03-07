@@ -25,4 +25,10 @@ class CardsTest {
         val cards = Cards(setOf(Card(Rank.ACE, Suit.CLOVER), Card(Rank.DEUCE, Suit.DIAMOND)))
         assertThat(cards.sum()).isEqualTo(13)
     }
+
+    @Test
+    fun `A클로버, 2클로버 카드들의 맨 앞 카드 A클로버를 알 수 있다`() {
+        val cards = Cards(setOf(Card(Rank.ACE, Suit.CLOVER), Card(Rank.DEUCE, Suit.CLOVER)))
+        assertThat(cards.firstCard().cards).isEqualTo(setOf(Card(Rank.ACE, Suit.CLOVER)))
+    }
 }
