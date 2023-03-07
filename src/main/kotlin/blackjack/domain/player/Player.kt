@@ -6,13 +6,15 @@ import blackjack.domain.card.Cards
 class Player(
     val name: PlayerName,
     val battingMoney: BattingMoney,
+    val checkCards: (player: Player) -> Unit,
     val cards: Cards = Cards(),
 ) {
 
     constructor(
         name: String,
         battingMoney: Int,
-    ) : this(PlayerName(name), BattingMoney(battingMoney))
+        checkCards: (player: Player) -> Unit,
+    ) : this(PlayerName(name), BattingMoney(battingMoney), checkCards)
 
     private fun isPossibleToDrawAdditionalCard(): DrawState {
         if (cards.getMinimumCardsScore() >= BLACK_JACK_SCORE) {
@@ -24,11 +26,16 @@ class Player(
 
     fun drawCard(): Boolean {
         cards.draw()
+        checkCards(this)
 
         return isPossibleToDrawAdditionalCard() == DrawState.POSSIBLE
     }
 
-    fun isDrawnNothing(): Boolean = cards.size == Cards.INITIAL_CARDS_SIZE
+    fun checkIsDrawnNothing() {
+        if (cards.size == Cards.INITIAL_CARDS_SIZE) {
+            checkCards(this)
+        }
+    }
 
     companion object {
         private const val BLACK_JACK_SCORE = 21

@@ -57,12 +57,16 @@ object OutputView {
         println()
         println(CARD_DIVIDING_MSG.format(players.joinToString(SEPARATOR) { player -> player.name.value }))
         println(SHOW_DEALER_CARD.format(dealer.cards.cards.first().toDescription()))
-        players.forEach { player -> printCardResults(player) }
+        players.forEach { player -> printPlayerCurrentCards(player) }
         println()
     }
 
-    fun printCardResults(player: Player) {
+    fun printPlayerCurrentCards(player: Player) {
         println(player.toCardsDescription())
+    }
+    
+    fun printDealerCurrentCards(dealer:Dealer){
+        println(SHOW_DEALER_CARD.format(dealer.cards.cards.joinToString(SEPARATOR) { card -> card.toDescription() }))
     }
 
     fun printIsDealerReceivedCard(drawResult: DrawResult) {

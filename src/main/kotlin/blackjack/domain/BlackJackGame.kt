@@ -16,9 +16,10 @@ class BlackJackGame(
     fun initPlayers(
         playerNames: List<String>,
         battingMoneys: List<Int>,
+        checkCards: (player: Player) -> Unit,
     ) {
         players = playerNames.mapIndexed { playerIndex, playerName ->
-            Player(playerName, battingMoneys[playerIndex])
+            Player(playerName, battingMoneys[playerIndex], checkCards)
         }
     }
 
@@ -38,6 +39,8 @@ class BlackJackGame(
             val isPlayerWanted = isPlayerWantedAdditionalCards(player)
 
         } while (isPlayerWanted && player.drawCard())
+
+        player.checkIsDrawnNothing()
     }
 
     fun drawAdditionalCardsForDealer(): DrawResult {
