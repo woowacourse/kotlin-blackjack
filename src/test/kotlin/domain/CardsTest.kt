@@ -58,4 +58,22 @@ class CardsTest {
         // then
         assertThat(actual).isEqualTo(16)
     }
+
+    @Test
+    fun `소지한 카드가 A, A, 9이면 합은 21이다`() {
+        // given
+        val cards = Cards(
+            listOf(
+                Card(CardShape.CLUBS, CardValue.ACE),
+                Card(CardShape.DIAMONDS, CardValue.ACE),
+                Card(CardShape.DIAMONDS, CardValue.NINE)
+            )
+        )
+
+        // when
+        val actual = cards.actualCardValueSum()
+
+        // then
+        assertThat(actual).isEqualTo(21)
+    }
 }

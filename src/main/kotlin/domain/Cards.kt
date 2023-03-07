@@ -8,7 +8,7 @@ class Cards(cards: List<Card>) {
     val value: List<Card> get() = _value.toList()
 
     fun actualCardValueSum(): Int {
-        if ((calculateCardValueSum() < SUM_CONDITION) and (countAce() != ZERO)) {
+        if ((calculateCardValueSum() <= SUM_CONDITION) and (countAce() != ZERO)) {
             return calculateCardValueSum() + ACE_EXTRA_SCORE
         }
 
@@ -28,7 +28,7 @@ class Cards(cards: List<Card>) {
     }
 
     companion object {
-        private const val SUM_CONDITION = 10
+        private const val SUM_CONDITION = 11
         private const val ACE_EXTRA_SCORE = 10
         private const val ZERO = 0
     }
