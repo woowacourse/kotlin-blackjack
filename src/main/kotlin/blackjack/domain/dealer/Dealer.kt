@@ -5,11 +5,8 @@ import blackjack.domain.card.Cards
 import blackjack.domain.player.DrawState
 
 class Dealer(
-    val battingMoney: BattingMoney,
     val cards: Cards = Cards(),
 ) {
-
-    constructor(battingMoney: Int): this(BattingMoney(battingMoney))
 
     private fun isPossibleToDraw(): DrawState {
         if (cards.getTotalCardsScore() >= DEALER_UPPER_DRAW_CONDITION) {

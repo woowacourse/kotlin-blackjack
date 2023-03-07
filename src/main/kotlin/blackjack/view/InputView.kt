@@ -10,11 +10,31 @@ object InputView {
     private const val YES = "y"
     private const val NO = "n"
     private const val ADDITIONAL_DRAW_ERROR_MSG = "[ERROR] y또는 n 이외의 입력은 받지 않습니다."
+    private const val REQUEST_PLAYERS_BATTING_MONEY = "%s의 배팅 금액은?"
+    private const val NUMERIC_ERROR_MSG = "[ERROR] 숫자가 아닌 입력은 허용하지 않습니다.\n다시 입력해주세요."
+
+    private fun requestNumericInput(message: String): Int{
+        println(message)
+
+        while(true){
+            readln().toIntOrNull()?.let{number -> return number}
+            println(NUMERIC_ERROR_MSG)
+        }
+    }
 
     fun requestPlayersName(): List<String> {
         println(REQUEST_PLAYERS_NAME_MSG)
 
         return readln().split(TOKENIZER).map(String::trim)
+    }
+
+    fun requestPlayersBattingMoney(playerNames: List<String>): List<Int> {
+        val battingMoneys = playerNames.map { playerName ->
+
+            requestNumericInput(REQUEST_PLAYERS_BATTING_MONEY.format(playerName))
+        }
+
+        return battingMoneys
     }
 
     fun requestAdditionalDraw(player: Player): Boolean {
