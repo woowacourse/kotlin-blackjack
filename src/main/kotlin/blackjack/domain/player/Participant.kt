@@ -4,7 +4,10 @@ import blackjack.domain.card.Cards
 import blackjack.domain.result.Result
 import blackjack.domain.result.Score
 
-class Participant(name: String) : Player(name) {
+class Participant(
+    name: String,
+    cards: Cards = Cards()
+) : Player(name, cards) {
 
     lateinit var result: Result
         private set

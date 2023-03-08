@@ -1,11 +1,15 @@
 package blackjack.domain.player
 
 import blackjack.domain.card.Card
+import blackjack.domain.card.Cards
 import blackjack.domain.card.Deck
 import blackjack.domain.result.Result
 import blackjack.domain.result.Score
 
-class Dealer(name: String = "딜러") : Player(name) {
+class Dealer(
+    name: String = "딜러",
+    cards: Cards = Cards()
+) : Player(name, cards) {
 
     private val deck: Deck = Deck()
     val results: MutableMap<Result, Int> = Result.values().associateWith { 0 }.toMutableMap()

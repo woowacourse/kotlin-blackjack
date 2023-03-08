@@ -6,6 +6,7 @@ import blackjack.domain.card.CardShape
 import blackjack.domain.card.Cards
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
 
 class ScoreTest {
 
@@ -15,31 +16,18 @@ class ScoreTest {
         dealerCards.addCard(Card(CardNumber.JACK, CardShape.CLOVER))
         dealerCards.addCard(Card(CardNumber.ONE, CardShape.CLOVER))
         val participantCards: Cards = Cards()
-        participantCards.addCard(Card(CardNumber.JACK, CardShape.CLOVER))
+        participantCards.addCard(Card(CardNumber.ONE, CardShape.CLOVER))
         participantCards.addCard(Card(CardNumber.ONE, CardShape.CLOVER))
 
-        assertThat(Score.getParticipantResult(dealerCards, participantCards)).isEqualTo(Result.DRAW)
+        assertThat(Score.getParticipantResult(dealerCards, participantCards)).isEqualTo(Result.LOSE)
     }
 
     @Test
     fun `결과를 받아 그와 상반되는 결과를 돌려준다`() {
-        assertThat(Score.reversResult(Result.WIN)).isEqualTo(Result.LOSE)
+        assertAll(
+            { assertThat(Score.reversResult(Result.WIN)).isEqualTo(Result.LOSE) },
+            { assertThat(Score.reversResult(Result.LOSE)).isEqualTo(Result.WIN) },
+            { assertThat(Score.reversResult(Result.DRAW)).isEqualTo(Result.DRAW) }
+        )
     }
 }
-
-// fun valueOf(dealerSum: Int, participantSum: Int): Result {
-//    when {
-//        ((dealerSum > Cards.MAX_SUM_NUMBER) and (participantSum > Cards.MAX_SUM_NUMBER)) -> return DRAW
-//        (participantSum > Cards.MAX_SUM_NUMBER) -> return LOSE
-//        (dealerSum > Cards.MAX_SUM_NUMBER) -> return WIN
-//        (dealerSum > participantSum) -> return LOSE
-//        (dealerSum == participantSum) -> return DRAW
-//    }
-//    return WIN
-// }
-//
-// fun reverse(result: Result) = when (result) {
-//    WIN -> LOSE
-//    LOSE -> WIN
-//    else -> DRAW
-// }
