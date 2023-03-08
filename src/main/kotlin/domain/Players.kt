@@ -18,7 +18,5 @@ class Players(val list: List<Player>) {
     companion object {
         private const val MINIMUM_PLAYER_COUNT = 1
         private const val MAXIMUM_PLAYER_COUNT = 8
-        private const val INITIALIZE_TO_ZERO = 0
-        private const val PLUS_ONE = 1
     }
 }
