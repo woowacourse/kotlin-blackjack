@@ -1,14 +1,20 @@
 package blackjack.domain
 
+import java.util.LinkedList
+
 class CardPack {
-    var cards = Card.ALL_CARDS.toMutableList()
+    var cards: LinkedList<Card> = LinkedList(Card.ALL_CARDS)
+
+    init {
+        cards.shuffle()
+    }
 
     fun draw(): Card {
-        val card = cards.shuffled()[0]
-        cards.removeAt(0)
+        val card = cards.removeFirst()
 
         if (cards.size == 0) {
-            cards.addAll(Card.ALL_CARDS.toList())
+            cards.addAll(Card.ALL_CARDS)
+            cards.shuffle()
         }
 
         return card
