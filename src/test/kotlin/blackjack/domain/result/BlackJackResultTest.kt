@@ -4,7 +4,6 @@ import blackjack.domain.blackjack.blackJack
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardMark
 import blackjack.domain.card.CardValue
-import blackjack.domain.card.Cards
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
@@ -13,7 +12,6 @@ class BlackJackResultTest {
     @Test
     fun `수익금액을 가져올 수 있다`() {
         val blackJack = blackJack {
-            cardDeck(Cards.all())
             participants {
                 dealer()
                 guest("아크", 1000)

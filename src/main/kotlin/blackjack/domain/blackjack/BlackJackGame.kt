@@ -7,11 +7,11 @@ import blackjack.domain.participants.Guest
 import blackjack.domain.participants.User
 
 class BlackJackGame {
-    lateinit var getCommand: (String) -> Boolean
+    var getCommand: (String) -> Boolean = { true }
 
     fun setUp(getNames: () -> List<String>, getBettingMoney: (String) -> Int): BlackJack =
         blackJack {
-            cardDeck(Cards.all())
+            cardDeck = CardDeck(Cards.all().shuffled())
             participants {
                 dealer()
                 getNames().forEach { name -> guest(name, getBettingMoney(name)) }
