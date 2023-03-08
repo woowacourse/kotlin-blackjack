@@ -11,7 +11,7 @@ class Cards {
         _items.add(card)
     }
 
-    fun getFirstCard(): List<Card> = listOf(_items.first())
+    fun getFirstCard(): Card = _items.first()
 
     fun calculateTotalScore(): Int {
         val score = _items.fold(0) { total, card -> total + card.getScore() }
