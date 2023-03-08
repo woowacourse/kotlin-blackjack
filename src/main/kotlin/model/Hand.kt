@@ -1,15 +1,20 @@
 package model
 
-class Hand(private val cards: Cards) {
-    val size
-        get() = cards.cards.size
-    constructor(cards: List<Card>) : this(Cards(cards))
+import java.util.LinkedList
 
-    fun toList() = cards.cards.toList()
+data class Hand(private val cards: LinkedList<Card>) {
+    val size
+        get() = cards.size
+    constructor(cards: List<Card>) : this(LinkedList(cards))
+
+    init {
+        require(cards.distinct().size == cards.size) { CARD_DUPLICATE_ERROR }
+    }
+    fun toList() = cards.toList()
 
     fun add(card: Card) {
-        require(!cards.cards.contains(card)) { CARD_DUPLICATE_ERROR }
-        cards.cards.add(card)
+        require(!cards.contains(card)) { CARD_DUPLICATE_ERROR }
+        cards.add(card)
     }
 
     fun sum(): Int {
@@ -20,7 +25,7 @@ class Hand(private val cards: Cards) {
 
     private fun filterSum(score: Int = 0, condition: (Rank) -> Boolean): Int {
         var sum = score
-        cards.cards.filter { condition(it.rank) }.forEach {
+        cards.filter { condition(it.rank) }.forEach {
             sum += it.rank.getScore(sum)
         }
         return sum
