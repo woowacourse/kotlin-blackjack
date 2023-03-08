@@ -8,8 +8,8 @@ class Cards(
     val cards: List<Card>
         get() = _cards.toList()
 
-    var state: CardsState = CardsState.Running
-        private set
+    private var state: CardsState = CardsState.Running
+
 
     val size: Int
         get() = cards.size
@@ -55,6 +55,8 @@ class Cards(
 
         return CardNumber.BIG_A.value
     }
+
+    fun checkCardsState(cardsState: CardsState): Boolean = state == cardsState
 
     companion object {
         const val INITIAL_CARDS_SIZE = 2

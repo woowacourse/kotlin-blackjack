@@ -2,7 +2,6 @@ package blackjack.domain.dealer
 
 import blackjack.domain.card.Cards
 import blackjack.domain.player.DrawState
-import blackjack.domain.player.Player
 
 class Dealer(
     val cards: Cards = Cards(),

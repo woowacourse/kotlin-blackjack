@@ -8,26 +8,24 @@ enum class GameResultCase(
     val gameResult: GameResult,
 ) {
 
-    // TODO: Cards객체를 너무 잘 알고 있는 것이 아닐까?
-    // TODO: state 막 갖다 써도 될까?
     BLACKJACK_WIN(
         condition = { playerCards, dealerCards ->
-            playerCards.state == CardsState.BlackJack &&
-                dealerCards.state != CardsState.BlackJack
+            playerCards.checkCardsState(CardsState.BlackJack) &&
+                    !dealerCards.checkCardsState(CardsState.BlackJack)
         },
         gameResult = GameResult.BLACKJACK_WIN
     ),
 
     DEALER_BURST(
         condition = { _, dealerCards ->
-            dealerCards.state == CardsState.Burst
+            dealerCards.checkCardsState(CardsState.Burst)
         },
         gameResult = GameResult.WIN
     ),
 
     PLAYER_BURST(
         condition = { playerCards, _ ->
-            playerCards.state == CardsState.Burst
+            playerCards.checkCardsState(CardsState.Burst)
         },
         gameResult = GameResult.LOSE
     ),
