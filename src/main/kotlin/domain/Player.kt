@@ -19,7 +19,7 @@ abstract class Player(
     }
 
     fun calculateCardValueSum(): Int = hand.cards.sumOf { card ->
-        Card.valueOf(card).number
+        card.cardNumber.number
     }
 
     fun addCard(card: List<Card>) {
