@@ -8,7 +8,6 @@ class CardDeck(value: List<Card>) {
 
     init {
         require(value.distinct().size == value.size) { CARD_DECK_DUPLICATE_ERROR }
-        require(value.size == CARD_DECK_SIZE) { CARD_DECK_SIZE_ERROR }
     }
 
     fun drawCard(): Card = _value.removeFirst()
@@ -19,6 +18,10 @@ class CardDeck(value: List<Card>) {
         private const val CARD_DECK_SIZE = 52
         private const val CARD_DECK_DUPLICATE_ERROR = "카드덱은 중복될 수 없습니다"
         private const val CARD_DECK_SIZE_ERROR = "카드덱은 52장이어야 합니다"
-        fun createCardDeck(): CardDeck = CardDeck(Rank.values().flatMap { rank -> Suit.values().map { suit -> Card(rank, suit) } })
+        fun createCardDeck(): CardDeck {
+            val cardDeck = CardDeck(Rank.values().flatMap { rank -> Suit.values().map { suit -> Card(rank, suit) } })
+            require(cardDeck.size == CARD_DECK_SIZE) { CARD_DECK_SIZE_ERROR }
+            return cardDeck
+        }
     }
 }

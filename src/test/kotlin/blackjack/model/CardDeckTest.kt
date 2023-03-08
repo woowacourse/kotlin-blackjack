@@ -22,22 +22,18 @@ class CardDeckTest {
     }
 
     @Test
-    fun `카드덱 생성 시 52장이 아니면 예외가 발생한다`() {
-        assertThrows<IllegalArgumentException> {
-            CardDeck(
-                listOf(
-                    Card(Rank.ACE, Suit.CLOVER)
-                )
-            )
-        }
-    }
+    fun `카드덱에서 드로우 시 가장 앞에 있는 A다이아몬드 카드를 뽑을 수 있다 `() {
+        // given
+        val cards = listOf(Card(Rank.ACE, Suit.DIAMOND), Card(Rank.DEUCE, Suit.CLOVER), Card(Rank.JACK, Suit.HEART))
+        val cardDeck = CardDeck(cards)
 
-    @Test
-    fun `카드덱에서 카드를 A다이아몬드 카드를 뽑을 수 있다 `() {
-        val cardDeck = CardDeck.createCardDeck()
-        val card = cardDeck.drawCard()
-        assertThat(card.rank).isEqualTo(Rank.ACE)
-        assertThat(card.suit).isEqualTo(Suit.DIAMOND)
+        // when
+        val actual = cardDeck.drawCard()
+
+        // then
+        val expected = Card(Rank.ACE, Suit.DIAMOND)
+        assertThat(actual.rank).isEqualTo(expected.rank)
+        assertThat(actual.suit).isEqualTo(expected.suit)
     }
 
     @Test
