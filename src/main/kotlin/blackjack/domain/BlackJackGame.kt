@@ -4,7 +4,6 @@ import blackjack.domain.dealer.Dealer
 import blackjack.domain.dealer.DrawResult
 import blackjack.domain.gameResult.TotalGameResult
 import blackjack.domain.player.Player
-import blackjack.domain.player.PlayerName
 
 class BlackJackGame(
     val dealer: Dealer = Dealer(),

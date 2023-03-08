@@ -8,7 +8,7 @@ class BlackJackGameController(
     private val blackJackGame: BlackJackGame = BlackJackGame(),
 ) {
 
-    fun run(){
+    fun run() {
         initPlayers()
         drawAdditionalCards()
         checkResult()

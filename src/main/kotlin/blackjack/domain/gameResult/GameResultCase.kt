@@ -11,7 +11,7 @@ enum class GameResultCase(
     BLACKJACK_WIN(
         condition = { playerCards, dealerCards ->
             playerCards.checkCardsState(CardsState.BlackJack) &&
-                    !dealerCards.checkCardsState(CardsState.BlackJack)
+                !dealerCards.checkCardsState(CardsState.BlackJack)
         },
         gameResult = GameResult.BLACKJACK_WIN
     ),
