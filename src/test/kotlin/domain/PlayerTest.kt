@@ -1,17 +1,154 @@
 package domain
 
-import domain.player.Dealer
-import domain.player.Player
 import domain.card.Card
 import domain.card.CardNumber
 import domain.card.Shape
+import domain.player.Dealer
+import domain.player.Player
+import domain.player.User
 import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
+import view.GameResult
 
 class PlayerTest {
+    @Test
+    fun `딜러는 18점, 유저1, 유저2의 점수는 19, 15점이다`() {
+        // given
+        val player1Cards: List<Card> = listOf<Card>(
+            Card.of(Shape.CLUBS, CardNumber.NINE),
+            Card.of(Shape.DIAMONDS, CardNumber.KING),
+        )
+
+        val player2Cards: List<Card> = listOf<Card>(
+            Card.of(Shape.CLUBS, CardNumber.QUEEN),
+            Card.of(Shape.DIAMONDS, CardNumber.FIVE),
+        )
+
+        val dealer = Dealer.create(
+            listOf<Card>(
+                Card.of(Shape.CLUBS, CardNumber.QUEEN),
+                Card.of(Shape.DIAMONDS, CardNumber.EIGHT),
+            ),
+        )
+
+        val users: List<User> = listOf(
+            User.create("player1", player1Cards),
+            User.create("player2", player2Cards),
+        )
+
+        // when
+        val actual = users.map { user -> user.getResult(dealer) }
+        val expected = listOf<GameResult>(GameResult.WIN, GameResult.LOSE)
+
+        // then
+        assertThat(actual).isEqualTo(expected)
+    }
+
+    @Test
+    fun `딜러는 22점, 유저1, 유저2의 점수는 19, 15점이다`() {
+        // given
+        val player1Cards: List<Card> = listOf<Card>(
+            Card.of(Shape.CLUBS, CardNumber.NINE),
+            Card.of(Shape.DIAMONDS, CardNumber.KING),
+        )
+
+        val player2Cards: List<Card> = listOf<Card>(
+            Card.of(Shape.CLUBS, CardNumber.QUEEN),
+            Card.of(Shape.DIAMONDS, CardNumber.FIVE),
+        )
+
+        val dealer = Dealer.create(
+            listOf<Card>(
+                Card.of(Shape.CLUBS, CardNumber.QUEEN),
+                Card.of(Shape.DIAMONDS, CardNumber.TWO),
+                Card.of(Shape.DIAMONDS, CardNumber.KING),
+            ),
+        )
+
+        val users: List<User> = listOf(
+            User.create("player1", player1Cards),
+            User.create("player2", player2Cards),
+        )
+
+        // when
+        val actual = users.map { user -> user.getResult(dealer) }
+        val expected = listOf<GameResult>(GameResult.WIN, GameResult.WIN)
+
+        // then
+        assertThat(actual).isEqualTo(expected)
+    }
+
+    @Test
+    fun `딜러는 22점, 유저1, 유저2의 점수는 23, 15점이다`() {
+        // given
+        val player1Cards: List<Card> = listOf<Card>(
+            Card.of(Shape.CLUBS, CardNumber.NINE),
+            Card.of(Shape.DIAMONDS, CardNumber.KING),
+            Card.of(Shape.DIAMONDS, CardNumber.FOUR),
+        )
+
+        val player2Cards: List<Card> = listOf<Card>(
+            Card.of(Shape.CLUBS, CardNumber.QUEEN),
+            Card.of(Shape.DIAMONDS, CardNumber.FIVE),
+        )
+
+        val dealer = Dealer.create(
+            listOf<Card>(
+                Card.of(Shape.CLUBS, CardNumber.QUEEN),
+                Card.of(Shape.DIAMONDS, CardNumber.TWO),
+                Card.of(Shape.DIAMONDS, CardNumber.KING),
+            ),
+        )
+
+        val users: List<User> = listOf(
+            User.create("player1", player1Cards),
+            User.create("player2", player2Cards),
+        )
+
+        // when
+        val actual = users.map { user -> user.getResult(dealer) }
+        val expected = listOf<GameResult>(GameResult.DRAW, GameResult.WIN)
+
+        // then
+        assertThat(actual).isEqualTo(expected)
+    }
+
+    @Test
+    fun `딜러, 유저1, 유저2가 블랙잭일 경우, 딜러가 승리한다`() {
+        // given
+        val player1Cards: List<Card> = listOf<Card>(
+            Card.of(Shape.CLUBS, CardNumber.ACE),
+            Card.of(Shape.DIAMONDS, CardNumber.KING),
+        )
+
+        val player2Cards: List<Card> = listOf<Card>(
+            Card.of(Shape.CLUBS, CardNumber.ACE),
+            Card.of(Shape.DIAMONDS, CardNumber.KING),
+        )
+
+        val dealer = Dealer.create(
+            listOf<Card>(
+                Card.of(Shape.CLUBS, CardNumber.QUEEN),
+                Card.of(Shape.DIAMONDS, CardNumber.ACE),
+            ),
+        )
+
+        val users: List<User> = listOf(
+            User.create("player1", player1Cards),
+            User.create("player2", player2Cards),
+        )
+
+        // when
+        val actual = users.map { user -> user.getResult(dealer) }
+        val expected = listOf<GameResult>(GameResult.LOSE, GameResult.LOSE)
+
+        // then
+        assertThat(actual).isEqualTo(expected)
+    }
 
     @Test
     fun `딜러는 A와 J를 들고 있다`() {
