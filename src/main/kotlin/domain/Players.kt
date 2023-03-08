@@ -7,14 +7,6 @@ class Players(val list: List<Player>) {
         }
     }
 
-    fun result(dealer: Dealer): Map<Player, GameResult> {
-        val result = mutableMapOf<Player, GameResult>()
-        list.forEach { player ->
-            result[player] = player.getGameResult(dealer)
-        }
-        return result
-    }
-
     companion object {
         private const val MINIMUM_PLAYER_COUNT = 1
         private const val MAXIMUM_PLAYER_COUNT = 8

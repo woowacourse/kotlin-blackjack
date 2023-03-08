@@ -1,7 +1,7 @@
 package domain
 
 class Player(nameAndBet: NameAndBet, cards: Cards) : Participant(nameAndBet.name, cards) {
-    val betMoney = nameAndBet.betMoney
+    private val betMoney = nameAndBet.betMoney
     override fun isPossibleDrawCard(): Boolean = !isBurst()
 
     fun getGameResult(dealer: Dealer): GameResult {
@@ -13,5 +13,9 @@ class Player(nameAndBet: NameAndBet, cards: Cards) : Participant(nameAndBet.name
             resultSum() == dealer.resultSum() -> GameResult.DRAW
             else -> GameResult.LOSE
         }
+    }
+
+    fun getGameProfitMoney(dealer: Dealer): Int {
+        return (getGameResult(dealer).profitRate * betMoney).toInt()
     }
 }
