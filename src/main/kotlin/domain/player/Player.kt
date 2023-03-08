@@ -35,14 +35,15 @@ abstract class Player(
         val dealerOverMaxScore = dealerScore > GAME_MAX_SCORE
         val playerOverMaxScore = userScore > GAME_MAX_SCORE
         return when {
-            isDealerBlackJack(dealerScore) and (userScore != GAME_MAX_SCORE) -> GameResult.LOSE
+            isALLBlackJack(dealerScore, userScore) -> GameResult.DRAW
             (dealerOverMaxScore and playerOverMaxScore) or (dealerScore == userScore) -> GameResult.DRAW
             ((dealerScore > userScore) and !dealerOverMaxScore or playerOverMaxScore) -> GameResult.LOSE
             else -> GameResult.WIN
         }
     }
 
-    private fun isDealerBlackJack(dealerScore: Int): Boolean = dealerScore == GAME_MAX_SCORE
+    private fun isALLBlackJack(dealerScore: Int, userScore: Int): Boolean =
+        (dealerScore == GAME_MAX_SCORE) and (userScore == GAME_MAX_SCORE)
 
     private fun hasAceCard(): Boolean = hand.cards.any { card ->
         card.cardNumber == CardNumber.ACE
