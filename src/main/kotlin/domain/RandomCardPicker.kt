@@ -1,10 +1,11 @@
 package domain
 
 class RandomCardPicker : CardDrawer {
+    private val cardDeck =
+        CardCategory.values().flatMap { cardCategory -> CardNumber.values().map { Card.of(cardCategory, it) } }
+
     override fun draw(): Card {
-        val randomCardCategory = CardCategory.values().random()
-        val randomCardNumber = CardNumber.values().random()
-        return Card.of(cardCategory = randomCardCategory, cardNumber = randomCardNumber)
+        return cardDeck.shuffled()[FIRST]
     }
 
     override fun drawInitCards(): Cards {
@@ -13,5 +14,6 @@ class RandomCardPicker : CardDrawer {
 
     companion object {
         const val DRAW_INIT_CARD_COUNT = 2
+        private const val FIRST = 1
     }
 }
