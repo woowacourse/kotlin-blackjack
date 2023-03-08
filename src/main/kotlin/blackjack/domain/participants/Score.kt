@@ -7,15 +7,20 @@ class Score(cards: Cards) {
     private val minScore: Int = cards.toList().sumOf { it.value.value }
 
     val maxScore: Int =
-        minScore + if (cards.isContainsAce && isMaxNumberBust.not()) ACE_OTHER_NUMBER_DIFF else 0
+        if (cards.isContainsAce && isMaxNumberBust.not()) {
+            minScore + ACE_OTHER_NUMBER_DIFF
+        } else {
+            minScore
+        }
 
-    fun score(): Int = if (isMaxScoreInRange) maxScore else minScore
+    val score: Int
+        get() = if (isMaxScoreInRange) maxScore else minScore
 
     val isBlackJackNumber: Boolean
-        get() = score() == BLACKJACK_NUMBER
+        get() = score == BLACKJACK_NUMBER
 
     val isOverBlackJackNumber: Boolean
-        get() = score() > BLACKJACK_NUMBER
+        get() = score > BLACKJACK_NUMBER
 
     private val isMaxNumberBust: Boolean
         get() = minScore + ACE_OTHER_NUMBER_DIFF > BLACKJACK_NUMBER

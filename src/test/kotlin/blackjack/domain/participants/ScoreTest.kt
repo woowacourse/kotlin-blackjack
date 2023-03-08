@@ -20,7 +20,7 @@ class ScoreTest {
 
         val score = Score(cards)
 
-        assertThat(score.score()).isEqualTo(12)
+        assertThat(score.score).isEqualTo(12)
     }
 
     @Test

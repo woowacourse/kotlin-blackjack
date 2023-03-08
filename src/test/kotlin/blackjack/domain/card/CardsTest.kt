@@ -39,7 +39,7 @@ class CardsTest {
         var cards = Cards()
         cards += Card(CLOVER, EIGHT)
         cards += Card(SPADE, EIGHT)
-        assertThat(cards.result.score()).isEqualTo(16)
+        assertThat(cards.result.score).isEqualTo(16)
     }
 
     @Test

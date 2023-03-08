@@ -8,7 +8,7 @@ abstract class User(name: String) {
     var cards = Cards()
 
     val score: Int
-        get() = cards.result.score()
+        get() = cards.result.score
 
     val isBlackJack: Boolean
         get() = cards.result.isBlackJackNumber
