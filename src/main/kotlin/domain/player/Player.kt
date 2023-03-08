@@ -31,13 +31,13 @@ abstract class Player(
     fun getResult(dealer: Dealer): GameResult = calculateResult(dealer.addScoreTenIfHasAce())
 
     private fun calculateResult(dealerScore: Int): GameResult {
+        val userScore = addScoreTenIfHasAce()
         val dealerOverMaxScore = dealerScore > GAME_MAX_SCORE
-        val playerOverMaxScore = calculateCardValueSum() > GAME_MAX_SCORE
-
+        val playerOverMaxScore = userScore > GAME_MAX_SCORE
         return when {
-            isDealerBlackJack(dealerScore) -> GameResult.LOSE
-            (dealerOverMaxScore and playerOverMaxScore) or (dealerScore == calculateCardValueSum()) -> GameResult.DRAW
-            ((dealerScore > calculateCardValueSum()) and !dealerOverMaxScore or playerOverMaxScore) -> GameResult.LOSE
+            isDealerBlackJack(dealerScore) and (userScore != GAME_MAX_SCORE) -> GameResult.LOSE
+            (dealerOverMaxScore and playerOverMaxScore) or (dealerScore == userScore) -> GameResult.DRAW
+            ((dealerScore > userScore) and !dealerOverMaxScore or playerOverMaxScore) -> GameResult.LOSE
             else -> GameResult.WIN
         }
     }

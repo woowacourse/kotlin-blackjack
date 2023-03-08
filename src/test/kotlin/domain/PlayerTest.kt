@@ -118,22 +118,22 @@ class PlayerTest {
     }
 
     @Test
-    fun `딜러, 유저1, 유저2가 블랙잭일 경우, 딜러가 승리한다`() {
+    fun `딜러, 유저1, 유저2가 블랙잭일 경우, 무승부이다`() {
         // given
         val player1Cards: List<Card> = listOf<Card>(
             Card.of(Shape.CLUBS, CardNumber.ACE),
-            Card.of(Shape.DIAMONDS, CardNumber.KING),
+            Card.of(Shape.DIAMONDS, CardNumber.JACK),
         )
 
         val player2Cards: List<Card> = listOf<Card>(
             Card.of(Shape.CLUBS, CardNumber.ACE),
-            Card.of(Shape.DIAMONDS, CardNumber.KING),
+            Card.of(Shape.DIAMONDS, CardNumber.JACK),
         )
 
         val dealer = Dealer.create(
             listOf<Card>(
-                Card.of(Shape.CLUBS, CardNumber.QUEEN),
-                Card.of(Shape.DIAMONDS, CardNumber.ACE),
+                Card.of(Shape.HEARTS, CardNumber.JACK),
+                Card.of(Shape.SPADES, CardNumber.ACE),
             ),
         )
 
@@ -144,7 +144,7 @@ class PlayerTest {
 
         // when
         val actual = users.map { user -> user.getResult(dealer) }
-        val expected = listOf<GameResult>(GameResult.LOSE, GameResult.LOSE)
+        val expected = listOf<GameResult>(GameResult.DRAW, GameResult.DRAW)
 
         // then
         assertThat(actual).isEqualTo(expected)
