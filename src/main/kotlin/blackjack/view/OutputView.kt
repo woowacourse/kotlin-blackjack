@@ -66,10 +66,6 @@ object OutputView {
         println(player.toCardsDescription())
     }
 
-    fun printDealerCurrentCards(dealer: Dealer) {
-        println(SHOW_DEALER_CARD.format(dealer.cards.cards.joinToString(SEPARATOR) { card -> card.toDescription() }))
-    }
-
     fun printIsDealerReceivedCard(drawResult: DrawResult) {
         println()
         when (drawResult) {

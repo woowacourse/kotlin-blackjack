@@ -9,9 +9,13 @@ class BlackJackGameController(
 ) {
 
     fun run() {
-        initPlayers()
-        drawAdditionalCards()
-        checkResult()
+        runCatching {
+            initPlayers()
+            drawAdditionalCards()
+            checkResult()
+        }.onFailure { exception ->
+            OutputView.printErrorMessage(exception)
+        }
     }
 
     private fun initPlayers() {
