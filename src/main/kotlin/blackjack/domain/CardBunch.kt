@@ -13,14 +13,18 @@ class CardBunch private constructor(cards: MutableList<Card>) {
     }
 
     fun getTotalScore(): Int {
-        val aceCount = cards.count { it.cardNumber == CardNumber.ACE }
         var result = cards.sumOf { it.cardNumber.value }
         if (result > MAX_SCORE_CONDITION) return result
-        repeat(aceCount) {
-            if ((result + ACE_SCORE_GAP) > MAX_SCORE_CONDITION) return result
-            result += ACE_SCORE_GAP
+        if (containsAce()) {
+            result = getOptimizedResult(result)
         }
         return result
+    }
+
+    private fun getOptimizedResult(result: Int): Int {
+        var optimizedResult = result
+        if ((optimizedResult + ACE_SCORE_GAP) <= MAX_SCORE_CONDITION) optimizedResult += ACE_SCORE_GAP
+        return optimizedResult
     }
 
     fun isBurst(): Boolean = getTotalScore() > MAX_SCORE_CONDITION
