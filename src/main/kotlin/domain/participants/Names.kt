@@ -1,4 +1,4 @@
-package domain.player
+package domain.participants
 
 class Names(val userNames: List<String>) {
     init {

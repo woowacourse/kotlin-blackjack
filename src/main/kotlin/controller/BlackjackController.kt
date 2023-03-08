@@ -1,8 +1,7 @@
 package controller
 
 import domain.BlackjackGame
-import domain.player.Names
-import domain.player.Player
+import domain.participants.Names
 import view.InputView
 import view.OutputView
 
@@ -27,7 +26,7 @@ class BlackjackController {
 
     private fun printBlackjackSetting(blackjackGame: BlackjackGame) {
         OutputView.printDivideCard(blackjackGame.players)
-        OutputView.printDealerSettingCard(blackjackGame.dealerState.cards.first())
+        OutputView.printDealerSettingCard(blackjackGame.dealer)
         OutputView.printParticipantsCards(blackjackGame.players)
     }
 
@@ -36,7 +35,7 @@ class BlackjackController {
             blackjackGame.repeatPickCard(
                 player.name,
                 { validatePickAnswer(player.name) },
-                { OutputView.printParticipantCards(player.name, player.ownCards.cards) }
+                (OutputView::printParticipantCards)
             )
         }
     }
@@ -52,11 +51,7 @@ class BlackjackController {
     }
 
     private fun printCardResult(blackjackGame: BlackjackGame) {
-        val cardResult = mutableListOf(Player(DEALER, blackjackGame.dealerState))
-        blackjackGame.players.forEach {
-            cardResult.add(Player(it.name, it.ownCards))
-        }
-        OutputView.printCardResult(cardResult)
+        OutputView.printCardResult(blackjackGame.dealer, blackjackGame.players)
     }
 
     private fun printWinningResult(blackjackGame: BlackjackGame) {

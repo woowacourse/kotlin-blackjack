@@ -2,30 +2,29 @@ package domain
 
 import domain.card.Card
 import domain.card.CardMaker
+import domain.card.Cards
 import domain.deck.Deck
-import domain.gamer.cards.DealerCards
-import domain.gamer.cards.PlayerCards
 import domain.judge.ParticipantResult
-import domain.judge.Referee
 import domain.judge.Result
-import domain.player.Names
-import domain.player.Player
+import domain.participants.Dealer
+import domain.participants.Names
+import domain.participants.Player
 
 class BlackjackGame(
     names: Names,
     private val deck: Deck = Deck(CardMaker().makeShuffledCards())
 ) {
-    val dealerState: DealerCards
+    val dealer: Dealer
     val players: List<Player>
 
     init {
-        dealerState = DealerCards(makeStartDeck())
+        dealer = Dealer(Cards(makeStartDeck()))
         players = makePlayer(names)
     }
 
     private fun makePlayer(names: Names): List<Player> {
         return names.userNames.map {
-            Player(it, PlayerCards(makeStartDeck()))
+            Player(it, Cards(makeStartDeck()))
         }
     }
 
@@ -46,28 +45,32 @@ class BlackjackGame(
     }
 
     private fun pickDealerCard() {
-        dealerState.pickCard(deck.giveCard())
+        dealer.ownCards.pickCard(deck.giveCard())
     }
 
-    fun repeatPickCard(name: String, validatePickAnswer: () -> Boolean, printCards: () -> Unit) {
+    fun repeatPickCard(
+        name: String,
+        validatePickAnswer: () -> Boolean,
+        printCards: (String, List<Card>) -> Unit
+    ) {
         while (!checkBurst(name)) {
             val answer = validatePickAnswer()
             if (answer) pickPlayerCard(name) else return
-            printCards()
+            printCards(name, findPlayer(name).ownCards.cards)
         }
     }
 
-    private fun checkBurst(name: String) = findPlayer(name).ownCards.checkOverCondition()
+    private fun checkBurst(name: String) = findPlayer(name).checkBurst()
 
     fun pickDealerCardIfPossible(): Boolean {
-        if (!dealerState.checkOverCondition()) {
+        if (!dealer.checkOverCondition()) {
             pickDealerCard()
             return true
         }
         return false
     }
 
-    fun getPlayerWinningResult(): List<ParticipantResult> = Referee(dealerState, players).judgePlayersResult()
+    fun getPlayerWinningResult(): List<ParticipantResult> = dealer.judgePlayersResult(players)
 
     fun judgeDealerResult(playersResult: List<ParticipantResult>): List<Result> {
         return playersResult.map {

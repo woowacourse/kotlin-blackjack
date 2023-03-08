@@ -6,7 +6,7 @@ import domain.card.Shape
 import domain.deck.Deck
 import domain.judge.ParticipantResult
 import domain.judge.Result
-import domain.player.Names
+import domain.participants.Names
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

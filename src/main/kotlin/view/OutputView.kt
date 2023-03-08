@@ -3,7 +3,8 @@ package view
 import domain.card.Card
 import domain.judge.ParticipantResult
 import domain.judge.Result
-import domain.player.Player
+import domain.participants.Dealer
+import domain.participants.Player
 
 object OutputView {
     private const val SEPARATOR = ", "
@@ -22,8 +23,8 @@ object OutputView {
         println(names.joinToString(SEPARATOR, WITH_DEALER, DIVIDE_TWO_CARDS))
     }
 
-    fun printDealerSettingCard(card: Card) {
-        println(DEALER + printCardForm(card))
+    fun printDealerSettingCard(dealer: Dealer) {
+        println(DEALER + printCardForm(dealer.ownCards.cards.first()))
     }
 
     fun printParticipantsCards(participants: List<Player>) {
@@ -45,10 +46,27 @@ object OutputView {
         println(PICK_CARD_OVER_SIXTEEN)
     }
 
-    fun printCardResult(participants: List<Player>) {
-        participants.forEach { (name, participant) ->
-            println("${name}$PARTICIPANT_CARD ${participant.cards.joinToString(SEPARATOR) { printCardForm(it) }}${RESULT}${participant.calculateCardSum()}")
+    fun printCardResult(dealer: Dealer, participants: List<Player>) {
+        printDealerCardResult(dealer)
+        participants.forEach {
+            printPlayerCardResult(it)
         }
+    }
+
+    private fun printDealerCardResult(dealer: Dealer) {
+        println(
+            "${dealer.name} $PARTICIPANT_CARD " +
+                dealer.ownCards.cards.joinToString { printCardForm(it) } +
+                "${RESULT}${dealer.ownCards.calculateCardSum()}"
+        )
+    }
+
+    private fun printPlayerCardResult(player: Player) {
+        println(
+            "${player.name}$PARTICIPANT_CARD " +
+                player.ownCards.cards.joinToString { printCardForm(it) } +
+                "${RESULT}${player.ownCards.calculateCardSum()}"
+        )
     }
 
     fun printWinningResult(dealerResult: List<Result>, playerStates: List<ParticipantResult>) {
@@ -58,7 +76,7 @@ object OutputView {
     }
 
     private fun printDealerWinningResult(dealerResult: List<Result>) {
-        println("$DEALER${countResult(dealerResult).joinToString()}")
+        println("$DEALER${countResult(dealerResult).joinToString("")}")
     }
 
     private fun countResult(dealerResult: List<Result>): List<String> {
