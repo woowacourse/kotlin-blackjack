@@ -8,7 +8,7 @@ class CardDeckTest {
     @Test
     fun `Card를 한 장 반환한다`() {
         val actual = CardDeck().drawCard()
-        assertThat(Card.getAllCards()).contains(actual)
+        assertThat(Card.all()).contains(actual)
     }
 
     @Test
