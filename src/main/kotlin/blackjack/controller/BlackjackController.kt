@@ -20,6 +20,11 @@ class BlackjackController(
         printResult(dealer, participants)
     }
 
+    private fun setInitialPlayersCards(dealer: Dealer, participants: Participants) {
+        dealer.setInitialPlayersCards(participants)
+        outputView.printInitialSettingCard(dealer, participants)
+    }
+
     private fun hitPlayerCards(dealer: Dealer, participants: Participants) {
         hitParticipantsCards(dealer, participants)
         hitDealerCard(dealer)
@@ -31,15 +36,6 @@ class BlackjackController(
         }
     }
 
-    private fun hitDealerCard(dealer: Dealer) {
-        if (dealer.canHit()) {
-            dealer.addCard(dealer.drawCard())
-            outputView.printDealerHitMessage()
-            return
-        }
-        outputView.printDealerNotHitMessage()
-    }
-
     private fun hitParticipantCards(dealer: Dealer, participant: Participant) {
         while (participant.canHit() && readHitOrNot(participant.name)) {
             participant.addCard(dealer.drawCard())
@@ -47,9 +43,13 @@ class BlackjackController(
         }
     }
 
-    private fun setInitialPlayersCards(dealer: Dealer, participants: Participants) {
-        dealer.setInitialPlayersCards(participants)
-        outputView.printInitialSettingCard(dealer, participants)
+    private fun hitDealerCard(dealer: Dealer) {
+        if (dealer.canHit()) {
+            dealer.addCard(dealer.drawCard())
+            outputView.printDealerHitMessage()
+            return
+        }
+        outputView.printDealerNotHitMessage()
     }
 
     private fun printResult(dealer: Dealer, participants: Participants) {
