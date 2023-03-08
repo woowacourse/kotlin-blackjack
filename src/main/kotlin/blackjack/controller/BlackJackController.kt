@@ -12,7 +12,7 @@ class BlackJackController(
         val blackJack = BlackJackGame().setUp(inputView::inputParticipants, inputView::inputBettingMoney)
         outputView.outputInitState(blackJack)
         BlackJackGame().apply {
-            getCommand = inputView::inputDrawMore
+            onDraw = inputView::inputDrawMore
             guestsTurn(blackJack.guests, blackJack.cardDeck, outputView::outputCard)
             dealerTurn(blackJack.dealer, blackJack.cardDeck, outputView::outputDealerDraw)
         }

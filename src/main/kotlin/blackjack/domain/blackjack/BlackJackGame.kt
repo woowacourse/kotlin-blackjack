@@ -7,7 +7,7 @@ import blackjack.domain.participants.Guest
 import blackjack.domain.participants.User
 
 class BlackJackGame {
-    var getCommand: (String) -> Boolean = { true }
+    var onDraw: (String) -> Boolean = { true }
 
     fun setUp(getNames: () -> List<String>, getBettingMoney: (String) -> Int): BlackJack =
         blackJack {
@@ -32,7 +32,7 @@ class BlackJackGame {
 
     private fun guestTurn(guest: Guest, cardDeck: CardDeck, output: (User) -> Unit) {
         if (guest.isBlackJack) return
-        when (getCommand(guest.name.toString())) {
+        when (onDraw(guest.name.toString())) {
             true -> guestDraw(guest, cardDeck, output)
             false -> output(guest)
         }
