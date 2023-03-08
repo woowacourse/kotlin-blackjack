@@ -1,6 +1,6 @@
 package entity
 
-class Dealer(val cards: Cards = Cards(listOf())) : User {
+class Dealer(val cards: Cards = Cards()) : User {
     override fun isDistributable(): Boolean = cards.sumOfNumbers() <= MAXIMUM_CARD_SUM_NUMBER
 
     companion object {

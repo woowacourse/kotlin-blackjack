@@ -3,7 +3,7 @@ package entity
 import model.BlackjackStage
 import model.CardFactory
 
-class Player(val name: Name, private val bet: Money, val cards: Cards = Cards(listOf())) : User {
+class Player(val name: Name, private val bet: Money, val cards: Cards = Cards()) : User {
     override fun isDistributable(): Boolean = cards.sumOfNumbers() < BlackjackStage.WINNING_NUMBER
 
     fun addMoreCards(cardFactory: CardFactory) {
@@ -20,11 +20,11 @@ class Player(val name: Name, private val bet: Money, val cards: Cards = Cards(li
     }
 
     fun calculateWinMoney(gameResultType: GameResultType): Money {
-        if (cards.isBlackjack()) return Money((bet.value * 1.5).toInt())
+        if (cards.isBlackjack()) return Money((bet.value * FACTOR_BLACKJACK_MONEY).toInt())
         return when (gameResultType) {
-            GameResultType.WIN -> Money(bet.value * 2)
-            GameResultType.DRAW -> Money(0)
-            GameResultType.LOSE -> Money(-bet.value)
+            GameResultType.WIN -> Money(bet.value * FACTOR_WIN_MONEY)
+            GameResultType.DRAW -> Money(FACTOR_DRAW_MONEY)
+            GameResultType.LOSE -> Money(bet.value * FACTOR_LOSE_MONEY)
         }
     }
 
@@ -33,4 +33,11 @@ class Player(val name: Name, private val bet: Money, val cards: Cards = Cards(li
 
     private fun isDraw(playerCardNumberSum: Int, dealerCardNumberSum: Int): Boolean =
         playerCardNumberSum == dealerCardNumberSum || playerCardNumberSum > BlackjackStage.WINNING_NUMBER && dealerCardNumberSum > BlackjackStage.WINNING_NUMBER
+
+    companion object {
+        const val FACTOR_WIN_MONEY = 2
+        const val FACTOR_DRAW_MONEY = 0
+        const val FACTOR_LOSE_MONEY = -1
+        const val FACTOR_BLACKJACK_MONEY = 1.5
+    }
 }

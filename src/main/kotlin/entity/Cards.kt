@@ -2,7 +2,7 @@ package entity
 
 import model.BlackjackStage
 
-class Cards(value: List<Card>) {
+class Cards(value: List<Card> = listOf()) {
     private val _value: MutableList<Card> = value.toMutableList()
     val value: List<Card>
         get() = _value.toList()
