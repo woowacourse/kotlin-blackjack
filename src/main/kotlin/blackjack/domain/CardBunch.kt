@@ -8,37 +8,30 @@ class CardBunch private constructor(cards: MutableList<Card>) {
 
     constructor(vararg cards: Card) : this(cards.toMutableList())
 
-    fun addCard(card: Card) = _cards.add(card)
+    fun addCard(card: Card): Boolean = _cards.add(card)
 
     fun getSumOfCards(): Int {
-        var result = 0
-        cards.forEach { card ->
-            result += card.cardNumber.value
-        }
+        var sum = cards.sumOf { it.cardNumber.value }
         if (containAce()) {
-            result += checkAceValue(result)
+            sum = decideAddTen(sum)
         }
-        return result
+        return sum
     }
 
     private fun containAce(): Boolean {
-        _cards.forEach { card ->
-            if (card.cardNumber == CardNumber.ACE) return true
-        }
-        return false
+        return _cards.any { card -> card.cardNumber == CardNumber.ACE }
     }
 
-    private fun checkAceValue(result: Int): Int {
-        return when (result + TEN > MAX_SCORE_CONDITION) {
-            true -> ZERO
-            false -> TEN
+    private fun decideAddTen(sum: Int): Int {
+        return when (sum + TEN > MAX_SCORE_CONDITION) {
+            true -> sum
+            false -> sum + TEN
         }
     }
 
     fun isBurst(): Boolean = getSumOfCards() > MAX_SCORE_CONDITION
 
     companion object {
-        private const val ZERO = 0
         private const val TEN = 10
     }
 }
