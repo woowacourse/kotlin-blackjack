@@ -25,8 +25,8 @@ class BlackJackGameTest {
         }
     }
 
-    private fun inputDrawMore(string: String): String {
-        return "y"
+    private fun inputDrawMore(string: String): Boolean {
+        return true
     }
 
     private fun outputCard(user: User) = null

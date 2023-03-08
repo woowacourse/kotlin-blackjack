@@ -6,7 +6,7 @@ import blackjack.domain.participants.Guest
 import blackjack.domain.participants.User
 
 class BlackJackGame {
-    lateinit var getCommand: (String) -> String
+    lateinit var getCommand: (String) -> Boolean?
 
     fun guestsTurn(guests: List<Guest>, cardDeck: CardDeck, output: (User) -> Unit) =
         guests.forEach { guest -> guestTurn(guest, cardDeck, output) }
@@ -22,9 +22,9 @@ class BlackJackGame {
     private fun guestTurn(guest: Guest, cardDeck: CardDeck, output: (User) -> Unit) {
         if (guest.isBlackJack()) return
         when (getCommand(guest.name.toString())) {
-            in DRAW_COMMANDS -> draw(guest, cardDeck, output)
-            in END_TURN_COMMANDS -> output(guest)
-            else -> this.guestTurn(guest, cardDeck, output)
+            true -> draw(guest, cardDeck, output)
+            false -> output(guest)
+            null -> this.guestTurn(guest, cardDeck, output)
         }
     }
 
@@ -34,10 +34,5 @@ class BlackJackGame {
         if (guest.isContinue) {
             guestTurn(guest, cardDeck, output)
         }
-    }
-
-    companion object {
-        private val DRAW_COMMANDS = listOf("Y", "y")
-        private val END_TURN_COMMANDS = listOf("N", "n")
     }
 }

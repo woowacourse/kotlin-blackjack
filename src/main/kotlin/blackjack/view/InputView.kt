@@ -6,8 +6,18 @@ class InputView {
         return readln().split(",").map { it.trim() }
     }
 
-    fun inputDrawMore(name: String): String {
+    fun inputDrawMore(name: String): Boolean? {
         println("\n${name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
-        return readln()
+        val command = readln()
+        return when (command) {
+            in DRAW_COMMANDS -> true
+            in END_TURN_COMMANDS -> false
+            else -> null
+        }
+    }
+
+    companion object {
+        private val DRAW_COMMANDS = listOf("Y", "y")
+        private val END_TURN_COMMANDS = listOf("N", "n")
     }
 }
