@@ -9,14 +9,14 @@ class ParticipantsTest {
         val participants = Participants(
             Players(
                 Player(
-                    Name("pobi"),
+                    NameAndBet(Name("pobi"), 0),
                     Cards(
                         Card.of(CardCategory.CLOVER, CardNumber.EIGHT),
                         Card.of(CardCategory.SPADE, CardNumber.NINE)
                     )
                 ),
                 Player(
-                    Name("jason"),
+                    NameAndBet(Name("jason"), 0),
                     Cards(
                         Card.of(CardCategory.CLOVER, CardNumber.EIGHT),
                         Card.of(CardCategory.SPADE, CardNumber.NINE)

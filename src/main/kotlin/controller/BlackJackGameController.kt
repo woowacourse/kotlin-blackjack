@@ -2,6 +2,7 @@ package controller
 
 import domain.Name
 import domain.Names
+import domain.PlayersNameAndBet
 import domain.phase.DealerAddPhase
 import domain.phase.GameResultMoneyPhase
 import domain.phase.GameScorePhase
@@ -15,7 +16,7 @@ import view.ResultView
 class BlackJackGameController(private val inputView: InputView, private val resultView: ResultView) : Runnable {
     override fun run() {
         val blackJackGame = initGame()
-        val result = blackJackGame.runGame(getNames())
+        val result = blackJackGame.runGame(getPlayersNameAndBet())
     }
 
     private fun initGame(): BlackJackGame {
@@ -29,8 +30,17 @@ class BlackJackGameController(private val inputView: InputView, private val resu
         return BlackJackGame(phases)
     }
 
+    private fun getPlayersNameAndBet(): PlayersNameAndBet {
+        val names = getNames()
+        return getBets(names)
+    }
+
     private fun getNames(): Names {
         return inputView.readNames() ?: getNames()
+    }
+
+    private fun getBets(names: Names): PlayersNameAndBet {
+        return PlayersNameAndBet(listOf()) // ?: getBets()
     }
 
     private fun getChoiceOfAddCard(name: Name): Boolean {

@@ -10,7 +10,7 @@ class PlayersTest {
         assertThrows<IllegalStateException> {
             Players(9) {
                 Player(
-                    Name("pobi"),
+                    NameAndBet(Name("pobi"), 0),
                     Cards(
                         Card.of(CardCategory.CLOVER, CardNumber.EIGHT),
                         Card.of(CardCategory.SPADE, CardNumber.NINE)
@@ -24,14 +24,14 @@ class PlayersTest {
     fun `딜러와 플레이어들을 비교해서 플레이어들의 승패 결과를 얻는다`() {
         val players = Players(
             Player(
-                Name("pobi"),
+                NameAndBet(Name("pobi"), 0),
                 Cards(
                     Card.of(CardCategory.CLOVER, CardNumber.EIGHT),
                     Card.of(CardCategory.SPADE, CardNumber.NINE)
                 )
             ),
             Player(
-                Name("jason"),
+                NameAndBet(Name("jason"), 0),
                 Cards(
                     Card.of(CardCategory.CLOVER, CardNumber.EIGHT),
                     Card.of(CardCategory.SPADE, CardNumber.TWO)
