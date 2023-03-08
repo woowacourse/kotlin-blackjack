@@ -1,6 +1,6 @@
 package domain
 
-class BetProfitResult private constructor(val players: Players, val dealer: Dealer) {
+class BetProfitResult(val players: Players, val dealer: Dealer) {
     val playersResult: Map<Player, Int>
         get() {
             val map = mutableMapOf<Player, Int>()
@@ -12,10 +12,4 @@ class BetProfitResult private constructor(val players: Players, val dealer: Deal
 
     val dealerResult: Int
         get() = playersResult.values.sum() * -1
-
-    companion object {
-        fun of(players: Players, dealer: Dealer): BetProfitResult {
-            return BetProfitResult(players, dealer)
-        }
-    }
 }

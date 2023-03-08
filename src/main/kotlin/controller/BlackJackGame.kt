@@ -17,7 +17,7 @@ class BlackJackGame(private val phases: Phases, private val deck: CardDeck = Bla
         val dealer = Dealer(deck.drawInitCards())
         val participants = Participants(Players(players), dealer)
         phases.run(participants, deck)
-        return BetProfitResult.of(participants.players, participants.dealer)
+        return BetProfitResult(participants.players, participants.dealer)
     }
 
     companion object {
