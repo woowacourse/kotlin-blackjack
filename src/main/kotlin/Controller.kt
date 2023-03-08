@@ -1,5 +1,4 @@
 import domain.BlackJackGame
-import domain.User
 import domain.UserNameContainer
 import view.GameResultView
 import view.LoginView
@@ -13,29 +12,19 @@ class Controller(
 
     fun run() {
         val blackJackGame = BlackJackGame()
-        blackJackGame.setUpBlackJackGame(::readUserNames, ::readBetAmount)
+        blackJackGame.setUpBlackJackGame(::readUserNames, loginView::requestBetAmount)
         playGameView.printPlayers(players = blackJackGame.players)
-        blackJackGame.playDealerTurn { printDealerPickNewCard() }
-        blackJackGame.playUserTurn(::readMoreCardCommand, ::printUserCards)
+        blackJackGame.playDealerTurn(playGameView::printDealerPickNewCard)
+        blackJackGame.playUserTurn(playGameView::isOneMoreCard, playGameView::printUserCard)
         gameResultView.printCardResult(blackJackGame.players)
         blackJackGame.judgeGameResult(gameResultView::printFinalResult)
         blackJackGame.calculateProfit(gameResultView::printFinalProfit)
     }
 
     private fun readUserNames(): List<String> {
-        val userNameContainer = repeatWithRunCatching { getUserNames() }
+        val userNameContainer = repeatWithRunCatching { UserNameContainer(loginView.requestPlayerName()) }
         return userNameContainer.names
     }
-
-    private fun getUserNames(): UserNameContainer = UserNameContainer(loginView.requestPlayerName())
-
-    private fun readBetAmount(userName: String) = loginView.requestBetAmount(userName)
-
-    private fun printUserCards(user: User) = playGameView.printUserCard(user)
-
-    private fun readMoreCardCommand(user: User): Boolean = playGameView.isOneMoreCard(user)
-
-    private fun printDealerPickNewCard() = playGameView.printDealerPickNewCard()
 
     private fun <T> repeatWithRunCatching(action: () -> T): T {
         return runCatching(action).getOrElse { error ->
