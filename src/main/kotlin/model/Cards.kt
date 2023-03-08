@@ -19,7 +19,7 @@ class Cards(cards: Set<Card>) {
         return sum
     }
 
-    fun firstCard(): Cards = Cards(setOf(cards.first()))
+    fun firstCard(): Card = cards.first()
 
     companion object {
         const val DEALER_STANDARD_HIT_POINT = 16
