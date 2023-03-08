@@ -3,6 +3,7 @@ package view
 import domain.Dealer
 import domain.Player
 import domain.User
+import view.util.toCardInfo
 
 class GameResultView {
 
@@ -25,7 +26,7 @@ class GameResultView {
         PLAYER_CARD_RESULT.format(
             player.name,
             player.cards.joinToString(SEPARATOR) { card ->
-                card.toString()
+                card.toCardInfo()
             },
             player.addScoreTenIfHasAce(),
         )

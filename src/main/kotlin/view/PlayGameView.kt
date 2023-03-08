@@ -3,6 +3,7 @@ package view
 import domain.Dealer
 import domain.Player
 import domain.User
+import view.util.toCardInfo
 
 class PlayGameView {
 
@@ -12,7 +13,7 @@ class PlayGameView {
     }
 
     fun printPlayerCard(dealer: Dealer, users: List<User>) {
-        println(USER_RESULT_FORMAT.format(dealer.name, dealer.cards.first()))
+        println(USER_RESULT_FORMAT.format(dealer.name, dealer.cards.first().toCardInfo()))
         users.forEach { user ->
             println(formatPlayerCard(user))
         }
@@ -33,7 +34,7 @@ class PlayGameView {
         USER_RESULT_FORMAT.format(
             player.name,
             player.cards.joinToString(SEPARATOR) { card ->
-                card.toString()
+                card.toCardInfo()
             },
         )
 

@@ -1,13 +1,9 @@
 package domain.card
 
 class Card private constructor(
-    private val shape: Shape,
+    val shape: Shape,
     val cardNumber: CardNumber,
 ) {
-
-    override fun toString(): String {
-        return "${cardNumber.cardSign}${shape.pattern}"
-    }
 
     companion object {
         private val cardCache: MutableMap<Pair<Shape, CardNumber>, Card> = mutableMapOf()
@@ -16,10 +12,6 @@ class Card private constructor(
             cardNumber: CardNumber,
         ): Card {
             return cardCache.getOrPut(shape to cardNumber) { Card(shape, cardNumber) }
-        }
-
-        fun valueOf(card: Card): CardNumber {
-            return card.cardNumber
         }
     }
 }
