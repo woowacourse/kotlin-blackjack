@@ -1,9 +1,9 @@
-import domain.* // ktlint-disable no-wildcard-imports
+import domain.CardMachine
+import domain.card.Card
 import domain.player.Dealer
 import domain.player.User
-import domain.card.Card
 import domain.player.UserNameContainer
-import view.*
+import view.* // ktlint-disable no-wildcard-imports
 import view.Answer.Companion.YES
 
 class Controller(
@@ -39,23 +39,15 @@ class Controller(
         gameResultView.printFinalResult(getGameResult(dealer, users), users)
     }
 
-    private fun getGameResult(dealer: Dealer, users: List<User>): List<GameResult> {
-        val referee: Referee = Referee(
-            dealer.addScoreTenIfHasAce(),
-            users.map { user ->
-                user.addScoreTenIfHasAce()
-            },
-        )
-        return referee.getResult()
+    private fun getGameResult(dealer: Dealer, users: List<User>): List<GameResult> = users.map { user ->
+        user.getResult(dealer)
     }
 
     private fun dealerPickNewCardIfNeed(dealer: Dealer) {
-        if (!dealer.isOverSumCondition()) {
-            if (dealer.addScoreTenIfHasAce() != 21) {
-                playGameView.printDealerPickNewCard()
-                val newCard = cardMachine.getCards(1)
-                dealer.addCard(newCard)
-            }
+        if (!dealer.isOverSumCondition() and (dealer.addScoreTenIfHasAce() != 21)) {
+            playGameView.printDealerPickNewCard()
+            val newCard = cardMachine.getCards(1)
+            dealer.addCard(newCard)
         }
     }
 
