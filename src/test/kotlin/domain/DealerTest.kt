@@ -22,7 +22,7 @@ class DealerTest {
         val actual = dealer.isOverSumCondition()
 
         // then
-        assertThat(actual).isEqualTo(false)
+        assertThat(actual).isFalse
     }
 
     @Test
@@ -39,6 +39,6 @@ class DealerTest {
         val actual = dealer.isOverSumCondition()
 
         // then
-        assertThat(actual).isEqualTo(true)
+        assertThat(actual).isTrue
     }
 }

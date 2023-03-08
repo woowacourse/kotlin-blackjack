@@ -11,7 +11,8 @@ class UserTest {
     fun `플레이어는 소지한 카드의 합은 8이다`() {
         // given
         val user = User.create(
-            "산군" to listOf<Card>(
+            "산군",
+            listOf<Card>(
                 Card.of(Shape.CLUBS, CardNumber.FIVE),
                 Card.of(Shape.DIAMONDS, CardNumber.THREE),
             ),
@@ -28,11 +29,11 @@ class UserTest {
     fun `플레이어가 소지한 카드의 합은 10이다`() {
         // given
         val user = User.create(
-            "산군" to
-                listOf<Card>(
-                    Card.of(Shape.CLUBS, CardNumber.FIVE),
-                    Card.of(Shape.DIAMONDS, CardNumber.FIVE),
-                ),
+            "산군",
+            listOf<Card>(
+                Card.of(Shape.CLUBS, CardNumber.FIVE),
+                Card.of(Shape.DIAMONDS, CardNumber.FIVE),
+            ),
         )
 
         // when
