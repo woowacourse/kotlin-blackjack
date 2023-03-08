@@ -15,7 +15,7 @@ object ResultOutput {
             INITIAL_CARDS_SCRIPT.format(
                 person.name,
                 person.showHandOfCards().joinToString(",") { it.toText() },
-                person.getTotalCardNumber(GetAppropriateSum()),
+                person.getTotalCardNumber(GetAppropriateSum),
             ),
         )
     }

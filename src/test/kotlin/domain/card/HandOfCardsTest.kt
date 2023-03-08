@@ -35,7 +35,7 @@ internal class HandOfCardsTest {
         )
 
         // when
-        val actual = handOfCards.getTotalCardSum(GetAppropriateSum())
+        val actual = handOfCards.getTotalCardSum(GetAppropriateSum)
 
         // then
         assertThat(actual).isEqualTo(expected)
@@ -51,7 +51,7 @@ internal class HandOfCardsTest {
         )
 
         // when
-        val actual = handOfCards.getTotalCardSum(GetMinSum())
+        val actual = handOfCards.getTotalCardSum(GetMinSum)
 
         // then
         assertThat(actual).isEqualTo(expected)

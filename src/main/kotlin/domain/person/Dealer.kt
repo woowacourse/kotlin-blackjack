@@ -12,7 +12,7 @@ class Dealer(
 
     fun showFirstCard(): List<Card> = handOfCards.showFirstCard()
 
-    override fun canReceiveMoreCard(): Boolean = getTotalCardNumber(GetAppropriateSum()) <= DEALER_STAND_CONDITION
+    override fun canReceiveMoreCard(): Boolean = getTotalCardNumber(GetAppropriateSum) <= DEALER_STAND_CONDITION
 
     companion object {
         const val DEALER = "딜러"

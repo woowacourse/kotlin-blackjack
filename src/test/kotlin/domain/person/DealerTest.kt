@@ -45,7 +45,7 @@ class DealerTest {
         dealer.receiveCard(Card(HEART, number1))
         dealer.receiveCard(Card(HEART, number2))
 
-        assertThat(dealer.getTotalCardNumber(GetAppropriateSum())).isEqualTo(sum)
+        assertThat(dealer.getTotalCardNumber(GetAppropriateSum)).isEqualTo(sum)
     }
 
     @CsvSource(value = ["ACE,ACE,false", "KING,QUEEN,true"])

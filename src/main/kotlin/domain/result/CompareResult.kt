@@ -28,7 +28,7 @@ sealed class CompareResult {
     }
 
     companion object {
-        private val sumStrategy = GetAppropriateSum()
+        private val sumStrategy = GetAppropriateSum
 
         fun compare(dealer: Dealer, player: Player): CompareResult {
             val gap = player.getTotalCardNumber(sumStrategy) - dealer.getTotalCardNumber(sumStrategy)

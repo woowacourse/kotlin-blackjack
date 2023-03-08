@@ -5,7 +5,7 @@ import constant.BlackJackConstants.BLACK_JACK
 import constant.BlackJackConstants.SMALL_ACE
 import domain.card.HandOfCards
 
-class GetAppropriateSum : SumStrategy {
+object GetAppropriateSum : SumStrategy {
     override fun getSum(handOfCards: HandOfCards): Int {
         val aceCount = handOfCards.countAce()
         val exceptAceSum = handOfCards.getExceptAceSum()

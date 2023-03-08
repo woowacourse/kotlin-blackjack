@@ -8,5 +8,5 @@ class Player(
     override val name: String,
     override val handOfCards: HandOfCards,
 ) : Person() {
-    override fun canReceiveMoreCard() = getTotalCardNumber(GetMinSum()) <= BLACK_JACK
+    override fun canReceiveMoreCard() = getTotalCardNumber(GetMinSum) <= BLACK_JACK
 }

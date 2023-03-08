@@ -22,5 +22,5 @@ abstract class Person() {
 
     abstract fun canReceiveMoreCard(): Boolean
 
-    fun isBust(): Boolean = getTotalCardNumber(GetMinSum()) > BLACK_JACK
+    fun isBust(): Boolean = getTotalCardNumber(GetMinSum) > BLACK_JACK
 }

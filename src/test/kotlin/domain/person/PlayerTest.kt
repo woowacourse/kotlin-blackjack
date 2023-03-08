@@ -46,7 +46,7 @@ class PlayerTest {
         player.receiveCard(Card(CLOVER, number1))
         player.receiveCard(Card(CLOVER, number2))
 
-        assertThat(player.getTotalCardNumber(GetAppropriateSum())).isEqualTo(sum)
+        assertThat(player.getTotalCardNumber(GetAppropriateSum)).isEqualTo(sum)
     }
 
     @CsvSource(value = ["ACE,TEN,15", "TWO,THREE,9"])
@@ -55,7 +55,7 @@ class PlayerTest {
         player.receiveCard(Card(CLOVER, number1))
         player.receiveCard(Card(CLOVER, number2))
 
-        assertThat(player.getTotalCardNumber(GetMinSum())).isEqualTo(sum)
+        assertThat(player.getTotalCardNumber(GetMinSum)).isEqualTo(sum)
     }
 
     @CsvSource(value = ["ACE,ACE,false", "KING,QUEEN,true"])
