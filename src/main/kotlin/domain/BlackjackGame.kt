@@ -12,8 +12,8 @@ class BlackjackGame(
     names: Names,
     private val deck: Deck = Deck(CardMaker().makeShuffledCards())
 ) {
-    private val dealer: Dealer
-    private val players: List<Player>
+    val dealer: Dealer
+    val players: List<Player>
 
     init {
         dealer = Dealer(Cards(makeStartDeck()))
