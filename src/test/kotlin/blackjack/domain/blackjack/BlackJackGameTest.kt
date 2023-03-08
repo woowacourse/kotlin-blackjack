@@ -9,12 +9,11 @@ class BlackJackGameTest {
     @Test
     fun `게임을 실행한다`() {
         val blackJack = blackJack {
-            cardDeck(Cards.all())
             participants {
                 dealer()
                 guests(listOf("아크", "로피"))
             }
-            draw()
+            initDraw()
         }
 
         assertDoesNotThrow {

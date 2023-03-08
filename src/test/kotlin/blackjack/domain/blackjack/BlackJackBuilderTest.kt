@@ -9,12 +9,11 @@ class BlackJackBuilderTest {
     @Test
     fun `블랙잭 게임 초기 시작단계가 실행된다`() {
         val blackJack = blackJack {
-            cardDeck(Cards.all())
             participants {
                 dealer()
                 guests(listOf("아크", "로피"))
             }
-            draw()
+            initDraw()
         }
         assertAll(
             { assertThat(blackJack.guests[0].name.toString()).isEqualTo("아크") },

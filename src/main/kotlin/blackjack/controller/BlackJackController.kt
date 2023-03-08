@@ -23,7 +23,7 @@ class BlackJackController(
             dealer()
             guests(inputView.inputParticipants())
         }
-        initDraw(Cards.all())
+        initDraw()
     }
 
     private fun startBlackJack(blackJack: BlackJack) =

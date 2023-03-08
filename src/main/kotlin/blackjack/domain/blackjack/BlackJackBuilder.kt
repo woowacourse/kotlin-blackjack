@@ -2,6 +2,7 @@ package blackjack.domain.blackjack
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardDeck
+import blackjack.domain.card.Cards
 import blackjack.domain.participants.Participants
 import blackjack.domain.participants.ParticipantsBuilder
 
@@ -10,14 +11,13 @@ fun blackJack(block: BlackJackBuilder.() -> Unit): BlackJack {
 }
 
 class BlackJackBuilder {
-    private lateinit var cardDeck: CardDeck
+    private val cardDeck: CardDeck = CardDeck(Cards.all().shuffled())
     private lateinit var participants: Participants
     fun participants(block: ParticipantsBuilder.() -> Unit) {
         participants = ParticipantsBuilder().apply(block).build()
     }
 
-    fun initDraw(cards: List<Card>) = participants.all().forEach {
-        cardDeck = CardDeck(cards.shuffled())
+    fun initDraw() = participants.all().forEach {
         it.draw(cardDeck.nextCard())
         it.draw(cardDeck.nextCard())
     }
