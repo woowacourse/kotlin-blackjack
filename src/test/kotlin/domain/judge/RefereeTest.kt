@@ -23,7 +23,7 @@ class RefereeTest() {
         val playerState =
             PlayerCards(mutableListOf(Card(Shape.HEART, CardValue.JACK), Card(Shape.HEART, CardValue.ACE)))
         val referee = Referee(dealerState, listOf(Player("jack", playerState))).judgePlayersResult()
-        assertThat(referee).isEqualTo(listOf(ParticipantResult("jack", Result.WIN)))
+        assertThat(referee).isEqualTo(listOf(ParticipantResult("jack", Result.BLACKJACK_WIN)))
     }
 
     @Test

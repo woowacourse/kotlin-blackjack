@@ -18,24 +18,18 @@ class Referee(private val dealerState: DealerCards, private val players: List<Pl
 
         return when {
             checkBlackJack(player) && checkBlackJack(dealerState) -> Result.DRAW
-            checkBlackJack(player) -> Result.WIN
-            else -> judgeWithConditions(playerSum, dealerSum)
-        }
-    }
-
-    private fun checkBlackJack(participant: ParticipantCards): Boolean =
-        participant.cards.size == BLACKJACK_SIZE && participant.calculateCardSum() == CARD_SUM_MAX_VALUE
-
-    private fun judgeWithConditions(playerSum: Int, dealerSum: Int): Result {
-        return when {
-            playerSum > CARD_SUM_MAX_VALUE -> Result.LOSS
+            checkBlackJack(player) -> Result.BLACKJACK_WIN
             dealerSum > CARD_SUM_MAX_VALUE -> Result.WIN
+            playerSum > CARD_SUM_MAX_VALUE -> Result.LOSS
             dealerSum > playerSum -> Result.LOSS
             playerSum == CARD_SUM_MAX_VALUE && dealerSum == CARD_SUM_MAX_VALUE -> Result.LOSS
             playerSum > dealerSum -> Result.WIN
             else -> Result.DRAW
         }
     }
+
+    private fun checkBlackJack(participant: ParticipantCards): Boolean =
+        participant.cards.size == BLACKJACK_SIZE && participant.calculateCardSum() == CARD_SUM_MAX_VALUE
 
     companion object {
         private const val BLACKJACK_SIZE = 2
