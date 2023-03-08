@@ -4,7 +4,6 @@ import domain.CardGame
 import domain.CardPackGenerator
 import model.Bet
 import model.BetInfos
-import model.BetInfosBuilder
 import model.CardPack
 import model.Dealer
 import model.Dealer.Companion.DEALER
@@ -36,13 +35,11 @@ class Controller(private val inputView: InputView, private val outputView: Outpu
         return Names(inputView.readName().map(::Name))
     }
 
-    private fun initBets(block: BetInfosBuilder.() -> Unit): BetInfos {
-        return BetInfosBuilder().apply(block).build()
-    }
-
-    private fun askHowMuchBets(players: Players) = initBets {
-        players.toList().forEach { bet(it, askHowMuchBet(it.name)) }
-    }
+    private fun askHowMuchBets(players: Players) = BetInfos(
+        buildMap {
+            players.toList().forEach { put(it, askHowMuchBet(it.name)) }
+        }
+    )
 
     private fun askHowMuchBet(name: Name): Bet {
         outputView.printHowMuchBet(name)
