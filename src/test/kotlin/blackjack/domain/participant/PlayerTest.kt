@@ -41,6 +41,16 @@ class PlayerTest {
     }
 
     @Test
+    fun `카드의 합이 21이면 blackjack이다`() {
+        val player = Player("hatti").apply {
+            receive(Card(CardNumber.KING, CardShape.HEART))
+            receive(Card(CardNumber.ACE, CardShape.HEART))
+        }
+
+        assertThat(player.isBlackJack()).isTrue
+    }
+
+    @Test
     fun `카드의 합이 21 미만이면 Hit가 가능하다`() {
         val player = Player("hatti").apply {
             receive(Card(CardNumber.TWO, CardShape.HEART))
