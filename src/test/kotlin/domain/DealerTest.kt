@@ -3,7 +3,6 @@ package domain
 import blackjack.domain.Card
 import blackjack.domain.CardHand
 import blackjack.domain.CardNumber
-import blackjack.domain.CardPack
 import blackjack.domain.Dealer
 import blackjack.domain.DrawResult
 import blackjack.domain.Shape
@@ -17,7 +16,7 @@ class DealerTest {
         val dealer = createDealer(CardNumber.TEN, CardNumber.FIVE)
 
         assertThat(
-            dealer.drawCard()
+            dealer.drawCard(card)
         ).isEqualTo(DrawResult.Success)
     }
 
@@ -26,11 +25,13 @@ class DealerTest {
         val dealer = createDealer(CardNumber.TEN, CardNumber.SEVEN)
 
         assertThat(
-            dealer.drawCard()
+            dealer.drawCard(card)
         ).isEqualTo(DrawResult.Failure)
     }
 
+    private val card = Card(CardNumber.ONE, Shape.SPADE)
+
     private fun createDealer(firstCardNumber: CardNumber, secondCardNumber: CardNumber): Dealer {
-        return Dealer(CardPack(), CardHand(listOf(Card(firstCardNumber, Shape.SPADE), Card(secondCardNumber, Shape.SPADE))))
+        return Dealer(CardHand(listOf(Card(firstCardNumber, Shape.SPADE), Card(secondCardNumber, Shape.SPADE))))
     }
 }

@@ -1,6 +1,6 @@
 package blackjack.domain
 
-class BlackJackReferee {
+object BlackJackReferee {
 
     fun judgeGameResult(players: List<Player>, dealer: Dealer) = players.map { player ->
         PlayerGameResult(

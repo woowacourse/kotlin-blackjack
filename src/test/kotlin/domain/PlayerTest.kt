@@ -3,7 +3,6 @@ package domain
 import blackjack.domain.Card
 import blackjack.domain.CardHand
 import blackjack.domain.CardNumber
-import blackjack.domain.CardPack
 import blackjack.domain.DrawState
 import blackjack.domain.Player
 import blackjack.domain.PlayerName
@@ -18,11 +17,13 @@ class PlayerTest {
         val player = createPlayer(CardNumber.K, CardNumber.K)
 
         assertThat(
-            player.drawCard()
+            player.drawCard(card)
         ).isEqualTo(DrawState.IMPOSSIBLE)
     }
 
+    private val card = Card(CardNumber.ONE, Shape.SPADE)
+
     private fun createPlayer(firstCardNumber: CardNumber, secondCardNumber: CardNumber): Player {
-        return Player(PlayerName("name"), CardPack(), CardHand(listOf(Card(firstCardNumber, Shape.SPADE), Card(secondCardNumber, Shape.SPADE))))
+        return Player(PlayerName("name"), CardHand(listOf(Card(firstCardNumber, Shape.SPADE), Card(secondCardNumber, Shape.SPADE))))
     }
 }

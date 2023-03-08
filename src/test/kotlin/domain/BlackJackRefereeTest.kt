@@ -4,7 +4,6 @@ import blackjack.domain.BlackJackReferee
 import blackjack.domain.Card
 import blackjack.domain.CardHand
 import blackjack.domain.CardNumber
-import blackjack.domain.CardPack
 import blackjack.domain.Dealer
 import blackjack.domain.GameResult
 import blackjack.domain.Player
@@ -21,10 +20,9 @@ class BlackJackRefereeTest {
         val player2 = createPlayer(CardNumber.EIGHT, CardNumber.ONE) // 9
         val player3 = createPlayer(CardNumber.EIGHT, CardNumber.TWO) // 10
         val dealer = createDealer(CardNumber.SIX, CardNumber.FOUR) // 10
-        val blackJackReferee = BlackJackReferee()
 
         // when
-        val actual = blackJackReferee.judgeGameResult(
+        val actual = BlackJackReferee.judgeGameResult(
             players = listOf(player1, player2, player3),
             dealer = dealer
         )
@@ -37,10 +35,10 @@ class BlackJackRefereeTest {
     }
 
     private fun createPlayer(firstCardNumber: CardNumber, secondCardNumber: CardNumber): Player {
-        return Player(PlayerName("name"), CardPack(), CardHand(listOf(Card(firstCardNumber, Shape.SPADE), Card(secondCardNumber, Shape.SPADE))))
+        return Player(PlayerName("name"), CardHand(listOf(Card(firstCardNumber, Shape.SPADE), Card(secondCardNumber, Shape.SPADE))))
     }
 
     private fun createDealer(firstCardNumber: CardNumber, secondCardNumber: CardNumber): Dealer {
-        return Dealer(CardPack(), CardHand(listOf(Card(firstCardNumber, Shape.SPADE), Card(secondCardNumber, Shape.SPADE))))
+        return Dealer(CardHand(listOf(Card(firstCardNumber, Shape.SPADE), Card(secondCardNumber, Shape.SPADE))))
     }
 }
