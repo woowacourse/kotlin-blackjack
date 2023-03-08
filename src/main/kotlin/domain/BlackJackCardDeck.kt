@@ -1,9 +1,10 @@
 package domain
 
-class BlackJackCardDeck(val deck: List<Card> = Card.DECK) : CardDeck {
+class BlackJackCardDeck(private var deck: List<Card> = Card.DECK) : CardDeck {
     private var i = 0
         set(value) {
             field = if (i >= deck.size) {
+                deck = deck.shuffled()
                 0
             } else {
                 value
