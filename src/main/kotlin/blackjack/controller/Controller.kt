@@ -45,9 +45,11 @@ class Controller(private val cardDeck: CardDeck) {
     }
 
     private fun showDealerState(dealer: Dealer) {
-        val condition = dealer.canGetCard()
-        OutputView.printDealerOverCondition(condition)
-        if (condition) dealer.receiveCard(cardDeck.drawCard())
+        while (dealer.canGetCard()) {
+            OutputView.printDealerOverCondition(dealer.canGetCard())
+            dealer.receiveCard(cardDeck.drawCard())
+        }
+        OutputView.printDealerOverCondition(dealer.canGetCard())
     }
 
     private fun printFinalWinOrLose(dealer: Dealer, players: List<Player>) {
