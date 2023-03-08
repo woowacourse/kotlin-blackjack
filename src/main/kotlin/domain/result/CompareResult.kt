@@ -1,6 +1,6 @@
 package domain.result
 
-import domain.card.strategy.GetAppropriateSum
+import domain.card.strategy.SumStrategy.getAppropriateSum
 import domain.person.Dealer
 import domain.person.Player
 
@@ -28,10 +28,10 @@ sealed class CompareResult {
     }
 
     companion object {
-        private val sumStrategy = GetAppropriateSum
 
         fun compare(dealer: Dealer, player: Player): CompareResult {
-            val gap = player.getTotalCardNumber(sumStrategy) - dealer.getTotalCardNumber(sumStrategy)
+            val gap =
+                player.getTotalCardNumber { getAppropriateSum() } - dealer.getTotalCardNumber { getAppropriateSum() }
 
             return when {
                 player.isBust() -> PlayerBust

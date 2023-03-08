@@ -1,7 +1,5 @@
 package domain.card
 
-import domain.card.strategy.SumStrategy
-
 class HandOfCards(cards: List<Card>) {
     private val _cards = mutableListOf<Card>()
     val cards: List<Card> get() = _cards.toList()
@@ -15,10 +13,6 @@ class HandOfCards(cards: List<Card>) {
 
     fun addCard(card: Card) {
         _cards.add(card)
-    }
-
-    fun getTotalCardSum(sumStrategy: SumStrategy): Int {
-        return sumStrategy.getSum(this)
     }
 
     fun countAce() = cards.count { it.number == CardNumber.ACE }
