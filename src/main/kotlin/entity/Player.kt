@@ -1,10 +1,10 @@
 package entity
 
-import misc.GameRule
+import model.BlackjackStage
 import model.CardFactory
 
 class Player(val name: Name, private val bet: Money, val cards: Cards = Cards(listOf())) : User {
-    override fun isDistributable(): Boolean = cards.sumOfNumbers() < GameRule.WINNING_NUMBER
+    override fun isDistributable(): Boolean = cards.sumOfNumbers() < BlackjackStage.WINNING_NUMBER
 
     fun addMoreCards(cardFactory: CardFactory) {
         cards.addCards(cardFactory.generate(User.SINGLE_DISTRIBUTE_COUNT))
@@ -31,8 +31,8 @@ class Player(val name: Name, private val bet: Money, val cards: Cards = Cards(li
     }
 
     private fun isWin(playerCardNumberSum: Int, dealerCardNumberSum: Int): Boolean =
-        playerCardNumberSum in (dealerCardNumberSum + 1)..GameRule.WINNING_NUMBER || GameRule.WINNING_NUMBER in playerCardNumberSum until dealerCardNumberSum
+        playerCardNumberSum in (dealerCardNumberSum + 1)..BlackjackStage.WINNING_NUMBER || BlackjackStage.WINNING_NUMBER in playerCardNumberSum until dealerCardNumberSum
 
     private fun isDraw(playerCardNumberSum: Int, dealerCardNumberSum: Int): Boolean =
-        playerCardNumberSum == dealerCardNumberSum || playerCardNumberSum > GameRule.WINNING_NUMBER && dealerCardNumberSum > GameRule.WINNING_NUMBER
+        playerCardNumberSum == dealerCardNumberSum || playerCardNumberSum > BlackjackStage.WINNING_NUMBER && dealerCardNumberSum > BlackjackStage.WINNING_NUMBER
 }

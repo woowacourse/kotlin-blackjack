@@ -1,13 +1,13 @@
 package entity
 
-import misc.GameRule
+import model.BlackjackStage
 
 class Cards(value: List<Card>) {
     private val _value: MutableList<Card> = value.toMutableList()
     val value: List<Card>
         get() = _value.toList()
 
-    fun isBlackjack(): Boolean = value.size == User.BLACKJACK_COUNT && sumOfNumbers() == GameRule.WINNING_NUMBER
+    fun isBlackjack(): Boolean = value.size == User.BLACKJACK_COUNT && sumOfNumbers() == BlackjackStage.WINNING_NUMBER
 
     fun sumOfNumbers(): Int = value.sumOf { it.cardNumber.numberStrategy(sumOfNumbersWithoutAce()) }
 

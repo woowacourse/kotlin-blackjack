@@ -35,5 +35,6 @@ class BlackjackStage(val dealer: Dealer = Dealer(), val players: Players, privat
 
     companion object {
         const val INITIAL_CARD_DISTRIBUTE_COUNT = 2
+        const val WINNING_NUMBER = 21
     }
 }
