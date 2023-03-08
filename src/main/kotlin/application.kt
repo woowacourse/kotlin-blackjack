@@ -3,6 +3,10 @@ import view.InputView
 import view.OutputView
 
 fun main() {
-    val controller = Controller(InputView(), OutputView())
-    controller.run()
+    runCatching {
+        val controller = Controller(InputView(), OutputView())
+        controller.run()
+    }.onFailure {
+        println(it.message)
+    }
 }
