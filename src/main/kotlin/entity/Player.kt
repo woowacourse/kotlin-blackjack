@@ -10,14 +10,12 @@ class Player(val name: Name, private val bet: Money, val cards: Cards = Cards(li
         cards.addCards(cardFactory.generate(User.SINGLE_DISTRIBUTE_COUNT))
     }
 
-    fun determineGameResult(dealerCardNumberSum: Int): Pair<Player, GameResultType> {
+    fun determineGameResult(dealerCardNumberSum: Int): GameResultType {
         val playerCardNumberSum = cards.sumOfNumbers()
         return when {
-            isWin(playerCardNumberSum, dealerCardNumberSum) -> Pair(this, GameResultType.WIN)
-
-            isDraw(playerCardNumberSum, dealerCardNumberSum) -> Pair(this, GameResultType.DRAW)
-
-            else -> Pair(this, GameResultType.LOSE)
+            isWin(playerCardNumberSum, dealerCardNumberSum) -> GameResultType.WIN
+            isDraw(playerCardNumberSum, dealerCardNumberSum) -> GameResultType.DRAW
+            else -> GameResultType.LOSE
         }
     }
 

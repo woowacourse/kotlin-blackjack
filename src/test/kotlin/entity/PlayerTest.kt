@@ -39,7 +39,7 @@ class PlayerTest {
         val actual = player1.determineGameResult(21)
 
         // then
-        val except = player1 to GameResultType.DRAW
+        val except = GameResultType.DRAW
         assertThat(actual).isEqualTo(except)
     }
 
@@ -54,7 +54,7 @@ class PlayerTest {
         val actual = player1.determineGameResult(22)
 
         // then
-        val except = player1 to GameResultType.DRAW
+        val except = GameResultType.DRAW
         assertThat(actual).isEqualTo(except)
     }
 
@@ -69,7 +69,7 @@ class PlayerTest {
         val actual = player1.determineGameResult(22)
 
         // then
-        val except = player1 to GameResultType.WIN
+        val except = GameResultType.WIN
         assertThat(actual).isEqualTo(except)
     }
 
@@ -84,7 +84,7 @@ class PlayerTest {
         val actual = player1.determineGameResult(20)
 
         // then
-        val except = player1 to GameResultType.WIN
+        val except = GameResultType.WIN
         assertThat(actual).isEqualTo(except)
     }
 
@@ -99,7 +99,7 @@ class PlayerTest {
         val actual = player1.determineGameResult(21)
 
         // then
-        val except = player1 to GameResultType.LOSE
+        val except = GameResultType.LOSE
         assertThat(actual).isEqualTo(except)
     }
 
@@ -114,7 +114,7 @@ class PlayerTest {
         val actual = player1.determineGameResult(21)
 
         // then
-        val except = player1 to GameResultType.LOSE
+        val except = GameResultType.LOSE
         assertThat(actual).isEqualTo(except)
     }
 
