@@ -11,18 +11,17 @@ import model.Result
 import model.Suit
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.MethodSource
 
 class PlayersTest {
-    @Test
-    fun `players를 생성할 수 있다`() {
-        val players = Players(
-            Player("jason", Card(Rank.ACE, Suit.HEART)),
-            Player("pobi", Card(Rank.DEUCE, Suit.HEART))
-        )
-        assertThat(players.size).isEqualTo(2)
-        assertThat(players.players[0].name.value).isEqualTo("jason")
-        assertThat(players.players[1].name.value).isEqualTo("pobi")
+    @ParameterizedTest
+    @MethodSource("createPlayers")
+    fun `players는 1명부터 8명까지의 플레이어로 구성된다`(players: List<Player>) {
+        assertDoesNotThrow { Players(players) }
     }
 
     @Test
@@ -67,5 +66,28 @@ class PlayersTest {
         private fun Dealer(vararg card: Card): Dealer = Dealer(Cards(card.toSet()))
         private fun Player(name: String, vararg card: Card): Player = Player(Cards(card.toSet()), Name(name))
         private fun Players(vararg player: Player): Players = Players(player.toList())
+
+        @JvmStatic
+        fun createPlayers(): List<Arguments> {
+            return listOf(
+                Arguments.of(
+                    listOf(
+                        Player("jason")
+                    )
+                ),
+                Arguments.of(
+                    listOf(
+                        Player("jason"),
+                        Player("Pobi"),
+                        Player("Sunny"),
+                        Player("Scot"),
+                        Player("Dooly"),
+                        Player("Sudal"),
+                        Player("Mendel"),
+                        Player("Met"),
+                    )
+                )
+            )
+        }
     }
 }
