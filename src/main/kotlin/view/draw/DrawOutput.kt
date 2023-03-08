@@ -2,7 +2,7 @@ package view.draw
 
 import constant.BlackJackConstants
 import domain.person.Player
-import view.ViewCommon
+import view.ViewCommon.toText
 
 object DrawOutput {
     private const val ONE_MORE_CARD_SCRIPT = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)"
@@ -21,7 +21,7 @@ object DrawOutput {
         println(
             INITIAL_CARDS_SCRIPT.format(
                 player.name,
-                player.showHandOfCards().joinToString(SEPARATOR) { ViewCommon.cardToString(it) },
+                player.showHandOfCards().joinToString(SEPARATOR) { it.toText() },
             ),
         )
     }

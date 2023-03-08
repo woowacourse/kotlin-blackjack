@@ -3,7 +3,7 @@ package view.result
 import domain.card.strategy.GetAppropriateSum
 import domain.person.Person
 import domain.result.OutCome
-import view.ViewCommon
+import view.ViewCommon.toText
 
 object ResultOutput {
     private const val INITIAL_CARDS_SCRIPT = "%s 카드: %s - 결과: %s"
@@ -14,7 +14,7 @@ object ResultOutput {
         println(
             INITIAL_CARDS_SCRIPT.format(
                 person.name,
-                person.showHandOfCards().joinToString(",") { ViewCommon.cardToString(it) },
+                person.showHandOfCards().joinToString(",") { it.toText() },
                 person.getTotalCardNumber(GetAppropriateSum()),
             ),
         )

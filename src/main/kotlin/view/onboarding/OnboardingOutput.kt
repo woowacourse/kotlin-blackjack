@@ -3,7 +3,7 @@ package view.onboarding
 import domain.person.Dealer
 import domain.person.Persons
 import domain.person.Player
-import view.ViewCommon
+import view.ViewCommon.toText
 
 object OnboardingOutput {
     private const val ERROR_INPUT_BLACK = "공백은 입력할 수 없습니다. 다시 입력하세요."
@@ -32,7 +32,7 @@ object OnboardingOutput {
         println(
             INITIAL_CARDS_SCRIPT.format(
                 dealer.name,
-                dealer.showFirstCard().joinToString { ViewCommon.cardToString(it) },
+                dealer.showFirstCard().joinToString { it.toText() },
             ),
         )
     }
@@ -42,7 +42,7 @@ object OnboardingOutput {
             println(
                 INITIAL_CARDS_SCRIPT.format(
                     player.name,
-                    player.showHandOfCards().joinToString(",") { ViewCommon.cardToString(it) },
+                    player.showHandOfCards().joinToString(",") { it.toText() },
                 ),
             )
         }

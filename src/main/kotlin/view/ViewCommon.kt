@@ -5,12 +5,12 @@ import domain.card.CardNumber
 import domain.card.CardShape
 
 object ViewCommon {
-    fun cardToString(card: Card): String {
-        return cardNumberToString(card.number) + cardShapeToString(card.shape)
+    fun Card.toText(): String {
+        return number.toText() + shape.toText()
     }
 
-    private fun cardNumberToString(cardNumber: CardNumber): String {
-        return when (cardNumber) {
+    private fun CardNumber.toText(): String {
+        return when (this) {
             CardNumber.ACE -> "A"
             CardNumber.TWO -> "2"
             CardNumber.THREE -> "3"
@@ -27,8 +27,8 @@ object ViewCommon {
         }
     }
 
-    private fun cardShapeToString(cardShape: CardShape): String {
-        return when (cardShape) {
+    private fun CardShape.toText(): String {
+        return when (this) {
             CardShape.HEART -> "하트"
             CardShape.CLOVER -> "클로버"
             CardShape.DIAMOND -> "다이아몬드"
