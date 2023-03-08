@@ -6,12 +6,12 @@ class BlackJackGame {
     lateinit var players: Players
 
     fun setUpBlackJackGame(
-        readUserNames: () -> List<String>,
-        readBetAmount: (String) -> Int
+        getUserNames: () -> List<String>,
+        getBetAmount: (String) -> Int
     ) {
-        val userNames = readUserNames()
+        val userNames = getUserNames()
         val betAmounts = userNames.map { userName ->
-            readBetAmount(userName)
+            getBetAmount(userName)
         }
         players = Players(
             dealer = Dealer(cards = Cards(deck.getCards(CARD_PAIR))),
@@ -24,47 +24,47 @@ class BlackJackGame {
     }
 
     fun playDealerTurn(
-        printDealerPickNewCard: () -> Unit
+        onDealerOverSumCondition: () -> Unit
     ) {
         if (!players.dealer.isOverSumCondition()) {
-            printDealerPickNewCard()
+            onDealerOverSumCondition()
             val newCard = deck.getOneCard()
             players.dealer.cards.addCard(newCard)
         }
     }
 
     fun playUserTurn(
-        readMoreCardCommand: (User) -> Boolean,
-        printUserCards: (User) -> Unit
+        getMoreCardCommand: (User) -> Boolean,
+        onUserPickNewCards: (User) -> Unit
     ) {
         players.users.forEach { user ->
-            repeatGetCommand(user, readMoreCardCommand, printUserCards)
+            repeatGetCommand(user, getMoreCardCommand, onUserPickNewCards)
         }
     }
 
     private fun repeatGetCommand(
         user: User,
-        readMoreCardCommand: (User) -> Boolean,
-        printUserCards: (User) -> Unit
+        getMoreCardCommand: (User) -> Boolean,
+        onUserPickNewCards: (User) -> Unit
     ) {
         val userScore = Score.valueOf(user.cards.calculateCardValueSum())
-        if (readMoreCardCommand(user) && (!userScore.isBurst() && !userScore.isBlackJack())) {
+        if (getMoreCardCommand(user) && (!userScore.isBurst() && !userScore.isBlackJack())) {
             user.cards.addCard(deck.getOneCard())
-            printUserCards(user)
-            return repeatGetCommand(user, readMoreCardCommand, printUserCards)
+            onUserPickNewCards(user)
+            return repeatGetCommand(user, getMoreCardCommand, onUserPickNewCards)
         }
-        printUserCards(user)
+        onUserPickNewCards(user)
         return
     }
 
     fun judgeGameResult(
-        printGameResult: (List<User>) -> Unit
+        onGameResult: (List<User>) -> Unit
     ) {
         val referee: Referee = Referee(
             Score.valueOf(players.dealer.cards.actualCardValueSum()),
         )
         referee.getResult(players.users)
-        printGameResult(players.users)
+        onGameResult(players.users)
     }
 
     fun calculateProfit(
