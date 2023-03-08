@@ -19,7 +19,7 @@ class BlackJackGame(
         battingMoneys: List<Int>,
     ) {
         players = playerNames.mapIndexed { playerIndex, playerName ->
-            Player(PlayerName(playerName), BattingMoney(battingMoneys[playerIndex]))
+            Player(playerName, battingMoneys[playerIndex])
         }
     }
 
@@ -36,7 +36,6 @@ class BlackJackGame(
         }
     }
 
-    // TODO: 카드 뽑고 보여주는 과정은 어떻게? 메소드 넘겨서?
     private fun drawCardsRepeatedly(
         player: Player,
         isPlayerWantedAdditionalCards: (player: Player) -> Boolean,

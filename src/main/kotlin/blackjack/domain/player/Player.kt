@@ -1,24 +1,32 @@
 package blackjack.domain.player
 
 import blackjack.domain.BattingMoney
-import blackjack.domain.BlackJackGameParticipant
 import blackjack.domain.card.Cards
 
 data class Player(
     val name: PlayerName,
     val battingMoney: BattingMoney,
-) : BlackJackGameParticipant() {
+    val cards: Cards = Cards(),
+) {
 
-//    constructor(
-//        name: String,
-//        battingMoney: Int,
-//    ) : this(PlayerName(name), BattingMoney(battingMoney))
+    constructor(
+        name: String,
+        battingMoney: Int,
+    ) : this(PlayerName(name), BattingMoney(battingMoney))
+
+    private fun isPossibleToDrawAdditionalCard(): DrawState {
+        if (cards.getMinimumCardsScore() >= BLACK_JACK_SCORE) {
+            return DrawState.IMPOSSIBLE
+        }
+
+        return DrawState.POSSIBLE
+    }
 
     fun drawCard(checkCurrentCards: (player: Player) -> Unit = { }): Boolean {
         cards.draw()
         checkCurrentCards(this)
 
-        return isPossibleToDrawAdditionalCard(BLACK_JACK_SCORE) == DrawState.POSSIBLE
+        return isPossibleToDrawAdditionalCard() == DrawState.POSSIBLE
     }
 
     fun checkIsDrawnNothing(checkCurrentCards: (player: Player) -> Unit = { }) {

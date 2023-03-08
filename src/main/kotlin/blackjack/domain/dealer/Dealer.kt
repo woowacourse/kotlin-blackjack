@@ -1,12 +1,23 @@
 package blackjack.domain.dealer
 
-import blackjack.domain.BlackJackGameParticipant
+import blackjack.domain.card.Cards
 import blackjack.domain.player.DrawState
+import blackjack.domain.player.Player
 
-class Dealer: BlackJackGameParticipant() {
+class Dealer(
+    val cards: Cards = Cards(),
+) {
+
+    private fun isPossibleToDrawAdditionalCard(): DrawState {
+        if (cards.getMinimumCardsScore() >= DEALER_UPPER_DRAW_CONDITION) {
+            return DrawState.IMPOSSIBLE
+        }
+
+        return DrawState.POSSIBLE
+    }
 
     fun drawCard(): DrawResult {
-        if (isPossibleToDrawAdditionalCard(DEALER_UPPER_DRAW_CONDITION) == DrawState.POSSIBLE) {
+        if (isPossibleToDrawAdditionalCard() == DrawState.POSSIBLE) {
             cards.draw()
 
             return DrawResult.Success
