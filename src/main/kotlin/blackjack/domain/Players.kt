@@ -12,6 +12,9 @@ class Players(private val players: List<Player>) {
     fun <V> associateWith(valueSelector: (Player) -> V): Map<Player, V> {
         return players.associateWith { valueSelector(it) }
     }
+    fun forEach(action: (Player) -> Unit) {
+        for (player in players) action(player)
+    }
 
     companion object {
         private const val MIN_PLAYER_COUNT = 2
