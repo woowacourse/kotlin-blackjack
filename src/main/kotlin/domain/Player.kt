@@ -1,5 +1,7 @@
 package domain
 
+import domain.result.GameResult
+
 class Player(nameAndBet: NameAndBet, cards: Cards) : Participant(nameAndBet.name, cards) {
     private val betMoney = nameAndBet.betMoney
     override fun isPossibleDrawCard(): Boolean = !isBurst()

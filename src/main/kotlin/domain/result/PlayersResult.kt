@@ -1,4 +1,4 @@
-package domain
+package domain.result
 
 class PlayersResult(val list: List<NameAndProfit>) {
     val sum: Int

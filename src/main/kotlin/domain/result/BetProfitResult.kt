@@ -1,4 +1,7 @@
-package domain
+package domain.result
+
+import domain.Dealer
+import domain.Players
 
 class BetProfitResult(private val players: Players, private val dealer: Dealer) {
     val playersResult: PlayersResult

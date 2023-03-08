@@ -1,4 +1,4 @@
-package domain
+package domain.result
 
 enum class GameResult(val profitRate: Double) {
     WIN_BLACKJACK(1.5),

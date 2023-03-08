@@ -1,6 +1,5 @@
 package controller
 
-import domain.BetProfitResult
 import domain.BlackJackCardDeck
 import domain.Card
 import domain.CardDeck
@@ -10,6 +9,7 @@ import domain.Player
 import domain.Players
 import domain.PlayersNameAndBet
 import domain.phase.Phases
+import domain.result.BetProfitResult
 
 class BlackJackGame(private val phases: Phases, private val deck: CardDeck = BlackJackCardDeck(Card.DECK.shuffled())) {
 

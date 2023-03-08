@@ -1,6 +1,5 @@
 package view
 
-import domain.BetProfitResult
 import domain.BlackJackCardDeck
 import domain.Card
 import domain.CardCategory
@@ -10,6 +9,7 @@ import domain.Participant
 import domain.Participants
 import domain.Player
 import domain.Players
+import domain.result.BetProfitResult
 
 class ResultView {
     fun printGameInit(players: Players) {

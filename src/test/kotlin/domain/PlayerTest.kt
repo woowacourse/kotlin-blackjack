@@ -1,5 +1,6 @@
 package domain
 
+import domain.result.GameResult
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
