@@ -33,7 +33,7 @@ class BlackjackGame() {
         dealer.pickCard(Deck.giveCard())
     }
 
-    fun checkBurst(player: Player) = player.checkBurst()//players.find { it.name == name }!!.checkBurst()
+    fun checkBurst(player: Player) = player.checkBurst()
 
     fun checkDealerAvailableForPick(): Boolean {
         return dealer.checkAvailableForPick()

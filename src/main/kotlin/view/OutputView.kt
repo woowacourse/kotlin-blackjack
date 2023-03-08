@@ -1,6 +1,7 @@
 package view
 
 import domain.card.Card
+import domain.card.Shape
 import domain.gamer.Participant
 import domain.gamer.Player
 import domain.gamer.cards.Cards
@@ -38,7 +39,16 @@ object OutputView {
     }
 
     private fun printCardForm(card: Card): String {
-        return card.cardValue.title + card.shape.shape
+        return card.cardValue.title + printCardShape(card.shape)
+    }
+
+    private fun printCardShape(cardShape: Shape): String {
+        return when (cardShape) {
+            Shape.HEART -> "하트"
+            Shape.CLOVER -> "클로버"
+            Shape.DIAMOND -> "다이아몬드"
+            Shape.SPADE -> "스페이드"
+        }
     }
 
     fun printDealerUnder16() {
@@ -47,7 +57,11 @@ object OutputView {
 
     fun printCardResult(participants: Map<String, Participant>) {
         participants.forEach { (name, participant) ->
-            println("${name}$PARTICIPANT_CARD ${participant.cards.getCards().joinToString(SEPARATOR) { printCardForm(it) }}${RESULT}${participant.calculateCardSum()}")
+            println(
+                "${name}$PARTICIPANT_CARD ${
+                    participant.cards.getCards().joinToString(SEPARATOR) { printCardForm(it) }
+                }${RESULT}${participant.calculateCardSum()}"
+            )
         }
     }
 
