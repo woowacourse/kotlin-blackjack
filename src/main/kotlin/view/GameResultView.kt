@@ -56,9 +56,9 @@ class GameResultView {
 
     fun printFinalProfit(dealerProfit: Double, usersProfit: List<Pair<String, Double>>) {
         println(FINAL_PROFIT_TITLE)
-        println(DEALER_PROFIT.format(dealerProfit))
+        println(DEALER_PROFIT.format(dealerProfit.toInt()))
         usersProfit.forEach { nameAndProfit ->
-            println(USER_RESULT_FORMAT.format(nameAndProfit.first, nameAndProfit.second))
+            println(USER_RESULT_FORMAT.format(nameAndProfit.first, nameAndProfit.second.toInt()))
         }
     }
 
