@@ -1,6 +1,7 @@
 package controller
 
-import domain.CardDrawer
+import domain.CardPicker
+import domain.Cards
 import domain.Dealer
 import domain.GameResult
 import domain.Names
@@ -10,7 +11,7 @@ import domain.Player
 import domain.Players
 import domain.RandomCardPicker
 
-class BlackJackGame(names: Names, private val cardDrawer: CardDrawer = RandomCardPicker()) {
+class BlackJackGame(names: Names, private val cardPicker: CardPicker = RandomCardPicker()) {
     val participants: Participants
     private val players: Players
         get() = participants.players
@@ -18,13 +19,17 @@ class BlackJackGame(names: Names, private val cardDrawer: CardDrawer = RandomCar
         get() = participants.dealer
 
     init {
-        val players = names.values.map { Player(it, cardDrawer.drawInitCards()) }
-        val dealer = Dealer(cardDrawer.drawInitCards())
+        val players = names.values.map { Player(it, drawInitCards()) }
+        val dealer = Dealer(drawInitCards())
         participants = Participants(Players(players), dealer)
     }
 
+    private fun drawInitCards(): Cards {
+        return Cards(List(INIT_DRAW_CARDS_COUNT) { cardPicker.draw() })
+    }
+
     private fun Participant.addCard() {
-        this.cards.add(cardDrawer.draw())
+        this.cards.add(cardPicker.draw())
     }
 
     private fun Player.playerSelectAdd(getChoiceOfAddCard: (Player) -> Boolean, showPlayerCards: (Player) -> Unit) {
@@ -34,13 +39,13 @@ class BlackJackGame(names: Names, private val cardDrawer: CardDrawer = RandomCar
         }
         if (!isPossibleDrawCard()) return
         showPlayerCards(this)
-        if (isGetCard) playerSelectAdd(getChoiceOfAddCard, showPlayerCards)
+        if (isGetCard) {
+            playerSelectAdd(getChoiceOfAddCard, showPlayerCards)
+        }
     }
 
     fun playersSelectAddPhase(isGetCard: (Player) -> Boolean, showPlayerCards: (Player) -> Unit) {
-        players.list.forEach { player ->
-            player.playerSelectAdd(isGetCard, showPlayerCards)
-        }
+        players.list.forEach { player -> player.playerSelectAdd(isGetCard, showPlayerCards) }
     }
 
     fun dealerSelectPhase(result: (Dealer) -> Unit) {
@@ -52,5 +57,9 @@ class BlackJackGame(names: Names, private val cardDrawer: CardDrawer = RandomCar
 
     fun getGameResult(): GameResult {
         return GameResult(participants)
+    }
+
+    companion object {
+        private const val INIT_DRAW_CARDS_COUNT = 2
     }
 }
