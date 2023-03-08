@@ -1,9 +1,9 @@
 package domain
 
-import domain.player.User
 import domain.card.Card
 import domain.card.CardNumber
 import domain.card.Shape
+import domain.player.User
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
