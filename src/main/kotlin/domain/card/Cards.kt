@@ -1,6 +1,6 @@
 package domain.card
 
-import controller.BlackJackGame
+import domain.BlackJackGame
 
 class Cards(list: List<Card>) {
     private val _list = list.toMutableList()

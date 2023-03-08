@@ -1,10 +1,5 @@
-package controller
+package domain
 
-import domain.Dealer
-import domain.Participants
-import domain.Player
-import domain.Players
-import domain.PlayersNameAndBet
 import domain.card.BlackJackCardDeck
 import domain.card.Card
 import domain.card.CardDeck

@@ -1,5 +1,6 @@
 package controller
 
+import domain.BlackJackGame
 import domain.Name
 import domain.Names
 import domain.PlayersNameAndBet
