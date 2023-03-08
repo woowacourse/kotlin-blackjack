@@ -59,8 +59,4 @@ class BlackJackGameTest {
         // then
         assertThat(blackJackGame.participants.dealer.getScore().getValue()).isEqualTo(15)
     }
-
-    @Test
-    fun `참가자들의 승패 결과를 반환한다`() {
-    }
 }
