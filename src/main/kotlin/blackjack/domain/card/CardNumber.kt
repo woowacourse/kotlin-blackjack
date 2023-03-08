@@ -18,6 +18,7 @@ enum class CardNumber(val value: Int, private val otherValue: Int = value) {
     K(10);
 
     companion object {
+
         private const val CURRENT_SUM_STANDARD = 11
 
         fun decideAceValue(currentSum: Int): Int {

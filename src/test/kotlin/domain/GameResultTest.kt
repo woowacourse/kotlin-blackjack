@@ -38,7 +38,7 @@ class GameResultTest {
                 Card(CardNumber.K, Shape.CLOVER)
             )
         )
-        dealerCards.draw()
+        dealerCards.draw(Card(CardNumber.FOUR, Shape.CLOVER))
 
         assertThat(
             GameResult.valueOf(
