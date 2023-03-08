@@ -44,5 +44,5 @@ class OutputView {
         }
     }
 
-    private fun outputOutcome(result: BlackJackResultUser) { println("${result.name}: ${result.rateOfReturn}") }
+    private fun outputOutcome(result: BlackJackResultUser) { println("${result.name}: ${result.revenue}") }
 }

@@ -14,6 +14,6 @@ class BlackJackResultUserTest {
     @Test
     fun `수익금액을 가져올 수 있다`() {
         val blackJackResultUser = BlackJackResultUser(Name("아크"), 1000)
-        assertThat(blackJackResultUser.rateOfReturn).isEqualTo(1000)
+        assertThat(blackJackResultUser.revenue).isEqualTo(1000)
     }
 }

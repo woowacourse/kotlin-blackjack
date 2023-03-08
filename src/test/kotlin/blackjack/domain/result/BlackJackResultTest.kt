@@ -31,9 +31,9 @@ class BlackJackResultTest {
         val blackJackResult = BlackJackResult(blackJack.participants)
 
         assertAll(
-            { assertThat(blackJackResult.dealer.rateOfReturn).isEqualTo(1000) },
-            { assertThat(blackJackResult.guests[0].rateOfReturn).isEqualTo(1000) },
-            { assertThat(blackJackResult.guests[1].rateOfReturn).isEqualTo(-2000) },
+            { assertThat(blackJackResult.dealer.revenue).isEqualTo(1000) },
+            { assertThat(blackJackResult.guests[0].revenue).isEqualTo(1000) },
+            { assertThat(blackJackResult.guests[1].revenue).isEqualTo(-2000) },
         )
     }
 }
