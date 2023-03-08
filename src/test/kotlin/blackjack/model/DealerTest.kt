@@ -59,6 +59,18 @@ class DealerTest {
         assertThat(dealerResult[Result.LOSE]).isEqualTo(2)
     }
 
+    @Test
+    fun `유저 2명 중 이긴 유저가 1명, 진 유저가 1명이면 딜러는 1승 1패이다`() {
+        val dealer = Dealer(Card(Rank.TEN, Suit.CLOVER), Card(Rank.TEN, Suit.SPADE))
+        val players = Players(
+            Player("jason", Card(Rank.TEN, Suit.DIAMOND), Card(Rank.ACE, Suit.CLOVER)),
+            Player("pobi", Card(Rank.DEUCE, Suit.HEART), Card(Rank.JACK, Suit.CLOVER))
+        )
+        val dealerResult = dealer.getFinalResult(Participants(players))
+        assertThat(dealerResult[Result.WIN]).isEqualTo(1)
+        assertThat(dealerResult[Result.LOSE]).isEqualTo(1)
+    }
+
     companion object {
         private fun Dealer(vararg card: Card): Dealer = Dealer(Cards(card.toSet()))
         private fun Player(name: String, vararg card: Card): Player = Player(Cards(card.toSet()), Name(name))

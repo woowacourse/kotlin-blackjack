@@ -4,12 +4,6 @@ class Player(cards: Cards, name: Name) : Participant(cards, name) {
     override fun getFirstOpenCards(): Cards = cards
 
     override fun isPossibleDrawCard(): Boolean = !isBust()
-    override fun getGameResult(other: Participant): Result {
-        if (isBust()) return Result.LOSE
-        if (other.isBust()) return Result.WIN
-        if (cards.sum() > other.cards.sum()) return Result.WIN
-        return Result.LOSE
-    }
 
     override fun isHit(needToDraw: (String) -> Boolean): Boolean {
         return isPossibleDrawCard() && needToDraw(name.value)
