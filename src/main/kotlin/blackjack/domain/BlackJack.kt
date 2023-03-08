@@ -7,10 +7,10 @@ class BlackJack(private val deck: CardDeck, private val participants: Participan
 
     fun getFirstOpenCards(): List<ParticipantCards> = participants.getFirstOpenCards()
 
-    fun getPlayers(): List<Player> = participants.getPlayers()
+    fun getPlayers(): List<BettingPlayer> = participants.getPlayers()
 
-    fun drawPlayer(player: Player) {
-        player.addCard(deck.draw())
+    fun drawPlayer(player: BettingPlayer) {
+        player.draw(deck)
     }
 
     fun drawDealer(block: (Boolean) -> Unit) = participants.drawDealerCard(deck, block)

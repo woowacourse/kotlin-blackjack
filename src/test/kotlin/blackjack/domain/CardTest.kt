@@ -22,6 +22,6 @@ class CardTest {
         "KING,SPADE", "KING,HEART", "KING,DIAMOND", "KING,CLOVER"
     )
     fun `카드는 각 모양별로 2부터 10, A, J, Q, K가 존재한다`(cardNumber: CardNumber, suit: Suit) {
-        assertThat(Card.all()).containsExactly(Card(cardNumber, suit))
+        assertThat(Card.all()).contains(Card(cardNumber, suit))
     }
 }

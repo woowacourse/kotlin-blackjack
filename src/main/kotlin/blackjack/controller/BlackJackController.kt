@@ -1,11 +1,12 @@
 package blackjack.controller
 
+import blackjack.domain.BettingPlayer
+import blackjack.domain.BettingPlayers
 import blackjack.domain.BlackJack
 import blackjack.domain.CardDeck
 import blackjack.domain.Dealer
 import blackjack.domain.Participants
 import blackjack.domain.Player
-import blackjack.domain.Players
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -24,7 +25,11 @@ class BlackJackController {
 
     private fun initBlackJack(): BlackJack = BlackJack(CardDeck(), Participants(Dealer(), enrollPlayers()))
 
-    private fun enrollPlayers(): Players = Players(InputView.inputNames().map(::Player))
+    private fun enrollPlayers(): BettingPlayers {
+        val players = InputView.inputNames().map(::Player)
+        val bettingPlayers = players.map { BettingPlayer(it, 0) }
+        return BettingPlayers(bettingPlayers)
+    }
 
     private fun setUpCard(blackJack: BlackJack) {
         drawInitialCards(blackJack)
@@ -44,9 +49,9 @@ class BlackJackController {
         OutputView.printInterval()
     }
 
-    private fun takePlayerTurn(blackJack: BlackJack, player: Player) {
+    private fun takePlayerTurn(blackJack: BlackJack, player: BettingPlayer) {
         if (!player.canDraw()) {
-            val isDraw = InputView.inputDrawCommand(player.name)
+            val isDraw = InputView.inputDrawCommand(player.getName())
             if (!isDraw) return printPlayerCards(player)
 
             drawCard(blackJack, player)
@@ -54,13 +59,14 @@ class BlackJackController {
         }
     }
 
-    private fun drawCard(blackJack: BlackJack, player: Player) {
+    private fun drawCard(blackJack: BlackJack, player: BettingPlayer) {
         blackJack.drawPlayer(player)
         printPlayerCards(player)
     }
 
-    private fun printPlayerCards(player: Player) {
-        OutputView.printCards(player.name, player.getCards())
+    private fun printPlayerCards(player: BettingPlayer) {
+        val participantCards = player.getCards()
+        OutputView.printCards(participantCards.name, participantCards.cards)
     }
 
     private fun takeDealerTurn(blackJack: BlackJack) {

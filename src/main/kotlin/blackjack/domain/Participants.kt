@@ -1,14 +1,14 @@
 package blackjack.domain
 
-class Participants(private val dealer: Dealer, private val players: Players) {
+class Participants(private val dealer: Dealer, private val bettingPlayers: BettingPlayers) {
     fun drawAll(deck: CardDeck) {
         dealer.addCard(deck.draw())
-        players.drawAll(deck)
+        bettingPlayers.drawAll(deck)
     }
 
-    fun getFirstOpenCards(): List<ParticipantCards> = listOf(ParticipantCards(dealer.name, dealer.getFirstOpenCards())) + players.getFirstOpenCards()
+    fun getFirstOpenCards(): List<ParticipantCards> = listOf(ParticipantCards(dealer.name, dealer.getFirstOpenCards())) + bettingPlayers.getFirstOpenCards()
 
-    fun getPlayers(): List<Player> = players.toList()
+    fun getPlayers(): List<BettingPlayer> = bettingPlayers.toList()
 
     fun drawDealerCard(deck: CardDeck, block: (Boolean) -> Unit) {
         while (dealer.canDraw()) {
@@ -18,13 +18,13 @@ class Participants(private val dealer: Dealer, private val players: Players) {
         block(false)
     }
 
-    fun getCards(): List<ParticipantCards> = listOf(ParticipantCards(dealer.name, dealer.getCards())) + players.getCards()
+    fun getCards(): List<ParticipantCards> = listOf(ParticipantCards(dealer.name, dealer.getCards())) + bettingPlayers.getCards()
 
-    fun getTotalScores(): List<ParticipantScore> = listOf(ParticipantScore(dealer.name, dealer.getTotalScore())) + players.getTotalScores()
+    fun getTotalScores(): List<ParticipantScore> = listOf(ParticipantScore(dealer.name, dealer.getTotalScore())) + bettingPlayers.getTotalScores()
 
     fun judgePlayers(): PlayerResults = PlayerResults(
-        players.toList().associate { player ->
-            player.name to (dealer judge player.getTotalScore())
+        bettingPlayers.toList().associate { player ->
+            player.getName() to (dealer judge player.getTotalScore())
         }
     )
 }
