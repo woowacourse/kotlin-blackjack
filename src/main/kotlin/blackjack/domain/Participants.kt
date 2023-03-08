@@ -1,6 +1,5 @@
 package blackjack.domain
 
-// class Participants(private val dealer: Dealer, private val players: Players) {
 class Participants(private val participants: List<Participant>) {
     init {
         require(participants.size in MINIMUM_PARTICIPANTS..MAXIMUM_PARTICIPANTS) {
@@ -15,13 +14,45 @@ class Participants(private val participants: List<Participant>) {
         }
     }
 
-    fun takeTurns(deck: CardDeck, onDrawn: (Participant) -> Unit) { // : BlackJackResult {
+    fun takeTurns(deck: CardDeck, onDrawn: (Participant) -> Unit) {
         participants.forEach { participant ->
             while (participant.canDraw()) {
                 draw(participant, deck)
                 onDrawn(participant)
             }
         }
+    }
+
+    fun getMatchResults(): List<MatchResult> = listOf(getDealerMatchResult()) + getPlayerMatchResults()
+
+    private fun getDealerMatchResult(): MatchResult {
+        var (win, lose, draw) = Triple(0, 0, 0)
+        getPlayers().forEach { player ->
+            when (getDealer() judge player) {
+                GameResult.WIN -> win++
+                GameResult.LOSE -> lose++
+                GameResult.DRAW -> draw++
+            }
+        }
+        return MatchResult(getDealer(), win, lose, draw)
+    }
+
+    private fun getPlayerMatchResults(): List<MatchResult> = getPlayers().map { player ->
+        var (win, lose, draw) = Triple(0, 0, 0)
+        when (player judge getDealer()) {
+            GameResult.WIN -> win++
+            GameResult.LOSE -> lose++
+            GameResult.DRAW -> draw++
+        }
+        MatchResult(player, win, lose, draw)
+    }
+
+    fun getCardResults(): List<CardResult> = participants.map { participant ->
+        CardResult(
+            participant,
+            participant.getCards(),
+            participant.getTotalScore()
+        )
     }
 
     fun getFirstOpenCards(): Map<String, List<Card>> = participants.associate { it.name to it.getFirstOpenCards() }
@@ -33,24 +64,6 @@ class Participants(private val participants: List<Participant>) {
     private fun draw(participant: Participant, deck: CardDeck) {
         participant.addCard(deck.draw())
     }
-
-    fun drawDealerCard(deck: CardDeck, isDraw: (Boolean) -> Unit) {
-        while (getDealer().canDraw()) {
-            getDealer().addCard(deck.draw())
-            isDraw(true)
-        }
-        isDraw(false)
-    }
-
-    fun getCards(): Map<String, List<Card>> = participants.associate { it.name to it.getCards() }
-
-    fun getTotalScores(): Map<String, Int> = participants.associate { it.name to it.getTotalScore() }
-
-    fun judgePlayers(): PlayerResults = PlayerResults(
-        getPlayers().associate { player ->
-            player.name to (player judge getDealer())
-        }
-    )
 
     companion object {
         private const val MINIMUM_PARTICIPANTS = 1
