@@ -2,6 +2,7 @@ package controller
 
 import domain.BetProfitResult
 import domain.BlackJackCardDeck
+import domain.Card
 import domain.CardDeck
 import domain.Dealer
 import domain.Participants
@@ -10,7 +11,7 @@ import domain.Players
 import domain.PlayersNameAndBet
 import domain.phase.Phases
 
-class BlackJackGame(private val phases: Phases, private val deck: CardDeck = BlackJackCardDeck()) {
+class BlackJackGame(private val phases: Phases, private val deck: CardDeck = BlackJackCardDeck(Card.DECK.shuffled())) {
 
     fun runGame(playersNameAndBet: PlayersNameAndBet): BetProfitResult {
         val players = playersNameAndBet.list.map { Player(it, deck.drawInitCards()) }

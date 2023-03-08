@@ -5,20 +5,6 @@ import org.junit.jupiter.api.Test
 
 class PlayerTest {
     @Test
-    fun `처음에 패를 두 장 보여준다`() {
-        val player = Player(
-            NameAndBet(Name("scott"), 0),
-            Cards(
-                Card.of(CardCategory.CLOVER, CardNumber.EIGHT),
-                Card.of(CardCategory.SPADE, CardNumber.NINE)
-            )
-        )
-        val actual = player.showInitCards().size
-        val expected = 2
-        assertThat(actual).isEqualTo(expected)
-    }
-
-    @Test
     fun `21보다 작으면 더 받을 수 있도록 true를 반환한다`() {
         val player = Player(
             NameAndBet(Name("scott"), 0),

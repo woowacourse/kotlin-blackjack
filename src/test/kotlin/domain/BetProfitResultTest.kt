@@ -35,7 +35,7 @@ class BetProfitResultTest {
                 )
             )
         )
-        val betProfitResult = BetProfitResult.of(participants.players, participants.dealer)
+        val betProfitResult = BetProfitResult(participants.players, participants.dealer)
         assertAll(
             "딜러와 플레이어의 베팅결과가 올바르게 나온다",
             {
