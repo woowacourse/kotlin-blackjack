@@ -3,7 +3,6 @@ package blackjack.controller
 import blackjack.domain.blackjack.BlackJack
 import blackjack.domain.blackjack.BlackJackGame
 import blackjack.domain.blackjack.blackJack
-import blackjack.domain.card.Cards
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
