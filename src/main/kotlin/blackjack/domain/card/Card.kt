@@ -9,7 +9,6 @@ class Card(
 
         private val ALL_CARDS: MutableSet<Card> = CardNumber
             .values()
-            .filter { cardNumber -> CardNumber.BIG_A != cardNumber }
             .flatMap { cardNumber ->
                 Shape.values().map { shape ->
                     Card(cardNumber, shape)
