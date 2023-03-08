@@ -1,19 +1,19 @@
 package blackjack.domain
 
 class BlackJack(private val deck: CardDeck, private val participants: Participants) {
-    fun drawAll() {
-        participants.drawAll(deck)
+    fun readyToStart() {
+        participants.drawFirst(deck)
     }
 
     fun getFirstOpenCards(): Map<String, List<Card>> = participants.getFirstOpenCards()
 
-    fun getPlayers(): List<Player> = participants.getPlayers()
+    fun getPlayers(): List<Participant> = participants.getPlayers()
 
-    fun drawPlayer(player: Player) {
-        player.addCard(deck.draw())
+    fun draw(participant: Participant) {
+        participant.addCard(deck.draw())
     }
 
-    fun drawDealer(block: (Boolean) -> Unit) = participants.drawDealerCard(deck, block)
+    fun drawDealer(isDraw: (Boolean) -> Unit) = participants.drawDealerCard(deck, isDraw)
 
     fun getCards(): Map<String, List<Card>> = participants.getCards()
 
