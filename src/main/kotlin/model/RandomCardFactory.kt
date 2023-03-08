@@ -9,7 +9,6 @@ class RandomCardFactory : CardFactory {
     private val cards: Cards = CardType.values()
         .flatMap { cardType -> CardNumber.values().map { cardNumber -> Card(cardType, cardNumber) } }
         .shuffled()
-        .toMutableList()
         .let { Cards(it) }
 
     private var index = 0

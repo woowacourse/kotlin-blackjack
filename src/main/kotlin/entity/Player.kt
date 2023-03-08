@@ -10,22 +10,18 @@ class Player(val name: Name, private val bet: Money, val cards: Cards = Cards(li
         cards.addCards(cardFactory.generate(User.SINGLE_DISTRIBUTE_COUNT))
     }
 
-    fun determineGameResult(dealerCardNumberSum: Int): Pair<Player, GameResult> {
+    fun determineGameResult(dealerCardNumberSum: Int): Pair<Player, GameResultType> {
         val playerCardNumberSum = cards.sumOfNumbers()
         return when {
-            isWin(playerCardNumberSum, dealerCardNumberSum) -> Pair(
-                this, GameResult(GameResultType.WIN, calculateWinMoney(GameResultType.WIN))
-            )
+            isWin(playerCardNumberSum, dealerCardNumberSum) -> Pair(this, GameResultType.WIN)
 
-            isDraw(playerCardNumberSum, dealerCardNumberSum) -> Pair(
-                this, GameResult(GameResultType.DRAW, calculateWinMoney(GameResultType.DRAW))
-            )
+            isDraw(playerCardNumberSum, dealerCardNumberSum) -> Pair(this, GameResultType.DRAW)
 
-            else -> Pair(this, GameResult(GameResultType.LOSE, calculateWinMoney(GameResultType.LOSE)))
+            else -> Pair(this, GameResultType.LOSE)
         }
     }
 
-    private fun calculateWinMoney(gameResultType: GameResultType): Money {
+    fun calculateWinMoney(gameResultType: GameResultType): Money {
         if (cards.isBlackjack()) return Money((bet.value * 1.5).toInt())
         return when (gameResultType) {
             GameResultType.WIN -> Money(bet.value * 2)

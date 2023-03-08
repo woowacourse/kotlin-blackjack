@@ -49,32 +49,40 @@ class BlackjackStageTest {
     }
 
     @Test
-    fun `모든 플레이어에게 카드 한장 분배한다`() {
+    fun `모든 플레이어에게 카드를 21이 넘을 때 까지 분배한다`() {
         // given
-        val cardFactory = ManualCardFactory(listOf(
-            CardType.CLUB to CardNumber.THREE,
-            CardType.SPADE to CardNumber.QUEEN)
+        val cardFactory = ManualCardFactory(
+            listOf(
+                CardType.CLUB to CardNumber.FIVE,
+                CardType.CLUB to CardNumber.TEN,
+                CardType.CLUB to CardNumber.TEN,
+                CardType.CLUB to CardNumber.FOUR
+            )
         )
         val players = Players()
         val dealer = Dealer()
         val blackjackStage = BlackjackStage(dealer, players, cardFactory)
 
         // when
-        val actual = blackjackStage.distributePlayers { true }
+        blackjackStage.distributePlayers({ true }) {}
 
         // then
         val except = listOf(
-            Card(CardType.CLUB, CardNumber.THREE)
+            Card(CardType.CLUB, CardNumber.FIVE),
+            Card(CardType.CLUB, CardNumber.TEN),
+            Card(CardType.CLUB, CardNumber.TEN)
         )
-        assertThat(actual?.cards?.value).isEqualTo(except)
+        assertThat(blackjackStage.players.value[0].cards.value).isEqualTo(except)
     }
 
     @Test
     fun `딜러에게 카드 한장 분배한다`() {
         // given
-        val cardFactory = ManualCardFactory(listOf(
+        val cardFactory = ManualCardFactory(
+            listOf(
                 CardType.CLUB to CardNumber.THREE,
-                CardType.SPADE to CardNumber.QUEEN)
+                CardType.SPADE to CardNumber.QUEEN
+            )
         )
         val players = Players()
         val dealer = Dealer()
