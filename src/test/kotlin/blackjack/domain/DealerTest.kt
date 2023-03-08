@@ -29,4 +29,57 @@ class DealerTest {
 
         assertThat(player.chooseWinner(dealer)).isEqualTo(Consequence.LOSE)
     }
+
+    @Test
+    fun `딜러가 블랙잭이고 플레이어는 블랙잭이 아닌 21일떄 딜러가 승리한다`() {
+        val card1 = Card(Shape.HEART, CardNumber.ACE)
+        val card2 = Card(Shape.HEART, CardNumber.KING)
+        val cardBunch1 = CardBunch(card1, card2)
+        val dealer = Dealer(cardBunch1)
+
+        val card3 = Card(Shape.HEART, CardNumber.SIX)
+        val card4 = Card(Shape.HEART, CardNumber.SEVEN)
+        val card5 = Card(Shape.HEART, CardNumber.EIGHT)
+        val cardBunch2 = CardBunch(card3, card4, card5)
+        val player = Player("krrong", cardBunch2)
+
+        assertThat(dealer.compareScore(player.cardBunch.getTotalScore(), player.cardBunch.isBlackJack())).isEqualTo(
+            Consequence.LOSE,
+        )
+    }
+
+    @Test
+    fun `딜러가 블랙잭이 아닌 21이고 플레이어는 블랙잭일떄 플레이가 승리한다`() {
+        val card1 = Card(Shape.HEART, CardNumber.SIX)
+        val card2 = Card(Shape.HEART, CardNumber.SEVEN)
+        val card3 = Card(Shape.HEART, CardNumber.EIGHT)
+        val cardBunch1 = CardBunch(card1, card2, card3)
+        val dealer = Dealer(cardBunch1)
+
+        val card4 = Card(Shape.HEART, CardNumber.ACE)
+        val card5 = Card(Shape.HEART, CardNumber.KING)
+        val cardBunch2 = CardBunch(card4, card5)
+        val player = Player("krrong", cardBunch2)
+
+        assertThat(dealer.compareScore(player.cardBunch.getTotalScore(), player.cardBunch.isBlackJack())).isEqualTo(
+            Consequence.WIN,
+        )
+    }
+
+    @Test
+    fun `딜러가 블랙잭이고 플레이어는 블랙잭일떄 비긴다`() {
+        val card1 = Card(Shape.HEART, CardNumber.ACE)
+        val card2 = Card(Shape.HEART, CardNumber.JACK)
+        val cardBunch1 = CardBunch(card1, card2)
+        val dealer = Dealer(cardBunch1)
+
+        val card3 = Card(Shape.HEART, CardNumber.ACE)
+        val card4 = Card(Shape.HEART, CardNumber.KING)
+        val cardBunch2 = CardBunch(card3, card4)
+        val player = Player("krrong", cardBunch2)
+
+        assertThat(dealer.compareScore(player.cardBunch.getTotalScore(), player.cardBunch.isBlackJack())).isEqualTo(
+            Consequence.DRAW,
+        )
+    }
 }
