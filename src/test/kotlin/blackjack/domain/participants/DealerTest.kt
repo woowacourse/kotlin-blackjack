@@ -12,7 +12,7 @@ class DealerTest {
         val dealer = Dealer()
         dealer.draw(Card(CardMark.CLOVER, CardValue.ACE))
         dealer.draw(Card(CardMark.CLOVER, CardValue.SIX))
-        assertThat(dealer.isContinue()).isFalse
+        assertThat(dealer.isContinue).isFalse
     }
 
     @Test
@@ -20,6 +20,6 @@ class DealerTest {
         val dealer = Dealer()
         dealer.draw(Card(CardMark.CLOVER, CardValue.ACE))
         dealer.draw(Card(CardMark.CLOVER, CardValue.FIVE))
-        assertThat(dealer.isContinue()).isTrue
+        assertThat(dealer.isContinue).isTrue
     }
 }

@@ -37,7 +37,7 @@ class OutputView {
         print("\n${user.name}카드: $cardText")
     }
 
-    private fun outputScore(user: User) { print(" - 결과: ${user.score()}") }
+    private fun outputScore(user: User) { print(" - 결과: ${user.score}") }
 
     private fun outputOutcomes(blackJackResult: BlackJackResult) {
         blackJackResult.run {

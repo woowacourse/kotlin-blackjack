@@ -15,26 +15,26 @@ enum class Outcome(val rate: Double) {
 
         private fun matchBlackJack(guest: Guest, dealer: Dealer): Outcome =
             when {
-                guest.isBlackJack() && guest.cards.size == 2 -> WIN_WITH_BLACKJACK
-                guest.isBlackJack() && dealer.isBlackJack() -> DRAW
-                guest.isBlackJack() -> WIN
-                dealer.isBlackJack() -> LOSE
+                guest.isBlackJack && guest.cards.size == 2 -> WIN_WITH_BLACKJACK
+                guest.isBlackJack && dealer.isBlackJack -> DRAW
+                guest.isBlackJack -> WIN
+                dealer.isBlackJack -> LOSE
                 else -> matchBust(guest, dealer)
             }
 
         private fun matchBust(guest: Guest, dealer: Dealer): Outcome =
             when {
-                guest.isBust() && dealer.isBust() -> DRAW
-                guest.isBust() -> LOSE
-                dealer.isBust() -> WIN
+                guest.isBust && dealer.isBust -> DRAW
+                guest.isBust -> LOSE
+                dealer.isBust -> WIN
                 else -> matchScore(guest, dealer)
             }
 
         private fun matchScore(guest: Guest, dealer: Dealer): Outcome =
             when {
-                guest.score() > dealer.score() -> WIN
-                guest.score() == dealer.score() -> DRAW
-                guest.score() < dealer.score() -> LOSE
+                guest.score > dealer.score -> WIN
+                guest.score == dealer.score -> DRAW
+                guest.score < dealer.score -> LOSE
                 else -> throw IllegalStateException()
             }
     }

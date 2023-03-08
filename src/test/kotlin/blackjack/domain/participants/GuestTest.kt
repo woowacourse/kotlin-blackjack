@@ -16,6 +16,6 @@ class GuestTest {
     @Test
     fun `버스트가 아지 않고 블랙잭이아니면 카드를 뽑을 수 있다`() {
         val user = Guest("아크")
-        assertThat(user.isContinue()).isTrue
+        assertThat(user.isContinue).isTrue
     }
 }

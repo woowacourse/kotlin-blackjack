@@ -19,7 +19,7 @@ class UserTest {
         val user = Guest("아크")
         user.draw(Card(CardMark.CLOVER, CardValue.EIGHT))
         user.draw(Card(CardMark.SPADE, CardValue.EIGHT))
-        assertThat(user.score()).isEqualTo(16)
+        assertThat(user.score).isEqualTo(16)
     }
 
     @Test
@@ -27,7 +27,7 @@ class UserTest {
         val user = Guest("아크")
         user.draw(Card(CardMark.CLOVER, CardValue.ACE))
         user.draw(Card(CardMark.SPADE, CardValue.ACE))
-        assertThat(user.isBust()).isFalse
+        assertThat(user.isBust).isFalse
     }
 
     @Test
@@ -35,6 +35,6 @@ class UserTest {
         val user = Guest("아크")
         user.draw(Card(CardMark.CLOVER, CardValue.ACE))
         user.draw(Card(CardMark.SPADE, CardValue.KING))
-        assertThat(user.isBlackJack()).isTrue
+        assertThat(user.isBlackJack).isTrue
     }
 }

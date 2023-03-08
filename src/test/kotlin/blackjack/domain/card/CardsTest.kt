@@ -24,14 +24,14 @@ class CardsTest {
     fun `ACE 카드가 없으면 false를 반환한다`() {
         var cards = Cards()
         cards += Card(CLOVER, EIGHT)
-        assertThat(cards.isContainsACE()).isFalse
+        assertThat(cards.isContainsAce).isFalse
     }
 
     @Test
     fun `ACE 카드가 있으면 true를 반환한다`() {
         var cards = Cards()
         cards += Card(CLOVER, ACE)
-        assertThat(cards.isContainsACE()).isTrue
+        assertThat(cards.isContainsAce).isTrue
     }
 
     @Test
