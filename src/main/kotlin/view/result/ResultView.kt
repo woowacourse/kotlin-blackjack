@@ -8,13 +8,19 @@ import view.result.ResultOutput.printPersonCards
 import view.result.ResultOutput.printPlayerResult
 
 object ResultView {
-    fun printPersonsCards(persons: Persons) {
+
+    fun printResult(persons: Persons, gameResult: GameResult) {
+        printPersonsCards(persons)
+        printFinalResult(gameResult)
+    }
+
+    private fun printPersonsCards(persons: Persons) {
         printPersonCards(persons.dealer)
         persons.players.forEach { printPersonCards(it) }
         println()
     }
 
-    fun printFinalResult(gameResult: GameResult) {
+    private fun printFinalResult(gameResult: GameResult) {
         printFinalOutcome()
         printDealerResult(gameResult.getDealerResult())
         printPlayerResult(gameResult.getPlayerResult())

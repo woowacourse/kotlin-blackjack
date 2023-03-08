@@ -12,7 +12,6 @@ class BlackJackController {
         OnboardingView.printInitialSetting(persons)
         blackJackGame.handOutCardsToPlayers(persons.players, { DrawView.askPlayerDraw(it) }, { DrawView.printPlayerCards(it) })
         blackJackGame.handOutCardsToDealer(persons.dealer, { DrawView.printDealerDrew() }, { DrawView.printDealerDidNotDrew() })
-        ResultView.printPersonsCards(persons)
-        ResultView.printFinalResult(blackJackGame.drawResult(persons))
+        ResultView.printResult(persons, blackJackGame.drawResult(persons))
     }
 }
