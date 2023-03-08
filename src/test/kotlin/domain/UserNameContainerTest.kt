@@ -11,7 +11,7 @@ class UserNameContainerTest {
         val names = listOf("산군", "산군")
 
         // then, when
-        assertThrows<IllegalArgumentException> {
+        assertThrows<IllegalArgumentException>("[ERROR] 유저의 이름이 중복되었습니다.") {
             UserNameContainer(names)
         }
     }
@@ -22,7 +22,7 @@ class UserNameContainerTest {
         val names = listOf("", "해시")
 
         // then, when
-        assertThrows<IllegalArgumentException> {
+        assertThrows<IllegalArgumentException>("[ERROR] 유저의 이름이 비어있습니다.") {
             UserNameContainer(names)
         }
     }
