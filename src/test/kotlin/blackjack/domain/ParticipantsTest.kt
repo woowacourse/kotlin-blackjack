@@ -107,6 +107,29 @@ class ParticipantsTest {
             ),
         )
     }
+
+    @Test
+    fun `딜러의 총점이 17점 이라면 유저의 점수가 6일때는 패배하고 유저의 점수가 19라면 승리한다`() {
+        val participants = Participants(
+            listOf("krong", "dogpig"),
+            StubCardDeck(
+                mutableListOf(
+                    // 딜러 초기화
+                    Card(HEART, CardNumber.JACK),
+                    Card(HEART, CardNumber.SEVEN),
+                    // 플레이어 두명 초기화
+                    // 첫번째 유저
+                    Card(HEART, CardNumber.TWO),
+                    Card(HEART, CardNumber.FOUR),
+                    // 두번째 유저
+                    Card(HEART, CardNumber.JACK),
+                    Card(HEART, CardNumber.NINE),
+                ),
+            ),
+        )
+        assertThat(participants.getConsequence(participants.players[0])).isEqualTo(Consequence.LOSE)
+        assertThat(participants.getConsequence(participants.players[1])).isEqualTo(Consequence.WIN)
+    }
 }
 
 class StubCardDeck(private val cardDeck: MutableList<Card>) : CardDeck {
