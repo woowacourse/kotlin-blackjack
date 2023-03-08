@@ -1,6 +1,4 @@
-package domain
-
-import domain.card.Card
+package domain.card
 
 class Hand(_cards: List<Card>) {
     private val _cards: MutableList<Card> = _cards.toMutableList()

@@ -2,6 +2,7 @@ package domain
 
 import domain.card.Card
 import domain.card.CardNumber
+import domain.card.Hand
 
 abstract class Player(
     val name: String,

@@ -1,6 +1,7 @@
 package domain
 
 import domain.card.Card
+import domain.card.Hand
 
 class User private constructor(
     name: String,
