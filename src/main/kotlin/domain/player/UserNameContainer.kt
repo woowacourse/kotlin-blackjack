@@ -1,4 +1,4 @@
-package domain
+package domain.player
 
 class UserNameContainer(val names: List<String>) {
 

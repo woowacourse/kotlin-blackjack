@@ -1,5 +1,6 @@
 package domain
 
+import domain.player.UserNameContainer
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 

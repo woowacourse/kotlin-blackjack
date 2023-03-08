@@ -1,5 +1,8 @@
 import domain.* // ktlint-disable no-wildcard-imports
+import domain.player.Dealer
+import domain.player.User
 import domain.card.Card
+import domain.player.UserNameContainer
 import view.*
 import view.Answer.Companion.YES
 

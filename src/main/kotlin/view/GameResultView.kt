@@ -1,8 +1,8 @@
 package view
 
-import domain.Dealer
-import domain.Player
-import domain.User
+import domain.player.Dealer
+import domain.player.Player
+import domain.player.User
 import view.util.toCardInfo
 
 class GameResultView {

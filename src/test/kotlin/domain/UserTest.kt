@@ -1,5 +1,6 @@
 package domain
 
+import domain.player.User
 import domain.card.Card
 import domain.card.CardNumber
 import domain.card.Shape
