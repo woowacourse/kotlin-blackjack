@@ -1,11 +1,17 @@
 package blackjack.domain
 
 abstract class Participant(val name: String) {
-    val cards = Cards()
+    private val cards = Cards()
 
     abstract fun getFirstOpenCards(): List<Card>
 
     abstract fun canDraw(): Boolean
+
+    fun getTotalScore(): Int = cards.calculateTotalScore()
+
+    fun isBust(): Boolean = cards.isOverBlackjack(getTotalScore())
+
+    fun isStay(): Boolean = cards.isStay()
 
     infix fun judge(other: Participant): GameResult = when {
         isBust() && other.isBust() -> GameResult.DRAW
@@ -16,13 +22,11 @@ abstract class Participant(val name: String) {
         else -> GameResult.LOSE
     }
 
-    fun isBust(): Boolean = cards.isOverBlackjack(getTotalScore())
-
     fun addCard(card: Card) {
         cards.add(card)
     }
 
-    fun getTotalScore(): Int = cards.calculateTotalScore()
-
     fun getCards(): List<Card> = cards.items
+
+    fun getFirstCard(): Card = cards.getFirstCard()
 }
