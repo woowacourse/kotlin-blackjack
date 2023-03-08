@@ -45,7 +45,7 @@ class BlackJackController {
     }
 
     private fun takePlayerTurn(blackJack: BlackJack, player: Player) {
-        if (!player.canDraw()) {
+        if (player.canDraw()) {
             val isDraw = InputView.inputDrawCommand(player.name)
             if (!isDraw) return printPlayerCards(player)
 
