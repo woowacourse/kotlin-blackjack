@@ -1,16 +1,17 @@
 package blackjack.domain.player
 
-import blackjack.domain.Result
-import blackjack.domain.card.Cards.Companion.MAX_SUM_NUMBER
+import blackjack.domain.card.Cards
+import blackjack.domain.result.Result
+import blackjack.domain.result.Score
 
 class Participant(name: String) : Player(name) {
 
     lateinit var result: Result
         private set
 
-    fun updateResult(dealerSum: Int) {
-        result = Result.valueOf(dealerSum, cards.sum())
+    fun updateResult(dealerCards: Cards) {
+        result = Score.getParticipantResult(dealerCards, cards)
     }
 
-    override fun canHit(): Boolean = cards.sum() < MAX_SUM_NUMBER
+    override fun canHit(): Boolean = cards.sum() < Score.MAX_SUM_NUMBER
 }

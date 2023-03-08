@@ -1,8 +1,9 @@
 package blackjack.domain.player
 
-import blackjack.domain.Result
 import blackjack.domain.card.Card
 import blackjack.domain.card.Deck
+import blackjack.domain.result.Result
+import blackjack.domain.result.Score
 
 class Dealer(name: String = "딜러") : Player(name) {
 
@@ -16,13 +17,13 @@ class Dealer(name: String = "딜러") : Player(name) {
 
     fun decideParticipantsResult(participants: Participants) {
         participants.values.forEach {
-            it.updateResult(cards.sum())
+            it.updateResult(cards)
         }
     }
 
     fun decideDealerResult(participants: Participants) {
         participants.values.forEach {
-            val dealerResult = Result.reverse(it.result)
+            val dealerResult = Score.reversResult(it.result)
             results[dealerResult] = results[dealerResult]?.plus(1) ?: throw IllegalArgumentException()
         }
     }

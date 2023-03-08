@@ -1,11 +1,11 @@
 package blackjack.view
 
-import blackjack.domain.Result
 import blackjack.domain.card.CardNumber
 import blackjack.domain.card.CardShape
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Participants
 import blackjack.domain.player.Player
+import blackjack.domain.result.Result
 
 class OutputView {
 
