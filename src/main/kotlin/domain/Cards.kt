@@ -14,17 +14,21 @@ class Cards(cards: List<Card>) {
         get() = cards.any { it.isAce }
 
     val isBurst: Boolean
-        get() = minSum() > BlackJackGame.BLACKJACK_NUMBER
+        get() = sum() > BlackJackGame.BLACKJACK_NUMBER
 
     val isBlackJack: Boolean
         get() {
-            return ((maxSum() == BlackJackGame.BLACKJACK_NUMBER) && (size == 2))
+            return ((resultSum == BlackJackGame.BLACKJACK_NUMBER) && (size == 2))
         }
 
     val resultSum: Int
         get() {
-            return if (maxSum() <= BlackJackGame.BLACKJACK_NUMBER) maxSum()
-            else minSum()
+            var sum = sum()
+            if (hasAce) {
+                sum += ACE_ADDITIONAL_VALUE
+            }
+            return if (sum <= BlackJackGame.BLACKJACK_NUMBER) sum
+            else sum()
         }
 
     init {
@@ -35,13 +39,8 @@ class Cards(cards: List<Card>) {
         _cards.add(card)
     }
 
-    private fun minSum(): Int {
+    private fun sum(): Int {
         return cards.sumOf { it.cardNumber.value }
-    }
-
-    private fun maxSum(): Int {
-        if (hasAce) return minSum() + ACE_ADDITIONAL_VALUE
-        return minSum()
     }
 
     companion object {
