@@ -3,16 +3,8 @@ package blackjack.domain
 import blackjack.Shape
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertDoesNotThrow
 
 class CardBunchTest {
-    @Test
-    fun `카드뭉치 생성 시 다른 카드를 받으면 생성한다`() {
-        val card1 = Card(Shape.HEART, CardNumber.SEVEN)
-        val card2 = Card(Shape.HEART, CardNumber.SIX)
-
-        assertDoesNotThrow { CardBunch(card1, card2) }
-    }
 
     @Test
     fun `카드를 추가한다`() {
