@@ -20,19 +20,26 @@ class Player(val name: Name, private val bet: Money, val cards: Cards = Cards())
     }
 
     fun calculateWinMoney(gameResultType: GameResultType): Money {
-        if (cards.isBlackjack()) return Money((bet.value * FACTOR_BLACKJACK_MONEY).toInt())
+        if (cards.isBlackjack()) return bet * FACTOR_BLACKJACK_MONEY
         return when (gameResultType) {
-            GameResultType.WIN -> Money(bet.value * FACTOR_WIN_MONEY)
-            GameResultType.DRAW -> Money(FACTOR_DRAW_MONEY)
-            GameResultType.LOSE -> Money(bet.value * FACTOR_LOSE_MONEY)
+            GameResultType.WIN -> bet * FACTOR_WIN_MONEY
+            GameResultType.DRAW -> bet * FACTOR_DRAW_MONEY
+            GameResultType.LOSE -> bet * FACTOR_LOSE_MONEY
         }
     }
 
-    private fun isWin(playerCardNumberSum: Int, dealerCardNumberSum: Int): Boolean =
-        playerCardNumberSum in (dealerCardNumberSum + 1)..BlackjackStage.WINNING_NUMBER || BlackjackStage.WINNING_NUMBER in playerCardNumberSum until dealerCardNumberSum
+    private fun isWin(playerCardNumberSum: Int, dealerCardNumberSum: Int): Boolean {
+        val isGreaterThanDealer = playerCardNumberSum in (dealerCardNumberSum + 1)..BlackjackStage.WINNING_NUMBER
+        val isDealerBustButPlayer = BlackjackStage.WINNING_NUMBER in playerCardNumberSum until dealerCardNumberSum
+        return isGreaterThanDealer || isDealerBustButPlayer
+    }
 
-    private fun isDraw(playerCardNumberSum: Int, dealerCardNumberSum: Int): Boolean =
-        playerCardNumberSum == dealerCardNumberSum || playerCardNumberSum > BlackjackStage.WINNING_NUMBER && dealerCardNumberSum > BlackjackStage.WINNING_NUMBER
+    private fun isDraw(playerCardNumberSum: Int, dealerCardNumberSum: Int): Boolean {
+        val isEqualWithDealer = playerCardNumberSum == dealerCardNumberSum
+        val isPlayerBust = playerCardNumberSum > BlackjackStage.WINNING_NUMBER
+        val isDealerBust = dealerCardNumberSum > BlackjackStage.WINNING_NUMBER
+        return isEqualWithDealer || (isPlayerBust && isDealerBust)
+    }
 
     companion object {
         const val FACTOR_WIN_MONEY = 2
