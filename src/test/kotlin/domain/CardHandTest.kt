@@ -10,10 +10,6 @@ import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 
 class CardHandTest {
-    private fun cards(firstCardNumber: CardNumber, secondCardNumber: CardNumber): CardHand {
-        return CardHand(listOf(Card(firstCardNumber, Shape.SPADE), Card(secondCardNumber, Shape.SPADE)))
-    }
-
     @Test
     fun `게임을 시작할때 카드가 두장이 아니면 예외를 발생시킨다`() {
         assertThrows<IllegalArgumentException> {
@@ -47,5 +43,9 @@ class CardHandTest {
         assertThat(
             cards(CardNumber.A, CardNumber.A).getTotalCardsScore()
         ).isEqualTo(12)
+    }
+
+    private fun cards(firstCardNumber: CardNumber, secondCardNumber: CardNumber): CardHand {
+        return CardHand(listOf(Card(firstCardNumber, Shape.SPADE), Card(secondCardNumber, Shape.SPADE)))
     }
 }

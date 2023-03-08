@@ -12,9 +12,6 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class PlayerTest {
-    private fun createPlayer(firstCardNumber: CardNumber, secondCardNumber: CardNumber): Player {
-        return Player(PlayerName("name"), CardPack(), CardHand(listOf(Card(firstCardNumber, Shape.SPADE), Card(secondCardNumber, Shape.SPADE))))
-    }
 
     @Test
     fun `21점을 넘으면 추가적인 카드를 뽑지 못한다`() {
@@ -23,5 +20,9 @@ class PlayerTest {
         assertThat(
             player.drawCard()
         ).isEqualTo(DrawState.IMPOSSIBLE)
+    }
+
+    private fun createPlayer(firstCardNumber: CardNumber, secondCardNumber: CardNumber): Player {
+        return Player(PlayerName("name"), CardPack(), CardHand(listOf(Card(firstCardNumber, Shape.SPADE), Card(secondCardNumber, Shape.SPADE))))
     }
 }

@@ -11,9 +11,6 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class DealerTest {
-    private fun createDealer(firstCardNumber: CardNumber, secondCardNumber: CardNumber): Dealer {
-        return Dealer(CardPack(), CardHand(listOf(Card(firstCardNumber, Shape.SPADE), Card(secondCardNumber, Shape.SPADE))))
-    }
 
     @Test
     fun `딜러는 들고있는 카드의 총합이 16이하라면 카드를 추가로 받는다`() {
@@ -31,5 +28,9 @@ class DealerTest {
         assertThat(
             dealer.drawCard()
         ).isEqualTo(DrawResult.Failure)
+    }
+
+    private fun createDealer(firstCardNumber: CardNumber, secondCardNumber: CardNumber): Dealer {
+        return Dealer(CardPack(), CardHand(listOf(Card(firstCardNumber, Shape.SPADE), Card(secondCardNumber, Shape.SPADE))))
     }
 }

@@ -14,14 +14,6 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class BlackJackRefereeTest {
-    private fun createPlayer(firstCardNumber: CardNumber, secondCardNumber: CardNumber): Player {
-        return Player(PlayerName("name"), CardPack(), CardHand(listOf(Card(firstCardNumber, Shape.SPADE), Card(secondCardNumber, Shape.SPADE))))
-    }
-
-    private fun createDealer(firstCardNumber: CardNumber, secondCardNumber: CardNumber): Dealer {
-        return Dealer(CardPack(), CardHand(listOf(Card(firstCardNumber, Shape.SPADE), Card(secondCardNumber, Shape.SPADE))))
-    }
-
     @Test
     fun `카드 합이 10인 딜러를 상대로 카드 합이 9인 플레이어는 패배하고 카드 합이 17인 플레이어는 승리하고 카드 합이 10인 플레이어는 무승부`() {
         // given
@@ -42,5 +34,13 @@ class BlackJackRefereeTest {
         assertThat(player1Result.gameResult).isEqualTo(GameResult.WIN)
         assertThat(player2Result.gameResult).isEqualTo(GameResult.LOSE)
         assertThat(player3Result.gameResult).isEqualTo(GameResult.DRAW)
+    }
+
+    private fun createPlayer(firstCardNumber: CardNumber, secondCardNumber: CardNumber): Player {
+        return Player(PlayerName("name"), CardPack(), CardHand(listOf(Card(firstCardNumber, Shape.SPADE), Card(secondCardNumber, Shape.SPADE))))
+    }
+
+    private fun createDealer(firstCardNumber: CardNumber, secondCardNumber: CardNumber): Dealer {
+        return Dealer(CardPack(), CardHand(listOf(Card(firstCardNumber, Shape.SPADE), Card(secondCardNumber, Shape.SPADE))))
     }
 }
