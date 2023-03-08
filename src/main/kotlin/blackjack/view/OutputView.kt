@@ -40,7 +40,7 @@ object OutputView {
     fun printResults(results: PlayerResults) {
         println("## 최종 승패")
         printDealerResult(results.getDealerResult())
-        results.get().forEach { (name, result) -> printPlayerResult(name, result) }
+        results.get().forEach { playerResult -> printPlayerResult(playerResult.name, playerResult.result) }
     }
 
     private fun printDealerResult(result: Map<GameResult, Int>) {

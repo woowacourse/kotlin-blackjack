@@ -2,7 +2,7 @@ package blackjack.domain
 
 class PlayerResults(private val results: Map<String, GameResult>) {
 
-    fun get(): Map<String, GameResult> = results
+    fun get(): List<PlayerResult> = results.map { (name, result) -> PlayerResult(name, result) }
 
     fun getDealerResult(): Map<GameResult, Int> {
         with(results.values) {
