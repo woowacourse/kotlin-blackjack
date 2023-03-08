@@ -21,8 +21,8 @@ class ProfitCalculator(
     }
 
     private fun dealerProfitWithUserBlackJack(user: User): Double {
-        var profit = user.betAmount
-        if (user.cards.isBlackJack()) profit += user.betAmount * HALF
+        var profit = -user.betAmount
+        if (user.cards.isBlackJack()) profit -= user.betAmount * HALF
         return profit
     }
 
