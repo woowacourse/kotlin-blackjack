@@ -49,7 +49,8 @@ object OutputView {
 
     private fun printPlayerResult(name: String, result: GameResult) {
         when (result) {
-            GameResult.BLACKJACK, GameResult.WIN -> println("$name: 승")
+            GameResult.BLACKJACK -> println("$name: 블랙잭")
+            GameResult.WIN -> println("$name: 승")
             GameResult.DRAW -> println("$name: 무")
             GameResult.LOSE -> println("$name: 패")
         }
