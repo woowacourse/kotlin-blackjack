@@ -11,7 +11,7 @@ class Deck(_cards: List<Card>) {
         require(_cards.isNotEmpty()) { ERROR_EMPTY_DECK }
     }
 
-    fun addCard(card: List<Card>) {
+    fun drawAndPushOneCard(card: List<Card>) {
         _cards.add(card.first())
     }
 
