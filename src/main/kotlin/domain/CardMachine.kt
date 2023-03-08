@@ -12,7 +12,7 @@ class CardMachine {
         cards.shuffle()
     }
 
-    fun getCard(count: Int): List<Card> = List(count) { cards.removeFirst() }
+    fun getCards(count: Int): List<Card> = List(count) { cards.removeFirst() }
 
     private fun createDeckOfCard() = Shape.values().forEach { shape -> matchCardValueAndShape(shape) }
 

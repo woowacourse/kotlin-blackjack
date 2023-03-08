@@ -11,7 +11,7 @@ class CardMachineTest {
         val cardMachine = CardMachine()
 
         // when
-        val actual = cardMachine.getCard(count)
+        val actual = cardMachine.getCards(count)
 
         // then
         assertThat(actual).hasSize(count)

@@ -15,9 +15,9 @@ class Controller(
 
     fun run() {
         val userNames = initUserName()
-        val dealerCards = cardMachine.getCard(PAIR)
+        val dealerCards = cardMachine.getCards(PAIR)
         val userCards = List(userNames.size) {
-            cardMachine.getCard(PAIR)
+            cardMachine.getCards(PAIR)
         }
         val users = initUsers(userNames, userCards)
         val dealer = Dealer.create(dealerCards)
@@ -53,7 +53,7 @@ class Controller(
         if (!dealer.isOverSumCondition()) {
             if (dealer.addScoreTenIfHasAce() != 21) {
                 playGameView.printDealerPickNewCard()
-                val newCard = cardMachine.getCard(1)
+                val newCard = cardMachine.getCards(1)
                 dealer.addCard(newCard)
             }
         }
@@ -80,7 +80,7 @@ class Controller(
     }
 
     private fun userPickNewCard(user: User) {
-        user.addCard(cardMachine.getCard(1))
+        user.addCard(cardMachine.getCards(1))
         playGameView.printUserCard(user)
         repeatGetCommand(user)
     }
