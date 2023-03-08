@@ -23,6 +23,8 @@ class Cards {
 
     private fun hasAce(): Boolean = _items.any(Card::isAce)
 
+    fun isBlackJack(): Boolean = calculateAceScore(_items.take(2).sumOf { it.getScore() }) == blackjackScore()
+
     companion object {
         private const val BONUS_SCORE = 10
     }

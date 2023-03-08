@@ -1,17 +1,22 @@
 package blackjack.domain
 
+import blackjack.domain.BlackJack.Companion.blackjackScore
+
 class Dealer : Participant(DEALER_NAME) {
     override fun getFirstOpenCards(): List<Card> = cards.getFirstCard()
 
     override fun canDraw(): Boolean = cards.calculateTotalScore() < STAY_SCORE
 
-    infix fun judge(playerScore: Int): GameResult {
+    infix fun judge(player: BettingPlayer): GameResult {
         val dealerScore = getTotalScore()
+        val playerScore = player.getTotalScore()
+        val isBlackJack = player.isBlackJack()
 
         return when {
-            playerScore > BlackJack.blackjackScore() -> GameResult.LOSE
-            dealerScore > BlackJack.blackjackScore() || playerScore > dealerScore -> GameResult.WIN
+            playerScore > blackjackScore() -> GameResult.LOSE
             dealerScore == playerScore -> GameResult.DRAW
+            isBlackJack -> GameResult.BLACKJACK
+            dealerScore > blackjackScore() || playerScore > dealerScore -> GameResult.WIN
             else -> GameResult.LOSE
         }
     }

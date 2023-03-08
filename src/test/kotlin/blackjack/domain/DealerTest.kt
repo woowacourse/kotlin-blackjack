@@ -94,53 +94,143 @@ class DealerTest {
 
     @Test
     fun `플레이어가 21점을 초과하면 패배한다`() {
+        val player = BettingPlayer(Player("glo"), 0)
+        val deck = CardDeck(
+            listOf(
+                Card(CardNumber.NINE, Suit.SPADE),
+                Card(CardNumber.TWO, Suit.SPADE),
+                Card(CardNumber.QUEEN, Suit.SPADE),
+                Card(CardNumber.KING, Suit.SPADE)
+            )
+        )
+        with(player) {
+            draw(deck)
+            draw(deck)
+            draw(deck)
+            draw(deck)
+        }
+
         with(dealer) {
             addCard(Card(CardNumber.JACK, Suit.SPADE))
             addCard(Card(CardNumber.QUEEN, Suit.SPADE))
             addCard(Card(CardNumber.KING, Suit.SPADE))
         }
 
-        assertThat(dealer judge 22).isEqualTo(GameResult.LOSE)
+        assertThat(dealer judge player).isEqualTo(GameResult.LOSE)
     }
 
     @Test
-    fun `딜러만 21점을 초과하면 플레이어가 승리한다`() {
+    fun `플레이어가 21점을 초과하지 않고 플레이어와 딜러의 점수가 같으면 무승부이다`() {
+        val player = BettingPlayer(Player("glo"), 0)
+        val deck = CardDeck(
+            listOf(
+                Card(CardNumber.ACE, Suit.SPADE),
+                Card(CardNumber.QUEEN, Suit.SPADE)
+            )
+        )
+        with(player) {
+            draw(deck)
+            draw(deck)
+        }
+
+        with(dealer) {
+            addCard(Card(CardNumber.ACE, Suit.SPADE))
+            addCard(Card(CardNumber.QUEEN, Suit.SPADE))
+        }
+
+        assertThat(dealer judge player).isEqualTo(GameResult.DRAW)
+    }
+
+    @Test
+    fun `플레이어가 21점을 초과하지 않고 처음 받은 카드 두 장이 21점이면 블랙잭이다`() {
+        val player = BettingPlayer(Player("glo"), 0)
+        val deck = CardDeck(
+            listOf(
+                Card(CardNumber.ACE, Suit.SPADE),
+                Card(CardNumber.QUEEN, Suit.SPADE)
+            )
+        )
+        with(player) {
+            draw(deck)
+            draw(deck)
+        }
+
+        with(dealer) {
+            addCard(Card(CardNumber.ACE, Suit.SPADE))
+            addCard(Card(CardNumber.QUEEN, Suit.SPADE))
+            addCard(Card(CardNumber.FIVE, Suit.SPADE))
+            addCard(Card(CardNumber.SIX, Suit.SPADE))
+        }
+
+        assertThat(dealer judge player).isEqualTo(GameResult.BLACKJACK)
+    }
+
+    @Test
+    fun `플레이어가 21점을 초과하지 않고 블랙잭이 아니면서 딜러가 21점을 초과하면 플레이어가 승리한다`() {
+        val player = BettingPlayer(Player("glo"), 0)
+        val deck = CardDeck(
+            listOf(
+                Card(CardNumber.ACE, Suit.SPADE),
+                Card(CardNumber.NINE, Suit.SPADE),
+                Card(CardNumber.ACE, Suit.DIAMOND)
+            )
+        )
+        with(player) {
+            draw(deck)
+            draw(deck)
+            draw(deck)
+        }
+
         with(dealer) {
             addCard(Card(CardNumber.JACK, Suit.SPADE))
             addCard(Card(CardNumber.QUEEN, Suit.SPADE))
             addCard(Card(CardNumber.KING, Suit.SPADE))
         }
 
-        assertThat(dealer judge 21).isEqualTo(GameResult.WIN)
+        assertThat(dealer judge player).isEqualTo(GameResult.WIN)
     }
 
     @Test
-    fun `딜러와 플레이어 모두 21점을 초과하지 않고 플레이어가 딜러보다 점수가 높으면 플레이어가 승리한다`() {
+    fun `딜러와 플레이어 모두 21점을 초과하지 않고 블랙잭이 아니면서 플레이어가 딜러보다 점수가 높으면 플레이어가 승리한다`() {
+        val player = BettingPlayer(Player("glo"), 0)
+        val deck = CardDeck(
+            listOf(
+                Card(CardNumber.ACE, Suit.SPADE),
+                Card(CardNumber.NINE, Suit.SPADE)
+            )
+        )
+        with(player) {
+            draw(deck)
+            draw(deck)
+        }
+
         with(dealer) {
             addCard(Card(CardNumber.JACK, Suit.SPADE))
-            addCard(Card(CardNumber.QUEEN, Suit.SPADE))
+            addCard(Card(CardNumber.EIGHT, Suit.SPADE))
         }
 
-        assertThat(dealer judge 21).isEqualTo(GameResult.WIN)
+        assertThat(dealer judge player).isEqualTo(GameResult.WIN)
     }
 
     @Test
-    fun `딜러와 플레이어 모두 21점을 초과하지 않고 플레이어와 딜러의 점수가 같으면 무승부이다`() {
-        with(dealer) {
-            addCard(Card(CardNumber.ACE, Suit.SPADE))
-            addCard(Card(CardNumber.QUEEN, Suit.SPADE))
+    fun `딜러와 플레이어 모두 21점을 초과하지 않고 블랙잭이 아니면서 딜러가 플레이어보다 점수가 높으면 플레이어가 패배한다`() {
+        val player = BettingPlayer(Player("glo"), 0)
+        val deck = CardDeck(
+            listOf(
+                Card(CardNumber.ACE, Suit.SPADE),
+                Card(CardNumber.NINE, Suit.SPADE)
+            )
+        )
+        with(player) {
+            draw(deck)
+            draw(deck)
         }
 
-        assertThat(dealer judge 21).isEqualTo(GameResult.DRAW)
-    }
-
-    @Test
-    fun `딜러와 플레이어 모두 21점을 초과하지 않고 딜러가 플레이어보다 점수가 높으면 플레이어가 패배한다`() {
         with(dealer) {
             addCard(Card(CardNumber.ACE, Suit.SPADE))
-            addCard(Card(CardNumber.QUEEN, Suit.SPADE))
+            addCard(Card(CardNumber.JACK, Suit.SPADE))
         }
 
-        assertThat(dealer judge 20).isEqualTo(GameResult.LOSE)
+        assertThat(dealer judge player).isEqualTo(GameResult.LOSE)
     }
 }

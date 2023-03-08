@@ -24,7 +24,7 @@ class Participants(private val dealer: Dealer, private val bettingPlayers: Betti
 
     fun judgePlayers(): PlayerResults = PlayerResults(
         bettingPlayers.toList().associate { player ->
-            player.getName() to (dealer judge player.getTotalScore())
+            player.getName() to (dealer judge player)
         }
     )
 }

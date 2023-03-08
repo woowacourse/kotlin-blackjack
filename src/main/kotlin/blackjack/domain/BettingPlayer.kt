@@ -14,4 +14,6 @@ class BettingPlayer(private val player: Player, val money: Int) {
     fun getTotalScore(): Int = player.getTotalScore()
 
     fun getName(): String = player.name
+
+    fun isBlackJack(): Boolean = player.isBlackJack()
 }
