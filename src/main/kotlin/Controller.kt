@@ -64,12 +64,8 @@ class Controller(
         return userNameContainer.names
     }
 
-    private fun initUsers(userNames: List<String>, userCards: List<List<Card>>): List<User> {
-        val userNamesAndCards = userNames.zip(userCards)
-        return userNamesAndCards.map { userNameAndCard ->
-            User.create(userNameAndCard)
-        }
-    }
+    private fun initUsers(userNames: List<String>, userCards: List<List<Card>>): List<User> =
+        userNames.mapIndexed { card, userName -> User.create(userName, userCards[card]) }
 
     private fun requestGetCommand(users: List<User>) {
         users.forEach { user ->
