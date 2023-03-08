@@ -25,7 +25,10 @@ class Deck {
         require(cards.size == DECK_SIZE) { ERROR_DECK_SIZE }
     }
 
-    fun getCard() = cards.removeFirst()
+    fun getCard(): Card {
+        if (cards.isEmpty()) throw NoSuchElementException("카드가 더 이상 없습니다. 카드 드로우를 종료합니다.")
+        return cards.removeFirst()
+    }
 
     companion object {
         private const val DECK_SIZE = 52
