@@ -44,11 +44,9 @@ class PlayersTest {
                 Card.of(CardCategory.SPADE, CardNumber.FOUR)
             )
         )
-        val actual = players.result(dealer)
+        val actual = players.result(dealer).values.groupingBy { it }.eachCount()
         val expected = mapOf(
-            GameResult.WIN_BLACKJACK to 0,
             GameResult.WIN to 1,
-            GameResult.DRAW to 0,
             GameResult.LOSE to 1
         )
         assertThat(actual).isEqualTo(expected)
