@@ -6,7 +6,7 @@ class Participants(private val dealer: Dealer, private val players: Players) {
         players.drawAll(deck)
     }
 
-    fun getFirstOpenCards(): Map<String, List<Card>> = mapOf(dealer.name to dealer.getFirstOpenCards()) + players.getFirstOpenCards()
+    fun getFirstOpenCards(): List<ParticipantCards> = listOf(ParticipantCards(dealer.name, dealer.getFirstOpenCards())) + players.getFirstOpenCards()
 
     fun getPlayers(): List<Player> = players.toList()
 
@@ -18,9 +18,9 @@ class Participants(private val dealer: Dealer, private val players: Players) {
         block(false)
     }
 
-    fun getCards(): Map<String, List<Card>> = mapOf(dealer.name to dealer.getCards()) + players.getCards()
+    fun getCards(): List<ParticipantCards> = listOf(ParticipantCards(dealer.name, dealer.getCards())) + players.getCards()
 
-    fun getTotalScores(): Map<String, Int> = mapOf(dealer.name to dealer.getTotalScore()) + players.getTotalScores()
+    fun getTotalScores(): List<ParticipantScore> = listOf(ParticipantScore(dealer.name, dealer.getTotalScore())) + players.getTotalScores()
 
     fun judgePlayers(): PlayerResults = PlayerResults(
         players.toList().associate { player ->

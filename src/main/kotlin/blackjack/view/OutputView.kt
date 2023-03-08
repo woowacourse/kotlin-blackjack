@@ -3,30 +3,32 @@ package blackjack.view
 import blackjack.domain.Card
 import blackjack.domain.CardNumber
 import blackjack.domain.GameResult
+import blackjack.domain.ParticipantCards
+import blackjack.domain.ParticipantScore
 import blackjack.domain.PlayerResults
 import blackjack.domain.Suit
 
 object OutputView {
     private const val SEPARATOR = ", "
 
-    fun printFirstOpenCards(cards: Map<String, List<Card>>) {
-        println("${cards.keys.first()}와 ${cards.keys.drop(1).joinToString(SEPARATOR)}에게 2장의 카드를 나누었습니다.")
-        printCards(cards)
+    fun printFirstOpenCards(participantsCards: List<ParticipantCards>) {
+        println("${participantsCards.first().name}와 ${participantsCards.drop(1).joinToString(SEPARATOR) { it.name }}에게 2장의 카드를 나누었습니다.")
+        participantsCards.forEach { (name, cards) ->
+            printCards(name, cards)
+        }
     }
 
-    fun printCards(cards: Map<String, List<Card>>) {
-        cards.forEach { (name, cards) ->
-            println("$name 카드: ${cards.joinToString(SEPARATOR) { it.toText() }}")
-        }
+    fun printCards(name: String, cards: List<Card>) {
+        println("$name 카드: ${cards.joinToString(SEPARATOR) { it.toText() }}")
     }
 
     fun printDealerHit() {
         println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
     }
 
-    fun printScores(cards: Map<String, List<Card>>, scores: Map<String, Int>) {
-        scores.forEach { (name, score) ->
-            printScore(name, cards[name] ?: emptyList(), score)
+    fun printScores(participantsCards: List<ParticipantCards>, scores: List<ParticipantScore>) {
+        scores.forEachIndexed { index, (name, score) ->
+            printScore(name, participantsCards[index].cards, score)
         }
         printInterval()
     }

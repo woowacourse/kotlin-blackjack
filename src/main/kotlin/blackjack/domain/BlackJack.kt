@@ -5,7 +5,7 @@ class BlackJack(private val deck: CardDeck, private val participants: Participan
         participants.drawAll(deck)
     }
 
-    fun getFirstOpenCards(): Map<String, List<Card>> = participants.getFirstOpenCards()
+    fun getFirstOpenCards(): List<ParticipantCards> = participants.getFirstOpenCards()
 
     fun getPlayers(): List<Player> = participants.getPlayers()
 
@@ -15,9 +15,9 @@ class BlackJack(private val deck: CardDeck, private val participants: Participan
 
     fun drawDealer(block: (Boolean) -> Unit) = participants.drawDealerCard(deck, block)
 
-    fun getCards(): Map<String, List<Card>> = participants.getCards()
+    fun getCards(): List<ParticipantCards> = participants.getCards()
 
-    fun getTotalScores(): Map<String, Int> = participants.getTotalScores()
+    fun getTotalScores(): List<ParticipantScore> = participants.getTotalScores()
 
     fun getGameResults(): PlayerResults = participants.judgePlayers()
 

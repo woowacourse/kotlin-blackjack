@@ -60,7 +60,7 @@ class BlackJackController {
     }
 
     private fun printPlayerCards(player: Player) {
-        OutputView.printCards(mapOf(player.name to player.getCards()))
+        OutputView.printCards(player.name, player.getCards())
     }
 
     private fun takeDealerTurn(blackJack: BlackJack) {

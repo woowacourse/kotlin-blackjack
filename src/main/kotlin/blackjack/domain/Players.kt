@@ -11,11 +11,11 @@ class Players(private val players: List<Player>) {
         players.forEach { it.addCard(deck.draw()) }
     }
 
-    fun getFirstOpenCards(): Map<String, List<Card>> = players.associate { it.name to it.getFirstOpenCards() }
+    fun getFirstOpenCards(): List<ParticipantCards> = getCards()
 
-    fun getCards(): Map<String, List<Card>> = players.associate { it.name to it.getCards() }
+    fun getCards(): List<ParticipantCards> = players.map { ParticipantCards(it.name, it.getCards()) }
 
-    fun getTotalScores(): Map<String, Int> = players.associate { it.name to it.getTotalScore() }
+    fun getTotalScores(): List<ParticipantScore> = players.map { ParticipantScore(it.name, it.getTotalScore()) }
 
     fun toList(): List<Player> = players.toList()
 
