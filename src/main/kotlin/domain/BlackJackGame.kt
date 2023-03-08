@@ -58,16 +58,13 @@ class BlackJackGame {
     }
 
     fun judgeGameResult(
-        printGameResult: (List<GameResult>, Players) -> Unit
+        printGameResult: (List<User>) -> Unit
     ) {
         val referee: Referee = Referee(
             Score.valueOf(players.dealer.cards.actualCardValueSum()),
-            players.users.map { user ->
-                Score.valueOf(user.cards.actualCardValueSum())
-            },
         )
-        val userGameResults = referee.getResult()
-        printGameResult(userGameResults, players)
+        referee.getResult(players.users)
+        printGameResult(players.users)
     }
 
     companion object {

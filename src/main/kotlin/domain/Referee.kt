@@ -1,10 +1,10 @@
 package domain
 
-class Referee(private val dealerScore: Score, private val userScore: List<Score>) {
+class Referee(private val dealerScore: Score) {
 
-    fun getResult(): List<GameResult> {
-        return userScore.map { userScore ->
-            calculateResult(userScore)
+    fun getResult(users: List<User>) {
+        users.forEach { user ->
+            user.gameResult = calculateResult(Score.valueOf(user.cards.actualCardValueSum()))
         }
     }
 

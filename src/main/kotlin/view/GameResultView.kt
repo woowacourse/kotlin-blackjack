@@ -2,6 +2,7 @@ package view
 
 import domain.GameResult
 import domain.Players
+import domain.User
 
 class GameResultView {
 
@@ -28,21 +29,25 @@ class GameResultView {
         }
     }
 
-    fun printFinalResult(gameResult: List<GameResult>, players: Players) {
+    fun printFinalResult(users: List<User>) {
         println(FINAL_RESULT)
+        printDealerResult(users)
+        users.forEach { user ->
+            println(USER_RESULT_FORMAT.format(user.name, user.gameResult.label))
+        }
+    }
+
+    private fun printDealerResult(users: List<User>) {
+        val loseCount = users.count { it.gameResult == GameResult.LOSE }
+        val drawCount = users.count { it.gameResult == GameResult.DRAW }
+        val winCount = users.count { it.gameResult == GameResult.WIN }
         println(
             DEALER_RESULT_FORMAT.format(
-                gameResult.count { it == GameResult.LOSE },
-                GameResult.WIN.label,
-                gameResult.count { it == GameResult.DRAW },
-                GameResult.DRAW.label,
-                gameResult.count { it == GameResult.WIN },
-                GameResult.LOSE.label,
+                loseCount, GameResult.WIN.label,
+                drawCount, GameResult.DRAW.label,
+                winCount, GameResult.LOSE.label,
             ),
         )
-        players.users.forEachIndexed { index, user ->
-            println(USER_RESULT_FORMAT.format(user.name, gameResult[index].label))
-        }
     }
 
     companion object {
