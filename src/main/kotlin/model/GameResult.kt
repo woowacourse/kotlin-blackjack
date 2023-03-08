@@ -1,9 +1,7 @@
 package model
 
 class GameResult private constructor(val playersFinalResult: Map<Name, Int>) {
-    fun getDealerProfitResult(): Int = filterSum { it < 0 } + filterSum { it > 0 }
-
-    private fun filterSum(fn: (Int) -> Boolean): Int = playersFinalResult.values.filter { fn(it) }.sum() * -1
+    fun getDealerProfitResult(): Int = playersFinalResult.values.sum() * -1
 
     companion object {
         private const val ZERO = 0
