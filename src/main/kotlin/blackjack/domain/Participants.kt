@@ -1,10 +1,12 @@
 package blackjack.domain
 
-class Participants(names: List<String>) {
+import blackjack.domain.carddeck.CardDeck
+
+class Participants(names: List<String>, private val cardDeck: CardDeck) {
     val dealer: Dealer = Dealer(makeCardBunch())
     val players: List<Player> = names.map { Player(it, makeCardBunch()) }
 
-    private fun makeCardBunch(): CardBunch = CardBunch(CardDeck.drawCard(), CardDeck.drawCard())
+    private fun makeCardBunch(): CardBunch = CardBunch(cardDeck.drawCard(), cardDeck.drawCard())
 
     fun progressPlayersAddCard(getDecision: (Player) -> Boolean, printPlayerCard: (Player) -> Unit) {
         players.forEach { progressEachPlayerAddCard(it, getDecision, printPlayerCard) }
@@ -37,12 +39,12 @@ class Participants(names: List<String>) {
         player: Player,
         printPlayerCard: (Player) -> Unit,
     ) {
-        player.cardBunch.addCard(CardDeck.drawCard())
+        player.cardBunch.addCard(cardDeck.drawCard())
         printPlayerCard(player)
     }
 
     fun judgmentDealerAddCard() {
-        if (!dealer.isOverCondition()) dealer.addCard(CardDeck.drawCard())
+        if (!dealer.isOverCondition()) dealer.addCard(cardDeck.drawCard())
     }
 
     fun getConsequence(player: Player): Consequence = player.chooseWinner(dealer)

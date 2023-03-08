@@ -1,13 +1,14 @@
 package blackjack.controller
 
 import blackjack.domain.Participants
+import blackjack.domain.carddeck.RandomCardDeck
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
 class Controller() {
     fun runGame() {
         val participants =
-            Participants(InputView.getPlayerNames())
+            Participants(InputView.getPlayerNames(), RandomCardDeck)
         showInitialState(participants)
         participants.progressPlayersAddCard(InputView::getDecision, OutputView::printPlayerCards)
         printResult(participants)
