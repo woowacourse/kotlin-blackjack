@@ -13,12 +13,12 @@ fun main() {
     val players = InputView.getNames().map(::Player)
     val dealer = Dealer()
 
-    onGameStart(deck, players, dealer)
-    onGameRun(deck, players, dealer)
+    startGame(deck, players, dealer)
+    runGame(deck, players, dealer)
     ResultView.printResult(dealer, players, BlackjackResult.of(dealer, players))
 }
 
-private fun onGameStart(deck: Deck, players: List<Player>, dealer: Dealer) {
+private fun startGame(deck: Deck, players: List<Player>, dealer: Dealer) {
     dealCards(deck, players + dealer)
     ResultView.printSetUp(dealer, players)
 }
@@ -29,7 +29,7 @@ private fun dealCards(deck: Deck, participants: List<Participant>) {
     }
 }
 
-private fun onGameRun(deck: Deck, players: List<Player>, dealer: Dealer) {
+private fun runGame(deck: Deck, players: List<Player>, dealer: Dealer) {
     decideHitOrStand(deck, players)
     checkDealerHitOrStand(deck, dealer)
 }
