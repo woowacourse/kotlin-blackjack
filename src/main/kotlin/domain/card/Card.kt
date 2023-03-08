@@ -1,7 +1,7 @@
 package domain.card
 
 class Card private constructor(
-    val shape: Shape,
+    private val shape: Shape,
     val cardNumber: CardNumber,
 ) {
 

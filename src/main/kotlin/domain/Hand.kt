@@ -2,7 +2,7 @@ package domain
 
 import domain.card.Card
 
-class Deck(_cards: List<Card>) {
+class Hand(_cards: List<Card>) {
     private val _cards: MutableList<Card> = _cards.toMutableList()
     val cards: List<Card>
         get() = _cards.toList()
@@ -11,7 +11,7 @@ class Deck(_cards: List<Card>) {
         require(_cards.isNotEmpty()) { ERROR_EMPTY_DECK }
     }
 
-    fun drawAndPushOneCard(card: List<Card>) {
+    fun drawOneCard(card: List<Card>) {
         _cards.add(card.first())
     }
 
