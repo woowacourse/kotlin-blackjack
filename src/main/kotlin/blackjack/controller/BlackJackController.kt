@@ -17,9 +17,7 @@ class BlackJackController {
             val result = start(
                 onDrawn = { participant -> OutputView.printDrawn(participant) }
             )
-
-            OutputView.printScores(getCards(), getTotalScores())
-            OutputView.printResults(getGameResults())
+            OutputView.printBlackJackResult(result)
         }
     }
 
