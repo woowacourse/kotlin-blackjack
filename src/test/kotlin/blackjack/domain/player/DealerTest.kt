@@ -21,7 +21,7 @@ class DealerTest {
     @Test
     fun `갖고 있는 카드 숫자의 합이 16이 넘는다면 카드를 더 받을 수 없는 상태이다`() {
         val cards: Cards = Cards(
-            mutableListOf(
+            listOf(
                 Card(CardNumber.KING, CardShape.CLOVER),
                 Card(CardNumber.QUEEN, CardShape.CLOVER)
             )
