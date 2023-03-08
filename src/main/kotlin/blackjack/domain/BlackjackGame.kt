@@ -5,30 +5,27 @@ import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Participant
 import blackjack.domain.participant.Player
 
-class BlackjackGame(
-    val players: List<Player>,
-    val dealer: Dealer
-) {
+class BlackjackGame {
     private val deck: Deck = Deck.create()
 
-    fun startGame(output: (Dealer, List<Player>) -> Unit) {
-        dealCards()
-        output(dealer, players)
+    fun startGame(participant: BlackjackParticipant, output: (Dealer, List<Player>) -> Unit) {
+        dealCards(participant)
+        output(participant.dealer, participant.players)
     }
 
-    fun runPlayer(input: (String) -> (Boolean), output: (Player) -> Unit) {
-        players.forEach { decideHitOrStand(it, input, output) }
+    fun runPlayer(participant: BlackjackParticipant, input: (String) -> (Boolean), output: (Player) -> Unit) {
+        participant.players.forEach { decideHitOrStand(it, input, output) }
     }
 
-    fun runDealer(output: (String) -> Unit) {
+    fun runDealer(dealer: Dealer, output: (String) -> Unit) {
         if (dealer.shouldHit()) {
             dealer.receive(deck.draw())
             output(dealer.name)
         }
     }
 
-    private fun dealCards() {
-        val participants = players + dealer
+    private fun dealCards(participant: BlackjackParticipant) {
+        val participants = participant.players + participant.dealer
         repeat(Participant.INIT_CARD_SIZE) {
             participants.forEach { it.receive(deck.draw()) }
         }
