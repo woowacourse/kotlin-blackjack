@@ -7,7 +7,7 @@ class Players(val list: List<Player>) {
         }
     }
 
-    fun result(dealer: Participant): Map<GameResult, Int> {
+    fun result(dealer: Dealer): Map<GameResult, Int> {
         val result = GameResult.values().associateWith { INITIALIZE_TO_ZERO }.toMutableMap()
         list.forEach { player ->
             val playerResult = player.getGameResult(dealer)

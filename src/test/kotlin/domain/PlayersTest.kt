@@ -46,6 +46,7 @@ class PlayersTest {
         )
         val actual = players.result(dealer)
         val expected = mapOf(
+            GameResult.WIN_BLACKJACK to 0,
             GameResult.WIN to 1,
             GameResult.DRAW to 0,
             GameResult.LOSE to 1

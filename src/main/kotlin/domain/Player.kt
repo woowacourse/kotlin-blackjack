@@ -8,15 +8,15 @@ class Player(nameAndBet: NameAndBet, cards: Cards) : Participant(nameAndBet.name
 
     override fun isPossibleDrawCard(): Boolean = !isBurst()
 
-    fun getGameResult(participant: Participant): GameResult {
-        if (isBurst()) return GameResult.LOSE
-        if (participant.isBurst()) return GameResult.WIN
-        if (isBlackJack() && participant.isBlackJack()) return GameResult.DRAW
-        if (participant.isBlackJack()) return GameResult.LOSE
-        if (isBlackJack()) return GameResult.WIN
-        if (resultSum() > participant.resultSum()) return GameResult.WIN
-        if (resultSum() == participant.resultSum()) return GameResult.DRAW
-        return GameResult.LOSE
+    fun getGameResult(dealer: Dealer): GameResult {
+        return when {
+            isBurst() -> GameResult.LOSE
+            isBlackJack() && dealer.isBlackJack() -> GameResult.DRAW
+            isBlackJack() -> GameResult.WIN_BLACKJACK
+            dealer.isBurst() || resultSum() > dealer.resultSum() -> GameResult.WIN
+            resultSum() == dealer.resultSum() -> GameResult.DRAW
+            else -> GameResult.LOSE
+        }
     }
 
     companion object {
