@@ -2,6 +2,7 @@ package controller
 
 import domain.BlackjackGame
 import domain.participants.Names
+import domain.participants.Player
 import view.InputView
 import view.OutputView
 
@@ -10,11 +11,11 @@ class BlackjackController {
     fun startGame() {
         val names = insertNames()
         val blackjackGame = BlackjackGame(names)
-        printBlackjackSetting(blackjackGame)
-        requestPickCard(blackjackGame)
-        dealerPickCard(blackjackGame)
-        printCardResult(blackjackGame)
-        printWinningResult(blackjackGame)
+        blackjackGame.startBlackjackGame(OutputView::printBlackjackSetting)
+        blackjackGame.playsTurn(this::validatePickAnswer, OutputView::printParticipantCards)
+        blackjackGame.dealerPickCard(OutputView::printDealerUnder16)
+        blackjackGame.printCardResult(OutputView::printCardResult)
+        blackjackGame.printWinningResult(OutputView::printWinningResult)
     }
 
     private fun insertNames(): Names {
@@ -30,37 +31,8 @@ class BlackjackController {
         OutputView.printParticipantsCards(blackjackGame.players)
     }
 
-    private fun requestPickCard(blackjackGame: BlackjackGame) {
-        blackjackGame.players.forEach { player ->
-            blackjackGame.repeatPickCard(
-                player.name,
-                { validatePickAnswer(player.name) },
-                (OutputView::printParticipantCards)
-            )
-        }
-    }
-
-    private fun validatePickAnswer(name: String): Boolean {
-        val answer = InputView.inputRepeatGetCard(name)
-        return answer ?: validatePickAnswer(name)
-    }
-
-    private fun dealerPickCard(blackjackGame: BlackjackGame) {
-        if (blackjackGame.pickDealerCardIfPossible())
-            OutputView.printDealerUnder16()
-    }
-
-    private fun printCardResult(blackjackGame: BlackjackGame) {
-        OutputView.printCardResult(blackjackGame.dealer, blackjackGame.players)
-    }
-
-    private fun printWinningResult(blackjackGame: BlackjackGame) {
-        val playerResult = blackjackGame.getPlayerWinningResult()
-        val dealerResult = blackjackGame.judgeDealerResult(playerResult)
-        OutputView.printWinningResult(dealerResult, playerResult)
-    }
-
-    companion object {
-        private const val DEALER = "딜러"
+    private fun validatePickAnswer(player: Player): Boolean {
+        val answer = InputView.inputRepeatGetCard(player)
+        return answer ?: validatePickAnswer(player)
     }
 }

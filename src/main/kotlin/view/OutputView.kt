@@ -17,25 +17,30 @@ object OutputView {
     private const val FINAL_RESULT = "\n## 최종 승패"
     private const val PICK_CARD_OVER_SIXTEEN = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n"
 
-    fun printDivideCard(players: List<Player>) {
+    fun printBlackjackSetting(players: List<Player>, dealer: Dealer) {
+        printDivideCard(players)
+        printDealerSettingCard(dealer)
+        printPlayersSettingCards(players)
+    }
+    private fun printDivideCard(players: List<Player>) {
         println()
         val names = players.map { it.name }
         println(names.joinToString(SEPARATOR, WITH_DEALER, DIVIDE_TWO_CARDS))
     }
 
-    fun printDealerSettingCard(dealer: Dealer) {
+    private fun printDealerSettingCard(dealer: Dealer) {
         println(DEALER + printCardForm(dealer.ownCards.cards.first()))
     }
 
-    fun printParticipantsCards(participants: List<Player>) {
-        participants.forEach {
-            printParticipantCards(it.name, it.ownCards.cards)
+    private fun printPlayersSettingCards(players: List<Player>) {
+        players.forEach {
+            printParticipantCards(it)
         }
         println()
     }
 
-    fun printParticipantCards(name: String, cards: List<Card>) {
-        println("${name}$PARTICIPANT_CARD ${cards.joinToString(SEPARATOR) { printCardForm(it) }}")
+    fun printParticipantCards(player: Player) {
+        println("${player.name}$PARTICIPANT_CARD ${player.ownCards.cards.joinToString(SEPARATOR) { printCardForm(it) }}")
     }
 
     private fun printCardForm(card: Card): String {
