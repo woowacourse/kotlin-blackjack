@@ -1,10 +1,7 @@
 import domain.* // ktlint-disable no-wildcard-imports
 import domain.card.Card
-import view.Answer
+import view.*
 import view.Answer.Companion.YES
-import view.GameIntroView
-import view.GameResultView
-import view.PlayGameView
 
 class Controller(
     private val gameIntroView: GameIntroView = GameIntroView(),

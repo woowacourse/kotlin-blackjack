@@ -1,7 +1,6 @@
 package view
 
 import domain.Dealer
-import domain.GameResult
 import domain.Player
 import domain.User
 

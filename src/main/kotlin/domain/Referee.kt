@@ -1,5 +1,7 @@
 package domain
 
+import view.GameResult
+
 class Referee(private val dealerScore: Int, private val userScore: List<Int>) {
 
     fun getResult(): List<GameResult> {

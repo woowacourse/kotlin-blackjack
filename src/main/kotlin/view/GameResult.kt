@@ -1,4 +1,4 @@
-package domain
+package view
 
 enum class GameResult(val label: String) {
     WIN("승"),
