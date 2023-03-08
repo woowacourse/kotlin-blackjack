@@ -67,6 +67,15 @@ class BlackJackGame {
         printGameResult(players.users)
     }
 
+    fun calculateProfit(
+        onCalculateProfit: (Double, List<Pair<String, Double>>) -> Unit
+    ) {
+        val profitCalculator = ProfitCalculator(players)
+        val dealerProfit = profitCalculator.getDealerProfit()
+        val usersProfit = profitCalculator.getUsersProfit()
+        onCalculateProfit(dealerProfit, usersProfit)
+    }
+
     companion object {
         private const val NUMBER_OF_CARD_SET = 1
         private const val CARD_PAIR = 2

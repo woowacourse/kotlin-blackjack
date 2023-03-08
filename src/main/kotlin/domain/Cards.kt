@@ -27,9 +27,13 @@ class Cards(cards: List<Card>) {
         card.value == CardValue.ACE
     }
 
+    fun isBlackJack(): Boolean = (_value.size == NUMBER_OF_BLACKJACK_CARDS) && (actualCardValueSum() == BLACKJACK_SCORE)
+
     companion object {
         private const val SUM_CONDITION = 11
         private const val ACE_EXTRA_SCORE = 10
+        private const val NUMBER_OF_BLACKJACK_CARDS = 2
+        private const val BLACKJACK_SCORE = 21
         private const val ZERO = 0
     }
 }

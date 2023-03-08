@@ -16,6 +16,10 @@ class GameResultView {
                 dealer.cards.actualCardValueSum(),
             ),
         )
+        printUserCards(users)
+    }
+
+    private fun printUserCards(users: List<User>) {
         users.forEach { user ->
             println(
                 PLAYER_CARD.format(
@@ -50,11 +54,21 @@ class GameResultView {
         )
     }
 
+    fun printFinalProfit(dealerProfit: Double, usersProfit: List<Pair<String, Double>>) {
+        println(FINAL_PROFIT_TITLE)
+        println(DEALER_PROFIT.format(dealerProfit))
+        usersProfit.forEach { nameAndProfit ->
+            println(USER_RESULT_FORMAT.format(nameAndProfit.first, nameAndProfit.second))
+        }
+    }
+
     companion object {
         private const val DEALER_RESULT_FORMAT = "딜러: %d%s %d%s %d%s"
         private const val USER_RESULT_FORMAT = "%s: %s"
         private const val PLAYER_CARD = "%s: %s - 결과: %d"
         private const val SEPARATOR = ", "
         private const val FINAL_RESULT = "## 최종 승패"
+        private const val FINAL_PROFIT_TITLE = "## 최종 수익"
+        private const val DEALER_PROFIT = "딜러: %s"
     }
 }
