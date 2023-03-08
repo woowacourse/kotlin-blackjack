@@ -15,44 +15,23 @@ class BlackjackController(
         val dealer: Dealer = Dealer()
         val participants: Participants = readParticipants()
         setInitialPlayersCards(dealer, participants)
-        drawPlayerCards(dealer, participants)
-
+        hitPlayerCards(dealer, participants)
         dealer.decidePlayerResult(participants)
-
-        printSumResult(dealer, participants)
-        printFinalResult(dealer, participants)
+        printResult(dealer, participants)
     }
 
-    private fun drawPlayerCards(dealer: Dealer, participants: Participants) {
-        drawParticipantsCards(dealer, participants)
-        drawDealerCard(dealer)
+    private fun hitPlayerCards(dealer: Dealer, participants: Participants) {
+        hitParticipantsCards(dealer, participants)
+        hitDealerCard(dealer)
     }
 
-    private fun setInitialPlayersCards(dealer: Dealer, participants: Participants) {
-        dealer.setInitialPlayersCards(participants)
-        outputView.printInitialSettingCard(dealer, participants)
-    }
-
-    private fun drawParticipantsCards(dealer: Dealer, participants: Participants) {
+    private fun hitParticipantsCards(dealer: Dealer, participants: Participants) {
         participants.values.forEach {
-            drawParticipantCard(dealer, it)
+            hitParticipantCards(dealer, it)
         }
     }
 
-    private fun drawParticipantCard(dealer: Dealer, participant: Participant) {
-        while (true) {
-            val check = participant.canHit()
-            if (check) {
-                val answer: Boolean = readHitOrNot(participant.name)
-                if (answer) participant.addCard(dealer.drawCard())
-                outputView.printCurrentPlayerCards(participant)
-                if (!answer) break
-            }
-            if (!check) break
-        }
-    }
-
-    private fun drawDealerCard(dealer: Dealer) {
+    private fun hitDealerCard(dealer: Dealer) {
         if (dealer.canHit()) {
             dealer.addCard(dealer.drawCard())
             outputView.printDealerHitMessage()
@@ -61,11 +40,22 @@ class BlackjackController(
         outputView.printDealerNotHitMessage()
     }
 
-    private fun printSumResult(dealer: Dealer, participants: Participants) =
-        outputView.printSumResult(dealer, participants)
+    private fun hitParticipantCards(dealer: Dealer, participant: Participant) {
+        while (participant.canHit() && readHitOrNot(participant.name)) {
+            participant.addCard(dealer.drawCard())
+            outputView.printCurrentPlayerCards(participant)
+        }
+    }
 
-    private fun printFinalResult(dealer: Dealer, participants: Participants) =
+    private fun setInitialPlayersCards(dealer: Dealer, participants: Participants) {
+        dealer.setInitialPlayersCards(participants)
+        outputView.printInitialSettingCard(dealer, participants)
+    }
+
+    private fun printResult(dealer: Dealer, participants: Participants) {
+        outputView.printSumResult(dealer, participants)
         outputView.printPlayersResults(dealer, participants)
+    }
 
     private fun readParticipants(): Participants = inputView.readParticipants() ?: readParticipants()
 
