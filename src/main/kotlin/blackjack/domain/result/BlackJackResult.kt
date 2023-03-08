@@ -17,5 +17,5 @@ class BlackJackResult(dealer: Dealer, guests: List<Guest>) {
     private fun calculateDealerRateOfReturn(): Int = guests.sumOf { -it.rateOfReturn }
 
     private fun calculateGuestRateOfReturn(guest: Guest, dealer: Dealer): Int =
-        (calculateGuestWin(guest, dealer).rate * guest.bettingMoney.toInt()).toInt()
+        (calculateGuestWin(guest, dealer).rate * guest.bettingMoney.value).toInt()
 }

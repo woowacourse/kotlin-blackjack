@@ -10,7 +10,7 @@ class GuestTest {
     @ValueSource(ints = [10, 1_000_000])
     fun `배팅 금액을 반환한다`(money: Int) {
         val user = Guest("아크", money)
-        assertThat(user.bettingMoney.toInt()).isEqualTo(money)
+        assertThat(user.bettingMoney.value).isEqualTo(money)
     }
 
     @Test

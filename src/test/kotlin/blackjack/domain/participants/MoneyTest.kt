@@ -23,6 +23,6 @@ class MoneyTest {
     @ValueSource(ints = [10, 50_000, 1_000_000])
     fun `금액을 반환한다`(int: Int) {
         val money = Money(int)
-        assertThat(money.toInt()).isEqualTo(int)
+        assertThat(money.value).isEqualTo(int)
     }
 }

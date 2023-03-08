@@ -1,12 +1,10 @@
 package blackjack.domain.participants
 
 @JvmInline
-value class Money(private val money: Int) {
+value class Money(val value: Int) {
     init {
-        require(money in MIN_MONEY..MAX_MONEY) { ERROR_MONEY_RANGE }
+        require(value in MIN_MONEY..MAX_MONEY) { ERROR_MONEY_RANGE }
     }
-
-    fun toInt() = money
 
     companion object {
         private const val MIN_MONEY = 10
