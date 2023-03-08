@@ -7,6 +7,7 @@ import domain.CardCategory
 import domain.CardNumber
 import domain.Dealer
 import domain.Participant
+import domain.Participants
 import domain.Player
 import domain.Players
 
@@ -19,15 +20,18 @@ class ResultView {
         return players.list.joinToString(SEPARATOR) { it.name.value }
     }
 
-    fun printInitCards(participants: List<Participant>) {
-        participants.forEach { participant ->
-            println(PRINT_NAME_AND_CARDS.format(participant.name.value, formatStringCards(participant.showInitCards())))
+    fun printInitCards(participants: Participants) {
+        participants.dealer.run {
+            println(PRINT_NAME_AND_CARDS.format(name.value, formatStringCards(cards.list.take(1))))
+        }
+        participants.players.list.forEach { player ->
+            println(PRINT_NAME_AND_CARDS.format(player.name.value, formatStringCards(player.cards.list.take(1))))
         }
         println()
     }
 
     fun printPlayerCard(player: Player) {
-        println(PRINT_NAME_AND_CARDS.format(player.name.value, formatStringCards(player.showAllCards())))
+        println(PRINT_NAME_AND_CARDS.format(player.name.value, formatStringCards(player.cards.list)))
     }
 
     fun printDealerAddCard(dealer: Dealer) {
@@ -48,7 +52,7 @@ class ResultView {
             println(
                 PRINT_NAME_AND_CARDS_AND_SCORE.format(
                     participant.name.value,
-                    formatStringCards(participant.showAllCards()),
+                    formatStringCards(participant.cards.list),
                     participant.resultSum()
                 )
             )

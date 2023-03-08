@@ -2,10 +2,6 @@ package domain
 
 class Player(nameAndBet: NameAndBet, cards: Cards) : Participant(nameAndBet.name, cards) {
     val betMoney = nameAndBet.betMoney
-    override fun showInitCards(): List<Card> {
-        return cards.cards.take(TAKE_TWO)
-    }
-
     override fun isPossibleDrawCard(): Boolean = !isBurst()
 
     fun getGameResult(dealer: Dealer): GameResult {
@@ -17,9 +13,5 @@ class Player(nameAndBet: NameAndBet, cards: Cards) : Participant(nameAndBet.name
             resultSum() == dealer.resultSum() -> GameResult.DRAW
             else -> GameResult.LOSE
         }
-    }
-
-    companion object {
-        private const val TAKE_TWO = 2
     }
 }

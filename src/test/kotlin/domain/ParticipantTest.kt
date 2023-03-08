@@ -13,10 +13,6 @@ class ParticipantTest {
                 Card.of(CardCategory.SPADE, CardNumber.NINE)
             )
         ) {
-            override fun showInitCards(): List<Card> {
-                return cards.cards.take(2)
-            }
-
             override fun isPossibleDrawCard(): Boolean = true
         }
 
@@ -34,10 +30,6 @@ class ParticipantTest {
                 Card.of(CardCategory.SPADE, CardNumber.NINE)
             )
         ) {
-            override fun showInitCards(): List<Card> {
-                return cards.cards.take(2)
-            }
-
             override fun isPossibleDrawCard(): Boolean = true
         }
 

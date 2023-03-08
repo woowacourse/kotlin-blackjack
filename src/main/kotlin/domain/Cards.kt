@@ -2,16 +2,16 @@ package domain
 
 import controller.BlackJackGame
 
-class Cards(cards: List<Card>) {
-    private val _cards = cards.toMutableList()
-    val cards: List<Card>
-        get() = _cards.toList()
+class Cards(list: List<Card>) {
+    private val _list = list.toMutableList()
+    val list: List<Card>
+        get() = _list.toList()
 
     val size: Int
-        get() = _cards.size
+        get() = _list.size
 
     private val hasAce: Boolean
-        get() = cards.any { it.isAce }
+        get() = list.any { it.isAce }
 
     val isBurst: Boolean
         get() = sum() > BlackJackGame.BLACKJACK_NUMBER
@@ -31,15 +31,15 @@ class Cards(cards: List<Card>) {
         }
 
     init {
-        check(cards.size >= MINIMUM_CARDS_SIZE) { ERROR_CARDS_SIZE }
+        check(list.size >= MINIMUM_CARDS_SIZE) { ERROR_CARDS_SIZE }
     }
 
     fun add(card: Card) {
-        _cards.add(card)
+        _list.add(card)
     }
 
     private fun sum(): Int {
-        return cards.sumOf { it.cardNumber.value }
+        return list.sumOf { it.cardNumber.value }
     }
 
     companion object {
