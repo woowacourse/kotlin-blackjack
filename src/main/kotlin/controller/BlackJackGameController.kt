@@ -4,7 +4,6 @@ import domain.Name
 import domain.Names
 import domain.PlayersNameAndBet
 import domain.phase.DealerAddPhase
-import domain.phase.GameResultMoneyPhase
 import domain.phase.GameScorePhase
 import domain.phase.InitPhase
 import domain.phase.Phases
@@ -17,6 +16,7 @@ class BlackJackGameController(private val inputView: InputView, private val resu
     override fun run() {
         val blackJackGame = initGame()
         val result = blackJackGame.runGame(getPlayersNameAndBet())
+        resultView.printGameResult(result)
     }
 
     private fun initGame(): BlackJackGame {
@@ -24,9 +24,8 @@ class BlackJackGameController(private val inputView: InputView, private val resu
         val playersSelectAddPhase = PlayersSelectAddPhase(::getChoiceOfAddCard, resultView::printPlayerCard)
         val dealerSelectAddPhase = DealerAddPhase(resultView::printDealerAddCard)
         val gameScorePhase = GameScorePhase(resultView::printScore)
-        val gameResultMoneyPhase = GameResultMoneyPhase(resultView::printGameResult)
         val phases =
-            Phases(initPhase, playersSelectAddPhase, dealerSelectAddPhase, gameScorePhase, gameResultMoneyPhase)
+            Phases(initPhase, playersSelectAddPhase, dealerSelectAddPhase, gameScorePhase)
         return BlackJackGame(phases)
     }
 

@@ -1,5 +1,6 @@
 package view
 
+import domain.BetProfitResult
 import domain.BlackJackCardDeck
 import domain.Card
 import domain.CardCategory
@@ -33,11 +34,16 @@ class ResultView {
         println(PRINT_DEALER_ADD_CARD.format(dealer.name.value))
     }
 
-    fun printGameResult(players: Players, dealer: Dealer) {
+    fun printGameResult(result: BetProfitResult) {
         println(PRINT_GAME_RESULT)
+        println(PRINT_BET_GAME_RESULT.format(result.dealer.name.value, result.dealerResult))
+        result.players.list.forEach {
+            println(PRINT_BET_GAME_RESULT.format(it.name.value, result.playersResult[it]))
+        }
     }
 
     fun printScore(participants: List<Participant>) {
+        println()
         participants.forEach { participant ->
             println(
                 PRINT_NAME_AND_CARDS_AND_SCORE.format(
