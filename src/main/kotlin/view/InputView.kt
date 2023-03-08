@@ -1,27 +1,31 @@
 package view
 
 class InputView {
+    private val regexName = Regex("[가-힣a-zA-Z]+")
     private val regexAnswer = Regex("[$Y$y$N$n]")
     private val regexNumber = Regex("\\d+")
-    fun readName(): List<String> {
-        val input = readln().replace(" ", "")
-        require(input.isNotBlank()) { NULL_ERROR }
-        return input.split(",")
+    fun readName(): InputState<List<String>> {
+        val input = readln().replace(" ", "").split(",")
+        input.forEach {
+            if (it.isBlank()) return InputState.Error(NULL_ERROR)
+            if (!regexName.matches(it)) return InputState.Error(IS_NOT_WORD)
+        }
+        return InputState.Success(input)
     }
 
-    fun readBet(): Int {
+    fun readBet(): InputState<Int> {
         val input = readln()
-        require(input.isNotBlank()) { NULL_ERROR }
-        require(regexNumber.matches(input)) { IS_NOT_NUMBER }
-        return input.toInt()
+        if (input.isBlank()) return InputState.Error(NULL_ERROR)
+        if (!regexNumber.matches(input)) return InputState.Error(IS_NOT_NUMBER)
+        return InputState.Success(input.toInt())
     }
 
-    fun readYesOrNo(): Boolean {
+    fun readYesOrNo(): InputState<Boolean> {
         val input = readln()
-        require(input.isNotBlank()) { NULL_ERROR }
-        require(regexAnswer.matches(input)) { IS_NOT_YES_OR_NO_ERROR }
-        if (input == Y || input == y) return true
-        return false
+        if (input.isBlank()) return InputState.Error(NULL_ERROR)
+        if (!regexAnswer.matches(input)) return InputState.Error(IS_NOT_YES_OR_NO)
+        if (input == Y || input == y) return InputState.Success(true)
+        return InputState.Success(false)
     }
 
     companion object {
@@ -31,7 +35,8 @@ class InputView {
         private const val n = "n"
 
         private const val NULL_ERROR = "입력 값이 비었습니다"
-        private const val IS_NOT_YES_OR_NO_ERROR = "입력 값은 y 혹은 n이 아닙니다"
+        private const val IS_NOT_YES_OR_NO = "입력 값은 y 혹은 n이 아닙니다"
         private const val IS_NOT_NUMBER = "입력 값이 숫자가 아닙니다"
+        private const val IS_NOT_WORD = "입력 값이 문자가 아닙니다"
     }
 }

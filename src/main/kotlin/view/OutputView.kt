@@ -67,6 +67,10 @@ class OutputView {
         }
     }
 
+    fun printError(error: String) {
+        println(error)
+    }
+
     private fun cardsToString(hand: Hand): String = hand.toList().joinToString(separator = ", ") {
         rankModel.getString(it.rank) + suitModel.getString(it.suit)
     }
@@ -85,5 +89,6 @@ class OutputView {
         private const val MESSAGE_RESULT_TITLE = "## 최종 수익"
         private const val MESSAGE_DEALER_RESULT = "딜러: %d"
         private const val MESSAGE_PLAYER_RESULT = "%s: %d"
+        private const val ERROR_INPUT_BLANK = ""
     }
 }

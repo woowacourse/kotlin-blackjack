@@ -13,6 +13,7 @@ import model.Names
 import model.Participants
 import model.Player
 import model.Players
+import view.InputState
 import view.InputView
 import view.OutputView
 
@@ -32,7 +33,13 @@ class Controller(private val inputView: InputView, private val outputView: Outpu
 
     private fun initNames(): Names {
         outputView.printInputPlayerNames()
-        return Names(inputView.readName().map(::Name))
+        return when (val names = inputView.readName()) {
+            is InputState.Error -> {
+                outputView.printError(names.error)
+                initNames()
+            }
+            is InputState.Success -> Names(names.input.map(::Name))
+        }
     }
 
     private fun askHowMuchBets(players: Players) = BetInfos(
@@ -43,7 +50,13 @@ class Controller(private val inputView: InputView, private val outputView: Outpu
 
     private fun askHowMuchBet(name: Name): Bet {
         outputView.printHowMuchBet(name)
-        return Bet(inputView.readBet())
+        return when (val bet = inputView.readBet()) {
+            is InputState.Error -> {
+                outputView.printError(bet.error)
+                askHowMuchBet(name)
+            }
+            is InputState.Success -> Bet(bet.input)
+        }
     }
 
     private fun printParticipants(participants: Participants) {
@@ -60,8 +73,18 @@ class Controller(private val inputView: InputView, private val outputView: Outpu
         }
     }
 
+    private fun askYesOrNo(): Boolean {
+        return when (val answer = inputView.readYesOrNo()) {
+            is InputState.Error -> {
+                outputView.printError(answer.error)
+                askYesOrNo()
+            }
+            is InputState.Success -> answer.input
+        }
+    }
+
     private fun askGetMorePlayerCard(player: Player, cardPack: CardPack) {
-        while (player.isHit() && inputView.readYesOrNo()) {
+        while (player.isHit() && askYesOrNo()) {
             player.pick(cardPack)
             outputView.printPlayerStatus(player)
             if (player.isHit()) outputView.printGetCardMore(player.name)
