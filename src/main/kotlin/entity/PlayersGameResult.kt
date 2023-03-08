@@ -6,6 +6,10 @@ class PlayersGameResult(val value: Map<Player, GameResult>) {
             .asSequence()
             .groupingBy { it.value.type.opposite() }
             .eachCount()
-            .let { DealerGameResult(it, value.values.sumOf { profit -> -profit.profit.value }.let { profit -> Money(profit) }) }
+            .let { DealerGameResult(it, sumOfOppositeMoney()) }
+    }
+
+    private fun sumOfOppositeMoney(): Money {
+        return Money(value.values.sumOf { profit -> -profit.profit.value })
     }
 }
