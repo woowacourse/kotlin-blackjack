@@ -22,7 +22,7 @@ class ParticipantsTest {
         )
         val actual = Participants(listOf(dealer) + players)
         assertThat(actual.participants.size).isEqualTo(3)
-        assertThat(actual.participants[0].name.value).isEqualTo("딜러")
+        assertThat(actual.participants[0].isDealer()).isTrue
         assertThat(actual.participants[1].name.value).isEqualTo("jason")
         assertThat(actual.participants[2].name.value).isEqualTo("pobi")
     }

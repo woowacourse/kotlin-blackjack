@@ -2,7 +2,6 @@ package view
 
 import model.Cards
 import model.Dealer
-import model.Dealer.Companion.DEALER
 import model.Participant
 import model.Participants
 import model.Player
@@ -22,7 +21,7 @@ class OutputView {
 
     private fun noticeDistributeCardsNameFormat(participants: Participants): String {
         return MESSAGE_DISTRIBUTE_CARD.format(
-            participants.participants.filter { it.name.value != DEALER }
+            participants.participants.filter { !it.isDealer() }
                 .joinToString(", ") { it.name.value }
         )
     }
