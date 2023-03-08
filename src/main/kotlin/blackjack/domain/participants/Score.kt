@@ -11,6 +11,12 @@ class Score(cards: Cards) {
 
     fun score(): Int = if (isMaxScoreInRange) maxScore else minScore
 
+    val isBlackJackNumber: Boolean
+        get() = score() == BLACKJACK_NUMBER
+
+    val isOverBlackJackNumber: Boolean
+        get() = score() > BLACKJACK_NUMBER
+
     private val isMaxNumberBust: Boolean
         get() = minScore + ACE_OTHER_NUMBER_DIFF > BLACKJACK_NUMBER
 
@@ -19,6 +25,6 @@ class Score(cards: Cards) {
 
     companion object {
         private const val ACE_OTHER_NUMBER_DIFF = 10
-        const val BLACKJACK_NUMBER = 21
+        private const val BLACKJACK_NUMBER = 21
     }
 }

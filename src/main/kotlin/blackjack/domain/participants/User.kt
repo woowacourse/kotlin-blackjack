@@ -2,7 +2,6 @@ package blackjack.domain.participants
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
-import blackjack.domain.participants.Score.Companion.BLACKJACK_NUMBER
 
 abstract class User(name: String) {
     val name = Name(name)
@@ -12,10 +11,10 @@ abstract class User(name: String) {
         get() = cards.result.score()
 
     val isBlackJack: Boolean
-        get() = score == BLACKJACK_NUMBER
+        get() = cards.result.isBlackJackNumber
 
     val isBust: Boolean
-        get() = score > BLACKJACK_NUMBER
+        get() = cards.result.isOverBlackJackNumber
 
     abstract val isContinue: Boolean
 
