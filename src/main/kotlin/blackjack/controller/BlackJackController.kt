@@ -1,6 +1,7 @@
 package blackjack.controller
 
 import blackjack.domain.blackjack.BlackJackGame
+import blackjack.domain.result.BlackJackResult
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -16,6 +17,6 @@ class BlackJackController(
             guestsTurn(blackJack.guests, blackJack.cardDeck, outputView::outputCard)
             dealerTurn(blackJack.dealer, blackJack.cardDeck, outputView::outputDealerDraw)
         }
-        outputView.outputResult(blackJack)
+        outputView.outputResult(blackJack, BlackJackResult(blackJack.participants))
     }
 }

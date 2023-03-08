@@ -14,13 +14,13 @@ class OutputView {
         }
     }
 
-    fun outputResult(blackJack: BlackJack) {
+    fun outputResult(blackJack: BlackJack, result: BlackJackResult) {
         blackJack.participants.all().forEach { user ->
             outputCard(user)
             outputScore(user)
         }
         println("")
-        outputOutcomes(BlackJackResult(blackJack.participants))
+        outputOutcomes(result)
     }
 
     fun outputCard(user: User) {
