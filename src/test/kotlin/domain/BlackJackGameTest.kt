@@ -16,6 +16,6 @@ class BlackJackGameTest {
 
         // then
         assertThat(blackJackGame.players.users[0].name).isEqualTo("해시")
-        assertThat(blackJackGame.players.users[0].betAmount).isEqualTo(1000)
+        assertThat(blackJackGame.players.users[0].betAmount).isEqualTo(1000.0)
     }
 }

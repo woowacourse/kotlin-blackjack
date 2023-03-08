@@ -20,6 +20,6 @@ class UserTest {
         )
         assertThat(user.name).isEqualTo("해시")
         assertThat(user.cards.value.size).isEqualTo(2)
-        assertThat(user.betAmount).isEqualTo(1000)
+        assertThat(user.betAmount).isEqualTo(1000.0)
     }
 }
