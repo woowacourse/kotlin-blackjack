@@ -1,5 +1,8 @@
 package domain
 
+import domain.card.Card
+import domain.card.CardCategory
+import domain.card.CardNumber
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 

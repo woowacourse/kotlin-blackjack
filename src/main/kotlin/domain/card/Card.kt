@@ -1,4 +1,4 @@
-package domain
+package domain.card
 
 class Card private constructor(val cardCategory: CardCategory, val cardNumber: CardNumber) {
     val isAce: Boolean

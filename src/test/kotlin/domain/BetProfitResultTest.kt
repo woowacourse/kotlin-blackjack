@@ -1,5 +1,8 @@
 package domain
 
+import domain.card.Card
+import domain.card.CardCategory
+import domain.card.CardNumber
 import domain.result.BetProfitResult
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test

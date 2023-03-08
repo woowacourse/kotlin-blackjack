@@ -1,5 +1,6 @@
 package domain
 
+import domain.card.Cards
 import domain.result.GameResult
 
 class Player(nameAndBet: NameAndBet, cards: Cards) : Participant(nameAndBet.name, cards) {

@@ -1,7 +1,7 @@
 package domain.phase
 
-import domain.CardDeck
 import domain.Participants
+import domain.card.CardDeck
 
 class Phases(private val phases: List<Phase>) {
     constructor(vararg phase: Phase) : this(phase.map { it })

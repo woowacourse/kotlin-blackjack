@@ -1,8 +1,8 @@
 package domain.phase
 
-import domain.CardDeck
 import domain.Dealer
 import domain.Participants
+import domain.card.CardDeck
 
 class DealerAddPhase(val printDealerAddCard: (Dealer) -> Unit) : Phase {
     override fun runPhase(participants: Participants, deck: CardDeck) {

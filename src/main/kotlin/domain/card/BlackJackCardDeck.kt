@@ -1,4 +1,4 @@
-package domain
+package domain.card
 
 class BlackJackCardDeck(private var deck: List<Card> = Card.DECK) : CardDeck {
     private var i = 0

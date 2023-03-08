@@ -1,10 +1,10 @@
 package domain.phase
 
-import domain.CardDeck
 import domain.Name
 import domain.Participants
 import domain.Player
 import domain.Players
+import domain.card.CardDeck
 
 class PlayersSelectAddPhase(
     private val isPlayerCardAdd: (Name) -> Boolean,

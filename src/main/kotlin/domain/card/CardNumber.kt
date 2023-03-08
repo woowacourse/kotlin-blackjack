@@ -1,4 +1,4 @@
-package domain
+package domain.card
 
 enum class CardNumber(val value: Int) {
     ACE(1),

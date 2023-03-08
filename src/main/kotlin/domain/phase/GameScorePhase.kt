@@ -1,8 +1,8 @@
 package domain.phase
 
-import domain.CardDeck
 import domain.Participant
 import domain.Participants
+import domain.card.CardDeck
 
 class GameScorePhase(
     private val printScore: (List<Participant>) -> Unit

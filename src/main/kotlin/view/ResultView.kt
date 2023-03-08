@@ -1,14 +1,14 @@
 package view
 
-import domain.BlackJackCardDeck
-import domain.Card
-import domain.CardCategory
-import domain.CardNumber
 import domain.Dealer
 import domain.Participant
 import domain.Participants
 import domain.Player
 import domain.Players
+import domain.card.BlackJackCardDeck
+import domain.card.Card
+import domain.card.CardCategory
+import domain.card.CardNumber
 import domain.result.BetProfitResult
 
 class ResultView {

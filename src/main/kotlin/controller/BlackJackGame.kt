@@ -1,13 +1,13 @@
 package controller
 
-import domain.BlackJackCardDeck
-import domain.Card
-import domain.CardDeck
 import domain.Dealer
 import domain.Participants
 import domain.Player
 import domain.Players
 import domain.PlayersNameAndBet
+import domain.card.BlackJackCardDeck
+import domain.card.Card
+import domain.card.CardDeck
 import domain.phase.Phases
 import domain.result.BetProfitResult
 
