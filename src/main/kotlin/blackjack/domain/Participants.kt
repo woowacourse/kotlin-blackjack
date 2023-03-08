@@ -24,7 +24,7 @@ class Participants(private val dealer: Dealer, private val players: Players) {
 
     fun judgePlayers(): PlayerResults = PlayerResults(
         players.toList().associate { player ->
-            player.name to (dealer judge player.getTotalScore())
+            player.name to (player judge dealer)
         }
     )
 }

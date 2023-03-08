@@ -18,12 +18,15 @@ class Cards {
         return calculateAceScore(score)
     }
 
-    private fun calculateAceScore(score: Int): Int =
+    fun isOverBlackjack(score: Int): Boolean = score > BLACKJACK_SCORE
+
+    fun calculateAceScore(score: Int): Int =
         if (hasAce() && (score + BONUS_SCORE) <= blackjackScore()) score + BONUS_SCORE else score
 
     private fun hasAce(): Boolean = _items.any(Card::isAce)
 
     companion object {
         private const val BONUS_SCORE = 10
+        private const val BLACKJACK_SCORE = 21
     }
 }
