@@ -24,6 +24,11 @@ object OutputView {
     private const val WIN_DESCRIPTION = "승"
     private const val DRAW_DESCRIPTION = "무"
     private const val LOSE_DESCRIPTION = "패"
+    private const val HEART_DESCRIPTION = "하트"
+    private const val CLOVER_DESCRIPTION = "클로버"
+    private const val SPADE_DESCRIPTION = "스페이드"
+    private const val DIAMOND_DESCRIPTION = "다이아몬드"
+
 
     private fun Player.toCardsDescription(): String = SHOW_PLAYER_CARDS.format(
         name.value,
@@ -41,10 +46,10 @@ object OutputView {
     }
 
     private fun Shape.toDescription(): String = when (this) {
-        Shape.HEART -> "하트"
-        Shape.CLOVER -> "클로버"
-        Shape.SPADE -> "스페이드"
-        Shape.DIAMOND -> "다이아몬드"
+        Shape.HEART -> HEART_DESCRIPTION
+        Shape.CLOVER -> CLOVER_DESCRIPTION
+        Shape.SPADE -> SPADE_DESCRIPTION
+        Shape.DIAMOND -> DIAMOND_DESCRIPTION
     }
 
     private fun GameResult.toDescription() = when (this) {

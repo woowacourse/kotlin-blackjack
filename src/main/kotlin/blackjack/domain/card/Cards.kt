@@ -16,7 +16,7 @@ class Cards(
     init {
         require(cards.size == INITIAL_CARDS_SIZE)
 
-        if (getTotalCardsScore() == 21) {
+        if (getTotalCardsScore() == BLACKJACK_SCORE) {
             state = CardsState.BlackJack
         }
     }
@@ -28,7 +28,7 @@ class Cards(
     }
 
     private fun initCardsState() {
-        if (getMinimumCardsScore() > 21) {
+        if (getMinimumCardsScore() > BLACKJACK_SCORE) {
             state = CardsState.Burst
         }
     }
@@ -51,5 +51,6 @@ class Cards(
 
     companion object {
         const val INITIAL_CARDS_SIZE = 2
+        private const val BLACKJACK_SCORE = 21
     }
 }
