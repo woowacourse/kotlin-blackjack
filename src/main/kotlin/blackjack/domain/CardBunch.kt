@@ -25,6 +25,20 @@ class CardBunch private constructor(cards: MutableList<Card>) {
 
     fun isBurst(): Boolean = getTotalScore() > MAX_SCORE_CONDITION
 
+    fun isBlackJack(): Boolean = cards.size == 2 && (containsAce() && containsCardValueTen())
+
+    private fun containsAce(): Boolean {
+        var result = false
+        cards.forEach { if (it.cardNumber == CardNumber.ACE) result = true }
+        return result
+    }
+
+    private fun containsCardValueTen(): Boolean {
+        var result = false
+        cards.forEach { if (it.cardNumber.value == 10) result = true }
+        return result
+    }
+
     companion object {
         private const val ACE_SCORE_GAP = 10
     }
