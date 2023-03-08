@@ -37,18 +37,11 @@ class Controller(private val cardDeck: CardDeck) {
 
     private fun askGetCard(player: Player) {
         while (player.canGetCard()) {
-            if (!isSuccessAddCardToPlayer(player)) return
-        }
-    }
-
-    private fun isSuccessAddCardToPlayer(player: Player): Boolean {
-        if (InputView.getDecision(player)) {
+            if (!InputView.getDecision(player)) break
             player.receiveCard(cardDeck.drawCard())
             OutputView.printPlayerCard(player)
-            return true
         }
         OutputView.printPlayerCard(player)
-        return false
     }
 
     private fun showDealerState(dealer: Dealer) {
