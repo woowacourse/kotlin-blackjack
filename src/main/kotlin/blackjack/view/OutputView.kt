@@ -4,6 +4,7 @@ import blackjack.domain.Result
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Participant
 import blackjack.domain.player.Participants
+import blackjack.domain.player.Player
 
 class OutputView {
 
@@ -26,10 +27,10 @@ class OutputView {
     }
 
     fun printSumResult(dealer: Dealer, participants: Participants) {
-        printFirstRoundDealerCard(dealer)
+        printPlayerCardsSumResult(dealer)
         println(SUM_RESULT_MENT.format(dealer.cards.sumCardsNumber()))
         participants.values.forEach {
-            printParticipantCardsSumResult(it)
+            printPlayerCardsSumResult(it)
             print(SUM_RESULT_MENT.format(it.cards.sumCardsNumber()))
             println()
         }
@@ -62,11 +63,11 @@ class OutputView {
         val dealerCard = dealer.cards.values[0]
         print(DEALER_CARD_MENT.format(dealerCard.number.word + dealerCard.shape.word))
     }
-    private fun printParticipantCardsSumResult(participant: Participant) {
-        val cardsWord: String = participant.cards.values.map {
+    private fun printPlayerCardsSumResult(player: Player) {
+        val cardsWord: String = player.cards.values.map {
             it.number.word + it.shape.word
         }.joinToString(", ")
-        print("${participant.name} 카드: $cardsWord")
+        print("${player.name} 카드: $cardsWord")
     }
 
     companion object {
