@@ -8,7 +8,7 @@ import blackjack.domain.result.Outcome
 
 class OutputView {
     fun outputInitState(blackJack: BlackJack) {
-        print("\n딜러와 ${blackJack.guests.map{it.name}.joinToString(", ")} 에게 2장의 나누었습니다.")
+        print("\n딜러와 ${blackJack.guests.map { it.name }.joinToString(", ")} 에게 2장의 나누었습니다.")
         outputCardForDealer(blackJack.dealer)
         blackJack.guests.forEach { user ->
             outputCard(user)
@@ -25,12 +25,12 @@ class OutputView {
     }
 
     private fun outputCardForDealer(user: User) {
-        val cardText = user.cards.cards.toList()[0].let { card -> pattern(card.value) + name(card.mark) }
+        val cardText = user.cards.cards.toList()[0].let { card -> card.value.pattern() + card.mark.name() }
         print("\n${user.name}카드: $cardText")
     }
 
     fun outputCard(user: User) {
-        val cardText = user.cards.cards.joinToString(", ") { card -> pattern(card.value) + name(card.mark) }
+        val cardText = user.cards.cards.joinToString(", ") { card -> card.value.pattern() + card.mark.name() }
         print("\n${user.name}카드: $cardText")
     }
 
@@ -58,20 +58,29 @@ class OutputView {
         }.let { println("${user.name}: $it") }
     }
 
-    private fun name(mark: CardMark): String =
-        when (mark) {
+    private fun CardMark.name(): String =
+        when (this) {
             CardMark.CLOVER -> "클로버"
             CardMark.DIA -> "다이아몬드"
             CardMark.HEART -> "하트"
             CardMark.SPADE -> "스페이드"
         }
 
-    private fun pattern(value: CardValue): String =
-        when (value) {
+    private fun CardValue.pattern(): String =
+        when (this) {
             CardValue.ACE -> "A"
             CardValue.KING -> "K"
             CardValue.QUEEN -> "Q"
             CardValue.JACK -> "J"
-            else -> value.toString()
+            CardValue.TWO,
+            CardValue.THREE,
+            CardValue.FOUR,
+            CardValue.FIVE,
+            CardValue.SIX,
+            CardValue.SEVEN,
+            CardValue.EIGHT,
+            CardValue.NINE,
+            CardValue.TEN,
+            -> this.value.toString()
         }
 }
