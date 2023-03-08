@@ -17,6 +17,7 @@ class BlackJackGame : BlackJackGameBluePrint {
         if (dealer.canReceiveMoreCard()) {
             dealer.receiveCard(deck.getCard())
             printDealerDrew()
+            return
         }
         printDealerDidNotDrew()
     }
