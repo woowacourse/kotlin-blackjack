@@ -23,12 +23,11 @@ class Cards(cards: List<Card>) {
 
     val resultSum: Int
         get() {
-            var sum = sum()
-            if (hasAce) {
-                sum += ACE_ADDITIONAL_VALUE
+            val sum = sum()
+            if (hasAce && (sum + ACE_ADDITIONAL_VALUE <= BlackJackGame.BLACKJACK_NUMBER)) {
+                return sum + ACE_ADDITIONAL_VALUE
             }
-            return if (sum <= BlackJackGame.BLACKJACK_NUMBER) sum
-            else sum()
+            return sum
         }
 
     init {
