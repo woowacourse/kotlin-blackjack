@@ -10,9 +10,6 @@ class Cards(
 
     private var state: CardsState = CardsState.Running
 
-    val size: Int
-        get() = cards.size
-
     init {
         require(cards.size == INITIAL_CARDS_SIZE)
 
