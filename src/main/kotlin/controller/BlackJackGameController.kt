@@ -40,7 +40,7 @@ class BlackJackGameController(private val inputView: InputView, private val resu
     }
 
     private fun getBets(names: Names): PlayersNameAndBet {
-        return PlayersNameAndBet(listOf()) // ?: getBets()
+        return inputView.readPlayersBetMoney(names) ?: getBets(names)
     }
 
     private fun getChoiceOfAddCard(name: Name): Boolean {
