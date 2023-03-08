@@ -1,3 +1,4 @@
+/*
 package domain.card.strategy
 
 import constant.BlackJackConstants.BIG_ACE
@@ -22,3 +23,4 @@ object GetAppropriateSum : SumStrategy {
         return max
     }
 }
+*/

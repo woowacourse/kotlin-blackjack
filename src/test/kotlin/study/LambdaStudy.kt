@@ -20,5 +20,4 @@ fun main() {
     println(sum(numbers))
     println(sum(numbers) { sumAllEven(it) })
     println(sum(numbers) { sumAllOverThree(it) })
-    val asdf = numbers - listOf<Int>(1)
 }

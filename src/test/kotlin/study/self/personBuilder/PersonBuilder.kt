@@ -1,4 +1,4 @@
-package study.self
+package study.self.personBuilder
 
 import domain.card.Card
 import domain.person.Dealer
