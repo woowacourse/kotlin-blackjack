@@ -4,7 +4,6 @@ import domain.card.Card
 import domain.card.CardValue
 import domain.card.Cards
 import domain.card.Shape
-import domain.judge.ParticipantResult
 import domain.judge.Result
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -36,9 +35,9 @@ class DealerTest {
         val playerCards = Cards(mutableListOf(Card(Shape.HEART, CardValue.JACK), Card(Shape.HEART, CardValue.ACE)))
         val player = Player("jack", playerCards)
 
-        val referee = dealer.judgePlayersResult(listOf(player))
+        dealer.judgePlayersResult(listOf(player))
 
-        assertThat(referee).isEqualTo(listOf(ParticipantResult("jack", Result.BLACKJACK_WIN)))
+        assertThat(player.result).isEqualTo(Result.BLACKJACK_WIN)
     }
 
     @Test
@@ -53,8 +52,8 @@ class DealerTest {
         )
         val player =
             Player("jack", Cards(mutableListOf(Card(Shape.HEART, CardValue.JACK), Card(Shape.HEART, CardValue.ACE))))
-        val referee = dealer.judgePlayersResult(listOf(player))
-        assertThat(referee).isEqualTo(listOf(ParticipantResult("jack", Result.DRAW)))
+        dealer.judgePlayersResult(listOf(player))
+        assertThat(player.result).isEqualTo(Result.DRAW)
     }
 
     @Test
@@ -78,8 +77,8 @@ class DealerTest {
                     )
                 )
             )
-        val referee = dealer.judgePlayersResult(listOf(player))
-        assertThat(referee).isEqualTo(listOf(ParticipantResult("jack", Result.LOSS)))
+        dealer.judgePlayersResult(listOf(player))
+        assertThat(player.result).isEqualTo(Result.LOSS)
     }
 
     @Test
@@ -94,8 +93,8 @@ class DealerTest {
             )
         )
         val player = Player("jack", Cards(mutableListOf(Card(Shape.HEART, CardValue.JACK))))
-        val referee = dealer.judgePlayersResult(listOf(player))
-        assertThat(referee).isEqualTo(listOf(ParticipantResult("jack", Result.WIN)))
+        dealer.judgePlayersResult(listOf(player))
+        assertThat(player.result).isEqualTo(Result.WIN)
     }
 
     @Test
@@ -119,10 +118,8 @@ class DealerTest {
                 )
             )
         )
-        val referee = dealer.judgePlayersResult(listOf(player))
-        assertThat(referee).isEqualTo(
-            listOf(ParticipantResult("jack", Result.LOSS))
-        )
+        dealer.judgePlayersResult(listOf(player))
+        assertThat(player.result).isEqualTo(Result.LOSS)
     }
 
     @Test
@@ -138,8 +135,8 @@ class DealerTest {
                 )
             )
         )
-        val referee = dealer.judgePlayersResult(listOf(player))
-        assertThat(referee).isEqualTo(listOf(ParticipantResult("jack", Result.LOSS)))
+        dealer.judgePlayersResult(listOf(player))
+        assertThat(player.result).isEqualTo(Result.LOSS)
     }
 
     @Test
@@ -167,9 +164,8 @@ class DealerTest {
                 )
             )
         )
-        val referee = dealer.judgePlayersResult(listOf(player1, player2))
-        assertThat(referee).isEqualTo(
-            listOf(ParticipantResult("jack", Result.LOSS), ParticipantResult("king", Result.WIN))
-        )
+        dealer.judgePlayersResult(listOf(player1, player2))
+        assertThat(player1.result).isEqualTo(Result.LOSS)
+        assertThat(player2.result).isEqualTo(Result.WIN)
     }
 }

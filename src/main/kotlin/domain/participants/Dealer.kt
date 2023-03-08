@@ -1,17 +1,17 @@
 package domain.participants
 
 import domain.card.Cards
-import domain.judge.ParticipantResult
 import domain.judge.Result
 
 class Dealer(val ownCards: Cards, val name: String = "딜러") {
 
     fun checkOverCondition(): Boolean = ownCards.calculateCardSum() > CARD_PICK_CONDITION
 
-    fun judgePlayersResult(players: List<Player>): List<ParticipantResult> =
+    fun judgePlayersResult(players: List<Player>) {
         players.map {
-            ParticipantResult(it.name, judgePlayerResult(it.ownCards))
+            it.setResult(judgePlayerResult(it.ownCards))
         }
+    }
 
     private fun judgePlayerResult(player: Cards): Result {
         val playerSum = player.calculateCardSum()

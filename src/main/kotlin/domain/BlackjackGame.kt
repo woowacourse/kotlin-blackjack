@@ -4,8 +4,6 @@ import domain.card.Card
 import domain.card.CardMaker
 import domain.card.Cards
 import domain.deck.Deck
-import domain.judge.ParticipantResult
-import domain.judge.Result
 import domain.participants.Dealer
 import domain.participants.Names
 import domain.participants.Player
@@ -79,18 +77,9 @@ class BlackjackGame(
         showResult(dealer, players)
     }
 
-    fun printWinningResult(showWinningResult: (List<Result>, List<ParticipantResult>) -> Unit) {
-        val playerResult = getPlayerWinningResult()
-        val dealerResult = judgeDealerResult(playerResult)
-        showWinningResult(dealerResult, playerResult)
-    }
-
-    private fun getPlayerWinningResult(): List<ParticipantResult> = dealer.judgePlayersResult(players)
-
-    private fun judgeDealerResult(playersResult: List<ParticipantResult>): List<Result> {
-        return playersResult.map {
-            it.result.reverseResult()
-        }
+    fun printWinningResult(showWinningResult: (List<Player>) -> Unit) {
+        dealer.judgePlayersResult(players)
+        showWinningResult(players)
     }
 
     companion object {

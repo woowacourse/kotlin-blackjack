@@ -1,7 +1,6 @@
 package view
 
 import domain.card.Card
-import domain.judge.ParticipantResult
 import domain.judge.Result
 import domain.participants.Dealer
 import domain.participants.Player
@@ -74,13 +73,16 @@ object OutputView {
         )
     }
 
-    fun printWinningResult(dealerResult: List<Result>, playerStates: List<ParticipantResult>) {
+    fun printWinningResult(players: List<Player>) {
         println(FINAL_RESULT)
-        printDealerWinningResult(dealerResult)
-        printPlayerWinningResult(playerStates)
+        printDealerWinningResult(players)
+        printPlayerWinningResult(players)
     }
 
-    private fun printDealerWinningResult(dealerResult: List<Result>) {
+    private fun printDealerWinningResult(players: List<Player>) {
+        val dealerResult = players.map {
+            it.result.reverseResult()
+        }
         println("$DEALER${countResult(dealerResult).joinToString("")}")
     }
 
@@ -92,8 +94,8 @@ object OutputView {
 
     private fun formatResultCount(count: Int, result: Result) = if (count == 0) "" else "$count${result.result} "
 
-    private fun printPlayerWinningResult(playerResult: List<ParticipantResult>) {
-        playerResult.forEach {
+    private fun printPlayerWinningResult(players: List<Player>) {
+        players.forEach {
             println("${it.name}: ${it.result.result}")
         }
     }
