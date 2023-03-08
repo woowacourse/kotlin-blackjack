@@ -1,15 +1,16 @@
 package domain.gamer
 
-import domain.gamer.cards.Cards
-
-class Players(private var players: List<Player>) {
-    fun addPlayers(names: List<String>) {
-        names.forEach {
-            players = players.plus(Player(it, Cards(listOf())))
-        }
+class Players(private val players: List<Player>) {
+    init {
+        require(players.size <= MAX_PLAYER_COUNT) { println(ERROR_OVER_MAX_PLAYER_COUNT) }
     }
 
     fun getPlayers(): List<Player> {
         return players.toList()
+    }
+
+    companion object {
+        private const val ERROR_OVER_MAX_PLAYER_COUNT = "게임 인원은 8명까지 가능합니다"
+        private const val MAX_PLAYER_COUNT = 8
     }
 }

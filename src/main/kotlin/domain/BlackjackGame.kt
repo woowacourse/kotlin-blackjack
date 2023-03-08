@@ -10,7 +10,8 @@ import domain.judge.Result
 
 class BlackjackGame() {
     val dealer = Dealer(Cards(listOf()))
-    val players = Players(listOf())
+    var players = Players(listOf())
+        private set
 
     fun startGame(names: List<String>) {
         initPlayers(names)
@@ -22,7 +23,7 @@ class BlackjackGame() {
     }
 
     private fun initPlayers(names: List<String>) {
-        players.addPlayers(names)
+        players = Players(names.map { Player(it, Cards(listOf())) })
     }
 
     fun pickPlayerCard(player: Player) {
