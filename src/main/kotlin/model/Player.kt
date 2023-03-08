@@ -3,18 +3,45 @@ package model
 class Player(hand: Hand, name: Name) : Participant(hand, name) {
     override fun isHit(): Boolean = !isBust() && (hand.sum() != BLACKJACK_POINT)
 
-    fun judge(dealer: Dealer): FinalResult {
-        val playerPoint = hand.sum()
-        val dealerPoint = dealer.hand.sum()
-
+    private fun isBlackJackWin(dealer: Dealer): Boolean {
         return when {
-            isBust() -> FinalResult.LOSE // 플레이어 버스트
-            dealer.isBust() -> FinalResult.WIN // 딜러 버스트
-            isBlackJack() && dealer.isBlackJack() -> FinalResult.PUSH // 둘 다 블랙잭
-            isBlackJack() -> FinalResult.BLACKJACK_WIN // 플레이어만 블랙잭
-            dealer.isBlackJack() -> FinalResult.LOSE // 딜러만 블랙잭
-            playerPoint == dealerPoint -> FinalResult.PUSH // 딜러, 플레이어 점수 같음
-            playerPoint > dealerPoint -> FinalResult.WIN // 플레이어가 더 점수가 큼
+            !dealer.isBlackJack() && isBlackJack() -> true
+            else -> false
+        }
+    }
+
+    private fun isWin(dealer: Dealer): Boolean {
+        return when {
+            !isBust() && dealer.isBust() -> true
+            !dealer.isBlackJack() && isBlackJack() -> true
+            !(isBlackJack() || dealer.isBlackJack()) && (hand.sum() > dealer.hand.sum()) -> true
+            else -> false
+        }
+    }
+
+    private fun isPush(dealer: Dealer): Boolean {
+        return when {
+            isBlackJack() && dealer.isBlackJack() -> true
+            !(isBlackJack() || dealer.isBlackJack()) && (hand.sum() == dealer.hand.sum()) -> true
+            else -> false
+        }
+    }
+
+    private fun isLose(dealer: Dealer): Boolean {
+        return when {
+            isBust() -> true
+            !isBlackJack() && dealer.isBlackJack() -> true
+            !dealer.isBust() && !(isBlackJack() || dealer.isBlackJack()) && (hand.sum() < dealer.hand.sum()) -> true
+            else -> false
+        }
+    }
+
+    fun judge(dealer: Dealer): FinalResult {
+        return when {
+            isBlackJackWin(dealer) -> FinalResult.BLACKJACK_WIN
+            isLose(dealer) -> FinalResult.LOSE
+            isWin(dealer) -> FinalResult.WIN
+            isPush(dealer) -> FinalResult.PUSH
             else -> FinalResult.LOSE
         }
     }
