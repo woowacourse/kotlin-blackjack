@@ -12,7 +12,7 @@ class ViewUtils {
                 CardNumber.KING -> "K"
                 CardNumber.QUEEN -> "Q"
                 CardNumber.JACK -> "J"
-                else -> (ordinal + 1).toString()
+                else -> this.numberStrategy(0).toString()
             }
         }
 
