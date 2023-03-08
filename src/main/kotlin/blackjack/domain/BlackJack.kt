@@ -5,13 +5,15 @@ class BlackJack(private val deck: CardDeck, private val participants: Participan
         participants.drawFirst(deck)
     }
 
+    fun start(onDrawn: (Participant) -> Unit) { // BlackJackResult {
+        participants.takeTurns(deck, onDrawn)
+    }
+
     fun getFirstOpenCards(): Map<String, List<Card>> = participants.getFirstOpenCards()
 
-    fun getPlayers(): List<Participant> = participants.getPlayers()
+    // fun getPlayers(): List<Participant> = participants.getPlayers()
 
-    fun draw(participant: Participant) {
-        participant.addCard(deck.draw())
-    }
+    // fun getDealer(): Participant = participants.getDealer()
 
     fun drawDealer(isDraw: (Boolean) -> Unit) = participants.drawDealerCard(deck, isDraw)
 

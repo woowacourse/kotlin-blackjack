@@ -2,7 +2,10 @@ package blackjack.view
 
 import blackjack.domain.Card
 import blackjack.domain.CardNumber
+import blackjack.domain.Dealer
 import blackjack.domain.GameResult
+import blackjack.domain.Participant
+import blackjack.domain.Player
 import blackjack.domain.PlayerResults
 import blackjack.domain.Suit
 
@@ -17,6 +20,15 @@ object OutputView {
     fun printCards(cards: Map<String, List<Card>>) {
         cards.forEach { (name, cards) ->
             println("$name 카드: ${cards.joinToString(SEPARATOR) { it.toText() }}")
+        }
+    }
+
+    fun printDrawn(participant: Participant) {
+        when (participant) {
+            is Dealer -> println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+            is Player -> println(
+                "${participant.name} 카드: ${participant.getCards().joinToString(SEPARATOR) { it.toText() }}"
+            )
         }
     }
 

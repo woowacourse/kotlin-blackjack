@@ -9,14 +9,30 @@ class Participants(private val participants: List<Participant>) {
     }
 
     fun drawFirst(deck: CardDeck) {
-        participants.forEach { it.addCard(deck.draw()) }
+        participants.forEach { participant ->
+            participant.addCard(deck.draw())
+            participant.addCard(deck.draw())
+        }
+    }
+
+    fun takeTurns(deck: CardDeck, onDrawn: (Participant) -> Unit) { // : BlackJackResult {
+        participants.forEach { participant ->
+            while (participant.canDraw()) {
+                draw(participant, deck)
+                onDrawn(participant)
+            }
+        }
     }
 
     fun getFirstOpenCards(): Map<String, List<Card>> = participants.associate { it.name to it.getFirstOpenCards() }
 
-    fun getPlayers(): List<Participant> = participants.filterIsInstance<Player>()
+    private fun getPlayers(): List<Participant> = participants.filterIsInstance<Player>()
 
     private fun getDealer(): Participant = participants.first { it is Dealer }
+
+    private fun draw(participant: Participant, deck: CardDeck) {
+        participant.addCard(deck.draw())
+    }
 
     fun drawDealerCard(deck: CardDeck, isDraw: (Boolean) -> Unit) {
         while (getDealer().canDraw()) {
