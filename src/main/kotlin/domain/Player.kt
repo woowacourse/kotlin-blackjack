@@ -5,34 +5,33 @@ import domain.card.CardNumber
 
 abstract class Player(
     val name: String,
-    private val deck: Deck,
+    private val hand: Hand,
 ) {
 
-    val cards: List<Card> get() = deck.cards.toList()
+    val cards: List<Card> get() = hand.cards.toList()
 
     fun addScoreTenIfHasAce(): Int {
-        if ((calculateCardValueSum() < BLACK_JACK_LESS_TEN) and (countAce() != NO_ACE)) {
+        if ((calculateCardValueSum() <= BLACK_JACK_LESS_TEN) and (hasAceCard())) {
             return calculateCardValueSum() + ACE_CARD_PLUS_TEN
         }
 
         return calculateCardValueSum()
     }
 
-    fun calculateCardValueSum(): Int = deck.cards.sumOf { card ->
+    fun calculateCardValueSum(): Int = hand.cards.sumOf { card ->
         Card.valueOf(card).number
     }
 
     fun addCard(card: List<Card>) {
-        deck.addCard(card)
+        hand.drawOneCard(card)
     }
 
-    private fun countAce(): Int = deck.cards.count { card ->
-        Card.valueOf(card) == CardNumber.ACE
+    private fun hasAceCard(): Boolean = hand.cards.any { card ->
+        card.cardNumber == CardNumber.ACE
     }
 
     companion object {
-        private const val BLACK_JACK_LESS_TEN = 12
+        private const val BLACK_JACK_LESS_TEN = 11
         private const val ACE_CARD_PLUS_TEN = 10
-        private const val NO_ACE = 0
     }
 }
