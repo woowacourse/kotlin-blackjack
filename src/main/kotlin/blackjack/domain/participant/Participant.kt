@@ -1,4 +1,7 @@
-package blackjack.domain
+package blackjack.domain.participant
+
+import blackjack.domain.card.Card
+import blackjack.domain.card.CardScore
 
 abstract class Participant(val name: String) {
 

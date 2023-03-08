@@ -1,4 +1,6 @@
-package blackjack.domain
+package blackjack.domain.participant
+
+import blackjack.domain.result.ResultType
 
 class Player(name: String) : Participant(name) {
     fun canHit(): Boolean = this.score < TARGET_SCORE

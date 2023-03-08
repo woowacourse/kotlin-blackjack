@@ -1,13 +1,13 @@
 package blackjack.view
 
-import blackjack.domain.BlackjackResult
-import blackjack.domain.Card
-import blackjack.domain.CardNumber
-import blackjack.domain.CardShape
-import blackjack.domain.Dealer
-import blackjack.domain.Participant
-import blackjack.domain.Player
-import blackjack.domain.ResultType
+import blackjack.domain.card.Card
+import blackjack.domain.card.CardNumber
+import blackjack.domain.card.CardShape
+import blackjack.domain.participant.Dealer
+import blackjack.domain.participant.Participant
+import blackjack.domain.participant.Player
+import blackjack.domain.result.BlackjackResult
+import blackjack.domain.result.ResultType
 
 object ResultView {
     private const val SET_UP_MESSAGE = "\n%s와 %s에게 ${Participant.INIT_CARD_SIZE} 장의 카드를 나누었습니다."
@@ -62,7 +62,9 @@ object ResultView {
     }
 
     private fun Dealer.faceUpOnlyOne(): String = FACE_UP_CARDS.format(this.name, this.cards[0].name())
-    private fun Participant.faceUp(): String = FACE_UP_CARDS.format(this.name, this.cards.joinToString(", ") { it.name() })
+    private fun Participant.faceUp(): String =
+        FACE_UP_CARDS.format(this.name, this.cards.joinToString(", ") { it.name() })
+
     private fun Participant.showScore(): String = SHOW_SCORE.format(this.score)
     private fun Card.name(): String = "${this.number.toMark()}${this.shape.toKorean()}"
 
