@@ -30,7 +30,7 @@ data class Player(
     }
 
     fun checkIsDrawnNothing(checkCurrentCards: (player: Player) -> Unit = { }) {
-        if (cards.size == Cards.INITIAL_CARDS_SIZE) {
+        if (cards.isDrawnNothing()) {
             checkCurrentCards(this)
         }
     }

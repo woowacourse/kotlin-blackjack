@@ -49,7 +49,10 @@ class Cards(
 
     fun checkCardsState(cardsState: CardsState): Boolean = state == cardsState
 
+    fun isDrawnNothing() = cards.size == 2
+
     companion object {
+
         const val INITIAL_CARDS_SIZE = 2
         private const val BLACKJACK_SCORE = 21
     }
