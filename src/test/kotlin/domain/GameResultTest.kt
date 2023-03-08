@@ -31,7 +31,15 @@ class GameResultTest {
     }
 
     @Test
-    fun `dealer가 21점을 초과하게 되면 플레이어가 승리한다`() {
+    fun `dealer 카드의 합이 21점을 초과하게 되면 플레이어가 승리한다`() {
+        val dealerCards = Cards(
+            listOf(
+                Card(CardNumber.K, Shape.CLOVER),
+                Card(CardNumber.K, Shape.CLOVER)
+            )
+        )
+        dealerCards.draw()
+
         assertThat(
             GameResult.valueOf(
                 playerCards = Cards(
@@ -40,14 +48,9 @@ class GameResultTest {
                         Card(CardNumber.TEN, Shape.HEART)
                     )
                 ),
-                dealerCards = Cards(
-                    listOf(
-                        Card(CardNumber.BIG_A, Shape.CLOVER),
-                        Card(CardNumber.BIG_A, Shape.CLOVER)
-                    )
-                )
+                dealerCards = dealerCards
             )
-        ).isEqualTo(GameResult.BLACKJACK_WIN)
+        ).isEqualTo(GameResult.WIN)
     }
 
     @Test
@@ -56,8 +59,8 @@ class GameResultTest {
             GameResult.valueOf(
                 playerCards = Cards(
                     listOf(
-                        Card(CardNumber.BIG_A, Shape.CLOVER),
-                        Card(CardNumber.BIG_A, Shape.HEART)
+                        Card(CardNumber.A, Shape.CLOVER),
+                        Card(CardNumber.A, Shape.HEART)
                     )
                 ),
                 dealerCards = Cards(
@@ -96,7 +99,7 @@ class GameResultTest {
             GameResult.valueOf(
                 playerCards = Cards(
                     listOf(
-                        Card(CardNumber.TEN, Shape.CLOVER),
+                        Card(CardNumber.FOUR, Shape.CLOVER),
                         Card(CardNumber.A, Shape.HEART)
                     )
                 ),
@@ -107,7 +110,7 @@ class GameResultTest {
                     )
                 )
             )
-        ).isEqualTo(GameResult.DRAW)
+        ).isEqualTo(GameResult.WIN)
     }
 
     @Test
