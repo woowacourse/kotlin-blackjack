@@ -1,15 +1,15 @@
 package domain
 
-class BetProfitResult(val players: Players, val dealer: Dealer) {
-    val playersResult: Map<Player, Int>
+class BetProfitResult(private val players: Players, private val dealer: Dealer) {
+    val playersResult: PlayersResult
         get() {
-            val map = mutableMapOf<Player, Int>()
+            val nameAndProfits = mutableListOf<NameAndProfit>()
             players.list.forEach {
-                map[it] = it.getGameProfitMoney(dealer)
+                nameAndProfits.add(NameAndProfit(it.name, it.getGameProfitMoney(dealer)))
             }
-            return map
+            return PlayersResult(nameAndProfits)
         }
 
     val dealerResult: Int
-        get() = playersResult.values.sum() * -1
+        get() = playersResult.sum * -1
 }

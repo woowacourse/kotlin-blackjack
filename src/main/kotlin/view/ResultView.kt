@@ -22,10 +22,10 @@ class ResultView {
 
     fun printInitCards(participants: Participants) {
         participants.dealer.run {
-            println(PRINT_NAME_AND_CARDS.format(name.value, formatStringCards(cards.list.take(1))))
+            println(PRINT_NAME_AND_CARDS.format(name.value, formatStringCards(cards.list.take(TAKE_ONE))))
         }
         participants.players.list.forEach { player ->
-            println(PRINT_NAME_AND_CARDS.format(player.name.value, formatStringCards(player.cards.list.take(1))))
+            println(PRINT_NAME_AND_CARDS.format(player.name.value, formatStringCards(player.cards.list.take(TAKE_TWO))))
         }
         println()
     }
@@ -40,9 +40,9 @@ class ResultView {
 
     fun printGameResult(result: BetProfitResult) {
         println(PRINT_GAME_RESULT)
-        println(PRINT_BET_GAME_RESULT.format(result.dealer.name.value, result.dealerResult))
-        result.players.list.forEach {
-            println(PRINT_BET_GAME_RESULT.format(it.name.value, result.playersResult[it]))
+        println(PRINT_BET_GAME_RESULT.format(Dealer.DEALER_NAME, result.dealerResult))
+        result.playersResult.list.forEach {
+            println(PRINT_BET_GAME_RESULT.format(it.name.value, it.profitMoney))
         }
     }
 
@@ -96,6 +96,9 @@ class ResultView {
         private const val PRINT_GAME_RESULT = "\n## 최종승패"
         private const val PRINT_BET_GAME_RESULT = "%s: %d"
         private const val PRINT_NAME_AND_CARDS_AND_SCORE = "%s 카드: %s - 결과: %d"
+
+        private const val TAKE_ONE = 1
+        private const val TAKE_TWO = 2
 
         private const val ACE = "A"
         private const val KING = "K"

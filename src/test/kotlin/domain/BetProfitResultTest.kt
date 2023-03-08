@@ -39,11 +39,11 @@ class BetProfitResultTest {
         assertAll(
             "딜러와 플레이어의 베팅결과가 올바르게 나온다",
             {
-                val result: Int = betProfitResult.playersResult[pobi] ?: 0
+                val result: Int = betProfitResult.playersResult.list[0].profitMoney
                 assertThat(result).isEqualTo(10000)
             },
             {
-                val result: Int = betProfitResult.playersResult[jason] ?: 0
+                val result: Int = betProfitResult.playersResult.list[1].profitMoney
                 assertThat(result).isEqualTo(-20000)
             },
             {
