@@ -18,8 +18,8 @@ class BlackJackBuilder {
     }
 
     fun draw() = participants.all.forEach {
-        it.draw(cardDeck.nextCard())
-        it.draw(cardDeck.nextCard())
+        it.draw(cardDeck.drawCard())
+        it.draw(cardDeck.drawCard())
     }
 
     fun build(): BlackJack = BlackJack(cardDeck, participants)

@@ -11,7 +11,7 @@ class CardDeck(cards: List<Card>) {
         require(cards.size == CARDS_SIZE) { ERROR_INVALID_CARDS_SIZE }
     }
 
-    fun nextCard(): Card {
+    fun drawCard(): Card {
         require(cards.isNotEmpty()) { ERROR_EMPTY_CARDS }
         return cards.removeFirst()
     }
