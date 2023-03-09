@@ -20,5 +20,13 @@ private fun CardValue.pattern(): String =
         CardValue.KING -> "K"
         CardValue.QUEEN -> "Q"
         CardValue.JACK -> "J"
-        else -> this.value.toString()
+        CardValue.TEN -> "10"
+        CardValue.NINE -> "9"
+        CardValue.EIGHT -> "8"
+        CardValue.SEVEN -> "7"
+        CardValue.SIX -> "6"
+        CardValue.FIVE -> "5"
+        CardValue.FOUR -> "4"
+        CardValue.THREE -> "3"
+        CardValue.TWO -> "2"
     }
