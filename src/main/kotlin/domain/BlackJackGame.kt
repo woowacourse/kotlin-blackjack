@@ -6,7 +6,7 @@ class BlackJackGame {
         getUserNames: () -> List<String>,
         getBetAmount: (String) -> Int
     ): BlackJackGameData {
-        val userNames = getUserNames()
+        val userNames = repeatWithRunCatching { UserNameContainer(getUserNames()).names }
         val betAmounts = userNames.map { userName ->
             getBetAmount(userName)
         }
@@ -15,6 +15,13 @@ class BlackJackGame {
         }
 
         return makeBlackJackGameData(userBetAmounts)
+    }
+
+    private fun <T> repeatWithRunCatching(action: () -> T): T {
+        return runCatching(action).getOrElse { error ->
+            println(error.message.toString())
+            repeatWithRunCatching(action)
+        }
     }
 
     private fun makeBlackJackGameData(userBetAmounts: List<UserBetAmount>): BlackJackGameData {
