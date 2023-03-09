@@ -39,7 +39,6 @@ class Participants(private val participants: List<Participant>) {
 
     fun getMatchResults(): List<MatchResult> = listOf(getDealerMatchResult()) + getPlayerMatchResults()
 
-    // TODO(둘다 패면 무승부로 처리하도록 변경해야 함)
     private fun getDealerMatchResult(): MatchResult {
         var (win, lose, draw) = Triple(0, 0, 0)
         getPlayers().forEach { player ->
@@ -52,7 +51,6 @@ class Participants(private val participants: List<Participant>) {
         return MatchResult(getDealer(), win, lose, draw)
     }
 
-    // TODO(둘다 패면 무승부로 처리하도록 변경해야 함)
     private fun getPlayerMatchResults(): List<MatchResult> = getPlayers().map { player ->
         var (win, lose, draw) = Triple(0, 0, 0)
         when (player judge getDealer()) {

@@ -23,13 +23,13 @@ class Cards(vararg cards: Card) {
 
     private fun isOverBlackjack(score: Int): Boolean = score > BLACKJACK_SCORE
 
-    fun isStay(): Boolean = calculateTotalScore() >= STAY_SCORE
+    fun isStay(): Boolean = calculateTotalScore() >= DEALER_HIT_MAX_SCORE
 
     private fun hasAce(): Boolean = _items.any(Card::isAce)
 
     companion object {
         private const val BONUS_SCORE = 10
         private const val BLACKJACK_SCORE = 21
-        private const val STAY_SCORE = 17
+        private const val DEALER_HIT_MAX_SCORE = 17
     }
 }

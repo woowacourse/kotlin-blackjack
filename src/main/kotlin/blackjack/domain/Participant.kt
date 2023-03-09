@@ -18,6 +18,7 @@ abstract class Participant(val name: String) {
         val otherScore = other.getTotalScore()
 
         return when {
+            isBust() && other.isBust() -> GameResult.DRAW
             isBust() -> GameResult.LOSE
             other.isBust() || (myScore > otherScore) -> GameResult.WIN
             myScore == otherScore -> GameResult.DRAW
