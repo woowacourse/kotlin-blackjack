@@ -2,8 +2,9 @@ package blackjack.domain.participant
 
 import blackjack.domain.card.CardDeck
 import blackjack.domain.data.ParticipantCards
+import blackjack.domain.data.ParticipantResults
 import blackjack.domain.data.ParticipantScore
-import blackjack.domain.result.PlayerResults
+import blackjack.domain.result.GameResults
 
 class Participants(private val dealer: Dealer, private val bettingPlayers: BettingPlayers) {
     fun drawAll(deck: CardDeck) {
@@ -27,9 +28,12 @@ class Participants(private val dealer: Dealer, private val bettingPlayers: Betti
 
     fun getTotalScores(): List<ParticipantScore> = listOf(ParticipantScore(dealer.name, dealer.getTotalScore())) + bettingPlayers.getTotalScores()
 
-    fun judgePlayers(): PlayerResults = PlayerResults(
-        bettingPlayers.toList().associate { player ->
-            player to (dealer judge player)
-        }
+    fun getParticipantResults(): ParticipantResults {
+        val gameResults = judgePlayers()
+        return ParticipantResults(gameResults.getDealerResult(dealer.name), gameResults.getPlayerResults(), gameResults.calculateProfits())
+    }
+
+    private fun judgePlayers(): GameResults = GameResults(
+        bettingPlayers.toList().associateWith { player -> (dealer judge player) }
     )
 }

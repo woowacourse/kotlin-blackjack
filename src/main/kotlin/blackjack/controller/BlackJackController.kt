@@ -14,18 +14,17 @@ class BlackJackController(
     private val inputView: InputView,
     private val outputView: OutputView
 ) {
-    fun start() {
-        with(initBlackJack()) {
+    fun start(deck: CardDeck) {
+        with(initBlackJack(deck)) {
             setUpCard(this)
             takeTurns(this)
             takeDealerTurn(this)
 
-            val results = getGameResults()
-            outputView.printResult(getCards(), getTotalScores(), results, results.calculateProfits())
+            outputView.printResult(getCards(), getTotalScores(), getParticipantResults())
         }
     }
 
-    private fun initBlackJack(): BlackJack = BlackJack(CardDeck(), Participants(Dealer(), enrollPlayers()))
+    private fun initBlackJack(deck: CardDeck): BlackJack = BlackJack(deck, Participants(Dealer(), enrollPlayers()))
 
     private fun enrollPlayers(): BettingPlayers {
         val players = inputView.inputNames().map(::Player)

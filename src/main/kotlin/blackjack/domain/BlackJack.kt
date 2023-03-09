@@ -2,10 +2,10 @@ package blackjack.domain
 
 import blackjack.domain.card.CardDeck
 import blackjack.domain.data.ParticipantCards
+import blackjack.domain.data.ParticipantResults
 import blackjack.domain.data.ParticipantScore
 import blackjack.domain.participant.BettingPlayer
 import blackjack.domain.participant.Participants
-import blackjack.domain.result.PlayerResults
 
 class BlackJack(private val deck: CardDeck, private val participants: Participants) {
     fun drawAll() {
@@ -26,7 +26,7 @@ class BlackJack(private val deck: CardDeck, private val participants: Participan
 
     fun getTotalScores(): List<ParticipantScore> = participants.getTotalScores()
 
-    fun getGameResults(): PlayerResults = participants.judgePlayers()
+    fun getParticipantResults(): ParticipantResults = participants.getParticipantResults()
 
     companion object {
         private const val BLACKJACK_SCORE = 21

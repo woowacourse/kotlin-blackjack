@@ -6,33 +6,25 @@ import blackjack.domain.card.Suit
 import blackjack.domain.data.DealerResult
 import blackjack.domain.data.ParticipantCards
 import blackjack.domain.data.ParticipantProfit
+import blackjack.domain.data.ParticipantResults
 import blackjack.domain.data.ParticipantScore
+import blackjack.domain.data.PlayerResult
 import blackjack.domain.result.GameResult
-import blackjack.domain.result.PlayerResults
 
 class Console : InputView, OutputView {
     override fun inputNames(): List<String> {
         println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
-        val names = readln().split(",").map { it.trim() }
-        println()
-        return names
+        return readln().split(",").map { it.trim() }
     }
 
-    override fun inputBettingMoney(name: String): Int {
-        println("${name}의 베팅 금액은?")
-        return checkBettingMoney(readln())
-            .onSuccess { println() }
-            .onFailure { println(it.message) }
-            .getOrElse { inputBettingMoney(name) }
-    }
-
-    private fun checkBettingMoney(input: String): Result<Int> {
-        return runCatching {
-            val money = input.toIntOrNull()
-            requireNotNull(money) { "베팅 금액은 숫자여야 합니다. 베팅 금액은 '$input' 일 수 없습니다." }
-            require(money >= 500) { "베팅 금액은 500원 이상이어야 합니다. 베팅 금액은 '$input' 일 수 없습니다." }
-            money
+    override tailrec fun inputBettingMoney(name: String): Int {
+        println("\n${name}의 베팅 금액은?")
+        val money = readln().toIntOrNull()
+        if (money == null || money < 500) {
+            println("베팅 금액은 500원 이상이어야 합니다. 베팅 금액은 '$money' 일 수 없습니다.")
+            return inputBettingMoney(name)
         }
+        return money
     }
 
     override fun inputDrawCommand(name: String): Boolean = runCatching {
@@ -48,7 +40,7 @@ class Console : InputView, OutputView {
 
     override fun printFirstOpenCards(participantsCards: List<ParticipantCards>) {
         println(
-            "${participantsCards.first().name}와 ${
+            "\n${participantsCards.first().name}와 ${
             participantsCards.drop(1).joinToString(", ") { it.name }
             }에게 2장의 카드를 나누었습니다."
         )
@@ -69,44 +61,43 @@ class Console : InputView, OutputView {
     override fun printResult(
         cards: List<ParticipantCards>,
         totalScores: List<ParticipantScore>,
-        results: PlayerResults,
-        calculateProfits: List<ParticipantProfit>
+        results: ParticipantResults
     ) {
         println()
         printScores(cards, totalScores)
-        printResults(results)
-        printProfits(calculateProfits)
+        printResults(results.dealerResult, results.playerResults)
+        printProfits(results.profits)
     }
 
     private fun printScores(participantsCards: List<ParticipantCards>, scores: List<ParticipantScore>) {
-        scores.forEachIndexed { index, (name, score) ->
-            printScore(name, participantsCards[index].cards, score)
-        }
-        println()
+        println(
+            scores
+                .mapIndexed { index, (name, score) -> getScoreMessage(name, participantsCards[index].cards, score) }
+                .joinToString("\n")
+        )
     }
 
-    private fun printScore(name: String, cards: List<Card>, score: Int) {
-        println("$name 카드: ${cards.joinToString(", ") { it.toText() }} - 결과: $score")
+    private fun getScoreMessage(name: String, cards: List<Card>, score: Int): String =
+        "$name 카드: ${cards.joinToString(", ") { it.toText() }} - 결과: $score"
+
+    private fun printResults(dealerResult: DealerResult, playerResults: List<PlayerResult>) {
+        println(
+            """
+            |${"\n"}## 최종 승패
+            |${dealerResult.name}: ${dealerResult.win}승 ${dealerResult.draw}무 ${dealerResult.lose}패
+            |${playerResults.joinToString("\n") { getPlayerResultMessage(it.name, it.result) }}
+            """.trimMargin()
+        )
     }
 
-    private fun printResults(results: PlayerResults) {
-        println("## 최종 승패")
-        printDealerResult(results.getDealerResult())
-        results.get().forEach { playerResult -> printPlayerResult(playerResult.name, playerResult.result) }
-        println()
-    }
+    private fun getDealerResultMessage(result: DealerResult): String =
+        ""
 
-    private fun printDealerResult(result: DealerResult) {
-        println("딜러: ${result.win}승 ${result.draw}무 ${result.lose}패")
-    }
-
-    private fun printPlayerResult(name: String, result: GameResult) {
-        when (result) {
-            GameResult.BLACKJACK -> println("$name: 블랙잭")
-            GameResult.WIN -> println("$name: 승")
-            GameResult.DRAW -> println("$name: 무")
-            GameResult.LOSE -> println("$name: 패")
-        }
+    private fun getPlayerResultMessage(name: String, result: GameResult): String = when (result) {
+        GameResult.BLACKJACK -> "$name: 블랙잭"
+        GameResult.WIN -> "$name: 승"
+        GameResult.DRAW -> "$name: 무"
+        GameResult.LOSE -> "$name: 패"
     }
 
     private fun Card.toText(): String = "${number.toText()}${suit.toText()}"
@@ -135,9 +126,11 @@ class Console : InputView, OutputView {
     }
 
     private fun printProfits(profits: List<ParticipantProfit>) {
-        println("## 최종 수익")
-        profits.forEach { (name, profit) ->
-            println("$name: $profit")
-        }
+        println(
+            """
+            |${"\n"}## 최종 수익
+            |${profits.joinToString("\n") { (name, profit) -> "$name: $profit" }}
+            """.trimMargin()
+        )
     }
 }

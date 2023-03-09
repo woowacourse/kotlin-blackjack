@@ -5,16 +5,16 @@ import blackjack.domain.data.ParticipantProfit
 import blackjack.domain.data.PlayerResult
 import blackjack.domain.participant.BettingPlayer
 
-class PlayerResults(private val results: Map<BettingPlayer, GameResult>) {
+class GameResults(private val results: Map<BettingPlayer, GameResult>) {
 
-    fun get(): List<PlayerResult> = results.map { (player, result) -> PlayerResult(player.getName(), result) }
+    fun getPlayerResults(): List<PlayerResult> = results.map { (player, result) -> PlayerResult(player.getName(), result) }
 
-    fun getDealerResult(): DealerResult {
+    fun getDealerResult(name: String): DealerResult {
         with(results.values) {
             val win = count { it == GameResult.LOSE }
             val draw = count { it == GameResult.DRAW }
             val lose = count { it == GameResult.WIN || it == GameResult.BLACKJACK }
-            return DealerResult(win, draw, lose)
+            return DealerResult(name, win, draw, lose)
         }
     }
 

@@ -7,13 +7,13 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 
-class PlayerResultsTest {
-    lateinit var playerResults: PlayerResults
+class GameResultsTest {
+    lateinit var gameResults: GameResults
 
     @BeforeEach
     fun setUp() {
-        playerResults =
-            PlayerResults(
+        gameResults =
+            GameResults(
                 mapOf(
                     BettingPlayer(Player("부나"), 0) to GameResult.LOSE,
                     BettingPlayer(Player("글로"), 0) to GameResult.WIN,
@@ -25,7 +25,7 @@ class PlayerResultsTest {
 
     @Test
     fun `플레이어들의 승부 결과를 반환한다`() {
-        val results = playerResults.get()
+        val results = gameResults.getPlayerResults()
 
         assertAll(
             { assertThat(results[0].name to results[0].result).isEqualTo("부나" to GameResult.LOSE) },
@@ -37,7 +37,7 @@ class PlayerResultsTest {
 
     @Test
     fun `딜러의 승부 결과를 반환한다`() {
-        with(playerResults.getDealerResult()) {
+        with(gameResults.getDealerResult("딜러")) {
             assertAll(
                 { assertThat(win).isEqualTo(2) },
                 { assertThat(draw).isEqualTo(1) },
@@ -48,7 +48,7 @@ class PlayerResultsTest {
 
     @Test
     fun `플레이어가 블랙잭이면 플레이어가 딜러로부터 배당금의 3분의 2배를 얻는다`() {
-        val results = PlayerResults(mapOf(BettingPlayer(Player("glo"), 1000) to GameResult.BLACKJACK))
+        val results = GameResults(mapOf(BettingPlayer(Player("glo"), 1000) to GameResult.BLACKJACK))
 
         val profits = results.calculateProfits()
 
@@ -60,7 +60,7 @@ class PlayerResultsTest {
 
     @Test
     fun `플레이어가 우승하면 플레이어가 딜러로부터 배당금을 받는다`() {
-        val results = PlayerResults(mapOf(BettingPlayer(Player("glo"), 1000) to GameResult.WIN))
+        val results = GameResults(mapOf(BettingPlayer(Player("glo"), 1000) to GameResult.WIN))
 
         val profits = results.calculateProfits()
 
@@ -72,7 +72,7 @@ class PlayerResultsTest {
 
     @Test
     fun `플레이어가 패배하면 딜러가 플레이어로부터 배당금을 받는다`() {
-        val results = PlayerResults(mapOf(BettingPlayer(Player("glo"), 1000) to GameResult.LOSE))
+        val results = GameResults(mapOf(BettingPlayer(Player("glo"), 1000) to GameResult.LOSE))
 
         val profits = results.calculateProfits()
 
@@ -84,7 +84,7 @@ class PlayerResultsTest {
 
     @Test
     fun `무승부면 딜러와 플레이어 모두 수익이 없다`() {
-        val results = PlayerResults(mapOf(BettingPlayer(Player("glo"), 1000) to GameResult.DRAW))
+        val results = GameResults(mapOf(BettingPlayer(Player("glo"), 1000) to GameResult.DRAW))
 
         val profits = results.calculateProfits()
 
