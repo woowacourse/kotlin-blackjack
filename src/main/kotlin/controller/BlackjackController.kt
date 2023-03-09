@@ -6,6 +6,7 @@ import entity.Player
 import entity.Players
 import model.BlackjackStage
 import model.CardFactory
+import model.Users
 import view.GameView
 import view.InitView
 import view.ResultView
@@ -24,8 +25,9 @@ class BlackjackController(
         }.let { Players(it) }
     }
 
-    private fun initBlackjack(): BlackjackStage =
-        BlackjackStage(players = readPlayers(), cardFactory = cardFactory)
+    private fun initBlackjack(): BlackjackStage = BlackjackStage(
+        Users(readPlayers()), cardFactory
+    )
 
     private fun distributeMoreCardPlayer(blackjackStage: BlackjackStage) {
         blackjackStage.distributePlayers({
@@ -47,11 +49,11 @@ class BlackjackController(
     }
 
     private fun displayGameStatus(blackjackStage: BlackjackStage) {
-        resultView.printGameStatus(blackjackStage.dealer, blackjackStage.players)
+        resultView.printGameStatus(blackjackStage.users.dealer, blackjackStage.users.players)
     }
 
     private fun displayGameResult(blackjackStage: BlackjackStage) {
-        val playersGameResult = blackjackStage.players.determineAllPlayerGameResult(blackjackStage.dealer)
+        val playersGameResult = blackjackStage.users.players.determineAllPlayerGameResult(blackjackStage.users.dealer)
         val dealerGameResult = playersGameResult.makeDealerGameResult()
         resultView.printGameResult(dealerGameResult, playersGameResult)
         resultView.printProfitResult(dealerGameResult, playersGameResult)

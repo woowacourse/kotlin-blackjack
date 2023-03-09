@@ -30,7 +30,8 @@ class BlackjackStageTest {
         )
         val players = Players()
         val dealer = Dealer()
-        val blackjackStage = BlackjackStage(dealer, players, cardFactory)
+        val users = Users(players, dealer)
+        val blackjackStage = BlackjackStage(users, cardFactory)
 
         // when
         blackjackStage.distributeAllUsers()
@@ -44,8 +45,8 @@ class BlackjackStageTest {
             Card(CardType.DIAMOND, CardNumber.TWO),
             Card(CardType.CLUB, CardNumber.FOUR),
         )
-        assertThat(blackjackStage.dealer.cards.value).isEqualTo(dealerExcept)
-        assertThat(blackjackStage.players.value[0].cards.value).isEqualTo(playerExcept)
+        assertThat(blackjackStage.users.dealer.cards.value).isEqualTo(dealerExcept)
+        assertThat(blackjackStage.users.players.value[0].cards.value).isEqualTo(playerExcept)
     }
 
     @Test
@@ -61,7 +62,8 @@ class BlackjackStageTest {
         )
         val players = Players()
         val dealer = Dealer()
-        val blackjackStage = BlackjackStage(dealer, players, cardFactory)
+        val users = Users(players, dealer)
+        val blackjackStage = BlackjackStage(users, cardFactory)
 
         // when
         blackjackStage.distributePlayers({ true }) {}
@@ -72,7 +74,7 @@ class BlackjackStageTest {
             Card(CardType.CLUB, CardNumber.TEN),
             Card(CardType.CLUB, CardNumber.TEN)
         )
-        assertThat(blackjackStage.players.value[0].cards.value).isEqualTo(except)
+        assertThat(blackjackStage.users.players.value[0].cards.value).isEqualTo(except)
     }
 
     @Test
@@ -86,7 +88,8 @@ class BlackjackStageTest {
         )
         val players = Players()
         val dealer = Dealer()
-        val blackjackStage = BlackjackStage(dealer, players, cardFactory)
+        val users = Users(players, dealer)
+        val blackjackStage = BlackjackStage(users, cardFactory)
 
         // when
         blackjackStage.distributeDealer { }
@@ -95,6 +98,6 @@ class BlackjackStageTest {
         val except = listOf(
             Card(CardType.CLUB, CardNumber.THREE)
         )
-        assertThat(blackjackStage.dealer.cards.value).isEqualTo(except)
+        assertThat(blackjackStage.users.dealer.cards.value).isEqualTo(except)
     }
 }

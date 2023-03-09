@@ -20,13 +20,13 @@ class GameView(private val input: Input, private val output: Output) {
     fun printInitialUsersStatus(blackjackStage: BlackjackStage) {
         output.println(
             MESSAGE_USERS_STATUS.format(
-                blackjackStage.players.value.joinToString(", ") {
+                blackjackStage.users.players.value.joinToString(", ") {
                     it.name.value
                 }
             )
         )
-        printDealerStatus(blackjackStage.dealer)
-        blackjackStage.players.value.forEach { printPlayerStatus(it) }
+        printDealerStatus(blackjackStage.users.dealer)
+        blackjackStage.users.players.value.forEach { printPlayerStatus(it) }
     }
 
     fun printWhetherMoreCard(name: String) {
