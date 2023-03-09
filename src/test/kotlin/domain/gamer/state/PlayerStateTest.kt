@@ -15,29 +15,4 @@ class PlayerStateTest {
         playerState.pickCard(Card(Shape.CLOVER, CardValue.JACK))
         assertThat(playerState.cards.getCards()).isEqualTo(listOf(Card(Shape.CLOVER, CardValue.JACK)))
     }
-
-    @Test
-    fun `카드 값의 합을 반환한다`() {
-        val playerState =
-            Player("jack", Card(Shape.SPADE, CardValue.JACK), Card(Shape.SPADE, CardValue.JACK))
-        assertThat(playerState.calculateCardSum()).isEqualTo(20)
-    }
-
-    @Test
-    fun `플레이어 카드의 합이 21이 넘었을 경우 true를 반환한다`() {
-        val playerState = Player(
-            "jack",
-            Card(Shape.SPADE, CardValue.JACK),
-            Card(Shape.SPADE, CardValue.JACK),
-            Card(Shape.SPADE, CardValue.JACK)
-        )
-        assertThat(playerState.checkBurst()).isTrue
-    }
-
-    @Test
-    fun `플레이어 카드의 합이 21이 넘지 않았을 경우 false를 반환한다`() {
-        val playerState =
-            Player("jack", Card(Shape.SPADE, CardValue.JACK), Card(Shape.SPADE, CardValue.JACK))
-        assertThat(playerState.checkBurst()).isFalse
-    }
 }

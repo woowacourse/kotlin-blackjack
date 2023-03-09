@@ -12,17 +12,18 @@ class Referee(private val dealer: Dealer, private val players: List<Player>) {
     }
 
     private fun judgePlayerResult(player: Player): Result {
-        val playerSum = player.calculateCardSum()
-        val dealerSum = dealer.calculateCardSum()
+        val playerSum = player.cards.calculateCardSum()
+        val dealerSum = dealer.cards.calculateCardSum()
 
         return when {
             playerSum > CARD_SUM_MAX_VALUE ||
-                (dealer.checkBlackjack() && !player.checkBlackjack()) ||
+                (dealer.cards.checkBlackjack() && !player.cards.checkBlackjack()) ||
                 dealerSum.checkPlayerLossCondition(
                     playerSum
                 ) -> Result.LOSS
 
-            playerSum > dealerSum || dealerSum > CARD_SUM_MAX_VALUE || (player.checkBlackjack() && !dealer.checkBlackjack()) -> Result.WIN
+            playerSum > dealerSum || dealerSum > CARD_SUM_MAX_VALUE ||
+                (player.cards.checkBlackjack() && !dealer.cards.checkBlackjack()) -> Result.WIN
             else -> Result.DRAW
         }
     }

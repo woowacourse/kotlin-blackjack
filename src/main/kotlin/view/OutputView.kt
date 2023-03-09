@@ -60,7 +60,7 @@ object OutputView {
             println(
                 "${name}$PARTICIPANT_CARD ${
                     participant.cards.getCards().joinToString(SEPARATOR) { printCardForm(it) }
-                }${RESULT}${participant.calculateCardSum()}"
+                }${RESULT}${participant.cards.calculateCardSum()}"
             )
         }
     }

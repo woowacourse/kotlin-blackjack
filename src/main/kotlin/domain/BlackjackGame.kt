@@ -34,7 +34,7 @@ class BlackjackGame(private val deck: Deck) {
         dealer.pickCard(deck.giveCard())
     }
 
-    fun checkBurst(player: Player) = player.checkBurst()
+    fun checkBurst(player: Player) = player.cards.checkBurst()
 
     fun checkDealerAvailableForPick(): Boolean {
         return dealer.checkAvailableForPick()
