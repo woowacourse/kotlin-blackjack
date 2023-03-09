@@ -29,13 +29,12 @@ object ResultView {
     }
 
     fun printResult(dealer: Dealer, players: Players, blackjackResult: BlackjackResult) {
-        val playerList = players.toList()
         printCardsWithScore(dealer)
-        playerList.forEach { printCardsWithScore(it) }
+        players.forEach { printCardsWithScore(it) }
 
         println(FINAL_RESULT_MESSAGE)
         printDealerResult(dealer, blackjackResult)
-        playerList.forEach {
+        players.forEach {
             printPlayerResult(it, blackjackResult.getResultOf(it))
         }
     }
