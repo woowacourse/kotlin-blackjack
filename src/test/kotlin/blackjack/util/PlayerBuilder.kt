@@ -1,4 +1,4 @@
-package domain.util
+package blackjack.util
 
 import model.cards.Card
 import model.cards.Hand
@@ -8,8 +8,8 @@ import model.participants.Player
 class PlayerBuilder {
     private lateinit var name: Name
     private var hand: Hand = Hand(emptyList())
-    fun name(name: Name) {
-        this.name = name
+    fun name(name: String) {
+        this.name = Name(name)
     }
 
     fun hand(card: Card) {

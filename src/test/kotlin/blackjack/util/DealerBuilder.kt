@@ -1,4 +1,4 @@
-package domain.util
+package blackjack.util
 
 import model.cards.Card
 import model.cards.Hand

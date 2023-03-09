@@ -1,4 +1,4 @@
-package domain.util
+package blackjack.util
 
 import model.participants.Player
 import model.participants.Players

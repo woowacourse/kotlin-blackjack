@@ -1,34 +1,72 @@
 package view
 
 import model.InputState
+import model.participants.Bet
+import model.participants.Name
+import model.participants.Names
 
-class InputView {
+class InputView(private val onError: (String) -> Unit) {
     private val regexName = Regex("[가-힣a-zA-Z]+")
     private val regexAnswer = Regex("[$Y$y$N$n]")
     private val regexNumber = Regex("\\d+")
-    fun readName(): InputState<List<String>> {
+
+    fun readName(): Names {
         val input = readln().replace(" ", "").split(",")
         input.forEach {
-            if (it.isBlank()) return InputState.Error(NULL_ERROR)
-            if (!regexName.matches(it)) return InputState.Error(IS_NOT_WORD)
+            verifyName(it) ?: return readName()
         }
-        return InputState.Success(input)
+        return Names(input.map(::Name))
     }
 
-    fun readBet(): InputState<Int> {
-        val input = readln()
-        if (input.isBlank()) return InputState.Error(NULL_ERROR)
-        if (!regexNumber.matches(input)) return InputState.Error(IS_NOT_NUMBER)
-        if (input.toInt() in MIN_VALUE..MAX_VALUE) return InputState.Error(AMOUNT_RANGE_ERROR)
-        return InputState.Success(input.toInt())
+    private fun verifyName(name: String): String? {
+        val isError = when {
+            name.isBlank() -> InputState.Error(NULL_ERROR)
+            !regexName.matches(name) -> InputState.Error(IS_NOT_YES_OR_NO)
+            else -> InputState.Success(name)
+        }
+        if (isError is InputState.Error) {
+            onError(isError.error)
+            return null
+        }
+        return name
     }
 
-    fun readYesOrNo(): InputState<Boolean> {
+    fun readBet(): Bet {
         val input = readln()
-        if (input.isBlank()) return InputState.Error(NULL_ERROR)
-        if (!regexAnswer.matches(input)) return InputState.Error(IS_NOT_YES_OR_NO)
-        if (input == Y || input == y) return InputState.Success(true)
-        return InputState.Success(false)
+        if (verifyBet(input) == null) return readBet()
+        return Bet(input.toInt())
+    }
+
+    private fun verifyBet(bet: String): String? {
+        val isError = when {
+            bet.isBlank() -> InputState.Error(NULL_ERROR)
+            !regexNumber.matches(bet) -> InputState.Error(IS_NOT_NUMBER)
+            bet.toInt() !in MIN_VALUE..MAX_VALUE -> InputState.Error(AMOUNT_RANGE_ERROR)
+            else -> InputState.Success(bet)
+        }
+        if (isError is InputState.Error) {
+            onError(isError.error)
+            return null
+        }
+        return bet
+    }
+
+    fun readYesOrNo(): Boolean {
+        val input = readln()
+        return verifyAnswer(input) ?: readYesOrNo()
+    }
+
+    private fun verifyAnswer(answer: String): Boolean? {
+        val isError = when {
+            answer.isBlank() -> InputState.Error(NULL_ERROR)
+            !regexAnswer.matches(answer) -> InputState.Error(IS_NOT_YES_OR_NO)
+            else -> InputState.Success(answer == y || answer == Y)
+        }
+        if (isError is InputState.Error) {
+            onError(isError.error)
+            return null
+        }
+        return answer == y || answer == Y
     }
 
     companion object {
