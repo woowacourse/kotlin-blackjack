@@ -23,34 +23,44 @@ class BlackjackManager(cardsGenerator: CardsGenerator) {
     fun provideParticipantMoreCard(
         participant: Participant,
         requestMoreCard: (String) -> Boolean,
-        printResult: (Participant) -> Unit
+        onProvideCard: (Participant) -> Unit
     ) {
         while (true) {
             val check = participant.checkProvideCardPossible()
             if (check) {
                 val answer = requestMoreCard(participant.name)
                 if (answer) provideCard(participant)
-                printResult(participant)
+                onProvideCard(participant)
                 if (!answer) break
             }
             if (!check) break
         }
     }
 
-    fun provideDealerMoreCard(printResult: () -> Unit) {
-        while (true) {
-            if (!dealer.checkProvideCardPossible()) break
-            provideCard(dealer)
-            printResult()
+    fun provideParticipantsMoreCard(
+        readMoreCard: (String) -> Boolean,
+        onProvideCard: (Participant) -> Unit
+    ) {
+        participants.values.forEach {
+            provideParticipantMoreCard(it, readMoreCard, onProvideCard)
         }
     }
 
-    fun updatePlayersResult() {
-        participants.values.forEach {
-            it.updateResult(dealer.cards.sumCardsNumber())
+    fun provideDealerMoreCard(onProvideCard: () -> Unit) {
+        while (true) {
+            if (!dealer.checkProvideCardPossible()) break
+            provideCard(dealer)
+            onProvideCard()
         }
+    }
 
-        dealer.updateResults(participants.values.map { it.cards.sumCardsNumber() })
+    fun calculatePlayersResult(onCalculateResults: (PlayersResults, DealerResult) -> Unit) {
+        val playersResult = mutableListOf<PlayerResult>()
+        participants.values.forEach {
+            playersResult.add(it.calculateResult(dealer))
+        }
+        val dealerResult = dealer.calculateResults(participants)
+        onCalculateResults(PlayersResults(playersResult), dealerResult)
     }
 
     private fun provideCard(player: Player) {

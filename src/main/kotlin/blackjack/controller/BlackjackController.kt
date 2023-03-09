@@ -17,24 +17,13 @@ class BlackjackController(
     fun run() {
         blackjackManager.setup(inputView::readParticipantsName)
         outputView.printSettingCard(blackjackManager.dealer, blackjackManager.participants)
-        provideParticipantsMoreCard()
+        blackjackManager.provideParticipantsMoreCard(inputView::readMoreCard, outputView::printParticipantCards)
         blackjackManager.provideDealerMoreCard(outputView::printDealerHitCardMent)
-        blackjackManager.updatePlayersResult()
+        blackjackManager.calculatePlayersResult(outputView::printFinalResult)
         printSumResult()
-        printFinalResult()
-    }
-
-    private fun provideParticipantsMoreCard() {
-        blackjackManager.participants.values.forEach {
-            blackjackManager.provideParticipantMoreCard(it, inputView::readMoreCard, outputView::printParticipantCards)
-        }
     }
 
     private fun printSumResult() {
         outputView.printSumResult(blackjackManager.dealer, blackjackManager.participants)
-    }
-
-    private fun printFinalResult() {
-        outputView.printFinalResult(blackjackManager.dealer, blackjackManager.participants)
     }
 }
