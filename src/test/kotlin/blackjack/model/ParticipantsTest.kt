@@ -20,7 +20,7 @@ class ParticipantsTest {
             )
         )
 
-        val actual = Participants.of(dealer, players).toList()
+        val actual = Participants(dealer, players).toList()
 
         assertThat(actual.size).isEqualTo(3)
         assertThat(actual[0].name.value).isEqualTo("딜러")

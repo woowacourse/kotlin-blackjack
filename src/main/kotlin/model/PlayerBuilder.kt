@@ -1,4 +1,5 @@
 package model
+
 class PlayerBuilder {
     private lateinit var name: Name
     private var hand: Hand = Hand(emptyList())
