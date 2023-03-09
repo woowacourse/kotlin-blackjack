@@ -1,6 +1,7 @@
 package blackjack.controller
 
 import blackjack.domain.BettingMoney
+import blackjack.domain.Calculator
 import blackjack.domain.CardBunch
 import blackjack.domain.CardDeck
 import blackjack.domain.Dealer
@@ -11,11 +12,12 @@ import blackjack.view.OutputView
 class Controller(private val cardDeck: CardDeck) {
     fun runGame() {
         val dealer = makeDealer()
-        val players = makePlayers(InputView.getPlayerNames())
+        val names = InputView.getPlayerNames()
+        val players = makePlayers(names, InputView.getBettingMoney(names))
         showInitialCard(dealer, players)
         players.forEach { player -> askHitPlayer(player) }
         printCardAndScore(dealer, players)
-        printFinalWinOrLose(dealer, players)
+        printFinalProfit(Calculator().calculateDividend(dealer.versusPlayers(players)))
     }
 
     private fun printCardAndScore(dealer: Dealer, players: List<Player>) {
@@ -23,8 +25,8 @@ class Controller(private val cardDeck: CardDeck) {
         OutputView.printCardAndScore(dealer, players)
     }
 
-    private fun makePlayers(names: List<String>): List<Player> =
-        names.map { Player(it, makeInitialCardBunch(), BettingMoney(1000)) }
+    private fun makePlayers(names: List<String>, bettingMoneys: List<BettingMoney>): List<Player> =
+        names.mapIndexed { index, name -> Player(name, makeInitialCardBunch(), bettingMoneys[index]) }
 
     private fun makeDealer(): Dealer = Dealer(makeInitialCardBunch())
 
@@ -53,8 +55,7 @@ class Controller(private val cardDeck: CardDeck) {
         OutputView.printDealerState(dealer.canHit())
     }
 
-    private fun printFinalWinOrLose(dealer: Dealer, players: List<Player>) {
-        val gameResult = dealer.versusPlayers(players)
-        OutputView.printWinOrLose(gameResult)
+    private fun printFinalProfit(playerProfitBy: Map<Player, Int>) {
+        OutputView.printProfit(playerProfitBy)
     }
 }
