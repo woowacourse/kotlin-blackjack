@@ -21,11 +21,7 @@ class ProfitCalculatorTest {
             ),
             betAmount = 1000.0
         )
-        val referee = Referee(
-            Score.valueOf(
-                players.dealer.cards.actualCardValueSum()
-            )
-        )
+        val referee = Referee(players.dealerScore)
         referee.getResult(players.users)
 
         val profitCalculator = ProfitCalculator(players)
@@ -53,11 +49,7 @@ class ProfitCalculatorTest {
             ),
             betAmount = 1000.0
         )
-        val referee = Referee(
-            Score.valueOf(
-                players.dealer.cards.actualCardValueSum()
-            )
-        )
+        val referee = Referee(players.dealerScore)
         referee.getResult(players.users)
 
         val profitCalculator = ProfitCalculator(players)
@@ -85,11 +77,7 @@ class ProfitCalculatorTest {
             ),
             betAmount = 1000.0
         )
-        val referee = Referee(
-            Score.valueOf(
-                players.dealer.cards.actualCardValueSum()
-            )
-        )
+        val referee = Referee(players.dealerScore)
         referee.getResult(players.users)
 
         val profitCalculator = ProfitCalculator(players)
@@ -117,11 +105,7 @@ class ProfitCalculatorTest {
             ),
             betAmount = 1000.0
         )
-        val referee = Referee(
-            Score.valueOf(
-                players.dealer.cards.actualCardValueSum()
-            )
-        )
+        val referee = Referee(players.dealerScore)
         referee.getResult(players.users)
 
         val profitCalculator = ProfitCalculator(players)
@@ -149,11 +133,7 @@ class ProfitCalculatorTest {
             ),
             betAmount = 1000.0
         )
-        val referee = Referee(
-            Score.valueOf(
-                players.dealer.cards.actualCardValueSum()
-            )
-        )
+        val referee = Referee(players.dealerScore)
         referee.getResult(players.users)
 
         val profitCalculator = ProfitCalculator(players)
@@ -182,11 +162,7 @@ class ProfitCalculatorTest {
             ),
             betAmount = 1000.0
         )
-        val referee = Referee(
-            Score.valueOf(
-                players.dealer.cards.actualCardValueSum()
-            )
-        )
+        val referee = Referee(players.dealerScore)
         referee.getResult(players.users)
 
         val profitCalculator = ProfitCalculator(players)
@@ -215,11 +191,7 @@ class ProfitCalculatorTest {
             ),
             betAmount = 1000.0
         )
-        val referee = Referee(
-            Score.valueOf(
-                players.dealer.cards.actualCardValueSum()
-            )
-        )
+        val referee = Referee(players.dealerScore)
         referee.getResult(players.users)
 
         val profitCalculator = ProfitCalculator(players)
@@ -249,11 +221,7 @@ class ProfitCalculatorTest {
             ),
             betAmount = 1000.0
         )
-        val referee = Referee(
-            Score.valueOf(
-                players.dealer.cards.actualCardValueSum()
-            )
-        )
+        val referee = Referee(players.dealerScore)
         referee.getResult(players.users)
 
         val profitCalculator = ProfitCalculator(players)
@@ -285,11 +253,7 @@ class ProfitCalculatorTest {
             ),
             betAmount = 1000.0
         )
-        val referee = Referee(
-            Score.valueOf(
-                players.dealer.cards.actualCardValueSum()
-            )
-        )
+        val referee = Referee(players.dealerScore)
         referee.getResult(players.users)
 
         val profitCalculator = ProfitCalculator(players)

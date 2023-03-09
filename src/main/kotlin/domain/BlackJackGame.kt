@@ -34,13 +34,13 @@ class BlackJackGame {
         blackJackGameData: BlackJackGameData,
         onDealerOverSumCondition: () -> Unit
     ) {
-        val dealer = blackJackGameData.players.dealer
+        val dealer = blackJackGameData.dealer
         val deck = blackJackGameData.deck
 
         if (!dealer.isOverSumCondition()) {
             onDealerOverSumCondition()
             val newCard = deck.getOneCard()
-            dealer.cards.addCard(newCard)
+            dealer.addCard(newCard)
         }
     }
 
@@ -49,8 +49,8 @@ class BlackJackGame {
         getMoreCardCommand: (User) -> Boolean,
         onUserPickNewCards: (User) -> Unit
     ) {
-        val players = blackJackGameData.players
-        players.users.forEach { user ->
+        val users = blackJackGameData.users
+        users.forEach { user ->
             repeatGetCommand(blackJackGameData, user, getMoreCardCommand, onUserPickNewCards)
         }
     }
@@ -61,10 +61,10 @@ class BlackJackGame {
         getMoreCardCommand: (User) -> Boolean,
         onUserPickNewCards: (User) -> Unit
     ) {
-        val userScore = Score.valueOf(user.cards.calculateCardValueSum())
+        val userScore = user.score
         if ((userScore.isBurst() || userScore.isBlackJack())) return
         if (getMoreCardCommand(user)) {
-            user.cards.addCard(blackJackGameData.deck.getOneCard())
+            user.addCard(blackJackGameData.deck.getOneCard())
             onUserPickNewCards(user)
             return repeatGetCommand(blackJackGameData, user, getMoreCardCommand, onUserPickNewCards)
         }
@@ -77,9 +77,7 @@ class BlackJackGame {
         onGameResult: (List<User>) -> Unit
     ) {
         val players = blackJackGameData.players
-        val referee: Referee = Referee(
-            Score.valueOf(players.dealer.cards.actualCardValueSum()),
-        )
+        val referee: Referee = Referee(players.dealerScore)
         referee.getResult(players.users)
         onGameResult(players.users)
     }
