@@ -7,7 +7,7 @@ class Player(
 ) {
 
     private fun isPossibleToDrawAdditionalCard(): DrawState {
-        if (cardHand.getMinimumCardsScore() >= BLACK_JACK_SCORE) {
+        if (cardHand.getMinimumCardsScore() >= BlackJackReferee.BLACK_JACK_SCORE) {
             return DrawState.IMPOSSIBLE
         }
 
@@ -18,9 +18,5 @@ class Player(
         cardHand.draw(card)
 
         return isPossibleToDrawAdditionalCard()
-    }
-
-    companion object {
-        const val BLACK_JACK_SCORE = 21
     }
 }

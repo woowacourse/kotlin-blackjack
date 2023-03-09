@@ -5,11 +5,11 @@ enum class GameResultCondition(
     val condition: (playerScore: Int, dealerScore: Int) -> Boolean
 ) {
     PLAYER_BURST_CONDITION(
-        condition = { playerScore, _ -> playerScore > Player.BLACK_JACK_SCORE },
+        condition = { playerScore, _ -> playerScore > BlackJackReferee.BLACK_JACK_SCORE },
         gameResult = GameResult.LOSE
     ),
     DEALER_BURST_CONDITION(
-        condition = { playerScore, dealerScore -> dealerScore > Player.BLACK_JACK_SCORE },
+        condition = { _, dealerScore -> dealerScore > blackjack.domain.BlackJackReferee.BLACK_JACK_SCORE },
         gameResult = GameResult.WIN
     ),
     DRAW_CONDITION(
