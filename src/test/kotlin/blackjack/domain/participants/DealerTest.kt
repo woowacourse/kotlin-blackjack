@@ -8,18 +8,18 @@ import org.junit.jupiter.api.Test
 
 class DealerTest {
     @Test
-    fun `ACE를 11로 둘 때 17이상이면 뽑을 수 없다`() {
+    fun `점수가 17이상이면 뽑을 수 없다`() {
         val dealer = Dealer()
-        dealer.draw(Card(CardMark.CLOVER, CardValue.ACE))
-        dealer.draw(Card(CardMark.CLOVER, CardValue.SIX))
+        dealer.draw(Card(CardMark.CLOVER, CardValue.QUEEN))
+        dealer.draw(Card(CardMark.CLOVER, CardValue.SEVEN))
         assertThat(dealer.isContinuable).isFalse
     }
 
     @Test
-    fun `ACE를 11로 둘 때 17미만이면 뽑을 수 있다`() {
+    fun `점수가 17미만이면 뽑을 수 있다`() {
         val dealer = Dealer()
-        dealer.draw(Card(CardMark.CLOVER, CardValue.ACE))
-        dealer.draw(Card(CardMark.CLOVER, CardValue.FIVE))
+        dealer.draw(Card(CardMark.CLOVER, CardValue.QUEEN))
+        dealer.draw(Card(CardMark.CLOVER, CardValue.SIX))
         assertThat(dealer.isContinuable).isTrue
     }
 }
