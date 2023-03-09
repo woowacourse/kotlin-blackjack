@@ -1,10 +1,10 @@
 package model
 
-import entity.Player
-import entity.User
-import entity.Users
+import entity.users.Player
+import entity.users.User
+import entity.users.Users
 
-class BlackjackStage(private val users: Users, private val cardFactory: CardFactory) {
+class BlackjackStage(val users: Users, private val cardFactory: CardFactory) {
     fun distributeAllUsers() {
         distributeUser(users.dealer, INITIAL_CARD_DISTRIBUTE_COUNT)
         users.players.value.forEach {
