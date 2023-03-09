@@ -17,15 +17,15 @@ class ScoreTest {
     }
 
     @Test
-    fun `점수가 21이면 버스트가 아니다`() {
+    fun `점수가 21이면 블랙잭이다`() {
         // given
         val score = Score.valueOf(21)
 
         // when
-        val actual = score.isBurst()
+        val actual = score.isBlackJack()
 
         // then
-        assertThat(actual).isEqualTo(false)
+        assertThat(actual).isEqualTo(true)
     }
 
     @Test
