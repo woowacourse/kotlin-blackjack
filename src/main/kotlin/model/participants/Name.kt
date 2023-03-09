@@ -1,4 +1,4 @@
-package model
+package model.participants
 
 data class Name(val value: String) {
     init {

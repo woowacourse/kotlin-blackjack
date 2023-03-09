@@ -1,9 +1,9 @@
 package domain
 
-import model.Card
-import model.CardPack
-import model.Rank
-import model.Suit
+import model.cards.Card
+import model.cards.CardPack
+import model.cards.Rank
+import model.cards.Suit
 
 class CardPackGenerator {
 

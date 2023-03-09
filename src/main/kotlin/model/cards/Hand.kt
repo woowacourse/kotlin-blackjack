@@ -1,4 +1,4 @@
-package model
+package model.cards
 
 data class Hand(private val cards: Cards) {
     val size

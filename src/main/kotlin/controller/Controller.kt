@@ -2,7 +2,7 @@ package controller
 
 import domain.CardGame
 import domain.CardPackGenerator
-import model.GameResult
+import model.result.GameResult
 import view.InputView
 import view.OutputView
 

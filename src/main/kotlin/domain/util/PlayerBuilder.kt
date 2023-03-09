@@ -1,4 +1,9 @@
-package model
+package domain.util
+
+import model.cards.Card
+import model.cards.Hand
+import model.participants.Name
+import model.participants.Player
 
 class PlayerBuilder {
     private lateinit var name: Name

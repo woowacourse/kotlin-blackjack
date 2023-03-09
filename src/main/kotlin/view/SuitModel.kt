@@ -1,6 +1,6 @@
 package view
 
-import model.Suit
+import model.cards.Suit
 
 class SuitModel {
     fun getString(suit: Suit) = when (suit) {

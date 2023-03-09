@@ -2,15 +2,15 @@ package blackjack.domain
 
 import domain.CardGame
 import domain.CardPackGenerator
-import model.Card
-import model.Dealer
-import model.Hand
 import model.InputState
-import model.Name
-import model.Player
-import model.Players
-import model.Rank
-import model.Suit
+import model.cards.Card
+import model.cards.Hand
+import model.cards.Rank
+import model.cards.Suit
+import model.participants.Dealer
+import model.participants.Name
+import model.participants.Player
+import model.participants.Players
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test

@@ -1,4 +1,4 @@
-package model
+package model.cards
 
 class CardPack(private val cards: Cards) {
     val size

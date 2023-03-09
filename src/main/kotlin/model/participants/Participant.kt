@@ -1,4 +1,7 @@
-package model
+package model.participants
+
+import model.cards.CardPack
+import model.cards.Hand
 
 abstract class Participant(val hand: Hand, val name: Name) {
     abstract fun isHit(): Boolean

@@ -1,15 +1,15 @@
 package blackjack.model
 
-import model.Bet
-import model.BetInfos
-import model.Card
-import model.Dealer
-import model.GameResult
-import model.Hand
-import model.Name
-import model.Player
-import model.Rank
-import model.Suit
+import model.cards.Card
+import model.cards.Hand
+import model.cards.Rank
+import model.cards.Suit
+import model.participants.Bet
+import model.participants.BetInfo
+import model.participants.Dealer
+import model.participants.Name
+import model.participants.Player
+import model.result.GameResult
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -23,7 +23,7 @@ class GameResultTest {
         )
         val player1 = player(Name("jason"), Card(Rank.JACK, Suit.HEART), Card(Rank.NINE, Suit.DIAMOND))
         val player2 = player(Name("pobi"), Card(Rank.JACK, Suit.SPADE), Card(Rank.KING, Suit.HEART))
-        val result = GameResult.of(dealer, BetInfos(mapOf(player1 to Bet(1000), player2 to Bet(2000))))
+        val result = GameResult.of(dealer, BetInfo(mapOf(player1 to Bet(1000), player2 to Bet(2000))))
         assertThat(result.getDealerProfitResult()).isEqualTo(3000)
         assertThat(result.playersFinalResult[Name("jason")]).isEqualTo(-1000)
         assertThat(result.playersFinalResult[Name("pobi")]).isEqualTo(-2000)
@@ -39,7 +39,7 @@ class GameResultTest {
         val player1 = player(Name("jason"), Card(Rank.JACK, Suit.HEART), Card(Rank.NINE, Suit.DIAMOND))
         val player2 = player(Name("pobi"), Card(Rank.JACK, Suit.SPADE), Card(Rank.KING, Suit.SPADE))
 
-        val result = GameResult.of(dealer, BetInfos(mapOf(player1 to Bet(10000), player2 to Bet(20000))))
+        val result = GameResult.of(dealer, BetInfo(mapOf(player1 to Bet(10000), player2 to Bet(20000))))
 
         assertThat(result.getDealerProfitResult()).isEqualTo(-30000)
         assertThat(result.playersFinalResult[Name("jason")]).isEqualTo(10000)
@@ -52,7 +52,7 @@ class GameResultTest {
         val player1 = player(Name("jason"), Card(Rank.JACK, Suit.SPADE), Card(Rank.NINE, Suit.DIAMOND))
         val player2 = player(Name("pobi"), Card(Rank.JACK, Suit.SPADE), Card(Rank.KING, Suit.DIAMOND), Card(Rank.ACE, Suit.DIAMOND))
 
-        val result = GameResult.of(dealer, BetInfos(mapOf(player1 to Bet(10000), player2 to Bet(20000))))
+        val result = GameResult.of(dealer, BetInfo(mapOf(player1 to Bet(10000), player2 to Bet(20000))))
         assertThat(result.getDealerProfitResult()).isEqualTo(-10000)
         assertThat(result.playersFinalResult[Name("jason")]).isEqualTo(-10000)
         assertThat(result.playersFinalResult[Name("pobi")]).isEqualTo(20000)
@@ -64,7 +64,7 @@ class GameResultTest {
         val player1 = player(Name("jason"), Card(Rank.JACK, Suit.SPADE), Card(Rank.ACE, Suit.CLOVER))
         val player2 = player(Name("pobi"), Card(Rank.JACK, Suit.SPADE), Card(Rank.NINE, Suit.DIAMOND), Card(Rank.ACE, Suit.DIAMOND))
 
-        val result = GameResult.of(dealer, BetInfos(mapOf(player1 to Bet(20000), player2 to Bet(20000))))
+        val result = GameResult.of(dealer, BetInfo(mapOf(player1 to Bet(20000), player2 to Bet(20000))))
         assertThat(result.getDealerProfitResult()).isEqualTo(20000)
         assertThat(result.playersFinalResult[Name("jason")]).isEqualTo(0)
         assertThat(result.playersFinalResult[Name("pobi")]).isEqualTo(-20000)
@@ -75,7 +75,7 @@ class GameResultTest {
         val player1 = player(Name("jason"), Card(Rank.JACK, Suit.SPADE), Card(Rank.ACE, Suit.CLOVER))
         val player2 = player(Name("pobi"), Card(Rank.JACK, Suit.SPADE), Card(Rank.NINE, Suit.DIAMOND), Card(Rank.ACE, Suit.DIAMOND))
 
-        val result = GameResult.of(dealer, BetInfos(mapOf(player1 to Bet(100000), player2 to Bet(100000))))
+        val result = GameResult.of(dealer, BetInfo(mapOf(player1 to Bet(100000), player2 to Bet(100000))))
         assertThat(result.getDealerProfitResult()).isEqualTo(-50000)
         assertThat(result.playersFinalResult[Name("jason")]).isEqualTo(50000)
         assertThat(result.playersFinalResult[Name("pobi")]).isEqualTo(0)

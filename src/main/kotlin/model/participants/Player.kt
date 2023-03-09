@@ -1,4 +1,7 @@
-package model
+package model.participants
+
+import model.cards.Hand
+import model.result.FinalResult
 
 class Player(hand: Hand, name: Name) : Participant(hand, name) {
     override fun isHit(): Boolean = !isBust() && (hand.sum() != BLACKJACK_POINT)

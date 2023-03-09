@@ -1,6 +1,6 @@
 package view
 
-import model.Rank
+import model.cards.Rank
 
 class RankModel {
     fun getString(rank: Rank): String = when (rank) {

@@ -1,4 +1,8 @@
-package model
+package domain.util
+
+import model.cards.Card
+import model.cards.Hand
+import model.participants.Dealer
 
 class DealerBuilder {
     private var hand: Hand = Hand(emptyList())

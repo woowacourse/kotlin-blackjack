@@ -1,4 +1,4 @@
-package model
+package model.participants
 
 data class Names(val names: List<Name>) : List<Name> by names {
     init {

@@ -1,13 +1,13 @@
 package view
 
-import model.Card
-import model.Dealer.Companion.DEALER
-import model.GameResult
-import model.Hand
-import model.Name
-import model.Participant
-import model.Participants
-import model.Player
+import model.cards.Card
+import model.cards.Hand
+import model.participants.Dealer.Companion.DEALER
+import model.participants.Name
+import model.participants.Participant
+import model.participants.Participants
+import model.participants.Player
+import model.result.GameResult
 
 class OutputView {
     private val suitModel = SuitModel()

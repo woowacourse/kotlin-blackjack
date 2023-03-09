@@ -1,4 +1,7 @@
-package model
+package domain.util
+
+import model.participants.Player
+import model.participants.Players
 
 class PlayersBuilder {
     private val players = mutableListOf<Player>()

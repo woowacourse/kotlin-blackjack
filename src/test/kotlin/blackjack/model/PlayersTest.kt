@@ -1,9 +1,9 @@
 package blackjack.model
 
-import model.Hand
-import model.Name
-import model.Player
-import model.Players
+import model.cards.Hand
+import model.participants.Name
+import model.participants.Player
+import model.participants.Players
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
