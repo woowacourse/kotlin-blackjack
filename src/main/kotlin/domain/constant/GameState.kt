@@ -4,4 +4,5 @@ enum class GameState {
     HIT,
     STAND,
     BUST,
+    BLACKJACK,
 }

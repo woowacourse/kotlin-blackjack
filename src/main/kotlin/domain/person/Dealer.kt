@@ -1,7 +1,7 @@
 package domain.person
 
 import domain.card.Card
-import domain.constant.BlackJackConstants.BLACK_JACK
+import domain.constant.BlackJackConstants.BLACK_JACK_NUMBER
 import domain.constant.BlackJackConstants.DEALER_STAND_CONDITION
 import domain.constant.GameState
 import domain.constant.GameState.BUST
@@ -17,9 +17,10 @@ class Dealer(value: List<Card>, override val name: String = "딜러") : Person(v
     override fun checkState(): GameState {
         val totalNumber = CardsScore.getTotalCardNumber(cards)
         return when {
-            totalNumber > BLACK_JACK -> BUST
+            cards.value.size == 2 && totalNumber == BLACK_JACK_NUMBER -> GameState.BLACKJACK
+            totalNumber > BLACK_JACK_NUMBER -> BUST
             totalNumber > DEALER_STAND_CONDITION -> STAND
-            totalNumber <= BLACK_JACK -> HIT
+            totalNumber <= BLACK_JACK_NUMBER -> HIT
             else -> throw IllegalStateException()
         }
     }
