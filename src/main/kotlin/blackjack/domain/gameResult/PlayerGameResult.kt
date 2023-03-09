@@ -12,7 +12,7 @@ data class PlayerGameResult(
 
         fun of(player: Player, dealer: Dealer) = PlayerGameResult(
             playerName = player.name.value,
-            profitMoney = ProfitMoney(
+            profitMoney = ProfitMoney.of(
                 player.battingMoney,
                 GameResult.valueOf(player.cards, dealer.cards)
             )

@@ -5,12 +5,19 @@ import blackjack.domain.player.BattingMoney
 @JvmInline
 value class ProfitMoney(val value: Int) {
 
-    constructor(
-        battingMoney: BattingMoney,
-        gameResult: GameResult,
-    ) : this((battingMoney.value * gameResult.profitRate).toInt())
-
     operator fun not(): ProfitMoney {
         return ProfitMoney(-value)
+    }
+
+    companion object{
+
+        fun of(
+            battingMoney: BattingMoney,
+            gameResult: GameResult,
+        ): ProfitMoney {
+            val profitValue = (battingMoney.value * gameResult.profitRate).toInt()
+
+            return ProfitMoney(profitValue)
+        }
     }
 }
