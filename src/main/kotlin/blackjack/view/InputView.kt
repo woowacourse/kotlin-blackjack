@@ -5,25 +5,29 @@ import blackjack.domain.player.Participants
 
 class InputView {
 
-    fun readParticipants(): Participants? {
+    fun readParticipants(): Participants {
         println(PROMPT_PARTICIPANTS_NAME)
 
-        return kotlin.runCatching {
+        val participants: Participants? = kotlin.runCatching {
             val participantsName = readln().split(",")
             val participants = participantsName.map { Participant(it) }.toList()
             println()
             Participants(participants)
         }.getOrNull()
+
+        return participants ?: readParticipants()
     }
 
-    fun readHitOrNot(name: String): Boolean? {
+    fun readHitOrNot(name: String): Boolean {
         println(ASK_MORE_CARD.format(name))
 
-        return when (readln().lowercase()) {
+        val hitOrNot = when (readln().lowercase()) {
             ANSWER_HIT -> true
             ANSWER_NOT_HIT -> false
             else -> null
         }
+
+        return hitOrNot ?: readHitOrNot(name)
     }
 
     companion object {

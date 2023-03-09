@@ -19,7 +19,7 @@ class BlackjackController(
 
     fun run() {
         val dealer: Dealer = Dealer()
-        val participants: Participants = readParticipants()
+        val participants: Participants = inputView.readParticipants()
         setInitialPlayersCards(dealer, participants)
         hitPlayerCards(dealer, participants)
         dealer.decidePlayersResult(participants)
@@ -47,7 +47,7 @@ class BlackjackController(
     }
 
     private fun hitParticipantCards(dealer: Dealer, participant: Participant) {
-        while (participant.canHit() && readHitOrNot(participant.name)) {
+        while (participant.canHit() && inputView.readHitOrNot(participant.name)) {
             participant.addCard(deck.draw())
             outputView.printCurrentPlayerCards(participant)
         }
@@ -66,8 +66,4 @@ class BlackjackController(
         outputView.printSumResult(dealer, participants)
         outputView.printPlayersResults(dealer, participants)
     }
-
-    private fun readParticipants(): Participants = inputView.readParticipants() ?: readParticipants()
-
-    private fun readHitOrNot(name: String): Boolean = inputView.readHitOrNot(name) ?: readHitOrNot(name)
 }
