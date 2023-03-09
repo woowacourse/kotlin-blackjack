@@ -5,7 +5,6 @@ import domain.constant.BlackJackConstants.DEALER_STAND_CONDITION
 import domain.person.Participants
 import domain.person.Person
 import domain.result.CardsScore
-import domain.result.OutCome
 
 class ResultView {
     private fun cardToString(card: Card) =
@@ -49,15 +48,14 @@ class ResultView {
         )
     }
 
-    fun printFinalResult(dealerResult: Map<OutCome, Int>, playerResult: Map<String, OutCome>) {
+    fun printFinalResult(dealerResult: Double, playerResult: Map<String, Double>) {
         println(FINAL_OUTCOME_SCRIPT)
-        print(DEALER_SCRIPT)
-        dealerResult.entries.forEach { print(" ${it.value}${ViewUtils.outComeToText(it.key)}") }
-        playerResult.entries.forEach { println("${it.key}: ${ViewUtils.outComeToText(it.value)}") }
+        println(DEALER_SCRIPT + dealerResult)
+        playerResult.entries.forEach { println("${it.key}: ${it.value}") }
     }
 
     companion object {
-        private const val FINAL_OUTCOME_SCRIPT = "## 최종 승패"
+        private const val FINAL_OUTCOME_SCRIPT = "## 최종 수익"
         private const val DEALER_SCRIPT = "딜러: "
         private const val SHARE_TWO_CARDS_SCRIPT = "%s와 %s에게 2장의 카드를 나누었습니다."
         private const val INITIAL_CARDS_SCRIPT = "%s 카드: %s"
