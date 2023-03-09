@@ -6,9 +6,9 @@ class User(val name: String, val cards: Cards, val betAmount: Double) {
 
     lateinit var gameResult: GameResult
 
-    fun addCard(card: Card) = cards.addCard(card)
+    val score get() = Score.valueOfCards(cards.numbers)
 
-    val score get() = cards.calculateCardValueSum()
+    fun addCard(card: Card) = cards.addCard(card)
 
     companion object {
         fun create(userBetAmount: UserBetAmount, cards: Cards): User =

@@ -18,7 +18,7 @@ class CardsTest {
         )
 
         // when
-        val actual = cards.actualCardValueSum().value
+        val actual = cards.score.value
 
         // then
         assertThat(actual).isEqualTo(8)
@@ -35,7 +35,7 @@ class CardsTest {
         )
 
         // when
-        val actual = cards.actualCardValueSum().value
+        val actual = cards.score.value
 
         // then
         assertThat(actual).isEqualTo(19)
@@ -53,7 +53,7 @@ class CardsTest {
         )
 
         // when
-        val actual = cards.actualCardValueSum().value
+        val actual = cards.score.value
 
         // then
         assertThat(actual).isEqualTo(16)
@@ -71,7 +71,7 @@ class CardsTest {
         )
 
         // when
-        val actual = cards.actualCardValueSum().value
+        val actual = cards.score.value
 
         // then
         assertThat(actual).isEqualTo(21)

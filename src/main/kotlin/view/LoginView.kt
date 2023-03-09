@@ -5,9 +5,7 @@ class LoginView {
     fun requestPlayerName(): List<String> {
         printRequestPlayerName()
 
-        return readLine()?.split(SEPARATOR)?.map { name ->
-            name.trim()
-        } ?: emptyList()
+        return readln().split(SEPARATOR).map { name -> name.trim() }
     }
 
     private fun printRequestPlayerName() {
