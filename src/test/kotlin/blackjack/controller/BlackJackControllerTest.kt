@@ -53,14 +53,13 @@ class BlackJackControllerTest {
         inputView = FakeInputView(names, money, commands)
         outputView = FakeOutputView()
         controller = BlackJackController(inputView, outputView)
+
+        controller.start(CardDeck(deck))
     }
 
     @Test
-    fun `블랙잭 게임 테스트`() {
-        controller.start(CardDeck(deck))
-
+    fun `참여자들이 처음 공개하는 카드 확인`() {
         assertAll(
-            // 처음 나누어준 카드
             {
                 assertThat(outputView.firstOpenCards[0])
                     .isEqualTo(ParticipantCards("딜러", listOf(Card(CardNumber.JACK, Suit.SPADE))))
@@ -96,10 +95,18 @@ class BlackJackControllerTest {
                             "제이슨", listOf(Card(CardNumber.JACK, Suit.HEART), Card(CardNumber.NINE, Suit.HEART))
                         )
                     )
-            },
-            // 딜러가 몇 번 카드를 더 받는지 확인
-            { assertThat(outputView.dealerHitCount).isEqualTo(1) },
-            // 참여자들의 최종 카드 확인
+            }
+        )
+    }
+
+    @Test
+    fun `딜러가 몇 번 카드를 더 받는지 확인`() {
+        assertThat(outputView.dealerHitCount).isEqualTo(1)
+    }
+
+    @Test
+    fun `참여자들의 최종 카드 확인`() {
+        assertAll(
             {
                 assertThat(outputView.participantCards[0])
                     .isEqualTo(
@@ -147,20 +154,35 @@ class BlackJackControllerTest {
                             "제이슨", listOf(Card(CardNumber.JACK, Suit.HEART), Card(CardNumber.NINE, Suit.HEART))
                         )
                     )
-            },
-            // 참여자들의 최종 점수를 확인
+            }
+        )
+    }
+
+    @Test
+    fun `참여자들의 최종 점수를 확인`() {
+        assertAll(
             { assertThat(outputView.totalScores[0]).isEqualTo(ParticipantScore("딜러", 19)) },
             { assertThat(outputView.totalScores[1]).isEqualTo(ParticipantScore("부나", 20)) },
             { assertThat(outputView.totalScores[2]).isEqualTo(ParticipantScore("글로", 21)) },
             { assertThat(outputView.totalScores[3]).isEqualTo(ParticipantScore("반달", 31)) },
-            { assertThat(outputView.totalScores[4]).isEqualTo(ParticipantScore("제이슨", 19)) },
-            // 참여자들의 최종 승패를 확인
+            { assertThat(outputView.totalScores[4]).isEqualTo(ParticipantScore("제이슨", 19)) }
+        )
+    }
+
+    @Test
+    fun `참여자들의 최종 승패를 확인`() {
+        assertAll(
             { assertThat(outputView.results.dealerResult).isEqualTo(DealerResult("딜러", 1, 1, 2)) },
             { assertThat(outputView.results.playerResults[0]).isEqualTo(PlayerResult("부나", GameResult.WIN)) },
             { assertThat(outputView.results.playerResults[1]).isEqualTo(PlayerResult("글로", GameResult.BLACKJACK)) },
             { assertThat(outputView.results.playerResults[2]).isEqualTo(PlayerResult("반달", GameResult.LOSE)) },
-            { assertThat(outputView.results.playerResults[3]).isEqualTo(PlayerResult("제이슨", GameResult.DRAW)) },
-            // 참여자들의 최종 수익을 확인
+            { assertThat(outputView.results.playerResults[3]).isEqualTo(PlayerResult("제이슨", GameResult.DRAW)) }
+        )
+    }
+
+    @Test
+    fun `참여자들의 최종 수익을 확인`() {
+        assertAll(
             { assertThat(outputView.results.profits[0]).isEqualTo(ParticipantProfit("딜러", -11000)) },
             { assertThat(outputView.results.profits[1]).isEqualTo(ParticipantProfit("부나", 1000)) },
             { assertThat(outputView.results.profits[2]).isEqualTo(ParticipantProfit("글로", 15000)) },
