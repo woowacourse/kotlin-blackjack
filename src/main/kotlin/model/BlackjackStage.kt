@@ -1,14 +1,13 @@
 package model
 
-import entity.Dealer
 import entity.Player
-import entity.Players
 import entity.User
+import entity.Users
 
-class BlackjackStage(val dealer: Dealer, val players: Players, private val cardFactory: CardFactory) {
+class BlackjackStage(private val users: Users, private val cardFactory: CardFactory) {
     fun distributeAllUsers() {
-        distributeUser(dealer, INITIAL_CARD_DISTRIBUTE_COUNT)
-        players.value.forEach {
+        distributeUser(users.dealer, INITIAL_CARD_DISTRIBUTE_COUNT)
+        users.players.value.forEach {
             distributeUser(it, INITIAL_CARD_DISTRIBUTE_COUNT)
         }
     }
@@ -20,8 +19,8 @@ class BlackjackStage(val dealer: Dealer, val players: Players, private val cardF
     }
 
     fun distributeDealer(): Boolean {
-        if (dealer.isDistributable()) {
-            distributeUser(dealer, User.SINGLE_DISTRIBUTE_COUNT)
+        if (users.dealer.isDistributable()) {
+            distributeUser(users.dealer, User.SINGLE_DISTRIBUTE_COUNT)
             return true
         }
         return false

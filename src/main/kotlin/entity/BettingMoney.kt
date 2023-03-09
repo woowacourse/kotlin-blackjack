@@ -1,3 +1,3 @@
 package entity
 
-class BettingMoney(val value: Int)
+data class BettingMoney(val value: Int)
