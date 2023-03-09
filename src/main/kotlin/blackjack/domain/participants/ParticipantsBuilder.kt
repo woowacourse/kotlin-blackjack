@@ -1,8 +1,8 @@
 package blackjack.domain.participants
 
 class ParticipantsBuilder {
-    private lateinit var dealer: Dealer
-    private lateinit var guests: List<Guest>
+    private var dealer: Dealer = Dealer()
+    private var guests: List<Guest> = emptyList()
 
     fun dealer() { dealer = Dealer() }
 
