@@ -10,6 +10,7 @@ class Player(
     fun canHit(): Boolean = this.score < TARGET_SCORE
 
     fun against(dealer: Dealer): ResultType {
+        if (this.isBlackJack() && !dealer.isBlackJack()) return ResultType.WIN
         if (this.isBust()) return ResultType.LOSE
         if (dealer.isBust()) return ResultType.WIN
 

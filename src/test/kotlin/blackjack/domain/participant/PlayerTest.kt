@@ -100,4 +100,19 @@ class PlayerTest {
 
         assertThat(player.against(dealer)).isEqualTo(ResultType.TIE)
     }
+
+    @Test
+    fun `플레이어의 카드가 2장이고 합이 21, 딜러의 카드가 2장이 아니고 합이 21이면 이긴다`() {
+        val player = Player("hatti", BettingMoney(1000)).apply {
+            receive(Card(CardNumber.KING, CardShape.HEART))
+            receive(Card(CardNumber.ACE, CardShape.HEART))
+        }
+        val dealer = Dealer().apply {
+            receive(Card(CardNumber.SIX, CardShape.DIAMOND))
+            receive(Card(CardNumber.SEVEN, CardShape.DIAMOND))
+            receive(Card(CardNumber.EIGHT, CardShape.DIAMOND))
+        }
+
+        assertThat(player.against(dealer)).isEqualTo(ResultType.WIN)
+    }
 }
