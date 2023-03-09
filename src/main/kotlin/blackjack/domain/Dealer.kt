@@ -22,13 +22,31 @@ class Dealer(override val cardBunch: CardBunch) : Participant {
     }
 
     private fun getPlayerConsequence(dealerScore: Int, playerScore: Int): Consequence {
-        if (playerScore > MAX_SCORE_CONDITION) return Consequence.LOSE
-        if (dealerScore > MAX_SCORE_CONDITION) return Consequence.WIN
-        if (dealerScore == MAX_SCORE_CONDITION && playerScore != MAX_SCORE_CONDITION) return Consequence.LOSE
-        if (playerScore > dealerScore) return Consequence.WIN
-        if (playerScore == dealerScore) return Consequence.DRAW
-        return Consequence.LOSE
+        return when {
+            isDealerBurst(dealerScore) -> Consequence.WIN
+            isPlayerBurst(playerScore) -> Consequence.LOSE
+            isPush(dealerScore, playerScore) -> Consequence.DRAW
+            isDraw(dealerScore, playerScore) -> Consequence.DRAW
+            isDealerBlackjack(dealerScore) && !isPlayerBlackjack(playerScore) -> Consequence.LOSE
+            isDealerWin(dealerScore, playerScore) -> Consequence.LOSE
+            else -> Consequence.WIN
+        }
     }
+
+    private fun isPlayerBurst(playerScore: Int): Boolean = playerScore > MAX_SCORE_CONDITION
+
+    private fun isDealerBurst(dealerScore: Int): Boolean = dealerScore > MAX_SCORE_CONDITION
+
+    private fun isPush(dealerScore: Int, playerScore: Int): Boolean =
+        isDealerBlackjack(dealerScore) && isPlayerBlackjack(playerScore)
+
+    private fun isDraw(dealerScore: Int, playerScore: Int): Boolean = dealerScore == playerScore
+
+    private fun isDealerBlackjack(dealerScore: Int): Boolean = dealerScore == MAX_SCORE_CONDITION
+
+    private fun isPlayerBlackjack(playerScore: Int): Boolean = playerScore == MAX_SCORE_CONDITION
+
+    private fun isDealerWin(dealerScore: Int, playerScore: Int): Boolean = dealerScore > playerScore
 
     companion object {
         private const val ADD_CARD_CONDITION = 17
