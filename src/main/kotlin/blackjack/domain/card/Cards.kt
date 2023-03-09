@@ -8,7 +8,8 @@ class Cards(
     val cards: List<Card>
         get() = _cards.toList()
 
-    private var state: CardsState = CardsState.Running
+    var state: CardsState = CardsState.Running
+        private set
 
     init {
         require(cards.size == INITIAL_CARDS_SIZE)
@@ -32,18 +33,19 @@ class Cards(
 
     fun getMinimumCardsScore(): Int = cards.sumOf { card -> card.number.value }
 
+
     fun getTotalCardsScore(): Int {
         val aceCardsCount = cards.count { card -> card.number == CardNumber.A }
 
-        //TODO: var로 하지말기
-        var currentSum = cards
+        var totalScore = cards
             .filter { card -> card.number != CardNumber.A }
             .sumOf { card -> card.number.value }
 
         repeat(aceCardsCount) {
-            currentSum += CardNumber.decideAceValue(currentSum)
+            totalScore += CardNumber.decideAceValue(totalScore)
         }
-        return currentSum
+
+        return totalScore
     }
 
     fun checkCardsState(cardsState: CardsState): Boolean = state == cardsState
