@@ -18,6 +18,8 @@ class CardBunch private constructor(cards: MutableList<Card>) {
         return sum
     }
 
+    fun size(): Int = _cards.size
+
     private fun containAce(): Boolean {
         return _cards.any { card -> card.cardNumber == CardNumber.ACE }
     }

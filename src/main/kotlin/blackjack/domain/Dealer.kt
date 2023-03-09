@@ -8,9 +8,7 @@ class Dealer(override val cardBunch: CardBunch) : Participant {
     override fun getScore(): Int = cardBunch.getSumOfCards()
 
     private fun versusPlayer(player: Player): Consequence {
-        val dealerScore = cardBunch.getSumOfCards()
-        val playerScore = player.getScore()
-        return getPlayerConsequence(dealerScore, playerScore)
+        return getPlayerConsequence(player)
     }
 
     fun versusPlayers(players: List<Player>): Map<String, Consequence> {
@@ -21,32 +19,27 @@ class Dealer(override val cardBunch: CardBunch) : Participant {
         return gameResult
     }
 
-    private fun getPlayerConsequence(dealerScore: Int, playerScore: Int): Consequence {
+    private fun getPlayerConsequence(player: Player): Consequence {
         return when {
-            isDealerBurst(dealerScore) -> Consequence.WIN
-            isPlayerBurst(playerScore) -> Consequence.LOSE
-            isPush(dealerScore, playerScore) -> Consequence.DRAW
-            isDraw(dealerScore, playerScore) -> Consequence.DRAW
-            isDealerBlackjack(dealerScore) && !isPlayerBlackjack(playerScore) -> Consequence.LOSE
-            isDealerWin(dealerScore, playerScore) -> Consequence.LOSE
+            isPush(player) -> Consequence.DRAW
+            this.isBlackjack() && !player.isBlackjack() -> Consequence.LOSE
+            isDealerBurst() -> Consequence.WIN
+            isPlayerBurst(player) -> Consequence.LOSE
+            isDraw(player) -> Consequence.DRAW
+            isDealerWin(player) -> Consequence.LOSE
             else -> Consequence.WIN
         }
     }
 
-    private fun isPlayerBurst(playerScore: Int): Boolean = playerScore > MAX_SCORE_CONDITION
+    private fun isPlayerBurst(player: Player): Boolean = player.getScore() > MAX_SCORE_CONDITION
 
-    private fun isDealerBurst(dealerScore: Int): Boolean = dealerScore > MAX_SCORE_CONDITION
+    private fun isDealerBurst(): Boolean = this.getScore() > MAX_SCORE_CONDITION
 
-    private fun isPush(dealerScore: Int, playerScore: Int): Boolean =
-        isDealerBlackjack(dealerScore) && isPlayerBlackjack(playerScore)
+    private fun isPush(player: Player): Boolean = this.isBlackjack() && player.isBlackjack()
 
-    private fun isDraw(dealerScore: Int, playerScore: Int): Boolean = dealerScore == playerScore
+    private fun isDraw(player: Player): Boolean = this.getScore() == player.getScore()
 
-    private fun isDealerBlackjack(dealerScore: Int): Boolean = dealerScore == MAX_SCORE_CONDITION
-
-    private fun isPlayerBlackjack(playerScore: Int): Boolean = playerScore == MAX_SCORE_CONDITION
-
-    private fun isDealerWin(dealerScore: Int, playerScore: Int): Boolean = dealerScore > playerScore
+    private fun isDealerWin(player: Player): Boolean = this.getScore() > player.getScore()
 
     companion object {
         private const val ADD_CARD_CONDITION = 17

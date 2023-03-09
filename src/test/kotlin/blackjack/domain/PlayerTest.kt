@@ -27,4 +27,29 @@ class PlayerTest {
 
         assertThat(player.cardBunch.cards.size).isEqualTo(3)
     }
+
+    @Test
+    fun `2장의 카드의 합이 21이면 블랙잭이다`() {
+        val name = "krrong"
+        val card1 = Card.get(Shape.HEART, CardNumber.ACE)
+        val card2 = Card.get(Shape.HEART, CardNumber.JACK)
+        val cardBunch = CardBunch(card1, card2)
+
+        val player = Player(name, cardBunch)
+
+        assertThat(player.isBlackjack()).isTrue
+    }
+
+    @Test
+    fun `3장의 카드의 합이 21이면 블랙잭이 아니다`() {
+        val name = "krrong"
+        val card1 = Card.get(Shape.HEART, CardNumber.SIX)
+        val card2 = Card.get(Shape.HEART, CardNumber.SEVEN)
+        val card3 = Card.get(Shape.HEART, CardNumber.EIGHT)
+        val cardBunch = CardBunch(card1, card2, card3)
+
+        val player = Player(name, cardBunch)
+
+        assertThat(player.isBlackjack()).isFalse
+    }
 }
