@@ -10,8 +10,7 @@ class Blackjack(private val deck: CardDeck, private val participants: Participan
         onEndGame: (BlackjackResult) -> Unit,
     ) {
         participants.drawFirst(deck, onStartFirstDrawn, onFirstDrawn)
-        participants.takePlayerTurns(deck, onDrawnMore)
-        participants.takeDealerTurns(deck, onDrawnMore)
+        participants.takeTurns(deck, onDrawnMore)
         onEndGame(BlackjackResult(participants.getCardResults(), participants.getMatchResults()))
     }
 }
