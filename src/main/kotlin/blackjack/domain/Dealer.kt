@@ -11,10 +11,10 @@ class Dealer(override val cardBunch: CardBunch) : Participant {
         return getPlayerConsequence(player)
     }
 
-    fun versusPlayers(players: List<Player>): Map<String, Consequence> {
-        val gameResult = mutableMapOf<String, Consequence>()
+    fun versusPlayers(players: List<Player>): Map<Player, Consequence> {
+        val gameResult = mutableMapOf<Player, Consequence>()
         players.forEach { player ->
-            gameResult[player.name] = versusPlayer(player)
+            gameResult[player] = versusPlayer(player)
         }
         return gameResult
     }

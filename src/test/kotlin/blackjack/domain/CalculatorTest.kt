@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test
 
 class CalculatorTest {
     @Test
-    fun `1000원을 베팅하고 승리하면 2000원을 받는다`() {
+    fun `1000원을 베팅하고 승리하면 1000원 이익이다`() {
         // given
         val card1 = Card.get(Shape.HEART, CardNumber.TWO)
         val card2 = Card.get(Shape.HEART, CardNumber.THREE)
@@ -14,14 +14,14 @@ class CalculatorTest {
         val calculator = Calculator()
 
         // when
-        val actual = calculator.calculateDividend(player, Consequence.WIN)
+        val actual = calculator.calculateDividend(mapOf(player to Consequence.WIN))
 
         // then
-        assertThat(actual).isEqualTo(2000)
+        assertThat(actual[player]).isEqualTo(1000)
     }
 
     @Test
-    fun `1000원을 베팅하고 패배하면 0원을 받는다`() {
+    fun `1000원을 베팅하고 지면 -1000원 이득이다`() {
         // given
         val card1 = Card.get(Shape.HEART, CardNumber.TWO)
         val card2 = Card.get(Shape.HEART, CardNumber.THREE)
@@ -30,14 +30,14 @@ class CalculatorTest {
         val calculator = Calculator()
 
         // when
-        val actual = calculator.calculateDividend(player, Consequence.LOSE)
+        val actual = calculator.calculateDividend(mapOf(player to Consequence.LOSE))
 
         // then
-        assertThat(actual).isEqualTo(0)
+        assertThat(actual[player]).isEqualTo(-1000)
     }
 
     @Test
-    fun `1000원을 베팅하고 비기면 1000원을 받는다`() {
+    fun `1000원을 베팅하고 비기면 0원 이득이다`() {
         // given
         val card1 = Card.get(Shape.HEART, CardNumber.TWO)
         val card2 = Card.get(Shape.HEART, CardNumber.THREE)
@@ -46,9 +46,9 @@ class CalculatorTest {
         val calculator = Calculator()
 
         // when
-        val actual = calculator.calculateDividend(player, Consequence.DRAW)
+        val actual = calculator.calculateDividend(mapOf(player to Consequence.DRAW))
 
         // then
-        assertThat(actual).isEqualTo(1000)
+        assertThat(actual[player]).isEqualTo(0)
     }
 }

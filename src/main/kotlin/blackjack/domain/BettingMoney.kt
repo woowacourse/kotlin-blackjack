@@ -13,7 +13,7 @@ class BettingMoney(private val money: Int) {
 
     fun multipleZero(): Int = 0
 
-    fun toInt(): Int = money
+    fun minusFrom(profit: Int): Int = profit - money
 
     companion object {
         private const val MIN_MONEY = 0

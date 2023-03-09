@@ -38,7 +38,7 @@ class DealerTest {
 
         val actual = dealer.versusPlayers(listOf(player1))
 
-        assertThat(actual["krrong"]).isEqualTo(Consequence.LOSE)
+        assertThat(actual[player1]).isEqualTo(Consequence.LOSE)
     }
 
     @Test
@@ -54,7 +54,7 @@ class DealerTest {
 
         val actual = dealer.versusPlayers(listOf(player1))
 
-        assertThat(actual["krrong"]).isEqualTo(Consequence.WIN)
+        assertThat(actual[player1]).isEqualTo(Consequence.WIN)
     }
 
     @Test
@@ -70,7 +70,7 @@ class DealerTest {
 
         val actual = dealer.versusPlayers(listOf(player1))
 
-        assertThat(actual["krrong"]).isEqualTo(Consequence.LOSE)
+        assertThat(actual[player1]).isEqualTo(Consequence.LOSE)
     }
 
     @Test
@@ -85,7 +85,7 @@ class DealerTest {
 
         val actual = dealer.versusPlayers(listOf(player1))
 
-        assertThat(actual["krrong"]).isEqualTo(Consequence.DRAW)
+        assertThat(actual[player1]).isEqualTo(Consequence.DRAW)
     }
 
     @Test
@@ -101,7 +101,7 @@ class DealerTest {
 
         val actual = dealer.versusPlayers(listOf(player1))
 
-        assertThat(actual["krrong"]).isEqualTo(Consequence.LOSE)
+        assertThat(actual[player1]).isEqualTo(Consequence.LOSE)
     }
 
     @Test
@@ -117,6 +117,6 @@ class DealerTest {
 
         val actual = dealer.versusPlayers(listOf(player1))
 
-        assertThat(actual["krrong"]).isEqualTo(Consequence.WIN)
+        assertThat(actual[player1]).isEqualTo(Consequence.WIN)
     }
 }
