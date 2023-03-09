@@ -1,12 +1,9 @@
 package view
 
 import model.Cards
-import model.Dealer
 import model.GameResult
 import model.Participant
 import model.Participants
-import model.Player
-import model.Players
 import model.Rank
 import model.Result
 import model.Suit
@@ -16,13 +13,13 @@ class OutputView {
     fun printNoticeDistributeCards(participants: Participants) {
         println()
         println(noticeDistributeCardsNameFormat(participants))
-        participants.participants.forEach { printPlayerStatus(it) }
+        participants.all.forEach { printPlayerStatus(it) }
         println()
     }
 
     private fun noticeDistributeCardsNameFormat(participants: Participants): String {
         return MESSAGE_DISTRIBUTE_CARD.format(
-            participants.participants.filter { !it.isDealer() }
+            participants.all.filter { !it.isDealer() }
                 .joinToString(", ") { it.name.value }
         )
     }
@@ -51,7 +48,7 @@ class OutputView {
 
     fun printGameResult(participants: Participants) {
         val dealerResult = GameResult(participants)
-        val playerResult = Players(participants.players.map { it as Player }).getGameResult(participants.dealer as Dealer)
+        val playerResult = participants.players.getGameResult(participants.dealer)
         println()
         println(MESSAGE_RESULT_TITLE)
         println(MESSAGE_DEALER_RESULT.format(dealerResult.winCount, dealerResult.loseCount))

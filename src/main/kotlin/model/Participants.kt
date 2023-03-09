@@ -1,12 +1,10 @@
 package model
 
-data class Participants(val participants: List<Participant>) {
-    val dealer: Participant
-        get() = participants.find { it.isDealer() }!!
-    val players: List<Participant>
-        get() = participants.filter { !it.isDealer() }
+data class Participants(val dealer: Participant, val players: Players) {
+    val all: List<Participant>
+        get() = listOf(dealer) + players
 
     fun drawFirstCard(cardDeck: CardDeck) {
-        participants.forEach { it.drawFirst(cardDeck) }
+        all.forEach { it.drawFirst(cardDeck) }
     }
 }

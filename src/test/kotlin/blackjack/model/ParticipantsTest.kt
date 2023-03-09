@@ -17,11 +17,11 @@ class ParticipantsTest {
         val dealer = Dealer()
         val player1 = Player.from("jason")
         val player2 = Player.from("pobi")
-        val actual = Participants(listOf(dealer) + Players(player1, player2))
-        assertThat(actual.participants.size).isEqualTo(3)
-        assertThat(actual.participants[0].name.value).isEqualTo("딜러")
-        assertThat(actual.participants[1].name.value).isEqualTo("jason")
-        assertThat(actual.participants[2].name.value).isEqualTo("pobi")
+        val actual = Participants(dealer, Players(player1, player2))
+        assertThat(actual.all.size).isEqualTo(3)
+        assertThat(actual.dealer.name.value).isEqualTo("딜러")
+        assertThat(actual.players[0].name.value).isEqualTo("jason")
+        assertThat(actual.players[1].name.value).isEqualTo("pobi")
     }
 
     @Test
@@ -37,11 +37,11 @@ class ParticipantsTest {
         val dealer = Dealer()
         val player1 = Player.from("jason")
         val player2 = Player.from("pobi")
-        val actual = Participants(listOf(dealer) + Players(player1, player2))
+        val actual = Participants(dealer, Players(player1, player2))
         actual.drawFirstCard(cardDeck)
-        assertThat(actual.participants[0].cards.size == 2).isTrue
-        assertThat(actual.participants[1].cards.size == 2).isTrue
-        assertThat(actual.participants[2].cards.size == 2).isTrue
+        assertThat(actual.dealer.cards.size == 2).isTrue
+        assertThat(actual.players[0].cards.size == 2).isTrue
+        assertThat(actual.players[1].cards.size == 2).isTrue
     }
 
     companion object {
