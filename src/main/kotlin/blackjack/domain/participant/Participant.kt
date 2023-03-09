@@ -18,7 +18,7 @@ abstract class Participant(val name: String) {
 
     fun isBust(): Boolean = score > TARGET_SCORE
 
-    fun isBlackJack(): Boolean = score == TARGET_SCORE
+    fun isBlackJack(): Boolean = score == TARGET_SCORE && _cards.size == INIT_CARD_SIZE
 
     companion object {
         const val INIT_CARD_SIZE = 2

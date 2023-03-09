@@ -42,7 +42,7 @@ class PlayerTest {
     }
 
     @Test
-    fun `카드의 합이 21이면 blackjack이다`() {
+    fun `카드의 개수가 2개이고 합이 21이면 blackjack이다`() {
         val player = Player("hatti", BettingMoney(1000)).apply {
             receive(Card(CardNumber.KING, CardShape.HEART))
             receive(Card(CardNumber.ACE, CardShape.HEART))
