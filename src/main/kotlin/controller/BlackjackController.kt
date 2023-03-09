@@ -1,10 +1,12 @@
 package controller
 
+import entity.BettingMoney
 import entity.CardDistributeCondition
 import entity.Dealer
 import entity.Name
 import entity.Player
 import entity.Players
+import entity.UserInformation
 import model.BlackjackStage
 import model.RandomCardFactory
 import view.GameSetView
@@ -16,14 +18,15 @@ class BlackjackController {
     private val gameView = GameView()
     private val resultView = ResultView()
 
-    private fun readPlayers(): Players {
+    private fun readPlayersInformation(): Players {
         return gameSetView.readPlayerNames().map {
-            Player(Name(it))
+            val bettingMoney = gameSetView.readBettingMoney(it)
+            Player(UserInformation(Name(it), BettingMoney(bettingMoney)))
         }.let { Players(it) }
     }
 
     private fun initBlackjack(): BlackjackStage {
-        val players = readPlayers()
+        val players = readPlayersInformation()
         val dealer = Dealer()
         val cardFactory = RandomCardFactory()
         val blackjackStage = BlackjackStage(dealer, players, cardFactory)
@@ -40,7 +43,7 @@ class BlackjackController {
 
     private fun distributeMoreCardPlayerProcess(player: Player, blackjackStage: BlackjackStage) {
         while (player.isDistributable()) {
-            gameView.printWhetherMoreCard(player.name.value)
+            gameView.printWhetherMoreCard(player.userInformation.name.value)
             if (!player.isDistributable() || !CardDistributeCondition(gameView.readWhetherMoreCard()).toBoolean()) break
             blackjackStage.distributePlayers(player)
             gameView.printPlayerStatus(player)

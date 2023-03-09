@@ -12,7 +12,7 @@ class GameView {
     }
 
     fun printPlayerStatus(player: Player) {
-        print(player.name.value)
+        print(player.userInformation.name.value)
         print(MESSAGE_PLAYER_NAME)
         println(ViewUtils.cardsToString(player.cards))
     }
@@ -21,7 +21,7 @@ class GameView {
         println(
             MESSAGE_USERS_STATUS.format(
                 players.value.joinToString(", ") {
-                    it.name.value
+                    it.userInformation.name.value
                 }
             )
         )
