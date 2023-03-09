@@ -1,6 +1,5 @@
 package blackjack.domain.player
 
-import blackjack.domain.BattingMoney
 import blackjack.domain.card.Cards
 
 data class Player(

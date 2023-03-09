@@ -1,6 +1,6 @@
 package blackjack.domain.gameResult
 
-import blackjack.domain.BattingMoney
+import blackjack.domain.player.BattingMoney
 
 @JvmInline
 value class ProfitMoney(val value: Int) {

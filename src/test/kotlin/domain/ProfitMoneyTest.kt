@@ -1,6 +1,6 @@
 package domain
 
-import blackjack.domain.BattingMoney
+import blackjack.domain.player.BattingMoney
 import blackjack.domain.gameResult.GameResult
 import blackjack.domain.gameResult.ProfitMoney
 import org.assertj.core.api.Java6Assertions.assertThat

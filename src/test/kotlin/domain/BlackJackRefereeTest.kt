@@ -1,6 +1,6 @@
 package domain
 
-import blackjack.domain.BattingMoney
+import blackjack.domain.player.BattingMoney
 import blackjack.domain.BlackJackReferee
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber

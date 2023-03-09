@@ -3,6 +3,7 @@ package blackjack.domain.gameResult
 import blackjack.domain.card.Cards
 import blackjack.domain.card.CardsState
 
+//TODO: 매번 values를 호출해서 판단해야할까?
 enum class GameResultCase(
     val condition: (playerCards: Cards, dealerCards: Cards) -> Boolean,
     val gameResult: GameResult,

@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.player
 
 @JvmInline
 value class BattingMoney(val value: Int) {

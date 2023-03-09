@@ -13,6 +13,7 @@ object InputView {
     private const val REQUEST_PLAYERS_BATTING_MONEY = "%s의 배팅 금액은?"
     private const val NUMERIC_ERROR_MSG = "[ERROR] 숫자가 아닌 입력은 허용하지 않습니다.\n다시 입력해주세요."
 
+    //TODO: 매번 이런 함수를 만들어야할까?
     private fun requestNumericInput(message: String): Int {
         println(message)
 
