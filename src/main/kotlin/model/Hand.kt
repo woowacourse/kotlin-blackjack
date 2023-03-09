@@ -5,11 +5,13 @@ import java.util.LinkedList
 data class Hand(private val cards: LinkedList<Card>) {
     val size
         get() = cards.size
+
     constructor(cards: List<Card>) : this(LinkedList(cards))
 
     init {
         require(cards.distinct().size == cards.size) { CARD_DUPLICATE_ERROR }
     }
+
     fun toList() = cards.toList()
 
     fun add(card: Card) {
