@@ -19,8 +19,8 @@ class CardValueTest {
     }
 
     @Test
-    fun `카드리스트들에 ACE 카드가 있으면 false가 반환된다`() {
-        val cardValues = listOf(CardValue.TEN, CardValue.EIGHT, CardValue.ACE)
+    fun `카드리스트들에 ACE 카드가 없으면 false가 반환된다`() {
+        val cardValues = listOf(CardValue.TEN, CardValue.EIGHT, CardValue.SIX)
         assertThat(CardValue.containsAce(cardValues)).isFalse()
     }
 }
