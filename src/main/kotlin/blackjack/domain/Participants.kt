@@ -3,7 +3,7 @@ package blackjack.domain
 class Participants(private val participants: List<Participant>) {
     init {
         require(participants.size in MINIMUM_PARTICIPANTS..MAXIMUM_PARTICIPANTS) {
-            "블랙잭은 최소 ${MINIMUM_PARTICIPANTS}명에서 최대 ${MAXIMUM_PARTICIPANTS}명의 플레이어가 참여 가능합니다. (현재 플레이어수 : ${participants.size}명)"
+            "블랙잭은 딜러를 포함하여 최소 ${MINIMUM_PARTICIPANTS}명에서 최대 ${MAXIMUM_PARTICIPANTS}명의 플레이어가 참여 가능합니다. (현재 플레이어수 : ${participants.size}명)"
         }
     }
 
@@ -66,7 +66,7 @@ class Participants(private val participants: List<Participant>) {
     }
 
     companion object {
-        private const val MINIMUM_PARTICIPANTS = 1
+        private const val MINIMUM_PARTICIPANTS = 2
         private const val MAXIMUM_PARTICIPANTS = 8
     }
 }
