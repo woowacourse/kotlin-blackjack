@@ -54,7 +54,8 @@ class BlackJackGame {
         onUserPickNewCards: (User) -> Unit
     ) {
         val userScore = Score.valueOf(user.cards.calculateCardValueSum())
-        if (getMoreCardCommand(user) && (!userScore.isBurst() && !userScore.isBlackJack())) {
+        if ((userScore.isBurst() || userScore.isBlackJack())) return
+        if (getMoreCardCommand(user)) {
             user.cards.addCard(blackJackGameData.deck.getOneCard())
             onUserPickNewCards(user)
             return repeatGetCommand(blackJackGameData, user, getMoreCardCommand, onUserPickNewCards)
