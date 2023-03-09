@@ -10,33 +10,32 @@ import blackjack.domain.participant.Player
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
-class BlackJackController {
-
+class BlackJackController(
+    private val inputView: InputView,
+    private val outputView: OutputView
+) {
     fun start() {
         with(initBlackJack()) {
             setUpCard(this)
             takeTurns(this)
             takeDealerTurn(this)
 
-            OutputView.printScores(getCards(), getTotalScores())
             val results = getGameResults()
-            OutputView.printResults(results)
-            OutputView.printProfits(results.calculateProfits())
+            outputView.printResult(getCards(), getTotalScores(), results, results.calculateProfits())
         }
     }
 
     private fun initBlackJack(): BlackJack = BlackJack(CardDeck(), Participants(Dealer(), enrollPlayers()))
 
     private fun enrollPlayers(): BettingPlayers {
-        val players = InputView.inputNames().map(::Player)
-        val bettingPlayers = players.map { BettingPlayer(it, InputView.inputBettingMoney(it.name)) }
+        val players = inputView.inputNames().map(::Player)
+        val bettingPlayers = players.map { BettingPlayer(it, inputView.inputBettingMoney(it.name)) }
         return BettingPlayers(bettingPlayers)
     }
 
     private fun setUpCard(blackJack: BlackJack) {
         drawInitialCards(blackJack)
-        OutputView.printFirstOpenCards(blackJack.getFirstOpenCards())
-        OutputView.printInterval()
+        outputView.printFirstOpenCards(blackJack.getFirstOpenCards())
     }
 
     private fun drawInitialCards(blackJack: BlackJack) {
@@ -48,12 +47,11 @@ class BlackJackController {
         blackJack.getPlayers().forEach { player ->
             takePlayerTurn(blackJack, player)
         }
-        OutputView.printInterval()
     }
 
     private fun takePlayerTurn(blackJack: BlackJack, player: BettingPlayer) {
         if (!player.canDraw()) {
-            val isDraw = InputView.inputDrawCommand(player.getName())
+            val isDraw = inputView.inputDrawCommand(player.getName())
             if (!isDraw) return printPlayerCards(player)
 
             drawCard(blackJack, player)
@@ -68,13 +66,12 @@ class BlackJackController {
 
     private fun printPlayerCards(player: BettingPlayer) {
         val participantCards = player.getCards()
-        OutputView.printCards(participantCards.name, participantCards.cards)
+        outputView.printCards(participantCards.name, participantCards.cards)
     }
 
     private fun takeDealerTurn(blackJack: BlackJack) {
         blackJack.drawDealer { isHit ->
-            if (isHit) OutputView.printDealerHit()
+            if (isHit) outputView.printDealerHit()
         }
-        OutputView.printInterval()
     }
 }
