@@ -11,7 +11,7 @@ class BlackjackResult private constructor(private val playersRevenue: Map<Player
             "모든 참여자는 ${Participant.INIT_CARD_SIZE}장 이상의 카드를 가지고 있어야 블랙잭 결과를 생성할 수 있습니다."
 
         fun of(dealer: Dealer, playersBetAmount: PlayersBetAmount): BlackjackResult {
-            val players = Players(playersBetAmount.keys)
+            val players = playersBetAmount.players
             require(dealer.hasInitialCards() && players.haveInitialCards()) { PARTICIPANTS_SHOULD_HAVE_INITIAL_CARDS }
             require(dealer.shouldHit().not()) { DEALER_SHOULD_HIT_ERROR }
 
@@ -21,9 +21,7 @@ class BlackjackResult private constructor(private val playersRevenue: Map<Player
         }
 
         private fun createResult(dealer: Dealer, playersBetAmount: PlayersBetAmount): Map<Player, Int> {
-            val players = Players(playersBetAmount.keys)
-
-            return players.associateWith { it against dealer }.map { (player, result) ->
+            return playersBetAmount.players.associateWith { it against dealer }.map { (player, result) ->
                 val playerBetAmount = playersBetAmount[player]?.toInt() ?: 0
                 when (result) {
                     ResultType.WIN -> player to if (player.isBlackjack()) playerBetAmount + (playerBetAmount / 2) else playerBetAmount
