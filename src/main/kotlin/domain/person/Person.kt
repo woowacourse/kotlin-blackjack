@@ -3,7 +3,8 @@ package domain.person
 import constant.BlackJackConstants.BLACK_JACK
 import domain.card.Card
 import domain.card.HandOfCards
-import domain.card.strategy.SumStrategy.getMinSum
+import domain.card.strategy.GetMinSum
+import domain.card.strategy.SumStrategy
 
 abstract class Person() {
     abstract val name: String
@@ -15,11 +16,11 @@ abstract class Person() {
 
     fun showHandOfCards(): List<Card> = handOfCards.cards
 
-    fun getTotalCardNumber(getSum: HandOfCards.() -> Int): Int {
-        return handOfCards.getSum()
+    fun getTotalCardNumber(sumStrategy: SumStrategy): Int {
+        return handOfCards.getTotalCardSum(sumStrategy)
     }
 
     abstract fun canReceiveMoreCard(): Boolean
 
-    fun isBust(): Boolean = getTotalCardNumber { getMinSum() } > BLACK_JACK
+    fun isBust(): Boolean = getTotalCardNumber(GetMinSum) > BLACK_JACK
 }

@@ -6,7 +6,7 @@ import domain.card.CardShape.CLOVER
 import domain.card.CardShape.DIAMOND
 import domain.card.CardShape.HEART
 import domain.card.HandOfCards
-import domain.card.strategy.SumStrategy.getAppropriateSum
+import domain.card.strategy.GetAppropriateSum
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -45,7 +45,7 @@ class DealerTest {
         dealer.receiveCard(Card(HEART, number1))
         dealer.receiveCard(Card(HEART, number2))
 
-        assertThat(dealer.getTotalCardNumber { getAppropriateSum() }).isEqualTo(sum)
+        assertThat(dealer.getTotalCardNumber(GetAppropriateSum)).isEqualTo(sum)
     }
 
     @CsvSource(value = ["ACE,ACE,false", "KING,QUEEN,true"])

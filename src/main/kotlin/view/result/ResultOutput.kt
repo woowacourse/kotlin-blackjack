@@ -1,6 +1,6 @@
 package view.result
 
-import domain.card.strategy.SumStrategy.getAppropriateSum
+import domain.card.strategy.GetAppropriateSum
 import domain.person.Person
 import domain.result.OutCome
 import view.ViewCommon.toText
@@ -15,7 +15,7 @@ object ResultOutput {
             INITIAL_CARDS_SCRIPT.format(
                 person.name,
                 person.showHandOfCards().joinToString(",") { it.toText() },
-                person.getTotalCardNumber { getAppropriateSum() },
+                person.getTotalCardNumber(GetAppropriateSum),
             ),
         )
     }

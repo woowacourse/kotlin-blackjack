@@ -1,7 +1,7 @@
 package domain.card
 
-import domain.card.strategy.SumStrategy.getAppropriateSum
-import domain.card.strategy.SumStrategy.getMinSum
+import domain.card.strategy.GetAppropriateSum
+import domain.card.strategy.GetMinSum
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
@@ -35,7 +35,7 @@ internal class HandOfCardsTest {
         )
 
         // when
-        val actual = handOfCards.getAppropriateSum()
+        val actual = handOfCards.getTotalCardSum(GetAppropriateSum)
 
         // then
         assertThat(actual).isEqualTo(expected)
@@ -51,7 +51,7 @@ internal class HandOfCardsTest {
         )
 
         // when
-        val actual = handOfCards.getMinSum()
+        val actual = handOfCards.getTotalCardSum(GetMinSum)
 
         // then
         assertThat(actual).isEqualTo(expected)
