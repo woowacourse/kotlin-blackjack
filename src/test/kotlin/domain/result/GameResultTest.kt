@@ -8,6 +8,7 @@ import domain.card.CardNumber.KING
 import domain.card.CardNumber.NINE
 import domain.card.CardShape
 import domain.person.Dealer
+import domain.person.Participants
 import domain.person.Player
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -29,7 +30,7 @@ class GameResultTest {
         )
         val dealer = Dealer(listOf(KING, NINE))
 
-        val gameResult = GameResult(dealer, players)
+        val gameResult = GameResult(Participants(dealer, players))
 
         val expectedDealerResult = mapOf(OutCome.WIN to 1, OutCome.LOSE to 1)
         val expectedPlayersResult = mapOf("빅스" to OutCome.LOSE, "베르" to OutCome.WIN)
