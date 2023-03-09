@@ -7,24 +7,28 @@ import blackjack.domain.CardResult
 import blackjack.domain.Dealer
 import blackjack.domain.MatchResult
 import blackjack.domain.Participant
+import blackjack.domain.Participants
 import blackjack.domain.Player
 import blackjack.domain.Suit
 
 object OutputView {
     private const val SEPARATOR = ", "
 
-    fun printFirstOpenCards(cards: Map<String, List<Card>>) {
-        println("${cards.keys.first()}와 ${cards.keys.drop(1).joinToString(SEPARATOR)}에게 2장의 카드를 나누었습니다.")
-        printCards(cards)
+    fun printFirstDrawnMessage(participants: Participants) {
+        val dealer = participants.getDealer()
+        val players = participants.getPlayers()
+        println("${dealer.name}와 ${players.joinToString(SEPARATOR) { it.name }}에게 2장의 카드를 나누었습니다.")
     }
 
-    private fun printCards(cards: Map<String, List<Card>>) {
-        cards.forEach { (name, cards) ->
-            println("$name 카드: ${cards.joinToString(SEPARATOR) { it.toText() }}")
-        }
+    fun printFirstOpenCards(participant: Participant) {
+        printCards(participant.name, participant.getFirstOpenCards())
     }
 
-    fun printDrawn(participant: Participant) {
+    private fun printCards(name: String, cards: List<Card>) {
+        println("$name 카드: ${cards.joinToString(SEPARATOR) { it.toText() }}")
+    }
+
+    fun printAllCards(participant: Participant) {
         when (participant) {
             is Dealer -> println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
             is Player -> println(
@@ -100,5 +104,5 @@ object OutputView {
         Suit.CLOVER -> "클로버"
     }
 
-    fun printInterval() = println()
+    private fun printInterval() = println()
 }

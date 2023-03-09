@@ -8,12 +8,12 @@ import blackjack.view.OutputView
 
 class BlackjackController {
     fun start() {
-        with(initBlackjack()) {
-            setUpCard(this)
-
-            val result = start(onDrawn = OutputView::printDrawn)
-            OutputView.printBlackjackResult(result)
-        }
+        initBlackjack().start(
+            onStartFirstDrawn = OutputView::printFirstDrawnMessage,
+            onFirstDrawn = OutputView::printFirstOpenCards,
+            onDrawnMore = OutputView::printAllCards,
+            onEndGame = OutputView::printBlackjackResult
+        )
     }
 
     private fun initBlackjack(): Blackjack = Blackjack(CardDeck(), enrollPlayers())
@@ -22,15 +22,5 @@ class BlackjackController {
         Player(name, needToDraw = {
             InputView.inputDrawCommand(name)
         })
-    }
-
-    private fun setUpCard(blackJack: Blackjack) {
-        drawInitialCards(blackJack)
-        OutputView.printFirstOpenCards(blackJack.getFirstOpenCards())
-        OutputView.printInterval()
-    }
-
-    private fun drawInitialCards(blackJack: Blackjack) {
-        blackJack.readyToStart()
     }
 }
