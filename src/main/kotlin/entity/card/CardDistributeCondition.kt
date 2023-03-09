@@ -1,4 +1,4 @@
-package entity
+package entity.card
 
 class CardDistributeCondition(val value: String) {
     init {

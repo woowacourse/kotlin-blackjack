@@ -1,4 +1,6 @@
-package entity
+package entity.result
+
+import entity.users.Player
 
 class PlayersGameResult(val value: Map<Player, GameResultType>) {
     fun makeDealerGameResult(): DealerGameResult {

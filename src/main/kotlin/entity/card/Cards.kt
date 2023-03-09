@@ -1,4 +1,4 @@
-package entity
+package entity.card
 
 import misc.GameRule
 

@@ -1,9 +1,9 @@
 package view
 
-import entity.Cards
-import entity.Dealer
-import entity.Player
-import entity.Players
+import entity.card.Cards
+import entity.users.Dealer
+import entity.users.Player
+import entity.users.Players
 
 class GameView {
     private fun printDealerStatus(dealer: Dealer) {

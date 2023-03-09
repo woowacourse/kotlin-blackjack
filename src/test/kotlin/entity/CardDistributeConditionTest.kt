@@ -1,5 +1,6 @@
 package entity
 
+import entity.card.CardDistributeCondition
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow

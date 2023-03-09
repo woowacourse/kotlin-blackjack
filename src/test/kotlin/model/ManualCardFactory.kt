@@ -1,9 +1,9 @@
 package model
 
-import entity.Card
-import entity.CardNumber
-import entity.CardType
-import entity.Cards
+import entity.card.Card
+import entity.card.CardNumber
+import entity.card.CardType
+import entity.card.Cards
 
 class ManualCardFactory(private val cardTypes: List<CardType>, private val cardNumbers: List<CardNumber>) :
     CardFactory {

@@ -1,4 +1,6 @@
-package entity
+package entity.users
+
+import entity.result.PlayersGameResult
 
 class Players(val value: List<Player>) {
     fun determineAllPlayerGameResult(dealer: User): PlayersGameResult {

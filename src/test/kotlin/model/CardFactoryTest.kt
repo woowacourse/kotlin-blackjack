@@ -1,8 +1,8 @@
 package model
 
-import entity.Card
-import entity.CardNumber
-import entity.CardType
+import entity.card.Card
+import entity.card.CardNumber
+import entity.card.CardType
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

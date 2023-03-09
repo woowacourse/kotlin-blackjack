@@ -1,4 +1,4 @@
-package entity
+package entity.card
 
 enum class CardNumber(val value: Int) {
     ACE(1),

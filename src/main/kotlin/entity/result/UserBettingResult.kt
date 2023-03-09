@@ -1,5 +1,8 @@
-package entity
+package entity.result
 
+import entity.users.Dealer
+import entity.users.Player
+import entity.users.Players
 import misc.GameRule
 
 class UserBettingResult {

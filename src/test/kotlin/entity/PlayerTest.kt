@@ -1,5 +1,15 @@
 package entity
 
+import entity.card.Card
+import entity.card.CardNumber
+import entity.card.CardType
+import entity.card.Cards
+import entity.result.BettingMoney
+import entity.result.GameResultType
+import entity.users.Dealer
+import entity.users.Name
+import entity.users.Player
+import entity.users.UserInformation
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 
@@ -14,7 +24,10 @@ class PlayerTest {
 
     @Test
     fun `플레이어가 가진 카드의 숫자 합이 21 이상이면 한장의 카드를 더 받을 수 없다`() {
-        val dealer = Dealer(Cards(listOf(Card(CardType.SPADE, CardNumber.TEN), Card(CardType.SPADE, CardNumber.TEN), Card(CardType.SPADE, CardNumber.TWO))))
+        val dealer = Dealer(
+            Cards(listOf(Card(CardType.SPADE, CardNumber.TEN), Card(CardType.SPADE, CardNumber.TEN), Card(
+                CardType.SPADE, CardNumber.TWO)))
+        )
         val isDistributable = dealer.isDistributable()
 
         Assertions.assertThat(isDistributable).isFalse

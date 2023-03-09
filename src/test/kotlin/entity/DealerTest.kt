@@ -1,5 +1,10 @@
 package entity
 
+import entity.card.Card
+import entity.card.CardNumber
+import entity.card.CardType
+import entity.card.Cards
+import entity.users.Dealer
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

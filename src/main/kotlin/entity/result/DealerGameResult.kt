@@ -1,4 +1,4 @@
-package entity
+package entity.result
 
 class DealerGameResult(val value: Map<GameResultType, Int>) {
     init {

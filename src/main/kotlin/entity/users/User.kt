@@ -1,4 +1,6 @@
-package entity
+package entity.users
+
+import entity.card.Cards
 
 abstract class User(val cards: Cards) {
     abstract fun isDistributable(): Boolean
