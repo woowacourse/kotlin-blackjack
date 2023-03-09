@@ -5,7 +5,6 @@ import model.Dealer.Companion.DEALER
 import model.GameResult
 import model.Hand
 import model.Name
-import model.Names
 import model.Participant
 import model.Participants
 import model.Player
@@ -23,16 +22,17 @@ class OutputView {
         println(MESSAGE_HOW_MUCH_BET.format(name.value))
     }
 
-    fun printNoticeDistributeCards(players: Names) {
+    fun printNoticeDistributeCards(participants: Participants) {
         println()
-        println(MESSAGE_DISTRIBUTE_CARD.format(players.joinToString(", ") { it.value }))
+        println(MESSAGE_DISTRIBUTE_CARD.format(participants.players.toNames().joinToString(", ") { it.value }))
+        printParticipantsStatus(participants)
     }
 
     fun printGetCardMore(name: Name) {
         println(MESSAGE_INPUT_YES_OR_NO.format(name.value))
     }
 
-    fun printParticipantsStatus(participants: Participants) {
+    private fun printParticipantsStatus(participants: Participants) {
         participants.toList().forEach { printParticipantStatus(it) }
         println()
     }
@@ -50,7 +50,12 @@ class OutputView {
         println(MESSAGE_PARTICIPANT_STATUS.format(participant.name.value, cardsToString((participant as Player).hand)))
     }
 
-    fun printAllPlayerStatusResult(participants: Participants) {
+    fun printResult(participants: Participants, gameResult: GameResult) {
+        printAllPlayerStatusResult(participants)
+        printFinalResult(gameResult)
+    }
+
+    private fun printAllPlayerStatusResult(participants: Participants) {
         println()
         participants.toList().forEach {
             print(MESSAGE_PARTICIPANT_STATUS.format(it.name.value, cardsToString(it.hand)))
@@ -58,7 +63,7 @@ class OutputView {
         }
     }
 
-    fun printFinalResult(gameResult: GameResult) {
+    private fun printFinalResult(gameResult: GameResult) {
         println()
         println(MESSAGE_RESULT_TITLE)
         println(MESSAGE_DEALER_RESULT.format(gameResult.getDealerProfitResult()))
@@ -89,6 +94,5 @@ class OutputView {
         private const val MESSAGE_RESULT_TITLE = "## 최종 수익"
         private const val MESSAGE_DEALER_RESULT = "딜러: %d"
         private const val MESSAGE_PLAYER_RESULT = "%s: %d"
-        private const val ERROR_INPUT_BLANK = ""
     }
 }
