@@ -9,7 +9,7 @@ abstract class Participant(val name: String) {
 
     fun getTotalScore(): Int = cards.calculateTotalScore()
 
-    fun isBust(): Boolean = cards.isOverBlackjack(getTotalScore())
+    fun isBust(): Boolean = cards.isOverBlackjack()
 
     fun isStay(): Boolean = cards.isStay()
 
