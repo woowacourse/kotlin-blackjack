@@ -14,9 +14,4 @@ class BlackJack(private val deck: CardDeck, private val participants: Participan
     }
 
     fun getFirstOpenCards(): Map<String, List<Card>> = participants.getFirstOpenCards()
-
-    companion object {
-        private const val BLACKJACK_SCORE = 21
-        fun blackjackScore(): Int = BLACKJACK_SCORE
-    }
 }
