@@ -42,7 +42,7 @@ class DealerTest {
     }
 
     @Test
-    fun `플레이어보다 딜러의 점수가 낮으면 플레이어가 승리한다`() {
+    fun `플레이어보다 딜러의 점수가 낮으면 딜러가 진다`() {
         val card1 = Card.get(Shape.HEART, CardNumber.SIX)
         val card2 = Card.get(Shape.HEART, CardNumber.SEVEN)
         val card3 = Card.get(Shape.HEART, CardNumber.NINE)
@@ -118,5 +118,21 @@ class DealerTest {
         val actual = dealer.versusPlayers(listOf(player1))
 
         assertThat(actual[player1]).isEqualTo(Consequence.WIN)
+    }
+
+    @Test
+    fun `플레이어와 딜러의 점수가 모두 21을 넘는경우 딜러가 이긴다`() {
+        val card1 = Card.get(Shape.HEART, CardNumber.SIX)
+        val card2 = Card.get(Shape.HEART, CardNumber.SEVEN)
+        val card3 = Card.get(Shape.HEART, CardNumber.JACK)
+        val playerCardBunch = CardBunch(card1, card2, card3)
+        val dealerCardBunch = CardBunch(card1, card2, card3)
+
+        val player1 = Player("krrong", playerCardBunch, BettingMoney(1000))
+        val dealer = Dealer(dealerCardBunch)
+
+        val actual = dealer.versusPlayers(listOf(player1))
+
+        assertThat(actual[player1]).isEqualTo(Consequence.LOSE)
     }
 }

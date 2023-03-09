@@ -23,6 +23,7 @@ class Dealer(override val cardBunch: CardBunch) : Participant {
         return when {
             isPush(player) -> Consequence.DRAW
             this.isBlackjack() && !player.isBlackjack() -> Consequence.LOSE
+            isPlayerBurst(player) && isDealerBurst() -> Consequence.LOSE
             isDealerBurst() -> Consequence.WIN
             isPlayerBurst(player) -> Consequence.LOSE
             isDraw(player) -> Consequence.DRAW
