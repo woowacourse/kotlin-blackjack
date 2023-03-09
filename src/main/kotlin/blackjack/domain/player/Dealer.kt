@@ -27,13 +27,6 @@ class Dealer(
         results[gameResult] = results[gameResult]?.plus(1) ?: throw IllegalArgumentException()
     }
 
-    fun decideGameResult(participants: Participants) {
-        participants.values.forEach {
-            val gameResult = reversGameResult(it.gameResult)
-            results[gameResult] = results[gameResult]?.plus(1) ?: throw IllegalArgumentException()
-        }
-    }
-
     private fun reversGameResult(gameResult: GameResult): GameResult = when (gameResult) {
         GameResult.WIN -> GameResult.LOSE
         GameResult.LOSE -> GameResult.WIN
