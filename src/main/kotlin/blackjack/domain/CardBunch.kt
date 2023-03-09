@@ -31,11 +31,7 @@ class CardBunch private constructor(cards: MutableList<Card>) {
 
     fun isBlackJack(): Boolean = cards.size == 2 && getTotalScore() == 21
 
-    private fun containsAce(): Boolean {
-        var result = false
-        cards.forEach { if (it.cardNumber == CardNumber.ACE) result = true }
-        return result
-    }
+    private fun containsAce(): Boolean = cards.map { card -> card.isAce() }.reduce { acc, isAce -> acc && isAce }
 
     companion object {
         private const val ACE_SCORE_GAP = 10
