@@ -4,6 +4,7 @@ class Player(name: ParticipantName) : Participant(name) {
     constructor(name: String) : this(ParticipantName(name))
     infix fun against(dealer: Dealer): ResultType {
         if (dealer.isBust()) return ResultType.WIN
+        if (isBust()) return ResultType.LOSE
 
         val score = this.getScore()
         val dealerScore = dealer.getScore()

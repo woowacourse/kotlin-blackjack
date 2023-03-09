@@ -106,6 +106,21 @@ class PlayerTest {
     }
 
     @Test
+    fun `딜러가 버스트가 아니고 플레이어가 버스트라면 승부에서 진다`() {
+        val player = Player("pobi").apply {
+            receive(Card(CardNumber.JACK, CardShape.HEART))
+            receive(Card(CardNumber.QUEEN, CardShape.DIAMOND))
+            receive(Card(CardNumber.KING, CardShape.DIAMOND))
+        }
+        val dealer = Dealer().apply {
+            receive(Card(CardNumber.TWO, CardShape.HEART))
+            receive(Card(CardNumber.TWO, CardShape.DIAMOND))
+        }
+
+        assertThat(player against dealer).isEqualTo(ResultType.LOSE)
+    }
+
+    @Test
     fun `플레이어의 카드가 두 장이고 두 카드 가치의 합이 21이면 블랙잭이다`() {
         val player = Player("pobi").apply {
             receive(Card(CardNumber.ACE, CardShape.CLOVER))
