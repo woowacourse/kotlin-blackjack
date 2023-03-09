@@ -16,7 +16,7 @@ class ProfitCalculator(
         return when (user.gameResult) {
             GameResult.LOSE -> user.betAmount
             GameResult.WIN -> dealerProfitWithUserBlackJack(user)
-            else -> NONE_PROFIT
+            GameResult.DRAW -> NONE_PROFIT
         }
     }
 
