@@ -44,7 +44,7 @@ class BlackjackManagerTest {
         // when
         val participant1 = blackjackManager.participants.values[0]
         var index = 0
-        blackjackManager.provideParticipantMoreCard(participant1, { _: String -> listOf(true, false)[index++] }) {}
+        blackjackManager.playParticipantTurns(participant1, { _: String -> listOf(true, false)[index++] }) {}
 
         val actual = participant1.cards.values.size
 
@@ -60,7 +60,7 @@ class BlackjackManagerTest {
 
         // when
         val participant1 = blackjackManager.participants.values[0]
-        blackjackManager.provideParticipantMoreCard(participant1, { false }) {}
+        blackjackManager.playParticipantTurns(participant1, { false }) {}
 
         val actual = participant1.cards.values.size
 
@@ -75,7 +75,7 @@ class BlackjackManagerTest {
         blackjackManager.setup()
 
         // when
-        blackjackManager.provideDealerMoreCard {}
+        blackjackManager.playDealerTurns {}
         val actual = blackjackManager.dealer.cards.values.size
 
         // then

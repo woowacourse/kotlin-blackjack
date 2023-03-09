@@ -30,7 +30,16 @@ class BlackjackManager(
         }
     }
 
-    fun provideParticipantMoreCard(
+    fun playParticipantsTurns(
+        readMoreCard: (String) -> Boolean,
+        onProvideCard: (Participant) -> Unit
+    ) {
+        participants.values.forEach {
+            playParticipantTurns(it, readMoreCard, onProvideCard)
+        }
+    }
+
+    fun playParticipantTurns(
         participant: Participant,
         requestMoreCard: (String) -> Boolean,
         onProvideCard: (Participant) -> Unit
@@ -45,16 +54,7 @@ class BlackjackManager(
         }
     }
 
-    fun provideParticipantsMoreCard(
-        readMoreCard: (String) -> Boolean,
-        onProvideCard: (Participant) -> Unit
-    ) {
-        participants.values.forEach {
-            provideParticipantMoreCard(it, readMoreCard, onProvideCard)
-        }
-    }
-
-    fun provideDealerMoreCard(onProvideCard: () -> Unit) {
+    fun playDealerTurns(onProvideCard: () -> Unit) {
         while (true) {
             if (!dealer.checkProvideCardPossible()) break
             provideCard(dealer)
