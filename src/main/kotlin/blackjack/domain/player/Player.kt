@@ -1,14 +1,16 @@
 package blackjack.domain.player
 
-import blackjack.domain.Result
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
 
 abstract class Player(
-    val name: String
+    val name: String,
+    val cards: Cards
 ) {
-
-    val cards: Cards = Cards()
+    val isBurst
+        get() = cards.isBurst()
+    val isBlackjack
+        get() = cards.isBlackjack()
 
     init {
         require(name.length in 2..10) { ERROR_NAME_LENGTH }
@@ -18,18 +20,6 @@ abstract class Player(
 
     fun addCard(card: Card) {
         cards.addCard(card)
-    }
-
-    fun calculateResult(otherSum: Int): Result {
-        val mySum = cards.sumCardsNumber()
-        return when {
-            ((otherSum > Cards.MAX_SUM_NUMBER) and (mySum > Cards.MAX_SUM_NUMBER)) -> Result.DRAW
-            (mySum > Cards.MAX_SUM_NUMBER) -> Result.LOSE
-            (otherSum > Cards.MAX_SUM_NUMBER) -> Result.WIN
-            (otherSum > mySum) -> Result.LOSE
-            (otherSum == mySum) -> Result.DRAW
-            else -> Result.WIN
-        }
     }
 
     companion object {
