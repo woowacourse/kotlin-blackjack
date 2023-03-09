@@ -1,6 +1,6 @@
 package blackjack.domain.gameResult
 
 data class TotalGameResult(
-    val playerGameResults: List<PlayerGameResult>,
+    val playerGameResults: PlayerGameResults,
     val dealerGameResults: ProfitMoney
 )

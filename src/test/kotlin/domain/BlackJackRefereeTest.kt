@@ -1,6 +1,5 @@
 package domain
 
-import blackjack.domain.player.BattingMoney
 import blackjack.domain.BlackJackReferee
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
@@ -8,8 +7,10 @@ import blackjack.domain.card.Cards
 import blackjack.domain.card.Shape
 import blackjack.domain.dealer.Dealer
 import blackjack.domain.gameResult.PlayerGameResult
+import blackjack.domain.gameResult.PlayerGameResults
 import blackjack.domain.gameResult.ProfitMoney
 import blackjack.domain.gameResult.TotalGameResult
+import blackjack.domain.player.BattingMoney
 import blackjack.domain.player.Player
 import blackjack.domain.player.PlayerName
 import org.assertj.core.api.Assertions.assertThat
@@ -67,10 +68,12 @@ class BlackJackRefereeTest {
 
         assertThat(actual).isEqualTo(
             TotalGameResult(
-                playerGameResults = listOf(
-                    PlayerGameResult("woogi", ProfitMoney(1000)),
-                    PlayerGameResult("ring", ProfitMoney(-1000)),
-                    PlayerGameResult("sunny", ProfitMoney(0))
+                playerGameResults = PlayerGameResults(
+                    listOf(
+                        PlayerGameResult("woogi", ProfitMoney(1000)),
+                        PlayerGameResult("ring", ProfitMoney(-1000)),
+                        PlayerGameResult("sunny", ProfitMoney(0))
+                    )
                 ),
                 dealerGameResults = ProfitMoney(0)
             )
