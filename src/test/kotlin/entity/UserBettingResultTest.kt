@@ -13,6 +13,7 @@ import entity.users.Name
 import entity.users.Player
 import entity.users.Players
 import entity.users.UserInformation
+import entity.users.Users
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -34,7 +35,7 @@ class UserBettingResultTest {
         val playerGameResult = PlayersGameResult(mapOf(player to GameResultType.WIN))
 
         // when
-        val userBettingResult = UserBettingResult().getPlayersBettingResults(players, dealer, playerGameResult)
+        val userBettingResult = UserBettingResult().getPlayersBettingResults(Users(players, dealer), playerGameResult)
         val profitMoney = userBettingResult[player]
 
         // then
@@ -66,7 +67,7 @@ class UserBettingResultTest {
         val playerGameResult = PlayersGameResult(mapOf(player to GameResultType.WIN))
 
         // when
-        val userBettingResult = UserBettingResult().getPlayersBettingResults(players, dealer, playerGameResult)
+        val userBettingResult = UserBettingResult().getPlayersBettingResults(Users(players, dealer), playerGameResult)
         val profitMoney = userBettingResult[player]
 
         // then
@@ -99,7 +100,7 @@ class UserBettingResultTest {
         val playerGameResult = PlayersGameResult(mapOf(player to GameResultType.DRAW))
 
         // when
-        val userBettingResult = UserBettingResult().getPlayersBettingResults(players, dealer, playerGameResult)
+        val userBettingResult = UserBettingResult().getPlayersBettingResults(Users(players, dealer), playerGameResult)
         val profitMoney = userBettingResult[player]
 
         // then
@@ -124,7 +125,7 @@ class UserBettingResultTest {
         val playerGameResult = PlayersGameResult(mapOf(player to GameResultType.LOSE))
 
         // when
-        val userBettingResult = UserBettingResult().getPlayersBettingResults(players, dealer, playerGameResult)
+        val userBettingResult = UserBettingResult().getPlayersBettingResults(Users(players, dealer), playerGameResult)
         val profitMoney = userBettingResult[player]
 
         // then
@@ -157,7 +158,7 @@ class UserBettingResultTest {
         val playerGameResult = PlayersGameResult(mapOf(player to GameResultType.WIN))
 
         // when
-        val userBettingResult = UserBettingResult().getPlayersBettingResults(players, dealer, playerGameResult)
+        val userBettingResult = UserBettingResult().getPlayersBettingResults(Users(players, dealer), playerGameResult)
         val profitMoney = userBettingResult[player]
 
         // then
