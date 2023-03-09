@@ -1,5 +1,6 @@
 package blackjack.controller
 
+import blackjack.domain.BettingMoney
 import blackjack.domain.CardBunch
 import blackjack.domain.CardDeck
 import blackjack.domain.Dealer
@@ -23,7 +24,7 @@ class Controller(private val cardDeck: CardDeck) {
     }
 
     private fun makePlayers(names: List<String>): List<Player> =
-        names.map { Player(it, makeInitialCardBunch()) }
+        names.map { Player(it, makeInitialCardBunch(), BettingMoney(1000)) }
 
     private fun makeDealer(): Dealer = Dealer(makeInitialCardBunch())
 

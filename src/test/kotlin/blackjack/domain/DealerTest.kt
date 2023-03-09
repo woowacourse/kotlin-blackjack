@@ -33,7 +33,7 @@ class DealerTest {
         val playerCardBunch = CardBunch(card1, card2)
         val dealerCardBunch = CardBunch(card2, card3)
 
-        val player1 = Player("krrong", playerCardBunch)
+        val player1 = Player("krrong", playerCardBunch, BettingMoney(1000))
         val dealer = Dealer(dealerCardBunch)
 
         val actual = dealer.versusPlayers(listOf(player1))
@@ -49,7 +49,7 @@ class DealerTest {
         val playerCardBunch = CardBunch(card2, card3)
         val dealerCardBunch = CardBunch(card1, card2)
 
-        val player1 = Player("krrong", playerCardBunch)
+        val player1 = Player("krrong", playerCardBunch, BettingMoney(1000))
         val dealer = Dealer(dealerCardBunch)
 
         val actual = dealer.versusPlayers(listOf(player1))
@@ -65,7 +65,7 @@ class DealerTest {
         val playerCardBunch = CardBunch(card1, card2)
         val dealerCardBunch = CardBunch(card2, card3)
 
-        val player1 = Player("krrong", playerCardBunch)
+        val player1 = Player("krrong", playerCardBunch, BettingMoney(1000))
         val dealer = Dealer(dealerCardBunch)
 
         val actual = dealer.versusPlayers(listOf(player1))
@@ -80,7 +80,7 @@ class DealerTest {
         val playerCardBunch = CardBunch(card1, card2)
         val dealerCardBunch = CardBunch(card1, card2)
 
-        val player1 = Player("krrong", playerCardBunch)
+        val player1 = Player("krrong", playerCardBunch, BettingMoney(1000))
         val dealer = Dealer(dealerCardBunch)
 
         val actual = dealer.versusPlayers(listOf(player1))
@@ -96,7 +96,7 @@ class DealerTest {
         val playerCardBunch = CardBunch(card1, card2, card3)
         val dealerCardBunch = CardBunch(card1, card2)
 
-        val player1 = Player("krrong", playerCardBunch)
+        val player1 = Player("krrong", playerCardBunch, BettingMoney(1000))
         val dealer = Dealer(dealerCardBunch)
 
         val actual = dealer.versusPlayers(listOf(player1))
@@ -112,7 +112,7 @@ class DealerTest {
         val playerCardBunch = CardBunch(card1, card2)
         val dealerCardBunch = CardBunch(card1, card2, card3)
 
-        val player1 = Player("krrong", playerCardBunch)
+        val player1 = Player("krrong", playerCardBunch, BettingMoney(1000))
         val dealer = Dealer(dealerCardBunch)
 
         val actual = dealer.versusPlayers(listOf(player1))
