@@ -21,6 +21,11 @@ class Player(name: Name, cards: Cards, val bettingMoney: BettingMoney) : Partici
         }
     }
 
+    fun getProfit(dealerScore: Score): Int {
+        val gameResultType = getGameResult(dealerScore)
+        return GameResultType.getProfit(bettingMoney.money, gameResultType)
+    }
+
     companion object {
         private const val TAKE_TWO = 2
         private const val GAME_RESULT_ERROR = "[ERROR] 승패 반환 오류가 발생하였습니다!!"

@@ -98,30 +98,3 @@ class GameResultTest {
         assertThat(actual.second).isEqualTo(1000)
     }
 }
-
-// @Test
-// fun `플레이어들의 승패 정보를 반환한다`() {
-//     val player1 = Player(
-//         "pobi",
-//         8,
-//         9,
-//     )
-//     val player2 = Player(
-//         "jason",
-//         7,
-//         9,
-//     )
-//     val participants = Participants(
-//         players = Players(
-//             player1,
-//             player2,
-//         ),
-//         dealer = Dealer(8, 9),
-//     )
-//     val gameResult = GameResult(participants)
-//     val actual = gameResult.getPlayersGameResult()
-//     assertAll(
-//         { assertThat(actual[player1]).isEqualTo(GameResultType.DRAW) },
-//         { assertThat(actual[player2]).isEqualTo(GameResultType.LOSE) },
-//     )
-// }
