@@ -12,8 +12,10 @@ class Cards(cards: List<Card> = listOf()) {
         _cards.add(card)
     }
 
-    fun containsCardNumber(cardNumber: CardNumber): Boolean =
+    private fun containsCardNumber(cardNumber: CardNumber): Boolean =
         _cards.any { it.number == cardNumber }
 
-    fun sum(): Int = _cards.sumOf { it.number.value }
+    fun sum(): Int = _cards.sumOf { it.number.value } + bonus()
+
+    private fun bonus(): Int = if (_cards.size == 2 && containsCardNumber(CardNumber.ONE)) 10 else 0
 }

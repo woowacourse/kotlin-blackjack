@@ -16,7 +16,7 @@ class BlackjackController(
         val participants: Participants = readParticipants()
         setInitialPlayersCards(dealer, participants)
         hitPlayerCards(dealer, participants)
-        dealer.decidePlayerResult(participants)
+        dealer.decidePlayersResult(participants)
         printResult(dealer, participants)
     }
 

@@ -3,8 +3,7 @@ package blackjack.domain.player
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
 import blackjack.domain.card.Deck
-import blackjack.domain.result.Result
-import blackjack.domain.result.Score
+import blackjack.domain.result.GameResult
 
 class Dealer(
     name: String = "딜러",
@@ -12,40 +11,39 @@ class Dealer(
 ) : Player(name, cards) {
 
     private val deck: Deck = Deck()
-    val results: MutableMap<Result, Int> = Result.values().associateWith { 0 }.toMutableMap()
+    val results: MutableMap<GameResult, Int> = GameResult.values().associateWith { 0 }.toMutableMap()
 
-    fun decidePlayerResult(participants: Participants) {
-        decideParticipantsResult(participants)
+    override fun canHit(): Boolean = cards.sum() <= MIN_SUM_NUMBER
+
+    fun decidePlayersResult(participants: Participants) {
+        participants.values.forEach { it.updateGameResult(it.getGameResult(cards.sum())) }
         decideDealerResult(participants)
-    }
-
-    fun decideParticipantsResult(participants: Participants) {
-        participants.values.forEach {
-            it.updateResult(cards)
-        }
     }
 
     fun decideDealerResult(participants: Participants) {
         participants.values.forEach {
-            val dealerResult = Score.reversResult(it.result)
-            results[dealerResult] = results[dealerResult]?.plus(1) ?: throw IllegalArgumentException()
+            val gameResult = reversGameResult(it.gameResult)
+            results[gameResult] = results[gameResult]?.plus(1) ?: throw IllegalArgumentException()
         }
     }
 
     fun setInitialPlayersCards(participants: Participants) {
         repeat(CARD_SETTING_COUNT) { addCard(deck.draw()) }
-        participants.values.forEach { setInitialParticipantCards(it) }
+        participants.values.forEach {
+            val initCards: List<Card> = listOf(deck.draw(), deck.draw())
+            it.setInitialCards(Cards(initCards))
+        }
     }
 
     fun drawCard(): Card = deck.draw()
 
-    override fun canHit(): Boolean = cards.sum() <= MIN_SUM_NUMBER
-
-    private fun setInitialParticipantCards(participant: Participant) =
-        repeat(CARD_SETTING_COUNT) { participant.addCard(deck.draw()) }
+    private fun reversGameResult(gameResult: GameResult): GameResult = when (gameResult) {
+        GameResult.WIN -> GameResult.LOSE
+        GameResult.LOSE -> GameResult.WIN
+        else -> GameResult.DRAW
+    }
 
     companion object {
         const val MIN_SUM_NUMBER = 16
-        private const val CARD_SETTING_COUNT = 2
     }
 }

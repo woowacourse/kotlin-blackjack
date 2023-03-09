@@ -5,7 +5,7 @@ import blackjack.domain.card.CardShape
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Participants
 import blackjack.domain.player.Player
-import blackjack.domain.result.Result
+import blackjack.domain.result.GameResult
 
 class OutputView {
 
@@ -40,12 +40,12 @@ class OutputView {
         println(FINAL_RESULT_MESSAGE)
 
         val dealerResultMessage: StringBuilder = StringBuilder("${dealer.name}: ")
-        if (dealer.results[Result.WIN] != 0) dealerResultMessage.append("${dealer.results[Result.WIN]}${Result.WIN.toText()} ")
-        if (dealer.results[Result.LOSE] != 0) dealerResultMessage.append("${dealer.results[Result.LOSE]}${Result.LOSE.toText()} ")
-        if (dealer.results[Result.DRAW] != 0) dealerResultMessage.append("${dealer.results[Result.DRAW]}${Result.DRAW.toText()} ")
+        if (dealer.results[GameResult.WIN] != 0) dealerResultMessage.append("${dealer.results[GameResult.WIN]}${GameResult.WIN.toText()} ")
+        if (dealer.results[GameResult.LOSE] != 0) dealerResultMessage.append("${dealer.results[GameResult.LOSE]}${GameResult.LOSE.toText()} ")
+        if (dealer.results[GameResult.DRAW] != 0) dealerResultMessage.append("${dealer.results[GameResult.DRAW]}${GameResult.DRAW.toText()} ")
         println(dealerResultMessage.toString())
 
-        participants.values.forEach { println("${it.name}: ${it.result.toText()}") }
+        participants.values.forEach { println("${it.name}: ${it.gameResult.toText()}") }
     }
 
     fun printSumResult(dealer: Dealer, participants: Participants) {
@@ -92,11 +92,11 @@ class OutputView {
         }
     }
 
-    private fun Result.toText(): String {
+    private fun GameResult.toText(): String {
         return when (this) {
-            Result.WIN -> "승"
-            Result.DRAW -> "무"
-            Result.LOSE -> "패"
+            GameResult.WIN -> "승"
+            GameResult.DRAW -> "무"
+            GameResult.LOSE -> "패"
         }
     }
 

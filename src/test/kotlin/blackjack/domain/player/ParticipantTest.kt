@@ -3,7 +3,7 @@ package blackjack.domain.player
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
 import blackjack.domain.card.CardShape
-import blackjack.domain.result.Result
+import blackjack.domain.result.GameResult
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -26,8 +26,8 @@ class ParticipantTest {
         participant.addCard(Card(CardNumber.ONE, CardShape.CLOVER))
         participant.addCard(Card(CardNumber.JACK, CardShape.HEART))
 
-        participant.updateResult(dealer.cards)
+        participant.updateGameResult(dealer.getGameResult(dealer.cards.sum()))
 
-        assertThat(participant.result).isEqualTo(Result.DRAW)
+        assertThat(participant.gameResult).isEqualTo(GameResult.DRAW)
     }
 }
