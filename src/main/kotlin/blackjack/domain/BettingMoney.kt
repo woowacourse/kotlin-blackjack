@@ -5,7 +5,7 @@ class BettingMoney(private val money: Int) {
         require(money > MIN_MONEY) { ERROR_MONEY }
     }
 
-    fun multipleOnePointFive(): Int = (money * 1.5).toInt()
+    fun multipleTwoPointFive(): Int = (money * 2.5).toInt()
 
     fun multipleOne(): Int = money
 
