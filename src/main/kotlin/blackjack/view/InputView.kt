@@ -38,6 +38,7 @@ object InputView {
         return battingMoneys
     }
 
+    //TODO: 아 is 키워드 사용해보면 어떨까?
     fun requestAdditionalDraw(player: Player): Boolean {
         println(REQUEST_ADDITIONAL_CARDS_MSG.format(player.name.value))
 

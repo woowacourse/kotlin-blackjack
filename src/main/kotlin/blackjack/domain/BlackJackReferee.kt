@@ -17,6 +17,7 @@ class BlackJackReferee {
     }
 
     private fun judgePlayerGameResults(players: List<Player>, dealer: Dealer): PlayerGameResults =
+        //TODO: 개선이 필요하다
         PlayerGameResults(
             players.map { player ->
                 PlayerGameResult(
