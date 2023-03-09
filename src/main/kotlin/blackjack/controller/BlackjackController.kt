@@ -13,8 +13,8 @@ class BlackjackController(
 ) {
 
     fun run() {
-        val blackjackManager = BlackjackManager(cardsGenerator)
-        blackjackManager.setup(inputView::readParticipantsName)
+        val blackjackManager = BlackjackManager(cardsGenerator, inputView::readParticipantsName)
+        blackjackManager.setup()
         outputView.printSettingCard(blackjackManager.dealer, blackjackManager.participants)
         blackjackManager.provideParticipantsMoreCard(inputView::readMoreCard, outputView::printParticipantCards)
         blackjackManager.provideDealerMoreCard(outputView::printDealerHitCardMent)

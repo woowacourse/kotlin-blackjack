@@ -3,15 +3,21 @@ package blackjack.domain.player
 import blackjack.domain.card.CardDeck
 import blackjack.domain.card.CardsGenerator
 
-class BlackjackManager(cardsGenerator: CardsGenerator) {
+class BlackjackManager(cardsGenerator: CardsGenerator, getPlayerNames: () -> List<String>) {
 
     private val cardDeck = CardDeck(cardsGenerator)
     val dealer = Dealer()
-    lateinit var participants: Participants
-        private set
+    val participants: Participants
 
-    fun setup(getNames: () -> List<String>) {
-        participants = Participants(getNames().map { Participant(it) })
+    init {
+        participants = Participants(
+            getPlayerNames().map {
+                Participant(it)
+            }
+        )
+    }
+
+    fun setup() {
         repeat(CARD_SETTING_COUNT) { provideCard(dealer) }
         participants.values.forEach { participant ->
             repeat(CARD_SETTING_COUNT) {
@@ -27,13 +33,11 @@ class BlackjackManager(cardsGenerator: CardsGenerator) {
     ) {
         while (true) {
             val check = participant.checkProvideCardPossible()
-            if (check) {
-                val answer = requestMoreCard(participant.name)
-                if (answer) provideCard(participant)
-                onProvideCard(participant)
-                if (!answer) break
-            }
             if (!check) break
+            val answer = requestMoreCard(participant.name)
+            if (answer) provideCard(participant)
+            onProvideCard(participant)
+            if (!answer) break
         }
     }
 
