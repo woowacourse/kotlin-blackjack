@@ -7,17 +7,20 @@ class Cards(cards: List<Card>) {
     private val _value: MutableList<Card> = cards.toMutableList()
     val value: List<Card> get() = _value.toList()
 
-    fun actualCardValueSum(): Int {
-        if ((calculateCardValueSum() <= SUM_CONDITION) and (countAce() != ZERO)) {
-            return calculateCardValueSum() + ACE_EXTRA_SCORE
+    fun actualCardValueSum(): Score {
+        if ((calculateCardValueSum().isUnder(Score.valueOf(SUM_CONDITION))) and (countAce() != ZERO)) {
+            return calculateCardValueSum() + Score.valueOf(ACE_EXTRA_SCORE)
         }
 
         return calculateCardValueSum()
     }
 
-    fun calculateCardValueSum(): Int = _value.sumOf { card ->
-        card.value.number
-    }
+    fun calculateCardValueSum(): Score =
+        Score.valueOf(
+            _value.sumOf { card ->
+                card.value.number
+            }
+        )
 
     fun addCard(card: Card) {
         _value.add(card)
@@ -27,7 +30,8 @@ class Cards(cards: List<Card>) {
         card.value == CardValue.ACE
     }
 
-    fun isBlackJack(): Boolean = (_value.size == NUMBER_OF_BLACKJACK_CARDS) && (actualCardValueSum() == BLACKJACK_SCORE)
+    fun isBlackJack(): Boolean =
+        (_value.size == NUMBER_OF_BLACKJACK_CARDS) && (actualCardValueSum() == Score.valueOf(BLACKJACK_SCORE))
 
     companion object {
         private const val SUM_CONDITION = 11
