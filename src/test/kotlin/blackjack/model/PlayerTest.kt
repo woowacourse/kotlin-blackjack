@@ -48,12 +48,20 @@ class PlayerTest {
     }
 
     @Test
+    fun `카드의 수가 2장이고, 카드의 합이 21이면 BLACKJACK이다`() {
+        val player = Player("jason")
+        player.cards.add(Card(Rank.ACE, Suit.CLOVER))
+        player.cards.add(Card(Rank.KING, Suit.DIAMOND))
+        assertThat(player.isBlackJack()).isTrue
+    }
+
+    @Test
     fun `딜러와 비교하여 점수가 딜러보다 높으면 승리한다`() {
         val cardDeck = CardDeck(
             Card(Rank.SEVEN, Suit.DIAMOND),
             Card(Rank.TEN, Suit.CLOVER),
             Card(Rank.ACE, Suit.CLOVER),
-            Card(Rank.TEN, Suit.DIAMOND)
+            Card(Rank.NINE, Suit.DIAMOND)
         )
         val dealer = Dealer()
         val player = Player(Name("jason"))
@@ -63,7 +71,7 @@ class PlayerTest {
     }
 
     @Test
-    fun `점수가 딜러와 같다면 패배한다`() {
+    fun `점수가 딜러와 같다면 무승부다`() {
         val cardDeck = CardDeck(
             Card(Rank.SEVEN, Suit.DIAMOND),
             Card(Rank.TEN, Suit.CLOVER),
@@ -74,7 +82,7 @@ class PlayerTest {
         val player = Player(Name("jason"))
         dealer.drawFirst(cardDeck)
         player.drawFirst(cardDeck)
-        assertThat(player.getGameResult(dealer)).isEqualTo(Result.LOSE)
+        assertThat(player.getGameResult(dealer)).isEqualTo(Result.DRAW)
     }
 
     @Test

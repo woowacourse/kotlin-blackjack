@@ -54,7 +54,7 @@ class PlayersTest {
             Card(Rank.SEVEN, Suit.HEART),
             Card(Rank.JACK, Suit.SPADE),
             Card(Rank.ACE, Suit.DIAMOND),
-            Card(Rank.TEN, Suit.HEART),
+            Card(Rank.NINE, Suit.HEART),
             Card(Rank.JACK, Suit.CLOVER),
             Card(Rank.KING, Suit.SPADE)
         )
