@@ -79,11 +79,11 @@ class BlackjackGame(
         return false
     }
 
-    fun printCardResult(showResult: (Dealer, List<Player>) -> Unit) {
+    fun showCardResult(showResult: (Dealer, List<Player>) -> Unit) {
         showResult(dealer, players)
     }
 
-    fun printWinningResult(showWinningResult: (List<Player>) -> Unit) {
+    fun showWinningResult(showWinningResult: (List<Player>) -> Unit) {
         judgePlayersResult(players)
         showWinningResult(players)
     }
