@@ -86,7 +86,7 @@ class BlackJackGame {
 
     fun calculateProfit(
         blackJackGameData: BlackJackGameData,
-        onCalculateProfit: (Double, List<Pair<String, Double>>) -> Unit
+        onCalculateProfit: (Double, List<UserProfit>) -> Unit
     ) {
         val profitCalculator = ProfitCalculator(blackJackGameData.players)
         val dealerProfit = profitCalculator.getDealerProfit()

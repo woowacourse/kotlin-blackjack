@@ -26,10 +26,10 @@ class ProfitCalculator(
         return profit
     }
 
-    fun getUsersProfit(): List<Pair<String, Double>> {
+    fun getUsersProfit(): List<UserProfit> {
         val isDealerBlackJack = players.dealer.cards.isBlackJack()
         return players.users.map { user ->
-            user.name to getUserProfit(isDealerBlackJack, user)
+            UserProfit(user, getUserProfit(isDealerBlackJack, user))
         }
     }
 

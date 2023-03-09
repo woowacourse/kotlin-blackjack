@@ -32,7 +32,7 @@ class ProfitCalculatorTest {
 
         // when
         val dealerProfit = profitCalculator.getDealerProfit()
-        val userProfit = profitCalculator.getUsersProfit()[0].second
+        val userProfit = profitCalculator.getUsersProfit()[0].profit
 
         // then
         assertThat(dealerProfit).isEqualTo(1000.0)
@@ -64,7 +64,7 @@ class ProfitCalculatorTest {
 
         // when
         val dealerProfit = profitCalculator.getDealerProfit()
-        val userProfit = profitCalculator.getUsersProfit()[0].second
+        val userProfit = profitCalculator.getUsersProfit()[0].profit
 
         // then
         assertThat(dealerProfit).isEqualTo(-1500.0)
@@ -96,7 +96,7 @@ class ProfitCalculatorTest {
 
         // when
         val dealerProfit = profitCalculator.getDealerProfit()
-        val userProfit = profitCalculator.getUsersProfit()[0].second
+        val userProfit = profitCalculator.getUsersProfit()[0].profit
 
         // then
         assertThat(dealerProfit).isEqualTo(0.0)
@@ -128,7 +128,7 @@ class ProfitCalculatorTest {
 
         // when
         val dealerProfit = profitCalculator.getDealerProfit()
-        val userProfit = profitCalculator.getUsersProfit()[0].second
+        val userProfit = profitCalculator.getUsersProfit()[0].profit
 
         // then
         assertThat(dealerProfit).isEqualTo(1000.0)
@@ -160,7 +160,7 @@ class ProfitCalculatorTest {
 
         // when
         val dealerProfit = profitCalculator.getDealerProfit()
-        val userProfit = profitCalculator.getUsersProfit()[0].second
+        val userProfit = profitCalculator.getUsersProfit()[0].profit
 
         // then
         assertThat(dealerProfit).isEqualTo(-1000.0)
@@ -193,7 +193,7 @@ class ProfitCalculatorTest {
 
         // when
         val dealerProfit = profitCalculator.getDealerProfit()
-        val userProfit = profitCalculator.getUsersProfit()[0].second
+        val userProfit = profitCalculator.getUsersProfit()[0].profit
 
         // then
         assertThat(dealerProfit).isEqualTo(-1000.0)
@@ -226,7 +226,7 @@ class ProfitCalculatorTest {
 
         // when
         val dealerProfit = profitCalculator.getDealerProfit()
-        val userProfit = profitCalculator.getUsersProfit()[0].second
+        val userProfit = profitCalculator.getUsersProfit()[0].profit
 
         // then
         assertThat(dealerProfit).isEqualTo(-1500.0)
@@ -260,7 +260,7 @@ class ProfitCalculatorTest {
 
         // when
         val dealerProfit = profitCalculator.getDealerProfit()
-        val userProfit = profitCalculator.getUsersProfit()[0].second
+        val userProfit = profitCalculator.getUsersProfit()[0].profit
 
         // then
         assertThat(dealerProfit).isEqualTo(0.0)
@@ -296,8 +296,8 @@ class ProfitCalculatorTest {
 
         // when
         val dealerProfit = profitCalculator.getDealerProfit()
-        val user1Profit = profitCalculator.getUsersProfit()[0].second
-        val user2Profit = profitCalculator.getUsersProfit()[1].second
+        val user1Profit = profitCalculator.getUsersProfit()[0].profit
+        val user2Profit = profitCalculator.getUsersProfit()[1].profit
 
         // then
         assertThat(dealerProfit).isEqualTo(-500.0)

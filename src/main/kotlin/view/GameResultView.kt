@@ -3,6 +3,7 @@ package view
 import domain.GameResult
 import domain.Players
 import domain.User
+import domain.UserProfit
 
 class GameResultView {
 
@@ -54,11 +55,11 @@ class GameResultView {
         )
     }
 
-    fun printFinalProfit(dealerProfit: Double, usersProfit: List<Pair<String, Double>>) {
+    fun printFinalProfit(dealerProfit: Double, usersProfit: List<UserProfit>) {
         println(FINAL_PROFIT_TITLE)
         println(DEALER_PROFIT.format(dealerProfit.toInt()))
         usersProfit.forEach { nameAndProfit ->
-            println(USER_RESULT_FORMAT.format(nameAndProfit.first, nameAndProfit.second.toInt()))
+            println(USER_RESULT_FORMAT.format(nameAndProfit.user.name, nameAndProfit.profit.toInt()))
         }
     }
 
