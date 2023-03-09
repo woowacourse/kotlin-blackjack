@@ -4,6 +4,7 @@ import blackjack.domain.Card
 import blackjack.domain.CardNumber
 import blackjack.domain.GameResult
 import blackjack.domain.ParticipantCards
+import blackjack.domain.ParticipantProfit
 import blackjack.domain.ParticipantScore
 import blackjack.domain.PlayerResults
 import blackjack.domain.Suit
@@ -41,6 +42,7 @@ object OutputView {
         println("## 최종 승패")
         printDealerResult(results.getDealerResult())
         results.get().forEach { playerResult -> printPlayerResult(playerResult.name, playerResult.result) }
+        printInterval()
     }
 
     private fun printDealerResult(result: Map<GameResult, Int>) {
@@ -79,6 +81,13 @@ object OutputView {
         Suit.HEART -> "하트"
         Suit.DIAMOND -> "다이아몬드"
         Suit.CLOVER -> "클로버"
+    }
+
+    fun printProfits(profits: List<ParticipantProfit>) {
+        println("## 최종 수익")
+        profits.forEach { (name, profit) ->
+            println("$name: $profit")
+        }
     }
 
     fun printInterval() = println()

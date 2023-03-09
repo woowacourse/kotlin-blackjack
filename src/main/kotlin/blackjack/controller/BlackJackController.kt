@@ -19,7 +19,9 @@ class BlackJackController {
             takeDealerTurn(this)
 
             OutputView.printScores(getCards(), getTotalScores())
-            OutputView.printResults(getGameResults())
+            val results = getGameResults()
+            OutputView.printResults(results)
+            OutputView.printProfits(results.calculateProfits())
         }
     }
 
