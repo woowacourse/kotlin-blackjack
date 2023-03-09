@@ -7,9 +7,10 @@ class Cards(private val cards: Set<Card> = setOf()) {
 
     val size: Int = cards.size
 
-    fun toList() = cards.toList()
     val isContainsAce: Boolean
         get() = cards.any { it.isAce }
+
+    fun toList() = cards.toList()
 
     operator fun plus(card: Card): Cards {
         require(card !in cards) { ERROR_EXIST_DUPLICATE_CARD }
