@@ -1,6 +1,9 @@
 package domain.result
 
 enum class OutCome {
+    BLACKJACK {
+        override fun convertOutCome() = LOSE
+    },
     WIN {
         override fun convertOutCome() = LOSE
     },
