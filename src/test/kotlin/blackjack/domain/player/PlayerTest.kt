@@ -1,6 +1,5 @@
 package blackjack.domain.player
 
-import blackjack.domain.Result
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
 import blackjack.domain.card.CardShape
@@ -10,7 +9,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.ValueSource
 
 class PlayerTest {
@@ -54,38 +52,29 @@ class PlayerTest {
         assertThat(actual).isEqualTo(12)
     }
 
-    @ParameterizedTest
-    @CsvSource(
-        value = ["20,LOSE", "8,WIN", "12,DRAW"]
-    )
-    fun `다른 플레이어의 숫자의 합을 받아 자신의 승패를 판단한다`(otherSum: Int, expected: Result) {
-        // given
-        val testPlayer = TestPlayer("aaa")
-        testPlayer.addCard(Card(CardNumber.EIGHT, CardShape.CLOVER))
-        testPlayer.addCard(Card(CardNumber.FOUR, CardShape.CLOVER))
-
-        // when
-        val actual = testPlayer.calculateResult(otherSum)
-
-        // then
-        assertThat(actual).isEqualTo(expected)
-    }
-
     @Test
     fun `카드 추가 발급 가능 여부를 판단한다`() {
         // given
-        val testPlayer = TestPlayer("aaa")
-        testPlayer.addCard(Card(CardNumber.EIGHT, CardShape.CLOVER))
-        testPlayer.addCard(Card(CardNumber.FOUR, CardShape.CLOVER))
+        val testPlayer = TestPlayer(
+            "aaa",
+            Cards(listOf(Card(CardNumber.EIGHT, CardShape.CLOVER), Card(CardNumber.FOUR, CardShape.CLOVER)))
+        )
 
         // when
         val actual = testPlayer.checkProvideCardPossible()
 
         // then
-        assertThat(actual).isFalse
+        assertThat(actual).isTrue
     }
 
-    class TestPlayer(name: String) : Player(name) {
-        override val cardProvideCriteria = 11
+    class TestPlayer(name: String, cards: Cards = Cards()) : Player(name, cards) {
+        override fun checkProvideCardPossible(): Boolean {
+            if (cards.sumCardsNumber() <= TEST_PLAYER_MORE_CARD_CRITERIA) return true
+            return false
+        }
+
+        companion object {
+            const val TEST_PLAYER_MORE_CARD_CRITERIA = 21
+        }
     }
 }
