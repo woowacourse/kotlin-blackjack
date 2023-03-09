@@ -17,8 +17,6 @@ enum class CardNumber(val value: Int) {
     ;
 
     companion object {
-        fun shuffledCardNumbers(): List<CardNumber> = CardNumber.values().toList().shuffled()
-
         fun all(): List<CardNumber> = CardNumber.values().toList()
     }
 }
