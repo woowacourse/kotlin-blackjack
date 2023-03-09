@@ -1,4 +1,4 @@
-package view
+package model
 
 sealed class InputState<out T> {
     class Success<out T>(val input: T) : InputState<T>()

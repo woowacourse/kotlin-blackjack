@@ -1,5 +1,7 @@
 package view
 
+import model.InputState
+
 class InputView {
     private val regexName = Regex("[가-힣a-zA-Z]+")
     private val regexAnswer = Regex("[$Y$y$N$n]")

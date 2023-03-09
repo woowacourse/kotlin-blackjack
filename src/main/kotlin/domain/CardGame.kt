@@ -6,14 +6,13 @@ import model.BetInfosBuilder
 import model.CardPack
 import model.Dealer
 import model.DealerBuilder
+import model.InputState
 import model.Name
 import model.Names
 import model.Participants
 import model.Player
-import model.PlayerBuilder
 import model.Players
 import model.PlayersBuilder
-import view.InputState
 
 class CardGame(private val cardPack: CardPack, private val onError: (String) -> Unit) {
     fun setUp(getName: () -> InputState<List<String>>): Participants {
@@ -114,10 +113,6 @@ class CardGame(private val cardPack: CardPack, private val onError: (String) -> 
 
     private fun dealer(block: DealerBuilder.() -> Unit): Dealer {
         return DealerBuilder().apply(block).build()
-    }
-
-    private fun player(block: PlayerBuilder.() -> Unit): Player {
-        return PlayerBuilder().apply(block).build()
     }
 
     private fun players(block: PlayersBuilder.() -> Unit): Players {
