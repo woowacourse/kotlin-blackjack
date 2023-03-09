@@ -50,7 +50,7 @@ class BlackJackGame(
         do {
             addCard()
             showPlayerCards(this)
-        } while (isGetCard(this) && isPossibleDrawCard())
+        } while (isPossibleDrawCard() && isGetCard(this))
     }
 
     fun playersSelectAddPhase(isGetCard: (Player) -> Boolean, showPlayerCards: (Player) -> Unit) {
