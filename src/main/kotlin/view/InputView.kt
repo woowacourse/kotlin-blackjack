@@ -19,6 +19,7 @@ class InputView {
         val input = readln()
         if (input.isBlank()) return InputState.Error(NULL_ERROR)
         if (!regexNumber.matches(input)) return InputState.Error(IS_NOT_NUMBER)
+        if (input.toInt() in MIN_VALUE..MAX_VALUE) return InputState.Error(AMOUNT_RANGE_ERROR)
         return InputState.Success(input.toInt())
     }
 
@@ -40,5 +41,8 @@ class InputView {
         private const val IS_NOT_YES_OR_NO = "입력 값은 y 혹은 n이 아닙니다"
         private const val IS_NOT_NUMBER = "입력 값이 숫자가 아닙니다"
         private const val IS_NOT_WORD = "입력 값이 문자가 아닙니다"
+        private const val MIN_VALUE = 1000
+        private const val MAX_VALUE = 1000000
+        private const val AMOUNT_RANGE_ERROR = "배팅 금액은 1000원부터 1000000원까지 가능합니다."
     }
 }
