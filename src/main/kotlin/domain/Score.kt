@@ -1,21 +1,30 @@
 package domain
 
 class Score(val cards: Cards) {
-    private val sum = cards.sum()
+    private val sum: Int
+        get() = cards.sum()
+    val state: ScoreState
+        get() = getState()
 
     init {
         require(sum >= MINIMUM_SUM) { MINIMUM_SUM_ERROR }
     }
 
-    fun isBurst(): Boolean = sum > BLACKJACK_NUMBER
+    fun isBurst(): Boolean = getValue() > BLACKJACK_NUMBER
 
-    fun isBlackJack(): Boolean = cards.size == BLACKJACK_CONDITION_SIZE && sum == BLACKJACK_CONDITION_SIZE
+    fun isBlackJack(): Boolean = (cards.size == BLACKJACK_CONDITION_SIZE) && (getValue() == BLACKJACK_NUMBER)
 
     fun getValue(): Int {
         if (cards.isContainAce()) {
             return getScoreWithAce()
         }
         return sum
+    }
+
+    private fun getState(): ScoreState {
+        if (isBurst()) return ScoreState.Burst
+        if (isBlackJack()) return ScoreState.BlackJack
+        return ScoreState.Normal(getValue())
     }
 
     private fun getScoreWithAce(): Int {
