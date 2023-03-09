@@ -47,7 +47,7 @@ class PlayerTest {
         player.addCard(Card(CardNumber.ACE, Suit.SPADE))
         player.addCard(Card(CardNumber.KING, Suit.SPADE))
 
-        assertThat(player.canDraw()).isFalse
+        assertThat(player.canDraw()).isTrue
     }
 
     @Test
@@ -56,7 +56,7 @@ class PlayerTest {
         player.addCard(Card(CardNumber.EIGHT, Suit.SPADE))
         player.addCard(Card(CardNumber.KING, Suit.SPADE))
 
-        assertThat(player.canDraw()).isTrue
+        assertThat(player.canDraw()).isFalse
     }
 
     @Test
@@ -96,5 +96,93 @@ class PlayerTest {
         player.addCard(Card(secondCardNumber, secondCardSuit))
 
         assertThat(player.getTotalScore()).isEqualTo(expected)
+    }
+
+    @Test
+    fun `본인과 상대방이 모두 21점을 초과하면 무승부이다`() {
+        val me = Player("부나").apply {
+            addCard(Card(CardNumber.JACK, Suit.SPADE))
+            addCard(Card(CardNumber.QUEEN, Suit.SPADE))
+            addCard(Card(CardNumber.TWO, Suit.SPADE))
+        }
+        val other = Player("반달").apply {
+            addCard(Card(CardNumber.JACK, Suit.DIAMOND))
+            addCard(Card(CardNumber.QUEEN, Suit.DIAMOND))
+            addCard(Card(CardNumber.THREE, Suit.DIAMOND))
+        }
+
+        assertThat(me judge other).isEqualTo(GameResult.DRAW)
+    }
+
+    @Test
+    fun `본인만 21점을 초과하면 패배한다`() {
+        val me = Player("부나").apply {
+            addCard(Card(CardNumber.JACK, Suit.SPADE))
+            addCard(Card(CardNumber.QUEEN, Suit.SPADE))
+            addCard(Card(CardNumber.TWO, Suit.SPADE))
+        }
+        val other = Player("반달").apply {
+            addCard(Card(CardNumber.JACK, Suit.DIAMOND))
+            addCard(Card(CardNumber.QUEEN, Suit.DIAMOND))
+        }
+
+        assertThat(me judge other).isEqualTo(GameResult.LOSE)
+    }
+
+    @Test
+    fun `상대방만 21점을 초과하면 승리한다`() {
+        val me = Player("부나").apply {
+            addCard(Card(CardNumber.JACK, Suit.SPADE))
+            addCard(Card(CardNumber.QUEEN, Suit.SPADE))
+        }
+        val other = Player("반달").apply {
+            addCard(Card(CardNumber.JACK, Suit.DIAMOND))
+            addCard(Card(CardNumber.QUEEN, Suit.DIAMOND))
+            addCard(Card(CardNumber.TWO, Suit.SPADE))
+        }
+
+        assertThat(me judge other).isEqualTo(GameResult.WIN)
+    }
+
+    @Test
+    fun `본인과 상대방이 21점을 초과하지 않고 점수가 동일하면 무승부이다`() {
+        val me = Player("부나").apply {
+            addCard(Card(CardNumber.JACK, Suit.SPADE))
+            addCard(Card(CardNumber.QUEEN, Suit.SPADE))
+        }
+        val other = Player("반달").apply {
+            addCard(Card(CardNumber.JACK, Suit.DIAMOND))
+            addCard(Card(CardNumber.QUEEN, Suit.DIAMOND))
+        }
+
+        assertThat(me judge other).isEqualTo(GameResult.DRAW)
+    }
+
+    @Test
+    fun `본인과 상대방이 21점을 초과하지 않고 본인의 점수가 높으면 승리한다`() {
+        val me = Player("부나").apply {
+            addCard(Card(CardNumber.JACK, Suit.SPADE))
+            addCard(Card(CardNumber.QUEEN, Suit.SPADE))
+        }
+        val other = Player("반달").apply {
+            addCard(Card(CardNumber.JACK, Suit.DIAMOND))
+            addCard(Card(CardNumber.TWO, Suit.DIAMOND))
+        }
+
+        assertThat(me judge other).isEqualTo(GameResult.WIN)
+    }
+
+    @Test
+    fun `본인과 상대방이 21점을 초과하지 않고 상대방의 점수가 높으면 패배한다`() {
+        val me = Player("부나").apply {
+            addCard(Card(CardNumber.JACK, Suit.SPADE))
+            addCard(Card(CardNumber.TWO, Suit.SPADE))
+        }
+        val other = Player("반달").apply {
+            addCard(Card(CardNumber.JACK, Suit.DIAMOND))
+            addCard(Card(CardNumber.QUEEN, Suit.DIAMOND))
+        }
+
+        assertThat(me judge other).isEqualTo(GameResult.LOSE)
     }
 }
