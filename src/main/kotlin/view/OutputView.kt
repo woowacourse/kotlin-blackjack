@@ -32,8 +32,8 @@ class OutputView {
         println(MESSAGE_INPUT_YES_OR_NO.format(name.value))
     }
 
-    fun printPlayersStatus(players: Participants) {
-        players.toList().forEach { printPlayerStatus(it) }
+    fun printParticipantsStatus(participants: Participants) {
+        participants.toList().forEach { printParticipantStatus(it) }
         println()
     }
 
@@ -42,7 +42,7 @@ class OutputView {
         println(MESSAGE_DEALER_GET_CARD)
     }
 
-    fun printPlayerStatus(participant: Participant) {
+    fun printParticipantStatus(participant: Participant) {
         if (participant.name.value == DEALER) {
             println(MESSAGE_DEALER_STATUS.format(cardToString(participant.hand.toList()[0])))
             return
