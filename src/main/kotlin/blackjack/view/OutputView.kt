@@ -6,6 +6,7 @@ import blackjack.domain.CardNumber
 import blackjack.domain.Consequence
 import blackjack.domain.Dealer
 import blackjack.domain.Player
+import blackjack.domain.Shape
 
 object OutputView {
     private const val DEALER_INITIAL_CARD_SCRIPT = "딜러: %s"
@@ -16,10 +17,13 @@ object OutputView {
     private const val DEALER_LOSE = 1
     private const val DRAW = 2
 
-    private fun makeCardToString(card: Card): String = stringOf(card.cardNumber) + card.shape.korean
+    private fun makeCardToString(card: Card): String {
+        return stringOfNumber(card.cardNumber) + stringOfShape(card.shape)
+    }
 
-    private fun makeBunchToString(bunch: CardBunch): String =
-        bunch.cards.joinToString(separator = ", ") { makeCardToString(it) }
+    private fun makeBunchToString(bunch: CardBunch): String {
+        return bunch.cards.joinToString(separator = ", ") { makeCardToString(it) }
+    }
 
     fun printDealerInitialCard(cardBunch: CardBunch) {
         println(DEALER_INITIAL_CARD_SCRIPT.format(makeCardToString(cardBunch.cards.first())))
@@ -59,7 +63,15 @@ object OutputView {
         val dealerResult = makeDealerResult(gameResult)
         println("딜러: ${dealerResult[DEALER_WIN]}승 ${dealerResult[DEALER_LOSE]}패 ${dealerResult[DRAW]}무")
         gameResult.keys.forEach { name ->
-            println("$name: ${gameResult[name]?.value}")
+            println("$name: ${gameResult[name]?.let { stringOfConsequence(it) }}")
+        }
+    }
+
+    private fun stringOfConsequence(consequence: Consequence): String {
+        return when (consequence) {
+            Consequence.WIN -> "승"
+            Consequence.LOSE -> "패"
+            Consequence.DRAW -> "무"
         }
     }
 
@@ -75,13 +87,22 @@ object OutputView {
         return dealerResult
     }
 
-    private fun stringOf(cardNumber: CardNumber): String {
+    private fun stringOfNumber(cardNumber: CardNumber): String {
         return when (cardNumber) {
             CardNumber.ACE -> "A"
             CardNumber.JACK -> "J"
             CardNumber.QUEEN -> "Q"
             CardNumber.KING -> "K"
             else -> cardNumber.value.toString()
+        }
+    }
+
+    private fun stringOfShape(shape: Shape): String {
+        return when (shape) {
+            Shape.CLOVER -> "클로버"
+            Shape.DIAMOND -> "다이아몬드"
+            Shape.HEART -> "하트"
+            Shape.SPADE -> "스페이드"
         }
     }
 }
