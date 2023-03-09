@@ -7,7 +7,7 @@ class InputView {
     fun inputParticipants(): List<Name> {
         return runCatching { getParticipants() }
             .onFailure { println(it.message) }
-            .getOrDefault(inputParticipants())
+            .getOrElse { inputParticipants() }
     }
 
     private fun getParticipants(): List<Name> {
@@ -22,7 +22,7 @@ class InputView {
     fun inputBettingMoney(name: String): Money {
         return runCatching { Money(getBettingMoney(name)) }
             .onFailure { println(it.message) }
-            .getOrDefault(inputBettingMoney(name))
+            .getOrElse { inputBettingMoney(name) }
     }
 
     private fun getBettingMoney(name: String): Int {
