@@ -1,14 +1,21 @@
 package blackjack.view
 
 import blackjack.domain.participants.Money
+import blackjack.domain.participants.Name
 
 class InputView {
-    fun inputParticipants(): List<String> {
+    fun inputParticipants(): List<Name> {
+        return runCatching { getParticipants() }
+            .onFailure { println(it.message) }
+            .getOrDefault(inputParticipants())
+    }
+
+    private fun getParticipants(): List<Name> {
         println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
         val participants = readln().split(",").map { it.trim() }.filter { it.isNotBlank() }
         return when (participants.size) {
             0 -> inputParticipants()
-            else -> participants
+            else -> participants.map { Name(it) }
         }
     }
 

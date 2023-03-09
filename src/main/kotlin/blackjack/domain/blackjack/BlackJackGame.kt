@@ -4,16 +4,17 @@ import blackjack.domain.card.CardDeck
 import blackjack.domain.participants.Dealer
 import blackjack.domain.participants.Guest
 import blackjack.domain.participants.Money
+import blackjack.domain.participants.Name
 import blackjack.domain.participants.User
 
 class BlackJackGame {
     var onDraw: (String) -> Boolean = { true }
 
-    fun setUp(getNames: () -> List<String>, getBettingMoney: (String) -> Money): BlackJack =
+    fun setUp(getNames: () -> List<Name>, getBettingMoney: (String) -> Money): BlackJack =
         blackJack {
             participants {
                 dealer()
-                getNames().forEach { name -> guest(name, getBettingMoney(name)) }
+                getNames().forEach { name -> guest(name, getBettingMoney(name.toString())) }
             }
             initDrawAll()
         }
