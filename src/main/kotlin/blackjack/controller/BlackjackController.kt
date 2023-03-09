@@ -22,8 +22,13 @@ class BlackjackController(
         val participants: Participants = inputView.readParticipants()
         setInitialPlayersCards(dealer, participants)
         hitPlayerCards(dealer, participants)
-        dealer.decidePlayersResult(participants)
+        decidePlayersResult(dealer, participants)
         printResult(dealer, participants)
+    }
+
+    private fun decidePlayersResult(dealer: Dealer, participants: Participants) {
+        participants.values.forEach { it.decideGameResult(dealer) }
+        participants.values.forEach { dealer.decideGameResult(it) }
     }
 
     private fun setInitialPlayersCards(dealer: Dealer, participants: Participants) {

@@ -2,7 +2,6 @@ package blackjack.domain.player
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
-import blackjack.domain.result.GameResult
 
 abstract class Player(
     val name: String,
@@ -11,20 +10,10 @@ abstract class Player(
 
     abstract fun canHit(): Boolean
 
+    abstract fun decideGameResult(otherPlayer: Player)
+
     fun addCard(card: Card) {
         cards.addCard(card)
-    }
-
-    fun getGameResult(otherPlayerCardsSum: Int): GameResult {
-        val cardsSum: Int = cards.sum()
-
-        return when {
-            cardsSum > MAX_SUM_NUMBER -> GameResult.LOSE
-            otherPlayerCardsSum > MAX_SUM_NUMBER -> GameResult.WIN
-            otherPlayerCardsSum > cardsSum -> GameResult.LOSE
-            otherPlayerCardsSum == cardsSum -> GameResult.DRAW
-            else -> GameResult.WIN
-        }
     }
 
     fun setInitialCards(cards: Cards) =
