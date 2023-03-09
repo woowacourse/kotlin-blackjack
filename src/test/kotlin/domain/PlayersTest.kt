@@ -17,6 +17,7 @@ class PlayersTest {
                                 Card.of(CardCategory.SPADE, CardNumber.NINE),
                             ),
                         ),
+                        BettingMoney(1000),
                     )
                 },
             )

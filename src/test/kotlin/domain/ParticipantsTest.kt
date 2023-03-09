@@ -15,6 +15,7 @@ class ParticipantsTest {
                     )
                 },
             ),
+            BettingMoney(1000),
         )
     }
 

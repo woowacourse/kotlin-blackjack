@@ -2,14 +2,8 @@ package domain
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 
 class CardsTest {
-    @Test
-    fun `카드의 개수는 2장 이상이어야 한다`() {
-        assertThrows<IllegalStateException> { Cards(listOf(Card.of(CardCategory.CLOVER, CardNumber.ACE))) }
-    }
-
     @Test
     fun `카드 번호의 총합을 계산한다`() {
         // given

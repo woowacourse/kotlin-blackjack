@@ -1,5 +1,6 @@
 package controller
 
+import domain.BettingMoney
 import domain.Card
 import domain.CardCategory
 import domain.CardNumber
@@ -29,7 +30,8 @@ class BlackJackGameTest {
     @Test
     fun `숫자가 5인 카드만 뽑을 수 있고, 계속 카드를 받는다고 하면 모든 플레이어의 최종 스코어는 25이다`() {
         // given
-        val blackJackGame = BlackJackGame(Names("scott", "woogi", "mendel"), TestCardPicker())
+        val blackJackGame =
+            BlackJackGame({ Names("scott", "woogi", "mendel") }, { BettingMoney(1000) }, TestCardPicker())
         // when
         blackJackGame.playersSelectAddPhase({ true }, {})
         // then
@@ -41,7 +43,8 @@ class BlackJackGameTest {
     @Test
     fun `숫자가 5인 카드만 뽑을 수 있고, 카드를 받지 않는다고 하면 모든 플레이어의 최종 스코어는 10이다`() {
         // given
-        val blackJackGame = BlackJackGame(Names("scott", "woogi", "mendel"), TestCardPicker())
+        val blackJackGame =
+            BlackJackGame({ Names("scott", "woogi", "mendel") }, { BettingMoney(1000) }, TestCardPicker())
         // when
         blackJackGame.playersSelectAddPhase({ false }, {})
         // then
@@ -53,7 +56,8 @@ class BlackJackGameTest {
     @Test
     fun `숫자가 5인 카드만 뽑을 수 있을 때, 딜러의 최종 스코어는 15 이다`() {
         // given
-        val blackJackGame = BlackJackGame(Names("scott", "woogi", "mendel"), TestCardPicker())
+        val blackJackGame =
+            BlackJackGame({ Names("scott", "woogi", "mendel") }, { BettingMoney(1000) }, TestCardPicker())
         // when
         blackJackGame.dealerSelectPhase { }
         // then
