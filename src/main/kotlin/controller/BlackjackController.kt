@@ -2,7 +2,6 @@ package controller
 
 import domain.BlackjackGame
 import domain.participants.Names
-import domain.participants.Player
 import view.InputView
 import view.OutputView
 
@@ -12,7 +11,7 @@ class BlackjackController {
         val names = insertNames()
         val blackjackGame = BlackjackGame(names)
         blackjackGame.startBlackjackGame(OutputView::printBlackjackSetting)
-        blackjackGame.playsTurn(this::validatePickAnswer, OutputView::printParticipantCards)
+        blackjackGame.playsTurn(InputView::inputRepeatGetCard, OutputView::printParticipantCards)
         blackjackGame.dealerPickCard(OutputView::printDealerUnder16)
         blackjackGame.printCardResult(OutputView::printCardResult)
         blackjackGame.printWinningResult(OutputView::printWinningResult)
@@ -23,16 +22,5 @@ class BlackjackController {
         return runCatching { Names(names) }
             .onFailure { println(it.message) }
             .getOrNull() ?: insertNames()
-    }
-
-    private fun printBlackjackSetting(blackjackGame: BlackjackGame) {
-        OutputView.printDivideCard(blackjackGame.players)
-        OutputView.printDealerSettingCard(blackjackGame.dealer)
-        OutputView.printParticipantsCards(blackjackGame.players)
-    }
-
-    private fun validatePickAnswer(player: Player): Boolean {
-        val answer = InputView.inputRepeatGetCard(player)
-        return answer ?: validatePickAnswer(player)
     }
 }
