@@ -10,18 +10,18 @@ class Participant(name: String, cards: Cards = Cards()) : Player(name, cards) {
         return false
     }
 
-    fun calculateResult(other: Player): PlayerResult {
+    fun calculateResult(dealer: Dealer): PlayerResult {
         val result = when {
             (isBurst) -> Result.LOSE
-            (other.isBurst) -> Result.WIN
-            (isBlackjack and !other.isBlackjack) -> Result.WIN
-            (!isBlackjack and other.isBlackjack) -> Result.LOSE
-            (isBlackjack and other.isBlackjack) -> Result.DRAW
-            (cards.sumCardsNumber() > other.cards.sumCardsNumber()) -> Result.WIN
-            (cards.sumCardsNumber() < other.cards.sumCardsNumber()) -> Result.LOSE
+            (dealer.isBurst) -> Result.WIN
+            (isBlackjack and !dealer.isBlackjack) -> Result.WIN
+            (!isBlackjack and dealer.isBlackjack) -> Result.LOSE
+            (isBlackjack and dealer.isBlackjack) -> Result.DRAW
+            (cards.sumCardsNumber() > dealer.cards.sumCardsNumber()) -> Result.WIN
+            (cards.sumCardsNumber() < dealer.cards.sumCardsNumber()) -> Result.LOSE
             else -> Result.DRAW
         }
-        return PlayerResult(mapOf(name to result))
+        return PlayerResult(Pair(name, result))
     }
 
     companion object {
