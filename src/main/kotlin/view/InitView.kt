@@ -1,18 +1,18 @@
 package view
 
-class InitView {
+class InitView(private val input: Input, private val output: Output) {
     fun readPlayerNames(): List<String> {
-        println(MESSAGE_READ_PLAYER_NAME)
-        val input = readln().trim()
-        require(input.contains(",")) { MESSAGE_COMMA_NEEDED }
-        return input.split(",")
+        output.println(MESSAGE_READ_PLAYER_NAME)
+        val trimmedInput = input.readln().trim()
+        require(trimmedInput.contains(",")) { MESSAGE_COMMA_NEEDED }
+        return trimmedInput.split(",")
     }
 
     fun readPlayerMoney(name: String): Int {
-        println(MESSAGE_READ_PLAYER_MONEY.format(name))
-        val input = readln().trim()
-        requireNotNull(input.toIntOrNull()) { MESSAGE_ONLY_INTEGER }
-        return input.toInt()
+        output.println(MESSAGE_READ_PLAYER_MONEY.format(name))
+        val trimmedInput = input.readln().trim()
+        requireNotNull(trimmedInput.toIntOrNull()) { MESSAGE_ONLY_INTEGER }
+        return trimmedInput.toInt()
     }
 
     companion object {

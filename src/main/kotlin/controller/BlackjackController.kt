@@ -5,15 +5,17 @@ import entity.Name
 import entity.Player
 import entity.Players
 import model.BlackjackStage
-import model.RandomCardFactory
+import model.CardFactory
 import view.GameView
 import view.InitView
 import view.ResultView
 
-class BlackjackController {
-    private val initView = InitView()
-    private val gameView = GameView()
-    private val resultView = ResultView()
+class BlackjackController(
+    private val initView: InitView,
+    private val gameView: GameView,
+    private val resultView: ResultView,
+    private val cardFactory: CardFactory
+) {
 
     private fun readPlayers(): Players {
         return initView.readPlayerNames().map {
@@ -23,7 +25,7 @@ class BlackjackController {
     }
 
     private fun initBlackjack(): BlackjackStage =
-        BlackjackStage(players = readPlayers(), cardFactory = RandomCardFactory())
+        BlackjackStage(players = readPlayers(), cardFactory = cardFactory)
 
     private fun distributeMoreCardPlayer(blackjackStage: BlackjackStage) {
         blackjackStage.distributePlayers({

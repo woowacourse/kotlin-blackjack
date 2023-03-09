@@ -6,27 +6,27 @@ import entity.GameResultType
 import entity.Players
 import entity.PlayersGameResult
 
-class ResultView {
+class ResultView(private val output: Output) {
     fun printGameStatus(dealer: Dealer, players: Players) {
-        println(MESSAGE_DEALER_GAME_STATUS.format(ViewUtils.cardsToString(dealer.cards), dealer.cards.sumOfNumbers()))
+        output.println(MESSAGE_DEALER_GAME_STATUS.format(ViewUtils.cardsToString(dealer.cards), dealer.cards.sumOfNumbers()))
         players.value.forEach {
-            println(MESSAGE_PLAYERS_GAME_STATUS.format(it.name.value, ViewUtils.cardsToString(it.cards), it.cards.sumOfNumbers()))
+            output.println(MESSAGE_PLAYERS_GAME_STATUS.format(it.name.value, ViewUtils.cardsToString(it.cards), it.cards.sumOfNumbers()))
         }
     }
 
     fun printGameResult(dealerGameResult: DealerGameResult, playersGameResult: PlayersGameResult) {
-        println(MESSAGE_GAME_RESULT)
-        println(MESSAGE_DEALER_GAME_RESULT.format(formatDealerGameResult(dealerGameResult)))
+        output.println(MESSAGE_GAME_RESULT)
+        output.println(MESSAGE_DEALER_GAME_RESULT.format(formatDealerGameResult(dealerGameResult)))
         playersGameResult.value.forEach {
-            println(MESSAGE_PLAYERS_GAME_RESULT.format(it.key.name.value, gameResultTypeToString(it.value.type)))
+            output.println(MESSAGE_PLAYERS_GAME_RESULT.format(it.key.name.value, gameResultTypeToString(it.value.type)))
         }
     }
 
     fun printProfitResult(dealerGameResult: DealerGameResult, playersGameResult: PlayersGameResult) {
-        println(MESSAGE_PROFIT_RESULT)
-        println(MESSAGE_DEALER_PROFIT_RESULT.format(dealerGameResult.profit.value))
+        output.println(MESSAGE_PROFIT_RESULT)
+        output.println(MESSAGE_DEALER_PROFIT_RESULT.format(dealerGameResult.profit.value))
         playersGameResult.value.forEach {
-            println(MESSAGE_PLAYERS_PROFIT_RESULT.format(it.key.name.value, it.value.profit.value))
+            output.println(MESSAGE_PLAYERS_PROFIT_RESULT.format(it.key.name.value, it.value.profit.value))
         }
     }
 

@@ -5,20 +5,20 @@ import entity.Dealer
 import entity.Player
 import model.BlackjackStage
 
-class GameView {
+class GameView(private val input: Input, private val output: Output) {
     private fun printDealerStatus(dealer: Dealer) {
-        print(MESSAGE_DEALER_NAME)
-        println(ViewUtils.cardsToString(dealer.cards.value.take(1).let { Cards(it) }))
+        output.print(MESSAGE_DEALER_NAME)
+        output.println(ViewUtils.cardsToString(dealer.cards.value.take(1).let { Cards(it) }))
     }
 
     fun printPlayerStatus(player: Player) {
-        print(player.name.value)
-        print(MESSAGE_PLAYER_NAME)
-        println(ViewUtils.cardsToString(player.cards))
+        output.print(player.name.value)
+        output.print(MESSAGE_PLAYER_NAME)
+        output.println(ViewUtils.cardsToString(player.cards))
     }
 
     fun printInitialUsersStatus(blackjackStage: BlackjackStage) {
-        println(
+        output.println(
             MESSAGE_USERS_STATUS.format(
                 blackjackStage.players.value.joinToString(", ") {
                     it.name.value
@@ -30,19 +30,19 @@ class GameView {
     }
 
     fun printWhetherMoreCard(name: String) {
-        println(MESSAGE_MORE_CARD.format(name))
+        output.println(MESSAGE_MORE_CARD.format(name))
     }
 
     fun readWhetherMoreCard(): Boolean {
-        val input = readln().trim()
-        require(input == "y" || input == "n") {
-            MESSAGE_CONDITION_ERROR.format(input)
+        val trimmedInput = input.readln().trim()
+        require(trimmedInput == "y" || trimmedInput == "n") {
+            MESSAGE_CONDITION_ERROR.format(trimmedInput)
         }
-        return input == "y"
+        return trimmedInput == "y"
     }
 
     fun printDealerMoreCard() {
-        println(MESSAGE_DEALER_MORE_CARD)
+        output.println(MESSAGE_DEALER_MORE_CARD)
     }
 
     companion object {
