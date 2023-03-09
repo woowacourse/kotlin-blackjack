@@ -27,13 +27,6 @@ class BlackjackStage(val dealer: Dealer, val players: Players, private val cardF
         return false
     }
 
-//    fun distributeDealer(printDealerStatus: () -> Unit) {
-//        if (dealer.isDistributable()) {
-//            distributeUser(dealer, User.SINGLE_DISTRIBUTE_COUNT)
-//            printDealerStatus()
-//        }
-//    }
-
     private fun distributeUser(user: User, count: Int) {
         user.addCards(cardFactory.generate(count))
     }
