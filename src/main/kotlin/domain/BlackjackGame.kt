@@ -5,7 +5,6 @@ import domain.gamer.Dealer
 import domain.gamer.Player
 import domain.gamer.Players
 import domain.gamer.cards.Cards
-import domain.judge.Referee
 import domain.judge.Result
 
 class BlackjackGame(private val deck: Deck) {
@@ -40,7 +39,11 @@ class BlackjackGame(private val deck: Deck) {
         return dealer.checkAvailableForPick()
     }
 
-    fun getPlayerWinningResult() = Referee(dealer, players.getPlayers()).judgePlayersResult()
+    fun getPlayerWinningResult() = mutableMapOf<String, Result>().apply {
+        players.getPlayers().forEach {
+            this[it.name] = it.judgeResult(dealer.cards)
+        }
+    }
 
     fun judgeDealerResult(playersResult: Map<String, Result>): List<Result> =
         playersResult.map { it.value.reverseResult() }

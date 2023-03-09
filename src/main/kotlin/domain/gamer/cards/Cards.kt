@@ -3,7 +3,6 @@ package domain.gamer.cards
 import domain.card.Card
 import domain.card.CardValue
 import domain.gamer.Participant.Companion.START_DECK_CARD_COUNT
-import domain.judge.Referee
 
 class Cards(private var cards: List<Card>) {
 
@@ -28,12 +27,13 @@ class Cards(private var cards: List<Card>) {
 
     private fun checkAceContained() = cards.any { it.cardValue.title == CardValue.ACE.title }
 
-    fun checkBurst(): Boolean = calculateCardSum() > Referee.CARD_SUM_MAX_VALUE
+    fun checkBurst(): Boolean = calculateCardSum() > CARD_SUM_MAX_VALUE
 
     fun checkBlackjack(): Boolean =
-        calculateCardSum() == Referee.CARD_SUM_MAX_VALUE && cards.size == START_DECK_CARD_COUNT
+        calculateCardSum() == CARD_SUM_MAX_VALUE && cards.size == START_DECK_CARD_COUNT
 
     companion object {
         private const val ACE_COUNT_VALUE_CHANGE_CONDITION = 2
+        const val CARD_SUM_MAX_VALUE = 21
     }
 }
