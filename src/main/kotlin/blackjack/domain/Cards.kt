@@ -1,13 +1,9 @@
 package blackjack.domain
 
 class Cards(vararg cards: Card) {
-    private val _items: MutableList<Card> by lazy { mutableListOf() }
+    private val _items: MutableList<Card> by lazy { cards.toMutableList() }
     val items: List<Card>
         get() = _items.toList()
-
-    init {
-        _items.addAll(cards)
-    }
 
     fun add(card: Card) {
         _items.add(card)
