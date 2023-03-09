@@ -5,7 +5,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
 class CardTest {
-    @ParameterizedTest
+    @ParameterizedTest(name = "{1} {0} 카드가 존재한다.")
     @CsvSource(
         "ACE,SPADE", "ACE,HEART", "ACE,DIAMOND", "ACE,CLOVER",
         "TWO,SPADE", "TWO,HEART", "TWO,DIAMOND", "TWO,CLOVER",
@@ -22,6 +22,6 @@ class CardTest {
         "KING,SPADE", "KING,HEART", "KING,DIAMOND", "KING,CLOVER"
     )
     fun `카드는 각 모양별로 2부터 10, A, J, Q, K가 존재한다`(cardNumber: CardNumber, suit: Suit) {
-        assertThat(Card.all()).containsExactly(Card(cardNumber, suit))
+        assertThat(Card.all()).contains(Card(cardNumber, suit))
     }
 }
