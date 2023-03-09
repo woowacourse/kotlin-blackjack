@@ -9,7 +9,7 @@ class GuestTest {
     @ParameterizedTest
     @ValueSource(ints = [10, 1_000_000])
     fun `배팅 금액을 반환한다`(money: Int) {
-        val user = Guest("아크", money)
+        val user = Guest("아크", Money(money))
         assertThat(user.bettingMoney.value).isEqualTo(money)
     }
 

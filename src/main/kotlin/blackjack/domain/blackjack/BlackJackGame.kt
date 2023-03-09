@@ -3,12 +3,13 @@ package blackjack.domain.blackjack
 import blackjack.domain.card.CardDeck
 import blackjack.domain.participants.Dealer
 import blackjack.domain.participants.Guest
+import blackjack.domain.participants.Money
 import blackjack.domain.participants.User
 
 class BlackJackGame {
     var onDraw: (String) -> Boolean = { true }
 
-    fun setUp(getNames: () -> List<String>, getBettingMoney: (String) -> Int): BlackJack =
+    fun setUp(getNames: () -> List<String>, getBettingMoney: (String) -> Money): BlackJack =
         blackJack {
             participants {
                 dealer()

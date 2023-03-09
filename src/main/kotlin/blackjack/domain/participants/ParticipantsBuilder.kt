@@ -6,7 +6,7 @@ class ParticipantsBuilder {
 
     fun dealer() { dealer = Dealer() }
 
-    fun guest(name: String, bettingMoney: Int) {
+    fun guest(name: String, bettingMoney: Money = Money(10)) {
         guests += Guest(name, bettingMoney)
     }
 

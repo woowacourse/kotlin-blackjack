@@ -10,8 +10,8 @@ class BlackJackGameTest {
         val blackJack = blackJack {
             participants {
                 dealer()
-                guest("아크", 10)
-                guest("로피", 10)
+                guest("아크")
+                guest("로피")
             }
             initDrawAll()
         }

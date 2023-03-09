@@ -1,5 +1,7 @@
 package blackjack.view
 
+import blackjack.domain.participants.Money
+
 class InputView {
     fun inputParticipants(): List<String> {
         println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
@@ -10,9 +12,15 @@ class InputView {
         }
     }
 
-    fun inputBettingMoney(name: String): Int {
+    fun inputBettingMoney(name: String): Money {
+        return runCatching { Money(getBettingMoney(name)) }
+            .onFailure { println(it.message) }
+            .getOrDefault(inputBettingMoney(name))
+    }
+
+    private fun getBettingMoney(name: String): Int {
         println("\n${name}의 배팅 금액은?")
-        return readln().toIntOrNull() ?: inputBettingMoney(name)
+        return readln().toIntOrNull() ?: getBettingMoney(name)
     }
 
     fun inputDrawMore(name: String): Boolean {
