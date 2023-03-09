@@ -3,7 +3,7 @@ package domain.result
 import domain.card.CardNumber
 import domain.card.Cards
 import domain.constant.BlackJackConstants.BIG_ACE
-import domain.constant.BlackJackConstants.BLACK_JACK
+import domain.constant.BlackJackConstants.BLACK_JACK_NUMBER
 import domain.constant.BlackJackConstants.NOTHING
 import domain.constant.BlackJackConstants.SMALL_ACE
 
@@ -26,7 +26,7 @@ object CardsScore {
         val maxAceSum = BIG_ACE + (aceCount - 1) * SMALL_ACE
         return when {
             aceCount == NOTHING -> NOTHING
-            BLACK_JACK - sumExceptAce >= maxAceSum -> maxAceSum
+            BLACK_JACK_NUMBER - sumExceptAce >= maxAceSum -> maxAceSum
             else -> aceCount * SMALL_ACE
         }
     }
