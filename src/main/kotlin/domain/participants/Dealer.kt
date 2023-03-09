@@ -7,6 +7,7 @@ class Dealer(val ownCards: Cards, val name: String = "딜러") {
 
     fun checkOverCondition(): Boolean = ownCards.calculateCardSum() > CARD_PICK_CONDITION
 
+    // 얘는 밖에서 하고 judgePlayerResult로 반환해줘야하는 것 아닌가? 지금 이건 너무 양방향 의존같은데..
     fun judgePlayersResult(players: List<Player>) {
         players.map {
             it.setResult(judgePlayerResult(it.ownCards))

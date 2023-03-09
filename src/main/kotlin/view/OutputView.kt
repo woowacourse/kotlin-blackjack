@@ -13,7 +13,7 @@ object OutputView {
     private const val DEALER = "딜러: "
     private const val PARTICIPANT_CARD = "카드:"
     private const val RESULT = " - 결과: "
-    private const val FINAL_RESULT = "\n## 최종 승패"
+    private const val FINAL_RESULT = "\n## 최종 수익"
     private const val PICK_CARD_OVER_SIXTEEN = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n"
 
     fun printBlackjackSetting(players: List<Player>, dealer: Dealer) {
@@ -73,10 +73,10 @@ object OutputView {
         )
     }
 
-    fun printWinningResult(players: List<Player>) {
+    fun printProfitResult(players: List<Player>) {
         println(FINAL_RESULT)
         printDealerWinningResult(players)
-        printPlayerWinningResult(players)
+        printPlayerProfitResult(players)
     }
 
     private fun printDealerWinningResult(players: List<Player>) {
@@ -94,9 +94,9 @@ object OutputView {
 
     private fun formatResultCount(count: Int, result: Result) = if (count == 0) "" else "$count${result.result} "
 
-    private fun printPlayerWinningResult(players: List<Player>) {
+    private fun printPlayerProfitResult(players: List<Player>) {
         players.forEach {
-            println("${it.name}: ${it.result.result}")
+            println("${it.name}: ${it.result.calculateProfit(it.bettingMoney)}")
         }
     }
 }
