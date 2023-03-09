@@ -2,26 +2,37 @@ package blackjack.domain
 
 enum class GameResultCondition(
     val gameResult: GameResult,
-    val condition: (playerScore: Int, dealerScore: Int) -> Boolean
+    val scoreCondition: (playerScore: Int, dealerScore: Int) -> Boolean,
+    val blackJackCondition: (isPlayerBlackJack: Boolean) -> Boolean
 ) {
     PLAYER_BURST_CONDITION(
-        condition = { playerScore, _ -> playerScore > BlackJackReferee.BLACK_JACK_SCORE },
+        scoreCondition = { playerScore, _ -> playerScore > BlackJackReferee.BLACK_JACK_SCORE },
+        blackJackCondition = { isPlayerBlackJack -> isPlayerBlackJack or true },
         gameResult = GameResult.LOSE
     ),
     DEALER_BURST_CONDITION(
-        condition = { _, dealerScore -> dealerScore > blackjack.domain.BlackJackReferee.BLACK_JACK_SCORE },
+        scoreCondition = { _, dealerScore -> dealerScore > BlackJackReferee.BLACK_JACK_SCORE },
+        blackJackCondition = { isPlayerBlackJack -> isPlayerBlackJack or true },
         gameResult = GameResult.WIN
     ),
     DRAW_CONDITION(
-        condition = { playerScore, dealerScore -> playerScore == dealerScore },
+        scoreCondition = { playerScore, dealerScore -> playerScore == dealerScore },
+        blackJackCondition = { isPlayerBlackJack -> isPlayerBlackJack or true },
         gameResult = GameResult.DRAW
     ),
     PLAYER_LOSE_CONDITION(
-        condition = { playerScore, dealerScore -> playerScore < dealerScore },
+        scoreCondition = { playerScore, dealerScore -> playerScore < dealerScore },
+        blackJackCondition = { isPlayerBlackJack -> isPlayerBlackJack or true },
         gameResult = GameResult.LOSE
     ),
+    PLAYER_BLACKJACK_CONDITION(
+        scoreCondition = { playerScore, dealerScore -> playerScore > dealerScore },
+        blackJackCondition = { isPlayerBlackJack -> isPlayerBlackJack and true },
+        gameResult = GameResult.BLACKJACK
+    ),
     PLAYER_WIN_CONDITION(
-        condition = { playerScore, dealerScore -> playerScore > dealerScore },
+        scoreCondition = { playerScore, dealerScore -> playerScore > dealerScore },
+        blackJackCondition = { isPlayerBlackJack -> isPlayerBlackJack or true },
         gameResult = GameResult.WIN
     );
 }

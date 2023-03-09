@@ -38,6 +38,10 @@ class CardHand(cards: List<Card>) {
         return BIG_ACE_VALUE
     }
 
+    fun isBlackJack(): Boolean {
+        return cards.size == INITIAL_CARDS_SIZE && getTotalCardsScore() == BlackJackReferee.BLACK_JACK_SCORE
+    }
+
     companion object {
         const val INITIAL_CARDS_SIZE = 2
         private const val SMALL_ACE_VALUE = 1

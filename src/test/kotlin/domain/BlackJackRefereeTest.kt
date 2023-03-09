@@ -1,5 +1,6 @@
 package domain
 
+import blackjack.domain.BetAmount
 import blackjack.domain.BlackJackReferee
 import blackjack.domain.Card
 import blackjack.domain.CardHand
@@ -35,7 +36,7 @@ class BlackJackRefereeTest {
     }
 
     private fun createPlayer(firstCardNumber: CardNumber, secondCardNumber: CardNumber): Player {
-        return Player(PlayerName("name"), CardHand(listOf(Card(firstCardNumber, Shape.SPADE), Card(secondCardNumber, Shape.SPADE))))
+        return Player(PlayerName("name"), CardHand(listOf(Card(firstCardNumber, Shape.SPADE), Card(secondCardNumber, Shape.SPADE))), BetAmount(1000))
     }
 
     private fun createDealer(firstCardNumber: CardNumber, secondCardNumber: CardNumber): Dealer {

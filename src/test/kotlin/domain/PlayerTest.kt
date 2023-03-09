@@ -1,5 +1,6 @@
 package domain
 
+import blackjack.domain.BetAmount
 import blackjack.domain.Card
 import blackjack.domain.CardHand
 import blackjack.domain.CardNumber
@@ -24,6 +25,6 @@ class PlayerTest {
     private val card = Card(CardNumber.ONE, Shape.SPADE)
 
     private fun createPlayer(firstCardNumber: CardNumber, secondCardNumber: CardNumber): Player {
-        return Player(PlayerName("name"), CardHand(listOf(Card(firstCardNumber, Shape.SPADE), Card(secondCardNumber, Shape.SPADE))))
+        return Player(PlayerName("name"), CardHand(listOf(Card(firstCardNumber, Shape.SPADE), Card(secondCardNumber, Shape.SPADE))), BetAmount(1000))
     }
 }

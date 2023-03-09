@@ -2,6 +2,5 @@ package blackjack.domain
 
 data class PlayerGameResult(
     val playerName: String,
-    val gameResult: GameResult,
-    val isBlackJack: Boolean
+    val gameResult: GameResult
 )

@@ -20,6 +20,7 @@ object OutputView {
     private const val GAME_RESULTS = "###최종 승패"
     private const val DEALER_GAME_RESULTS = "딜러: %d승 %d패 %d무"
     private const val PLAYER_GAME_RESULT = "%s: %s"
+    private const val BET_RESULTS = "최종 수익"
 
     private const val HEART_DESCRIPTION = "하트"
     private const val DIAMOND_DESCRIPTION = "다이아몬드"
@@ -113,6 +114,7 @@ object OutputView {
     private fun makeGameResultDescription(gameResult: GameResult): String {
         return when (gameResult) {
             GameResult.WIN -> WIN_DESCRIPTION
+            GameResult.BLACKJACK -> WIN_DESCRIPTION
             GameResult.LOSE -> LOSE_DESCRIPTION
             GameResult.DRAW -> DRAW_DESCRIPTION
         }
@@ -120,5 +122,14 @@ object OutputView {
 
     fun printErrorMessage(exception: Throwable) {
         println(exception.message)
+    }
+
+    fun printBetResults(playersGameResult: List<PlayerGameResult>, dealerGameResult: List<GameResult>) {
+        var dealerMoney = 0
+
+        println(BET_RESULTS)
+        // playersGameResult.forEach { playerResult ->
+        //     if (playerResult.isBlackJack)
+        // }
     }
 }
