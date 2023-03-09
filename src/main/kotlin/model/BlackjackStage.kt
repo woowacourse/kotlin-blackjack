@@ -26,9 +26,7 @@ class BlackjackStage(val users: Users, private val cardFactory: CardFactory) {
         return false
     }
 
-    private fun distributeUser(user: User, count: Int) {
-        user.addCards(cardFactory.generate(count))
-    }
+    private fun distributeUser(user: User, count: Int) = user.addCards(cardFactory.generate(count))
 
     companion object {
         const val INITIAL_CARD_DISTRIBUTE_COUNT = 2

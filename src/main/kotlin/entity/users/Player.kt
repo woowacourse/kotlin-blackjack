@@ -1,7 +1,7 @@
 package entity.users
 
-import entity.result.GameResultType
 import entity.card.Cards
+import entity.result.GameResultType
 import misc.GameRule
 
 class Player(val userInformation: UserInformation, cards: Cards = Cards(listOf())) : User(cards) {

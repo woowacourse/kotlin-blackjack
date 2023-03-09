@@ -25,8 +25,14 @@ class PlayerTest {
     @Test
     fun `플레이어가 가진 카드의 숫자 합이 21 이상이면 한장의 카드를 더 받을 수 없다`() {
         val dealer = Dealer(
-            Cards(listOf(Card(CardType.SPADE, CardNumber.TEN), Card(CardType.SPADE, CardNumber.TEN), Card(
-                CardType.SPADE, CardNumber.TWO)))
+            Cards(
+                listOf(
+                    Card(CardType.SPADE, CardNumber.TEN), Card(CardType.SPADE, CardNumber.TEN),
+                    Card(
+                        CardType.SPADE, CardNumber.TWO
+                    )
+                )
+            )
         )
         val isDistributable = dealer.isDistributable()
 

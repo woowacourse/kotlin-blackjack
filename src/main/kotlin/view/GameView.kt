@@ -29,17 +29,11 @@ class GameView {
         players.value.forEach { printPlayerStatus(it) }
     }
 
-    fun printWhetherMoreCard(name: String) {
-        println(MESSAGE_MORE_CARD.format(name))
-    }
+    fun printWhetherMoreCard(name: String) = println(MESSAGE_MORE_CARD.format(name))
 
-    fun readWhetherMoreCard(): String {
-        return readln().trim()
-    }
+    fun readWhetherMoreCard() = readln().trim()
 
-    fun printDealerMoreCard() {
-        println(MESSAGE_DEALER_MORE_CARD)
-    }
+    fun printDealerMoreCard() = println(MESSAGE_DEALER_MORE_CARD)
 
     companion object {
         private const val MESSAGE_DEALER_NAME = "딜러: "

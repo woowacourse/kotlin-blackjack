@@ -5,9 +5,7 @@ class CardDistributeCondition(val value: String) {
         require(value == CONDITION_YES_MESSAGE || value == CONDITION_NO_MESSAGE) { CONDITION_ERROR_MESSAGE }
     }
 
-    fun toBoolean(): Boolean {
-        return value == CONDITION_YES_MESSAGE
-    }
+    fun toBoolean(): Boolean = value == CONDITION_YES_MESSAGE
 
     companion object {
         const val CONDITION_YES_MESSAGE = "y"

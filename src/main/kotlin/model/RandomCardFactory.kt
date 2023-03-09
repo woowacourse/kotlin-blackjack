@@ -19,9 +19,7 @@ class RandomCardFactory : CardFactory {
         return cards.value[index++]
     }
 
-    override fun generate(count: Int): Cards {
-        return Cards((0 until count).map { generateCard() })
-    }
+    override fun generate(count: Int) = Cards((0 until count).map { generateCard() })
 
     companion object {
         private const val CARD_CREATE_INDEX_ERROR_MESSAGE = "카드는 52개 이상 생성할 수 없습니다."

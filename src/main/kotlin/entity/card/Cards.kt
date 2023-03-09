@@ -18,9 +18,7 @@ class Cards(value: List<Card>) {
         else ACE_ELEVEN
     }
 
-    fun addCards(cards: Cards) {
-        cards.value.forEach { _value.add(it) }
-    }
+    fun addCards(cards: Cards) = cards.value.forEach { _value.add(it) }
 
     companion object {
         private const val ACE_ONE = 1
