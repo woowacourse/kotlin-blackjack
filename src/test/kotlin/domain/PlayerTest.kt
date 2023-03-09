@@ -4,15 +4,24 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class PlayerTest {
+    private fun Cards(vararg cards: Int): Cards {
+        return Cards(
+            cards.map { number ->
+                Card.of(
+                    CardCategory.CLOVER,
+                    CardNumber.values().find { it.value == number } ?: CardNumber.FIVE,
+                )
+            },
+        )
+    }
+
     @Test
     fun `처음에 패를 두 장 보여준다`() {
         val player = Player(
             Name("scott"),
             Cards(
-                listOf(
-                    Card.of(CardCategory.CLOVER, CardNumber.EIGHT),
-                    Card.of(CardCategory.SPADE, CardNumber.NINE),
-                ),
+                8,
+                9,
             ),
             BettingMoney(1000),
         )
@@ -43,16 +52,14 @@ class PlayerTest {
         val player = Player(
             Name("scott"),
             Cards(
-                listOf(
-                    Card.of(CardCategory.CLOVER, CardNumber.QUEEN),
-                    Card.of(CardCategory.SPADE, CardNumber.NINE),
-                    Card.of(CardCategory.SPADE, CardNumber.NINE),
-                ),
+                10,
+                9,
+                9,
             ),
             BettingMoney(1000),
         )
-        val opponentScore = Score(23, false)
-        val result = player.getGameResult(opponentScore)
+        val dealerScore = Score(Cards(10, 12))
+        val result = player.getGameResult(dealerScore)
         val expected = GameResultType.LOSE
         assertThat(result).isEqualTo(expected)
     }
@@ -69,8 +76,8 @@ class PlayerTest {
             ),
             BettingMoney(1000),
         )
-        val opponentScore = Score(23, false)
-        val result = player.getGameResult(opponentScore)
+        val dealerScore = Score(Cards(12, 10))
+        val result = player.getGameResult(dealerScore)
         val expected = GameResultType.WIN
         assertThat(result).isEqualTo(expected)
     }
@@ -87,8 +94,8 @@ class PlayerTest {
             ),
             BettingMoney(1000),
         )
-        val opponentScore = Score(17, false)
-        val result = player.getGameResult(opponentScore)
+        val dealerScore = Score(Cards(10, 7))
+        val result = player.getGameResult(dealerScore)
         val expected = GameResultType.DRAW
         assertThat(result).isEqualTo(expected)
     }
@@ -105,8 +112,8 @@ class PlayerTest {
             ),
             BettingMoney(1000),
         )
-        val opponentScore = Score(18, false)
-        val result = player.getGameResult(opponentScore)
+        val dealerScore = Score(Cards(10, 8))
+        val result = player.getGameResult(dealerScore)
         val expected = GameResultType.LOSE
         assertThat(result).isEqualTo(expected)
     }
@@ -123,8 +130,8 @@ class PlayerTest {
             ),
             BettingMoney(1000),
         )
-        val opponentScore = Score(16, false)
-        val result = player.getGameResult(opponentScore)
+        val dealerScore = Score(Cards(10, 6))
+        val result = player.getGameResult(dealerScore)
         val expected = GameResultType.WIN
         assertThat(result).isEqualTo(expected)
     }

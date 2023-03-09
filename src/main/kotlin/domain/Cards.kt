@@ -16,13 +16,9 @@ class Cards(list: List<Card>) {
         _cards.add(card)
     }
 
-    private fun isContainAce(): Boolean {
-        return _cards.count { it.isAce } == HAS_ACE
+    fun isContainAce(): Boolean {
+        return _cards.any { it.isAce }
     }
 
-    fun getScore(): Score = Score(sum(), isContainAce())
-
-    companion object {
-        private const val HAS_ACE = 1
-    }
+    fun getScore(): Score = Score(this)
 }

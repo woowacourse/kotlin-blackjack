@@ -4,16 +4,25 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class ParticipantTest {
+    private fun Cards(vararg cards: Int): Cards {
+        return Cards(
+            cards.map { number ->
+                Card.of(
+                    CardCategory.CLOVER,
+                    CardNumber.values().find { it.value == number } ?: CardNumber.FIVE,
+                )
+            },
+        )
+    }
+
     @Test
     fun `카드의 최종 합을 구한다`() {
         // given
         val participant = object : Participant(
             Name("Scott"),
             Cards(
-                listOf(
-                    Card.of(CardCategory.CLOVER, CardNumber.EIGHT),
-                    Card.of(CardCategory.SPADE, CardNumber.NINE),
-                ),
+                8,
+                9,
             ),
         ) {
             override fun showInitCards(): List<Card> {
@@ -27,7 +36,7 @@ class ParticipantTest {
 
         // when
         val actual = participant.getScore()
-        val expected = Score(17, false)
+        val expected = Score(Cards(10, 7))
 
         // then
         assertThat(actual.getValue()).isEqualTo(expected.getValue())
