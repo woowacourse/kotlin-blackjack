@@ -4,7 +4,11 @@ class Score(val cards: Cards) {
     private val sum: Int
         get() = cards.sum()
     val state: ScoreState
-        get() = getState()
+        get() {
+            if (isBurst()) return ScoreState.Burst
+            if (isBlackJack()) return ScoreState.BlackJack
+            return ScoreState.Normal(getValue())
+        }
 
     init {
         require(sum >= MINIMUM_SUM) { MINIMUM_SUM_ERROR }
@@ -19,12 +23,6 @@ class Score(val cards: Cards) {
             return getScoreWithAce()
         }
         return sum
-    }
-
-    private fun getState(): ScoreState {
-        if (isBurst()) return ScoreState.Burst
-        if (isBlackJack()) return ScoreState.BlackJack
-        return ScoreState.Normal(getValue())
     }
 
     private fun getScoreWithAce(): Int {
