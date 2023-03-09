@@ -13,6 +13,7 @@ class Player(name: ParticipantName) : Participant(name) {
             else -> ResultType.LOSE
         }
     }
+    fun isBlackjack(): Boolean = cards.size == 2 && getScore() == TARGET_SCORE
 
     override fun equals(other: Any?): Boolean = if (other is Player) name == other.name else false
     override fun hashCode(): Int = this.name.hashCode()

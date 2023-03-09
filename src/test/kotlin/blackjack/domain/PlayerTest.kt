@@ -106,6 +106,16 @@ class PlayerTest {
     }
 
     @Test
+    fun `플레이어의 카드가 두 장이고 두 카드 가치의 합이 21이면 블랙잭이다`() {
+        val player = Player("pobi").apply {
+            receive(Card(CardNumber.ACE, CardShape.CLOVER))
+            receive(Card(CardNumber.KING, CardShape.DIAMOND))
+        }
+
+        assertThat(player.isBlackjack()).isTrue
+    }
+
+    @Test
     fun `플레이어는 이름으로 구분된다`() {
         val player1 = Player("thomas")
         val player2 = Player("pobi")
