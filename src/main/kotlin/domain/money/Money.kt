@@ -13,6 +13,6 @@ value class Money(val value: Int) {
     companion object {
         private const val MINIMUM_MONEY = 10_000
         private const val MAXIMUM_MONEY = 100_000
-        private const val ERROR_MONEY_RANGE = "배팅 금액은 10000 에서 100000 이하여야 합니다"
+        private const val ERROR_MONEY_RANGE = "배팅 금액은 10000원 에서 100000원 이하여야 합니다"
     }
 }
