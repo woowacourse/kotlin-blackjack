@@ -35,9 +35,7 @@ class DealerTest {
         val playerCards = Cards(mutableListOf(Card(Shape.HEART, CardValue.JACK), Card(Shape.HEART, CardValue.ACE)))
         val player = Player("jack", playerCards)
 
-        dealer.judgePlayersResult(listOf(player))
-
-        assertThat(player.result).isEqualTo(Result.BLACKJACK_WIN)
+        assertThat(dealer.judgePlayerResult(player.ownCards)).isEqualTo(Result.BLACKJACK_WIN)
     }
 
     @Test
@@ -52,8 +50,7 @@ class DealerTest {
         )
         val player =
             Player("jack", Cards(mutableListOf(Card(Shape.HEART, CardValue.JACK), Card(Shape.HEART, CardValue.ACE))))
-        dealer.judgePlayersResult(listOf(player))
-        assertThat(player.result).isEqualTo(Result.DRAW)
+        assertThat(dealer.judgePlayerResult(player.ownCards)).isEqualTo(Result.DRAW)
     }
 
     @Test
@@ -77,8 +74,7 @@ class DealerTest {
                     )
                 )
             )
-        dealer.judgePlayersResult(listOf(player))
-        assertThat(player.result).isEqualTo(Result.LOSS)
+        assertThat(dealer.judgePlayerResult(player.ownCards)).isEqualTo(Result.LOSS)
     }
 
     @Test
@@ -93,8 +89,7 @@ class DealerTest {
             )
         )
         val player = Player("jack", Cards(mutableListOf(Card(Shape.HEART, CardValue.JACK))))
-        dealer.judgePlayersResult(listOf(player))
-        assertThat(player.result).isEqualTo(Result.WIN)
+        assertThat(dealer.judgePlayerResult(player.ownCards)).isEqualTo(Result.WIN)
     }
 
     @Test
@@ -118,8 +113,7 @@ class DealerTest {
                 )
             )
         )
-        dealer.judgePlayersResult(listOf(player))
-        assertThat(player.result).isEqualTo(Result.LOSS)
+        assertThat(dealer.judgePlayerResult(player.ownCards)).isEqualTo(Result.LOSS)
     }
 
     @Test
@@ -135,37 +129,6 @@ class DealerTest {
                 )
             )
         )
-        dealer.judgePlayersResult(listOf(player))
-        assertThat(player.result).isEqualTo(Result.LOSS)
-    }
-
-    @Test
-    fun `플레이어 두명이 각 15,21의 결과값을 갖고 딜러가 20일 때, 패,승을 반환한다`() {
-        val dealer =
-            Dealer(
-                Cards(mutableListOf(Card(Shape.HEART, CardValue.JACK), Card(Shape.HEART, CardValue.QUEEN)))
-            )
-        val player1 = Player(
-            "jack",
-            Cards(
-                mutableListOf(
-                    Card(Shape.SPADE, CardValue.JACK),
-                    Card(Shape.SPADE, CardValue.FIVE)
-                )
-            )
-        )
-        val player2 = Player(
-            "king",
-            Cards(
-                mutableListOf(
-                    Card(Shape.SPADE, CardValue.QUEEN),
-                    Card(Shape.SPADE, CardValue.KING),
-                    Card(Shape.SPADE, CardValue.ACE)
-                )
-            )
-        )
-        dealer.judgePlayersResult(listOf(player1, player2))
-        assertThat(player1.result).isEqualTo(Result.LOSS)
-        assertThat(player2.result).isEqualTo(Result.WIN)
+        assertThat(dealer.judgePlayerResult(player.ownCards)).isEqualTo(Result.LOSS)
     }
 }

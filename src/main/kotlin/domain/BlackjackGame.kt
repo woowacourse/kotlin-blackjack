@@ -84,8 +84,14 @@ class BlackjackGame(
     }
 
     fun printWinningResult(showWinningResult: (List<Player>) -> Unit) {
-        dealer.judgePlayersResult(players)
+        judgePlayersResult(players)
         showWinningResult(players)
+    }
+
+    private fun judgePlayersResult(players: List<Player>) {
+        players.map {
+            it.setResult(dealer.judgePlayerResult(it.ownCards))
+        }
     }
 
     companion object {
