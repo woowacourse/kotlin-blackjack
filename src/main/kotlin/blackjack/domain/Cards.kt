@@ -19,7 +19,9 @@ class Cards(vararg cards: Card) {
     private fun calculateAceScore(score: Int): Int =
         if (hasAce() && !isOverBlackjack(score + BONUS_SCORE)) score + BONUS_SCORE else score
 
-    fun isOverBlackjack(score: Int): Boolean = score > BLACKJACK_SCORE
+    fun isOverBlackjack(): Boolean = calculateTotalScore() > BLACKJACK_SCORE
+
+    private fun isOverBlackjack(score: Int): Boolean = score > BLACKJACK_SCORE
 
     fun isStay(): Boolean = calculateTotalScore() >= STAY_SCORE
 
@@ -29,9 +31,5 @@ class Cards(vararg cards: Card) {
         private const val BONUS_SCORE = 10
         private const val BLACKJACK_SCORE = 21
         private const val STAY_SCORE = 17
-    }
-
-    init {
-        _items.addAll(cards)
     }
 }

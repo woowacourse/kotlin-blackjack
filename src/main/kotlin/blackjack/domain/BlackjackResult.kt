@@ -1,6 +1,6 @@
 package blackjack.domain
 
-data class BlackJackResult(
+data class BlackjackResult(
     val cardResults: List<CardResult>,
     val matchResults: List<MatchResult>,
 )

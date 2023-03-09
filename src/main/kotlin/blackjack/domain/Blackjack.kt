@@ -1,13 +1,16 @@
 package blackjack.domain
 
-class BlackJack(private val deck: CardDeck, private val participants: Participants) {
+class Blackjack(private val deck: CardDeck, private val participants: Participants) {
+
+    constructor(deck: CardDeck, players: List<Player>) : this(deck, Participants(listOf(Dealer()) + players))
+
     fun readyToStart() {
         participants.drawFirst(deck)
     }
 
-    fun start(onDrawn: (Participant) -> Unit): BlackJackResult {
+    fun start(onDrawn: (Participant) -> Unit): BlackjackResult {
         participants.takeTurns(deck, onDrawn)
-        return BlackJackResult(
+        return BlackjackResult(
             participants.getCardResults(),
             participants.getMatchResults(),
         )

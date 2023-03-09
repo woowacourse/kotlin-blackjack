@@ -1,27 +1,24 @@
 package blackjack.controller
 
-import blackjack.domain.BlackJack
+import blackjack.domain.Blackjack
 import blackjack.domain.CardDeck
-import blackjack.domain.Dealer
-import blackjack.domain.Participants
 import blackjack.domain.Player
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
-class BlackJackController {
-
+class BlackjackController {
     fun start() {
-        with(initBlackJack()) {
+        with(initBlackjack()) {
             setUpCard(this)
 
             val result = start(
                 onDrawn = { participant -> OutputView.printDrawn(participant) }
             )
-            OutputView.printBlackJackResult(result)
+            OutputView.printBlackjackResult(result)
         }
     }
 
-    private fun initBlackJack(): BlackJack = BlackJack(CardDeck(), Participants(listOf(Dealer()) + enrollPlayers()))
+    private fun initBlackjack(): Blackjack = Blackjack(CardDeck(), enrollPlayers())
 
     private fun enrollPlayers(): List<Player> = InputView.inputNames().map { name ->
         Player(name, needToDraw = {
@@ -29,13 +26,13 @@ class BlackJackController {
         })
     }
 
-    private fun setUpCard(blackJack: BlackJack) {
+    private fun setUpCard(blackJack: Blackjack) {
         drawInitialCards(blackJack)
         OutputView.printFirstOpenCards(blackJack.getFirstOpenCards())
         OutputView.printInterval()
     }
 
-    private fun drawInitialCards(blackJack: BlackJack) {
+    private fun drawInitialCards(blackJack: Blackjack) {
         blackJack.readyToStart()
     }
 }

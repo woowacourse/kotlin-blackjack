@@ -1,6 +1,6 @@
 package blackjack.view
 
-import blackjack.domain.BlackJackResult
+import blackjack.domain.BlackjackResult
 import blackjack.domain.Card
 import blackjack.domain.CardNumber
 import blackjack.domain.CardResult
@@ -33,7 +33,7 @@ object OutputView {
         }
     }
 
-    fun printBlackJackResult(blackJackResult: BlackJackResult) {
+    fun printBlackjackResult(blackJackResult: BlackjackResult) {
         printCardResults(blackJackResult.cardResults)
         printFinalResult(blackJackResult.matchResults)
     }
