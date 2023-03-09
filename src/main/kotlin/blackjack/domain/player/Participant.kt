@@ -6,11 +6,11 @@ import blackjack.domain.card.Cards
 class Participant(name: String, cards: Cards = Cards()) : Player(name, cards) {
 
     override fun checkProvideCardPossible(): Boolean {
-        if (cards.sumCardsNumber() <= PARTICIPANT_MORE_CARD_CRITERIA) return true
+        if (cards.sumCardsNumber() < PARTICIPANT_MORE_CARD_CRITERIA) return true
         return false
     }
 
-    fun calculateResult(dealer: Dealer): PlayerResult {
+    fun calculateResult(dealer: Dealer): ParticipantResult {
         val result = when {
             (isBurst) -> Result.LOSE
             (dealer.isBurst) -> Result.WIN
@@ -21,7 +21,7 @@ class Participant(name: String, cards: Cards = Cards()) : Player(name, cards) {
             (cards.sumCardsNumber() < dealer.cards.sumCardsNumber()) -> Result.LOSE
             else -> Result.DRAW
         }
-        return PlayerResult(Pair(name, result))
+        return ParticipantResult(Pair(name, result))
     }
 
     companion object {

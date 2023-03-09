@@ -5,8 +5,8 @@ import blackjack.domain.player.Dealer
 import blackjack.domain.player.DealerResult
 import blackjack.domain.player.Participant
 import blackjack.domain.player.Participants
+import blackjack.domain.player.ParticipantsResults
 import blackjack.domain.player.Player
-import blackjack.domain.player.PlayersResults
 
 class OutputView {
 
@@ -35,12 +35,12 @@ class OutputView {
         }
     }
 
-    fun printFinalResult(playersResults: PlayersResults, dealerResult: DealerResult) {
+    fun printFinalResult(participantsResults: ParticipantsResults, dealerResult: DealerResult) {
         println()
         println(FINAL_RESULT_MENT)
-        var dealerResultMessage = FINAL_DEALER_RESULT_MENT + printDealerFinalResut(dealerResult)
+        val dealerResultMessage = FINAL_DEALER_RESULT_MENT + printDealerFinalResut(dealerResult)
         println(dealerResultMessage)
-        playersResults.results.forEach {
+        participantsResults.results.forEach {
             println(FINAL_PARTICIPANT_RESULT_MENT.format(it.result.first, it.result.second.word))
         }
     }

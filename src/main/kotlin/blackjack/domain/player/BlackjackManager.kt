@@ -54,13 +54,13 @@ class BlackjackManager(cardsGenerator: CardsGenerator) {
         }
     }
 
-    fun calculatePlayersResult(onCalculateResults: (PlayersResults, DealerResult) -> Unit) {
-        val playersResult = mutableListOf<PlayerResult>()
+    fun calculatePlayersResult(onCalculateResults: (ParticipantsResults, DealerResult) -> Unit) {
+        val playersResult = mutableListOf<ParticipantResult>()
         participants.values.forEach {
             playersResult.add(it.calculateResult(dealer))
         }
         val dealerResult = dealer.calculateResults(participants)
-        onCalculateResults(PlayersResults(playersResult), dealerResult)
+        onCalculateResults(ParticipantsResults(playersResult), dealerResult)
     }
 
     private fun provideCard(player: Player) {
