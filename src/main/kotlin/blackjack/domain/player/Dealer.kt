@@ -21,6 +21,7 @@ class Dealer(name: String = "딜러", cards: Cards = Cards()) : Player(name, car
     private fun calculateResult(participant: Participant): Result {
         return when {
             (participant.isBurst) -> Result.WIN
+            (isBurst) -> Result.LOSE
             (isBlackjack and !participant.isBlackjack) -> Result.WIN
             (!isBlackjack and participant.isBlackjack) -> Result.LOSE
             (isBlackjack and participant.isBlackjack) -> Result.DRAW
