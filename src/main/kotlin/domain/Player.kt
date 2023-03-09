@@ -9,21 +9,14 @@ class Player(name: Name, cards: Cards, val bettingMoney: BettingMoney) : Partici
         return !cards.getScore().isBurst()
     }
 
-    fun getGameResult(dealerScore: Score): GameResultType {
-        val myScore = getScore()
-        if (myScore.isBurst()) return GameResultType.LOSE
-        if (dealerScore.isBurst()) return GameResultType.WIN
-        return when (myScore.getValue() - dealerScore.getValue()) {
-            DRAW_NUMBER -> GameResultType.DRAW
-            in POSITIVE_RANGE -> GameResultType.WIN
-            in NEGATIVE_RANGE -> GameResultType.LOSE
-            else -> throw IllegalStateException(GAME_RESULT_ERROR)
-        }
+    private fun getGameResult(dealerScore: Score): GameResultType {
+        val playerScoreState: ScoreState = getScore().state
+        return GameResultType.valueOf(dealerScore.state, playerScoreState)
     }
 
     fun getProfit(dealerScore: Score): Int {
         val gameResultType = getGameResult(dealerScore)
-        return GameResultType.getProfit(bettingMoney.money, gameResultType)
+        return (bettingMoney.money * gameResultType.profitRate).toInt()
     }
 
     companion object {
