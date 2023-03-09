@@ -5,6 +5,10 @@ class Cards(vararg cards: Card) {
     val items: List<Card>
         get() = _items.toList()
 
+    init {
+        _items.addAll(cards)
+    }
+
     fun add(card: Card) {
         _items.add(card)
     }
