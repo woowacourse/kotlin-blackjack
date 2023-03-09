@@ -5,7 +5,7 @@ import blackjack.domain.participants.Dealer
 import blackjack.domain.participants.Guest
 import blackjack.domain.participants.Participants
 import blackjack.domain.result.Outcome
-import blackjack.domain.result.Outcome.Companion.gameResult
+import blackjack.domain.result.Outcome.Companion.getOutcome
 
 data class BlackJack(
     val cardDeck: CardDeck,
@@ -17,5 +17,5 @@ data class BlackJack(
     val guests: List<Guest>
         get() = participants.guests
 
-    fun getResult(): List<Outcome> = participants.guests.map { guest -> gameResult(guest, participants.dealer) }
+    fun getResult(): List<Outcome> = participants.guests.map { guest -> getOutcome(guest, participants.dealer) }
 }

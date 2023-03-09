@@ -8,7 +8,7 @@ enum class Outcome {
     companion object {
         private const val BLACKJACK_NUMBER = 21
 
-        fun gameResult(user: User, other: User): Outcome =
+        fun getOutcome(user: User, other: User): Outcome =
             when {
                 other.getScore() > BLACKJACK_NUMBER && user.getScore() > BLACKJACK_NUMBER -> DRAW
                 other.getScore() > BLACKJACK_NUMBER -> WIN
