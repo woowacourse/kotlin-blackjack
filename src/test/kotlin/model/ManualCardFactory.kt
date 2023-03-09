@@ -5,15 +5,15 @@ import entity.CardNumber
 import entity.CardType
 import entity.Cards
 
-class ManualCardFactory(private val cardTypes: List<CardType>, private val cardNumbers: List<CardNumber>) :
+class ManualCardFactory(private val cards: List<Pair<CardType, CardNumber>>) :
     CardFactory {
     private var index = 0
 
     private fun generateCard(): Card {
-        require(index < cardTypes.size && index < cardNumbers.size) {
+        require(index < cards.size) {
             MESSAGE_TOO_MANY_GENERATE_CARD
         }
-        return Card(cardTypes[index], cardNumbers[index++])
+        return Card(cards[index].first, cards[index++].second)
     }
 
     override fun generate(count: Int): Cards {

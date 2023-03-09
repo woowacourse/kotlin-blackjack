@@ -1,10 +1,8 @@
 package entity
 
-import misc.GameRule
-
 enum class CardNumber(val numberStrategy: (sumOfCardNumbers: Int) -> Int) {
     ACE({ sumOfCards ->
-        if (sumOfCards + 11 > GameRule.WINNING_NUMBER) {
+        if (sumOfCards + 11 > Player.WINNING_NUMBER) {
             1
         } else {
             11

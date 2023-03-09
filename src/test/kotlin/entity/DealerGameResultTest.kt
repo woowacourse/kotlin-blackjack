@@ -8,7 +8,7 @@ class DealerGameResultTest {
     @Test
     fun `딜러의 게임 결과 값에 0이 포함되면 오류가 발생한다`() {
         val message = assertThrows<IllegalStateException> {
-            DealerGameResult(mapOf(GameResultType.WIN to 0))
+            DealerGameResult(mapOf(GameResultType.WIN to 0), Money(0))
         }.message
 
         assertThat(message).isEqualTo("게임 결과가 잘못되었습니다.")
