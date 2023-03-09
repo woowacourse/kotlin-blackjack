@@ -43,24 +43,20 @@ class CardGame(private val cardPack: CardPack, private val onError: (String) -> 
         hand(cardPack.pop())
     }
 
-    fun setBets(players: Players, onGetBet: (Name) -> Unit, getBet: () -> InputState<Int>): BetInfo {
-        return betInfos {
-            players.toList().forEach {
-                onGetBet(it.name)
-                bet(it, setBet(getBet))
-            }
+    fun setBets(players: Players, onGetBet: (Name) -> Unit, getBet: () -> InputState<Int>): BetInfo = betInfos {
+        players.toList().forEach {
+            onGetBet(it.name)
+            bet(it, setBet(getBet))
         }
     }
 
-    private fun setBet(getBet: () -> InputState<Int>): Bet {
-        return when (val bet = getBet()) {
-            is InputState.Error -> {
-                onError(bet.error)
-                setBet(getBet)
-            }
-
-            is InputState.Success -> Bet(bet.input)
+    private fun setBet(getBet: () -> InputState<Int>): Bet = when (val bet = getBet()) {
+        is InputState.Error -> {
+            onError(bet.error)
+            setBet(getBet)
         }
+
+        is InputState.Success -> Bet(bet.input)
     }
 
     fun askGetMorePlayersCard(
@@ -88,15 +84,13 @@ class CardGame(private val cardPack: CardPack, private val onError: (String) -> 
         }
     }
 
-    private fun askYesOrNo(getAnswer: () -> InputState<Boolean>): Boolean {
-        return when (val answer = getAnswer()) {
-            is InputState.Error -> {
-                onError(answer.error)
-                askYesOrNo(getAnswer)
-            }
-
-            is InputState.Success -> answer.input
+    private fun askYesOrNo(getAnswer: () -> InputState<Boolean>): Boolean = when (val answer = getAnswer()) {
+        is InputState.Error -> {
+            onError(answer.error)
+            askYesOrNo(getAnswer)
         }
+
+        is InputState.Success -> answer.input
     }
 
     fun getMoreDealerCard(dealer: Dealer, onHitDealer: () -> Unit) {
@@ -106,15 +100,9 @@ class CardGame(private val cardPack: CardPack, private val onError: (String) -> 
         }
     }
 
-    private fun betInfos(block: BetInfosBuilder.() -> Unit): BetInfo {
-        return BetInfosBuilder().apply(block).build()
-    }
+    private fun betInfos(block: BetInfosBuilder.() -> Unit): BetInfo = BetInfosBuilder().apply(block).build()
 
-    private fun dealer(block: DealerBuilder.() -> Unit): Dealer {
-        return DealerBuilder().apply(block).build()
-    }
+    private fun dealer(block: DealerBuilder.() -> Unit): Dealer = DealerBuilder().apply(block).build()
 
-    private fun players(block: PlayersBuilder.() -> Unit): Players {
-        return PlayersBuilder().apply(block).build()
-    }
+    private fun players(block: PlayersBuilder.() -> Unit): Players = PlayersBuilder().apply(block).build()
 }
