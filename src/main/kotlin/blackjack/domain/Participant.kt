@@ -13,13 +13,16 @@ abstract class Participant(val name: String) {
 
     fun isStay(): Boolean = cards.isStay()
 
-    infix fun judge(other: Participant): GameResult = when {
-        isBust() && other.isBust() -> GameResult.DRAW
-        isBust() -> GameResult.LOSE
-        other.isBust() -> GameResult.WIN
-        getTotalScore() == other.getTotalScore() -> GameResult.DRAW
-        getTotalScore() > other.getTotalScore() -> GameResult.WIN
-        else -> GameResult.LOSE
+    infix fun judge(other: Participant): GameResult {
+        val myScore = getTotalScore()
+        val otherScore = other.getTotalScore()
+
+        return when {
+            isBust() -> GameResult.LOSE
+            other.isBust() || (myScore > otherScore) -> GameResult.WIN
+            myScore == otherScore -> GameResult.DRAW
+            else -> GameResult.LOSE
+        }
     }
 
     fun addCard(card: Card) {
