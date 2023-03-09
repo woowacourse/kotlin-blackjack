@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 
 class PlayerResultsTest {
-
     lateinit var playerResults: PlayerResults
 
     @BeforeEach
@@ -24,25 +23,25 @@ class PlayerResultsTest {
 
     @Test
     fun `플레이어들의 승부 결과를 반환한다`() {
-        assertThat(playerResults.get()).isEqualTo(
-            mapOf(
-                "부나" to GameResult.LOSE,
-                "글로" to GameResult.WIN,
-                "반달" to GameResult.DRAW,
-                "제이슨" to GameResult.LOSE
-            )
+        val results = playerResults.get()
+
+        assertAll(
+            { assertThat(results[0].name to results[0].result).isEqualTo("부나" to GameResult.LOSE) },
+            { assertThat(results[1].name to results[1].result).isEqualTo("글로" to GameResult.WIN) },
+            { assertThat(results[2].name to results[2].result).isEqualTo("반달" to GameResult.DRAW) },
+            { assertThat(results[3].name to results[3].result).isEqualTo("제이슨" to GameResult.LOSE) }
         )
     }
 
     @Test
     fun `딜러의 승부 결과를 반환한다`() {
-        assertThat(playerResults.getDealerResult()).isEqualTo(
-            mapOf(
-                GameResult.WIN to 2,
-                GameResult.DRAW to 1,
-                GameResult.LOSE to 1
+        with(playerResults.getDealerResult()) {
+            assertAll(
+                { assertThat(win).isEqualTo(2) },
+                { assertThat(draw).isEqualTo(1) },
+                { assertThat(lose).isEqualTo(1) }
             )
-        )
+        }
     }
 
     @Test

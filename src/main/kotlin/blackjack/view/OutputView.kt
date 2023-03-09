@@ -2,6 +2,7 @@ package blackjack.view
 
 import blackjack.domain.Card
 import blackjack.domain.CardNumber
+import blackjack.domain.DealerResult
 import blackjack.domain.GameResult
 import blackjack.domain.ParticipantCards
 import blackjack.domain.ParticipantProfit
@@ -45,8 +46,8 @@ object OutputView {
         printInterval()
     }
 
-    private fun printDealerResult(result: Map<GameResult, Int>) {
-        println("딜러: ${result[GameResult.WIN]}승 ${result[GameResult.DRAW]}무 ${result[GameResult.LOSE]}패")
+    private fun printDealerResult(result: DealerResult) {
+        println("딜러: ${result.win}승 ${result.draw}무 ${result.lose}패")
     }
 
     private fun printPlayerResult(name: String, result: GameResult) {

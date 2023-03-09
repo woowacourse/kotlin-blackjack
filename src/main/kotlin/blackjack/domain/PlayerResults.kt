@@ -4,12 +4,12 @@ class PlayerResults(private val results: Map<BettingPlayer, GameResult>) {
 
     fun get(): List<PlayerResult> = results.map { (player, result) -> PlayerResult(player.getName(), result) }
 
-    fun getDealerResult(): Map<GameResult, Int> {
+    fun getDealerResult(): DealerResult {
         with(results.values) {
             val win = count { it == GameResult.LOSE }
             val draw = count { it == GameResult.DRAW }
             val lose = count { it == GameResult.WIN || it == GameResult.BLACKJACK }
-            return mapOf((GameResult.WIN to win), (GameResult.DRAW to draw), (GameResult.LOSE to lose))
+            return DealerResult(win, draw, lose)
         }
     }
 
