@@ -13,7 +13,7 @@ class BlackJackBuilderTest {
                 guest("아크", 10)
                 guest("로피", 10)
             }
-            draw()
+            initDrawAll()
         }
         assertAll(
             { assertThat(blackJack.guests[0].name.toString()).isEqualTo("아크") },

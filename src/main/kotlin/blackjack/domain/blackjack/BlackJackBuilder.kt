@@ -10,14 +10,14 @@ fun blackJack(block: BlackJackBuilder.() -> Unit): BlackJack {
 }
 
 class BlackJackBuilder {
-    var cardDeck: CardDeck = CardDeck(Cards.all())
+    private var cardDeck: CardDeck = CardDeck(Cards.all().shuffled())
     var participants: Participants = Participants()
 
     fun participants(block: ParticipantsBuilder.() -> Unit) {
         participants = ParticipantsBuilder().apply(block).build()
     }
 
-    fun draw() = participants.all.forEach {
+    fun initDrawAll() = participants.all.forEach {
         it.draw(cardDeck.drawCard())
         it.draw(cardDeck.drawCard())
     }

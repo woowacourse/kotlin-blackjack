@@ -13,7 +13,7 @@ class BlackJackGameTest {
                 guest("아크", 10)
                 guest("로피", 10)
             }
-            draw()
+            initDrawAll()
         }
 
         assertDoesNotThrow {
