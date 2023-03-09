@@ -1,6 +1,6 @@
 package domain
 
-class Player(name: Name, cards: Cards) : Participant(name, cards) {
+class Player(name: Name, cards: Cards, val bettingMoney: BettingMoney) : Participant(name, cards) {
     override fun showInitCards(): List<Card> {
         return cards.list.take(TAKE_TWO)
     }

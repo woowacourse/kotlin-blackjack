@@ -14,6 +14,7 @@ class PlayerTest {
                     Card.of(CardCategory.SPADE, CardNumber.NINE),
                 ),
             ),
+            BettingMoney(1000),
         )
 
         val actual = player.showInitCards().size
@@ -31,6 +32,7 @@ class PlayerTest {
                     Card.of(CardCategory.SPADE, CardNumber.NINE),
                 ),
             ),
+            BettingMoney(1000),
         )
         val actual = player.isPossibleDrawCard()
         assertThat(actual).isTrue
@@ -47,6 +49,7 @@ class PlayerTest {
                     Card.of(CardCategory.SPADE, CardNumber.NINE),
                 ),
             ),
+            BettingMoney(1000),
         )
         val opponentScore = Score(23, false)
         val result = player.getGameResult(opponentScore)
@@ -64,6 +67,7 @@ class PlayerTest {
                     Card.of(CardCategory.SPADE, CardNumber.NINE),
                 ),
             ),
+            BettingMoney(1000),
         )
         val opponentScore = Score(23, false)
         val result = player.getGameResult(opponentScore)
@@ -81,6 +85,7 @@ class PlayerTest {
                     Card.of(CardCategory.SPADE, CardNumber.NINE),
                 ),
             ),
+            BettingMoney(1000),
         )
         val opponentScore = Score(17, false)
         val result = player.getGameResult(opponentScore)
@@ -98,6 +103,7 @@ class PlayerTest {
                     Card.of(CardCategory.SPADE, CardNumber.NINE),
                 ),
             ),
+            BettingMoney(1000),
         )
         val opponentScore = Score(18, false)
         val result = player.getGameResult(opponentScore)
@@ -115,6 +121,7 @@ class PlayerTest {
                     Card.of(CardCategory.SPADE, CardNumber.NINE),
                 ),
             ),
+            BettingMoney(1000),
         )
         val opponentScore = Score(16, false)
         val result = player.getGameResult(opponentScore)
