@@ -1,23 +1,19 @@
 package domain
 
-class GameResult(val participants: Participants) {
-    fun getPlayersGameResult(): Map<Name, GameResultType> {
-        return participants.players.list.associate { player ->
-            Pair(player.name, player.getGameResult(participants.dealer.getScore()))
+class GameResult(private val participants: Participants) {
+    private fun getPlayersGameResult(): Map<Player, GameResultType> {
+        return participants.players.list.associateWith { player -> player.getGameResult(participants.dealer.getScore()) }
+    }
+
+    fun getPlayersProfit(): Map<Player, Int> {
+        val gameResult = getPlayersGameResult()
+        return gameResult.keys.associateWith { player ->
+            GameResultType.getProfit(player.bettingMoney.money, gameResult[player] ?: throw IllegalArgumentException())
         }
     }
 
-    fun getDealerGameResult(): Map<GameResultType, Int> {
-        val playersGameResult = getPlayersGameResult()
-        return GameResultType.values()
-            .associateWith { gameResultType -> playersGameResult.values.count { changeType(it) == gameResultType } }
-    }
-
-    private fun changeType(gameResultType: GameResultType): GameResultType {
-        return when (gameResultType) {
-            GameResultType.LOSE -> GameResultType.WIN
-            GameResultType.WIN -> GameResultType.LOSE
-            else -> gameResultType
-        }
+    fun getDealerProfit(): Pair<Dealer, Int> {
+        val playersProfit = getPlayersProfit()
+        return Pair(participants.dealer, -playersProfit.values.sum())
     }
 }
