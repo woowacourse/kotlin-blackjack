@@ -1,6 +1,7 @@
 package blackjack.view
 
-import blackjack.domain.BettingMoney
+import blackjack.domain.betting.BettingMoney
+
 object InputView {
     private const val INSERT_PLAYERS_NAME = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)"
     private const val ANSWER_YES = "y"
@@ -26,11 +27,9 @@ object InputView {
 
     fun getBettingMoney(name: String): BettingMoney {
         println(INSERT_GET_BETTING_MONEY.format(name))
-        val input = readln().trim().toIntOrNull()
+        val input = readln().trim().toIntOrNull() ?: return getBettingMoney(name)
 
-        return if (input == null) {
-            getBettingMoney(name)
-        } else runCatching {
+        return runCatching {
             BettingMoney(input)
         }.onFailure {
             println(it.message)

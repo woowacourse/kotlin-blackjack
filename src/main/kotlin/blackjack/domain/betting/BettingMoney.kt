@@ -1,6 +1,6 @@
-package blackjack.domain
+package blackjack.domain.betting
 
-class BettingMoney (private val money: Int) {
+class BettingMoney(private val money: Int) {
     init {
         require(money >= MINIMUM_MONEY) { ERROR_MONEY }
     }

@@ -1,5 +1,6 @@
-package blackjack.domain
+package blackjack.domain.game
 
+import blackjack.domain.betting.BettingMoney
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Player
 

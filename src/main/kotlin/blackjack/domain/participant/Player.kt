@@ -1,6 +1,6 @@
 package blackjack.domain.participant
 
-import blackjack.domain.BettingMoney
+import blackjack.domain.betting.BettingMoney
 import blackjack.domain.result.ResultType
 
 class Player(

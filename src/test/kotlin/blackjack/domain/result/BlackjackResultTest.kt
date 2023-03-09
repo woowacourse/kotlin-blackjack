@@ -1,6 +1,6 @@
 package blackjack.domain.result
 
-import blackjack.domain.BettingMoney
+import blackjack.domain.betting.BettingMoney
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
 import blackjack.domain.card.CardShape
