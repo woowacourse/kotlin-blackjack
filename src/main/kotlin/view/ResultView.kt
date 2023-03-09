@@ -52,8 +52,8 @@ class ResultView {
     fun printFinalResult(dealerResult: Map<OutCome, Int>, playerResult: Map<String, OutCome>) {
         println(FINAL_OUTCOME_SCRIPT)
         print(DEALER_SCRIPT)
-        dealerResult.entries.forEach { print(" ${it.value}${it.key.text}") }
-        playerResult.entries.forEach { println("${it.key}: ${it.value.text}") }
+        dealerResult.entries.forEach { print(" ${it.value}${ViewUtils.outComeToText(it.key)}") }
+        playerResult.entries.forEach { println("${it.key}: ${ViewUtils.outComeToText(it.value)}") }
     }
 
     companion object {

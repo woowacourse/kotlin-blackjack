@@ -15,6 +15,7 @@ import domain.card.CardNumber.TEN
 import domain.card.CardNumber.THREE
 import domain.card.CardNumber.TWO
 import domain.card.CardShape
+import domain.result.OutCome
 
 object ViewUtils {
     fun cardShapeToText(cardShape: CardShape) = when (cardShape) {
@@ -30,5 +31,11 @@ object ViewUtils {
         KING -> "K"
         QUEEN -> "Q"
         JACK -> "J"
+    }
+
+    fun outComeToText(outCome: OutCome) = when (outCome) {
+        OutCome.WIN -> "승"
+        OutCome.DRAW -> "무"
+        OutCome.LOSE -> "패"
     }
 }
