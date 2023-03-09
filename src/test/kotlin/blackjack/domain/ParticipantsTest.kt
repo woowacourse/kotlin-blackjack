@@ -65,6 +65,7 @@ class ParticipantsTest {
                     Card(HEART, CardNumber.SIX),
                     // 추가 딜러가 받는카드
                     Card(HEART, CardNumber.FIVE),
+                    Card(HEART, CardNumber.SEVEN),
                 ),
             ),
         )
@@ -74,6 +75,7 @@ class ParticipantsTest {
                 Card(HEART, CardNumber.TWO),
                 Card(HEART, CardNumber.THREE),
                 Card(HEART, CardNumber.FIVE),
+                Card(HEART, CardNumber.SEVEN),
             ),
         )
     }

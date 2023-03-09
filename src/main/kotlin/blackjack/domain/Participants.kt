@@ -44,7 +44,7 @@ class Participants(names: List<String>, private val cardDeck: CardDeck) {
     }
 
     fun judgmentDealerAddCard() {
-        if (!dealer.isOverCondition()) dealer.addCard(cardDeck.drawCard())
+        while (!dealer.isOverCondition()) dealer.addCard(cardDeck.drawCard())
     }
 
     fun getConsequence(player: Player): Consequence = player.chooseWinner(dealer)
