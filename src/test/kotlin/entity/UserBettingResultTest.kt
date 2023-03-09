@@ -3,7 +3,7 @@ package entity
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class PlayerBettingResultTest {
+class UserBettingResultTest {
     @Test
     fun `플레이어의 카드의 수가 2장이고 블랙잭이면 배팅금액의 1,5배를 돌려받는다`() {
         // given
@@ -21,8 +21,8 @@ class PlayerBettingResultTest {
         val playerGameResult = PlayersGameResult(mapOf(player to GameResultType.WIN))
 
         // when
-        val playerBettingResult = PlayerBettingResult().getPlayersBettingResults(players, dealer, playerGameResult)
-        val profitMoney = playerBettingResult[player]
+        val userBettingResult = UserBettingResult().getPlayersBettingResults(players, dealer, playerGameResult)
+        val profitMoney = userBettingResult[player]
 
         // then
         assertThat(profitMoney).isEqualTo(2500.0)
@@ -53,8 +53,8 @@ class PlayerBettingResultTest {
         val playerGameResult = PlayersGameResult(mapOf(player to GameResultType.WIN))
 
         // when
-        val playerBettingResult = PlayerBettingResult().getPlayersBettingResults(players, dealer, playerGameResult)
-        val profitMoney = playerBettingResult[player]
+        val userBettingResult = UserBettingResult().getPlayersBettingResults(players, dealer, playerGameResult)
+        val profitMoney = userBettingResult[player]
 
         // then
         assertThat(profitMoney).isEqualTo(2000.0)
@@ -86,8 +86,8 @@ class PlayerBettingResultTest {
         val playerGameResult = PlayersGameResult(mapOf(player to GameResultType.DRAW))
 
         // when
-        val playerBettingResult = PlayerBettingResult().getPlayersBettingResults(players, dealer, playerGameResult)
-        val profitMoney = playerBettingResult[player]
+        val userBettingResult = UserBettingResult().getPlayersBettingResults(players, dealer, playerGameResult)
+        val profitMoney = userBettingResult[player]
 
         // then
         assertThat(profitMoney).isEqualTo(1000.0)
@@ -111,8 +111,8 @@ class PlayerBettingResultTest {
         val playerGameResult = PlayersGameResult(mapOf(player to GameResultType.LOSE))
 
         // when
-        val playerBettingResult = PlayerBettingResult().getPlayersBettingResults(players, dealer, playerGameResult)
-        val profitMoney = playerBettingResult[player]
+        val userBettingResult = UserBettingResult().getPlayersBettingResults(players, dealer, playerGameResult)
+        val profitMoney = userBettingResult[player]
 
         // then
         assertThat(profitMoney).isEqualTo(-1000.0)
@@ -144,8 +144,8 @@ class PlayerBettingResultTest {
         val playerGameResult = PlayersGameResult(mapOf(player to GameResultType.WIN))
 
         // when
-        val playerBettingResult = PlayerBettingResult().getPlayersBettingResults(players, dealer, playerGameResult)
-        val profitMoney = playerBettingResult[player]
+        val userBettingResult = UserBettingResult().getPlayersBettingResults(players, dealer, playerGameResult)
+        val profitMoney = userBettingResult[player]
 
         // then
         assertThat(profitMoney).isEqualTo(2000.0)
@@ -156,12 +156,12 @@ class PlayerBettingResultTest {
         // given
         val player1 = Player(UserInformation(Name("test"), BettingMoney(1000)), Cards(listOf()))
         val player2 = Player(UserInformation(Name("test"), BettingMoney(1000)), Cards(listOf()))
-        val playerBettingResult = PlayerBettingResult()
-        playerBettingResult.playersBettingResults[player1] = 1000.0
-        playerBettingResult.playersBettingResults[player2] = -2000.0
+        val userBettingResult = UserBettingResult()
+        userBettingResult.playersBettingResults[player1] = 1000.0
+        userBettingResult.playersBettingResults[player2] = -2000.0
 
         // when
-        val profitMoney = playerBettingResult.getDealerBettingResult()
+        val profitMoney = userBettingResult.getDealerBettingResult()
 
         // then
         assertThat(profitMoney).isEqualTo(1000.0)

@@ -1,6 +1,6 @@
 package entity
 
-class PlayerBettingResult {
+class UserBettingResult {
     val playersBettingResults = mutableMapOf<Player, Double>()
 
     fun getPlayersBettingResults(players: Players, dealer: Dealer, playersGameResult: PlayersGameResult): MutableMap<Player, Double> {
