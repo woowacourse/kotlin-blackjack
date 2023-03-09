@@ -2,7 +2,8 @@ package blackjack.domain
 
 class Player(
     val name: PlayerName,
-    val cardHand: CardHand
+    val cardHand: CardHand,
+    val betAmount: BetAmount
 ) {
 
     private fun isPossibleToDrawAdditionalCard(): DrawState {

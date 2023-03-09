@@ -7,13 +7,14 @@ class BlackJackGame(
     private val cardPack: CardPack,
     private val dealer: Dealer = Dealer(CardHand(listOf(cardPack.draw(), cardPack.draw())))
 ) {
-    lateinit var players: List<Player>
+    private lateinit var players: List<Player>
 
     fun entryPlayers() {
         players = InputView.requestPlayersName().map { name ->
             Player(
                 name = PlayerName(name),
-                cardHand = CardHand(listOf(cardPack.draw(), cardPack.draw()))
+                cardHand = CardHand(listOf(cardPack.draw(), cardPack.draw())),
+                betAmount = BetAmount(InputView.requestBetAmount(name))
             )
         }
     }
