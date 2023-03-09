@@ -3,7 +3,6 @@ package blackjack.domain
 class Player(name: ParticipantName) : Participant(name) {
     constructor(name: String) : this(ParticipantName(name))
     infix fun against(dealer: Dealer): ResultType {
-        if (this.isBust()) return ResultType.LOSE
         if (dealer.isBust()) return ResultType.WIN
 
         val score = this.getScore()

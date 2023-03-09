@@ -90,26 +90,11 @@ class PlayerTest {
     }
 
     @Test
-    fun `플레이어가 버스트라면 딜러의 점수와 상관없이 승부에서 진다`() {
+    fun `딜러가 버스트라면 플레이어의 점수와 상관없이 승부에서 이긴다`() {
         val player = Player("pobi").apply {
-            receive(Card(CardNumber.KING, CardShape.HEART))
+            receive(Card(CardNumber.JACK, CardShape.HEART))
+            receive(Card(CardNumber.QUEEN, CardShape.DIAMOND))
             receive(Card(CardNumber.KING, CardShape.DIAMOND))
-            receive(Card(CardNumber.KING, CardShape.DIAMOND))
-        }
-        val dealer = Dealer().apply {
-            receive(Card(CardNumber.KING, CardShape.HEART))
-            receive(Card(CardNumber.KING, CardShape.DIAMOND))
-            receive(Card(CardNumber.KING, CardShape.DIAMOND))
-        }
-
-        assertThat(player against dealer).isEqualTo(ResultType.LOSE)
-    }
-
-    @Test
-    fun `딜러가 버스트일 때 플레이어가 버스트가 아니라면 승부에서 이긴다`() {
-        val player = Player("pobi").apply {
-            receive(Card(CardNumber.TWO, CardShape.HEART))
-            receive(Card(CardNumber.TWO, CardShape.DIAMOND))
         }
         val dealer = Dealer().apply {
             receive(Card(CardNumber.KING, CardShape.HEART))
