@@ -9,6 +9,7 @@ object InputView {
     private const val PRINT_BET_AMOUNT = "%s의 배팅 금액은?"
     private const val PRINT_QUESTION_CARD_PICK_FORM = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)"
     private const val SEPARATOR = ","
+    private const val ZERO = 0
 
     fun inputPlayerNames(): List<String> {
         println(PRINT_PARTICIPANT_NAMES)
@@ -28,7 +29,7 @@ object InputView {
     }
 
     private fun checkOverZero(input: String): Int? {
-        if ((input.toIntOrNull() ?: 0) > 0)
+        if ((input.toIntOrNull() ?: ZERO) > ZERO)
             return input.toInt()
         return null
     }
