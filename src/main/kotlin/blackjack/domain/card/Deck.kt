@@ -1,25 +1,16 @@
 package blackjack.domain.card
 
 class Deck {
-    private lateinit var cards: MutableList<Card>
-
-    init {
-        setCards()
-    }
+    private val cards: MutableList<Card> =
+        List(DECK_COUNT) { createCardPack() }.flatten().shuffled().toMutableList()
 
     fun draw(): Card = cards.removeAt(0)
 
-    private fun setCards() {
-        cards = createCards()
-        repeat(DECK_COUNT) { cards += cards }
-        cards = cards.shuffled().toMutableList()
-    }
+    private fun createCardPack(): List<Card> =
+        CardNumber.values().flatMap { number -> cardShapesMap(number) }.toList()
 
-    private fun createCards(): MutableList<Card> =
-        CardNumber.values().flatMap { number -> cardShapesMap(number) }.toMutableList()
-
-    private fun cardShapesMap(number: CardNumber): MutableList<Card> =
-        CardShape.values().map { shape -> Card(number, shape) }.toMutableList()
+    private fun cardShapesMap(number: CardNumber): List<Card> =
+        CardShape.values().map { shape -> Card.from(Card(number, shape)) }.toList()
 
     companion object {
         private const val DECK_COUNT = 6
