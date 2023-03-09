@@ -3,7 +3,6 @@ package blackjack.view
 import blackjack.domain.Card
 import blackjack.domain.CardBunch
 import blackjack.domain.CardNumber
-import blackjack.domain.Consequence
 import blackjack.domain.Dealer
 import blackjack.domain.Player
 import blackjack.domain.Shape
@@ -13,9 +12,6 @@ object OutputView {
     private const val DISTRIBUTE_SCRIPT = "딜러와 %s에게 2장의 카드를 나누었습니다."
     private const val CAN_GET_CARD_SCRIPT = "딜러는 16이하라 한 장의 카드를 더 받았습니다."
     private const val CANNOT_GET_CARD_SCRIPT = "딜러는 17이상이라 카드를 더 받지 못합니다."
-    private const val DEALER_WIN = 0
-    private const val DEALER_LOSE = 1
-    private const val DRAW = 2
 
     private fun makeCardToString(card: Card): String {
         return stringOfNumber(card.cardNumber) + stringOfShape(card.shape)
@@ -54,37 +50,12 @@ object OutputView {
         println()
     }
 
-    fun printWinOrLose(gameResult: Map<String, Consequence>) {
-        println("##최종 승패")
-        printPlayerResult(gameResult)
-    }
-
-    private fun printPlayerResult(gameResult: Map<String, Consequence>) {
-        val dealerResult = makeDealerResult(gameResult)
-        println("딜러: ${dealerResult[DEALER_WIN]}승 ${dealerResult[DEALER_LOSE]}패 ${dealerResult[DRAW]}무")
-        gameResult.keys.forEach { name ->
-            println("$name: ${gameResult[name]?.let { stringOfConsequence(it) }}")
+    fun printProfit(playerProfitBy: Map<Player, Int>) {
+        val dealerProfit = playerProfitBy.values.sum() * -1
+        println("딜러: $dealerProfit")
+        playerProfitBy.keys.forEach { player ->
+            println("${player.name}: ${playerProfitBy[player]}")
         }
-    }
-
-    private fun stringOfConsequence(consequence: Consequence): String {
-        return when (consequence) {
-            Consequence.WIN -> "승"
-            Consequence.LOSE -> "패"
-            Consequence.DRAW -> "무"
-        }
-    }
-
-    private fun makeDealerResult(gameResult: Map<String, Consequence>): List<Int> {
-        val dealerResult = mutableListOf(0, 0, 0)
-        gameResult.forEach {
-            when (it.value) {
-                Consequence.WIN -> dealerResult[DEALER_LOSE]++
-                Consequence.LOSE -> dealerResult[DEALER_WIN]++
-                Consequence.DRAW -> dealerResult[DRAW]++
-            }
-        }
-        return dealerResult
     }
 
     private fun stringOfNumber(cardNumber: CardNumber): String {
