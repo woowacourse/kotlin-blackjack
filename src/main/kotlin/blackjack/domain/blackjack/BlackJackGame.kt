@@ -21,10 +21,7 @@ class BlackJackGame {
 
     private fun guestTurn(guest: Guest, cardDeck: CardDeck, output: (User) -> Unit) {
         if (guest.isBlackJack()) return
-        when (getCommand(guest.name.toString())) {
-            true -> draw(guest, cardDeck, output)
-            false -> output(guest)
-        }
+        if (getCommand(guest.name.toString())) draw(guest, cardDeck, output) else output(guest)
     }
 
     private fun draw(guest: Guest, cardDeck: CardDeck, output: (User) -> Unit) {
