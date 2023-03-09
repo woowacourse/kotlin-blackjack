@@ -5,6 +5,8 @@ class Players(private val players: Set<Player>) {
         require(players.size in MIN_PLAYER_COUNT..MAX_PLAYER_COUNT) { PLAYER_COUNT_ERROR }
     }
 
+    constructor(players: List<Player>) : this(players.toSet())
+
     fun haveInitialCards() = players.all { it.hasInitialCards() }
     fun toList(): List<Player> = players.toList()
     fun <V> associateWith(valueSelector: (Player) -> V): Map<Player, V> {
