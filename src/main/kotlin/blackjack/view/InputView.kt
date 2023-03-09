@@ -10,6 +10,23 @@ object InputView {
         return names
     }
 
+    fun inputBettingMoney(name: String): Int {
+        println("${name}의 베팅 금액은?")
+        return checkBettingMoney(readln())
+            .onSuccess { printInterval() }
+            .onFailure { println(it.message) }
+            .getOrElse { inputBettingMoney(name) }
+    }
+
+    private fun checkBettingMoney(input: String): Result<Int> {
+        return runCatching {
+            val money = input.toIntOrNull()
+            requireNotNull(money) { "베팅 금액은 숫자여야 합니다. 베팅 금액은 '$input' 일 수 없습니다." }
+            require(money >= 500) { "베팅 금액은 500원 이상이어야 합니다. 베팅 금액은 '$input' 일 수 없습니다." }
+            money
+        }
+    }
+
     fun inputDrawCommand(name: String): Boolean = runCatching {
         println("${name}은(는) 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
 

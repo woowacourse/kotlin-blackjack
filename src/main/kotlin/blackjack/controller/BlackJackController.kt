@@ -29,7 +29,7 @@ class BlackJackController {
 
     private fun enrollPlayers(): BettingPlayers {
         val players = InputView.inputNames().map(::Player)
-        val bettingPlayers = players.map { BettingPlayer(it, 0) }
+        val bettingPlayers = players.map { BettingPlayer(it, InputView.inputBettingMoney(it.name)) }
         return BettingPlayers(bettingPlayers)
     }
 
