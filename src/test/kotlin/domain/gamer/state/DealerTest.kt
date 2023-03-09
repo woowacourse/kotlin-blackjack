@@ -2,9 +2,9 @@ package domain.gamer.state
 
 import domain.SpadeCardsOf
 import domain.card.Card
-import domain.card.CardValue.ACE
 import domain.card.CardValue.EIGHT
 import domain.card.CardValue.JACK
+import domain.card.CardValue.TWO
 import domain.card.Shape
 import domain.gamer.Dealer
 import domain.gamer.cards.Cards
@@ -32,7 +32,7 @@ class DealerTest {
     @Test
     fun `딜러 카드의 합이 16을 넘지 않았을 경우 카드를 뽑을 수 있다`() {
         val dealer = Dealer(
-            SpadeCardsOf(JACK, ACE)
+            SpadeCardsOf(JACK, TWO)
         )
         assertThat(dealer.checkAvailableForPick()).isTrue
     }
