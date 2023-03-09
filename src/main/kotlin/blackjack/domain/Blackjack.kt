@@ -1,7 +1,6 @@
 package blackjack.domain
 
 class Blackjack(private val deck: CardDeck, private val participants: Participants) {
-
     constructor(deck: CardDeck, players: List<Player>) : this(deck, Participants(listOf(Dealer()) + players))
 
     fun readyToStart() {
@@ -9,7 +8,9 @@ class Blackjack(private val deck: CardDeck, private val participants: Participan
     }
 
     fun start(onDrawn: (Participant) -> Unit): BlackjackResult {
-        participants.takeTurns(deck, onDrawn)
+        participants.takePlayerTurns(deck, onDrawn)
+        participants.takeDealerTurns(deck, onDrawn)
+
         return BlackjackResult(
             participants.getCardResults(),
             participants.getMatchResults(),
