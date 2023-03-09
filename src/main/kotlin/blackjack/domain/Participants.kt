@@ -21,18 +21,9 @@ class Participants(private val participants: List<Participant>) {
     }
 
     fun takeTurns(deck: CardDeck, onDrawn: (Participant) -> Unit) {
-        takePlayerTurns(deck, onDrawn)
-        takeDealerTurns(deck, onDrawn)
-    }
-
-    private fun takePlayerTurns(deck: CardDeck, onDrawn: (Participant) -> Unit) {
-        getPlayers().forEach { participant ->
+        (getPlayers() + getDealer()).forEach { participant ->
             drawUntilCanDraw(participant, deck, onDrawn)
         }
-    }
-
-    private fun takeDealerTurns(deck: CardDeck, onDrawn: (Participant) -> Unit) {
-        drawUntilCanDraw(getDealer(), deck, onDrawn)
     }
 
     private fun drawUntilCanDraw(
