@@ -1,9 +1,7 @@
 package blackjack.domain
 
 import domain.CardGame
-import model.Card
 import model.CardDeck
-import model.Cards
 import model.Dealer
 import model.Participant
 import model.Participants
@@ -42,6 +40,5 @@ class CardGameTest {
     companion object {
         private val cardDeck = CardDeck.createCardDeck()
         private fun Participants(vararg participant: Participant): Participants = Participants(participant.toList())
-        private fun Dealer(vararg card: Card): Dealer = Dealer(Cards(card.toSet()))
     }
 }

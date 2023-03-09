@@ -6,6 +6,7 @@ class GameResult(private val participants: Participants) {
     val loseCount: Int
         get() = getResult(Result.LOSE)
     private fun getResult(winOrLose: Result): Int {
-        return participants.players.count { participants.dealer.getGameResult(it) == winOrLose }
+        val res = participants.players.count { participants.dealer.getGameResult(it) == winOrLose }
+        return res
     }
 }

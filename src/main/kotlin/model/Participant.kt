@@ -3,7 +3,8 @@ package model
 import model.Cards.Companion.PARTICIPANT_STANDARD_BUST_POINT
 import model.Dealer.Companion.DEALER
 
-abstract class Participant(val cards: Cards, val name: Name) {
+abstract class Participant(val name: Name) {
+    val cards = Cards(setOf())
     abstract fun getFirstOpenCards(): Cards
     abstract fun isPossibleDrawCard(): Boolean
     abstract fun isHit(needToDraw: (String) -> Boolean): Boolean

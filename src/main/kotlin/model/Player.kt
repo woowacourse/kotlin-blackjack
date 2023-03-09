@@ -1,6 +1,6 @@
 package model
 
-class Player(cards: Cards, name: Name) : Participant(cards, name) {
+class Player(name: Name) : Participant(name) {
     override fun getFirstOpenCards(): Cards = cards
 
     override fun isPossibleDrawCard(): Boolean = !isBust()
@@ -10,6 +10,6 @@ class Player(cards: Cards, name: Name) : Participant(cards, name) {
     }
 
     companion object {
-        fun from(name: String): Player = Player(Cards(setOf()), Name(name))
+        fun from(name: String): Player = Player(Name(name))
     }
 }
