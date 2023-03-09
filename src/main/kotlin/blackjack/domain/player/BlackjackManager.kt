@@ -5,10 +5,11 @@ import blackjack.domain.card.CardsGenerator
 import blackjack.domain.card.RandomCardsGenerator
 
 class BlackjackManager(
-    private val cardsGenerator: CardsGenerator = RandomCardsGenerator(),
+    cardsGenerator: CardsGenerator = RandomCardsGenerator(),
     getPlayerNames: () -> List<String>
 ) {
 
+    private val cardDeck = CardDeck(cardsGenerator)
     val dealer = Dealer()
     val participants: Participants
 
@@ -71,11 +72,9 @@ class BlackjackManager(
     }
 
     private fun provideCard(player: Player) {
-        val cardDeck = CardDeck(cardsGenerator)
         cardDeck.apply {
-            if (checkProvidePossible()) {
-                player.addCard(provide())
-            }
+            val card = provide() ?: return
+            player.addCard(card)
         }
     }
 
