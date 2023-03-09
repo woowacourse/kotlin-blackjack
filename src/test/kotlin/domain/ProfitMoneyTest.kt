@@ -11,7 +11,7 @@ class ProfitMoneyTest {
     @Test
     fun `1000원을 배팅하고 블랙잭 승리인 경우에는 1500의 이득을 얻는다`() {
         assertThat(
-            ProfitMoney(
+            ProfitMoney.of(
                 battingMoney = BattingMoney(1000),
                 gameResult = GameResult.BLACKJACK_WIN
             )
@@ -21,7 +21,7 @@ class ProfitMoneyTest {
     @Test
     fun `1000원을 배팅하고 승리인(블랙잭 승리x) 경우에는 1000의 이득을 얻는다`() {
         assertThat(
-            ProfitMoney(
+            ProfitMoney.of(
                 battingMoney = BattingMoney(1000),
                 gameResult = GameResult.WIN
             )
@@ -31,7 +31,7 @@ class ProfitMoneyTest {
     @Test
     fun `1000원을 배팅하고 무승부인 경우에는 0의 이득을 얻는다`() {
         assertThat(
-            ProfitMoney(
+            ProfitMoney.of(
                 battingMoney = BattingMoney(1000),
                 gameResult = GameResult.DRAW
             )
@@ -41,7 +41,7 @@ class ProfitMoneyTest {
     @Test
     fun `1000원을 배팅하고 패배하는 경우에는 1000의 손해를 본다`() {
         assertThat(
-            ProfitMoney(
+            ProfitMoney.of(
                 battingMoney = BattingMoney(1000),
                 gameResult = GameResult.LOSE
             )
