@@ -16,6 +16,7 @@ class UserBettingResult {
         if (playersGameResult.value[player] == GameResultType.WIN || dealer.cards.sumOfNumbers() > 21) return 2 * playerBettingMoney
         if (player.cards.sumOfNumbers() == 21 && dealer.cards.sumOfNumbers() == 21) return playerBettingMoney
         if (player.cards.sumOfNumbers() > 21) return -playerBettingMoney
+        if (playersGameResult.value[player] == GameResultType.LOSE) return -playerBettingMoney
         return 0.0
     }
 

@@ -6,6 +6,8 @@ import entity.Dealer
 import entity.Name
 import entity.Player
 import entity.Players
+import entity.PlayersGameResult
+import entity.UserBettingResult
 import entity.UserInformation
 import model.BlackjackStage
 import model.RandomCardFactory
@@ -54,14 +56,17 @@ class BlackjackController {
         if (blackjackStage.distributeDealer()) gameView.printDealerMoreCard()
     }
 
-    private fun displayGameStatus(blackjackStage: BlackjackStage) {
+    private fun displayGameStatus(blackjackStage: BlackjackStage) =
         resultView.printGameStatus(blackjackStage.dealer, blackjackStage.players)
-    }
 
-    private fun displayGameResult(blackjackStage: BlackjackStage) {
-        val playersGameResult = blackjackStage.players.determineAllPlayerGameResult(blackjackStage.dealer)
-        val dealerGameResult = playersGameResult.makeDealerGameResult()
-        resultView.printGameResult(dealerGameResult, playersGameResult)
+    private fun getGameResult(blackjackStage: BlackjackStage) =
+        blackjackStage.players.determineAllPlayerGameResult(blackjackStage.dealer)
+
+    private fun displayBettingResult(blackjackStage: BlackjackStage, playersGameResult: PlayersGameResult) {
+        val userBettingResult = UserBettingResult()
+        val playersBettingResults = userBettingResult.getPlayersBettingResults(blackjackStage.players, blackjackStage.dealer, playersGameResult)
+        val dealerBettingResult = userBettingResult.getDealerBettingResult()
+        resultView.printUserBettingResult(dealerBettingResult, playersBettingResults)
     }
 
     fun process() {
@@ -69,6 +74,7 @@ class BlackjackController {
         distributeMoreCardPlayer(blackjackStage)
         distributeMoreCardDealer(blackjackStage)
         displayGameStatus(blackjackStage)
-        displayGameResult(blackjackStage)
+        val playersGameResult = getGameResult(blackjackStage)
+        displayBettingResult(blackjackStage, playersGameResult)
     }
 }
