@@ -80,7 +80,6 @@ class OutputView {
             CardValue.SEVEN,
             CardValue.EIGHT,
             CardValue.NINE,
-            CardValue.TEN,
-            -> this.value.toString()
+            CardValue.TEN -> this.value.toString()
         }
 }
