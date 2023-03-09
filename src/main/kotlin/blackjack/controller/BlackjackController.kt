@@ -9,21 +9,16 @@ import blackjack.view.OutputView
 class BlackjackController(
     private val inputView: InputView = InputView(),
     private val outputView: OutputView = OutputView(),
-    cardsGenerator: CardsGenerator = RandomCardsGenerator()
+    private val cardsGenerator: CardsGenerator = RandomCardsGenerator()
 ) {
 
-    private var blackjackManager: BlackjackManager = BlackjackManager(cardsGenerator)
-
     fun run() {
+        val blackjackManager = BlackjackManager(cardsGenerator)
         blackjackManager.setup(inputView::readParticipantsName)
         outputView.printSettingCard(blackjackManager.dealer, blackjackManager.participants)
         blackjackManager.provideParticipantsMoreCard(inputView::readMoreCard, outputView::printParticipantCards)
         blackjackManager.provideDealerMoreCard(outputView::printDealerHitCardMent)
-        blackjackManager.calculatePlayersResult(outputView::printFinalResult)
-        printSumResult()
-    }
-
-    private fun printSumResult() {
         outputView.printSumResult(blackjackManager.dealer, blackjackManager.participants)
+        blackjackManager.calculatePlayersResult(outputView::printFinalResult)
     }
 }
