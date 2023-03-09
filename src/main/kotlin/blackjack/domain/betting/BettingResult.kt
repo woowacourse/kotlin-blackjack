@@ -6,6 +6,7 @@ import blackjack.domain.result.ResultType
 
 class BettingResult(private val bettingResult: Map<Player, Int>) {
     fun getPlayerEarningMoney(player: Player) = bettingResult[player]
+    fun getDealerEarningMoney(): Int = -bettingResult.values.sum()
 
     companion object {
         fun of(players: List<Player>, gameResult: BlackjackResult): BettingResult {

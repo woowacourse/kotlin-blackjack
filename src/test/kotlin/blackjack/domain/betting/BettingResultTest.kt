@@ -59,4 +59,26 @@ class BettingResultTest {
 
         assertThat(bettingResult.getPlayerEarningMoney(player)).isEqualTo(-1000)
     }
+
+    @Test
+    fun `딜러의 수익금은 플레이어들의 수익금의 총합에 -1을 곱한 값이다`() {
+        val player1 = Player("hatti", BettingMoney(1000)).apply {
+            receive(Card(CardNumber.KING, CardShape.HEART))
+            receive(Card(CardNumber.ACE, CardShape.HEART))
+            receive(Card(CardNumber.TWO, CardShape.HEART))
+        }
+        val player2 = Player("krrong", BettingMoney(1000)).apply {
+            receive(Card(CardNumber.KING, CardShape.HEART))
+            receive(Card(CardNumber.ACE, CardShape.HEART))
+        }
+        val dealer = Dealer().apply {
+            receive(Card(CardNumber.SIX, CardShape.DIAMOND))
+            receive(Card(CardNumber.SEVEN, CardShape.DIAMOND))
+            receive(Card(CardNumber.EIGHT, CardShape.DIAMOND))
+        }
+        val result = BlackjackResult.of(dealer, listOf(player1, player2))
+        val bettingResult = BettingResult.of(listOf(player1, player2), result)
+
+        assertThat(bettingResult.getDealerEarningMoney()).isEqualTo(-500)
+    }
 }
