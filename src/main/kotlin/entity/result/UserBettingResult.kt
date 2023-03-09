@@ -2,15 +2,15 @@ package entity.result
 
 import entity.users.Dealer
 import entity.users.Player
-import entity.users.Players
+import entity.users.Users
 import misc.GameRule
 
 class UserBettingResult {
     val playersBettingResults = mutableMapOf<Player, Double>()
 
-    fun getPlayersBettingResults(players: Players, dealer: Dealer, playersGameResult: PlayersGameResult): MutableMap<Player, Double> {
-        players.value.forEach { player ->
-            playersBettingResults[player] = getPlayerBettingResult(player, dealer, playersGameResult)
+    fun getPlayersBettingResults(users: Users, playersGameResult: PlayersGameResult): MutableMap<Player, Double> {
+        users.players.value.forEach { player ->
+            playersBettingResults[player] = getPlayerBettingResult(player, users.dealer, playersGameResult)
         }
         return playersBettingResults
     }
