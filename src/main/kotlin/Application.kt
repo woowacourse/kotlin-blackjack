@@ -13,10 +13,9 @@ fun main() {
         val game = BlackjackController(
             InitView(input, output),
             GameView(input, output),
-            ResultView(output),
-            RandomCardFactory()
+            ResultView(output)
         )
-        game.process()
+        game.process(RandomCardFactory())
     }.onFailure {
         print("[ERROR] : ")
         println(it.message)

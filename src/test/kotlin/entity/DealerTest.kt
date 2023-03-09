@@ -1,5 +1,6 @@
 package entity
 
+import model.ManualCardFactory
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -18,5 +19,26 @@ class DealerTest {
         val isDistributable = dealer.isDistributable()
 
         assertThat(isDistributable).isFalse
+    }
+
+    @Test
+    fun `딜러에게 카드 한장 분배한다`() {
+        // given
+        val cardFactory = ManualCardFactory(
+            listOf(
+                CardType.CLUB to CardNumber.THREE,
+                CardType.SPADE to CardNumber.QUEEN
+            )
+        )
+        val dealer = Dealer()
+
+        // when
+        dealer.distribute(cardFactory) { }
+
+        // then
+        val except = listOf(
+            Card(CardType.CLUB, CardNumber.THREE)
+        )
+        assertThat(dealer.cards.value).isEqualTo(except)
     }
 }

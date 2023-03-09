@@ -18,14 +18,7 @@ class BlackjackControllerTest {
         val fakeConsole = StringBuilder()
         val input = FakeInput(
             listOf(
-                "corgan,bix,sangoon",
-                "1000",
-                "2000",
-                "3000",
-                "y",
-                "n",
-                "n",
-                "n"
+                "corgan,bix,sangoon", "1000", "2000", "3000", "y", "n", "n", "n"
             )
         )
         val output = FakeOutput(fakeConsole)
@@ -44,11 +37,11 @@ class BlackjackControllerTest {
             )
         )
         val blackjackController = BlackjackController(
-            InitView(input, output), GameView(input, output), ResultView(output), cardFactory
+            InitView(input, output), GameView(input, output), ResultView(output)
         )
 
         // when
-        blackjackController.process()
+        blackjackController.process(cardFactory)
 
         // then
         val except = """게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)

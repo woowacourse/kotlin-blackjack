@@ -3,7 +3,7 @@ package view
 import entity.Cards
 import entity.Dealer
 import entity.Player
-import model.BlackjackStage
+import model.Users
 
 class GameView(private val input: Input, private val output: Output) {
     private fun printDealerStatus(dealer: Dealer) {
@@ -17,16 +17,16 @@ class GameView(private val input: Input, private val output: Output) {
         output.println(ViewUtils.cardsToString(player.cards))
     }
 
-    fun printInitialUsersStatus(blackjackStage: BlackjackStage) {
+    fun printInitialUsersStatus(users: Users) {
         output.println(
             MESSAGE_USERS_STATUS.format(
-                blackjackStage.users.players.value.joinToString(", ") {
+                users.players.value.joinToString(", ") {
                     it.name.value
                 }
             )
         )
-        printDealerStatus(blackjackStage.users.dealer)
-        blackjackStage.users.players.value.forEach { printPlayerStatus(it) }
+        printDealerStatus(users.dealer)
+        users.players.value.forEach { printPlayerStatus(it) }
     }
 
     fun printWhetherMoreCard(name: String) {

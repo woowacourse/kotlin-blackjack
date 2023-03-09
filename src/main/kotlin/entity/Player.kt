@@ -1,13 +1,19 @@
 package entity
 
-import model.BlackjackStage
 import model.CardFactory
 
-class Player(val name: Name, private val bet: Money, val cards: Cards = Cards()) : User {
-    override fun isDistributable(): Boolean = cards.sumOfNumbers() < BlackjackStage.WINNING_NUMBER
+class Player(val name: Name, private val bet: Money = Money(0), val cards: Cards = Cards()) : User {
+    override fun isDistributable(): Boolean = cards.sumOfNumbers() < WINNING_NUMBER
 
-    fun addMoreCards(cardFactory: CardFactory) {
-        cards.addCards(cardFactory.generate(User.SINGLE_DISTRIBUTE_COUNT))
+    fun distribute(
+        cardFactory: CardFactory,
+        distributeCondition: (player: Player) -> Boolean,
+        printPlayerStatus: (player: Player) -> Unit
+    ) {
+        while (isDistributable() && distributeCondition(this)) {
+            cards.addCards(cardFactory.generate(User.SINGLE_DISTRIBUTE_COUNT))
+            printPlayerStatus(this)
+        }
     }
 
     fun determineGameResult(dealerCardNumberSum: Int): GameResultType {
@@ -29,15 +35,15 @@ class Player(val name: Name, private val bet: Money, val cards: Cards = Cards())
     }
 
     private fun isWin(playerCardNumberSum: Int, dealerCardNumberSum: Int): Boolean {
-        val isGreaterThanDealer = playerCardNumberSum in (dealerCardNumberSum + 1)..BlackjackStage.WINNING_NUMBER
-        val isDealerBustButPlayer = BlackjackStage.WINNING_NUMBER in playerCardNumberSum until dealerCardNumberSum
+        val isGreaterThanDealer = playerCardNumberSum in (dealerCardNumberSum + 1)..WINNING_NUMBER
+        val isDealerBustButPlayer = WINNING_NUMBER in playerCardNumberSum until dealerCardNumberSum
         return isGreaterThanDealer || isDealerBustButPlayer
     }
 
     private fun isDraw(playerCardNumberSum: Int, dealerCardNumberSum: Int): Boolean {
         val isEqualWithDealer = playerCardNumberSum == dealerCardNumberSum
-        val isPlayerBust = playerCardNumberSum > BlackjackStage.WINNING_NUMBER
-        val isDealerBust = dealerCardNumberSum > BlackjackStage.WINNING_NUMBER
+        val isPlayerBust = playerCardNumberSum > WINNING_NUMBER
+        val isDealerBust = dealerCardNumberSum > WINNING_NUMBER
         return isEqualWithDealer || (isPlayerBust && isDealerBust)
     }
 
@@ -46,5 +52,6 @@ class Player(val name: Name, private val bet: Money, val cards: Cards = Cards())
         const val FACTOR_DRAW_MONEY = 0
         const val FACTOR_LOSE_MONEY = -1
         const val FACTOR_BLACKJACK_MONEY = 1.5
+        const val WINNING_NUMBER = 21
     }
 }
