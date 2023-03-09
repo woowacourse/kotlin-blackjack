@@ -8,9 +8,9 @@ import domain.judge.Referee
 
 abstract class Participant(val cards: Cards) {
 
-    fun makeStartDeck() {
+    fun makeStartDeck(deck: Deck) {
         repeat(START_DECK_CARD_COUNT) {
-            pickCard(Deck.giveCard())
+            pickCard(deck.giveCard())
         }
     }
 

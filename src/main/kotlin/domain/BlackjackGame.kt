@@ -8,17 +8,17 @@ import domain.gamer.cards.Cards
 import domain.judge.Referee
 import domain.judge.Result
 
-class BlackjackGame() {
+class BlackjackGame(private val deck: Deck) {
     val dealer = Dealer(Cards(listOf()))
     var players = Players(listOf())
         private set
 
     fun startGame(names: List<String>) {
         initPlayers(names)
-        Deck.makeDeck()
-        dealer.makeStartDeck()
+        deck.makeRandomDeck()
+        dealer.makeStartDeck(deck)
         players.getPlayers().forEach {
-            it.makeStartDeck()
+            it.makeStartDeck(deck)
         }
     }
 
@@ -27,11 +27,11 @@ class BlackjackGame() {
     }
 
     fun pickPlayerCard(player: Player) {
-        player.pickCard(Deck.giveCard())
+        player.pickCard(deck.giveCard())
     }
 
     fun pickDealerCard() {
-        dealer.pickCard(Deck.giveCard())
+        dealer.pickCard(deck.giveCard())
     }
 
     fun checkBurst(player: Player) = player.checkBurst()

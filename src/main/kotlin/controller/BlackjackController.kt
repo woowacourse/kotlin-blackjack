@@ -1,6 +1,8 @@
 package controller
 
 import domain.BlackjackGame
+import domain.card.Card
+import domain.deck.Deck
 import domain.gamer.Participant
 import domain.gamer.Player
 import view.InputView
@@ -10,7 +12,7 @@ class BlackjackController() {
 
     fun startGame() {
         val names = InputView.inputPlayerNames()
-        val blackjackGame = BlackjackGame()
+        val blackjackGame = BlackjackGame(Deck(Card.getAllCard()))
         blackjackGame.startGame(names)
         printBlackjackSetting(names, blackjackGame)
         requestPickCard(blackjackGame)

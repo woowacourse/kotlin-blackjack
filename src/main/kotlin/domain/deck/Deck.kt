@@ -2,14 +2,11 @@ package domain.deck
 
 import domain.card.Card
 
-object Deck {
-    private const val ERROR_EMPTY_DECK = "[ERROR] 카드가 존재하지 않습니다."
-    private var deck = Card.getAllCard()
-    private var cardPosition = 0
+class Deck(private var deck: List<Card>) {
 
-    fun makeDeck() {
-        cardPosition = 0
+    fun makeRandomDeck() {
         deck = deck.shuffled()
+        cardPosition = 0
     }
 
     fun giveCard(): Card {
@@ -19,5 +16,10 @@ object Deck {
 
     private fun checkDeckEmpty() {
         check(deck.isNotEmpty()) { println(ERROR_EMPTY_DECK) }
+    }
+
+    companion object {
+        private var cardPosition = 0
+        private const val ERROR_EMPTY_DECK = "[ERROR] 카드가 존재하지 않습니다."
     }
 }
