@@ -6,13 +6,13 @@ import org.junit.jupiter.api.Test
 class CardsTest {
 
     @Test
-    fun `새로운 카드를 받아 가진 카드에 추가한다`() {
+    fun `Cards는 카드를 가진다`() {
         val cards = Cards(listOf(Card(CardNumber.KING, CardShape.HEART)))
         assertThat(cards.values.size).isEqualTo(1)
     }
 
     @Test
-    fun `갖고 있는 카드에 Ace가 포함된 경우 Ace를 11로 계산해 숫자의 합을 반환한다`() {
+    fun `갖고 있는 카드에 Ace가 포함되고 숫자의 합이 21이 넘지 않으면, 숫자의 합을 구하면, Ace는 11로 계산된다`() {
         val cards = Cards(
             listOf(
                 Card(CardNumber.ACE, CardShape.DIAMOND),
@@ -24,7 +24,7 @@ class CardsTest {
     }
 
     @Test
-    fun `갖고 있는 카드에 Ace가 포함된 경우 Ace를 1로 계산해 숫자의 합을 반환한다`() {
+    fun `갖고 있는 카드에 Ace가 포함되고 숫자의 합이 21이 넘으면, 숫자의 합을 구하면, Ace는 1로 계산된다`() {
         val cards = Cards(
             listOf(
                 Card(CardNumber.ACE, CardShape.DIAMOND),

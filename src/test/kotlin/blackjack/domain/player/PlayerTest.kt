@@ -14,29 +14,29 @@ import org.junit.jupiter.params.provider.ValueSource
 class PlayerTest {
 
     @Test
-    fun `이름을 생성할 수 있다`() {
+    fun `Player를 생성할 때 이름을 넘겨줄 수 있다`() {
         assertDoesNotThrow { TestPlayer("수달") }
     }
 
     @Test
-    fun `이름은 2글자 이상 10글자 이하여야 한다`() {
+    fun `Player의 이름은 2글자 이상 10글자 이하여야 한다`() {
         assertDoesNotThrow { TestPlayer("berry") }
     }
 
     @ParameterizedTest
     @ValueSource(strings = ["b", "berryyyyyyy"])
-    fun `이름은 2글자 미만이거나 10글자 초과면 오류가 발생한다`(expected: String) {
+    fun `이름이 2글자 미만이거나 10글자 초과면 오류가 발생한다`(expected: String) {
         assertThrows<IllegalArgumentException> { TestPlayer(expected) }
     }
 
     @Test
-    fun `카드들을 가진다`() {
+    fun `Player는 카드들을 가진다`() {
         val player = TestPlayer("aa")
         assertThat(player.cards.values).isEqualTo(Cards().values)
     }
 
     @Test
-    fun `새로운 카드를 받아 가진 카드에 추가한다`() {
+    fun `새로운 카드를 발급받으면, 기존에 가지고 있던 카드들에 추가한다`() {
         val player = TestPlayer("aa")
         val expected = Card(CardNumber.FOUR, CardShape.HEART)
         player.addCard(expected)
@@ -44,7 +44,7 @@ class PlayerTest {
     }
 
     @Test
-    fun `갖고 있는 카드 숫자의 합을 계산해 반환한다`() {
+    fun `Player가 갖고 있는 카드 숫자의 합을 계산해 반환한다`() {
         val player = TestPlayer("aa")
         player.addCard(Card(CardNumber.FOUR, CardShape.HEART))
         player.addCard(Card(CardNumber.EIGHT, CardShape.CLOVER))
@@ -53,7 +53,7 @@ class PlayerTest {
     }
 
     @Test
-    fun `카드 추가 발급 가능 여부를 판단한다`() {
+    fun `Player의 카드 추가 발급 가능 여부를 판단한다`() {
         // given
         val testPlayer = TestPlayer(
             "aaa",

@@ -8,11 +8,10 @@ import org.junit.jupiter.api.Test
 class BlackjackManagerTest {
 
     @Test
-    fun `입력받은 이름의 참가자를 생성한다`() {
+    fun `BlackjackManager를 생성할 때 이름을 넘겨주면, 객체를 생성할 때, 해당 이름을 가진 참가자를 생성한다`() {
 
         // given
         val blackjackManager = BlackjackManager(TestCardsGenerator()) { listOf("aaa", "bbb") }
-        blackjackManager.setup()
 
         // when
         val actual = blackjackManager.participants.values.map { it.name }
@@ -22,7 +21,7 @@ class BlackjackManagerTest {
     }
 
     @Test
-    fun `초기에 모든 플레이어에게 카드 두장을 나누어준다`() {
+    fun `setup 함수를 호출하면 모든 플레이어에게 카드 두장을 발행한다`() {
         // given
         val blackjackManager = BlackjackManager(TestCardsGenerator()) { listOf("aaa", "bbb") }
         blackjackManager.setup()
@@ -37,7 +36,7 @@ class BlackjackManagerTest {
     }
 
     @Test
-    fun `카드 발행 가능 상태이고 추가 발행을 원한다면 참가자에게 카드를 나눠준다`() {
+    fun `추가 발행을 한번 원하고 더 이상 원하지 않는다면 참가자에게 카드를 추가로 한장만 나눠준다`() {
         // given
         val blackjackManager = BlackjackManager(TestCardsGenerator()) { listOf("aaa", "bbb") }
         blackjackManager.setup()
@@ -54,7 +53,7 @@ class BlackjackManagerTest {
     }
 
     @Test
-    fun `카드 발행 가능 상태이고 추가 발행을 원하지 않는다면 참가자에게 카드를 나눠주지 않는다`() {
+    fun `추가 발행을 원하지 않는다면 참가자에게 카드를 발행하지 않는다`() {
         // given
         val blackjackManager = BlackjackManager(TestCardsGenerator()) { listOf("aaa", "bbb") }
         blackjackManager.setup()
@@ -70,7 +69,7 @@ class BlackjackManagerTest {
     }
 
     @Test
-    fun `카드 발행 가능 상태인 동안 딜러에게 계속 카드를 발행한다`() {
+    fun `카드 숫자 합이 16이 넘지 않는동안 딜러에게 계속 카드를 발행한다`() {
         // given
         val blackjackManager = BlackjackManager(TestCardsGenerator()) { listOf("aaa", "bbb") }
         blackjackManager.setup()
@@ -84,7 +83,7 @@ class BlackjackManagerTest {
     }
 
     @Test
-    fun `플레이어들의 게임 결과를 업데이트한다`() {
+    fun `플레이어1은 14 플레이어2는 7 딜러는 9일때, 참가자들의 승패를 계산한다`() {
         // given
         val blackjackManager = BlackjackManager(TestCardsGenerator()) { listOf("aaa", "bbb") }
         blackjackManager.setup()

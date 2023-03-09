@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test
 class ParticipantTest {
 
     @Test
-    fun `카드를 발급 받을 수 있는지 확인한다`() {
+    fun `딜러가 카드를 8클로버만 가지고 있을 때, 카드를 더 받을 수 있는지 확인하면, true이다`() {
         val participant = Participant("aaa")
         participant.addCard(Card(CardNumber.EIGHT, CardShape.CLOVER))
         val actual = participant.checkProvideCardPossible()

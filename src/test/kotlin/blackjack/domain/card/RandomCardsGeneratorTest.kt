@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test
 
 class RandomCardsGeneratorTest {
     @Test
-    fun `카드를 52장 생성한다`() {
+    fun `RandomCardsGenerator는 카드를 52장 생성한다`() {
         // given
         val deckGenerator = RandomCardsGenerator()
 
@@ -18,7 +18,7 @@ class RandomCardsGeneratorTest {
     }
 
     @Test
-    fun `생성된 카드는 랜덤한 순서를 갖는다`() {
+    fun `RandomCardsGenerator로 생성된 카드는 랜덤한 순서를 갖는다`() {
         // given
         val deckGenerator1 = RandomCardsGenerator()
         val deckGenerator2 = RandomCardsGenerator()

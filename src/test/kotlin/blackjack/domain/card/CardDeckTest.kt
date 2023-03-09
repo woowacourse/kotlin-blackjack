@@ -18,7 +18,7 @@ class CardDeckTest {
     }
 
     @Test
-    fun `카드를 한 장 발행하고 해당 카드를 삭제한다`() {
+    fun `카드를 한 장 발행하면, cardDeck의 카드 개수가 하나 감소한다`() {
         // given
         val cardDeck = CardDeck(RandomCardsGenerator())
 

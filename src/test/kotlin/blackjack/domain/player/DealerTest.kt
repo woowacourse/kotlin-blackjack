@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 
 class DealerTest {
     @Test
-    fun `카드를 더 받아야 하는 상태인지 확인한다`() {
+    fun `딜러가 카드를 8클로버만 가지고 있을 때, 카드를 더 받아야 하는 상태인지 확인하면, true이다`() {
         val dealer = Dealer()
         dealer.addCard(Card(CardNumber.EIGHT, CardShape.CLOVER))
         val actual = dealer.checkProvideCardPossible()
