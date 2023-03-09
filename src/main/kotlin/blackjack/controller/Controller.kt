@@ -12,13 +12,13 @@ class Controller(private val cardDeck: CardDeck) {
         val dealer = makeDealer()
         val players = makePlayers(InputView.getPlayerNames())
         showInitialCard(dealer, players)
-        players.forEach { player -> askGetCard(player) }
+        players.forEach { player -> askHitPlayer(player) }
         printCardAndScore(dealer, players)
         printFinalWinOrLose(dealer, players)
     }
 
     private fun printCardAndScore(dealer: Dealer, players: List<Player>) {
-        showDealerState(dealer)
+        askHitDealer(dealer)
         OutputView.printCardAndScore(dealer, players)
     }
 
@@ -35,21 +35,21 @@ class Controller(private val cardDeck: CardDeck) {
         players.forEach { OutputView.printPlayerCard(it) }
     }
 
-    private fun askGetCard(player: Player) {
-        while (player.canGetCard()) {
-            if (!InputView.getDecision(player)) break
+    private fun askHitPlayer(player: Player) {
+        while (player.canHit()) {
+            if (!InputView.getHitOrNot(player)) break
             player.receiveCard(cardDeck.drawCard())
             OutputView.printPlayerCard(player)
         }
         OutputView.printPlayerCard(player)
     }
 
-    private fun showDealerState(dealer: Dealer) {
-        while (dealer.canGetCard()) {
-            OutputView.printDealerOverCondition(dealer.canGetCard())
+    private fun askHitDealer(dealer: Dealer) {
+        while (dealer.canHit()) {
+            OutputView.printDealerState(dealer.canHit())
             dealer.receiveCard(cardDeck.drawCard())
         }
-        OutputView.printDealerOverCondition(dealer.canGetCard())
+        OutputView.printDealerState(dealer.canHit())
     }
 
     private fun printFinalWinOrLose(dealer: Dealer, players: List<Player>) {

@@ -38,7 +38,7 @@ object OutputView {
         println(DISTRIBUTE_SCRIPT.format(players.joinToString(separator = ", ") { it.name }))
     }
 
-    fun printDealerOverCondition(condition: Boolean) {
+    fun printDealerState(condition: Boolean) {
         when (condition) {
             true -> println(CAN_GET_CARD_SCRIPT)
             false -> println(CANNOT_GET_CARD_SCRIPT)

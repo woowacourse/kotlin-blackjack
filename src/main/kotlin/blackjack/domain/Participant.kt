@@ -7,7 +7,7 @@ interface Participant {
         cardBunch.addCard(card)
     }
 
-    fun canGetCard(): Boolean
+    fun canHit(): Boolean
 
     fun getScore(): Int
 }

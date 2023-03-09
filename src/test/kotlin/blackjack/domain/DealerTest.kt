@@ -11,7 +11,7 @@ class DealerTest {
         val cardBunch = CardBunch(card1, card2)
         val dealer = Dealer(cardBunch)
 
-        assertThat(dealer.canGetCard()).isTrue
+        assertThat(dealer.canHit()).isTrue
     }
 
     @Test
@@ -22,7 +22,7 @@ class DealerTest {
         val cardBunch = CardBunch(card1, card2, card3)
         val dealer = Dealer(cardBunch)
 
-        assertThat(dealer.canGetCard()).isFalse
+        assertThat(dealer.canHit()).isFalse
     }
 
     @Test

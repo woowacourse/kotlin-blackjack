@@ -16,7 +16,7 @@ object InputView {
         }
     }
 
-    fun getDecision(player: Player): Boolean {
+    fun getHitOrNot(player: Player): Boolean {
         return runCatching {
             println(GET_DECISION_SCRIPT.format(player.name))
             when (readln().lowercase()) {
@@ -26,7 +26,7 @@ object InputView {
             }
         }.getOrElse {
             println(it.message)
-            getDecision(player)
+            getHitOrNot(player)
         }
     }
 }
