@@ -1,6 +1,21 @@
 package blackjack.domain.gameResult
 
+import blackjack.domain.dealer.Dealer
+import blackjack.domain.player.Player
+
 data class PlayerGameResult(
     val playerName: String,
-    val profitMoney: ProfitMoney
-)//TODO: playerName String으로 받지 말고 PlayerName으로 받자 부생성자가 필요할듯
+    val profitMoney: ProfitMoney,
+) {
+
+    companion object {
+
+        fun of(player: Player, dealer: Dealer) = PlayerGameResult(
+            playerName = player.name.value,
+            profitMoney = ProfitMoney(
+                player.battingMoney,
+                GameResult.valueOf(player.cards, dealer.cards)
+            )
+        )
+    }
+}
