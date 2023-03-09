@@ -26,7 +26,7 @@ class GameResult(private val participants: Participants) {
 
     private fun compareTotalNumbers(player: Player): Pair<String, OutCome> {
         val differenceCardNumber =
-            CardsScore.getTotalCardNumber(player.cards) - CardsScore.getTotalCardNumber(participants.dealer.cards)
+            CardsScore.getTotalWithOneBigAce(player.cards) - CardsScore.getTotalWithOneBigAce(participants.dealer.cards)
         return when {
             player.isState(GameState.BLACKJACK) -> player.name to BLACKJACK
             player.isState(GameState.BUST) -> player.name to LOSE

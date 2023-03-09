@@ -19,7 +19,7 @@ class CardsScoreTest {
             ),
         )
 
-        Assertions.assertThat(CardsScore.getTotalCardNumber(cards)).isEqualTo(sum)
+        Assertions.assertThat(CardsScore.getTotalWithOneBigAce(cards)).isEqualTo(sum)
     }
 
     @CsvSource(value = ["ACE,ACE,12", "ACE,FIVE,16", "ACE, KING,21"])
@@ -31,7 +31,7 @@ class CardsScoreTest {
                 Card(CardShape.HEART, number2),
             ),
         )
-        Assertions.assertThat(CardsScore.getTotalCardNumber(cards)).isEqualTo(sum)
+        Assertions.assertThat(CardsScore.getTotalWithOneBigAce(cards)).isEqualTo(sum)
     }
 
     @CsvSource(value = ["ACE,TEN,KING,21", "ACE,TWO,KING,13", "ACE,ACE,KING,12"])
@@ -54,7 +54,7 @@ class CardsScoreTest {
         cards.add(Card(CardShape.HEART, number3))
 
         // then
-        Assertions.assertThat(CardsScore.getTotalCardNumber(cards)).isEqualTo(sum)
+        Assertions.assertThat(CardsScore.getTotalWithOneBigAce(cards)).isEqualTo(sum)
     }
 
     @CsvSource(value = ["ACE,TWO,THREE,16", "ACE,FOUR,SIX,21"])
@@ -76,6 +76,6 @@ class CardsScoreTest {
         // when
         cards.add(Card(CardShape.HEART, number3))
 
-        Assertions.assertThat(CardsScore.getTotalCardNumber(cards)).isEqualTo(sum)
+        Assertions.assertThat(CardsScore.getTotalWithOneBigAce(cards)).isEqualTo(sum)
     }
 }

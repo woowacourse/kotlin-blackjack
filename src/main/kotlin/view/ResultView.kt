@@ -43,7 +43,7 @@ class ResultView {
             RESULT_CARDS_SCRIPT.format(
                 person.name,
                 person.cards.value.joinToString(", ") { cardToString(it) },
-                CardsScore.getTotalCardNumber(person.cards),
+                CardsScore.getTotalWithOneBigAce(person.cards),
             ),
         )
     }

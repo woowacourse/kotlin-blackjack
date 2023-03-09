@@ -15,7 +15,7 @@ class Dealer(value: List<Card>, override val name: String = "딜러") : Person(v
     }
 
     override fun checkState(): GameState {
-        val totalNumber = CardsScore.getTotalCardNumber(cards)
+        val totalNumber = CardsScore.getTotalWithOneBigAce(cards)
         return when {
             cards.value.size == 2 && totalNumber == BLACK_JACK_NUMBER -> GameState.BLACKJACK
             totalNumber > BLACK_JACK_NUMBER -> BUST
