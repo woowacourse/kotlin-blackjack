@@ -1,6 +1,6 @@
 package blackjack.domain
 
-enum class GameResult(dividendRate: Double) {
+enum class GameResult(val dividendRate: Double) {
     LOSE(-1.0), // 패
     DRAW(0.0), // 무
     BLACKJACK(1.5), // 블랙잭으로 승

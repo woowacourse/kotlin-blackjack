@@ -45,6 +45,11 @@ class CardHandTest {
         ).isEqualTo(12)
     }
 
+    @Test
+    fun `처음 받은 2장의 합이 21이면 blackjack 이다`() {
+        assertThat(cards(CardNumber.A, CardNumber.K).isBlackJack()).isTrue
+    }
+
     private fun cards(firstCardNumber: CardNumber, secondCardNumber: CardNumber): CardHand {
         return CardHand(listOf(Card(firstCardNumber, Shape.SPADE), Card(secondCardNumber, Shape.SPADE)))
     }

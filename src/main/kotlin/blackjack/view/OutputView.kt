@@ -1,5 +1,6 @@
 package blackjack.view
 
+import blackjack.domain.BetAmount
 import blackjack.domain.Card
 import blackjack.domain.Dealer
 import blackjack.domain.DrawResult
@@ -7,6 +8,7 @@ import blackjack.domain.GameResult
 import blackjack.domain.Player
 import blackjack.domain.PlayerGameResult
 import blackjack.domain.Shape
+import java.lang.StringBuilder
 
 object OutputView {
 
@@ -17,10 +19,11 @@ object OutputView {
     private const val DEALER_RECEIVED_CARD_MSG = "딜러는 16이하라 한장의 카드를 더 받았습니다."
     private const val DEALER_RECEIVED_NOTHING_MSG = "딜러는 17이상이라 한장의 카드를 더 받지 않았습니다."
     private const val FINAL_SCORE = " - 결과: %d"
-    private const val GAME_RESULTS = "###최종 승패"
+    private const val GAME_RESULTS = "### 최종 승패"
     private const val DEALER_GAME_RESULTS = "딜러: %d승 %d패 %d무"
     private const val PLAYER_GAME_RESULT = "%s: %s"
-    private const val BET_RESULTS = "최종 수익"
+    private const val BET_RESULTS = "### 최종 수익"
+    private const val DEALER_DIVIDEND_RESULT = "딜러: %d"
 
     private const val HEART_DESCRIPTION = "하트"
     private const val DIAMOND_DESCRIPTION = "다이아몬드"
@@ -104,7 +107,7 @@ object OutputView {
         playerGameResults.forEach { playerGameResult ->
             println(
                 PLAYER_GAME_RESULT.format(
-                    playerGameResult.playerName,
+                    playerGameResult.player.name.value,
                     makeGameResultDescription(playerGameResult.gameResult)
                 )
             )
@@ -124,12 +127,10 @@ object OutputView {
         println(exception.message)
     }
 
-    fun printBetResults(playersGameResult: List<PlayerGameResult>, dealerGameResult: List<GameResult>) {
-        var dealerMoney = 0
-
+    fun printBetResults(dealerDividend: BetAmount, playerDividend: StringBuilder) {
+        println()
         println(BET_RESULTS)
-        // playersGameResult.forEach { playerResult ->
-        //     if (playerResult.isBlackJack)
-        // }
+        println(DEALER_DIVIDEND_RESULT.format(dealerDividend.money))
+        println(playerDividend)
     }
 }

@@ -2,6 +2,7 @@ package blackjack.domain
 
 import blackjack.view.InputView
 import blackjack.view.OutputView
+import java.lang.StringBuilder
 
 class BlackJackGame(
     private val cardPack: CardPack,
@@ -53,11 +54,24 @@ class BlackJackGame(
 
     fun judgeGameResults() {
         val playersGameResult = BlackJackReferee.judgeGameResult(players, dealer)
-        // val dealerGameResult = playersGameResult.map { playerGameResult ->
-        //     !playerGameResult.gameResult
-        // }
+        val dealerGameResult = playersGameResult.map { playerGameResult ->
+            !playerGameResult.gameResult
+        }
 
-        val dealerGameResult = listOf(GameResult.DRAW)
         OutputView.printGameResults(playersGameResult, dealerGameResult)
+        judgeBetResults(playersGameResult)
+    }
+
+    private fun judgeBetResults(playersGameResult: List<PlayerGameResult>) {
+        var dealerDividend = BetAmount(0)
+        val playersDividend = StringBuilder()
+
+        playersGameResult.forEach { playerGameResult ->
+            var playerDividend = playerGameResult.player.betAmount * playerGameResult.gameResult.dividendRate
+            playersDividend.append(playerGameResult.player.name.value + ": " + (playerGameResult.player.betAmount * playerGameResult.gameResult.dividendRate).money + "\n")
+            dealerDividend += (playerDividend * -1.0)
+        }
+
+        OutputView.printBetResults(dealerDividend, playersDividend)
     }
 }
