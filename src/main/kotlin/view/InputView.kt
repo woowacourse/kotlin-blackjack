@@ -22,6 +22,7 @@ object InputView {
     }
 
     fun inputBetAmount(player: Player): Int {
+        println()
         println(PRINT_BET_AMOUNT.format(player.name))
         return checkOverZero(readln()) ?: inputBetAmount(player)
     }

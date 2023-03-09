@@ -34,6 +34,12 @@ class BlackjackGame(
         }
     }
 
+    fun getBetAmount(getBetAmount: (Player) -> Int) {
+        players.forEach { player ->
+            player.setBettingMoney(getBetAmount(player))
+        }
+    }
+
     fun startBlackjackGame(startGame: (List<Player>, Dealer) -> Unit) {
         startGame(players, dealer)
     }

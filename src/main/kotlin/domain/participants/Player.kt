@@ -14,4 +14,8 @@ class Player(val name: String, val ownCards: Cards) {
     fun setResult(result: Result) {
         this.result = result
     }
+
+    fun setBettingMoney(money: Int) {
+        this.bettingMoney = money
+    }
 }
