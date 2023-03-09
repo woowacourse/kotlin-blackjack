@@ -11,9 +11,7 @@ class BlackjackController {
         with(initBlackjack()) {
             setUpCard(this)
 
-            val result = start(
-                onDrawn = { participant -> OutputView.printDrawn(participant) }
-            )
+            val result = start(onDrawn = OutputView::printDrawn)
             OutputView.printBlackjackResult(result)
         }
     }
