@@ -12,4 +12,18 @@ class DeckTest {
             CardNumber.values().flatMap { number -> CardShape.values().map { shape -> Card(number, shape) } }
         assertThat(cards).contains(deck.draw())
     }
+
+    @Test
+    fun `카드 덱에 'A 하트' 다음에 '3 스페이드'가 있을 때, 1장을 뽑으면 'A 하트'가 나온다`() {
+        val deck = Deck(
+            mutableListOf(
+                Card(CardNumber.ONE, CardShape.HEART),
+                Card(CardNumber.THREE, CardShape.SPADE)
+            )
+        )
+
+        val actual = deck.draw()
+
+        assertThat(actual).isEqualTo(Card(CardNumber.ONE, CardShape.HEART))
+    }
 }

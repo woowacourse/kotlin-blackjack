@@ -51,5 +51,9 @@ class PlayerTest {
         override fun canHit(): Boolean {
             TODO("Not yet implemented")
         }
+
+        override fun decideGameResult(otherPlayer: Player) {
+            TODO("Not yet implemented")
+        }
     }
 }
