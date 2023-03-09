@@ -16,10 +16,18 @@ class Participants(private val participants: List<Participant>) {
 
     fun takeTurns(deck: CardDeck, onDrawn: (Participant) -> Unit) {
         participants.forEach { participant ->
-            while (participant.canDraw()) {
-                draw(participant, deck)
-                onDrawn(participant)
-            }
+            drawUntilCanDraw(participant, deck, onDrawn)
+        }
+    }
+
+    private fun drawUntilCanDraw(
+        participant: Participant,
+        deck: CardDeck,
+        onDrawn: (Participant) -> Unit
+    ) {
+        while (participant.canDraw()) {
+            draw(participant, deck)
+            onDrawn(participant)
         }
     }
 
