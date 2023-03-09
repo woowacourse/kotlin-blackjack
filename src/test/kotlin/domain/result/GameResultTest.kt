@@ -7,6 +7,7 @@ import domain.card.CardNumber.EIGHT
 import domain.card.CardNumber.KING
 import domain.card.CardNumber.NINE
 import domain.card.CardShape
+import domain.money.Money
 import domain.person.Dealer
 import domain.person.Participants
 import domain.person.Player
@@ -29,15 +30,19 @@ class GameResultTest {
             Player(listOf(ACE, KING), "베르"),
         )
         val dealer = Dealer(listOf(KING, NINE))
-
         val gameResult = GameResult(Participants(dealer, players))
 
-        val expectedDealerResult = mapOf(OutCome.WIN to 1, OutCome.LOSE to 1)
-        val expectedPlayersResult = mapOf("빅스" to OutCome.LOSE, "베르" to OutCome.WIN)
+        val bettingMoney = mapOf("빅스" to Money(10000), "베르" to Money(20000))
+
+        val expectedPlayersResult = mapOf("빅스" to -10000.0, "베르" to 30000.0)
+
+        // when
+        val playerResult = gameResult.getPlayerResult(bettingMoney)
+        val dealerResult = gameResult.getDealerResult(playerResult)
 
         assertAll(
-            { assertThat(gameResult.getDealerResult()).isEqualTo(expectedDealerResult) },
-            { assertThat(gameResult.getPlayerResult()).isEqualTo(expectedPlayersResult) },
+            { assertThat(playerResult).isEqualTo(expectedPlayersResult) },
+            { assertThat(dealerResult).isEqualTo(-20000.0) },
         )
     }
 }
