@@ -5,7 +5,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
 class CardNumberTest {
-    @ParameterizedTest
+    @ParameterizedTest(name = "{0} 카드는 {1}점이다.")
     @CsvSource(
         "ACE, 1", "TWO, 2", "THREE, 3", "FOUR, 4", "FIVE, 5",
         "SIX, 6", "SEVEN, 7", "EIGHT, 8", "NINE, 9", "TEN, 10",

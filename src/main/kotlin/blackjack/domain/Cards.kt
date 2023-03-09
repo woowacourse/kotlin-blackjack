@@ -1,6 +1,6 @@
 package blackjack.domain
 
-class Cards {
+class Cards(vararg cards: Card) {
     private val _items: MutableList<Card> by lazy { mutableListOf() }
     val items: List<Card>
         get() = _items.toList()
@@ -29,5 +29,9 @@ class Cards {
         private const val BONUS_SCORE = 10
         private const val BLACKJACK_SCORE = 21
         private const val STAY_SCORE = 17
+    }
+
+    init {
+        _items.addAll(cards)
     }
 }
