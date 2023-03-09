@@ -6,7 +6,7 @@ data class Participants(val participants: List<Participant>) {
     val players: List<Participant>
         get() = participants.filter { !it.isDealer() }
 
-    fun forEach(action: (Participant) -> Unit) {
-        for (participant in participants) action(participant)
+    fun drawFirstCard(cardDeck: CardDeck) {
+        participants.forEach { it.drawFirst(cardDeck) }
     }
 }

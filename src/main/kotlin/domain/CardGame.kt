@@ -6,9 +6,7 @@ import model.Participants
 
 class CardGame(private val cardDeck: CardDeck, private val participants: Participants) {
     fun readyToStart() {
-        participants.forEach {
-            it.drawFirst(cardDeck)
-        }
+        participants.drawFirstCard(cardDeck)
     }
 
     fun drawCard(participant: Participant, status: (Participant) -> Unit, needToDraw: (String) -> Boolean) {
