@@ -39,6 +39,7 @@ object OutputView {
     }
 
     private fun printCardResults(cardResults: List<CardResult>) {
+        printInterval()
         cardResults.forEach(::printScore)
     }
 
@@ -49,6 +50,7 @@ object OutputView {
     }
 
     private fun printFinalResult(matchResults: List<MatchResult>) {
+        printInterval()
         println("## 최종 승패")
         printMatchResults(matchResults)
     }
