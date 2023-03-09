@@ -35,12 +35,12 @@ private fun getPlayers(): Players {
     )
 }
 
-private fun getPlayersBetAmount(players: Players): PlayersBetAmount {
+private fun getPlayersBetAmount(players: Players): Map<Player, Money> {
     val playersBetAmount = mutableMapOf<Player, Money>()
     players.forEach {
         playersBetAmount[it] = getPlayerBetAmount(it)
     }
-    return PlayersBetAmount(playersBetAmount)
+    return playersBetAmount
 }
 
 private fun getPlayerBetAmount(player: Player): Money {

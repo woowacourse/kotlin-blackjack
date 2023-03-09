@@ -12,20 +12,18 @@ class BlackjackResultTest {
             receive(Card(CardNumber.NINE, CardShape.CLOVER))
             receive(Card(CardNumber.TWO, CardShape.CLOVER))
         }
-        val playersBetAmount = PlayersBetAmount(
-            Players(
-                listOf(
-                    Player("pobi").apply {
-                        receive(Card(CardNumber.NINE, CardShape.CLOVER))
-                        receive(Card(CardNumber.TWO, CardShape.CLOVER))
-                    },
-                    Player("thomas").apply {
-                        receive(Card(CardNumber.NINE, CardShape.CLOVER))
-                        receive(Card(CardNumber.TWO, CardShape.CLOVER))
-                    },
-                ),
-            ).associateWith { Money(10000) },
-        )
+        val playersBetAmount = Players(
+            listOf(
+                Player("pobi").apply {
+                    receive(Card(CardNumber.NINE, CardShape.CLOVER))
+                    receive(Card(CardNumber.TWO, CardShape.CLOVER))
+                },
+                Player("thomas").apply {
+                    receive(Card(CardNumber.NINE, CardShape.CLOVER))
+                    receive(Card(CardNumber.TWO, CardShape.CLOVER))
+                },
+            ),
+        ).associateWith { Money(10000) }
 
         assertThatIllegalArgumentException().isThrownBy { BlackjackResult.of(dealer, playersBetAmount) }
             .withMessage("딜러가 히트해야 한다면 블랙잭 결과를 생성할 수 없습니다.")
@@ -37,23 +35,21 @@ class BlackjackResultTest {
             receive(Card(CardNumber.NINE, CardShape.CLOVER))
             receive(Card(CardNumber.TEN, CardShape.CLOVER))
         }
-        val playersBetAmount = PlayersBetAmount(
-            Players(
-                listOf(
-                    Player("pobi").apply {
-                        receive(Card(CardNumber.NINE, CardShape.CLOVER))
-                    },
-                    Player("thomas").apply {
-                        receive(Card(CardNumber.KING, CardShape.CLOVER))
-                        receive(Card(CardNumber.ACE, CardShape.CLOVER))
-                    },
-                    Player("jason").apply {
-                        receive(Card(CardNumber.NINE, CardShape.CLOVER))
-                        receive(Card(CardNumber.TEN, CardShape.CLOVER))
-                    },
-                ),
-            ).associateWith { Money(10000) },
-        )
+        val playersBetAmount = Players(
+            listOf(
+                Player("pobi").apply {
+                    receive(Card(CardNumber.NINE, CardShape.CLOVER))
+                },
+                Player("thomas").apply {
+                    receive(Card(CardNumber.KING, CardShape.CLOVER))
+                    receive(Card(CardNumber.ACE, CardShape.CLOVER))
+                },
+                Player("jason").apply {
+                    receive(Card(CardNumber.NINE, CardShape.CLOVER))
+                    receive(Card(CardNumber.TEN, CardShape.CLOVER))
+                },
+            ),
+        ).associateWith { Money(10000) }
 
         assertThatIllegalArgumentException().isThrownBy { BlackjackResult.of(dealer, playersBetAmount) }
             .withMessage("모든 참여자는 ${Participant.INIT_CARD_SIZE}장 이상의 카드를 가지고 있어야 블랙잭 결과를 생성할 수 있습니다.")
@@ -74,7 +70,7 @@ class BlackjackResultTest {
             receive(Card(CardNumber.ACE, CardShape.HEART))
         }
         val betAmount = 10000
-        val playersBetAmount = PlayersBetAmount(mapOf(player1 to Money(betAmount), player2 to Money(betAmount)))
+        val playersBetAmount = mapOf(player1 to Money(betAmount), player2 to Money(betAmount))
 
         val actual = BlackjackResult.of(dealer, playersBetAmount)
 
@@ -96,7 +92,7 @@ class BlackjackResultTest {
             receive(Card(CardNumber.ACE, CardShape.HEART))
         }
         val betAmount = 10000
-        val playersBetAmount = PlayersBetAmount(mapOf(player1 to Money(betAmount), player2 to Money(betAmount)))
+        val playersBetAmount = mapOf(player1 to Money(betAmount), player2 to Money(betAmount))
 
         val actual = BlackjackResult.of(dealer, playersBetAmount)
 
@@ -118,7 +114,7 @@ class BlackjackResultTest {
             receive(Card(CardNumber.SEVEN, CardShape.HEART))
         }
         val betAmount = 10000
-        val playersBetAmount = PlayersBetAmount(mapOf(player1 to Money(betAmount), player2 to Money(betAmount)))
+        val playersBetAmount = mapOf(player1 to Money(betAmount), player2 to Money(betAmount))
 
         val actual = BlackjackResult.of(dealer, playersBetAmount)
 
@@ -140,7 +136,7 @@ class BlackjackResultTest {
             receive(Card(CardNumber.SEVEN, CardShape.HEART))
         }
         val betAmount = 10000
-        val playersBetAmount = PlayersBetAmount(mapOf(player1 to Money(betAmount), player2 to Money(betAmount)))
+        val playersBetAmount = mapOf(player1 to Money(betAmount), player2 to Money(betAmount))
 
         val actual = BlackjackResult.of(dealer, playersBetAmount)
 
