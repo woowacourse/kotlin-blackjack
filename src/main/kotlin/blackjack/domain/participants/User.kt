@@ -16,7 +16,7 @@ abstract class User(name: String) {
     val isBust: Boolean
         get() = cards.result.isOverBlackJackNumber
 
-    abstract val isContinue: Boolean
+    abstract val isContinuable: Boolean
 
     fun draw(card: Card) { cards += card }
 }

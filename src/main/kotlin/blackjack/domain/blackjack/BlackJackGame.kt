@@ -21,7 +21,7 @@ class BlackJackGame {
 
     fun dealerTurn(dealer: Dealer, cardDeck: CardDeck, output: () -> Unit) {
         if (dealer.isBlackJack) return
-        if (dealer.isContinue) {
+        if (dealer.isContinuable) {
             dealer.draw(cardDeck.nextCard())
             output()
         }
@@ -41,7 +41,7 @@ class BlackJackGame {
     private fun guestDraw(guest: Guest, cardDeck: CardDeck, output: (User) -> Unit) {
         guest.draw(cardDeck.nextCard())
         output(guest)
-        if (guest.isContinue) {
+        if (guest.isContinuable) {
             guestTurn(guest, cardDeck, output)
         }
     }
