@@ -5,7 +5,6 @@ import domain.constant.BlackJackConstants.DEALER_STAND_CONDITION
 import domain.person.Participants
 import domain.person.Person
 import domain.result.CardsScore
-import domain.result.GameResult
 import domain.result.OutCome
 
 class ResultView {
@@ -50,19 +49,10 @@ class ResultView {
         )
     }
 
-    fun printFinalResult(gameResult: GameResult) {
+    fun printFinalResult(dealerResult: Map<OutCome, Int>, playerResult: Map<String, OutCome>) {
         println(FINAL_OUTCOME_SCRIPT)
-        printDealerResult(gameResult.getDealerResult())
-        printPlayerResult(gameResult.getPlayerResult())
-    }
-
-    private fun printDealerResult(dealerResult: Map<OutCome, Int>) {
         print(DEALER_SCRIPT)
         dealerResult.entries.forEach { print(" ${it.value}${it.key.text}") }
-        println()
-    }
-
-    private fun printPlayerResult(playerResult: Map<String, OutCome>) {
         playerResult.entries.forEach { println("${it.key}: ${it.value.text}") }
     }
 

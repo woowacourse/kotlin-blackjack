@@ -5,6 +5,7 @@ import domain.constant.GameState
 import domain.person.Participants
 import domain.person.Player
 import domain.result.GameResult
+import domain.result.OutCome
 
 class BlackJackGame(private val deck: Deck, private val participants: Participants) {
 
@@ -46,10 +47,10 @@ class BlackJackGame(private val deck: Deck, private val participants: Participan
 
     fun judgeResult(
         printCardsResult: (Participants) -> Unit,
-        printFinalResult: (GameResult) -> Unit,
+        printFinalResult: (Map<OutCome, Int>, Map<String, OutCome>) -> Unit,
     ) {
         printCardsResult(participants)
         val gameResult = GameResult(participants)
-        printFinalResult(gameResult)
+        printFinalResult(gameResult.getDealerResult(), gameResult.getPlayerResult())
     }
 }
