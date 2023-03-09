@@ -68,7 +68,7 @@ class BlackJackGame {
         getMoreCardCommand: (User) -> Boolean,
         onUserPickNewCards: (User) -> Unit
     ) {
-        val userScore = user.score
+        val userScore = user.cards.score
         if ((userScore.isBurst() || userScore.isBlackJack())) return
         if (getMoreCardCommand(user)) {
             user.addCard(blackJackGameData.deck.getOneCard())

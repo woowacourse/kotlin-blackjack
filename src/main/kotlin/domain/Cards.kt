@@ -7,9 +7,9 @@ class Cards(cards: List<Card>) {
     private val _value: MutableList<Card> = cards.toMutableList()
     val value: List<Card> get() = _value.toList()
 
-    val numbers: List<Int> get() = _value.map { it.value.number }
+    private val numbers: List<Int> get() = _value.map { it.value.number }
 
-    val score: Score = Score.valueOfCards(numbers, hasAce())
+    val score: Score get() = Score.valueOfCards(numbers, hasAce())
 
     fun addCard(card: Card) {
         _value.add(card)
