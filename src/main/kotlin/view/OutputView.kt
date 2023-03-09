@@ -2,6 +2,7 @@ package view
 
 import model.Cards
 import model.Dealer
+import model.GameResult
 import model.Participant
 import model.Participants
 import model.Player
@@ -49,11 +50,11 @@ class OutputView {
     }
 
     fun printGameResult(participants: Participants) {
-        val dealerResult = (participants.dealer as Dealer).getFinalResult(Participants(participants.players))
+        val dealerResult = GameResult(participants)
         val playerResult = Players(participants.players.map { it as Player }).getGameResult(participants.dealer as Dealer)
         println()
         println(MESSAGE_RESULT_TITLE)
-        println(MESSAGE_DEALER_RESULT.format(dealerResult[Result.WIN], dealerResult[Result.LOSE]))
+        println(MESSAGE_DEALER_RESULT.format(dealerResult.winCount, dealerResult.loseCount))
         participants.players.forEach {
             println(MESSAGE_PLAYER_RESULT.format(it.name.value, if (playerResult[it.name] == Result.WIN) "승" else "패"))
         }

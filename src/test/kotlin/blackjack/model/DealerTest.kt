@@ -3,12 +3,12 @@ package blackjack.model
 import model.Card
 import model.Cards
 import model.Dealer
+import model.GameResult
 import model.Name
 import model.Participants
 import model.Player
 import model.Players
 import model.Rank
-import model.Result
 import model.Suit
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -54,9 +54,10 @@ class DealerTest {
             Player("jason", Card(Rank.TEN, Suit.DIAMOND), Card(Rank.KING, Suit.DIAMOND)),
             Player("pobi", Card(Rank.ACE, Suit.HEART), Card(Rank.JACK, Suit.CLOVER))
         )
-        val dealerResult = dealer.getFinalResult(Participants(players))
-        assertThat(dealerResult[Result.WIN]).isEqualTo(0)
-        assertThat(dealerResult[Result.LOSE]).isEqualTo(2)
+        val participants = Participants(listOf(dealer) + players)
+        val dealerResult = GameResult(participants)
+        assertThat(dealerResult.winCount).isEqualTo(0)
+        assertThat(dealerResult.loseCount).isEqualTo(2)
     }
 
     @Test
@@ -66,9 +67,10 @@ class DealerTest {
             Player("jason", Card(Rank.TEN, Suit.DIAMOND), Card(Rank.ACE, Suit.CLOVER)),
             Player("pobi", Card(Rank.DEUCE, Suit.HEART), Card(Rank.JACK, Suit.CLOVER))
         )
-        val dealerResult = dealer.getFinalResult(Participants(players))
-        assertThat(dealerResult[Result.WIN]).isEqualTo(1)
-        assertThat(dealerResult[Result.LOSE]).isEqualTo(1)
+        val participants = Participants(listOf(dealer) + players)
+        val dealerResult = GameResult(participants)
+        assertThat(dealerResult.winCount).isEqualTo(1)
+        assertThat(dealerResult.loseCount).isEqualTo(1)
     }
 
     companion object {
