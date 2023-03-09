@@ -62,7 +62,7 @@ class BlackjackController() {
     }
 
     private fun dealerPickCard(blackjackGame: BlackjackGame) {
-        if (blackjackGame.checkDealerAvailableForPick()) {
+        while (blackjackGame.checkDealerAvailableForPick()) {
             OutputView.printDealerUnder16()
             blackjackGame.pickDealerCard()
         }
