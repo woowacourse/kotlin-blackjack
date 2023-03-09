@@ -15,32 +15,32 @@ class Participants(names: List<String>, private val cardDeck: CardDeck) {
     private fun progressEachPlayerAddCard(
         player: Player,
         getDecision: (Player) -> Boolean,
-        printPlayerCard: (Player) -> Unit,
+        transferPlayerCard: (Player) -> Unit,
     ) {
         while (!player.isOverCondition()) {
-            if (!progressEachTurn(player, getDecision, printPlayerCard)) return
+            if (!progressEachTurn(player, getDecision, transferPlayerCard)) return
         }
     }
 
     private fun progressEachTurn(
         player: Player,
         getDecision: (Player) -> Boolean,
-        printPlayerCard: (Player) -> Unit,
+        transferPlayerCard: (Player) -> Unit,
     ): Boolean {
         if (getDecision(player)) {
-            positiveGetCard(player, printPlayerCard)
+            positiveGetCard(player, transferPlayerCard)
             return true
         }
-        printPlayerCard(player)
+        transferPlayerCard(player)
         return false
     }
 
     private fun positiveGetCard(
         player: Player,
-        printPlayerCard: (Player) -> Unit,
+        transferPlayerCard: (Player) -> Unit,
     ) {
         player.cardBunch.addCard(cardDeck.drawCard())
-        printPlayerCard(player)
+        transferPlayerCard(player)
     }
 
     fun judgmentDealerAddCard() {
