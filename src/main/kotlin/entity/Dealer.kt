@@ -12,6 +12,10 @@ class Dealer(val cards: Cards = Cards()) : User {
         }
     }
 
+    fun pickFirstCard(): Card {
+        return cards.value[0]
+    }
+
     companion object {
         const val MAXIMUM_CARD_SUM_NUMBER = 16
     }

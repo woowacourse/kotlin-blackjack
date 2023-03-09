@@ -1,46 +1,34 @@
 package view
 
-import entity.Dealer
-import entity.DealerGameResult
-import entity.GameResultType
-import entity.Players
-import entity.PlayersGameResult
-
 class ResultView(private val output: Output) {
-    fun printGameStatus(dealer: Dealer, players: Players) {
-        output.println(MESSAGE_DEALER_GAME_STATUS.format(ViewUtils.cardsToString(dealer.cards), dealer.cards.sumOfNumbers()))
-        players.value.forEach {
-            output.println(MESSAGE_PLAYERS_GAME_STATUS.format(it.name.value, ViewUtils.cardsToString(it.cards), it.cards.sumOfNumbers()))
+    fun printDealerStatus(cards: String, result: Int) {
+        output.println(MESSAGE_DEALER_GAME_STATUS.format(cards, result))
+    }
+    fun printPlayerStatus(playersName: List<String>, playersCards: List<String>, playersResult: List<Int>) {
+        playersName.forEachIndexed { index, _ ->
+            output.println(MESSAGE_PLAYERS_GAME_STATUS.format(playersName[index], playersCards[index], playersResult[index]))
         }
     }
 
-    fun printGameResult(dealerGameResult: DealerGameResult, playersGameResult: PlayersGameResult) {
+    fun printGameResult(dealerGameResult: Map<String, Int>, playersGameResult: Map<String, String>) {
         output.println(MESSAGE_GAME_RESULT)
         output.println(MESSAGE_DEALER_GAME_RESULT.format(formatDealerGameResult(dealerGameResult)))
-        playersGameResult.value.forEach {
-            output.println(MESSAGE_PLAYERS_GAME_RESULT.format(it.key.name.value, gameResultTypeToString(it.value.type)))
+        playersGameResult.forEach {
+            output.println(MESSAGE_PLAYERS_GAME_RESULT.format(it.key, it.value))
         }
     }
 
-    fun printProfitResult(dealerGameResult: DealerGameResult, playersGameResult: PlayersGameResult) {
+    fun printProfitResult(dealerProfit: Int, playersName: List<String>, playersProfit: List<Int>) {
         output.println(MESSAGE_PROFIT_RESULT)
-        output.println(MESSAGE_DEALER_PROFIT_RESULT.format(dealerGameResult.profit.value))
-        playersGameResult.value.forEach {
-            output.println(MESSAGE_PLAYERS_PROFIT_RESULT.format(it.key.name.value, it.value.profit.value))
+        output.println(MESSAGE_DEALER_PROFIT_RESULT.format(dealerProfit))
+        playersName.zip(playersProfit).forEach {
+            output.println(MESSAGE_PLAYERS_PROFIT_RESULT.format(it.first, it.second))
         }
     }
 
-    private fun formatDealerGameResult(dealerGameResult: DealerGameResult): String {
-        return dealerGameResult.value.asSequence().joinToString(" ") {
-            MESSAGE_GAME_RESULT_TYPE.format(it.value, gameResultTypeToString(it.key))
-        }
-    }
-
-    private fun gameResultTypeToString(gameResultType: GameResultType): String {
-        return when (gameResultType) {
-            GameResultType.WIN -> "승"
-            GameResultType.LOSE -> "패"
-            GameResultType.DRAW -> "무"
+    private fun formatDealerGameResult(dealerGameResult: Map<String, Int>): String {
+        return dealerGameResult.asSequence().joinToString(" ") {
+            MESSAGE_GAME_RESULT_TYPE.format(it.value, it.key)
         }
     }
 

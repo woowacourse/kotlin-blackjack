@@ -1,32 +1,23 @@
 package view
 
-import entity.Cards
-import entity.Dealer
-import entity.Player
-import model.Users
-
 class GameView(private val input: Input, private val output: Output) {
-    private fun printDealerStatus(dealer: Dealer) {
+    fun printDealerStatus(dealerCards: String) {
         output.print(MESSAGE_DEALER_NAME)
-        output.println(ViewUtils.cardsToString(dealer.cards.value.take(1).let { Cards(it) }))
+        output.println(dealerCards)
     }
 
-    fun printPlayerStatus(player: Player) {
-        output.print(player.name.value)
+    fun printPlayerStatus(playerName: String, playerCards: String) {
+        output.print(playerName)
         output.print(MESSAGE_PLAYER_NAME)
-        output.println(ViewUtils.cardsToString(player.cards))
+        output.println(playerCards)
     }
 
-    fun printInitialUsersStatus(users: Users) {
+    fun printInitialUsersStatus(playersNames: List<String>) {
         output.println(
             MESSAGE_USERS_STATUS.format(
-                users.players.value.joinToString(", ") {
-                    it.name.value
-                }
+                playersNames.joinToString(", ")
             )
         )
-        printDealerStatus(users.dealer)
-        users.players.value.forEach { printPlayerStatus(it) }
     }
 
     fun printWhetherMoreCard(name: String) {

@@ -1,5 +1,6 @@
-package view
+package controller
 
+import entity.Card
 import entity.CardNumber
 import entity.CardType
 import entity.Cards
@@ -25,10 +26,14 @@ class ViewUtils {
             }
         }
 
-        fun cardsToString(cards: Cards): String {
-            return cards.value.joinToString(", ") {
-                it.cardNumber.toShorthandString() + it.cardType.toKoreanString()
+        fun Cards.toFormattedString(): String {
+            return value.joinToString(", ") {
+                it.toFormattedString()
             }
+        }
+
+        fun Card.toFormattedString(): String {
+            return cardNumber.toShorthandString() + cardType.toKoreanString()
         }
     }
 }
