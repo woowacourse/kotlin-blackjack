@@ -10,8 +10,7 @@ class Controller(private val inputView: InputView, private val outputView: Outpu
     fun run() {
         CardGame(CardPackGenerator().createCardPack().shuffled(), outputView::printError).apply {
             outputView.printInputPlayerNames()
-            val names = initName(inputView::readName)
-            val participants = setUp(names)
+            val participants = setUp(inputView::readName)
             val betInfos = setBets(participants.players, outputView::printHowMuchBet, inputView::readBet)
             outputView.printNoticeDistributeCards(participants)
             askGetMorePlayersCard(participants.players, outputView::printGetCardMore, inputView::readYesOrNo, outputView::printParticipantStatus)

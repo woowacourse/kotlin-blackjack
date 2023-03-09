@@ -16,7 +16,8 @@ import model.PlayersBuilder
 import view.InputState
 
 class CardGame(private val cardPack: CardPack, private val onError: (String) -> Unit) {
-    fun setUp(names: Names): Participants {
+    fun setUp(getName: () -> InputState<List<String>>): Participants {
+        val names = initName(getName)
         val dealer = setDealer()
         val players = players {
             names.forEach {
@@ -30,7 +31,7 @@ class CardGame(private val cardPack: CardPack, private val onError: (String) -> 
         return Participants(dealer, players)
     }
 
-    fun initName(getName: () -> InputState<List<String>>): Names = when (val names = getName()) {
+    private fun initName(getName: () -> InputState<List<String>>): Names = when (val names = getName()) {
         is InputState.Error -> {
             onError(names.error)
             initName(getName)
