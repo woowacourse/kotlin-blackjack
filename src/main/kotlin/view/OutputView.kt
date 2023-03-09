@@ -1,7 +1,7 @@
 package view
 
+import domain.GameResult
 import model.Cards
-import model.GameResult
 import model.Participant
 import model.Participants
 import model.Rank
