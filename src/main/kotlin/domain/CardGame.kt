@@ -2,6 +2,7 @@ package domain
 
 import domain.util.BetInfosBuilder
 import domain.util.DealerBuilder
+import domain.util.PlayerBuilder
 import domain.util.PlayersBuilder
 import model.InputState
 import model.cards.CardPack
@@ -17,15 +18,7 @@ import model.participants.Players
 class CardGame(private val cardPack: CardPack, private val onError: (String) -> Unit) {
     fun setUp(getName: () -> InputState<List<String>>): Participants {
         val dealer = setDealer()
-        val players = players {
-            initName(getName).forEach {
-                player {
-                    name(it)
-                    hand(cardPack.pop())
-                    hand(cardPack.pop())
-                }
-            }
-        }
+        val players = setPlayers(initName(getName))
         return Participants(dealer, players)
     }
 
@@ -39,6 +32,18 @@ class CardGame(private val cardPack: CardPack, private val onError: (String) -> 
     }
 
     private fun setDealer(): Dealer = dealer {
+        hand(cardPack.pop())
+        hand(cardPack.pop())
+    }
+
+    private fun setPlayers(names: Names): Players = players {
+        names.forEach {
+            setPlayer(it)
+        }
+    }
+
+    private fun setPlayer(name: Name): Player = player {
+        name(name)
         hand(cardPack.pop())
         hand(cardPack.pop())
     }
@@ -101,8 +106,7 @@ class CardGame(private val cardPack: CardPack, private val onError: (String) -> 
     }
 
     private fun betInfos(block: BetInfosBuilder.() -> Unit): BetInfo = BetInfosBuilder().apply(block).build()
-
     private fun dealer(block: DealerBuilder.() -> Unit): Dealer = DealerBuilder().apply(block).build()
-
+    private fun player(block: PlayerBuilder.() -> Unit): Player = PlayerBuilder().apply(block).build()
     private fun players(block: PlayersBuilder.() -> Unit): Players = PlayersBuilder().apply(block).build()
 }
