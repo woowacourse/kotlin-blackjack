@@ -2,10 +2,10 @@ package domain
 
 import domain.card.Deck
 import domain.constant.GameState
+import domain.money.Money
 import domain.person.Participants
 import domain.person.Player
 import domain.result.GameResult
-import domain.result.OutCome
 
 class BlackJackGame(private val deck: Deck, private val participants: Participants) {
 
@@ -41,16 +41,20 @@ class BlackJackGame(private val deck: Deck, private val participants: Participan
         if (participants.dealer.isState(GameState.HIT)) {
             participants.dealer.receiveCard(deck.getCards(1))
             printDealerGetCardOrNot(true)
+            return
         }
         printDealerGetCardOrNot(false)
     }
 
     fun judgeResult(
+        playerBettingMoneys: Map<String, Money>,
         printCardsResult: (Participants) -> Unit,
-        printFinalResult: (Map<OutCome, Int>, Map<String, OutCome>) -> Unit,
+        printFinalResult: (Double, Map<String, Double>) -> Unit,
     ) {
         printCardsResult(participants)
         val gameResult = GameResult(participants)
-        printFinalResult(gameResult.getDealerResult(), gameResult.getPlayerResult())
+        val playersResult = gameResult.getPlayerResult(playerBettingMoneys)
+        val dealerResult = gameResult.getDealerResult(playersResult)
+        printFinalResult(dealerResult, playersResult)
     }
 }
