@@ -11,7 +11,7 @@ class PlayerTest {
         val card1 = Card.get(Shape.HEART, CardNumber.SIX)
         val card2 = Card.get(Shape.HEART, CardNumber.SEVEN)
         val cardBunch = CardBunch(card1, card2)
-        assertDoesNotThrow { Player(name, cardBunch) }
+        assertDoesNotThrow { Player(name, cardBunch, BettingMoney(100)) }
     }
 
     @Test
@@ -21,7 +21,7 @@ class PlayerTest {
         val card2 = Card.get(Shape.HEART, CardNumber.SEVEN)
         val cardBunch = CardBunch(card1, card2)
 
-        val player = Player(name, cardBunch)
+        val player = Player(name, cardBunch, BettingMoney(100))
         val card3 = Card.get(Shape.HEART, CardNumber.NINE)
         player.receiveCard(card3)
 
@@ -35,7 +35,7 @@ class PlayerTest {
         val card2 = Card.get(Shape.HEART, CardNumber.JACK)
         val cardBunch = CardBunch(card1, card2)
 
-        val player = Player(name, cardBunch)
+        val player = Player(name, cardBunch, BettingMoney(100))
 
         assertThat(player.isBlackjack()).isTrue
     }
@@ -48,7 +48,7 @@ class PlayerTest {
         val card3 = Card.get(Shape.HEART, CardNumber.EIGHT)
         val cardBunch = CardBunch(card1, card2, card3)
 
-        val player = Player(name, cardBunch)
+        val player = Player(name, cardBunch, BettingMoney(100))
 
         assertThat(player.isBlackjack()).isFalse
     }
