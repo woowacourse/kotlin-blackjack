@@ -1,7 +1,6 @@
 package domain.gamer
 
 import domain.card.Card
-import domain.card.CardValue
 import domain.deck.Deck
 import domain.gamer.cards.Cards
 
