@@ -5,8 +5,11 @@ import blackjack.domain.state.Score
 class Cards(private val cards: Set<Card> = setOf()) {
     val size: Int = cards.size
 
-    val isContainsAce: Boolean
-        get() = cards.any { it.isAce }
+    val isContainsAce: Boolean = cards.any { it.isAce }
+
+    private val hardScore: Score = Score(cards.toList().sumOf { it.value.value })
+
+    private val softScore: Score = hardScore + SOFT_ACE_SCORE
 
     fun toList() = cards.toList()
 
@@ -15,17 +18,14 @@ class Cards(private val cards: Set<Card> = setOf()) {
         return Cards(cards.plus(card))
     }
 
-    fun calculateScore(): Score {
-        val score = Score(cards.toList().sumOf { it.value.value } + SOFT_ACE_NUMBER)
-        return when {
-            isContainsAce && score.isBust.not() -> score
-            else -> Score(cards.toList().sumOf { it.value.value })
-        }
+    fun calculateScore(): Score = when {
+        isContainsAce && softScore.isBust.not() -> softScore
+        else -> hardScore
     }
 
     companion object {
         private const val ERROR_EXIST_DUPLICATE_CARD = "카드는 중복될 수 없습니다."
-        private const val SOFT_ACE_NUMBER = 10
+        private val SOFT_ACE_SCORE = Score(10)
         private val CARDS: List<Card> = CardMark.values().flatMap { mark ->
             CardValue.values().map { value -> Card(mark, value) }
         }
