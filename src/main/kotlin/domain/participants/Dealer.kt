@@ -12,8 +12,8 @@ class Dealer(val ownCards: Cards, val name: String = "딜러") {
         val dealerSum = ownCards.calculateCardSum()
 
         return when {
-            checkBlackJack(player) && checkBlackJack(ownCards) -> Result.DRAW
-            checkBlackJack(player) -> Result.BLACKJACK_WIN
+            player.checkBlackJack() && ownCards.checkBlackJack() -> Result.DRAW
+            player.checkBlackJack() -> Result.BLACKJACK_WIN
             playerSum > CARD_SUM_MAX_VALUE -> Result.LOSS
             dealerSum > CARD_SUM_MAX_VALUE -> Result.WIN
             dealerSum > playerSum -> Result.LOSS
@@ -23,12 +23,8 @@ class Dealer(val ownCards: Cards, val name: String = "딜러") {
         }
     }
 
-    private fun checkBlackJack(participant: Cards): Boolean =
-        participant.cards.size == BLACKJACK_SIZE && participant.calculateCardSum() == CARD_SUM_MAX_VALUE
-
     companion object {
         private const val CARD_PICK_CONDITION = 16
-        private const val BLACKJACK_SIZE = 2
         const val CARD_SUM_MAX_VALUE = 21
     }
 }

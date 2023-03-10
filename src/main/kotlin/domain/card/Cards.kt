@@ -19,8 +19,12 @@ class Cards(private val _cards: MutableList<Card>) {
         return ZERO
     }
 
+    fun checkBlackJack(): Boolean =
+        cards.size == BLACKJACK_SIZE && calculateCardSum() == Dealer.CARD_SUM_MAX_VALUE
+
     companion object {
         private const val ANOTHER_ACE_VALUE = 11
         private const val ZERO = 0
+        private const val BLACKJACK_SIZE = 2
     }
 }
