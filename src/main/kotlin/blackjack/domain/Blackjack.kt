@@ -1,7 +1,7 @@
 package blackjack.domain
 
 class Blackjack(private val deck: CardDeck, private val participants: Participants) {
-    constructor(deck: CardDeck, players: List<Player>) : this(deck, Participants(listOf(Dealer()) + players))
+    constructor(deck: CardDeck, players: List<Participant>) : this(deck, Participants(listOf(Dealer()) + players))
 
     fun start(
         onStartFirstDrawn: (Participants) -> Unit,

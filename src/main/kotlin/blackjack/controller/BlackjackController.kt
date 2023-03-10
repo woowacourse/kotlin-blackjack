@@ -2,7 +2,7 @@ package blackjack.controller
 
 import blackjack.domain.Blackjack
 import blackjack.domain.CardDeck
-import blackjack.domain.Player
+import blackjack.domain.Participant
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -18,9 +18,5 @@ class BlackjackController {
 
     private fun initBlackjack(): Blackjack = Blackjack(CardDeck(), enrollPlayers())
 
-    private fun enrollPlayers(): List<Player> = InputView.inputNames().map { name ->
-        Player(name, needToDraw = {
-            InputView.inputDrawCommand(name)
-        })
-    }
+    private fun enrollPlayers(): List<Participant> = InputView.inputPlayers()
 }
