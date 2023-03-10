@@ -1,9 +1,8 @@
 package blackjack.view
 
 import blackjack.domain.blackjack.BlackJackSetting
+import blackjack.domain.participants.Name
 import blackjack.domain.participants.User
-import blackjack.domain.result.BlackJackResult
-import blackjack.domain.result.BlackJackResultUser
 
 class OutputView {
     fun outputInitState(blackJackSetting: BlackJackSetting) {
@@ -14,13 +13,13 @@ class OutputView {
         }
     }
 
-    fun outputResult(blackJackSetting: BlackJackSetting, result: BlackJackResult) {
+    fun outputResult(blackJackSetting: BlackJackSetting) {
         blackJackSetting.participants.all.forEach { user ->
             outputCard(user)
             outputScore(user)
         }
         println("")
-        outputOutcomes(result)
+        outputOutcomes(blackJackSetting)
     }
 
     fun outputCard(user: User) {
@@ -36,13 +35,12 @@ class OutputView {
 
     private fun outputScore(user: User) { print(" - 결과: ${user.score}") }
 
-    private fun outputOutcomes(blackJackResult: BlackJackResult) {
-        blackJackResult.run {
+    private fun outputOutcomes(blackJackSetting: BlackJackSetting) {
+        blackJackSetting.run {
             println("\n## 최종 승패")
-            outputOutcome(dealer)
-            guests.forEach { guest -> outputOutcome(guest) }
+            outputOutcome(dealer.name, dealer.calculateProfit(guests))
+            guests.forEach { guest -> outputOutcome(guest.name, guest.calculateProfit(dealer)) }
         }
     }
-
-    private fun outputOutcome(result: BlackJackResultUser) { println("${result.name}: ${result.revenue}") }
+    private fun outputOutcome(userName: Name, userProfit: Int) { println("$userName: $userProfit") }
 }

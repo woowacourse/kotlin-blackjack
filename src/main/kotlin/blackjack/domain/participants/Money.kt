@@ -6,6 +6,8 @@ value class Money(val value: Int) {
         require(value in MIN_MONEY..MAX_MONEY) { ERROR_MONEY_RANGE }
     }
 
+    fun toDouble(): Double = value.toDouble()
+
     companion object {
         private const val MIN_MONEY = 10
         private const val MAX_MONEY = 1_000_000
