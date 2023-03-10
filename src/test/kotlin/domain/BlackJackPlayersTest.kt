@@ -8,7 +8,6 @@ import blackjack.domain.dealer.Dealer
 import blackjack.domain.gameResult.PlayerGameResult
 import blackjack.domain.gameResult.PlayerGameResults
 import blackjack.domain.gameResult.ProfitMoney
-import blackjack.domain.gameResult.TotalGameResult
 import blackjack.domain.player.BattingMoney
 import blackjack.domain.player.BlackJackPlayers
 import blackjack.domain.player.Player
@@ -88,15 +87,12 @@ class BlackJackPlayersTest {
         val actual = blackJackPlayers.judgePlayerGameResults(dealer.cards.state)
 
         assertThat(actual).isEqualTo(
-            TotalGameResult(
-                playerGameResults = PlayerGameResults(
-                    listOf(
-                        PlayerGameResult("woogi", ProfitMoney(1000)),
-                        PlayerGameResult("ring", ProfitMoney(-1000)),
-                        PlayerGameResult("sunny", ProfitMoney(0))
-                    )
-                ),
-                dealerGameResults = ProfitMoney(0)
+            PlayerGameResults(
+                listOf(
+                    PlayerGameResult("woogi", ProfitMoney(1000)),
+                    PlayerGameResult("ring", ProfitMoney(-1000)),
+                    PlayerGameResult("sunny", ProfitMoney(0))
+                )
             )
         )
     }
