@@ -5,10 +5,9 @@ import blackjack.domain.participants.Dealer
 import blackjack.domain.result.Outcome
 
 class Bust(cards: Cards) : EndTurn(cards) {
-    override fun matchWith(dealer: Dealer): Outcome {
-        return when (dealer.state) {
+    override fun matchWith(dealer: Dealer): Outcome =
+        when (dealer.state) {
             is Bust -> Outcome.DRAW
             else -> Outcome.LOSE
         }
-    }
 }

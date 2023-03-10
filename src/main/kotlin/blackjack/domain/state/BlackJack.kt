@@ -9,7 +9,6 @@ class BlackJack(cards: Cards = Cards()) : EndTurn(cards) {
     constructor(cards: List<Card>) : this(Cards(cards.toSet()))
     constructor(vararg cards: Card) : this(Cards(cards.toSet()))
 
-    override fun matchWith(dealer: Dealer): Outcome {
-        return Outcome.WIN_WITH_BLACKJACK
-    }
+    override fun matchWith(dealer: Dealer): Outcome =
+        Outcome.WIN_WITH_BLACKJACK
 }

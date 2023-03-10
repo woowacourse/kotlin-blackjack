@@ -15,8 +15,8 @@ class Hit(cards: Cards) : InTurn(cards) {
         }
     }
 
-    override fun matchWith(dealer: Dealer): Outcome {
-        return when (dealer.state) {
+    override fun matchWith(dealer: Dealer): Outcome =
+        when (dealer.state) {
             is BlackJack -> Outcome.LOSE
             is Bust -> Outcome.WIN
             is Stay -> compareScore(dealer)
@@ -24,7 +24,6 @@ class Hit(cards: Cards) : InTurn(cards) {
             else -> {
                 throw IllegalStateException("Dealer's state is not valid") }
         }
-    }
 
     private fun compareScore(dealer: Dealer) = when {
         dealer.score > score -> Outcome.LOSE
