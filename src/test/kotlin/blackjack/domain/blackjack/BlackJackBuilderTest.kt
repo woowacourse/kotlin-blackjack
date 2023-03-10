@@ -18,11 +18,11 @@ class BlackJackBuilderTest {
         }
         assertAll(
             { assertThat(blackJack.guests[0].name.toString()).isEqualTo("아크") },
-            { assertThat(blackJack.guests[0].cards.size).isEqualTo(2) },
+            { assertThat(blackJack.guests[0].state.size).isEqualTo(2) },
             { assertThat(blackJack.guests[1].name.toString()).isEqualTo("로피") },
-            { assertThat(blackJack.guests[1].cards.size).isEqualTo(2) },
+            { assertThat(blackJack.guests[1].state.size).isEqualTo(2) },
             { assertThat(blackJack.dealer.name.toString()).isEqualTo("딜러") },
-            { assertThat(blackJack.dealer.cards.size).isEqualTo(2) },
+            { assertThat(blackJack.dealer.state.size).isEqualTo(2) },
             { assertThat(blackJack.cardDeck.size).isEqualTo(46) },
         )
     }

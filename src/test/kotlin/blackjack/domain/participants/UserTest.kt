@@ -11,7 +11,7 @@ class UserTest {
     fun `카드를 뽑을 수 있다`() {
         val user = Guest(Name("아크"))
         user.draw(Card(CardMark.CLOVER, CardValue.EIGHT))
-        assertThat(user.cards.size).isEqualTo(1)
+        assertThat(user.state.size).isEqualTo(1)
     }
 
     @Test

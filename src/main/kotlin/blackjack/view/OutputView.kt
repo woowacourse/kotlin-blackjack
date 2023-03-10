@@ -24,13 +24,13 @@ class OutputView {
     }
 
     fun outputCard(user: User) {
-        val cardText = user.cards.toList().joinToString(", ") { it.toText() }
+        val cardText = user.state.cards.toList().joinToString(", ") { it.toText() }
         print("\n${user.name}카드: $cardText")
     }
     fun outputDealerDraw() { println("\n\n딜러는 16이하라 한장의 카드를 더 받았습니다.") }
 
     private fun outputCardForDealer(user: User) {
-        val cardText = user.cards.toList()[0].toText()
+        val cardText = user.state.cards.toList()[0].toText()
         print("\n${user.name}카드: $cardText")
     }
 

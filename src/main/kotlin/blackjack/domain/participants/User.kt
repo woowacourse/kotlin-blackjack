@@ -1,21 +1,22 @@
 package blackjack.domain.participants
 
 import blackjack.domain.card.Card
-import blackjack.domain.card.Cards
+import blackjack.domain.state.State
 
-abstract class User(val name: Name) {
-    var cards = Cards()
+abstract class User(val name: Name, var state: State) {
 
     val score: Int
-        get() = cards.result.score
+        get() = state.score.value
 
     val isBlackJack: Boolean
-        get() = cards.result.isBlackJackNumber
+        get() = state.score.isBlackJack
 
     val isBust: Boolean
-        get() = cards.result.isOverBlackJackNumber
+        get() = state.score.isBust
 
     abstract val isContinuable: Boolean
 
-    fun draw(card: Card) { cards += card }
+    fun draw(card: Card) {
+        state = state.draw(card)
+    }
 }

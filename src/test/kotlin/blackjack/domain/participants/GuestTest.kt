@@ -1,5 +1,6 @@
 package blackjack.domain.participants
 
+import blackjack.domain.state.FirstTurn
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -9,7 +10,7 @@ class GuestTest {
     @ParameterizedTest
     @ValueSource(ints = [10, 1_000_000])
     fun `배팅 금액을 반환한다`(money: Int) {
-        val user = Guest(Name("아크"), Money(money))
+        val user = Guest(Name("아크"), FirstTurn(), Money(money))
         assertThat(user.bettingMoney.value).isEqualTo(money)
     }
 

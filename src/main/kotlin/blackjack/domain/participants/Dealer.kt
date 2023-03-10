@@ -1,8 +1,14 @@
 package blackjack.domain.participants
 
-class Dealer(name: Name = Name("딜러")) : User(name) {
+import blackjack.domain.state.FirstTurn
+import blackjack.domain.state.State
+
+class Dealer(
+    name: Name = Name("딜러"),
+    state: State = FirstTurn(),
+) : User(name, state) {
     override val isContinuable: Boolean
-        get() = cards.result.maxScore < DEALER_MIN_NUMBER
+        get() = state.score.value < DEALER_MIN_NUMBER
 
     companion object {
         private const val DEALER_MIN_NUMBER = 17

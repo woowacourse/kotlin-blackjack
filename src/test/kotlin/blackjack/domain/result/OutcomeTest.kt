@@ -59,7 +59,6 @@ class OutcomeTest {
         val guest = Guest(Name("아크"))
         dealer.draw(Card(CardMark.CLOVER, CardValue.ACE))
         dealer.draw(Card(CardMark.CLOVER, CardValue.KING))
-        dealer.draw(Card(CardMark.CLOVER, CardValue.QUEEN))
 
         guest.draw(Card(CardMark.SPADE, CardValue.QUEEN))
         guest.draw(Card(CardMark.SPADE, CardValue.KING))

@@ -15,7 +15,7 @@ enum class Outcome(val rate: Double) {
 
         private fun matchBlackJack(guest: Guest, dealer: Dealer): Outcome =
             when {
-                guest.isBlackJack && guest.cards.size == 2 -> WIN_WITH_BLACKJACK
+                guest.isBlackJack && guest.state.size == 2 -> WIN_WITH_BLACKJACK
                 guest.isBlackJack && dealer.isBlackJack -> DRAW
                 guest.isBlackJack -> WIN
                 dealer.isBlackJack -> LOSE

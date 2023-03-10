@@ -12,8 +12,7 @@ class HitTest {
     @Test
     fun `히트에서 히트로 갈 수 있다`() {
         // given
-        var state: State = FirstTurn(CLOVER_TWO)
-        state = state.draw(CLOVER_THREE)
+        var state: State = FirstTurn().draw(CLOVER_KING).draw(CLOVER_THREE)
 
         // when
         state = state.draw(CLOVER_FOUR)
@@ -23,36 +22,21 @@ class HitTest {
     }
 
     @Test
-    fun `히트에서 블랙잭으로 갈 수 있다`() {
+    fun `히트에서 스테이로 갈 수 있다`() {
         // given
-        var state: State = FirstTurn(CLOVER_KING)
-        state = state.draw(CLOVER_NINE)
+        var state: State = FirstTurn().draw(CLOVER_KING).draw(CLOVER_NINE)
 
         // when
         state = state.draw(CLOVER_TWO)
 
         // then
-        assertThat(state).isInstanceOf(BlackJack::class.java)
+        assertThat(state).isInstanceOf(Stay::class.java)
     }
 
     @Test
     fun `히트에서 버스트로 갈 수 있다`() {
         // given
-        var state: State = FirstTurn(CLOVER_KING)
-        state = state.draw(CLOVER_NINE)
-
-        // when
-        state = state.draw(CLOVER_THREE)
-
-        // then
-        assertThat(state).isInstanceOf(Bust::class.java)
-    }
-
-    @Test
-    fun `히트에서 스테이로 갈 수 있다`() {
-        // given
-        var state: State = FirstTurn(CLOVER_KING)
-        state = state.draw(CLOVER_NINE)
+        var state: State = FirstTurn().draw(CLOVER_KING).draw(CLOVER_NINE)
 
         // when
         state = state.draw(CLOVER_THREE)
