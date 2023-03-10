@@ -31,6 +31,15 @@ class PlayerTest {
     }
 
     @Test
+    fun `플레이어는 카드덱에서 카드 한 장을 뽑을 수 있다`() {
+        val cardDeck = CardDeck(Card(Rank.ACE, Suit.SPADE))
+        val player = Player("jason")
+        player.drawCard(cardDeck)
+        val expected = setOf(Card(Rank.ACE, Suit.SPADE))
+        assertThat(player.cards.cards).isEqualTo(expected)
+    }
+
+    @Test
     fun `카드의 합이 21이 넘지 않으면 카드를 뽑을 수 있는 상태이다`() {
         val player = Player("jason")
         player.cards.add(Card(Rank.KING, Suit.DIAMOND))
@@ -115,7 +124,7 @@ class PlayerTest {
         val dealer = Dealer()
         val player = Player("jason")
         dealer.drawFirst(cardDeck)
-        dealer.cards.add(cardDeck.drawCard())
+        dealer.drawCard(cardDeck)
         player.drawFirst(cardDeck)
         assertThat(player.getGameResult(dealer)).isEqualTo(Result.WIN)
     }

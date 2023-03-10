@@ -15,6 +15,7 @@ abstract class Participant(val name: Name) {
         cards.add(cardDeck.drawCard())
         cards.add(cardDeck.drawCard())
     }
+    fun drawCard(cardDeck: CardDeck) = cards.add(cardDeck.drawCard())
     fun getGameResult(other: Participant): Result {
         if (isBlackJack() && other.isBlackJack()) return Result.DRAW
         if (isBlackJack()) return Result.BLACKJACK

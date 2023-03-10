@@ -11,7 +11,7 @@ class CardGame(private val cardDeck: CardDeck, private val participants: Partici
 
     fun drawCard(participant: Participant, status: (Participant) -> Unit, needToDraw: (String) -> Boolean) {
         while (participant.isHit(needToDraw)) {
-            participant.cards.add(cardDeck.drawCard())
+            participant.drawCard(cardDeck)
             status(participant)
         }
     }
