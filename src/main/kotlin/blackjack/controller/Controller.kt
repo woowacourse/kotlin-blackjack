@@ -20,14 +20,14 @@ class Controller() {
     }
 
     private fun showInitialState(blackJackGame: BlackJackGame) {
-        OutputView.printDistributeScript(blackJackGame.participants.players)
+        OutputView.printDistributeScript(blackJackGame.participants.players.value)
         OutputView.printDealerInitialCard(blackJackGame.participants.dealer.cardBunch)
-        blackJackGame.participants.players.forEach { OutputView.printPlayerCards(it) }
+        blackJackGame.participants.players.value.forEach { OutputView.printPlayerCards(it) }
     }
 
     private fun progressDealerAddCard(blackJackGame: BlackJackGame) {
         OutputView.printDealerOverCondition(!blackJackGame.participants.dealer.isOverCondition())
-        blackJackGame.judgmentDealerAddCard()
+        blackJackGame.progressDealerAddCard()
     }
 
     private fun printTotalScore(blackJackGame: BlackJackGame) {

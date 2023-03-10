@@ -23,6 +23,10 @@ class Dealer(override val cardBunch: CardBunch) : Participant {
         cardBunch.addCard(card)
     }
 
+    fun progressAddCard(getCard: () -> Card) {
+        while (!isOverCondition()) addCard(getCard())
+    }
+
     companion object {
         private const val ADD_CARD_CONDITION = 16
     }

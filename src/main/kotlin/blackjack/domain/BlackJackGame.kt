@@ -3,10 +3,10 @@ package blackjack.domain
 import blackjack.domain.carddeck.CardDeck
 
 class BlackJackGame(names: List<String>, private val cardDeck: CardDeck) {
-    val participants: Participants = Participants(names, cardDeck::drawCard)
+    val participants: Participants = Participants(names, ParticipantGenerator(cardDeck::drawCard))
 
     fun progressPlayersAddCard(getDecision: (Player) -> Boolean, printPlayerCard: (Player) -> Unit) {
-        participants.players.forEach { progressEachPlayerAddCard(it, getDecision, printPlayerCard) }
+        participants.players.value.forEach { progressEachPlayerAddCard(it, getDecision, printPlayerCard) }
     }
 
     private fun progressEachPlayerAddCard(
@@ -40,7 +40,7 @@ class BlackJackGame(names: List<String>, private val cardDeck: CardDeck) {
         transferPlayerCard(player)
     }
 
-    fun judgmentDealerAddCard() {
-        while (!participants.dealer.isOverCondition()) participants.dealer.addCard(cardDeck.drawCard())
+    fun progressDealerAddCard() {
+        participants.dealer.progressAddCard(cardDeck::drawCard)
     }
 }

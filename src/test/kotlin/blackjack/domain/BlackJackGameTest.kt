@@ -69,7 +69,7 @@ class BlackJackGameTest {
                 ),
             ),
         )
-        blackJackGame.judgmentDealerAddCard()
+        blackJackGame.progressDealerAddCard()
         assertThat(blackJackGame.participants.dealer.cardBunch.cards).isEqualTo(
             listOf(
                 Card(HEART, CardNumber.TWO),
@@ -101,7 +101,7 @@ class BlackJackGameTest {
                 ),
             ),
         )
-        blackJackGame.judgmentDealerAddCard()
+        blackJackGame.progressDealerAddCard()
         assertThat(blackJackGame.participants.dealer.cardBunch.cards).isEqualTo(
             listOf(
                 Card(HEART, CardNumber.JACK),
