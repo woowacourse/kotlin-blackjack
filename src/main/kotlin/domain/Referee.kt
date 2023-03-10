@@ -18,8 +18,8 @@ class Referee(private val dealerScore: Score) {
     }
 
     private fun isDraw(score: Score) =
-        ((dealerScore.isBurst()) and (score.isBurst())) or (dealerScore.value == score.value)
+        ((dealerScore.isBust()) and (score.isBust())) or (dealerScore.value == score.value)
 
     private fun isLose(score: Score) =
-        ((dealerScore.isOver(score)) and (!dealerScore.isBurst())) or (score.isBurst())
+        ((dealerScore.isOver(score)) and (!dealerScore.isBust())) or (score.isBust())
 }

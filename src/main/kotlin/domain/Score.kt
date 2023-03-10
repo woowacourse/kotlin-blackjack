@@ -2,7 +2,7 @@ package domain
 
 @JvmInline
 value class Score private constructor(val value: Int) {
-    fun isBurst(): Boolean = (value > BLACKJACK_CONDITION)
+    fun isBust(): Boolean = (value > BLACKJACK_CONDITION)
 
     fun isOver(score: Score) = (value > score.value)
 

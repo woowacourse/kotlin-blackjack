@@ -10,7 +10,7 @@ class ScoreTest {
         val score = Score.valueOf(22)
 
         // when
-        val actual = score.isBurst()
+        val actual = score.isBust()
 
         // then
         assertThat(actual).isEqualTo(true)
