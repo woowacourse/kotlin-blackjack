@@ -1,28 +1,29 @@
 package domain
 
+import domain.card.Card
 import domain.deck.Deck
 import domain.gamer.Dealer
 import domain.gamer.Player
 import domain.gamer.Players
 import domain.gamer.cards.Cards
+import domain.judge.PlayerResultInfo
 import domain.judge.Result
 
-class BlackjackGame(private val deck: Deck) {
-    val dealer = Dealer(Cards(listOf()))
-    var players = Players(listOf())
-        private set
-
+class BlackjackGame(
+    private val deck: Deck,
+    val dealer: Dealer = Dealer(Cards(emptyList())),
+    private var _players: Players = Players(emptyList())
+) {
+    val players: Players get() = _players
     fun startGame(names: List<String>) {
         initPlayers(names)
-        deck.makeRandomDeck()
+        deck.makeRandomDeck(Card.getAllCard().shuffled())
         dealer.makeStartDeck(deck)
-        players.getPlayers().forEach {
-            it.makeStartDeck(deck)
-        }
+        _players.makeStartDecks(deck)
     }
 
     private fun initPlayers(names: List<String>) {
-        players = Players(names.map { Player(it, Cards(listOf())) })
+        _players = Players(names.map { Player(it, Cards(listOf())) })
     }
 
     fun pickPlayerCard(player: Player) {
@@ -33,18 +34,18 @@ class BlackjackGame(private val deck: Deck) {
         dealer.pickCard(deck.giveCard())
     }
 
-    fun checkBurst(player: Player) = player.cards.checkBurst()
+    fun checkBurst(player: Player) = player.cards.isBurst()
 
     fun checkDealerAvailableForPick(): Boolean {
-        return dealer.checkAvailableForPick()
+        return dealer.isAvailableForPick()
     }
 
-    fun getPlayerWinningResult() = mutableMapOf<String, Result>().apply {
-        players.getPlayers().forEach {
-            this[it.name] = it.judgeResult(dealer.cards)
-        }
-    }
+    fun getPlayersWinningResult() = _players.getPlayersWinningResult(dealer)
 
     fun judgeDealerResult(playersResult: Map<String, Result>): List<Result> =
         playersResult.map { it.value.reverseResult() }
+
+    fun getPlayerRewards(playersResult: Map<String, PlayerResultInfo>) = _players.getPlayersReward(playersResult)
+
+    fun calculateDealerRewards(playerResults: List<Int>): Int = playerResults.sum() * -1
 }
