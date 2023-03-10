@@ -3,7 +3,7 @@ package blackjack.domain.state
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
 
-class BlackjackState(cards: Cards) : FinishedState(cards) {
+class BlackjackState(cards: Cards, override val earningRate: Double = 1.5) : FinishedState(cards) {
     constructor(vararg cards: Card) : this(Cards(*cards))
 
     init {

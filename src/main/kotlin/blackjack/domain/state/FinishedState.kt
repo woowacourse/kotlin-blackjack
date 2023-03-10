@@ -2,6 +2,7 @@ package blackjack.domain.state
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
+import blackjack.domain.money.Money
 
 abstract class FinishedState(private val cards: Cards) : CardState {
     init {
@@ -15,6 +16,10 @@ abstract class FinishedState(private val cards: Cards) : CardState {
     override fun stay(): CardState {
         throw IllegalStateException("게임이 종료되어 스테이할 수 없습니다.")
     }
+
+    override fun profit(money: Money): Money = money * earningRate
+
+    abstract val earningRate: Double
 
     companion object {
         private const val MINIMUM_CARDS_SIZE = 2

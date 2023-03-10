@@ -4,6 +4,7 @@ import blackjack.domain.SPADE_ACE
 import blackjack.domain.SPADE_JACK
 import blackjack.domain.SPADE_KING
 import blackjack.domain.SPADE_TWO
+import blackjack.domain.money.BetMoney
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -38,5 +39,13 @@ class HitStateTest {
 
         // then
         assertThat(expected).isInstanceOf(HitState::class.java)
+    }
+
+    @Test
+    fun `Hit 상태이면 수익을 계산할 수 없다`() {
+        val cardState = HitState(SPADE_KING, SPADE_JACK)
+        assertThrows<IllegalStateException> {
+            cardState.profit(BetMoney(1000))
+        }
     }
 }
