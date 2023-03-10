@@ -8,13 +8,15 @@ import blackjack.domain.participant.Participant
 import blackjack.domain.participant.Participants
 
 class BlackJack(private val deck: CardDeck, private val participants: Participants) {
-    fun drawAll() {
+    fun start(onFirstDraw: (List<ParticipantCards>) -> Unit, onDraw: (Participant) -> Unit) {
         participants.drawAll(deck)
+        participants.drawAll(deck)
+        onFirstDraw(participants.getFirstOpenCards())
+
+        play(onDraw)
     }
 
-    fun getFirstOpenCards(): List<ParticipantCards> = participants.getFirstOpenCards()
-
-    fun play(onDraw: (Participant) -> Unit) {
+    private fun play(onDraw: (Participant) -> Unit) {
         participants.takeTurns(deck, onDraw)
     }
 

@@ -6,7 +6,7 @@ import blackjack.domain.data.ParticipantScore
 import blackjack.domain.participant.Participant
 
 interface OutputView {
-    fun printFirstOpenCards(participantsCards: List<ParticipantCards>)
+    fun printFirstDraw(participantsCards: List<ParticipantCards>)
     fun printDraw(participant: Participant)
     fun printResult(
         cards: List<ParticipantCards>,

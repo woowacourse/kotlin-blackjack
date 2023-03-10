@@ -16,9 +16,7 @@ class BlackJackController(
 ) {
     fun start(deck: CardDeck) {
         with(initBlackJack(deck)) {
-            setUpCard(this)
-            play(outputView::printDraw)
-
+            start(outputView::printFirstDraw, outputView::printDraw)
             outputView.printResult(getCards(), getTotalScores(), getParticipantResults())
         }
     }
@@ -29,15 +27,5 @@ class BlackJackController(
         val players = inputView.inputNames().map { Player(it, inputView::inputDrawCommand) }
         val bettingPlayers = players.map { BettingPlayer(it, inputView.inputBettingMoney(it.name)) }
         return BettingPlayers(bettingPlayers)
-    }
-
-    private fun setUpCard(blackJack: BlackJack) {
-        drawInitialCards(blackJack)
-        outputView.printFirstOpenCards(blackJack.getFirstOpenCards())
-    }
-
-    private fun drawInitialCards(blackJack: BlackJack) {
-        blackJack.drawAll()
-        blackJack.drawAll()
     }
 }

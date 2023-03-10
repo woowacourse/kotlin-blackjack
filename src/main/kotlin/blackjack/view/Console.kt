@@ -41,7 +41,7 @@ class Console : InputView, OutputView {
         inputDrawCommand(name)
     }
 
-    override fun printFirstOpenCards(participantsCards: List<ParticipantCards>) {
+    override fun printFirstDraw(participantsCards: List<ParticipantCards>) {
         println(
             """
             |

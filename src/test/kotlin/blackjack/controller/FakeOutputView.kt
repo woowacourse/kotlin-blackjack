@@ -14,7 +14,7 @@ class FakeOutputView : OutputView {
     lateinit var totalScores: List<ParticipantScore>
     lateinit var results: ParticipantResults
 
-    override fun printFirstOpenCards(participantsCards: List<ParticipantCards>) {
+    override fun printFirstDraw(participantsCards: List<ParticipantCards>) {
         firstOpenCards = participantsCards
     }
 
