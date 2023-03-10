@@ -1,6 +1,8 @@
 package blackjack.domain.dealer
 
 import blackjack.domain.card.Cards
+import blackjack.domain.gameResult.PlayerGameResults
+import blackjack.domain.gameResult.ProfitMoney
 import blackjack.domain.player.DrawState
 
 class Dealer(
@@ -15,7 +17,7 @@ class Dealer(
         return DrawState.POSSIBLE
     }
 
-    fun drawCard(checkDrawResult: (DrawResult) -> Unit) {
+    fun drawCard(checkDrawResult: (DrawResult) -> Unit = {}) {
         if (isPossibleToDrawAdditionalCard() == DrawState.POSSIBLE) {
             cards.draw()
 
@@ -23,6 +25,14 @@ class Dealer(
         }
 
         return checkDrawResult(DrawResult.Failure)
+    }
+
+    //todo test
+    fun judgeDealerGameResults(
+        playersTotalProfitMoney: ProfitMoney
+    ): ProfitMoney {
+
+        return !playersTotalProfitMoney
     }
 
     companion object {

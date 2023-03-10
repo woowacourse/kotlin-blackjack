@@ -3,41 +3,45 @@ package blackjack.domain
 import blackjack.domain.dealer.Dealer
 import blackjack.domain.dealer.DrawResult
 import blackjack.domain.gameResult.TotalGameResult
+import blackjack.domain.player.BlackJackPlayers
 import blackjack.domain.player.Player
 
 class BlackJackGame(
     val dealer: Dealer = Dealer(),
-    private val blackJackReferee: BlackJackReferee = BlackJackReferee(),
 ) {
 
-    //todo: players를 컬렉션으로 만들어야할까?
-    lateinit var players: List<Player>
+    lateinit var blackJackPlayers: BlackJackPlayers
         private set
 
     fun initPlayers(
         playerDataSources: List<Pair<String, Int>>,
     ) {
-        players = playerDataSources.map { playerData ->
-            Player(playerData.first, playerData.second)
+        val players = playerDataSources.map { (playerName, battingMoney) ->
+            Player(playerName, battingMoney)
         }
+
+        blackJackPlayers = BlackJackPlayers(players)
     }
 
     fun drawAdditionalCardsForPlayers(
         isPlayerWantedAdditionalCards: (player: Player) -> Boolean,
         checkCurrentCards: (player: Player) -> Unit = { },
     ) {
-        players.forEach { player ->
-            player.drawCardsRepeatedly(
-                isPlayerWantedAdditionalCards = { isPlayerWantedAdditionalCards(player) },
-                checkCurrentCards = { checkCurrentCards(player) }
-            )
-        }
+        blackJackPlayers.drawAdditionalCardsForPlayers(
+            isPlayerWantedAdditionalCards = isPlayerWantedAdditionalCards,
+            checkCurrentCards = checkCurrentCards
+        )
     }
 
-    fun drawAdditionalCardsForDealer(checkDrawResult: (DrawResult) -> Unit){
+    fun drawAdditionalCardsForDealer(checkDrawResult: (DrawResult) -> Unit) {
         dealer.drawCard(checkDrawResult)
     }
 
-    fun judgeGameResults(): TotalGameResult =
-        blackJackReferee.judgeTotalGameResults(players, dealer.cards.state)
+    fun judgeResult(): TotalGameResult {
+        val playersGameResults = blackJackPlayers.judgePlayerGameResults(dealer.cards.state)
+        val dealerGameResult = dealer.judgeDealerGameResults(playersGameResults.getPlayersTotalProfit())
+
+        return TotalGameResult(playersGameResults, dealerGameResult)
+    }
+
 }

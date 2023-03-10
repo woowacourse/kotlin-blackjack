@@ -6,6 +6,7 @@ import blackjack.domain.dealer.Dealer
 import blackjack.domain.dealer.DrawResult
 import blackjack.domain.gameResult.GameResult
 import blackjack.domain.gameResult.TotalGameResult
+import blackjack.domain.player.BlackJackPlayers
 import blackjack.domain.player.Player
 
 object OutputView {
@@ -58,11 +59,11 @@ object OutputView {
         GameResult.LOSE -> LOSE_DESCRIPTION
     }
 
-    fun printCardDividingMessage(dealer: Dealer, players: List<Player>) {
+    fun printCardDividingMessage(dealer: Dealer, blackJackPlayers: BlackJackPlayers) {
         println()
-        println(CARD_DIVIDING_MSG.format(players.joinToString(SEPARATOR) { player -> player.name.value }))
+        println(CARD_DIVIDING_MSG.format(blackJackPlayers.players.joinToString(SEPARATOR) { player -> player.name.value }))
         println(SHOW_DEALER_CARD.format(dealer.cards.cards.first().toDescription()))
-        players.forEach { player -> printPlayerCurrentCards(player) }
+        blackJackPlayers.players.forEach { player -> printPlayerCurrentCards(player) }
         println()
     }
 
@@ -78,13 +79,13 @@ object OutputView {
         }
     }
 
-    fun printFinalCards(dealer: Dealer, players: List<Player>) {
+    fun printFinalCards(dealer: Dealer, blackJackPlayers: BlackJackPlayers) {
         println()
         println(
             SHOW_DEALER_CARD.format(dealer.cards.cards.joinToString(SEPARATOR) { card -> card.toDescription() }) +
                 FINAL_SCORE.format(dealer.cards.getTotalCardsScore())
         )
-        players.forEach { player ->
+        blackJackPlayers.players.forEach { player ->
             print(player.toCardsDescription())
             println(FINAL_SCORE.format(player.cards.getTotalCardsScore()))
         }

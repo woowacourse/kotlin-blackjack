@@ -20,7 +20,7 @@ class BlackJackGameController(
 
     private fun initPlayers() {
         blackJackGame.initPlayers(InputView.requestPlayersInput())
-        OutputView.printCardDividingMessage(blackJackGame.dealer, blackJackGame.players)
+        OutputView.printCardDividingMessage(blackJackGame.dealer, blackJackGame.blackJackPlayers)
     }
 
     private fun drawAdditionalCards() {
@@ -32,7 +32,7 @@ class BlackJackGameController(
     }
 
     private fun checkResult() {
-        OutputView.printFinalCards(blackJackGame.dealer, blackJackGame.players)
-        OutputView.printGameResults(blackJackGame.judgeGameResults())
+        OutputView.printFinalCards(blackJackGame.dealer, blackJackGame.blackJackPlayers)
+        OutputView.printGameResults(blackJackGame.judgeResult())
     }
 }
