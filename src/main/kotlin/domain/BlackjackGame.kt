@@ -7,11 +7,12 @@ import domain.gamer.Players
 import domain.gamer.cards.Cards
 import domain.judge.Result
 
-class BlackjackGame(private val deck: Deck) {
-    val dealer = Dealer(Cards(listOf()))
-    var players = Players(listOf())
-        private set
-
+class BlackjackGame(
+    private val deck: Deck,
+    val dealer: Dealer = Dealer(Cards(emptyList())),
+    private var _players: Players = Players(emptyList())
+) {
+    val players: Players get() = _players
     fun startGame(names: List<String>) {
         initPlayers(names)
         deck.makeRandomDeck()
@@ -22,7 +23,7 @@ class BlackjackGame(private val deck: Deck) {
     }
 
     private fun initPlayers(names: List<String>) {
-        players = Players(names.map { Player(it, Cards(listOf())) })
+        _players = Players(names.map { Player(it, Cards(listOf())) })
     }
 
     fun pickPlayerCard(player: Player) {
