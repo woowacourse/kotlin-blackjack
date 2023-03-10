@@ -37,6 +37,24 @@ class MoneyTest {
     @Test
     fun `게임에서 블랙잭일 경우 10000원을 베팅하면 25000원의 금액 반환`() {
         val bettingMoney = Money(10000)
-        assertThat(bettingMoney.getProfits(Outcome.BLACKJACK).value).isEqualTo(25000)
+        assertThat(bettingMoney.getProfits(Outcome.BLACKJACK)).isEqualTo(25000)
+    }
+
+    @Test
+    fun `게임에서 이겼을 경우 10000원을 베팅하면 20000원의 금액 반환`() {
+        val bettingMoney = Money(10000)
+        assertThat(bettingMoney.getProfits(Outcome.WIN)).isEqualTo(20000)
+    }
+
+    @Test
+    fun `게임에서 비겼을 경우 10000원을 베팅하면 10000원의 금액 반환`() {
+        val bettingMoney = Money(10000)
+        assertThat(bettingMoney.getProfits(Outcome.DRAW)).isEqualTo(10000)
+    }
+
+    @Test
+    fun `게임에서 졌을 경우 10000원을 베팅하면 0원의 금액 반환`() {
+        val bettingMoney = Money(10000)
+        assertThat(bettingMoney.getProfits(Outcome.LOSE)).isEqualTo(0)
     }
 }

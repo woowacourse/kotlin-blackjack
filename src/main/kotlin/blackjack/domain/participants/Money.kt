@@ -9,8 +9,8 @@ class Money(val value: Int) {
         require(value % MONEY_LIMIT_VALUE == 0) { ERROR_MONEY_VALUE }
     }
 
-    fun getProfits(outcome: Outcome): Money {
-        return Money(value + (value * outcome.ratio).toInt())
+    fun getProfits(outcome: Outcome): Int {
+        return value + (value * outcome.ratio).toInt()
     }
     // operator fun plus(other: Money): Money = Money(value + other.value)
 
