@@ -30,6 +30,10 @@ object OutputView {
         println("${player.name}카드 : $bunchString")
     }
 
+    fun printAllPlayerCard(players: List<Player>) {
+        players.forEach { printPlayerCards(it) }
+    }
+
     fun printDistributeScript(players: List<Player>) {
         println(DISTRIBUTE_SCRIPT.format(players.joinToString(separator = ", ") { it.name }))
     }
@@ -43,7 +47,7 @@ object OutputView {
 
     fun printTotalScore(participants: Participants) {
         println("딜러 카드 : ${makeBunchString(participants.dealer.cardBunch)} - 결과: ${participants.dealer.cardBunch.getTotalScore()}")
-        participants.players.forEach { player ->
+        participants.players.value.forEach { player ->
             val bunchString = makeBunchString(player.cardBunch)
             println("${player.name}카드 : $bunchString - 결과: ${player.cardBunch.getTotalScore()}")
         }
@@ -58,7 +62,7 @@ object OutputView {
 
     private fun printDealerResult(participants: Participants) {
         val result = mutableListOf(0, 0, 0)
-        participants.players.forEach { player ->
+        participants.players.value.forEach { player ->
             result[decideDealerResult(participants.getConsequence(player))]++
         }
         println("딜러: ${result[DEALER_WIN]}승 ${result[DEALER_LOSE]}패 ${result[DRAW]}무")
@@ -73,7 +77,7 @@ object OutputView {
 
     private fun getResultString(participants: Participants) {
         var resultString = ""
-        participants.players.forEach { player ->
+        participants.players.value.forEach { player ->
             resultString += decidePlayerResult(participants.getConsequence(player), player)
         }
         println(resultString)

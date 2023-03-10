@@ -5,9 +5,9 @@ class Players(val value: List<Player>) {
 
     fun progressPlayersAddCard(
         getDecision: (Player) -> Boolean,
-        printPlayerCard: (Player) -> Unit,
+        transferPlayerCard: (Player) -> Unit,
         getCard: () -> Card,
     ) {
-        value.forEach { it.progressAddCard(getDecision, printPlayerCard, getCard) }
+        value.forEach { it.progressAddCard(getDecision, transferPlayerCard, getCard) }
     }
 }
