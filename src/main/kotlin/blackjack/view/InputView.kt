@@ -13,14 +13,18 @@ object InputView {
     private const val REQUEST_PLAYERS_BATTING_MONEY = "%s의 배팅 금액은?"
     private const val NUMERIC_ERROR_MSG = "[ERROR] 숫자가 아닌 입력은 허용하지 않습니다.\n다시 입력해주세요."
 
-    // TODO: 매번 이런 함수를 만들어야할까?
+    private fun <T> requestSpecificInput(errorMessage: String, toSpecificOrNull: (String) -> T?): T {
+
+        while (true) {
+            toSpecificOrNull(readln())?.let { specificInput -> return specificInput }
+            println(errorMessage)
+        }
+    }
+
     private fun requestNumericInput(message: String): Int {
         println(message)
 
-        while (true) {
-            readln().toIntOrNull()?.let { number -> return number }
-            println(NUMERIC_ERROR_MSG)
-        }
+        return requestSpecificInput(NUMERIC_ERROR_MSG, String::toIntOrNull)
     }
 
     fun requestPlayersName(): List<String> {
@@ -38,21 +42,15 @@ object InputView {
         return battingMoneys
     }
 
-    // TODO: 아 is 키워드 사용해보면 어떨까?
     fun requestAdditionalDraw(player: Player): Boolean {
         println(REQUEST_ADDITIONAL_CARDS_MSG.format(player.name.value))
 
-        while (true) {
-            readln().toBooleanOrNull()?.let { additionalDrawFlag -> return additionalDrawFlag }
-            println(ADDITIONAL_DRAW_ERROR_MSG)
-        }
+        return requestSpecificInput(ADDITIONAL_DRAW_ERROR_MSG, ::toBooleanOrNull)
     }
 
-    private fun String.toBooleanOrNull(): Boolean? = if (this == YES) {
-        true
-    } else if (this == NO) {
-        false
-    } else {
-        null
+    private fun toBooleanOrNull(input: String): Boolean? = when (input) {
+        YES -> true
+        NO -> false
+        else -> null
     }
 }
