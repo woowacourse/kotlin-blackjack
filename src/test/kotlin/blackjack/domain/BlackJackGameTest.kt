@@ -31,14 +31,14 @@ class BlackJackGameTest {
             ),
         )
         blackJackGame.progressPlayersAddCard({ stubInput.stubGetDecision() }, {})
-        assertThat(blackJackGame.participants.players[0].cardBunch.cards).isEqualTo(
+        assertThat(blackJackGame.participants.players.value[0].cardBunch.cards).isEqualTo(
             listOf(
                 Card(HEART, CardNumber.TWO),
                 Card(HEART, CardNumber.FOUR),
                 Card(HEART, CardNumber.FIVE),
             ),
         )
-        assertThat(blackJackGame.participants.players[1].cardBunch.cards).isEqualTo(
+        assertThat(blackJackGame.participants.players.value[1].cardBunch.cards).isEqualTo(
             listOf(
                 Card(HEART, CardNumber.FIVE),
                 Card(HEART, CardNumber.SIX),
@@ -69,7 +69,7 @@ class BlackJackGameTest {
                 ),
             ),
         )
-        blackJackGame.progressDealerAddCard()
+        blackJackGame.progressDealerAddCard {}
         assertThat(blackJackGame.participants.dealer.cardBunch.cards).isEqualTo(
             listOf(
                 Card(HEART, CardNumber.TWO),
@@ -101,7 +101,7 @@ class BlackJackGameTest {
                 ),
             ),
         )
-        blackJackGame.progressDealerAddCard()
+        blackJackGame.progressDealerAddCard {}
         assertThat(blackJackGame.participants.dealer.cardBunch.cards).isEqualTo(
             listOf(
                 Card(HEART, CardNumber.JACK),
@@ -129,10 +129,10 @@ class BlackJackGameTest {
                 ),
             ),
         )
-        assertThat(blackJackGame.participants.getConsequence(blackJackGame.participants.players[0])).isEqualTo(
+        assertThat(blackJackGame.participants.getConsequence(blackJackGame.participants.players.value[0])).isEqualTo(
             Consequence.LOSE,
         )
-        assertThat(blackJackGame.participants.getConsequence(blackJackGame.participants.players[1])).isEqualTo(
+        assertThat(blackJackGame.participants.getConsequence(blackJackGame.participants.players.value[1])).isEqualTo(
             Consequence.WIN,
         )
     }
