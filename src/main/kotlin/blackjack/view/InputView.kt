@@ -13,10 +13,10 @@ object InputView {
     private const val REQUEST_PLAYERS_BATTING_MONEY = "%s의 배팅 금액은?"
     private const val NUMERIC_ERROR_MSG = "[ERROR] 숫자가 아닌 입력은 허용하지 않습니다.\n다시 입력해주세요."
 
-    private fun <T> requestSpecificInput(errorMessage: String, toSpecificOrNull: (String) -> T?): T {
+    private fun <T> requestSpecificInput(errorMessage: String, toSomeTypeOrNull: (String) -> T?): T {
 
         while (true) {
-            toSpecificOrNull(readln())?.let { specificInput -> return specificInput }
+            toSomeTypeOrNull(readln())?.let { someType -> return someType }
             println(errorMessage)
         }
     }

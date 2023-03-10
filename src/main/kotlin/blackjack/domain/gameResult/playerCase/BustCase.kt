@@ -1,4 +1,4 @@
-package blackjack.domain.gameResult.gamecase
+package blackjack.domain.gameResult.playerCase
 
 import blackjack.domain.card.CardsState
 import blackjack.domain.gameResult.GameResult
@@ -19,9 +19,9 @@ enum class BustCase(
 
     companion object {
 
-        fun valueOf(cardsState: CardsState): BustCase? {
+        fun valueOf(dealerCardsState: CardsState): BustCase? {
             return values().find { bustCase ->
-                bustCase.condition(cardsState)
+                bustCase.condition(dealerCardsState)
             }
         }
     }

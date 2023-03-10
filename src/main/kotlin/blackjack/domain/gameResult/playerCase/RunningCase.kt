@@ -1,4 +1,4 @@
-package blackjack.domain.gameResult.gamecase
+package blackjack.domain.gameResult.playerCase
 
 import blackjack.domain.card.CardsState
 import blackjack.domain.gameResult.GameResult

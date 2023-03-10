@@ -29,7 +29,7 @@ data class Player(
     }
 
     fun checkIsDrawnNothing(checkCurrentCards: (player: Player) -> Unit = { }) {
-        if (cards.isDrawnNothing()) {
+        if (cards.isDrawnNothing) {
             checkCurrentCards(this)
         }
     }

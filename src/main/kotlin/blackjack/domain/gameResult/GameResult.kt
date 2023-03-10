@@ -1,9 +1,9 @@
 package blackjack.domain.gameResult
 
 import blackjack.domain.card.CardsState
-import blackjack.domain.gameResult.gamecase.BlackJackCase
-import blackjack.domain.gameResult.gamecase.BustCase
-import blackjack.domain.gameResult.gamecase.RunningCase
+import blackjack.domain.gameResult.playerCase.BlackJackCase
+import blackjack.domain.gameResult.playerCase.BustCase
+import blackjack.domain.gameResult.playerCase.RunningCase
 
 enum class GameResult(val profitRate: Double) {
 

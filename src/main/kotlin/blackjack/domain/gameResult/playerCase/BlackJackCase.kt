@@ -1,10 +1,10 @@
-package blackjack.domain.gameResult.gamecase
+package blackjack.domain.gameResult.playerCase
 
 import blackjack.domain.card.CardsState
 import blackjack.domain.gameResult.GameResult
 
 enum class BlackJackCase(
-    val condition: (dealerCardsStateState: CardsState) -> Boolean,
+    val condition: (dealerCardsState: CardsState) -> Boolean,
     val gameResult: GameResult,
 ) {
 
@@ -14,7 +14,6 @@ enum class BlackJackCase(
         },
         gameResult = GameResult.BLACKJACK_WIN
     ),
-
     DRAW(
         condition = { dealerCardsState ->
             dealerCardsState == CardsState.BlackJack
@@ -24,9 +23,9 @@ enum class BlackJackCase(
 
     companion object {
 
-        fun valueOf(cardsState: CardsState): BlackJackCase? {
+        fun valueOf(dealerCardsState: CardsState): BlackJackCase? {
             return values().find { blackJackCase ->
-                blackJackCase.condition(cardsState)
+                blackJackCase.condition(dealerCardsState)
             }
         }
     }
