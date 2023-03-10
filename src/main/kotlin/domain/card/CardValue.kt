@@ -17,5 +17,6 @@ enum class CardValue(val title: String, val value: Int) {
 
     companion object {
         const val ACE_ELEVEN_VALUE = 11
+        const val ACE_VALUE_GAP = 10
     }
 }

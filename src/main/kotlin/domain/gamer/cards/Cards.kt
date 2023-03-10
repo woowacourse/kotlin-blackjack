@@ -17,7 +17,7 @@ class Cards(private var cards: List<Card>) {
     fun calculateCardSum(): Int {
         return cards
             .sumOf { it.cardValue.value } +
-            if (isAceValueToEleven()) CardValue.ACE_ELEVEN_VALUE - CardValue.ACE.value else 0
+            if (isAceValueToEleven()) CardValue.ACE_VALUE_GAP else 0
     }
 
     private fun isAceValueToEleven(): Boolean {
