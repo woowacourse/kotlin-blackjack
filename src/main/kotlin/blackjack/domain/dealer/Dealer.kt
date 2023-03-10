@@ -26,7 +26,6 @@ class Dealer(
         return checkDrawResult(DrawResult.Failure)
     }
 
-    // todo test
     fun judgeDealerGameResults(
         playersTotalProfitMoney: ProfitMoney
     ): ProfitMoney {
