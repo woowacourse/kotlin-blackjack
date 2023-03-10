@@ -1,6 +1,6 @@
-package domain.money
+package domain.judge
 
-import domain.judge.Result
+import domain.money.Money
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -29,4 +29,3 @@ class PlayerResultInfoTest {
         assertThat(playerResultInfo.calculateRevenue()).isEqualTo(-50)
     }
 }
-

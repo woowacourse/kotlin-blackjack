@@ -97,6 +97,6 @@ class PlayerTest {
 
         )
         val result = player.judgeResult(dealerCards)
-        assertThat(result).isEqualTo(Result.WIN)
+        assertThat(result).isEqualTo(Result.BLACKJACK_WIN)
     }
 }
