@@ -6,7 +6,7 @@ import blackjack.domain.card.RandomCardsGenerator
 
 class BlackjackManager(
     cardsGenerator: CardsGenerator = RandomCardsGenerator(),
-    getPlayerNames: () -> List<String>
+    playerNames: List<String>
 ) {
 
     private val cardDeck = CardDeck(cardsGenerator)
@@ -15,7 +15,7 @@ class BlackjackManager(
 
     init {
         participants = Participants(
-            getPlayerNames().map {
+            playerNames.map {
                 Participant(it)
             }
         )
