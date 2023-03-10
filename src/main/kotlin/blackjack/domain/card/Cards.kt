@@ -8,7 +8,7 @@ class Cards(
     val cards: List<Card>
         get() = _cards.toList()
 
-    var state: CardsState = CardsState.Running
+    var state: CardsState = CardsState.Running(getTotalCardsScore())
         private set
 
     init {
@@ -22,27 +22,28 @@ class Cards(
     fun draw(card: Card = Card.draw()) {
         _cards.add(card)
 
-        initCardsState()
+        updateCardsState()
     }
 
-    private fun initCardsState() {
+    private fun updateCardsState() {
         if (getMinimumCardsScore() > BLACKJACK_SCORE) {
-            state = CardsState.Burst
+            state = CardsState.Bust
+            return
         }
+        state = CardsState.Running(getTotalCardsScore())
     }
 
     fun getMinimumCardsScore(): Int = cards.sumOf { card -> card.number.value }
 
-
-    //TODO: Score로 wrapping하자
     fun getTotalCardsScore(): Int {
-        val totalScore = cards
+        val minimumScore = cards
             .sumOf { card -> card.number.value }
 
         if (cards.any { card -> card.number == CardNumber.A }) {
-            return CardNumber.decideAceValue(totalScore)
+            return CardNumber.decideAceValue(minimumScore)
         }
-        return totalScore
+
+        return minimumScore
     }
 
     fun checkCardsState(cardsState: CardsState): Boolean = state == cardsState

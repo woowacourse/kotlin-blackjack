@@ -1,7 +1,9 @@
 package blackjack.domain.gameResult
 
-import blackjack.domain.card.Cards
 import blackjack.domain.card.CardsState
+import blackjack.domain.gameResult.gamecase.BlackJackCase
+import blackjack.domain.gameResult.gamecase.BustCase
+import blackjack.domain.gameResult.gamecase.RunningCase
 
 enum class GameResult(val profitRate: Double) {
 
@@ -19,10 +21,13 @@ enum class GameResult(val profitRate: Double) {
 
     companion object {
 
-        fun valueOf(playerCards: Cards, dealerCards: Cards): GameResult = when (playerCards.state) {
-            is CardsState.BlackJack -> CardsState.BlackJack.decideGameResult(dealerCards.state)
-            is CardsState.Burst -> CardsState.Burst.decideGameResult(dealerCards.state)
-            is CardsState.Running -> CardsState.Running.decideGameResult(playerCards.getTotalCardsScore(), dealerCards)
-        }
+        private const val EXCEPTION_CASE = "처리하지 못한 케이스입니다"
+        
+        fun valueOf(playerCardsState: CardsState, dealerCardsState: CardsState): GameResult = when (playerCardsState) {
+            is CardsState.BlackJack -> BlackJackCase.valueOf(dealerCardsState)?.gameResult
+            is CardsState.Bust -> BustCase.valueOf(dealerCardsState)?.gameResult
+            is CardsState.Running -> RunningCase.valueOf(playerCardsState.score, dealerCardsState)?.gameResult
+        } ?: throw java.lang.IllegalStateException(EXCEPTION_CASE)
     }
+    
 }

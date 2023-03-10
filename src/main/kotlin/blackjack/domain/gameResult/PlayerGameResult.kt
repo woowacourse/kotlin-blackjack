@@ -14,7 +14,7 @@ data class PlayerGameResult(
             playerName = player.name.value,
             profitMoney = ProfitMoney.of(
                 player.battingMoney,
-                GameResult.valueOf(player.cards, dealer.cards)
+                GameResult.valueOf(player.cards.state, dealer.cards.state)
             )
         )
     }

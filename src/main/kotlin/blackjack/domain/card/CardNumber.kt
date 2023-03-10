@@ -21,13 +21,12 @@ enum class CardNumber(val value: Int) {
 
         private const val PLUS_SCORE_FOR_ACE = 10
 
-        //TODO: 21이라는 상수를 왜 여기저기서 사용하게 될까?
-        fun decideAceValue(currentSum: Int): Int {
-            if (currentSum + PLUS_SCORE_FOR_ACE <= 21) {
-                return currentSum + PLUS_SCORE_FOR_ACE
+        fun decideAceValue(score: Int): Int {
+            if (score + PLUS_SCORE_FOR_ACE <= 21) {
+                return score + PLUS_SCORE_FOR_ACE
             }
 
-            return currentSum
+            return score
         }
     }
 }

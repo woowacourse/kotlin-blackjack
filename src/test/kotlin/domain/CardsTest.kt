@@ -85,11 +85,11 @@ class CardsTest {
 
         cards.draw(Card(CardNumber.FOUR, Shape.SPADE))
 
-        assertThat(cards.checkCardsState(CardsState.Running))
+        assertThat(cards.state).isEqualTo(CardsState.Running(18))
     }
 
     @Test
-    fun `카드를 뽑았을때 가지고 있는 카드의 최소 합이 21보다 커지면 BURST 상태가 된다`() {
+    fun `카드를 뽑았을때 가지고 있는 카드의 최소 합이 21보다 커지면 Bust 상태가 된다`() {
         val cards = Cards(
             listOf(
                 Card(CardNumber.K, Shape.SPADE),
@@ -98,6 +98,6 @@ class CardsTest {
         )
         cards.draw(Card(CardNumber.FOUR, Shape.HEART))
 
-        assertThat(cards.checkCardsState(CardsState.Burst))
+        assertThat(cards.checkCardsState(CardsState.Bust))
     }
 }

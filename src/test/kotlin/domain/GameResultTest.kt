@@ -14,18 +14,18 @@ class GameResultTest {
     fun `player가 블랙잭이고 dealer가 블랙잭이 아닌 경우 player가 블랙잭 승리한다`() {
         assertThat(
             GameResult.valueOf(
-                playerCards = Cards(
+                playerCardsState = Cards(
                     listOf(
                         Card(CardNumber.A, Shape.CLOVER),
                         Card(CardNumber.TEN, Shape.HEART)
                     )
-                ),
-                dealerCards = Cards(
+                ).state,
+                dealerCardsState = Cards(
                     listOf(
                         Card(CardNumber.A, Shape.CLOVER),
                         Card(CardNumber.FOUR, Shape.CLOVER)
                     )
-                )
+                ).state
             )
         ).isEqualTo(GameResult.BLACKJACK_WIN)
     }
@@ -42,13 +42,13 @@ class GameResultTest {
 
         assertThat(
             GameResult.valueOf(
-                playerCards = Cards(
+                playerCardsState = Cards(
                     listOf(
                         Card(CardNumber.SEVEN, Shape.CLOVER),
                         Card(CardNumber.TEN, Shape.HEART)
                     )
-                ),
-                dealerCards = dealerCards
+                ).state,
+                dealerCardsState = dealerCards.state
             )
         ).isEqualTo(GameResult.WIN)
     }
@@ -57,18 +57,18 @@ class GameResultTest {
     fun `player의 점수가 21점을 초과하고 dealer의 점수가 21점을 넘지 않으면 player는 패배한다`() {
         assertThat(
             GameResult.valueOf(
-                playerCards = Cards(
+                playerCardsState = Cards(
                     listOf(
                         Card(CardNumber.A, Shape.CLOVER),
                         Card(CardNumber.A, Shape.HEART)
                     )
-                ),
-                dealerCards = Cards(
+                ).state,
+                dealerCardsState = Cards(
                     listOf(
                         Card(CardNumber.TEN, Shape.CLOVER),
                         Card(CardNumber.THREE, Shape.CLOVER)
                     )
-                )
+                ).state
             )
         ).isEqualTo(GameResult.LOSE)
     }
@@ -77,18 +77,18 @@ class GameResultTest {
     fun `player와 Dealer의 점수가 21점이 넘지 않고, 점수가 같은 경우 무승부이다`() {
         assertThat(
             GameResult.valueOf(
-                playerCards = Cards(
+                playerCardsState = Cards(
                     listOf(
                         Card(CardNumber.A, Shape.CLOVER),
                         Card(CardNumber.A, Shape.HEART)
                     )
-                ),
-                dealerCards = Cards(
+                ).state,
+                dealerCardsState = Cards(
                     listOf(
                         Card(CardNumber.A, Shape.CLOVER),
                         Card(CardNumber.A, Shape.CLOVER)
                     )
-                )
+                ).state
             )
         ).isEqualTo(GameResult.DRAW)
     }
@@ -97,18 +97,18 @@ class GameResultTest {
     fun `player와 Dealer의 점수가 21점이 넘지 않고, player가 dealer보다 점수가 큰 경우 player가 승리한다`() {
         assertThat(
             GameResult.valueOf(
-                playerCards = Cards(
+                playerCardsState = Cards(
                     listOf(
                         Card(CardNumber.FOUR, Shape.CLOVER),
                         Card(CardNumber.A, Shape.HEART)
                     )
-                ),
-                dealerCards = Cards(
+                ).state,
+                dealerCardsState = Cards(
                     listOf(
                         Card(CardNumber.THREE, Shape.CLOVER),
                         Card(CardNumber.TWO, Shape.CLOVER)
                     )
-                )
+                ).state
             )
         ).isEqualTo(GameResult.WIN)
     }
@@ -117,18 +117,18 @@ class GameResultTest {
     fun `dealer와 player의 점수가 21점이 넘지 않고, dealer의 점수가 더 높은 경우 dealer는 승리한다`() {
         assertThat(
             GameResult.valueOf(
-                playerCards = Cards(
+                playerCardsState = Cards(
                     listOf(
                         Card(CardNumber.TWO, Shape.CLOVER),
                         Card(CardNumber.A, Shape.HEART)
                     )
-                ),
-                dealerCards = Cards(
+                ).state,
+                dealerCardsState = Cards(
                     listOf(
                         Card(CardNumber.A, Shape.CLOVER),
                         Card(CardNumber.TEN, Shape.CLOVER)
                     )
-                )
+                ).state
             )
         ).isEqualTo(GameResult.LOSE)
     }
