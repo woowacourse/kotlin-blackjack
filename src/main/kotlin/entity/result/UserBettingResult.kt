@@ -21,8 +21,8 @@ class UserBettingResult {
         val dealerCardSum = dealer.cards.sumOfNumbers()
         val playerGameResult = playersGameResult.value[player]
         return when {
-            playerCardsSum == GameRule.WINNING_NUMBER && player.cards.value.size == 2 -> playerBettingMoney + playerBettingMoney * 1.5
-            playerGameResult == GameResultType.WIN || dealerCardSum > GameRule.WINNING_NUMBER -> 2 * playerBettingMoney
+            playerCardsSum == GameRule.WINNING_NUMBER && player.cards.value.size == 2 -> playerBettingMoney * 2.5
+            playerGameResult == GameResultType.WIN || dealerCardSum > GameRule.WINNING_NUMBER -> playerBettingMoney * 2
             playerCardsSum == GameRule.WINNING_NUMBER && dealerCardSum == GameRule.WINNING_NUMBER -> playerBettingMoney
             playerCardsSum > GameRule.WINNING_NUMBER || playerGameResult == GameResultType.LOSE -> -playerBettingMoney
             else -> INIT_PROFIT_MONEY
