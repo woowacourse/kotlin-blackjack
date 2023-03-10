@@ -28,7 +28,7 @@ class BlackJackControllerTest {
     )
     private val commands = mapOf(
         "부나" to false,
-        "글로" to false,
+        "글로" to true,
         "반달" to true,
         "제이슨" to false
     )
@@ -36,14 +36,14 @@ class BlackJackControllerTest {
         Card(CardNumber.JACK, Suit.SPADE), // dealer1
         Card(CardNumber.QUEEN, Suit.DIAMOND), // 부나1
         Card(CardNumber.KING, Suit.HEART), // 글로1
-        Card(CardNumber.ACE, Suit.CLOVER), // 반달1
+        Card(CardNumber.EIGHT, Suit.CLOVER), // 반달1
         Card(CardNumber.JACK, Suit.HEART), // 제이슨1
         Card(CardNumber.FIVE, Suit.SPADE), // dealer2
         Card(CardNumber.KING, Suit.DIAMOND), // 부나2
         Card(CardNumber.ACE, Suit.HEART), // 글로2
         Card(CardNumber.JACK, Suit.CLOVER), // 반달2
         Card(CardNumber.NINE, Suit.HEART), // 제이슨2
-        Card(CardNumber.QUEEN, Suit.CLOVER), // 반달3
+        Card(CardNumber.THREE, Suit.CLOVER), // 반달3
         Card(CardNumber.KING, Suit.CLOVER), // 반달4
         Card(CardNumber.FOUR, Suit.SPADE), // dealer3
     )
@@ -84,7 +84,7 @@ class BlackJackControllerTest {
                 assertThat(outputView.firstOpenCards[3])
                     .isEqualTo(
                         ParticipantCards(
-                            "반달", listOf(Card(CardNumber.ACE, Suit.CLOVER), Card(CardNumber.JACK, Suit.CLOVER))
+                            "반달", listOf(Card(CardNumber.EIGHT, Suit.CLOVER), Card(CardNumber.JACK, Suit.CLOVER))
                         )
                     )
             },
@@ -141,8 +141,8 @@ class BlackJackControllerTest {
                         ParticipantCards(
                             "반달",
                             listOf(
-                                Card(CardNumber.ACE, Suit.CLOVER), Card(CardNumber.JACK, Suit.CLOVER),
-                                Card(CardNumber.QUEEN, Suit.CLOVER), Card(CardNumber.KING, Suit.CLOVER)
+                                Card(CardNumber.EIGHT, Suit.CLOVER), Card(CardNumber.JACK, Suit.CLOVER),
+                                Card(CardNumber.THREE, Suit.CLOVER), Card(CardNumber.KING, Suit.CLOVER)
                             )
                         )
                     )

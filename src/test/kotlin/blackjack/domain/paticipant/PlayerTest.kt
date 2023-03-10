@@ -48,10 +48,11 @@ class PlayerTest {
 
     @Test
     fun `카드의 합이 21을 초과하지 않으면 카드를 뽑을 수 있다`() {
-        player.addCard(Card(CardNumber.ACE, Suit.SPADE))
         player.addCard(Card(CardNumber.KING, Suit.SPADE))
+        player.addCard(Card(CardNumber.QUEEN, Suit.SPADE))
+        player.addCard(Card(CardNumber.ACE, Suit.SPADE))
 
-        assertThat(player.canDraw()).isFalse
+        assertThat(player.canDraw()).isTrue
     }
 
     @Test
@@ -60,7 +61,7 @@ class PlayerTest {
         player.addCard(Card(CardNumber.EIGHT, Suit.SPADE))
         player.addCard(Card(CardNumber.KING, Suit.SPADE))
 
-        assertThat(player.canDraw()).isTrue
+        assertThat(player.canDraw()).isFalse
     }
 
     @Test
