@@ -14,7 +14,7 @@ fun main() {
     val game = BlackjackGame()
 
     game.startGame(participant, ResultView::printSetUp)
-    game.runPlayer(participant, InputView::doesPlayerWantHit, ResultView::printCards)
+    game.runPlayer(participant.players, InputView::doesPlayerWantHit, ResultView::printCards)
     game.runDealer(participant.dealer, ResultView::printDealerHitMessage)
 
     val bettingResult = BettingResult.of(participant.players, BlackjackResult.of(participant.dealer, participant.players))

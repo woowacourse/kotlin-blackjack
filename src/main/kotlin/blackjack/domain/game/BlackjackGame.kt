@@ -13,8 +13,8 @@ class BlackjackGame {
         outcome(participant.dealer, participant.players)
     }
 
-    fun runPlayer(participant: BlackjackParticipant, isHit: (String) -> (Boolean), outcome: (Player) -> Unit) {
-        participant.players.forEach { decideHitOrStand(it, isHit, outcome) }
+    fun runPlayer(players: List<Player>, isHit: (String) -> (Boolean), outcome: (Player) -> Unit) {
+        players.forEach { decideHitOrStand(it, isHit, outcome) }
     }
 
     fun runDealer(dealer: Dealer, outcome: (String) -> Unit) {
