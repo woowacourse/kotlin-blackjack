@@ -67,7 +67,7 @@ class BlackJackGame(
         val playersDividend = StringBuilder()
 
         playersGameResult.forEach { playerGameResult ->
-            var playerDividend = playerGameResult.player.betAmount * playerGameResult.gameResult.dividendRate
+            val playerDividend = playerGameResult.player.betAmount * playerGameResult.gameResult.dividendRate
             playersDividend.append(playerGameResult.player.name.value + ": " + (playerGameResult.player.betAmount * playerGameResult.gameResult.dividendRate).money + "\n")
             dealerDividend += (playerDividend * -1.0)
         }
