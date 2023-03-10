@@ -15,7 +15,7 @@ class Dealer(val ownCards: Cards, val name: String = "딜러") {
             player.checkBlackJack() && ownCards.checkBlackJack() -> Result.DRAW
             player.checkBlackJack() -> Result.BLACKJACK_WIN
             playerSum > CARD_SUM_MAX_VALUE -> Result.LOSS
-            dealerSum > CARD_SUM_MAX_VALUE -> Result.WIN
+            ownCards.checkBurst() -> Result.WIN
             dealerSum > playerSum -> Result.LOSS
             playerSum == CARD_SUM_MAX_VALUE && dealerSum == CARD_SUM_MAX_VALUE -> Result.LOSS
             playerSum > dealerSum -> Result.WIN

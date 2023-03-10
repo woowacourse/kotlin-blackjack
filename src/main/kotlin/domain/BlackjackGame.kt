@@ -69,7 +69,7 @@ class BlackjackGame(
         wantPickCard: () -> Boolean,
         onPickCard: () -> Unit
     ) {
-        while (!player.checkBurst()) {
+        while (!player.ownCards.checkBurst()) {
             val answer = wantPickCard()
             if (answer) player.ownCards.pickCard(deck.giveCard()) else return
             onPickCard()

@@ -19,6 +19,8 @@ class Cards(private val _cards: MutableList<Card>) {
         return ZERO
     }
 
+    fun checkBurst(): Boolean = calculateCardSum() > Dealer.CARD_SUM_MAX_VALUE
+
     fun checkBlackJack(): Boolean =
         cards.size == BLACKJACK_SIZE && calculateCardSum() == Dealer.CARD_SUM_MAX_VALUE
 
