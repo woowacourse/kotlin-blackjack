@@ -87,8 +87,8 @@ object OutputView {
         }
     }
 
-    private fun printResultForm(result: Result) {
-        when (result) {
+    private fun printResultForm(result: Result): String {
+        return when (result) {
             Result.WIN -> "승"
             Result.DRAW -> "무"
             Result.LOSS -> "패"
