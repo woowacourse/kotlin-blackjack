@@ -78,11 +78,20 @@ object OutputView {
         println("$DEALER$winCount $lossCount $drawCount")
     }
 
-    private fun formatResultCount(count: Int, result: Result) = if (count == 0) "" else count.toString() + result.result
+    private fun formatResultCount(count: Int, result: Result) =
+        if (count == 0) "" else count.toString() + printResultForm(result)
 
     private fun printPlayerWinningResult(playerResult: Map<String, Result>) {
         playerResult.forEach {
-            println("${it.key}: ${it.value.result}")
+            println("${it.key}: ${printResultForm(it.value)}")
+        }
+    }
+
+    private fun printResultForm(result: Result) {
+        when (result) {
+            Result.WIN -> "승"
+            Result.DRAW -> "무"
+            Result.LOSS -> "패"
         }
     }
 }
