@@ -21,14 +21,25 @@ data class Player(
         return DrawState.POSSIBLE
     }
 
-    fun drawCard(checkCurrentCards: (player: Player) -> Unit = { }): Boolean {
+    fun drawCardsRepeatedly(
+        isPlayerWantedAdditionalCards: (player: Player) -> Boolean,
+        checkCurrentCards: (player: Player) -> Unit = { },
+    ) {
+        do {
+            val isPlayerWanted = isPlayerWantedAdditionalCards(this)
+        } while (isPlayerWanted && drawCard { checkCurrentCards(this) })
+
+        checkIsDrawnNothing { checkCurrentCards(this) }
+    }
+
+    private fun drawCard(checkCurrentCards: (player: Player) -> Unit = { }): Boolean {
         cards.draw()
         checkCurrentCards(this)
 
         return isPossibleToDrawAdditionalCard() == DrawState.POSSIBLE
     }
 
-    fun checkIsDrawnNothing(checkCurrentCards: (player: Player) -> Unit = { }) {
+    private fun checkIsDrawnNothing(checkCurrentCards: (player: Player) -> Unit = { }) {
         if (cards.isDrawnNothing) {
             checkCurrentCards(this)
         }

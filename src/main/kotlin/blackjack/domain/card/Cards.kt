@@ -41,6 +41,7 @@ class Cards(
         val minimumScore = getMinimumCardsScore()
 
         if (cards.any { card -> card.number == CardNumber.A }) {
+
             return minimumScore + CardNumber.decideAceValue(minimumScore)
         }
 
