@@ -29,7 +29,6 @@ object OutputView {
     private const val SPADE_DESCRIPTION = "스페이드"
     private const val DIAMOND_DESCRIPTION = "다이아몬드"
 
-
     private fun Player.toCardsDescription(): String = SHOW_PLAYER_CARDS.format(
         name.value,
         cards.cards.joinToString(SEPARATOR) { card ->
@@ -97,7 +96,7 @@ object OutputView {
         println(
             DEALER_GAME_RESULTS.format(totalGameResult.dealerGameResults.value)
         )
-        //TODO: playerGameResults.playerGameResults? 개선해보자
+        // TODO: playerGameResults.playerGameResults? 개선해보자
         totalGameResult.playerGameResults.playerGameResults.forEach { playerGameResult ->
             println(PLAYER_GAME_RESULT.format(playerGameResult.playerName, playerGameResult.profitMoney.value))
         }

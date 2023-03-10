@@ -5,7 +5,7 @@ import blackjack.domain.dealer.DrawResult
 import blackjack.domain.gameResult.TotalGameResult
 import blackjack.domain.player.Player
 
-//TODO: 스스로 장/단점을 잘 판단하자.
+// TODO: 스스로 장/단점을 잘 판단하자.
 class BlackJackGame(
     val dealer: Dealer = Dealer(),
     private val blackJackReferee: BlackJackReferee = BlackJackReferee(),

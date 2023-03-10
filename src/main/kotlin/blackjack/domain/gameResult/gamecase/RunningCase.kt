@@ -9,7 +9,7 @@ enum class RunningCase(
 ) {
 
     DEALER_BLACKJACK_LOSE(
-        condition = {_, dealerCardsState -> dealerCardsState == CardsState.BlackJack},
+        condition = { _, dealerCardsState -> dealerCardsState == CardsState.BlackJack },
         gameResult = GameResult.LOSE
     ),
     DEALER_BUST_WIN(
@@ -35,8 +35,7 @@ enum class RunningCase(
         gameResult = GameResult.DRAW
     );
 
-
-    companion object{
+    companion object {
         fun valueOf(playerScore: Int, dealerCardsState: CardsState): RunningCase? {
 
             return values().find { runningCase ->
@@ -44,5 +43,4 @@ enum class RunningCase(
             }
         }
     }
-
 }

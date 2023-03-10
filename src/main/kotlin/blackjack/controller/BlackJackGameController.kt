@@ -4,7 +4,7 @@ import blackjack.domain.BlackJackGame
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
-//TODO: View의 호출을 최소한으로 줄여보자.
+// TODO: View의 호출을 최소한으로 줄여보자.
 class BlackJackGameController(
     private val blackJackGame: BlackJackGame = BlackJackGame(),
 ) {

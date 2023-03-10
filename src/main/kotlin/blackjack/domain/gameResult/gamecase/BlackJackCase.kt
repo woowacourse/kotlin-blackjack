@@ -30,5 +30,4 @@ enum class BlackJackCase(
             }
         }
     }
-
 }

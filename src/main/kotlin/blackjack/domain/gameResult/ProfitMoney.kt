@@ -9,7 +9,7 @@ value class ProfitMoney(val value: Int) {
         return ProfitMoney(-value)
     }
 
-    companion object{
+    companion object {
 
         fun of(
             battingMoney: BattingMoney,

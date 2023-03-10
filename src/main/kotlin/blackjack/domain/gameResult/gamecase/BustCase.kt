@@ -13,7 +13,7 @@ enum class BustCase(
         gameResult = GameResult.WIN
     ),
     LOSE(
-        condition = {dealerCardsState -> dealerCardsState != CardsState.Bust },
+        condition = { dealerCardsState -> dealerCardsState != CardsState.Bust },
         gameResult = GameResult.LOSE
     );
 
