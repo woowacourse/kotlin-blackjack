@@ -17,12 +17,16 @@ class UserBettingResult {
 
     private fun getPlayerBettingResult(player: Player, dealer: Dealer, playersGameResult: PlayersGameResult): Double {
         val playerBettingMoney = player.userInformation.bettingMoney.value.toDouble()
-        if (player.cards.sumOfNumbers() == GameRule.WINNING_NUMBER && player.cards.value.size == 2) return playerBettingMoney + playerBettingMoney * 1.5
-        if (playersGameResult.value[player] == GameResultType.WIN || dealer.cards.sumOfNumbers() > GameRule.WINNING_NUMBER) return 2 * playerBettingMoney
-        if (player.cards.sumOfNumbers() == GameRule.WINNING_NUMBER && dealer.cards.sumOfNumbers() == GameRule.WINNING_NUMBER) return playerBettingMoney
-        if (player.cards.sumOfNumbers() > GameRule.WINNING_NUMBER) return -playerBettingMoney
-        if (playersGameResult.value[player] == GameResultType.LOSE) return -playerBettingMoney
-        return INIT_PROFIT_MONEY
+        val playerCardsSum = player.cards.sumOfNumbers()
+        val dealerCardSum = dealer.cards.sumOfNumbers()
+        val playerGameResult = playersGameResult.value[player]
+        return when {
+            playerCardsSum == GameRule.WINNING_NUMBER && player.cards.value.size == 2 -> playerBettingMoney + playerBettingMoney * 1.5
+            playerGameResult == GameResultType.WIN || dealerCardSum > GameRule.WINNING_NUMBER -> 2 * playerBettingMoney
+            playerCardsSum == GameRule.WINNING_NUMBER && dealerCardSum == GameRule.WINNING_NUMBER -> playerBettingMoney
+            playerCardsSum > GameRule.WINNING_NUMBER || playerGameResult == GameResultType.LOSE -> -playerBettingMoney
+            else -> INIT_PROFIT_MONEY
+        }
     }
 
     fun getDealerBettingResult(): Double {
