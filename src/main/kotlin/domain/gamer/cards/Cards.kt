@@ -21,13 +21,13 @@ class Cards(private var cards: List<Card>) {
     }
 
     private fun isAceValueToEleven(): Boolean {
-        return checkAceContained() && cards
+        return isAceContained() && cards
             .sumOf { it.cardValue.value } <= CardValue.ACE_ELEVEN_VALUE
     }
 
-    private fun checkAceContained() = cards.any { it.cardValue.title == CardValue.ACE.title }
+    private fun isAceContained() = cards.any { it.cardValue.title == CardValue.ACE.title }
 
-    fun checkBurst(): Boolean = calculateCardSum() > CARD_SUM_MAX_VALUE
+    fun isBurst(): Boolean = calculateCardSum() > CARD_SUM_MAX_VALUE
 
     fun checkBlackjack(): Boolean =
         calculateCardSum() == CARD_SUM_MAX_VALUE && cards.size == START_DECK_CARD_COUNT

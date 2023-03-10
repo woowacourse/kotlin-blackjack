@@ -35,10 +35,10 @@ class BlackjackGame(
         dealer.pickCard(deck.giveCard())
     }
 
-    fun checkBurst(player: Player) = player.cards.checkBurst()
+    fun checkBurst(player: Player) = player.cards.isBurst()
 
     fun checkDealerAvailableForPick(): Boolean {
-        return dealer.checkAvailableForPick()
+        return dealer.isAvailableForPick()
     }
 
     fun getPlayerWinningResult() = mutableMapOf<String, Result>().apply {

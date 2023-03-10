@@ -26,7 +26,7 @@ class DealerTest {
             Dealer(
                 SpadeCardsOf(JACK, JACK)
             )
-        assertThat(dealer.checkAvailableForPick()).isFalse
+        assertThat(dealer.isAvailableForPick()).isFalse
     }
 
     @Test
@@ -34,6 +34,6 @@ class DealerTest {
         val dealer = Dealer(
             SpadeCardsOf(JACK, TWO)
         )
-        assertThat(dealer.checkAvailableForPick()).isTrue
+        assertThat(dealer.isAvailableForPick()).isTrue
     }
 }

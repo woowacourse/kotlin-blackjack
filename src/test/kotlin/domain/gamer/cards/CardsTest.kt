@@ -22,13 +22,13 @@ class CardsTest {
     @Test
     fun `플레이어 카드의 합이 21이 넘었을 경우 버스트가 난다`() {
         val cards = SpadeCardsOf(JACK, QUEEN, THREE)
-        assertThat(cards.checkBurst()).isTrue
+        assertThat(cards.isBurst()).isTrue
     }
 
     @Test
     fun `플레이어 카드의 합이 21이 넘지 않았을 경우 false를 반환한다`() {
         val cards = SpadeCardsOf(JACK, QUEEN)
-        assertThat(cards.checkBurst()).isFalse
+        assertThat(cards.isBurst()).isFalse
     }
 
     @Test
