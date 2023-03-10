@@ -13,3 +13,15 @@ class FirstTurn(card1: Card, card2: Card) : InProgress() {
         return Hit(handOfCards)
     }
 }
+
+class DealerFirstTurn(card1: Card, card2: Card) : InProgress() {
+    override val handOfCards = HandOfCards(card1, card2)
+
+    override fun nextState(draw: () -> Card): State {
+        return when {
+            handOfCards.isBlackJack() -> BlackJack(handOfCards)
+            handOfCards.isDealerStay() -> Stay(handOfCards)
+            else -> DealerHit(handOfCards).nextState { draw() }
+        }
+    }
+}

@@ -10,3 +10,11 @@ class Hit(override val handOfCards: HandOfCards) : InProgress() {
         return this
     }
 }
+
+class DealerHit(override val handOfCards: HandOfCards) : InProgress() {
+    override fun nextState(draw: () -> Card): State {
+        handOfCards.addCard(draw())
+        if (handOfCards.isBust()) return Bust(handOfCards)
+        return Stay(handOfCards)
+    }
+}
