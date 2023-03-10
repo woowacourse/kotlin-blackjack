@@ -1,6 +1,5 @@
 package blackjack.domain.state
 
-import blackjack.domain.card.Cards
 import blackjack.domain.state.Fixtures.CLOVER_ACE
 import blackjack.domain.state.Fixtures.CLOVER_KING
 import blackjack.domain.state.Fixtures.CLOVER_QUEEN
@@ -30,10 +29,5 @@ class BlackJackSettingTest {
     fun `블랙잭의 카드 갯수를 반환한다`() {
         val state: State = BlackJack(CLOVER_KING, CLOVER_ACE)
         assertThat(state.size).isEqualTo(2)
-    }
-
-    @Test
-    fun `블랙잭의 배당 비율은 1 5배이다`() {
-        assertThat(BlackJack(Cards()).ratio).isEqualTo(1.5)
     }
 }

@@ -31,9 +31,4 @@ class BustTest {
         val state: State = Bust(Cards(CLOVER_KING, CLOVER_QUEEN, CLOVER_JACK))
         assertThat(state.size).isEqualTo(3)
     }
-
-    @Test
-    fun `버스트의 배당 비율은 0배이다`() {
-        assertThat(Bust(Cards()).ratio).isEqualTo(0.0)
-    }
 }

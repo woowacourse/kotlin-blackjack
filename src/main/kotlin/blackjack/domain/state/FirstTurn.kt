@@ -2,9 +2,10 @@ package blackjack.domain.state
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
+import blackjack.domain.participants.Dealer
+import blackjack.domain.result.Outcome
 
 class FirstTurn private constructor(cards: Cards) : InTurn(cards) {
-    override val ratio: Double = 0.0
     constructor() : this(Cards())
 
     override fun draw(card: Card): State {
@@ -14,5 +15,9 @@ class FirstTurn private constructor(cards: Cards) : InTurn(cards) {
             newCards.calculateScore().isBlackJack -> BlackJack(newCards)
             else -> Hit(newCards)
         }
+    }
+
+    override fun matchWith(dealer: Dealer): Outcome {
+        throw IllegalStateException("초기 세팅 전에는 결과를 비교할 수 없습니다.")
     }
 }
