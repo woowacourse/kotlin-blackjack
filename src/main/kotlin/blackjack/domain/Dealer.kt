@@ -19,12 +19,8 @@ class Dealer(override val cardBunch: CardBunch) : Participant {
         }
     }
 
-    fun addCard(card: Card) {
-        cardBunch.addCard(card)
-    }
-
     fun progressAddCard(getCard: () -> Card) {
-        while (!isOverCondition()) addCard(getCard())
+        while (!isOverCondition()) receiveCard(getCard())
     }
 
     companion object {
