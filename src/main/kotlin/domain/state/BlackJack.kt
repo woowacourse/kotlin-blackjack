@@ -1,6 +1,8 @@
 package domain.state
 
-class BlackJack : Finished() {
+import domain.card.HandOfCards
+
+class BlackJack(override val handOfCards: HandOfCards) : Finished() {
     override fun profit(bet: Double) = bet * BLACK_JACK_RATE
 
     companion object {

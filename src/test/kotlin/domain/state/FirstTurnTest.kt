@@ -37,7 +37,7 @@ internal class FirstTurnTest {
     fun `profit함수를 호출하면 StateException이 발생한다`() {
         val firstTurn = FirstTurn(CLOVER_TWO, CLOVER_KING)
 
-        assertThrows<IllegalStateException> { firstTurn.profit() }.shouldHaveMessage("아직 진행중입니다")
+        assertThrows<IllegalStateException> { firstTurn.profit(0.0) }.shouldHaveMessage("아직 진행중입니다")
     }
 
     @Test

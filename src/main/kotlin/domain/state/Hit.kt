@@ -5,7 +5,7 @@ import domain.card.Card
 import domain.card.HandOfCards
 import domain.card.strategy.GetAppropriateSum
 
-class Hit(val handOfCards: HandOfCards) : InProgress() {
+class Hit(override val handOfCards: HandOfCards) : InProgress() {
     override fun nextState(draw: () -> Card): State {
         handOfCards.addCard(draw())
         val cardSum = handOfCards.getTotalCardSum(GetAppropriateSum)
