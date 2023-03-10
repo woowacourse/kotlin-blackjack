@@ -31,15 +31,15 @@ class BlackjackManager(
     }
 
     fun playParticipantsTurns(
-        readMoreCard: (String) -> Boolean,
+        requestMoreCard: (String) -> Boolean,
         onProvideCard: (Participant) -> Unit
     ) {
         participants.values.forEach {
-            playParticipantTurns(it, readMoreCard, onProvideCard)
+            playParticipantTurns(it, requestMoreCard, onProvideCard)
         }
     }
 
-    fun playParticipantTurns(
+    private fun playParticipantTurns(
         participant: Participant,
         requestMoreCard: (String) -> Boolean,
         onProvideCard: (Participant) -> Unit

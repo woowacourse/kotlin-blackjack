@@ -36,36 +36,24 @@ class BlackjackManagerTest {
     }
 
     @Test
-    fun `추가 발행을 한번 원하고 더 이상 원하지 않는다면 참가자에게 카드를 추가로 한장만 나눠준다`() {
+    fun `플레이어1은 카드 추가 발급을 한번 원하고, 플레이어2는 카드 추가 발급을 원하지 않을 때, 플레이어1 에게만 카드를 추가로 한장만 나눠준다`() {
         // given
         val blackjackManager = BlackjackManager(TestCardsGenerator(), listOf("aaa", "bbb"))
         blackjackManager.setup()
 
         // when
-        val participant1 = blackjackManager.participants.values[0]
         var index = 0
-        blackjackManager.playParticipantTurns(participant1, { _: String -> listOf(true, false)[index++] }) {}
+        blackjackManager.playParticipantsTurns({ _: String -> listOf(true, false, false)[index++] }) {}
 
-        val actual = participant1.cards.values.size
-
-        // then
-        assertThat(actual).isEqualTo(3)
-    }
-
-    @Test
-    fun `추가 발행을 원하지 않는다면 참가자에게 카드를 발행하지 않는다`() {
-        // given
-        val blackjackManager = BlackjackManager(TestCardsGenerator()) { listOf("aaa", "bbb") }
-        blackjackManager.setup()
-
-        // when
         val participant1 = blackjackManager.participants.values[0]
-        blackjackManager.playParticipantTurns(participant1, { false }) {}
+        val participant2 = blackjackManager.participants.values[1]
 
-        val actual = participant1.cards.values.size
+        val actual1 = participant1.cards.values.size
+        val actual2 = participant2.cards.values.size
 
         // then
-        assertThat(actual).isEqualTo(2)
+        assertThat(actual1).isEqualTo(3)
+        assertThat(actual2).isEqualTo(2)
     }
 
     @Test
