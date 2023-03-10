@@ -3,6 +3,7 @@ package blackjack.model
 import model.Card
 import model.CardDeck
 import model.Dealer
+import model.Money
 import model.Name
 import model.Player
 import model.Rank
@@ -15,7 +16,7 @@ class PlayerTest {
     @Test
     fun `플레이어는 카드 두 장을 받을 수 있다`() {
         val cardDeck = CardDeck(Card(Rank.ACE, Suit.DIAMOND), Card(Rank.ACE, Suit.CLOVER))
-        val player = Player(Name("jason"))
+        val player = Player("jason")
         player.drawFirst(cardDeck)
         assertThat(player.cards.cards).isEqualTo(setOf(Card(Rank.ACE, Suit.DIAMOND), Card(Rank.ACE, Suit.CLOVER)))
     }
@@ -64,7 +65,7 @@ class PlayerTest {
             Card(Rank.NINE, Suit.DIAMOND)
         )
         val dealer = Dealer()
-        val player = Player(Name("jason"))
+        val player = Player("jason")
         dealer.drawFirst(cardDeck)
         player.drawFirst(cardDeck)
         assertThat(player.getGameResult(dealer)).isEqualTo(Result.WIN)
@@ -79,7 +80,7 @@ class PlayerTest {
             Card(Rank.TEN, Suit.SPADE)
         )
         val dealer = Dealer()
-        val player = Player(Name("jason"))
+        val player = Player("jason")
         dealer.drawFirst(cardDeck)
         player.drawFirst(cardDeck)
         assertThat(player.getGameResult(dealer)).isEqualTo(Result.DRAW)
@@ -95,7 +96,7 @@ class PlayerTest {
             Card(Rank.DEUCE, Suit.SPADE)
         )
         val dealer = Dealer()
-        val player = Player(Name("jason"))
+        val player = Player("jason")
         dealer.drawFirst(cardDeck)
         player.drawFirst(cardDeck)
         player.cards.add(cardDeck.drawCard())
@@ -112,7 +113,7 @@ class PlayerTest {
             Card(Rank.TEN, Suit.SPADE)
         )
         val dealer = Dealer()
-        val player = Player(Name("jason"))
+        val player = Player("jason")
         dealer.drawFirst(cardDeck)
         dealer.cards.add(cardDeck.drawCard())
         player.drawFirst(cardDeck)
@@ -120,7 +121,7 @@ class PlayerTest {
     }
 
     companion object {
-        private fun Player(name: String): Player = Player(Name(name))
+        private fun Player(name: String): Player = Player(Name(name), Money(1_000L))
         private fun CardDeck(vararg card: Card): CardDeck = CardDeck(card.toList())
     }
 }

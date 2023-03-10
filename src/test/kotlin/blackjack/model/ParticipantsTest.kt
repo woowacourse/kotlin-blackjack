@@ -3,6 +3,8 @@ package blackjack.model
 import model.Card
 import model.CardDeck
 import model.Dealer
+import model.Money
+import model.Name
 import model.Participants
 import model.Player
 import model.Players
@@ -15,8 +17,8 @@ class ParticipantsTest {
     @Test
     fun `딜러와 플레이어의 참가자 정보를 생성할 수 있다`() {
         val dealer = Dealer()
-        val player1 = Player.from("jason")
-        val player2 = Player.from("pobi")
+        val player1 = Player("jason")
+        val player2 = Player("pobi")
         val actual = Participants(dealer, Players(player1, player2))
         assertThat(actual.all.size).isEqualTo(3)
         assertThat(actual.dealer.name.value).isEqualTo("딜러")
@@ -35,8 +37,8 @@ class ParticipantsTest {
             Card(Rank.JACK, Suit.CLOVER)
         )
         val dealer = Dealer()
-        val player1 = Player.from("jason")
-        val player2 = Player.from("pobi")
+        val player1 = Player("jason")
+        val player2 = Player("pobi")
         val actual = Participants(dealer, Players(player1, player2))
         actual.drawFirstCard(cardDeck)
         assertThat(actual.dealer.cards.size == 2).isTrue
@@ -45,6 +47,7 @@ class ParticipantsTest {
     }
 
     companion object {
+        private fun Player(name: String): Player = Player(Name(name), Money(1_000L))
         private fun Players(vararg player: Player): Players = Players(player.toList())
         private fun CardDeck(vararg card: Card): CardDeck = CardDeck(card.toList())
     }

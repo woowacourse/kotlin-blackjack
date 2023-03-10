@@ -5,7 +5,6 @@ import model.Cards
 import model.Participant
 import model.Participants
 import model.Rank
-import model.Result
 import model.Suit
 
 class OutputView {
@@ -47,13 +46,14 @@ class OutputView {
     }
 
     fun printGameResult(participants: Participants) {
-        val dealerResult = GameResult(participants)
-        val playerResult = participants.players.getGameResult(participants.dealer)
+        val gameResult = GameResult(participants)
+        val playerResult = gameResult.playersResult
+        val dealerResult = gameResult.dealerResult
         println()
         println(MESSAGE_RESULT_TITLE)
-        println(MESSAGE_DEALER_RESULT.format(dealerResult.winCount, dealerResult.loseCount))
-        participants.players.forEach {
-            println(MESSAGE_PLAYER_RESULT.format(it.name.value, if (playerResult[it.name] == Result.WIN) "승" else "패"))
+        println(MESSAGE_DEALER_PROFIT_RESULT.format(dealerResult))
+        playerResult.forEach {
+            println(MESSAGE_PLAYER_PROFIT_RESULT.format(it.key.value, it.value))
         }
     }
 
@@ -85,8 +85,8 @@ class OutputView {
         private const val MESSAGE_PARTICIPANT_STATUS = "%s카드: %s"
         private const val MESSAGE_POINT_RESULT = " - 결과: %d"
         private const val MESSAGE_DEALER_GET_CARD = "%s는 16이하라 한장의 카드를 더 받았습니다."
-        private const val MESSAGE_RESULT_TITLE = "## 최종 승패"
-        private const val MESSAGE_DEALER_RESULT = "딜러: %d승 %d패"
-        private const val MESSAGE_PLAYER_RESULT = "%s: %s"
+        private const val MESSAGE_RESULT_TITLE = "## 최종 수익"
+        private const val MESSAGE_DEALER_PROFIT_RESULT = "딜러: %d"
+        private const val MESSAGE_PLAYER_PROFIT_RESULT = "%s: %d"
     }
 }
