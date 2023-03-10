@@ -1,31 +1,39 @@
 package view
 
-import model.Card
-import model.Cards
-import model.Dealer.Companion.DEALER
-import model.GameResult
-import model.Name
-import model.Participant
-import model.Player
-import model.Rank
-import model.Suit
+import model.cards.Card
+import model.cards.Hand
+import model.participants.Dealer.Companion.DEALER
+import model.participants.Name
+import model.participants.Participant
+import model.participants.Participants
+import model.participants.Player
+import model.result.GameResult
 
 class OutputView {
+    private val suitModel = SuitModel()
+    private val rankModel = RankModel()
+
     fun printInputPlayerNames() {
         println(MESSAGE_INPUT_NAME)
     }
 
-    fun printNoticeDistributeCards(players: List<Name>) {
+    fun printHowMuchBet(name: Name) {
         println()
-        println(MESSAGE_DISTRIBUTE_CARD.format(players.joinToString(", ") { it.value }))
+        println(MESSAGE_HOW_MUCH_BET.format(name.value))
+    }
+
+    fun printNoticeDistributeCards(participants: Participants) {
+        println()
+        println(MESSAGE_DISTRIBUTE_CARD.format(participants.players.toNames().joinToString(", ") { it.value }))
+        printParticipantsStatus(participants)
     }
 
     fun printGetCardMore(name: Name) {
         println(MESSAGE_INPUT_YES_OR_NO.format(name.value))
     }
 
-    fun printPlayersStatus(players: List<Participant>) {
-        players.forEach { printPlayerStatus(it) }
+    private fun printParticipantsStatus(participants: Participants) {
+        participants.toList().forEach { printParticipantStatus(it) }
         println()
     }
 
@@ -34,74 +42,57 @@ class OutputView {
         println(MESSAGE_DEALER_GET_CARD)
     }
 
-    fun printPlayerStatus(participant: Participant) {
+    fun printParticipantStatus(participant: Participant) {
         if (participant.name.value == DEALER) {
-            println(MESSAGE_DEALER_STATUS.format(cardToString(participant.cards.cards[0])))
+            println(MESSAGE_DEALER_STATUS.format(cardToString(participant.hand.toList()[0])))
             return
         }
-        println(MESSAGE_PARTICIPANT_STATUS.format(participant.name.value, cardsToString((participant as Player).cards)))
+        println(MESSAGE_PARTICIPANT_STATUS.format(participant.name.value, cardsToString((participant as Player).hand)))
     }
 
-    fun printAllPlayerStatusResult(participants: List<Participant>) {
+    fun printResult(participants: Participants, gameResult: GameResult) {
+        printAllPlayerStatusResult(participants)
+        printFinalResult(gameResult)
+    }
+
+    private fun printAllPlayerStatusResult(participants: Participants) {
         println()
-        participants.forEach {
-            print(MESSAGE_PARTICIPANT_STATUS.format(it.name.value, cardsToString(it.cards)))
-            println(MESSAGE_POINT_RESULT.format(it.cards.sum()))
+        participants.toList().forEach {
+            print(MESSAGE_PARTICIPANT_STATUS.format(it.name.value, cardsToString(it.hand)))
+            println(MESSAGE_POINT_RESULT.format(it.hand.sum()))
         }
     }
 
-    fun printFinalResult(gameResult: GameResult) {
+    private fun printFinalResult(gameResult: GameResult) {
         println()
         println(MESSAGE_RESULT_TITLE)
-        println(MESSAGE_DEALER_RESULT.format(gameResult.getDealerWinResult(), gameResult.getDealerLoseResult()))
-        gameResult.playersResult.forEach {
-            println(MESSAGE_PLAYER_RESULT.format(it.key, if (it.value) "승" else "패"))
+        println(MESSAGE_DEALER_RESULT.format(gameResult.getDealerProfitResult()))
+        gameResult.playersFinalResult.forEach {
+            println(MESSAGE_PLAYER_RESULT.format(it.key.value, it.value))
         }
     }
 
-    private fun rankToString(rank: Rank): String {
-        return when (rank) {
-            Rank.ACE -> ACE
-            Rank.KING -> KING
-            Rank.JACK -> JACK
-            Rank.QUEEN -> QUEEN
-            else -> rank.getScore().toString()
-        }
+    fun printError(error: String) {
+        println(error)
     }
 
-    private fun suitToString(suit: Suit): String {
-        return when (suit) {
-            Suit.DIAMOND -> DIAMOND
-            Suit.CLOVER -> CLOVER
-            Suit.SPADE -> SPADE
-            Suit.HEART -> HEART
-        }
+    private fun cardsToString(hand: Hand): String = hand.toList().joinToString(separator = ", ") {
+        rankModel.getString(it.rank) + suitModel.getString(it.suit)
     }
 
-    private fun cardsToString(cards: Cards): String = cards.cards.joinToString(separator = ", ") {
-        rankToString(it.rank) + suitToString(it.suit)
-    }
-
-    private fun cardToString(card: Card): String = rankToString(card.rank) + suitToString(card.suit)
+    private fun cardToString(card: Card): String = rankModel.getString(card.rank) + suitModel.getString(card.suit)
 
     companion object {
         private const val MESSAGE_INPUT_NAME = "게임에 참여할 플레이어의 이름을 입력하세요. (쉼표 기준으로 분리)"
+        private const val MESSAGE_HOW_MUCH_BET = "%s의 배팅 금액은?"
         private const val MESSAGE_DISTRIBUTE_CARD = "딜러와 %s에게 2장의 나누었습니다."
         private const val MESSAGE_INPUT_YES_OR_NO = "%s는/은 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)"
         private const val MESSAGE_DEALER_STATUS = "딜러: %s"
         private const val MESSAGE_PARTICIPANT_STATUS = "%s카드: %s"
         private const val MESSAGE_POINT_RESULT = " - 결과: %d"
         private const val MESSAGE_DEALER_GET_CARD = "딜러는 16이하라 한장의 카드를 더 받았습니다."
-        private const val MESSAGE_RESULT_TITLE = "## 최종 승패"
-        private const val MESSAGE_DEALER_RESULT = "딜러: %d승 %d패"
-        private const val MESSAGE_PLAYER_RESULT = "%s: %s"
-        private const val DIAMOND = "다이아몬드"
-        private const val CLOVER = "클로버"
-        private const val SPADE = "스페이드"
-        private const val HEART = "하트"
-        private const val ACE = "A"
-        private const val KING = "K"
-        private const val JACK = "J"
-        private const val QUEEN = "Q"
+        private const val MESSAGE_RESULT_TITLE = "## 최종 수익"
+        private const val MESSAGE_DEALER_RESULT = "딜러: %d"
+        private const val MESSAGE_PLAYER_RESULT = "%s: %d"
     }
 }

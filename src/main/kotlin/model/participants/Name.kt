@@ -1,7 +1,6 @@
-package model
+package model.participants
 
-@JvmInline
-value class Name(val value: String) {
+data class Name(val value: String) {
     init {
         require(Regex("([a-z]|[A-Z]|[가-힣])+").matches(value)) { VALIDATE_ERROR }
     }

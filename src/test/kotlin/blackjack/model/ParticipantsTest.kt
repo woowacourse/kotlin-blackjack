@@ -1,26 +1,26 @@
 package blackjack.model
 
-import model.Cards
-import model.Dealer
-import model.Name
-import model.Participants
-import model.Player
-import model.Players
+import model.cards.Hand
+import model.participants.Dealer
+import model.participants.Name
+import model.participants.Participants
+import model.participants.Player
+import model.participants.Players
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class ParticipantsTest {
     @Test
     fun `딜러와 플레이어의 참가자 정보를 생성할 수 있다`() {
-        val dealer = Dealer(emptyCards())
+        val dealer = Dealer(emptyHand())
         val players = Players(
             listOf(
-                Player(emptyCards(), Name("jason")),
-                Player(emptyCards(), Name("pobi"))
+                Player(emptyHand(), Name("jason")),
+                Player(emptyHand(), Name("pobi"))
             )
         )
 
-        val actual = Participants.of(dealer, players).toList()
+        val actual = Participants(dealer, players).toList()
 
         assertThat(actual.size).isEqualTo(3)
         assertThat(actual[0].name.value).isEqualTo("딜러")
@@ -28,5 +28,5 @@ class ParticipantsTest {
         assertThat(actual[2].name.value).isEqualTo("pobi")
     }
 
-    private fun emptyCards() = Cards(emptyList())
+    private fun emptyHand() = Hand(emptyList())
 }

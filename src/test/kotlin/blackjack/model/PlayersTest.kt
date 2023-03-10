@@ -1,9 +1,9 @@
 package blackjack.model
 
-import model.Cards
-import model.Name
-import model.Player
-import model.Players
+import model.cards.Hand
+import model.participants.Name
+import model.participants.Player
+import model.participants.Players
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -12,8 +12,8 @@ class PlayersTest {
     fun `players를 생성할 수 있다`() {
         val players = Players(
             listOf(
-                Player(emptyCards(), Name("jason")),
-                Player(emptyCards(), Name("pobi"))
+                Player(emptyHand(), Name("jason")),
+                Player(emptyHand(), Name("pobi"))
             )
         )
 
@@ -23,5 +23,5 @@ class PlayersTest {
         assertThat(actual[1].name.value).isEqualTo("pobi")
     }
 
-    private fun emptyCards() = Cards(emptyList())
+    private fun emptyHand() = Hand(emptyList())
 }

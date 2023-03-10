@@ -1,4 +1,4 @@
-package model
+package model.cards
 
 enum class Rank(private val score: Int) {
     ACE(1),

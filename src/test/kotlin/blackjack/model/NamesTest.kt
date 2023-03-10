@@ -1,7 +1,7 @@
 package blackjack.model
 
-import model.Name
-import model.Names
+import model.participants.Name
+import model.participants.Names
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
