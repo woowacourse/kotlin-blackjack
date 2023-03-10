@@ -6,6 +6,7 @@ import domain.gamer.Dealer
 import domain.gamer.Player
 import domain.gamer.Players
 import domain.gamer.cards.Cards
+import domain.judge.PlayerResultInfo
 import domain.judge.Result
 
 class BlackjackGame(
@@ -43,4 +44,8 @@ class BlackjackGame(
 
     fun judgeDealerResult(playersResult: Map<String, Result>): List<Result> =
         playersResult.map { it.value.reverseResult() }
+
+    fun getPlayerRewards(playersResult: Map<String, PlayerResultInfo>) = _players.getPlayersReward(playersResult)
+
+    fun calculateDealerRewards(playerResults: List<Int>): Int = playerResults.sum() * -1
 }

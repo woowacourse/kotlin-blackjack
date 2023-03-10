@@ -1,6 +1,7 @@
 package domain.gamer
 
 import domain.deck.Deck
+import domain.judge.PlayerResultInfo
 import domain.judge.Result
 
 class Players(private val players: List<Player>) {
@@ -23,6 +24,13 @@ class Players(private val players: List<Player>) {
             this[it.name] = it.judgeResult(dealer.cards)
         }
     }
+
+    fun getPlayersReward(playersResult: Map<String, PlayerResultInfo>): MutableMap<String, Int> =
+        mutableMapOf<String, Int>().apply {
+            playersResult.map {
+                put(it.key, it.value.calculateRevenue())
+            }
+        }
 
     companion object {
         private const val ERROR_OVER_MAX_PLAYER_COUNT = "게임 인원은 8명까지 가능합니다"

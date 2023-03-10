@@ -17,6 +17,8 @@ object OutputView {
     private const val RESULT = " - 결과: "
     private const val FINAL_RESULT = "\n## 최종 승패"
     private const val PICK_CARD_OVER_SIXTEEN = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n"
+    private const val FINAL_REVENUE = "\n## 최종 수익"
+    private const val REVENUE_FORM = "%s: %d"
 
     fun printDivideCard(names: List<String>) {
         println()
@@ -89,9 +91,17 @@ object OutputView {
 
     private fun printResultForm(result: Result): String {
         return when (result) {
-            Result.WIN -> "승"
+            Result.WIN, Result.BLACKJACK_WIN -> "승"
             Result.DRAW -> "무"
             Result.LOSS -> "패"
+        }
+    }
+
+    fun printRevenue(dealerRevenue: Int, playerRevenue: Map<String, Int>) {
+        println(FINAL_REVENUE)
+        println(DEALER + "%d".format(dealerRevenue))
+        playerRevenue.map {
+            println(REVENUE_FORM.format(it.key, it.value))
         }
     }
 }

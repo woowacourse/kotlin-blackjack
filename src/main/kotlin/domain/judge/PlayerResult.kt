@@ -1,6 +1,6 @@
-package domain.money
+package domain.judge
 
-import domain.judge.Result
+import domain.money.Money
 
 data class PlayerResultInfo(val result: Result, val money: Money) {
 
