@@ -1,8 +1,8 @@
 package blackjack.domain.card
 
-enum class CardNumber(val value: Int, private val otherValue: Int = value) {
+enum class CardNumber(val value: Int) {
 
-    A(1, 11),
+    A(1),
     ONE(1),
     TWO(2),
     THREE(3),
@@ -19,14 +19,15 @@ enum class CardNumber(val value: Int, private val otherValue: Int = value) {
 
     companion object {
 
-        private const val CURRENT_SUM_STANDARD = 11
+        private const val PLUS_SCORE_FOR_ACE = 10
 
+        //TODO: 21이라는 상수를 왜 여기저기서 사용하게 될까?
         fun decideAceValue(currentSum: Int): Int {
-            if (currentSum >= CURRENT_SUM_STANDARD) {
-                return A.value
+            if (currentSum + PLUS_SCORE_FOR_ACE <= 21) {
+                return currentSum + PLUS_SCORE_FOR_ACE
             }
 
-            return A.otherValue
+            return currentSum
         }
     }
 }

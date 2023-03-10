@@ -34,17 +34,14 @@ class Cards(
     fun getMinimumCardsScore(): Int = cards.sumOf { card -> card.number.value }
 
 
+    //TODO: Score로 wrapping하자
     fun getTotalCardsScore(): Int {
-        val aceCardsCount = cards.count { card -> card.number == CardNumber.A }
-
-        var totalScore = cards
-            .filter { card -> card.number != CardNumber.A }
+        val totalScore = cards
             .sumOf { card -> card.number.value }
 
-        repeat(aceCardsCount) {
-            totalScore += CardNumber.decideAceValue(totalScore)
+        if (cards.any { card -> card.number == CardNumber.A }) {
+            return CardNumber.decideAceValue(totalScore)
         }
-
         return totalScore
     }
 
