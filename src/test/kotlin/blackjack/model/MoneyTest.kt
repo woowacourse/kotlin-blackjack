@@ -1,6 +1,8 @@
 package blackjack.model
 
 import model.Money
+import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
@@ -10,5 +12,10 @@ class MoneyTest {
     @ValueSource(longs = [-1_000L, 999L, 0L])
     fun `Money 값이 1000이상이 아니라면 예외가 발생한다`(value: Long) {
         assertThrows<IllegalArgumentException> { Money(value) }
+    }
+
+    @Test
+    fun `Money를 생성할 수 있다`() {
+        assertThat(Money(1_000L).value).isEqualTo(1_000L)
     }
 }
