@@ -63,12 +63,11 @@ class BlackjackManager(
     }
 
     fun calculatePlayersResult(onCalculateResults: (ParticipantsResults, DealerResult) -> Unit) {
-        val playersResult = mutableListOf<ParticipantResult>()
-        participants.values.forEach {
-            playersResult.add(it.calculateResult(dealer))
+        val participantsResults = participants.values.map { participant ->
+            participant.calculateResult(dealer)
         }
         val dealerResult = dealer.calculateResults(participants)
-        onCalculateResults(ParticipantsResults(playersResult), dealerResult)
+        onCalculateResults(ParticipantsResults(participantsResults), dealerResult)
     }
 
     private fun provideCard(player: Player) {

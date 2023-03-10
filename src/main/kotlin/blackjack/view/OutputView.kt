@@ -41,7 +41,7 @@ class OutputView {
         val dealerResultMessage = FINAL_DEALER_RESULT_MENT + printDealerFinalResut(dealerResult)
         println(dealerResultMessage)
         participantsResults.results.forEach {
-            println(FINAL_PARTICIPANT_RESULT_MENT.format(it.result.first, it.result.second.word))
+            println(FINAL_PARTICIPANT_RESULT_MENT.format(it.name, it.result.word))
         }
     }
 

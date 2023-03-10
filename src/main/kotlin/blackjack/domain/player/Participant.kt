@@ -18,7 +18,7 @@ class Participant(name: String, cards: Cards = Cards()) : Player(name, cards) {
             (cards.sumCardsNumber() < dealer.cards.sumCardsNumber()) -> Result.LOSE
             else -> Result.DRAW
         }
-        return ParticipantResult(Pair(name, result))
+        return ParticipantResult(name, result)
     }
 
     companion object {
