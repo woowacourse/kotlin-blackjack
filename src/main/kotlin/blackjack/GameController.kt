@@ -1,5 +1,6 @@
 package blackjack
 
+import blackjack.domain.betting.BettingResult
 import blackjack.domain.game.BlackjackGame
 import blackjack.domain.game.BlackjackParticipant
 import blackjack.domain.participant.Dealer
@@ -16,6 +17,6 @@ fun main() {
     game.runPlayer(participant, InputView::doesPlayerWantHit, ResultView::printCards)
     game.runDealer(participant.dealer, ResultView::printDealerHitMessage)
 
-    val result = BlackjackResult.of(participant.dealer, participant.players)
-    ResultView.printResult(participant.dealer, participant.players, result)
+    val bettingResult = BettingResult.of(participant.players, BlackjackResult.of(participant.dealer, participant.players))
+    ResultView.printResult(participant.dealer, participant.players, bettingResult)
 }
