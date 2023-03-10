@@ -1,17 +1,23 @@
 package domain.person
 
 import domain.card.Card
-import domain.card.HandOfCards
+import domain.state.Bust
+import domain.state.InProgress
+import domain.state.State
 
-abstract class Person() {
+abstract class Person {
     abstract val name: String
-    protected abstract val handOfCards: HandOfCards
+    abstract var state: State
+        protected set
 
-    fun receiveCard(vararg card: Card) {
-        card.forEach { handOfCards.addCard(it) }
+    fun receiveCard(card: Card) {
+        state = state.nextState { card }
     }
 
     fun showHandOfCards(): List<Card> = state.handOfCards.cards
 
     fun getTotal(): Int = state.handOfCards.getTotalCardSum()
+
+    fun isBust() = state is Bust
+    fun isInProgress() = state is InProgress
 }

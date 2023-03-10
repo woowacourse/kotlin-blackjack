@@ -1,12 +1,13 @@
 package domain.person
 
-import constant.BlackJackConstants.BLACK_JACK_NUMBER
-import domain.card.HandOfCards
-import domain.card.strategy.GetMinSum
+import domain.card.Card
+import domain.state.FirstTurn
+import domain.state.State
 
 class Player(
     override val name: String,
-    override val handOfCards: HandOfCards,
+    card1: Card,
+    card2: Card,
 ) : Person() {
-    override fun canReceiveMoreCard() = getTotalCardNumber(GetMinSum) <= BLACK_JACK_NUMBER
+    override var state: State = FirstTurn(card1, card2)
 }

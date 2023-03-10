@@ -14,7 +14,7 @@ class BlackJackGame : BlackJackGameBluePrint {
     override fun makePersons(names: List<String>): Persons = Persons.getPersons(names, deck)
 
     override fun handOutCardsToDealer(dealer: Dealer, printDealerDrew: () -> Unit, printDealerDidNotDrew: () -> Unit) {
-        if (dealer.canReceiveMoreCard()) {
+        if (dealer.isInProgress()) {
             dealer.receiveCard(deck.getCard())
             printDealerDrew()
             return

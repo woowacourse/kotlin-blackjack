@@ -18,7 +18,7 @@ class PlayerTest {
 
     @BeforeEach
     private fun setUp() {
-        player = Player("베르", HandOfCards(Card(HEART, CardNumber.TWO), Card(DIAMOND, CardNumber.TWO)))
+        player = Player("베르", Card(HEART, CardNumber.TWO), Card(DIAMOND, CardNumber.TWO))
     }
 
     @Test
@@ -59,7 +59,8 @@ class PlayerTest {
     @ParameterizedTest
     fun `플레이어의 카드 총 합이 21을 넘었는지 체크할 수 있다`(n1: CardNumber, n2: CardNumber, expected: Boolean) {
         // given
-        player.receiveCard(Card(CLOVER, n1), Card(CLOVER, n2))
+        player.receiveCard(Card(CLOVER, n1))
+        player.receiveCard(Card(CLOVER, n2))
 
         // when
         val actual = player.isBust()
@@ -80,7 +81,7 @@ class PlayerTest {
         player.receiveCard(Card(HEART, n2))
 
         // when
-        val actual = player.canReceiveMoreCard()
+        val actual = player.isInProgress()
 
         assertThat(actual).isEqualTo(expected)
     }

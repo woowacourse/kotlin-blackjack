@@ -3,7 +3,6 @@ package domain.result
 import domain.card.Card
 import domain.card.CardNumber
 import domain.card.CardShape
-import domain.card.HandOfCards
 import domain.person.Dealer
 import domain.person.Persons
 import domain.person.Player
@@ -17,14 +16,15 @@ class GameResultTest {
         val players = listOf<Player>(
             Player(
                 "빅스",
-                HandOfCards(Card(CardShape.HEART, CardNumber.TWO), Card(CardShape.DIAMOND, CardNumber.THREE)),
+                Card(CardShape.HEART, CardNumber.TWO),
+                Card(CardShape.DIAMOND, CardNumber.THREE),
             ).apply {
                 receiveCard(Card(CardShape.CLOVER, CardNumber.FOUR))
             },
-            Player("베르", HandOfCards(Card(CardShape.CLOVER, CardNumber.ACE), Card(CardShape.SPADE, CardNumber.KING))),
+            Player("베르", Card(CardShape.CLOVER, CardNumber.ACE), Card(CardShape.SPADE, CardNumber.KING)),
         )
         val dealer =
-            Dealer(HandOfCards(Card(CardShape.CLOVER, CardNumber.KING), Card(CardShape.SPADE, CardNumber.NINE)))
+            Dealer(Card(CardShape.CLOVER, CardNumber.KING), Card(CardShape.SPADE, CardNumber.NINE))
         val gameResult = GameResult(Persons(dealer, players))
 
         val expectedDealerResult = mapOf(OutCome.WIN to 1, OutCome.LOSE to 1)

@@ -18,7 +18,7 @@ class DealerTest {
 
     @BeforeEach
     private fun setUp() {
-        dealer = Dealer(HandOfCards(Card(HEART, CardNumber.TWO), Card(DIAMOND, CardNumber.TWO)))
+        dealer = Dealer(Card(HEART, CardNumber.KING), Card(DIAMOND, CardNumber.TWO))
     }
 
     @Test
@@ -33,24 +33,23 @@ class DealerTest {
 
         assertAll(
             { assertThat(actual.size).isEqualTo(2) },
-            { assertThat(actual).isEqualTo(listOf(Card(HEART, CardNumber.TWO), Card(DIAMOND, CardNumber.TWO))) },
+            { assertThat(actual).isEqualTo(listOf(Card(HEART, CardNumber.KING), Card(DIAMOND, CardNumber.TWO))) },
         )
     }
 
-    @CsvSource(value = ["ACE,SIX,21", "TWO,THREE,9"])
+    @CsvSource(value = ["ACE,13", "KING,22"])
     @ParameterizedTest
-    fun `카드 패의 총합을 계산한다`(number1: CardNumber, number2: CardNumber, sum: Int) {
+    fun `카드 패의 총합을 계산한다`(number1: CardNumber, sum: Int) {
         dealer.receiveCard(Card(HEART, number1))
-        dealer.receiveCard(Card(HEART, number2))
 
         assertThat(dealer.getTotal()).isEqualTo(sum)
     }
 
-    @CsvSource(value = ["ACE,ACE,false", "KING,QUEEN,true"])
+    @CsvSource(value = ["ACE,false", "KING,true"])
     @ParameterizedTest
-    fun `딜러의 카드 총 합이 21을 넘었는지 체크할 수 있다`(n1: CardNumber, n2: CardNumber, expected: Boolean) {
+    fun `딜러의 카드 총 합이 21을 넘었는지 체크할 수 있다`(n1: CardNumber, expected: Boolean) {
         // given
-        dealer.receiveCard(Card(CLOVER, n1), Card(CLOVER, n2))
+        dealer.receiveCard(Card(CLOVER, n1))
 
         // when
         val actual = dealer.isBust()
@@ -69,20 +68,7 @@ class DealerTest {
 
         assertAll(
             { assertThat(actual.size).isEqualTo(1) },
-            { assertThat(actual).isEqualTo(listOf(Card(HEART, CardNumber.TWO))) },
+            { assertThat(actual).isEqualTo(listOf(Card(HEART, CardNumber.KING))) },
         )
-    }
-
-    @CsvSource(value = ["THREE,THREE,true", "KING,QUEEN,false"])
-    @ParameterizedTest
-    fun `딜러는 카드의 총합이 17이상인지 체크한다 (카드를 더 받을 수 있는지 체크한다)`(n1: CardNumber, n2: CardNumber, expected: Boolean) {
-        // given
-        dealer.receiveCard(Card(HEART, n1))
-        dealer.receiveCard(Card(HEART, n2))
-
-        // when
-        val actual = dealer.canReceiveMoreCard()
-
-        assertThat(actual).isEqualTo(expected)
     }
 }
