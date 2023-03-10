@@ -1,5 +1,8 @@
 package blackjack.domain.participants
 
+import blackjack.domain.result.Outcome
+import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
@@ -29,5 +32,11 @@ class MoneyTest {
         assertThrows<IllegalArgumentException> {
             Money(money)
         }
+    }
+
+    @Test
+    fun `게임에서 블랙잭일 경우 10000원을 베팅하면 25000원의 금액 반환`() {
+        val bettingMoney = Money(10000)
+        assertThat(bettingMoney.getProfits(Outcome.BLACKJACK).value).isEqualTo(25000)
     }
 }

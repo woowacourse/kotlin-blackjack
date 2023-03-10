@@ -2,8 +2,8 @@ package blackjack.domain.result
 
 import blackjack.domain.participants.User
 
-enum class Outcome {
-    WIN, DRAW, LOSE;
+enum class Outcome(val ratio: Double) {
+    WIN(1.0), DRAW(0.0), LOSE(-1.0), BLACKJACK(1.5);
 
     companion object {
         private const val BLACKJACK_NUMBER = 21
