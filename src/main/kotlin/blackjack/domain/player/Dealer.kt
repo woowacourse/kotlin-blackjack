@@ -7,25 +7,12 @@ class Dealer(name: String = "딜러", cards: Cards = Cards()) : Player(name, car
 
     override fun checkProvideCardPossible(): Boolean = (cards.sumCardsNumber() <= PARTICIPANT_MORE_CARD_CRITERIA)
 
-    fun calculateResults(participants: Participants): DealerResult {
+    fun calculateResults(participantsResults: ParticipantsResults): DealerResult {
         val results: MutableList<Result> = mutableListOf()
-        participants.values.forEach { participant ->
-            results.add(calculateResult(participant))
+        participantsResults.results.map { participantResult ->
+            results.add(participantResult.result.reverse())
         }
         return DealerResult(results)
-    }
-
-    private fun calculateResult(participant: Participant): Result {
-        return when {
-            (participant.isBurst) -> Result.WIN
-            (isBurst) -> Result.LOSE
-            (isBlackjack and !participant.isBlackjack) -> Result.WIN
-            (!isBlackjack and participant.isBlackjack) -> Result.LOSE
-            (isBlackjack and participant.isBlackjack) -> Result.DRAW
-            (participant.cards.sumCardsNumber() > cards.sumCardsNumber()) -> Result.LOSE
-            (participant.cards.sumCardsNumber() < cards.sumCardsNumber()) -> Result.WIN
-            else -> Result.DRAW
-        }
     }
 
     companion object {

@@ -4,7 +4,6 @@ import blackjack.domain.Result
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
 import blackjack.domain.card.CardShape
-import blackjack.domain.card.Cards
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -18,81 +17,41 @@ class DealerTest {
     }
 
     @Test
-    fun `플레이어1은 Burst 플레이어2는 20 딜러는 17 일때, 딜러의 승패를 계산하면, 1승 1패이다`() {
+    fun `플레이어들의 승패가 1패 1승일때, 딜러의 승패를 계산하면, 1승 1패이다`() {
         // given
-        val dealer = Dealer(
-            cards = Cards(
-                listOf(
-                    Card(CardNumber.EIGHT, CardShape.DIAMOND),
-                    Card(CardNumber.NINE, CardShape.DIAMOND)
-                )
-            )
-        )
-        val player1 = Participant(
-            "aaa",
-            cards = Cards(
-                listOf(
-                    Card(CardNumber.EIGHT, CardShape.DIAMOND),
-                    Card(CardNumber.SEVEN, CardShape.HEART),
-                    Card(CardNumber.NINE, CardShape.DIAMOND)
-                )
-            )
-        )
-
-        val player2 = Participant(
-            "aaa",
-            cards = Cards(
-                listOf(
-                    Card(CardNumber.KING, CardShape.DIAMOND),
-                    Card(CardNumber.QUEEN, CardShape.HEART)
-                )
-            )
-        )
+        val participantsResults =
+            ParticipantsResults(listOf(ParticipantResult("aaa", Result.LOSE), ParticipantResult("bbb", Result.WIN)))
 
         // when
-        val actual = dealer.calculateResults(Participants(listOf(player1, player2)))
+        val actual = Dealer().calculateResults(participantsResults)
 
         // then
         assertThat(actual.results).isEqualTo(listOf(Result.WIN, Result.LOSE))
     }
 
     @Test
-    fun `플레이어1은 17 플레이어2는 20 딜러는 Burst 일때, 딜러의 승패를 계산하면, 2패이다`() {
+    fun `플레이어들의 승패가 2승일 때, 딜러의 승패를 계산하면, 2패이다`() {
         // given
-        val dealer = Dealer(
-            cards = Cards(
-                listOf(
-                    Card(CardNumber.QUEEN, CardShape.DIAMOND),
-                    Card(CardNumber.KING, CardShape.DIAMOND),
-                    Card(CardNumber.THREE, CardShape.SPADE)
-                )
-            )
-        )
-        val player1 = Participant(
-            "aaa",
-            cards = Cards(
-                listOf(
-                    Card(CardNumber.EIGHT, CardShape.DIAMOND),
-                    Card(CardNumber.NINE, CardShape.DIAMOND)
-                )
-            )
-        )
-
-        val player2 = Participant(
-            "aaa",
-            cards = Cards(
-                listOf(
-                    Card(CardNumber.EIGHT, CardShape.HEART),
-                    Card(CardNumber.QUEEN, CardShape.SPADE),
-                    Card(CardNumber.TWO, CardShape.DIAMOND)
-                )
-            )
-        )
+        val participantsResults =
+            ParticipantsResults(listOf(ParticipantResult("aaa", Result.WIN), ParticipantResult("bbb", Result.WIN)))
 
         // when
-        val actual = dealer.calculateResults(Participants(listOf(player1, player2)))
+        val actual = Dealer().calculateResults(participantsResults)
 
         // then
         assertThat(actual.results).isEqualTo(listOf(Result.LOSE, Result.LOSE))
+    }
+
+    @Test
+    fun `플레이어들의 승패가 1무 1승일때, 딜러의 승패를 계산하면, 1무 1패이다`() {
+        // given
+        val participantsResults =
+            ParticipantsResults(listOf(ParticipantResult("aaa", Result.DRAW), ParticipantResult("bbb", Result.WIN)))
+
+        // when
+        val actual = Dealer().calculateResults(participantsResults)
+
+        // then
+        assertThat(actual.results).isEqualTo(listOf(Result.DRAW, Result.LOSE))
     }
 }
