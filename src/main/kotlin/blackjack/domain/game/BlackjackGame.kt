@@ -8,19 +8,19 @@ import blackjack.domain.participant.Player
 class BlackjackGame {
     private val deck: Deck = Deck.create()
 
-    fun startGame(participant: BlackjackParticipant, output: (Dealer, List<Player>) -> Unit) {
+    fun startGame(participant: BlackjackParticipant, outcome: (Dealer, List<Player>) -> Unit) {
         dealCards(participant)
-        output(participant.dealer, participant.players)
+        outcome(participant.dealer, participant.players)
     }
 
-    fun runPlayer(participant: BlackjackParticipant, input: (String) -> (Boolean), output: (Player) -> Unit) {
-        participant.players.forEach { decideHitOrStand(it, input, output) }
+    fun runPlayer(participant: BlackjackParticipant, isHit: (String) -> (Boolean), outcome: (Player) -> Unit) {
+        participant.players.forEach { decideHitOrStand(it, isHit, outcome) }
     }
 
-    fun runDealer(dealer: Dealer, output: (String) -> Unit) {
+    fun runDealer(dealer: Dealer, outcome: (String) -> Unit) {
         if (dealer.shouldHit()) {
             dealer.receive(deck.draw())
-            output(dealer.name)
+            outcome(dealer.name)
         }
     }
 
@@ -31,10 +31,10 @@ class BlackjackGame {
         }
     }
 
-    private fun decideHitOrStand(player: Player, input: (String) -> (Boolean), output: (Player) -> Unit) {
-        while (player.canHit() && input(player.name)) {
+    private fun decideHitOrStand(player: Player, isHit: (String) -> (Boolean), outcome: (Player) -> Unit) {
+        while (player.canHit() && isHit(player.name)) {
             player.receive(deck.draw())
-            output(player)
+            outcome(player)
         }
     }
 }
