@@ -28,7 +28,7 @@ class BlackjackController() {
     }
 
     private fun printWinningResult(blackjackGame: BlackjackGame) {
-        val playerResult = blackjackGame.getPlayerWinningResult()
+        val playerResult = blackjackGame.getPlayersWinningResult()
         val dealerResult = blackjackGame.judgeDealerResult(playerResult)
         OutputView.printWinningResult(dealerResult, playerResult)
     }

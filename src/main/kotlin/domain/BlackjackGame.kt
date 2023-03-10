@@ -18,9 +18,7 @@ class BlackjackGame(
         initPlayers(names)
         deck.makeRandomDeck(Card.getAllCard().shuffled())
         dealer.makeStartDeck(deck)
-        players.getPlayers().forEach {
-            it.makeStartDeck(deck)
-        }
+        _players.makeStartDecks(deck)
     }
 
     private fun initPlayers(names: List<String>) {
@@ -41,11 +39,7 @@ class BlackjackGame(
         return dealer.isAvailableForPick()
     }
 
-    fun getPlayerWinningResult() = mutableMapOf<String, Result>().apply {
-        players.getPlayers().forEach {
-            this[it.name] = it.judgeResult(dealer.cards)
-        }
-    }
+    fun getPlayersWinningResult() = _players.getPlayersWinningResult(dealer)
 
     fun judgeDealerResult(playersResult: Map<String, Result>): List<Result> =
         playersResult.map { it.value.reverseResult() }
