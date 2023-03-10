@@ -9,6 +9,8 @@ class Cards(vararg cards: Card) {
         _items.add(card)
     }
 
+    fun isGreaterOrEqualsThan(size: Int): Boolean = _items.size >= size
+
     fun getFirstCard(): Card = _items.first()
 
     fun calculateTotalScore(): Int {
@@ -24,6 +26,10 @@ class Cards(vararg cards: Card) {
     private fun isOverBlackjack(score: Int): Boolean = score > BLACKJACK_SCORE
 
     fun isStay(): Boolean = calculateTotalScore() >= DEALER_HIT_MAX_SCORE
+
+    fun isBlackjack(): Boolean = calculateTotalScore() == BLACKJACK_SCORE
+
+    fun isBust(): Boolean = calculateTotalScore() > BLACKJACK_SCORE
 
     private fun hasAce(): Boolean = _items.any(Card::isAce)
 
