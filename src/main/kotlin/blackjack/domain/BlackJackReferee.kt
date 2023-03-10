@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import blackjack.domain.card.CardsState
 import blackjack.domain.dealer.Dealer
 import blackjack.domain.gameResult.PlayerGameResult
 import blackjack.domain.gameResult.PlayerGameResults
@@ -9,8 +10,12 @@ import blackjack.domain.player.Player
 
 class BlackJackReferee {
 
-    fun judgeTotalGameResults(players: List<Player>, dealer: Dealer): TotalGameResult {
-        val playerGameResults = judgePlayerGameResults(players, dealer)
+    fun judgeTotalGameResults(
+        players: List<Player>,
+        dealerCardsState: CardsState
+    ): TotalGameResult {
+
+        val playerGameResults = judgePlayerGameResults(players, dealerCardsState)
         val dealerGameResult = judgeDealerGameResults(playerGameResults)
 
         return TotalGameResult(
@@ -19,15 +24,22 @@ class BlackJackReferee {
         )
     }
 
-    private fun judgePlayerGameResults(players: List<Player>, dealer: Dealer): PlayerGameResults {
+    private fun judgePlayerGameResults(
+        players: List<Player>,
+        dealerCardsState: CardsState
+    ): PlayerGameResults {
+
         val playerGameResults = players.map { player ->
-            PlayerGameResult.of(player, dealer)
+            PlayerGameResult.of(player, dealerCardsState)
         }
 
         return PlayerGameResults(playerGameResults)
     }
 
-    private fun judgeDealerGameResults(playerProfitResults: PlayerGameResults): ProfitMoney {
+    private fun judgeDealerGameResults(
+        playerProfitResults: PlayerGameResults
+    ): ProfitMoney {
+
         val totalProfitMoney = playerProfitResults.getPlayersTotalProfit()
 
         return !totalProfitMoney

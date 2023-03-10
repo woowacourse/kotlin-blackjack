@@ -96,7 +96,7 @@ object OutputView {
         println(
             DEALER_GAME_RESULTS.format(totalGameResult.dealerGameResults.value)
         )
-        // TODO: playerGameResults.playerGameResults? 개선해보자
+
         totalGameResult.playerGameResults.playerGameResults.forEach { playerGameResult ->
             println(PLAYER_GAME_RESULT.format(playerGameResult.playerName, playerGameResult.profitMoney.value))
         }

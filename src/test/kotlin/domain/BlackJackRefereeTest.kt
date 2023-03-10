@@ -64,7 +64,7 @@ class BlackJackRefereeTest {
 
         val blackJackReferee = BlackJackReferee()
 
-        val actual = blackJackReferee.judgeTotalGameResults(listOf(woogi, ring, sunny), dealer)
+        val actual = blackJackReferee.judgeTotalGameResults(listOf(woogi, ring, sunny), dealer.cards.state)
 
         assertThat(actual).isEqualTo(
             TotalGameResult(

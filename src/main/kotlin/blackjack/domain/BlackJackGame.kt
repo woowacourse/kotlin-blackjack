@@ -10,6 +10,7 @@ class BlackJackGame(
     private val blackJackReferee: BlackJackReferee = BlackJackReferee(),
 ) {
 
+    //todo: players를 컬렉션으로 만들어야할까?
     lateinit var players: List<Player>
         private set
 
@@ -37,5 +38,6 @@ class BlackJackGame(
         dealer.drawCard(checkDrawResult)
     }
 
-    fun judgeGameResults(): TotalGameResult = blackJackReferee.judgeTotalGameResults(players, dealer)
+    fun judgeGameResults(): TotalGameResult =
+        blackJackReferee.judgeTotalGameResults(players, dealer.cards.state)
 }

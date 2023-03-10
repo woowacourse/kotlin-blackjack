@@ -5,7 +5,6 @@ import blackjack.domain.card.CardNumber
 import blackjack.domain.card.Cards
 import blackjack.domain.card.Shape
 import blackjack.domain.dealer.Dealer
-import blackjack.domain.dealer.DrawResult
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -21,10 +20,11 @@ class DealerTest {
                 )
             )
         )
+        dealer.drawCard()
 
         assertThat(
-            dealer.drawCard()
-        ).isEqualTo(DrawResult.Success)
+            dealer.cards.isDrawnNothing
+        ).isFalse
     }
 
     @Test
@@ -37,9 +37,11 @@ class DealerTest {
                 )
             )
         )
+        dealer.drawCard()
+
 
         assertThat(
-            dealer.drawCard()
-        ).isEqualTo(DrawResult.Failure)
+            dealer.cards.isDrawnNothing
+        ).isTrue
     }
 }

@@ -14,8 +14,7 @@ class BlackJackGameTest {
         blackJackGame = BlackJackGame()
 
         blackJackGame.initPlayers(
-            playerNames = listOf("woogi", "james", "ring", "scott", "sunny"),
-            battingMoneys = listOf(1000, 1000, 1000, 1000, 1000)
+            playerDataSources = listOf("woogi" to 1000, "james" to 1000, "ring" to 1000, "scott" to 1000, "sunny" to 1000)
         )
     }
 
