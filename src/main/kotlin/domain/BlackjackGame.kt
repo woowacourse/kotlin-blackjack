@@ -40,11 +40,21 @@ class BlackjackGame(
         }
     }
 
-    fun startBlackjackGame(startGame: (List<Player>, Dealer) -> Unit) {
-        startGame(players, dealer)
+    fun playsTurn(
+        wantPickCard: (Player) -> Boolean,
+        onPickCard: (Player) -> Unit,
+        onDealerPickCard: () -> Unit
+    ) {
+        playsPlayerTurn(wantPickCard, onPickCard)
+
+        while (pickDealerCardIfPossible())
+            onDealerPickCard()
     }
 
-    fun playsTurn(wantPickCard: (Player) -> Boolean, onPickCard: (Player) -> Unit) {
+    private fun playsPlayerTurn(
+        wantPickCard: (Player) -> Boolean,
+        onPickCard: (Player) -> Unit
+    ) {
         players.forEach { player ->
             repeatPickCard(
                 player,
@@ -64,11 +74,6 @@ class BlackjackGame(
             if (answer) player.ownCards.pickCard(deck.giveCard()) else return
             onPickCard()
         }
-    }
-
-    fun dealerPickCard(onPickCard: () -> Unit) {
-        while (pickDealerCardIfPossible())
-            onPickCard()
     }
 
     private fun pickDealerCardIfPossible(): Boolean {

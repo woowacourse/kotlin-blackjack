@@ -11,9 +11,8 @@ class BlackjackController {
         val names = insertNames()
         val blackjackGame = BlackjackGame(names)
         blackjackGame.getBetAmount(InputView::inputBetAmount)
-        blackjackGame.startBlackjackGame(OutputView::printBlackjackSetting)
-        blackjackGame.playsTurn(InputView::inputRepeatGetCard, OutputView::printParticipantCards)
-        blackjackGame.dealerPickCard(OutputView::printDealerUnder16)
+        OutputView.printBlackjackSetting(blackjackGame.players, blackjackGame.dealer)
+        blackjackGame.playsTurn(InputView::inputRepeatGetCard, OutputView::printParticipantCards, OutputView::printDealerUnder16)
         blackjackGame.showCardResult(OutputView::printCardResult)
         blackjackGame.showWinningResult(OutputView::printProfitResult)
     }
