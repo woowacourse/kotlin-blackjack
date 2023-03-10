@@ -1,9 +1,9 @@
 package blackjack.view
 
-import blackjack.domain.BetMoney
-import blackjack.domain.Money
-import blackjack.domain.Participant
-import blackjack.domain.Player
+import blackjack.domain.money.BetMoney
+import blackjack.domain.money.Money
+import blackjack.domain.participant.Participant
+import blackjack.domain.participant.Player
 
 object InputView {
     private const val PLAYER_NAME_DELIMITER = ","

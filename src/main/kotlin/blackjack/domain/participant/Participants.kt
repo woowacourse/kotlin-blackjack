@@ -1,4 +1,9 @@
-package blackjack.domain
+package blackjack.domain.participant
+
+import blackjack.domain.card.CardDeck
+import blackjack.domain.result.CardResult
+import blackjack.domain.result.GameResult
+import blackjack.domain.result.MatchResult
 
 class Participants(private val participants: List<Participant>) {
     init {

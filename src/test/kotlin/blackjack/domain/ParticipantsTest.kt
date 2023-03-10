@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import blackjack.domain.participant.Participant
+import blackjack.domain.participant.Participants
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 

@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.money
 
 class BetMoney(value: Int) : Money(value) {
     init {
