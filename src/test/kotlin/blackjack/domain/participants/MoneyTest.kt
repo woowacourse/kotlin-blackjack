@@ -22,4 +22,12 @@ class MoneyTest {
             Money(money)
         }
     }
+
+    @ParameterizedTest
+    @ValueSource(ints = [12345, 120])
+    fun `돈은 1000원으로 나누어떨어지지 않으면 예외가 발생한다`(money: Int) {
+        assertThrows<IllegalArgumentException> {
+            Money(money)
+        }
+    }
 }
