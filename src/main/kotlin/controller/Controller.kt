@@ -20,8 +20,7 @@ class Controller(private val inputView: InputView, private val outputView: Outpu
         outputView.printNoticeDistributeCards(participants)
         participants.players.forEach { cardGame.drawCard(it, outputView::printPlayerStatus, inputView::readYesOrNo) }
         cardGame.drawCard(participants.dealer, outputView::printDealerGetCard) { true }
-        outputView.printAllPlayerStatusResult(participants.all)
-        outputView.printGameResult(participants)
+        outputView.printAllPlayerStatusResult(participants)
     }
 
     private fun readPlayersName(): Names {

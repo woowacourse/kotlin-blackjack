@@ -37,15 +37,16 @@ class OutputView {
         )
     }
 
-    fun printAllPlayerStatusResult(participants: List<Participant>) {
+    fun printAllPlayerStatusResult(participants: Participants) {
         println()
         participants.forEach {
             print(MESSAGE_PARTICIPANT_STATUS.format(it.name.value, it.cards.getCardsFormat()))
             println(MESSAGE_POINT_RESULT.format(it.cards.sum()))
         }
+        printGameResult(participants)
     }
 
-    fun printGameResult(participants: Participants) {
+    private fun printGameResult(participants: Participants) {
         val gameResult = GameResult(participants)
         val playerResult = gameResult.playersResult
         val dealerResult = gameResult.dealerResult
