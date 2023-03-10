@@ -10,6 +10,7 @@ import domain.card.CardNumber.TEN
 import domain.card.CardNumber.THREE
 import domain.card.CardNumber.TWO
 import domain.card.CardShape.CLOVER
+import domain.card.CardShape.HEART
 
 object Dummy {
     val CLOVER_ACE = Card(CLOVER, ACE)
@@ -22,4 +23,5 @@ object Dummy {
     val CLOVER_SIX = Card(CLOVER, SIX)
     val CLOVER_TEN = Card(CLOVER, TEN)
     val CLOVER_KING = Card(CLOVER, KING)
+    val HEART_KING = Card(HEART, KING)
 }
