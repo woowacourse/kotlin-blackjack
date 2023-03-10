@@ -12,11 +12,15 @@
         - [x] 다음 상태가 Hit이 될 수 있다.
         - [x] 다음 상태가 Stay가 될 수 있다.
         - [x] 다음 상태가 BlackJack이 될 수 있다.
+        - [x] isFinished가 false이다.
+        - [x] profit을 구할 수 없다.
     - Hit
-        - [ ] 카드를 받는다.
-        - [ ] 다음 상태가 Hit이 될 수 있다.
-        - [ ] 다음 상태가 Bust가 될 수 있다.
-        - [ ] 다음 상태가 Stay가 될 수 있다.
+        - [x] 카드를 받는다.
+        - [x] 다음 상태가 Hit이 될 수 있다.
+        - [x] 다음 상태가 Bust가 될 수 있다.
+        - [x] 다음 상태가 Stay가 될 수 있다.
+        - [x] isFinished가 false이다.
+        - [x] profit을 구할 수 없다.
     - Stay
         - [ ] 수익률을 계산한다.
     - BlackJack
