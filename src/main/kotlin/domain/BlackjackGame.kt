@@ -1,5 +1,6 @@
 package domain
 
+import domain.card.Card
 import domain.deck.Deck
 import domain.gamer.Dealer
 import domain.gamer.Player
@@ -15,7 +16,7 @@ class BlackjackGame(
     val players: Players get() = _players
     fun startGame(names: List<String>) {
         initPlayers(names)
-        deck.makeRandomDeck()
+        deck.makeRandomDeck(Card.getAllCard().shuffled())
         dealer.makeStartDeck(deck)
         players.getPlayers().forEach {
             it.makeStartDeck(deck)

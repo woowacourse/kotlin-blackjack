@@ -4,8 +4,8 @@ import domain.card.Card
 
 class Deck(private var deck: List<Card>) {
 
-    fun makeRandomDeck() {
-        deck = deck.shuffled()
+    fun makeRandomDeck(randomDeck: List<Card>) {
+        deck = randomDeck
         cardPosition = 0
     }
 
