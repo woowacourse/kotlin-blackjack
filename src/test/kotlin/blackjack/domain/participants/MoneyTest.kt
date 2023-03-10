@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.ValueSource
 
 class MoneyTest {
@@ -34,27 +35,10 @@ class MoneyTest {
         }
     }
 
-    @Test
-    fun `게임에서 블랙잭일 경우 10000원을 베팅하면 25000원의 금액 반환`() {
+    @ParameterizedTest
+    @CsvSource(value = ["BLACKJACK, 25000", "WIN, 20000", "DRAW, 10000", "LOSE, 0"])
+    fun `게임 OutCome에 따라 베팅금액에 대해 얻을 수 있는 금액 반환`(outcome: Outcome, money: Int) {
         val bettingMoney = Money(10000)
-        assertThat(bettingMoney.getProfits(Outcome.BLACKJACK)).isEqualTo(25000)
-    }
-
-    @Test
-    fun `게임에서 이겼을 경우 10000원을 베팅하면 20000원의 금액 반환`() {
-        val bettingMoney = Money(10000)
-        assertThat(bettingMoney.getProfits(Outcome.WIN)).isEqualTo(20000)
-    }
-
-    @Test
-    fun `게임에서 비겼을 경우 10000원을 베팅하면 10000원의 금액 반환`() {
-        val bettingMoney = Money(10000)
-        assertThat(bettingMoney.getProfits(Outcome.DRAW)).isEqualTo(10000)
-    }
-
-    @Test
-    fun `게임에서 졌을 경우 10000원을 베팅하면 0원의 금액 반환`() {
-        val bettingMoney = Money(10000)
-        assertThat(bettingMoney.getProfits(Outcome.LOSE)).isEqualTo(0)
+        assertThat(bettingMoney.getProfits(outcome)).isEqualTo(money)
     }
 }
