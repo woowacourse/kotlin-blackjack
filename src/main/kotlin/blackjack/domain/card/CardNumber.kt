@@ -19,14 +19,16 @@ enum class CardNumber(val value: Int) {
 
     companion object {
 
-        private const val PLUS_SCORE_FOR_ACE = 10
+        private const val ADDITION_SCORE_FOR_ACE = 10
+        private const val STANDARD_SCORE = 11
+        private const val ZERO = 0
 
         fun decideAceValue(score: Int): Int {
-            if (score + PLUS_SCORE_FOR_ACE <= 21) {
-                return score + PLUS_SCORE_FOR_ACE
+            if (score <= STANDARD_SCORE) {
+                return ADDITION_SCORE_FOR_ACE
             }
 
-            return score
+            return ZERO
         }
     }
 }

@@ -8,6 +8,9 @@ class Cards(
     val cards: List<Card>
         get() = _cards.toList()
 
+    val isDrawnNothing: Boolean
+        get() = cards.size == INITIAL_CARDS_SIZE
+
     var state: CardsState = CardsState.Running(getTotalCardsScore())
         private set
 
@@ -21,7 +24,6 @@ class Cards(
 
     fun draw(card: Card = Card.draw()) {
         _cards.add(card)
-
         updateCardsState()
     }
 
@@ -36,8 +38,7 @@ class Cards(
     fun getMinimumCardsScore(): Int = cards.sumOf { card -> card.number.value }
 
     fun getTotalCardsScore(): Int {
-        val minimumScore = cards
-            .sumOf { card -> card.number.value }
+        val minimumScore = getMinimumCardsScore()
 
         if (cards.any { card -> card.number == CardNumber.A }) {
             return CardNumber.decideAceValue(minimumScore)
@@ -46,13 +47,9 @@ class Cards(
         return minimumScore
     }
 
-    fun checkCardsState(cardsState: CardsState): Boolean = state == cardsState
-
-    fun isDrawnNothing() = cards.size == 2
-
     companion object {
 
-        const val INITIAL_CARDS_SIZE = 2
+        private const val INITIAL_CARDS_SIZE = 2
         private const val BLACKJACK_SCORE = 21
     }
 }
