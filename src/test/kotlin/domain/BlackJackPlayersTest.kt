@@ -26,7 +26,8 @@ class BlackJackPlayersTest {
                 Player("james", 1000),
                 Player("ring", 1000),
                 Player("scott", 1000),
-                Player("sunny", 1000))
+                Player("sunny", 1000)
+            )
         )
 
         blackJackPlayers.drawAdditionalCardsForPlayers(

@@ -37,7 +37,6 @@ class RunningCaseTest {
         assertThat(actual).isEqualTo(RunningCase.WIN)
     }
 
-
     @Test
     fun `dealer의 카드가 Running 상태이고 delaer점수가 플레이어의 점수보다 높을때 패배한다`() {
         val actual = RunningCase.valueOf(
@@ -48,7 +47,6 @@ class RunningCaseTest {
         assertThat(actual).isEqualTo(RunningCase.LOSE)
     }
 
-
     @Test
     fun `dealer의 카드가 Running 상태이고 delaer점수가 플레이어의 점수와 같을때 무승부이다`() {
         val actual = RunningCase.valueOf(
@@ -58,6 +56,4 @@ class RunningCaseTest {
 
         assertThat(actual).isEqualTo(RunningCase.DRAW)
     }
-
-
 }

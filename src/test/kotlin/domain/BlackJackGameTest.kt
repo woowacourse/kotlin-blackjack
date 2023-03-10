@@ -1,11 +1,11 @@
-//package domain
+// package domain
 //
-//import blackjack.domain.BlackJackGame
-//import org.assertj.core.api.Java6Assertions.assertThat
-//import org.junit.jupiter.api.BeforeEach
-//import org.junit.jupiter.api.Test
+// import blackjack.domain.BlackJackGame
+// import org.assertj.core.api.Java6Assertions.assertThat
+// import org.junit.jupiter.api.BeforeEach
+// import org.junit.jupiter.api.Test
 //
-//class BlackJackGameTest {
+// class BlackJackGameTest {
 //
 //    private lateinit var blackJackGame: BlackJackGame
 //
@@ -28,4 +28,4 @@
 //            blackJackGame.players.all { player -> player.cards.getMinimumCardsScore() >= 21 }
 //        ).isTrue
 //    }
-//}
+// }

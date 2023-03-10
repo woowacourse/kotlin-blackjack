@@ -13,9 +13,7 @@ class BlackJackGame(
     lateinit var blackJackPlayers: BlackJackPlayers
         private set
 
-    fun initPlayers(
-        playerDataSources: List<Pair<String, Int>>,
-    ) {
+    fun initPlayers(playerDataSources: List<Pair<String, Int>>) {
         val players = playerDataSources.map { (playerName, battingMoney) ->
             Player(playerName, battingMoney)
         }
@@ -43,5 +41,4 @@ class BlackJackGame(
 
         return TotalGameResult(playersGameResults, dealerGameResult)
     }
-
 }

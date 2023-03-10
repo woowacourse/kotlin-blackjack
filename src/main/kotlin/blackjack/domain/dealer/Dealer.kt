@@ -1,7 +1,6 @@
 package blackjack.domain.dealer
 
 import blackjack.domain.card.Cards
-import blackjack.domain.gameResult.PlayerGameResults
 import blackjack.domain.gameResult.ProfitMoney
 import blackjack.domain.player.DrawState
 
@@ -27,7 +26,7 @@ class Dealer(
         return checkDrawResult(DrawResult.Failure)
     }
 
-    //todo test
+    // todo test
     fun judgeDealerGameResults(
         playersTotalProfitMoney: ProfitMoney
     ): ProfitMoney {

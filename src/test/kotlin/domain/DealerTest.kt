@@ -40,14 +40,13 @@ class DealerTest {
         )
         dealer.drawCard()
 
-
         assertThat(
             dealer.cards.isDrawnNothing
         ).isTrue
     }
 
     @Test
-    fun `플레이어가 총 10000의 이득을 보았을때 딜러는 10000의 손해를 본다`(){
+    fun `플레이어가 총 10000의 이득을 보았을때 딜러는 10000의 손해를 본다`() {
         val dealer = Dealer()
 
         val actual = dealer.judgeDealerGameResults(ProfitMoney(10000))
