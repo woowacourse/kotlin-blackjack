@@ -27,13 +27,20 @@ object InputView {
         return requestSpecificInput(NUMERIC_ERROR_MSG, String::toIntOrNull)
     }
 
-    fun requestPlayersName(): List<String> {
+    fun requestPlayersInput(): List<Pair<String, Int>> {
+        val names = requestPlayersName()
+        val moneys = requestPlayersBattingMoney(names)
+
+        return names.zip(moneys)
+    }
+
+    private fun requestPlayersName(): List<String> {
         println(REQUEST_PLAYERS_NAME_MSG)
 
         return readln().split(TOKENIZER).map(String::trim)
     }
 
-    fun requestPlayersBattingMoney(playerNames: List<String>): List<Int> {
+    private fun requestPlayersBattingMoney(playerNames: List<String>): List<Int> {
         val battingMoneys = playerNames.map { playerName ->
 
             requestNumericInput(REQUEST_PLAYERS_BATTING_MONEY.format(playerName))

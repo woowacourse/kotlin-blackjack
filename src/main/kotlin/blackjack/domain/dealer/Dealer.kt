@@ -15,14 +15,14 @@ class Dealer(
         return DrawState.POSSIBLE
     }
 
-    fun drawCard(): DrawResult {
+    fun drawCard(checkDrawResult: (DrawResult) -> Unit) {
         if (isPossibleToDrawAdditionalCard() == DrawState.POSSIBLE) {
             cards.draw()
 
-            return DrawResult.Success
+            return checkDrawResult(DrawResult.Success)
         }
 
-        return DrawResult.Failure
+        return checkDrawResult(DrawResult.Failure)
     }
 
     companion object {

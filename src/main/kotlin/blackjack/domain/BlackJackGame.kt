@@ -14,11 +14,10 @@ class BlackJackGame(
         private set
 
     fun initPlayers(
-        playerNames: List<String>,
-        battingMoneys: List<Int>,
+        playerDataSources: List<Pair<String, Int>>,
     ) {
-        players = playerNames.mapIndexed { playerIndex, playerName ->
-            Player(playerName, battingMoneys[playerIndex])
+        players = playerDataSources.map { playerData ->
+            Player(playerData.first, playerData.second)
         }
     }
 
@@ -34,10 +33,8 @@ class BlackJackGame(
         }
     }
 
-    fun drawAdditionalCardsForDealer(): DrawResult {
-        val isDealerDrawn = dealer.drawCard()
-
-        return isDealerDrawn
+    fun drawAdditionalCardsForDealer(checkDrawResult: (DrawResult) -> Unit){
+        dealer.drawCard(checkDrawResult)
     }
 
     fun judgeGameResults(): TotalGameResult = blackJackReferee.judgeTotalGameResults(players, dealer)

@@ -2,6 +2,7 @@ package blackjack.controller
 
 import blackjack.domain.BlackJackGame
 import blackjack.view.InputView
+import blackjack.view.InputView.requestPlayersInput
 import blackjack.view.OutputView
 
 // TODO: View의 호출을 최소한으로 줄여보자.
@@ -20,10 +21,7 @@ class BlackJackGameController(
     }
 
     private fun initPlayers() {
-        val playersName = InputView.requestPlayersName()
-        val battingMoneys = InputView.requestPlayersBattingMoney(playersName)
-
-        blackJackGame.initPlayers(playersName, battingMoneys)
+        blackJackGame.initPlayers(requestPlayersInput())
         OutputView.printCardDividingMessage(blackJackGame.dealer, blackJackGame.players)
     }
 
@@ -32,7 +30,7 @@ class BlackJackGameController(
             isPlayerWantedAdditionalCards = InputView::requestAdditionalDraw,
             checkCurrentCards = OutputView::printPlayerCurrentCards
         )
-        OutputView.printIsDealerReceivedCard(blackJackGame.drawAdditionalCardsForDealer())
+        blackJackGame.drawAdditionalCardsForDealer(OutputView::printIsDealerReceivedCard)
     }
 
     private fun checkResult() {
