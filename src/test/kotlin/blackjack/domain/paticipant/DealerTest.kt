@@ -101,6 +101,75 @@ class DealerTest {
     }
 
     @Test
+    fun `플레이어와 딜러 모두 블랙잭이면 무승부이다`() {
+        val player = BettingPlayer(Player("glo"), 0)
+        val deck = CardDeck(
+            listOf(
+                Card(CardNumber.QUEEN, Suit.SPADE),
+                Card(CardNumber.ACE, Suit.SPADE)
+            )
+        )
+        with(player) {
+            draw(deck)
+            draw(deck)
+        }
+
+        with(dealer) {
+            addCard(Card(CardNumber.JACK, Suit.HEART))
+            addCard(Card(CardNumber.ACE, Suit.HEART))
+        }
+
+        assertThat(dealer judge player).isEqualTo(GameResult.DRAW)
+    }
+
+    @Test
+    fun `딜러만 블랙잭이면 플레이어는 패배한다`() {
+        val player = BettingPlayer(Player("glo"), 0)
+        val deck = CardDeck(
+            listOf(
+                Card(CardNumber.NINE, Suit.SPADE),
+                Card(CardNumber.TWO, Suit.SPADE)
+            )
+        )
+        with(player) {
+            draw(deck)
+            draw(deck)
+        }
+
+        with(dealer) {
+            addCard(Card(CardNumber.JACK, Suit.SPADE))
+            addCard(Card(CardNumber.ACE, Suit.SPADE))
+        }
+
+        assertThat(dealer judge player).isEqualTo(GameResult.LOSE)
+    }
+
+    @Test
+    fun `플레이어와 딜러 모두 버스트면 무승부이다`() {
+        val player = BettingPlayer(Player("glo"), 0)
+        val deck = CardDeck(
+            listOf(
+                Card(CardNumber.QUEEN, Suit.SPADE),
+                Card(CardNumber.KING, Suit.SPADE),
+                Card(CardNumber.TWO, Suit.SPADE)
+            )
+        )
+        with(player) {
+            draw(deck)
+            draw(deck)
+            draw(deck)
+        }
+
+        with(dealer) {
+            addCard(Card(CardNumber.JACK, Suit.HEART))
+            addCard(Card(CardNumber.KING, Suit.HEART))
+            addCard(Card(CardNumber.TWO, Suit.HEART))
+        }
+
+        assertThat(dealer judge player).isEqualTo(GameResult.DRAW)
+    }
+
+    @Test
     fun `플레이어가 21점을 초과하면 패배한다`() {
         val player = BettingPlayer(Player("glo"), 0)
         val deck = CardDeck(
@@ -121,10 +190,32 @@ class DealerTest {
         with(dealer) {
             addCard(Card(CardNumber.JACK, Suit.SPADE))
             addCard(Card(CardNumber.QUEEN, Suit.SPADE))
-            addCard(Card(CardNumber.KING, Suit.SPADE))
         }
 
         assertThat(dealer judge player).isEqualTo(GameResult.LOSE)
+    }
+
+    @Test
+    fun `딜러만 21점을 초과하면 패배한다`() {
+        val player = BettingPlayer(Player("glo"), 0)
+        val deck = CardDeck(
+            listOf(
+                Card(CardNumber.NINE, Suit.SPADE),
+                Card(CardNumber.TWO, Suit.SPADE)
+            )
+        )
+        with(player) {
+            draw(deck)
+            draw(deck)
+        }
+
+        with(dealer) {
+            addCard(Card(CardNumber.JACK, Suit.SPADE))
+            addCard(Card(CardNumber.QUEEN, Suit.SPADE))
+            addCard(Card(CardNumber.KING, Suit.SPADE))
+        }
+
+        assertThat(dealer judge player).isEqualTo(GameResult.WIN)
     }
 
     @Test

@@ -17,4 +17,8 @@ abstract class Participant(val name: String) {
     fun getTotalScore(): Int = cards.calculateTotalScore()
 
     fun getCards(): List<Card> = cards.items
+
+    fun isBlackjack(): Boolean = cards.isBlackJack()
+
+    fun isBust(): Boolean = cards.isBust()
 }

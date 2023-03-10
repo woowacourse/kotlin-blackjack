@@ -19,5 +19,7 @@ class BettingPlayer(private val player: Player, val money: Int) {
 
     fun getName(): String = player.name
 
-    fun isBlackJack(): Boolean = player.isBlackJack()
+    fun isBlackJack(): Boolean = player.isBlackjack()
+
+    fun isBust(): Boolean = player.isBust()
 }

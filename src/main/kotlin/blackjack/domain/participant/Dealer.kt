@@ -1,6 +1,5 @@
 package blackjack.domain.participant
 
-import blackjack.domain.BlackJack.Companion.blackjackScore
 import blackjack.domain.card.Card
 import blackjack.domain.result.GameResult
 
@@ -12,13 +11,13 @@ class Dealer : Participant(DEALER_NAME) {
     infix fun judge(player: BettingPlayer): GameResult {
         val dealerScore = getTotalScore()
         val playerScore = player.getTotalScore()
-        val isBlackJack = player.isBlackJack()
 
         return when {
-            playerScore > blackjackScore() -> GameResult.LOSE
+            player.isBust() && isBust() -> GameResult.DRAW
             dealerScore == playerScore -> GameResult.DRAW
-            isBlackJack -> GameResult.BLACKJACK
-            dealerScore > blackjackScore() || playerScore > dealerScore -> GameResult.WIN
+            player.isBust() -> GameResult.LOSE
+            player.isBlackJack() -> GameResult.BLACKJACK
+            isBust() || playerScore > dealerScore -> GameResult.WIN
             else -> GameResult.LOSE
         }
     }
