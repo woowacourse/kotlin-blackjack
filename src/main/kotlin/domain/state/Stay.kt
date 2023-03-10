@@ -1,3 +1,5 @@
 package domain.state
 
-class Stay : State
+class Stay : Finished() {
+    override fun profit(bet: Double) = bet
+}
