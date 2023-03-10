@@ -5,9 +5,6 @@ import domain.card.CardNumber
 import domain.card.CardShape.CLOVER
 import domain.card.CardShape.DIAMOND
 import domain.card.CardShape.HEART
-import domain.card.HandOfCards
-import domain.card.strategy.GetAppropriateSum
-import domain.card.strategy.GetMinSum
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -46,7 +43,7 @@ class PlayerTest {
         player.receiveCard(Card(CLOVER, number1))
         player.receiveCard(Card(CLOVER, number2))
 
-        assertThat(player.getTotalCardNumber(GetAppropriateSum)).isEqualTo(sum)
+        assertThat(player.getTotal()).isEqualTo(sum)
     }
 
     @CsvSource(value = ["ACE,TEN,15", "TWO,THREE,9"])
@@ -55,7 +52,7 @@ class PlayerTest {
         player.receiveCard(Card(CLOVER, number1))
         player.receiveCard(Card(CLOVER, number2))
 
-        assertThat(player.getTotalCardNumber(GetMinSum)).isEqualTo(sum)
+        assertThat(player.getTotal()).isEqualTo(sum)
     }
 
     @CsvSource(value = ["ACE,ACE,false", "KING,QUEEN,true"])

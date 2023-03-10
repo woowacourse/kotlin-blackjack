@@ -1,6 +1,8 @@
 package domain.card
 
-import domain.card.strategy.SumStrategy
+import constant.BlackJackConstants.BLACK_JACK_NUMBER
+import constant.BlackJackConstants.DEALER_STAND_CONDITION
+import domain.card.CardNumber.ACE
 
 class HandOfCards(cards: List<Card>) {
     private val _cards = mutableListOf<Card>()
@@ -17,17 +19,18 @@ class HandOfCards(cards: List<Card>) {
         _cards.add(card)
     }
 
-    fun getTotalCardSum(sumStrategy: SumStrategy): Int {
-        return sumStrategy.getSum(this)
+    fun getTotalCardSum(): Int {
+        val sum = cards.sumOf { it.number.value }
+        return when {
+            sum + 10 > BLACK_JACK_NUMBER -> sum
+            cards.any { it.number == ACE } -> sum + 10
+            else -> sum
+        }
     }
 
-    fun countAce() = cards.count { it.number == CardNumber.ACE }
+    fun showFirstCard(): List<Card> = cards.subList(0, 1)
 
-    fun getExceptAceSum() = cards
-        .filter { it.number != CardNumber.ACE }
-        .sumOf { it.number.value }
-
-    fun showFirstCard(): List<Card> {
-        return cards.subList(0, 1)
-    }
+    fun isBlackJack() = getTotalCardSum() == BLACK_JACK_NUMBER
+    fun isDealerStay() = getTotalCardSum() > DEALER_STAND_CONDITION
+    fun isBust() = getTotalCardSum() > BLACK_JACK_NUMBER
 }

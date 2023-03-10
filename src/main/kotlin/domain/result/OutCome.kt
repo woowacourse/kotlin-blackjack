@@ -1,6 +1,5 @@
 package domain.result
 
-import domain.card.strategy.GetAppropriateSum
 import domain.person.Dealer
 import domain.person.Player
 
@@ -18,11 +17,9 @@ enum class OutCome {
     abstract fun convertOutCome(): OutCome
 
     companion object {
-        private val sumStrategy = GetAppropriateSum
-
         fun getOutCome(dealer: Dealer, player: Player): Pair<String, OutCome> {
             val gap =
-                player.getTotalCardNumber(sumStrategy) - dealer.getTotalCardNumber(sumStrategy)
+                player.getTotal() - dealer.getTotal()
             return when {
                 player.isBust() -> player.name to LOSE
                 dealer.isBust() -> player.name to WIN
