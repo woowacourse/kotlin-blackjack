@@ -6,11 +6,12 @@ import blackjack.domain.participants.Guest
 import blackjack.domain.participants.Money
 import blackjack.domain.participants.Name
 import blackjack.domain.participants.User
+import blackjack.domain.state.BlackJack
 
 class BlackJackGame {
     var onDraw: (String) -> Boolean = { true }
 
-    fun setUp(getNames: () -> List<Name>, getBettingMoney: (String) -> Money): BlackJack =
+    fun setUp(getNames: () -> List<Name>, getBettingMoney: (String) -> Money): BlackJackSetting =
         blackJack {
             participants {
                 dealer()
@@ -20,19 +21,19 @@ class BlackJackGame {
         }
 
     fun dealerTurn(dealer: Dealer, cardDeck: CardDeck, output: () -> Unit) {
-        if (dealer.isBlackJack) return
-        if (dealer.isContinuable) {
-            dealer.draw(cardDeck.drawCard())
-            output()
+        when {
+            dealer.state is BlackJack -> return
+            dealer.isContinuable -> dealer.draw(cardDeck.drawCard())
         }
+        output()
     }
 
     fun guestsTurn(guests: List<Guest>, cardDeck: CardDeck, output: (User) -> Unit) =
         guests.forEach { guest -> guestTurn(guest, cardDeck, output) }
 
     private fun guestTurn(guest: Guest, cardDeck: CardDeck, output: (User) -> Unit) {
-        if (guest.isBlackJack) return
         when (onDraw(guest.name.toString())) {
+            (guest.state is BlackJack) -> return
             true -> guestDraw(guest, cardDeck, output)
             false -> output(guest)
         }

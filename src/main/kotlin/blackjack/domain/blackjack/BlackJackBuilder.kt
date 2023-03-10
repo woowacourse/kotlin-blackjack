@@ -6,7 +6,7 @@ import blackjack.domain.participants.Participants
 import blackjack.domain.participants.ParticipantsBuilder
 import blackjack.domain.state.FirstTurn
 
-fun blackJack(block: BlackJackBuilder.() -> Unit): BlackJack {
+fun blackJack(block: BlackJackBuilder.() -> Unit): BlackJackSetting {
     return BlackJackBuilder().apply(block).build()
 }
 
@@ -22,5 +22,5 @@ class BlackJackBuilder {
         it.state = FirstTurn().draw(cardDeck.drawCard()).draw(cardDeck.drawCard())
     }
 
-    fun build(): BlackJack = BlackJack(cardDeck, participants)
+    fun build(): BlackJackSetting = BlackJackSetting(cardDeck, participants)
 }

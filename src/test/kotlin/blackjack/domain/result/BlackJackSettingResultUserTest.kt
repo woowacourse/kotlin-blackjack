@@ -4,7 +4,7 @@ import blackjack.domain.participants.Name
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class BlackJackResultUserTest {
+class BlackJackSettingResultUserTest {
     @Test
     fun `이름을 가져올 수 있다`() {
         val blackJackResultUser = BlackJackResultUser(Name("아크"), 1000)

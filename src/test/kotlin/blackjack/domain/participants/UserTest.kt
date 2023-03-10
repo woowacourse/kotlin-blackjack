@@ -3,6 +3,8 @@ package blackjack.domain.participants
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardMark
 import blackjack.domain.card.CardValue
+import blackjack.domain.state.BlackJack
+import blackjack.domain.state.Hit
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -23,11 +25,12 @@ class UserTest {
     }
 
     @Test
-    fun `ACE를 2장 뽑아도 버스트가 아니다`() {
+    fun `ACE를 2장 뽑아도 히트다`() {
         val user = Guest(Name("아크"))
         user.draw(Card(CardMark.CLOVER, CardValue.ACE))
         user.draw(Card(CardMark.SPADE, CardValue.ACE))
-        assertThat(user.isBust).isFalse
+        println(user.state)
+        assertThat(user.state is Hit).isTrue
     }
 
     @Test
@@ -35,6 +38,6 @@ class UserTest {
         val user = Guest(Name("아크"))
         user.draw(Card(CardMark.CLOVER, CardValue.ACE))
         user.draw(Card(CardMark.SPADE, CardValue.KING))
-        assertThat(user.isBlackJack).isTrue
+        assertThat(user.state is BlackJack).isTrue
     }
 }

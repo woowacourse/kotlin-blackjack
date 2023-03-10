@@ -1,21 +1,21 @@
 package blackjack.view
 
-import blackjack.domain.blackjack.BlackJack
+import blackjack.domain.blackjack.BlackJackSetting
 import blackjack.domain.participants.User
 import blackjack.domain.result.BlackJackResult
 import blackjack.domain.result.BlackJackResultUser
 
 class OutputView {
-    fun outputInitState(blackJack: BlackJack) {
-        print("\n딜러와 ${blackJack.guests.map{it.name}.joinToString(", ")} 에게 2장의 나누었습니다.")
-        outputCardForDealer(blackJack.dealer)
-        blackJack.guests.forEach { user ->
+    fun outputInitState(blackJackSetting: BlackJackSetting) {
+        print("\n딜러와 ${blackJackSetting.guests.map{it.name}.joinToString(", ")} 에게 2장의 나누었습니다.")
+        outputCardForDealer(blackJackSetting.dealer)
+        blackJackSetting.guests.forEach { user ->
             outputCard(user)
         }
     }
 
-    fun outputResult(blackJack: BlackJack, result: BlackJackResult) {
-        blackJack.participants.all.forEach { user ->
+    fun outputResult(blackJackSetting: BlackJackSetting, result: BlackJackResult) {
+        blackJackSetting.participants.all.forEach { user ->
             outputCard(user)
             outputScore(user)
         }

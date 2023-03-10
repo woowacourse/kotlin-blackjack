@@ -4,6 +4,7 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
 
 class FirstTurn private constructor(cards: Cards) : InTurn(cards) {
+    override val ratio: Double = 0.0
     constructor() : this(Cards())
 
     override fun draw(card: Card): State {

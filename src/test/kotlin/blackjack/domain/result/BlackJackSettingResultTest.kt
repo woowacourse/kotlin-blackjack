@@ -10,7 +10,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 
-class BlackJackResultTest {
+class BlackJackSettingResultTest {
     @Test
     fun `수익금액을 가져올 수 있다`() {
         val blackJack = blackJack {

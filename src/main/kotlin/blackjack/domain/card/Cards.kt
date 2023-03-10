@@ -13,6 +13,8 @@ class Cards(private val cards: Set<Card> = setOf()) {
 
     fun toList() = cards.toList()
 
+    constructor(vararg cards: Card) : this(cards.toSet())
+
     operator fun plus(card: Card): Cards {
         require(card !in cards) { ERROR_EXIST_DUPLICATE_CARD }
         return Cards(cards.plus(card))

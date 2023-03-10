@@ -5,7 +5,7 @@ import blackjack.domain.participants.User
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 
-class BlackJackGameTest {
+class BlackJackSettingGameTest {
     @Test
     fun `게임을 실행한다`() {
         val blackJack = blackJack {

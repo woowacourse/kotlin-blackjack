@@ -1,5 +1,6 @@
 package blackjack.domain.state
 
+import blackjack.domain.card.Cards
 import blackjack.domain.state.Fixtures.CLOVER_FOUR
 import blackjack.domain.state.Fixtures.CLOVER_KING
 import blackjack.domain.state.Fixtures.CLOVER_NINE
@@ -43,5 +44,10 @@ class HitTest {
 
         // then
         assertThat(state).isInstanceOf(Bust::class.java)
+    }
+
+    @Test
+    fun `히트의 배당 비율은 1배이다`() {
+        assertThat(Hit(Cards()).ratio).isEqualTo(1.0)
     }
 }

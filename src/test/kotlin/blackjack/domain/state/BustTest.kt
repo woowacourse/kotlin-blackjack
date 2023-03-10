@@ -22,13 +22,18 @@ class BustTest {
 
     @Test
     fun `버스트의 점수를 반환한다`() {
-        val state: State = Bust(Cards(setOf(CLOVER_KING, CLOVER_QUEEN, CLOVER_JACK)))
+        val state: State = Bust(Cards(CLOVER_KING, CLOVER_QUEEN, CLOVER_JACK))
         assertThat(state.score.value).isEqualTo(30)
     }
 
     @Test
     fun `버스트의 카드 갯수를 반환한다`() {
-        val state: State = Bust(Cards((setOf(CLOVER_KING, CLOVER_QUEEN, CLOVER_JACK))))
+        val state: State = Bust(Cards(CLOVER_KING, CLOVER_QUEEN, CLOVER_JACK))
         assertThat(state.size).isEqualTo(3)
+    }
+
+    @Test
+    fun `버스트의 배당 비율은 0배이다`() {
+        assertThat(Bust(Cards()).ratio).isEqualTo(0.0)
     }
 }

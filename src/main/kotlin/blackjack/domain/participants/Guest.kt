@@ -1,6 +1,7 @@
 package blackjack.domain.participants
 
 import blackjack.domain.state.FirstTurn
+import blackjack.domain.state.Hit
 import blackjack.domain.state.State
 
 class Guest(
@@ -9,5 +10,5 @@ class Guest(
     val bettingMoney: Money = Money(10),
 ) : User(name, state) {
     override val isContinuable: Boolean
-        get() = isBust.not() && isBlackJack.not()
+        get() = state is Hit || state is FirstTurn
 }

@@ -7,5 +7,6 @@ interface State {
     val cards: Cards
     val score: Score
     val size: Int
+    val ratio: Double
     fun draw(card: Card): State
 }

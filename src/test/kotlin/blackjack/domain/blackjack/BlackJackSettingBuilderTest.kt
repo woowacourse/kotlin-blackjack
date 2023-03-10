@@ -5,7 +5,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 
-class BlackJackBuilderTest {
+class BlackJackSettingBuilderTest {
     @Test
     fun `BlackJack을 초기화 할 수 있다`() {
         val blackJack = blackJack {

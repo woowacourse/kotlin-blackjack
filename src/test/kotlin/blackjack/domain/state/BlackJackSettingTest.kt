@@ -1,5 +1,6 @@
 package blackjack.domain.state
 
+import blackjack.domain.card.Cards
 import blackjack.domain.state.Fixtures.CLOVER_ACE
 import blackjack.domain.state.Fixtures.CLOVER_KING
 import blackjack.domain.state.Fixtures.CLOVER_QUEEN
@@ -7,7 +8,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
-class BlackJackTest {
+class BlackJackSettingTest {
     @Test
     fun `블랙잭은 더이상 카드를 뽑을 수 없다`() {
         assertThrows<IllegalStateException> { BlackJack().draw(CLOVER_KING) }
@@ -29,5 +30,10 @@ class BlackJackTest {
     fun `블랙잭의 카드 갯수를 반환한다`() {
         val state: State = BlackJack(CLOVER_KING, CLOVER_ACE)
         assertThat(state.size).isEqualTo(2)
+    }
+
+    @Test
+    fun `블랙잭의 배당 비율은 1 5배이다`() {
+        assertThat(BlackJack(Cards()).ratio).isEqualTo(1.5)
     }
 }
