@@ -54,8 +54,8 @@ class Console : InputView, OutputView {
         println("$name 카드: ${cards.joinToString(", ") { it.toText() }}")
     }
 
-    override fun printDealerHit() {
-        println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.")
+    override fun printDealerHit(name: String) {
+        println("\n${name}는 16이하라 한장의 카드를 더 받았습니다.")
     }
 
     override fun printResult(
@@ -89,9 +89,6 @@ class Console : InputView, OutputView {
             """.trimMargin()
         )
     }
-
-    private fun getDealerResultMessage(result: DealerResult): String =
-        ""
 
     private fun getPlayerResultMessage(name: String, result: GameResult): String = when (result) {
         GameResult.BLACKJACK -> "$name: 블랙잭"

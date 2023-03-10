@@ -4,7 +4,7 @@ import blackjack.domain.card.CardDeck
 import blackjack.domain.data.ParticipantCards
 import blackjack.domain.data.ParticipantScore
 
-class BettingPlayer(private val player: Player, val money: Int) {
+class BettingPlayer(val player: Player, val money: Int) {
     fun draw(deck: CardDeck) {
         player.addCard(deck.draw())
     }

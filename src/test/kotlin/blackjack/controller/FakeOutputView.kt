@@ -22,7 +22,7 @@ class FakeOutputView : OutputView {
         this.cards.add(name to cards)
     }
 
-    override fun printDealerHit() {
+    override fun printDealerHit(name: String) {
         dealerHitCount++
     }
 

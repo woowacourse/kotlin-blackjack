@@ -17,8 +17,7 @@ class BlackJackController(
     fun start(deck: CardDeck) {
         with(initBlackJack(deck)) {
             setUpCard(this)
-            takeTurns(this)
-            takeDealerTurn(this)
+            play(inputView::inputDrawCommand, outputView::printCards, outputView::printDealerHit)
 
             outputView.printResult(getCards(), getTotalScores(), getParticipantResults())
         }
@@ -40,37 +39,5 @@ class BlackJackController(
     private fun drawInitialCards(blackJack: BlackJack) {
         blackJack.drawAll()
         blackJack.drawAll()
-    }
-
-    private fun takeTurns(blackJack: BlackJack) {
-        blackJack.getPlayers().forEach { player ->
-            takePlayerTurn(blackJack, player)
-        }
-    }
-
-    private fun takePlayerTurn(blackJack: BlackJack, player: BettingPlayer) {
-        if (!player.isBlackJack() && player.canDraw()) {
-            val isDraw = inputView.inputDrawCommand(player.getName())
-            if (!isDraw) return printPlayerCards(player)
-
-            drawCard(blackJack, player)
-            takePlayerTurn(blackJack, player)
-        }
-    }
-
-    private fun drawCard(blackJack: BlackJack, player: BettingPlayer) {
-        blackJack.drawPlayer(player)
-        printPlayerCards(player)
-    }
-
-    private fun printPlayerCards(player: BettingPlayer) {
-        val participantCards = player.getCards()
-        outputView.printCards(participantCards.name, participantCards.cards)
-    }
-
-    private fun takeDealerTurn(blackJack: BlackJack) {
-        blackJack.drawDealer { isHit ->
-            if (isHit) outputView.printDealerHit()
-        }
     }
 }

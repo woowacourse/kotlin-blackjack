@@ -1,5 +1,6 @@
 package blackjack.domain.participant
 
+import blackjack.domain.card.Card
 import blackjack.domain.card.CardDeck
 import blackjack.domain.data.ParticipantCards
 import blackjack.domain.data.ParticipantResults
@@ -14,14 +15,33 @@ class Participants(private val dealer: Dealer, private val bettingPlayers: Betti
 
     fun getFirstOpenCards(): List<ParticipantCards> = listOf(ParticipantCards(dealer.name, dealer.getFirstOpenCards())) + bettingPlayers.getFirstOpenCards()
 
-    fun getPlayers(): List<BettingPlayer> = bettingPlayers.toList()
+    fun takeTurns(deck: CardDeck, askDraw: (String) -> Boolean, onPlayerDraw: (String, List<Card>) -> Unit, onDealerDraw: (String) -> Unit) {
+        takePlayerTurns(deck, askDraw, onPlayerDraw)
+        takeDealerTurn(deck, onDealerDraw)
+    }
 
-    fun drawDealerCard(deck: CardDeck, block: (Boolean) -> Unit) {
+    private fun takePlayerTurns(deck: CardDeck, askDraw: (String) -> Boolean, onDraw: (String, List<Card>) -> Unit) {
+        bettingPlayers.toList().forEach {
+            takePlayerTurn(deck, it, askDraw, onDraw)
+        }
+    }
+
+    private fun takePlayerTurn(deck: CardDeck, player: BettingPlayer, askDraw: (String) -> Boolean, onDraw: (String, List<Card>) -> Unit) {
+        if (player.canDraw()) {
+            val isDraw = askDraw(player.getName())
+            if (!isDraw) return onDraw(player.getName(), player.player.getCards())
+
+            player.draw(deck)
+            onDraw(player.getName(), player.player.getCards())
+            takePlayerTurn(deck, player, askDraw, onDraw)
+        }
+    }
+
+    private fun takeDealerTurn(deck: CardDeck, onDraw: (String) -> Unit) {
         while (dealer.canDraw()) {
             dealer.addCard(deck.draw())
-            block(true)
+            onDraw(dealer.name)
         }
-        block(false)
     }
 
     fun getCards(): List<ParticipantCards> = listOf(ParticipantCards(dealer.name, dealer.getCards())) + bettingPlayers.getCards()
