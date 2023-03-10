@@ -4,16 +4,16 @@ class Referee(private val dealerScore: Score) {
 
     fun getResult(users: List<User>): List<GameResult> {
         return users.map { user ->
-            user.gameResult = calculateResult(user.cards.score)
+            user.gameResult = calculateResult(user)
             user.gameResult
         }
     }
 
-    private fun calculateResult(score: Score): GameResult {
-        if (isDraw(score))
-            return GameResult.DRAW
-        if (isLose(score))
+    private fun calculateResult(user: User): GameResult {
+        if (isLose(user.cards.score))
             return GameResult.LOSE
+        if (isDraw(user.cards.score) && !user.cards.isBlackJack())
+            return GameResult.DRAW
         return GameResult.WIN
     }
 

@@ -34,8 +34,7 @@ class ProfitCalculator(
     }
 
     private fun getUserProfit(isDealerBlackJack: Boolean, user: User): Double {
-        if (isDealerBlackJack && user.cards.isBlackJack()) return NONE_PROFIT
-        if (isDealerBlackJack) return -user.betAmount
+        if (isDealerBlackJack && !user.cards.isBlackJack()) return -user.betAmount
         if (user.cards.isBlackJack()) return user.betAmount * BLACKJACK_PROFIT_RATE
         return when (user.gameResult) {
             GameResult.WIN -> user.betAmount

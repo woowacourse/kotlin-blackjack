@@ -206,7 +206,7 @@ class ProfitCalculatorTest {
     }
 
     @Test
-    fun `딜러는 유저 모두 버스트인 경우 딜러의 수익은 0, 유저의 수익은 0이다`() {
+    fun `딜러는 유저 모두 버스트인 경우 딜러의 수익은 1000, 유저의 수익은 -1000이다`() {
         // given
         val players = createPlayersWithOneUser(
             dealerCards = listOf(
@@ -231,8 +231,36 @@ class ProfitCalculatorTest {
         val userProfit = profitCalculator.getUsersProfit()[0].profit
 
         // then
-        assertThat(dealerProfit).isEqualTo(0.0)
-        assertThat(userProfit).isEqualTo(0.0)
+        assertThat(dealerProfit).isEqualTo(1000.0)
+        assertThat(userProfit).isEqualTo(-1000.0)
+    }
+
+    @Test
+    fun `딜러 유저 모두 블랙잭인 경우 딜러의 수익은 -1500, 유저의 수익은 1500이다`() {
+        // given
+        val players = createPlayersWithOneUser(
+            dealerCards = listOf(
+                Card(CardShape.DIAMONDS, CardValue.ACE),
+                Card(CardShape.DIAMONDS, CardValue.TEN)
+            ),
+            userCards = listOf(
+                Card(CardShape.DIAMONDS, CardValue.ACE),
+                Card(CardShape.DIAMONDS, CardValue.TEN)
+            ),
+            betAmount = 1000.0
+        )
+        val referee = Referee(players.dealerScore)
+        referee.getResult(players.users)
+
+        val profitCalculator = ProfitCalculator(players)
+
+        // when
+        val dealerProfit = profitCalculator.getDealerProfit()
+        val userProfit = profitCalculator.getUsersProfit()[0].profit
+
+        // then
+        assertThat(dealerProfit).isEqualTo(-1500.0)
+        assertThat(userProfit).isEqualTo(1500.0)
     }
 
     @Test

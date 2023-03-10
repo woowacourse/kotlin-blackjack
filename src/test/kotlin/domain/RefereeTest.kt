@@ -107,7 +107,7 @@ class RefereeTest {
 
         // when
         val actual = Referee(dealerScore).getResult(users)
-        val expected = listOf<GameResult>(GameResult.DRAW, GameResult.WIN)
+        val expected = listOf<GameResult>(GameResult.LOSE, GameResult.WIN)
 
         // then
         assertThat(actual).isEqualTo(expected)
