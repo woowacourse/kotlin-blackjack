@@ -1,51 +1,10 @@
 package blackjack.domain
 
-import blackjack.domain.carddeck.CardDeck
+class Participants(names: List<String>, drawCard: () -> Card) {
+    val dealer: Dealer = Dealer(makeCardBunch(drawCard))
+    val players: List<Player> = names.map { Player(it, makeCardBunch(drawCard)) }
 
-class Participants(names: List<String>, private val cardDeck: CardDeck) {
-    val dealer: Dealer = Dealer(makeCardBunch())
-    val players: List<Player> = names.map { Player(it, makeCardBunch()) }
-
-    private fun makeCardBunch(): CardBunch = CardBunch(cardDeck.drawCard(), cardDeck.drawCard())
-
-    fun progressPlayersAddCard(getDecision: (Player) -> Boolean, printPlayerCard: (Player) -> Unit) {
-        players.forEach { progressEachPlayerAddCard(it, getDecision, printPlayerCard) }
-    }
-
-    private fun progressEachPlayerAddCard(
-        player: Player,
-        getDecision: (Player) -> Boolean,
-        transferPlayerCard: (Player) -> Unit,
-    ) {
-        while (!player.isOverCondition()) {
-            if (!progressEachTurn(player, getDecision, transferPlayerCard)) return
-        }
-    }
-
-    private fun progressEachTurn(
-        player: Player,
-        getDecision: (Player) -> Boolean,
-        transferPlayerCard: (Player) -> Unit,
-    ): Boolean {
-        if (getDecision(player)) {
-            positiveGetCard(player, transferPlayerCard)
-            return true
-        }
-        transferPlayerCard(player)
-        return false
-    }
-
-    private fun positiveGetCard(
-        player: Player,
-        transferPlayerCard: (Player) -> Unit,
-    ) {
-        player.cardBunch.addCard(cardDeck.drawCard())
-        transferPlayerCard(player)
-    }
-
-    fun judgmentDealerAddCard() {
-        while (!dealer.isOverCondition()) dealer.addCard(cardDeck.drawCard())
-    }
+    private fun makeCardBunch(drawCard: () -> Card): CardBunch = CardBunch(drawCard(), drawCard())
 
     fun getConsequence(player: Player): Consequence = player.chooseWinner(dealer)
 }

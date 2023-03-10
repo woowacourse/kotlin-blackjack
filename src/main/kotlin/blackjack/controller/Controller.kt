@@ -1,41 +1,40 @@
 package blackjack.controller
 
-import blackjack.domain.Participants
+import blackjack.domain.BlackJackGame
 import blackjack.domain.carddeck.RandomCardDeck
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
 class Controller() {
     fun runGame() {
-        val participants =
-            Participants(InputView.getPlayerNames(), RandomCardDeck)
-        showInitialState(participants)
-        participants.progressPlayersAddCard(InputView::getDecision, OutputView::printPlayerCards)
-        printResult(participants)
+        val blackJackGame = BlackJackGame(InputView.getPlayerNames(), RandomCardDeck)
+        showInitialState(blackJackGame)
+        blackJackGame.progressPlayersAddCard(InputView::getDecision, OutputView::printPlayerCards)
+        printResult(blackJackGame)
     }
 
-    private fun printResult(participants: Participants) {
-        progressDealerAddCard(participants)
-        printTotalScore(participants)
-        printWinOrLose(participants)
+    private fun printResult(blackJackGame: BlackJackGame) {
+        progressDealerAddCard(blackJackGame)
+        printTotalScore(blackJackGame)
+        printWinOrLose(blackJackGame)
     }
 
-    private fun showInitialState(participants: Participants) {
-        OutputView.printDistributeScript(participants.players)
-        OutputView.printDealerInitialCard(participants.dealer.cardBunch)
-        participants.players.forEach { OutputView.printPlayerCards(it) }
+    private fun showInitialState(blackJackGame: BlackJackGame) {
+        OutputView.printDistributeScript(blackJackGame.participants.players)
+        OutputView.printDealerInitialCard(blackJackGame.participants.dealer.cardBunch)
+        blackJackGame.participants.players.forEach { OutputView.printPlayerCards(it) }
     }
 
-    private fun progressDealerAddCard(participants: Participants) {
-        OutputView.printDealerOverCondition(!participants.dealer.isOverCondition())
-        participants.judgmentDealerAddCard()
+    private fun progressDealerAddCard(blackJackGame: BlackJackGame) {
+        OutputView.printDealerOverCondition(!blackJackGame.participants.dealer.isOverCondition())
+        blackJackGame.judgmentDealerAddCard()
     }
 
-    private fun printTotalScore(participants: Participants) {
-        OutputView.printTotalScore(participants)
+    private fun printTotalScore(blackJackGame: BlackJackGame) {
+        OutputView.printTotalScore(blackJackGame.participants)
     }
 
-    private fun printWinOrLose(participants: Participants) {
-        OutputView.printWinOrLose(participants)
+    private fun printWinOrLose(blackJackGame: BlackJackGame) {
+        OutputView.printWinOrLose(blackJackGame.participants)
     }
 }
