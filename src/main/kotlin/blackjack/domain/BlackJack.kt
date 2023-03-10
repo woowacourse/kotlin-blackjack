@@ -1,10 +1,10 @@
 package blackjack.domain
 
-import blackjack.domain.card.Card
 import blackjack.domain.card.CardDeck
 import blackjack.domain.data.ParticipantCards
 import blackjack.domain.data.ParticipantResults
 import blackjack.domain.data.ParticipantScore
+import blackjack.domain.participant.Participant
 import blackjack.domain.participant.Participants
 
 class BlackJack(private val deck: CardDeck, private val participants: Participants) {
@@ -14,8 +14,8 @@ class BlackJack(private val deck: CardDeck, private val participants: Participan
 
     fun getFirstOpenCards(): List<ParticipantCards> = participants.getFirstOpenCards()
 
-    fun play(askDraw: (String) -> Boolean, onPlayerDraw: (String, List<Card>) -> Unit, onDealerDraw: (String) -> Unit) {
-        participants.takeTurns(deck, askDraw, onPlayerDraw, onDealerDraw)
+    fun play(onDraw: (Participant) -> Unit) {
+        participants.takeTurns(deck, onDraw)
     }
 
     fun getCards(): List<ParticipantCards> = participants.getCards()

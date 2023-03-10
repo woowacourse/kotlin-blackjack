@@ -1,14 +1,14 @@
 package blackjack.controller
 
-import blackjack.domain.card.Card
 import blackjack.domain.data.ParticipantCards
 import blackjack.domain.data.ParticipantResults
 import blackjack.domain.data.ParticipantScore
+import blackjack.domain.participant.Dealer
+import blackjack.domain.participant.Participant
 import blackjack.view.OutputView
 
 class FakeOutputView : OutputView {
     lateinit var firstOpenCards: List<ParticipantCards>
-    private val cards: MutableList<Pair<String, List<Card>>> = mutableListOf()
     var dealerHitCount: Int = 0
     lateinit var participantCards: List<ParticipantCards>
     lateinit var totalScores: List<ParticipantScore>
@@ -18,12 +18,8 @@ class FakeOutputView : OutputView {
         firstOpenCards = participantsCards
     }
 
-    override fun printCards(name: String, cards: List<Card>) {
-        this.cards.add(name to cards)
-    }
-
-    override fun printDealerHit(name: String) {
-        dealerHitCount++
+    override fun printDraw(participant: Participant) {
+        if (participant is Dealer) dealerHitCount++
     }
 
     override fun printResult(

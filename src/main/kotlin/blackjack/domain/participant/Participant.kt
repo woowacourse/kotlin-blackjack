@@ -1,6 +1,7 @@
 package blackjack.domain.participant
 
 import blackjack.domain.card.Card
+import blackjack.domain.card.CardDeck
 import blackjack.domain.card.Cards
 
 abstract class Participant(val name: String) {
@@ -12,6 +13,13 @@ abstract class Participant(val name: String) {
 
     fun addCard(card: Card) {
         cards.add(card)
+    }
+
+    fun drawUntilPossible(deck: CardDeck, onDraw: (Participant) -> Unit) {
+        while (canDraw()) {
+            cards.add(deck.draw())
+            onDraw(this)
+        }
     }
 
     fun getTotalScore(): Int = cards.calculateTotalScore()
