@@ -5,10 +5,7 @@ import blackjack.domain.card.Cards
 
 class Dealer(name: String = "딜러", cards: Cards = Cards()) : Player(name, cards) {
 
-    override fun checkProvideCardPossible(): Boolean {
-        if (cards.sumCardsNumber() <= PARTICIPANT_MORE_CARD_CRITERIA) return true
-        return false
-    }
+    override fun checkProvideCardPossible(): Boolean = (cards.sumCardsNumber() <= PARTICIPANT_MORE_CARD_CRITERIA)
 
     fun calculateResults(participants: Participants): DealerResult {
         val results: MutableList<Result> = mutableListOf()

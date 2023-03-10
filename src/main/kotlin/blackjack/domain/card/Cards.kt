@@ -15,15 +15,9 @@ class Cards(_cards: List<Card> = listOf()) {
         return _cards.sumOf { it.number.value }
     }
 
-    fun isBlackjack(): Boolean {
-        if ((_cards.size == 2) and (sumCardsNumber() == MAX_SUM_NUMBER)) return true
-        return false
-    }
+    fun isBlackjack(): Boolean = ((_cards.size == 2) and (sumCardsNumber() == MAX_SUM_NUMBER))
 
-    fun isBurst(): Boolean {
-        if (sumCardsNumber() > MAX_SUM_NUMBER) return true
-        return false
-    }
+    fun isBurst(): Boolean = (sumCardsNumber() > MAX_SUM_NUMBER)
 
     private fun checkHavingAce(): Boolean = _cards.any { it.isAce() }
 

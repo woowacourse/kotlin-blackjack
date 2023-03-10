@@ -68,10 +68,7 @@ class PlayerTest {
     }
 
     class TestPlayer(name: String, cards: Cards = Cards()) : Player(name, cards) {
-        override fun checkProvideCardPossible(): Boolean {
-            if (cards.sumCardsNumber() <= TEST_PLAYER_MORE_CARD_CRITERIA) return true
-            return false
-        }
+        override fun checkProvideCardPossible(): Boolean = (cards.sumCardsNumber() <= TEST_PLAYER_MORE_CARD_CRITERIA)
 
         companion object {
             const val TEST_PLAYER_MORE_CARD_CRITERIA = 21

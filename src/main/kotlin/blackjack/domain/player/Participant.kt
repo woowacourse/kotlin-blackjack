@@ -5,10 +5,7 @@ import blackjack.domain.card.Cards
 
 class Participant(name: String, cards: Cards = Cards()) : Player(name, cards) {
 
-    override fun checkProvideCardPossible(): Boolean {
-        if (cards.sumCardsNumber() < PARTICIPANT_MORE_CARD_CRITERIA) return true
-        return false
-    }
+    override fun checkProvideCardPossible(): Boolean = (cards.sumCardsNumber() < PARTICIPANT_MORE_CARD_CRITERIA)
 
     fun calculateResult(dealer: Dealer): ParticipantResult {
         val result = when {
