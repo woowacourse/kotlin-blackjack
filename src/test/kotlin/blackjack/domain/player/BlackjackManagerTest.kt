@@ -71,25 +71,25 @@ class BlackjackManagerTest {
     }
 
     @Test
-    fun `플레이어1은 14 플레이어2는 7 딜러는 9일때, 참가자들의 승패를 계산한다`() {
+    fun `플레이어1 스코어는 14 플레이어2 스코어는 7 딜러 스코어는 9일때, 참가자들의 승패를 계산한다`() {
         // given
         val blackjackManager = BlackjackManager(TestCardsGenerator(), listOf("aaa", "bbb"))
         blackjackManager.setup()
 
         // when
-        var participantsResults = ParticipantsResults(listOf())
-        var dealerResult = DealerResult(listOf())
-        blackjackManager.calculatePlayersResult { _participantsResults, _dealerResult ->
-            participantsResults = _participantsResults
-            dealerResult = _dealerResult
-        }
-        val actual1 = participantsResults.results[0].result
-        val actual2 = participantsResults.results[1].result
-        val actual3 = dealerResult.results
+        val playersResult = blackjackManager.calculatePlayersResult()
+        val participantsResults: ParticipantsResults = playersResult.participantsResults
+        val dealerResult: DealerResult = playersResult.dealerResult
 
         // then
-        assertThat(actual1).isEqualTo(Pair("aaa", Result.WIN))
-        assertThat(actual2).isEqualTo(Pair("bbb", Result.LOSE))
-        assertThat(actual3).contains(Result.WIN, Result.LOSE)
+        assertThat(participantsResults).isEqualTo(
+            ParticipantsResults(
+                listOf(
+                    ParticipantResult("aaa", Result.WIN),
+                    ParticipantResult("bbb", Result.LOSE)
+                )
+            )
+        )
+        assertThat(dealerResult).isEqualTo(DealerResult(listOf(Result.LOSE, Result.WIN)))
     }
 }

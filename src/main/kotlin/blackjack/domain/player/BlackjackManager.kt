@@ -54,7 +54,7 @@ class BlackjackManager(
         }
     }
 
-    fun playDealerTurns(onProvideCard: () -> Unit) {
+    fun playDealerTurn(onProvideCard: () -> Unit) {
         while (true) {
             if (!dealer.checkProvideCardPossible()) break
             provideCard(dealer)
@@ -62,14 +62,14 @@ class BlackjackManager(
         }
     }
 
-    fun calculatePlayersResult(onCalculateResults: (ParticipantsResults, DealerResult) -> Unit) {
+    fun calculatePlayersResult(): PlayersResult {
         val participantsResults = ParticipantsResults(
             participants.values.map { participant ->
                 participant.calculateResult(dealer)
             }
         )
         val dealerResult = dealer.calculateResults(participantsResults)
-        onCalculateResults(participantsResults, dealerResult)
+        return PlayersResult(dealerResult, participantsResults)
     }
 
     private fun provideCard(player: Player) {
