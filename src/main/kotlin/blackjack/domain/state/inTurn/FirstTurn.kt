@@ -2,7 +2,6 @@ package blackjack.domain.state.inTurn
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
-import blackjack.domain.participants.user.Dealer
 import blackjack.domain.result.Outcome
 import blackjack.domain.state.State
 import blackjack.domain.state.endTurn.BlackJack
@@ -19,7 +18,7 @@ class FirstTurn private constructor(cards: Cards) : InTurn(cards) {
         }
     }
 
-    override fun matchWith(dealer: Dealer): Outcome {
+    override fun matchWith(otherState: State): Outcome {
         throw IllegalStateException("초기 세팅 전에는 결과를 비교할 수 없습니다.")
     }
 }

@@ -21,7 +21,7 @@ class OutcomeTest {
         guest.draw(Card(CardMark.SPADE, CardValue.ACE))
         guest.draw(Card(CardMark.SPADE, CardValue.QUEEN))
 
-        assertThat(guest.state.matchWith(dealer)).isEqualTo(Outcome.WIN_WITH_BLACKJACK)
+        assertThat(guest.state.matchWith(dealer.state)).isEqualTo(Outcome.WIN_WITH_BLACKJACK)
     }
 
     @Test
@@ -36,7 +36,7 @@ class OutcomeTest {
         guest.draw(Card(CardMark.SPADE, CardValue.ACE))
         print(guest.state)
         print(dealer.state)
-        assertThat(guest.state.matchWith(dealer)).isEqualTo(Outcome.DRAW)
+        assertThat(guest.state.matchWith(dealer.state)).isEqualTo(Outcome.DRAW)
     }
 
     @Test
@@ -50,7 +50,7 @@ class OutcomeTest {
         guest.draw(Card(CardMark.SPADE, CardValue.KING))
         guest.draw(Card(CardMark.SPADE, CardValue.ACE))
 
-        assertThat(guest.state.matchWith(dealer)).isEqualTo(Outcome.WIN)
+        assertThat(guest.state.matchWith(dealer.state)).isEqualTo(Outcome.WIN)
     }
 
     @Test
@@ -63,7 +63,7 @@ class OutcomeTest {
         guest.draw(Card(CardMark.SPADE, CardValue.QUEEN))
         guest.draw(Card(CardMark.SPADE, CardValue.KING))
 
-        assertThat(guest.state.matchWith(dealer)).isEqualTo(Outcome.LOSE)
+        assertThat(guest.state.matchWith(dealer.state)).isEqualTo(Outcome.LOSE)
     }
 
     @Test
@@ -78,7 +78,7 @@ class OutcomeTest {
         guest.draw(Card(CardMark.SPADE, CardValue.QUEEN))
         guest.draw(Card(CardMark.SPADE, CardValue.THREE))
 
-        assertThat(guest.state.matchWith(dealer)).isEqualTo(Outcome.DRAW)
+        assertThat(guest.state.matchWith(dealer.state)).isEqualTo(Outcome.DRAW)
     }
 
     @Test
@@ -92,7 +92,7 @@ class OutcomeTest {
         guest.draw(Card(CardMark.SPADE, CardValue.KING))
         guest.draw(Card(CardMark.SPADE, CardValue.QUEEN))
 
-        assertThat(guest.state.matchWith(dealer)).isEqualTo(Outcome.WIN)
+        assertThat(guest.state.matchWith(dealer.state)).isEqualTo(Outcome.WIN)
     }
 
     @Test
@@ -106,7 +106,7 @@ class OutcomeTest {
         guest.draw(Card(CardMark.SPADE, CardValue.QUEEN))
         guest.draw(Card(CardMark.SPADE, CardValue.TWO))
 
-        assertThat(guest.state.matchWith(dealer)).isEqualTo(Outcome.LOSE)
+        assertThat(guest.state.matchWith(dealer.state)).isEqualTo(Outcome.LOSE)
     }
 
     @Test
@@ -119,7 +119,7 @@ class OutcomeTest {
         guest.draw(Card(CardMark.SPADE, CardValue.EIGHT))
         guest.draw(Card(CardMark.SPADE, CardValue.SEVEN))
 
-        assertThat(guest.state.matchWith(dealer)).isEqualTo(Outcome.DRAW)
+        assertThat(guest.state.matchWith(dealer.state)).isEqualTo(Outcome.DRAW)
     }
 
     @Test
@@ -131,7 +131,7 @@ class OutcomeTest {
 
         guest.draw(Card(CardMark.SPADE, CardValue.KING))
         guest.draw(Card(CardMark.SPADE, CardValue.QUEEN))
-        assertThat(guest.state.matchWith(dealer)).isEqualTo(Outcome.WIN)
+        assertThat(guest.state.matchWith(dealer.state)).isEqualTo(Outcome.WIN)
     }
 
     @Test
@@ -144,6 +144,6 @@ class OutcomeTest {
         guest.draw(Card(CardMark.SPADE, CardValue.KING))
         guest.draw(Card(CardMark.SPADE, CardValue.NINE))
 
-        assertThat(guest.state.matchWith(dealer)).isEqualTo(Outcome.LOSE)
+        assertThat(guest.state.matchWith(dealer.state)).isEqualTo(Outcome.LOSE)
     }
 }

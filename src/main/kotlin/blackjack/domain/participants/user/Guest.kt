@@ -13,6 +13,6 @@ class Guest(
         get() = state is Hit || state is FirstTurn
 
     fun calculateProfit(dealer: Dealer): Int {
-        return (bettingMoney.toDouble() * state.matchWith(dealer).rate).toInt()
+        return (bettingMoney.toDouble() * state.matchWith(dealer.state).rate).toInt()
     }
 }
