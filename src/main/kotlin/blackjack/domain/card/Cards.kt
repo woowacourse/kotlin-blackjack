@@ -45,6 +45,5 @@ class Cards(
     companion object {
 
         private const val INITIAL_CARDS_SIZE = 2
-
     }
 }

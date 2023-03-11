@@ -17,7 +17,7 @@ sealed class CardsState {
             isInitialDraw: Boolean = false,
         ): CardsState {
 
-            return when{
+            return when {
                 score > BLACKJACK_SCORE -> Bust
                 score == BLACKJACK_SCORE && isInitialDraw -> BlackJack
                 else -> Running(score)

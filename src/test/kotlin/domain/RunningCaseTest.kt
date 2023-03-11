@@ -14,7 +14,7 @@ class RunningCaseTest {
             dealerCardsState = CardsState.BlackJack
         )
 
-        assertThat(actual).isEqualTo(RunningCase.DEALER_BLACKJACK_LOSE)
+        assertThat(actual).isEqualTo(RunningCase.LOSE)
     }
 
     @Test
@@ -24,7 +24,7 @@ class RunningCaseTest {
             dealerCardsState = CardsState.Bust
         )
 
-        assertThat(actual).isEqualTo(RunningCase.DEALER_BUST_WIN)
+        assertThat(actual).isEqualTo(RunningCase.WIN)
     }
 
     @Test

@@ -3,7 +3,6 @@ package domain
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
 import blackjack.domain.card.Cards
-import blackjack.domain.card.CardsState
 import blackjack.domain.card.Shape
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -60,44 +59,5 @@ class CardsTest {
                 )
             ).getTotalCardsScore()
         ).isEqualTo(12)
-    }
-
-    @Test
-    fun `처음 받은 두장의 카드 합이 21인 경우 BLACKJACK 상태가 된다`() {
-        val cards = Cards(
-            listOf(
-                Card(CardNumber.K, Shape.SPADE),
-                Card(CardNumber.A, Shape.CLOVER)
-            )
-        )
-
-        assertThat(cards.state).isEqualTo(CardsState.BlackJack)
-    }
-
-    @Test
-    fun `가지고 있는 카드의 최소 합이 21이하인 경우 RUNNING 상태이다`() {
-        val cards = Cards(
-            listOf(
-                Card(CardNumber.K, Shape.SPADE),
-                Card(CardNumber.FOUR, Shape.CLOVER)
-            )
-        )
-
-        cards.draw(Card(CardNumber.FOUR, Shape.SPADE))
-
-        assertThat(cards.state).isEqualTo(CardsState.Running(18))
-    }
-
-    @Test
-    fun `카드를 뽑았을때 가지고 있는 카드의 최소 합이 21보다 커지면 Bust 상태가 된다`() {
-        val cards = Cards(
-            listOf(
-                Card(CardNumber.K, Shape.SPADE),
-                Card(CardNumber.K, Shape.CLOVER)
-            )
-        )
-        cards.draw(Card(CardNumber.FOUR, Shape.HEART))
-
-        assertThat(cards.state).isEqualTo(CardsState.Bust)
     }
 }

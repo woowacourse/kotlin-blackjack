@@ -27,6 +27,7 @@ object InputView {
         return requestSpecificInput(NUMERIC_ERROR_MSG, String::toIntOrNull)
     }
 
+    // TODO: domain을 너무 잘 알고 있는 친구
     fun requestPlayersInput(): List<Pair<String, Int>> {
         val names = requestPlayersName()
         val moneys = requestPlayersBattingMoney(names)
