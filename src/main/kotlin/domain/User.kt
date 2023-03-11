@@ -1,8 +1,10 @@
 package domain
 
-import domain.card.Card
-
-class User(val name: String, val cards: Cards, val betAmount: Double) {
+class User(
+    name: String,
+    cards: Cards,
+    val betAmount: Double
+) : Player(name, cards) {
 
     private lateinit var _gameResult: GameResult
 
@@ -15,12 +17,6 @@ class User(val name: String, val cards: Cards, val betAmount: Double) {
     fun setGameResult(gameResult: GameResult) {
         _gameResult = gameResult
     }
-
-    fun getScore(): Score = cards.score
-
-    fun isBlackJack(): Boolean = cards.isBlackJack()
-
-    fun addCard(card: Card) = cards.addCard(card)
 
     companion object {
 
