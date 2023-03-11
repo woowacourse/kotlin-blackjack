@@ -66,7 +66,7 @@ class BlackjackController {
     private fun displayBettingResult(blackjackStage: BlackjackStage, playersGameResult: PlayersGameResult) {
         val users = Users(blackjackStage.users.players, blackjackStage.users.dealer)
         val userBettingResult = UserBettingResult(users, playersGameResult)
-        val playersBettingResults = userBettingResult.getPlayersBettingResults()
+        val playersBettingResults = userBettingResult.getBettingResults()
         val dealerBettingResult = userBettingResult.getDealerBettingResult()
         resultView.printBettingResult(dealerBettingResult, playersBettingResults)
     }
