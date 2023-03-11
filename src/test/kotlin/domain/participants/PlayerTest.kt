@@ -18,14 +18,14 @@ class PlayerTest {
                 Card(Shape.SPADE, CardValue.JACK)
             )
         )
-        val player = Player("pingu", cards)
-        assertThat(player.checkBurst()).isTrue
+        val player = Player("pingu", cards, 0)
+        assertThat(player.ownCards.checkBurst()).isTrue
     }
 
     @Test
     fun `플레이어 카드의 합이 21이 넘지 않았을 경우 false를 반환한다`() {
         val cards = Cards(mutableListOf(Card(Shape.SPADE, CardValue.JACK), Card(Shape.SPADE, CardValue.JACK)))
-        val player = Player("pingu", cards)
-        assertThat(player.checkBurst()).isFalse
+        val player = Player("pingu", cards, 0)
+        assertThat(player.ownCards.checkBurst()).isFalse
     }
 }

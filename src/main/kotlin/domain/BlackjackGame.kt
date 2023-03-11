@@ -10,6 +10,7 @@ import domain.participants.Player
 
 class BlackjackGame(
     names: Names,
+    bettingMoney: List<Int>,
     private val deck: Deck = Deck(CardMaker().makeShuffledCards())
 ) {
     val dealer: Dealer
@@ -17,7 +18,7 @@ class BlackjackGame(
 
     init {
         dealer = Dealer(Cards(makeStartDeck()))
-        players = makePlayer(names)
+        players = makePlayer(names, bettingMoney)
     }
 
     private fun makeStartDeck(): MutableList<Card> {
@@ -28,15 +29,9 @@ class BlackjackGame(
         return startDeck
     }
 
-    private fun makePlayer(names: Names): List<Player> {
-        return names.userNames.map {
-            Player(it, Cards(makeStartDeck()))
-        }
-    }
-
-    fun getBetAmount(getBetAmount: (Player) -> Int) {
-        players.forEach { player ->
-            player.setBettingMoney(getBetAmount(player))
+    private fun makePlayer(names: Names, money: List<Int>): List<Player> {
+        return names.userNames.mapIndexed { index, name ->
+            Player(name, Cards(makeStartDeck()), money[index])
         }
     }
 

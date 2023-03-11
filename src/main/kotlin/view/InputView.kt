@@ -1,5 +1,6 @@
 package view
 
+import domain.participants.Names
 import domain.participants.Player
 
 object InputView {
@@ -22,10 +23,16 @@ object InputView {
         return this.filter { it.isNotBlank() }
     }
 
-    fun inputBetAmount(player: Player): Int {
+    fun inputBetAmount(names: Names): List<Int> {
+        return names.userNames.map {
+            repeatInputBetAmount(it)
+        }
+    }
+
+    private fun repeatInputBetAmount(name: String): Int {
         println()
-        println(PRINT_BET_AMOUNT.format(player.name))
-        return checkOverZero(readln()) ?: inputBetAmount(player)
+        println(PRINT_BET_AMOUNT.format(name))
+        return checkOverZero(readln()) ?: repeatInputBetAmount(name)
     }
 
     private fun checkOverZero(input: String): Int? {
