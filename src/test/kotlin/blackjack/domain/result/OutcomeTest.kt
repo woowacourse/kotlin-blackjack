@@ -5,6 +5,7 @@ import blackjack.domain.card.CardMark
 import blackjack.domain.card.CardValue
 import blackjack.domain.participants.Dealer
 import blackjack.domain.participants.Guest
+import blackjack.domain.participants.Name
 import blackjack.domain.result.Outcome.Companion.getOutcome
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -13,7 +14,7 @@ class OutcomeTest {
     @Test
     fun `딜러와 유저의 점수가 같으면 비긴다`() {
         val dealer = Dealer()
-        val guest = Guest("아크", 10000)
+        val guest = Guest(Name("아크"))
         dealer.draw(Card(CardMark.CLOVER, CardValue.EIGHT))
         dealer.draw(Card(CardMark.DIA, CardValue.SEVEN))
 
@@ -26,7 +27,7 @@ class OutcomeTest {
     @Test
     fun `딜러와 유저의 점수가 둘 다 21점 이상이면 비긴다`() {
         val dealer = Dealer()
-        val guest = Guest("아크", 10000)
+        val guest = Guest(Name("아크"))
         dealer.draw(Card(CardMark.CLOVER, CardValue.EIGHT))
         dealer.draw(Card(CardMark.DIA, CardValue.SEVEN))
         dealer.draw(Card(CardMark.HEART, CardValue.NINE))
@@ -41,7 +42,7 @@ class OutcomeTest {
     @Test
     fun `딜러 점수가 유저 점수보다 크면 유저가 진다`() {
         val dealer = Dealer()
-        val guest = Guest("아크", 10000)
+        val guest = Guest(Name("아크"))
         dealer.draw(Card(CardMark.CLOVER, CardValue.EIGHT))
         dealer.draw(Card(CardMark.DIA, CardValue.SEVEN))
         dealer.draw(Card(CardMark.HEART, CardValue.THREE))
@@ -56,7 +57,7 @@ class OutcomeTest {
     @Test
     fun `유저 점수가 21을 넘으면 유저가 진다`() {
         val dealer = Dealer()
-        val guest = Guest("아크", 10000)
+        val guest = Guest(Name("아크"))
         dealer.draw(Card(CardMark.CLOVER, CardValue.EIGHT))
         dealer.draw(Card(CardMark.DIA, CardValue.SEVEN))
         dealer.draw(Card(CardMark.HEART, CardValue.THREE))
@@ -71,7 +72,7 @@ class OutcomeTest {
     @Test
     fun `유저 점수가 딜러 점수보다 크면 유저가 이긴다`() {
         val dealer = Dealer()
-        val guest = Guest("아크", 10000)
+        val guest = Guest(Name("아크"))
         dealer.draw(Card(CardMark.CLOVER, CardValue.EIGHT))
         dealer.draw(Card(CardMark.DIA, CardValue.SEVEN))
         dealer.draw(Card(CardMark.HEART, CardValue.TWO))
@@ -86,7 +87,7 @@ class OutcomeTest {
     @Test
     fun `딜러 점수가 21을 넘으면 유저가 이긴다`() {
         val dealer = Dealer()
-        val guest = Guest("아크", 10000)
+        val guest = Guest(Name("아크"))
         dealer.draw(Card(CardMark.CLOVER, CardValue.EIGHT))
         dealer.draw(Card(CardMark.DIA, CardValue.SEVEN))
         dealer.draw(Card(CardMark.HEART, CardValue.KING))
@@ -101,7 +102,7 @@ class OutcomeTest {
     @Test
     fun `딜러와 유저가 모두 블랙잭인 경우 비긴다`() {
         val dealer = Dealer()
-        val guest = Guest("아크", 10000)
+        val guest = Guest(Name("아크"))
         dealer.draw(Card(CardMark.DIA, CardValue.ACE))
         dealer.draw(Card(CardMark.CLOVER, CardValue.TEN))
 
@@ -114,7 +115,7 @@ class OutcomeTest {
     @Test
     fun `유저만 블랙잭인 경우 블랙잭을 반환한다`() {
         val dealer = Dealer()
-        val guest = Guest("아크", 10000)
+        val guest = Guest(Name("아크"))
         dealer.draw(Card(CardMark.DIA, CardValue.ACE))
         dealer.draw(Card(CardMark.CLOVER, CardValue.THREE))
 

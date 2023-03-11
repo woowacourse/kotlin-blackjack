@@ -3,12 +3,8 @@ package blackjack.domain.participants
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
 
-abstract class User(name: String, money: Int) {
-    val userInfo = UserInfo(name, money)
+abstract class User(val name: Name) {
     var cards = Cards()
-
-    val name: String
-        get() = userInfo.name.toString()
 
     fun getScore(): Int = cards.result.score()
 

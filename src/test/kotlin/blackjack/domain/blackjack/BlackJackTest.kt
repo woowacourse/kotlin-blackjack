@@ -7,6 +7,7 @@ import blackjack.domain.card.CardValue
 import blackjack.domain.card.Cards
 import blackjack.domain.participants.Dealer
 import blackjack.domain.participants.Guest
+import blackjack.domain.participants.Name
 import blackjack.domain.participants.Participants
 import blackjack.domain.result.Outcome
 import org.assertj.core.api.Assertions.assertThat
@@ -16,7 +17,7 @@ class BlackJackTest {
     @Test
     fun `게임 결과를 반환한다`() {
         val blackJack = BlackJack(
-            participants = Participants(Dealer(), listOf(Guest("아크"), Guest("로피"))),
+            participants = Participants(Dealer(), listOf(Guest(Name("아크")), Guest(Name("로피")))),
             cardDeck = CardDeck(Cards.all()),
         ).apply {
             dealer.draw(Card(CardMark.CLOVER, CardValue.QUEEN))

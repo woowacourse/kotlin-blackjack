@@ -1,6 +1,6 @@
 package blackjack.domain.participants
 
-class Guest(name: String, money: Int = 0) : User(name, money) {
+class Guest(name: Name) : User(name) {
     override val isContinue: Boolean
         get() = isNotBust && isBlackJack().not()
 

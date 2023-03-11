@@ -7,9 +7,14 @@ import blackjack.domain.participants.User
 
 class BlackJackGame {
     lateinit var getCommand: (String) -> Boolean
+    lateinit var bettingMoney: (String) -> Int?
 
     fun guestsTurn(guests: List<Guest>, cardDeck: CardDeck, output: (User) -> Unit) =
         guests.forEach { guest -> guestTurn(guest, cardDeck, output) }
+
+    fun guestsMoney(guests: List<Guest>) {
+        guests.forEach { guest -> guest.setBettingMoney(bettingMoney(guest.name)!!)}
+    }
 
     fun dealerTurn(dealer: Dealer, cardDeck: CardDeck, output: () -> Unit) {
         if (dealer.isBlackJack()) return
