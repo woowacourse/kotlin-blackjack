@@ -1,6 +1,6 @@
 package blackjack.domain.card
 
-import blackjack.domain.player.Player.Companion.CARD_SETTING_COUNT
+import blackjack.domain.player.Player.Companion.MAX_SUM_NUMBER
 
 class Cards(cards: List<Card> = listOf()) {
 
@@ -20,13 +20,12 @@ class Cards(cards: List<Card> = listOf()) {
     fun containsCardNumber(cardNumber: CardNumber): Boolean =
         _cards.any { it.number == cardNumber }
 
-    fun sum(): Int = _cards.sumOf { it.number.value } + bonus()
-
-    private fun bonus(): Int =
-        if (_cards.size == CARD_SETTING_COUNT && containsCardNumber(CardNumber.ONE)) ACE_BONUS else NO_ACE_BONUS
-
+    fun sum(): Int {
+        val sum = _cards.sumOf { it.number.value }
+        if (containsCardNumber(CardNumber.ONE) && sum + ACE_BONUS <= MAX_SUM_NUMBER) return sum + ACE_BONUS
+        return sum
+    }
     companion object {
         private const val ACE_BONUS = 10
-        private const val NO_ACE_BONUS = 0
     }
 }
