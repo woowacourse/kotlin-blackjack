@@ -64,9 +64,9 @@ class BlackjackController {
         blackjackStage.users.players.determineAllPlayerGameResult(blackjackStage.users.dealer)
 
     private fun displayBettingResult(blackjackStage: BlackjackStage, playersGameResult: PlayersGameResult) {
-        val userBettingResult = UserBettingResult()
         val users = Users(blackjackStage.users.players, blackjackStage.users.dealer)
-        val playersBettingResults = userBettingResult.getPlayersBettingResults(users, playersGameResult)
+        val userBettingResult = UserBettingResult(users, playersGameResult)
+        val playersBettingResults = userBettingResult.getPlayersBettingResults()
         val dealerBettingResult = userBettingResult.getDealerBettingResult()
         resultView.printUserBettingResult(dealerBettingResult, playersBettingResults)
     }

@@ -5,17 +5,17 @@ import entity.users.Player
 import entity.users.Users
 import misc.GameRule
 
-class UserBettingResult {
+class UserBettingResult(val users: Users, val playersGameResult: PlayersGameResult) {
     val playersBettingResults = mutableMapOf<Player, Double>()
 
-    fun getPlayersBettingResults(users: Users, playersGameResult: PlayersGameResult): MutableMap<Player, Double> {
+    fun getPlayersBettingResults(): MutableMap<Player, Double> {
         users.players.value.forEach { player ->
-            playersBettingResults[player] = getPlayerBettingResult(player, users.dealer, playersGameResult)
+            playersBettingResults[player] = getPlayerBettingResult(player, users.dealer)
         }
         return playersBettingResults
     }
 
-    private fun getPlayerBettingResult(player: Player, dealer: Dealer, playersGameResult: PlayersGameResult): Double {
+    private fun getPlayerBettingResult(player: Player, dealer: Dealer): Double {
         val playerBettingMoney = player.userInformation.bettingMoney.value.toDouble()
         val playerCardsSum = player.cards.sumOfNumbers()
         val dealerCardSum = dealer.cards.sumOfNumbers()
