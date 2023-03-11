@@ -21,6 +21,9 @@ class Cards(cards: Set<Card>) {
 
     fun firstCard(): Card = cards.first()
 
+    fun isBust(): Boolean = sum() > PARTICIPANT_STANDARD_BUST_POINT
+    fun isBlackJack(): Boolean = size == 2 && sum() == 21
+
     companion object {
         const val DEALER_STANDARD_HIT_POINT = 16
         const val PARTICIPANT_STANDARD_BUST_POINT = 21

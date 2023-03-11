@@ -31,4 +31,16 @@ class CardsTest {
         val cards = Cards(setOf(Card(Rank.ACE, Suit.CLOVER), Card(Rank.DEUCE, Suit.CLOVER)))
         assertThat(cards.firstCard()).isEqualTo(Card(Rank.ACE, Suit.CLOVER))
     }
+
+    @Test
+    fun `카드의 합이 21을 초과하면 bust이다`() {
+        val cards = Cards(setOf(Card(Rank.KING, Suit.DIAMOND), Card(Rank.QUEEN, Suit.CLOVER), Card(Rank.JACK, Suit.HEART)))
+        assertThat(cards.isBust()).isTrue
+    }
+
+    @Test
+    fun `카드의 수가 2장이고, 합이 21이면 BLACKJACK이다`() {
+        val cards = Cards(setOf(Card(Rank.ACE, Suit.DIAMOND), Card(Rank.QUEEN, Suit.CLOVER)))
+        assertThat(cards.isBlackJack()).isTrue
+    }
 }
