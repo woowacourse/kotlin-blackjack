@@ -38,8 +38,6 @@ class BlackJackGame {
     private fun guestDraw(guest: Guest, cardDeck: CardDeck, output: (User) -> Unit) {
         guest.draw(cardDeck.drawCard())
         output(guest)
-        if (guest.isHit) {
-            guestTurn(guest, cardDeck, output)
-        }
+        if (guest.isHit) { guestTurn(guest, cardDeck, output) }
     }
 }
