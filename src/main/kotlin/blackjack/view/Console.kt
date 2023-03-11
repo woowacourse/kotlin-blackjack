@@ -12,6 +12,8 @@ import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Participant
 import blackjack.domain.participant.Player
 import blackjack.domain.result.GameResult
+import blackjack.model.CardNumberModel
+import blackjack.model.SuitModel
 
 class Console : InputView, OutputView {
     override fun inputNames(): List<String> {
@@ -61,7 +63,7 @@ class Console : InputView, OutputView {
     }
 
     private fun getCardsMessage(name: String, cards: List<Card>): String =
-        "$name 카드: ${cards.joinToString(", ") { it.toText() }}"
+        "$name 카드: ${cards.joinToString(", ") { it.toPresentation() }}"
 
     override fun printResult(results: ParticipantResults) {
         printScores(results)
@@ -81,7 +83,7 @@ class Console : InputView, OutputView {
     }
 
     private fun getScoreMessage(result: ParticipantResult): String =
-        "${result.name} 카드: ${result.cards.joinToString(", ") { it.toText() }} - 결과: ${result.score}"
+        "${result.name} 카드: ${result.cards.joinToString(", ") { it.toPresentation() }} - 결과: ${result.score}"
 
     private fun printGameResults(dealerResult: DealerResult, playerResults: List<PlayerResult>) {
         println(
@@ -101,30 +103,30 @@ class Console : InputView, OutputView {
         GameResult.LOSE -> "${result.name}: 패"
     }
 
-    private fun Card.toText(): String = "${number.toText()}${suit.toText()}"
+    private fun Card.toPresentation(): String = "${number.toPresentation()}${suit.toPresentation()}"
 
-    private fun CardNumber.toText(): String = when (this) {
-        CardNumber.ACE -> "A"
-        CardNumber.TWO -> "2"
-        CardNumber.THREE -> "3"
-        CardNumber.FOUR -> "4"
-        CardNumber.FIVE -> "5"
-        CardNumber.SIX -> "6"
-        CardNumber.SEVEN -> "7"
-        CardNumber.EIGHT -> "8"
-        CardNumber.NINE -> "9"
-        CardNumber.TEN -> "10"
-        CardNumber.JACK -> "J"
-        CardNumber.QUEEN -> "Q"
-        CardNumber.KING -> "K"
-    }
+    private fun CardNumber.toPresentation(): String = when (this) {
+        CardNumber.ACE -> CardNumberModel.ACE
+        CardNumber.TWO -> CardNumberModel.TWO
+        CardNumber.THREE -> CardNumberModel.THREE
+        CardNumber.FOUR -> CardNumberModel.FOUR
+        CardNumber.FIVE -> CardNumberModel.FIVE
+        CardNumber.SIX -> CardNumberModel.SIX
+        CardNumber.SEVEN -> CardNumberModel.SEVEN
+        CardNumber.EIGHT -> CardNumberModel.EIGHT
+        CardNumber.NINE -> CardNumberModel.NINE
+        CardNumber.TEN -> CardNumberModel.TEN
+        CardNumber.JACK -> CardNumberModel.JACK
+        CardNumber.QUEEN -> CardNumberModel.QUEEN
+        CardNumber.KING -> CardNumberModel.KING
+    }.text
 
-    private fun Suit.toText(): String = when (this) {
-        Suit.SPADE -> "스페이드"
-        Suit.HEART -> "하트"
-        Suit.DIAMOND -> "다이아몬드"
-        Suit.CLOVER -> "클로버"
-    }
+    private fun Suit.toPresentation(): String = when (this) {
+        Suit.SPADE -> SuitModel.SPADE
+        Suit.HEART -> SuitModel.HEART
+        Suit.DIAMOND -> SuitModel.DIAMOND
+        Suit.CLOVER -> SuitModel.CLOVER
+    }.text
 
     private fun printProfits(results: ParticipantResults) {
         println(
