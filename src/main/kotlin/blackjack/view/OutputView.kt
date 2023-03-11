@@ -3,13 +3,12 @@ package blackjack.view
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
 import blackjack.domain.card.Suit
+import blackjack.domain.money.Money
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Participant
 import blackjack.domain.participant.Participants
 import blackjack.domain.participant.Player
-import blackjack.domain.result.BlackjackResult
-import blackjack.domain.result.CardResult
-import blackjack.domain.result.MatchResult
+import blackjack.domain.result.GameResult
 
 object OutputView {
     private const val SEPARATOR = ", "
@@ -31,40 +30,40 @@ object OutputView {
     fun printAllCards(participant: Participant) {
         when (participant) {
             is Dealer -> println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
-            is Player -> println("${participant.name} 카드: ${participant.getCards().joinToString(SEPARATOR) { it.toText() }}")
+            is Player -> println(
+                "${participant.name} 카드: ${
+                participant.getCards().joinToString(SEPARATOR) { it.toText() }
+                }"
+            )
         }
     }
 
-    fun printBlackjackResult(blackJackResult: BlackjackResult) {
-        printCardResults(blackJackResult.cardResults)
-        printFinalResult(blackJackResult.matchResults)
+    fun printBlackjackResult(gameResults: List<GameResult>) {
+        printCardResults(gameResults)
+        printFinalResult(gameResults)
     }
 
-    private fun printCardResults(cardResults: List<CardResult>) {
+    private fun printCardResults(gameResults: List<GameResult>) {
         printInterval()
-        cardResults.forEach(::printScore)
+        gameResults.forEach { printScore(it.participantName, it.cards, it.scoreSum) }
     }
 
-    private fun printScore(cardResult: CardResult) {
-        with(cardResult) {
-            println("${participant.name} 카드: ${cards.joinToString(SEPARATOR) { it.toText() }} - 결과: $scoreSum")
-        }
+    private fun printScore(name: String, cards: List<Card>, scoreSum: Int) {
+        println("$name 카드: ${cards.joinToString(SEPARATOR) { it.toText() }} - 결과: $scoreSum")
     }
 
-    private fun printFinalResult(matchResults: List<MatchResult>) {
+    private fun printFinalResult(gameResults: List<GameResult>) {
         printInterval()
         println("## 최종 수익")
-        printMatchResults(matchResults)
+        printMatchResults(gameResults)
     }
 
-    private fun printMatchResults(matchResults: List<MatchResult>) {
-        matchResults.forEach(::printPlayerResult)
+    private fun printMatchResults(gameResults: List<GameResult>) {
+        gameResults.forEach { printParticipantResult(it.participantName, it.profit) }
     }
 
-    private fun printPlayerResult(matchResult: MatchResult) {
-        val playerName = matchResult.participant.name
-        val profit = matchResult.profit.getAmount()
-        println("$playerName: $profit")
+    private fun printParticipantResult(name: String, profit: Money) {
+        println("$name: ${profit.getAmount()}")
     }
 
     private fun Card.toText(): String = "${number.toText()}${suit.toText()}"

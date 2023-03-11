@@ -2,8 +2,7 @@ package blackjack.domain.participant
 
 import blackjack.domain.card.CardDeck
 import blackjack.domain.money.Money
-import blackjack.domain.result.CardResult
-import blackjack.domain.result.MatchResult
+import blackjack.domain.result.GameResult
 
 class Participants(private val participants: List<Participant>) {
     init {
@@ -68,26 +67,25 @@ class Participants(private val participants: List<Participant>) {
         return player.stay()
     }
 
-    fun getMatchResults(): List<MatchResult> = listOf(getDealerMatchResult()) + getPlayerMatchResults()
-
-    private fun getPlayerMatchResults(): List<MatchResult> = getPlayers().map { player ->
-        MatchResult(player, player.getProfit(getDealer()))
-    }
-
-    private fun getDealerMatchResult(): MatchResult {
-        val dealer = getDealer()
-        var totalProfit = Money(0)
-        getPlayers().forEach { totalProfit += dealer.getProfit(it) }
-        return MatchResult(dealer, totalProfit)
-    }
-
-    fun getCardResults(): List<CardResult> = dealerFirst().map { participant ->
-        CardResult(
-            participant,
+    fun getGameResult(): List<GameResult> = dealerFirst().map { participant ->
+        GameResult(
+            participant.name,
             participant.getCards(),
-            participant.getTotalScore()
+            participant.getTotalScore(),
+            getProfit(participant)
         )
     }
+
+    private fun getProfit(participant: Participant): Money = when (participant) {
+        is Player -> getPlayerMatchResults(participant)
+        is Dealer -> getDealerMatchResult(participant)
+        else -> throw IllegalArgumentException("올바르지 않은 참여자입니다.")
+    }
+
+    private fun getPlayerMatchResults(player: Player): Money = player.getProfit(getDealer())
+
+    private fun getDealerMatchResult(dealer: Dealer): Money =
+        Money(getPlayers().sumOf { dealer.getProfit(it).getAmount() })
 
     fun getPlayers(): List<Participant> = participants.filterIsInstance<Player>()
 
