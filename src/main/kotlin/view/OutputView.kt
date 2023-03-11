@@ -41,7 +41,7 @@ object OutputView {
     }
 
     fun printParticipantCards(player: Player) {
-        println("${player.name}$PARTICIPANT_CARD ${player.ownCards.cards.joinToString(SEPARATOR) { printCardForm(it) }}")
+        println("${player.name}$PARTICIPANT_CARD ${player.ownCards.cards.joinToString { printCardForm(it) }}")
     }
 
     private fun printCardForm(card: Card): String {

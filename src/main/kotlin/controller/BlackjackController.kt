@@ -1,6 +1,7 @@
 package controller
 
 import domain.BlackjackGame
+import domain.BlackjackResult
 import domain.participants.Names
 import view.InputView
 import view.OutputView
@@ -10,11 +11,10 @@ class BlackjackController {
     fun startGame() {
         val names = insertNames()
         val blackjackGame = BlackjackGame(names, InputView.inputBetAmount(names))
-
         OutputView.printBlackjackSetting(blackjackGame.players, blackjackGame.dealer)
-        blackjackGame.playsTurn(InputView::inputRepeatGetCard, OutputView::printParticipantCards, OutputView::printDealerUnder16)
+        blackjackGame.play(InputView::inputRepeatGetCard, OutputView::printParticipantCards, OutputView::printDealerUnder16)
 
-        OutputView.printResult(blackjackGame.getResult())
+        OutputView.printResult(BlackjackResult(blackjackGame.dealer, blackjackGame.players).getResult())
     }
 
     private fun insertNames(): Names {

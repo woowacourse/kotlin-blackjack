@@ -25,7 +25,7 @@ class BlackjackGameTest {
 
     @Test
     fun `입력값이 false라면 카드를 뽑지않는다`() {
-        blackjackGame.playsTurn({ false }, {}, {})
+        blackjackGame.play({ false }, {}, {})
         val expect = mutableListOf(
             Card(Shape.DIAMOND, CardValue.TEN),
             Card(Shape.CLOVER, CardValue.JACK)
@@ -36,7 +36,7 @@ class BlackjackGameTest {
 
     @Test
     fun `입력값이 true라면 플레이어가 burst가 될 때까지 카드를 뽑는다`() {
-        blackjackGame.playsTurn({ true }, {}, {})
+        blackjackGame.play({ true }, {}, {})
         val expect = mutableListOf(
             Card(Shape.DIAMOND, CardValue.TEN),
             Card(Shape.CLOVER, CardValue.JACK),
@@ -48,7 +48,7 @@ class BlackjackGameTest {
 
     @Test
     fun `딜러가 16이하의 값을 가졌다면 16을 넘을 때까지 계속 카드를 뽑는다`() {
-        blackjackGame.playsTurn({ false }, {}, {})
+        blackjackGame.play({ false }, {}, {})
         val expect = mutableListOf(
             Card(Shape.DIAMOND, CardValue.TEN),
             Card(Shape.CLOVER, CardValue.JACK),

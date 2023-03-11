@@ -7,8 +7,6 @@ import domain.deck.Deck
 import domain.participants.Dealer
 import domain.participants.Names
 import domain.participants.Player
-import domain.result.ParticipantsResult
-import domain.result.PlayerResult
 
 class BlackjackGame(
     names: Names,
@@ -37,7 +35,7 @@ class BlackjackGame(
         }
     }
 
-    fun playsTurn(
+    fun play(
         wantPickCard: (Player) -> Boolean,
         onPickCard: (Player) -> Unit,
         onDealerPickCard: () -> Unit
@@ -79,19 +77,6 @@ class BlackjackGame(
             return true
         }
         return false
-    }
-
-    fun getResult(): ParticipantsResult {
-        return ParticipantsResult(dealer, calculateProfit())
-    }
-
-    private fun calculateProfit(): List<PlayerResult> {
-        return players.map {
-            PlayerResult(
-                it,
-                dealer.judgePlayerResult(it.ownCards).calculateProfit(it.bettingMoney)
-            )
-        }
     }
 
     companion object {
