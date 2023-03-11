@@ -11,7 +11,7 @@ class CardDeckTest {
         val cardDeck = CardDeck(RandomCardsGenerator())
 
         // when
-        val actual = cardDeck.cards.size
+        val actual: Int = cardDeck.getCardsSize()
 
         // then
         assertThat(actual).isEqualTo(52)
@@ -24,7 +24,7 @@ class CardDeckTest {
 
         // when
         cardDeck.provide()
-        val actual = cardDeck.cards.size
+        val actual: Int = cardDeck.getCardsSize()
 
         // then
         assertThat(actual).isEqualTo(51)

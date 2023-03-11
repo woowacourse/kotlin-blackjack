@@ -15,10 +15,10 @@ class BlackjackController(
     fun run() {
         val blackjackManager = BlackjackManager(cardsGenerator, inputView.readParticipantsName())
         blackjackManager.setup()
-        outputView.printSettingCard(blackjackManager.dealer, blackjackManager.participants)
+        outputView.printSetupCards(blackjackManager.dealer, blackjackManager.participants)
         blackjackManager.playParticipantsTurns(inputView::readMoreCard, outputView::printParticipantCards)
-        blackjackManager.playDealerTurns(outputView::printDealerHitCardMent)
-        outputView.printSumResult(blackjackManager.dealer, blackjackManager.participants)
-        blackjackManager.calculatePlayersResult(outputView::printFinalResult)
+        blackjackManager.playDealerTurn(outputView::printDealerHitCardMent)
+        outputView.printScoreResult(blackjackManager.dealer, blackjackManager.participants)
+        outputView.printPlayersResult(blackjackManager.calculatePlayersResult())
     }
 }

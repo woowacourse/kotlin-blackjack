@@ -1,6 +1,7 @@
 package blackjack.domain.player
 
 import blackjack.domain.Result
+import blackjack.domain.card.Cards
 import blackjack.domain.card.TestCardsGenerator
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -10,29 +11,33 @@ class BlackjackManagerTest {
     @Test
     fun `BlackjackManager를 생성할 때 이름을 넘겨주면, 객체를 생성할 때, 해당 이름을 가진 참가자를 생성한다`() {
 
-        // given
-        val blackjackManager = BlackjackManager(TestCardsGenerator(), listOf("aaa", "bbb"))
-
         // when
-        val actual = blackjackManager.participants.values.map { it.name }
+        val blackjackManager = BlackjackManager(TestCardsGenerator(), listOf("aaa", "bbb"))
+        val participants: Participants = blackjackManager.participants
 
         // then
-        assertThat(actual).isEqualTo(listOf("aaa", "bbb"))
+        var index = 0
+        participants.values.forEach { participant ->
+            assertThat(participant.name).isEqualTo(listOf("aaa", "bbb")[index++])
+        }
     }
 
     @Test
     fun `setup 함수를 호출하면 모든 플레이어에게 카드 두장을 발행한다`() {
         // given
         val blackjackManager = BlackjackManager(TestCardsGenerator(), listOf("aaa", "bbb"))
-        blackjackManager.setup()
 
         // when
-        val dealerCardsSize = blackjackManager.dealer.cards.values.size
-        val participantsCardsSize = blackjackManager.participants.values.map { it.cards.values.size }
+        blackjackManager.setup()
+        val dealerCards: Cards = blackjackManager.dealer.cards
+        val participantsCards: List<Cards> = blackjackManager.participants.values.map { it.cards }
 
         // then
-        assertThat(dealerCardsSize).isEqualTo(2)
-        assertThat(participantsCardsSize).isEqualTo(listOf(2, 2))
+        assertThat(dealerCards.getSize()).isEqualTo(2)
+        var index = 0
+        participantsCards.forEach { cards ->
+            assertThat(cards.getSize()).isEqualTo(listOf(2, 2)[index++])
+        }
     }
 
     @Test
@@ -45,15 +50,12 @@ class BlackjackManagerTest {
         var index = 0
         blackjackManager.playParticipantsTurns({ _: String -> listOf(true, false, false)[index++] }) {}
 
-        val participant1 = blackjackManager.participants.values[0]
-        val participant2 = blackjackManager.participants.values[1]
-
-        val actual1 = participant1.cards.values.size
-        val actual2 = participant2.cards.values.size
+        val participant1Cards: Cards = blackjackManager.participants.values[0].cards
+        val participant2Cards: Cards = blackjackManager.participants.values[1].cards
 
         // then
-        assertThat(actual1).isEqualTo(3)
-        assertThat(actual2).isEqualTo(2)
+        assertThat(participant1Cards.getSize()).isEqualTo(3)
+        assertThat(participant2Cards.getSize()).isEqualTo(2)
     }
 
     @Test
@@ -63,11 +65,11 @@ class BlackjackManagerTest {
         blackjackManager.setup()
 
         // when
-        blackjackManager.playDealerTurns {}
-        val actual = blackjackManager.dealer.cards.values.size
+        blackjackManager.playDealerTurn {}
+        val dealerCards: Cards = blackjackManager.dealer.cards
 
         // then
-        assertThat(actual).isEqualTo(4)
+        assertThat(dealerCards.getSize()).isEqualTo(4)
     }
 
     @Test

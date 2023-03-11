@@ -6,10 +6,11 @@ import blackjack.domain.player.DealerResult
 import blackjack.domain.player.Participant
 import blackjack.domain.player.Participants
 import blackjack.domain.player.Player
+import blackjack.domain.player.PlayersResult
 
 class OutputView {
 
-    fun printSettingCard(dealer: Dealer, participants: Participants) {
+    fun printSetupCards(dealer: Dealer, participants: Participants) {
         val participantsNames: List<String> = participants.values.map { it.name }
         println(SETTING_CARD_MENT.format(participantsNames.joinToString(", ")))
         printFirstRoundDealerCard(dealer)
@@ -23,13 +24,13 @@ class OutputView {
         println(DEALER_HIT_CARD_MENT)
     }
 
-    fun printSumResult(dealer: Dealer, participants: Participants) {
+    fun printScoreResult(dealer: Dealer, participants: Participants) {
         println()
         printPlayerCardsSumResult(dealer)
-        println(SUM_RESULT_MENT.format(dealer.cards.sumCardsNumber()))
+        println(SUM_RESULT_MENT.format(dealer.cards.calculateScore()))
         participants.values.forEach {
             printPlayerCardsSumResult(it)
-            print(SUM_RESULT_MENT.format(it.cards.sumCardsNumber()))
+            print(SUM_RESULT_MENT.format(it.cards.calculateScore()))
             println()
         }
     }

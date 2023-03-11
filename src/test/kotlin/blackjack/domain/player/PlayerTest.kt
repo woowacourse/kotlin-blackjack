@@ -31,29 +31,52 @@ class PlayerTest {
 
     @Test
     fun `Player는 카드들을 가진다`() {
+
+        // when
         val player = TestPlayer("aa")
-        assertThat(player.cards.values).isEqualTo(Cards().values)
+
+        // then
+        assertThat(player.cards).isEqualTo(Cards())
     }
 
     @Test
-    fun `새로운 카드를 발급받으면, 기존에 가지고 있던 카드들에 추가한다`() {
-        val player = TestPlayer("aa")
-        val expected = Card(CardNumber.FOUR, CardShape.HEART)
-        player.addCard(expected)
-        assertThat(player.cards.values).isEqualTo(listOf(expected))
+    fun `새로운 카드를 발급받으면, Player가 기존에 가지고 있던 카드에 추가한다`() {
+
+        // given
+        val player = TestPlayer("aa", Cards(listOf(Card(CardNumber.FOUR, CardShape.HEART))))
+
+        // when
+        player.addCard(Card(CardNumber.EIGHT, CardShape.CLOVER))
+
+        // then
+        assertThat(player.cards).isEqualTo(
+            Cards(
+                listOf(
+                    Card(CardNumber.FOUR, CardShape.HEART),
+                    Card(CardNumber.EIGHT, CardShape.CLOVER)
+                )
+            )
+        )
     }
 
     @Test
     fun `Player가 갖고 있는 카드 숫자의 합을 계산해 반환한다`() {
-        val player = TestPlayer("aa")
-        player.addCard(Card(CardNumber.FOUR, CardShape.HEART))
-        player.addCard(Card(CardNumber.EIGHT, CardShape.CLOVER))
-        val actual = player.cards.sumCardsNumber()
+
+        // given
+        val player = TestPlayer(
+            "aa",
+            Cards(listOf(Card(CardNumber.FOUR, CardShape.HEART), Card(CardNumber.EIGHT, CardShape.CLOVER)))
+        )
+
+        // when
+        val actual: Int = player.cards.calculateScore()
+
+        // then
         assertThat(actual).isEqualTo(12)
     }
 
     @Test
-    fun `Player의 카드 추가 발급 가능 여부를 판단한다`() {
+    fun `Player가 갖고 있는 카드에 따라 추가 발급 가능 여부를 판단한다`() {
         // given
         val testPlayer = TestPlayer(
             "aaa",
@@ -61,14 +84,14 @@ class PlayerTest {
         )
 
         // when
-        val actual = testPlayer.checkProvideCardPossible()
+        val actual: Boolean = testPlayer.checkProvideCardPossible()
 
         // then
         assertThat(actual).isTrue
     }
 
     class TestPlayer(name: String, cards: Cards = Cards()) : Player(name, cards) {
-        override fun checkProvideCardPossible(): Boolean = (cards.sumCardsNumber() <= TEST_PLAYER_MORE_CARD_CRITERIA)
+        override fun checkProvideCardPossible(): Boolean = (cards.calculateScore() <= TEST_PLAYER_MORE_CARD_CRITERIA)
 
         companion object {
             const val TEST_PLAYER_MORE_CARD_CRITERIA = 21

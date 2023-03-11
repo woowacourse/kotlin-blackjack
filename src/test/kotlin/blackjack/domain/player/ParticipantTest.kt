@@ -11,15 +11,21 @@ import org.junit.jupiter.api.Test
 class ParticipantTest {
 
     @Test
-    fun `딜러가 카드를 8클로버만 가지고 있을 때, 카드를 더 받을 수 있는지 확인하면, true이다`() {
-        val participant = Participant("aaa")
-        participant.addCard(Card(CardNumber.EIGHT, CardShape.CLOVER))
-        val actual = participant.checkProvideCardPossible()
-        assertThat(actual).isEqualTo(true)
+    fun `참가자가 카드를 8클로버만 가지고 있을 때, 카드를 더 받을 수 있는지 확인하면, true이다`() {
+
+        // given
+        val participant = Participant("aaa", Cards(listOf(Card(CardNumber.EIGHT, CardShape.CLOVER))))
+
+        // when
+        val actual: Boolean = participant.checkProvideCardPossible()
+
+        // then
+        assertThat(actual).isTrue
     }
 
     @Test
-    fun `플레이어1은 Burst 딜러는 17일때, 플레이어1의 승패를 계산하면, 패배이다`() {
+    fun `참가자1 스코어는 Burst 딜러 스코어는 17일때, 참가자1의 승패를 계산하면, 패배이다`() {
+
         // given
         val dealer = Dealer(
             cards = Cards(
@@ -29,7 +35,8 @@ class ParticipantTest {
                 )
             )
         )
-        val player1 = Participant(
+
+        val participant1 = Participant(
             "aaa",
             cards = Cards(
                 listOf(
@@ -41,14 +48,15 @@ class ParticipantTest {
         )
 
         // when
-        val actual = player1.calculateResult(dealer)
+        val actual: ParticipantResult = participant1.calculateResult(dealer)
 
         // then
-        assertThat(actual.result).isEqualTo(Pair("aaa", Result.LOSE))
+        assertThat(actual).isEqualTo(ParticipantResult("aaa", Result.LOSE))
     }
 
     @Test
-    fun `플레이어1은 17 딜러는 Burst 일때, 플레이어1의 승패를 계산하면, 승리이다`() {
+    fun `참가자1 스코어는 17 딜러 스코어는 Burst 일때, 참가자1의 승패를 계산하면, 승리이다`() {
+
         // given
         val dealer = Dealer(
             cards = Cards(
@@ -59,7 +67,7 @@ class ParticipantTest {
                 )
             )
         )
-        val player1 = Participant(
+        val participant1 = Participant(
             "aaa",
             cards = Cards(
                 listOf(
@@ -70,9 +78,9 @@ class ParticipantTest {
         )
 
         // when
-        val actual = player1.calculateResult(dealer)
+        val actual: ParticipantResult = participant1.calculateResult(dealer)
 
         // then
-        assertThat(actual.result).isEqualTo(Pair("aaa", Result.WIN))
+        assertThat(actual).isEqualTo(ParticipantResult("aaa", Result.WIN))
     }
 }

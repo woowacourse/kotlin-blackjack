@@ -8,7 +8,7 @@ abstract class Player(
     val cards: Cards
 ) {
     val isBurst
-        get() = cards.isBurst()
+        get() = cards.isBust()
     val isBlackjack
         get() = cards.isBlackjack()
 
