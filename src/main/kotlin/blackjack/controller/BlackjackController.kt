@@ -1,12 +1,9 @@
 package blackjack.controller
 
-import blackjack.domain.card.Card
-import blackjack.domain.card.Cards
 import blackjack.domain.card.MultiDeck
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Participant
 import blackjack.domain.player.Participants
-import blackjack.domain.player.Player
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -20,7 +17,7 @@ class BlackjackController(
     fun run() {
         val dealer: Dealer = Dealer()
         val participants: Participants = inputView.readParticipants()
-        setInitialPlayersCards(dealer, participants)
+        setFirstTurnPlayersCards(dealer, participants)
         hitPlayerCards(dealer, participants)
         decidePlayersResult(dealer, participants)
         printResult(dealer, participants)
@@ -31,13 +28,10 @@ class BlackjackController(
         participants.values.forEach { dealer.decideGameResult(it) }
     }
 
-    private fun setInitialPlayersCards(dealer: Dealer, participants: Participants) {
-        repeat(Player.CARD_SETTING_COUNT) { dealer.addCard(multiDeck.draw()) }
-        participants.values.forEach {
-            val initCards: List<Card> = listOf(multiDeck.draw(), multiDeck.draw())
-            it.setInitialCards(Cards(initCards))
-        }
-        outputView.printInitialSettingCard(dealer, participants)
+    private fun setFirstTurnPlayersCards(dealer: Dealer, participants: Participants) {
+        dealer.setFirstTurnCards(multiDeck)
+        participants.values.forEach { it.setFirstTurnCards(multiDeck) }
+        outputView.printFirstTurnSettingCard(dealer, participants)
     }
 
     private fun hitPlayerCards(dealer: Dealer, participants: Participants) {
@@ -47,11 +41,11 @@ class BlackjackController(
 
     private fun hitParticipantsCards(dealer: Dealer, participants: Participants) {
         participants.values.forEach {
-            hitParticipantCards(dealer, it)
+            hitParticipantCards(it)
         }
     }
 
-    private fun hitParticipantCards(dealer: Dealer, participant: Participant) {
+    private fun hitParticipantCards(participant: Participant) {
         while (participant.canHit() && inputView.readHitOrNot(participant.name)) {
             participant.addCard(multiDeck.draw())
             outputView.printCurrentPlayerCards(participant)

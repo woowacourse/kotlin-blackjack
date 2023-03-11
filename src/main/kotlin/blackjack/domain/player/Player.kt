@@ -2,6 +2,7 @@ package blackjack.domain.player
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
+import blackjack.domain.card.MultiDeck
 
 abstract class Player(
     val name: String,
@@ -16,8 +17,8 @@ abstract class Player(
         cards.add(card)
     }
 
-    fun setInitialCards(cards: Cards) =
-        cards.values.forEach { addCard(it) }
+    fun setFirstTurnCards(multiDeck: MultiDeck) =
+        repeat(CARD_SETTING_COUNT) { cards.add(multiDeck.draw()) }
 
     companion object {
         const val CARD_SETTING_COUNT = 2

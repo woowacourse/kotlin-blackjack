@@ -28,7 +28,7 @@ class OutputView {
         println()
     }
 
-    fun printInitialSettingCard(dealer: Dealer, participants: Participants) {
+    fun printFirstTurnSettingCard(dealer: Dealer, participants: Participants) {
         val participantsNames: List<String> = participants.values.map { it.name }
         println(INITIAL_SETTING_CARD_MESSAGE.format(participantsNames.joinToString(", ")))
         printFirstRoundDealerCards(dealer)
