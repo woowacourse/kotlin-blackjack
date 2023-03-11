@@ -89,4 +89,17 @@ class FinalProfitTest {
         val finalProfit = FinalProfit.playersFinalProfits(dealer, usersBettingMoney)
         assertThat(finalProfit.getUserProfit(guest)).isEqualTo(15000)
     }
+
+    @Test
+    fun `딜러의 최종 수익을 반환한다`() {
+        val finalProfit = FinalProfit(
+            mapOf(
+                Guest(Name("로피")) to 10000,
+                Guest(Name("아크")) to 20000,
+            ),
+        )
+        val dealerProfit = finalProfit.getDealerProfit()
+
+        assertThat(dealerProfit).isEqualTo(-30000)
+    }
 }
