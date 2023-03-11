@@ -2,7 +2,6 @@ package blackjack.domain.participants
 
 import blackjack.domain.result.Outcome
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
@@ -36,8 +35,8 @@ class MoneyTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = ["BLACKJACK, 25000", "WIN, 20000", "DRAW, 10000", "LOSE, 0"])
-    fun `게임 OutCome에 따라 베팅금액에 대해 얻을 수 있는 금액 반환`(outcome: Outcome, money: Int) {
+    @CsvSource(value = ["BLACKJACK, 15000", "WIN, 10000", "DRAW, 0", "LOSE, -10000"])
+    fun `게임 OutCome에 따라 베팅금액에 대한 최종 수익 반환`(outcome: Outcome, money: Int) {
         val bettingMoney = Money(10000)
         assertThat(bettingMoney.getProfits(outcome)).isEqualTo(money)
     }

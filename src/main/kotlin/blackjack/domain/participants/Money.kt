@@ -9,10 +9,7 @@ class Money(val value: Int) {
         require(value % MONEY_LIMIT_VALUE == 0) { ERROR_MONEY_VALUE }
     }
 
-    fun getProfits(outcome: Outcome): Int {
-        return value + (value * outcome.ratio).toInt()
-    }
-    // operator fun plus(other: Money): Money = Money(value + other.value)
+    fun getProfits(outcome: Outcome): Int = (value * outcome.ratio).toInt()
 
     companion object {
         private const val MONEY_LIMIT_VALUE = 1000
