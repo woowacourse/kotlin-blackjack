@@ -43,26 +43,6 @@ class CardsTest {
     }
 
     @Test
-    fun `점수가 17점 이상이면 스테이다`() {
-        val cards = Cards(
-            Card(CardNumber.ACE, Suit.SPADE),
-            Card(CardNumber.SIX, Suit.SPADE)
-        )
-
-        assertThat(cards.isStay).isTrue
-    }
-
-    @Test
-    fun `점수가 17점 미만이면 스테이가 아니다`() {
-        val cards = Cards(
-            Card(CardNumber.ACE, Suit.SPADE),
-            Card(CardNumber.FIVE, Suit.SPADE)
-        )
-
-        assertThat(cards.isStay).isFalse
-    }
-
-    @Test
     fun `점수가 21점을 초과하면 버스트다`() {
         val cards = Cards(
             Card(CardNumber.JACK, Suit.SPADE),

@@ -2,7 +2,6 @@ package blackjack.domain.state
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
-import blackjack.domain.money.Money
 
 abstract class FinishedState(protected val cards: Cards) : CardState {
     abstract val earningRate: Double
@@ -19,8 +18,6 @@ abstract class FinishedState(protected val cards: Cards) : CardState {
     override fun stay(): CardState {
         throw IllegalStateException("게임이 종료되어 스테이할 수 없습니다.")
     }
-
-    override fun profit(money: Money): Money = money * earningRate
 
     override fun getAllCards(): List<Card> = cards.items
 

@@ -1,8 +1,13 @@
 package blackjack.domain.state
 
-import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
+import blackjack.domain.money.Money
 
 class StayState(cards: Cards, override val earningRate: Double = 1.0) : FinishedState(cards) {
-    constructor(vararg cards: Card) : this(Cards(*cards))
+    override fun profit(other: CardState, money: Money): Money {
+        val scoreGap = getTotalScore() - other.getTotalScore()
+        if (scoreGap > 0) return money * earningRate
+        else if (scoreGap == 0) return Money(0)
+        return -money
+    }
 }

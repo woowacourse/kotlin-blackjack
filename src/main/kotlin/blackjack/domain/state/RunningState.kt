@@ -25,7 +25,7 @@ abstract class RunningState(protected val cards: Cards) : CardState {
 
     override fun getFirstCard(): Card = cards.getFirstCard()
 
-    override fun profit(money: Money): Money {
+    override fun profit(other: CardState, money: Money): Money {
         throw IllegalStateException("게임이 종료되지 않아 수익을 계산할 수 없습니다.")
     }
 

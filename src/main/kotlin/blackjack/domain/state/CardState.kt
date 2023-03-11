@@ -10,7 +10,7 @@ interface CardState {
 
     fun stay(): CardState
 
-    fun profit(money: Money): Money
+    fun profit(other: CardState, money: Money): Money
 
     fun getAllCards(): List<Card>
 
