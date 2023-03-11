@@ -7,6 +7,6 @@ class BlackjackState(cards: Cards, override val earningRate: Double = 1.5) : Fin
     constructor(vararg cards: Card) : this(Cards(*cards))
 
     init {
-        check(cards.isBlackjack()) { "카드의 총 합이 21점이 아닙니다." }
+        check(cards.isBlackjack) { "카드의 총 합이 21점이 아닙니다." }
     }
 }

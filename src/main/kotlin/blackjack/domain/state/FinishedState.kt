@@ -9,7 +9,7 @@ abstract class FinishedState(protected val cards: Cards) : CardState {
     override val isFinished: Boolean = true
 
     init {
-        check(cards.isGreaterOrEqualsThan(MINIMUM_CARDS_SIZE)) { "카드를 최소 2장 보유해야 합니다." }
+        check(cards.isGreaterOrEqualsCardSize(MINIMUM_CARDS_SIZE)) { "카드를 최소 2장 보유해야 합니다." }
     }
 
     override fun draw(card: Card): CardState {

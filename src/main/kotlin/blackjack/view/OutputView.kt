@@ -31,9 +31,7 @@ object OutputView {
     fun printAllCards(participant: Participant) {
         when (participant) {
             is Dealer -> println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
-            is Player -> println(
-                "${participant.name} 카드: ${participant.getCards().joinToString(SEPARATOR) { it.toText() }}"
-            )
+            is Player -> println("${participant.name} 카드: ${participant.getCards().joinToString(SEPARATOR) { it.toText() }}")
         }
     }
 

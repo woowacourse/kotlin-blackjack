@@ -49,7 +49,7 @@ class CardsTest {
             Card(CardNumber.SIX, Suit.SPADE)
         )
 
-        assertThat(cards.isStay()).isTrue
+        assertThat(cards.isStay).isTrue
     }
 
     @Test
@@ -59,7 +59,7 @@ class CardsTest {
             Card(CardNumber.FIVE, Suit.SPADE)
         )
 
-        assertThat(cards.isStay()).isFalse
+        assertThat(cards.isStay).isFalse
     }
 
     @Test
@@ -70,7 +70,7 @@ class CardsTest {
             Card(CardNumber.TWO, Suit.SPADE)
         )
 
-        assertThat(cards.isOverBlackjack()).isTrue
+        assertThat(cards.isBust).isTrue
     }
 
     @Test
@@ -80,6 +80,6 @@ class CardsTest {
             Card(CardNumber.QUEEN, Suit.SPADE)
         )
 
-        assertThat(cards.isOverBlackjack()).isFalse
+        assertThat(cards.isBust).isFalse
     }
 }

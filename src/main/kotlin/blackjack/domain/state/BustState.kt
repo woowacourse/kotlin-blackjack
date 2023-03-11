@@ -7,6 +7,6 @@ class BustState(cards: Cards, override val earningRate: Double = 1.0) : Finished
     constructor(vararg cards: Card) : this(Cards(*cards))
 
     init {
-        check(cards.isBust()) { "버스트 상태는 21점을 초과해야 합니다." }
+        check(cards.isBust) { "버스트 상태는 21점을 초과해야 합니다." }
     }
 }

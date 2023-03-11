@@ -7,10 +7,10 @@ class HitState(cards: Cards) : RunningState(cards) {
     constructor(vararg cards: Card) : this(Cards(*cards))
 
     init {
-        check(cards.isGreaterOrEqualsThan(MINIMUM_CARDS_SIZE)) { "히트 상태는 카드를 최소 2장 보유해야 합니다." }
+        check(cards.isGreaterOrEqualsCardSize(MINIMUM_CARDS_SIZE)) { "히트 상태는 카드를 최소 2장 보유해야 합니다." }
     }
 
-    override fun nextStateCondition(): Boolean = cards.isOverBlackjack()
+    override fun nextStateCondition(): Boolean = cards.isBust
 
     override fun nextState(): CardState = BustState(cards)
 

@@ -12,7 +12,6 @@ class Participants(private val participants: List<Participant>) {
         }
     }
 
-    // Cards가 아니라 CardState에서 처리하도록 해야 함, Interface에 getAll, getFirst 정의하고 abstract에서 각각 구현하면 될듯
     fun drawFirst(
         deck: CardDeck,
         onStartFirstDrawn: (Participants) -> Unit = {},
@@ -20,18 +19,15 @@ class Participants(private val participants: List<Participant>) {
     ): Participants {
         onStartFirstDrawn(this)
         return Participants(
-            participants.map { participant ->
-                participant.draw(deck.draw()).draw(deck.draw())
-            }.onEach(onFirstDrawn)
+            dealerFirst()
+                .map { participant -> participant.draw(deck.draw()).draw(deck.draw()) }
+                .onEach(onFirstDrawn)
         )
     }
 
-    fun takeTurns(deck: CardDeck, onDrawn: (Participant) -> Unit): Participants =
-        Participants(
-            (getPlayers() + getDealer()).map { participant ->
-                drawUntilCanDraw(participant, deck, onDrawn)
-            }
-        )
+    fun takeTurns(deck: CardDeck, onDrawn: (Participant) -> Unit): Participants = Participants(
+        playersFirst().map { participant -> drawUntilCanDraw(participant, deck, onDrawn) }
+    )
 
     private fun drawUntilCanDraw(
         participant: Participant,
@@ -39,13 +35,25 @@ class Participants(private val participants: List<Participant>) {
         onDrawn: (Participant) -> Unit
     ): Participant {
         var drawnParticipant = participant
+        if (!drawnParticipant.canDraw()) return drawnParticipant
 
-        while (drawnParticipant.canDraw()) {
+        do {
             drawnParticipant = checkPlayerNeedToDraw(drawnParticipant)
-            if (drawnParticipant.canDraw()) {
-                drawnParticipant = drawnParticipant.draw(deck.draw())
-                onDrawn(drawnParticipant)
-            }
+            drawnParticipant = drawCard(drawnParticipant, deck, onDrawn)
+        } while (drawnParticipant.canDraw())
+        return drawnParticipant
+    }
+
+    private fun drawCard(
+        participant: Participant,
+        deck: CardDeck,
+        onDrawn: (Participant) -> Unit
+    ): Participant {
+        var drawnParticipant = participant
+
+        if (participant.canDraw()) {
+            drawnParticipant = participant.draw(deck.draw())
+            onDrawn(drawnParticipant)
         }
         return drawnParticipant
     }
@@ -73,7 +81,7 @@ class Participants(private val participants: List<Participant>) {
         return MatchResult(dealer, totalProfit)
     }
 
-    fun getCardResults(): List<CardResult> = (listOf(getDealer()) + getPlayers()).map { participant ->
+    fun getCardResults(): List<CardResult> = dealerFirst().map { participant ->
         CardResult(
             participant,
             participant.getCards(),
@@ -85,8 +93,9 @@ class Participants(private val participants: List<Participant>) {
 
     fun getDealer(): Participant = participants.first { it is Dealer }
 
-    fun addFirst(newParticipant: Participant): Participants =
-        Participants(participants.toMutableList().apply { add(0, newParticipant) })
+    private fun dealerFirst(): List<Participant> = listOf(getDealer()) + getPlayers()
+
+    private fun playersFirst(): List<Participant> = getPlayers() + getDealer()
 
     companion object {
         private const val MINIMUM_PARTICIPANTS = 2

@@ -2,18 +2,15 @@ package blackjack.view
 
 import blackjack.domain.money.BetMoney
 import blackjack.domain.money.Money
-import blackjack.domain.participant.Participants
 import blackjack.domain.participant.Player
 
 object InputView {
     private const val PLAYER_NAME_DELIMITER = ","
 
-    fun inputPlayers(): Participants = Participants(
-        inputNames().map { name ->
-            val betAmount = inputBetAmount(name)
-            Player(name = name, money = betAmount) { inputDrawCommand(name) }
-        }
-    )
+    fun inputPlayers(): List<Player> = inputNames().map { name ->
+        val betAmount = inputBetAmount(name)
+        Player(name = name, money = betAmount) { inputDrawCommand(name) }
+    }
 
     private fun inputNames(): List<String> {
         println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")

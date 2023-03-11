@@ -12,7 +12,9 @@ class Dealer(cardState: CardState = StartState()) : Participant(DEALER_NAME, car
 
     override fun draw(card: Card): Participant = Dealer(cardState.draw(card))
 
-    // 플레이어 손익의 반대이다.
+    /**
+     플레이어 손익의 반대이다.
+     */
     override fun getProfit(other: Participant): Money = -other.getProfit(this)
 
     companion object {
