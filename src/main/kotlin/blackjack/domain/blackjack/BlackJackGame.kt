@@ -1,9 +1,7 @@
 package blackjack.domain.blackjack
 
 import blackjack.domain.card.CardDeck
-import blackjack.domain.participants.Dealer
-import blackjack.domain.participants.Guest
-import blackjack.domain.participants.User
+import blackjack.domain.participants.*
 
 class BlackJackGame {
     lateinit var getCommand: (String) -> Boolean

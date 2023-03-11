@@ -15,14 +15,6 @@ class BlackJackBuilder {
         participants = ParticipantsBuilder().apply(block).build()
     }
 
-    fun initBetting(input: (String) -> Int?): UsersBettingMoney {
-        return UsersBettingMoney(
-            participants.guests.map {
-                it to BettingMoney(input(it.name.toString())!!)
-            }.toMap(),
-        )
-    }
-
     fun initDraw() {
         participants.all().forEach {
             it.draw(cardDeck.nextCard())
