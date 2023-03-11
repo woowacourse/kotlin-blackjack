@@ -2,6 +2,7 @@ package blackjack.domain.participants
 
 import blackjack.domain.result.Outcome
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
@@ -18,11 +19,10 @@ class MoneyTest {
         }
     }
 
-    @ParameterizedTest
-    @ValueSource(ints = [999, 0, -1000])
-    fun `돈이 1000원 이하인 경우 예외가 발생한다`(money: Int) {
+    @Test
+    fun `돈이 음수인 경우 예외가 발생한다`() {
         assertThrows<IllegalArgumentException> {
-            Money(money)
+            Money(-1000)
         }
     }
 
@@ -36,7 +36,7 @@ class MoneyTest {
 
     @ParameterizedTest
     @CsvSource(value = ["BLACKJACK, 15000", "WIN, 10000", "DRAW, 0", "LOSE, -10000"])
-    fun `게임 OutCome에 따라 베팅금액에 대한 최종 수익 반환`(outcome: Outcome, money: Int) {
+    fun `게임 OutCome에 따라 베팅금액에 대한 최종 수밈 반환`(outcome: Outcome, money: Int) {
         val bettingMoney = Money(10000)
         assertThat(bettingMoney.getProfits(outcome)).isEqualTo(money)
     }
