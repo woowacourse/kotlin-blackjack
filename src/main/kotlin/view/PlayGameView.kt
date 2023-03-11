@@ -17,14 +17,24 @@ class PlayGameView {
     }
 
     private fun printPlayerCard(dealer: Dealer, users: List<User>) {
-        println(PLAYER_CARD.format(dealer.name, dealer.cards.value.first()))
+        println(PLAYER_CARD.format(dealer.name, dealer.getCards().first()))
         users.forEach { user ->
-            println(PLAYER_CARD.format(user.name, (user.cards.value.map { it.toString() }).joinToString(SEPARATOR)))
+            println(
+                PLAYER_CARD.format(
+                    user.name,
+                    (user.getCards().map { it.toString() }).joinToString(SEPARATOR)
+                )
+            )
         }
     }
 
     fun printUserCard(user: User) {
-        println(PLAYER_CARD.format(user.name, (user.cards.value.map { it.toString() }).joinToString(SEPARATOR)))
+        println(
+            PLAYER_CARD.format(
+                user.name,
+                (user.getCards().map { it.toString() }).joinToString(SEPARATOR)
+            )
+        )
     }
 
     fun isOneMoreCard(user: User): Boolean {

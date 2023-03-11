@@ -8,4 +8,6 @@ abstract class Player(val name: String, val cards: Cards) {
     fun isBlackJack(): Boolean = cards.isBlackJack()
 
     fun addCard(card: Card) = cards.addCard(card)
+
+    fun getCards(): List<Card> = cards.value
 }

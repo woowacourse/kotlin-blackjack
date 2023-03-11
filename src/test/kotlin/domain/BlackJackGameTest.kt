@@ -72,7 +72,7 @@ class BlackJackGameTest {
 
         // when
         blackJackGame.playDealerTurn(blackJackGameData) {}
-        val actual = blackJackGameData.players.dealer.cards.value.size
+        val actual = blackJackGameData.players.dealer.getCards().size
 
         // then
         assertThat(actual).isEqualTo(3)
@@ -97,7 +97,7 @@ class BlackJackGameTest {
 
         // when
         blackJackGame.playDealerTurn(blackJackGameData) {}
-        val actual = blackJackGameData.players.dealer.cards.value.size
+        val actual = blackJackGameData.players.dealer.getCards().size
 
         // then
         assertThat(actual).isEqualTo(2)

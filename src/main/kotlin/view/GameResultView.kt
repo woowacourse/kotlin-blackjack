@@ -13,8 +13,8 @@ class GameResultView {
         println(
             PLAYER_CARD.format(
                 dealer.name,
-                dealer.cards.value.joinToString(SEPARATOR) { it.toString() },
-                dealer.cards.score.value,
+                dealer.getCards().joinToString(SEPARATOR) { it.toString() },
+                dealer.getScore().value,
             ),
         )
         printUserCards(users)
@@ -25,7 +25,7 @@ class GameResultView {
             println(
                 PLAYER_CARD.format(
                     user.name,
-                    (user.cards.value.map { it.toString() }).joinToString(
+                    (user.getCards().map { it.toString() }).joinToString(
                         SEPARATOR,
                     ),
                     user.getScore().value,
@@ -59,7 +59,7 @@ class GameResultView {
         println(FINAL_PROFIT_TITLE)
         println(DEALER_PROFIT.format(dealerProfit.toInt()))
         usersProfit.forEach { nameAndProfit ->
-            println(USER_RESULT_FORMAT.format(nameAndProfit.user.name, nameAndProfit.profit.toInt()))
+            println(USER_RESULT_FORMAT.format(nameAndProfit.name, nameAndProfit.profit.toInt()))
         }
     }
 
