@@ -36,7 +36,7 @@ class BettingMoneyTest {
 
     @ParameterizedTest
     @CsvSource(value = ["BLACKJACK, 15000", "WIN, 10000", "DRAW, 0", "LOSE, -10000"])
-    fun `게임 OutCome에 따라 베팅금액에 대한 최종 수밈 반환`(outcome: Outcome, money: Int) {
+    fun `게임 OutCome에 따라 베팅금액에 대한 최종 수익 반환`(outcome: Outcome, money: Int) {
         val bettingMoney = BettingMoney(10000)
         assertThat(bettingMoney.getProfits(outcome)).isEqualTo(money)
     }
