@@ -14,8 +14,8 @@ class LoginView {
 
     fun requestBetAmount(name: String): Int {
         println(REQUEST_BET_AMOUNT.format(name))
-        val input = readln().toIntOrNull() ?: notNumberBetAmount(name)
-        if (input <= 0) negativeBetAmount(name)
+        val input = readln().toIntOrNull() ?: return notNumberBetAmount(name)
+        if (input <= 0) return negativeBetAmount(name)
         return input
     }
 
