@@ -13,9 +13,8 @@ class Dealer : Participant(DEALER_NAME) {
         val playerScore = player.user.getTotalScore()
 
         return when {
-            player.isBust() && isBust() -> GameResult.DRAW
-            dealerScore == playerScore -> GameResult.DRAW
             player.isBust() -> GameResult.LOSE
+            dealerScore == playerScore -> GameResult.DRAW
             player.isBlackJack() -> GameResult.BLACKJACK
             isBust() || playerScore > dealerScore -> GameResult.WIN
             else -> GameResult.LOSE

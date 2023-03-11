@@ -145,7 +145,7 @@ class DealerTest {
     }
 
     @Test
-    fun `플레이어와 딜러 모두 버스트면 무승부이다`() {
+    fun `플레이어와 딜러 모두 버스트면 플레이어가 패배한다`() {
         val player = BettingPlayer(Player("glo"), 0)
         val deck = CardDeck(
             listOf(
@@ -166,7 +166,7 @@ class DealerTest {
             addCard(Card(CardNumber.TWO, Suit.HEART))
         }
 
-        assertThat(dealer judge player).isEqualTo(GameResult.DRAW)
+        assertThat(dealer judge player).isEqualTo(GameResult.LOSE)
     }
 
     @Test
