@@ -22,13 +22,13 @@ class BlackJackTest {
 
     @Test
     fun `블랙잭의 점수를 반환한다`() {
-        val state: State = BlackJack(CLOVER_KING, CLOVER_ACE)
+        val state: State = BlackJack(listOf(CLOVER_KING, CLOVER_ACE))
         assertThat(state.score.value).isEqualTo(21)
     }
 
     @Test
     fun `블랙잭의 카드 갯수를 반환한다`() {
-        val state: State = BlackJack(CLOVER_KING, CLOVER_ACE)
+        val state: State = BlackJack(listOf(CLOVER_KING, CLOVER_ACE))
         assertThat(state.size).isEqualTo(2)
     }
 }
