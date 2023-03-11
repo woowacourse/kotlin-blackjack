@@ -1,7 +1,5 @@
 package model
 
-import model.Dealer.Companion.DEALER
-
 abstract class Participant(val name: Name) {
     val cards = Cards(setOf())
     abstract fun getFirstOpenCards(): Cards
@@ -9,7 +7,7 @@ abstract class Participant(val name: Name) {
     abstract fun isHit(needToDraw: (String) -> Boolean): Boolean
     fun isBust(): Boolean = cards.isBust()
     fun isBlackJack(): Boolean = cards.isBlackJack()
-    fun isDealer(): Boolean = name.value == DEALER
+    fun isDealer(): Boolean = this is Dealer
     fun drawFirst(cardDeck: CardDeck) {
         cards.add(cardDeck.drawCard())
         cards.add(cardDeck.drawCard())
