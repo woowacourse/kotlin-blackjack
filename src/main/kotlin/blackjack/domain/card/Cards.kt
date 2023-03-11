@@ -17,9 +17,7 @@ class Cards(
     init {
         require(cards.size == INITIAL_CARDS_SIZE)
 
-        if (getTotalCardsScore() == BLACKJACK_SCORE) {
-            state = CardsState.BlackJack
-        }
+        state = CardsState.valueOf(getTotalCardsScore(), true)
     }
 
     fun draw(card: Card = Card.draw()) {
@@ -28,12 +26,7 @@ class Cards(
     }
 
     private fun updateCardsState() {
-        if (getMinimumCardsScore() > BLACKJACK_SCORE) {
-            state = CardsState.Bust
-
-            return
-        }
-        state = CardsState.Running(getTotalCardsScore())
+        state = CardsState.valueOf(getTotalCardsScore())
     }
 
     fun getMinimumCardsScore(): Int = cards.sumOf { card -> card.number.value }
@@ -52,6 +45,6 @@ class Cards(
     companion object {
 
         private const val INITIAL_CARDS_SIZE = 2
-        private const val BLACKJACK_SCORE = 21
+
     }
 }
