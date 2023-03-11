@@ -1,10 +1,10 @@
 package domain.state.dealerState
 
-import domain.Score
 import domain.card.Card
 import domain.card.Hand
 import domain.constant.BlackJackConstants.BLACK_JACK_NUMBER
 import domain.constant.BlackJackConstants.DEALER_STAND_CONDITION
+import domain.result.Score
 import domain.state.BlackJack
 import domain.state.Started
 import domain.state.State

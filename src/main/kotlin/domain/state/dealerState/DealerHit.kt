@@ -1,9 +1,9 @@
 package domain.state.dealerState
 
-import domain.Score
 import domain.card.Card
 import domain.card.Hand
 import domain.constant.BlackJackConstants
+import domain.result.Score
 import domain.state.Bust
 import domain.state.Started
 import domain.state.State
