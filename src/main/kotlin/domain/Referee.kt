@@ -4,7 +4,7 @@ class Referee(private val dealerScore: Score) {
 
     fun getResult(users: List<User>): List<GameResult> {
         return users.map { user ->
-            user.gameResult = calculateResult(user)
+            user.setGameResult(calculateResult(user))
             user.gameResult
         }
     }
