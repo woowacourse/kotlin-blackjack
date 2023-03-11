@@ -3,6 +3,10 @@ package blackjack.domain
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.MethodSource
+import java.util.stream.Stream
 
 class CardBunchTest {
     @Test
@@ -23,42 +27,6 @@ class CardBunchTest {
         cardBunch.addCard(card3)
 
         assertThat(cardBunch.cards.size).isEqualTo(3)
-    }
-
-    @Test
-    fun `6,7,9카드의 총합은 22다`() {
-        val card1 = Card.get(Shape.HEART, CardNumber.SEVEN)
-        val card2 = Card.get(Shape.HEART, CardNumber.SIX)
-        val card3 = Card.get(Shape.HEART, CardNumber.NINE)
-
-        val cardBunch = CardBunch(card1, card2, card3)
-
-        val totalScore = cardBunch.getSumOfCards()
-        assertThat(totalScore).isEqualTo(22)
-    }
-
-    @Test
-    fun `Ace,2,3카드의 총합은 16이다`() {
-        val card1 = Card.get(Shape.HEART, CardNumber.ACE)
-        val card2 = Card.get(Shape.HEART, CardNumber.TWO)
-        val card3 = Card.get(Shape.HEART, CardNumber.THREE)
-
-        val cardBunch = CardBunch(card1, card2, card3)
-
-        val totalScore = cardBunch.getSumOfCards()
-        assertThat(totalScore).isEqualTo(16)
-    }
-
-    @Test
-    fun `Ace,Jack,King카드의 총합은 21이다`() {
-        val card1 = Card.get(Shape.HEART, CardNumber.ACE)
-        val card2 = Card.get(Shape.HEART, CardNumber.JACK)
-        val card3 = Card.get(Shape.HEART, CardNumber.KING)
-
-        val cardBunch = CardBunch(card1, card2, card3)
-
-        val totalScore = cardBunch.getSumOfCards()
-        assertThat(totalScore).isEqualTo(21)
     }
 
     @Test
@@ -106,5 +74,38 @@ class CardBunchTest {
         val cardBunch = CardBunch(card1, card2)
 
         assertThat(cardBunch.getSumOfCards()).isEqualTo(12)
+    }
+
+    @ParameterizedTest(name = "카드의 합은 {3}이다")
+    @MethodSource("provideCards")
+    fun `합계 테스트`(card1: Card, card2: Card, card3: Card, sum: Int) {
+        val cardBunch = CardBunch(card1, card2, card3)
+        assertThat(cardBunch.getSumOfCards()).isEqualTo(sum)
+    }
+
+    companion object {
+        @JvmStatic
+        fun provideCards(): Stream<Arguments> {
+            return Stream.of(
+                Arguments.of(
+                    Card.get(Shape.HEART, CardNumber.SIX),
+                    Card.get(Shape.HEART, CardNumber.SEVEN),
+                    Card.get(Shape.HEART, CardNumber.NINE),
+                    22
+                ),
+                Arguments.of(
+                    Card.get(Shape.HEART, CardNumber.ACE),
+                    Card.get(Shape.HEART, CardNumber.JACK),
+                    Card.get(Shape.HEART, CardNumber.KING),
+                    21
+                ),
+                Arguments.of(
+                    Card.get(Shape.HEART, CardNumber.ACE),
+                    Card.get(Shape.HEART, CardNumber.TWO),
+                    Card.get(Shape.HEART, CardNumber.THREE),
+                    16
+                ),
+            )
+        }
     }
 }
