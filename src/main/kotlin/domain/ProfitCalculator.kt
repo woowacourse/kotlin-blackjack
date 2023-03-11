@@ -5,11 +5,9 @@ class ProfitCalculator(
 ) {
 
     fun getDealerProfit(): Double {
-        var dealerProfit = NONE_PROFIT
-        players.users.forEach { user ->
-            dealerProfit += singleUserDealerProfit(user)
+        return players.users.sumOf { user ->
+            singleUserDealerProfit(user)
         }
-        return dealerProfit
     }
 
     private fun singleUserDealerProfit(user: User): Double {
