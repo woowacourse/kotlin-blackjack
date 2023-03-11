@@ -1,4 +1,8 @@
-package blackjack.domain
+package blackjack.domain.participant
+
+import blackjack.domain.card.Card
+import blackjack.domain.card.Cards
+import blackjack.domain.result.GameResult
 
 abstract class Participant(val name: String) {
     private val cards = Cards()

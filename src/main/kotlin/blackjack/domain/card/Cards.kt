@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.card
 
 class Cards(vararg cards: Card) {
     private val _items: MutableList<Card> by lazy { mutableListOf() }

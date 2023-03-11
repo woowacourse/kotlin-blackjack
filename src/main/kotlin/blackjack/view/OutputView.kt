@@ -1,14 +1,14 @@
 package blackjack.view
 
-import blackjack.domain.BlackjackResult
-import blackjack.domain.Card
-import blackjack.domain.CardNumber
-import blackjack.domain.CardResult
-import blackjack.domain.Dealer
-import blackjack.domain.MatchResult
-import blackjack.domain.Participant
-import blackjack.domain.Player
-import blackjack.domain.Suit
+import blackjack.domain.card.Card
+import blackjack.domain.card.CardNumber
+import blackjack.domain.card.Suit
+import blackjack.domain.participant.Dealer
+import blackjack.domain.participant.Participant
+import blackjack.domain.participant.Player
+import blackjack.domain.result.BlackjackResult
+import blackjack.domain.result.CardResult
+import blackjack.domain.result.MatchResult
 
 object OutputView {
     private const val SEPARATOR = ", "
