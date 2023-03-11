@@ -21,8 +21,8 @@ class UserBettingResult {
         val dealerCardSum = dealer.cards.sumOfNumbers()
         val playerGameResult = playersGameResult.value[player]
         return when {
-            playerCardsSum == GameRule.WINNING_NUMBER && player.cards.value.size == 2 -> playerBettingMoney * 2.5
-            playerGameResult == GameResultType.WIN || dealerCardSum > GameRule.WINNING_NUMBER -> playerBettingMoney * 2
+            playerCardsSum == GameRule.WINNING_NUMBER && player.cards.value.size == PLAYER_BLACKJACK_CARD_SIZE -> playerBettingMoney * PLAYER_BLACKJACK_BETTING
+            playerGameResult == GameResultType.WIN || dealerCardSum > GameRule.WINNING_NUMBER -> playerBettingMoney * PLAYER_WIN_OR_DEALER_OVER_TWENTY_ONE_BETTING
             playerCardsSum == GameRule.WINNING_NUMBER && dealerCardSum == GameRule.WINNING_NUMBER -> playerBettingMoney
             playerCardsSum > GameRule.WINNING_NUMBER || playerGameResult == GameResultType.LOSE -> -playerBettingMoney
             else -> INIT_PROFIT_MONEY
@@ -40,5 +40,8 @@ class UserBettingResult {
 
     companion object {
         private const val INIT_PROFIT_MONEY = 0.0
+        private const val PLAYER_BLACKJACK_CARD_SIZE = 2
+        private const val PLAYER_BLACKJACK_BETTING = 2.5
+        private const val PLAYER_WIN_OR_DEALER_OVER_TWENTY_ONE_BETTING = 2
     }
 }
