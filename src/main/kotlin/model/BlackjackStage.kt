@@ -1,10 +1,13 @@
 package model
 
+import entity.result.PlayersGameResult
 import entity.users.Player
 import entity.users.User
 import entity.users.Users
 
 class BlackjackStage(val users: Users, private val cardFactory: CardFactory) {
+    fun getPlayersGameResult(): PlayersGameResult = users.players.determineAllPlayerGameResult(users.dealer)
+
     fun distributeAllUsers() {
         distributeUser(users.dealer, INITIAL_CARD_DISTRIBUTE_COUNT)
         users.players.value.forEach {

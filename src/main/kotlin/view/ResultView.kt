@@ -1,12 +1,13 @@
 package view
 
-import entity.users.Dealer
 import entity.users.Player
-import entity.users.Players
+import model.BlackjackStage
 import view.ViewUtils.Companion.isString
 
 class ResultView {
-    fun printStatus(dealer: Dealer, players: Players) {
+    fun printStatus(blackjackStage: BlackjackStage) {
+        val dealer = blackjackStage.users.dealer
+        val players = blackjackStage.users.players
         println(MESSAGE_DEALER_GAME_STATUS.format(dealer.cards.isString(), dealer.cardsNumberSum()))
         players.value.forEach {
             println(MESSAGE_PLAYERS_GAME_STATUS.format(it.userInformation.name.value, it.cards.isString(), it.cardsNumberSum()))
