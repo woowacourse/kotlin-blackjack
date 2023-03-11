@@ -2,7 +2,7 @@ package blackjack.domain.participants
 
 import blackjack.domain.result.Outcome
 
-class BettingMoney(val value: Int) {
+class BettingMoney(private val value: Int) {
 
     init {
         require(value >= 0) { ERROR_MONEY_NEGATIVE }
