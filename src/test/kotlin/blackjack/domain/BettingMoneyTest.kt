@@ -18,21 +18,21 @@ class BettingMoneyTest {
 
     @Test
     fun `1000원을 2배 하여 반환한다`() {
-        assertThat(BettingMoney(1000).multipleTwo()).isEqualTo(2000)
+        assertThat(BettingMoney(1000).times(2.0)).isEqualTo(2000)
     }
 
     @Test
     fun `1000원을 2점5배 하여 반환한다`() {
-        assertThat(BettingMoney(1000).multipleTwoPointFive()).isEqualTo(2500)
+        assertThat(BettingMoney(1000).times(2.5)).isEqualTo(2500)
     }
 
     @Test
     fun `1000원을 1배 하여 반환한다`() {
-        assertThat(BettingMoney(1000).multipleOne()).isEqualTo(1000)
+        assertThat(BettingMoney(1000).times(1.0)).isEqualTo(1000)
     }
 
     @Test
     fun `1000원을 0배 하여 반환한다`() {
-        assertThat(BettingMoney(1000).multipleZero()).isEqualTo(0)
+        assertThat(BettingMoney(1000).times(0.0)).isEqualTo(0)
     }
 }
