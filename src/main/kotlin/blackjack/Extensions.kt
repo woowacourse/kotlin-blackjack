@@ -1,3 +1,3 @@
 package blackjack
 
-fun Int.isBiggerThan(value: Int): Boolean = this > value
+fun Int.isGreaterThan(value: Int): Boolean = this > value

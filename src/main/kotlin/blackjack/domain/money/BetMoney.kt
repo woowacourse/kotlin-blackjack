@@ -8,6 +8,4 @@ class BetMoney(value: Int) : Money(value) {
     companion object {
         private const val BET_AMOUNT_UNIT = 1000
     }
-
-    override fun times(operand: Double): Money = BetMoney((value * operand).toInt())
 }

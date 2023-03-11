@@ -6,17 +6,19 @@ import blackjack.domain.participant.Participant
 import blackjack.domain.participant.Participants
 import blackjack.domain.result.BlackjackResult
 
-class Blackjack(private val deck: CardDeck, private val participants: Participants) {
-    constructor(deck: CardDeck, players: List<Participant>) : this(deck, Participants(listOf(Dealer()) + players))
-
+class Blackjack(private val deck: CardDeck) {
     fun start(
+        participants: Participants,
         onStartFirstDrawn: (Participants) -> Unit,
         onFirstDrawn: (Participant) -> Unit,
         onDrawnMore: (Participant) -> Unit,
         onEndGame: (BlackjackResult) -> Unit,
     ) {
-        participants.drawFirst(deck, onStartFirstDrawn, onFirstDrawn)
-        participants.takeTurns(deck, onDrawnMore)
-        onEndGame(BlackjackResult(participants.getCardResults(), participants.getMatchResults()))
+        val finishedParticipants = participants
+            .addFirst(Dealer())
+            .drawFirst(deck, onStartFirstDrawn, onFirstDrawn)
+            .takeTurns(deck, onDrawnMore)
+
+        onEndGame(BlackjackResult(finishedParticipants.getCardResults(), finishedParticipants.getMatchResults()))
     }
 }

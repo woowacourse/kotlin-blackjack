@@ -4,7 +4,10 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
 import blackjack.domain.money.Money
 
-abstract class FinishedState(private val cards: Cards) : CardState {
+abstract class FinishedState(protected val cards: Cards) : CardState {
+    abstract val earningRate: Double
+    override val isFinished: Boolean = true
+
     init {
         check(cards.isGreaterOrEqualsThan(MINIMUM_CARDS_SIZE)) { "카드를 최소 2장 보유해야 합니다." }
     }
@@ -19,7 +22,11 @@ abstract class FinishedState(private val cards: Cards) : CardState {
 
     override fun profit(money: Money): Money = money * earningRate
 
-    abstract val earningRate: Double
+    override fun getAllCards(): List<Card> = cards.items
+
+    override fun getFirstCard(): Card = cards.getFirstCard()
+
+    override fun getTotalScore(): Int = cards.calculateTotalScore()
 
     companion object {
         private const val MINIMUM_CARDS_SIZE = 2

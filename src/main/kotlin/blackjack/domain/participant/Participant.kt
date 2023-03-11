@@ -3,15 +3,18 @@ package blackjack.domain.participant
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
 import blackjack.domain.result.GameResult
+import blackjack.domain.state.CardState
 
-abstract class Participant(val name: String) {
+abstract class Participant(val name: String, val cardState: CardState) {
     private val cards = Cards()
 
     abstract fun getFirstOpenCards(): List<Card>
 
-    abstract fun canDraw(): Boolean
+    abstract fun stay(): Participant
 
-    fun getTotalScore(): Int = cards.calculateTotalScore()
+    fun canDraw(): Boolean = !cardState.isFinished
+
+    fun getTotalScore(): Int = cardState.getTotalScore()
 
     fun isBust(): Boolean = cards.isOverBlackjack()
 
@@ -30,11 +33,9 @@ abstract class Participant(val name: String) {
         }
     }
 
-    fun addCard(card: Card) {
-        cards.add(card)
-    }
+    abstract fun draw(card: Card): Participant
 
-    fun getCards(): List<Card> = cards.items
+    fun getCards(): List<Card> = cardState.getAllCards()
 
-    fun getFirstCard(): Card = cards.getFirstCard()
+    fun getFirstCard(): Card = cardState.getFirstCard()
 }

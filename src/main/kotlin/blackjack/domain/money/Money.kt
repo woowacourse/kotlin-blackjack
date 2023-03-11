@@ -1,13 +1,13 @@
 package blackjack.domain.money
 
-import blackjack.isBiggerThan
+import blackjack.isGreaterThan
 
-abstract class Money(val value: Int) {
+open class Money(private val value: Int) {
     init {
-        require(value.isBiggerThan(MINIMUM_AMOUNT)) { "금액은 양수여야 합니다. (현재 입력값 : $value)" }
+        require(value.isGreaterThan(MINIMUM_AMOUNT)) { "금액은 양수여야 합니다. (현재 입력값 : $value)" }
     }
 
-    abstract operator fun times(operand: Double): Money
+    operator fun times(operand: Double): Money = Money((value * operand).toInt())
 
     companion object {
         private const val MINIMUM_AMOUNT = 0

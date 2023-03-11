@@ -3,7 +3,7 @@ package blackjack.domain.state
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
 
-class HitState(private val cards: Cards) : RunningState(cards) {
+class HitState(cards: Cards) : RunningState(cards) {
     constructor(vararg cards: Card) : this(Cards(*cards))
 
     init {
