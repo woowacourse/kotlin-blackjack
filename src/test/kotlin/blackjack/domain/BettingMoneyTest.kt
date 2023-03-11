@@ -12,8 +12,14 @@ class BettingMoneyTest {
     }
 
     @Test
-    fun `베팅금액이 0원보다 작으면 에러가 난다`() {
-        assertThrows<IllegalArgumentException> { BettingMoney(0) }
+    fun `베팅금액이 0원이면 오류가 발생한다`() {
+        val exception = assertThrows<IllegalArgumentException> { BettingMoney(0) }
+        assertThat(exception.message).isEqualTo("베팅 금액은 최소 금액은 0원보다 커야합니다.")
+    }
+
+    @Test
+    fun `베팅금액이 0원보다 작으면 오류가 발생한다`() {
+        assertThrows<IllegalArgumentException> { BettingMoney(-100) }
     }
 
     @Test
