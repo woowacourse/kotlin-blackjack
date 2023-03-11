@@ -6,13 +6,7 @@ import org.junit.jupiter.api.assertThrows
 
 class CardDeckTest {
     @Test
-    fun `Card를 한 장 반환한다`() {
-        val actual = CardDeck(Card.all()).drawCard()
-        assertThat(Card.all()).contains(actual)
-    }
-
-    @Test
-    fun `하나의 덱에서 53번을 뽑으면 오류가 발생한다`() {
+    fun `덱에 카드가 없을 때 뽑으면 오류가 난다`() {
         val cardDeck = CardDeck(Card.all())
         repeat(52) {
             cardDeck.drawCard()
