@@ -2,7 +2,7 @@ package blackjack.domain.state.endTurn
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
-import blackjack.domain.result.Outcome
+import blackjack.domain.state.Outcome
 import blackjack.domain.state.State
 
 class BlackJack(cards: Cards = Cards()) : EndTurn(cards) {

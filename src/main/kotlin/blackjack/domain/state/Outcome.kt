@@ -1,4 +1,4 @@
-package blackjack.domain.result
+package blackjack.domain.state
 
 enum class Outcome(val rate: Double) {
     WIN_WITH_BLACKJACK(0.5),

@@ -1,7 +1,7 @@
 package blackjack.domain.state.endTurn
 
 import blackjack.domain.card.Cards
-import blackjack.domain.result.Outcome
+import blackjack.domain.state.Outcome
 import blackjack.domain.state.Score
 import blackjack.domain.state.State
 import blackjack.domain.state.inTurn.Hit
