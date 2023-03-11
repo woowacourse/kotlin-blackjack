@@ -10,6 +10,10 @@ abstract class EndTurn(final override val cards: Cards) : State {
     override val score: Score = cards.calculateScore()
     override val size: Int = cards.size
     override fun draw(card: Card): State {
-        throw IllegalStateException("더이상 카드를 뽑을 수 없습니다..")
+        throw IllegalStateException(ERROR_NO_MORE_DRAW)
+    }
+
+    companion object {
+        private const val ERROR_NO_MORE_DRAW = "더이상 카드를 뽑을 수 없습니다."
     }
 }

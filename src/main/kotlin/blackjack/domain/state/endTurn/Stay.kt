@@ -11,7 +11,7 @@ class Stay(cards: Cards) : EndTurn(cards) {
             is Bust -> Outcome.WIN
             is BlackJack -> compareBlackJack()
             is Stay -> compareScore(otherState.score)
-            else -> throw IllegalStateException("Dealer's state is not valid")
+            else -> throw IllegalStateException(ERROR_INVALID_STATE)
         }
     }
 
@@ -24,5 +24,9 @@ class Stay(cards: Cards) : EndTurn(cards) {
         otherScore > score -> Outcome.LOSE
         otherScore < score -> Outcome.WIN
         else -> Outcome.DRAW
+    }
+
+    companion object {
+        private const val ERROR_INVALID_STATE = "비교할 수 없는 상태입니다."
     }
 }
