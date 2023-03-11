@@ -5,7 +5,7 @@ import blackjack.domain.participants.Participants
 import blackjack.domain.participants.user.Dealer
 import blackjack.domain.participants.user.Guest
 
-class BlackJackSetting(
+class BlackJackData(
     val cardDeck: CardDeck,
     val participants: Participants,
 ) {

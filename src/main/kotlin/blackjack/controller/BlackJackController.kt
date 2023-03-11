@@ -9,13 +9,13 @@ class BlackJackController(
     private val outputView: OutputView,
 ) {
     fun run() {
-        val blackJack = BlackJackGame().setUp(inputView::inputParticipants, inputView::inputBettingMoney)
-        outputView.outputInitState(blackJack)
+        val data = BlackJackGame().setUp(inputView::inputParticipants, inputView::inputBettingMoney)
+        outputView.outputInitState(data)
         BlackJackGame().apply {
             onDraw = inputView::inputDrawMore
-            guestsTurn(blackJack.guests, blackJack.cardDeck, outputView::outputCard)
-            dealerTurn(blackJack.dealer, blackJack.cardDeck, outputView::outputDealerDraw)
+            guestsTurn(data.guests, data.cardDeck, outputView::outputCard)
+            dealerTurn(data.dealer, data.cardDeck, outputView::outputDealerDraw)
         }
-        outputView.outputResult(blackJack)
+        outputView.outputResult(data)
     }
 }

@@ -1,25 +1,25 @@
 package blackjack.view
 
-import blackjack.domain.blackjack.BlackJackSetting
+import blackjack.domain.blackjack.BlackJackData
 import blackjack.domain.participants.user.Name
 import blackjack.domain.participants.user.User
 
 class OutputView {
-    fun outputInitState(blackJackSetting: BlackJackSetting) {
-        print("\n딜러와 ${blackJackSetting.guests.map{it.name}.joinToString(", ")} 에게 2장의 나누었습니다.")
-        outputCardForDealer(blackJackSetting.dealer)
-        blackJackSetting.guests.forEach { user ->
+    fun outputInitState(blackJackData: BlackJackData) {
+        print("\n딜러와 ${blackJackData.guests.map{it.name}.joinToString(", ")} 에게 2장의 나누었습니다.")
+        outputCardForDealer(blackJackData.dealer)
+        blackJackData.guests.forEach { user ->
             outputCard(user)
         }
     }
 
-    fun outputResult(blackJackSetting: BlackJackSetting) {
-        blackJackSetting.participants.all.forEach { user ->
+    fun outputResult(blackJackData: BlackJackData) {
+        blackJackData.participants.all.forEach { user ->
             outputCard(user)
             outputScore(user)
         }
         println("")
-        outputOutcomes(blackJackSetting)
+        outputOutcomes(blackJackData)
     }
 
     fun outputCard(user: User) {
@@ -35,8 +35,8 @@ class OutputView {
 
     private fun outputScore(user: User) { print(" - 결과: ${user.score}") }
 
-    private fun outputOutcomes(blackJackSetting: BlackJackSetting) {
-        blackJackSetting.run {
+    private fun outputOutcomes(blackJackData: BlackJackData) {
+        blackJackData.run {
             println("\n## 최종 수익")
             outputOutcome(dealer.name, dealer.calculateProfit(guests))
             guests.forEach { guest -> outputOutcome(guest.name, guest.calculateProfit(dealer)) }

@@ -10,8 +10,8 @@ import blackjack.domain.participants.user.User
 class BlackJackGame {
     var onDraw: (String) -> Boolean = { true }
 
-    fun setUp(getNames: () -> List<Name>, getBettingMoney: (String) -> Money): BlackJackSetting =
-        blackJackSetting {
+    fun setUp(getNames: () -> List<Name>, getBettingMoney: (String) -> Money): BlackJackData =
+        blackJackData {
             participants {
                 dealer()
                 getNames().forEach { name -> guest(name, getBettingMoney(name.toString())) }

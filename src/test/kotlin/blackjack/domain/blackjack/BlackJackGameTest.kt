@@ -5,10 +5,10 @@ import blackjack.domain.participants.user.User
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 
-class BlackJackSettingGameTest {
+class BlackJackGameTest {
     @Test
     fun `게임을 실행한다`() {
-        val blackJack = blackJackSetting {
+        val data = blackJackData {
             participants {
                 dealer()
                 guest(Name("아크"))
@@ -19,8 +19,8 @@ class BlackJackSettingGameTest {
 
         assertDoesNotThrow {
             BlackJackGame().apply {
-                guestsTurn(blackJack.guests, blackJack.cardDeck, ::outputCard)
-                dealerTurn(blackJack.dealer, blackJack.cardDeck, ::outputDealer)
+                guestsTurn(data.guests, data.cardDeck, ::outputCard)
+                dealerTurn(data.dealer, data.cardDeck, ::outputDealer)
             }
         }
     }

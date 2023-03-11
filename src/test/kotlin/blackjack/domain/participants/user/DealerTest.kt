@@ -1,6 +1,6 @@
 package blackjack.domain.participants.user
 
-import blackjack.domain.blackjack.blackJackSetting
+import blackjack.domain.blackjack.blackJackData
 import blackjack.domain.state.Fixtures.CLOVER_EIGHT
 import blackjack.domain.state.Fixtures.CLOVER_NINE
 import blackjack.domain.state.Fixtures.CLOVER_QUEEN
@@ -31,7 +31,7 @@ class DealerTest {
 
     @Test
     fun `수익금액을 가져올 수 있다`() {
-        val blackJack = blackJackSetting {
+        val data = blackJackData {
             participants {
                 dealer()
                 guest(Name("아크"), Money(1000))
@@ -39,16 +39,16 @@ class DealerTest {
             }
         }
 
-        blackJack.dealer.draw(CLOVER_NINE)
-        blackJack.dealer.draw(CLOVER_EIGHT)
+        data.dealer.draw(CLOVER_NINE)
+        data.dealer.draw(CLOVER_EIGHT)
 
-        blackJack.guests[0].draw(CLOVER_TEN)
-        blackJack.guests[0].draw(CLOVER_NINE)
+        data.guests[0].draw(CLOVER_TEN)
+        data.guests[0].draw(CLOVER_NINE)
 
-        blackJack.guests[1].draw(CLOVER_NINE)
-        blackJack.guests[1].draw(CLOVER_SEVEN)
+        data.guests[1].draw(CLOVER_NINE)
+        data.guests[1].draw(CLOVER_SEVEN)
 
-        val profit = blackJack.participants.dealer.calculateProfit(blackJack.participants.guests)
+        val profit = data.participants.dealer.calculateProfit(data.participants.guests)
         assertThat(profit).isEqualTo(1000)
     }
 }
