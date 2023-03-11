@@ -1,41 +1,25 @@
 package domain
 
+import domain.card.Card
+import domain.card.CardShape
+import domain.card.CardValue
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class UserTest {
     @Test
-    fun `플레이어는 소지한 카드의 합은 8이다`() {
-        // given
+    fun `이름이 해시, 배팅금액이 1000, 카드 2장을 가진 유저를 생성한다`() {
         val user = User.create(
-            "산군" to listOf<Card>(
-                Card(Card.Shape.CLUBS, Card.Value.FIVE),
-                Card(Card.Shape.DIAMONDS, Card.Value.THREE),
-            ),
+            UserBetAmount("해시", 1000),
+            Cards(
+                listOf(
+                    Card(CardShape.DIAMONDS, CardValue.ACE),
+                    Card(CardShape.HEARTS, CardValue.TWO)
+                )
+            )
         )
-
-        // when
-        val actual = user.calculateCardValueSum()
-
-        // then
-        assertThat(actual).isEqualTo(8)
-    }
-
-    @Test
-    fun `플레이어는 소지한 카드의 합은 10이다`() {
-        // given
-        val user = User.create(
-            "산군" to
-                listOf<Card>(
-                    Card(Card.Shape.CLUBS, Card.Value.FIVE),
-                    Card(Card.Shape.DIAMONDS, Card.Value.FIVE),
-                ),
-        )
-
-        // when
-        val actual = user.calculateCardValueSum()
-
-        // then
-        assertThat(actual).isEqualTo(10)
+        assertThat(user.name).isEqualTo("해시")
+        assertThat(user.getCards().size).isEqualTo(2)
+        assertThat(user.betAmount).isEqualTo(1000.0)
     }
 }

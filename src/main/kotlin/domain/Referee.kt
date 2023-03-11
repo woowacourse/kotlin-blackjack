@@ -1,28 +1,26 @@
 package domain
 
-class Referee(private val dealerScore: Int, private val userScore: List<Int>) {
+class Referee(private val dealerScore: Score) {
 
-    fun getResult(): List<GameResult> {
-        return userScore.map { userScore ->
-            calculateResult(userScore)
+    fun getResult(users: List<User>): List<GameResult> {
+        return users.map { user ->
+            user.setGameResult(calculateResult(user))
+            user.gameResult
         }
     }
 
-    private fun calculateResult(score: Int): GameResult {
-        if (isDraw(score))
-            return GameResult.DRAW
-        if (isLose(score))
+    private fun calculateResult(user: User): GameResult {
+        val userScore = user.getScore()
+        if (isLose(userScore))
             return GameResult.LOSE
+        if (isDraw(userScore) && !user.isBlackJack())
+            return GameResult.DRAW
         return GameResult.WIN
     }
 
-    private fun isDraw(score: Int) =
-        ((dealerScore > SCORE_CONDITION) and (score > SCORE_CONDITION)) or (dealerScore == score)
+    private fun isDraw(score: Score) =
+        ((dealerScore.isBust()) and (score.isBust())) or (dealerScore.value == score.value)
 
-    private fun isLose(score: Int) =
-        ((dealerScore > score) and (dealerScore <= SCORE_CONDITION)) or (score > SCORE_CONDITION)
-
-    companion object {
-        private const val SCORE_CONDITION = 21
-    }
+    private fun isLose(score: Score) =
+        ((dealerScore.isOver(score)) and (!dealerScore.isBust())) or (score.isBust())
 }

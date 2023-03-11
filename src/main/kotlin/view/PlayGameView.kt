@@ -1,29 +1,49 @@
 package view
 
 import domain.Dealer
+import domain.Players
 import domain.User
 
 class PlayGameView {
 
-    fun printNoticeSplitCard(userNames: List<String>) {
-        val names = userNames.joinToString(SEPARATOR)
+    fun printPlayers(players: Players) {
+        printNoticeSplitCard(players.users)
+        printPlayerCard(players.dealer, players.users)
+    }
+
+    private fun printNoticeSplitCard(users: List<User>) {
+        val names = users.joinToString(SEPARATOR) { it.name }
         println(NOTICE_SPLIT_CARD.format(names))
     }
 
-    fun printPlayerCard(dealer: Dealer, users: List<User>) {
-        println(PLAYER_CARD.format(dealer.name, dealer.cards.first()))
+    private fun printPlayerCard(dealer: Dealer, users: List<User>) {
+        println(PLAYER_CARD.format(dealer.name, dealer.getCards().first()))
         users.forEach { user ->
-            println(PLAYER_CARD.format(user.name, (user.cards.map { it.toString() }).joinToString(SEPARATOR)))
+            println(
+                PLAYER_CARD.format(
+                    user.name,
+                    (user.getCards().map { it.toString() }).joinToString(SEPARATOR)
+                )
+            )
         }
     }
 
     fun printUserCard(user: User) {
-        println(PLAYER_CARD.format(user.name, (user.cards.map { it.toString() }).joinToString(SEPARATOR)))
+        println(
+            PLAYER_CARD.format(
+                user.name,
+                (user.getCards().map { it.toString() }).joinToString(SEPARATOR)
+            )
+        )
     }
 
-    fun requestOneMoreCard(user: User): String {
+    fun isOneMoreCard(user: User): Boolean {
         println(REQUEST_MORE_CARD.format(user.name))
-        return readLine() ?: requestOneMoreCard(user)
+        return when (readln()) {
+            Answer.YES.value -> true
+            Answer.NO.value -> false
+            else -> isOneMoreCard(user)
+        }
     }
 
     fun printDealerPickNewCard() = println(NOTICE_DEALER_PICK_NEW_CARD)
