@@ -134,4 +134,29 @@ class DealerTest {
         )
         assertThat(dealer.judgePlayerResult(player.ownCards)).isEqualTo(Result.LOSS)
     }
+
+    @Test
+    fun `딜러가 21이고, 플레이어도 21일 때 비긴다`() {
+        val dealer = Dealer(
+            Cards(
+                mutableListOf(
+                    Card(Shape.HEART, CardValue.JACK),
+                    Card(Shape.HEART, CardValue.FIVE),
+                    Card(Shape.HEART, CardValue.SIX)
+                )
+            )
+        )
+        val player = Player(
+            "jack",
+            Cards(
+                mutableListOf(
+                    Card(Shape.SPADE, CardValue.JACK),
+                    Card(Shape.SPADE, CardValue.SIX),
+                    Card(Shape.SPADE, CardValue.FIVE)
+                )
+            ),
+            0
+        )
+        assertThat(dealer.judgePlayerResult(player.ownCards)).isEqualTo(Result.DRAW)
+    }
 }
