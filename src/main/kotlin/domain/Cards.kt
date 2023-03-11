@@ -7,9 +7,9 @@ class Cards(cards: List<Card>) {
     private val _value: MutableList<Card> = cards.toMutableList()
     val value: List<Card> get() = _value.toList()
 
-    private val numbers: List<Int> get() = _value.map { it.value.number }
+    val score: Score get() = Score.valueOfCards(numbers(), hasAce())
 
-    val score: Score get() = Score.valueOfCards(numbers, hasAce())
+    private fun numbers(): List<Int> = _value.map { it.value.number }
 
     fun addCard(card: Card) {
         _value.add(card)
@@ -24,7 +24,7 @@ class Cards(cards: List<Card>) {
     fun isBlackJack(): Boolean = isTwoCards() && isBlackJackScore()
 
     private fun isTwoCards(): Boolean = (_value.size == NUMBER_OF_BLACKJACK_CARDS)
-    private fun isBlackJackScore(): Boolean = Score.valueOfCards(numbers, hasAce()) == Score.valueOf(BLACKJACK_SCORE)
+    private fun isBlackJackScore(): Boolean = Score.valueOfCards(numbers(), hasAce()) == Score.valueOf(BLACKJACK_SCORE)
 
     companion object {
         private const val NUMBER_OF_BLACKJACK_CARDS = 2
