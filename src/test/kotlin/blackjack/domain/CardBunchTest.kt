@@ -58,7 +58,7 @@ class CardBunchTest {
     }
 
     @Test
-    fun `카드의 총합이 21이 넘었다면 True를 반환한다`() {
+    fun `카드의 총합이 21이 넘었다면 해당 카드 뭉치느 Burst된다`() {
         val card1 = Card(Shape.HEART, CardNumber.ACE)
         val card2 = Card(Shape.HEART, CardNumber.JACK)
         val card3 = Card(Shape.HEART, CardNumber.KING)
@@ -72,7 +72,7 @@ class CardBunchTest {
     }
 
     @Test
-    fun `카드의 총합이 21이 넘지 않았다면 False를 반환한다`() {
+    fun `카드의 총합이 21이 넘지 않았다면 해당 카드뭉치는 Burst되지않는다`() {
         val card1 = Card(Shape.HEART, CardNumber.ACE)
         val card2 = Card(Shape.HEART, CardNumber.JACK)
         val card3 = Card(Shape.HEART, CardNumber.KING)
