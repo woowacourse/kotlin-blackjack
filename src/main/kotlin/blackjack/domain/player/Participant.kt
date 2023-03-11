@@ -9,8 +9,8 @@ class Participant(name: String, val betAmount: Int = 0, cards: Cards = Cards()) 
 
     fun calculateEarningRate(dealer: Dealer): ParticipantEarningRate {
         val earningRate = when {
-            (isBurst) -> EarningRate.LOSE
-            (dealer.isBurst) -> EarningRate.WIN
+            (isBust) -> EarningRate.LOSE
+            (dealer.isBust) -> EarningRate.WIN
             (isBlackjack and !dealer.isBlackjack) -> EarningRate.BLACKJACK_WIN
             (!isBlackjack and dealer.isBlackjack) -> EarningRate.LOSE
             (isBlackjack and dealer.isBlackjack) -> EarningRate.DRAW

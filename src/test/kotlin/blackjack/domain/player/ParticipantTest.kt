@@ -23,7 +23,7 @@ class ParticipantTest {
     }
 
     @Test
-    fun `참가자1 스코어는 Burst 딜러 스코어는 17일때, 참가자1의 수익률을 계산하면, -1_0이다`() {
+    fun `참가자1 스코어는 Bust 딜러 스코어는 17일때, 참가자1의 수익률을 계산하면, -1_0이다`() {
 
         // given
         val dealer = Dealer(
@@ -54,7 +54,7 @@ class ParticipantTest {
     }
 
     @Test
-    fun `참가자1 스코어는 17 딜러 스코어는 Burst 일때, 참가자1의 수익률을 계산하면, 1_0이다`() {
+    fun `참가자1 스코어는 17 딜러 스코어는 Bust 일때, 참가자1의 수익률을 계산하면, 1_0이다`() {
 
         // given
         val dealer = Dealer(
