@@ -35,7 +35,7 @@ class UserBettingResultTest {
         val playerGameResult = PlayersGameResult(mapOf(player to GameResultType.WIN))
 
         // when
-        val userBettingResult = UserBettingResult().getPlayersBettingResults(Users(players, dealer), playerGameResult)
+        val userBettingResult = UserBettingResult(Users(players, dealer), playerGameResult).getBettingResults()
         val profitMoney = userBettingResult[player]
 
         // then
@@ -67,7 +67,7 @@ class UserBettingResultTest {
         val playerGameResult = PlayersGameResult(mapOf(player to GameResultType.WIN))
 
         // when
-        val userBettingResult = UserBettingResult().getPlayersBettingResults(Users(players, dealer), playerGameResult)
+        val userBettingResult = UserBettingResult(Users(players, dealer), playerGameResult).getBettingResults()
         val profitMoney = userBettingResult[player]
 
         // then
@@ -100,7 +100,7 @@ class UserBettingResultTest {
         val playerGameResult = PlayersGameResult(mapOf(player to GameResultType.DRAW))
 
         // when
-        val userBettingResult = UserBettingResult().getPlayersBettingResults(Users(players, dealer), playerGameResult)
+        val userBettingResult = UserBettingResult(Users(players, dealer), playerGameResult).getBettingResults()
         val profitMoney = userBettingResult[player]
 
         // then
@@ -125,7 +125,7 @@ class UserBettingResultTest {
         val playerGameResult = PlayersGameResult(mapOf(player to GameResultType.LOSE))
 
         // when
-        val userBettingResult = UserBettingResult().getPlayersBettingResults(Users(players, dealer), playerGameResult)
+        val userBettingResult = UserBettingResult(Users(players, dealer), playerGameResult).getBettingResults()
         val profitMoney = userBettingResult[player]
 
         // then
@@ -158,7 +158,7 @@ class UserBettingResultTest {
         val playerGameResult = PlayersGameResult(mapOf(player to GameResultType.WIN))
 
         // when
-        val userBettingResult = UserBettingResult().getPlayersBettingResults(Users(players, dealer), playerGameResult)
+        val userBettingResult = UserBettingResult(Users(players, dealer), playerGameResult).getBettingResults()
         val profitMoney = userBettingResult[player]
 
         // then
@@ -170,7 +170,11 @@ class UserBettingResultTest {
         // given
         val player1 = Player(UserInformation(Name("test"), BettingMoney(1000)), Cards(listOf()))
         val player2 = Player(UserInformation(Name("test"), BettingMoney(1000)), Cards(listOf()))
-        val userBettingResult = UserBettingResult()
+        val players = Players(listOf(player1, player2))
+        val dealer = Dealer()
+        val playerGameResult = PlayersGameResult(mapOf())
+
+        val userBettingResult = UserBettingResult(Users(players, dealer), playerGameResult)
         userBettingResult.playersBettingResults[player1] = 1000.0
         userBettingResult.playersBettingResults[player2] = -2000.0
 
