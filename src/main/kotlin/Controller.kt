@@ -11,10 +11,13 @@ class Controller(
 
     fun run() {
         val blackJackGame = BlackJackGame()
-        val blackJackGameData = blackJackGame.setUpBlackJackGame(loginView::requestPlayerName, loginView::requestBetAmount)
+        val blackJackGameData =
+            blackJackGame.setUpBlackJackGame(loginView::requestPlayerName, loginView::requestBetAmount)
+
         playGameView.printPlayers(players = blackJackGameData.players)
         blackJackGame.playDealerTurn(blackJackGameData, playGameView::printDealerPickNewCard)
         blackJackGame.playUserTurn(blackJackGameData, playGameView::isOneMoreCard, playGameView::printUserCard)
+
         gameResultView.printCardResult(blackJackGameData.players)
         blackJackGame.judgeGameResult(blackJackGameData, gameResultView::printFinalResult)
         blackJackGame.calculateProfit(blackJackGameData, gameResultView::printFinalProfit)
