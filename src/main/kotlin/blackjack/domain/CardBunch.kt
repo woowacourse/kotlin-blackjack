@@ -11,11 +11,8 @@ class CardBunch private constructor(cards: MutableList<Card>) {
     fun addCard(card: Card): Boolean = _cards.add(card)
 
     fun getSumOfCards(): Int {
-        var sum = cards.sumOf { it.cardNumber.value }
-        if (containAce()) {
-            sum = decideAddTen(sum)
-        }
-        return sum
+        val sum = cards.sumOf { it.cardNumber.value }
+        return if (containAce()) decideAddTen(sum) else sum
     }
 
     fun size(): Int = _cards.size
