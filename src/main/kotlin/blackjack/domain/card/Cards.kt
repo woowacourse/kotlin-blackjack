@@ -15,14 +15,14 @@ class Cards(private val cards: Set<Card> = setOf()) {
 
     fun toList() = cards.toList()
 
-    operator fun plus(card: Card): Cards {
-        require(card !in cards) { ERROR_EXIST_DUPLICATE_CARD }
-        return Cards(cards.plus(card))
-    }
-
     fun calculateScore(): Score = when {
         isContainsAce && softScore.isBust.not() -> softScore
         else -> hardScore
+    }
+
+    operator fun plus(card: Card): Cards {
+        require(card !in cards) { ERROR_EXIST_DUPLICATE_CARD }
+        return Cards(cards.plus(card))
     }
 
     companion object {
