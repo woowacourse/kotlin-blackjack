@@ -22,6 +22,7 @@ class BlackJackController(
             dealer()
             guests(inputView.inputParticipants())
         }
+        initBetting(inputView::inputBettingMoney)
         initDraw()
     }
 
@@ -29,7 +30,6 @@ class BlackJackController(
         BlackJackGame().apply {
             getCommand = inputView::inputDrawMore
             bettingMoney = inputView::inputBettingMoney
-            guestsMoney(blackJack.guests)
             guestsTurn(blackJack.guests, blackJack.cardDeck, outputView::outputCard)
             dealerTurn(blackJack.dealer, blackJack.cardDeck, outputView::outputDealerDraw)
         }

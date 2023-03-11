@@ -6,7 +6,7 @@ class ParticipantsBuilder {
 
     fun dealer() { dealer = Dealer() }
 
-    fun guests(names: List<String>) { guests = names.map { Guest(it) } }
+    fun guests(names: List<String>) { guests = names.map { Guest(Name(it)) } }
 
     fun build(): Participants = Participants(dealer, guests)
 }
