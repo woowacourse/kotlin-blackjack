@@ -16,6 +16,7 @@ object OutputView {
     private const val DEALER_WIN = 0
     private const val DEALER_LOSE = 1
     private const val DRAW = 2
+
     private fun makeCardString(card: Card): String = getCardNumberString(card.cardNumber) + card.shape.korean
 
     private fun makeBunchString(bunch: CardBunch): String =
@@ -54,31 +55,20 @@ object OutputView {
         println()
     }
 
-    fun printWinOrLose(participants: Participants) {
+    fun printWinOrLose(dealerConsequence: List<Int>, consequences: List<Pair<Player, Consequence>>) {
         println("##최종 승패")
-        printDealerResult(participants)
-        getResultString(participants)
+        printDealerResult(dealerConsequence)
+        getResultString(consequences)
     }
 
-    private fun printDealerResult(participants: Participants) {
-        val result = mutableListOf(0, 0, 0)
-        participants.players.value.forEach { player ->
-            result[decideDealerResult(participants.getConsequence(player))]++
-        }
-        println("딜러: ${result[DEALER_WIN]}승 ${result[DEALER_LOSE]}패 ${result[DRAW]}무")
+    private fun printDealerResult(dealerConsequence: List<Int>) {
+        println("딜러: ${dealerConsequence[DEALER_WIN]}승 ${dealerConsequence[DEALER_LOSE]}패 ${dealerConsequence[DRAW]}무")
     }
 
-    private fun decideDealerResult(consequence: Consequence): Int =
-        when (consequence) {
-            Consequence.WIN -> DEALER_LOSE
-            Consequence.LOSE -> DEALER_WIN
-            Consequence.DRAW -> DRAW
-        }
-
-    private fun getResultString(participants: Participants) {
+    private fun getResultString(consequences: List<Pair<Player, Consequence>>) {
         var resultString = ""
-        participants.players.value.forEach { player ->
-            resultString += decidePlayerResult(participants.getConsequence(player), player)
+        consequences.forEach { consequence ->
+            resultString += decidePlayerResult(consequence.second, consequence.first)
         }
         println(resultString)
     }

@@ -11,7 +11,7 @@ class Controller() {
         val blackJackGame = BlackJackGame(InputView.getPlayerNames(), RandomCardDeck)
         showInitialState(blackJackGame.participants)
         blackJackGame.progressPlayersAddCard(InputView::getDecision, OutputView::printPlayerCards)
-        blackJackGame.progressDealerAddCard(OutputView::printDealerOverCondition)
+        blackJackGame.progressDealerAddCard()
         printResult(blackJackGame)
     }
 
@@ -23,6 +23,9 @@ class Controller() {
 
     private fun printResult(blackJackGame: BlackJackGame) {
         OutputView.printTotalScore(blackJackGame.participants)
-        OutputView.printWinOrLose(blackJackGame.participants)
+        OutputView.printWinOrLose(
+            blackJackGame.participants.getDealersConsequence(),
+            blackJackGame.participants.getPlayersConsequences(),
+        )
     }
 }
