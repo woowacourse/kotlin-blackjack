@@ -12,7 +12,7 @@ fun blackJack(block: BlackJackBuilder.() -> Unit): BlackJackSetting {
 
 class BlackJackBuilder {
     private var cardDeck: CardDeck = CardDeck(Cards.all().shuffled())
-    lateinit var participants: Participants
+    var participants: Participants = Participants()
 
     fun participants(block: ParticipantsBuilder.() -> Unit) {
         participants = ParticipantsBuilder().apply(block).build()

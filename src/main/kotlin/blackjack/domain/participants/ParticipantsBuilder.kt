@@ -7,7 +7,7 @@ import blackjack.domain.participants.user.Name
 import blackjack.domain.state.inTurn.FirstTurn
 
 class ParticipantsBuilder {
-    private lateinit var dealer: Dealer
+    private var dealer: Dealer = Dealer()
     private val guests = MutableList(0) { Guest() }
 
     fun dealer() { dealer = Dealer() }

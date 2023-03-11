@@ -10,7 +10,6 @@ class Dealer(
     name: Name = Name("딜러"),
     state: State = FirstTurn(),
 ) : User(name, state) {
-
     fun calculateProfit(guests: List<Guest>): Int = guests.sumOf { it.calculateProfit(this) } * -1
 
     override fun draw(card: Card) {
