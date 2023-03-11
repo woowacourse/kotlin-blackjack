@@ -52,9 +52,9 @@ class OutputView {
         val dealerResult = gameResult.dealerResult
         println()
         println(MESSAGE_RESULT_TITLE)
-        println(MESSAGE_DEALER_PROFIT_RESULT.format(dealerResult))
+        println(MESSAGE_PROFIT_RESULT.format(participants.dealer.name.value, dealerResult))
         playerResult.forEach {
-            println(MESSAGE_PLAYER_PROFIT_RESULT.format(it.key.value, it.value))
+            println(MESSAGE_PROFIT_RESULT.format(it.key.value, it.value))
         }
     }
 
@@ -87,7 +87,6 @@ class OutputView {
         private const val MESSAGE_POINT_RESULT = " - 결과: %d"
         private const val MESSAGE_DEALER_GET_CARD = "%s는 16이하라 한장의 카드를 더 받았습니다."
         private const val MESSAGE_RESULT_TITLE = "## 최종 수익"
-        private const val MESSAGE_DEALER_PROFIT_RESULT = "딜러: %d"
-        private const val MESSAGE_PLAYER_PROFIT_RESULT = "%s: %d"
+        private const val MESSAGE_PROFIT_RESULT = "%s: %d"
     }
 }
