@@ -14,7 +14,7 @@ class Dealer(
     fun calculateProfit(guests: List<Guest>): Int = guests.sumOf { it.calculateProfit(this) } * -1
 
     override fun draw(card: Card) {
-        state = state.draw(card)
+        super.draw(card)
         if (state is Hit && isDrawable.not()) state = Stay(state.cards)
     }
 
