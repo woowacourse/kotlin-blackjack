@@ -4,7 +4,7 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.CardDeck
 import blackjack.domain.card.Cards
 
-abstract class Participant(val name: String) {
+abstract class Participant() {
     val cards = Cards()
 
     abstract fun getFirstOpenCards(): List<Card>

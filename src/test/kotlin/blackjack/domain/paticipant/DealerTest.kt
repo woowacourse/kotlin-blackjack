@@ -1,12 +1,11 @@
 package blackjack.domain.paticipant
 
 import blackjack.domain.card.Card
-import blackjack.domain.card.CardDeck
 import blackjack.domain.card.CardNumber
 import blackjack.domain.card.Suit
-import blackjack.domain.participant.BettingPlayer
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Player
+import blackjack.domain.participant.PlayerInfo
 import blackjack.domain.result.GameResult
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
@@ -102,18 +101,12 @@ class DealerTest {
 
     @Test
     fun `플레이어와 딜러 모두 블랙잭이면 무승부이다`() {
-        val player = BettingPlayer(Player("glo"), 0)
-        val deck = CardDeck(
-            listOf(
-                Card(CardNumber.QUEEN, Suit.SPADE),
-                Card(CardNumber.ACE, Suit.SPADE)
-            )
-        )
-        with(player) {
-            draw(deck)
-            draw(deck)
-        }
+        val player = Player(PlayerInfo("glo", 0))
 
+        with(player) {
+            addCard(Card(CardNumber.QUEEN, Suit.SPADE))
+            addCard(Card(CardNumber.ACE, Suit.SPADE))
+        }
         with(dealer) {
             addCard(Card(CardNumber.JACK, Suit.HEART))
             addCard(Card(CardNumber.ACE, Suit.HEART))
@@ -124,18 +117,12 @@ class DealerTest {
 
     @Test
     fun `딜러만 블랙잭이면 플레이어는 패배한다`() {
-        val player = BettingPlayer(Player("glo"), 0)
-        val deck = CardDeck(
-            listOf(
-                Card(CardNumber.NINE, Suit.SPADE),
-                Card(CardNumber.TWO, Suit.SPADE)
-            )
-        )
-        with(player) {
-            draw(deck)
-            draw(deck)
-        }
+        val player = Player(PlayerInfo("glo", 0))
 
+        with(player) {
+            addCard(Card(blackjack.domain.card.CardNumber.NINE, blackjack.domain.card.Suit.SPADE))
+            addCard(Card(blackjack.domain.card.CardNumber.TWO, blackjack.domain.card.Suit.SPADE))
+        }
         with(dealer) {
             addCard(Card(CardNumber.JACK, Suit.SPADE))
             addCard(Card(CardNumber.ACE, Suit.SPADE))
@@ -146,20 +133,13 @@ class DealerTest {
 
     @Test
     fun `플레이어와 딜러 모두 버스트면 플레이어가 패배한다`() {
-        val player = BettingPlayer(Player("glo"), 0)
-        val deck = CardDeck(
-            listOf(
-                Card(CardNumber.QUEEN, Suit.SPADE),
-                Card(CardNumber.KING, Suit.SPADE),
-                Card(CardNumber.TWO, Suit.SPADE)
-            )
-        )
-        with(player) {
-            draw(deck)
-            draw(deck)
-            draw(deck)
-        }
+        val player = Player(PlayerInfo("glo", 0))
 
+        with(player) {
+            addCard(Card(CardNumber.QUEEN, Suit.SPADE))
+            addCard(Card(CardNumber.KING, Suit.SPADE))
+            addCard(Card(CardNumber.TWO, Suit.SPADE))
+        }
         with(dealer) {
             addCard(Card(CardNumber.JACK, Suit.HEART))
             addCard(Card(CardNumber.KING, Suit.HEART))
@@ -171,22 +151,14 @@ class DealerTest {
 
     @Test
     fun `플레이어가 21점을 초과하면 패배한다`() {
-        val player = BettingPlayer(Player("glo"), 0)
-        val deck = CardDeck(
-            listOf(
-                Card(CardNumber.NINE, Suit.SPADE),
-                Card(CardNumber.TWO, Suit.SPADE),
-                Card(CardNumber.QUEEN, Suit.SPADE),
-                Card(CardNumber.KING, Suit.SPADE)
-            )
-        )
-        with(player) {
-            draw(deck)
-            draw(deck)
-            draw(deck)
-            draw(deck)
-        }
+        val player = Player(PlayerInfo("glo", 0))
 
+        with(player) {
+            addCard(Card(CardNumber.NINE, Suit.SPADE))
+            addCard(Card(CardNumber.TWO, Suit.SPADE))
+            addCard(Card(CardNumber.QUEEN, Suit.SPADE))
+            addCard(Card(CardNumber.KING, Suit.SPADE))
+        }
         with(dealer) {
             addCard(Card(CardNumber.JACK, Suit.SPADE))
             addCard(Card(CardNumber.QUEEN, Suit.SPADE))
@@ -197,18 +169,12 @@ class DealerTest {
 
     @Test
     fun `딜러만 21점을 초과하면 패배한다`() {
-        val player = BettingPlayer(Player("glo"), 0)
-        val deck = CardDeck(
-            listOf(
-                Card(CardNumber.NINE, Suit.SPADE),
-                Card(CardNumber.TWO, Suit.SPADE)
-            )
-        )
-        with(player) {
-            draw(deck)
-            draw(deck)
-        }
+        val player = Player(PlayerInfo("glo", 0))
 
+        with(player) {
+            addCard(Card(CardNumber.NINE, Suit.SPADE))
+            addCard(Card(CardNumber.TWO, Suit.SPADE))
+        }
         with(dealer) {
             addCard(Card(CardNumber.JACK, Suit.SPADE))
             addCard(Card(CardNumber.QUEEN, Suit.SPADE))
@@ -220,18 +186,12 @@ class DealerTest {
 
     @Test
     fun `플레이어가 21점을 초과하지 않고 플레이어와 딜러의 점수가 같으면 무승부이다`() {
-        val player = BettingPlayer(Player("glo"), 0)
-        val deck = CardDeck(
-            listOf(
-                Card(CardNumber.ACE, Suit.SPADE),
-                Card(CardNumber.QUEEN, Suit.SPADE)
-            )
-        )
-        with(player) {
-            draw(deck)
-            draw(deck)
-        }
+        val player = Player(PlayerInfo("glo", 0))
 
+        with(player) {
+            addCard(Card(CardNumber.ACE, Suit.SPADE))
+            addCard(Card(CardNumber.QUEEN, Suit.SPADE))
+        }
         with(dealer) {
             addCard(Card(CardNumber.ACE, Suit.SPADE))
             addCard(Card(CardNumber.QUEEN, Suit.SPADE))
@@ -242,18 +202,12 @@ class DealerTest {
 
     @Test
     fun `플레이어가 21점을 초과하지 않고 처음 받은 카드 두 장이 21점이면 블랙잭이다`() {
-        val player = BettingPlayer(Player("glo"), 0)
-        val deck = CardDeck(
-            listOf(
-                Card(CardNumber.ACE, Suit.SPADE),
-                Card(CardNumber.QUEEN, Suit.SPADE)
-            )
-        )
-        with(player) {
-            draw(deck)
-            draw(deck)
-        }
+        val player = Player(PlayerInfo("glo", 0))
 
+        with(player) {
+            addCard(Card(CardNumber.ACE, Suit.SPADE))
+            addCard(Card(CardNumber.QUEEN, Suit.SPADE))
+        }
         with(dealer) {
             addCard(Card(CardNumber.ACE, Suit.SPADE))
             addCard(Card(CardNumber.QUEEN, Suit.SPADE))
@@ -266,20 +220,13 @@ class DealerTest {
 
     @Test
     fun `플레이어가 21점을 초과하지 않고 블랙잭이 아니면서 딜러가 21점을 초과하면 플레이어가 승리한다`() {
-        val player = BettingPlayer(Player("glo"), 0)
-        val deck = CardDeck(
-            listOf(
-                Card(CardNumber.ACE, Suit.SPADE),
-                Card(CardNumber.NINE, Suit.SPADE),
-                Card(CardNumber.ACE, Suit.DIAMOND)
-            )
-        )
-        with(player) {
-            draw(deck)
-            draw(deck)
-            draw(deck)
-        }
+        val player = Player(PlayerInfo("glo", 0))
 
+        with(player) {
+            addCard(Card(CardNumber.ACE, Suit.SPADE))
+            addCard(Card(CardNumber.NINE, Suit.SPADE))
+            addCard(Card(CardNumber.ACE, Suit.DIAMOND))
+        }
         with(dealer) {
             addCard(Card(CardNumber.JACK, Suit.SPADE))
             addCard(Card(CardNumber.QUEEN, Suit.SPADE))
@@ -291,18 +238,12 @@ class DealerTest {
 
     @Test
     fun `딜러와 플레이어 모두 21점을 초과하지 않고 블랙잭이 아니면서 플레이어가 딜러보다 점수가 높으면 플레이어가 승리한다`() {
-        val player = BettingPlayer(Player("glo"), 0)
-        val deck = CardDeck(
-            listOf(
-                Card(CardNumber.ACE, Suit.SPADE),
-                Card(CardNumber.NINE, Suit.SPADE)
-            )
-        )
-        with(player) {
-            draw(deck)
-            draw(deck)
-        }
+        val player = Player(PlayerInfo("glo", 0))
 
+        with(player) {
+            addCard(Card(CardNumber.ACE, Suit.SPADE))
+            addCard(Card(CardNumber.NINE, Suit.SPADE))
+        }
         with(dealer) {
             addCard(Card(CardNumber.JACK, Suit.SPADE))
             addCard(Card(CardNumber.EIGHT, Suit.SPADE))
@@ -313,18 +254,12 @@ class DealerTest {
 
     @Test
     fun `딜러와 플레이어 모두 21점을 초과하지 않고 블랙잭이 아니면서 딜러가 플레이어보다 점수가 높으면 플레이어가 패배한다`() {
-        val player = BettingPlayer(Player("glo"), 0)
-        val deck = CardDeck(
-            listOf(
-                Card(CardNumber.ACE, Suit.SPADE),
-                Card(CardNumber.NINE, Suit.SPADE)
-            )
-        )
-        with(player) {
-            draw(deck)
-            draw(deck)
-        }
+        val player = Player(PlayerInfo("glo", 0))
 
+        with(player) {
+            addCard(Card(CardNumber.ACE, Suit.SPADE))
+            addCard(Card(CardNumber.NINE, Suit.SPADE))
+        }
         with(dealer) {
             addCard(Card(CardNumber.ACE, Suit.SPADE))
             addCard(Card(CardNumber.JACK, Suit.SPADE))

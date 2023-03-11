@@ -1,10 +1,12 @@
 package blackjack.domain.participant
 
-import blackjack.domain.BlackJack.Companion.blackjackScore
+import blackjack.domain.BlackJack
 import blackjack.domain.card.Card
 
-class Player(name: String, private val askDraw: (String) -> Boolean = { true }) : Participant(name) {
+class Player(val info: PlayerInfo) : Participant() {
     override fun getFirstOpenCards(): List<Card> = getCards()
 
-    override fun canDraw(): Boolean = !isBlackjack() && cards.calculateTotalScore() <= blackjackScore() && askDraw(name)
+    override fun canDraw(): Boolean {
+        return !isBlackjack() && cards.calculateTotalScore() <= BlackJack.blackjackScore() && info.askDraw(info.name)
+    }
 }

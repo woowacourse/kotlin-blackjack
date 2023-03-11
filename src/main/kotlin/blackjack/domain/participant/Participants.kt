@@ -5,18 +5,18 @@ import blackjack.domain.data.ParticipantCards
 import blackjack.domain.data.ParticipantResults
 import blackjack.domain.result.GameResults
 
-class Participants(private val dealer: Dealer, private val bettingPlayers: BettingPlayers) {
+class Participants(private val dealer: Dealer, private val players: Players) {
     fun drawAll(deck: CardDeck) {
         dealer.addCard(deck.draw())
-        bettingPlayers.drawAll(deck)
+        players.drawAll(deck)
     }
 
     fun getFirstOpenCards(): List<ParticipantCards> {
-        return listOf(ParticipantCards(dealer.name, dealer.getFirstOpenCards())) + bettingPlayers.getFirstOpenCards()
+        return listOf(ParticipantCards(dealer.name, dealer.getFirstOpenCards())) + players.getFirstOpenCards()
     }
 
     fun takeTurns(deck: CardDeck, onDraw: (Participant) -> Unit) {
-        (bettingPlayers.players.map(BettingPlayer::user) + dealer).forEach {
+        (players.users + dealer).forEach {
             it.drawUntilPossible(deck, onDraw)
         }
     }
@@ -25,6 +25,6 @@ class Participants(private val dealer: Dealer, private val bettingPlayers: Betti
 
     private fun judgePlayers(): GameResults = GameResults(
         dealer,
-        bettingPlayers.players.associateWith { player -> (dealer judge player) }
+        players.users.associateWith { player -> (dealer judge player) }
     )
 }

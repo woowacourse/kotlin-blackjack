@@ -4,23 +4,24 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
 import blackjack.domain.card.Suit
 import blackjack.domain.participant.Player
+import blackjack.domain.participant.PlayerInfo
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
-class PlayerTest {
+class PlayerInfoTest {
     lateinit var player: Player
 
     @BeforeEach
     fun setUp() {
-        player = Player("pobi")
+        player = Player(PlayerInfo("pobi", 0))
     }
 
     @Test
     fun `플레이어는 이름을 갖는다`() {
-        assertThat(player.name).isEqualTo("pobi")
+        assertThat(player.info.name).isEqualTo("pobi")
     }
 
     @Test

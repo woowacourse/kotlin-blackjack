@@ -1,9 +1,9 @@
 package blackjack.domain.result
 
 import blackjack.domain.data.ParticipantResults
-import blackjack.domain.participant.BettingPlayer
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Player
+import blackjack.domain.participant.PlayerInfo
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -18,10 +18,10 @@ class GameResultsTest {
             GameResults(
                 Dealer(),
                 mapOf(
-                    BettingPlayer(Player("부나"), 1000) to GameResult.BLACKJACK,
-                    BettingPlayer(Player("글로"), 2000) to GameResult.WIN,
-                    BettingPlayer(Player("반달"), 3000) to GameResult.DRAW,
-                    BettingPlayer(Player("제이슨"), 4000) to GameResult.LOSE
+                    Player(PlayerInfo("부나", 1000)) to GameResult.BLACKJACK,
+                    Player(PlayerInfo("글로", 2000)) to GameResult.WIN,
+                    Player(PlayerInfo("반달", 3000)) to GameResult.DRAW,
+                    Player(PlayerInfo("제이슨", 4000)) to GameResult.LOSE
                 )
             ).getResults()
     }
