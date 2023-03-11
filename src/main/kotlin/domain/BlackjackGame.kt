@@ -5,12 +5,13 @@ import domain.card.CardMaker
 import domain.card.Cards
 import domain.deck.Deck
 import domain.participants.Dealer
+import domain.participants.Money
 import domain.participants.Names
 import domain.participants.Player
 
 class BlackjackGame(
     names: Names,
-    bettingMoney: List<Int>,
+    bettingMoney: List<Money>,
     private val deck: Deck = Deck(CardMaker().makeShuffledCards())
 ) {
     val dealer: Dealer
@@ -29,7 +30,7 @@ class BlackjackGame(
         return startDeck
     }
 
-    private fun makePlayer(names: Names, money: List<Int>): List<Player> {
+    private fun makePlayer(names: Names, money: List<Money>): List<Player> {
         return names.userNames.mapIndexed { index, name ->
             Player(name, Cards(makeStartDeck()), money[index])
         }

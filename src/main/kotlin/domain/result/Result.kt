@@ -1,6 +1,6 @@
 package domain.result
 
-import kotlin.math.roundToInt
+import domain.participants.Money
 
 enum class Result(private val profit: Double) {
     WIN(1.0),
@@ -8,5 +8,5 @@ enum class Result(private val profit: Double) {
     LOSS(-1.0),
     BLACKJACK_WIN(1.5);
 
-    fun calculateProfit(money: Int): Int = (this.profit * money).roundToInt()
+    fun calculateProfit(money: Money) = money * profit
 }

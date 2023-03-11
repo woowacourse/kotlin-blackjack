@@ -4,6 +4,7 @@ import domain.card.Card
 import domain.card.CardValue
 import domain.card.Shape
 import domain.deck.Deck
+import domain.participants.Money
 import domain.participants.Names
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -21,7 +22,7 @@ class BlackjackGameTest {
             Card(Shape.SPADE, CardValue.TWO)
         )
     )
-    private val blackjackGame = BlackjackGame(Names(listOf("pingu")), listOf(0), deck)
+    private val blackjackGame = BlackjackGame(Names(listOf("pingu")), listOf(Money(100)), deck)
 
     @Test
     fun `입력값이 false라면 카드를 뽑지않는다`() {

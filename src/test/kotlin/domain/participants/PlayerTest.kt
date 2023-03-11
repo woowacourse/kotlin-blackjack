@@ -14,7 +14,7 @@ class PlayerTest {
         val cards = Cards(mutableListOf(Card(Shape.SPADE, CardValue.JACK)))
         val dealer = Dealer(cards)
 
-        val result = Player("pingu", cards, 0).getWinningResult(dealer)
+        val result = Player("pingu", cards, Money(100)).getWinningResult(dealer)
 
         assertThat(result).isEqualTo(Result.DRAW)
     }

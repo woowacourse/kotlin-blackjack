@@ -33,7 +33,7 @@ class DealerTest {
         )
         val dealer = Dealer(dealerCards)
         val playerCards = Cards(mutableListOf(Card(Shape.HEART, CardValue.JACK), Card(Shape.HEART, CardValue.ACE)))
-        val player = Player("jack", playerCards, 0)
+        val player = Player("jack", playerCards, Money(100))
 
         assertThat(dealer.judgePlayerResult(player.ownCards)).isEqualTo(Result.BLACKJACK_WIN)
     }
@@ -49,7 +49,7 @@ class DealerTest {
             )
         )
         val player =
-            Player("jack", Cards(mutableListOf(Card(Shape.HEART, CardValue.JACK), Card(Shape.HEART, CardValue.ACE))), 0)
+            Player("jack", Cards(mutableListOf(Card(Shape.HEART, CardValue.JACK), Card(Shape.HEART, CardValue.ACE))), Money(100))
         assertThat(dealer.judgePlayerResult(player.ownCards)).isEqualTo(Result.DRAW)
     }
 
@@ -73,7 +73,7 @@ class DealerTest {
                         Card(Shape.HEART, CardValue.ACE)
                     )
                 ),
-                0
+                Money(100)
             )
         assertThat(dealer.judgePlayerResult(player.ownCards)).isEqualTo(Result.LOSS)
     }
@@ -89,7 +89,7 @@ class DealerTest {
                 )
             )
         )
-        val player = Player("jack", Cards(mutableListOf(Card(Shape.HEART, CardValue.JACK))), 0)
+        val player = Player("jack", Cards(mutableListOf(Card(Shape.HEART, CardValue.JACK))), Money(100))
         assertThat(dealer.judgePlayerResult(player.ownCards)).isEqualTo(Result.WIN)
     }
 
@@ -113,7 +113,7 @@ class DealerTest {
                     Card(Shape.SPADE, CardValue.THREE)
                 )
             ),
-            0
+            Money(100)
         )
         assertThat(dealer.judgePlayerResult(player.ownCards)).isEqualTo(Result.LOSS)
     }
@@ -130,7 +130,7 @@ class DealerTest {
                     Card(Shape.SPADE, CardValue.THREE)
                 )
             ),
-            0
+            Money(100)
         )
         assertThat(dealer.judgePlayerResult(player.ownCards)).isEqualTo(Result.LOSS)
     }
@@ -155,7 +155,7 @@ class DealerTest {
                     Card(Shape.SPADE, CardValue.FIVE)
                 )
             ),
-            0
+            Money(100)
         )
         assertThat(dealer.judgePlayerResult(player.ownCards)).isEqualTo(Result.DRAW)
     }
