@@ -1,8 +1,8 @@
 package blackjack.domain.player
 
-import blackjack.domain.Result
 import blackjack.domain.card.Cards
 import blackjack.domain.card.TestCardsGenerator
+import blackjack.domain.card.TestCardsGenerator2
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -28,7 +28,7 @@ class BlackjackManagerTest {
         val blackjackManager = BlackjackManager(TestCardsGenerator(), listOf("aaa", "bbb"))
 
         // when
-        blackjackManager.setup()
+        blackjackManager.setupCards()
         val dealerCards: Cards = blackjackManager.dealer.cards
         val participantsCards: List<Cards> = blackjackManager.participants.values.map { it.cards }
 
@@ -44,7 +44,7 @@ class BlackjackManagerTest {
     fun `플레이어1은 카드 추가 발급을 한번 원하고, 플레이어2는 카드 추가 발급을 원하지 않을 때, 플레이어1 에게만 카드를 추가로 한장만 나눠준다`() {
         // given
         val blackjackManager = BlackjackManager(TestCardsGenerator(), listOf("aaa", "bbb"))
-        blackjackManager.setup()
+        blackjackManager.setupCards()
 
         // when
         var index = 0
@@ -62,7 +62,7 @@ class BlackjackManagerTest {
     fun `카드 숫자 합이 16이 넘지 않는동안 딜러에게 계속 카드를 발행한다`() {
         // given
         val blackjackManager = BlackjackManager(TestCardsGenerator(), listOf("aaa", "bbb"))
-        blackjackManager.setup()
+        blackjackManager.setupCards()
 
         // when
         blackjackManager.playDealerTurn {}
@@ -73,25 +73,34 @@ class BlackjackManagerTest {
     }
 
     @Test
-    fun `플레이어1 스코어는 14 플레이어2 스코어는 7 딜러 스코어는 9일때, 참가자들의 승패를 계산한다`() {
+    fun `플레이어1 스코어는 14 플레이어2 스코어는 7 딜러 스코어는 9일때, 참가자들의 수익률을 계산한다`() {
         // given
         val blackjackManager = BlackjackManager(TestCardsGenerator(), listOf("aaa", "bbb"))
-        blackjackManager.setup()
+        blackjackManager.setupCards()
 
         // when
-        val playersResult = blackjackManager.calculatePlayersResult()
-        val participantsResults: ParticipantsResults = playersResult.participantsResults
-        val dealerResult: DealerResult = playersResult.dealerResult
+        val playersEarningRate: List<Double> =
+            blackjackManager.calculateParticipantsEarningRate().values.map { it.earningRate.rate }
 
         // then
-        assertThat(participantsResults).isEqualTo(
-            ParticipantsResults(
-                listOf(
-                    ParticipantResult("aaa", Result.WIN),
-                    ParticipantResult("bbb", Result.LOSE)
-                )
-            )
+        assertThat(playersEarningRate).isEqualTo(
+            listOf(1.0, -1.0)
         )
-        assertThat(dealerResult).isEqualTo(DealerResult(listOf(Result.LOSE, Result.WIN)))
+    }
+
+    @Test
+    fun `플레이어1 스코어는 14 플레이어2 스코어는 블랙잭 딜러 스코어는 14일때, 참가자들의 수익률을 계산한다`() {
+        // given
+        val blackjackManager = BlackjackManager(TestCardsGenerator2(), listOf("aaa", "bbb"))
+        blackjackManager.setupCards()
+
+        // when
+        val playersEarningRate: List<Double> =
+            blackjackManager.calculateParticipantsEarningRate().values.map { it.earningRate.rate }
+
+        // then
+        assertThat(playersEarningRate).isEqualTo(
+            listOf(0.0, 1.5)
+        )
     }
 }

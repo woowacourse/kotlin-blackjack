@@ -6,7 +6,8 @@ import blackjack.domain.card.RandomCardsGenerator
 
 class BlackjackManager(
     cardsGenerator: CardsGenerator = RandomCardsGenerator(),
-    playerNames: List<String>
+    playerNames: List<String>,
+    getBetAmount: (String) -> Int = { 0 }
 ) {
 
     private val cardDeck = CardDeck(cardsGenerator)
@@ -16,12 +17,12 @@ class BlackjackManager(
     init {
         participants = Participants(
             playerNames.map {
-                Participant(it)
+                Participant(it, betAmount = getBetAmount(it))
             }
         )
     }
 
-    fun setup() {
+    fun setupCards() {
         repeat(CARD_SETTING_COUNT) { provideCard(dealer) }
         participants.values.forEach { participant ->
             repeat(CARD_SETTING_COUNT) {
@@ -62,15 +63,27 @@ class BlackjackManager(
         }
     }
 
-    fun calculatePlayersResult(): PlayersResult {
-        val participantsResults = ParticipantsResults(
+    fun calculateParticipantsEarningRate(): ParticipantsEarningRate = ParticipantsEarningRate(
+        participants.values.map { participant ->
+            participant.calculateEarningRate(dealer)
+        }
+    )
+
+    fun calculateParticipantsProfit(
+        participantsEarningRate: ParticipantsEarningRate
+    ): ParticipantsProfit =
+        ParticipantsProfit(
             participants.values.map { participant ->
-                participant.calculateResult(dealer)
+                val name = participant.name
+                val participantEarningRate: ParticipantEarningRate =
+                    participantsEarningRate.values.find { participantEarningRate -> participantEarningRate.name == name }
+                        ?: throw IllegalArgumentException(ERROR_CANT_FIND_PARTICIPANT_EARNING_RATE)
+                ParticipantProfit(
+                    name,
+                    (participant.betAmount * participantEarningRate.earningRate.rate).toInt()
+                )
             }
         )
-        val dealerResult = dealer.calculateResults(participantsResults)
-        return PlayersResult(dealerResult, participantsResults)
-    }
 
     private fun provideCard(player: Player) {
         cardDeck.apply {
@@ -81,5 +94,6 @@ class BlackjackManager(
 
     companion object {
         private const val CARD_SETTING_COUNT = 2
+        private const val ERROR_CANT_FIND_PARTICIPANT_EARNING_RATE = "[ERRPR] 해당 참가자의 수익률을 찾을 수 없습니다"
     }
 }
