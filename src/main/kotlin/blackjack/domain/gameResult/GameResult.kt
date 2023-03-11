@@ -21,12 +21,10 @@ enum class GameResult(val profitRate: Double) {
 
     companion object {
 
-        private const val EXCEPTION_CASE = "처리하지 못한 케이스입니다"
-
         fun valueOf(playerCardsState: CardsState, dealerCardsState: CardsState): GameResult = when (playerCardsState) {
-            is CardsState.BlackJack -> BlackJackCase.valueOf(dealerCardsState)?.gameResult
-            is CardsState.Bust -> BustCase.valueOf(dealerCardsState)?.gameResult
-            is CardsState.Running -> RunningCase.valueOf(playerCardsState.score, dealerCardsState)?.gameResult
-        } ?: throw java.lang.IllegalStateException(EXCEPTION_CASE)
+            is CardsState.BlackJack -> BlackJackCase.valueOf(dealerCardsState).gameResult
+            is CardsState.Bust -> BustCase.valueOf(dealerCardsState).gameResult
+            is CardsState.Running -> RunningCase.valueOf(playerCardsState.score, dealerCardsState).gameResult
+        }
     }
 }
