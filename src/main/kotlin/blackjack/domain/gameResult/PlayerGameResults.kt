@@ -1,8 +1,7 @@
 package blackjack.domain.gameResult
 
-class PlayerGameResults(playerGameResults: List<PlayerGameResult>) {
+data class PlayerGameResults(private val _playerGameResults: List<PlayerGameResult>) {
 
-    private val _playerGameResults: List<PlayerGameResult> = playerGameResults.toList()
     val playerGameResults: List<PlayerGameResult>
         get() = _playerGameResults.toList()
 
@@ -12,20 +11,5 @@ class PlayerGameResults(playerGameResults: List<PlayerGameResult>) {
         }
 
         return ProfitMoney(totalProfitValue)
-    }
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as PlayerGameResults
-
-        if (_playerGameResults != other._playerGameResults) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        return _playerGameResults.hashCode()
     }
 }
