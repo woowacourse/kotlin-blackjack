@@ -24,10 +24,10 @@ class Cards(cards: List<Card>) {
     fun isBlackJack(): Boolean = isTwoCards() && isBlackJackScore()
 
     private fun isTwoCards(): Boolean = (_value.size == NUMBER_OF_BLACKJACK_CARDS)
-    private fun isBlackJackScore(): Boolean = Score.valueOfCards(numbers(), hasAce()) == Score.valueOf(BLACKJACK_SCORE)
+
+    private fun isBlackJackScore(): Boolean = score.isBlackJack(numbers(), hasAce())
 
     companion object {
         private const val NUMBER_OF_BLACKJACK_CARDS = 2
-        private const val BLACKJACK_SCORE = 21
     }
 }

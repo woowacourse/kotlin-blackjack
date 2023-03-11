@@ -69,7 +69,7 @@ class BlackJackGame {
         onUserPickNewCards: (User) -> Unit
     ) {
         val userScore = user.cards.score
-        if ((userScore.isBust() || userScore.isBlackJack())) return
+        if ((userScore.isBust() || userScore.isBlackJackRegardlessAce())) return
         if (getMoreCardCommand(user)) {
             user.addCard(blackJackGameData.deck.getOneCard())
             onUserPickNewCards(user)

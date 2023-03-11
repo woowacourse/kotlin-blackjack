@@ -22,7 +22,7 @@ class ScoreTest {
         val score = Score.valueOf(21)
 
         // when
-        val actual = score.isBlackJack()
+        val actual = score.isBlackJackRegardlessAce()
 
         // then
         assertThat(actual).isEqualTo(true)
