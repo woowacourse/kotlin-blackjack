@@ -14,7 +14,7 @@ object OutputView {
     private const val PARTICIPANT_CARD = "카드:"
     private const val RESULT = " - 결과: "
     private const val FINAL_RESULT = "\n## 최종 수익"
-    private const val PICK_CARD_OVER_SIXTEEN = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n"
+    private const val PICK_CARD_OVER_SIXTEEN = "\n딜러는 16이하라 한장의 카드를 더 받았습니다."
     private const val REVERSE = -1
 
     fun printBlackjackSetting(players: List<Player>, dealer: Dealer) {
