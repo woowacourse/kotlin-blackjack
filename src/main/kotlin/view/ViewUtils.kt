@@ -12,7 +12,7 @@ class ViewUtils {
                 CardNumber.KING -> "K"
                 CardNumber.QUEEN -> "Q"
                 CardNumber.JACK -> "J"
-                else -> (this.ordinal + 1).toString()
+                else -> (ordinal + 1).toString()
             }
         }
 
@@ -25,8 +25,8 @@ class ViewUtils {
             }
         }
 
-        fun cardsToString(cards: Cards): String {
-            return cards.value.joinToString(", ") {
+        fun Cards.isString(): String {
+            return value.joinToString(", ") {
                 it.cardNumber.isString() + it.cardType.isString()
             }
         }

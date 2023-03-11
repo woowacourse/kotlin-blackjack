@@ -3,16 +3,17 @@ package view
 import entity.users.Dealer
 import entity.users.Player
 import entity.users.Players
+import view.ViewUtils.Companion.isString
 
 class ResultView {
-    fun printGameStatus(dealer: Dealer, players: Players) {
-        println(MESSAGE_DEALER_GAME_STATUS.format(ViewUtils.cardsToString(dealer.cards), dealer.cardsNumberSum()))
+    fun printStatus(dealer: Dealer, players: Players) {
+        println(MESSAGE_DEALER_GAME_STATUS.format(dealer.cards.isString(), dealer.cardsNumberSum()))
         players.value.forEach {
-            println(MESSAGE_PLAYERS_GAME_STATUS.format(it.userInformation.name.value, ViewUtils.cardsToString(it.cards), it.cardsNumberSum()))
+            println(MESSAGE_PLAYERS_GAME_STATUS.format(it.userInformation.name.value, it.cards.isString(), it.cardsNumberSum()))
         }
     }
 
-    fun printUserBettingResult(dealerBattingResult: Double, playersBattingResult: MutableMap<Player, Double>) {
+    fun printBettingResult(dealerBattingResult: Double, playersBattingResult: MutableMap<Player, Double>) {
         println(MESSAGE_TOTAL_PROFIT_MONEY)
         println(MESSAGE_DEALER_BETTING_RESULT.format(dealerBattingResult.toInt()))
         playersBattingResult.forEach { (player, result) ->

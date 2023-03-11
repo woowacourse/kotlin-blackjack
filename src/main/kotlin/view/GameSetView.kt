@@ -1,14 +1,14 @@
 package view
 
 class GameSetView {
-    fun readPlayerNames(): List<String> {
+    fun getNames(): List<String> {
         println(MESSAGE_READ_PLAYER_NAME)
         val input = readln().trim()
         require(input.contains(",")) { NAME_INPUT_ERROR_MESSAGE }
         return input.split(",")
     }
 
-    fun readBettingMoney(name: String): Int {
+    fun getBetting(name: String): Int {
         println(MESSAGE_READ_BETTING_MONEY.format(name))
         return readln().trim().toInt()
     }
