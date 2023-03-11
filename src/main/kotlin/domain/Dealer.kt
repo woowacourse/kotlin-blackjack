@@ -3,7 +3,11 @@ package domain
 import domain.card.Card
 
 class Dealer(val name: String = DEALER_NAME, val cards: Cards) {
+
+    fun getScore(): Score = cards.score
     fun isHit(): Boolean = (!cards.isOver(SUM_CONDITION))
+
+    fun isBlackJack(): Boolean = cards.isBlackJack()
 
     fun addCard(card: Card) = cards.addCard(card)
 

@@ -28,7 +28,7 @@ class GameResultView {
                     (user.cards.value.map { it.toString() }).joinToString(
                         SEPARATOR,
                     ),
-                    user.cards.score.value,
+                    user.getScore().value,
                 ),
             )
         }

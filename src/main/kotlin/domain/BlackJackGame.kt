@@ -42,11 +42,10 @@ class BlackJackGame {
         onDealerHit: () -> Unit
     ) {
         val dealer = blackJackGameData.dealer
-        val deck = blackJackGameData.deck
 
         if (dealer.isHit()) {
             onDealerHit()
-            val newCard = deck.getOneCard()
+            val newCard = blackJackGameData.getOneCard()
             dealer.addCard(newCard)
         }
     }
@@ -68,10 +67,10 @@ class BlackJackGame {
         getMoreCardCommand: (User) -> Boolean,
         onUserPickNewCards: (User) -> Unit
     ) {
-        val userScore = user.cards.score
+        val userScore = user.getScore()
         if ((userScore.isBust() || userScore.isBlackJackRegardlessAce())) return
         if (getMoreCardCommand(user)) {
-            user.addCard(blackJackGameData.deck.getOneCard())
+            user.addCard(blackJackGameData.getOneCard())
             onUserPickNewCards(user)
             return repeatGetCommand(blackJackGameData, user, getMoreCardCommand, onUserPickNewCards)
         }

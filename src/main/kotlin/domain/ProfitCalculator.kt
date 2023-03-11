@@ -20,20 +20,21 @@ class ProfitCalculator(
 
     private fun dealerProfitWithUserBlackJack(user: User): Double {
         var profit = -user.betAmount
-        if (user.cards.isBlackJack()) profit -= user.betAmount * HALF
+        if (user.isBlackJack()) profit -= user.betAmount * HALF
         return profit
     }
 
     fun getUsersProfit(): List<UserProfit> {
-        val isDealerBlackJack = players.dealer.cards.isBlackJack()
+        val dealer = players.dealer
+        val isDealerBlackJack = dealer.isBlackJack()
         return players.users.map { user ->
             UserProfit(user, getUserProfit(isDealerBlackJack, user))
         }
     }
 
     private fun getUserProfit(isDealerBlackJack: Boolean, user: User): Double {
-        if (isDealerBlackJack && !user.cards.isBlackJack()) return -user.betAmount
-        if (user.cards.isBlackJack()) return user.betAmount * BLACKJACK_PROFIT_RATE
+        if (isDealerBlackJack && !user.isBlackJack()) return -user.betAmount
+        if (user.isBlackJack()) return user.betAmount * BLACKJACK_PROFIT_RATE
         return when (user.gameResult) {
             GameResult.WIN -> user.betAmount
             GameResult.DRAW -> NONE_PROFIT

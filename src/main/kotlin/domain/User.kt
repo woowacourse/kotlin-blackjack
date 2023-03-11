@@ -16,6 +16,10 @@ class User(val name: String, val cards: Cards, val betAmount: Double) {
         _gameResult = gameResult
     }
 
+    fun getScore(): Score = cards.score
+
+    fun isBlackJack(): Boolean = cards.isBlackJack()
+
     fun addCard(card: Card) = cards.addCard(card)
 
     companion object {

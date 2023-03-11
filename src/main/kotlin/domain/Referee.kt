@@ -10,9 +10,10 @@ class Referee(private val dealerScore: Score) {
     }
 
     private fun calculateResult(user: User): GameResult {
-        if (isLose(user.cards.score))
+        val userScore = user.getScore()
+        if (isLose(userScore))
             return GameResult.LOSE
-        if (isDraw(user.cards.score) && !user.cards.isBlackJack())
+        if (isDraw(userScore) && !user.isBlackJack())
             return GameResult.DRAW
         return GameResult.WIN
     }
