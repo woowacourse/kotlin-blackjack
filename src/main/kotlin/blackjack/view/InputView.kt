@@ -32,15 +32,13 @@ object InputView {
         }
     }
 
-    fun getBettingMoney(names: List<String>): List<BettingMoney> {
+    fun getBettingMoney(name: String): BettingMoney {
         return runCatching {
-            names.map { name ->
-                println(BETTING_SCRIPT.format(name))
-                BettingMoney(readln().toInt())
-            }
+            println(BETTING_SCRIPT.format(name))
+            BettingMoney(readln().toInt())
         }.getOrElse {
             println(it.message)
-            getBettingMoney(names)
+            getBettingMoney(name)
         }
     }
 }

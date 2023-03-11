@@ -1,6 +1,5 @@
 package blackjack.controller
 
-import blackjack.domain.BettingMoney
 import blackjack.domain.Calculator
 import blackjack.domain.CardBunch
 import blackjack.domain.CardDeck
@@ -12,8 +11,7 @@ import blackjack.view.OutputView
 class Controller(private val cardDeck: CardDeck) {
     fun runGame() {
         val dealer = makeDealer()
-        val names = InputView.getPlayerNames()
-        val players = makePlayers(names, InputView.getBettingMoney(names))
+        val players = makePlayers()
         showInitialCard(dealer, players)
         players.forEach { player -> askHitPlayer(player) }
         printCardAndScore(dealer, players)
@@ -25,8 +23,10 @@ class Controller(private val cardDeck: CardDeck) {
         OutputView.printCardAndScore(dealer, players)
     }
 
-    private fun makePlayers(names: List<String>, bettingMoneys: List<BettingMoney>): List<Player> =
-        names.mapIndexed { index, name -> Player(name, makeInitialCardBunch(), bettingMoneys[index]) }
+    private fun makePlayers(): List<Player> {
+        val names = InputView.getPlayerNames()
+        return names.map { name -> Player(name, makeInitialCardBunch(), InputView.getBettingMoney(name)) }
+    }
 
     private fun makeDealer(): Dealer = Dealer(makeInitialCardBunch())
 
