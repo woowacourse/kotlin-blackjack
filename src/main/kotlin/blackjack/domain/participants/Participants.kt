@@ -8,6 +8,5 @@ data class Participants(
     val dealer: Dealer,
     val guests: List<Guest> = emptyList(),
 ) {
-    val all: List<User>
-        get() = listOf(dealer) + guests
+    val all: List<User> = listOf(dealer) + guests
 }
