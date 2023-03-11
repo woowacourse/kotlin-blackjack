@@ -7,9 +7,9 @@ import blackjack.domain.card.Suit
 import blackjack.domain.data.ParticipantCards
 import blackjack.domain.result.GameResult
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.SoftAssertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertAll
 
 class BlackJackControllerTest {
     private lateinit var inputView: FakeInputView
@@ -55,44 +55,26 @@ class BlackJackControllerTest {
 
     @Test
     fun `참여자들이 처음 공개하는 카드 확인`() {
-        assertAll(
-            {
-                assertThat(outputView.firstOpenCards[0])
-                    .isEqualTo(ParticipantCards("딜러", listOf(Card(CardNumber.JACK, Suit.SPADE))))
-            },
-            {
-                assertThat(outputView.firstOpenCards[1])
-                    .isEqualTo(
-                        ParticipantCards(
-                            "부나", listOf(Card(CardNumber.QUEEN, Suit.DIAMOND), Card(CardNumber.KING, Suit.DIAMOND))
-                        )
-                    )
-            },
-            {
-                assertThat(outputView.firstOpenCards[2])
-                    .isEqualTo(
-                        ParticipantCards(
-                            "글로", listOf(Card(CardNumber.KING, Suit.HEART), Card(CardNumber.ACE, Suit.HEART))
-                        )
-                    )
-            },
-            {
-                assertThat(outputView.firstOpenCards[3])
-                    .isEqualTo(
-                        ParticipantCards(
-                            "반달", listOf(Card(CardNumber.EIGHT, Suit.CLOVER), Card(CardNumber.JACK, Suit.CLOVER))
-                        )
-                    )
-            },
-            {
-                assertThat(outputView.firstOpenCards[4])
-                    .isEqualTo(
-                        ParticipantCards(
-                            "제이슨", listOf(Card(CardNumber.JACK, Suit.HEART), Card(CardNumber.NINE, Suit.HEART))
-                        )
-                    )
-            }
-        )
+        val soft = SoftAssertions()
+
+        val expected0 = ParticipantCards("딜러", listOf(Card(CardNumber.JACK, Suit.SPADE)))
+        soft.assertThat(outputView.firstOpenCards[0]).isEqualTo(expected0)
+
+        val expected1 =
+            ParticipantCards("부나", listOf(Card(CardNumber.QUEEN, Suit.DIAMOND), Card(CardNumber.KING, Suit.DIAMOND)))
+        soft.assertThat(outputView.firstOpenCards[1]).isEqualTo(expected1)
+
+        val expected2 =
+            ParticipantCards("글로", listOf(Card(CardNumber.KING, Suit.HEART), Card(CardNumber.ACE, Suit.HEART)))
+        soft.assertThat(outputView.firstOpenCards[2]).isEqualTo(expected2)
+
+        val expected3 =
+            ParticipantCards("반달", listOf(Card(CardNumber.EIGHT, Suit.CLOVER), Card(CardNumber.JACK, Suit.CLOVER)))
+        soft.assertThat(outputView.firstOpenCards[3]).isEqualTo(expected3)
+
+        val expected4 =
+            ParticipantCards("제이슨", listOf(Card(CardNumber.JACK, Suit.HEART), Card(CardNumber.NINE, Suit.HEART)))
+        soft.assertThat(outputView.firstOpenCards[4]).isEqualTo(expected4)
     }
 
     @Test
@@ -102,120 +84,97 @@ class BlackJackControllerTest {
 
     @Test
     fun `참여자들의 최종 카드 확인`() {
-        assertAll(
-            {
-                assertThat(outputView.dealerResult.name to outputView.dealerResult.cards)
-                    .isEqualTo(
-                        "딜러" to
-                            listOf(
-                                Card(CardNumber.JACK, Suit.SPADE), Card(CardNumber.FIVE, Suit.SPADE),
-                                Card(CardNumber.FOUR, Suit.SPADE)
-                            )
-                    )
-            },
-            {
-                assertThat(outputView.playerResults[0].name to outputView.playerResults[0].cards)
-                    .isEqualTo(
-                        "부나" to listOf(Card(CardNumber.QUEEN, Suit.DIAMOND), Card(CardNumber.KING, Suit.DIAMOND))
-                    )
-            },
-            {
-                assertThat(outputView.playerResults[1].name to outputView.playerResults[1].cards)
-                    .isEqualTo(
-                        "글로" to listOf(Card(CardNumber.KING, Suit.HEART), Card(CardNumber.ACE, Suit.HEART))
-                    )
-            },
-            {
-                assertThat(outputView.playerResults[2].name to outputView.playerResults[2].cards)
-                    .isEqualTo(
-                        "반달" to
-                            listOf(
-                                Card(CardNumber.EIGHT, Suit.CLOVER), Card(CardNumber.JACK, Suit.CLOVER),
-                                Card(CardNumber.THREE, Suit.CLOVER), Card(CardNumber.KING, Suit.CLOVER)
-                            )
-                    )
-            },
-            {
-                assertThat(outputView.playerResults[3].name to outputView.playerResults[3].cards)
-                    .isEqualTo(
-                        "제이슨" to listOf(Card(CardNumber.JACK, Suit.HEART), Card(CardNumber.NINE, Suit.HEART))
-                    )
-            }
+        val soft = SoftAssertions()
+
+        val expectedDealer = "딜러" to listOf(
+            Card(CardNumber.JACK, Suit.SPADE), Card(CardNumber.FIVE, Suit.SPADE),
+            Card(CardNumber.FOUR, Suit.SPADE)
         )
+        soft.assertThat(outputView.dealerResult.name to outputView.dealerResult.cards).isEqualTo(expectedDealer)
+
+        val expectedPlayer0 = "부나" to listOf(Card(CardNumber.QUEEN, Suit.DIAMOND), Card(CardNumber.KING, Suit.DIAMOND))
+        soft.assertThat(outputView.playerResults[0].name to outputView.playerResults[0].cards)
+            .isEqualTo(expectedPlayer0)
+
+        val expectedPlayer1 = "글로" to listOf(Card(CardNumber.KING, Suit.HEART), Card(CardNumber.ACE, Suit.HEART))
+        soft.assertThat(outputView.playerResults[1].name to outputView.playerResults[1].cards)
+            .isEqualTo(expectedPlayer1)
+
+        val expectedPlayer2 = "반달" to listOf(
+            Card(CardNumber.EIGHT, Suit.CLOVER), Card(CardNumber.JACK, Suit.CLOVER),
+            Card(CardNumber.THREE, Suit.CLOVER), Card(CardNumber.KING, Suit.CLOVER)
+        )
+        soft.assertThat(outputView.playerResults[2].name to outputView.playerResults[2].cards)
+            .isEqualTo(expectedPlayer2)
+
+        val expectedPlayer3 = "제이슨" to listOf(Card(CardNumber.JACK, Suit.HEART), Card(CardNumber.NINE, Suit.HEART))
+        soft.assertThat(outputView.playerResults[3].name to outputView.playerResults[3].cards)
+            .isEqualTo(expectedPlayer3)
     }
 
     @Test
     fun `참여자들의 최종 점수를 확인`() {
-        assertAll(
-            {
-                assertThat(outputView.dealerResult.name to outputView.dealerResult.score)
-                    .isEqualTo("딜러" to 19)
-            },
-            {
-                assertThat(outputView.playerResults[0].name to outputView.playerResults[0].score)
-                    .isEqualTo("부나" to 20)
-            },
-            {
-                assertThat(outputView.playerResults[1].name to outputView.playerResults[1].score)
-                    .isEqualTo("글로" to 21)
-            },
-            {
-                assertThat(outputView.playerResults[2].name to outputView.playerResults[2].score)
-                    .isEqualTo("반달" to 31)
-            },
-            {
-                assertThat(outputView.playerResults[3].name to outputView.playerResults[3].score)
-                    .isEqualTo("제이슨" to 19)
-            }
-        )
+        val soft = SoftAssertions()
+
+        val actualDealer = outputView.dealerResult.name to outputView.dealerResult.score
+        soft.assertThat(actualDealer).isEqualTo("딜러" to 19)
+
+        val actualPlayer0 = outputView.playerResults[0].name to outputView.playerResults[0].score
+        soft.assertThat(actualPlayer0).isEqualTo("부나" to 20)
+
+        val actualPlayer1 = outputView.playerResults[1].name to outputView.playerResults[1].score
+        soft.assertThat(actualPlayer1).isEqualTo("글로" to 21)
+
+        val actualPlayer2 = outputView.playerResults[2].name to outputView.playerResults[2].score
+        soft.assertThat(actualPlayer2).isEqualTo("반달" to 31)
+
+        val actualPlayer3 = outputView.playerResults[3].name to outputView.playerResults[3].score
+        soft.assertThat(actualPlayer3).isEqualTo("제이슨" to 19)
     }
 
     @Test
     fun `참여자들의 최종 승패를 확인`() {
-        assertAll(
-            { assertThat(outputView.dealerResult.name).isEqualTo("딜러") },
-            { assertThat(outputView.dealerResult.win).isEqualTo(1) },
-            { assertThat(outputView.dealerResult.draw).isEqualTo(1) },
-            { assertThat(outputView.dealerResult.lose).isEqualTo(2) },
-            {
-                assertThat(outputView.playerResults[0].name to outputView.playerResults[0].gameResult)
-                    .isEqualTo("부나" to GameResult.WIN)
-            },
-            {
-                assertThat(outputView.playerResults[1].name to outputView.playerResults[1].gameResult)
-                    .isEqualTo("글로" to GameResult.BLACKJACK)
-            },
-            {
-                assertThat(outputView.playerResults[2].name to outputView.playerResults[2].gameResult)
-                    .isEqualTo("반달" to GameResult.LOSE)
-            },
-            {
-                assertThat(outputView.playerResults[3].name to outputView.playerResults[3].gameResult)
-                    .isEqualTo("제이슨" to GameResult.DRAW)
-            }
-        )
+        val soft = SoftAssertions()
+
+        val actualDealerName = outputView.dealerResult.name
+        soft.assertThat(actualDealerName).isEqualTo("딜러")
+        val actualDealerWin = outputView.dealerResult.win
+        soft.assertThat(actualDealerWin).isEqualTo(1)
+        val actualDealerDraw = outputView.dealerResult.draw
+        soft.assertThat(actualDealerDraw).isEqualTo(1)
+        val actualDealerLose = outputView.dealerResult.lose
+        soft.assertThat(actualDealerLose).isEqualTo(2)
+
+        val actualPlayer0 = outputView.playerResults[0].name to outputView.playerResults[0].gameResult
+        soft.assertThat(actualPlayer0).isEqualTo("부나" to GameResult.WIN)
+
+        val actualPlayer1 = outputView.playerResults[1].name to outputView.playerResults[1].gameResult
+        soft.assertThat(actualPlayer1).isEqualTo("글로" to GameResult.BLACKJACK)
+
+        val actualPlayer2 = outputView.playerResults[2].name to outputView.playerResults[2].gameResult
+        soft.assertThat(actualPlayer2).isEqualTo("반달" to GameResult.LOSE)
+
+        val actualPlayer3 = outputView.playerResults[3].name to outputView.playerResults[3].gameResult
+        soft.assertThat(actualPlayer3).isEqualTo("제이슨" to GameResult.DRAW)
     }
 
     @Test
     fun `참여자들의 최종 수익을 확인`() {
-        assertAll(
-            { assertThat(outputView.dealerResult.name to outputView.dealerResult.profit).isEqualTo("딜러" to -11000) },
-            {
-                assertThat(outputView.playerResults[0].name to outputView.playerResults[0].profit)
-                    .isEqualTo("부나" to 1000)
-            },
-            {
-                assertThat(outputView.playerResults[1].name to outputView.playerResults[1].profit)
-                    .isEqualTo("글로" to 15000)
-            },
-            {
-                assertThat(outputView.playerResults[2].name to outputView.playerResults[2].profit)
-                    .isEqualTo("반달" to -5000)
-            },
-            {
-                assertThat(outputView.playerResults[3].name to outputView.playerResults[3].profit)
-                    .isEqualTo("제이슨" to 0)
-            }
-        )
+        val soft = SoftAssertions()
+
+        val actualDealer = outputView.dealerResult.name to outputView.dealerResult.profit
+        soft.assertThat(actualDealer).isEqualTo("딜러" to -11000)
+
+        val actualPlayer0 = outputView.playerResults[0].name to outputView.playerResults[0].profit
+        soft.assertThat(actualPlayer0).isEqualTo("부나" to 1000)
+
+        val actualPlayer1 = outputView.playerResults[1].name to outputView.playerResults[1].profit
+        soft.assertThat(actualPlayer1).isEqualTo("글로" to 15000)
+
+        val actualPlayer2 = outputView.playerResults[2].name to outputView.playerResults[2].profit
+        soft.assertThat(actualPlayer2).isEqualTo("반달" to -5000)
+
+        val actualPlayer3 = outputView.playerResults[3].name to outputView.playerResults[3].profit
+        soft.assertThat(actualPlayer3).isEqualTo("제이슨" to 0)
     }
 }
