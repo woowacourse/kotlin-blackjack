@@ -14,7 +14,7 @@ class BlackJackSettingTest {
     @Test
     fun `게임 결과를 반환한다`() {
         val blackJackSetting = BlackJackSetting(
-            participants = Participants(Dealer(), listOf(Guest(Name("아크")), Guest(Name("로피")))),
+            participants = Participants(Dealer(), listOf(Guest(name = Name("아크")), Guest(name = Name("로피")))),
             cardDeck = CardDeck(Cards.all()),
         )
         assertAll(

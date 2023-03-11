@@ -4,7 +4,6 @@ import blackjack.domain.blackjack.blackJack
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardMark
 import blackjack.domain.card.CardValue
-import blackjack.domain.state.inTurn.FirstTurn
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
@@ -15,13 +14,13 @@ class GuestTest {
     @ParameterizedTest
     @ValueSource(ints = [10, 1_000_000])
     fun `배팅 금액을 반환한다`(money: Int) {
-        val user = Guest(Name("아크"), FirstTurn(), Money(money))
+        val user = Guest(Money(money))
         assertThat(user.bettingMoney.value).isEqualTo(money)
     }
 
     @Test
     fun `버스트가 나지 않고 블랙잭이 아니면 카드를 뽑을 수 있다`() {
-        val user = Guest(Name("아크"))
+        val user = Guest()
         assertThat(user.isContinuable).isTrue
     }
 

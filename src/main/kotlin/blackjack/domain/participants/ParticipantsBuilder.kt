@@ -8,12 +8,12 @@ import blackjack.domain.state.inTurn.FirstTurn
 
 class ParticipantsBuilder {
     private lateinit var dealer: Dealer
-    private val guests = MutableList(0) { Guest(Name(""), FirstTurn()) }
+    private val guests = MutableList(0) { Guest() }
 
     fun dealer() { dealer = Dealer() }
 
     fun guest(name: Name, bettingMoney: Money = Money(10)) {
-        guests += Guest(name, FirstTurn(), bettingMoney)
+        guests += Guest(bettingMoney, name, FirstTurn())
     }
 
     fun build(): Participants = Participants(dealer, guests)

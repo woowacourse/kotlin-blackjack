@@ -5,14 +5,12 @@ import blackjack.domain.state.inTurn.FirstTurn
 import blackjack.domain.state.inTurn.Hit
 
 class Guest(
-    name: Name,
-    state: State = FirstTurn(),
     val bettingMoney: Money = Money(10),
+    name: Name = Name("게스트"),
+    state: State = FirstTurn(),
 ) : User(name, state) {
     override val isContinuable: Boolean
         get() = state is Hit || state is FirstTurn
 
-    fun calculateProfit(dealer: Dealer): Int {
-        return (bettingMoney.toDouble() * state.matchWith(dealer.state).rate).toInt()
-    }
+    fun calculateProfit(dealer: Dealer): Int = (bettingMoney.toDouble() * state.matchWith(dealer.state).rate).toInt()
 }

@@ -7,6 +7,7 @@ import blackjack.domain.participants.user.Money
 import blackjack.domain.participants.user.Name
 import blackjack.domain.participants.user.User
 import blackjack.domain.state.endTurn.BlackJack
+import blackjack.domain.state.inTurn.Hit
 
 class BlackJackGame {
     var onDraw: (String) -> Boolean = { true }
@@ -32,8 +33,8 @@ class BlackJackGame {
         guests.forEach { guest -> guestTurn(guest, cardDeck, output) }
 
     private fun guestTurn(guest: Guest, cardDeck: CardDeck, output: (User) -> Unit) {
+        if (guest.state !is Hit) return
         when (onDraw(guest.name.toString())) {
-            (guest.state is BlackJack) -> return
             true -> guestDraw(guest, cardDeck, output)
             false -> output(guest)
         }

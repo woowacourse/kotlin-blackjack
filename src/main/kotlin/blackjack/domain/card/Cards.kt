@@ -11,9 +11,9 @@ class Cards(private val cards: Set<Card> = setOf()) {
 
     private val softScore: Score = hardScore + SOFT_ACE_SCORE
 
-    fun toList() = cards.toList()
-
     constructor(vararg cards: Card) : this(cards.toSet())
+
+    fun toList() = cards.toList()
 
     operator fun plus(card: Card): Cards {
         require(card !in cards) { ERROR_EXIST_DUPLICATE_CARD }

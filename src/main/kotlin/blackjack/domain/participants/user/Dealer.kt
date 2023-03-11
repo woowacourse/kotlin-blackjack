@@ -10,9 +10,7 @@ class Dealer(
     override val isContinuable: Boolean
         get() = state.score.value < DEALER_MIN_NUMBER
 
-    fun calculateProfit(guests: List<Guest>): Int {
-        return -guests.sumOf { it.calculateProfit(this) }
-    }
+    fun calculateProfit(guests: List<Guest>): Int = guests.sumOf { it.calculateProfit(this) } * -1
 
     companion object {
         private const val DEALER_MIN_NUMBER = 17
