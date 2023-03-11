@@ -1,8 +1,8 @@
 package blackjack.domain.participant
 
 import blackjack.domain.card.CardDeck
+import blackjack.domain.money.Money
 import blackjack.domain.result.CardResult
-import blackjack.domain.result.GameResult
 import blackjack.domain.result.MatchResult
 
 class Participants(private val participants: List<Participant>) {
@@ -62,29 +62,18 @@ class Participants(private val participants: List<Participant>) {
 
     fun getMatchResults(): List<MatchResult> = listOf(getDealerMatchResult()) + getPlayerMatchResults()
 
-    private fun getDealerMatchResult(): MatchResult {
-        var (win, lose, draw) = Triple(0, 0, 0)
-        getPlayers().forEach { player ->
-            when (getDealer() judge player) {
-                GameResult.WIN -> win++
-                GameResult.LOSE -> lose++
-                GameResult.DRAW -> draw++
-            }
-        }
-        return MatchResult(getDealer(), win, lose, draw)
-    }
-
     private fun getPlayerMatchResults(): List<MatchResult> = getPlayers().map { player ->
-        var (win, lose, draw) = Triple(0, 0, 0)
-        when (player judge getDealer()) {
-            GameResult.WIN -> win++
-            GameResult.LOSE -> lose++
-            GameResult.DRAW -> draw++
-        }
-        MatchResult(player, win, lose, draw)
+        MatchResult(player, player.getProfit(getDealer()))
     }
 
-    fun getCardResults(): List<CardResult> = participants.map { participant ->
+    private fun getDealerMatchResult(): MatchResult {
+        val dealer = getDealer()
+        var totalProfit = Money(0)
+        getPlayers().forEach { totalProfit += dealer.getProfit(it) }
+        return MatchResult(dealer, totalProfit)
+    }
+
+    fun getCardResults(): List<CardResult> = (listOf(getDealer()) + getPlayers()).map { participant ->
         CardResult(
             participant,
             participant.getCards(),

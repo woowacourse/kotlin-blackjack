@@ -1,10 +1,12 @@
 package blackjack.domain.result
 
+import blackjack.domain.money.Money
 import blackjack.domain.participant.Participant
 
 data class MatchResult(
     val participant: Participant,
-    val winCount: Int,
-    val loseCount: Int,
-    val drawCount: Int
+    val profit: Money
+    // val winCount: Int,
+    // val loseCount: Int,
+    // val drawCount: Int
 )
