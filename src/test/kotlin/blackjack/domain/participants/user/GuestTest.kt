@@ -19,12 +19,6 @@ class GuestTest {
     }
 
     @Test
-    fun `버스트가 나지 않고 블랙잭이 아니면 카드를 뽑을 수 있다`() {
-        val user = Guest()
-        assertThat(user.isContinuable).isTrue
-    }
-
-    @Test
     fun `수익금액을 가져올 수 있다`() {
         val blackJack = blackJack {
             participants {

@@ -4,6 +4,8 @@ import blackjack.domain.blackjack.blackJack
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardMark
 import blackjack.domain.card.CardValue
+import blackjack.domain.state.endTurn.Stay
+import blackjack.domain.state.inTurn.Hit
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -13,7 +15,7 @@ class DealerTest {
         val dealer = Dealer()
         dealer.draw(Card(CardMark.CLOVER, CardValue.QUEEN))
         dealer.draw(Card(CardMark.CLOVER, CardValue.SEVEN))
-        assertThat(dealer.isContinuable).isFalse
+        assertThat(dealer.state).isInstanceOf(Stay::class.java)
     }
 
     @Test
@@ -21,7 +23,7 @@ class DealerTest {
         val dealer = Dealer()
         dealer.draw(Card(CardMark.CLOVER, CardValue.QUEEN))
         dealer.draw(Card(CardMark.CLOVER, CardValue.SIX))
-        assertThat(dealer.isContinuable).isTrue
+        assertThat(dealer.state).isInstanceOf(Hit::class.java)
     }
 
     @Test

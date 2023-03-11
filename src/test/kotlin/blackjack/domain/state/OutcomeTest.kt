@@ -70,8 +70,8 @@ class OutcomeTest {
         val dealer = Dealer()
         val guest = Guest()
         dealer.draw(Card(CardMark.CLOVER, CardValue.KING))
-        dealer.draw(Card(CardMark.CLOVER, CardValue.QUEEN))
         dealer.draw(Card(CardMark.CLOVER, CardValue.TWO))
+        dealer.draw(Card(CardMark.CLOVER, CardValue.QUEEN))
 
         guest.draw(Card(CardMark.SPADE, CardValue.KING))
         guest.draw(Card(CardMark.SPADE, CardValue.QUEEN))
@@ -85,8 +85,8 @@ class OutcomeTest {
         val dealer = Dealer()
         val guest = Guest()
         dealer.draw(Card(CardMark.CLOVER, CardValue.KING))
-        dealer.draw(Card(CardMark.CLOVER, CardValue.QUEEN))
         dealer.draw(Card(CardMark.CLOVER, CardValue.TWO))
+        dealer.draw(Card(CardMark.CLOVER, CardValue.QUEEN))
 
         guest.draw(Card(CardMark.SPADE, CardValue.KING))
         guest.draw(Card(CardMark.SPADE, CardValue.QUEEN))
@@ -113,10 +113,10 @@ class OutcomeTest {
         val dealer = Dealer()
         val guest = Guest()
         dealer.draw(Card(CardMark.CLOVER, CardValue.EIGHT))
-        dealer.draw(Card(CardMark.CLOVER, CardValue.SEVEN))
+        dealer.draw(Card(CardMark.CLOVER, CardValue.NINE))
 
         guest.draw(Card(CardMark.SPADE, CardValue.EIGHT))
-        guest.draw(Card(CardMark.SPADE, CardValue.SEVEN))
+        guest.draw(Card(CardMark.SPADE, CardValue.NINE))
 
         assertThat(guest.state.matchWith(dealer.state)).isEqualTo(Outcome.DRAW)
     }
