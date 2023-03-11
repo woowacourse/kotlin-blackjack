@@ -59,7 +59,7 @@ class BlackjackController(
     }
 
     private fun hitDealerCard(dealer: Dealer) {
-        if (dealer.canHit()) {
+        while (dealer.canHit()) {
             dealer.addCard(multiDeck.draw())
             outputView.printDealerHitMessage()
             return
