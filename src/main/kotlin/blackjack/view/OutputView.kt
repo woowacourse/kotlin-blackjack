@@ -65,7 +65,7 @@ class OutputView {
             val finalProfit = FinalProfit.playersFinalProfits(dealer, usersBettingMoney)
             println("\n## 최종 수익")
             println("${dealer.name}: ${finalProfit.getDealerProfit()}")
-            guests.forEach{ user ->
+            guests.forEach { user ->
                 outputUserProfits(
                     user,
                     finalProfit,

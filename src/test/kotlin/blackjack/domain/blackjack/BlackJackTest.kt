@@ -5,7 +5,7 @@ import blackjack.domain.card.CardDeck
 import blackjack.domain.card.CardMark
 import blackjack.domain.card.CardValue
 import blackjack.domain.card.Cards
-import blackjack.domain.participants.*
+import blackjack.domain.participants.* // ktlint-disable no-wildcard-imports
 import blackjack.domain.result.Outcome
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test

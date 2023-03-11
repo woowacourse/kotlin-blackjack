@@ -2,7 +2,7 @@ package blackjack.domain.blackjack
 
 import blackjack.domain.card.CardDeck
 import blackjack.domain.card.Cards
-import blackjack.domain.participants.*
+import blackjack.domain.participants.* // ktlint-disable no-wildcard-imports
 
 fun blackJack(block: BlackJackBuilder.() -> Unit): BlackJack {
     return BlackJackBuilder().apply(block).build()

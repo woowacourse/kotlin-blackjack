@@ -1,7 +1,7 @@
 package blackjack.domain.blackjack
 
 import blackjack.domain.card.CardDeck
-import blackjack.domain.participants.*
+import blackjack.domain.participants.* // ktlint-disable no-wildcard-imports
 import blackjack.domain.result.Outcome
 import blackjack.domain.result.Outcome.Companion.getOutcome
 
