@@ -20,6 +20,10 @@ class BlackjackController(
         blackjackManager.playParticipantsTurns(inputView::readMoreCard, outputView::printParticipantCards)
         blackjackManager.playDealerTurn(outputView::printDealerHitCardMent)
         outputView.printScoreResult(blackjackManager.dealer, blackjackManager.participants)
-        outputView.printPlayersResult(blackjackManager.calculatePlayersResult())
+        outputView.printPlayersProfit(
+            blackjackManager.calculateParticipantsProfit(
+                blackjackManager.calculateParticipantsEarningRate()
+            )
+        )
     }
 }
