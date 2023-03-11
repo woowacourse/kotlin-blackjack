@@ -9,6 +9,12 @@ import blackjack.domain.state.Score
 import blackjack.domain.state.State
 
 class Stay(cards: Cards) : EndTurn(cards) {
+    init {
+        cards.calculateScore().let {
+            require(it.isBlackJack || it.isBust.not()) { ERROR_BUST_SCORE }
+        }
+    }
+
     override fun matchWith(otherState: State): Outcome {
         return when (otherState) {
             is Bust -> WIN
@@ -30,6 +36,7 @@ class Stay(cards: Cards) : EndTurn(cards) {
     }
 
     companion object {
+        private const val ERROR_BUST_SCORE = "Stay는 21점 이하이어야 합니다."
         private const val ERROR_INVALID_STATE = "비교할 수 없는 상태입니다."
     }
 }

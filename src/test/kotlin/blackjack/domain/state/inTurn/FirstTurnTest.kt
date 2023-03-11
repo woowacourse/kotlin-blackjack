@@ -11,6 +11,17 @@ import org.junit.jupiter.api.assertDoesNotThrow
 
 class FirstTurnTest {
     @Test
+    fun `첫 턴에서 카드를 뽑을 수 있다`() {
+        assertDoesNotThrow { FirstTurn().draw(CLOVER_KING) }
+    }
+
+    @Test
+    fun `두번 뽑기 전까지 첫턴이다`() {
+        val state: State = FirstTurn().draw(CLOVER_KING)
+        assertThat(state).isInstanceOf(FirstTurn::class.java)
+    }
+
+    @Test
     fun `첫 턴에 블랙잭이 나올 수 있다 `() {
         var state: State = FirstTurn().draw(CLOVER_KING)
         state = state.draw(CLOVER_ACE)
@@ -22,13 +33,6 @@ class FirstTurnTest {
         var state: State = FirstTurn().draw(CLOVER_KING)
         state = state.draw(CLOVER_TWO)
         assertThat(state).isInstanceOf(Hit::class.java)
-    }
-
-    @Test
-    fun `첫 턴에 카드를 뽑을 수 있다`() {
-        assertDoesNotThrow {
-            FirstTurn().draw(CLOVER_KING).draw(CLOVER_ACE)
-        }
     }
 
     @Test

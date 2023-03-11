@@ -1,148 +1,87 @@
 package blackjack.domain.state
 
-import blackjack.domain.card.Card
-import blackjack.domain.card.CardMark
-import blackjack.domain.card.CardValue
-import blackjack.domain.participants.user.Dealer
-import blackjack.domain.participants.user.Guest
+import blackjack.domain.card.Cards
+import blackjack.domain.state.Fixtures.CLOVER_ACE
+import blackjack.domain.state.Fixtures.CLOVER_EIGHT
+import blackjack.domain.state.Fixtures.CLOVER_KING
+import blackjack.domain.state.Fixtures.CLOVER_NINE
+import blackjack.domain.state.Fixtures.CLOVER_QUEEN
+import blackjack.domain.state.endTurn.BlackJack
+import blackjack.domain.state.endTurn.Bust
+import blackjack.domain.state.endTurn.Stay
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class OutcomeTest {
     @Test
     fun `유저가 두장으로 블랙잭이 되면 딜러가 블랙잭이여도 이긴다`() {
-        val dealer = Dealer()
-        val guest = Guest()
-        dealer.draw(Card(CardMark.CLOVER, CardValue.EIGHT))
-        dealer.draw(Card(CardMark.CLOVER, CardValue.SEVEN))
-        dealer.draw(Card(CardMark.CLOVER, CardValue.NINE))
+        val dealerState = BlackJack(Cards(CLOVER_ACE, CLOVER_QUEEN))
+        val guestState = BlackJack(Cards(CLOVER_ACE, CLOVER_QUEEN))
 
-        guest.draw(Card(CardMark.SPADE, CardValue.ACE))
-        guest.draw(Card(CardMark.SPADE, CardValue.QUEEN))
-
-        assertThat(guest.state.matchWith(dealer.state)).isEqualTo(Outcome.WIN_WITH_BLACKJACK)
+        assertThat(guestState.matchWith(dealerState)).isEqualTo(Outcome.WIN_WITH_BLACKJACK)
     }
 
     @Test
-    fun `유저와 딜러 모두 블랙잭이면 비긴다`() {
-        val dealer = Dealer()
-        val guest = Guest()
-        dealer.draw(Card(CardMark.CLOVER, CardValue.ACE))
-        dealer.draw(Card(CardMark.CLOVER, CardValue.KING))
+    fun `유저 혼자 21점이면 이긴다`() {
+        val dealerState = Stay(Cards(CLOVER_KING, CLOVER_QUEEN))
+        val guestState = Stay(Cards(CLOVER_ACE, CLOVER_KING, CLOVER_QUEEN))
 
-        guest.draw(Card(CardMark.SPADE, CardValue.QUEEN))
-        guest.draw(Card(CardMark.SPADE, CardValue.KING))
-        guest.draw(Card(CardMark.SPADE, CardValue.ACE))
-        print(guest.state)
-        print(dealer.state)
-        assertThat(guest.state.matchWith(dealer.state)).isEqualTo(Outcome.DRAW)
+        assertThat(guestState.matchWith(dealerState)).isEqualTo(Outcome.WIN)
     }
 
     @Test
-    fun `유저 혼자 블랙잭이면 이긴다`() {
-        val dealer = Dealer()
-        val guest = Guest()
-        dealer.draw(Card(CardMark.CLOVER, CardValue.KING))
-        dealer.draw(Card(CardMark.CLOVER, CardValue.QUEEN))
+    fun `유저가 21점이고 딜러가 블랙잭이면 비긴다`() {
+        val dealerState = BlackJack(Cards(CLOVER_ACE, CLOVER_KING))
+        val guestState = Stay(Cards(CLOVER_ACE, CLOVER_KING, CLOVER_QUEEN))
 
-        guest.draw(Card(CardMark.SPADE, CardValue.QUEEN))
-        guest.draw(Card(CardMark.SPADE, CardValue.KING))
-        guest.draw(Card(CardMark.SPADE, CardValue.ACE))
-
-        assertThat(guest.state.matchWith(dealer.state)).isEqualTo(Outcome.WIN)
-    }
-
-    @Test
-    fun `딜러 혼자 블랙잭이면 진다`() {
-        val dealer = Dealer()
-        val guest = Guest()
-        dealer.draw(Card(CardMark.CLOVER, CardValue.ACE))
-        dealer.draw(Card(CardMark.CLOVER, CardValue.KING))
-
-        guest.draw(Card(CardMark.SPADE, CardValue.QUEEN))
-        guest.draw(Card(CardMark.SPADE, CardValue.KING))
-
-        assertThat(guest.state.matchWith(dealer.state)).isEqualTo(Outcome.LOSE)
+        assertThat(guestState.matchWith(dealerState)).isEqualTo(Outcome.DRAW)
     }
 
     @Test
     fun `딜러와 유저의 점수가 둘 다 21점 초과면 비긴다`() {
-        val dealer = Dealer()
-        val guest = Guest()
-        dealer.draw(Card(CardMark.CLOVER, CardValue.KING))
-        dealer.draw(Card(CardMark.CLOVER, CardValue.TWO))
-        dealer.draw(Card(CardMark.CLOVER, CardValue.QUEEN))
+        val dealerState = Bust(Cards(CLOVER_KING, CLOVER_QUEEN, CLOVER_NINE))
+        val guestState = Bust(Cards(CLOVER_KING, CLOVER_QUEEN, CLOVER_EIGHT))
 
-        guest.draw(Card(CardMark.SPADE, CardValue.KING))
-        guest.draw(Card(CardMark.SPADE, CardValue.QUEEN))
-        guest.draw(Card(CardMark.SPADE, CardValue.THREE))
-
-        assertThat(guest.state.matchWith(dealer.state)).isEqualTo(Outcome.DRAW)
+        assertThat(guestState.matchWith(dealerState)).isEqualTo(Outcome.DRAW)
     }
 
     @Test
     fun `딜러 혼자 점수가 21을 넘으면 유저가 이긴다`() {
-        val dealer = Dealer()
-        val guest = Guest()
-        dealer.draw(Card(CardMark.CLOVER, CardValue.KING))
-        dealer.draw(Card(CardMark.CLOVER, CardValue.TWO))
-        dealer.draw(Card(CardMark.CLOVER, CardValue.QUEEN))
+        val dealerState = Bust(Cards(CLOVER_KING, CLOVER_QUEEN, CLOVER_NINE))
+        val guestState = Stay(Cards(CLOVER_KING, CLOVER_QUEEN))
 
-        guest.draw(Card(CardMark.SPADE, CardValue.KING))
-        guest.draw(Card(CardMark.SPADE, CardValue.QUEEN))
-
-        assertThat(guest.state.matchWith(dealer.state)).isEqualTo(Outcome.WIN)
+        assertThat(guestState.matchWith(dealerState)).isEqualTo(Outcome.WIN)
     }
 
     @Test
     fun `유저 혼자 점수가 21점을 넘으면 유저가 진다`() {
-        val dealer = Dealer()
-        val guest = Guest()
-        dealer.draw(Card(CardMark.CLOVER, CardValue.KING))
-        dealer.draw(Card(CardMark.CLOVER, CardValue.QUEEN))
+        val dealerState = Stay(Cards(CLOVER_KING, CLOVER_QUEEN))
+        val guestState = Bust(Cards(CLOVER_KING, CLOVER_QUEEN, CLOVER_NINE))
 
-        guest.draw(Card(CardMark.SPADE, CardValue.KING))
-        guest.draw(Card(CardMark.SPADE, CardValue.QUEEN))
-        guest.draw(Card(CardMark.SPADE, CardValue.TWO))
-
-        assertThat(guest.state.matchWith(dealer.state)).isEqualTo(Outcome.LOSE)
+        assertThat(guestState.matchWith(dealerState)).isEqualTo(Outcome.LOSE)
     }
 
     @Test
     fun `딜러와 유저의 점수가 같으면 비긴다`() {
-        val dealer = Dealer()
-        val guest = Guest()
-        dealer.draw(Card(CardMark.CLOVER, CardValue.EIGHT))
-        dealer.draw(Card(CardMark.CLOVER, CardValue.NINE))
+        val dealerState = Stay(Cards(CLOVER_NINE, CLOVER_EIGHT))
+        val guestState = Stay(Cards(CLOVER_NINE, CLOVER_EIGHT))
 
-        guest.draw(Card(CardMark.SPADE, CardValue.EIGHT))
-        guest.draw(Card(CardMark.SPADE, CardValue.NINE))
-
-        assertThat(guest.state.matchWith(dealer.state)).isEqualTo(Outcome.DRAW)
+        assertThat(guestState.matchWith(dealerState)).isEqualTo(Outcome.DRAW)
     }
 
     @Test
     fun `유저 점수가 딜러 점수보다 크면 유저가 이긴다`() {
-        val dealer = Dealer()
-        val guest = Guest()
-        dealer.draw(Card(CardMark.CLOVER, CardValue.KING))
-        dealer.draw(Card(CardMark.CLOVER, CardValue.NINE))
+        val dealerState = Stay(Cards(CLOVER_KING, CLOVER_NINE))
+        val guestState = Stay(Cards(CLOVER_KING, CLOVER_QUEEN))
 
-        guest.draw(Card(CardMark.SPADE, CardValue.KING))
-        guest.draw(Card(CardMark.SPADE, CardValue.QUEEN))
-        assertThat(guest.state.matchWith(dealer.state)).isEqualTo(Outcome.WIN)
+        assertThat(guestState.matchWith(dealerState)).isEqualTo(Outcome.WIN)
     }
 
     @Test
     fun `딜러 점수가 유저 점수보다 크면 유저가 진다`() {
-        val dealer = Dealer()
-        val guest = Guest()
-        dealer.draw(Card(CardMark.CLOVER, CardValue.KING))
-        dealer.draw(Card(CardMark.CLOVER, CardValue.QUEEN))
+        val dealerState = Stay(Cards(CLOVER_KING, CLOVER_QUEEN))
+        val guestState = Stay(Cards(CLOVER_KING, CLOVER_NINE))
 
-        guest.draw(Card(CardMark.SPADE, CardValue.KING))
-        guest.draw(Card(CardMark.SPADE, CardValue.NINE))
-
-        assertThat(guest.state.matchWith(dealer.state)).isEqualTo(Outcome.LOSE)
+        assertThat(guestState.matchWith(dealerState)).isEqualTo(Outcome.LOSE)
     }
 }
