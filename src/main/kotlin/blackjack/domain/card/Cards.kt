@@ -30,6 +30,7 @@ class Cards(
     private fun updateCardsState() {
         if (getMinimumCardsScore() > BLACKJACK_SCORE) {
             state = CardsState.Bust
+
             return
         }
         state = CardsState.Running(getTotalCardsScore())
@@ -42,7 +43,7 @@ class Cards(
 
         if (cards.any { card -> card.number == CardNumber.A }) {
 
-            return minimumScore + CardNumber.decideAceValue(minimumScore)
+            return minimumScore + CardNumber.decideAdditionalAceScore(minimumScore)
         }
 
         return minimumScore

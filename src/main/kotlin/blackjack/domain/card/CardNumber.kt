@@ -23,7 +23,7 @@ enum class CardNumber(val value: Int) {
         private const val STANDARD_SCORE = 11
         private const val ZERO = 0
 
-        fun decideAceValue(score: Int): Int {
+        fun decideAdditionalAceScore(score: Int): Int {
             if (score <= STANDARD_SCORE) {
                 return ADDITION_SCORE_FOR_ACE
             }
