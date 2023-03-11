@@ -56,10 +56,10 @@ object OutputView {
         printDealerCardResult(result.dealer)
         result.playerResult.forEach { printPlayerCardResult(it.player) }
         println(FINAL_RESULT)
-        val dealerProfit = result.playerResult.sumOf { it.result.calculateProfit(it.player.bettingMoney) * REVERSE }
+        val dealerProfit = result.playerResult.sumOf { it.profit * REVERSE }
         println("$DEALER$dealerProfit")
         result.playerResult.forEach {
-            println("${it.player.name}: ${it.result.calculateProfit(it.player.bettingMoney)}")
+            println("${it.player.name}: ${it.profit}")
         }
     }
 

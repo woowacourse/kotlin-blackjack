@@ -82,12 +82,15 @@ class BlackjackGame(
     }
 
     fun getResult(): ParticipantsResult {
-        return ParticipantsResult(dealer, judgePlayersResult())
+        return ParticipantsResult(dealer, calculateProfit())
     }
 
-    private fun judgePlayersResult(): List<PlayerResult> {
+    private fun calculateProfit(): List<PlayerResult> {
         return players.map {
-            PlayerResult(it, dealer.judgePlayerResult(it.ownCards))
+            PlayerResult(
+                it,
+                dealer.judgePlayerResult(it.ownCards).calculateProfit(it.bettingMoney)
+            )
         }
     }
 
