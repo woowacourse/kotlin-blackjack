@@ -1,0 +1,14 @@
+package domain.person
+
+import domain.card.Card
+import domain.card.Hand
+import domain.state.State
+import domain.state.dealerState.DealerFirstTurn
+
+class Dealer2(name: String = "딜러") : Person2(name) {
+
+    override var state: State = DealerFirstTurn(Hand())
+    fun showOneCard(): List<Card> {
+        return state.getHandCards().subList(0, 1)
+    }
+}
