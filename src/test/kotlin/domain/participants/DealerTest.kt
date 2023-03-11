@@ -4,7 +4,7 @@ import domain.card.Card
 import domain.card.CardValue
 import domain.card.Cards
 import domain.card.Shape
-import domain.judge.Result
+import domain.result.Result
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

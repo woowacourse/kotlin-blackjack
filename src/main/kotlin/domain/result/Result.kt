@@ -1,4 +1,4 @@
-package domain.judge
+package domain.result
 
 import kotlin.math.roundToInt
 

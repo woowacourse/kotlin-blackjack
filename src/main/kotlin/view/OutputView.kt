@@ -3,6 +3,7 @@ package view
 import domain.card.Card
 import domain.participants.Dealer
 import domain.participants.Player
+import domain.result.ParticipantsResult
 
 object OutputView {
     private const val SEPARATOR = ", "
@@ -51,10 +52,14 @@ object OutputView {
         println(PICK_CARD_OVER_SIXTEEN)
     }
 
-    fun printCardResult(dealer: Dealer, participants: List<Player>) {
-        printDealerCardResult(dealer)
-        participants.forEach {
-            printPlayerCardResult(it)
+    fun printResult(result: ParticipantsResult) {
+        printDealerCardResult(result.dealer)
+        result.playerResult.forEach { printPlayerCardResult(it.player) }
+        println(FINAL_RESULT)
+        val dealerProfit = result.playerResult.sumOf { it.result.calculateProfit(it.player.bettingMoney) * REVERSE }
+        println("$DEALER$dealerProfit")
+        result.playerResult.forEach {
+            println("${it.player.name}: ${it.result.calculateProfit(it.player.bettingMoney)}")
         }
     }
 
@@ -72,24 +77,5 @@ object OutputView {
                 player.ownCards.cards.joinToString { printCardForm(it) } +
                 "${RESULT}${player.ownCards.calculateCardSum()}"
         )
-    }
-
-    fun printProfitResult(players: List<Player>) {
-        println(FINAL_RESULT)
-        printDealerProfitResult(players)
-        printPlayerProfitResult(players)
-    }
-
-    private fun printDealerProfitResult(players: List<Player>) {
-        val dealerResult = players.map {
-            it.result.calculateProfit(it.bettingMoney) * REVERSE
-        }.sum()
-        println("$DEALER$dealerResult")
-    }
-
-    private fun printPlayerProfitResult(players: List<Player>) {
-        players.forEach {
-            println("${it.name}: ${it.result.calculateProfit(it.bettingMoney)}")
-        }
     }
 }

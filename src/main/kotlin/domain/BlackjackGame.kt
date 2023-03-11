@@ -7,6 +7,8 @@ import domain.deck.Deck
 import domain.participants.Dealer
 import domain.participants.Names
 import domain.participants.Player
+import domain.result.ParticipantsResult
+import domain.result.PlayerResult
 
 class BlackjackGame(
     names: Names,
@@ -79,18 +81,13 @@ class BlackjackGame(
         return false
     }
 
-    fun showCardResult(showResult: (Dealer, List<Player>) -> Unit) {
-        showResult(dealer, players)
+    fun getResult(): ParticipantsResult {
+        return ParticipantsResult(dealer, judgePlayersResult())
     }
 
-    fun showWinningResult(showWinningResult: (List<Player>) -> Unit) {
-        judgePlayersResult(players)
-        showWinningResult(players)
-    }
-
-    private fun judgePlayersResult(players: List<Player>) {
-        players.map {
-            it.setResult(dealer.judgePlayerResult(it.ownCards))
+    private fun judgePlayersResult(): List<PlayerResult> {
+        return players.map {
+            PlayerResult(it, dealer.judgePlayerResult(it.ownCards))
         }
     }
 

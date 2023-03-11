@@ -13,8 +13,8 @@ class BlackjackController {
 
         OutputView.printBlackjackSetting(blackjackGame.players, blackjackGame.dealer)
         blackjackGame.playsTurn(InputView::inputRepeatGetCard, OutputView::printParticipantCards, OutputView::printDealerUnder16)
-        blackjackGame.showCardResult(OutputView::printCardResult)
-        blackjackGame.showWinningResult(OutputView::printProfitResult)
+
+        OutputView.printResult(blackjackGame.getResult())
     }
 
     private fun insertNames(): Names {

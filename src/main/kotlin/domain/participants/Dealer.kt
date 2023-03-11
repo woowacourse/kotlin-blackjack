@@ -1,7 +1,7 @@
 package domain.participants
 
 import domain.card.Cards
-import domain.judge.Result
+import domain.result.Result
 
 class Dealer(val ownCards: Cards, val name: String = "딜러") {
 
