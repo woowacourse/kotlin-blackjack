@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test
 
 class DealerTest {
     @Test
-    fun `점수가 17이상이면 뽑을 수 없다`() {
+    fun `점수가 17이상이면 카드를 뽑을 수 없다`() {
         val dealer = Dealer()
         dealer.draw(Card(CardMark.CLOVER, CardValue.QUEEN))
         dealer.draw(Card(CardMark.CLOVER, CardValue.SEVEN))
@@ -19,7 +19,7 @@ class DealerTest {
     }
 
     @Test
-    fun `점수가 17미만이면 뽑을 수 있다`() {
+    fun `점수가 17미만이면 카드를 뽑을 수 있다`() {
         val dealer = Dealer()
         dealer.draw(Card(CardMark.CLOVER, CardValue.QUEEN))
         dealer.draw(Card(CardMark.CLOVER, CardValue.SIX))
