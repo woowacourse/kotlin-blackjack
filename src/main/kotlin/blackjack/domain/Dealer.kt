@@ -7,16 +7,12 @@ class Dealer(override val cardBunch: CardBunch) : Participant {
 
     override fun getScore(): Int = cardBunch.getSumOfCards()
 
-    private fun versusPlayer(player: Player): Consequence {
-        return getPlayerConsequence(player)
+    fun versusPlayers(players: List<Player>): Map<Player, Consequence> {
+        return players.associateWith { player -> this versusPlayer player }
     }
 
-    fun versusPlayers(players: List<Player>): Map<Player, Consequence> {
-        val gameResult = mutableMapOf<Player, Consequence>()
-        players.forEach { player ->
-            gameResult[player] = versusPlayer(player)
-        }
-        return gameResult
+    private infix fun Dealer.versusPlayer(other: Player): Consequence {
+        return getPlayerConsequence(other)
     }
 
     private fun getPlayerConsequence(player: Player): Consequence {
