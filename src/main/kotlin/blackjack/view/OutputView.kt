@@ -37,7 +37,7 @@ class OutputView {
 
     private fun outputOutcomes(blackJackSetting: BlackJackSetting) {
         blackJackSetting.run {
-            println("\n## 최종 승패")
+            println("\n## 최종 수익")
             outputOutcome(dealer.name, dealer.calculateProfit(guests))
             guests.forEach { guest -> outputOutcome(guest.name, guest.calculateProfit(dealer)) }
         }
