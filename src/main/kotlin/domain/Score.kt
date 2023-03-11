@@ -6,6 +6,8 @@ value class Score private constructor(val value: Int) {
 
     fun isOver(score: Score) = (value > score.value)
 
+    fun isOver(score: Int) = value > score
+
     fun isBlackJackRegardlessAce(): Boolean = (value == BLACKJACK_CONDITION)
 
     fun isBlackJack(numbers: List<Int>, hasAce: Boolean): Boolean =

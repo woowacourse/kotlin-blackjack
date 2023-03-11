@@ -39,13 +39,13 @@ class BlackJackGame {
 
     fun playDealerTurn(
         blackJackGameData: BlackJackGameData,
-        onDealerOverSumCondition: () -> Unit
+        onDealerHit: () -> Unit
     ) {
         val dealer = blackJackGameData.dealer
         val deck = blackJackGameData.deck
 
-        if (!dealer.isOverSumCondition()) {
-            onDealerOverSumCondition()
+        if (dealer.isHit()) {
+            onDealerHit()
             val newCard = deck.getOneCard()
             dealer.addCard(newCard)
         }

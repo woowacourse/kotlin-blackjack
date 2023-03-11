@@ -9,7 +9,9 @@ class Cards(cards: List<Card>) {
 
     val score: Score get() = Score.valueOfCards(numbers(), hasAce())
 
-    private fun numbers(): List<Int> = _value.map { it.value.number }
+    private fun numbers(): List<Int> = _value.map { it.number }
+
+    fun isOver(number: Int): Boolean = score.isOver(number)
 
     fun addCard(card: Card) {
         _value.add(card)

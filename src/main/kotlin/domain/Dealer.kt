@@ -3,7 +3,7 @@ package domain
 import domain.card.Card
 
 class Dealer(val name: String = DEALER_NAME, val cards: Cards) {
-    fun isOverSumCondition(): Boolean = (cards.score.isOver(Score.valueOf(SUM_CONDITION)))
+    fun isHit(): Boolean = (!cards.isOver(SUM_CONDITION))
 
     fun addCard(card: Card) = cards.addCard(card)
 
