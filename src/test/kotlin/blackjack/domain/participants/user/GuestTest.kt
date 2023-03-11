@@ -1,6 +1,6 @@
 package blackjack.domain.participants.user
 
-import blackjack.domain.blackjack.blackJack
+import blackjack.domain.blackjack.blackJackSetting
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardMark
 import blackjack.domain.card.CardValue
@@ -20,7 +20,7 @@ class GuestTest {
 
     @Test
     fun `수익금액을 가져올 수 있다`() {
-        val blackJack = blackJack {
+        val blackJack = blackJackSetting {
             participants {
                 dealer()
                 guest(Name("아크"), Money(1000))

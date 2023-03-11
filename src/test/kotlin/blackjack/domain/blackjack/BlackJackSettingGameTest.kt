@@ -8,7 +8,7 @@ import org.junit.jupiter.api.assertDoesNotThrow
 class BlackJackSettingGameTest {
     @Test
     fun `게임을 실행한다`() {
-        val blackJack = blackJack {
+        val blackJack = blackJackSetting {
             participants {
                 dealer()
                 guest(Name("아크"))

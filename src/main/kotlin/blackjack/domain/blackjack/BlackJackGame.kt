@@ -11,7 +11,7 @@ class BlackJackGame {
     var onDraw: (String) -> Boolean = { true }
 
     fun setUp(getNames: () -> List<Name>, getBettingMoney: (String) -> Money): BlackJackSetting =
-        blackJack {
+        blackJackSetting {
             participants {
                 dealer()
                 getNames().forEach { name -> guest(name, getBettingMoney(name.toString())) }
