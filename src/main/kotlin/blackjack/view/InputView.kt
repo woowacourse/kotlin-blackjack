@@ -27,27 +27,16 @@ object InputView {
         return requestSpecificInput(NUMERIC_ERROR_MSG, String::toIntOrNull)
     }
 
-    // TODO: domain을 너무 잘 알고 있는 친구
-    fun requestPlayersInput(): List<Pair<String, Int>> {
-        val names = requestPlayersName()
-        val moneys = requestPlayersBattingMoney(names)
-
-        return names.zip(moneys)
-    }
-
-    private fun requestPlayersName(): List<String> {
+    fun requestPlayersName(): List<String> {
         println(REQUEST_PLAYERS_NAME_MSG)
 
         return readln().split(TOKENIZER).map(String::trim)
     }
 
-    private fun requestPlayersBattingMoney(playerNames: List<String>): List<Int> {
-        val battingMoneys = playerNames.map { playerName ->
+    fun requestBattingMoney(playerName: String): Int {
+        requestNumericInput(REQUEST_PLAYERS_BATTING_MONEY.format(playerName))
 
-            requestNumericInput(REQUEST_PLAYERS_BATTING_MONEY.format(playerName))
-        }
-
-        return battingMoneys
+        return requestNumericInput(NUMERIC_ERROR_MSG)
     }
 
     fun requestAdditionalDraw(player: Player): Boolean {

@@ -19,7 +19,9 @@ class BlackJackGameController(
     }
 
     private fun initPlayers() {
-        blackJackGame.initPlayers(InputView.requestPlayersInput())
+        val names = InputView.requestPlayersName()
+
+        blackJackGame.initPlayers(names, InputView::requestBattingMoney)
         OutputView.printCardDividingMessage(blackJackGame.dealer, blackJackGame.blackJackPlayers)
     }
 

@@ -13,9 +13,9 @@ class BlackJackGame(
     lateinit var blackJackPlayers: BlackJackPlayers
         private set
 
-    fun initPlayers(playerDataSources: List<Pair<String, Int>>) {
-        val players = playerDataSources.map { (playerName, battingMoney) ->
-            Player(playerName, battingMoney)
+    fun initPlayers(names: List<String>, getBattingMoney: (String) -> Int) {
+        val players = names.map { name ->
+            Player(name, getBattingMoney(name))
         }
 
         blackJackPlayers = BlackJackPlayers(players)
