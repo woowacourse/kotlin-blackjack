@@ -1,9 +1,10 @@
 package blackjack.domain.participants.user
 
 import blackjack.domain.blackjack.blackJackSetting
-import blackjack.domain.card.Card
-import blackjack.domain.card.CardMark
-import blackjack.domain.card.CardValue
+import blackjack.domain.state.Fixtures.CLOVER_EIGHT
+import blackjack.domain.state.Fixtures.CLOVER_NINE
+import blackjack.domain.state.Fixtures.CLOVER_SEVEN
+import blackjack.domain.state.Fixtures.CLOVER_TEN
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
@@ -28,14 +29,14 @@ class GuestTest {
             }
         }
 
-        blackJack.dealer.draw(Card(CardMark.SPADE, CardValue.NINE))
-        blackJack.dealer.draw(Card(CardMark.HEART, CardValue.TEN))
+        blackJack.dealer.draw(CLOVER_NINE)
+        blackJack.dealer.draw(CLOVER_EIGHT)
 
-        blackJack.guests[0].draw(Card(CardMark.SPADE, CardValue.TEN))
-        blackJack.guests[0].draw(Card(CardMark.HEART, CardValue.TEN))
+        blackJack.guests[0].draw(CLOVER_TEN)
+        blackJack.guests[0].draw(CLOVER_NINE)
 
-        blackJack.guests[1].draw(Card(CardMark.SPADE, CardValue.NINE))
-        blackJack.guests[1].draw(Card(CardMark.HEART, CardValue.NINE))
+        blackJack.guests[1].draw(CLOVER_NINE)
+        blackJack.guests[1].draw(CLOVER_SEVEN)
 
         assertAll(
             { assertThat(blackJack.guests[0].calculateProfit(blackJack.dealer)).isEqualTo(1000) },
