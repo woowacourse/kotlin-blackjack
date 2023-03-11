@@ -8,7 +8,6 @@ sealed class CardsState {
 
     object Bust : CardsState()
 
-    //TODO: 객체가 스스로 일할 수 있게
     companion object {
 
         private const val BLACKJACK_SCORE = 21

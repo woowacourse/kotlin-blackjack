@@ -4,42 +4,28 @@ import blackjack.domain.card.CardsState
 import blackjack.domain.gameResult.GameResult
 
 enum class RunningCase(
-    val condition: (playerScore: Int, dealerCardsState: CardsState) -> Boolean,
     val gameResult: GameResult,
 ) {
 
-    DEALER_BLACKJACK_LOSE(
-        condition = { _, dealerCardsState -> dealerCardsState == CardsState.BlackJack },
-        gameResult = GameResult.LOSE
-    ),
-    DEALER_BUST_WIN(
-        condition = { _, dealerCardsState -> dealerCardsState == CardsState.Bust },
-        gameResult = GameResult.WIN
-    ),
-    WIN(
-        condition = { playerScore, dealerCardsState ->
-            dealerCardsState is CardsState.Running && playerScore > dealerCardsState.score
-        },
-        gameResult = GameResult.WIN
-    ),
-    LOSE(
-        condition = { playerScore, dealerCardsState ->
-            dealerCardsState is CardsState.Running && playerScore < dealerCardsState.score
-        },
-        gameResult = GameResult.LOSE
-    ),
-    DRAW(
-        condition = { playerScore, dealerCardsState ->
-            dealerCardsState is CardsState.Running && playerScore == dealerCardsState.score
-        },
-        gameResult = GameResult.DRAW
-    );
+    WIN(GameResult.WIN),
+    LOSE(GameResult.LOSE),
+    DRAW(GameResult.DRAW);
 
     companion object {
-        fun valueOf(playerScore: Int, dealerCardsState: CardsState): RunningCase? {
 
-            return values().find { runningCase ->
-                runningCase.condition(playerScore, dealerCardsState)
+        fun valueOf(playerScore: Int, dealerCardsState: CardsState): RunningCase {
+            return when (dealerCardsState) {
+                is CardsState.Bust -> WIN
+                is CardsState.BlackJack -> LOSE
+                is CardsState.Running -> decideByScore(playerScore, dealerCardsState.score)
+            }
+        }
+
+        private fun decideByScore(playerScore: Int, dealerCardsScore: Int): RunningCase {
+            return when {
+                playerScore > dealerCardsScore -> WIN
+                playerScore < dealerCardsScore -> LOSE
+                else -> DRAW
             }
         }
     }
