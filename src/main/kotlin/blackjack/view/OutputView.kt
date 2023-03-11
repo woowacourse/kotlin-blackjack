@@ -9,26 +9,22 @@ import blackjack.domain.result.GameResult
 
 class OutputView {
 
-    fun printCurrentPlayerCards(player: Player, sumResultMessage: String = "") {
+    fun printPlayerCards(player: Player, sumResultMessage: String = "") {
         val cardsWord: String = player.cards.values.joinToString(", ") {
             it.number.toText() + it.shape.toEmoji()
         }
         println("${player.name} 카드: $cardsWord $sumResultMessage")
     }
 
-    fun printDealerHitMessage() {
-        println()
-        println(DEALER_HIT_MESSAGE)
-        println()
-    }
-
-    fun printDealerNotHitMessage() {
-        println()
-        println(DEALER_NOT_HIT_MESSAGE)
+    fun printDealerHitOrNotMessage(hitOrNot: Boolean) {
+        println(
+            if (hitOrNot) DEALER_HIT_MESSAGE
+            else DEALER_NOT_HIT_MESSAGE
+        )
         println()
     }
 
-    fun printFirstTurnSettingCard(dealer: Dealer, participants: Participants) {
+    fun printFirstTurnSettingCards(dealer: Dealer, participants: Participants) {
         val participantsNames: List<String> = participants.values.map { it.name }
         println(INITIAL_SETTING_CARD_MESSAGE.format(participantsNames.joinToString(", ")))
         printFirstRoundDealerCards(dealer)
@@ -49,14 +45,14 @@ class OutputView {
     }
 
     fun printSumResult(dealer: Dealer, participants: Participants) {
-        printCurrentPlayerCards(dealer, "- 결과: ${dealer.cards.sum()}")
+        printPlayerCards(dealer, "- 결과: ${dealer.cards.sum()}")
         participants.values.forEach {
-            printCurrentPlayerCards(it, "- 결과: ${it.cards.sum()}")
+            printPlayerCards(it, "- 결과: ${it.cards.sum()}")
         }
     }
 
-    private fun printParticipantsCards(participants: Participants) {
-        participants.values.forEach { printCurrentPlayerCards(it) }
+    fun printParticipantsCards(participants: Participants) {
+        participants.values.forEach { printPlayerCards(it) }
         println()
     }
 

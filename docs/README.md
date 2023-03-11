@@ -73,6 +73,15 @@
 - GameResult (Enum Class)
   - [x] 승/패/무 결과를 가진다
 
+- BattingAmount
+  - [ ] 배팅 금액을 생성할 수 있다
+  - [ ] 최소 배팅 금액은 5000원이다
+  - [ ] 천원 단위로만 받을 수 있다
+
 ---
 
 - BlackjackGame
+
+---
+
+
