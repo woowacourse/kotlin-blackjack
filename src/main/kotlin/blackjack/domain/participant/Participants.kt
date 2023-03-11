@@ -3,7 +3,7 @@ package blackjack.domain.participant
 import blackjack.domain.card.CardDeck
 import blackjack.domain.data.ParticipantCards
 import blackjack.domain.data.ParticipantResults
-import blackjack.domain.result.GameResults
+import blackjack.domain.result.ResultManager
 
 class Participants(private val dealer: Dealer, private val players: Players) {
     fun drawAll(deck: CardDeck) {
@@ -21,10 +21,10 @@ class Participants(private val dealer: Dealer, private val players: Players) {
         }
     }
 
-    fun getParticipantResults(): ParticipantResults = judgePlayers().getResults()
+    fun getParticipantResults(): ParticipantResults = ResultManager(dealer, players).judge()
 
-    private fun judgePlayers(): GameResults = GameResults(
-        dealer,
-        players.users.associateWith { player -> (dealer judge player) }
-    )
+    // private fun judgePlayers(): GameResults = GameResults(
+    //     dealer,
+    //     players.users.associateWith { player -> (dealer judge player) }
+    // )
 }

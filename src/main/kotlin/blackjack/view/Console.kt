@@ -74,6 +74,7 @@ class Console : InputView, OutputView {
     private fun printScores(results: ParticipantResults) {
         println(
             """
+            |
             |${
             (listOf(results.dealerResult) + results.playerResults)
                 .joinToString("\n", transform = ::getScoreMessage)
