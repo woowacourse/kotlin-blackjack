@@ -2,32 +2,30 @@ package blackjack.view
 
 import blackjack.domain.player.Participant
 import blackjack.domain.player.Participants
+import java.lang.IllegalArgumentException
 
 class InputView {
 
     fun readParticipants(): Participants {
         println(PROMPT_PARTICIPANTS_NAME)
 
-        val participants: Participants? = kotlin.runCatching {
+        return kotlin.runCatching {
             val participantsName = readln().split(",")
             val participants = participantsName.map { Participant(it) }.toList()
             println()
             Participants(participants)
-        }.getOrNull()
-
-        return participants ?: readParticipants()
+        }.getOrElse { readParticipants() }
     }
 
     fun readHitOrNot(name: String): Boolean {
         println(ASK_MORE_CARD.format(name))
 
-        val hitOrNot = when (readln().lowercase()) {
-            ANSWER_HIT -> true
-            ANSWER_NOT_HIT -> false
-            else -> null
-        }
-
-        return hitOrNot ?: readHitOrNot(name)
+        return kotlin.runCatching {
+            val input = readln().lowercase()
+            if (input == ANSWER_HIT) return true
+            if (input == ANSWER_NOT_HIT) return false
+            throw IllegalArgumentException()
+        }.getOrElse { readHitOrNot(name) }
     }
 
     companion object {
