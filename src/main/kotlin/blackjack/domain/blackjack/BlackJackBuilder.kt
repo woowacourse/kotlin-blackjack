@@ -2,9 +2,7 @@ package blackjack.domain.blackjack
 
 import blackjack.domain.card.CardDeck
 import blackjack.domain.card.Cards
-import blackjack.domain.participants.Dealer
-import blackjack.domain.participants.Participants
-import blackjack.domain.participants.ParticipantsBuilder
+import blackjack.domain.participants.*
 
 fun blackJack(block: BlackJackBuilder.() -> Unit): BlackJack {
     return BlackJackBuilder().apply(block).build()
@@ -17,12 +15,12 @@ class BlackJackBuilder {
         participants = ParticipantsBuilder().apply(block).build()
     }
 
-    fun initBetting(input: (String) -> Int?) {
-        buildMap {
-            participants.guests.forEach {
-                put(it, input(it.name.toString()))
-            }
-        }
+    fun initBetting(input: (String) -> Int?): UsersBettingMoney {
+        return UsersBettingMoney(
+            participants.guests.map {
+                it to BettingMoney(input(it.name.toString())!!)
+            }.toMap(),
+        )
     }
 
     fun initDraw() {

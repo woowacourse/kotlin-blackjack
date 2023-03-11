@@ -7,7 +7,6 @@ import blackjack.domain.participants.User
 
 class BlackJackGame {
     lateinit var getCommand: (String) -> Boolean
-    lateinit var bettingMoney: (String) -> Int?
 
     fun guestsTurn(guests: List<Guest>, cardDeck: CardDeck, output: (User) -> Unit) =
         guests.forEach { guest -> guestTurn(guest, cardDeck, output) }
