@@ -4,9 +4,8 @@ import blackjack.domain.card.CardsState
 import blackjack.domain.gameResult.PlayerGameResult
 import blackjack.domain.gameResult.PlayerGameResults
 
-class BlackJackPlayers(players: List<Player>) {
+class BlackJackPlayers(private val _players: List<Player>) {
 
-    private val _players = players.toList()
     val players: List<Player>
         get() = _players.toList()
 
