@@ -10,7 +10,7 @@ class Dealer : Participant(DEALER_NAME) {
 
     infix fun judge(player: BettingPlayer): GameResult {
         val dealerScore = getTotalScore()
-        val playerScore = player.getTotalScore()
+        val playerScore = player.user.getTotalScore()
 
         return when {
             player.isBust() && isBust() -> GameResult.DRAW

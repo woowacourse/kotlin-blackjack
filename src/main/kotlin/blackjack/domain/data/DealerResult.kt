@@ -1,3 +1,13 @@
 package blackjack.domain.data
 
-data class DealerResult(val name: String, val win: Int, val draw: Int, val lose: Int)
+import blackjack.domain.card.Card
+
+data class DealerResult(
+    override val name: String,
+    override val cards: List<Card>,
+    override val score: Int,
+    val win: Int,
+    val draw: Int,
+    val lose: Int,
+    override val profit: Int
+) : ParticipantResult

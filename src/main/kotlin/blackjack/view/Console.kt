@@ -5,9 +5,8 @@ import blackjack.domain.card.CardNumber
 import blackjack.domain.card.Suit
 import blackjack.domain.data.DealerResult
 import blackjack.domain.data.ParticipantCards
-import blackjack.domain.data.ParticipantProfit
+import blackjack.domain.data.ParticipantResult
 import blackjack.domain.data.ParticipantResults
-import blackjack.domain.data.ParticipantScore
 import blackjack.domain.data.PlayerResult
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Participant
@@ -45,7 +44,9 @@ class Console : InputView, OutputView {
         println(
             """
             |
-            |${participantsCards.first().name}와 ${participantsCards.drop(1).joinToString(", ") { it.name }}에게 2장의 카드를 나누었습니다.
+            |${participantsCards.first().name}와 ${
+            participantsCards.drop(1).joinToString(", ") { it.name }
+            }에게 2장의 카드를 나누었습니다.
             |${participantsCards.joinToString("\n") { (name, cards) -> getCardsMessage(name, cards) }}
             |
             """.trimMargin()
@@ -59,46 +60,45 @@ class Console : InputView, OutputView {
         }
     }
 
-    private fun getCardsMessage(name: String, cards: List<Card>): String = "$name 카드: ${cards.joinToString(", ") { it.toText() }}"
+    private fun getCardsMessage(name: String, cards: List<Card>): String =
+        "$name 카드: ${cards.joinToString(", ") { it.toText() }}"
 
-    override fun printResult(
-        cards: List<ParticipantCards>,
-        totalScores: List<ParticipantScore>,
-        results: ParticipantResults
-    ) {
-        println()
-        printScores(cards, totalScores)
-        printResults(results.dealerResult, results.playerResults)
-        printProfits(results.profits)
+    override fun printResult(results: ParticipantResults) {
+        printScores(results)
+        printGameResults(results.dealerResult, results.playerResults)
+        printProfits(results)
     }
 
-    private fun printScores(participantsCards: List<ParticipantCards>, scores: List<ParticipantScore>) {
+    private fun printScores(results: ParticipantResults) {
         println(
-            scores
-                .mapIndexed { index, (name, score) -> getScoreMessage(name, participantsCards[index].cards, score) }
-                .joinToString("\n")
+            """
+            |${
+            (listOf(results.dealerResult) + results.playerResults)
+                .joinToString("\n", transform = ::getScoreMessage)
+            }
+            """.trimMargin()
         )
     }
 
-    private fun getScoreMessage(name: String, cards: List<Card>, score: Int): String =
-        "$name 카드: ${cards.joinToString(", ") { it.toText() }} - 결과: $score"
+    private fun getScoreMessage(result: ParticipantResult): String =
+        "${result.name} 카드: ${result.cards.joinToString(", ") { it.toText() }} - 결과: ${result.score}"
 
-    private fun printResults(dealerResult: DealerResult, playerResults: List<PlayerResult>) {
+    private fun printGameResults(dealerResult: DealerResult, playerResults: List<PlayerResult>) {
         println(
             """
             |
             |## 최종 승패
             |${dealerResult.name}: ${dealerResult.win}승 ${dealerResult.draw}무 ${dealerResult.lose}패
-            |${playerResults.joinToString("\n") { getPlayerResultMessage(it.name, it.result) }}
+            |${playerResults.joinToString("\n", transform = ::getPlayerResultMessage)}
             """.trimMargin()
         )
     }
 
-    private fun getPlayerResultMessage(name: String, result: GameResult): String = when (result) {
-        GameResult.BLACKJACK -> "$name: 블랙잭"
-        GameResult.WIN -> "$name: 승"
-        GameResult.DRAW -> "$name: 무"
-        GameResult.LOSE -> "$name: 패"
+    private fun getPlayerResultMessage(result: PlayerResult): String = when (result.gameResult) {
+        GameResult.BLACKJACK -> "${result.name}: 블랙잭"
+        GameResult.WIN -> "${result.name}: 승"
+        GameResult.DRAW -> "${result.name}: 무"
+        GameResult.LOSE -> "${result.name}: 패"
     }
 
     private fun Card.toText(): String = "${number.toText()}${suit.toText()}"
@@ -126,13 +126,18 @@ class Console : InputView, OutputView {
         Suit.CLOVER -> "클로버"
     }
 
-    private fun printProfits(profits: List<ParticipantProfit>) {
+    private fun printProfits(results: ParticipantResults) {
         println(
             """
             |
             |## 최종 수익
-            |${profits.joinToString("\n") { (name, profit) -> "$name: $profit" }}
+            |${
+            (listOf(results.dealerResult) + results.playerResults)
+                .joinToString("\n", transform = ::getProfitMessage)
+            }
             """.trimMargin()
         )
     }
+
+    private fun getProfitMessage(result: ParticipantResult) = "${result.name}: ${result.profit}"
 }

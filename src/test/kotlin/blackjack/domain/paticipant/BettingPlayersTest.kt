@@ -55,7 +55,7 @@ class BettingPlayersTest {
         bettingPlayers.drawAll(deck)
         bettingPlayers.drawAll(deck)
 
-        val actual = bettingPlayers.getCards()
+        val actual = bettingPlayers.getFirstOpenCards()
         assertThat(actual).isEqualTo(
             listOf(
                 ParticipantCards("buna", listOf(Card(CardNumber.ACE, Suit.SPADE), Card(CardNumber.KING, Suit.SPADE))),

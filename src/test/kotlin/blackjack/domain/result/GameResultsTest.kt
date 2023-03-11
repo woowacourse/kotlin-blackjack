@@ -1,6 +1,8 @@
 package blackjack.domain.result
 
+import blackjack.domain.data.ParticipantResults
 import blackjack.domain.participant.BettingPlayer
+import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Player
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
@@ -8,89 +10,63 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 
 class GameResultsTest {
-    lateinit var gameResults: GameResults
+    private lateinit var results: ParticipantResults
 
     @BeforeEach
     fun setUp() {
-        gameResults =
+        results =
             GameResults(
+                Dealer(),
                 mapOf(
-                    BettingPlayer(Player("부나"), 0) to GameResult.LOSE,
-                    BettingPlayer(Player("글로"), 0) to GameResult.WIN,
-                    BettingPlayer(Player("반달"), 0) to GameResult.DRAW,
-                    BettingPlayer(Player("제이슨"), 0) to GameResult.LOSE
+                    BettingPlayer(Player("부나"), 1000) to GameResult.BLACKJACK,
+                    BettingPlayer(Player("글로"), 2000) to GameResult.WIN,
+                    BettingPlayer(Player("반달"), 3000) to GameResult.DRAW,
+                    BettingPlayer(Player("제이슨"), 4000) to GameResult.LOSE
                 )
-            )
-    }
-
-    @Test
-    fun `플레이어들의 승부 결과를 반환한다`() {
-        val results = gameResults.getPlayerResults()
-
-        assertAll(
-            { assertThat(results[0].name to results[0].result).isEqualTo("부나" to GameResult.LOSE) },
-            { assertThat(results[1].name to results[1].result).isEqualTo("글로" to GameResult.WIN) },
-            { assertThat(results[2].name to results[2].result).isEqualTo("반달" to GameResult.DRAW) },
-            { assertThat(results[3].name to results[3].result).isEqualTo("제이슨" to GameResult.LOSE) }
-        )
+            ).getResults()
     }
 
     @Test
     fun `딜러의 승부 결과를 반환한다`() {
-        with(gameResults.getDealerResult("딜러")) {
-            assertAll(
-                { assertThat(win).isEqualTo(2) },
-                { assertThat(draw).isEqualTo(1) },
-                { assertThat(lose).isEqualTo(1) }
-            )
-        }
-    }
-
-    @Test
-    fun `플레이어가 블랙잭이면 플레이어가 딜러로부터 배당금의 3분의 2배를 얻는다`() {
-        val results = GameResults(mapOf(BettingPlayer(Player("glo"), 1000) to GameResult.BLACKJACK))
-
-        val profits = results.calculateProfits()
-
         assertAll(
-            { assertThat(profits[0].profit).isEqualTo(-1500) },
-            { assertThat(profits[1].profit).isEqualTo(1500) }
+            { assertThat(results.dealerResult.win).isEqualTo(1) },
+            { assertThat(results.dealerResult.draw).isEqualTo(1) },
+            { assertThat(results.dealerResult.lose).isEqualTo(2) }
         )
     }
 
     @Test
-    fun `플레이어가 우승하면 플레이어가 딜러로부터 배당금을 받는다`() {
-        val results = GameResults(mapOf(BettingPlayer(Player("glo"), 1000) to GameResult.WIN))
-
-        val profits = results.calculateProfits()
-
+    fun `플레이어들의 승부 결과를 반환한다`() {
         assertAll(
-            { assertThat(profits[0].profit).isEqualTo(-1000) },
-            { assertThat(profits[1].profit).isEqualTo(1000) }
+            { assertThat(results.playerResults[0].name to results.playerResults[0].gameResult).isEqualTo("부나" to GameResult.BLACKJACK) },
+            { assertThat(results.playerResults[1].name to results.playerResults[1].gameResult).isEqualTo("글로" to GameResult.WIN) },
+            { assertThat(results.playerResults[2].name to results.playerResults[2].gameResult).isEqualTo("반달" to GameResult.DRAW) },
+            { assertThat(results.playerResults[3].name to results.playerResults[3].gameResult).isEqualTo("제이슨" to GameResult.LOSE) }
         )
     }
 
     @Test
-    fun `플레이어가 패배하면 딜러가 플레이어로부터 배당금을 받는다`() {
-        val results = GameResults(mapOf(BettingPlayer(Player("glo"), 1000) to GameResult.LOSE))
+    fun `딜러의 수익은 모든 플레이어의 수익을 뺀 것이다`() {
+        assertThat(results.dealerResult.profit).isEqualTo(500)
+    }
 
-        val profits = results.calculateProfits()
+    @Test
+    fun `플레이어가 블랙잭이면 플레이어가 딜러로부터 배팅 금액의 3분의 2배를 얻는다`() {
+        assertThat(results.playerResults[0].profit).isEqualTo(1500)
+    }
 
-        assertAll(
-            { assertThat(profits[0].profit).isEqualTo(1000) },
-            { assertThat(profits[1].profit).isEqualTo(-1000) }
-        )
+    @Test
+    fun `플레이어가 우승하면 플레이어가 딜러로부터 배팅 금액을 받는다`() {
+        assertThat(results.playerResults[1].profit).isEqualTo(2000)
     }
 
     @Test
     fun `무승부면 딜러와 플레이어 모두 수익이 없다`() {
-        val results = GameResults(mapOf(BettingPlayer(Player("glo"), 1000) to GameResult.DRAW))
+        assertThat(results.playerResults[2].profit).isEqualTo(0)
+    }
 
-        val profits = results.calculateProfits()
-
-        assertAll(
-            { assertThat(profits[0].profit).isEqualTo(0) },
-            { assertThat(profits[1].profit).isEqualTo(0) }
-        )
+    @Test
+    fun `플레이어가 패배하면 플레이어는 딜러에게 배팅 금액을 준다`() {
+        assertThat(results.playerResults[3].profit).isEqualTo(-4000)
     }
 }

@@ -1,34 +1,35 @@
 package blackjack.domain.result
 
 import blackjack.domain.data.DealerResult
-import blackjack.domain.data.ParticipantProfit
+import blackjack.domain.data.ParticipantResults
 import blackjack.domain.data.PlayerResult
 import blackjack.domain.participant.BettingPlayer
+import blackjack.domain.participant.Dealer
+import blackjack.domain.participant.Player
 
-class GameResults(private val results: Map<BettingPlayer, GameResult>) {
+class GameResults(private val dealer: Dealer, private val results: Map<BettingPlayer, GameResult>) {
+    fun getResults(): ParticipantResults {
+        val playerResults = mutableListOf<PlayerResult>()
+        var dealerProfit = 0.0
+        results.forEach { (player, result) ->
+            val profit = player.money * result.payout
+            dealerProfit -= profit
+            playerResults.add(getPlayerResult(player.user, result, profit.toInt()))
+        }
+        val dealerResult = getDealerResult(dealerProfit.toInt())
+        return ParticipantResults(dealerResult, playerResults)
+    }
 
-    fun getPlayerResults(): List<PlayerResult> = results.map { (player, result) -> PlayerResult(player.getName(), result) }
+    private fun getPlayerResult(player: Player, result: GameResult, profit: Int): PlayerResult {
+        return PlayerResult(player.name, player.getCards(), player.getTotalScore(), result, profit)
+    }
 
-    fun getDealerResult(name: String): DealerResult {
+    private fun getDealerResult(profit: Int): DealerResult {
         with(results.values) {
             val win = count { it == GameResult.LOSE }
             val draw = count { it == GameResult.DRAW }
             val lose = count { it == GameResult.WIN || it == GameResult.BLACKJACK }
-            return DealerResult(name, win, draw, lose)
+            return DealerResult(dealer.name, dealer.getCards(), dealer.getTotalScore(), win, draw, lose, profit)
         }
-    }
-
-    fun calculateProfits(): List<ParticipantProfit> {
-        var dealerProfit = 0.0
-        val playerProfits = mutableListOf<ParticipantProfit>()
-
-        results.forEach { (player, result) ->
-            val profit = player.money * result.payout
-            dealerProfit -= profit
-            playerProfits.add(ParticipantProfit(player.getName(), profit.toInt()))
-        }
-
-        playerProfits.add(0, ParticipantProfit("딜러", dealerProfit.toInt()))
-        return playerProfits
     }
 }

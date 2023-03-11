@@ -15,10 +15,7 @@ class BlackJackController(
     private val outputView: OutputView
 ) {
     fun start(deck: CardDeck) {
-        with(initBlackJack(deck)) {
-            start(outputView::printFirstDraw, outputView::printDraw)
-            outputView.printResult(getCards(), getTotalScores(), getParticipantResults())
-        }
+        initBlackJack(deck).start(outputView::printFirstDraw, outputView::printDraw, outputView::printResult)
     }
 
     private fun initBlackJack(deck: CardDeck): BlackJack = BlackJack(deck, Participants(Dealer(), enrollPlayers()))
