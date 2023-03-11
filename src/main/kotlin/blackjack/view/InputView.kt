@@ -34,9 +34,8 @@ object InputView {
     }
 
     fun requestBattingMoney(playerName: String): Int {
-        requestNumericInput(REQUEST_PLAYERS_BATTING_MONEY.format(playerName))
 
-        return requestNumericInput(NUMERIC_ERROR_MSG)
+        return requestNumericInput(REQUEST_PLAYERS_BATTING_MONEY.format(playerName))
     }
 
     fun requestAdditionalDraw(player: Player): Boolean {
