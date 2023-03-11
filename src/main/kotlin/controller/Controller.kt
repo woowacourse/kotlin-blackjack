@@ -3,6 +3,7 @@ package controller
 import domain.CardGame
 import model.CardDeck
 import model.Dealer
+import model.Money
 import model.Name
 import model.Names
 import model.Participants
@@ -14,7 +15,7 @@ import view.OutputView
 class Controller(private val inputView: InputView, private val outputView: OutputView) {
     private val cardDeck = CardDeck.createCardDeck().shuffled()
     fun run() {
-        val participants = Participants(Dealer(), readPlayersBettingMoney(readPlayersName()))
+        val participants = Participants(Dealer(), readPlayers())
         val cardGame = CardGame(cardDeck, participants)
         cardGame.readyToStart()
         outputView.printNoticeDistributeCards(participants)
@@ -23,11 +24,12 @@ class Controller(private val inputView: InputView, private val outputView: Outpu
         outputView.printAllPlayerStatusResult(participants)
     }
 
-    private fun readPlayersName(): Names {
-        return Names(inputView.readName().map(::Name))
+    private fun readPlayers(): Players {
+        val names = Names(inputView.readName().map(::Name))
+        return Players(names.map { Player(it, readPlayerBettingMoney(it)) })
     }
 
-    private fun readPlayersBettingMoney(names: Names): Players {
-        return Players(names.map { Player.of(it, inputView.readBettingMoney(it.value)) })
+    private fun readPlayerBettingMoney(name: Name): Money {
+        return Money(inputView.readBettingMoney(name.value))
     }
 }
