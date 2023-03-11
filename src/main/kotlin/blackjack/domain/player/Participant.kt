@@ -1,24 +1,24 @@
 package blackjack.domain.player
 
-import blackjack.domain.Result
+import blackjack.domain.EarningRate
 import blackjack.domain.card.Cards
 
-class Participant(name: String, cards: Cards = Cards()) : Player(name, cards) {
+class Participant(name: String, val betAmount: Int = 0, cards: Cards = Cards()) : Player(name, cards) {
 
     override fun checkProvideCardPossible(): Boolean = (cards.calculateScore() < PARTICIPANT_MORE_CARD_CRITERIA)
 
-    fun calculateResult(dealer: Dealer): ParticipantResult {
-        val result = when {
-            (isBurst) -> Result.LOSE
-            (dealer.isBurst) -> Result.WIN
-            (isBlackjack and !dealer.isBlackjack) -> Result.WIN
-            (!isBlackjack and dealer.isBlackjack) -> Result.LOSE
-            (isBlackjack and dealer.isBlackjack) -> Result.DRAW
-            (cards.calculateScore() > dealer.cards.calculateScore()) -> Result.WIN
-            (cards.calculateScore() < dealer.cards.calculateScore()) -> Result.LOSE
-            else -> Result.DRAW
+    fun calculateEarningRate(dealer: Dealer): ParticipantEarningRate {
+        val earningRate = when {
+            (isBurst) -> EarningRate.LOSE
+            (dealer.isBurst) -> EarningRate.WIN
+            (isBlackjack and !dealer.isBlackjack) -> EarningRate.BLACKJACK_WIN
+            (!isBlackjack and dealer.isBlackjack) -> EarningRate.LOSE
+            (isBlackjack and dealer.isBlackjack) -> EarningRate.DRAW
+            (cards.calculateScore() > dealer.cards.calculateScore()) -> EarningRate.WIN
+            (cards.calculateScore() < dealer.cards.calculateScore()) -> EarningRate.LOSE
+            else -> EarningRate.DRAW
         }
-        return ParticipantResult(name, result)
+        return ParticipantEarningRate(name, earningRate)
     }
 
     companion object {
