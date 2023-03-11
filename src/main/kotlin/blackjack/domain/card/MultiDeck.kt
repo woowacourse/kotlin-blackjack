@@ -1,17 +1,13 @@
 package blackjack.domain.card
 
-class Deck(
+class MultiDeck private constructor(
     cards: List<Card> = listOf()
 ) {
     constructor(vararg cards: Pair<CardNumber, CardShape>) : this(cards.map { Card.from(it.first, it.second) }.toList())
 
-    private var _cards: MutableList<Card>
-
-    init {
-        _cards =
-            if (cards.isEmpty()) List(DECK_COUNT) { createCardPack() }.flatten().shuffled().toMutableList()
-            else cards.toMutableList()
-    }
+    private val _cards: MutableList<Card> =
+        if (cards.isEmpty()) List(DECK_COUNT) { createCardPack() }.flatten().shuffled().toMutableList()
+        else cards.toMutableList()
 
     fun draw(): Card = _cards.removeAt(0)
 

@@ -4,7 +4,7 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
 import blackjack.domain.card.CardShape
 import blackjack.domain.card.Cards
-import blackjack.domain.card.Deck
+import blackjack.domain.card.MultiDeck
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
@@ -46,8 +46,8 @@ class PlayerTest {
     @Test
     fun `카드를 발급받아 카드의 개수가 늘었는지 확인한다`() {
         val player = TestPlayer("aaa")
-        val deck = Deck()
-        player.addCard(deck.draw())
+        val multiDeck = MultiDeck()
+        player.addCard(multiDeck.draw())
         assertThat(player.cards.values.size).isEqualTo(1)
     }
 

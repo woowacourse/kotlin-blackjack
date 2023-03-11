@@ -2,7 +2,7 @@ package blackjack.controller
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
-import blackjack.domain.card.Deck
+import blackjack.domain.card.MultiDeck
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Participant
 import blackjack.domain.player.Participants
@@ -15,7 +15,7 @@ class BlackjackController(
     private val outputView: OutputView = OutputView()
 ) {
 
-    private val deck: Deck = Deck()
+    private val multiDeck: MultiDeck = MultiDeck()
 
     fun run() {
         val dealer: Dealer = Dealer()
@@ -32,9 +32,9 @@ class BlackjackController(
     }
 
     private fun setInitialPlayersCards(dealer: Dealer, participants: Participants) {
-        repeat(Player.CARD_SETTING_COUNT) { dealer.addCard(deck.draw()) }
+        repeat(Player.CARD_SETTING_COUNT) { dealer.addCard(multiDeck.draw()) }
         participants.values.forEach {
-            val initCards: List<Card> = listOf(deck.draw(), deck.draw())
+            val initCards: List<Card> = listOf(multiDeck.draw(), multiDeck.draw())
             it.setInitialCards(Cards(initCards))
         }
         outputView.printInitialSettingCard(dealer, participants)
@@ -53,14 +53,14 @@ class BlackjackController(
 
     private fun hitParticipantCards(dealer: Dealer, participant: Participant) {
         while (participant.canHit() && inputView.readHitOrNot(participant.name)) {
-            participant.addCard(deck.draw())
+            participant.addCard(multiDeck.draw())
             outputView.printCurrentPlayerCards(participant)
         }
     }
 
     private fun hitDealerCard(dealer: Dealer) {
         if (dealer.canHit()) {
-            dealer.addCard(deck.draw())
+            dealer.addCard(multiDeck.draw())
             outputView.printDealerHitMessage()
             return
         }
