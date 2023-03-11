@@ -19,14 +19,6 @@ class Dealer(override val cardBunch: CardBunch) : Participant {
         }
     }
 
-    fun progressAddCard(getCard: () -> Card, transferDealerCondition: (Boolean) -> Unit) {
-        while (!isOverCondition()) {
-            transferDealerCondition(isOverCondition())
-            receiveCard(getCard())
-        }
-        transferDealerCondition(isOverCondition())
-    }
-
     companion object {
         private const val ADD_CARD_CONDITION = 16
     }
