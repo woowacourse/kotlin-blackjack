@@ -25,16 +25,20 @@ class PlayerTest {
     @Test
     fun `새로운 카드를 받아 가진 카드에 추가한다`() {
         val player = TestPlayer("aa")
-        val expected = Card(CardNumber.FOUR, CardShape.HEART)
+        val expected = Card.from(CardNumber.FOUR, CardShape.HEART)
         player.addCard(expected)
         assertThat(player.cards.values).isEqualTo(listOf(expected))
     }
 
     @Test
     fun `갖고 있는 카드 숫자의 합을 계산해 반환한다`() {
-        val player = TestPlayer("aa")
-        player.addCard(Card(CardNumber.FOUR, CardShape.HEART))
-        player.addCard(Card(CardNumber.EIGHT, CardShape.CLOVER))
+        val player = TestPlayer(
+            "aa",
+            Cards(
+                Pair(CardNumber.FOUR, CardShape.HEART),
+                Pair(CardNumber.EIGHT, CardShape.CLOVER)
+            )
+        )
         val actual = player.cards.sum()
         assertThat(actual).isEqualTo(12)
     }
@@ -47,7 +51,7 @@ class PlayerTest {
         assertThat(player.cards.values.size).isEqualTo(1)
     }
 
-    class TestPlayer(name: String) : Player(name) {
+    class TestPlayer(name: String, cards: Cards = Cards()) : Player(name, cards) {
         override fun canHit(): Boolean {
             TODO("Not yet implemented")
         }

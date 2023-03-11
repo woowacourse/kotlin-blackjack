@@ -12,7 +12,7 @@ class DealerTest {
     @Test
     fun `갖고 있는 카드 숫자의 합이 16이 넘지 않는다면 카드를 더 받을 수 있는 상태이다`() {
         val dealer = Dealer("aaa")
-        dealer.addCard(Card(CardNumber.EIGHT, CardShape.CLOVER))
+        dealer.addCard(Card.from(CardNumber.EIGHT, CardShape.CLOVER))
         val actual = dealer.canHit()
         assertThat(actual).isEqualTo(true)
     }
@@ -21,8 +21,8 @@ class DealerTest {
     fun `갖고 있는 카드 숫자의 합이 16이 넘는다면 카드를 더 받을 수 없는 상태이다`() {
         val cards: Cards = Cards(
             listOf(
-                Card(CardNumber.KING, CardShape.CLOVER),
-                Card(CardNumber.QUEEN, CardShape.CLOVER)
+                Card.from(CardNumber.KING, CardShape.CLOVER),
+                Card.from(CardNumber.QUEEN, CardShape.CLOVER)
             )
         )
         val dealer = Dealer("aaa", cards)

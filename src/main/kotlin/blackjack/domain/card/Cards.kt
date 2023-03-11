@@ -1,6 +1,9 @@
 package blackjack.domain.card
 
 class Cards(cards: List<Card> = listOf()) {
+
+    constructor(vararg cards: Pair<CardNumber, CardShape>) : this(cards.map { Card.from(it.first, it.second) }.toList())
+
     private val _cards = cards.toMutableList()
 
     val values: List<Card>
@@ -8,11 +11,11 @@ class Cards(cards: List<Card> = listOf()) {
     val size: Int
         get() = _cards.size
 
-    fun addCard(card: Card) {
+    fun add(card: Card) {
         _cards.add(card)
     }
 
-    private fun containsCardNumber(cardNumber: CardNumber): Boolean =
+    fun containsCardNumber(cardNumber: CardNumber): Boolean =
         _cards.any { it.number == cardNumber }
 
     fun sum(): Int = _cards.sumOf { it.number.value } + bonus()

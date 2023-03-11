@@ -11,7 +11,7 @@ class ParticipantTest {
     @Test
     fun `카드를 발급 받을 수 있는지 확인한다`() {
         val participant = Participant("aaa")
-        participant.addCard(Card(CardNumber.EIGHT, CardShape.CLOVER))
+        participant.addCard(Card.from(CardNumber.EIGHT, CardShape.CLOVER))
         val actual = participant.canHit()
         assertThat(actual).isEqualTo(true)
     }

@@ -3,6 +3,7 @@ package study
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
 import blackjack.domain.card.CardShape
+import blackjack.domain.card.Cards
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -13,7 +14,7 @@ interface State {
     fun stay(): State
 }
 
-abstract class Start(val hand: Hand) : State {
+abstract class Start(val cards: Cards) : State {
     abstract fun draw(card: Card): State
 
     abstract override fun stay(): State
@@ -23,16 +24,16 @@ abstract class Start(val hand: Hand) : State {
     override fun profit(bet: Double): Double = bet * dividend
 }
 
-class Hit(hand: Hand) : Start(hand) {
+class Hit(cards: Cards) : Start(cards) {
     override val dividend: Double
         get() = 1.0
 
     override fun draw(card: Card): State {
-        hand.add(card)
+        cards.add(card)
         return when {
-            hand.calculateSum() > 21 -> Bust()
-            hand.calculateSum() == 21 -> Blackjack()
-            else -> Hit(hand)
+            cards.sum() > 21 -> Bust()
+            cards.sum() == 21 -> Blackjack()
+            else -> Hit(cards)
         }
     }
 
@@ -54,7 +55,7 @@ class Stay(override val dividend: Double = 0.0) : End()
 
 class Blackjack(override val dividend: Double = 1.5) : End()
 
-class Hand(private val cards: MutableList<Card>) {
+class Cards(private val cards: MutableList<Card>) {
 
     fun calculateSum(): Int = cards.sumOf { it.number.value }
 
@@ -64,47 +65,39 @@ class Hand(private val cards: MutableList<Card>) {
 class Study {
     @Test
     fun hit() {
-        val cards = Hand(
-            mutableListOf(
-                Card(CardNumber.TWO, CardShape.DIAMOND),
-                Card(CardNumber.THREE, CardShape.DIAMOND)
-            )
+        val cards = Cards(
+            Pair(CardNumber.TWO, CardShape.DIAMOND),
+            Pair(CardNumber.THREE, CardShape.DIAMOND)
         )
-        val hit = Hit(cards).draw(Card(CardNumber.FOUR, CardShape.DIAMOND))
+        val hit = Hit(cards).draw(Card.from(CardNumber.FOUR, CardShape.DIAMOND))
         assertThat(hit).isInstanceOf(Hit::class.java)
     }
 
     @Test
     fun bust() {
-        val cards = Hand(
-            mutableListOf(
-                Card(CardNumber.TEN, CardShape.DIAMOND),
-                Card(CardNumber.NINE, CardShape.DIAMOND)
-            )
+        val cards = Cards(
+            Pair(CardNumber.TEN, CardShape.DIAMOND),
+            Pair(CardNumber.NINE, CardShape.DIAMOND)
         )
-        val actual = Hit(cards).draw(Card(CardNumber.TEN, CardShape.DIAMOND))
+        val actual = Hit(cards).draw(Card.from(CardNumber.TEN, CardShape.DIAMOND))
         assertThat(actual).isInstanceOf(Bust::class.java)
     }
 
     @Test
     fun blackjack() {
-        val cards = Hand(
-            mutableListOf(
-                Card(CardNumber.TEN, CardShape.DIAMOND),
-                Card(CardNumber.FIVE, CardShape.DIAMOND)
-            )
+        val cards = Cards(
+            Pair(CardNumber.TEN, CardShape.DIAMOND),
+            Pair(CardNumber.FIVE, CardShape.DIAMOND)
         )
-        val actual = Hit(cards).draw(Card(CardNumber.SIX, CardShape.DIAMOND))
+        val actual = Hit(cards).draw(Card.from(CardNumber.SIX, CardShape.DIAMOND))
         assertThat(actual).isInstanceOf(Blackjack::class.java)
     }
 
     @Test
     fun stay() {
-        val cards = Hand(
-            mutableListOf(
-                Card(CardNumber.THREE, CardShape.DIAMOND),
-                Card(CardNumber.TWO, CardShape.DIAMOND)
-            )
+        val cards = Cards(
+            Pair(CardNumber.THREE, CardShape.DIAMOND),
+            Pair(CardNumber.TWO, CardShape.DIAMOND)
         )
         val actual = Hit(cards).stay()
         assertThat(actual).isInstanceOf(Stay::class.java)
@@ -112,14 +105,13 @@ class Study {
 
     @Test
     fun hit_stay() {
-        val cards = Hand(
-            mutableListOf(
-                Card(CardNumber.TWO, CardShape.DIAMOND),
-                Card(CardNumber.THREE, CardShape.DIAMOND)
-            )
+        val cards = Cards(
+            Pair(CardNumber.TWO, CardShape.DIAMOND),
+            Pair(CardNumber.THREE, CardShape.DIAMOND)
         )
 
-        val hit = Hit(cards).draw(Card(CardNumber.FOUR, CardShape.DIAMOND)).stay()
+        // val hit = Hit(cards).draw(Card(CardNumber.FOUR, CardShape.DIAMOND)).stay()
+        val hit = Hit(cards).draw(Card.from(CardNumber.FOUR, CardShape.DIAMOND))
         assertThat(hit).isInstanceOf(Hit::class.java)
     }
 }

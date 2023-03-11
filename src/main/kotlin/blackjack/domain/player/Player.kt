@@ -13,7 +13,7 @@ abstract class Player(
     abstract fun decideGameResult(otherPlayer: Player)
 
     fun addCard(card: Card) {
-        cards.addCard(card)
+        cards.add(card)
     }
 
     fun setInitialCards(cards: Cards) =

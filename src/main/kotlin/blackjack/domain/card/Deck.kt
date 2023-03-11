@@ -1,8 +1,10 @@
 package blackjack.domain.card
 
 class Deck(
-    cards: MutableList<Card> = mutableListOf()
+    cards: List<Card> = listOf()
 ) {
+    constructor(vararg cards: Pair<CardNumber, CardShape>) : this(cards.map { Card.from(it.first, it.second) }.toList())
+
     private var _cards: MutableList<Card>
 
     init {
@@ -17,7 +19,7 @@ class Deck(
         CardNumber.values().flatMap { number -> cardShapesMap(number) }.toList()
 
     private fun cardShapesMap(number: CardNumber): List<Card> =
-        CardShape.values().map { shape -> Card.from(Card(number, shape)) }.toList()
+        CardShape.values().map { shape -> Card.from(number, shape) }.toList()
 
     companion object {
         private const val DECK_COUNT = 6

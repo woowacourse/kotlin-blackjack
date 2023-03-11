@@ -1,6 +1,6 @@
 package blackjack.domain.card
 
-data class Card(
+data class Card private constructor(
     val number: CardNumber,
     val shape: CardShape
 ) {
@@ -8,8 +8,8 @@ data class Card(
     companion object {
         private val CARDS: List<Card> = createCards()
 
-        fun from(card: Card): Card {
-            return CARDS.find { card == it } ?: throw IllegalArgumentException()
+        fun from(cardNumber: CardNumber, cardShape: CardShape): Card {
+            return CARDS.find { cardNumber == it.number && cardShape == it.shape } ?: throw IllegalArgumentException()
         }
 
         private fun createCards(): List<Card> =
