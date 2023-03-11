@@ -1,6 +1,10 @@
 package blackjack.domain.participants
 
-import blackjack.domain.state.FirstTurn
+import blackjack.domain.participants.user.Dealer
+import blackjack.domain.participants.user.Guest
+import blackjack.domain.participants.user.Money
+import blackjack.domain.participants.user.Name
+import blackjack.domain.state.inTurn.FirstTurn
 
 class ParticipantsBuilder {
     private lateinit var dealer: Dealer

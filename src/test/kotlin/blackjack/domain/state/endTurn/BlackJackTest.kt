@@ -1,13 +1,14 @@
-package blackjack.domain.state
+package blackjack.domain.state.endTurn
 
 import blackjack.domain.state.Fixtures.CLOVER_ACE
 import blackjack.domain.state.Fixtures.CLOVER_KING
 import blackjack.domain.state.Fixtures.CLOVER_QUEEN
+import blackjack.domain.state.State
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
-class BlackJackSettingTest {
+class BlackJackTest {
     @Test
     fun `블랙잭은 더이상 카드를 뽑을 수 없다`() {
         assertThrows<IllegalStateException> { BlackJack().draw(CLOVER_KING) }

@@ -1,8 +1,8 @@
 package blackjack.view
 
 import blackjack.domain.blackjack.BlackJackSetting
-import blackjack.domain.participants.Name
-import blackjack.domain.participants.User
+import blackjack.domain.participants.user.Name
+import blackjack.domain.participants.user.User
 
 class OutputView {
     fun outputInitState(blackJackSetting: BlackJackSetting) {

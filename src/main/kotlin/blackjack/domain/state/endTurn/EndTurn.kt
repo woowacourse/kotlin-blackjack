@@ -1,7 +1,9 @@
-package blackjack.domain.state
+package blackjack.domain.state.endTurn
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
+import blackjack.domain.state.Score
+import blackjack.domain.state.State
 import kotlin.IllegalStateException
 
 abstract class EndTurn(final override val cards: Cards) : State {

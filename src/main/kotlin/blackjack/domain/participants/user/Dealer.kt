@@ -1,7 +1,7 @@
-package blackjack.domain.participants
+package blackjack.domain.participants.user
 
-import blackjack.domain.state.FirstTurn
 import blackjack.domain.state.State
+import blackjack.domain.state.inTurn.FirstTurn
 
 class Dealer(
     name: Name = Name("딜러"),

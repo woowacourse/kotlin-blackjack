@@ -1,7 +1,7 @@
 package blackjack.view
 
-import blackjack.domain.participants.Money
-import blackjack.domain.participants.Name
+import blackjack.domain.participants.user.Money
+import blackjack.domain.participants.user.Name
 
 class InputView {
     fun inputParticipants(): List<Name> {

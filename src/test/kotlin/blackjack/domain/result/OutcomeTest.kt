@@ -3,9 +3,9 @@ package blackjack.domain.result
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardMark
 import blackjack.domain.card.CardValue
-import blackjack.domain.participants.Dealer
-import blackjack.domain.participants.Guest
-import blackjack.domain.participants.Name
+import blackjack.domain.participants.user.Dealer
+import blackjack.domain.participants.user.Guest
+import blackjack.domain.participants.user.Name
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

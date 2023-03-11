@@ -1,10 +1,10 @@
-package blackjack.domain.participants
+package blackjack.domain.participants.user
 
 import blackjack.domain.blackjack.blackJack
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardMark
 import blackjack.domain.card.CardValue
-import blackjack.domain.state.FirstTurn
+import blackjack.domain.state.inTurn.FirstTurn
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll

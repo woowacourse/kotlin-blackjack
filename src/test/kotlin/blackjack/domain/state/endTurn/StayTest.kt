@@ -1,4 +1,4 @@
-package blackjack.domain.state
+package blackjack.domain.state.endTurn
 
 import blackjack.domain.card.Cards
 import blackjack.domain.state.Fixtures.CLOVER_KING

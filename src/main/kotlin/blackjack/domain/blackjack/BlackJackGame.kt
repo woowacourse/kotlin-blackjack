@@ -1,12 +1,12 @@
 package blackjack.domain.blackjack
 
 import blackjack.domain.card.CardDeck
-import blackjack.domain.participants.Dealer
-import blackjack.domain.participants.Guest
-import blackjack.domain.participants.Money
-import blackjack.domain.participants.Name
-import blackjack.domain.participants.User
-import blackjack.domain.state.BlackJack
+import blackjack.domain.participants.user.Dealer
+import blackjack.domain.participants.user.Guest
+import blackjack.domain.participants.user.Money
+import blackjack.domain.participants.user.Name
+import blackjack.domain.participants.user.User
+import blackjack.domain.state.endTurn.BlackJack
 
 class BlackJackGame {
     var onDraw: (String) -> Boolean = { true }

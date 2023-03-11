@@ -1,8 +1,9 @@
-package blackjack.domain.state
+package blackjack.domain.state.endTurn
 
 import blackjack.domain.card.Cards
-import blackjack.domain.participants.Dealer
+import blackjack.domain.participants.user.Dealer
 import blackjack.domain.result.Outcome
+import blackjack.domain.state.inTurn.Hit
 
 class Stay(cards: Cards) : EndTurn(cards) {
     override fun matchWith(dealer: Dealer): Outcome =

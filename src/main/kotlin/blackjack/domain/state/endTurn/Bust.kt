@@ -1,7 +1,7 @@
-package blackjack.domain.state
+package blackjack.domain.state.endTurn
 
 import blackjack.domain.card.Cards
-import blackjack.domain.participants.Dealer
+import blackjack.domain.participants.user.Dealer
 import blackjack.domain.result.Outcome
 
 class Bust(cards: Cards) : EndTurn(cards) {

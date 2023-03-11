@@ -2,10 +2,10 @@ package blackjack.domain.blackjack
 
 import blackjack.domain.card.CardDeck
 import blackjack.domain.card.Cards
-import blackjack.domain.participants.Dealer
-import blackjack.domain.participants.Guest
-import blackjack.domain.participants.Name
 import blackjack.domain.participants.Participants
+import blackjack.domain.participants.user.Dealer
+import blackjack.domain.participants.user.Guest
+import blackjack.domain.participants.user.Name
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll

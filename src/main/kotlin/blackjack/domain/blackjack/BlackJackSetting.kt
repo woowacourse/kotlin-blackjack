@@ -1,9 +1,9 @@
 package blackjack.domain.blackjack
 
 import blackjack.domain.card.CardDeck
-import blackjack.domain.participants.Dealer
-import blackjack.domain.participants.Guest
 import blackjack.domain.participants.Participants
+import blackjack.domain.participants.user.Dealer
+import blackjack.domain.participants.user.Guest
 
 class BlackJackSetting(
     val cardDeck: CardDeck,

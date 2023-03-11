@@ -1,9 +1,13 @@
-package blackjack.domain.state
+package blackjack.domain.state.inTurn
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
-import blackjack.domain.participants.Dealer
+import blackjack.domain.participants.user.Dealer
 import blackjack.domain.result.Outcome
+import blackjack.domain.state.State
+import blackjack.domain.state.endTurn.BlackJack
+import blackjack.domain.state.endTurn.Bust
+import blackjack.domain.state.endTurn.Stay
 
 class Hit(cards: Cards) : InTurn(cards) {
     override fun draw(card: Card): State {
