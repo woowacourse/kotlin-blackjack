@@ -40,4 +40,18 @@ class CardDeckTest {
         // then
         assertThat(actual.size).isEqualTo(2)
     }
+
+    @Test
+    fun `카드덱은 외부에서 변경이 불가능하다`() {
+        // given
+        val mutableList = mutableListOf(Card.get(Shape.HEART, CardNumber.ACE), Card.get(Shape.HEART, CardNumber.TWO))
+        val cardDeck = CardDeck(mutableList)
+        mutableList.clear()
+
+        // when
+        repeat(2) { cardDeck.drawCard() }
+
+        // then
+        assertThrows<IllegalArgumentException> { cardDeck.drawCard() }
+    }
 }
