@@ -1,7 +1,6 @@
 package blackjack.domain.participant
 
 import blackjack.domain.card.CardDeck
-import blackjack.domain.money.Money
 import blackjack.domain.result.GameResult
 
 class Participants(private val participants: List<Participant>) {
@@ -52,20 +51,9 @@ class Participants(private val participants: List<Participant>) {
             participant.name,
             participant.getCards(),
             participant.getTotalScore(),
-            getProfit(participant)
+            participant.getProfit(participants)
         )
     }
-
-    private fun getProfit(participant: Participant): Money = when (participant) {
-        is Player -> getPlayerMatchResults(participant)
-        is Dealer -> getDealerMatchResult(participant)
-        else -> throw IllegalArgumentException("올바르지 않은 참여자입니다.")
-    }
-
-    private fun getPlayerMatchResults(player: Player): Money = player.getProfit(dealer!!)
-
-    private fun getDealerMatchResult(dealer: Dealer): Money =
-        Money(getPlayers().sumOf { dealer.getProfit(it).getAmount() })
 
     fun getPlayers(): List<Participant> = participants.filterIsInstance<Player>()
 

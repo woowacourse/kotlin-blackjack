@@ -24,7 +24,10 @@ class Dealer(cardState: CardState = StartState()) : Participant(DEALER_NAME, car
     /**
      플레이어 손익의 반대이다.
      */
-    override fun getProfit(other: Participant): Money = -other.getProfit(this)
+    override fun getProfit(others: List<Participant>): Money {
+        val players = others.filterIsInstance<Player>()
+        return -Money(players.sumOf { it.getProfit(listOf(this)).getAmount() })
+    }
 
     companion object {
         private const val DEALER_NAME = "딜러"

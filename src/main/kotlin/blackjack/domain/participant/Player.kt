@@ -27,5 +27,8 @@ class Player(
         return stay()
     }
 
-    override fun getProfit(other: Participant): Money = cardState.profit(other.cardState, money)
+    override fun getProfit(others: List<Participant>): Money {
+        val dealer = others.first { it is Dealer }
+        return cardState.profit(dealer.cardState, money)
+    }
 }

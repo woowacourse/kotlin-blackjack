@@ -6,7 +6,6 @@ import blackjack.domain.state.CardState
 
 abstract class Participant(val name: String, val cardState: CardState) {
     abstract val maxDrawableScore: Int
-
     val isRunning: Boolean = cardState.isRunning
 
     abstract fun getFirstOpenCards(): List<Card>
@@ -15,7 +14,7 @@ abstract class Participant(val name: String, val cardState: CardState) {
 
     abstract fun stay(): Participant
 
-    abstract fun getProfit(other: Participant): Money
+    abstract fun getProfit(others: List<Participant>): Money
 
     abstract fun canDraw(): Boolean
 
