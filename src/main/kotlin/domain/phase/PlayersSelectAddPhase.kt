@@ -22,10 +22,20 @@ class PlayersSelectAddPhase(
 
     private fun Player.playerSelectAdd(deck: CardDeck) {
         if (isPossibleDrawCard().not()) return
-        val isAddCard = isPlayerCardAdd(name)
-        if (isAddCard) addCard(deck.draw())
+        when (isPlayerCardAdd(name)) {
+            true -> playerSelectCardAddStep(deck)
+            false -> playerSelectStayStep()
+        }
+    }
+
+    private fun Player.playerSelectCardAddStep(deck: CardDeck) {
+        addCard(deck.draw())
         printPlayerCards(this)
-        if (isAddCard) playerSelectAdd(deck)
-        else stay()
+        playerSelectAdd(deck)
+    }
+
+    private fun Player.playerSelectStayStep() {
+        printPlayerCards(this)
+        stay()
     }
 }
