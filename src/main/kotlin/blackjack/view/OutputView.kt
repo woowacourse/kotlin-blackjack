@@ -3,7 +3,6 @@ package blackjack.view
 import blackjack.domain.Card
 import blackjack.domain.CardBunch
 import blackjack.domain.CardNumber
-import blackjack.domain.Consequence
 import blackjack.domain.Participants
 import blackjack.domain.Player
 
@@ -13,9 +12,6 @@ object OutputView {
     private const val DISTRIBUTE_SCRIPT = "딜러와 %s에게 2장의 카드를 나누었습니다."
     private const val CAN_GET_CARD_SCRIPT = "딜러는 16이하라 한 장의 카드를 더 받았습니다."
     private const val CANNOT_GET_CARD_SCRIPT = "딜러는 17이상이라 카드를 더 받지 못합니다."
-    private const val DEALER_WIN = 0
-    private const val DEALER_LOSE = 1
-    private const val DRAW = 2
 
     private fun makeCardString(card: Card): String = getCardNumberString(card.cardNumber) + card.shape.korean
 
@@ -53,30 +49,6 @@ object OutputView {
             println("${player.name}카드 : $bunchString - 결과: ${player.cardBunch.getTotalScore()}")
         }
         println()
-    }
-
-    fun printWinOrLose(dealerConsequence: List<Int>, consequences: List<Pair<Player, Consequence>>) {
-        println("##최종 승패")
-        printDealerResult(dealerConsequence)
-        getResultString(consequences)
-    }
-
-    private fun printDealerResult(dealerConsequence: List<Int>) {
-        println("딜러: ${dealerConsequence[DEALER_WIN]}승 ${dealerConsequence[DEALER_LOSE]}패 ${dealerConsequence[DRAW]}무")
-    }
-
-    private fun getResultString(consequences: List<Pair<Player, Consequence>>) {
-        var resultString = ""
-        consequences.forEach { consequence ->
-            resultString += decidePlayerResult(consequence.second, consequence.first)
-        }
-        println(resultString)
-    }
-
-    private fun decidePlayerResult(consequence: Consequence, player: Player) = when (consequence) {
-        Consequence.WIN -> "${player.name}: 승\n"
-        Consequence.LOSE -> "${player.name}: 패\n"
-        Consequence.DRAW -> "${player.name}: 무\n"
     }
 
     private fun getCardNumberString(cardNumber: CardNumber): String {
