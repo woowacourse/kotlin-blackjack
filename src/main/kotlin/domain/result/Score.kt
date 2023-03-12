@@ -5,9 +5,9 @@ import domain.constant.BlackJackConstants
 
 class Score private constructor(val value: Int) {
 
-    fun isSame(other: Int) = value == other
+    fun isSame(other: Score) = value == other.value
 
-    fun isBiggerThan(other: Int) = value > other
+    fun isBiggerThan(other: Score) = value > other.value
 
     companion object {
         fun of(hand: Hand): Score {

@@ -41,20 +41,28 @@ class ScoreTest {
 
     @Test
     fun `other 보다 점수가 크면 true 를 반환한다`() {
-        val biggerHand = Hand(Card(CardShape.HEART, CardNumber.JACK), Card(CardShape.HEART, CardNumber.ACE))
+        val hand = Hand(Card(CardShape.HEART, CardNumber.JACK), Card(CardShape.HEART, CardNumber.ACE))
 
-        val biggerScore = Score.of(biggerHand)
+        val score = Score.of(hand)
 
-        assertThat(biggerScore.isBiggerThan(other = 10)).isTrue
+        val otherHand = Hand(Card(CardShape.HEART, CardNumber.THREE), Card(CardShape.HEART, CardNumber.ACE))
+
+        val otherScore = Score.of(otherHand)
+
+        assertThat(score.isBiggerThan(otherScore)).isTrue
     }
 
     @Test
     fun `other 보다 크지 않으면 false 를 반환한다`() {
-        val biggerHand = Hand(Card(CardShape.HEART, CardNumber.JACK), Card(CardShape.HEART, CardNumber.KING))
+        val hand = Hand(Card(CardShape.HEART, CardNumber.JACK), Card(CardShape.HEART, CardNumber.ACE))
 
-        val biggerScore = Score.of(biggerHand)
+        val score = Score.of(hand)
 
-        assertThat(biggerScore.isBiggerThan(21)).isFalse
+        val otherHand = Hand(Card(CardShape.HEART, CardNumber.JACK), Card(CardShape.HEART, CardNumber.ACE))
+
+        val otherScore = Score.of(otherHand)
+
+        assertThat(score.isBiggerThan(otherScore)).isFalse
     }
     @Test
     fun `other 과 같으면 true 를 반환한다`() {
@@ -62,6 +70,10 @@ class ScoreTest {
 
         val biggerScore = Score.of(hand)
 
-        assertThat(biggerScore.isSame(20)).isTrue
+        val otherHand = Hand(Card(CardShape.HEART, CardNumber.JACK), Card(CardShape.HEART, CardNumber.KING))
+
+        val otherScore = Score.of(otherHand)
+
+        assertThat(biggerScore.isSame(otherScore)).isTrue
     }
 }
