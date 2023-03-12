@@ -4,13 +4,9 @@ import domain.deck.Deck
 import domain.judge.PlayerResultInfo
 import domain.judge.Result
 
-class Players(private val players: List<Player>) {
+class Players(val players: List<Player>) {
     init {
         require(players.size <= MAX_PLAYER_COUNT) { println(ERROR_OVER_MAX_PLAYER_COUNT) }
-    }
-
-    fun getPlayers(): List<Player> {
-        return players.toList()
     }
 
     fun makeStartDecks(deck: Deck) {

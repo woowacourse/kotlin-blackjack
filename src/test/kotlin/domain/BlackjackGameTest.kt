@@ -1,5 +1,8 @@
 package domain
 
+import domain.card.Card
+import domain.card.CardValue
+import domain.card.Shape
 import domain.deck.Deck
 import domain.judge.Result
 import org.assertj.core.api.Assertions.assertThat
@@ -17,5 +20,14 @@ class BlackjackGameTest {
                 )
             )
         assertThat(actual).isEqualTo(listOf(Result.LOSS, Result.WIN, Result.WIN))
+    }
+
+    @Test
+    fun `test`() {
+        val card1 = Card(Shape.SPADE, CardValue.ACE)
+        val card2 = Card(Shape.SPADE, CardValue.ACE)
+        println(card1.hashCode())
+        print(card2.hashCode())
+        assertThat(card1).isEqualTo(card2)
     }
 }
