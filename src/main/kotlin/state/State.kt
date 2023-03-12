@@ -5,11 +5,11 @@ import domain.card.Cards
 
 interface State {
     val isFinished: Boolean
-    val rateOfProfit: Double
+    val rateOfProfit: RateOfProfit
     val score: Int
     fun draw(card: Card): State
     fun next(nextCards: Cards): State
     fun stay(): State
     fun getCards(): List<Card>
-    fun resultProfit(other: State): Double
+    fun resultProfit(other: State): RateOfProfit
 }

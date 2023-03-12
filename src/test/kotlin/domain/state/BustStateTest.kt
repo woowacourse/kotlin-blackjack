@@ -9,6 +9,7 @@ import org.junit.jupiter.api.assertAll
 import org.junit.jupiter.api.assertThrows
 import state.BlackJackState
 import state.BustState
+import state.RateOfProfit
 import state.StayState
 
 class BustStateTest {
@@ -31,7 +32,7 @@ class BustStateTest {
             Card.of(CardCategory.CLOVER, CardNumber.TEN)
         )
 
-        val expected = -1.0
+        val expected = RateOfProfit.LOSE
 
         assertAll(
             "플레이어가 버스트이면 딜러가 이긴다",

@@ -9,6 +9,7 @@ import org.junit.jupiter.api.assertAll
 import org.junit.jupiter.api.assertThrows
 import state.BlackJackState
 import state.BustState
+import state.RateOfProfit
 import state.StayState
 
 class BlackJackStateTest {
@@ -42,7 +43,7 @@ class BlackJackStateTest {
             Card.of(CardCategory.CLOVER, CardNumber.JACK)
         )
         val actual = blackJackState.resultProfit(dealerState)
-        val expected = 0.0
+        val expected = RateOfProfit.DRAW
         assertThat(actual).isEqualTo(expected)
     }
 
@@ -63,7 +64,7 @@ class BlackJackStateTest {
                     Card.of(CardCategory.CLOVER, CardNumber.SIX)
                 )
                 val actual = blackJackState.resultProfit(dealerState)
-                val expected = 1.5
+                val expected = RateOfProfit.WIN_BLACKJACK
                 assertThat(actual).isEqualTo(expected)
             },
             {
@@ -74,7 +75,7 @@ class BlackJackStateTest {
                     Card.of(CardCategory.CLOVER, CardNumber.TEN)
                 )
                 val actual = blackJackState.resultProfit(dealerState)
-                val expected = 1.5
+                val expected = RateOfProfit.WIN_BLACKJACK
                 assertThat(actual).isEqualTo(expected)
             }
         )

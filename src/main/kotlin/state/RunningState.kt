@@ -7,7 +7,7 @@ abstract class RunningState(cards: Cards) : StartedState(cards) {
     override val isFinished: Boolean
         get() = false
 
-    override val rateOfProfit: Double
+    override val rateOfProfit: RateOfProfit
         get() {
             throw IllegalStateException(ERROR_GAME_IS_NOT_OVER)
         }
@@ -17,7 +17,7 @@ abstract class RunningState(cards: Cards) : StartedState(cards) {
         return next(nextCards)
     }
 
-    override fun resultProfit(other: State): Double {
+    override fun resultProfit(other: State): RateOfProfit {
         throw IllegalStateException(ERROR_PROFIT)
     }
 

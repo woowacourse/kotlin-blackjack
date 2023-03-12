@@ -9,6 +9,7 @@ import org.junit.jupiter.api.assertAll
 import org.junit.jupiter.api.assertThrows
 import state.BlackJackState
 import state.BustState
+import state.RateOfProfit
 import state.StayState
 
 class StayTest {
@@ -63,7 +64,7 @@ class StayTest {
                     Card.of(CardCategory.CLOVER, CardNumber.SIX)
                 )
                 val actual = playerStayState.resultProfit(dealerState)
-                val expected = 1.0
+                val expected = RateOfProfit.WIN
                 Assertions.assertThat(actual).isEqualTo(expected)
             },
             {
@@ -73,7 +74,7 @@ class StayTest {
                     Card.of(CardCategory.CLOVER, CardNumber.JACK),
                 )
                 val actual = playerStayState.resultProfit(dealerState)
-                val expected = 0.0
+                val expected = RateOfProfit.DRAW
                 Assertions.assertThat(actual).isEqualTo(expected)
             },
             {
@@ -84,7 +85,7 @@ class StayTest {
                     Card.of(CardCategory.CLOVER, CardNumber.FIVE)
                 )
                 val actual = playerStayState.resultProfit(dealerState)
-                val expected = -1.0
+                val expected = RateOfProfit.LOSE
                 Assertions.assertThat(actual).isEqualTo(expected)
             }
         )
@@ -103,7 +104,7 @@ class StayTest {
             Card.of(CardCategory.CLOVER, CardNumber.ACE)
         )
         val actual = playerStayState.resultProfit(dealerState)
-        val expected = -1.0
+        val expected = RateOfProfit.LOSE
         Assertions.assertThat(actual).isEqualTo(expected)
     }
 
@@ -121,7 +122,7 @@ class StayTest {
             Card.of(CardCategory.CLOVER, CardNumber.TEN)
         )
         val actual = playerStayState.resultProfit(dealerState)
-        val expected = 1.0
+        val expected = RateOfProfit.WIN
         Assertions.assertThat(actual).isEqualTo(expected)
     }
 }

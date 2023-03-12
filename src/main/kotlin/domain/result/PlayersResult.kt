@@ -11,7 +11,7 @@ class PlayersResult(players: Players, dealer: Dealer) {
         list = players.list.map { player ->
             ParticipantResultInfo(
                 player.name,
-                (dealer.getProfit(player) * player.betMoney).toInt(),
+                (dealer.getProfit(player).value * player.betMoney).toInt(),
                 player.getCards()
             )
         }

@@ -5,6 +5,7 @@ import domain.card.CardCategory
 import domain.card.CardNumber
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import state.RateOfProfit
 
 class PlayerTest {
     @Test
@@ -30,7 +31,7 @@ class PlayerTest {
         dealer.stay()
 
         val result = dealer.getProfit(player)
-        val expected = -1.0
+        val expected = RateOfProfit.LOSE
         assertThat(result).isEqualTo(expected)
     }
 }

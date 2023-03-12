@@ -21,7 +21,7 @@ class PlayersSelectAddPhase(
     }
 
     private fun Player.playerSelectAdd(deck: CardDeck) {
-        if (isBust()) return
+        if (isBust() || !isPossibleDrawCard()) return
         val isAddCard = isPlayerCardAdd(name)
         if (isAddCard) addCard(deck.draw())
         printPlayerCards(this)
