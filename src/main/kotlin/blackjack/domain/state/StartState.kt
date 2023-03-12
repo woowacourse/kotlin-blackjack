@@ -10,10 +10,15 @@ class StartState(cards: Cards) : RunningState(cards) {
         check(!cards.isGreaterOrEqualsCardSize(LIMITED_CARD_SIZE)) { "시작 상태는 카드가 2장 미만이어야 합니다." }
     }
 
-    override fun nextStateCondition(): Boolean =
-        cards.isGreaterOrEqualsCardSize(LIMITED_CARD_SIZE)
+    override fun draw(card: Card): CardState {
+        cards.add(card)
+        if (cards.isGreaterOrEqualsCardSize(LIMITED_CARD_SIZE)) {
+            return nextState()
+        }
+        return this
+    }
 
-    override fun nextState(): CardState {
+    private fun nextState(): CardState {
         if (cards.isBlackjack) {
             return BlackjackState(cards)
         }

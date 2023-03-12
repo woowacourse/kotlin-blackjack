@@ -9,18 +9,6 @@ abstract class RunningState(cards: Cards) : CardState(cards) {
 
     override fun stay(): CardState = StayState(cards)
 
-    override fun draw(card: Card): CardState {
-        cards.add(card)
-        if (nextStateCondition()) {
-            return nextState()
-        }
-        return this
-    }
-
-    abstract fun nextStateCondition(): Boolean
-
-    abstract fun nextState(): CardState
-
     override fun getFirstCard(): Card = cards.getFirstCard()
 
     override fun profit(other: CardState, money: Money): Money {
