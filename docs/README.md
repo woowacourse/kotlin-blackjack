@@ -72,4 +72,14 @@
     - [x] BlackJack
     - [x] Bust
     
+#### step2 추가 기능목록
+- view
+  - InputView
+    - [ ] 베팅금액을 입력받는다
+  -OutputView
+    - [ ] 최종수익을 출력한다.
+
+
+- 도메인 로직
+  - [ ] 상태에 따른 최종 수익을 계산한다.
 
