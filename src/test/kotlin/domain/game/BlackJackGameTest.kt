@@ -4,7 +4,6 @@ import domain.card.Card
 import domain.card.CardCategory
 import domain.card.CardNumber
 import domain.card.CardPicker
-import domain.card.Cards
 import domain.participant.BettingMoney
 import domain.participant.Name
 import domain.participant.Names
@@ -20,10 +19,6 @@ class BlackJackGameTest {
     class TestCardPicker() : CardPicker {
         override fun draw(): Card {
             return Card.of(cardCategory = CardCategory.CLOVER, cardNumber = CardNumber.FIVE)
-        }
-
-        override fun drawInitCards(): Cards {
-            return Cards(List(2) { draw() })
         }
     }
 
