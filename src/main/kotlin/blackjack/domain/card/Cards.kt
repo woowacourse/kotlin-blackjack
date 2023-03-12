@@ -17,7 +17,7 @@ class Cards(_cards: List<Card> = listOf()) {
         return _cards.sumOf { it.number.value }
     }
 
-    fun isBlackjack(): Boolean = ((_cards.size == 2) and (calculateScore() == BUST_CRITERIA))
+    fun isBlackjack(): Boolean = ((_cards.size == CARD_SETTING_COUNT) and (calculateScore() == BUST_CRITERIA))
 
     fun isBust(): Boolean = (calculateScore() > BUST_CRITERIA)
 
@@ -27,7 +27,7 @@ class Cards(_cards: List<Card> = listOf()) {
 
     private fun calculateHavingAceScore(): Int {
         var result = _cards.sumOf { it.number.value }
-        if ((BUST_CRITERIA - result) >= 10) result += 10
+        if ((BUST_CRITERIA - result) >= ACE_GAP) result += ACE_GAP
         return result
     }
 
@@ -40,5 +40,7 @@ class Cards(_cards: List<Card> = listOf()) {
 
     companion object {
         const val BUST_CRITERIA = 21
+        const val ACE_GAP = 10
+        const val CARD_SETTING_COUNT = 2
     }
 }

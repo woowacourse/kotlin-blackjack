@@ -1,6 +1,7 @@
 package blackjack.domain.player
 
 import blackjack.domain.card.CardDeck
+import blackjack.domain.card.Cards.Companion.CARD_SETTING_COUNT
 import blackjack.domain.card.CardsGenerator
 import blackjack.domain.card.RandomCardsGenerator
 
@@ -96,7 +97,6 @@ class BlackjackManager(
     }
 
     companion object {
-        private const val CARD_SETTING_COUNT = 2
         private const val ERROR_CANT_FIND_PARTICIPANT_EARNING_RATE = "[ERRPR] 해당 참가자의 수익률을 찾을 수 없습니다"
         private const val NO_CARD_MESSAGE = "[ERROR] 더 이상 발급할 수 있는 카드가 없습니다."
     }
