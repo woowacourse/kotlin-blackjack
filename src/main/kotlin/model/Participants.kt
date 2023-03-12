@@ -1,6 +1,6 @@
 package model
 
-data class Participants(val dealer: Participant, val players: Players) {
+data class Participants(val dealer: Dealer, val players: Players) {
     val all: List<Participant>
         get() = listOf(dealer) + players
 

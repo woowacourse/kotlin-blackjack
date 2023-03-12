@@ -7,7 +7,6 @@ import model.Money
 import model.Name
 import model.Player
 import model.Rank
-import model.Result
 import model.Suit
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -66,7 +65,22 @@ class PlayerTest {
     }
 
     @Test
-    fun `딜러와 비교하여 점수가 딜러보다 높으면 승리한다`() {
+    fun `플레이어의 베팅이 1_000일 때, 플레이어가 BLACKJACK이라면 이익은 1_500이다`() {
+        val cardDeck = CardDeck(
+            Card(Rank.SEVEN, Suit.DIAMOND),
+            Card(Rank.TEN, Suit.CLOVER),
+            Card(Rank.ACE, Suit.CLOVER),
+            Card(Rank.KING, Suit.DIAMOND)
+        )
+        val dealer = Dealer()
+        val player = Player(Name("jason"), Money(1_000L))
+        dealer.drawFirst(cardDeck)
+        player.drawFirst(cardDeck)
+        assertThat(player.getProfitMoney(dealer).value).isEqualTo(1_500L)
+    }
+
+    @Test
+    fun `플레이어의 베팅이 1_000일 때, 딜러보다 카드 합이 높다면 이익은 1_000이다`() {
         val cardDeck = CardDeck(
             Card(Rank.SEVEN, Suit.DIAMOND),
             Card(Rank.TEN, Suit.CLOVER),
@@ -74,14 +88,14 @@ class PlayerTest {
             Card(Rank.NINE, Suit.DIAMOND)
         )
         val dealer = Dealer()
-        val player = Player("jason")
+        val player = Player(Name("jason"), Money(1_000L))
         dealer.drawFirst(cardDeck)
         player.drawFirst(cardDeck)
-        assertThat(player.getGameResult(dealer)).isEqualTo(Result.WIN)
+        assertThat(player.getProfitMoney(dealer).value).isEqualTo(1_000L)
     }
 
     @Test
-    fun `점수가 딜러와 같다면 무승부다`() {
+    fun `플레이어의 베팅이 1_000일 때, 딜러와 카드 합이 같다면 이익은 0이다`() {
         val cardDeck = CardDeck(
             Card(Rank.SEVEN, Suit.DIAMOND),
             Card(Rank.TEN, Suit.CLOVER),
@@ -89,14 +103,14 @@ class PlayerTest {
             Card(Rank.TEN, Suit.SPADE)
         )
         val dealer = Dealer()
-        val player = Player("jason")
+        val player = Player(Name("jason"), Money(1_000L))
         dealer.drawFirst(cardDeck)
         player.drawFirst(cardDeck)
-        assertThat(player.getGameResult(dealer)).isEqualTo(Result.DRAW)
+        assertThat(player.getProfitMoney(dealer).value).isEqualTo(0)
     }
 
     @Test
-    fun `점수가 딜러와 상관 없이 Bust라면 패배한다`() {
+    fun `플레이어의 베팅이 1_000일 때, 플레이어가 bust라면 이익은 -1_000이다`() {
         val cardDeck = CardDeck(
             Card(Rank.SEVEN, Suit.DIAMOND),
             Card(Rank.TEN, Suit.CLOVER),
@@ -105,15 +119,15 @@ class PlayerTest {
             Card(Rank.DEUCE, Suit.SPADE)
         )
         val dealer = Dealer()
-        val player = Player("jason")
+        val player = Player(Name("jason"), Money(1_000L))
         dealer.drawFirst(cardDeck)
         player.drawFirst(cardDeck)
         player.cards.add(cardDeck.drawCard())
-        assertThat(player.getGameResult(dealer)).isEqualTo(Result.LOSE)
+        assertThat(player.getProfitMoney(dealer).value).isEqualTo(-1_000L)
     }
 
     @Test
-    fun `플레이어가 21점 이하고 딜러가 Bust라면 승리한다`() {
+    fun `플레이어의 베팅이 1_000일 때, 딜러가 bust라면 이익은 1_000이다`() {
         val cardDeck = CardDeck(
             Card(Rank.TEN, Suit.DIAMOND),
             Card(Rank.TEN, Suit.CLOVER),
@@ -122,11 +136,11 @@ class PlayerTest {
             Card(Rank.TEN, Suit.SPADE)
         )
         val dealer = Dealer()
-        val player = Player("jason")
+        val player = Player(Name("jason"), Money(1_000L))
         dealer.drawFirst(cardDeck)
         dealer.drawCard(cardDeck)
         player.drawFirst(cardDeck)
-        assertThat(player.getGameResult(dealer)).isEqualTo(Result.WIN)
+        assertThat(player.getProfitMoney(dealer).value).isEqualTo(1_000L)
     }
 
     companion object {

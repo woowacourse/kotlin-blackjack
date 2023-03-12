@@ -1,27 +1,21 @@
 package blackjack.model
 
+import model.Name
+import model.Player
+import model.Profit
 import model.Result
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class ResultTest {
     @Test
-    fun `BLACKJACK은 1_5배 값을 갖는다`() {
-        assertThat(Result.BLACKJACK.multiple).isEqualTo(1.5f)
+    fun `참가자 정보와 참가자의 수익 정보를 갖는다`() {
+        val result = Result(Player("jason"), Profit(0L))
+        assertThat(result.participant.name.value).isEqualTo("jason")
+        assertThat(result.profit.value).isEqualTo(0L)
     }
 
-    @Test
-    fun `WIN은 1배 값을 갖는다`() {
-        assertThat(Result.WIN.multiple).isEqualTo(1f)
-    }
-
-    @Test
-    fun `DRAW은 0배 값을 갖는다`() {
-        assertThat(Result.DRAW.multiple).isEqualTo(0f)
-    }
-
-    @Test
-    fun `LOSE는 -1배 값을 갖는다`() {
-        assertThat(Result.LOSE.multiple).isEqualTo(-1f)
+    companion object {
+        fun Player(name: String): Player = Player.of(Name(name), 1_000L)
     }
 }

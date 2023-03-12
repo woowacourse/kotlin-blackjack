@@ -1,9 +1,9 @@
 package view
 
-import domain.GameResult
 import model.Cards
 import model.Participant
 import model.Participants
+import model.ParticipantsProfitResult
 import model.Rank
 import model.Suit
 
@@ -37,24 +37,19 @@ class OutputView {
         )
     }
 
-    fun printAllPlayerStatusResult(participants: Participants) {
+    fun printAllPlayerStatus(participants: Participants) {
         println()
         participants.forEach {
             print(MESSAGE_PARTICIPANT_STATUS.format(it.name.value, it.cards.getCardsFormat()))
             println(MESSAGE_POINT_RESULT.format(it.cards.sum()))
         }
-        printGameResult(participants)
     }
 
-    private fun printGameResult(participants: Participants) {
-        val gameResult = GameResult(participants)
-        val playerResult = gameResult.playersResult
-        val dealerResult = gameResult.dealerResult
+    fun printGameResult(participantsProfitResult: ParticipantsProfitResult) {
         println()
         println(MESSAGE_RESULT_TITLE)
-        println(MESSAGE_PROFIT_RESULT.format(participants.dealer.name.value, dealerResult))
-        playerResult.forEach {
-            println(MESSAGE_PROFIT_RESULT.format(it.key.value, it.value))
+        participantsProfitResult.value.forEach {
+            println(MESSAGE_PROFIT_RESULT.format(it.participant.name.value, it.profit.value))
         }
     }
 

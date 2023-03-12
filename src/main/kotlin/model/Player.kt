@@ -1,6 +1,6 @@
 package model
 
-class Player(name: Name, private val money: Money) : Participant(name) {
+class Player(name: Name, val money: Money) : Participant(name) {
     override fun getFirstOpenCards(): Cards = cards
 
     override fun isPossibleDrawCard(): Boolean = !isBust()
@@ -9,8 +9,14 @@ class Player(name: Name, private val money: Money) : Participant(name) {
         return isPossibleDrawCard() && needToDraw(name.value)
     }
 
-    fun getProfitMoney(dealer: Participant): Long {
-        return (getGameResult(dealer).multiple * money.value).toLong()
+    override fun getProfitMoney(other: Participant): Profit {
+        if (isBlackJack() && other.isBlackJack()) return Profit.of(money, CardGameResult.DRAW)
+        if (isBlackJack()) return Profit.of(money, CardGameResult.BLACKJACK)
+        if (isBust()) return Profit.of(money, CardGameResult.LOSE)
+        if (other.isBust()) return Profit.of(money, CardGameResult.WIN)
+        if (cards.sum() > other.cards.sum()) return Profit.of(money, CardGameResult.WIN)
+        if (cards.sum() == other.cards.sum()) return Profit.of(money, CardGameResult.DRAW)
+        return Profit.of(money, CardGameResult.LOSE)
     }
 
     companion object {
