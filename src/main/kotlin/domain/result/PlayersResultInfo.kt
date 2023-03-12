@@ -4,7 +4,7 @@ import domain.Dealer
 import domain.Players
 import domain.ProfitMoney
 
-class PlayersResult(players: Players, dealer: Dealer) {
+class PlayersResultInfo(players: Players, dealer: Dealer) {
     val list: List<ParticipantResultInfo>
     val sum: Int
 

@@ -5,7 +5,7 @@ import domain.Players
 import domain.ProfitMoney
 
 class BetProfitResult(players: Players, dealer: Dealer) {
-    val playersResult: PlayersResult = PlayersResult(players, dealer)
+    val playersResult: PlayersResultInfo = PlayersResultInfo(players, dealer)
 
     val dealerResult: ParticipantResultInfo =
         ParticipantResultInfo(dealer.name, ProfitMoney(-(playersResult.sum)), dealer.getCards(), dealer.getScore())
