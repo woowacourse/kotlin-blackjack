@@ -4,7 +4,8 @@ import blackjack.domain.participant.Player
 import blackjack.domain.result.BlackjackResult
 import blackjack.domain.result.ResultType
 
-class BettingResult(private val bettingResult: Map<Player, Int>) {
+class BettingResult
+    private constructor(private val bettingResult: Map<Player, Int>) {
     fun getPlayerEarningMoney(player: Player) = bettingResult[player]
     fun getDealerEarningMoney(): Int = -bettingResult.values.sum()
 
