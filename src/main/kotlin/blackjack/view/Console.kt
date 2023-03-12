@@ -16,6 +16,29 @@ import blackjack.model.CardNumberModel
 import blackjack.model.SuitModel
 
 class Console : InputView, OutputView {
+    private fun CardNumber.toPresentation(): String = when (this) {
+        CardNumber.ACE -> CardNumberModel.ACE
+        CardNumber.TWO -> CardNumberModel.TWO
+        CardNumber.THREE -> CardNumberModel.THREE
+        CardNumber.FOUR -> CardNumberModel.FOUR
+        CardNumber.FIVE -> CardNumberModel.FIVE
+        CardNumber.SIX -> CardNumberModel.SIX
+        CardNumber.SEVEN -> CardNumberModel.SEVEN
+        CardNumber.EIGHT -> CardNumberModel.EIGHT
+        CardNumber.NINE -> CardNumberModel.NINE
+        CardNumber.TEN -> CardNumberModel.TEN
+        CardNumber.JACK -> CardNumberModel.JACK
+        CardNumber.QUEEN -> CardNumberModel.QUEEN
+        CardNumber.KING -> CardNumberModel.KING
+    }.text
+
+    private fun Suit.toPresentation(): String = when (this) {
+        Suit.SPADE -> SuitModel.SPADE
+        Suit.HEART -> SuitModel.HEART
+        Suit.DIAMOND -> SuitModel.DIAMOND
+        Suit.CLOVER -> SuitModel.CLOVER
+    }.text
+
     override fun inputNames(): List<String> {
         println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
         return readln().split(",").map { it.trim() }
@@ -105,29 +128,6 @@ class Console : InputView, OutputView {
     }
 
     private fun Card.toPresentation(): String = "${number.toPresentation()}${suit.toPresentation()}"
-
-    private fun CardNumber.toPresentation(): String = when (this) {
-        CardNumber.ACE -> CardNumberModel.ACE
-        CardNumber.TWO -> CardNumberModel.TWO
-        CardNumber.THREE -> CardNumberModel.THREE
-        CardNumber.FOUR -> CardNumberModel.FOUR
-        CardNumber.FIVE -> CardNumberModel.FIVE
-        CardNumber.SIX -> CardNumberModel.SIX
-        CardNumber.SEVEN -> CardNumberModel.SEVEN
-        CardNumber.EIGHT -> CardNumberModel.EIGHT
-        CardNumber.NINE -> CardNumberModel.NINE
-        CardNumber.TEN -> CardNumberModel.TEN
-        CardNumber.JACK -> CardNumberModel.JACK
-        CardNumber.QUEEN -> CardNumberModel.QUEEN
-        CardNumber.KING -> CardNumberModel.KING
-    }.text
-
-    private fun Suit.toPresentation(): String = when (this) {
-        Suit.SPADE -> SuitModel.SPADE
-        Suit.HEART -> SuitModel.HEART
-        Suit.DIAMOND -> SuitModel.DIAMOND
-        Suit.CLOVER -> SuitModel.CLOVER
-    }.text
 
     private fun printProfits(results: ParticipantResults) {
         println(
