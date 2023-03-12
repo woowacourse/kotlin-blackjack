@@ -61,8 +61,8 @@
 
 #### 적용해보자 상태패턴
 - [ ]State
-  - [ ] ProgressAble
-    - [ ] 카드를 뽑는다(draw)
+  - [x] ProgressAble
+    - [x] 카드를 뽑는다(draw)
       - [x] Hit
       - [x] FirstTurn
   - [ ] Stopped

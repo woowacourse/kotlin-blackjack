@@ -9,5 +9,5 @@ class Hit(override val hand: CardBunchForState) : ProgressAble(hand) {
         return (Hit(hand))
     }
 
-    fun stay(): State = Stay(hand)
+    override fun stay(): State = Stay(hand)
 }
