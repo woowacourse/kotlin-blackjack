@@ -13,7 +13,7 @@ class ResultManager(private val dealer: Dealer, private val players: Players) {
         val playerProfits = players.users.zip(gameResults).map { (player, result) -> calculatePlayerProfit(player, result) }
         val dealerProfit = playerProfits.fold(0.0) { total, profit -> total - profit }
         val playerResults = players.users.zip(gameResults.zip(playerProfits)).map { (player, result) ->
-            PlayerResult(player.info.name, player.getCards(), player.getTotalScore(), result.first, result.second.toInt())
+            PlayerResult(player.name, player.getCards(), player.getTotalScore(), result.first, result.second.toInt())
         }
         val dealerResult = getDealerResult(gameResults, dealerProfit.toInt())
         return ParticipantResults(dealerResult, playerResults)
@@ -32,7 +32,7 @@ class ResultManager(private val dealer: Dealer, private val players: Players) {
         }
     }
 
-    private fun calculatePlayerProfit(player: Player, result: GameResult): Double = player.info.money * result.payout
+    private fun calculatePlayerProfit(player: Player, result: GameResult): Double = player.money * result.payout
 
     private fun getDealerResult(results: List<GameResult>, profit: Int): DealerResult {
         with(results) {

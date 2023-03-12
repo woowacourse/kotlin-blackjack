@@ -6,7 +6,6 @@ import blackjack.domain.card.CardNumber
 import blackjack.domain.card.Suit
 import blackjack.domain.data.ParticipantCards
 import blackjack.domain.participant.Player
-import blackjack.domain.participant.PlayerInfo
 import blackjack.domain.participant.Players
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
@@ -25,10 +24,10 @@ class PlayersTest {
     @Test
     fun `플레이어는 최대 7명까지 가능하다`() {
         val players = listOf(
-            Player(PlayerInfo("a", 0)), Player(PlayerInfo("b", 0)),
-            Player(PlayerInfo("c", 0)), Player(PlayerInfo("d", 0)),
-            Player(PlayerInfo("e", 0)), Player(PlayerInfo("f", 0)),
-            Player(PlayerInfo("g", 0)), Player(PlayerInfo("h", 0))
+            Player("a", 0), Player("b", 0),
+            Player("c", 0), Player("d", 0),
+            Player("e", 0), Player("f", 0),
+            Player("g", 0), Player("h", 0)
         )
 
         assertThatIllegalArgumentException().isThrownBy { Players(players) }
@@ -46,9 +45,9 @@ class PlayersTest {
         )
         val players = Players(
             listOf(
-                Player(PlayerInfo("buna", 0)),
-                Player(PlayerInfo("glo", 0)),
-                Player(PlayerInfo("bandal", 0))
+                Player("buna", 0),
+                Player("glo", 0),
+                Player("bandal", 0)
             )
         )
 

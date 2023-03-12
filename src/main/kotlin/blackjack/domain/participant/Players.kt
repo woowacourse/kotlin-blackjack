@@ -16,7 +16,7 @@ class Players(private val _users: List<Player>) {
         _users.forEach { it.addCard(deck.draw()) }
     }
 
-    fun getFirstOpenCards(): List<ParticipantCards> = _users.map { ParticipantCards(it.info.name, it.getCards()) }
+    fun getFirstOpenCards(): List<ParticipantCards> = _users.map { ParticipantCards(it.name, it.getCards()) }
 
     companion object {
         private const val MINIMUM_PLAYER = 1

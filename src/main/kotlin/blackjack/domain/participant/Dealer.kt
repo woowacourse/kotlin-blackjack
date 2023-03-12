@@ -2,9 +2,7 @@ package blackjack.domain.participant
 
 import blackjack.domain.card.Card
 
-class Dealer : Participant() {
-    val name: String = "딜러"
-
+class Dealer : Participant("딜러") {
     override fun getFirstOpenCards(): List<Card> = listOf(getFirstCard())
 
     override fun canDraw(): Boolean {

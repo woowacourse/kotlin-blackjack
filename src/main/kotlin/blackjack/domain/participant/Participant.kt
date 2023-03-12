@@ -7,7 +7,7 @@ import blackjack.domain.state.finished.Blackjack
 import blackjack.domain.state.finished.Bust
 import blackjack.domain.state.running.Start
 
-abstract class Participant {
+abstract class Participant(val name: String) {
     private var state: State = Start()
     val isFinished: Boolean
         get() = state.isFinished

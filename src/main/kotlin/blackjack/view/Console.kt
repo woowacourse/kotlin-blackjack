@@ -81,7 +81,7 @@ class Console : InputView, OutputView {
     override fun printDraw(participant: Participant) {
         when (participant) {
             is Dealer -> println("\n${participant.name}는 16이하라 한장의 카드를 더 받았습니다.")
-            is Player -> println(getCardsMessage(participant.info.name, participant.getCards()))
+            is Player -> println(getCardsMessage(participant.name, participant.getCards()))
         }
     }
 
