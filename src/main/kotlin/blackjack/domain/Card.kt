@@ -2,7 +2,21 @@ package blackjack.domain
 
 class Card private constructor(val shape: Shape, val cardNumber: CardNumber) {
     override fun equals(other: Any?): Boolean {
-        return other is Card && other.shape == this.shape && other.cardNumber == this.cardNumber
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Card
+
+        if (shape != other.shape) return false
+        if (cardNumber != other.cardNumber) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = shape.hashCode()
+        result = 31 * result + cardNumber.hashCode()
+        return result
     }
 
     companion object {
