@@ -7,8 +7,10 @@ class StayState(cards: Cards, override val earningRate: Double = 1.0) : Finished
     override fun profit(other: CardState, money: Money): Money {
         if (other is BustState) return money
         val scoreGap = getTotalScore() - other.getTotalScore()
-        if (scoreGap > 0) return money * earningRate
-        else if (scoreGap == 0) return Money(0)
-        return -money
+        return when {
+            scoreGap > 0 -> money * earningRate
+            scoreGap == 0 -> Money(0)
+            else -> -money
+        }
     }
 }
