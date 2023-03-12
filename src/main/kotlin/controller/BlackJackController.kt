@@ -10,6 +10,7 @@ class BlackJackController {
     fun runBlackJack() {
         val blackJackGame: BlackJackGameBluePrint = BlackJackGame()
         val persons = blackJackGame.makePersons(OnboardingView.requestInputNames())
+        val bets = OnboardingView.requestInputBets(persons.players.map { it.name })
 
         OnboardingView.printInitialSetting(persons)
         drawPhase(blackJackGame, persons)
