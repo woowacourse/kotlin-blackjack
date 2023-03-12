@@ -11,7 +11,7 @@ import domain.state.State
 class PlayerHit(hand: Hand) : Started(hand) {
     override fun draw(card: Card): State {
         val score = Score.of(hand.apply { add(card) })
-        if (score.isBiggerThan(BLACK_JACK_NUMBER)) return Bust(hand)
+        if (score.value > BLACK_JACK_NUMBER) return Bust(hand)
         return PlayerHit(hand)
     }
 }
