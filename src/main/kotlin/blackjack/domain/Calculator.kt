@@ -10,12 +10,9 @@ class Calculator {
     }
 
     fun calculateDividend(playerResultsBy: Map<Player, Consequence>): Map<Player, Int> {
-        val result = mutableMapOf<Player, Int>()
-        playerResultsBy.forEach {
-            val dividend = getDividend(it.key, it.value)
-            result[it.key] = it.key.getProfit(dividend)
+        return playerResultsBy.asSequence().associate {
+            it.key to it.key.getProfit(getDividend(it.key, it.value))
         }
-        return result
     }
 
     companion object {
