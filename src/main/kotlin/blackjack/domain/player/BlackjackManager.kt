@@ -89,7 +89,7 @@ class BlackjackManager(
                         ?: throw IllegalArgumentException(ERROR_CANT_FIND_PARTICIPANT_EARNING_RATE)
                 ParticipantProfit(
                     name,
-                    (participant.betAmount * participantEarningRate.earningRate.rate).toInt()
+                    (participant.betAmount * participantEarningRate.earningRate.of(participant.isBlackjack)).toInt()
                 )
             }
         )

@@ -11,7 +11,7 @@ class Participant(name: String, val betAmount: Int = 0, cards: Cards = Cards()) 
         val earningRate = when {
             (isBust) -> EarningRate.LOSE
             (dealer.isBust) -> EarningRate.WIN
-            (isBlackjack and !dealer.isBlackjack) -> EarningRate.BLACKJACK_WIN
+            (isBlackjack and !dealer.isBlackjack) -> EarningRate.WIN
             (!isBlackjack and dealer.isBlackjack) -> EarningRate.LOSE
             (isBlackjack and dealer.isBlackjack) -> EarningRate.DRAW
             (cards.calculateScore() > dealer.cards.calculateScore()) -> EarningRate.WIN
