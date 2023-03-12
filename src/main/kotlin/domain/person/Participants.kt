@@ -4,7 +4,6 @@ class Participants(val dealer: Dealer, val players: List<Player>) {
 
     init {
         checkPlayerNamesDuplicated()
-        checkPlayerNameDoesNotEqualDealer()
     }
 
     private fun checkPlayerNamesDuplicated() {
@@ -12,8 +11,11 @@ class Participants(val dealer: Dealer, val players: List<Player>) {
         require(playerNames.size == playerNames.toSet().size)
     }
 
-    private fun checkPlayerNameDoesNotEqualDealer() {
-        val playerNames = players.map { it.name }
-        require(dealer.name !in playerNames)
+    companion object {
+        fun from(getPlayerNames: () -> List<String>): Participants {
+            val dealer = Dealer()
+            val players = getPlayerNames().map { name -> Player(name) }
+            return Participants(dealer, players)
+        }
     }
 }
