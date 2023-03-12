@@ -13,6 +13,7 @@ class BlackjackController(
 
     fun run() {
         val blackjackGame = BlackjackGame(participants = inputView.readParticipants())
+        blackjackGame.bettingParticipants(inputView::readParticipantBattingAmount)
         blackjackGame.setFirstTurnPlayersCards(outputView::printFirstTurnSettingCards)
         blackjackGame.hitPlayersCards(
             inputView::readHitOrNot,

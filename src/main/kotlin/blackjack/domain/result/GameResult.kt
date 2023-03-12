@@ -1,8 +1,8 @@
 package blackjack.domain.result
 
 enum class GameResult(val ratio: Float) {
-    WIN(2.0f),
-    BLACKJACK(1.5f),
-    DRAW(1.0f),
-    LOSE(0.0f),
+    WIN(1.0f),
+    BLACKJACK(0.5f),
+    DRAW(0.0f),
+    LOSE(-1.0f),
 }

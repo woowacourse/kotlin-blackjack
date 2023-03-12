@@ -12,6 +12,14 @@ class BlackjackGame(
     val participants: Participants
 ) {
 
+    fun bettingParticipants(
+        readParticipantBattingAmount: (Participant) -> BettingAmount
+    ) {
+        participants.values.forEach {
+            it.setBettingAmount(readParticipantBattingAmount(it))
+        }
+    }
+
     fun setFirstTurnPlayersCards(
         printFirstTurnSettingCards: (Dealer, Participants) -> Unit,
     ) {
