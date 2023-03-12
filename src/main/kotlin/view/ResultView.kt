@@ -8,9 +8,9 @@ class ResultView {
     fun printStatus(blackjackStage: BlackjackStage) {
         val dealer = blackjackStage.users.dealer
         val players = blackjackStage.users.players
-        println(MESSAGE_DEALER_GAME_STATUS.format(dealer.cards.isString(), dealer.cardsNumberSum()))
+        println(MESSAGE_DEALER_GAME_STATUS.format(dealer.userInformation.cards.isString(), dealer.cardsNumberSum()))
         players.value.forEach {
-            println(MESSAGE_PLAYERS_GAME_STATUS.format(it.userInformation.name.value, it.cards.isString(), it.cardsNumberSum()))
+            println(MESSAGE_PLAYERS_GAME_STATUS.format(it.name.value, it.userInformation.cards.isString(), it.cardsNumberSum()))
         }
     }
 
@@ -18,7 +18,7 @@ class ResultView {
         println(MESSAGE_TOTAL_PROFIT_MONEY)
         println(MESSAGE_DEALER_BETTING_RESULT.format(dealerBattingResult.toInt()))
         playersBattingResult.forEach { (player, result) ->
-            println(MESSAGE_PLAYERS_BETTING_RESULT.format(player.userInformation.name.value, result.toInt()))
+            println(MESSAGE_PLAYERS_BETTING_RESULT.format(player.name.value, result.toInt()))
         }
     }
 

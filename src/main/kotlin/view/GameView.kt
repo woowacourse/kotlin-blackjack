@@ -9,20 +9,20 @@ import view.ViewUtils.Companion.isString
 class GameView {
     private fun printDealerStatus(dealer: Dealer) {
         print(MESSAGE_DEALER_NAME)
-        println(dealer.cards.value.take(1).let { Cards(it) }.isString())
+        println(dealer.userInformation.cards.value.take(1).let { Cards(it) }.isString())
     }
 
     fun printPlayerStatus(player: Player) {
-        print(player.userInformation.name.value)
+        print(player.name.value)
         print(MESSAGE_PLAYER_NAME)
-        println(player.cards.isString())
+        println(player.userInformation.cards.isString())
     }
 
     fun printInitStatus(dealer: Dealer, players: Players) {
         println(
             MESSAGE_USERS_STATUS.format(
                 players.value.joinToString(", ") {
-                    it.userInformation.name.value
+                    it.name.value
                 }
             )
         )

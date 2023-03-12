@@ -1,10 +1,15 @@
 package entity.users
 
 import entity.card.Cards
+import entity.result.BettingMoney
 import entity.result.GameResultType
 import misc.GameRule
 
-class Player(val userInformation: UserInformation, cards: Cards = Cards(listOf())) : User(cards) {
+class Player(
+    val name: Name,
+    userInformation: UserInformation = UserInformation(Cards(listOf()), BettingMoney(0))
+) :
+    User(userInformation) {
     override fun isDistributable(): Boolean = cardsNumberSum() < GameRule.WINNING_NUMBER
 
     fun determineGameResult(dealerCardNumberSum: Int): Pair<Player, GameResultType> {
