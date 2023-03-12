@@ -9,4 +9,6 @@ class Hit(override val hand: CardBunchForState) : State {
         if (addedHand.isBurst()) return Burst(addedHand)
         return (Hit(addedHand))
     }
+
+    fun stay(): State = Stay(hand)
 }

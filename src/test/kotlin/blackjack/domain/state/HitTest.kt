@@ -16,4 +16,10 @@ class HitTest {
         val hit = Hit(CardBunchForState(Cards.two, Cards.eight))
         assertThat(hit.draw(Cards.three)).isInstanceOf(Hit::class.java)
     }
+
+    @Test
+    fun `stay함수를 호출했을때 Stay객체를 반환한다`() {
+        val hit = Hit(CardBunchForState(Cards.two, Cards.eight))
+        assertThat(hit.stay()).isInstanceOf(Stay::class.java)
+    }
 }
