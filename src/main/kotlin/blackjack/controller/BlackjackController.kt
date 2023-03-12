@@ -1,8 +1,8 @@
 package blackjack.controller
 
 import blackjack.domain.Blackjack
-import blackjack.domain.BlackjackEventListener
 import blackjack.domain.card.CardDeck
+import blackjack.domain.listener.BlackjackEventListener
 import blackjack.domain.participant.Participant
 import blackjack.domain.participant.Participants
 import blackjack.domain.result.GameResult
