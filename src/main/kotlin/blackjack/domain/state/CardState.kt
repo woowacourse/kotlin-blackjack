@@ -5,7 +5,7 @@ import blackjack.domain.card.Cards
 import blackjack.domain.money.Money
 
 abstract class CardState(protected val cards: Cards) {
-    abstract val isFinished: Boolean
+    abstract val isRunning: Boolean
 
     abstract fun draw(card: Card): CardState
 

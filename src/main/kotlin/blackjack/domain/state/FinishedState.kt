@@ -5,7 +5,7 @@ import blackjack.domain.card.Cards
 
 abstract class FinishedState(cards: Cards) : CardState(cards) {
     abstract val earningRate: Double
-    override val isFinished: Boolean = true
+    override val isRunning: Boolean = false
 
     init {
         check(cards.isGreaterOrEqualsCardSize(MINIMUM_CARDS_SIZE)) { "카드를 최소 2장 보유해야 합니다." }

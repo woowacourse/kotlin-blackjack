@@ -5,7 +5,7 @@ import blackjack.domain.card.Cards
 import blackjack.domain.money.Money
 
 abstract class RunningState(cards: Cards) : CardState(cards) {
-    override val isFinished: Boolean = false
+    override val isRunning: Boolean = true
 
     override fun stay(): CardState = StayState(cards)
 

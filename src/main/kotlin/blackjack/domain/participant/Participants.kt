@@ -36,9 +36,9 @@ class Participants(private val participants: List<Participant>) {
         onDrawn: (Participant) -> Unit
     ): Participant {
         var result = participant
-        while (!result.isFinished) {
+        while (result.isRunning) {
             val card = deck.draw()
-            result = result.draw(card).apply { if (!isFinished) onDrawn(this) }
+            result = result.draw(card).apply { if (isRunning) onDrawn(this) }
         }
         return result
     }
