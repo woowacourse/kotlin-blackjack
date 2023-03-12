@@ -30,16 +30,22 @@ class Cards(list: List<Card>) {
             return sum
         }
 
-    init {
-        check(list.size >= MINIMUM_CARDS_SIZE) { ERROR_CARDS_SIZE }
-    }
-
     fun add(card: Card) {
         _list.add(card)
     }
 
+    fun add2(card: Card): Cards {
+        val newCards = _list.toMutableList()
+        newCards.add(card)
+        return Cards(newCards)
+    }
+
     private fun sum(): Int {
         return list.sumOf { it.cardNumber.value }
+    }
+
+    fun deepCopy(): Cards {
+        return Cards(list)
     }
 
     companion object {

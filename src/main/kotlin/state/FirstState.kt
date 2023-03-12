@@ -1,21 +1,27 @@
 package state
 
-import domain.BlackJackGame
 import domain.card.Card
+import domain.card.Cards
 
-class FirstState(val cards: List<Card>) : State {
-    override fun next(card: Card): State {
-        val nextCards = cards.toMutableList()
-        nextCards.add(card)
+class FirstState(val cards: Cards = Cards(listOf())) : State {
+    init {
+        check(cards.size < 2) { ERROR_FIRST_STATE }
+    }
 
+    override fun draw(card: Card): State {
+        val nextCards = cards.add2(card)
+        return next(nextCards)
+    }
+
+    override fun next(nextCards: Cards): State {
         if (nextCards.size == 2) {
-            var sum = nextCards.sumOf { it.cardNumber.value }
-            if (nextCards.any { it.isAce }) sum += 10
-            if (sum == BlackJackGame.BLACKJACK_NUMBER)
-                return BlackJackState(nextCards)
-            else
-                return HitState(nextCards)
+            if (nextCards.isBlackJack) return BlackJackState(nextCards)
+            return HitState(nextCards)
         }
         return FirstState(nextCards)
+    }
+
+    companion object {
+        private const val ERROR_FIRST_STATE = "카드가 두 장 미만어야 합니다."
     }
 }
