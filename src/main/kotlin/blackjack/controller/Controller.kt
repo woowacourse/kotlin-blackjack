@@ -8,7 +8,7 @@ import blackjack.view.OutputView
 
 class Controller() {
     fun runGame() {
-        val blackJackGame = BlackJackGame(InputView.getPlayerNames(), RandomCardDeck)
+        val blackJackGame = BlackJackGame(InputView.getPlayerNames(), RandomCardDeck, InputView::getBettingAmount)
         showInitialState(blackJackGame.participants)
         blackJackGame.progressPlayersAddCard(InputView::getDecision, OutputView::printPlayerCards)
         blackJackGame.progressDealerAddCard(OutputView::printDealerOverCondition)
