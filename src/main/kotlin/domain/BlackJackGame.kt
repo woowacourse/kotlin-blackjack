@@ -14,8 +14,9 @@ class BlackJackGame : BlackJackGameBluePrint {
     override fun makePersons(names: List<String>): Persons = Persons.getPersons(names, deck)
 
     override fun handOutCardsToDealer(dealer: Dealer, printDealerDrew: () -> Unit, printDealerDidNotDrew: () -> Unit) {
+        dealer.toNextState(deck.getCard())
         if (dealer.isInProgress()) {
-            dealer.receiveCard(deck.getCard())
+            dealer.toNextState(deck.getCard())
             printDealerDrew()
             return
         }
@@ -38,9 +39,12 @@ class BlackJackGame : BlackJackGameBluePrint {
         printCards: (Player) -> Unit,
     ) {
         val decision = Decision.of(askDrawCard(player.name))
-        if (decision == Decision.NO) return
+        if (decision == Decision.NO) {
+            player.toStay()
+            return
+        }
 
-        player.receiveCard(deck.getCard())
+        player.toNextState(deck.getCard())
         printCards(player)
         if (player.isBust()) return
 

@@ -19,7 +19,7 @@ class GameResultTest {
                 Card(CardShape.HEART, CardNumber.TWO),
                 Card(CardShape.DIAMOND, CardNumber.THREE),
             ).apply {
-                receiveCard(Card(CardShape.CLOVER, CardNumber.FOUR))
+                toNextState(Card(CardShape.CLOVER, CardNumber.FOUR))
             },
             Player("베르", Card(CardShape.CLOVER, CardNumber.ACE), Card(CardShape.SPADE, CardNumber.KING)),
         )

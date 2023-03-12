@@ -10,7 +10,7 @@ abstract class Person {
     abstract var state: State
         protected set
 
-    fun receiveCard(card: Card) {
+    fun toNextState(card: Card) {
         state = state.nextState { card }
     }
 

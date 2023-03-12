@@ -23,7 +23,7 @@ class DealerTest {
 
     @Test
     fun `딜러는 카드를 받아서 패에 추가할 수 있다`() {
-        dealer.receiveCard(Card(HEART, CardNumber.ACE))
+        dealer.toNextState(Card(HEART, CardNumber.ACE))
         assertThat(dealer.showHandOfCards().size).isEqualTo(3)
     }
 
@@ -40,7 +40,7 @@ class DealerTest {
     @CsvSource(value = ["ACE,13", "KING,22"])
     @ParameterizedTest
     fun `카드 패의 총합을 계산한다`(number1: CardNumber, sum: Int) {
-        dealer.receiveCard(Card(HEART, number1))
+        dealer.toNextState(Card(HEART, number1))
 
         assertThat(dealer.getTotal()).isEqualTo(sum)
     }
@@ -49,7 +49,7 @@ class DealerTest {
     @ParameterizedTest
     fun `딜러의 카드 총 합이 21을 넘었는지 체크할 수 있다`(n1: CardNumber, expected: Boolean) {
         // given
-        dealer.receiveCard(Card(CLOVER, n1))
+        dealer.toNextState(Card(CLOVER, n1))
 
         // when
         val actual = dealer.isBust()

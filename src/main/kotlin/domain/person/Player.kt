@@ -10,4 +10,8 @@ class Player(
     card2: Card,
 ) : Person() {
     override var state: State = FirstTurn(card1, card2)
+
+    fun toStay() {
+        state = state.toStay()
+    }
 }

@@ -34,11 +34,11 @@ internal class OutComeTest {
             Card(CardShape.HEART, p1),
             Card(CardShape.DIAMOND, p2),
         ).apply {
-            receiveCard(Card(CardShape.CLOVER, p3))
+            toNextState(Card(CardShape.CLOVER, p3))
         }
         val dealer =
             Dealer(Card(CardShape.CLOVER, d1), Card(CardShape.SPADE, d2)).apply {
-                receiveCard(Card(CardShape.DIAMOND, d3))
+                toNextState(Card(CardShape.DIAMOND, d3))
             }
 
         val actual = OutCome.getOutCome(dealer, player)
