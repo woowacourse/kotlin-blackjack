@@ -13,10 +13,8 @@ class Participants(private val participants: List<Participant>) {
 
     fun drawFirst(
         deck: CardDeck,
-        onStartFirstDrawn: (Participants) -> Unit = {},
         onFirstDrawn: (Participant) -> Unit = {},
     ): Participants {
-        onStartFirstDrawn(this)
         return Participants(
             dealerFirst()
                 .map { participant -> participant.draw(deck.draw()).draw(deck.draw()) }

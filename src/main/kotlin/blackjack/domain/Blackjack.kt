@@ -8,15 +8,19 @@ import blackjack.domain.result.GameResult
 
 class Blackjack(private val deck: CardDeck, private val players: List<Participant>) {
     fun start(
-        onStartFirstDrawn: (Participants) -> Unit,
+        onStartDrawn: (Participants) -> Unit,
         onFirstDrawn: (Participant) -> Unit,
         onDrawnMore: (Participant) -> Unit,
         onEndGame: (List<GameResult>) -> Unit,
     ) {
-        val finishedParticipants = Participants(players + Dealer())
-            .drawFirst(deck, onStartFirstDrawn, onFirstDrawn)
-            .takeTurns(deck, onDrawnMore)
+        val participants = Participants(players + Dealer())
+        onStartDrawn(participants)
 
-        onEndGame(finishedParticipants.getGameResult())
+        onEndGame(
+            participants
+                .drawFirst(deck, onFirstDrawn)
+                .takeTurns(deck, onDrawnMore)
+                .getGameResult()
+        )
     }
 }
