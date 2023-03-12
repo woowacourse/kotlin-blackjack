@@ -23,11 +23,12 @@ class CardBunchForState constructor(val cards: List<Card>) {
 
     fun isBurst(): Boolean = getTotalScore() > MAX_SCORE_CONDITION
 
-    fun isBlackJack(): Boolean = cards.size == 2 && getTotalScore() == 21
+    fun isDealerBurst(): Boolean = getTotalScore() > DEALER_ADD_CARD_CONDITION
 
     private fun containsAce(): Boolean = cards.any { card -> card.isAce() }
 
     companion object {
         private const val ACE_SCORE_GAP = 10
+        private const val DEALER_ADD_CARD_CONDITION = 16
     }
 }

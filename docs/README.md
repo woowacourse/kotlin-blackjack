@@ -65,8 +65,8 @@
     - [x] 카드를 뽑는다(draw)
       - [x] Hit
       - [x] FirstTurn
-      - [ ] DealersFirstTurn
-      - [ ] DealersHit
+      - [ ] DealerFirstTurn
+      - [ ] DealerHit
   - [ ] Stopped
     - [x] Stay
     - [x] BlackJack
