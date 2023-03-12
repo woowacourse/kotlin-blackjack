@@ -1,9 +1,9 @@
 package view
 
-import domain.BettingMoney
-import domain.Name
-import domain.Names
-import domain.Player
+import domain.participant.BettingMoney
+import domain.participant.Name
+import domain.participant.Names
+import domain.participant.Player
 
 class InputView {
     fun readNames(): Names {

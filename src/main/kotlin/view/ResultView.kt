@@ -1,11 +1,11 @@
 package view
 
-import domain.Card
-import domain.Dealer
-import domain.Participants
-import domain.Player
-import domain.Players
-import domain.RandomCardPicker
+import domain.card.Card
+import domain.card.RandomCardPicker
+import domain.participant.Dealer
+import domain.participant.Participants
+import domain.participant.Player
+import domain.participant.Players
 
 class ResultView {
     fun printGameInit(players: Players) {
