@@ -55,13 +55,6 @@ class Stay(override val dividend: Double = 0.0) : End()
 
 class Blackjack(override val dividend: Double = 1.5) : End()
 
-class Cards(private val cards: MutableList<Card>) {
-
-    fun calculateSum(): Int = cards.sumOf { it.number.value }
-
-    fun add(card: Card) = cards.add(card)
-}
-
 class Study {
     @Test
     fun hit() {

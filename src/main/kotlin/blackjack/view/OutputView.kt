@@ -92,6 +92,7 @@ class OutputView {
     private fun GameResult.toText(): String {
         return when (this) {
             GameResult.WIN -> "승"
+            GameResult.BLACKJACK -> "블랙잭"
             GameResult.DRAW -> "무"
             GameResult.LOSE -> "패"
         }
