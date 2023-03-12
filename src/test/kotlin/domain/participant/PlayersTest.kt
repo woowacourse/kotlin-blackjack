@@ -1,9 +1,5 @@
 package domain.participant
 
-import domain.card.Card
-import domain.card.CardCategory
-import domain.card.CardNumber
-import domain.card.Cards
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
@@ -15,12 +11,6 @@ class PlayersTest {
                 List(9) {
                     Player(
                         Name("pobi"),
-                        Cards(
-                            listOf(
-                                Card.of(CardCategory.CLOVER, CardNumber.EIGHT),
-                                Card.of(CardCategory.SPADE, CardNumber.NINE),
-                            ),
-                        ),
                         BettingMoney(1000),
                     )
                 },

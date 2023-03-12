@@ -2,7 +2,6 @@ package domain.card
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 
 class ScoreTest {
 
@@ -15,11 +14,6 @@ class ScoreTest {
                 )
             },
         )
-    }
-
-    @Test
-    fun `카드의 합은 최소 2 이상이어야 한다`() {
-        assertThrows<IllegalArgumentException> { Score(Cards(1)) }
     }
 
     @Test
@@ -83,38 +77,5 @@ class ScoreTest {
         val actual = score.isBlackJack()
         // then
         assertThat(actual).isTrue
-    }
-
-    @Test
-    fun `스코어가 버스트이면, 버스트 상태를 반환한다`() {
-        // given
-        val score = Score(Cards(10, 10, 10))
-        // when
-        val actual = score.state
-        val expected = ScoreState.Burst
-        // then
-        assertThat(actual).isEqualTo(expected)
-    }
-
-    @Test
-    fun `스코어가 블랙잭이면, 블랙잭 상태를 반환한다`() {
-        // given
-        val score = Score(Cards(10, 1))
-        // when
-        val actual = score.state
-        val expected = ScoreState.BlackJack
-        // then
-        assertThat(actual).isEqualTo(expected)
-    }
-
-    @Test
-    fun `스코어가 정상이라면, 정상 상태를 반환한다`() {
-        // given
-        val score = Score(Cards(10, 10))
-        // when
-        val actual = score.state
-        val expected = ScoreState.Normal(20)
-        // then
-        assertThat(actual).isEqualTo(expected)
     }
 }
