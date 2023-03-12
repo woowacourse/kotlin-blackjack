@@ -3,16 +3,11 @@ package state
 import domain.card.Card
 import domain.card.Cards
 
-class FirstState(val cards: Cards = Cards(listOf())) : State {
+class FirstState(cards: Cards = Cards(listOf())) : RunningState(cards) {
     constructor(vararg card: Card) : this(Cards(card.toList()))
 
     init {
         check(cards.size < 2) { ERROR_FIRST_STATE }
-    }
-
-    override fun draw(card: Card): State {
-        val nextCards = cards.add2(card)
-        return next(nextCards)
     }
 
     override fun next(nextCards: Cards): State {
@@ -23,7 +18,12 @@ class FirstState(val cards: Cards = Cards(listOf())) : State {
         return FirstState(nextCards)
     }
 
+    override fun stay(): State {
+        throw IllegalStateException(ERROR_INSUFFICIENT_CARDS_FOR_STAY)
+    }
+
     companion object {
-        private const val ERROR_FIRST_STATE = "카드가 두 장 미만어야 합니다."
+        private const val ERROR_FIRST_STATE = "[ERROR] 카드가 두 장 미만어야 합니다."
+        private const val ERROR_INSUFFICIENT_CARDS_FOR_STAY = "[ERROR] 카드가 두 장 미만이므로 stay를 호출할 수 없습니다."
     }
 }

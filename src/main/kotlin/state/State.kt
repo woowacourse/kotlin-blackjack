@@ -5,6 +5,6 @@ import domain.card.Cards
 
 interface State {
     fun draw(card: Card): State
-
     fun next(nextCards: Cards): State
+    fun stay(): State
 }

@@ -11,6 +11,6 @@ class BlackJackState(cards: Cards) : FinishedState(cards) {
     }
 
     companion object {
-        private const val ERROR_BLACKJACK_STATE = "카드가 두 장에 합이 21이어야 합니다."
+        private const val ERROR_BLACKJACK_STATE = "[ERROR] 카드가 두 장에 합이 21이어야 합니다."
     }
 }
