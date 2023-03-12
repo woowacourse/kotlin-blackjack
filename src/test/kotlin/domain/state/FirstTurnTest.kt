@@ -3,6 +3,7 @@ package domain.state
 import domain.Dummy.CLOVER_ACE
 import domain.Dummy.CLOVER_KING
 import domain.Dummy.CLOVER_TWO
+import domain.card.HandOfCards
 import io.kotest.matchers.throwable.shouldHaveMessage
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -36,8 +37,9 @@ internal class FirstTurnTest {
     @Test
     fun `profit함수를 호출하면 StateException이 발생한다`() {
         val firstTurn = FirstTurn(CLOVER_TWO, CLOVER_KING)
+        val state = Stay(HandOfCards(CLOVER_KING, CLOVER_TWO))
 
-        assertThrows<IllegalStateException> { firstTurn.profit(0.0) }.shouldHaveMessage("아직 진행중입니다")
+        assertThrows<IllegalStateException> { firstTurn.playerProfit(state, 0.0) }.shouldHaveMessage("아직 진행중입니다")
     }
 
     @Test

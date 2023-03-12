@@ -38,8 +38,9 @@ internal class HitTest {
     @Test
     fun `profit함수를 호출하면 StateException이 발생한다`() {
         val hit = Hit(HandOfCards(CLOVER_KING, CLOVER_THREE))
+        val state = Stay(HandOfCards(CLOVER_KING, CLOVER_TWO))
 
-        assertThrows<IllegalStateException> { hit.profit(0.0) }.shouldHaveMessage("아직 진행중입니다")
+        assertThrows<IllegalStateException> { hit.playerProfit(state, 0.0) }.shouldHaveMessage("아직 진행중입니다")
     }
 
     @Test

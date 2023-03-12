@@ -8,5 +8,5 @@ interface State {
     val handOfCards: HandOfCards
     fun nextState(draw: () -> Card): State
     fun toStay(): State
-    fun profit(bet: Double): Double
+    fun playerProfit(other: State, bet: Double): Double
 }
