@@ -19,17 +19,17 @@ class OutcomeTest {
     }
 
     @Test
-    fun `유저 혼자 21점이면 이긴다`() {
+    fun `유저 혼자 블랙잭이면 이긴다`() {
         val dealerState = Stay(Cards(CLOVER_KING, CLOVER_QUEEN))
-        val guestState = Stay(Cards(CLOVER_ACE, CLOVER_KING, CLOVER_QUEEN))
+        val guestState = BlackJack(Cards(CLOVER_ACE, CLOVER_KING, CLOVER_QUEEN))
 
         assertThat(guestState.matchWith(dealerState)).isEqualTo(Outcome.WIN)
     }
 
     @Test
-    fun `유저가 21점이고 딜러가 블랙잭이면 비긴다`() {
+    fun `유저가 3장이상의 블랙잭이고 딜러가 블랙잭이면 비긴다`() {
         val dealerState = BlackJack(Cards(CLOVER_ACE, CLOVER_KING))
-        val guestState = Stay(Cards(CLOVER_ACE, CLOVER_KING, CLOVER_QUEEN))
+        val guestState = BlackJack(Cards(CLOVER_ACE, CLOVER_KING, CLOVER_QUEEN))
 
         assertThat(guestState.matchWith(dealerState)).isEqualTo(Outcome.DRAW)
     }

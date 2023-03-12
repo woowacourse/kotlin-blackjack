@@ -7,7 +7,7 @@ class Hit(cards: Cards) : State(cards) {
     override fun draw(card: Card): State {
         val newCards: Cards = cards + card
         return when {
-            newCards.calculateScore().isBlackJack -> Stay(newCards)
+            newCards.calculateScore().isBlackJack -> BlackJack(newCards)
             newCards.calculateScore().isBust -> Bust(newCards)
             else -> Hit(cards + card)
         }

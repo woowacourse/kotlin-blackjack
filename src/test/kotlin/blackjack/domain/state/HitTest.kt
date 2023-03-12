@@ -30,7 +30,7 @@ class HitTest {
     }
 
     @Test
-    fun `히트에서 스테이로 갈 수 있다`() {
+    fun `히트에서 블랙잭으로 갈 수 있다`() {
         // given
         var state: State = FirstTurn().draw(CLOVER_KING).draw(CLOVER_NINE)
 
@@ -38,7 +38,7 @@ class HitTest {
         state = state.draw(CLOVER_TWO)
 
         // then
-        assertThat(state).isInstanceOf(Stay::class.java)
+        assertThat(state).isInstanceOf(BlackJack::class.java)
     }
 
     @Test
