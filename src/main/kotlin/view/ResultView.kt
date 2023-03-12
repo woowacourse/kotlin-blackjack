@@ -13,14 +13,14 @@ class ResultView {
     }
 
     fun printInitCards(participants: Participants) {
-        participants.participants.forEach { participant ->
+        participants.list.forEach { participant ->
             println(PRINT_NAME_AND_CARDS.format(participant.name.value, formatStringCards(participant.showInitCards())))
         }
         println()
     }
 
     fun printPlayerCard(player: Player) {
-        println(PRINT_NAME_AND_CARDS.format(player.name.value, formatStringCards(player.cards.list)))
+        println(PRINT_NAME_AND_CARDS.format(player.name.value, formatStringCards(player.state.cards().list)))
     }
 
     fun printDealerAddCard(dealer: Dealer) {
@@ -28,18 +28,19 @@ class ResultView {
     }
 
     fun printScore(participants: Participants) {
-        participants.participants.forEach { participant ->
+        println()
+        participants.list.forEach { participant ->
             println(
                 PRINT_NAME_AND_CARDS_AND_SCORE.format(
                     participant.name.value,
-                    formatStringCards(participant.cards.list),
-                    participant.getScore().getValue(),
+                    formatStringCards(participant.state.cards().list),
+                    participant.state.cards().getScore().getValue(),
                 ),
             )
         }
     }
 
-    fun printParticipantsProfit(dealerProfit: Pair<Dealer, Int>, playersProfit: Map<Player, Int>) {
+    fun printParticipantsProfit(dealerProfit: Pair<Dealer, Double>, playersProfit: Map<Player, Double>) {
         println(PRINT_PROFIT_INIT)
         formatStringDealerProfit(dealerProfit)
         formatStringPlayersProfit(playersProfit)
@@ -59,12 +60,12 @@ class ResultView {
         return "${cardNumber.number}${cardCategory.pattern}"
     }
 
-    private fun formatStringDealerProfit(dealerProfit: Pair<Dealer, Int>) {
+    private fun formatStringDealerProfit(dealerProfit: Pair<Dealer, Double>) {
         print(PRINT_PROFIT.format(dealerProfit.first.name.value, dealerProfit.second))
         println()
     }
 
-    private fun formatStringPlayersProfit(playersProfit: Map<Player, Int>) {
+    private fun formatStringPlayersProfit(playersProfit: Map<Player, Double>) {
         playersProfit.forEach { (player, profit) ->
             println(PRINT_PROFIT.format(player.name.value, profit))
         }
@@ -76,7 +77,7 @@ class ResultView {
         private const val PRINT_NAME_AND_CARDS = "%s카드: %s"
         private const val PRINT_DEALER_ADD_CARD = "\n%s는 ${Dealer.DEALER_ADD_CARD_CONDITION}이하라 한장의 카드를 더 받았습니다."
         private const val PRINT_PROFIT_INIT = "\n## 최종 수익"
-        private const val PRINT_PROFIT = "%s: %d"
+        private const val PRINT_PROFIT = "%s: %f"
         private const val PRINT_NAME_AND_CARDS_AND_SCORE = "%s 카드: %s - 결과: %d"
     }
 }

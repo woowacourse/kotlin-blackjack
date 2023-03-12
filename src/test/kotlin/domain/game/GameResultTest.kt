@@ -3,7 +3,6 @@ package domain.game
 import domain.card.Card
 import domain.card.CardCategory
 import domain.card.CardNumber
-import domain.card.Cards
 import domain.participant.BettingMoney
 import domain.participant.Dealer
 import domain.participant.Name
@@ -15,31 +14,14 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 
 class GameResultTest {
-    fun Player(name: String, vararg cards: Int): Player {
-        return Player(
-            Name(name),
-            Cards(
-                cards.map { number ->
-                    Card.of(
-                        CardCategory.CLOVER,
-                        CardNumber.values().find { it.value == number } ?: CardNumber.FIVE,
-                    )
-                },
-            ),
-            BettingMoney(1000),
-        )
+    private fun Card(number: Int): Card {
+        return Card.of(CardCategory.CLOVER, CardNumber.values().find { it.value == number } ?: CardNumber.FIVE)
     }
 
-    fun Dealer(vararg cards: Int): Dealer {
-        return Dealer(
-            Cards(
-                cards.map { number ->
-                    Card.of(
-                        CardCategory.CLOVER,
-                        CardNumber.values().find { it.value == number.toInt() } ?: CardNumber.FIVE,
-                    )
-                },
-            ),
+    fun Player(name: String): Player {
+        return Player(
+            Name(name),
+            BettingMoney(1000),
         )
     }
 
@@ -50,61 +32,65 @@ class GameResultTest {
     @Test
     fun `플레이어의 최종 수익을 반환한다`() {
         // given
-        val player1 = Player(
-            "pobi",
-            8,
-            9,
-        )
-        val player2 = Player(
-            "jason",
-            7,
-            9,
-        )
+        val player1 = Player("pobi")
+        val player2 = Player("jason")
+        val dealer = Dealer()
+
+        // when
+        player1.draw(Card(2))
+        player1.draw(Card(3))
+        player1.stopDraw()
+        player2.draw(Card(6))
+        player2.draw(Card(7))
+        player2.stopDraw()
+        dealer.draw(Card(10))
+        dealer.draw(Card(2))
+        dealer.stopDraw()
         val participants = Participants(
             players = Players(
                 player1,
                 player2,
             ),
-            dealer = Dealer(8, 9),
+            dealer = dealer,
         )
         val gameResult = GameResult(participants)
-
-        // when
         val actual = gameResult.getPlayersProfit()
 
         // then
         assertAll(
-            { assertThat(actual[player1]).isEqualTo(0) },
-            { assertThat(actual[player2]).isEqualTo(-1000) },
+            { assertThat(actual[player1]).isEqualTo(-1000.0) },
+            { assertThat(actual[player2]).isEqualTo(1000.0) },
         )
     }
 
     @Test
     fun `딜러의 최종 수익을 반환한다`() {
         // given
-        val player1 = Player(
-            "pobi",
-            8,
-            9,
-        )
-        val player2 = Player(
-            "jason",
-            7,
-            9,
-        )
+        val player1 = Player("pobi")
+        val player2 = Player("jason")
+        val dealer = Dealer()
+
+        // when
+        player1.draw(Card(2))
+        player1.draw(Card(3))
+        player1.stopDraw()
+        player2.draw(Card(6))
+        player2.draw(Card(7))
+        player2.stopDraw()
+        dealer.draw(Card(10))
+        dealer.draw(Card(2))
+        dealer.stopDraw()
         val participants = Participants(
             players = Players(
                 player1,
                 player2,
             ),
-            dealer = Dealer(8, 9),
+            dealer = dealer,
         )
         val gameResult = GameResult(participants)
-
-        // when
-        val actual = gameResult.getDealerProfit()
+        val actual = gameResult.getDealerProfit().second
 
         // then
-        assertThat(actual.second).isEqualTo(1000)
+        assertThat(actual).isEqualTo(0.0)
     }
 }

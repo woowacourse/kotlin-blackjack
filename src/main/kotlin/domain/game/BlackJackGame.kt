@@ -1,7 +1,6 @@
 package domain.game
 
 import domain.card.CardPicker
-import domain.card.Cards
 import domain.card.RandomCardPicker
 import domain.participant.BettingMoney
 import domain.participant.Dealer
@@ -25,8 +24,9 @@ class BlackJackGame(
 
     init {
         val players = initPlayers(names, bettingMoney)
-        val dealer = Dealer(drawInitCards())
+        val dealer = Dealer()
         participants = Participants(players, dealer)
+        drawInitCards()
     }
 
     fun introduceParticipants(showPlayers: (Players) -> Unit, showInitCards: ((Participants) -> Unit)) {
@@ -45,26 +45,28 @@ class BlackJackGame(
     }
 
     private fun initPlayers(names: () -> Names, bettingMoney: (Name) -> BettingMoney): Players {
-        return Players(names().values.map { name -> Player(name, drawInitCards(), bettingMoney(name)) })
+        return Players(names().values.map { name -> Player(name, bettingMoney(name)) })
     }
 
-    private fun drawInitCards(): Cards {
-        return Cards(List(INIT_DRAW_CARDS_COUNT) { cardPicker.draw() })
+    private fun drawInitCards() {
+        participants.list.forEach { participant ->
+            repeat(INIT_DRAW_CARDS_COUNT) { participant.addCard() }
+        }
     }
 
     private fun Participant.addCard() {
-        this.cards.add(cardPicker.draw())
+        draw(cardPicker.draw())
     }
 
     private fun Player.playerSelectAdd(isGetCard: (Player) -> Boolean, showPlayerCards: (Player) -> Unit) {
-        if (!isGetCard(this)) {
+        while (isPossibleDrawCard()) {
+            if (isGetCard(this)) {
+                addCard()
+            } else {
+                stopDraw()
+            }
             showPlayerCards(this)
-            return
         }
-        do {
-            addCard()
-            showPlayerCards(this)
-        } while (isPossibleDrawCard() && isGetCard(this))
     }
 
     private fun playersSelectAddPhase(isGetCard: (Player) -> Boolean, showPlayerCards: (Player) -> Unit) {
@@ -78,6 +80,7 @@ class BlackJackGame(
             showCards(dealer)
             participants.dealer.addCard()
         }
+        dealer.stopDraw()
     }
 
     companion object {

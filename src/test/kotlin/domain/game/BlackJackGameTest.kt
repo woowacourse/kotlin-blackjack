@@ -23,39 +23,15 @@ class BlackJackGameTest {
     }
 
     @Test
-    fun `숫자가 5인 카드만 뽑을 수 있고, 계속 카드를 받는다고 하면 모든 플레이어의 최종 스코어는 25이다`() {
+    fun `run 을 실행시켰을 때 result값이 제대로 나오는지 확인`() {
         // given
-        val blackJackGame =
-            BlackJackGame({ Names("scott", "woogi", "mendel") }, { BettingMoney(1000) }, TestCardPicker())
+        val names = Names("pobi", "Scott")
+        val bettingMoney = BettingMoney(1000)
+        val blackJackGame = BlackJackGame({ names }, { bettingMoney }, TestCardPicker())
         // when
-        blackJackGame.playersSelectAddPhase({ true }, {})
+        val gameResult = blackJackGame.runGame({ false }, {}, {})
+        val actual = gameResult.getDealerProfit().second
         // then
-        blackJackGame.participants.players.list.forEach { player ->
-            assertThat(player.getScore().getValue()).isEqualTo(25)
-        }
-    }
-
-    @Test
-    fun `숫자가 5인 카드만 뽑을 수 있고, 카드를 받지 않는다고 하면 모든 플레이어의 최종 스코어는 10이다`() {
-        // given
-        val blackJackGame =
-            BlackJackGame({ Names("scott", "woogi", "mendel") }, { BettingMoney(1000) }, TestCardPicker())
-        // when
-        blackJackGame.playersSelectAddPhase({ false }, {})
-        // then
-        blackJackGame.participants.players.list.forEach { player ->
-            assertThat(player.getScore().getValue()).isEqualTo(10)
-        }
-    }
-
-    @Test
-    fun `숫자가 5인 카드만 뽑을 수 있을 때, 딜러의 최종 스코어는 15 이다`() {
-        // given
-        val blackJackGame =
-            BlackJackGame({ Names("scott", "woogi", "mendel") }, { BettingMoney(1000) }, TestCardPicker())
-        // when
-        blackJackGame.dealerSelectPhase { }
-        // then
-        assertThat(blackJackGame.participants.dealer.getScore().getValue()).isEqualTo(15)
+        assertThat(actual).isEqualTo(2000.0)
     }
 }
