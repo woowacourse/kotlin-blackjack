@@ -1,3 +1,7 @@
 package blackjack.domain.state
 
-interface State
+import blackjack.domain.card.Card
+
+interface State {
+    fun draw(card: Card): State
+}

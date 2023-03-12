@@ -1,9 +1,10 @@
-package blackjack.domain.state
+package blackjack.domain.state.running
 
 import blackjack.domain.SPADE_ACE
 import blackjack.domain.SPADE_FOUR
 import blackjack.domain.SPADE_JACK
 import blackjack.domain.SPADE_SIX
+import blackjack.domain.state.finished.Blackjack
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
