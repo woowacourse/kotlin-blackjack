@@ -1,6 +1,6 @@
 package model
 
-class Player(name: Name, val money: Money) : Participant(name) {
+class Player(name: Name, private val money: Money) : Participant(name) {
     override fun getFirstOpenCards(): Cards = cards
 
     override fun isPossibleDrawCard(): Boolean = !isBust()
