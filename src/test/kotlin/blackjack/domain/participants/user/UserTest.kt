@@ -1,16 +1,16 @@
 package blackjack.domain.participants.user
 
 import blackjack.domain.card.Cards
+import blackjack.domain.state.BlackJack
+import blackjack.domain.state.Bust
 import blackjack.domain.state.Fixtures.CLOVER_ACE
 import blackjack.domain.state.Fixtures.CLOVER_EIGHT
 import blackjack.domain.state.Fixtures.CLOVER_JACK
 import blackjack.domain.state.Fixtures.CLOVER_KING
 import blackjack.domain.state.Fixtures.CLOVER_QUEEN
 import blackjack.domain.state.Fixtures.CLOVER_SEVEN
-import blackjack.domain.state.endTurn.BlackJack
-import blackjack.domain.state.endTurn.Bust
-import blackjack.domain.state.endTurn.Stay
-import blackjack.domain.state.inTurn.Hit
+import blackjack.domain.state.Hit
+import blackjack.domain.state.Stay
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll

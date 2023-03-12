@@ -1,12 +1,9 @@
-package blackjack.domain.state.inTurn
+package blackjack.domain.state
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
-import blackjack.domain.state.Outcome
-import blackjack.domain.state.State
-import blackjack.domain.state.endTurn.BlackJack
 
-class FirstTurn private constructor(cards: Cards) : InTurn(cards) {
+class FirstTurn private constructor(cards: Cards) : State(cards) {
     constructor() : this(Cards())
 
     override fun draw(card: Card): State {

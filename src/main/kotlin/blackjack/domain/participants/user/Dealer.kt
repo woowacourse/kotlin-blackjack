@@ -1,10 +1,10 @@
 package blackjack.domain.participants.user
 
 import blackjack.domain.card.Card
+import blackjack.domain.state.FirstTurn
+import blackjack.domain.state.Hit
 import blackjack.domain.state.State
-import blackjack.domain.state.endTurn.Stay
-import blackjack.domain.state.inTurn.FirstTurn
-import blackjack.domain.state.inTurn.Hit
+import blackjack.domain.state.Stay
 
 class Dealer(
     name: Name = Name("딜러"),

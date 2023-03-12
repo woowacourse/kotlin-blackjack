@@ -4,7 +4,7 @@ import blackjack.domain.participants.user.Dealer
 import blackjack.domain.participants.user.Guest
 import blackjack.domain.participants.user.Money
 import blackjack.domain.participants.user.Name
-import blackjack.domain.state.inTurn.FirstTurn
+import blackjack.domain.state.FirstTurn
 
 class ParticipantsBuilder {
     private var dealer: Dealer = Dealer()

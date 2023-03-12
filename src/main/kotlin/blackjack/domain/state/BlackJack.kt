@@ -1,11 +1,9 @@
-package blackjack.domain.state.endTurn
+package blackjack.domain.state
 
 import blackjack.domain.card.Cards
-import blackjack.domain.state.Outcome
 import blackjack.domain.state.Outcome.WIN_WITH_BLACKJACK
-import blackjack.domain.state.State
 
-class BlackJack(cards: Cards = Cards()) : EndTurn(cards) {
+class BlackJack(cards: Cards = Cards()) : State(cards) {
     init {
         require(cards.size == 2) { ERROR_BLACKJACK_CARD_COUNT }
         require(cards.calculateScore().isBlackJack) { ERROR_BLACKJACK_SCORE }

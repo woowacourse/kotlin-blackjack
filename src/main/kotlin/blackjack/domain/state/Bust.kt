@@ -1,12 +1,10 @@
-package blackjack.domain.state.endTurn
+package blackjack.domain.state
 
 import blackjack.domain.card.Cards
-import blackjack.domain.state.Outcome
 import blackjack.domain.state.Outcome.DRAW
 import blackjack.domain.state.Outcome.LOSE
-import blackjack.domain.state.State
 
-class Bust(cards: Cards) : EndTurn(cards) {
+class Bust(cards: Cards) : State(cards) {
     init {
         require(cards.calculateScore().isBust) { ERROR_BUST_SCORE }
     }

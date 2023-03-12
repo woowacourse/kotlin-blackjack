@@ -1,11 +1,10 @@
-package blackjack.domain.state.endTurn
+package blackjack.domain.state
 
 import blackjack.domain.card.Cards
 import blackjack.domain.state.Fixtures.CLOVER_ACE
 import blackjack.domain.state.Fixtures.CLOVER_KING
 import blackjack.domain.state.Fixtures.CLOVER_QUEEN
 import blackjack.domain.state.Fixtures.CLOVER_TWO
-import blackjack.domain.state.State
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows

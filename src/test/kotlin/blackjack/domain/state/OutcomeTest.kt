@@ -6,9 +6,6 @@ import blackjack.domain.state.Fixtures.CLOVER_EIGHT
 import blackjack.domain.state.Fixtures.CLOVER_KING
 import blackjack.domain.state.Fixtures.CLOVER_NINE
 import blackjack.domain.state.Fixtures.CLOVER_QUEEN
-import blackjack.domain.state.endTurn.BlackJack
-import blackjack.domain.state.endTurn.Bust
-import blackjack.domain.state.endTurn.Stay
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

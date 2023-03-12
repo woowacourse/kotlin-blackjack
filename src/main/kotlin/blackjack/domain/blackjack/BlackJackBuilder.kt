@@ -4,7 +4,7 @@ import blackjack.domain.card.CardDeck
 import blackjack.domain.card.Cards
 import blackjack.domain.participants.Participants
 import blackjack.domain.participants.ParticipantsBuilder
-import blackjack.domain.state.inTurn.FirstTurn
+import blackjack.domain.state.FirstTurn
 
 fun blackJackData(block: BlackJackBuilder.() -> Unit): BlackJackData {
     return BlackJackBuilder().apply(block).build()

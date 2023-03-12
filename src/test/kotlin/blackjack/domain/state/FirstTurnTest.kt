@@ -1,10 +1,8 @@
-package blackjack.domain.state.inTurn
+package blackjack.domain.state
 
 import blackjack.domain.state.Fixtures.CLOVER_ACE
 import blackjack.domain.state.Fixtures.CLOVER_KING
 import blackjack.domain.state.Fixtures.CLOVER_TWO
-import blackjack.domain.state.State
-import blackjack.domain.state.endTurn.BlackJack
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow

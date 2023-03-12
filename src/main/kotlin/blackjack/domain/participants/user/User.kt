@@ -1,8 +1,8 @@
 package blackjack.domain.participants.user
 
 import blackjack.domain.card.Card
+import blackjack.domain.state.Hit
 import blackjack.domain.state.State
-import blackjack.domain.state.inTurn.Hit
 
 abstract class User(val name: Name, var state: State) {
     val score: Int

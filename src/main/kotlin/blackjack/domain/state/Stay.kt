@@ -1,14 +1,11 @@
-package blackjack.domain.state.endTurn
+package blackjack.domain.state
 
 import blackjack.domain.card.Cards
-import blackjack.domain.state.Outcome
 import blackjack.domain.state.Outcome.DRAW
 import blackjack.domain.state.Outcome.LOSE
 import blackjack.domain.state.Outcome.WIN
-import blackjack.domain.state.Score
-import blackjack.domain.state.State
 
-class Stay(cards: Cards) : EndTurn(cards) {
+class Stay(cards: Cards) : State(cards) {
     init {
         cards.calculateScore().let {
             require(it.isBlackJack || it.isBust.not()) { ERROR_BUST_SCORE }
