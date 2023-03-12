@@ -1,13 +1,18 @@
 package domain
 
 import domain.card.Deck
-import domain.constant.GameState
-import domain.money.Money
+import domain.money.Profit
 import domain.person.Participants
 import domain.person.Player
-import domain.result.GameResult
+import domain.result.GameProfit
 
 class BlackJackGame(private val deck: Deck, private val participants: Participants) {
+
+    fun handOutCardsInitial(printInitialSetting: (Participants) -> Unit) {
+        participants.dealer.receiveCard(deck.getCards(2))
+        participants.players.forEach { it.receiveCard(deck.getCards(2)) }
+        printInitialSetting(participants)
+    }
 
     fun handOutCardsToPlayers(
         getPlayerWantContinue: (String) -> Boolean,
@@ -18,27 +23,25 @@ class BlackJackGame(private val deck: Deck, private val participants: Participan
 
     private fun handOutCardsToPlayer(
         player: Player,
-        getPlayerWantContinue: (String) -> Boolean,
+        isContinue: (String) -> Boolean,
         printPlayerCards: (Player) -> Unit,
     ) {
-        var decision = true
-        while (player.isState(GameState.HIT) && decision) {
-            decision = applyPlayerDecision(player, getPlayerWantContinue)
-            printPlayerCards(player)
+        while (player.isStarted()) {
+            handOutCard(player, isContinue, printPlayerCards)
         }
     }
 
-    private fun applyPlayerDecision(player: Player, getPlayerWantContinue: (String) -> Boolean): Boolean {
-        val decision = getPlayerWantContinue(player.name)
-        if (!decision) {
-            return false
+    private fun handOutCard(player: Player, isContinue: (String) -> Boolean, printPlayerCards: (Player) -> Unit) {
+        if (!isContinue(player.name)) {
+            player.stay()
+            return
         }
         player.receiveCard(deck.getCards(1))
-        return true
+        printPlayerCards(player)
     }
 
     fun handOutCardsToDealer(printDealerGetCardOrNot: (Boolean) -> Unit) {
-        if (participants.dealer.isState(GameState.HIT)) {
+        if (participants.dealer.isStarted()) {
             participants.dealer.receiveCard(deck.getCards(1))
             printDealerGetCardOrNot(true)
             return
@@ -47,14 +50,13 @@ class BlackJackGame(private val deck: Deck, private val participants: Participan
     }
 
     fun judgeResult(
-        playerBettingMoneys: Map<String, Money>,
+        gameProfit: GameProfit,
         printCardsResult: (Participants) -> Unit,
-        printFinalResult: (Double, Map<String, Double>) -> Unit,
+        printFinalResult: (Profit, Map<Player, Profit>) -> Unit,
     ) {
         printCardsResult(participants)
-        val gameResult = GameResult(participants)
-        val playersResult = gameResult.getPlayerResult(playerBettingMoneys)
-        val dealerResult = gameResult.getDealerResult(playersResult)
-        printFinalResult(dealerResult, playersResult)
+        val dealerProfit = gameProfit.getDealersProfit(participants)
+        val playerProfit = gameProfit.getPlayersProfit(participants)
+        printFinalResult(dealerProfit, playerProfit)
     }
 }
