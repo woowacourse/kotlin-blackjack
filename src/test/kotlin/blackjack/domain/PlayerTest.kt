@@ -189,4 +189,32 @@ class PlayerTest {
 
         assertThat(player judge dealer).isEqualTo(GameResult.LOSE)
     }
+
+    @Test
+    fun `플레이어의 처음 받은 카드가 두장이고 그 합이 21점이면 블랙잭이다`() {
+        val player = Player("반달").apply {
+            addCard(Card(CardNumber.JACK, Suit.SPADE))
+            addCard(Card(CardNumber.ACE, Suit.SPADE))
+        }
+        val dealer = Dealer().apply {
+            addCard(Card(CardNumber.JACK, Suit.SPADE))
+            addCard(Card(CardNumber.QUEEN, Suit.SPADE))
+        }
+
+        assertThat(player judge dealer).isEqualTo(GameResult.BLACKJACK_WIN)
+    }
+
+    @Test
+    fun `플레이어가 블랙잭이고 딜러도 블랙잭이라면 무승부다`() {
+        val player = Player("반달").apply {
+            addCard(Card(CardNumber.JACK, Suit.SPADE))
+            addCard(Card(CardNumber.ACE, Suit.SPADE))
+        }
+        val dealer = Dealer().apply {
+            addCard(Card(CardNumber.QUEEN, Suit.HEART))
+            addCard(Card(CardNumber.ACE, Suit.HEART))
+        }
+
+        assertThat(player judge dealer).isEqualTo(GameResult.DRAW)
+    }
 }

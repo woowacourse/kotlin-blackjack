@@ -1,5 +1,6 @@
 package blackjack.domain.participant
 
+import blackjack.domain.BetMoney
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardDeck
 import blackjack.domain.result.CardResult
@@ -7,10 +8,18 @@ import blackjack.domain.result.GameResult
 import blackjack.domain.result.MatchResult
 
 class Participants(private val participants: List<Participant>) {
+    private lateinit var participantsBetMoney: Map<Participant, BetMoney>
+
     init {
         require(participants.size in MINIMUM_PARTICIPANTS..MAXIMUM_PARTICIPANTS) {
             "블랙잭은 딜러를 포함하여 최소 ${MINIMUM_PARTICIPANTS}명에서 최대 ${MAXIMUM_PARTICIPANTS}명의 플레이어가 참여 가능합니다. (현재 플레이어수 : ${participants.size}명)"
         }
+    }
+
+    fun setBetMoney(inputBetMoney: (String) -> Int) {
+        participantsBetMoney = participants
+            .filterIsInstance<Player>()
+            .associateWith { BetMoney(inputBetMoney(it.name)) }
     }
 
     fun drawFirst(deck: CardDeck) {
@@ -41,28 +50,34 @@ class Participants(private val participants: List<Participant>) {
         }
     }
 
-    fun getMatchResults(): List<MatchResult> = listOf(getDealerMatchResult()) + getPlayerMatchResults()
+    fun getMatchResults(): List<MatchResult> {
+        val playerMatchResult = getPlayerMatchResults()
 
-    private fun getDealerMatchResult(): MatchResult {
-        var (win, lose, draw) = Triple(0, 0, 0)
-        getPlayers().forEach { player ->
-            when (getDealer() judge player) {
-                GameResult.WIN -> win++
-                GameResult.LOSE -> lose++
-                GameResult.DRAW -> draw++
-            }
-        }
-        return MatchResult(getDealer(), win, lose, draw)
+        return listOf(getDealerMatchResult(playerMatchResult)) + playerMatchResult
+    }
+
+    private fun getDealerMatchResult(playerMatchResult: List<MatchResult>): MatchResult {
+        var total = 0
+        playerMatchResult.forEach { total += it.total }
+
+        return MatchResult(getDealer(), total * -1)
     }
 
     private fun getPlayerMatchResults(): List<MatchResult> = getPlayers().map { player ->
-        var (win, lose, draw) = Triple(0, 0, 0)
+        var total = 0
         when (player judge getDealer()) {
-            GameResult.WIN -> win++
-            GameResult.LOSE -> lose++
-            GameResult.DRAW -> draw++
+            GameResult.WIN -> total += participantsBetMoney[player]?.money
+                ?: throw IllegalArgumentException("등록되지 않은 플레이어입니다.")
+
+            GameResult.LOSE -> total -= participantsBetMoney[player]?.money
+                ?: throw IllegalArgumentException("등록되지 않은 플레이어입니다.")
+
+            GameResult.DRAW -> {}
+
+            GameResult.BLACKJACK_WIN -> total += participantsBetMoney[player]?.addBlackjackPrizeMoney()
+                ?: throw IllegalArgumentException("등록되지 않은 플레이어입니다.")
         }
-        MatchResult(player, win, lose, draw)
+        MatchResult(player, total)
     }
 
     fun getCardResults(): List<CardResult> = participants.map { participant ->
