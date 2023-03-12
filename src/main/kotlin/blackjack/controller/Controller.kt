@@ -23,5 +23,9 @@ class Controller() {
 
     private fun printResult(blackJackGame: BlackJackGame) {
         OutputView.printTotalScore(blackJackGame.participants)
+        OutputView.printFinalPrizeMoney(
+            blackJackGame.participants.getDealerResultMoney(),
+            blackJackGame.participants.getPlayersPrizeMoney(),
+        )
     }
 }
