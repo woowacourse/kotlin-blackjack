@@ -24,6 +24,6 @@ class FirstState(cards: Cards = Cards(listOf())) : RunningState(cards) {
 
     companion object {
         private const val ERROR_FIRST_STATE = "[ERROR] 카드가 두 장 미만어야 합니다."
-        private const val ERROR_INSUFFICIENT_CARDS_FOR_STAY = "[ERROR] 카드가 두 장 미만이므로 stay를 호출할 수 없습니다."
+        private const val ERROR_INSUFFICIENT_CARDS_FOR_STAY = "[ERROR] 카드가 두 장 미만이므로 stay 할 수 없습니다."
     }
 }

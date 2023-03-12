@@ -11,4 +11,5 @@ interface State {
     fun next(nextCards: Cards): State
     fun stay(): State
     fun getCards(): List<Card>
+    fun resultProfit(other: State): Double
 }
