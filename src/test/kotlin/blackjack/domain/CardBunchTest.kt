@@ -76,6 +76,20 @@ class CardBunchTest {
         assertThat(cardBunch.getSumOfCards()).isEqualTo(12)
     }
 
+    @Test
+    fun `카드 리스트로 카드뭉치를 생성한다`() {
+        // given
+        val cards = mutableListOf(
+            Card.get(Shape.HEART, CardNumber.ACE), Card.get(Shape.HEART, CardNumber.TWO)
+        )
+
+        // when
+        val cardBunch = CardBunch(cards)
+
+        // then
+        assertThat(cardBunch.size()).isEqualTo(2)
+    }
+
     @ParameterizedTest(name = "카드의 합은 {3}이다")
     @MethodSource("provideCards")
     fun `합계 테스트`(card1: Card, card2: Card, card3: Card, sum: Int) {

@@ -25,12 +25,10 @@ class Controller(private val cardDeck: CardDeck) {
 
     private fun makePlayers(): List<Player> {
         val names = InputView.getPlayerNames()
-        return names.map { name -> Player(name, makeInitialCardBunch(), InputView.getBettingMoney(name)) }
+        return names.map { name -> Player(name, CardBunch(cardDeck.drawTwoCards()), InputView.getBettingMoney(name)) }
     }
 
-    private fun makeDealer(): Dealer = Dealer(makeInitialCardBunch())
-
-    private fun makeInitialCardBunch(): CardBunch = CardBunch(cardDeck.drawCard(), cardDeck.drawCard())
+    private fun makeDealer(): Dealer = Dealer(CardBunch(cardDeck.drawTwoCards()))
 
     private fun showInitialCard(dealer: Dealer, players: List<Player>) {
         OutputView.printDistributeScript(players)

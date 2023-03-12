@@ -2,8 +2,7 @@ package blackjack.domain
 
 import blackjack.const.MAX_SCORE_CONDITION
 
-class CardBunch private constructor(cards: MutableList<Card>) {
-    private val _cards: MutableList<Card> = cards
+class CardBunch(private val _cards: MutableList<Card>) {
     val cards: List<Card> get() = _cards.toList()
 
     constructor(vararg cards: Card) : this(cards.toMutableList())
@@ -11,7 +10,7 @@ class CardBunch private constructor(cards: MutableList<Card>) {
     fun addCard(card: Card): Boolean = _cards.add(card)
 
     fun getSumOfCards(): Int {
-        val sum = cards.sumOf { it.cardNumber.value }
+        val sum = _cards.sumOf { it.cardNumber.value }
         return if (containAce()) decideAddTen(sum) else sum
     }
 

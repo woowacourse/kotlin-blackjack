@@ -27,4 +27,17 @@ class CardDeckTest {
         val expected = Card.get(Shape.HEART, CardNumber.ACE)
         assertThat(actual).isEqualTo(expected)
     }
+
+    @Test
+    fun `2장의 카드를 뽑는다`() {
+        // given
+        val cardDeck =
+            CardDeck(mutableListOf(Card.get(Shape.HEART, CardNumber.ACE), Card.get(Shape.HEART, CardNumber.TWO)))
+
+        // when
+        val actual = cardDeck.drawTwoCards()
+
+        // then
+        assertThat(actual.size).isEqualTo(2)
+    }
 }
