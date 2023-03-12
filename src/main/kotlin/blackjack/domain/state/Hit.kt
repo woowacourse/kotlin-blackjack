@@ -1,13 +1,12 @@
 package blackjack.domain.state
 
-import blackjack.domain.Card
 import blackjack.domain.CardBunchForState
 
-class Hit(override val hand: CardBunchForState) : State {
-    override fun draw(card: Card): State {
-        val addedHand = CardBunchForState(hand.cards + card)
-        if (addedHand.isBurst()) return Burst(addedHand)
-        return (Hit(addedHand))
+class Hit(override val hand: CardBunchForState) : ProgressAble(hand) {
+
+    override fun returnCondition(hand: CardBunchForState): State {
+        if (hand.isBurst()) return Burst(hand)
+        return (Hit(hand))
     }
 
     fun stay(): State = Stay(hand)
