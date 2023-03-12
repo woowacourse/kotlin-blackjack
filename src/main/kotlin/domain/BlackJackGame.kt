@@ -9,8 +9,8 @@ import domain.result.GameProfit
 class BlackJackGame(private val deck: Deck, private val participants: Participants) {
 
     fun handOutCardsInitial(printInitialSetting: (Participants) -> Unit) {
-        participants.dealer.receiveCard(deck.getCards(2))
-        participants.players.forEach { it.receiveCard(deck.getCards(2)) }
+        participants.dealer.receiveCard(deck.getCards(INITIAL_CARDS_COUNT))
+        participants.players.forEach { it.receiveCard(deck.getCards(INITIAL_CARDS_COUNT)) }
         printInitialSetting(participants)
     }
 
@@ -36,13 +36,13 @@ class BlackJackGame(private val deck: Deck, private val participants: Participan
             player.stay()
             return
         }
-        player.receiveCard(deck.getCards(1))
+        player.receiveCard(deck.getCards(GAME_CARD_COUNT))
         printPlayerCards(player)
     }
 
     fun handOutCardsToDealer(printDealerGetCardOrNot: (Boolean) -> Unit) {
         if (participants.dealer.isStarted()) {
-            participants.dealer.receiveCard(deck.getCards(1))
+            participants.dealer.receiveCard(deck.getCards(GAME_CARD_COUNT))
             printDealerGetCardOrNot(true)
             return
         }
@@ -58,5 +58,10 @@ class BlackJackGame(private val deck: Deck, private val participants: Participan
         val dealerProfit = gameProfit.getDealersProfit(participants)
         val playerProfit = gameProfit.getPlayersProfit(participants)
         printFinalResult(dealerProfit, playerProfit)
+    }
+
+    companion object {
+        const val INITIAL_CARDS_COUNT = 2
+        const val GAME_CARD_COUNT = 1
     }
 }
