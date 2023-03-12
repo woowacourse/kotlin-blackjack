@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import blackjack.domain.state.BlackJack
 import blackjack.domain.state.Hit
 import blackjack.domain.state.State
 
@@ -14,6 +15,14 @@ class Player(val name: String, override var state: State, val bettingAmount: Int
             -1 -> Consequence.LOSE
             else -> throw IllegalStateException(INVALID_COMPARE_ERROR)
         }
+    }
+
+    fun getPrizeMoney(dealer: Dealer): Int {
+        var prizeMoney = bettingAmount * getConsequence(dealer).yieldRate
+        if (state is BlackJack) {
+            prizeMoney *= (state as BlackJack).yieldRate
+        }
+        return prizeMoney.toInt()
     }
 
     companion object {
