@@ -40,7 +40,11 @@ class BlackJackGame(names: List<String>, private val cardDeck: CardDeck) {
         transferPlayerCard(player)
     }
 
-    fun progressDealerAddCard() {
-        while (!participants.dealer.isOverCondition()) participants.dealer.receiveCard(cardDeck.drawCard())
+    fun progressDealerAddCard(transferDealerCondition: (Boolean) -> Unit) {
+        while (!participants.dealer.isOverCondition()) {
+            participants.dealer.receiveCard(cardDeck.drawCard())
+            transferDealerCondition(participants.dealer.isOverCondition())
+        }
+        transferDealerCondition(participants.dealer.isOverCondition())
     }
 }
