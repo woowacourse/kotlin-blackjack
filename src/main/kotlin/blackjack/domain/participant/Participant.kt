@@ -18,8 +18,11 @@ abstract class Participant(val name: String) {
     fun isStay(): Boolean = cards.isStay()
 
     infix fun judge(other: Participant): GameResult = when {
-        isBust() && other.isBust() -> GameResult.DRAW
-        isBust() -> GameResult.LOSE
+        isBust() -> when {
+            this is Player -> GameResult.LOSE
+            other.isBust() -> GameResult.WIN
+            else -> GameResult.LOSE
+        }
         other.isBust() -> GameResult.WIN
         getTotalScore() == other.getTotalScore() -> GameResult.DRAW
         getTotalScore() > other.getTotalScore() -> GameResult.WIN

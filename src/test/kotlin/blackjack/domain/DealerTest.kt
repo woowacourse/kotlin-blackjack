@@ -4,6 +4,8 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
 import blackjack.domain.card.Suit
 import blackjack.domain.participant.Dealer
+import blackjack.domain.participant.Player
+import blackjack.domain.result.GameResult
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -11,7 +13,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
 class DealerTest {
-    lateinit var dealer: Dealer
+    private lateinit var dealer: Dealer
 
     @BeforeEach
     fun setUp() {
@@ -94,5 +96,74 @@ class DealerTest {
         dealer.addCard(Card(secondCardNumber, secondCardSuit))
 
         assertThat(dealer.getTotalScore()).isEqualTo(expected)
+    }
+
+    @ParameterizedTest
+    @CsvSource(
+        "JACK, DIAMOND, QUEEN, DIAMOND, TWO, DIAMOND",
+        "JACK, DIAMOND, SIX, DIAMOND, TWO, DIAMOND",
+    )
+    fun `플레이어가 21점을 초과하면 딜러가 어느 상황이던 승리한다`(
+        firstCardNumber: CardNumber,
+        firstCardSuit: Suit,
+        secondCardNumber: CardNumber,
+        secondCardSuit: Suit,
+        thirdCardNumber: CardNumber,
+        thirdCardSuit: Suit,
+    ) {
+        val dealer = Dealer().apply {
+            addCard(Card(firstCardNumber, firstCardSuit))
+            addCard(Card(secondCardNumber, secondCardSuit))
+            addCard(Card(thirdCardNumber, thirdCardSuit))
+        }
+        val player = Player("반달").apply {
+            addCard(Card(CardNumber.JACK, Suit.SPADE))
+            addCard(Card(CardNumber.QUEEN, Suit.SPADE))
+            addCard(Card(CardNumber.TWO, Suit.SPADE))
+        }
+
+        assertThat(dealer judge player).isEqualTo(GameResult.WIN)
+    }
+
+    @Test
+    fun `딜러와 플레이어가 21점을 초과하지 않고 점수가 동일하면 무승부이다`() {
+        val dealer = Dealer().apply {
+            addCard(Card(CardNumber.JACK, Suit.DIAMOND))
+            addCard(Card(CardNumber.QUEEN, Suit.DIAMOND))
+        }
+        val player = Player("반달").apply {
+            addCard(Card(CardNumber.JACK, Suit.SPADE))
+            addCard(Card(CardNumber.QUEEN, Suit.SPADE))
+        }
+
+        assertThat(dealer judge player).isEqualTo(GameResult.DRAW)
+    }
+
+    @Test
+    fun `딜러와 플레이어가 21점을 초과하지 않고 딜러의 점수가 높으면 딜러가 승리한다`() {
+        val dealer = Dealer().apply {
+            addCard(Card(CardNumber.JACK, Suit.DIAMOND))
+            addCard(Card(CardNumber.QUEEN, Suit.SPADE))
+        }
+        val player = Player("반달").apply {
+            addCard(Card(CardNumber.JACK, Suit.SPADE))
+            addCard(Card(CardNumber.NINE, Suit.SPADE))
+        }
+
+        assertThat(dealer judge player).isEqualTo(GameResult.WIN)
+    }
+
+    @Test
+    fun `딜러와 플레이어가 21점을 초과하지 않고 플레이어의 점수가 더 높으면 딜러가 패배한다`() {
+        val dealer = Dealer().apply {
+            addCard(Card(CardNumber.JACK, Suit.DIAMOND))
+            addCard(Card(CardNumber.NINE, Suit.DIAMOND))
+        }
+        val player = Player("반달").apply {
+            addCard(Card(CardNumber.JACK, Suit.SPADE))
+            addCard(Card(CardNumber.QUEEN, Suit.SPADE))
+        }
+
+        assertThat(dealer judge player).isEqualTo(GameResult.LOSE)
     }
 }
