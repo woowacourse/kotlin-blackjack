@@ -2,7 +2,7 @@
 
 - 카드
     - 카드는 숫자와 모양을 갖는다.
-- Cards
+- Hand
     - 카드 리스트를 갖는다.
     - ACE 개수를 알 수 있다.
 - 카드덱
@@ -24,11 +24,26 @@
     - Participants
       - [x] 딜러와 플레이어들을 갖는다.
 
-- 게임 결과
-    - [x] 사람 모두를 갖는다.
-    - [x] 딜러와 플레이어의 숫자를 비교한다. (21에 가까운 사람이 이긴다)
-        - [x] 플레이어가 Bust 이면 무조건 패배
-        - [x] 숫자가 같으면 무승부이다.
+- 상태
+    - Started
+      - PlayerFirstTurn
+      - PlayerHit
+      - DealerFirstTurn
+      - DealerHit
+      
+    - Finished
+      - BlackJack
+        - PlayerBlackJack
+        - DealerBlackJack
+      - Bust
+      - Stay
+        - PlayerStay
+        - DealerStay
+        
+- 게임 수익
+    - 플레이어의 게임 수익을 반환
+    - 딜러의 게임 수익을 반환
+    
 
 - 블랙젝 게임
   - [x] participants 와 deck 을 가진다.
