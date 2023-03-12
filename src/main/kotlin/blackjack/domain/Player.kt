@@ -8,7 +8,7 @@ class Player(val name: String, override var state: State, val bettingAmount: Int
 
     override fun isOverCondition(): Boolean = state !is Hit
 
-    fun getConsequence(dealer: Dealer): Consequence {
+    private fun getConsequence(dealer: Dealer): Consequence {
         return when (compareValuesBy(this, dealer, { it.state }, { it.state.hand.getTotalScore() })) {
             1 -> Consequence.WIN
             0 -> Consequence.DRAW
