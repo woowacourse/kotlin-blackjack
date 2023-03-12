@@ -1,7 +1,7 @@
 package domain.card
 
 class BlackJackCardDeck(private val originalCashedDeck: List<Card> = Card.DECK.toList()) : CardDeck {
-    private val deck: MutableList<Card> = originalCashedDeck.toMutableList()
+    private val deck: MutableList<Card> = originalCashedDeck.shuffled().toMutableList()
 
     init {
         check(deck.isNotEmpty()) { ERROR_DECK_EMPTY }
@@ -9,7 +9,7 @@ class BlackJackCardDeck(private val originalCashedDeck: List<Card> = Card.DECK.t
 
     override fun draw(): Card {
         if (deck.isEmpty()) {
-            deck.addAll(originalCashedDeck)
+            deck.addAll(originalCashedDeck.shuffled())
         }
         return deck.removeLast()
     }
