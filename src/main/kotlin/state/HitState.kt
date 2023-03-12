@@ -7,12 +7,17 @@ class HitState(cards: Cards) : RunningState(cards) {
     constructor(vararg card: Card) : this(Cards(card.toList()))
 
     init {
-        check((cards.size > 2 && !cards.isBust) || (cards.size == 2) && !cards.isBlackJack) { ERROR_HIT_STATE }
+        check(
+            (cards.size > FirstState.FIST_STATE_BOUNDARY_SIZE && cards.isBust.not()) ||
+                (cards.size == FirstState.FIST_STATE_BOUNDARY_SIZE) && cards.isBlackJack.not()
+        ) {
+            ERROR_HIT_STATE
+        }
     }
 
-    override fun next(nextCards: Cards): State {
-        if (nextCards.isBust) return BustState(nextCards)
-        return HitState(nextCards)
+    override fun next(nextCards: Cards): State = when {
+        nextCards.isBust -> BustState(nextCards)
+        else -> HitState(nextCards)
     }
 
     override fun stay(): State {
