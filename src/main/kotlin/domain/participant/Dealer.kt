@@ -1,14 +1,13 @@
 package domain.participant
 
 import domain.card.Card
-import domain.card.Cards
 
-class Dealer(cards: Cards) : Participant(Name(DEALER_NAME), cards) {
+class Dealer() : Participant(Name(DEALER_NAME), BettingMoney(0)) {
     override fun showInitCards(): List<Card> {
-        return cards.list.take(TAKE_ONE)
+        return state.cards().list.take(TAKE_ONE)
     }
 
-    override fun isPossibleDrawCard(): Boolean = getScore().getValue() <= DEALER_ADD_CARD_CONDITION
+    override fun isPossibleDrawCard(): Boolean = state.cards().getScore().getValue() <= DEALER_ADD_CARD_CONDITION
 
     companion object {
         const val DEALER_NAME = "딜러"

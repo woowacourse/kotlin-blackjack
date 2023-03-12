@@ -3,34 +3,23 @@ package domain.participant
 import domain.card.Card
 import domain.card.CardCategory
 import domain.card.CardNumber
-import domain.card.Cards
-import domain.card.Score
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class PlayerTest {
-    private fun Cards(vararg cards: Int): Cards {
-        return Cards(
-            cards.map { number ->
-                Card.of(
-                    CardCategory.CLOVER,
-                    CardNumber.values().find { it.value == number } ?: CardNumber.FIVE,
-                )
-            },
-        )
+
+    private fun Card(number: Int): Card {
+        return Card.of(CardCategory.CLOVER, CardNumber.values().find { it.value == number } ?: CardNumber.FIVE)
     }
 
     @Test
     fun `처음에 패를 두 장 보여준다`() {
         val player = Player(
             Name("scott"),
-            Cards(
-                8,
-                9,
-            ),
             BettingMoney(1000),
         )
-
+        player.draw(Card(2))
+        player.draw(Card(3))
         val actual = player.showInitCards().size
         val expected = 2
         assertThat(actual).isEqualTo(expected)
@@ -40,12 +29,10 @@ class PlayerTest {
     fun `21보다 작으면 더 받을 수 있도록 true를 반환한다`() {
         val player = Player(
             Name("scott"),
-            Cards(
-                8,
-                9,
-            ),
             BettingMoney(1000),
         )
+        player.draw(Card(2))
+        player.draw(Card(3))
         val actual = player.isPossibleDrawCard()
         assertThat(actual).isTrue
     }
@@ -55,16 +42,18 @@ class PlayerTest {
         // given
         val player = Player(
             Name("scott"),
-            Cards(
-                8,
-                9,
-            ),
             BettingMoney(1000),
         )
-        val dealerScore = Score(Cards(2, 10))
+        player.draw(Card(10))
+        player.draw(Card(9))
+        player.stopDraw()
+        val dealer = Dealer()
+        dealer.draw(Card(5))
+        dealer.draw(Card(3))
+        dealer.stopDraw()
         // when
-        val actual = player.getProfit(dealerScore)
-        val expected = 1000
+        val actual = player.getProfit(dealer.state)
+        val expected = 1000.0
         // then
         assertThat(actual).isEqualTo(expected)
     }
@@ -74,16 +63,17 @@ class PlayerTest {
         // given
         val player = Player(
             Name("scott"),
-            Cards(
-                8,
-                9,
-            ),
             BettingMoney(1000),
         )
-        val dealerScore = Score(Cards(9, 10))
+        player.draw(Card(10))
+        player.draw(Card(9))
+        player.stopDraw()
+        val dealer = Dealer()
+        dealer.draw(Card(1))
+        dealer.draw(Card(10))
         // when
-        val actual = player.getProfit(dealerScore)
-        val expected = -1000
+        val actual = player.getProfit(dealer.state)
+        val expected = -1000.0
         // then
         assertThat(actual).isEqualTo(expected)
     }
@@ -93,16 +83,18 @@ class PlayerTest {
         // given
         val player = Player(
             Name("scott"),
-            Cards(
-                8,
-                9,
-            ),
             BettingMoney(1000),
         )
-        val dealerScore = Score(Cards(7, 10))
+        player.draw(Card(10))
+        player.draw(Card(9))
+        player.stopDraw()
+        val dealer = Dealer()
+        dealer.draw(Card(10))
+        dealer.draw(Card(9))
+        dealer.stopDraw()
         // when
-        val actual = player.getProfit(dealerScore)
-        val expected = 0
+        val actual = player.getProfit(dealer.state)
+        val expected = 0.0
         // then
         assertThat(actual).isEqualTo(expected)
     }
@@ -112,16 +104,17 @@ class PlayerTest {
         // given
         val player = Player(
             Name("scott"),
-            Cards(
-                1,
-                10,
-            ),
             BettingMoney(1000),
         )
-        val dealerScore = Score(Cards(2, 10))
+        player.draw(Card(1))
+        player.draw(Card(10))
+        val dealer = Dealer()
+        dealer.draw(Card(5))
+        dealer.draw(Card(3))
+        dealer.stopDraw()
         // when
-        val actual = player.getProfit(dealerScore)
-        val expected = 1500
+        val actual = player.getProfit(dealer.state)
+        val expected = 1500.0
         // then
         assertThat(actual).isEqualTo(expected)
     }
