@@ -15,24 +15,43 @@ import org.junit.jupiter.api.Test
 
 class BlackJackRefereeTest {
     @Test
-    fun `카드 합이 10인 딜러를 상대로 카드 합이 9인 플레이어는 패배하고 카드 합이 17인 플레이어는 승리하고 카드 합이 10인 플레이어는 무승부`() {
-        // given
-        val player1 = createPlayer(CardNumber.SEVEN, CardNumber.K) // 17
-        val player2 = createPlayer(CardNumber.EIGHT, CardNumber.ONE) // 9
-        val player3 = createPlayer(CardNumber.EIGHT, CardNumber.TWO) // 10
-        val dealer = createDealer(CardNumber.SIX, CardNumber.FOUR) // 10
+    fun `카드 합이 18인 딜러를 상대로 카드 합이 17인 플레이어는 패배한다`() {
+        val player = createPlayer(CardNumber.SEVEN, CardNumber.K)
+        val dealer = createDealer(CardNumber.TEN, CardNumber.EIGHT)
 
-        // when
-        val actual = BlackJackReferee.judgeGameResult(
-            players = listOf(player1, player2, player3),
-            dealer = dealer
-        )
+        val actual = BlackJackReferee.judgeGameResult(player, dealer)
 
-        // then
-        val (player1Result, player2Result, player3Result) = actual
-        assertThat(player1Result.gameResult).isEqualTo(GameResult.WIN)
-        assertThat(player2Result.gameResult).isEqualTo(GameResult.LOSE)
-        assertThat(player3Result.gameResult).isEqualTo(GameResult.DRAW)
+        assertThat(actual).isEqualTo(GameResult.LOSE)
+    }
+
+    @Test
+    fun `카드 합이 18인 딜러를 상대로 카드 합이 20인 플레이어는 승리한다`() {
+        val player = createPlayer(CardNumber.Q, CardNumber.K)
+        val dealer = createDealer(CardNumber.TEN, CardNumber.EIGHT)
+
+        val actual = BlackJackReferee.judgeGameResult(player, dealer)
+
+        assertThat(actual).isEqualTo(GameResult.WIN)
+    }
+
+    @Test
+    fun `카드 합이 18인 딜러를 상대로 카드 합이 18인 플레이어는 무승부한다`() {
+        val player = createPlayer(CardNumber.EIGHT, CardNumber.K)
+        val dealer = createDealer(CardNumber.TEN, CardNumber.EIGHT)
+
+        val actual = BlackJackReferee.judgeGameResult(player, dealer)
+
+        assertThat(actual).isEqualTo(GameResult.DRAW)
+    }
+
+    @Test
+    fun `딜러가 블랙잭이 아닌 경우 블랙잭인 플레이어는 승리한다`() {
+        val player = createPlayer(CardNumber.A, CardNumber.K)
+        val dealer = createDealer(CardNumber.TEN, CardNumber.EIGHT)
+
+        val actual = BlackJackReferee.judgeGameResult(player, dealer)
+
+        assertThat(actual).isEqualTo(GameResult.BLACKJACK)
     }
 
     private fun createPlayer(firstCardNumber: CardNumber, secondCardNumber: CardNumber): Player {

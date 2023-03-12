@@ -53,7 +53,9 @@ class BlackJackGame(
     fun showFinalCards() = OutputView.printFinalCards(dealer, players)
 
     fun judgeGameResults() {
-        val playersGameResult = BlackJackReferee.judgeGameResult(players, dealer)
+        val playersGameResult = players.map { player ->
+            PlayerGameResult(player, BlackJackReferee.judgeGameResult(player, dealer))
+        }
         val dealerGameResult = playersGameResult.map { playerGameResult ->
             !playerGameResult.gameResult
         }
