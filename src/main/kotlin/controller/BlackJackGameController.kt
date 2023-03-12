@@ -17,7 +17,7 @@ import view.ResultView
 class BlackJackGameController(private val inputView: InputView, private val resultView: ResultView) : Runnable {
     override fun run() {
         val blackJackGame = createBlackJackGame()
-        val result = blackJackGame.runGame(getPlayersNameAndBet())
+        val result = blackJackGame.runGame(getPlayersInfo())
         printResult(result)
     }
 
@@ -37,7 +37,7 @@ class BlackJackGameController(private val inputView: InputView, private val resu
         resultView.printGameResult(result)
     }
 
-    private fun getPlayersNameAndBet(): List<PlayerInfo> {
+    private fun getPlayersInfo(): List<PlayerInfo> {
         val names = getNames()
         return inputView.readPlayersBetMoney(names)
     }
