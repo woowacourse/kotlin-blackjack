@@ -1,11 +1,11 @@
-package domain.state.playerState
+package domain.state
 
 import domain.card.Card
 import domain.card.CardNumber
 import domain.card.CardShape
 import domain.card.Hand
 import domain.money.Money
-import domain.state.Stay
+import domain.state.playerState.PlayerFirstTurn
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -33,7 +33,10 @@ class StartedTest {
         val actual = PlayerFirstTurn(hand)
             .draw(Card(CardShape.DIAMOND, CardNumber.TEN))
 
-        assertThrows<IllegalStateException> { actual.profit(Money(10000)) }
+        val otherHand = Hand(Card(CardShape.HEART, CardNumber.ACE))
+        val other = PlayerFirstTurn(otherHand).draw(Card(CardShape.DIAMOND, CardNumber.TEN))
+
+        assertThrows<IllegalStateException> { actual.profit(other, Money(10000)) }
     }
 
     @Test
@@ -42,6 +45,6 @@ class StartedTest {
         val actual = PlayerFirstTurn(hand)
             .draw(Card(CardShape.DIAMOND, CardNumber.TEN))
 
-        assertThat(actual.stay()).isInstanceOf(Stay::class.java)
+        assertThat(actual.stay() is Stay).isTrue
     }
 }
