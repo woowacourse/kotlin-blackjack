@@ -3,15 +3,16 @@ package blackjack.domain.player
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
 import blackjack.domain.card.MultiDeck
+import blackjack.domain.result.GameResult
+import blackjack.domain.result.MatchResult
 
 abstract class Player(
     val name: String,
-    val cards: Cards = Cards()
+    val cards: Cards = Cards(),
+    val matchResult: MatchResult = MatchResult()
 ) {
 
     abstract fun canHit(): Boolean
-
-    abstract fun decideGameResult(otherPlayer: Player)
 
     fun addCard(card: Card) {
         cards.add(card)
@@ -19,6 +20,21 @@ abstract class Player(
 
     fun setFirstTurnCards(multiDeck: MultiDeck) =
         repeat(CARD_SETTING_COUNT) { cards.add(multiDeck.draw()) }
+
+    fun decideGameResult(otherPlayer: Player) {
+        val otherPlayerCardsSum: Int = otherPlayer.cards.sum()
+        val cardsSum = cards.sum()
+
+        val gameResult = when {
+            cardsSum > MAX_SUM_NUMBER -> GameResult.LOSE
+            otherPlayerCardsSum > MAX_SUM_NUMBER -> GameResult.WIN
+            otherPlayerCardsSum > cardsSum -> GameResult.LOSE
+            otherPlayerCardsSum == cardsSum -> GameResult.DRAW
+            else -> GameResult.WIN
+        }
+
+        matchResult.count(gameResult)
+    }
 
     companion object {
         const val CARD_SETTING_COUNT = 2

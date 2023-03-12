@@ -36,12 +36,13 @@ class OutputView {
         println(FINAL_RESULT_MESSAGE)
 
         val dealerResultMessage: StringBuilder = StringBuilder("${dealer.name}: ")
-        if (dealer.results[GameResult.WIN] != 0) dealerResultMessage.append("${dealer.results[GameResult.WIN]}${GameResult.WIN.toText()} ")
-        if (dealer.results[GameResult.LOSE] != 0) dealerResultMessage.append("${dealer.results[GameResult.LOSE]}${GameResult.LOSE.toText()} ")
-        if (dealer.results[GameResult.DRAW] != 0) dealerResultMessage.append("${dealer.results[GameResult.DRAW]}${GameResult.DRAW.toText()} ")
+        val dealerGameResults = dealer.matchResult.getResults()
+        if (dealerGameResults[GameResult.WIN] != 0) dealerResultMessage.append("${dealerGameResults[GameResult.WIN]}${GameResult.WIN.toText()} ")
+        if (dealerGameResults[GameResult.LOSE] != 0) dealerResultMessage.append("${dealerGameResults[GameResult.LOSE]}${GameResult.LOSE.toText()} ")
+        if (dealerGameResults[GameResult.DRAW] != 0) dealerResultMessage.append("${dealerGameResults[GameResult.DRAW]}${GameResult.DRAW.toText()} ")
         println(dealerResultMessage.toString())
 
-        participants.values.forEach { println("${it.name}: ${it.gameResult.toText()}") }
+        participants.values.forEach { println("${it.name}: ${it.matchResult.getResult().toText()}") }
     }
 
     fun printSumResult(dealer: Dealer, participants: Participants) {
@@ -51,7 +52,7 @@ class OutputView {
         }
     }
 
-    fun printParticipantsCards(participants: Participants) {
+    private fun printParticipantsCards(participants: Participants) {
         participants.values.forEach { printPlayerCards(it) }
         println()
     }
