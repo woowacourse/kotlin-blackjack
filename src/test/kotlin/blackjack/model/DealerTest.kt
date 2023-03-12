@@ -3,6 +3,8 @@ package blackjack.model
 import model.Card
 import model.CardDeck
 import model.Dealer
+import model.Name
+import model.Player
 import model.Rank
 import model.Suit
 import org.assertj.core.api.Assertions.assertThat
@@ -50,6 +52,20 @@ class DealerTest {
         val dealer = Dealer()
         dealer.drawFirst(cardDeck)
         assertThat(dealer.isPossibleDrawCard()).isFalse
+    }
+
+    @Test
+    fun `딜러는 참가자가 졌을 경우 참가자의 베팅 금액을 이익으로 얻는다`() {
+        val cardDeck = CardDeck(
+            Card(Rank.ACE, Suit.SPADE),
+            Card(Rank.TEN, Suit.SPADE),
+            Card(Rank.ACE, Suit.HEART),
+            Card(Rank.ACE, Suit.CLOVER),
+        )
+        val dealer = Dealer()
+        dealer.drawFirst(cardDeck)
+        val player = Player.of(Name("jaosn"), 1_000L)
+        assertThat(dealer.getProfitMoney(player).value).isEqualTo(1_000L)
     }
 
     companion object {
