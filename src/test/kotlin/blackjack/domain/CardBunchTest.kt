@@ -90,6 +90,21 @@ class CardBunchTest {
         assertThat(cardBunch.size()).isEqualTo(2)
     }
 
+    @Test
+    fun `카드 뭉치는 외부에서 변경할 수 없다`() {
+        // given
+        val cards = mutableListOf(
+            Card.get(Shape.HEART, CardNumber.ACE), Card.get(Shape.HEART, CardNumber.TWO)
+        )
+
+        // when
+        val cardBunch = CardBunch(cards)
+        cards.clear()
+
+        // then
+        assertThat(cardBunch.size()).isEqualTo(2)
+    }
+
     @ParameterizedTest(name = "카드의 합은 {3}이다")
     @MethodSource("provideCards")
     fun `합계 테스트`(card1: Card, card2: Card, card3: Card, sum: Int) {

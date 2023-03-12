@@ -2,7 +2,8 @@ package blackjack.domain
 
 import blackjack.const.MAX_SCORE_CONDITION
 
-class CardBunch(private val _cards: MutableList<Card>) {
+class CardBunch(private val initialCards: MutableList<Card>) {
+    private val _cards = initialCards.toMutableList()
     val cards: List<Card> get() = _cards.toList()
 
     constructor(vararg cards: Card) : this(cards.toMutableList())
