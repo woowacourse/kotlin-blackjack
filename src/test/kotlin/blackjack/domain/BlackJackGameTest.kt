@@ -9,6 +9,7 @@ class BlackJackGameTest {
 
     @Test
     fun `유저두명에게 각각 카드를 한장씩 추가로 분배한다`() {
+        val stubBettingAmountInput = StubBettingAmountInput()
         val stubInput = StubInput()
         val blackJackGame = BlackJackGame(
             listOf("krong", "dogpig"),
@@ -29,7 +30,7 @@ class BlackJackGameTest {
                     Card(HEART, CardNumber.SIX),
                 ),
             ),
-        )
+        ) { stubBettingAmountInput.getBettingAmountInput() }
         blackJackGame.progressPlayersAddCard({ stubInput.stubGetDecision() }, {})
         assertThat(blackJackGame.participants.players.value[0].state.hand.cards).isEqualTo(
             listOf(
@@ -49,6 +50,7 @@ class BlackJackGameTest {
 
     @Test
     fun `딜러의 첫카드 2장의 합이 16 이하라면 카드한장을 더뽑는다`() {
+        val stubBettingAmountInput = StubBettingAmountInput()
         val blackJackGame = BlackJackGame(
             listOf("krong", "dogpig"),
             StubCardDeck(
@@ -68,7 +70,7 @@ class BlackJackGameTest {
                     Card(HEART, CardNumber.SEVEN),
                 ),
             ),
-        )
+        ) { stubBettingAmountInput.getBettingAmountInput() }
         blackJackGame.progressDealerAddCard {}
         assertThat(blackJackGame.participants.dealer.state.hand.cards).isEqualTo(
             listOf(
@@ -82,6 +84,7 @@ class BlackJackGameTest {
 
     @Test
     fun `딜러의 첫카드 2장의 합이 17 이상이라면 카드한장를 뽑지 않는다`() {
+        val stubBettingAmountInput = StubBettingAmountInput()
         val blackJackGame = BlackJackGame(
             listOf("krong", "dogpig"),
             StubCardDeck(
@@ -100,7 +103,7 @@ class BlackJackGameTest {
                     Card(HEART, CardNumber.FIVE),
                 ),
             ),
-        )
+        ) { stubBettingAmountInput.getBettingAmountInput() }
         blackJackGame.progressDealerAddCard {}
         assertThat(blackJackGame.participants.dealer.state.hand.cards).isEqualTo(
             listOf(
@@ -120,4 +123,9 @@ class StubInput() {
     private val decisions = mutableListOf(true, false, true, false)
 
     fun stubGetDecision(): Boolean = decisions.removeFirst()
+}
+
+class StubBettingAmountInput() {
+    private val BettingAmounts = mutableListOf(1000, 2000, 3000, 4000)
+    fun getBettingAmountInput(): Int = BettingAmounts.removeFirst()
 }
