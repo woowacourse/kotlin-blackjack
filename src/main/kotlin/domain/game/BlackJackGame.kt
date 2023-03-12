@@ -29,6 +29,21 @@ class BlackJackGame(
         participants = Participants(players, dealer)
     }
 
+    fun introduceParticipants(showPlayers: (Players) -> Unit, showInitCards: ((Participants) -> Unit)) {
+        showPlayers(players)
+        showInitCards(participants)
+    }
+
+    fun runGame(
+        isGetCard: (Player) -> Boolean,
+        showPlayerCards: (Player) -> Unit,
+        showDealerResult: (Dealer) -> Unit,
+    ): GameResult {
+        playersSelectAddPhase(isGetCard, showPlayerCards)
+        dealerSelectPhase(showDealerResult)
+        return GameResult(participants)
+    }
+
     private fun initPlayers(names: () -> Names, bettingMoney: (Name) -> BettingMoney): Players {
         return Players(names().values.map { name -> Player(name, drawInitCards(), bettingMoney(name)) })
     }
@@ -52,21 +67,17 @@ class BlackJackGame(
         } while (isPossibleDrawCard() && isGetCard(this))
     }
 
-    fun playersSelectAddPhase(isGetCard: (Player) -> Boolean, showPlayerCards: (Player) -> Unit) {
+    private fun playersSelectAddPhase(isGetCard: (Player) -> Boolean, showPlayerCards: (Player) -> Unit) {
         players.list.forEach { player ->
             player.playerSelectAdd(isGetCard, showPlayerCards)
         }
     }
 
-    fun dealerSelectPhase(result: (Dealer) -> Unit) {
+    private fun dealerSelectPhase(showCards: (Dealer) -> Unit) {
         if (participants.dealer.isPossibleDrawCard()) {
-            result(dealer)
+            showCards(dealer)
             participants.dealer.addCard()
         }
-    }
-
-    fun getGameResult(): GameResult {
-        return GameResult(participants)
     }
 
     companion object {

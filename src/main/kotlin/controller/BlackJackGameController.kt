@@ -7,12 +7,13 @@ import view.ResultView
 class BlackJackGameController(private val inputView: InputView, private val resultView: ResultView) : Runnable {
     override fun run() {
         val blackJackGame = BlackJackGame(inputView::readNames, inputView::readBettingMoney)
-        resultView.printGameInit(blackJackGame.participants.players)
-        resultView.printInitCards(blackJackGame.participants)
-        blackJackGame.playersSelectAddPhase(inputView::readChoiceOfAddCard, resultView::printPlayerCard)
-        blackJackGame.dealerSelectPhase(resultView::printDealerAddCard)
+        blackJackGame.introduceParticipants(resultView::printGameInit, resultView::printInitCards)
+        val gameResult = blackJackGame.runGame(
+            inputView::readChoiceOfAddCard,
+            resultView::printPlayerCard,
+            resultView::printDealerAddCard,
+        )
         resultView.printScore(blackJackGame.participants)
-        val gameResult = blackJackGame.getGameResult()
         resultView.printParticipantsProfit(gameResult.getDealerProfit(), gameResult.getPlayersProfit())
     }
 }
