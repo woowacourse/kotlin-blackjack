@@ -2,6 +2,7 @@ package blackjack.controller
 
 import blackjack.domain.BlackJackGame
 import blackjack.domain.CardPack
+import blackjack.view.InputView
 import blackjack.view.OutputView
 
 class BlackJackController(
@@ -9,8 +10,8 @@ class BlackJackController(
 ) {
     fun run() {
         runCatching {
-            blackJackGame.entryPlayers()
-            blackJackGame.showDividingCards()
+            blackJackGame.entryPlayers(InputView.requestPlayersName())
+            blackJackGame.showDividingCards(OutputView::printCardDividingMessage)
             blackJackGame.drawAdditionalCards()
             blackJackGame.drawAdditionalCardForDealer()
             blackJackGame.showFinalCards()

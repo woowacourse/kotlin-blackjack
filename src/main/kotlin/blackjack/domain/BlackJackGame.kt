@@ -6,12 +6,11 @@ import java.lang.StringBuilder
 
 class BlackJackGame(
     private val cardPack: CardPack,
-    private val dealer: Dealer = Dealer(CardHand(listOf(cardPack.draw(), cardPack.draw())))
+    private val dealer: Dealer = Dealer(CardHand(listOf(cardPack.draw(), cardPack.draw()))),
+    private var players: List<Player> = emptyList()
 ) {
-    private lateinit var players: List<Player>
-
-    fun entryPlayers() {
-        players = InputView.requestPlayersName().map { name ->
+    fun entryPlayers(requestPlayersName: List<String>) {
+        players = requestPlayersName.map { name ->
             Player(
                 name = PlayerName(name),
                 cardHand = CardHand(listOf(cardPack.draw(), cardPack.draw())),
@@ -20,7 +19,7 @@ class BlackJackGame(
         }
     }
 
-    fun showDividingCards() = OutputView.printCardDividingMessage(dealer, players)
+    fun showDividingCards(printCardDividing: (Dealer, List<Player>) -> Unit) = printCardDividing(dealer, players)
 
     fun drawAdditionalCards() = players.forEach { player ->
         askToDrawAdditionalCardForPlayer(player)
