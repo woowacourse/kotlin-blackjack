@@ -5,7 +5,11 @@ import blackjack.domain.money.Money
 import blackjack.domain.result.GameResult
 
 class Participants(private val participants: List<Participant>) {
+    private val dealer = getDealer()
+    private val players = getPlayers()
+
     init {
+        requireNotNull(dealer) { "참여자에 딜러가 포함되어 있지 않습니다." }
         require(participants.size in MINIMUM_PARTICIPANTS..MAXIMUM_PARTICIPANTS) {
             "블랙잭은 딜러를 포함하여 최소 ${MINIMUM_PARTICIPANTS}명에서 최대 ${MAXIMUM_PARTICIPANTS}명의 플레이어가 참여 가능합니다. (현재 플레이어수 : ${participants.size}명)"
         }
@@ -58,18 +62,18 @@ class Participants(private val participants: List<Participant>) {
         else -> throw IllegalArgumentException("올바르지 않은 참여자입니다.")
     }
 
-    private fun getPlayerMatchResults(player: Player): Money = player.getProfit(getDealer())
+    private fun getPlayerMatchResults(player: Player): Money = player.getProfit(dealer!!)
 
     private fun getDealerMatchResult(dealer: Dealer): Money =
         Money(getPlayers().sumOf { dealer.getProfit(it).getAmount() })
 
     fun getPlayers(): List<Participant> = participants.filterIsInstance<Player>()
 
-    fun getDealer(): Participant = participants.first { it is Dealer }
+    fun getDealer(): Participant? = participants.firstOrNull { it is Dealer }
 
-    private fun dealerFirst(): List<Participant> = listOf(getDealer()) + getPlayers()
+    private fun dealerFirst(): List<Participant> = listOf(dealer!!) + players
 
-    private fun playersFirst(): List<Participant> = getPlayers() + getDealer()
+    private fun playersFirst(): List<Participant> = players + dealer!!
 
     companion object {
         private const val MINIMUM_PARTICIPANTS = 2

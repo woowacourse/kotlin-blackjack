@@ -16,7 +16,7 @@ object OutputView {
     fun printFirstDrawnMessage(participants: Participants) {
         val dealer = participants.getDealer()
         val players = participants.getPlayers()
-        println("${dealer.name}와 ${players.joinToString(SEPARATOR) { it.name }}에게 2장의 카드를 나누었습니다.")
+        println("${dealer?.name}와 ${players.joinToString(SEPARATOR) { it.name }}에게 2장의 카드를 나누었습니다.")
     }
 
     fun printFirstOpenCards(participant: Participant) {
