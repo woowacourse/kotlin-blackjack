@@ -90,4 +90,14 @@
 
 ---
 
+- State
+  - Running
+    - FirstTurn 
+    - Hit
+  - Finished
+    - Bust
+    - Blackjack
+      - 딜러와 같다면 무승부
+    - Stay
+      - 
 

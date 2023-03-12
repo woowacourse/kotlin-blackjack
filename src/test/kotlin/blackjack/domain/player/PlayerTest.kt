@@ -4,9 +4,10 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
 import blackjack.domain.card.CardShape
 import blackjack.domain.card.Cards
-import blackjack.domain.card.MultiDeck
+import blackjack.domain.result.GameResult
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
 import org.junit.jupiter.api.assertDoesNotThrow
 
 class PlayerTest {
@@ -31,24 +32,28 @@ class PlayerTest {
     }
 
     @Test
-    fun `갖고 있는 카드 숫자의 합을 계산해 반환한다`() {
-        val player = TestPlayer(
-            "aa",
+    fun `상대방의 카드와 비교해 게임 결과를 업데이트 한다`() {
+        val otherPlayer = TestPlayer(
+            "딜러",
             Cards(
-                Pair(CardNumber.FOUR, CardShape.HEART),
-                Pair(CardNumber.EIGHT, CardShape.CLOVER)
+                Pair(CardNumber.SEVEN, CardShape.HEART),
+                Pair(CardNumber.TEN, CardShape.HEART)
             )
         )
-        val actual = player.cards.sum()
-        assertThat(actual).isEqualTo(12)
-    }
+        val player = TestPlayer(
+            "수달",
+            Cards(
+                Pair(CardNumber.ONE, CardShape.DIAMOND),
+                Pair(CardNumber.KING, CardShape.DIAMOND)
+            )
+        )
 
-    @Test
-    fun `카드를 발급받아 카드의 개수가 늘었는지 확인한다`() {
-        val player = TestPlayer("aaa")
-        val multiDeck = MultiDeck()
-        player.addCard(multiDeck.draw())
-        assertThat(player.cards.values.size).isEqualTo(1)
+        player.decideGameResult(otherPlayer)
+        otherPlayer.decideGameResult(player)
+        assertAll(
+            { assertThat(player.matchResult.getResult()).isEqualTo(GameResult.BLACKJACK) },
+            { assertThat(otherPlayer.matchResult.getResult()).isEqualTo(GameResult.LOSE) },
+        )
     }
 
     class TestPlayer(name: String, cards: Cards = Cards()) : Player(name, cards) {
