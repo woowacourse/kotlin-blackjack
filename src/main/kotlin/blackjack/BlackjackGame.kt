@@ -1,4 +1,4 @@
-package blackjack.controller
+package blackjack
 
 import blackjack.domain.card.MultiDeck
 import blackjack.domain.player.Dealer
@@ -32,6 +32,7 @@ class BlackjackGame(
     fun decidePlayersResult() {
         participants.values.forEach { it.decideGameResult(dealer) }
         participants.values.forEach { dealer.decideGameResult(it) }
+        dealer.matchResult.reversGameResult()
     }
 
     private fun hitParticipantsCards(

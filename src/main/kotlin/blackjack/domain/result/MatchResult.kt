@@ -14,4 +14,10 @@ class MatchResult(
         countBy.filter { it.value == 1 }.keys.first()
 
     fun getResults(): Map<GameResult, Int> = countBy.toMap()
+
+    fun reversGameResult() {
+        val winTmp = countBy[GameResult.WIN]
+        countBy[GameResult.WIN] = countBy[GameResult.LOSE] ?: throw IllegalArgumentException()
+        countBy[GameResult.LOSE] = winTmp ?: throw IllegalArgumentException()
+    }
 }

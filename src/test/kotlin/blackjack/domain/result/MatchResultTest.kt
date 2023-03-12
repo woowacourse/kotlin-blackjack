@@ -18,4 +18,12 @@ class MatchResultTest {
         matchResult.count(GameResult.WIN)
         assertThat(matchResult.getResult()).isEqualTo(GameResult.WIN)
     }
+
+    @Test
+    fun `참가자들에 반대되는 게임 결과를 가진다`() {
+        val matchResult = MatchResult()
+        matchResult.count(GameResult.WIN)
+        matchResult.reversGameResult()
+        assertThat(matchResult.getResult()).isEqualTo(GameResult.LOSE)
+    }
 }
