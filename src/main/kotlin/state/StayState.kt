@@ -3,19 +3,11 @@ package state
 import domain.card.Card
 import domain.card.Cards
 
-class StayState(val cards: Cards) : State {
+class StayState(cards: Cards) : FinishedState(cards) {
     constructor(vararg card: Card) : this(Cards(card.toList()))
 
     init {
         check(cards.size >= 2 && !cards.isBust && !cards.isBlackJack) { ERROR_STAY_STATE }
-    }
-
-    override fun draw(card: Card): State {
-        throw IllegalStateException(BlackJackState.ERROR_CARD_STATE_FINISHED_DRAWN)
-    }
-
-    override fun next(nextCards: Cards): State {
-        throw IllegalStateException(BlackJackState.ERROR_CARD_STATE_FINISHED_DRAWN)
     }
 
     companion object {
