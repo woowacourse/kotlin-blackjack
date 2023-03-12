@@ -1,7 +1,6 @@
 package view.result
 
 import domain.person.Person
-import domain.result.OutCome
 import view.ViewCommon.toText
 
 object ResultOutput {
@@ -23,21 +22,11 @@ object ResultOutput {
         println(FINAL_OUTCOME_SCRIPT)
     }
 
-    fun printDealerResult(dealerResult: Map<OutCome, Int>) {
-        print(DEALER_SCRIPT)
-        dealerResult.entries.forEach { print(" ${it.value}${getOutComeText(it.key)}") }
-        println()
+    fun printDealerProfit(profit: Double) {
+        println("${DEALER_SCRIPT}$profit")
     }
 
-    fun printPlayerResult(playerResult: Map<String, OutCome>) {
-        playerResult.entries.forEach { println("${it.key}: ${getOutComeText(it.value)}") }
-    }
-
-    private fun getOutComeText(outCome: OutCome): String {
-        return when (outCome) {
-            OutCome.WIN -> "승"
-            OutCome.LOSE -> "패"
-            OutCome.DRAW -> "무"
-        }
+    fun printPlayerProfit(playerResult: Map<String, Double>) {
+        playerResult.entries.forEach { println("${it.key}: ${it.value}") }
     }
 }

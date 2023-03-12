@@ -1,17 +1,17 @@
 package view.result
 
 import domain.person.Persons
-import domain.result.GameResult
-import view.result.ResultOutput.printDealerResult
+import domain.result.Casino
+import view.result.ResultOutput.printDealerProfit
 import view.result.ResultOutput.printFinalOutcome
 import view.result.ResultOutput.printPersonCards
-import view.result.ResultOutput.printPlayerResult
+import view.result.ResultOutput.printPlayerProfit
 
 object ResultView {
 
-    fun printResult(persons: Persons, gameResult: GameResult) {
+    fun printResult(persons: Persons, casino: Casino) {
         printPersonsCards(persons)
-        printFinalResult(gameResult)
+        printFinalResult(casino)
     }
 
     private fun printPersonsCards(persons: Persons) {
@@ -20,9 +20,9 @@ object ResultView {
         println()
     }
 
-    private fun printFinalResult(gameResult: GameResult) {
+    private fun printFinalResult(casino: Casino) {
         printFinalOutcome()
-        printDealerResult(gameResult.getDealerResult())
-        printPlayerResult(gameResult.getPlayerResult())
+        printDealerProfit(casino.getDealerProfit())
+        printPlayerProfit(casino.getPlayersProfit())
     }
 }
