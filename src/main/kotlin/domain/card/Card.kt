@@ -17,11 +17,9 @@ class Card private constructor(val cardCategory: CardCategory, val cardNumber: C
         val DECK: List<Card> =
             CardCategory.values().flatMap { cardCategory -> CardNumber.values().map { Card(cardCategory, it) } }
 
-        private const val ERROR_NOT_FIND_MATCH_CARD = "[ERROR] 일치하는 카드가 없습니다."
         fun of(cardCategory: CardCategory, cardNumber: CardNumber): Card {
-            val findCard = DECK.find { cardCategory == it.cardCategory && cardNumber == it.cardNumber }
-            requireNotNull(findCard) { ERROR_NOT_FIND_MATCH_CARD }
-            return findCard
+            return DECK.find { cardCategory == it.cardCategory && cardNumber == it.cardNumber }
+                ?: Card(cardCategory, cardNumber)
         }
     }
 }
