@@ -8,7 +8,7 @@ import blackjack.domain.state.StartState
 class Dealer(cardState: CardState = StartState()) : Participant(DEALER_NAME, cardState) {
     override fun getFirstOpenCards(): List<Card> = listOf(getFirstCard())
 
-    override fun stay(): Participant = Dealer(cardState)
+    override fun stay(): Participant = Dealer(cardState.stay())
 
     override fun draw(card: Card): Participant = Dealer(cardState.draw(card))
 
