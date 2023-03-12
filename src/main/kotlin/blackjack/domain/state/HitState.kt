@@ -11,9 +11,9 @@ class HitState(cards: Cards) : RunningState(cards) {
     }
 
     override fun draw(card: Card): CardState {
-        cards.add(card)
-        if (cards.isBust) return BustState(cards)
-        return this
+        val newCards = cards.add(card)
+        if (newCards.isBust) return BustState(newCards)
+        return HitState(newCards)
     }
 
     companion object {

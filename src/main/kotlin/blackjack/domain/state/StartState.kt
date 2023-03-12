@@ -11,18 +11,18 @@ class StartState(cards: Cards) : RunningState(cards) {
     }
 
     override fun draw(card: Card): CardState {
-        cards.add(card)
-        if (cards.isGreaterOrEqualsCardSize(LIMITED_CARD_SIZE)) {
-            return nextState()
+        val newCards = cards.add(card)
+        if (newCards.isGreaterOrEqualsCardSize(LIMITED_CARD_SIZE)) {
+            return nextState(newCards)
         }
-        return this
+        return StartState(newCards)
     }
 
-    private fun nextState(): CardState {
-        if (cards.isBlackjack) {
-            return BlackjackState(cards)
+    private fun nextState(newCards: Cards): CardState {
+        if (newCards.isBlackjack) {
+            return BlackjackState(newCards)
         }
-        return HitState(cards)
+        return HitState(newCards)
     }
 
     companion object {

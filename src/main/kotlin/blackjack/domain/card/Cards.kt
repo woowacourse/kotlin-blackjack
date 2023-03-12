@@ -1,7 +1,8 @@
 package blackjack.domain.card
 
-class Cards(vararg cards: Card) {
-    private val _items: MutableList<Card> by lazy { cards.toMutableList() }
+class Cards(private val _items: MutableList<Card> = mutableListOf()) {
+    constructor(vararg cards: Card) : this(cards.toMutableList())
+
     val items: List<Card>
         get() = _items.toList()
     val isBust: Boolean
@@ -9,9 +10,7 @@ class Cards(vararg cards: Card) {
     val isBlackjack: Boolean
         get() = calculateTotalScore() == BLACKJACK_SCORE
 
-    fun add(card: Card) {
-        _items.add(card)
-    }
+    fun add(card: Card): Cards = Cards((_items + card).toMutableList())
 
     fun isGreaterOrEqualsCardSize(size: Int): Boolean = _items.size >= size
 
