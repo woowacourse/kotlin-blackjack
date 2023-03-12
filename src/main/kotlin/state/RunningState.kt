@@ -13,7 +13,7 @@ abstract class RunningState(cards: Cards) : StartedState(cards) {
         }
 
     override fun draw(card: Card): State {
-        val nextCards = cards.add2(card)
+        val nextCards = cards.add(card)
         return next(nextCards)
     }
 

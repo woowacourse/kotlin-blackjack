@@ -14,7 +14,7 @@ class CardsTest {
                 Card.of(CardCategory.CLOVER, CardNumber.TWO),
                 Card.of(CardCategory.CLOVER, CardNumber.KING)
             )
-        val actual = cards.resultSum
+        val actual = cards.score
         val expected = 12
         assertThat(actual).isEqualTo(expected)
     }
@@ -27,8 +27,8 @@ class CardsTest {
                 Card.of(CardCategory.CLOVER, CardNumber.KING)
             )
         val card = Card.of(CardCategory.DIAMOND, CardNumber.FIVE)
-        cards.add(card)
-        val actual = cards.size
+        val newCards = cards.add(card)
+        val actual = newCards.size
         val expected = 3
         assertThat(actual).isEqualTo(expected)
     }
@@ -41,8 +41,8 @@ class CardsTest {
                 Card.of(CardCategory.CLOVER, CardNumber.KING)
             )
         val card = Card.of(CardCategory.DIAMOND, CardNumber.FIVE)
-        cards.add(card)
-        val actual = cards.size
+        val newCards = cards.add(card)
+        val actual = newCards.size
         val expected = 3
         assertThat(actual).isEqualTo(expected)
     }
@@ -55,7 +55,7 @@ class CardsTest {
                 Card.of(CardCategory.CLOVER, CardNumber.KING),
                 Card.of(CardCategory.CLOVER, CardNumber.ACE)
             )
-        val actual = cards.resultSum
+        val actual = cards.score
         val expected = 13
         assertThat(actual).isEqualTo(expected)
     }
@@ -68,7 +68,7 @@ class CardsTest {
                 Card.of(CardCategory.CLOVER, CardNumber.EIGHT),
                 Card.of(CardCategory.SPADE, CardNumber.ACE)
             )
-        val actual = cards.resultSum
+        val actual = cards.score
         val expected = 19
         assertThat(actual).isEqualTo(expected)
     }

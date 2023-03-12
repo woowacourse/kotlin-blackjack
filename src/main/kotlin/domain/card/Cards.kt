@@ -18,10 +18,10 @@ class Cards(list: List<Card>) {
 
     val isBlackJack: Boolean
         get() {
-            return ((resultSum == BlackJackGame.BLACKJACK_NUMBER) && (size == 2))
+            return ((score == BlackJackGame.BLACKJACK_NUMBER) && (size == 2))
         }
 
-    val resultSum: Int
+    val score: Int
         get() {
             val sum = sum()
             if (hasAce && (sum + ACE_ADDITIONAL_VALUE <= BlackJackGame.BLACKJACK_NUMBER)) {
@@ -30,11 +30,7 @@ class Cards(list: List<Card>) {
             return sum
         }
 
-    fun add(card: Card) {
-        _list.add(card)
-    }
-
-    fun add2(card: Card): Cards {
+    fun add(card: Card): Cards {
         val newCards = _list.toMutableList()
         newCards.add(card)
         return Cards(newCards)
@@ -49,8 +45,6 @@ class Cards(list: List<Card>) {
     }
 
     companion object {
-        private const val MINIMUM_CARDS_SIZE = 2
-        private const val ERROR_CARDS_SIZE = "[ERROR] 초기 카드는 ${MINIMUM_CARDS_SIZE}장 이상이어야 합니다."
         private const val ACE_ADDITIONAL_VALUE = 10
     }
 }
