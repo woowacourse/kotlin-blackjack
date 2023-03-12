@@ -3,9 +3,9 @@ package blackjack.domain.result
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
 import blackjack.domain.card.Suit
+import blackjack.domain.participant.BettingPlayers
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Player
-import blackjack.domain.participant.Players
 import org.assertj.core.api.SoftAssertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -18,8 +18,8 @@ class ResultManagerTest {
     @BeforeEach
     fun setUp() {
         dealer = Dealer()
-        player = Player("글로", 1000)
-        resultManager = ResultManager(dealer, Players(listOf(player)))
+        player = Player("글로")
+        resultManager = ResultManager(dealer, BettingPlayers(listOf(player), mapOf(player to 1000)))
     }
 
     @Test

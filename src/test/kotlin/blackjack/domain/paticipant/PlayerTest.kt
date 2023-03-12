@@ -10,12 +10,12 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
-class PlayerInfoTest {
+class PlayerTest {
     lateinit var player: Player
 
     @BeforeEach
     fun setUp() {
-        player = Player("pobi", 0)
+        player = Player("pobi")
     }
 
     @Test

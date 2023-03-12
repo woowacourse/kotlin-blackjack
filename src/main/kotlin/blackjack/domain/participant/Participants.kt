@@ -5,21 +5,21 @@ import blackjack.domain.data.ParticipantCards
 import blackjack.domain.data.ParticipantResults
 import blackjack.domain.result.ResultManager
 
-class Participants(private val dealer: Dealer, private val players: Players) {
+class Participants(private val dealer: Dealer, private val bettingPlayers: BettingPlayers) {
     fun drawAll(deck: CardDeck) {
         dealer.addCard(deck.draw())
-        players.drawAll(deck)
+        bettingPlayers.drawAll(deck)
     }
 
     fun getFirstOpenCards(): List<ParticipantCards> {
-        return listOf(ParticipantCards(dealer.name, dealer.getFirstOpenCards())) + players.getFirstOpenCards()
+        return listOf(ParticipantCards(dealer.name, dealer.getFirstOpenCards())) + bettingPlayers.getFirstOpenCards()
     }
 
     fun takeTurns(deck: CardDeck, onDraw: (Participant) -> Unit) {
-        (players.users + dealer).forEach {
+        (bettingPlayers.players + dealer).forEach {
             it.drawUntilPossible(deck, onDraw)
         }
     }
 
-    fun getParticipantResults(): ParticipantResults = ResultManager(dealer, players).judge()
+    fun getParticipantResults(): ParticipantResults = ResultManager(dealer, bettingPlayers).judge()
 }
