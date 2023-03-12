@@ -10,8 +10,8 @@ class PlayersResult(players: Players, dealer: Dealer) {
 
     init {
         val nameAndProfits = mutableListOf<NameAndProfit>()
-        players.list.forEach {
-            nameAndProfits.add(NameAndProfit(it.name, it.getGameProfitMoney(dealer)))
+        players.list.forEach { player ->
+            nameAndProfits.add(NameAndProfit(player.name, (dealer.getProfit(player) * player.betMoney).toInt()))
         }
         list = nameAndProfits
     }

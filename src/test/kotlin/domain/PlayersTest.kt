@@ -1,8 +1,5 @@
 package domain
 
-import domain.card.Card
-import domain.card.CardCategory
-import domain.card.CardNumber
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
@@ -12,11 +9,7 @@ class PlayersTest {
         assertThrows<IllegalStateException> {
             Players(9) {
                 Player(
-                    NameAndBet(Name("pobi"), 0),
-                    Cards(
-                        Card.of(CardCategory.CLOVER, CardNumber.EIGHT),
-                        Card.of(CardCategory.SPADE, CardNumber.NINE)
-                    )
+                    NameAndBet(Name("pobi"), 0)
                 )
             }
         }

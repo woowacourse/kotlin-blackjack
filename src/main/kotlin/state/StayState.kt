@@ -15,8 +15,8 @@ class StayState(cards: Cards, override val rateOfProfit: Double = 1.0) : Finishe
         return when {
             other is BlackJackState -> -rateOfProfit
             other is BustState -> rateOfProfit
-            this.resultScore > other.resultScore -> rateOfProfit
-            this.resultScore < other.resultScore -> -rateOfProfit
+            this.score > other.score -> rateOfProfit
+            this.score < other.score -> -rateOfProfit
             else -> 0.0
         }
     }

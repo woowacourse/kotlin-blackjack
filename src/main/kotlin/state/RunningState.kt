@@ -7,11 +7,6 @@ abstract class RunningState(cards: Cards) : StartedState(cards) {
     override val isFinished: Boolean
         get() = false
 
-    override val resultScore: Int
-        get() {
-            throw IllegalStateException(ERROR_GAME_IS_NOT_OVER)
-        }
-
     override val rateOfProfit: Double
         get() {
             throw IllegalStateException(ERROR_GAME_IS_NOT_OVER)

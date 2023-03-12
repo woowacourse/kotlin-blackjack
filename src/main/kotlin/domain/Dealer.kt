@@ -1,9 +1,11 @@
 package domain
 
-import domain.card.Cards
+class Dealer : Participant(Name(DEALER_NAME)) {
+    override fun isPossibleDrawCard(): Boolean = curScore() <= DEALER_ADD_CARD_CONDITION
 
-class Dealer(cards: Cards) : Participant(Name(DEALER_NAME), cards) {
-    override fun isPossibleDrawCard(): Boolean = resultSum() <= DEALER_ADD_CARD_CONDITION
+    fun getProfit(participant: Participant): Double {
+        return participant.cardsState.resultProfit(this.cardsState)
+    }
 
     companion object {
         const val DEALER_NAME = "딜러"

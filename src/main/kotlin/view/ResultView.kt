@@ -22,16 +22,16 @@ class ResultView {
 
     fun printInitCards(participants: Participants) {
         participants.dealer.run {
-            println(PRINT_NAME_AND_CARDS.format(name.value, formatStringCards(cards.list.take(TAKE_ONE))))
+            println(PRINT_NAME_AND_CARDS.format(name.value, formatStringCards(getCards().take(TAKE_ONE))))
         }
         participants.players.list.forEach { player ->
-            println(PRINT_NAME_AND_CARDS.format(player.name.value, formatStringCards(player.cards.list.take(TAKE_TWO))))
+            println(PRINT_NAME_AND_CARDS.format(player.name.value, formatStringCards(player.getCards().take(TAKE_TWO))))
         }
         println()
     }
 
     fun printPlayerCard(player: Player) {
-        println(PRINT_NAME_AND_CARDS.format(player.name.value, formatStringCards(player.cards.list)))
+        println(PRINT_NAME_AND_CARDS.format(player.name.value, formatStringCards(player.getCards())))
     }
 
     fun printDealerAddCard(dealer: Dealer) {
@@ -52,8 +52,8 @@ class ResultView {
             println(
                 PRINT_NAME_AND_CARDS_AND_SCORE.format(
                     participant.name.value,
-                    formatStringCards(participant.cards.list),
-                    participant.resultSum()
+                    formatStringCards(participant.getCards()),
+                    participant.curScore()
                 )
             )
         }

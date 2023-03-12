@@ -6,7 +6,6 @@ import domain.card.CardCategory
 import domain.card.CardNumber
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertAll
 import org.junit.jupiter.api.assertThrows
 
 class BlackJackCardDeckTest {
@@ -16,17 +15,11 @@ class BlackJackCardDeckTest {
     }
 
     @Test
-    fun `카드뭉치에서 위에서부터 두 장의 카드를 얻을 수 있다`() {
-        val deckCards = listOf(Card.of(CardCategory.HEART, CardNumber.JACK)) +
-            List(51) { Card.of(CardCategory.SPADE, CardNumber.THREE) }
+    fun `카드뭉치에서 위에서 카드를 한 장 얻을 수 있다`() {
+        val deckCards = listOf(Card.of(CardCategory.HEART, CardNumber.JACK))
         val deck = BlackJackCardDeck(deckCards)
-        val cards = deck.drawInitCards()
-
-        assertAll(
-            "카드뭉치에서 위에서부터 두 장을 얻는다",
-            { assertThat(cards.list[0]).isEqualTo(Card.of(CardCategory.HEART, CardNumber.JACK)) },
-            { assertThat(cards.list[1]).isEqualTo(Card.of(CardCategory.SPADE, CardNumber.THREE)) },
-            { assertThat(cards.size).isEqualTo(2) }
-        )
+        val actual = deck.draw()
+        val expected = Card.of(CardCategory.HEART, CardNumber.JACK)
+        assertThat(actual).isEqualTo(expected)
     }
 }

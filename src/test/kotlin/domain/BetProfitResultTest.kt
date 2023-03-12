@@ -11,33 +11,24 @@ import org.junit.jupiter.api.assertAll
 class BetProfitResultTest {
     @Test
     fun `베팅에 대한 플레이어와 딜러의 수익 결과를 올바르게 반환한다`() {
-        val pobi = Player(
-            NameAndBet(Name("pobi"), 10000),
-            Cards(
-                Card.of(CardCategory.CLOVER, CardNumber.EIGHT),
-                Card.of(CardCategory.SPADE, CardNumber.NINE)
-            )
-        )
+        val pobi = Player(NameAndBet(Name("pobi"), 10000))
+        pobi.addCard(Card.of(CardCategory.CLOVER, CardNumber.EIGHT))
+        pobi.addCard(Card.of(CardCategory.SPADE, CardNumber.NINE))
+        pobi.stay()
 
-        val jason = Player(
-            NameAndBet(Name("jason"), 20000),
-            Cards(
-                Card.of(CardCategory.CLOVER, CardNumber.EIGHT),
-                Card.of(CardCategory.SPADE, CardNumber.TWO)
-            )
-        )
+        val jason = Player(NameAndBet(Name("jason"), 20000))
+        jason.addCard(Card.of(CardCategory.CLOVER, CardNumber.EIGHT))
+        jason.addCard(Card.of(CardCategory.SPADE, CardNumber.TWO))
+        jason.stay()
+
+        val dealer = Dealer()
+        dealer.addCard(Card.of(CardCategory.CLOVER, CardNumber.EIGHT))
+        dealer.addCard(Card.of(CardCategory.SPADE, CardNumber.THREE))
+        dealer.stay()
 
         val participants = Participants(
-            Players(
-                pobi,
-                jason
-            ),
-            Dealer(
-                Cards(
-                    Card.of(CardCategory.CLOVER, CardNumber.EIGHT),
-                    Card.of(CardCategory.SPADE, CardNumber.THREE)
-                )
-            )
+            Players(pobi, jason),
+            dealer
         )
         val betProfitResult = BetProfitResult(participants.players, participants.dealer)
         assertAll(

@@ -9,9 +9,12 @@ import domain.result.BetProfitResult
 class BlackJackGame(private val phases: Phases, private val deck: CardDeck = BlackJackCardDeck(Card.DECK.shuffled())) {
 
     fun runGame(playersNameAndBet: PlayersNameAndBet): BetProfitResult {
-        val players = playersNameAndBet.list.map { Player(it, deck.drawInitCards()) }
-        val dealer = Dealer(deck.drawInitCards())
+        val players = playersNameAndBet.list.map { Player(it) }
+        val dealer = Dealer()
         val participants = Participants(Players(players), dealer)
+        participants.all.forEach { participant ->
+            repeat(2) { participant.addCard(deck.draw()) }
+        }
         phases.run(participants, deck)
         return BetProfitResult(participants.players, participants.dealer)
     }

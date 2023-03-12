@@ -7,9 +7,6 @@ abstract class FinishedState(cards: Cards) : StartedState(cards) {
     override val isFinished: Boolean
         get() = true
 
-    override val resultScore: Int
-        get() = cards.resultSum
-
     override fun draw(card: Card): State {
         throw IllegalStateException(ERROR_CARD_STATE_FINISHED_DRAWN)
     }

@@ -19,10 +19,6 @@ class BlackJackCardDeck(private var deck: List<Card> = Card.DECK) : CardDeck {
         return deck[i++]
     }
 
-    override fun drawInitCards(): Cards {
-        return Cards(List(DRAW_INIT_CARD_COUNT) { draw() })
-    }
-
     companion object {
         const val DRAW_INIT_CARD_COUNT = 2
         private const val ERROR_DECK_EMPTY = "[ERROR] 덱에는 최소한 카드가 한 장이상 들어있어야 합니다."
