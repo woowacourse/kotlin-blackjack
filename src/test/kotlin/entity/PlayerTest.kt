@@ -7,17 +7,17 @@ import entity.card.Cards
 import entity.result.BettingMoney
 import entity.result.GameResultType
 import entity.users.Dealer
+import entity.users.GameInformation
 import entity.users.Name
 import entity.users.Player
-import entity.users.UserInformation
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 
 class PlayerTest {
     @Test
     fun `플레이어가 가진 카드의 숫자 합이 21 미만이면 한장의 카드를 더 받을 수 있다`() {
-        val userInformation = UserInformation(Cards(listOf(Card(CardType.SPADE, CardNumber.TEN))), BettingMoney(0))
-        val dealer = Dealer(userInformation)
+        val gameInformation = GameInformation(Cards(listOf(Card(CardType.SPADE, CardNumber.TEN))), BettingMoney(0))
+        val dealer = Dealer(gameInformation)
         val isDistributable = dealer.isDistributable()
 
         Assertions.assertThat(isDistributable).isTrue
@@ -25,7 +25,7 @@ class PlayerTest {
 
     @Test
     fun `플레이어가 가진 카드의 숫자 합이 21 이상이면 한장의 카드를 더 받을 수 없다`() {
-        val userInformation = UserInformation(
+        val gameInformation = GameInformation(
             Cards(
                 listOf(
                     Card(CardType.SPADE, CardNumber.TEN), Card(CardType.SPADE, CardNumber.TEN),
@@ -34,7 +34,7 @@ class PlayerTest {
             ),
             BettingMoney(0)
         )
-        val dealer = Dealer(userInformation)
+        val dealer = Dealer(gameInformation)
         val isDistributable = dealer.isDistributable()
 
         Assertions.assertThat(isDistributable).isFalse
@@ -43,7 +43,7 @@ class PlayerTest {
     @Test
     fun `플레이어 카드 숫자의 합이 21이고 딜러 카드 숫자의 합이 21이면 무승부이다`() {
         // given
-        val playerInformation = UserInformation(
+        val playerInformation = GameInformation(
             Cards(
                 listOf(
                     Card(CardType.HEART, CardNumber.TEN),
@@ -55,7 +55,7 @@ class PlayerTest {
         )
         val player1 = Player(Name("test"), playerInformation)
 
-        val dealerInformation = UserInformation(
+        val dealerInformation = GameInformation(
             Cards(
                 listOf(
                     Card(CardType.HEART, CardNumber.TEN),
@@ -78,7 +78,7 @@ class PlayerTest {
     @Test
     fun `플레이어 카드 숫자의 합이 22이고 딜러 카드 숫자의 합이 22이면 무승부이다`() {
         // given
-        val playerInformation = UserInformation(
+        val playerInformation = GameInformation(
             Cards(
                 listOf(
                     Card(CardType.HEART, CardNumber.TEN),
@@ -90,7 +90,7 @@ class PlayerTest {
         )
         val player1 = Player(Name("test"), playerInformation)
 
-        val dealerInformation = UserInformation(
+        val dealerInformation = GameInformation(
             Cards(
                 listOf(
                     Card(CardType.HEART, CardNumber.TEN),
@@ -113,7 +113,7 @@ class PlayerTest {
     @Test
     fun `플레이어 카드 숫자의 합이 19이고 딜러 카드 숫자의 합이 22이면 플레이어의 승리이다`() {
         // given
-        val playerInformation = UserInformation(
+        val playerInformation = GameInformation(
             Cards(
                 listOf(
                     Card(CardType.HEART, CardNumber.TEN),
@@ -124,7 +124,7 @@ class PlayerTest {
         )
         val player1 = Player(Name("test"), playerInformation)
 
-        val dealerInformation = UserInformation(
+        val dealerInformation = GameInformation(
             Cards(
                 listOf(
                     Card(CardType.HEART, CardNumber.TEN),
@@ -147,7 +147,7 @@ class PlayerTest {
     @Test
     fun `플레이어 카드 숫자의 합이 21이고 딜러 카드 숫자의 합이 20이면 플레이어의 승리이다`() {
         // given
-        val playerInformation = UserInformation(
+        val playerInformation = GameInformation(
             Cards(
                 listOf(
                     Card(CardType.HEART, CardNumber.SEVEN),
@@ -159,7 +159,7 @@ class PlayerTest {
         )
         val player1 = Player(Name("test"), playerInformation)
 
-        val dealerInformation = UserInformation(
+        val dealerInformation = GameInformation(
             Cards(
                 listOf(
                     Card(CardType.HEART, CardNumber.TEN),
@@ -181,7 +181,7 @@ class PlayerTest {
     @Test
     fun `플레이어 카드 숫자의 합이 20이고 딜러 카드 숫자의 합이 21이면 플레이어의 패배이다`() {
         // given
-        val playerInformation = UserInformation(
+        val playerInformation = GameInformation(
             Cards(
                 listOf(
                     Card(CardType.HEART, CardNumber.TEN),
@@ -192,7 +192,7 @@ class PlayerTest {
         )
         val player1 = Player(Name("test"), playerInformation)
 
-        val dealerInformation = UserInformation(
+        val dealerInformation = GameInformation(
             Cards(
                 listOf(
                     Card(CardType.HEART, CardNumber.TEN),
@@ -215,7 +215,7 @@ class PlayerTest {
     @Test
     fun `플레이어 카드 숫자의 합이 22이고 딜러 카드 숫자의 합이 21이면 플레이어의 패배이다`() {
         // given
-        val playerInformation = UserInformation(
+        val playerInformation = GameInformation(
             Cards(
                 listOf(
                     Card(CardType.HEART, CardNumber.TEN),
@@ -227,7 +227,7 @@ class PlayerTest {
         )
         val player1 = Player(Name("test"), playerInformation)
 
-        val dealerInformation = UserInformation(
+        val dealerInformation = GameInformation(
             Cards(
                 listOf(
                     Card(CardType.HEART, CardNumber.TEN),

@@ -7,9 +7,9 @@ import misc.GameRule
 
 class Player(
     val name: Name,
-    userInformation: UserInformation = UserInformation(Cards(listOf()), BettingMoney(0))
+    gameInformation: GameInformation = GameInformation(Cards(listOf()), BettingMoney(0))
 ) :
-    User(userInformation) {
+    User(gameInformation) {
     override fun isDistributable(): Boolean = cardsNumberSum() < GameRule.WINNING_NUMBER
 
     fun determineGameResult(dealerCardNumberSum: Int): Pair<Player, GameResultType> {

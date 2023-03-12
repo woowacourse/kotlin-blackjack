@@ -16,12 +16,12 @@ class UserBettingResult(val users: Users, private val playersGameResult: Players
     }
 
     private fun getBettingResult(player: Player, dealer: Dealer): Double {
-        val playerBettingMoney = player.userInformation.bettingMoney.value.toDouble()
-        val playerCardsSum = player.userInformation.cards.sumOfNumbers()
-        val dealerCardSum = dealer.userInformation.cards.sumOfNumbers()
+        val playerBettingMoney = player.gameInformation.bettingMoney.value.toDouble()
+        val playerCardsSum = player.gameInformation.cards.sumOfNumbers()
+        val dealerCardSum = dealer.gameInformation.cards.sumOfNumbers()
         val playerGameResult = playersGameResult.value[player]
         return when {
-            playerCardsSum == GameRule.WINNING_NUMBER && player.userInformation.cards.value.size == PLAYER_BLACKJACK_CARD_SIZE -> playerBettingMoney * PLAYER_BLACKJACK_BETTING
+            playerCardsSum == GameRule.WINNING_NUMBER && player.gameInformation.cards.value.size == PLAYER_BLACKJACK_CARD_SIZE -> playerBettingMoney * PLAYER_BLACKJACK_BETTING
             playerGameResult == GameResultType.WIN || dealerCardSum > GameRule.WINNING_NUMBER -> playerBettingMoney * PLAYER_WIN_OR_DEALER_OVER_TWENTY_ONE_BETTING
             playerCardsSum == GameRule.WINNING_NUMBER && dealerCardSum == GameRule.WINNING_NUMBER -> playerBettingMoney
             playerCardsSum > GameRule.WINNING_NUMBER || playerGameResult == GameResultType.LOSE -> -playerBettingMoney

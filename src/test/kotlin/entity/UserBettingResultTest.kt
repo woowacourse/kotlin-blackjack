@@ -9,10 +9,10 @@ import entity.result.GameResultType
 import entity.result.PlayersGameResult
 import entity.result.UserBettingResult
 import entity.users.Dealer
+import entity.users.GameInformation
 import entity.users.Name
 import entity.users.Player
 import entity.users.Players
-import entity.users.UserInformation
 import entity.users.Users
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -23,7 +23,7 @@ class UserBettingResultTest {
         // given
         val player = Player(
             Name("test"),
-            UserInformation(
+            GameInformation(
                 Cards(
                     listOf(
                         Card(CardType.HEART, CardNumber.TEN),
@@ -34,7 +34,7 @@ class UserBettingResultTest {
             ),
         )
         val players = Players(listOf(player))
-        val dealer = Dealer(UserInformation(Cards(listOf()), BettingMoney(0)))
+        val dealer = Dealer(GameInformation(Cards(listOf()), BettingMoney(0)))
         val playerGameResult = PlayersGameResult(mapOf(player to GameResultType.WIN))
 
         // when
@@ -50,7 +50,7 @@ class UserBettingResultTest {
         // given
         val player = Player(
             Name("test"),
-            UserInformation(
+            GameInformation(
                 Cards(
                     listOf(
                         Card(CardType.HEART, CardNumber.FOUR), Card(CardType.HEART, CardNumber.TEN),
@@ -62,7 +62,7 @@ class UserBettingResultTest {
         )
         val players = Players(listOf(player))
         val dealer = Dealer(
-            UserInformation(
+            GameInformation(
                 Cards(
                     listOf(
                         Card(CardType.HEART, CardNumber.TEN),
@@ -87,7 +87,7 @@ class UserBettingResultTest {
         // given
         val player = Player(
             Name("test"),
-            UserInformation(
+            GameInformation(
                 Cards(
                     listOf(
                         Card(CardType.HEART, CardNumber.SEVEN), Card(CardType.HEART, CardNumber.SEVEN),
@@ -99,7 +99,7 @@ class UserBettingResultTest {
         )
         val players = Players(listOf(player))
         val dealer = Dealer(
-            UserInformation(
+            GameInformation(
                 Cards(
                     listOf(
                         Card(CardType.HEART, CardNumber.SEVEN), Card(CardType.HEART, CardNumber.SEVEN),
@@ -124,7 +124,7 @@ class UserBettingResultTest {
         // given
         val player = Player(
             Name("test"),
-            UserInformation(
+            GameInformation(
                 Cards(
                     listOf(
                         Card(CardType.HEART, CardNumber.SEVEN), Card(CardType.HEART, CardNumber.SEVEN),
@@ -135,7 +135,7 @@ class UserBettingResultTest {
             ),
         )
         val players = Players(listOf(player))
-        val dealer = Dealer(UserInformation(Cards(listOf()), BettingMoney(0)))
+        val dealer = Dealer(GameInformation(Cards(listOf()), BettingMoney(0)))
         val playerGameResult = PlayersGameResult(mapOf(player to GameResultType.LOSE))
 
         // when
@@ -151,7 +151,7 @@ class UserBettingResultTest {
         // given
         val player = Player(
             Name("test"),
-            UserInformation(
+            GameInformation(
                 Cards(
                     listOf(
                         Card(CardType.HEART, CardNumber.TWO), Card(CardType.HEART, CardNumber.SEVEN),
@@ -163,7 +163,7 @@ class UserBettingResultTest {
         )
         val players = Players(listOf(player))
         val dealer = Dealer(
-            UserInformation(
+            GameInformation(
                 Cards(
                     listOf(
                         Card(CardType.HEART, CardNumber.SEVEN), Card(CardType.HEART, CardNumber.SEVEN),
@@ -186,10 +186,10 @@ class UserBettingResultTest {
     @Test
     fun `플레이어1의 최종 수익이 1000이고 플레이어2의 최종수익이 -2000이면 딜러의 최종 수익이 1000이다`() {
         // given
-        val player1 = Player(Name("test"), UserInformation(Cards(listOf()), BettingMoney(1000)))
-        val player2 = Player(Name("test"), UserInformation(Cards(listOf()), BettingMoney(1000)))
+        val player1 = Player(Name("test"), GameInformation(Cards(listOf()), BettingMoney(1000)))
+        val player2 = Player(Name("test"), GameInformation(Cards(listOf()), BettingMoney(1000)))
         val players = Players(listOf(player1, player2))
-        val dealer = Dealer(UserInformation(Cards(listOf()), BettingMoney(0)))
+        val dealer = Dealer(GameInformation(Cards(listOf()), BettingMoney(0)))
         val playerGameResult = PlayersGameResult(mapOf())
 
         val userBettingResult = UserBettingResult(Users(players, dealer), playerGameResult)

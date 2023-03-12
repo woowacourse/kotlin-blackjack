@@ -1,6 +1,6 @@
 package entity.users
 
-class Dealer(userInformation: UserInformation) : User(userInformation) {
+class Dealer(gameInformation: GameInformation) : User(gameInformation) {
     override fun isDistributable(): Boolean = cardsNumberSum() <= MAXIMUM_CARD_SUM_NUMBER
 
     companion object {

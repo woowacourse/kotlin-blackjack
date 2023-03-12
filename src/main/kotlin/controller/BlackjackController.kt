@@ -6,10 +6,10 @@ import entity.result.BettingMoney
 import entity.result.PlayersGameResult
 import entity.result.UserBettingResult
 import entity.users.Dealer
+import entity.users.GameInformation
 import entity.users.Name
 import entity.users.Player
 import entity.users.Players
-import entity.users.UserInformation
 import entity.users.Users
 import model.BlackjackStage
 import model.RandomCardFactory
@@ -25,13 +25,13 @@ class BlackjackController {
     private fun readPlayersInformation(): Players {
         return gameSetView.getNames().map {
             val bettingMoney = gameSetView.getBetting(it)
-            Player(Name(it), UserInformation(Cards(listOf()), BettingMoney(bettingMoney)))
+            Player(Name(it), GameInformation(Cards(listOf()), BettingMoney(bettingMoney)))
         }.let { Players(it) }
     }
 
     private fun initBlackjack(): BlackjackStage {
         val players = readPlayersInformation()
-        val dealer = Dealer(UserInformation(Cards(listOf()), BettingMoney(0)))
+        val dealer = Dealer(GameInformation(Cards(listOf()), BettingMoney(0)))
         val cardFactory = RandomCardFactory()
         val blackjackStage = BlackjackStage(Users(players, dealer), cardFactory)
         blackjackStage.distributeAllUsers()

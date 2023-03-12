@@ -2,11 +2,11 @@ package entity.users
 
 import entity.card.Cards
 
-abstract class User(val userInformation: UserInformation) {
+abstract class User(val gameInformation: GameInformation) {
     abstract fun isDistributable(): Boolean
-    fun cardsNumberSum() = userInformation.cards.sumOfNumbers()
+    fun cardsNumberSum() = gameInformation.cards.sumOfNumbers()
 
-    fun addCards(cards: Cards) = this.userInformation.cards.addCards(cards)
+    fun addCards(cards: Cards) = this.gameInformation.cards.addCards(cards)
 
     companion object {
         const val SINGLE_DISTRIBUTE_COUNT = 1
