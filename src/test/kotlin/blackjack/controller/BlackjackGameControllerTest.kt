@@ -11,7 +11,7 @@ import org.assertj.core.api.SoftAssertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-class BlackJackControllerTest {
+class BlackjackGameControllerTest {
     private lateinit var inputView: FakeInputView
     private lateinit var outputView: FakeOutputView
     private lateinit var controller: BlackJackController

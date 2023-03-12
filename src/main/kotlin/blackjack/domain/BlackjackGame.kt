@@ -6,7 +6,7 @@ import blackjack.domain.data.ParticipantResults
 import blackjack.domain.participant.Participant
 import blackjack.domain.participant.Participants
 
-class BlackJack(private val deck: CardDeck, private val participants: Participants) {
+class BlackjackGame(private val deck: CardDeck, private val participants: Participants) {
     fun start(
         onFirstDraw: (List<ParticipantCards>) -> Unit,
         onDraw: (Participant) -> Unit,

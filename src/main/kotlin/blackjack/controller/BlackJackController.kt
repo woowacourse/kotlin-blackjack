@@ -1,6 +1,6 @@
 package blackjack.controller
 
-import blackjack.domain.BlackJack
+import blackjack.domain.BlackjackGame
 import blackjack.domain.card.CardDeck
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Participants
@@ -18,7 +18,7 @@ class BlackJackController(
         initBlackJack(deck).start(outputView::printFirstDraw, outputView::printDraw, outputView::printResult)
     }
 
-    private fun initBlackJack(deck: CardDeck): BlackJack = BlackJack(deck, Participants(Dealer(), enrollPlayers()))
+    private fun initBlackJack(deck: CardDeck): BlackjackGame = BlackjackGame(deck, Participants(Dealer(), enrollPlayers()))
 
     private fun enrollPlayers(): Players {
         val names = inputView.inputNames()

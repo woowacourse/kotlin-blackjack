@@ -26,7 +26,7 @@ abstract class Participant() {
 
     fun getCards(): List<Card> = cards.items
 
-    fun isBlackjack(): Boolean = cards.isBlackJack()
+    fun isBlackjack(): Boolean = cards.isBlackjack()
 
     fun isBust(): Boolean = cards.isBust()
 }
