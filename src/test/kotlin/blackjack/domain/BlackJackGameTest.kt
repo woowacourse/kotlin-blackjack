@@ -31,14 +31,14 @@ class BlackJackGameTest {
             ),
         )
         blackJackGame.progressPlayersAddCard({ stubInput.stubGetDecision() }, {})
-        assertThat(blackJackGame.participants.players.value[0].cardBunch.cards).isEqualTo(
+        assertThat(blackJackGame.participants.players.value[0].state.hand.cards).isEqualTo(
             listOf(
                 Card(HEART, CardNumber.TWO),
                 Card(HEART, CardNumber.FOUR),
                 Card(HEART, CardNumber.FIVE),
             ),
         )
-        assertThat(blackJackGame.participants.players.value[1].cardBunch.cards).isEqualTo(
+        assertThat(blackJackGame.participants.players.value[1].state.hand.cards).isEqualTo(
             listOf(
                 Card(HEART, CardNumber.FIVE),
                 Card(HEART, CardNumber.SIX),
@@ -69,8 +69,8 @@ class BlackJackGameTest {
                 ),
             ),
         )
-        blackJackGame.progressDealerAddCard()
-        assertThat(blackJackGame.participants.dealer.cardBunch.cards).isEqualTo(
+        blackJackGame.progressDealerAddCard {}
+        assertThat(blackJackGame.participants.dealer.state.hand.cards).isEqualTo(
             listOf(
                 Card(HEART, CardNumber.TWO),
                 Card(HEART, CardNumber.THREE),
@@ -81,7 +81,7 @@ class BlackJackGameTest {
     }
 
     @Test
-    fun `딜러의 첫카드 2장의 합이 16 이상이라면 카드한장를 뽑지 않는다`() {
+    fun `딜러의 첫카드 2장의 합이 17 이상이라면 카드한장를 뽑지 않는다`() {
         val blackJackGame = BlackJackGame(
             listOf("krong", "dogpig"),
             StubCardDeck(
@@ -101,39 +101,12 @@ class BlackJackGameTest {
                 ),
             ),
         )
-        blackJackGame.progressDealerAddCard()
-        assertThat(blackJackGame.participants.dealer.cardBunch.cards).isEqualTo(
+        blackJackGame.progressDealerAddCard {}
+        assertThat(blackJackGame.participants.dealer.state.hand.cards).isEqualTo(
             listOf(
                 Card(HEART, CardNumber.JACK),
                 Card(HEART, CardNumber.SEVEN),
             ),
-        )
-    }
-
-    @Test
-    fun `딜러의 총점이 17점 이라면 유저의 점수가 6일때는 패배하고 유저의 점수가 19라면 승리한다`() {
-        val blackJackGame = BlackJackGame(
-            listOf("krong", "dogpig"),
-            StubCardDeck(
-                mutableListOf(
-                    // 딜러 초기화
-                    Card(HEART, CardNumber.JACK),
-                    Card(HEART, CardNumber.SEVEN),
-                    // 플레이어 두명 초기화
-                    // 첫번째 유저
-                    Card(HEART, CardNumber.TWO),
-                    Card(HEART, CardNumber.FOUR),
-                    // 두번째 유저
-                    Card(HEART, CardNumber.JACK),
-                    Card(HEART, CardNumber.NINE),
-                ),
-            ),
-        )
-        assertThat(blackJackGame.participants.getConsequence(blackJackGame.participants.players.value[0])).isEqualTo(
-            Consequence.LOSE,
-        )
-        assertThat(blackJackGame.participants.getConsequence(blackJackGame.participants.players.value[1])).isEqualTo(
-            Consequence.WIN,
         )
     }
 }
