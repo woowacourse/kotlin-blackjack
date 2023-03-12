@@ -7,8 +7,7 @@ import blackjack.view.OutputView
 
 class BlackjackController {
     fun start() {
-        Blackjack(CardDeck()).start(
-            players = InputView.inputPlayers(),
+        Blackjack(deck = CardDeck(), players = InputView.inputPlayers()).start(
             onStartFirstDrawn = OutputView::printFirstDrawnMessage,
             onFirstDrawn = OutputView::printFirstOpenCards,
             onDrawnMore = OutputView::printAllCards,

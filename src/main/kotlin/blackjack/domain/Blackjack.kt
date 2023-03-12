@@ -4,12 +4,10 @@ import blackjack.domain.card.CardDeck
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Participant
 import blackjack.domain.participant.Participants
-import blackjack.domain.participant.Player
 import blackjack.domain.result.GameResult
 
-class Blackjack(private val deck: CardDeck) {
+class Blackjack(private val deck: CardDeck, private val players: List<Participant>) {
     fun start(
-        players: List<Player>,
         onStartFirstDrawn: (Participants) -> Unit,
         onFirstDrawn: (Participant) -> Unit,
         onDrawnMore: (Participant) -> Unit,
