@@ -39,9 +39,9 @@ class ResultView {
 
     fun printGameResult(result: BetProfitResult) {
         println(PRINT_GAME_RESULT)
-        println(PRINT_BET_GAME_RESULT.format(result.dealerResult.name.value, result.dealerResult.profitMoney))
+        println(PRINT_BET_GAME_RESULT.format(result.dealerResult.name.value, result.dealerResult.profitMoney.value))
         result.playersResult.list.forEach {
-            println(PRINT_BET_GAME_RESULT.format(it.name.value, it.profitMoney))
+            println(PRINT_BET_GAME_RESULT.format(it.name.value, it.profitMoney.value))
         }
     }
 

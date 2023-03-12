@@ -1,7 +1,6 @@
 package domain
 
-@JvmInline
-value class BetMoney(val value: Int) {
+class BetMoney(val value: Int) {
     init {
         check(value in MINIMUM_BET_RANGE..MAXIMUM_BET_RANGE) { ERROR_BET_MONEY_RANGE }
     }

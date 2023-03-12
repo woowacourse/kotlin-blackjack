@@ -1,5 +1,6 @@
 package view
 
+import domain.BetMoney
 import domain.Name
 import domain.Names
 import domain.PlayerInfo
@@ -18,7 +19,7 @@ class InputView {
     private fun readBetMoney(name: Name): PlayerInfo {
         println(INPUT_PLAYERS_BET_MONEY.format(name.value))
         val input = readln()
-        return runCatchingGetOrNull { PlayerInfo(name, input.toInt()) } ?: readBetMoney(name)
+        return runCatchingGetOrNull { PlayerInfo(name, BetMoney(input.toInt())) } ?: readBetMoney(name)
     }
 
     fun readChoiceOfAddCard(name: Name): Answer? {

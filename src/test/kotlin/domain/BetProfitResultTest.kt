@@ -11,12 +11,12 @@ import org.junit.jupiter.api.assertAll
 class BetProfitResultTest {
     @Test
     fun `베팅에 대한 플레이어와 딜러의 수익 결과를 올바르게 반환한다`() {
-        val pobi = Player(PlayerInfo(Name("pobi"), 10000))
+        val pobi = Player(PlayerInfo("pobi", 10000))
         pobi.addCard(Card.of(CardCategory.CLOVER, CardNumber.EIGHT))
         pobi.addCard(Card.of(CardCategory.SPADE, CardNumber.NINE))
         pobi.stay()
 
-        val jason = Player(PlayerInfo(Name("jason"), 20000))
+        val jason = Player(PlayerInfo("jason", 20000))
         jason.addCard(Card.of(CardCategory.CLOVER, CardNumber.EIGHT))
         jason.addCard(Card.of(CardCategory.SPADE, CardNumber.TWO))
         jason.stay()
@@ -31,15 +31,15 @@ class BetProfitResultTest {
         assertAll(
             "딜러와 플레이어의 베팅결과가 올바르게 나온다",
             {
-                val result: Int = betProfitResult.playersResult.list[0].profitMoney
+                val result: Int = betProfitResult.playersResult.list[0].profitMoney.value
                 assertThat(result).isEqualTo(10000)
             },
             {
-                val result: Int = betProfitResult.playersResult.list[1].profitMoney
+                val result: Int = betProfitResult.playersResult.list[1].profitMoney.value
                 assertThat(result).isEqualTo(-20000)
             },
             {
-                val result: Int = betProfitResult.dealerResult.profitMoney
+                val result: Int = betProfitResult.dealerResult.profitMoney.value
                 assertThat(result).isEqualTo(10000)
             },
         )

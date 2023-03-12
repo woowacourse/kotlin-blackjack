@@ -1,10 +1,12 @@
 package domain
 
+import state.RateOfProfit
+
 @JvmInline
-value class ProfitMoney private constructor(val value: Int) {
+value class ProfitMoney(val value: Int) {
     companion object {
-        fun of(betMoney: BetMoney, rateOfProfit: Double): ProfitMoney {
-            return ProfitMoney((betMoney.value * rateOfProfit).toInt())
+        fun of(betMoney: BetMoney, rateOfProfit: RateOfProfit): ProfitMoney {
+            return ProfitMoney((betMoney.value * rateOfProfit.value).toInt())
         }
     }
 }

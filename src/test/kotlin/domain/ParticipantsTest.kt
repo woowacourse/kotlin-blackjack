@@ -8,8 +8,8 @@ class ParticipantsTest {
     fun `딜러와 플레이어들을 모두 가져온다`() {
         val participants = Participants(
             Players(
-                Player(PlayerInfo(Name("pobi"), 10000)),
-                Player(PlayerInfo(Name("jason"), 10000))
+                Player(PlayerInfo("pobi", 10000)),
+                Player(PlayerInfo("jason", 10000))
             ),
             Dealer()
         )
