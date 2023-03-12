@@ -4,6 +4,8 @@ import domain.card.Card
 import domain.card.Cards
 
 class FirstState(val cards: Cards = Cards(listOf())) : State {
+    constructor(vararg card: Card) : this(Cards(card.toList()))
+
     init {
         check(cards.size < 2) { ERROR_FIRST_STATE }
     }

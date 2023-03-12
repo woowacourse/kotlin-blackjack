@@ -7,7 +7,7 @@ class HitState(val cards: Cards) : State {
     constructor(vararg card: Card) : this(Cards(card.toList()))
 
     init {
-        check((cards.size > 2 && !cards.isBurst) || (cards.size == 2) && !cards.isBlackJack) { ERROR_HIT_STATE }
+        check((cards.size > 2 && !cards.isBust) || (cards.size == 2) && !cards.isBlackJack) { ERROR_HIT_STATE }
     }
 
     override fun draw(card: Card): State {
@@ -16,7 +16,7 @@ class HitState(val cards: Cards) : State {
     }
 
     override fun next(nextCards: Cards): State {
-        if (nextCards.isBurst) return BustState(nextCards)
+        if (nextCards.isBust) return BustState(nextCards)
         return HitState(nextCards)
     }
 

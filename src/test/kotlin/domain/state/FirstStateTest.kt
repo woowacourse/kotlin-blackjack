@@ -5,11 +5,22 @@ import domain.card.CardCategory
 import domain.card.CardNumber
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import state.BlackJackState
 import state.FirstState
 import state.HitState
 
 class FirstStateTest {
+    @Test
+    fun `카드가 두장이상이면 FirstState가 될 수 없다`() {
+        assertThrows<IllegalStateException> {
+            FirstState(
+                Card.of(CardCategory.CLOVER, CardNumber.EIGHT),
+                Card.of(CardCategory.DIAMOND, CardNumber.ACE)
+            )
+        }
+    }
+
     @Test
     fun `카드를 한장 받으면  FirstState가 된다`() {
         val firstState = FirstState()

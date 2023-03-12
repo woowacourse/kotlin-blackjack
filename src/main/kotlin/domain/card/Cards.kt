@@ -13,7 +13,7 @@ class Cards(list: List<Card>) {
     private val hasAce: Boolean
         get() = list.any { it.isAce }
 
-    val isBurst: Boolean
+    val isBust: Boolean
         get() = sum() > BlackJackGame.BLACKJACK_NUMBER
 
     val isBlackJack: Boolean
