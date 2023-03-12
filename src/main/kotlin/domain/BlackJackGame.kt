@@ -6,7 +6,7 @@ import domain.person.Dealer
 import domain.person.Decision
 import domain.person.Persons
 import domain.person.Player
-import domain.result.GameResult
+import domain.result.Casino
 
 class BlackJackGame : BlackJackGameBluePrint {
     private val deck = Deck()
@@ -51,5 +51,5 @@ class BlackJackGame : BlackJackGameBluePrint {
         playPlayerTurn(player, askDrawCard, printCards)
     }
 
-    override fun drawResult(persons: Persons): GameResult = GameResult(persons)
+    override fun drawResult(persons: Persons, bets: List<Double>) = Casino(persons, bets)
 }

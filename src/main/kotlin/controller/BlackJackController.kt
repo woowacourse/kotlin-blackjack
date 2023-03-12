@@ -14,7 +14,7 @@ class BlackJackController {
 
         OnboardingView.printInitialSetting(persons)
         drawPhase(blackJackGame, persons)
-        ResultView.printResult(persons, blackJackGame.drawResult(persons))
+        ResultView.printResult(persons, blackJackGame.drawResult(persons, bets))
     }
 
     private fun drawPhase(blackJackGame: BlackJackGameBluePrint, persons: Persons) {
