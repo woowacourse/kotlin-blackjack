@@ -8,7 +8,7 @@ import org.junit.jupiter.api.assertThrows
 class BettingMoneyTest {
     @Test
     fun `배팅금액은 0원보다 커야한다`() {
-        assertDoesNotThrow { BettingMoney(1000) }
+        assertDoesNotThrow { BettingMoney(1_000) }
     }
 
     @Test
@@ -24,6 +24,6 @@ class BettingMoneyTest {
 
     @Test
     fun `1000원을 2배 하여 반환한다`() {
-        assertThat(BettingMoney(1000) * 2.0).isEqualTo(2000)
+        assertThat(BettingMoney(1000) * 2.0).isEqualTo(2_000)
     }
 }

@@ -10,14 +10,14 @@ class CalculatorTest {
         val card1 = Card.get(Shape.HEART, CardNumber.TWO)
         val card2 = Card.get(Shape.HEART, CardNumber.THREE)
         val cardBunch = CardBunch(card1, card2)
-        val player = Player("krrong", cardBunch, BettingMoney(1000))
+        val player = Player("krrong", cardBunch, BettingMoney(1_000))
         val calculator = Calculator()
 
         // when
         val actual = calculator.calculateDividend(mapOf(player to Consequence.WIN))
 
         // then
-        assertThat(actual[player]).isEqualTo(1000)
+        assertThat(actual[player]).isEqualTo(1_000)
     }
 
     @Test
@@ -26,14 +26,14 @@ class CalculatorTest {
         val card1 = Card.get(Shape.HEART, CardNumber.TWO)
         val card2 = Card.get(Shape.HEART, CardNumber.THREE)
         val cardBunch = CardBunch(card1, card2)
-        val player = Player("krrong", cardBunch, BettingMoney(1000))
+        val player = Player("krrong", cardBunch, BettingMoney(1_000))
         val calculator = Calculator()
 
         // when
         val actual = calculator.calculateDividend(mapOf(player to Consequence.LOSE))
 
         // then
-        assertThat(actual[player]).isEqualTo(-1000)
+        assertThat(actual[player]).isEqualTo(-1_000)
     }
 
     @Test
@@ -42,7 +42,7 @@ class CalculatorTest {
         val card1 = Card.get(Shape.HEART, CardNumber.TWO)
         val card2 = Card.get(Shape.HEART, CardNumber.THREE)
         val cardBunch = CardBunch(card1, card2)
-        val player = Player("krrong", cardBunch, BettingMoney(1000))
+        val player = Player("krrong", cardBunch, BettingMoney(1_000))
         val calculator = Calculator()
 
         // when
@@ -58,13 +58,13 @@ class CalculatorTest {
         val card1 = Card.get(Shape.HEART, CardNumber.ACE)
         val card2 = Card.get(Shape.HEART, CardNumber.JACK)
         val cardBunch = CardBunch(card1, card2)
-        val player = Player("krrong", cardBunch, BettingMoney(1000))
+        val player = Player("krrong", cardBunch, BettingMoney(1_000))
         val calculator = Calculator()
 
         // when
         val actual = calculator.calculateDividend(mapOf(player to Consequence.WIN))
 
         // then
-        assertThat(actual[player]).isEqualTo(1500)
+        assertThat(actual[player]).isEqualTo(1_500)
     }
 }
