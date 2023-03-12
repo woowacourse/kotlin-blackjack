@@ -8,8 +8,6 @@ import state.State
 abstract class Participant(val name: Name) {
     var cardsState: State = FirstState()
         private set
-    val cardsStateIsFinished: Boolean
-        get() = cardsState.isFinished
 
     abstract fun isPossibleDrawCard(): Boolean
     fun addCard(card: Card) {
