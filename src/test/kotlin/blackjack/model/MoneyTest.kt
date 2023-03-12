@@ -16,6 +16,7 @@ class MoneyTest {
 
     @Test
     fun `Money를 생성할 수 있다`() {
-        assertThat(Money(1_000L).value).isEqualTo(1_000L)
+        val actual = Money(1_000L)
+        assertThat(actual).isEqualTo(Money(1_000L))
     }
 }

@@ -8,6 +8,6 @@ class ProfitTest {
     @Test
     fun `수익금 값을 가질 수 있다`() {
         val profit = Profit(1_000L)
-        assertThat(profit.value).isEqualTo(1_000L)
+        assertThat(profit).isEqualTo(Profit(1_000L))
     }
 }
