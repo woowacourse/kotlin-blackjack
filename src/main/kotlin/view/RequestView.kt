@@ -12,12 +12,12 @@ class RequestView {
         return input.split(',').map { it.trim() }
     }
 
-    fun requestPlayerDecision(name: String): Boolean {
+    fun isMoreCard(name: String): Boolean {
         println(ONE_MORE_CARD_SCRIPT.format(name))
         return when (readln().trim()) {
-            "y" -> return true
-            "n" -> return false
-            else -> requestPlayerDecision(name)
+            "y" -> true
+            "n" -> false
+            else -> isMoreCard(name)
         }
     }
 
