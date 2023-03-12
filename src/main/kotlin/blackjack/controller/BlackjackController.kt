@@ -9,6 +9,7 @@ import blackjack.view.OutputView
 class BlackjackController {
     fun start() {
         with(initBlackjack()) {
+            setBetMoney(this, inputBetMoney = InputView::inputBetMoney)
             setUpCard(this)
 
             val result = start(onDrawn = OutputView::printDrawn)
@@ -18,11 +19,14 @@ class BlackjackController {
 
     private fun initBlackjack(): Blackjack = Blackjack(CardDeck(), enrollPlayers())
 
-    private fun enrollPlayers(): List<Player> = InputView.inputNames().map { name ->
-        Player(name, needToDraw = {
-            InputView.inputDrawCommand(name)
-        })
+    private fun enrollPlayers(): List<Player> {
+        return InputView.inputNames().map { name ->
+            Player(name, needToDraw = { InputView.inputDrawCommand(name) })
+        }
     }
+
+    private fun setBetMoney(blackJack: Blackjack, inputBetMoney: (String) -> Int) =
+        blackJack.setBetMoney(inputBetMoney)
 
     private fun setUpCard(blackJack: Blackjack) {
         drawInitialCards(blackJack)

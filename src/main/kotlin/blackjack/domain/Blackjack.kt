@@ -11,6 +11,10 @@ import blackjack.domain.result.BlackjackResult
 class Blackjack(private val deck: CardDeck, private val participants: Participants) {
     constructor(deck: CardDeck, players: List<Player>) : this(deck, Participants(listOf(Dealer()) + players))
 
+    fun setBetMoney(inputBetMoney: (String) -> Int) {
+        participants.setBetMoney(inputBetMoney)
+    }
+
     fun readyToStart() {
         participants.drawFirst(deck)
     }
