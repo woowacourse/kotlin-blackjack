@@ -13,7 +13,7 @@ class Cards(vararg cards: Card) {
 
     fun isStartLimitSize(): Boolean = _items.size == START_LIMIT_SIZE
 
-    fun getFirstCard(): List<Card> = listOf(_items.first())
+    fun getFirstCard(): Card = _items.first()
 
     fun calculateTotalScore(): Int {
         val score = _items.fold(0) { total, card -> total + card.getScore() }

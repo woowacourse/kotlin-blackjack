@@ -213,10 +213,10 @@ class ResultManagerTest {
             addCard(Card(CardNumber.QUEEN, Suit.SPADE))
         }
         with(dealer) {
-            addCard(Card(CardNumber.ACE, Suit.SPADE))
-            addCard(Card(CardNumber.QUEEN, Suit.SPADE))
             addCard(Card(CardNumber.FIVE, Suit.SPADE))
             addCard(Card(CardNumber.SIX, Suit.SPADE))
+            addCard(Card(CardNumber.ACE, Suit.SPADE))
+            addCard(Card(CardNumber.QUEEN, Suit.SPADE))
         }
 
         val results = resultManager.judge()
@@ -281,10 +281,10 @@ class ResultManagerTest {
             addCard(Card(CardNumber.QUEEN, Suit.SPADE))
         }
         with(dealer) {
-            addCard(Card(CardNumber.ACE, Suit.SPADE))
-            addCard(Card(CardNumber.QUEEN, Suit.SPADE))
             addCard(Card(CardNumber.FIVE, Suit.SPADE))
             addCard(Card(CardNumber.SIX, Suit.SPADE))
+            addCard(Card(CardNumber.ACE, Suit.SPADE))
+            addCard(Card(CardNumber.QUEEN, Suit.SPADE))
         }
 
         val results = resultManager.judge()

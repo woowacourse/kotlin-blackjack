@@ -2,31 +2,42 @@ package blackjack.domain.participant
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardDeck
-import blackjack.domain.card.Cards
+import blackjack.domain.state.State
+import blackjack.domain.state.finished.Blackjack
+import blackjack.domain.state.finished.Bust
+import blackjack.domain.state.running.Start
 
-abstract class Participant() {
-    val cards = Cards()
+abstract class Participant {
+    private var state: State = Start()
+    val isFinished: Boolean
+        get() = state.isFinished
+
+    fun addCard(card: Card) {
+        state = state.draw(card)
+    }
 
     abstract fun getFirstOpenCards(): List<Card>
 
     abstract fun canDraw(): Boolean
 
-    fun addCard(card: Card) {
-        cards.add(card)
+    fun stay() {
+        state = state.stay()
     }
 
     fun drawUntilPossible(deck: CardDeck, onDraw: (Participant) -> Unit) {
-        while (canDraw()) {
-            cards.add(deck.draw())
+        while (!isFinished && canDraw()) {
+            state = state.draw(deck.draw())
             onDraw(this)
         }
     }
 
-    fun getTotalScore(): Int = cards.calculateTotalScore()
+    fun getFirstCard(): Card = state.getFirstCard()
 
-    fun getCards(): List<Card> = cards.items
+    fun getCards(): List<Card> = state.getAllCards()
 
-    fun isBlackjack(): Boolean = cards.isBlackjack()
+    fun getTotalScore(): Int = state.getTotalScore()
 
-    fun isBust(): Boolean = cards.isBust()
+    fun isBlackjack(): Boolean = state is Blackjack
+
+    fun isBust(): Boolean = state is Bust
 }
