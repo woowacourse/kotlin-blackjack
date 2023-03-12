@@ -3,7 +3,7 @@ package state
 import domain.card.Card
 import domain.card.Cards
 
-class StayState(cards: Cards, override val rateOfProfit: RateOfProfit = RateOfProfit.WIN) : FinishedState(cards) {
+class StayState(cards: Cards, override val rateOfProfit: RateOfProfit = RateOfProfit.WIN_PROFIT) : FinishedState(cards) {
     constructor(vararg card: Card) : this(Cards(card.toList()))
 
     init {
@@ -13,11 +13,11 @@ class StayState(cards: Cards, override val rateOfProfit: RateOfProfit = RateOfPr
     override fun resultProfit(other: State): RateOfProfit {
         otherIsFinished(other)
         return when {
-            other is BlackJackState -> RateOfProfit.LOSE
-            other is BustState -> RateOfProfit.WIN
-            this.score > other.score -> RateOfProfit.WIN
-            this.score < other.score -> RateOfProfit.LOSE
-            else -> RateOfProfit.DRAW
+            other is BlackJackState -> RateOfProfit.LOSE_PROFIT
+            other is BustState -> RateOfProfit.WIN_PROFIT
+            this.score > other.score -> RateOfProfit.WIN_PROFIT
+            this.score < other.score -> RateOfProfit.LOSE_PROFIT
+            else -> RateOfProfit.DRAW_PROFIT
         }
     }
 

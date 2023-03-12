@@ -3,7 +3,7 @@ package state
 import domain.card.Card
 import domain.card.Cards
 
-class BustState(cards: Cards, override val rateOfProfit: RateOfProfit = RateOfProfit.LOSE) : FinishedState(cards) {
+class BustState(cards: Cards, override val rateOfProfit: RateOfProfit = RateOfProfit.LOSE_PROFIT) : FinishedState(cards) {
     constructor(vararg card: Card) : this(Cards(card.toList()))
 
     init {

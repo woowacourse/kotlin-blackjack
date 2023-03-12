@@ -43,7 +43,7 @@ class BlackJackStateTest {
             Card.of(CardCategory.CLOVER, CardNumber.JACK)
         )
         val actual = blackJackState.resultProfit(dealerState)
-        val expected = RateOfProfit.DRAW
+        val expected = RateOfProfit.DRAW_PROFIT
         assertThat(actual).isEqualTo(expected)
     }
 
@@ -64,7 +64,7 @@ class BlackJackStateTest {
                     Card.of(CardCategory.CLOVER, CardNumber.SIX)
                 )
                 val actual = blackJackState.resultProfit(dealerState)
-                val expected = RateOfProfit.WIN_BLACKJACK
+                val expected = RateOfProfit.WIN_BLACKJACK_PROFIT
                 assertThat(actual).isEqualTo(expected)
             },
             {
@@ -75,7 +75,7 @@ class BlackJackStateTest {
                     Card.of(CardCategory.CLOVER, CardNumber.TEN)
                 )
                 val actual = blackJackState.resultProfit(dealerState)
-                val expected = RateOfProfit.WIN_BLACKJACK
+                val expected = RateOfProfit.WIN_BLACKJACK_PROFIT
                 assertThat(actual).isEqualTo(expected)
             }
         )

@@ -31,7 +31,7 @@ class PlayerTest {
         dealer.stay()
 
         val result = dealer.getProfit(player)
-        val expected = RateOfProfit.LOSE
+        val expected = RateOfProfit.LOSE_PROFIT
         assertThat(result).isEqualTo(expected)
     }
 }

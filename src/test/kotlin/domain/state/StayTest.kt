@@ -64,7 +64,7 @@ class StayTest {
                     Card.of(CardCategory.CLOVER, CardNumber.SIX)
                 )
                 val actual = playerStayState.resultProfit(dealerState)
-                val expected = RateOfProfit.WIN
+                val expected = RateOfProfit.WIN_PROFIT
                 Assertions.assertThat(actual).isEqualTo(expected)
             },
             {
@@ -74,7 +74,7 @@ class StayTest {
                     Card.of(CardCategory.CLOVER, CardNumber.JACK),
                 )
                 val actual = playerStayState.resultProfit(dealerState)
-                val expected = RateOfProfit.DRAW
+                val expected = RateOfProfit.DRAW_PROFIT
                 Assertions.assertThat(actual).isEqualTo(expected)
             },
             {
@@ -85,7 +85,7 @@ class StayTest {
                     Card.of(CardCategory.CLOVER, CardNumber.FIVE)
                 )
                 val actual = playerStayState.resultProfit(dealerState)
-                val expected = RateOfProfit.LOSE
+                val expected = RateOfProfit.LOSE_PROFIT
                 Assertions.assertThat(actual).isEqualTo(expected)
             }
         )
@@ -104,7 +104,7 @@ class StayTest {
             Card.of(CardCategory.CLOVER, CardNumber.ACE)
         )
         val actual = playerStayState.resultProfit(dealerState)
-        val expected = RateOfProfit.LOSE
+        val expected = RateOfProfit.LOSE_PROFIT
         Assertions.assertThat(actual).isEqualTo(expected)
     }
 
@@ -122,7 +122,7 @@ class StayTest {
             Card.of(CardCategory.CLOVER, CardNumber.TEN)
         )
         val actual = playerStayState.resultProfit(dealerState)
-        val expected = RateOfProfit.WIN
+        val expected = RateOfProfit.WIN_PROFIT
         Assertions.assertThat(actual).isEqualTo(expected)
     }
 }

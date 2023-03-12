@@ -32,7 +32,7 @@ class BustStateTest {
             Card.of(CardCategory.CLOVER, CardNumber.TEN)
         )
 
-        val expected = RateOfProfit.LOSE
+        val expected = RateOfProfit.LOSE_PROFIT
 
         assertAll(
             "플레이어가 버스트이면 딜러가 이긴다",
