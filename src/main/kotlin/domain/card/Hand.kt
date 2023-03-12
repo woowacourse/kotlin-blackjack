@@ -10,6 +10,7 @@ class Hand(cards: List<Card>) {
 
     val hasAce
         get() = _value.map { it.number }.contains(CardNumber.ACE)
+
     fun add(card: Card) {
         _value.add(card)
     }
