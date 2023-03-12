@@ -17,7 +17,11 @@ class Participants(private val participants: List<Participant>) {
     ): Participants {
         return Participants(
             dealerFirst()
-                .map { participant -> participant.draw(deck.draw()).draw(deck.draw()) }
+                .map { participant ->
+                    participant
+                        .draw(deck.draw(), isFirstDraw = true)
+                        .draw(deck.draw(), isFirstDraw = true)
+                }
                 .onEach(onFirstDrawn)
         )
     }
@@ -31,38 +35,12 @@ class Participants(private val participants: List<Participant>) {
         deck: CardDeck,
         onDrawn: (Participant) -> Unit
     ): Participant {
-        var drawnParticipant = participant
-        if (!drawnParticipant.canDraw()) return drawnParticipant
-
-        do {
-            drawnParticipant = checkPlayerNeedToDraw(drawnParticipant)
-            drawnParticipant = drawCard(drawnParticipant, deck, onDrawn)
-        } while (drawnParticipant.canDraw())
-        return drawnParticipant
-    }
-
-    private fun drawCard(
-        participant: Participant,
-        deck: CardDeck,
-        onDrawn: (Participant) -> Unit
-    ): Participant {
-        var drawnParticipant = participant
-
-        if (participant.canDraw()) {
-            drawnParticipant = participant.draw(deck.draw())
-            onDrawn(drawnParticipant)
+        var result = participant
+        while (!result.isFinished) {
+            val card = deck.draw()
+            result = result.draw(card).apply { if (!isFinished) onDrawn(this) }
         }
-        return drawnParticipant
-    }
-
-    private fun checkPlayerNeedToDraw(drawnParticipant: Participant): Participant {
-        if (drawnParticipant is Player) return playerNeedToDraw(drawnParticipant)
-        return drawnParticipant
-    }
-
-    private fun playerNeedToDraw(player: Player): Participant {
-        if (player.needToDraw()) return player
-        return player.stay()
+        return result
     }
 
     fun getGameResult(): List<GameResult> = dealerFirst().map { participant ->

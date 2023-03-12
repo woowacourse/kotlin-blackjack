@@ -1,20 +1,21 @@
 package blackjack.domain.state
 
 import blackjack.domain.card.Card
+import blackjack.domain.card.Cards
 import blackjack.domain.money.Money
 
-interface CardState {
-    val isFinished: Boolean
+abstract class CardState(protected val cards: Cards) {
+    abstract val isFinished: Boolean
 
-    fun draw(card: Card): CardState
+    abstract fun draw(card: Card): CardState
 
-    fun stay(): CardState
+    abstract fun stay(): CardState
 
-    fun profit(other: CardState, money: Money): Money
+    abstract fun profit(other: CardState, money: Money): Money
 
-    fun getAllCards(): List<Card>
+    abstract fun getFirstCard(): Card
 
-    fun getFirstCard(): Card
+    fun getAllCards(): List<Card> = cards.items
 
-    fun getTotalScore(): Int
+    fun getTotalScore(): Int = cards.calculateTotalScore()
 }
