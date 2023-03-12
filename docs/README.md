@@ -59,3 +59,13 @@
 
 - [x] 최초 카드 분배 대사 출력
 
+#### 적용해보자 상태패턴
+- [ ]State
+  - [ ] ProgressAble
+    - [ ] 카드를 뽑는다(draw)
+      - [ ] Hit
+      - [ ] FirstTurn
+  - [ ] Stopped
+    - [ ] Stay
+    - [ ] BlackJack
+    - [ ] Bust
