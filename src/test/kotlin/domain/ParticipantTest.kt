@@ -17,7 +17,7 @@ class ParticipantTest {
         participant.addCard(Card.of(CardCategory.CLOVER, CardNumber.EIGHT))
         participant.addCard(Card.of(CardCategory.SPADE, CardNumber.NINE))
 
-        val actual = participant.curScore()
+        val actual = participant.getScore().value
         val expected = 17
         assertThat(actual).isEqualTo(expected)
     }

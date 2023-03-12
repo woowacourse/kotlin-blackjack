@@ -14,7 +14,7 @@ class DealerAddPhase(val printDealerAddCard: (Dealer) -> Unit) : Phase {
             printDealerAddCard(dealer)
             dealer.addCard(deck.draw())
             dealerSelectPhase(dealer, deck)
-        } else if (!dealer.isBust()) {
+        } else if (dealer.cardsStateIsFinished.not()) {
             dealer.stay()
         }
     }

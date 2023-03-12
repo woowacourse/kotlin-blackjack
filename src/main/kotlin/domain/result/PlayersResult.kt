@@ -13,7 +13,8 @@ class PlayersResult(players: Players, dealer: Dealer) {
             ParticipantResultInfo(
                 player.name,
                 ProfitMoney.of(player.betMoney, dealer.getProfit(player)),
-                player.getCards()
+                player.getCards(),
+                player.getScore()
             )
         }
         sum = list.sumOf { it.profitMoney.value }

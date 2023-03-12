@@ -1,6 +1,7 @@
 package domain.card
 
 import domain.BlackJackGame
+import domain.Score
 
 class Cards(list: List<Card>) {
     private val _list = list.toMutableList()
@@ -18,19 +19,11 @@ class Cards(list: List<Card>) {
 
     val isBlackJack: Boolean
         get() {
-            return ((score == BlackJackGame.BLACKJACK_NUMBER) && (size == 2))
+            return ((score.value == BlackJackGame.BLACKJACK_NUMBER) && (size == 2))
         }
 
-    val score: Int
-        get() {
-            val sum = sum()
-            if (!hasAce) return sum
-            val sumWithAceAdditionalValue = sum + ACE_ADDITIONAL_VALUE
-            if (sumWithAceAdditionalValue <= BlackJackGame.BLACKJACK_NUMBER) {
-                return sumWithAceAdditionalValue
-            }
-            return sum
-        }
+    val score: Score
+        get() = Score(sum(), hasAce)
 
     fun add(card: Card): Cards {
         val newCards = _list.toMutableList()
@@ -44,9 +37,5 @@ class Cards(list: List<Card>) {
 
     fun deepCopy(): Cards {
         return Cards(list)
-    }
-
-    companion object {
-        private const val ACE_ADDITIONAL_VALUE = 10
     }
 }

@@ -21,12 +21,12 @@ class BlackJackGameController(private val inputView: InputView, private val resu
     }
 
     private fun initGame(): BlackJackGame {
-        val initPhase = InitDrawPhase(resultView::printGameInit, resultView::printInitCards)
+        val initDrawPhase = InitDrawPhase(resultView::printGameInit, resultView::printInitCards)
         val playersSelectAddPhase = PlayersSelectAddPhase(::getChoiceOfAddCard, resultView::printPlayerCard)
         val dealerSelectAddPhase = DealerAddPhase(resultView::printDealerAddCard)
         val gameScorePhase = GameScorePhase(resultView::printScore)
         val phases =
-            Phases(initPhase, playersSelectAddPhase, dealerSelectAddPhase, gameScorePhase)
+            Phases(initDrawPhase, playersSelectAddPhase, dealerSelectAddPhase, gameScorePhase)
         return BlackJackGame(phases)
     }
 

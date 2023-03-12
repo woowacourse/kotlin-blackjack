@@ -52,7 +52,7 @@ class ResultView {
                 PRINT_NAME_AND_CARDS_AND_SCORE.format(
                     participant.name.value,
                     formatStringCards(participant.getCards()),
-                    participant.curScore()
+                    participant.getScore().value
                 )
             )
         }
