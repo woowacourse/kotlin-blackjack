@@ -17,7 +17,7 @@ class Controller() {
 
     private fun showInitialState(participants: Participants) {
         OutputView.printDistributeScript(participants.players.value)
-        OutputView.printDealerInitialCard(participants.dealer.cardBunch)
+        OutputView.printDealerInitialCard(participants.dealer.state.hand)
         OutputView.printAllPlayerCard(participants.players.value)
     }
 

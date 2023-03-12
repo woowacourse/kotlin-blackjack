@@ -1,10 +1,10 @@
 package blackjack.domain.state
 
 import blackjack.domain.Card
-import blackjack.domain.CardBunchForState
+import blackjack.domain.CardBunch
 
 interface State {
-    val hand: CardBunchForState
+    val hand: CardBunch
 
     fun draw(card: Card): State
 

@@ -2,15 +2,9 @@ package blackjack.domain
 
 import blackjack.const.MAX_SCORE_CONDITION
 
-class CardBunch private constructor(cards: MutableList<Card>) {
-    private val _cards: MutableList<Card> = cards
-    val cards: List<Card> get() = _cards.toList()
+class CardBunch constructor(val cards: List<Card>) {
 
-    constructor(vararg cards: Card) : this(cards.toMutableList())
-
-    fun addCard(card: Card) {
-        _cards.add(card)
-    }
+    constructor(vararg cards: Card) : this(cards.toList())
 
     fun getTotalScore(): Int {
         var result = cards.sumOf { it.cardNumber.value }
@@ -29,11 +23,12 @@ class CardBunch private constructor(cards: MutableList<Card>) {
 
     fun isBurst(): Boolean = getTotalScore() > MAX_SCORE_CONDITION
 
-    fun isBlackJack(): Boolean = cards.size == 2 && getTotalScore() == 21
+    fun isDealerBurst(): Boolean = getTotalScore() > DEALER_ADD_CARD_CONDITION
 
     private fun containsAce(): Boolean = cards.any { card -> card.isAce() }
 
     companion object {
         private const val ACE_SCORE_GAP = 10
+        private const val DEALER_ADD_CARD_CONDITION = 16
     }
 }

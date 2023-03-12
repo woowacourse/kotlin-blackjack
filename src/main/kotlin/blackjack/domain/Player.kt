@@ -1,6 +1,9 @@
 package blackjack.domain
 
-class Player(val name: String, override val cardBunch: CardBunch) : Participant {
+import blackjack.domain.state.Burst
+import blackjack.domain.state.State
 
-    override fun isOverCondition(): Boolean = cardBunch.isBurst()
+class Player(val name: String, override var state: State) : Participant {
+
+    override fun isOverCondition(): Boolean = state is Burst
 }

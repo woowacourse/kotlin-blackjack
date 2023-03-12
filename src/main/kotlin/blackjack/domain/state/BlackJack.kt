@@ -1,5 +1,5 @@
 package blackjack.domain.state
 
-import blackjack.domain.CardBunchForState
+import blackjack.domain.CardBunch
 
-class BlackJack(override val hand: CardBunchForState) : Stopped
+class BlackJack(override val hand: CardBunch) : Stopped

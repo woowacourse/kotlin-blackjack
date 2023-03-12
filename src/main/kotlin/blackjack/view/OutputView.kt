@@ -23,7 +23,7 @@ object OutputView {
     }
 
     fun printPlayerCards(player: Player) {
-        val bunchString = makeBunchString(player.cardBunch)
+        val bunchString = makeBunchString(player.state.hand)
         println("${player.name}카드 : $bunchString")
     }
 
@@ -43,10 +43,10 @@ object OutputView {
     }
 
     fun printTotalScore(participants: Participants) {
-        println("딜러 카드 : ${makeBunchString(participants.dealer.cardBunch)} - 결과: ${participants.dealer.cardBunch.getTotalScore()}")
+        println("딜러 카드 : ${makeBunchString(participants.dealer.state.hand)} - 결과: ${participants.dealer.state.hand.getTotalScore()}")
         participants.players.value.forEach { player ->
-            val bunchString = makeBunchString(player.cardBunch)
-            println("${player.name}카드 : $bunchString - 결과: ${player.cardBunch.getTotalScore()}")
+            val bunchString = makeBunchString(player.state.hand)
+            println("${player.name}카드 : $bunchString - 결과: ${player.state.hand.getTotalScore()}")
         }
         println()
     }

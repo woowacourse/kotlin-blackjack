@@ -1,10 +1,12 @@
 package blackjack.domain
 
+import blackjack.domain.state.State
+
 interface Participant {
-    val cardBunch: CardBunch
+    var state: State
 
     fun receiveCard(card: Card) {
-        cardBunch.addCard(card)
+        state = state.draw(card)
     }
 
     fun isOverCondition(): Boolean
