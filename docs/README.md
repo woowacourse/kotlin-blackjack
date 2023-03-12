@@ -63,9 +63,9 @@
 - [ ]State
   - [ ] ProgressAble
     - [ ] 카드를 뽑는다(draw)
-      - [ ] Hit
-      - [ ] FirstTurn
+      - [x] Hit
+      - [x] FirstTurn
   - [ ] Stopped
     - [ ] Stay
-    - [ ] BlackJack
-    - [ ] Bust
+    - [x] BlackJack
+    - [x] Bust

@@ -2,6 +2,4 @@ package blackjack.domain.state
 
 import blackjack.domain.CardBunchForState
 
-interface State {
-    val hand: CardBunchForState
-}
+class Burst(override val hand: CardBunchForState) : State
