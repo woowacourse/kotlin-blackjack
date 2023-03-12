@@ -31,6 +31,8 @@ class Cards(vararg cards: Card) {
 
     private fun hasAce(): Boolean = _items.any(Card::isAce)
 
+    fun isBlackjack(): Boolean = (calculateTotalScore() == BLACKJACK_SCORE) && (items.size == 2)
+
     companion object {
         private const val BONUS_SCORE = 10
         private const val BLACKJACK_SCORE = 21
