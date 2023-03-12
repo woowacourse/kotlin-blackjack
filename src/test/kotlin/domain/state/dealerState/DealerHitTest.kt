@@ -17,7 +17,7 @@ class DealerHitTest {
             DealerHit(hand)
                 .draw(Card(CardShape.DIAMOND, CardNumber.TEN))
 
-        assertThat(actual).isInstanceOf(Bust::class.java)
+        assertThat(actual is Bust).isTrue
     }
 
     @Test
@@ -29,6 +29,6 @@ class DealerHitTest {
         val actual =
             DealerHit(hand).draw(Card(CardShape.DIAMOND, CardNumber.TEN))
 
-        assertThat(actual).isInstanceOf(Stay::class.java)
+        assertThat(actual is Stay).isTrue
     }
 }

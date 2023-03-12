@@ -14,7 +14,7 @@ class PlayerFirstTurnTest {
     fun `PlayerFirstTurn 에서 FirstTurn 된다`() {
         val actual = PlayerFirstTurn(Hand()).draw(Card(CardShape.DIAMOND, CardNumber.KING))
 
-        assertThat(actual).isInstanceOf(PlayerFirstTurn::class.java)
+        assertThat(actual is PlayerFirstTurn).isTrue
     }
 
     @Test
@@ -22,7 +22,7 @@ class PlayerFirstTurnTest {
         val hand = Hand(Card(CardShape.HEART, CardNumber.TEN))
         val actual = PlayerFirstTurn(hand).draw(Card(CardShape.DIAMOND, CardNumber.KING))
 
-        assertThat(actual).isInstanceOf(PlayerHit::class.java)
+        assertThat(actual is PlayerHit).isTrue
     }
 
     @Test
@@ -30,6 +30,6 @@ class PlayerFirstTurnTest {
         val hand = Hand(Card(CardShape.HEART, CardNumber.ACE))
         val actual = PlayerFirstTurn(hand).draw(Card(CardShape.DIAMOND, CardNumber.KING))
 
-        assertThat(actual).isInstanceOf(BlackJack::class.java)
+        assertThat(actual is BlackJack).isTrue
     }
 }

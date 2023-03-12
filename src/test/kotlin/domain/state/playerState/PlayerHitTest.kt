@@ -16,7 +16,7 @@ class PlayerHitTest {
         val actual =
             PlayerHit(hand).draw(Card(CardShape.DIAMOND, CardNumber.TEN))
 
-        assertThat(actual).isInstanceOf(Bust::class.java)
+        assertThat(actual is Bust).isTrue
     }
 
     @Test
@@ -25,7 +25,7 @@ class PlayerHitTest {
         val actual =
             PlayerHit(hand).draw(Card(CardShape.HEART, CardNumber.NINE))
 
-        assertThat(actual).isInstanceOf(PlayerHit::class.java)
+        assertThat(actual is PlayerHit).isTrue
     }
 
     @Test
@@ -34,6 +34,6 @@ class PlayerHitTest {
         val actual =
             PlayerHit(hand).stay()
 
-        assertThat(actual).isInstanceOf(Stay::class.java)
+        assertThat(actual is Stay).isTrue
     }
 }
