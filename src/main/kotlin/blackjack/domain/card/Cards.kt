@@ -7,18 +7,14 @@ class Cards(private val cards: Set<Card> = setOf()) {
 
     val isContainsAce: Boolean = cards.any { it.isAce }
 
-    private val hardScore: Score = Score(cards.toList().sumOf { it.value.value })
-
-    private val softScore: Score = hardScore + SOFT_ACE_SCORE
-
     constructor(vararg cards: Card) : this(cards.toSet())
 
     fun toList() = cards.toList()
 
-    fun calculateScore(): Score = when {
-        isContainsAce && softScore.isBust.not() -> softScore
-        else -> hardScore
-    }
+    fun calculateScore(): Score = Score(
+        cards.sumOf { it.value.value },
+        isContainsAce,
+    )
 
     operator fun plus(card: Card): Cards {
         require(card !in cards) { ERROR_EXIST_DUPLICATE_CARD }
@@ -27,7 +23,6 @@ class Cards(private val cards: Set<Card> = setOf()) {
 
     companion object {
         private const val ERROR_EXIST_DUPLICATE_CARD = "카드는 중복될 수 없습니다."
-        private val SOFT_ACE_SCORE = Score(10)
         private val CARDS: List<Card> = CardMark.values().flatMap { mark ->
             CardValue.values().map { value -> Card(mark, value) }
         }
