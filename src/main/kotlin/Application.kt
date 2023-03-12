@@ -1,5 +1,5 @@
-import blackjack.controller.BlackJackController
+import blackjack.controller.BlackJackGameController
 
 fun main() {
-    BlackJackController().run()
+    BlackJackGameController().run()
 }

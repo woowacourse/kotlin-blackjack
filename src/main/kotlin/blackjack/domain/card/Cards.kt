@@ -1,49 +1,49 @@
 package blackjack.domain.card
 
 class Cards(
-    cards: List<Card> = listOf(Card.draw(), Card.draw())
+    cards: List<Card> = listOf(Card.draw(), Card.draw()),
 ) {
 
     private val _cards: MutableList<Card> = cards.toMutableList()
     val cards: List<Card>
         get() = _cards.toList()
 
-    val size: Int
-        get() = cards.size
+    val isDrawnNothing: Boolean
+        get() = cards.size == INITIAL_CARDS_SIZE
+
+    var state: CardsState = CardsState.Running(getTotalCardsScore())
+        private set
 
     init {
         require(cards.size == INITIAL_CARDS_SIZE)
+
+        state = CardsState.valueOf(getTotalCardsScore(), true)
     }
 
     fun draw(card: Card = Card.draw()) {
         _cards.add(card)
-        CardNumber.values()
+        updateCardsState()
+    }
+
+    private fun updateCardsState() {
+        state = CardsState.valueOf(getTotalCardsScore())
     }
 
     fun getMinimumCardsScore(): Int = cards.sumOf { card -> card.number.value }
 
     fun getTotalCardsScore(): Int {
-        val aceCardsCount = cards.count { card -> card.number == CardNumber.A }
-        var currentSum = cards
-            .filter { card -> card.number != CardNumber.A }
-            .sumOf { card -> card.number.value }
+        val minimumScore = getMinimumCardsScore()
 
-        repeat(aceCardsCount) {
-            currentSum += decideAceCardsScore(currentSum)
-        }
-        return currentSum
-    }
+        if (cards.any { card -> card.number == CardNumber.A }) {
 
-    private fun decideAceCardsScore(currentSum: Int): Int {
-        if (currentSum >= CURRENT_SUM_STANDARD) {
-            return CardNumber.A.value
+            return minimumScore + CardNumber.decideAdditionalAceScore(minimumScore)
         }
 
-        return CardNumber.BIG_A.value
+        return minimumScore
     }
 
     companion object {
-        const val INITIAL_CARDS_SIZE = 2
-        private const val CURRENT_SUM_STANDARD = 11
+
+        private const val INITIAL_CARDS_SIZE = 2
     }
 }

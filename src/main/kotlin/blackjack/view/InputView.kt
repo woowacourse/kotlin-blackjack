@@ -10,6 +10,22 @@ object InputView {
     private const val YES = "y"
     private const val NO = "n"
     private const val ADDITIONAL_DRAW_ERROR_MSG = "[ERROR] y또는 n 이외의 입력은 받지 않습니다."
+    private const val REQUEST_PLAYERS_BATTING_MONEY = "%s의 배팅 금액은?"
+    private const val NUMERIC_ERROR_MSG = "[ERROR] 숫자가 아닌 입력은 허용하지 않습니다.\n다시 입력해주세요."
+
+    private fun <T> requestSpecificInput(errorMessage: String, toSomeTypeOrNull: (String) -> T?): T {
+
+        while (true) {
+            toSomeTypeOrNull(readln())?.let { someType -> return someType }
+            println(errorMessage)
+        }
+    }
+
+    private fun requestNumericInput(message: String): Int {
+        println(message)
+
+        return requestSpecificInput(NUMERIC_ERROR_MSG, String::toIntOrNull)
+    }
 
     fun requestPlayersName(): List<String> {
         println(REQUEST_PLAYERS_NAME_MSG)
@@ -17,20 +33,20 @@ object InputView {
         return readln().split(TOKENIZER).map(String::trim)
     }
 
+    fun requestBattingMoney(playerName: String): Int {
+
+        return requestNumericInput(REQUEST_PLAYERS_BATTING_MONEY.format(playerName))
+    }
+
     fun requestAdditionalDraw(player: Player): Boolean {
         println(REQUEST_ADDITIONAL_CARDS_MSG.format(player.name.value))
 
-        while (true) {
-            readln().toBooleanOrNull()?.let { additionalDrawFlag -> return additionalDrawFlag }
-            println(ADDITIONAL_DRAW_ERROR_MSG)
-        }
+        return requestSpecificInput(ADDITIONAL_DRAW_ERROR_MSG, ::toBooleanOrNull)
     }
 
-    private fun String.toBooleanOrNull(): Boolean? = if (this == YES) {
-        true
-    } else if (this == NO) {
-        false
-    } else {
-        null
+    private fun toBooleanOrNull(input: String): Boolean? = when (input) {
+        YES -> true
+        NO -> false
+        else -> null
     }
 }

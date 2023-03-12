@@ -15,6 +15,20 @@ enum class CardNumber(val value: Int) {
     TEN(10),
     J(10),
     Q(10),
-    K(10),
-    BIG_A(11)
+    K(10);
+
+    companion object {
+
+        private const val ADDITION_SCORE_FOR_ACE = 10
+        private const val STANDARD_SCORE = 11
+        private const val ZERO = 0
+
+        fun decideAdditionalAceScore(score: Int): Int {
+            if (score <= STANDARD_SCORE) {
+                return ADDITION_SCORE_FOR_ACE
+            }
+
+            return ZERO
+        }
+    }
 }
