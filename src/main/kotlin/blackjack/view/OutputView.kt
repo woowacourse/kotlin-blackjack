@@ -12,6 +12,7 @@ object OutputView {
     private const val DISTRIBUTE_SCRIPT = "딜러와 %s에게 2장의 카드를 나누었습니다."
     private const val CAN_GET_CARD_SCRIPT = "딜러는 16이하라 한 장의 카드를 더 받았습니다."
     private const val CANNOT_GET_CARD_SCRIPT = "딜러는 17이상이라 카드를 더 받지 못합니다."
+    private const val FINAL_PRIZE_MONEY_SCRIPT = "## 최종수입"
 
     private fun makeCardString(card: Card): String = getCardNumberString(card.cardNumber) + card.shape.korean
 
@@ -58,6 +59,22 @@ object OutputView {
             CardNumber.JACK -> "J"
             CardNumber.QUEEN -> "Q"
             CardNumber.KING -> "K"
+        }
+    }
+
+    fun printFinalPrizeMoney(dealerResultMoney: Int, playersPrizeMoney: List<Pair<String, Int>>) {
+        println(FINAL_PRIZE_MONEY_SCRIPT)
+        printDealerResultMoney(dealerResultMoney)
+        printPlayersPrizeMoney(playersPrizeMoney)
+    }
+
+    private fun printDealerResultMoney(dealerResultMoney: Int) {
+        println("딜러: $dealerResultMoney")
+    }
+
+    private fun printPlayersPrizeMoney(playersPrizeMoney: List<Pair<String, Int>>) {
+        playersPrizeMoney.forEach {
+            println("${it.first}: ${it.second}")
         }
     }
 }
