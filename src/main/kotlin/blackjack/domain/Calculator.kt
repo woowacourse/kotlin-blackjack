@@ -3,9 +3,9 @@ package blackjack.domain
 class Calculator {
     private fun getDividend(player: Player, consequence: Consequence): Int {
         return when (consequence) {
-            Consequence.WIN -> if (player.isBlackjack()) player.bettingMoney.times(MULTI_BLACKJACK) else player.bettingMoney.times(MULTI_WIN)
-            Consequence.LOSE -> player.bettingMoney.times(MULTI_LOSE)
-            Consequence.DRAW -> player.bettingMoney.times(MULTI_DRAW)
+            Consequence.WIN -> if (player.isBlackjack()) player.bettingMoney * MULTI_BLACKJACK else player.bettingMoney * MULTI_WIN
+            Consequence.LOSE -> player.bettingMoney * MULTI_LOSE
+            Consequence.DRAW -> player.bettingMoney * MULTI_DRAW
         }
     }
 
