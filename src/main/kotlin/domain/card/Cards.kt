@@ -24,8 +24,10 @@ class Cards(list: List<Card>) {
     val score: Int
         get() {
             val sum = sum()
-            if (hasAce && (sum + ACE_ADDITIONAL_VALUE <= BlackJackGame.BLACKJACK_NUMBER)) {
-                return sum + ACE_ADDITIONAL_VALUE
+            if (!hasAce) return sum
+            val sumWithAceAdditionalValue = sum + ACE_ADDITIONAL_VALUE
+            if (sumWithAceAdditionalValue <= BlackJackGame.BLACKJACK_NUMBER) {
+                return sumWithAceAdditionalValue
             }
             return sum
         }

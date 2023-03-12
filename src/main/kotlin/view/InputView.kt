@@ -1,8 +1,8 @@
 package view
 
 import domain.Name
-import domain.NameAndBet
 import domain.Names
+import domain.PlayerInfo
 import domain.PlayersNameAndBet
 
 class InputView {
@@ -13,17 +13,17 @@ class InputView {
     }
 
     fun readPlayersBetMoney(names: Names): PlayersNameAndBet? {
-        val playersNameAndBet = mutableListOf<NameAndBet>()
+        val playersNameAndBet = mutableListOf<PlayerInfo>()
         names.values.forEach { name ->
             playersNameAndBet.add(readBetMoney(name))
         }
         return runCatchingGetOrNull { PlayersNameAndBet(playersNameAndBet) }
     }
 
-    private fun readBetMoney(name: Name): NameAndBet {
+    private fun readBetMoney(name: Name): PlayerInfo {
         println(INPUT_PLAYERS_BET_MONEY.format(name.value))
         val input = readln()
-        return runCatchingGetOrNull { NameAndBet(name, input.toInt()) } ?: readBetMoney(name)
+        return runCatchingGetOrNull { PlayerInfo(name, input.toInt()) } ?: readBetMoney(name)
     }
 
     fun readChoiceOfAddCard(name: Name): Answer? {

@@ -9,7 +9,7 @@ class PlayersTest {
         assertThrows<IllegalStateException> {
             Players(9) {
                 Player(
-                    NameAndBet(Name("pobi"), 0)
+                    PlayerInfo(Name("pobi"), 0)
                 )
             }
         }

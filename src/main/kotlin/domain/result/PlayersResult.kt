@@ -4,15 +4,17 @@ import domain.Dealer
 import domain.Players
 
 class PlayersResult(players: Players, dealer: Dealer) {
-    val list: List<NameAndProfit>
+    val list: List<ParticipantResultInfo>
     val sum: Int
-        get() = list.sumOf { it.profitMoney }
 
     init {
-        val nameAndProfits = mutableListOf<NameAndProfit>()
-        players.list.forEach { player ->
-            nameAndProfits.add(NameAndProfit(player.name, (dealer.getProfit(player) * player.betMoney).toInt()))
+        list = players.list.map { player ->
+            ParticipantResultInfo(
+                player.name,
+                (dealer.getProfit(player) * player.betMoney).toInt(),
+                player.getCards()
+            )
         }
-        list = nameAndProfits
+        sum = list.sumOf { it.profitMoney }
     }
 }

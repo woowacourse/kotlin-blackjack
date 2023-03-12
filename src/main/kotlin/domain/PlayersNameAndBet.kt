@@ -1,6 +1,6 @@
 package domain
 
-class PlayersNameAndBet(val list: List<NameAndBet>) {
+class PlayersNameAndBet(val list: List<PlayerInfo>) {
     init {
         check(list.size in MINIMUM_PLAYER_COUNT..MAXIMUM_PLAYER_COUNT) { MAXIMUM_PLAYER_COUNT_ERROR }
     }
