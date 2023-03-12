@@ -1,10 +1,10 @@
 package blackjack.domain
 
 enum class GameResult(val dividendRate: Double) {
-    LOSE(-1.0), // 패
-    DRAW(0.0), // 무
-    BLACKJACK(1.5), // 블랙잭으로 승
-    WIN(1.0); // 그냥 승
+    LOSE(-1.0),
+    DRAW(0.0),
+    BLACKJACK(1.5),
+    WIN(1.0);
 
     operator fun not(): GameResult {
         return when (this) {
