@@ -1,8 +1,9 @@
 package controller
 
-import domain.BlackJackBuilder
 import domain.BlackJackGame
 import domain.card.Deck
+import domain.person.Participants
+import domain.result.GameProfit
 import view.RequestView
 import view.ResultView
 
@@ -11,23 +12,16 @@ class BlackJackController(
     private val resultView: ResultView,
 ) {
     fun runBlackJack() {
-        val deck = Deck.create()
-        val blackJackBuilder = BlackJackBuilder(deck)
+        val participants = Participants.from(requestView::requestInputNames)
+        val gameProfit = GameProfit.from(participants, requestView::requestBettingMoneys)
+        val blackJackGame = BlackJackGame(Deck.create(), participants)
 
-        val participants =
-            blackJackBuilder.getInitialPersons(requestView::requestInputNames)
-
-        val playerBettingMoneys =
-            blackJackBuilder.getPlayerBettingMoneys(participants, requestView::requestBettingMoneys)
-
-        blackJackBuilder.handOutInitialCards(participants, resultView::printInitialSetting)
-
-        val blackJackGame = BlackJackGame(deck, participants)
-
-        blackJackGame.handOutCardsToPlayers(requestView::requestPlayerDecision, resultView::printPlayerCards)
+        blackJackGame.handOutCardsInitial(resultView::printInitialSetting)
+        blackJackGame.handOutCardsToPlayers(requestView::isMoreCard, resultView::printPlayerCards)
         blackJackGame.handOutCardsToDealer(resultView::printDealerGetCardOrNot)
+
         blackJackGame.judgeResult(
-            playerBettingMoneys,
+            gameProfit,
             resultView::printPersonsCardsResult,
             resultView::printFinalResult,
         )
