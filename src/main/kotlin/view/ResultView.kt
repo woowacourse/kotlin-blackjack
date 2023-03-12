@@ -1,7 +1,6 @@
 package view
 
 import domain.Dealer
-import domain.Participant
 import domain.Participants
 import domain.Player
 import domain.Players
@@ -37,24 +36,23 @@ class ResultView {
         println(PRINT_DEALER_ADD_CARD.format(dealer.name.value))
     }
 
+    fun printScore(result: BetProfitResult) {
+        println()
+        result.dealerResult.run {
+            println(PRINT_NAME_AND_CARDS_AND_SCORE.format(name.value, formatStringCards(cards), score.value))
+        }
+        result.playersResult.list.forEach { participantInfo ->
+            participantInfo.run {
+                println(PRINT_NAME_AND_CARDS_AND_SCORE.format(name.value, formatStringCards(cards), score.value))
+            }
+        }
+    }
+
     fun printGameResult(result: BetProfitResult) {
         println(PRINT_GAME_RESULT)
         println(PRINT_BET_GAME_RESULT.format(result.dealerResult.name.value, result.dealerResult.profitMoney.value))
         result.playersResult.list.forEach {
             println(PRINT_BET_GAME_RESULT.format(it.name.value, it.profitMoney.value))
-        }
-    }
-
-    fun printScore(participants: List<Participant>) {
-        println()
-        participants.forEach { participant ->
-            println(
-                PRINT_NAME_AND_CARDS_AND_SCORE.format(
-                    participant.name.value,
-                    formatStringCards(participant.getCards()),
-                    participant.getScore().value
-                )
-            )
         }
     }
 

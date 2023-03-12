@@ -4,30 +4,37 @@ import domain.BlackJackGame
 import domain.Name
 import domain.Names
 import domain.PlayerInfo
+import domain.phase.BlackJackPhases
 import domain.phase.DealerAddPhase
-import domain.phase.GameScorePhase
 import domain.phase.InitDrawPhase
-import domain.phase.Phases
+import domain.phase.ParticipantAddCardPhase
 import domain.phase.PlayersSelectAddPhase
+import domain.result.BetProfitResult
 import view.Answer
 import view.InputView
 import view.ResultView
 
 class BlackJackGameController(private val inputView: InputView, private val resultView: ResultView) : Runnable {
     override fun run() {
-        val blackJackGame = initGame()
+        val blackJackGame = createBlackJackGame()
         val result = blackJackGame.runGame(getPlayersNameAndBet())
-        resultView.printGameResult(result)
+        printResult(result)
     }
 
-    private fun initGame(): BlackJackGame {
+    private fun createBlackJackGame(): BlackJackGame {
         val initDrawPhase = InitDrawPhase(resultView::printGameInit, resultView::printInitCards)
-        val playersSelectAddPhase = PlayersSelectAddPhase(::getChoiceOfAddCard, resultView::printPlayerCard)
-        val dealerSelectAddPhase = DealerAddPhase(resultView::printDealerAddCard)
-        val gameScorePhase = GameScorePhase(resultView::printScore)
+        val participantAddCardPhase = ParticipantAddCardPhase(
+            PlayersSelectAddPhase(::getChoiceOfAddCard, resultView::printPlayerCard),
+            DealerAddPhase(resultView::printDealerAddCard)
+        )
         val phases =
-            Phases(initDrawPhase, playersSelectAddPhase, dealerSelectAddPhase, gameScorePhase)
+            BlackJackPhases(initDrawPhase, participantAddCardPhase)
         return BlackJackGame(phases)
+    }
+
+    private fun printResult(result: BetProfitResult) {
+        resultView.printScore(result)
+        resultView.printGameResult(result)
     }
 
     private fun getPlayersNameAndBet(): List<PlayerInfo> {
