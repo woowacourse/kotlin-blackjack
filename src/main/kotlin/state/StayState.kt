@@ -3,7 +3,7 @@ package state
 import domain.card.Card
 import domain.card.Cards
 
-class StayState(cards: Cards) : FinishedState(cards) {
+class StayState(cards: Cards, override val rateOfProfit: Double = 1.0) : FinishedState(cards) {
     constructor(vararg card: Card) : this(Cards(card.toList()))
 
     init {

@@ -3,7 +3,7 @@ package state
 import domain.card.Card
 import domain.card.Cards
 
-class BlackJackState(cards: Cards) : FinishedState(cards) {
+class BlackJackState(cards: Cards, override val rateOfProfit: Double = 1.5) : FinishedState(cards) {
     constructor(vararg card: Card) : this(Cards(card.toList()))
 
     init {
