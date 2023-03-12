@@ -17,13 +17,14 @@ class BlackjackController(
             BlackjackManager(cardsGenerator, inputView.readParticipantsName(), inputView::readParticipantBetAmount)
         blackjackManager.setupCards()
         outputView.printSetupCards(blackjackManager.dealer, blackjackManager.participants)
-        blackjackManager.playParticipantsTurns(inputView::readMoreCard, outputView::printParticipantCards)
-        blackjackManager.playDealerTurn(outputView::printDealerHitCardMent)
+        blackjackManager.playGame(
+            inputView::readMoreCard,
+            outputView::printParticipantCards,
+            outputView::printDealerHitCardMent
+        )
         outputView.printScoreResult(blackjackManager.dealer, blackjackManager.participants)
         outputView.printPlayersProfit(
-            blackjackManager.calculateParticipantsProfit(
-                blackjackManager.calculateParticipantsEarningRate()
-            )
+            blackjackManager.calculateParticipantsProfit()
         )
     }
 }

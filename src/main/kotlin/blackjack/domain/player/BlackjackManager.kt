@@ -32,16 +32,25 @@ class BlackjackManager(
         }
     }
 
-    fun playParticipantsTurns(
+    fun playGame(
+        requestMoreCard: (String) -> Boolean,
+        onProvideParticipantCard: (Participant) -> Unit,
+        onProvideDealerCard: () -> Unit
+    ) {
+        playParticipantsTurns(requestMoreCard, onProvideParticipantCard)
+        playDealerTurn(onProvideDealerCard)
+    }
+
+    private fun playParticipantsTurns(
         requestMoreCard: (String) -> Boolean,
         onProvideCard: (Participant) -> Unit
     ) {
         participants.values.forEach {
-            playParticipantTurns(it, requestMoreCard, onProvideCard)
+            playParticipantTurn(it, requestMoreCard, onProvideCard)
         }
     }
 
-    private fun playParticipantTurns(
+    private fun playParticipantTurn(
         participant: Participant,
         requestMoreCard: (String) -> Boolean,
         onProvideCard: (Participant) -> Unit
@@ -56,7 +65,7 @@ class BlackjackManager(
         }
     }
 
-    fun playDealerTurn(onProvideCard: () -> Unit) {
+    private fun playDealerTurn(onProvideCard: () -> Unit) {
         while (true) {
             if (!dealer.checkProvideCardPossible()) break
             provideCard(dealer)
@@ -64,16 +73,15 @@ class BlackjackManager(
         }
     }
 
-    fun calculateParticipantsEarningRate(): ParticipantsEarningRate = ParticipantsEarningRate(
+    private fun calculateParticipantsEarningRate(): ParticipantsEarningRate = ParticipantsEarningRate(
         participants.values.map { participant ->
             participant.calculateEarningRate(dealer)
         }
     )
 
-    fun calculateParticipantsProfit(
-        participantsEarningRate: ParticipantsEarningRate
-    ): ParticipantsProfit =
-        ParticipantsProfit(
+    fun calculateParticipantsProfit(): ParticipantsProfit {
+        val participantsEarningRate = calculateParticipantsEarningRate()
+        return ParticipantsProfit(
             participants.values.map { participant ->
                 val name = participant.name
                 val participantEarningRate: ParticipantEarningRate =
@@ -85,6 +93,7 @@ class BlackjackManager(
                 )
             }
         )
+    }
 
     private fun provideCard(player: Player) {
         cardDeck.apply {
