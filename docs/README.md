@@ -66,6 +66,6 @@
       - [x] Hit
       - [x] FirstTurn
   - [ ] Stopped
-    - [ ] Stay
+    - [x] Stay
     - [x] BlackJack
     - [x] Bust
