@@ -1,6 +1,6 @@
 package domain
 
-class Player(nameAndBet: PlayerInfo) : Participant(nameAndBet.name) {
-    val betMoney = nameAndBet.betMoney
-    override fun isPossibleDrawCard(): Boolean = !isBust()
+class Player(playerInfo: PlayerInfo) : Participant(playerInfo.name) {
+    val betMoney = playerInfo.betMoney
+    override fun isPossibleDrawCard(): Boolean = !cardsState.isFinished
 }

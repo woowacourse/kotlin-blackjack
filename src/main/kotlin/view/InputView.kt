@@ -3,7 +3,6 @@ package view
 import domain.Name
 import domain.Names
 import domain.PlayerInfo
-import domain.PlayersNameAndBet
 
 class InputView {
     fun readNames(): Names? {
@@ -12,12 +11,8 @@ class InputView {
         return runCatchingGetOrNull { Names(input.split(NAME_DELIMITERS).map { Name(it.trim()) }) }
     }
 
-    fun readPlayersBetMoney(names: Names): PlayersNameAndBet? {
-        val playersNameAndBet = mutableListOf<PlayerInfo>()
-        names.values.forEach { name ->
-            playersNameAndBet.add(readBetMoney(name))
-        }
-        return runCatchingGetOrNull { PlayersNameAndBet(playersNameAndBet) }
+    fun readPlayersBetMoney(names: Names): List<PlayerInfo> {
+        return names.values.map { name -> readBetMoney(name) }
     }
 
     private fun readBetMoney(name: Name): PlayerInfo {

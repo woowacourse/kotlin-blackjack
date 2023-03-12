@@ -8,6 +8,7 @@ class Players(val list: List<Player>) {
     }
 
     companion object {
+        fun create(playersInfo: List<PlayerInfo>): Players = Players(playersInfo.map { Player(it) })
         private const val MINIMUM_PLAYER_COUNT = 1
         private const val MAXIMUM_PLAYER_COUNT = 8
     }

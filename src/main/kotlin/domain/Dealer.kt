@@ -8,7 +8,7 @@ class Dealer : Participant(Name(DEALER_NAME)) {
     }
 
     companion object {
-        const val DEALER_NAME = "딜러"
+        private const val DEALER_NAME = "딜러"
         const val DEALER_ADD_CARD_CONDITION = 16
     }
 }

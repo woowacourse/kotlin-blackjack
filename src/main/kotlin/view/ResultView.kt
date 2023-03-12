@@ -5,7 +5,6 @@ import domain.Participant
 import domain.Participants
 import domain.Player
 import domain.Players
-import domain.card.BlackJackCardDeck
 import domain.card.Card
 import domain.card.CardCategory
 import domain.card.CardNumber
@@ -40,7 +39,7 @@ class ResultView {
 
     fun printGameResult(result: BetProfitResult) {
         println(PRINT_GAME_RESULT)
-        println(PRINT_BET_GAME_RESULT.format(Dealer.DEALER_NAME, result.dealerResult))
+        println(PRINT_BET_GAME_RESULT.format(result.dealerResult.name.value, result.dealerResult.profitMoney))
         result.playersResult.list.forEach {
             println(PRINT_BET_GAME_RESULT.format(it.name.value, it.profitMoney))
         }
@@ -89,7 +88,8 @@ class ResultView {
     }
 
     companion object {
-        private const val PRINT_GAME_INIT_MESSAGE = "\n딜러와 %s에게 ${BlackJackCardDeck.DRAW_INIT_CARD_COUNT}장의 나누었습니다."
+        private const val DRAW_INIT_CARD_COUNT = 2
+        private const val PRINT_GAME_INIT_MESSAGE = "\n딜러와 %s에게 ${DRAW_INIT_CARD_COUNT}장의 나누었습니다."
         private const val SEPARATOR = ", "
         private const val PRINT_NAME_AND_CARDS = "%s카드: %s"
         private const val PRINT_DEALER_ADD_CARD = "\n%s는 ${Dealer.DEALER_ADD_CARD_CONDITION}이하라 한장의 카드를 더 받았습니다."
