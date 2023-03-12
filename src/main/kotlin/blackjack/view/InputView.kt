@@ -19,12 +19,12 @@ object InputView {
         return names
     }
 
-    private fun inputBetAmount(name: String): Money = runCatching {
+    private fun inputBetAmount(name: String): BetMoney = runCatching {
         println("${name}의 배팅 금액은?")
         val amount = readln().trim().toIntOrNull()
         requireNotNull(amount) { "배팅 금액은 숫자를 입력해주셔야 합니다." }
         printInterval()
-        return@runCatching BetMoney(amount)
+        return@runCatching BetMoney(Money(amount))
     }.getOrElse {
         println(it.message)
         inputBetAmount(name)

@@ -1,6 +1,7 @@
 package blackjack.domain.participant
 
 import blackjack.domain.card.Card
+import blackjack.domain.money.BetMoney
 import blackjack.domain.money.Money
 import blackjack.domain.state.CardState
 import blackjack.domain.state.StartState
@@ -8,7 +9,7 @@ import blackjack.domain.state.StartState
 class Player(
     name: String,
     cardState: CardState = StartState(),
-    private val money: Money,
+    private val money: BetMoney,
     val needToDraw: () -> Boolean = { true }
 ) : Participant(name, cardState) {
     override val maxDrawableScore: Int = 21

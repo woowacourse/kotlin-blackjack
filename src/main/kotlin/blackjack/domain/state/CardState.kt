@@ -2,6 +2,7 @@ package blackjack.domain.state
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
+import blackjack.domain.money.BetMoney
 import blackjack.domain.money.Money
 
 abstract class CardState(protected val cards: Cards) {
@@ -11,7 +12,7 @@ abstract class CardState(protected val cards: Cards) {
 
     abstract fun stay(): CardState
 
-    abstract fun profit(other: CardState, money: Money): Money
+    abstract fun profit(other: CardState, betMoney: BetMoney): Money
 
     abstract fun getFirstCard(): Card
 

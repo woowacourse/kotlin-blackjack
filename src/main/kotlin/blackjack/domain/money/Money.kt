@@ -1,11 +1,17 @@
 package blackjack.domain.money
 
-open class Money(private val amount: Int) {
+class Money(private val amount: Int = DEFAULT_AMOUNT) {
+    constructor(amount: Double) : this(amount.toInt())
+
     fun getAmount(): Int = amount
 
-    operator fun times(operand: Double): Money = Money((amount * operand).toInt())
+    operator fun times(operand: Double): Money = Money(amount * operand)
 
-    operator fun plus(money: Money): Money = Money(amount + money.amount)
+    operator fun plus(operand: Money): Money = Money(amount + operand.amount)
 
     operator fun unaryMinus(): Money = Money(-amount)
+
+    companion object {
+        private const val DEFAULT_AMOUNT = 0
+    }
 }
