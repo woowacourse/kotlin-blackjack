@@ -11,6 +11,8 @@ class Dealer(name: Name = Name(DEALER)) : Participant(name) {
 
     override fun getProfitMoney(other: Participant): Profit = -other.getProfitMoney(this)
 
+    override fun isDealer(): Boolean = true
+
     fun calculateDealerProfit(participants: Participants): Result {
         var profit = 0L
         participants.players.forEach { profit += getProfitMoney(it).value }
@@ -19,6 +21,5 @@ class Dealer(name: Name = Name(DEALER)) : Participant(name) {
 
     companion object {
         const val DEALER = "딜러"
-        private const val DEALER_LOSE_PROFIT = 0L
     }
 }

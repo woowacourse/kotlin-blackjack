@@ -20,6 +20,7 @@ class Player private constructor(name: Name, private val money: Money) : Partici
         if (playerCardsSum == otherCardsSum) return Profit.of(money, EarningRate.DRAW)
         return Profit.of(money, EarningRate.LOSE)
     }
+    override fun isDealer(): Boolean = false
 
     companion object {
         fun of(name: String, money: Long): Player = Player(Name(name), Money(money))
