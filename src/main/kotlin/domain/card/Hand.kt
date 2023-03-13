@@ -8,8 +8,7 @@ class Hand(cards: List<Card>) {
     val value: List<Card>
         get() = _value.toList()
 
-    val hasAce
-        get() = _value.map { it.number }.contains(CardNumber.ACE)
+    fun hasAce() = _value.map { it.number }.contains(CardNumber.ACE)
 
     fun add(card: Card) {
         _value.add(card)

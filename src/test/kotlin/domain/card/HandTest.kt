@@ -26,6 +26,6 @@ class HandTest {
     fun `ACE 를 1개 넣으면 ACE 개수는 1개이다`() {
         hand.add(Card(CardShape.HEART, CardNumber.ACE))
 
-        assertThat(hand.hasAce).isTrue
+        assertThat(hand.hasAce()).isTrue
     }
 }
