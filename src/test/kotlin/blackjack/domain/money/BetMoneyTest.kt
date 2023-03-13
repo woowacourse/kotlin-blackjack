@@ -55,7 +55,7 @@ class BetMoneyTest {
     }
 
     @Test
-    fun `배팅 금액을 곱했을 때 값이 음수일 수 없다`() {
+    fun `배팅 금액은 음수일 수 없다`() {
         assertThrows<IllegalArgumentException> {
             BetMoney(1000) * -2.0
         }
