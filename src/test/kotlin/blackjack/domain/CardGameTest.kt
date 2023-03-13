@@ -30,7 +30,7 @@ class CardGameTest {
         val needToDraw = true
         val player = Player.of(Cards(setOf()), "jason", 1_000L) { needToDraw }
         val cardGame = CardGame(cardDeck, Participants(Dealer(Cards(setOf())), Players(player)))
-        cardGame.drawCard {}
+        cardGame.start {}
         assertThat(player.isBust()).isTrue
     }
 
@@ -38,7 +38,7 @@ class CardGameTest {
     fun `딜러의 카드 합이 16 이하일 때 딜러는 16 초과가 될 때까지 카드를 뽑는다`() {
         val dealer = Dealer(Cards(setOf()))
         val cardGame = CardGame(cardDeck, Participants(dealer, Players(Player("tr"))))
-        cardGame.drawCard {}
+        cardGame.start {}
         assertThat(dealer.isHit()).isFalse
     }
 
@@ -57,7 +57,7 @@ class CardGameTest {
         val player2 = Player("pobi", 1_000L)
         val cardGame = CardGame(deck, Participants(dealer, Players(player1, player2)))
         cardGame.readyToStart()
-        val result = cardGame.getGameResult()
+        val result = cardGame.start {}
         assertThat(result.dealerResult.profit.value).isEqualTo(-2_000L)
     }
 
@@ -76,7 +76,7 @@ class CardGameTest {
         val player2 = Player("pobi", 1_000L)
         val cardGame = CardGame(deck, Participants(dealer, Players(player1, player2)))
         cardGame.readyToStart()
-        val result = cardGame.getGameResult()
+        val result = cardGame.start {}
         assertThat(result.dealerResult.profit.value).isEqualTo(0L)
     }
 
@@ -92,7 +92,7 @@ class CardGameTest {
         val player1 = Player("jason", 1_000L)
         val cardGame = CardGame(deck, Participants(dealer, Players(player1)))
         cardGame.readyToStart()
-        val result = cardGame.getGameResult()
+        val result = cardGame.start {}
         assertThat(result.dealerResult.profit.value).isEqualTo(0L)
         assertThat(result.playersResult[0].profit.value).isEqualTo(0L)
     }
@@ -112,7 +112,7 @@ class CardGameTest {
         val player2 = Player("pobi", 1_000L)
         val cardGame = CardGame(deck, Participants(dealer, Players(player1, player2)))
         cardGame.readyToStart()
-        val result = cardGame.getGameResult()
+        val result = cardGame.start {}
         assertThat(result.dealerResult.profit.value).isEqualTo(2_000L)
     }
 
@@ -131,7 +131,7 @@ class CardGameTest {
         val player2 = Player("pobi", 1_000L)
         val cardGame = CardGame(deck, Participants(dealer, Players(player1, player2)))
         cardGame.readyToStart()
-        val result = cardGame.getGameResult()
+        val result = cardGame.start {}
         assertThat(result.playersResult[0].profit.value).isEqualTo(1_500L)
         assertThat(result.playersResult[1].profit.value).isEqualTo(1_500L)
     }
@@ -148,7 +148,7 @@ class CardGameTest {
         val player1 = Player("jason", 1_000L)
         val cardGame = CardGame(deck, Participants(dealer, Players(player1)))
         cardGame.readyToStart()
-        val result = cardGame.getGameResult()
+        val result = cardGame.start {}
         assertThat(result.playersResult[0].profit.value).isEqualTo(1_000L)
     }
 
@@ -164,7 +164,7 @@ class CardGameTest {
         val player1 = Player("jason", 1_000L)
         val cardGame = CardGame(deck, Participants(dealer, Players(player1)))
         cardGame.readyToStart()
-        val result = cardGame.getGameResult()
+        val result = cardGame.start {}
         assertThat(result.playersResult[0].profit.value).isEqualTo(-1_000L)
     }
 

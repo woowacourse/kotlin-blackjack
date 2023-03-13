@@ -10,11 +10,13 @@ class CardGame(private val cardDeck: CardDeck, private val participants: Partici
         participants.drawFirstCard(cardDeck)
     }
 
-    fun drawCard(status: (Participant) -> Unit) {
+    fun start(status: (Participant) -> Unit): ParticipantsProfitResult {
         participants.players.forEach {
             drawToStart(it, status)
         }
         drawToStart(participants.dealer, status)
+
+        return participants.getParticipantsProfitResult()
     }
 
     private fun drawToStart(participant: Participant, status: (Participant) -> Unit) {
@@ -23,9 +25,5 @@ class CardGame(private val cardDeck: CardDeck, private val participants: Partici
             status(participant)
             drawToStart(participant, status)
         }
-    }
-
-    fun getGameResult(): ParticipantsProfitResult {
-        return participants.getParticipantsProfitResult()
     }
 }
