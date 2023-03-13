@@ -4,7 +4,7 @@ import blackjack.domain.player.Dealer
 import blackjack.domain.player.Participant
 import blackjack.domain.player.Participants
 import blackjack.domain.player.Player
-import blackjack.domain.result.GameResult
+import blackjack.domain.result.PlayerProfit
 
 class OutputView {
 
@@ -41,13 +41,14 @@ class OutputView {
     }
 
     fun printPlayersProfit(
-        gameResult: GameResult
+        dealerProfit: PlayerProfit,
+        participantsProfit: List<PlayerProfit>
     ) {
         println()
         println(FINAL_RESULT_MENT)
-        println(FINAL_DEALER_RESULT_MENT.format(gameResult.dealerProfit))
-        gameResult.participantsProfit.forEach {
-            println(FINAL_PARTICIPANT_RESULT_MENT.format(it.participant.name, it.profit))
+        println(FINAL_PARTICIPANT_RESULT_MENT.format(dealerProfit.player.name, dealerProfit.profit))
+        participantsProfit.forEach {
+            println(FINAL_PARTICIPANT_RESULT_MENT.format(it.player.name, it.profit))
         }
     }
 
@@ -69,7 +70,6 @@ class OutputView {
         private const val DEALER_HIT_CARD_MENT = "딜러는 16 이하라 한장의 카드를 더 받았습니다."
         private const val SUM_RESULT_MENT = " - 결과: %d"
         private const val FINAL_RESULT_MENT = "## 최종 수익"
-        private const val FINAL_DEALER_RESULT_MENT = "딜러: %d"
         private const val FINAL_PARTICIPANT_RESULT_MENT = "%s: %d"
     }
 }

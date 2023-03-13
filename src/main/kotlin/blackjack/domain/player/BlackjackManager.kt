@@ -5,7 +5,6 @@ import blackjack.domain.card.Cards.Companion.CARD_SETTING_COUNT
 import blackjack.domain.card.CardsGenerator
 import blackjack.domain.card.RandomCardsGenerator
 import blackjack.domain.result.GameResult
-import blackjack.domain.result.ParticipantProfit
 
 class BlackjackManager(
     cardsGenerator: CardsGenerator = RandomCardsGenerator(),
@@ -39,17 +38,10 @@ class BlackjackManager(
         requestMoreCard: (String) -> Boolean,
         onProvideParticipantCard: (Participant) -> Unit,
         onProvideDealerCard: () -> Unit
-    ) {
+    ): GameResult {
         playParticipantsTurns(requestMoreCard, onProvideParticipantCard)
         playDealerTurn(onProvideDealerCard)
-    }
-
-    fun calculatePlayersResult(
-        onCalculatePlayersScore: (Dealer, Participants) -> Unit,
-        onCalculatePlayersProfit: (GameResult) -> Unit
-    ) {
-        onCalculatePlayersScore(dealer, participants)
-        onCalculatePlayersProfit(GameResult(calculateParticipantsProfit()))
+        return GameResult(dealer, participants)
     }
 
     private fun playParticipantsTurns(
@@ -88,12 +80,6 @@ class BlackjackManager(
         cardDeck.apply {
             val card = provide() ?: throw IllegalArgumentException(NO_CARD_MESSAGE)
             player.addCard(card)
-        }
-    }
-
-    private fun calculateParticipantsProfit(): List<ParticipantProfit> {
-        return participants.values.map {
-            ParticipantProfit(it, it.calculateEarningRate(dealer))
         }
     }
 

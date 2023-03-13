@@ -16,11 +16,12 @@ class BlackjackController(
         val blackjackManager =
             BlackjackManager(cardsGenerator, inputView.readParticipantsName(), inputView::readParticipantBetAmount)
         blackjackManager.setupCards(outputView::printSetupCards)
-        blackjackManager.playGame(
+        val gameResult = blackjackManager.playGame(
             inputView::readMoreCard,
             outputView::printParticipantCards,
             outputView::printDealerHitCardMent
         )
-        blackjackManager.calculatePlayersResult(outputView::printScoreResult, outputView::printPlayersProfit)
+        outputView.printScoreResult(gameResult.dealer, gameResult.participants)
+        outputView.printPlayersProfit(gameResult.dealerProfit, gameResult.getParticipantsProfit())
     }
 }
