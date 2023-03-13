@@ -15,9 +15,9 @@ class Controller(private val inputView: InputView, private val outputView: Outpu
         val cardGame = CardGame(CardDeck.createCardDeck().shuffled(), participants)
         cardGame.readyToStart()
         outputView.printNoticeDistributeCards(participants)
-        participants.players.forEach { cardGame.drawCard(it, outputView::printPlayerStatus, inputView::readYesOrNo) }
-        cardGame.drawCard(participants.dealer, outputView::printDealerGetCard) { true }
-        outputView.printAllPlayerStatus(participants)
+        participants.players.forEach { cardGame.drawCard(it, outputView::printParticipantStatus, inputView::readYesOrNo) }
+        cardGame.drawCard(participants.dealer, outputView::printParticipantStatus) { true }
+        outputView.printParticipantsStatus(participants)
         outputView.printGameResult(cardGame.getGameResult())
     }
 

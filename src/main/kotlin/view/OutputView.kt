@@ -1,6 +1,7 @@
 package view
 
 import model.Cards
+import model.Dealer
 import model.Participant
 import model.Participants
 import model.ParticipantsProfitResult
@@ -12,7 +13,14 @@ class OutputView {
     fun printNoticeDistributeCards(participants: Participants) {
         println()
         println(noticeDistributeCardsNameFormat(participants))
-        participants.forEach { printPlayerStatus(it) }
+        participants.forEach {
+            println(
+                MESSAGE_PARTICIPANT_STATUS.format(
+                    it.name.value,
+                    it.getFirstOpenCards().getCardsFormat()
+                )
+            )
+        }
         println()
     }
 
@@ -22,12 +30,12 @@ class OutputView {
         )
     }
 
-    fun printDealerGetCard(participant: Participant) {
+    fun printParticipantStatus(participant: Participant) {
         println()
-        println(MESSAGE_DEALER_GET_CARD.format(participant.name.value))
-    }
-
-    fun printPlayerStatus(participant: Participant) {
+        if (participant is Dealer) {
+            println(MESSAGE_DEALER_GET_CARD.format(participant.name.value))
+            return
+        }
         println(
             MESSAGE_PARTICIPANT_STATUS.format(
                 participant.name.value,
@@ -36,7 +44,7 @@ class OutputView {
         )
     }
 
-    fun printAllPlayerStatus(participants: Participants) {
+    fun printParticipantsStatus(participants: Participants) {
         println()
         participants.forEach {
             print(MESSAGE_PARTICIPANT_STATUS.format(it.name.value, it.cards.getCardsFormat()))
