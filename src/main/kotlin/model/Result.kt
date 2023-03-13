@@ -1,5 +1,3 @@
 package model
 
-enum class Result {
-    WIN, LOSE
-}
+class Result(val participant: Participant, val profit: Profit)

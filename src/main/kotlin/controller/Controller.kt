@@ -5,20 +5,24 @@ import model.CardDeck
 import model.Cards
 import model.Dealer
 import model.Participants
+import model.Player
 import model.Players
 import view.InputView
 import view.OutputView
 
 class Controller(private val inputView: InputView, private val outputView: OutputView) {
-    private val cardDeck = CardDeck.createCardDeck().shuffled()
     fun run() {
-        val participants = Participants(listOf(Dealer(Cards(setOf()))) + Players.from(inputView.readName()))
-        val cardGame = CardGame(cardDeck, participants)
+        val participants = Participants(listOf(Dealer(Cards(setOf()))) + readPlayers())
+        val cardGame = CardGame(CardDeck.createCardDeck().shuffled(), participants)
         cardGame.readyToStart()
         outputView.printNoticeDistributeCards(participants)
-        participants.players.forEach { cardGame.drawCard(it, outputView::printPlayerStatus, inputView::readYesOrNo) }
-        cardGame.drawCard(participants.dealer, outputView::printDealerGetCard) { true }
-        outputView.printAllPlayerStatusResult(participants.participants)
-        outputView.printGameResult(participants)
+        val participantsProfitResult = cardGame.start(outputView::printParticipantStatus)
+        outputView.printParticipantsStatus(participants)
+        outputView.printGameResult(participantsProfitResult)
+    }
+
+    private fun readPlayers(): Players {
+        val names = inputView.readName()
+        return Players(names.map { Player.of(Cards(setOf()), it, inputView.readBettingMoney(it), inputView::readYesOrNo) })
     }
 }

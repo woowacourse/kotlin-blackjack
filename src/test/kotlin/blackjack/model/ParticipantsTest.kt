@@ -1,9 +1,9 @@
 package blackjack.model
 
 import model.Card
+import model.CardDeck
 import model.Cards
 import model.Dealer
-import model.Name
 import model.Participants
 import model.Player
 import model.Players
@@ -15,20 +15,40 @@ import org.junit.jupiter.api.Test
 class ParticipantsTest {
     @Test
     fun `딜러와 플레이어의 참가자 정보를 생성할 수 있다`() {
-        val dealer = Dealer(Cards(setOf(Card(Rank.KING, Suit.HEART))))
-        val players = Players(
-            Player("jason", Card(Rank.ACE, Suit.HEART)),
-            Player("pobi", Card(Rank.DEUCE, Suit.HEART))
+        val dealer = Dealer()
+        val player1 = Player("jason")
+        val player2 = Player("pobi")
+        val actual = Participants(dealer, Players(player1, player2))
+        assertThat(actual.dealer.name.value).isEqualTo("딜러")
+        assertThat(actual.players[0].name.value).isEqualTo("jason")
+        assertThat(actual.players[1].name.value).isEqualTo("pobi")
+    }
+
+    @Test
+    fun `참가자들은 초기 카드 두 장을 받을 수 있다`() {
+        val cardDeck = CardDeck(
+            Card(Rank.SEVEN, Suit.DIAMOND),
+            Card(Rank.TEN, Suit.SPADE),
+            Card(Rank.TEN, Suit.DIAMOND),
+            Card(Rank.KING, Suit.DIAMOND),
+            Card(Rank.ACE, Suit.HEART),
+            Card(Rank.JACK, Suit.CLOVER)
         )
-        val actual = Participants(listOf(dealer) + players)
-        assertThat(actual.participants.size).isEqualTo(3)
-        assertThat(actual.participants[0].name.value).isEqualTo("딜러")
-        assertThat(actual.participants[1].name.value).isEqualTo("jason")
-        assertThat(actual.participants[2].name.value).isEqualTo("pobi")
+        val dealer = Dealer()
+        val player1 = Player("jason")
+        val player2 = Player("pobi")
+        val actual = Participants(dealer, Players(player1, player2))
+        actual.drawFirstCard(cardDeck)
+        assertThat(actual.dealer.cards.size == 2).isTrue
+        assertThat(actual.players[0].cards.size == 2).isTrue
+        assertThat(actual.players[1].cards.size == 2).isTrue
     }
 
     companion object {
-        private fun Player(name: String, vararg card: Card): Player = Player(Cards(card.toSet()), Name(name))
+        private fun Dealer(): Dealer = Dealer(Cards(setOf()))
+        private fun Player(name: String): Player = Player.of(Cards(setOf()), name, 1_000L)
+        private fun Participants(dealer: Dealer, players: Players): Participants = Participants(listOf(dealer) + players)
         private fun Players(vararg player: Player): Players = Players(player.toList())
+        private fun CardDeck(vararg card: Card): CardDeck = CardDeck(card.toList())
     }
 }

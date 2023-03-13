@@ -1,21 +1,35 @@
 package model
 
-class Player(cards: Cards, name: Name) : Participant(cards, name) {
+class Player private constructor(
+    cards: Cards,
+    name: Name,
+    private val money: Money,
+    private val needToDraw: (String) -> Boolean
+) : Participant(cards, name) {
     override fun getFirstOpenCards(): Cards = cards
 
-    override fun isPossibleDrawCard(): Boolean = !isBust()
-    override fun getGameResult(other: Participant): Result {
-        if (isBust()) return Result.LOSE
-        if (other.isBust()) return Result.WIN
-        if (cards.sum() > other.cards.sum()) return Result.WIN
-        return Result.LOSE
+    override fun isHit(): Boolean {
+        return !isBust() && needToDraw(name.value)
     }
 
-    override fun isHit(needToDraw: (String) -> Boolean): Boolean {
-        return isPossibleDrawCard() && needToDraw(name.value)
+    override fun getProfitMoney(other: Participant): Profit {
+        val playerCardsSum = cards.sum()
+        val otherCardsSum = other.cards.sum()
+        if (isBlackJack() && other.isBlackJack()) return Profit.of(money, EarningRate.DRAW)
+        if (isBlackJack()) return Profit.of(money, EarningRate.BLACKJACK)
+        if (isBust()) return Profit.of(money, EarningRate.LOSE)
+        if (other.isBust()) return Profit.of(money, EarningRate.WIN)
+        if (playerCardsSum > otherCardsSum) return Profit.of(money, EarningRate.WIN)
+        if (playerCardsSum == otherCardsSum) return Profit.of(money, EarningRate.DRAW)
+        return Profit.of(money, EarningRate.LOSE)
+    }
+    override fun isDealer(): Boolean = false
+
+    override fun getResult(participants: Participants): Result {
+        return Result(this, getProfitMoney(participants.dealer))
     }
 
     companion object {
-        fun from(name: String): Player = Player(Cards(setOf()), Name(name))
+        fun of(cards: Cards, name: String, money: Long, needToDraw: (String) -> Boolean = { false }): Player = Player(cards, Name(name), Money(money), needToDraw)
     }
 }

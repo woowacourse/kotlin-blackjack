@@ -3,22 +3,22 @@ package model
 import model.Cards.Companion.DEALER_STANDARD_HIT_POINT
 
 class Dealer(cards: Cards, name: Name = Name(DEALER)) : Participant(cards, name) {
-    override fun getFirstOpenCards(): Cards = cards.firstCard()
+    override fun getFirstOpenCards(): Cards = Cards(setOf(cards.firstCard()))
 
-    override fun isPossibleDrawCard(): Boolean = cards.sum() <= DEALER_STANDARD_HIT_POINT
+    override fun isHit(): Boolean = cards.sum() <= DEALER_STANDARD_HIT_POINT
 
-    override fun getGameResult(other: Participant): Result = other.getGameResult(this)
+    override fun getProfitMoney(other: Participant): Profit = -other.getProfitMoney(this)
 
-    override fun isHit(needToDraw: (String) -> Boolean): Boolean = isPossibleDrawCard()
+    override fun isDealer(): Boolean = true
 
-    fun getFinalResult(participants: Participants): Map<Result, Int> {
-        return mapOf(
-            Result.WIN to participants.participants.count { getGameResult(it) == Result.LOSE },
-            Result.LOSE to participants.participants.count { getGameResult(it) == Result.WIN }
-        )
+    override fun getResult(participants: Participants): Result {
+        var profit = INITIALIZE_PROFIT
+        participants.players.forEach { profit += getProfitMoney(it).value }
+        return Result(this, Profit(profit))
     }
 
     companion object {
         const val DEALER = "딜러"
+        private const val INITIALIZE_PROFIT = 0L
     }
 }
