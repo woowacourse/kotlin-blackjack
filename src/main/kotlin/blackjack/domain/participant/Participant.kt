@@ -11,7 +11,7 @@ abstract class Participant(val name: String, val cardState: CardState) {
 
     abstract fun draw(card: Card, justDraw: Boolean = false): Participant
 
-    abstract fun stay(): Participant
+    protected abstract fun stay(): Participant
 
     abstract fun getProfit(others: List<Participant>): Money
 
