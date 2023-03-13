@@ -18,8 +18,6 @@ class CardGame(private val cardDeck: CardDeck, private val participants: Partici
     }
 
     fun getGameResult(): ParticipantsProfitResult {
-        val dealerProfit = participants.dealer.calculateDealerProfit(participants)
-        val playersProfit = participants.players.getGameProfitMoney(participants.dealer)
-        return ParticipantsProfitResult(listOf(dealerProfit) + playersProfit)
+        return participants.getParticipantsProfitResult()
     }
 }

@@ -170,6 +170,7 @@ class CardGameTest {
         private val cardDeck = CardDeck.createCardDeck()
         private fun Player(name: String): Player = Player.of(name, 1_000L)
         private fun Players(vararg player: Player): Players = Players(player.toList())
+        private fun Participants(dealer: Dealer, players: Players): Participants = Participants(listOf(dealer) + players)
         private fun CardDeck(vararg card: Card): CardDeck = CardDeck(card.toList())
     }
 }

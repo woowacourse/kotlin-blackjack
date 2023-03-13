@@ -12,14 +12,13 @@ class OutputView {
     fun printNoticeDistributeCards(participants: Participants) {
         println()
         println(noticeDistributeCardsNameFormat(participants))
-        participants.all.forEach { printPlayerStatus(it) }
+        participants.forEach { printPlayerStatus(it) }
         println()
     }
 
     private fun noticeDistributeCardsNameFormat(participants: Participants): String {
         return MESSAGE_DISTRIBUTE_CARD.format(
-            participants.all.filter { !it.isDealer() }
-                .joinToString(", ") { it.name.value }
+            participants.players.joinToString(", ") { it.name.value }
         )
     }
 

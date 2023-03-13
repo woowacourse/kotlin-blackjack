@@ -11,7 +11,7 @@ import view.OutputView
 
 class Controller(private val inputView: InputView, private val outputView: OutputView) {
     fun run() {
-        val participants = Participants(Dealer(), readPlayers())
+        val participants = Participants(listOf(Dealer()) + readPlayers())
         val cardGame = CardGame(CardDeck.createCardDeck().shuffled(), participants)
         cardGame.readyToStart()
         outputView.printNoticeDistributeCards(participants)

@@ -1,14 +1,24 @@
 package model
 
-data class Participants(val dealer: Dealer, val players: Players) {
-    val all: List<Participant>
-        get() = listOf(dealer) + players
+data class Participants(val value: List<Participant>) {
+    val dealer: Participant
+        get() = value.find { it.isDealer() }!!
+
+    val players: List<Participant>
+        get() = value.filter { !it.isDealer() }
 
     fun drawFirstCard(cardDeck: CardDeck) {
-        all.forEach { it.drawFirst(cardDeck) }
+        value.forEach { it.drawFirst(cardDeck) }
     }
 
     fun forEach(action: (Participant) -> Unit) {
-        for (participant in all) action(participant)
+        for (participant in value) action(participant)
+    }
+
+    fun getParticipantsProfitResult(): ParticipantsProfitResult {
+        return ParticipantsProfitResult(
+            listOf((dealer as Dealer).calculateDealerProfit(Participants(players))) +
+                Players(players.map { it as Player }).getGameProfitMoney(dealer)
+        )
     }
 }

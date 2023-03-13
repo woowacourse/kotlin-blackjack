@@ -18,7 +18,7 @@ class ParticipantsTest {
         val player1 = Player("jason")
         val player2 = Player("pobi")
         val actual = Participants(dealer, Players(player1, player2))
-        assertThat(actual.all.size).isEqualTo(3)
+        assertThat(actual.value.size).isEqualTo(3)
         assertThat(actual.dealer.name.value).isEqualTo("딜러")
         assertThat(actual.players[0].name.value).isEqualTo("jason")
         assertThat(actual.players[1].name.value).isEqualTo("pobi")
@@ -46,6 +46,7 @@ class ParticipantsTest {
 
     companion object {
         private fun Player(name: String): Player = Player.of(name, 1_000L)
+        private fun Participants(dealer: Dealer, players: Players): Participants = Participants(listOf(dealer) + players)
         private fun Players(vararg player: Player): Players = Players(player.toList())
         private fun CardDeck(vararg card: Card): CardDeck = CardDeck(card.toList())
     }
