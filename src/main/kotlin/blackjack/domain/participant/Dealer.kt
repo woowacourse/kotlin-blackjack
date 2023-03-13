@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.participant
 
 class Dealer(name: String = "딜러") : Participant(name) {
     fun shouldHit(): Boolean = cards.size == INIT_CARD_SIZE && score <= HIT_STANDARD_SCORE

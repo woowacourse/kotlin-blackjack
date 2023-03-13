@@ -1,9 +1,16 @@
-package blackjack.domain
+package blackjack.domain.participant
 
-class Player(name: String) : Participant(name) {
+import blackjack.domain.betting.BettingMoney
+import blackjack.domain.result.ResultType
+
+class Player(
+    name: String,
+    val bettingMoney: BettingMoney
+) : Participant(name) {
     fun canHit(): Boolean = this.score < TARGET_SCORE
 
     fun against(dealer: Dealer): ResultType {
+        if (this.isBlackJack() && !dealer.isBlackJack()) return ResultType.WIN
         if (this.isBust()) return ResultType.LOSE
         if (dealer.isBust()) return ResultType.WIN
 

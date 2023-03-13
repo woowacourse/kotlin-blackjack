@@ -1,5 +1,6 @@
-package blackjack.domain
+package blackjack.domain.card
 
+import blackjack.domain.participant.Participant
 
 class CardScore private constructor(val score: Int) {
 

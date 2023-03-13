@@ -1,4 +1,7 @@
-package blackjack.domain
+package blackjack.domain.participant
+
+import blackjack.domain.card.Card
+import blackjack.domain.card.CardScore
 
 abstract class Participant(val name: String) {
 
@@ -14,6 +17,8 @@ abstract class Participant(val name: String) {
     }
 
     fun isBust(): Boolean = score > TARGET_SCORE
+
+    fun isBlackJack(): Boolean = score == TARGET_SCORE && _cards.size == INIT_CARD_SIZE
 
     companion object {
         const val INIT_CARD_SIZE = 2

@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.result
 
 enum class ResultType {
     WIN,

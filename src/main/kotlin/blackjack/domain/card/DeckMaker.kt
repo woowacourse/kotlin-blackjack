@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.card
 
 object DeckMaker {
     private val cards: MutableList<Card> = CardNumber.values()
