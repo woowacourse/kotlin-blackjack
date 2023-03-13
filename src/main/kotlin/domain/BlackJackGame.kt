@@ -63,7 +63,7 @@ class BlackJackGame(private val deck: Deck, private val participants: Participan
     }
 
     companion object {
-        const val INITIAL_CARDS_COUNT = 2
-        const val GAME_CARD_COUNT = 1
+        private const val INITIAL_CARDS_COUNT = 2
+        private const val GAME_CARD_COUNT = 1
     }
 }
