@@ -1,7 +1,6 @@
 package blackjack.view
 
 import blackjack.domain.money.BetMoney
-import blackjack.domain.money.Money
 import blackjack.domain.participant.Player
 
 object InputView {
@@ -24,7 +23,7 @@ object InputView {
         val amount = readln().trim().toIntOrNull()
         requireNotNull(amount) { "배팅 금액은 숫자를 입력해주셔야 합니다." }
         printInterval()
-        return@runCatching BetMoney(Money(amount))
+        return@runCatching BetMoney(amount)
     }.getOrElse {
         println(it.message)
         inputBetAmount(name)

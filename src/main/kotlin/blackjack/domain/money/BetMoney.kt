@@ -1,6 +1,8 @@
 package blackjack.domain.money
 
 class BetMoney(private val money: Money = Money()) {
+    constructor(amount: Int) : this(Money(amount))
+
     init {
         val amount = money.getAmount()
         require(amount > MINIMUM_AMOUNT) { "금액은 양수여야 합니다. (금액 : $amount)" }
