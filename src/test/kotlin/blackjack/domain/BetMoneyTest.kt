@@ -32,6 +32,6 @@ class BetMoneyTest {
     @Test
     fun `블랙잭이라면 보너스로 상금을 더 받는다`() {
         val betMoney = BetMoney(1000)
-        assertThat(betMoney.addBlackjackPrizeMoney()).isEqualTo(1500)
+        assertThat(betMoney.getBlackjackPrizeMoney()).isEqualTo(1500)
     }
 }

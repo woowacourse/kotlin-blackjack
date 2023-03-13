@@ -11,5 +11,5 @@ data class BetMoney(private val _money: Double) {
 
     constructor(money: Int) : this(money.toDouble())
 
-    fun addBlackjackPrizeMoney() = (_money * 1.5).toInt()
+    fun getBlackjackPrizeMoney() = (_money * 1.5).toInt()
 }
