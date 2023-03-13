@@ -11,8 +11,8 @@ class EarningRate {
     }
 
     @Test
-    fun `WIN_OR_BLACKJACK_DRAW는 1배 값을 갖는다`() {
-        assertThat(EarningRate.WIN_OR_BLACKJACK_DRAW.multiple).isEqualTo(1f)
+    fun `WIN은 1배 값을 갖는다`() {
+        assertThat(EarningRate.WIN.multiple).isEqualTo(1f)
     }
 
     @Test
