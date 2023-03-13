@@ -8,6 +8,7 @@ import domain.participants.Dealer
 import domain.participants.Money
 import domain.participants.Names
 import domain.participants.Player
+import domain.result.ParticipantsResult
 
 class BlackjackGame(
     names: Names,
@@ -40,11 +41,13 @@ class BlackjackGame(
         wantPickCard: (Player) -> Boolean,
         onPickCard: (Player) -> Unit,
         onDealerPickCard: () -> Unit
-    ) {
+    ): Pair<ParticipantsResult, Int> {
         playsPlayerTurn(wantPickCard, onPickCard)
 
         while (pickDealerCardIfPossible())
             onDealerPickCard()
+        val result = BlackjackResult(dealer, players).getResult()
+        return Pair(result, result.playerResult.sumOf { it.profit * REVERSE })
     }
 
     private fun playsPlayerTurn(
@@ -82,5 +85,6 @@ class BlackjackGame(
 
     companion object {
         private const val START_NUMBER_OF_CARDS = 2
+        private const val REVERSE = -1
     }
 }

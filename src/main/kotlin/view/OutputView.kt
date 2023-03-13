@@ -15,7 +15,6 @@ object OutputView {
     private const val RESULT = " - 결과: "
     private const val FINAL_RESULT = "\n## 최종 수익"
     private const val PICK_CARD_OVER_SIXTEEN = "\n딜러는 16이하라 한장의 카드를 더 받았습니다."
-    private const val REVERSE = -1.0
 
     fun printBlackjackSetting(players: List<Player>, dealer: Dealer) {
         printDivideCard(players)
@@ -52,12 +51,11 @@ object OutputView {
         println(PICK_CARD_OVER_SIXTEEN)
     }
 
-    fun printResult(result: ParticipantsResult) {
+    fun printResult(result: ParticipantsResult, dealerProfit: Int) {
         printDealerCardResult(result.dealer)
         result.playerResult.forEach { printPlayerCardResult(it.player) }
 
         println(FINAL_RESULT)
-        val dealerProfit = result.playerResult.sumOf { it.profit * REVERSE }.toInt()
         println("$DEALER$dealerProfit")
         result.playerResult.forEach {
             println("${it.player.name}: ${it.profit}")
