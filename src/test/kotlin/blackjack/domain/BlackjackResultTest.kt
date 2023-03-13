@@ -74,8 +74,8 @@ class BlackjackResultTest {
             listOf(
                 Player("pobi").apply {
                     betting(Money(10000))
-                    receive(Card(CardNumber.NINE, CardShape.CLOVER))
-                    receive(Card(CardNumber.NINE, CardShape.HEART))
+                    receive(Card(CardNumber.TEN, CardShape.CLOVER))
+                    receive(Card(CardNumber.TEN, CardShape.HEART))
                     stay()
                 },
                 Player("thomas").apply {
@@ -87,7 +87,7 @@ class BlackjackResultTest {
             ),
         )
 
-        val actual = BlackjackResult.of(dealer, players).getRevenueOf(players.toList()[1])
+        val actual = BlackjackResult.of(dealer, players).getRevenueOf(players.toList()[0])
         val expect = players.toList()[1].getProfit().toInt()
 
         assertThat(actual).isEqualTo(expect)
