@@ -8,7 +8,7 @@ import org.junit.jupiter.api.assertDoesNotThrow
 
 class BlackjackGameTest {
     @Test
-    fun `게임을 오류 없이 실행한다`() {
+    fun `BlackjackGame을 생성 후 게임을 실행한다`() {
         val participant = BlackjackParticipant.of(
             Dealer(),
             listOf("hatti"),
