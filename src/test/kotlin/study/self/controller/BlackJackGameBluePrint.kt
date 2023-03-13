@@ -1,3 +1,4 @@
+package study.self.controller/*
 package controller
 
 import domain.person.Dealer
@@ -11,3 +12,4 @@ interface BlackJackGameBluePrint {
     fun handOutCardsToPlayers(players: List<Player>, askDrawCard: (String) -> Boolean, printCards: (Player) -> Unit)
     fun drawResult(persons: Persons, bets: List<Double>): Casino
 }
+*/

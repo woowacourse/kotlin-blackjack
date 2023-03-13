@@ -1,3 +1,4 @@
+/*
 package domain
 
 import controller.BlackJackGameBluePrint
@@ -53,3 +54,4 @@ class BlackJackGame : BlackJackGameBluePrint {
 
     override fun drawResult(persons: Persons, bets: List<Double>) = Casino(persons, bets)
 }
+*/
