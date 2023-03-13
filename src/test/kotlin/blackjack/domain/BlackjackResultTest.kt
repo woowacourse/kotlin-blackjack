@@ -94,6 +94,34 @@ class BlackjackResultTest {
     }
 
     @Test
+    fun `플레이어와 딜러가 무승부라면 플레이어의 수익은 0이다`() {
+        val dealer = Dealer().apply {
+            receive(Card(CardNumber.NINE, CardShape.CLOVER))
+            receive(Card(CardNumber.TEN, CardShape.CLOVER))
+        }
+        val players = Players(
+            listOf(
+                Player("pobi").apply {
+                    betting(Money(10000))
+                    receive(Card(CardNumber.NINE, CardShape.CLOVER))
+                    receive(Card(CardNumber.TEN, CardShape.HEART))
+                    stay()
+                },
+                Player("thomas").apply {
+                    betting(Money(10000))
+                    receive(Card(CardNumber.KING, CardShape.CLOVER))
+                    receive(Card(CardNumber.KING, CardShape.HEART))
+                    stay()
+                },
+            ),
+        )
+
+        val actual = BlackjackResult.of(dealer, players).getRevenueOf(players.toList()[0])
+
+        assertThat(actual).isZero
+    }
+
+    @Test
     fun `플레이어가 딜러에게 패배했다면 플레이어의 수익은 베팅 금액의 음수이다`() {
         val dealer = Dealer().apply {
             receive(Card(CardNumber.NINE, CardShape.CLOVER))
