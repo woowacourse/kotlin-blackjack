@@ -18,6 +18,6 @@ class PlayerBlackJackTest {
         val otherHand = Hand(Card(CardShape.HEART, CardNumber.ACE))
         val other = PlayerFirstTurn(otherHand).draw(Card(CardShape.DIAMOND, CardNumber.TEN))
 
-        Assertions.assertThat(actual.profit(other, Money(10000))).isEqualTo(Profit(15000.0))
+        Assertions.assertThat(actual.profit(other, Money(10000))).isEqualTo(Profit(5000.0))
     }
 }

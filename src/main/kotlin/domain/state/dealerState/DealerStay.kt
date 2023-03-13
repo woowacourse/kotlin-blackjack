@@ -9,6 +9,6 @@ class DealerStay(hand: Hand) : Stay(hand) {
     override fun getLoseProfit(money: Money) = Profit(money, LOSE_PROFIT_RATE)
 
     companion object {
-        private const val LOSE_PROFIT_RATE = -1.0
+        private const val LOSE_PROFIT_RATE = -0.5
     }
 }

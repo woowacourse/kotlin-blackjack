@@ -20,6 +20,6 @@ class DealerStayTest {
         val other = PlayerFirstTurn(otherHand)
             .draw(Card(CardShape.DIAMOND, CardNumber.ACE))
 
-        Assertions.assertThat(actual.profit(other, Money(10000))).isEqualTo(Profit(-10000.0))
+        Assertions.assertThat(actual.profit(other, Money(10000))).isEqualTo(Profit(-5000.0))
     }
 }

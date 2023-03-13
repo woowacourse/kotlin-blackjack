@@ -19,6 +19,6 @@ class DealerBlackJack(hand: Hand) : BlackJack(hand) {
     }
 
     companion object {
-        private const val LOSE_PROFIT_RATE = -1.5
+        private const val LOSE_PROFIT_RATE = -0.5
     }
 }
