@@ -30,7 +30,7 @@ class CardGameTest {
         val needToDraw = true
         val player = Player.of(Cards(setOf()), "jason", 1_000L) { needToDraw }
         val cardGame = CardGame(cardDeck, Participants(Dealer(Cards(setOf())), Players(player)))
-        cardGame.drawCard(player, {})
+        cardGame.drawCard {}
         assertThat(player.isBust()).isTrue
     }
 
@@ -38,7 +38,7 @@ class CardGameTest {
     fun `딜러의 카드 합이 16 이하일 때 딜러는 16 초과가 될 때까지 카드를 뽑는다`() {
         val dealer = Dealer(Cards(setOf()))
         val cardGame = CardGame(cardDeck, Participants(dealer, Players(Player("tr"))))
-        cardGame.drawCard(dealer, {})
+        cardGame.drawCard {}
         assertThat(dealer.isHit()).isFalse
     }
 

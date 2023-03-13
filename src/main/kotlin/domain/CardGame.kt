@@ -10,10 +10,18 @@ class CardGame(private val cardDeck: CardDeck, private val participants: Partici
         participants.drawFirstCard(cardDeck)
     }
 
-    fun drawCard(participant: Participant, status: (Participant) -> Unit) {
-        while (participant.isHit()) {
+    fun drawCard(status: (Participant) -> Unit) {
+        participants.players.forEach {
+            drawToStart(it, status)
+        }
+        drawToStart(participants.dealer, status)
+    }
+
+    private fun drawToStart(participant: Participant, status: (Participant) -> Unit) {
+        if (participant.isHit()) {
             participant.drawCard(cardDeck)
             status(participant)
+            drawToStart(participant, status)
         }
     }
 
