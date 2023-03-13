@@ -15,14 +15,14 @@ class Cards(private var cards: List<Card>) {
     }
 
     fun calculateCardSum(): Int {
-        return cards
-            .sumOf { it.cardValue.value } +
-            if (isAceValueToEleven()) CardValue.ACE_VALUE_GAP else 0
+        val cardSum = cards
+            .sumOf { it.cardValue.value }
+        return cardSum +
+            if (isAceValueToEleven(cardSum)) CardValue.ACE_VALUE_GAP else 0
     }
 
-    private fun isAceValueToEleven(): Boolean {
-        return isAceContained() && cards
-            .sumOf { it.cardValue.value } <= CardValue.ACE_ELEVEN_VALUE
+    private fun isAceValueToEleven(cardSum: Int): Boolean {
+        return isAceContained() && cardSum <= CardValue.ACE_ELEVEN_VALUE
     }
 
     private fun isAceContained() = cards.any { it.cardValue.title == CardValue.ACE.title }
@@ -33,7 +33,6 @@ class Cards(private var cards: List<Card>) {
         calculateCardSum() == CARD_SUM_MAX_VALUE && cards.size == START_DECK_CARD_COUNT
 
     companion object {
-        private const val ACE_COUNT_VALUE_CHANGE_CONDITION = 2
         const val CARD_SUM_MAX_VALUE = 21
     }
 }
