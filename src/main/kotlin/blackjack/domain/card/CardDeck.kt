@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.card
 
 class CardDeck(deck: List<Card> = Card.all().shuffled()) {
     constructor(vararg cards: Card) : this(cards.toList())

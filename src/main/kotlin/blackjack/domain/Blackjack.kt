@@ -1,21 +1,27 @@
 package blackjack.domain
 
-class Blackjack(private val deck: CardDeck, private val participants: Participants) {
-    constructor(deck: CardDeck, players: List<Player>) : this(deck, Participants(listOf(Dealer()) + players))
+import blackjack.domain.card.CardDeck
+import blackjack.domain.listener.BlackjackEventListener
+import blackjack.domain.participant.Dealer
+import blackjack.domain.participant.Participant
+import blackjack.domain.participant.Participants
+import blackjack.domain.result.GameResult
 
-    fun readyToStart() {
-        participants.drawFirst(deck)
+class Blackjack(
+    private val deck: CardDeck,
+    private val players: List<Participant>,
+    private val eventListener: BlackjackEventListener,
+) {
+    fun start() {
+        val participants = Participants(players + Dealer())
+        eventListener.onStartDrawn(participants)
+
+        val result = startGame(participants)
+        eventListener.onEndGame(result)
     }
 
-    fun start(onDrawn: (Participant) -> Unit): BlackjackResult {
-        participants.takePlayerTurns(deck, onDrawn)
-        participants.takeDealerTurns(deck, onDrawn)
-
-        return BlackjackResult(
-            participants.getCardResults(),
-            participants.getMatchResults(),
-        )
-    }
-
-    fun getFirstOpenCards(): Map<String, List<Card>> = participants.getFirstOpenCards()
+    private fun startGame(participants: Participants): List<GameResult> = participants
+        .drawFirst(deck, eventListener::onFirstDrawn)
+        .takeTurns(deck, eventListener::onDrawnMore)
+        .getGameResult()
 }
