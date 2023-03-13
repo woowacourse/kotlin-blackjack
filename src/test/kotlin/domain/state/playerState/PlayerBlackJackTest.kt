@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test
 
 class PlayerBlackJackTest {
     @Test
-    fun `BlackJack 상태일 때 배당률은 일점오배 이다`() {
+    fun `BlackJack 상태일 때 배당률은 영점오배 이다`() {
         val hand = Hand(Card(CardShape.HEART, CardNumber.ACE))
         val actual = PlayerFirstTurn(hand).draw(Card(CardShape.DIAMOND, CardNumber.TEN))
 

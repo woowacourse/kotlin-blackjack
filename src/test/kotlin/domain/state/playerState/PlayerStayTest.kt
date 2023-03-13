@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test
 
 class PlayerStayTest {
     @Test
-    fun `플레이어가 Stay 에서 상대가 블랙잭인 경우 수익의 1배 잃는다`() {
+    fun `플레이어가 Stay 에서 상대가 블랙잭인 경우 배팅 금액의 1배 잃는다`() {
         val hand = Hand(Card(CardShape.HEART, CardNumber.KING))
         val actual = PlayerFirstTurn(hand).draw(Card(CardShape.DIAMOND, CardNumber.TEN)).stay()
 
