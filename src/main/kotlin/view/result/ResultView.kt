@@ -9,8 +9,8 @@ import view.result.ResultOutput.printPlayerProfit
 
 object ResultView {
 
-    fun printResult(persons: Persons, casino: Casino) {
-        printPersonsCards(persons)
+    fun printResult(casino: Casino) {
+        printPersonsCards(casino.persons)
         printFinalResult(casino)
     }
 

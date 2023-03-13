@@ -3,7 +3,7 @@ package domain.result
 import domain.person.Persons
 import domain.person.Player
 
-class Casino(private val persons: Persons, bets: List<Double>) {
+class Casino(val persons: Persons, bets: List<Double>) {
     private val playerBets: Map<Player, Double> = persons.players.zip(bets).toMap()
 
     private fun getPlayerProfit(player: Player): Double {

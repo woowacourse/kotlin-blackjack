@@ -5,7 +5,7 @@ import view.ViewCommon.toText
 
 object ResultOutput {
     private const val INITIAL_CARDS_SCRIPT = "%s 카드: %s - 결과: %s"
-    private const val FINAL_OUTCOME_SCRIPT = "## 최종 승패"
+    private const val FINAL_OUTCOME_SCRIPT = "## 최종 수익"
     private const val DEALER_SCRIPT = "딜러: "
 
     fun printPersonCards(person: Person) {
