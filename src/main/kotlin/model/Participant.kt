@@ -4,7 +4,7 @@ abstract class Participant(val name: Name) {
     val cards = Cards(setOf())
     abstract fun getFirstOpenCards(): Cards
     abstract fun isPossibleDrawCard(): Boolean
-    abstract fun isHit(needToDraw: (String) -> Boolean): Boolean
+    abstract fun isHit(): Boolean
     abstract fun getProfitMoney(other: Participant): Profit
     abstract fun isDealer(): Boolean
     fun isBust(): Boolean = cards.isBust()

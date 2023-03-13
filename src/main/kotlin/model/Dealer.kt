@@ -7,7 +7,7 @@ class Dealer(name: Name = Name(DEALER)) : Participant(name) {
 
     override fun isPossibleDrawCard(): Boolean = cards.sum() <= DEALER_STANDARD_HIT_POINT
 
-    override fun isHit(needToDraw: (String) -> Boolean): Boolean = isPossibleDrawCard()
+    override fun isHit(): Boolean = isPossibleDrawCard()
 
     override fun getProfitMoney(other: Participant): Profit = -other.getProfitMoney(this)
 

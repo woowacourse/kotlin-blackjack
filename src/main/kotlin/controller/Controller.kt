@@ -15,14 +15,14 @@ class Controller(private val inputView: InputView, private val outputView: Outpu
         val cardGame = CardGame(CardDeck.createCardDeck().shuffled(), participants)
         cardGame.readyToStart()
         outputView.printNoticeDistributeCards(participants)
-        participants.players.forEach { cardGame.drawCard(it, outputView::printParticipantStatus, inputView::readYesOrNo) }
-        cardGame.drawCard(participants.dealer, outputView::printParticipantStatus) { true }
+        participants.players.forEach { cardGame.drawCard(it, outputView::printParticipantStatus) }
+        cardGame.drawCard(participants.dealer, outputView::printParticipantStatus)
         outputView.printParticipantsStatus(participants)
         outputView.printGameResult(cardGame.getGameResult())
     }
 
     private fun readPlayers(): Players {
         val names = inputView.readName()
-        return Players(names.map { Player.of(it, inputView.readBettingMoney(it)) })
+        return Players(names.map { Player.of(it, inputView.readBettingMoney(it), inputView::readYesOrNo) })
     }
 }
