@@ -31,7 +31,7 @@ class StayTest {
     }
 
     @Test
-    fun `스테이 상태이고 베팅을 했을 때 수익을 달라고 하면 베팅 금액과 스테이 상태의 수익률을 곱한 값을 반환한다`() {
+    fun `스테이 상태이고 베팅을 했을 때 수익을 달라고 하면 베팅 금액과 1을 곱한 값을 반환한다`() {
         val state = Stay(Hand(listOf()), Money(10000))
 
         val actual = state.getProfit()
