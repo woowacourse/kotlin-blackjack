@@ -1,11 +1,13 @@
 package blackjack.view
 
+import blackjack.domain.BetAmount
 import blackjack.domain.Card
 import blackjack.domain.Dealer
 import blackjack.domain.DrawResult
 import blackjack.domain.GameResult
 import blackjack.domain.Player
 import blackjack.domain.PlayerGameResult
+import blackjack.domain.PlayerName
 import blackjack.domain.Shape
 
 object OutputView {
@@ -17,9 +19,12 @@ object OutputView {
     private const val DEALER_RECEIVED_CARD_MSG = "딜러는 16이하라 한장의 카드를 더 받았습니다."
     private const val DEALER_RECEIVED_NOTHING_MSG = "딜러는 17이상이라 한장의 카드를 더 받지 않았습니다."
     private const val FINAL_SCORE = " - 결과: %d"
-    private const val GAME_RESULTS = "###최종 승패"
+    private const val GAME_RESULTS = "### 최종 승패"
     private const val DEALER_GAME_RESULTS = "딜러: %d승 %d패 %d무"
     private const val PLAYER_GAME_RESULT = "%s: %s"
+    private const val BET_RESULTS = "### 최종 수익"
+    private const val DEALER_DIVIDEND_RESULT = "딜러: %d"
+    private const val PLAYER_DIVIDEND_RESULT = "%s: %d"
 
     private const val HEART_DESCRIPTION = "하트"
     private const val DIAMOND_DESCRIPTION = "다이아몬드"
@@ -29,11 +34,11 @@ object OutputView {
     private const val LOSE_DESCRIPTION = "패"
     private const val DRAW_DESCRIPTION = "무"
 
-    fun printCardDividingMessage(dealer: Dealer, players: List<Player>) {
+    fun printCardDividingMessage(participants: Pair<Dealer, List<Player>>) {
         println()
-        println(CARD_DIVIDING_MSG.format(players.joinToString(SEPARATOR) { player -> player.name.value }))
-        println(SHOW_DEALER_CARD.format(makeToString(dealer.cardHand.cards.first())))
-        players.forEach { player -> printCardResults(player) }
+        println(CARD_DIVIDING_MSG.format(participants.second.joinToString(SEPARATOR) { player -> player.name.value }))
+        println(SHOW_DEALER_CARD.format(makeToString(participants.first.cardHand.cards.first())))
+        participants.second.forEach { player -> printCardResults(player) }
         println()
     }
 
@@ -71,14 +76,14 @@ object OutputView {
         }
     }
 
-    fun printFinalCards(dealer: Dealer, players: List<Player>) {
+    fun printFinalCards(participants: Pair<Dealer, List<Player>>) {
         println()
         println(
-            SHOW_DEALER_CARD.format(dealer.cardHand.cards.joinToString(SEPARATOR) { card -> makeToString(card) }) + FINAL_SCORE.format(
-                dealer.cardHand.getTotalCardsScore()
+            SHOW_DEALER_CARD.format(participants.first.cardHand.cards.joinToString(SEPARATOR) { card -> makeToString(card) }) + FINAL_SCORE.format(
+                participants.first.cardHand.getTotalCardsScore()
             )
         )
-        players.forEach { player ->
+        participants.second.forEach { player ->
             println(
                 SHOW_PLAYER_CARDS.format(
                     player.name.value,
@@ -103,7 +108,7 @@ object OutputView {
         playerGameResults.forEach { playerGameResult ->
             println(
                 PLAYER_GAME_RESULT.format(
-                    playerGameResult.playerName,
+                    playerGameResult.player.name.value,
                     makeGameResultDescription(playerGameResult.gameResult)
                 )
             )
@@ -113,6 +118,7 @@ object OutputView {
     private fun makeGameResultDescription(gameResult: GameResult): String {
         return when (gameResult) {
             GameResult.WIN -> WIN_DESCRIPTION
+            GameResult.BLACKJACK -> WIN_DESCRIPTION
             GameResult.LOSE -> LOSE_DESCRIPTION
             GameResult.DRAW -> DRAW_DESCRIPTION
         }
@@ -120,5 +126,14 @@ object OutputView {
 
     fun printErrorMessage(exception: Throwable) {
         println(exception.message)
+    }
+
+    fun printBetResults(dividend: Pair<BetAmount, Map<PlayerName, BetAmount>>) {
+        println()
+        println(BET_RESULTS)
+        println(DEALER_DIVIDEND_RESULT.format(dividend.first.money))
+        dividend.second.forEach { player ->
+            println(PLAYER_DIVIDEND_RESULT.format(player.key.value, player.value.money))
+        }
     }
 }

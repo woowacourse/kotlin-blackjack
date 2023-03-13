@@ -1,6 +1,5 @@
-package domain
+package blackjack.domain
 
-import blackjack.domain.PlayerName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows

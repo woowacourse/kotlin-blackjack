@@ -1,19 +1,11 @@
-package domain
+package blackjack.domain
 
-import blackjack.domain.Card
-import blackjack.domain.CardHand
-import blackjack.domain.CardNumber
-import blackjack.domain.Shape
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 
 class CardHandTest {
-    private fun cards(firstCardNumber: CardNumber, secondCardNumber: CardNumber): CardHand {
-        return CardHand(listOf(Card(firstCardNumber, Shape.SPADE), Card(secondCardNumber, Shape.SPADE)))
-    }
-
     @Test
     fun `게임을 시작할때 카드가 두장이 아니면 예외를 발생시킨다`() {
         assertThrows<IllegalArgumentException> {
@@ -47,5 +39,14 @@ class CardHandTest {
         assertThat(
             cards(CardNumber.A, CardNumber.A).getTotalCardsScore()
         ).isEqualTo(12)
+    }
+
+    @Test
+    fun `처음 받은 2장의 합이 21이면 blackjack 이다`() {
+        assertThat(cards(CardNumber.A, CardNumber.K).isBlackJack()).isTrue
+    }
+
+    private fun cards(firstCardNumber: CardNumber, secondCardNumber: CardNumber): CardHand {
+        return CardHand(listOf(Card(firstCardNumber, Shape.SPADE), Card(secondCardNumber, Shape.SPADE)))
     }
 }

@@ -1,26 +1,16 @@
-package domain
+package blackjack.domain
 
-import blackjack.domain.Card
-import blackjack.domain.CardHand
-import blackjack.domain.CardNumber
-import blackjack.domain.CardPack
-import blackjack.domain.Dealer
-import blackjack.domain.DrawResult
-import blackjack.domain.Shape
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class DealerTest {
-    private fun createDealer(firstCardNumber: CardNumber, secondCardNumber: CardNumber): Dealer {
-        return Dealer(CardPack(), CardHand(listOf(Card(firstCardNumber, Shape.SPADE), Card(secondCardNumber, Shape.SPADE))))
-    }
 
     @Test
     fun `딜러는 들고있는 카드의 총합이 16이하라면 카드를 추가로 받는다`() {
         val dealer = createDealer(CardNumber.TEN, CardNumber.FIVE)
 
         assertThat(
-            dealer.drawCard()
+            dealer.drawCard(CardPack())
         ).isEqualTo(DrawResult.Success)
     }
 
@@ -29,7 +19,13 @@ class DealerTest {
         val dealer = createDealer(CardNumber.TEN, CardNumber.SEVEN)
 
         assertThat(
-            dealer.drawCard()
+            dealer.drawCard(CardPack())
         ).isEqualTo(DrawResult.Failure)
+    }
+
+    private val card = Card(CardNumber.ONE, Shape.SPADE)
+
+    private fun createDealer(firstCardNumber: CardNumber, secondCardNumber: CardNumber): Dealer {
+        return Dealer(CardHand(listOf(Card(firstCardNumber, Shape.SPADE), Card(secondCardNumber, Shape.SPADE))))
     }
 }
