@@ -16,8 +16,8 @@ class DeckTest {
 
     @Test
     fun `게임 덱에서 보유한 카드를 한 장 준다`() {
-        val deck = Deck(listOf(Card(Shape.SPADE, ACE)))
-        assertThat(deck.giveCard()).isEqualTo(Card(Shape.SPADE, ACE))
+        val deck = Deck(listOf(Card.from(Shape.SPADE, ACE)))
+        assertThat(deck.giveCard()).isEqualTo(Card.from(Shape.SPADE, ACE))
     }
 
     @Test
@@ -32,13 +32,13 @@ class DeckTest {
         val deck = Deck((SpadeCardsOf(FIVE, SIX, SEVEN).getCards()))
         assertAll(
             {
-                assertThat(deck.giveCard()).isEqualTo(Card(Shape.SPADE, FIVE))
+                assertThat(deck.giveCard()).isEqualTo(Card.from(Shape.SPADE, FIVE))
             },
             {
-                assertThat(deck.giveCard()).isEqualTo(Card(Shape.SPADE, SIX))
+                assertThat(deck.giveCard()).isEqualTo(Card.from(Shape.SPADE, SIX))
             },
             {
-                assertThat(deck.giveCard()).isEqualTo(Card(Shape.SPADE, SEVEN))
+                assertThat(deck.giveCard()).isEqualTo(Card.from(Shape.SPADE, SEVEN))
             }
         )
     }

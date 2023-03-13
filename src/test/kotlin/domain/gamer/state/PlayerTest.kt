@@ -24,8 +24,8 @@ class PlayerTest {
     @Test
     fun `뽑은 카드를 저장한다`() {
         val playerState = Player("jack", Cards(listOf()))
-        playerState.pickCard(Card(Shape.CLOVER, JACK))
-        assertThat(playerState.cards.getCards()).isEqualTo(listOf(Card(Shape.CLOVER, JACK)))
+        playerState.pickCard(Card.from(Shape.CLOVER, JACK))
+        assertThat(playerState.cards.getCards()).isEqualTo(listOf(Card.from(Shape.CLOVER, JACK)))
     }
 
     @Test

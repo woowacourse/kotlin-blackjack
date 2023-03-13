@@ -15,7 +15,7 @@ class BlackjackGameTest {
     fun `플레이어 3명이 승,패,패 일 때 딜러는 2승 1패이다`() {
         val actual =
             BlackjackGame(
-                Deck(listOf(Card(Shape.SPADE, CardValue.ACE)))
+                Deck(listOf(Card.from(Shape.SPADE, CardValue.ACE)))
             ).judgeDealerResult(
                 mapOf(
                     Player("jack", Cards(listOf())) to Result.WIN,
@@ -28,8 +28,8 @@ class BlackjackGameTest {
 
     @Test
     fun `test`() {
-        val card1 = Card(Shape.SPADE, CardValue.ACE)
-        val card2 = Card(Shape.SPADE, CardValue.ACE)
+        val card1 = Card.from(Shape.SPADE, CardValue.ACE)
+        val card2 = Card.from(Shape.SPADE, CardValue.ACE)
         println(card1.hashCode())
         print(card2.hashCode())
         assertThat(card1).isEqualTo(card2)
