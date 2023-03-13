@@ -12,13 +12,11 @@ class Player(
     private val money: BetMoney,
     val needToDraw: () -> Boolean = { true }
 ) : Participant(name, cardState) {
-    override val maxDrawableScore: Int = 21
-
     override fun getFirstOpenCards(): List<Card> = getCards()
 
     override fun stay(): Participant = Player(name, cardState.stay(), money, needToDraw)
 
-    override fun canDraw(): Boolean = needToDraw() && cardState.getTotalScore() <= maxDrawableScore
+    override fun canDraw(): Boolean = needToDraw() && cardState.getTotalScore() <= MAX_DRAWABLE_SCORE
 
     override fun draw(card: Card, justDraw: Boolean): Participant {
         if (justDraw || canDraw()) {
@@ -30,5 +28,9 @@ class Player(
     override fun getProfit(others: List<Participant>): Money {
         val dealer = others.first { it !is Player }
         return cardState.profit(dealer.cardState, money)
+    }
+
+    companion object {
+        private const val MAX_DRAWABLE_SCORE: Int = 21
     }
 }
