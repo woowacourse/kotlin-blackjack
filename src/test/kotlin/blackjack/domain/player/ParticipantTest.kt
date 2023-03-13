@@ -47,7 +47,7 @@ class ParticipantTest {
         )
 
         // when
-        val actual: Double = participant1.calculateEarningRate(dealer).earningRate.rate
+        val actual: Double = participant1.calculateEarningRate(dealer).rate
 
         // then
         assertThat(actual).isEqualTo(-1.0)
@@ -77,7 +77,7 @@ class ParticipantTest {
         )
 
         // when
-        val actual: Double = participant1.calculateEarningRate(dealer).earningRate.rate
+        val actual: Double = participant1.calculateEarningRate(dealer).rate
 
         // then
         assertThat(actual).isEqualTo(1.0)
@@ -106,7 +106,7 @@ class ParticipantTest {
         )
 
         // when
-        val actual: Double = participant1.calculateEarningRate(dealer).earningRate.rate
+        val actual: Double = participant1.calculateEarningRate(dealer).rate
 
         // then
         assertThat(actual).isEqualTo(1.5)
@@ -135,7 +135,7 @@ class ParticipantTest {
         )
 
         // when
-        val actual: Double = participant1.calculateEarningRate(dealer).earningRate.rate
+        val actual: Double = participant1.calculateEarningRate(dealer).rate
 
         // then
         assertThat(actual).isEqualTo(0.0)
