@@ -12,8 +12,8 @@ class BlackjackManager(
 ) {
 
     private val cardDeck = CardDeck(cardsGenerator)
-    val dealer = Dealer()
-    val participants: Participants
+    private val dealer = Dealer()
+    private val participants: Participants
 
     init {
         participants = Participants(
@@ -23,13 +23,14 @@ class BlackjackManager(
         )
     }
 
-    fun setupCards() {
+    fun setupCards(onSetUpCards: (Dealer, Participants) -> Unit) {
         repeat(CARD_SETTING_COUNT) { provideCard(dealer) }
         participants.values.forEach { participant ->
             repeat(CARD_SETTING_COUNT) {
                 provideCard(participant)
             }
         }
+        onSetUpCards(dealer, participants)
     }
 
     fun playGame(
