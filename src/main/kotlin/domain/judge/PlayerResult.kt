@@ -15,7 +15,7 @@ data class PlayerResultInfo(val result: Result, val money: Money) {
 
     private fun calculateBlackJackMoney(): Int = (money.value * 1.5).toInt()
 
-    private fun calculateLossMoney() = money.value * -1
+    private fun calculateLossMoney(): Int = money.value * -1
 
-    private fun calculateDrawMoney() = 0
+    private fun calculateDrawMoney(): Int = 0
 }

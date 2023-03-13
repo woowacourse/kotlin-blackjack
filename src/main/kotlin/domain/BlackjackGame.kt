@@ -40,12 +40,13 @@ class BlackjackGame(
         return dealer.isAvailableForPick()
     }
 
-    fun getPlayersWinningResult() = _players.getPlayersWinningResult(dealer)
+    fun getPlayersWinningResult(): Map<String, Result> = _players.getPlayersWinningResult(dealer)
 
     fun judgeDealerResult(playersResult: Map<String, Result>): List<Result> =
         playersResult.map { it.value.reverseResult() }
 
-    fun getPlayerRewards(playersResult: Map<String, PlayerResultInfo>) = _players.getPlayersReward(playersResult)
+    fun getPlayerRewards(playersResult: Map<String, PlayerResultInfo>): Map<String, Int> =
+        _players.getPlayersReward(playersResult)
 
     fun calculateDealerRewards(playerResults: List<Int>): Int = playerResults.sum() * -1
 }
