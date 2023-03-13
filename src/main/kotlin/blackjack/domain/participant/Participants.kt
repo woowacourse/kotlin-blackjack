@@ -56,6 +56,24 @@ class Participants(private val participants: List<Participant>) {
         return listOf(getDealerMatchResult(playerMatchResult)) + playerMatchResult
     }
 
+    private fun getPlayerMatchResults(): List<MatchResult> = getPlayers().map { player ->
+        MatchResult(
+            player,
+            when (player judge getDealer()) {
+                GameResult.WIN -> participantsBetMoney[player]?.money
+                    ?: throw IllegalArgumentException("등록되지 않은 플레이어입니다.")
+
+                GameResult.LOSE -> participantsBetMoney[player]?.money?.reverseSign()
+                    ?: throw IllegalArgumentException("등록되지 않은 플레이어입니다.")
+
+                GameResult.DRAW -> 0
+
+                GameResult.BLACKJACK_WIN -> participantsBetMoney[player]?.getBlackjackPrizeMoney()
+                    ?: throw IllegalArgumentException("등록되지 않은 플레이어입니다.")
+            }
+        )
+    }
+
     private fun getDealerMatchResult(playerMatchResult: List<MatchResult>): MatchResult {
         val total = playerMatchResult.sumOf { it.total }
 
