@@ -91,7 +91,7 @@ class FinalProfitTest {
     }
 
     @Test
-    fun `딜러가 패배하면 딜러는 모든 유저의 배팅금액만큼 잃는다`() {
+    fun `딜러가 패배하면 딜러는 모든 유저의 베팅금액만큼 잃는다`() {
         val finalProfit = FinalProfit(
             mapOf(
                 Guest(Name("로피")) to 10000,
@@ -104,7 +104,7 @@ class FinalProfitTest {
     }
 
     @Test
-    fun `딜러가 승리하면 딜러는 모든 유저의 베텡금액만큼 얻는다`() {
+    fun `딜러가 승리하면 딜러는 모든 유저의 베팅금액만큼 얻는다`() {
         val finalProfit = FinalProfit(
             mapOf(
                 Guest(Name("로피")) to -10000,
