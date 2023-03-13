@@ -45,7 +45,32 @@ class HitStateTest {
     fun `Hit 상태이면 수익을 계산할 수 없다`() {
         val cardState = HitState(SPADE_KING, SPADE_JACK)
         assertThrows<IllegalStateException> {
-            cardState.profit(BetMoney(1000))
+            cardState.profit(other = StayState(SPADE_ACE, SPADE_TWO), BetMoney(1000))
+        }
+    }
+
+    @Test
+    fun `스테이를 반환한다`() {
+        val cardState = HitState(SPADE_KING, SPADE_JACK)
+        val expected = cardState.stay()
+
+        assertThat(expected).isInstanceOf(StayState::class.java)
+    }
+
+    @Test
+    fun `첫 번째 카드를 반환한다`() {
+        val cardState = HitState(SPADE_KING, SPADE_JACK)
+        val expected = cardState.getFirstCard()
+
+        assertThat(expected).isEqualTo(SPADE_KING)
+    }
+
+    @Test
+    fun `게임이 종료되지 않은 상태에서 수익 계산을 하려고 하면 예외가 발생한다`() {
+        val cardState = HitState(SPADE_KING, SPADE_JACK)
+
+        assertThrows<IllegalStateException> {
+            cardState.profit(StayState(), betMoney = BetMoney(1000))
         }
     }
 }

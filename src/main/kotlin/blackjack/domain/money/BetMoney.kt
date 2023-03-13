@@ -1,6 +1,6 @@
 package blackjack.domain.money
 
-class BetMoney(private val money: Money) {
+data class BetMoney(private val money: Money) {
     constructor(amount: Int) : this(Money(amount))
 
     init {

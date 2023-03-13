@@ -1,6 +1,6 @@
 package blackjack.domain.money
 
-class Money(private val amount: Int = DEFAULT_AMOUNT) {
+data class Money(private val amount: Int = DEFAULT_AMOUNT) {
     constructor(amount: Double) : this(amount.toInt())
 
     fun getAmount(): Int = amount

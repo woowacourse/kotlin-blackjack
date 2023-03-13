@@ -8,10 +8,10 @@ class Participants(private val participants: List<Participant>) {
     private val players = getPlayers()
 
     init {
-        requireNotNull(dealer) { "참여자에 딜러가 포함되어 있지 않습니다." }
         require(participants.size in MINIMUM_PARTICIPANTS..MAXIMUM_PARTICIPANTS) {
             "블랙잭은 딜러를 포함하여 최소 ${MINIMUM_PARTICIPANTS}명에서 최대 ${MAXIMUM_PARTICIPANTS}명의 플레이어가 참여 가능합니다. (현재 플레이어수 : ${participants.size}명)"
         }
+        requireNotNull(dealer) { "참여자에 딜러가 포함되어 있지 않습니다." }
     }
 
     fun drawFirst(
