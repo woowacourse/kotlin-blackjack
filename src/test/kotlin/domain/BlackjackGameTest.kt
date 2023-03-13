@@ -22,7 +22,13 @@ class BlackjackGameTest {
             Card(Shape.SPADE, CardValue.TWO)
         )
     )
-    private val blackjackGame = BlackjackGame(Names(listOf("pingu")), listOf(Money(100)), deck)
+
+    val names = Names(listOf("pingu"))
+    private fun insertBetAmount(): List<Money> {
+        return listOf(Money(1000))
+    }
+
+    private val blackjackGame = BlackjackGame(Names(listOf("pingu")), { insertBetAmount() }, deck)
 
     @Test
     fun `입력값이 false라면 카드를 뽑지않는다`() {
