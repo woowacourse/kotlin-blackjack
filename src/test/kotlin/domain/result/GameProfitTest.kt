@@ -46,12 +46,12 @@ class GameProfitTest {
 
         // then
         assertThat(gameProfit.getPersonsProfit(participants.players, participants.dealer).toList()).contains(
-            player1 to Profit(Money(10000), -1.0),
-            player2 to Profit(Money(20000), -1.0),
+            player1 to Profit.of(Money(10000), -1.0),
+            player2 to Profit.of(Money(20000), -1.0),
         )
 
         assertThat(
             gameProfit.getPersonProfitTotal(participants.dealer, participants.players),
-        ).isEqualTo(Profit(Money(30000), 1.0))
+        ).isEqualTo(Profit.of(Money(30000), 1.0))
     }
 }

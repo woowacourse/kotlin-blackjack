@@ -11,9 +11,9 @@ import domain.state.Stay
 class DealerBlackJack(hand: Hand) : BlackJack(hand) {
     override fun profit(other: State, money: Money): Profit {
         return when (other) {
-            is BlackJack -> Profit(money, LOSE_PROFIT_RATE)
-            is Bust -> Profit(money)
-            is Stay -> Profit(money)
+            is BlackJack -> Profit.of(money, LOSE_PROFIT_RATE)
+            is Bust -> Profit.of(money)
+            is Stay -> Profit.of(money)
             else -> throw IllegalStateException()
         }
     }

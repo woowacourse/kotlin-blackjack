@@ -10,10 +10,10 @@ abstract class Stay(hand: Hand) : Finished(hand) {
         val myScore = this.getScore()
         return when {
             other is BlackJack -> getLoseProfit(money)
-            other is Bust -> Profit(money)
-            otherScore.isBiggerThan(myScore) -> Profit(money, LOSE_PROFIT_RATE)
-            otherScore.isSame(myScore) -> Profit(money, DRAW_PROFIT_RATE)
-            else -> Profit(money)
+            other is Bust -> Profit.of(money)
+            otherScore.isBiggerThan(myScore) -> Profit.of(money, LOSE_PROFIT_RATE)
+            otherScore.isSame(myScore) -> Profit.of(money, DRAW_PROFIT_RATE)
+            else -> Profit.of(money)
         }
     }
 

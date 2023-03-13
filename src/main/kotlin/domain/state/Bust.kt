@@ -6,8 +6,8 @@ import domain.money.Profit
 
 class Bust(hand: Hand) : Finished(hand) {
     override fun profit(other: State, money: Money): Profit {
-        if (other is Bust) return Profit(money, DRAW_PROFIT_RATE)
-        return Profit(money, LOSE_PROFIT_RATE)
+        if (other is Bust) return Profit.of(money, DRAW_PROFIT_RATE)
+        return Profit.of(money, LOSE_PROFIT_RATE)
     }
 
     companion object {
