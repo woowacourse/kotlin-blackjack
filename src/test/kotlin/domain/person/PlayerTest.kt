@@ -107,4 +107,20 @@ class PlayerTest {
 
         assertThat(player.state.profit(other, Money(10000))).isEqualTo(Profit(10000.0))
     }
+
+    @Test
+    fun `플레이어가 BlackJack 로 이기면 수익이 영점오배이다`() {
+        val player = Player("베르")
+        player.receiveCard(
+            listOf(
+                Card(CardShape.HEART, CardNumber.ACE),
+                Card(CardShape.DIAMOND, CardNumber.QUEEN),
+            ),
+        )
+
+        val otherHand = Hand(Card(CardShape.HEART, CardNumber.SEVEN))
+        val other = DealerFirstTurn(otherHand).draw(Card(CardShape.DIAMOND, CardNumber.TEN))
+
+        assertThat(player.state.profit(other, Money(10000))).isEqualTo(Profit(5000.0))
+    }
 }
