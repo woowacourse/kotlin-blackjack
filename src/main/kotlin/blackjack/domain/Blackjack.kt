@@ -6,8 +6,12 @@ import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Participant
 import blackjack.domain.participant.Participants
 
-class Blackjack(private val deck: CardDeck, private val players: List<Participant>) {
-    fun start(blackjackEventListener: BlackjackEventListener) {
+class Blackjack(
+    private val deck: CardDeck,
+    private val players: List<Participant>,
+    private val blackjackEventListener: BlackjackEventListener,
+) {
+    fun start() {
         val participants = Participants(players + Dealer())
 
         with(blackjackEventListener) {

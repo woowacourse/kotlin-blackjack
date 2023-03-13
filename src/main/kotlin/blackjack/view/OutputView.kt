@@ -3,6 +3,7 @@ package blackjack.view
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
 import blackjack.domain.card.Suit
+import blackjack.domain.listener.BlackjackEventListener
 import blackjack.domain.money.Money
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Participant
@@ -10,16 +11,32 @@ import blackjack.domain.participant.Participants
 import blackjack.domain.participant.Player
 import blackjack.domain.result.GameResult
 
-object OutputView {
+object OutputView : BlackjackEventListener {
     private const val SEPARATOR = ", "
 
-    fun printFirstDrawnMessage(participants: Participants) {
+    override fun onStartDrawn(participants: Participants) {
+        printFirstDrawnMessage(participants)
+    }
+
+    override fun onFirstDrawn(participant: Participant) {
+        printFirstOpenCards(participant)
+    }
+
+    override fun onDrawnMore(participant: Participant) {
+        printAllCards(participant)
+    }
+
+    override fun onEndGame(gameResults: List<GameResult>) {
+        printBlackjackResult(gameResults)
+    }
+
+    private fun printFirstDrawnMessage(participants: Participants) {
         val dealer = participants.getDealer()
         val players = participants.getPlayers()
         println("${dealer?.name}와 ${players.joinToString(SEPARATOR) { it.name }}에게 2장의 카드를 나누었습니다.")
     }
 
-    fun printFirstOpenCards(participant: Participant) {
+    private fun printFirstOpenCards(participant: Participant) {
         printCards(participant.name, participant.getFirstOpenCards())
     }
 
@@ -27,7 +44,7 @@ object OutputView {
         println("$name 카드: ${cards.joinToString(SEPARATOR) { it.toText() }}")
     }
 
-    fun printAllCards(participant: Participant) {
+    private fun printAllCards(participant: Participant) {
         when (participant) {
             is Dealer -> println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
             is Player -> println(
@@ -38,7 +55,7 @@ object OutputView {
         }
     }
 
-    fun printBlackjackResult(gameResults: List<GameResult>) {
+    private fun printBlackjackResult(gameResults: List<GameResult>) {
         printCardResults(gameResults)
         printFinalResult(gameResults)
     }
