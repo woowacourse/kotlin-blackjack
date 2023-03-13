@@ -14,15 +14,17 @@ class Dealer(cardState: CardState = StartState()) : Participant(DEALER_NAME, car
 
     override fun draw(card: Card, justDraw: Boolean): Participant {
         if (justDraw || canDraw()) {
+            println(1)
             return Dealer(cardState = cardState.draw(card))
         }
+        println(2)
         return stay()
     }
 
     /**
      플레이어 손익의 반대이다.
      */
-    override fun getProfit(others: List<Participant>): Money = Money(
+    override fun getProfit(others: List<Participant>): Money = -Money(
         others
             .filterNot { it is Dealer }
             .sumOf { player -> player.getProfit(listOf(this)).getAmount() }
