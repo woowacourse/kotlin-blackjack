@@ -15,7 +15,9 @@ class BlackJackController(
         val blackJack = setUpBlackJack()
         val bettingMoney = blackJack.betMoney(inputView::inputBettingMoney)
         outputView.outputInitState(blackJack)
+
         startBlackJack(blackJack)
+
         outputView.outputResult(blackJack)
         outputView.outputProfits(blackJack, bettingMoney)
     }
