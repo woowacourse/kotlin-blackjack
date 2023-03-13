@@ -9,7 +9,7 @@ class Dealer(name: Name = Name(DEALER)) : Participant(name) {
 
     override fun isHit(needToDraw: (String) -> Boolean): Boolean = isPossibleDrawCard()
 
-    override fun getProfitMoney(other: Participant): Profit = if (other.getProfitMoney(this).value < 0) -other.getProfitMoney(this) else Profit(DEALER_LOSE_PROFIT)
+    override fun getProfitMoney(other: Participant): Profit = -other.getProfitMoney(this)
 
     fun calculateDealerProfit(participants: Participants): Result {
         var profit = 0L

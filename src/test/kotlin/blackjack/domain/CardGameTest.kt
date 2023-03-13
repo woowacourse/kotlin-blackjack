@@ -41,13 +41,13 @@ class CardGameTest {
     }
 
     @Test
-    fun `딜러가 진 경우 딜러의 수익은 0이다`() {
+    fun `딜러가 진 경우 딜러의 수익은 플레이어 수익의 -1배이다`() {
         val deck = CardDeck(
             Card(Rank.SEVEN, Suit.DIAMOND),
             Card(Rank.TEN, Suit.SPADE),
             Card(Rank.TEN, Suit.DIAMOND),
             Card(Rank.KING, Suit.DIAMOND),
-            Card(Rank.ACE, Suit.HEART),
+            Card(Rank.QUEEN, Suit.HEART),
             Card(Rank.JACK, Suit.CLOVER)
         )
         val dealer = Dealer()
@@ -56,7 +56,7 @@ class CardGameTest {
         val cardGame = CardGame(deck, Participants(dealer, Players(player1, player2)))
         cardGame.readyToStart()
         val result = cardGame.getGameResult()
-        assertThat(result.dealerResult.profit.value).isEqualTo(0L)
+        assertThat(result.dealerResult.profit.value).isEqualTo(-2_000L)
     }
 
     @Test
