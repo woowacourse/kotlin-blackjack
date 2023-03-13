@@ -1,41 +1,53 @@
 package view
 
-import domain.Card
-import domain.Dealer
-import domain.GameResult
-import domain.Participants
-import domain.Player
-import domain.Players
-import domain.RandomCardPicker
+import domain.card.Card
+import domain.card.RandomCardPicker
+import domain.participant.Dealer
+import domain.participant.Participants
+import domain.participant.Player
+import domain.participant.Players
 
 class ResultView {
     fun printGameInit(players: Players) {
         println(PRINT_GAME_INIT_MESSAGE.format(formatStringName(players)))
     }
 
-    private fun formatStringName(players: Players): String {
-        return players.list.joinToString(SEPARATOR) { it.name.value }
-    }
-
     fun printInitCards(participants: Participants) {
-        participants.participants.forEach { participant ->
+        participants.list.forEach { participant ->
             println(PRINT_NAME_AND_CARDS.format(participant.name.value, formatStringCards(participant.showInitCards())))
         }
         println()
     }
 
     fun printPlayerCard(player: Player) {
-        println(PRINT_NAME_AND_CARDS.format(player.name.value, formatStringCards(player.cards.list)))
+        println(PRINT_NAME_AND_CARDS.format(player.name.value, formatStringCards(player.state.cards().list)))
     }
 
     fun printDealerAddCard(dealer: Dealer) {
         println(PRINT_DEALER_ADD_CARD.format(dealer.name.value))
     }
 
-    fun printGameResult(gameResult: GameResult) {
-        println(PRINT_GAME_RESULT)
-        formatStringDealerResult(gameResult)
-        formatStringPlayersResult(gameResult)
+    fun printScore(participants: Participants) {
+        println()
+        participants.list.forEach { participant ->
+            println(
+                PRINT_NAME_AND_CARDS_AND_SCORE.format(
+                    participant.name.value,
+                    formatStringCards(participant.state.cards().list),
+                    participant.state.cards().getScore().getValue(),
+                ),
+            )
+        }
+    }
+
+    fun printParticipantsProfit(dealerProfit: Pair<Dealer, Double>, playersProfit: Map<Player, Double>) {
+        println(PRINT_PROFIT_INIT)
+        formatStringDealerProfit(dealerProfit)
+        formatStringPlayersProfit(playersProfit)
+    }
+
+    private fun formatStringName(players: Players): String {
+        return players.list.joinToString(SEPARATOR) { it.name.value }
     }
 
     private fun formatStringCards(cards: List<Card>): String {
@@ -48,29 +60,14 @@ class ResultView {
         return "${cardNumber.number}${cardCategory.pattern}"
     }
 
-    private fun formatStringDealerResult(gameResult: GameResult) {
-        print("딜러: ")
-        gameResult.getDealerGameResult().forEach { (gameResult, count) ->
-            print(PRINT_DEALER_GAME_RESULT.format(count, gameResult.value))
-        }
+    private fun formatStringDealerProfit(dealerProfit: Pair<Dealer, Double>) {
+        print(PRINT_PROFIT.format(dealerProfit.first.name.value, dealerProfit.second))
         println()
     }
 
-    private fun formatStringPlayersResult(gameResult: GameResult) {
-        gameResult.getPlayersGameResult().forEach { (name, gameResult) ->
-            println(PRINT_PLAYER_GAME_RESULT.format(name.value, gameResult.value))
-        }
-    }
-
-    fun printScore(participants: Participants) {
-        participants.participants.forEach { participant ->
-            println(
-                PRINT_NAME_AND_CARDS_AND_SCORE.format(
-                    participant.name.value,
-                    formatStringCards(participant.cards.list),
-                    participant.getScore().getValue(),
-                ),
-            )
+    private fun formatStringPlayersProfit(playersProfit: Map<Player, Double>) {
+        playersProfit.forEach { (player, profit) ->
+            println(PRINT_PROFIT.format(player.name.value, profit))
         }
     }
 
@@ -79,9 +76,8 @@ class ResultView {
         private const val SEPARATOR = ", "
         private const val PRINT_NAME_AND_CARDS = "%s카드: %s"
         private const val PRINT_DEALER_ADD_CARD = "\n%s는 ${Dealer.DEALER_ADD_CARD_CONDITION}이하라 한장의 카드를 더 받았습니다."
-        private const val PRINT_GAME_RESULT = "\n## 최종승패"
-        private const val PRINT_DEALER_GAME_RESULT = "%d%s "
-        private const val PRINT_PLAYER_GAME_RESULT = "%s: %s"
+        private const val PRINT_PROFIT_INIT = "\n## 최종 수익"
+        private const val PRINT_PROFIT = "%s: %f"
         private const val PRINT_NAME_AND_CARDS_AND_SCORE = "%s 카드: %s - 결과: %d"
     }
 }
