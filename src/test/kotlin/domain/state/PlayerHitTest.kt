@@ -7,44 +7,44 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
-internal class HitTest {
+internal class PlayerHitTest {
     @Test
     fun `카드를 받고 카드의 합이 21초과이면 Bust를 반환한다`() {
-        val hit = Hit(makeHandOfCards(10, 10))
-        val actual = hit.nextState(CLOVER_TWO)
+        val playerHit = PlayerHit(makeHandOfCards(10, 10))
+        val actual = playerHit.nextState(CLOVER_TWO)
 
         assertThat(actual).isInstanceOf(Bust::class.java)
     }
 
     @Test
     fun `카드를 받고 카드의 합이 21이하이면 Hit를 반환한다`() {
-        val hit = Hit(makeHandOfCards(10, 3))
-        val actual = hit.nextState(CLOVER_TWO)
+        val playerHit = PlayerHit(makeHandOfCards(10, 3))
+        val actual = playerHit.nextState(CLOVER_TWO)
 
-        assertThat(actual).isInstanceOf(Hit::class.java)
+        assertThat(actual).isInstanceOf(PlayerHit::class.java)
     }
 
     @Test
     fun `stay를 호출하면 Stay를 반환한다`() {
-        val hit = Hit(makeHandOfCards(10, 3))
-        val actual = hit.toStay()
+        val playerHit = PlayerHit(makeHandOfCards(10, 3))
+        val actual = playerHit.toStay()
 
         assertThat(actual).isInstanceOf(Stay::class.java)
     }
 
     @Test
     fun `profit함수를 호출하면 StateException이 발생한다`() {
-        val hit = Hit(makeHandOfCards(10, 3))
+        val playerHit = PlayerHit(makeHandOfCards(10, 3))
         val state = Stay(makeHandOfCards(10, 2))
 
-        assertThrows<IllegalStateException> { hit.playerProfit(state, 0.0) }.shouldHaveMessage("아직 진행중입니다")
+        assertThrows<IllegalStateException> { playerHit.playerProfit(state, 0.0) }.shouldHaveMessage("아직 진행중입니다")
     }
 
     @Test
     fun `isFinished는 항상 false이다`() {
-        val hit = Hit(makeHandOfCards(10, 3))
+        val playerHit = PlayerHit(makeHandOfCards(10, 3))
 
-        val actual = hit.isFinished
+        val actual = playerHit.isFinished
 
         assertThat(actual).isEqualTo(false)
     }
