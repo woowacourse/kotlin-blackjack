@@ -4,16 +4,10 @@ import constant.BlackJackConstants.BLACK_JACK_NUMBER
 import constant.BlackJackConstants.DEALER_STAND_CONDITION
 import domain.card.CardNumber.ACE
 
-class HandOfCards(cards: List<Card>) {
+class HandOfCards() {
     private val _cards = mutableListOf<Card>()
     val cards: List<Card> get() = _cards.toList()
-
-    init {
-        require(cards.size == 2) { "[ERROR] 2장의 카드가 들어오지 않았습니다. 들어온 카드 수: ${cards.size}" }
-        this._cards.addAll(cards)
-    }
-
-    constructor(card1: Card, card2: Card) : this(listOf(card1, card2))
+    val size: Int get() = cards.size
 
     fun addCard(card: Card) {
         _cards.add(card)

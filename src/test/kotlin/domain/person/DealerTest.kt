@@ -1,9 +1,10 @@
 package domain.person
 
+import domain.Dummy.CLOVER_TEN
+import domain.Dummy.CLOVER_TWO
 import domain.card.Card
 import domain.card.CardNumber
 import domain.card.CardShape.CLOVER
-import domain.card.CardShape.DIAMOND
 import domain.card.CardShape.HEART
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
@@ -18,7 +19,10 @@ class DealerTest {
 
     @BeforeEach
     private fun setUp() {
-        dealer = Dealer(Card(HEART, CardNumber.KING), Card(DIAMOND, CardNumber.TWO))
+        dealer = Dealer().apply {
+            toNextState(CLOVER_TEN)
+            toNextState(CLOVER_TWO)
+        }
     }
 
     @Test
@@ -33,7 +37,7 @@ class DealerTest {
 
         assertAll(
             { assertThat(actual.size).isEqualTo(2) },
-            { assertThat(actual).isEqualTo(listOf(Card(HEART, CardNumber.KING), Card(DIAMOND, CardNumber.TWO))) },
+            { assertThat(actual).isEqualTo(listOf(Card(CLOVER, CardNumber.TEN), Card(CLOVER, CardNumber.TWO))) },
         )
     }
 
@@ -68,7 +72,7 @@ class DealerTest {
 
         assertAll(
             { assertThat(actual.size).isEqualTo(1) },
-            { assertThat(actual).isEqualTo(listOf(Card(HEART, CardNumber.KING))) },
+            { assertThat(actual).isEqualTo(listOf(Card(CLOVER, CardNumber.TEN))) },
         )
     }
 }

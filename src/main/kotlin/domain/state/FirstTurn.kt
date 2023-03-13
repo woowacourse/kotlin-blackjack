@@ -3,25 +3,25 @@ package domain.state
 import domain.card.Card
 import domain.card.HandOfCards
 
-class FirstTurn(card1: Card, card2: Card) : InProgress() {
-    override val handOfCards = HandOfCards(card1, card2)
-
-    override fun nextState(draw: () -> Card): State {
-        if (handOfCards.isBlackJack()) return BlackJack(handOfCards)
-        handOfCards.addCard(draw())
-        if (handOfCards.isBust()) return Bust(handOfCards)
-        return Hit(handOfCards)
+class FirstTurn(override val handOfCards: HandOfCards) : InProgress() {
+    override fun nextState(card: Card): State {
+        handOfCards.addCard(card)
+        return when {
+            handOfCards.isBlackJack() -> BlackJack(handOfCards)
+            handOfCards.size < 2 -> FirstTurn(handOfCards)
+            else -> Hit(handOfCards)
+        }
     }
 }
 
-class DealerFirstTurn(card1: Card, card2: Card) : InProgress() {
-    override val handOfCards = HandOfCards(card1, card2)
-
-    override fun nextState(draw: () -> Card): State {
+class DealerFirstTurn(override val handOfCards: HandOfCards) : InProgress() {
+    override fun nextState(card: Card): State {
+        handOfCards.addCard(card)
         return when {
             handOfCards.isBlackJack() -> BlackJack(handOfCards)
             handOfCards.isDealerStay() -> Stay(handOfCards)
-            else -> DealerHit(handOfCards).nextState { draw() }
+            handOfCards.size < 2 -> DealerFirstTurn(handOfCards)
+            else -> DealerHit(handOfCards)
         }
     }
 }

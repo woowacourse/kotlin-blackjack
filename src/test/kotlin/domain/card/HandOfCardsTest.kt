@@ -10,10 +10,10 @@ internal class HandOfCardsTest {
     @Test
     fun `카드가 잘 추가되는지 확인한다`() {
         // given
-        val handOfCards = HandOfCards(
-            Card(CardShape.HEART, CardNumber.ACE),
-            Card(CardShape.DIAMOND, CardNumber.KING),
-        )
+        val handOfCards = HandOfCards().apply {
+            addCard(Card(CardShape.HEART, CardNumber.ACE))
+            addCard(Card(CardShape.DIAMOND, CardNumber.KING))
+        }
         val cardSize = handOfCards.cards.size
 
         // when
@@ -27,10 +27,10 @@ internal class HandOfCardsTest {
     @ParameterizedTest
     fun `Ace를 잘 판단하여 카드 합계를 계산하는지 테스트`(number1: CardNumber, number2: CardNumber, expected: Int) {
         // given
-        val handOfCards = HandOfCards(
-            Card(CardShape.HEART, number1),
-            Card(CardShape.HEART, number2),
-        )
+        val handOfCards = HandOfCards().apply {
+            addCard(Card(CardShape.HEART, number1))
+            addCard(Card(CardShape.HEART, number2))
+        }
 
         // when
         val actual = handOfCards.getTotalCardSum()
@@ -42,10 +42,10 @@ internal class HandOfCardsTest {
     @Test
     fun `첫 번째 카드만 보여준다`() {
         // given
-        val handOfCards = HandOfCards(
-            Card(CardShape.HEART, CardNumber.ACE),
-            Card(CardShape.DIAMOND, CardNumber.KING),
-        )
+        val handOfCards = HandOfCards().apply {
+            addCard(Card(CardShape.HEART, CardNumber.ACE))
+            addCard(Card(CardShape.DIAMOND, CardNumber.KING))
+        }
         val expected = Card(CardShape.HEART, CardNumber.ACE)
 
         // when

@@ -11,7 +11,7 @@ abstract class Person {
         protected set
 
     fun toNextState(card: Card) {
-        state = state.nextState { card }
+        state = state.nextState(card)
     }
 
     fun showHandOfCards(): List<Card> = state.handOfCards.cards

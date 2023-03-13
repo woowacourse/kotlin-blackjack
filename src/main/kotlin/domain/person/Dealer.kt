@@ -1,12 +1,13 @@
 package domain.person
 
 import domain.card.Card
+import domain.card.HandOfCards
 import domain.state.DealerFirstTurn
 import domain.state.State
 
-class Dealer(card1: Card, card2: Card) : Person() {
+class Dealer() : Person() {
     override val name: String = DEALER
-    override var state: State = DealerFirstTurn(card1, card2)
+    override var state: State = DealerFirstTurn(HandOfCards())
 
     fun showFirstCard(): List<Card> = state.handOfCards.showFirstCard()
 

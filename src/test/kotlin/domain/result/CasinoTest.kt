@@ -1,13 +1,11 @@
 package domain.result
 
 import domain.Dummy.CLOVER_ACE
-import domain.Dummy.CLOVER_FIVE
 import domain.Dummy.CLOVER_SIX
 import domain.Dummy.CLOVER_TEN
-import domain.Dummy.CLOVER_TWO
-import domain.person.Dealer
+import domain.Dummy.makeDealer
+import domain.Dummy.makePlayer
 import domain.person.Persons
-import domain.person.Player
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -17,11 +15,11 @@ internal class CasinoTest {
 
     @BeforeEach
     private fun setUp() {
-        val dealer = Dealer(CLOVER_ACE, CLOVER_SIX).apply { toNextState(CLOVER_TWO) }
+        val dealer = makeDealer(CLOVER_ACE, CLOVER_SIX)
         val players = listOf(
-            Player("BIX", CLOVER_SIX, CLOVER_TEN).apply { toStay() },
-            Player("VER", CLOVER_ACE, CLOVER_TEN).apply { toNextState(CLOVER_FIVE) },
-            Player("MAT", CLOVER_ACE, CLOVER_SIX).apply { toStay() },
+            makePlayer("BIX", CLOVER_SIX, CLOVER_TEN).apply { toStay() },
+            makePlayer("VER", CLOVER_ACE, CLOVER_TEN),
+            makePlayer("MAT", CLOVER_ACE, CLOVER_SIX).apply { toStay() },
         )
         val persons = Persons(dealer, players)
         val bets = listOf<Double>(8000.0, 10000.0, 9000.0)

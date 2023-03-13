@@ -11,7 +11,7 @@ import domain.result.Casino
 class BlackJackGame : BlackJackGameBluePrint {
     private val deck = Deck()
 
-    override fun makePersons(names: List<String>): Persons = Persons.getPersons(names, deck)
+    override fun makePersons(names: List<String>): Persons = Persons.getPersons(names)
 
     override fun handOutCardsToDealer(dealer: Dealer, printDealerDrew: () -> Unit, printDealerDidNotDrew: () -> Unit) {
         dealer.toNextState(deck.getCard())
