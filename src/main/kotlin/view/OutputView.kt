@@ -17,6 +17,8 @@ object OutputView {
     private const val RESULT = " - 결과: "
     private const val FINAL_RESULT = "\n## 최종 승패"
     private const val PICK_CARD_OVER_SIXTEEN = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n"
+    private const val FINAL_REVENUE = "\n## 최종 수익"
+    private const val REVENUE_FORM = "%s: %d"
 
     fun printDivideCard(names: List<String>) {
         println()
@@ -57,15 +59,11 @@ object OutputView {
 
     fun printCardResult(participants: Map<String, Participant>) {
         participants.forEach { (name, participant) ->
-            println(
-                "${name}$PARTICIPANT_CARD ${
-                    participant.cards.getCards().joinToString(SEPARATOR) { printCardForm(it) }
-                }${RESULT}${participant.cards.calculateCardSum()}"
-            )
+            println("${name}$PARTICIPANT_CARD ${participant.cards.getCards().joinToString(SEPARATOR) { printCardForm(it) }}${RESULT}${participant.cards.calculateCardSum()}")
         }
     }
 
-    fun printWinningResult(dealerResult: List<Result>, playerStates: Map<String, Result>) {
+    fun printWinningResult(dealerResult: List<Result>, playerStates: Map<Player, Result>) {
         println(FINAL_RESULT)
         printDealerWinningResult(dealerResult)
         printPlayerWinningResult(playerStates)
@@ -78,11 +76,28 @@ object OutputView {
         println("$DEALER$winCount $lossCount $drawCount")
     }
 
-    private fun formatResultCount(count: Int, result: Result) = if (count == 0) "" else count.toString() + result.result
+    private fun formatResultCount(count: Int, result: Result) =
+        if (count == 0) "" else count.toString() + printResultForm(result)
 
-    private fun printPlayerWinningResult(playerResult: Map<String, Result>) {
+    private fun printPlayerWinningResult(playerResult: Map<Player, Result>) {
         playerResult.forEach {
-            println("${it.key}: ${it.value.result}")
+            println("${it.key.name}: ${printResultForm(it.value)}")
+        }
+    }
+
+    private fun printResultForm(result: Result): String {
+        return when (result) {
+            Result.WIN -> "승"
+            Result.DRAW -> "무"
+            Result.LOSS -> "패"
+        }
+    }
+
+    fun printRevenue(dealerRevenue: Int, playerRevenue: Map<String, Int>) {
+        println(FINAL_REVENUE)
+        println(DEALER + "%d".format(dealerRevenue))
+        playerRevenue.map {
+            println(REVENUE_FORM.format(it.key, it.value))
         }
     }
 }

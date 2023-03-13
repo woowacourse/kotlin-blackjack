@@ -5,24 +5,16 @@ import domain.gamer.Dealer
 import domain.gamer.Player
 import domain.gamer.Players
 import domain.gamer.cards.Cards
+import domain.judge.PlayerResultInfo
 import domain.judge.Result
 
-class BlackjackGame(private val deck: Deck) {
-    val dealer = Dealer(Cards(listOf()))
-    var players = Players(listOf())
-        private set
-
-    fun startGame(names: List<String>) {
-        initPlayers(names)
-        deck.makeRandomDeck()
+class BlackjackGame(
+    private val deck: Deck,
+    val dealer: Dealer = Dealer(Cards(emptyList()))
+) {
+    fun startGame(players: Players) {
         dealer.makeStartDeck(deck)
-        players.getPlayers().forEach {
-            it.makeStartDeck(deck)
-        }
-    }
-
-    private fun initPlayers(names: List<String>) {
-        players = Players(names.map { Player(it, Cards(listOf())) })
+        players.makeStartDecks(deck)
     }
 
     fun pickPlayerCard(player: Player) {
@@ -33,18 +25,19 @@ class BlackjackGame(private val deck: Deck) {
         dealer.pickCard(deck.giveCard())
     }
 
-    fun checkBurst(player: Player) = player.cards.checkBurst()
+    fun checkBurst(player: Player) = player.cards.isBurst()
 
     fun checkDealerAvailableForPick(): Boolean {
-        return dealer.checkAvailableForPick()
+        return dealer.isAvailableForPick()
     }
 
-    fun getPlayerWinningResult() = mutableMapOf<String, Result>().apply {
-        players.getPlayers().forEach {
-            this[it.name] = it.judgeResult(dealer.cards)
-        }
-    }
+    fun getPlayersWinningResult(players: Players): Map<Player, Result> = players.getPlayersWinningResult(dealer)
 
-    fun judgeDealerResult(playersResult: Map<String, Result>): List<Result> =
+    fun judgeDealerResult(playersResult: Map<Player, Result>): List<Result> =
         playersResult.map { it.value.reverseResult() }
+
+    fun getPlayerRewards(players: Players, playersResult: Map<Player, PlayerResultInfo>): Map<String, Int> =
+        players.getPlayersReward(playersResult)
+
+    fun calculateDealerRewards(playerResults: List<Int>): Int = playerResults.sum() * -1
 }

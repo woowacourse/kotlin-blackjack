@@ -4,6 +4,7 @@ import controller.BlackjackController
 
 object InputView {
     private const val PRINT_PARTICIPANT_NAMES = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)"
+    private const val PRINT_QUESTION_MONEY = "%s의 베팅 금액은?"
     private const val PRINT_QUESTION_CARD_PICK_FORM = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)"
     private const val SEPARATOR = ","
 
@@ -11,6 +12,18 @@ object InputView {
         println(PRINT_PARTICIPANT_NAMES)
         val input = readln().trim()
         return input.split(SEPARATOR)
+    }
+
+    fun inputPlayerBets(names: List<String>) = mutableListOf<Int>().apply {
+        names.forEach {
+            add(inputBet(it))
+        }
+    }
+
+    private fun inputBet(name: String): Int {
+        println(PRINT_QUESTION_MONEY.format(name))
+        val input = readln().toIntOrNull()
+        return input ?: inputBet(name)
     }
 
     fun inputRepeatGetCard(name: String): String? {

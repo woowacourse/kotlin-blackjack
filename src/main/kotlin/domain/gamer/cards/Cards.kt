@@ -4,36 +4,36 @@ import domain.card.Card
 import domain.card.CardValue
 import domain.gamer.Participant.Companion.START_DECK_CARD_COUNT
 
-class Cards(private var cards: List<Card>) {
+class Cards(cards: List<Card>) {
+    private val _cards: MutableList<Card> = cards.toMutableList()
 
     fun addCard(card: Card) {
-        cards = cards.plus(card)
+        _cards.add(card)
     }
 
     fun getCards(): List<Card> {
-        return cards.toList()
+        return _cards.toList()
     }
 
     fun calculateCardSum(): Int {
-        return cards
-            .sumOf { it.cardValue.value } +
-            if (isAceValueToEleven()) CardValue.ACE_ELEVEN_VALUE - CardValue.ACE.value else 0
+        val cardSum = _cards
+            .sumOf { it.cardValue.value }
+        return cardSum +
+            if (isAceValueToEleven(cardSum)) CardValue.ACE_VALUE_GAP else 0
     }
 
-    private fun isAceValueToEleven(): Boolean {
-        return checkAceContained() && cards
-            .sumOf { it.cardValue.value } <= CardValue.ACE_ELEVEN_VALUE
+    private fun isAceValueToEleven(cardSum: Int): Boolean {
+        return isAceContained() && cardSum <= CardValue.ACE_ELEVEN_VALUE
     }
 
-    private fun checkAceContained() = cards.any { it.cardValue.title == CardValue.ACE.title }
+    private fun isAceContained() = _cards.any { it.cardValue.title == CardValue.ACE.title }
 
-    fun checkBurst(): Boolean = calculateCardSum() > CARD_SUM_MAX_VALUE
+    fun isBurst(): Boolean = calculateCardSum() > CARD_SUM_MAX_VALUE
 
     fun checkBlackjack(): Boolean =
-        calculateCardSum() == CARD_SUM_MAX_VALUE && cards.size == START_DECK_CARD_COUNT
+        calculateCardSum() == CARD_SUM_MAX_VALUE && _cards.size == START_DECK_CARD_COUNT
 
     companion object {
-        private const val ACE_COUNT_VALUE_CHANGE_CONDITION = 2
         const val CARD_SUM_MAX_VALUE = 21
     }
 }

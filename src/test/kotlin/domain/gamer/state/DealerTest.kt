@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test
 class DealerTest {
     @Test
     fun `뽑은 카드를 저장한다`() {
-        val card = Card(Shape.HEART, EIGHT)
+        val card = Card.from(Shape.HEART, EIGHT)
         val dealer = Dealer(Cards(listOf()))
         dealer.pickCard(card)
         assertThat(dealer.cards.getCards()).isEqualTo(listOf(card))
@@ -26,7 +26,7 @@ class DealerTest {
             Dealer(
                 SpadeCardsOf(JACK, JACK)
             )
-        assertThat(dealer.checkAvailableForPick()).isFalse
+        assertThat(dealer.isAvailableForPick()).isFalse
     }
 
     @Test
@@ -34,6 +34,6 @@ class DealerTest {
         val dealer = Dealer(
             SpadeCardsOf(JACK, TWO)
         )
-        assertThat(dealer.checkAvailableForPick()).isTrue
+        assertThat(dealer.isAvailableForPick()).isTrue
     }
 }

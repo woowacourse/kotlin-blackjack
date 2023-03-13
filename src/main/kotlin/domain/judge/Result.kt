@@ -1,9 +1,9 @@
 package domain.judge
 
-enum class Result(val result: String) {
-    WIN("승"),
-    DRAW("무"),
-    LOSS("패");
+enum class Result {
+    WIN,
+    DRAW,
+    LOSS;
 
     fun reverseResult(): Result = when (this) {
         WIN -> LOSS
