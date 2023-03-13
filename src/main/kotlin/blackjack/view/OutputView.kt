@@ -3,8 +3,8 @@ package blackjack.view
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Participant
 import blackjack.domain.player.Participants
-import blackjack.domain.player.ParticipantsProfit
 import blackjack.domain.player.Player
+import blackjack.domain.result.GameResult
 
 class OutputView {
 
@@ -34,20 +34,20 @@ class OutputView {
     }
 
     fun printParticipantCards(participant: Participant) {
-        val cardsWord: String = participant.cards.values.map {
+        val cardsWord: String = participant.cards.values.joinToString(", ") {
             it.number.word + it.shape.word
-        }.joinToString(", ")
+        }
         println("${participant.name} 카드: $cardsWord")
     }
 
     fun printPlayersProfit(
-        participantsProfit: ParticipantsProfit
+        gameResult: GameResult
     ) {
         println()
         println(FINAL_RESULT_MENT)
-        println(FINAL_DEALER_RESULT_MENT.format(-(participantsProfit.values.sumOf { it.profit })))
-        participantsProfit.values.forEach {
-            println(FINAL_PARTICIPANT_RESULT_MENT.format(it.name, it.profit))
+        println(FINAL_DEALER_RESULT_MENT.format(gameResult.dealerProfit))
+        gameResult.participantsProfit.forEach {
+            println(FINAL_PARTICIPANT_RESULT_MENT.format(it.participant.name, it.profit))
         }
     }
 
@@ -57,9 +57,9 @@ class OutputView {
     }
 
     private fun printPlayerCardsSumResult(player: Player) {
-        val cardsWord: String = player.cards.values.map {
+        val cardsWord: String = player.cards.values.joinToString(", ") {
             it.number.word + it.shape.word
-        }.joinToString(", ")
+        }
         print("${player.name} 카드: $cardsWord")
     }
 
