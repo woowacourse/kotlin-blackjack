@@ -41,13 +41,13 @@ class BlackjackGame(
         wantPickCard: (Player) -> Boolean,
         onPickCard: (Player) -> Unit,
         onDealerPickCard: () -> Unit
-    ): Pair<ParticipantsResult, Int> {
+    ): ParticipantsResult {
         playsPlayerTurn(wantPickCard, onPickCard)
 
         while (pickDealerCardIfPossible())
             onDealerPickCard()
-        val result = BlackjackResult(dealer, players).getResult()
-        return Pair(result, result.playerResult.sumOf { it.profit * REVERSE })
+
+        return BlackjackResult(dealer, players).getResult()
     }
 
     private fun playsPlayerTurn(
@@ -85,6 +85,5 @@ class BlackjackGame(
 
     companion object {
         private const val START_NUMBER_OF_CARDS = 2
-        private const val REVERSE = -1
     }
 }

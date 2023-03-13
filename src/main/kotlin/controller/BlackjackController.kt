@@ -17,7 +17,7 @@ class BlackjackController {
             OutputView::printParticipantCards,
             OutputView::printDealerUnder16
         )
-        OutputView.printResult(result.first, result.second)
+        OutputView.printResult(result, result.getDealerProfit())
     }
 
     private fun insertNames(): Names {
