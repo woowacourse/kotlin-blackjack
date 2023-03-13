@@ -31,7 +31,7 @@ class BettingTest {
     }
 
     @Test
-    fun `베팅 상태일 때 베팅하면 딜 상태로 넘어간다`() {
+    fun `베팅 상태일 때 베팅하면 딜 상태를 반환한다`() {
         var state: State = Betting(Hand(listOf()))
 
         state = state.betting(Money(10000))

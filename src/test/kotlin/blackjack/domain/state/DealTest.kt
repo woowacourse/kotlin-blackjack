@@ -32,7 +32,7 @@ class DealTest {
     }
 
     @Test
-    fun `딜 상태이고 드로우 했을 때 핸드의 카드 개수가 2장 미만이면 딜 상태가 된다`() {
+    fun `딜 상태이고 드로우 했을 때 핸드의 카드 개수가 2장 미만이면 딜 상태를 반환한다`() {
         var state: State = Deal(Hand(listOf()), null)
 
         state = state.draw(getAnyCard())
@@ -41,7 +41,7 @@ class DealTest {
     }
 
     @Test
-    fun `딜 상태이고 드로우 했을 때 핸드의 카드 개수가 2장 이상이면 히트 상태가 된다`() {
+    fun `딜 상태이고 드로우 했을 때 핸드의 카드 개수가 2장 이상이면 히트 상태를 반환한다`() {
         var state: State = Deal(Hand(listOf()), null)
         state = state.draw(getAnyCard())
 
