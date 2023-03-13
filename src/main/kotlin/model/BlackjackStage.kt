@@ -1,14 +1,16 @@
 package model
 
-import entity.Dealer
-import entity.Player
-import entity.Players
-import entity.User
+import entity.result.PlayersGameResult
+import entity.users.Player
+import entity.users.User
+import entity.users.Users
 
-class BlackjackStage(val dealer: Dealer, val players: Players, private val cardFactory: CardFactory) {
+class BlackjackStage(val users: Users, private val cardFactory: CardFactory) {
+    fun getPlayersGameResult(): PlayersGameResult = users.players.determineAllPlayerGameResult(users.dealer)
+
     fun distributeAllUsers() {
-        distributeUser(dealer, INITIAL_CARD_DISTRIBUTE_COUNT)
-        players.value.forEach {
+        distributeUser(users.dealer, INITIAL_CARD_DISTRIBUTE_COUNT)
+        users.players.value.forEach {
             distributeUser(it, INITIAL_CARD_DISTRIBUTE_COUNT)
         }
     }
@@ -19,16 +21,15 @@ class BlackjackStage(val dealer: Dealer, val players: Players, private val cardF
         }
     }
 
-    fun distributeDealer(printDealerStatus: () -> Unit) {
-        if (dealer.isDistributable()) {
-            distributeUser(dealer, User.SINGLE_DISTRIBUTE_COUNT)
-            printDealerStatus()
+    fun distributeDealer(): Boolean {
+        if (users.dealer.isDistributable()) {
+            distributeUser(users.dealer, User.SINGLE_DISTRIBUTE_COUNT)
+            return true
         }
+        return false
     }
 
-    private fun distributeUser(user: User, count: Int) {
-        user.addCards(cardFactory.generate(count))
-    }
+    private fun distributeUser(user: User, count: Int) = user.addCards(cardFactory.generate(count))
 
     companion object {
         const val INITIAL_CARD_DISTRIBUTE_COUNT = 2

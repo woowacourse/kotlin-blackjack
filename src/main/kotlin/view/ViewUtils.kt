@@ -1,9 +1,8 @@
 package view
 
-import entity.CardNumber
-import entity.CardType
-import entity.Cards
-import entity.GameResultType
+import entity.card.CardNumber
+import entity.card.CardType
+import entity.card.Cards
 
 class ViewUtils {
     companion object {
@@ -13,7 +12,7 @@ class ViewUtils {
                 CardNumber.KING -> "K"
                 CardNumber.QUEEN -> "Q"
                 CardNumber.JACK -> "J"
-                else -> (this.ordinal + 1).toString()
+                else -> (ordinal + 1).toString()
             }
         }
 
@@ -26,22 +25,10 @@ class ViewUtils {
             }
         }
 
-        fun cardsToString(cards: Cards): String {
-            return cards.value.joinToString(", ") {
+        fun Cards.isString(): String {
+            return value.joinToString(", ") {
                 it.cardNumber.isString() + it.cardType.isString()
             }
         }
-
-        fun GameResultType.isString(): String {
-            return when (this) {
-                GameResultType.WIN -> MESSAGE_WIN
-                GameResultType.LOSE -> MESSAGE_LOSE
-                GameResultType.DRAW -> MESSAGE_DRAW
-            }
-        }
-
-        private const val MESSAGE_WIN = "승"
-        private const val MESSAGE_LOSE = "패"
-        private const val MESSAGE_DRAW = "무"
     }
 }

@@ -1,10 +1,16 @@
 package controller
 
-import entity.CardDistributeCondition
-import entity.Dealer
-import entity.Name
-import entity.Player
-import entity.Players
+import entity.card.CardDistributeCondition
+import entity.card.Cards
+import entity.result.BettingMoney
+import entity.result.PlayersGameResult
+import entity.result.UserBettingResult
+import entity.users.Dealer
+import entity.users.GameInformation
+import entity.users.Name
+import entity.users.Player
+import entity.users.Players
+import entity.users.Users
 import model.BlackjackStage
 import model.RandomCardFactory
 import view.GameSetView
@@ -16,52 +22,54 @@ class BlackjackController {
     private val gameView = GameView()
     private val resultView = ResultView()
 
-    private fun readPlayers(): Players {
-        return gameSetView.readPlayerNames().map {
-            Player(Name(it))
+    private fun readPlayersInformation(): Players {
+        return gameSetView.getNames().map {
+            val bettingMoney = gameSetView.getBetting(it)
+            Player(Name(it), GameInformation(Cards(listOf()), BettingMoney(bettingMoney)))
         }.let { Players(it) }
     }
 
     private fun initBlackjack(): BlackjackStage {
-        val players = readPlayers()
-        val dealer = Dealer()
+        val players = readPlayersInformation()
+        val dealer = Dealer(GameInformation(Cards(listOf()), BettingMoney(0)))
         val cardFactory = RandomCardFactory()
-        val blackjackStage = BlackjackStage(dealer, players, cardFactory)
+        val blackjackStage = BlackjackStage(Users(players, dealer), cardFactory)
         blackjackStage.distributeAllUsers()
-        gameView.printInitialUsersStatus(dealer, players)
+        gameView.printInitStatus(dealer, players)
         return blackjackStage
     }
 
     private fun distributeMoreCardPlayer(blackjackStage: BlackjackStage) {
-        blackjackStage.players.value.forEach { player ->
+        blackjackStage.users.players.value.forEach { player ->
             distributeMoreCardPlayerProcess(player, blackjackStage)
         }
     }
 
     private fun distributeMoreCardPlayerProcess(player: Player, blackjackStage: BlackjackStage) {
-        while (true) {
-            gameView.printWhetherMoreCard(player.name.value)
-            if (!player.isDistributable() || !CardDistributeCondition(gameView.readWhetherMoreCard()).toBoolean()) break
+        while (player.isDistributable()) {
+            gameView.printMoreString1(player.name.value)
+            if (!player.isDistributable() || !CardDistributeCondition(gameView.getMoreString()).toBoolean()) break
             blackjackStage.distributePlayers(player)
             gameView.printPlayerStatus(player)
-            if (!player.isDistributable()) break
         }
     }
 
     private fun distributeMoreCardDealer(blackjackStage: BlackjackStage) {
-        blackjackStage.distributeDealer {
-            gameView.printDealerMoreCard()
-        }
+        if (blackjackStage.distributeDealer()) gameView.printMoreString2()
     }
 
-    private fun displayGameStatus(blackjackStage: BlackjackStage) {
-        resultView.printGameStatus(blackjackStage.dealer, blackjackStage.players)
-    }
+    private fun displayGameStatus(blackjackStage: BlackjackStage) =
+        resultView.printStatus(blackjackStage)
 
-    private fun displayGameResult(blackjackStage: BlackjackStage) {
-        val playersGameResult = blackjackStage.players.determineAllPlayerGameResult(blackjackStage.dealer)
-        val dealerGameResult = playersGameResult.makeDealerGameResult()
-        resultView.printGameResult(dealerGameResult, playersGameResult)
+    private fun getGameResult(blackjackStage: BlackjackStage) =
+        blackjackStage.getPlayersGameResult()
+
+    private fun displayBettingResult(blackjackStage: BlackjackStage, playersGameResult: PlayersGameResult) {
+        val users = Users(blackjackStage.users.players, blackjackStage.users.dealer)
+        val userBettingResult = UserBettingResult(users, playersGameResult)
+        val playersBettingResults = userBettingResult.getBettingResults()
+        val dealerBettingResult = userBettingResult.getDealerBettingResult()
+        resultView.printBettingResult(dealerBettingResult, playersBettingResults)
     }
 
     fun process() {
@@ -69,6 +77,7 @@ class BlackjackController {
         distributeMoreCardPlayer(blackjackStage)
         distributeMoreCardDealer(blackjackStage)
         displayGameStatus(blackjackStage)
-        displayGameResult(blackjackStage)
+        val playersGameResult = getGameResult(blackjackStage)
+        displayBettingResult(blackjackStage, playersGameResult)
     }
 }

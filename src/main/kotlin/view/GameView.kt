@@ -1,23 +1,24 @@
 package view
 
-import entity.Cards
-import entity.Dealer
-import entity.Player
-import entity.Players
+import entity.card.Cards
+import entity.users.Dealer
+import entity.users.Player
+import entity.users.Players
+import view.ViewUtils.Companion.isString
 
 class GameView {
     private fun printDealerStatus(dealer: Dealer) {
         print(MESSAGE_DEALER_NAME)
-        println(ViewUtils.cardsToString(dealer.cards.value.take(1).let { Cards(it) }))
+        println(dealer.gameInformation.cards.value.take(1).let { Cards(it) }.isString())
     }
 
     fun printPlayerStatus(player: Player) {
         print(player.name.value)
         print(MESSAGE_PLAYER_NAME)
-        println(ViewUtils.cardsToString(player.cards))
+        println(player.gameInformation.cards.isString())
     }
 
-    fun printInitialUsersStatus(dealer: Dealer, players: Players) {
+    fun printInitStatus(dealer: Dealer, players: Players) {
         println(
             MESSAGE_USERS_STATUS.format(
                 players.value.joinToString(", ") {
@@ -29,17 +30,11 @@ class GameView {
         players.value.forEach { printPlayerStatus(it) }
     }
 
-    fun printWhetherMoreCard(name: String) {
-        println(MESSAGE_MORE_CARD.format(name))
-    }
+    fun printMoreString1(name: String) = println(MESSAGE_MORE_CARD.format(name))
 
-    fun readWhetherMoreCard(): String {
-        return readln().trim()
-    }
+    fun getMoreString() = readln().trim()
 
-    fun printDealerMoreCard() {
-        println(MESSAGE_DEALER_MORE_CARD)
-    }
+    fun printMoreString2() = println(MESSAGE_DEALER_MORE_CARD)
 
     companion object {
         private const val MESSAGE_DEALER_NAME = "딜러: "

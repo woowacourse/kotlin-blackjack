@@ -1,4 +1,4 @@
-package entity
+package entity.users
 
 class Name(val value: String) {
     init {

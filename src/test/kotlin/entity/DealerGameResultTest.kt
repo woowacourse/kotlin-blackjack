@@ -1,5 +1,7 @@
 package entity
 
+import entity.result.DealerGameResult
+import entity.result.GameResultType
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
