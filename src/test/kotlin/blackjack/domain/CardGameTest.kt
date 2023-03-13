@@ -79,7 +79,7 @@ class CardGameTest {
     }
 
     @Test
-    fun `딜러와 플레이어가 블랙잭인 경우 딜러와 플레이어 수익은 0이다`() {
+    fun `딜러와 플레이어가 블랙잭인 경우 플레이어는 베팅 금액을 돌려 받는다`() {
         val deck = CardDeck(
             Card(Rank.ACE, Suit.CLOVER),
             Card(Rank.TEN, Suit.SPADE),
@@ -91,8 +91,8 @@ class CardGameTest {
         val cardGame = CardGame(deck, Participants(dealer, Players(player1)))
         cardGame.readyToStart()
         val result = cardGame.getGameResult()
-        assertThat(result.dealerResult.profit.value).isEqualTo(0L)
-        assertThat(result.playersResult[0].profit.value).isEqualTo(0L)
+        assertThat(result.dealerResult.profit.value).isEqualTo(-1_000L)
+        assertThat(result.playersResult[0].profit.value).isEqualTo(1_000L)
     }
 
     @Test
