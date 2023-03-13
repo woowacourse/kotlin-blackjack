@@ -3,8 +3,6 @@ package blackjack.model
 import model.Card
 import model.CardDeck
 import model.Dealer
-import model.Money
-import model.Name
 import model.Player
 import model.Rank
 import model.Suit
@@ -73,7 +71,7 @@ class PlayerTest {
             Card(Rank.KING, Suit.DIAMOND)
         )
         val dealer = Dealer()
-        val player = Player(Name("jason"), Money(1_000L))
+        val player = Player.of("jason", 1_000L)
         dealer.drawFirst(cardDeck)
         player.drawFirst(cardDeck)
         assertThat(player.getProfitMoney(dealer).value).isEqualTo(1_500L)
@@ -88,7 +86,7 @@ class PlayerTest {
             Card(Rank.NINE, Suit.DIAMOND)
         )
         val dealer = Dealer()
-        val player = Player(Name("jason"), Money(1_000L))
+        val player = Player.of("jason", 1_000L)
         dealer.drawFirst(cardDeck)
         player.drawFirst(cardDeck)
         assertThat(player.getProfitMoney(dealer).value).isEqualTo(1_000L)
@@ -103,7 +101,7 @@ class PlayerTest {
             Card(Rank.TEN, Suit.SPADE)
         )
         val dealer = Dealer()
-        val player = Player(Name("jason"), Money(1_000L))
+        val player = Player.of("jason", 1_000L)
         dealer.drawFirst(cardDeck)
         player.drawFirst(cardDeck)
         assertThat(player.getProfitMoney(dealer).value).isEqualTo(0)
@@ -119,7 +117,7 @@ class PlayerTest {
             Card(Rank.DEUCE, Suit.SPADE)
         )
         val dealer = Dealer()
-        val player = Player(Name("jason"), Money(1_000L))
+        val player = Player.of("jason", 1_000L)
         dealer.drawFirst(cardDeck)
         player.drawFirst(cardDeck)
         player.cards.add(cardDeck.drawCard())
@@ -136,7 +134,7 @@ class PlayerTest {
             Card(Rank.TEN, Suit.SPADE)
         )
         val dealer = Dealer()
-        val player = Player(Name("jason"), Money(1_000L))
+        val player = Player.of("jason", 1_000L)
         dealer.drawFirst(cardDeck)
         dealer.drawCard(cardDeck)
         player.drawFirst(cardDeck)
@@ -144,7 +142,7 @@ class PlayerTest {
     }
 
     companion object {
-        private fun Player(name: String): Player = Player(Name(name), Money(1_000L))
+        private fun Player(name: String): Player = Player.of(name, 1_000L)
         private fun CardDeck(vararg card: Card): CardDeck = CardDeck(card.toList())
     }
 }

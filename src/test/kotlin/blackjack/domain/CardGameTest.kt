@@ -4,8 +4,6 @@ import domain.CardGame
 import model.Card
 import model.CardDeck
 import model.Dealer
-import model.Money
-import model.Name
 import model.Participants
 import model.Player
 import model.Players
@@ -53,8 +51,8 @@ class CardGameTest {
             Card(Rank.JACK, Suit.CLOVER)
         )
         val dealer = Dealer()
-        val player1 = Player.of(Name("jason"), 1_000L)
-        val player2 = Player.of(Name("pobi"), 1_000L)
+        val player1 = Player.of("jason", 1_000L)
+        val player2 = Player.of("pobi", 1_000L)
         val cardGame = CardGame(deck, Participants(dealer, Players(player1, player2)))
         cardGame.readyToStart()
         val result = cardGame.getGameResult()
@@ -72,8 +70,8 @@ class CardGameTest {
             Card(Rank.TEN, Suit.HEART)
         )
         val dealer = Dealer()
-        val player1 = Player.of(Name("jason"), 1_000L)
-        val player2 = Player.of(Name("pobi"), 1_000L)
+        val player1 = Player.of("jason", 1_000L)
+        val player2 = Player.of("pobi", 1_000L)
         val cardGame = CardGame(deck, Participants(dealer, Players(player1, player2)))
         cardGame.readyToStart()
         val result = cardGame.getGameResult()
@@ -89,7 +87,7 @@ class CardGameTest {
             Card(Rank.TEN, Suit.DIAMOND),
         )
         val dealer = Dealer()
-        val player1 = Player.of(Name("jason"), 1_000L)
+        val player1 = Player.of("jason", 1_000L)
         val cardGame = CardGame(deck, Participants(dealer, Players(player1)))
         cardGame.readyToStart()
         val result = cardGame.getGameResult()
@@ -108,8 +106,8 @@ class CardGameTest {
             Card(Rank.JACK, Suit.CLOVER)
         )
         val dealer = Dealer()
-        val player1 = Player.of(Name("jason"), 1_000L)
-        val player2 = Player.of(Name("pobi"), 1_000L)
+        val player1 = Player.of("jason", 1_000L)
+        val player2 = Player.of("pobi", 1_000L)
         val cardGame = CardGame(deck, Participants(dealer, Players(player1, player2)))
         cardGame.readyToStart()
         val result = cardGame.getGameResult()
@@ -127,8 +125,8 @@ class CardGameTest {
             Card(Rank.ACE, Suit.DIAMOND)
         )
         val dealer = Dealer()
-        val player1 = Player.of(Name("jason"), 1_000L)
-        val player2 = Player.of(Name("pobi"), 1_000L)
+        val player1 = Player.of("jason", 1_000L)
+        val player2 = Player.of("pobi", 1_000L)
         val cardGame = CardGame(deck, Participants(dealer, Players(player1, player2)))
         cardGame.readyToStart()
         val result = cardGame.getGameResult()
@@ -145,7 +143,7 @@ class CardGameTest {
             Card(Rank.NINE, Suit.CLOVER)
         )
         val dealer = Dealer()
-        val player1 = Player.of(Name("jason"), 1_000L)
+        val player1 = Player.of("jason", 1_000L)
         val cardGame = CardGame(deck, Participants(dealer, Players(player1)))
         cardGame.readyToStart()
         val result = cardGame.getGameResult()
@@ -161,7 +159,7 @@ class CardGameTest {
             Card(Rank.FIVE, Suit.CLOVER)
         )
         val dealer = Dealer()
-        val player1 = Player.of(Name("jason"), 1_000L)
+        val player1 = Player.of("jason", 1_000L)
         val cardGame = CardGame(deck, Participants(dealer, Players(player1)))
         cardGame.readyToStart()
         val result = cardGame.getGameResult()
@@ -170,7 +168,7 @@ class CardGameTest {
 
     companion object {
         private val cardDeck = CardDeck.createCardDeck()
-        private fun Player(name: String): Player = Player(Name(name), Money(1_000L))
+        private fun Player(name: String): Player = Player.of(name, 1_000L)
         private fun Players(vararg player: Player): Players = Players(player.toList())
         private fun CardDeck(vararg card: Card): CardDeck = CardDeck(card.toList())
     }

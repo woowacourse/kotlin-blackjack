@@ -1,6 +1,6 @@
 package model
 
-class Player(name: Name, private val money: Money) : Participant(name) {
+class Player private constructor(name: Name, private val money: Money) : Participant(name) {
     override fun getFirstOpenCards(): Cards = cards
 
     override fun isPossibleDrawCard(): Boolean = !isBust()
@@ -22,6 +22,6 @@ class Player(name: Name, private val money: Money) : Participant(name) {
     }
 
     companion object {
-        fun of(name: Name, money: Long): Player = Player(name, Money(money))
+        fun of(name: String, money: Long): Player = Player(Name(name), Money(money))
     }
 }

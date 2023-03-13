@@ -1,7 +1,5 @@
 package blackjack.model
 
-import model.Money
-import model.Name
 import model.Player
 import model.Players
 import org.junit.jupiter.api.Test
@@ -41,7 +39,7 @@ class PlayersTest {
     }
 
     companion object {
-        private fun Player(name: String): Player = Player(Name(name), Money(1_000L))
+        private fun Player(name: String): Player = Player.of(name, 1_000L)
         private fun Players(vararg player: String): Players = Players(player.map { Player(it) })
 
         @JvmStatic

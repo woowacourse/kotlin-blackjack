@@ -3,7 +3,6 @@ package blackjack.model
 import model.Card
 import model.CardDeck
 import model.Dealer
-import model.Name
 import model.Player
 import model.Rank
 import model.Suit
@@ -64,7 +63,7 @@ class DealerTest {
         )
         val dealer = Dealer()
         dealer.drawFirst(cardDeck)
-        val player = Player.of(Name("jaosn"), 1_000L)
+        val player = Player.of("jaosn", 1_000L)
         assertThat(dealer.getProfitMoney(player).value).isEqualTo(1_000L)
     }
 
