@@ -10,4 +10,8 @@ object InputView {
     fun readCharacter(): String? {
         return readlnOrNull()
     }
+
+    fun readNumber(): Int? {
+        return readln().toIntOrNull()
+    }
 }

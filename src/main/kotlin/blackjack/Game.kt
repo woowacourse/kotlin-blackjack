@@ -1,10 +1,17 @@
 package blackjack
 
 import blackjack.domain.*
+import blackjack.domain.card.Deck
+import blackjack.domain.participant.Dealer
+import blackjack.domain.participant.Participant
+import blackjack.domain.participant.Player
+import blackjack.domain.participant.Players
+import blackjack.domain.state.Running
 import blackjack.view.InputView
 import blackjack.view.ResultView
 
 private const val INSERT_PLAYERS_NAME = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)"
+private const val INSERT_PLAYER_BET_AMOUNT = "\n%s의 배팅 금액은?"
 private const val ANSWER_YES = "y"
 private const val ANSWER_NO = "n"
 private const val INSERT_GET_ONE_MORE_CARD = "%s은(는) 한장의 카드를 더 받겠습니까?(예는 $ANSWER_YES, 아니오는 $ANSWER_NO)"
@@ -12,10 +19,9 @@ private const val DECK_EXHAUSTED_MESSAGE = "덱의 카드가 모두 소진되었
 
 fun main() {
     val deck = Deck()
-    ResultView.printMessage(INSERT_PLAYERS_NAME)
-    val players =
-        ReadValueSureModifier.tryToReadValueAndModifyToTargetUntilNoErrorOccur(InputView::readStrings, Players::create)
+    val players = getPlayers()
     val dealer = Dealer()
+    setPlayersBetAmount(players)
 
     dealCards(players.toList() + dealer, deck)
     ResultView.printSetUp(dealer, players)
@@ -27,8 +33,28 @@ fun main() {
     ResultView.printResult(dealer, players, BlackjackResult.of(dealer, players))
 }
 
+private fun getPlayers(): Players {
+    ResultView.printMessage(INSERT_PLAYERS_NAME)
+    return ReadValueSureModifier.tryToReadValueAndModifyToTargetUntilNoErrorOccur(
+        InputView::readStrings,
+        Players::create,
+    )
+}
+
+private fun setPlayersBetAmount(players: Players) {
+    players.forEach { it.betting(askPlayerBetAmount(it)) }
+}
+
+private fun askPlayerBetAmount(player: Player): Money {
+    ResultView.printMessage(INSERT_PLAYER_BET_AMOUNT.format(player.name))
+    return ReadValueSureModifier.tryToReadValueAndModifyToTargetUntilNoErrorOccur(
+        InputView::readNumber,
+        ::Money,
+    )
+}
+
 private fun dealCards(participants: List<Participant>, deck: Deck) {
-    repeat(Participant.INIT_CARD_SIZE) {
+    repeat(Running.MIN_HAND_SIZE) {
         participants.forEach { tryToDraw(it, deck) }
     }
 }
@@ -38,13 +64,16 @@ private fun tryToDraw(participant: Participant, deck: Deck) {
 }
 
 private fun decideHitOrStand(players: Players, deck: Deck) {
-    players.toList().forEach { decideHitOrStand(it, deck) }
+    players.forEach { decideHitOrStand(it, deck) }
 }
 
 private fun decideHitOrStand(player: Player, deck: Deck) {
-    while (deck.isNotExhausted() && player.canHit() && askPlayerWantToHitUntilGetCorrectAnswer(player)) {
+    while (deck.isNotExhausted() && player.isFinished().not() && askPlayerWantToHitUntilGetCorrectAnswer(player)) {
         tryToDraw(player, deck)
         ResultView.printCards(player)
+    }
+    if (player.isFinished().not()) {
+        player.stay()
     }
 }
 

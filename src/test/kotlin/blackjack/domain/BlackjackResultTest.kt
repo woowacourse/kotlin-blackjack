@@ -1,14 +1,18 @@
 package blackjack.domain
 
-import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
+import blackjack.domain.card.Card
+import blackjack.domain.card.CardNumber
+import blackjack.domain.card.CardShape
+import blackjack.domain.participant.Dealer
+import blackjack.domain.participant.Player
+import blackjack.domain.participant.Players
+import org.assertj.core.api.Assertions.*
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertAll
 
 class BlackjackResultTest {
 
     @Test
-    fun `딜러가 히트해야 할 때 블랙잭 결과를 생성하려 하면 에러가 발생한다`() {
+    fun `딜러가 끝난 상태가 아닐 때 블랙잭 결과를 생성하려 하면 에러가 발생한다`() {
         val dealer = Dealer().apply {
             receive(Card(CardNumber.NINE, CardShape.CLOVER))
             receive(Card(CardNumber.TWO, CardShape.CLOVER))
@@ -16,22 +20,26 @@ class BlackjackResultTest {
         val players = Players(
             listOf(
                 Player("pobi").apply {
+                    betting(Money(10000))
                     receive(Card(CardNumber.NINE, CardShape.CLOVER))
                     receive(Card(CardNumber.TWO, CardShape.CLOVER))
+                    stay()
                 },
                 Player("thomas").apply {
+                    betting(Money(10000))
                     receive(Card(CardNumber.NINE, CardShape.CLOVER))
                     receive(Card(CardNumber.TWO, CardShape.CLOVER))
+                    stay()
                 },
             ),
         )
 
         assertThatIllegalArgumentException().isThrownBy { BlackjackResult.of(dealer, players) }
-            .withMessage("딜러가 히트해야 한다면 블랙잭 결과를 생성할 수 없습니다.")
+            .withMessage("모든 참여자는 게임이 끝난 상태여야 합니다.")
     }
 
     @Test
-    fun `참여자 중 2장 이상의 카드를 받지 않은 참여자가 있을 때 블랙잭 결과를 생성하려 하면 에러가 발생한다`() {
+    fun `플레이어 중 끝난 상태가 아닌 플레이어가 있을 때 블랙잭 결과를 생성하면 에러가 발생한다`() {
         val dealer = Dealer().apply {
             receive(Card(CardNumber.NINE, CardShape.CLOVER))
             receive(Card(CardNumber.TEN, CardShape.CLOVER))
@@ -39,13 +47,19 @@ class BlackjackResultTest {
         val players = Players(
             listOf(
                 Player("pobi").apply {
+                    betting(Money(10000))
                     receive(Card(CardNumber.NINE, CardShape.CLOVER))
+                    receive(Card(CardNumber.NINE, CardShape.HEART))
+                    stay()
                 },
                 Player("thomas").apply {
+                    betting(Money(10000))
                     receive(Card(CardNumber.KING, CardShape.CLOVER))
-                    receive(Card(CardNumber.ACE, CardShape.CLOVER))
+                    receive(Card(CardNumber.KING, CardShape.HEART))
+                    stay()
                 },
                 Player("jason").apply {
+                    betting(Money(10000))
                     receive(Card(CardNumber.NINE, CardShape.CLOVER))
                     receive(Card(CardNumber.TEN, CardShape.CLOVER))
                 },
@@ -53,11 +67,11 @@ class BlackjackResultTest {
         )
 
         assertThatIllegalArgumentException().isThrownBy { BlackjackResult.of(dealer, players) }
-            .withMessage("모든 참여자는 ${Participant.INIT_CARD_SIZE}장 이상의 카드를 가지고 있어야 블랙잭 결과를 생성할 수 있습니다.")
+            .withMessage("모든 참여자는 게임이 끝난 상태여야 합니다.")
     }
 
     @Test
-    fun `딜러와 플레이어들이 주어지면 딜러의 승무패 각각의 횟수를 알 수 있다`() {
+    fun `플레이어가 딜러에게 승리했다면 플레이어의 수익은 플레이어의 상태의 수익과 같다`() {
         val dealer = Dealer().apply {
             receive(Card(CardNumber.NINE, CardShape.CLOVER))
             receive(Card(CardNumber.TEN, CardShape.CLOVER))
@@ -65,31 +79,28 @@ class BlackjackResultTest {
         val players = Players(
             listOf(
                 Player("pobi").apply {
-                    receive(Card(CardNumber.NINE, CardShape.CLOVER))
-                    receive(Card(CardNumber.TWO, CardShape.CLOVER))
+                    betting(Money(10000))
+                    receive(Card(CardNumber.TEN, CardShape.CLOVER))
+                    receive(Card(CardNumber.TEN, CardShape.HEART))
+                    stay()
                 },
                 Player("thomas").apply {
+                    betting(Money(10000))
                     receive(Card(CardNumber.KING, CardShape.CLOVER))
-                    receive(Card(CardNumber.ACE, CardShape.CLOVER))
-                },
-                Player("jason").apply {
-                    receive(Card(CardNumber.NINE, CardShape.CLOVER))
-                    receive(Card(CardNumber.TEN, CardShape.CLOVER))
+                    receive(Card(CardNumber.KING, CardShape.HEART))
+                    stay()
                 },
             ),
         )
 
-        val result = BlackjackResult.of(dealer, players)
+        val actual = BlackjackResult.of(dealer, players).getRevenueOf(players.toList()[0])
+        val expect = players.toList()[1].getProfit().toInt()
 
-        assertAll(
-            { assertThat(result.getCountOfDealer(ResultType.WIN)).isEqualTo(1) },
-            { assertThat(result.getCountOfDealer(ResultType.TIE)).isEqualTo(1) },
-            { assertThat(result.getCountOfDealer(ResultType.LOSE)).isEqualTo(1) },
-        )
+        assertThat(actual).isEqualTo(expect)
     }
 
     @Test
-    fun `딜러와 플레이어들이 주어지면 플레이어의 딜러와의 승부 결과를 알 수 있다`() {
+    fun `플레이어와 딜러가 무승부라면 플레이어의 수익은 0이다`() {
         val dealer = Dealer().apply {
             receive(Card(CardNumber.NINE, CardShape.CLOVER))
             receive(Card(CardNumber.TEN, CardShape.CLOVER))
@@ -97,26 +108,86 @@ class BlackjackResultTest {
         val players = Players(
             listOf(
                 Player("pobi").apply {
+                    betting(Money(10000))
                     receive(Card(CardNumber.NINE, CardShape.CLOVER))
-                    receive(Card(CardNumber.TWO, CardShape.CLOVER))
+                    receive(Card(CardNumber.TEN, CardShape.HEART))
+                    stay()
                 },
                 Player("thomas").apply {
+                    betting(Money(10000))
                     receive(Card(CardNumber.KING, CardShape.CLOVER))
-                    receive(Card(CardNumber.ACE, CardShape.CLOVER))
-                },
-                Player("jason").apply {
-                    receive(Card(CardNumber.NINE, CardShape.CLOVER))
-                    receive(Card(CardNumber.TEN, CardShape.CLOVER))
+                    receive(Card(CardNumber.KING, CardShape.HEART))
+                    stay()
                 },
             ),
         )
 
-        val result = BlackjackResult.of(dealer, players)
+        val actual = BlackjackResult.of(dealer, players).getRevenueOf(players.toList()[0])
 
-        assertAll(
-            { assertThat(result.getResultOf(players.toList()[0])).isEqualTo(ResultType.LOSE) },
-            { assertThat(result.getResultOf(players.toList()[1])).isEqualTo(ResultType.WIN) },
-            { assertThat(result.getResultOf(players.toList()[2])).isEqualTo(ResultType.TIE) },
+        assertThat(actual).isZero
+    }
+
+    @Test
+    fun `플레이어가 딜러에게 패배했다면 플레이어의 수익은 베팅 금액의 음수이다`() {
+        val dealer = Dealer().apply {
+            receive(Card(CardNumber.NINE, CardShape.CLOVER))
+            receive(Card(CardNumber.TEN, CardShape.CLOVER))
+        }
+        val players = Players(
+            listOf(
+                Player("pobi").apply {
+                    betting(Money(10000))
+                    receive(Card(CardNumber.NINE, CardShape.CLOVER))
+                    receive(Card(CardNumber.NINE, CardShape.HEART))
+                    stay()
+                },
+                Player("thomas").apply {
+                    betting(Money(10000))
+                    receive(Card(CardNumber.KING, CardShape.CLOVER))
+                    receive(Card(CardNumber.KING, CardShape.HEART))
+                    stay()
+                },
+            ),
         )
+
+        val actual = BlackjackResult.of(dealer, players).getRevenueOf(players.toList()[0])
+        val expect = -10000
+
+        assertThat(actual).isEqualTo(expect)
+    }
+
+    @Test
+    fun `딜러의 수익은 플레이어의 수익의 합의 음수와 같다`() {
+        val dealer = Dealer().apply {
+            receive(Card(CardNumber.NINE, CardShape.CLOVER))
+            receive(Card(CardNumber.TEN, CardShape.CLOVER))
+        }
+        val players = Players(
+            listOf(
+                Player("pobi").apply {
+                    betting(Money(10000))
+                    receive(Card(CardNumber.NINE, CardShape.CLOVER))
+                    receive(Card(CardNumber.NINE, CardShape.HEART))
+                    stay()
+                },
+                Player("thomas").apply {
+                    betting(Money(10000))
+                    receive(Card(CardNumber.KING, CardShape.CLOVER))
+                    receive(Card(CardNumber.KING, CardShape.HEART))
+                    stay()
+                },
+                Player("jason").apply {
+                    betting(Money(10000))
+                    receive(Card(CardNumber.NINE, CardShape.CLOVER))
+                    receive(Card(CardNumber.TEN, CardShape.CLOVER))
+                    stay()
+                },
+            ),
+        )
+
+        val actual = BlackjackResult.of(dealer, players).dealerRevenue
+        val expect = -players.toList().sumOf { BlackjackResult.of(dealer, players).getRevenueOf(it)!! }
+
+        assertThat(actual).isEqualTo(expect)
     }
 }

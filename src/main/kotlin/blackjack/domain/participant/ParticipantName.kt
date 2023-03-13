@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.participant
 
 data class ParticipantName(private val value: String) {
 
