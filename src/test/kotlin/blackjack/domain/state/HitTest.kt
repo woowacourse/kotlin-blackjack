@@ -11,6 +11,7 @@ class HitTest {
         val state = Hit(Hand(listOf()), null)
 
         assertThatIllegalStateException().isThrownBy { state.betting(getAnyMoney()) }
+            .withMessage("이미 베팅 상태를 지났습니다.")
     }
 
     @Test
