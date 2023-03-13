@@ -11,7 +11,7 @@ class Deck private constructor(cards: List<Card>) {
         require(_cards.size == DECK_SIZE) { ERROR_DECK_SIZE }
     }
 
-    fun getCard() = _cards.removeFirst()
+    fun getCards(count: Int) = List(count) { _cards.removeFirst() }
 
     companion object {
         private const val DECK_SIZE = 52

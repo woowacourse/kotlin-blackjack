@@ -1,18 +1,22 @@
 package domain.person
 
 import domain.card.Card
-import domain.card.Cards
-import domain.constant.GameState
+import domain.card.Hand
+import domain.result.Score
+import domain.state.State
 
-abstract class Person(open val name: String) {
-    val cards = Cards()
+abstract class Person(val name: String) {
 
-    fun receiveCard(vararg card: Card) {
-        card.forEach { cards.add(it) }
-        checkState()
+    abstract var state: State
+
+    val score: Score
+        get() = Score.of(Hand(state.getHandCards()))
+
+    fun receiveCard(cards: List<Card>) {
+        cards.forEach { state = state.draw(it) }
     }
 
-    protected abstract fun checkState(): GameState
-
-    fun isState(state: GameState) = checkState() == state
+    fun stay() {
+        state = state.stay()
+    }
 }

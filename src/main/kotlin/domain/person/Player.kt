@@ -1,17 +1,9 @@
 package domain.person
 
-import domain.constant.BlackJackConstants.BLACK_JACK
-import domain.constant.GameState
-import domain.constant.GameState.BUST
-import domain.constant.GameState.HIT
-import domain.result.CardsScore
+import domain.card.Hand
+import domain.state.State
+import domain.state.playerState.PlayerFirstTurn
 
-class Player(override val name: String) : Person(name) {
-
-    override fun checkState(): GameState {
-        if (CardsScore.getMinTotalCardNumber(cards) > BLACK_JACK) {
-            return BUST
-        }
-        return HIT
-    }
+class Player(name: String) : Person(name) {
+    override var state: State = PlayerFirstTurn(Hand())
 }

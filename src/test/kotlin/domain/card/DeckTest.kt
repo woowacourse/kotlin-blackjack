@@ -8,7 +8,7 @@ class DeckTest {
 
     @Test
     fun `덱에서 한장 뽑으면 트럼프 카드가 나온다`() {
-        val card = Deck.create().getCard()
+        val card = Deck.create().getCards(1)[0]
         assertAll(
             { assertThat(card.shape).isIn(CardShape.values().toList()) },
             { assertThat(card.number).isIn(CardNumber.values().toList()) },
