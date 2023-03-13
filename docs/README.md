@@ -93,11 +93,25 @@
 - State
   - Running
     - FirstTurn 
+      - 카드를 두 장 배분한다.
+        - 블랙잭이라면 Blackjack으로
+      - Dealer일 때 (?)
+        - 카드를 받을 수 있는 상황이라면 Hit으로
+        - 카드를 받을 수 없는 상황이라면 Stay로
+      - Hit으로
     - Hit
+      - hit 의사가 없다면 Stay로
+      - 카드를 한 장 받는다.
+        - 버스트라면 Bust로
   - Finished
     - Bust
+      - Dealer일 때는 1.0
+      - Participant일 때는 -1.0
     - Blackjack
-      - 딜러와 같다면 무승부
+      - 딜러와 같다면 0.0
+      - 아니라면 0.5
     - Stay
-      - 
+      - 딜러보다 크다면 1.0
+      - 딜러보다 작다면 -1.0
+      - 딜러와 같다면 0.0
 

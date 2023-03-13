@@ -30,19 +30,19 @@ class OutputView {
         printParticipantsCards(participants)
     }
 
+    fun printSumResult(dealer: Dealer, participants: Participants) {
+        printPlayerCards(dealer, "- 결과: ${dealer.cards.sum()}")
+        participants.values.forEach {
+            printPlayerCards(it, "- 결과: ${it.cards.sum()}")
+        }
+    }
+
     fun printPlayersResults(dealer: Dealer, participants: Participants) {
         println()
         println(FINAL_RESULT_MESSAGE)
 
         println("${dealer.name}: ${dealer.getPayout(participants)}")
         participants.values.forEach { println("${it.name}: ${it.bettingAmount.getPayout(it.matchResult.getResult())}") }
-    }
-
-    fun printSumResult(dealer: Dealer, participants: Participants) {
-        printPlayerCards(dealer, "- 결과: ${dealer.cards.sum()}")
-        participants.values.forEach {
-            printPlayerCards(it, "- 결과: ${it.cards.sum()}")
-        }
     }
 
     private fun printParticipantsCards(participants: Participants) {

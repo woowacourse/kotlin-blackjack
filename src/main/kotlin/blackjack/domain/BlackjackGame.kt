@@ -43,6 +43,14 @@ class BlackjackGame(
         dealer.matchResult.reversGameResult()
     }
 
+    fun printGameResult(
+        printSumResult: (Dealer, Participants) -> Unit,
+        printPlayersResults: (Dealer, Participants) -> Unit
+    ) {
+        printSumResult(dealer, participants)
+        printPlayersResults(dealer, participants)
+    }
+
     private fun hitParticipantsCards(
         readHitOrNot: (String) -> Boolean,
         printPlayerCards: (Player, String) -> Unit

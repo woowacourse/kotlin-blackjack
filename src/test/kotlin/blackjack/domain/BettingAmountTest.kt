@@ -36,10 +36,10 @@ class BettingAmountTest {
     @Test
     fun `게임 결과를 받아 페이아웃을 반환한다`() {
         assertAll(
-            { assertThat(BettingAmount(5000).getPayout(GameResult.WIN)).isEqualTo(10000) },
-            { assertThat(BettingAmount(5000).getPayout(GameResult.BLACKJACK)).isEqualTo(7500) },
-            { assertThat(BettingAmount(5000).getPayout(GameResult.DRAW)).isEqualTo(5000) },
-            { assertThat(BettingAmount(5000).getPayout(GameResult.LOSE)).isEqualTo(0) }
+            { assertThat(BettingAmount(5000).getPayout(GameResult.WIN)).isEqualTo(5000) },
+            { assertThat(BettingAmount(5000).getPayout(GameResult.BLACKJACK)).isEqualTo(2500) },
+            { assertThat(BettingAmount(5000).getPayout(GameResult.DRAW)).isEqualTo(0) },
+            { assertThat(BettingAmount(5000).getPayout(GameResult.LOSE)).isEqualTo(-5000) }
         )
     }
 }

@@ -1,8 +1,6 @@
 package blackjack.controller
 
 import blackjack.domain.BlackjackGame
-import blackjack.domain.player.Dealer
-import blackjack.domain.player.Participants
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -21,12 +19,6 @@ class BlackjackController(
             outputView::printDealerHitOrNotMessage
         )
         blackjackGame.decidePlayersResult()
-
-        printResult(blackjackGame.dealer, blackjackGame.participants)
-    }
-
-    private fun printResult(dealer: Dealer, participants: Participants) {
-        outputView.printSumResult(dealer, participants)
-        outputView.printPlayersResults(dealer, participants)
+        blackjackGame.printGameResult(outputView::printSumResult, outputView::printPlayersResults)
     }
 }
