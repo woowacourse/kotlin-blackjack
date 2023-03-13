@@ -39,13 +39,4 @@ internal class PlayerFirstTurnTest {
 
         assertThrows<IllegalStateException> { actual.playerProfit(state, 0.0) }.shouldHaveMessage("아직 진행중입니다")
     }
-
-    @Test
-    fun `isFinished는 항상 false이다`() {
-        val state = PlayerFirstTurn(HandOfCards())
-
-        val actual = state.isFinished
-
-        assertThat(actual).isEqualTo(false)
-    }
 }

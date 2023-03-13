@@ -39,13 +39,4 @@ internal class PlayerHitTest {
 
         assertThrows<IllegalStateException> { playerHit.playerProfit(state, 0.0) }.shouldHaveMessage("아직 진행중입니다")
     }
-
-    @Test
-    fun `isFinished는 항상 false이다`() {
-        val playerHit = PlayerHit(makeHandOfCards(10, 3))
-
-        val actual = playerHit.isFinished
-
-        assertThat(actual).isEqualTo(false)
-    }
 }
