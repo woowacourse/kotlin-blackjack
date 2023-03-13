@@ -91,7 +91,7 @@ class FinalProfitTest {
     }
 
     @Test
-    fun `딜러의 최종 수익을 반환한다`() {
+    fun `딜러가 패배하면 딜러는 모든 유저의 배팅금액만큼 잃는다`() {
         val finalProfit = FinalProfit(
             mapOf(
                 Guest(Name("로피")) to 10000,
@@ -101,5 +101,18 @@ class FinalProfitTest {
         val dealerProfit = finalProfit.getDealerProfit()
 
         assertThat(dealerProfit).isEqualTo(-30000)
+    }
+
+    @Test
+    fun `딜러가 승리하면 딜러는 모든 유저의 베텡금액만큼 얻는다`() {
+        val finalProfit = FinalProfit(
+            mapOf(
+                Guest(Name("로피")) to -10000,
+                Guest(Name("아크")) to -20000,
+            ),
+        )
+        val dealerProfit = finalProfit.getDealerProfit()
+
+        assertThat(dealerProfit).isEqualTo(30000)
     }
 }
