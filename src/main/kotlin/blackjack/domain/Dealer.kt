@@ -6,7 +6,7 @@ import blackjack.domain.state.State
 
 class Dealer(name: ParticipantName = ParticipantName("딜러")) : Participant(name) {
 
-    override var state: State = Deal(Hand(listOf()))
+    override var state: State = Deal(Hand(listOf()), null)
 
     fun shouldHit(): Boolean = state.hasJustRunning() && state.getScore() <= HIT_STANDARD_SCORE
 
