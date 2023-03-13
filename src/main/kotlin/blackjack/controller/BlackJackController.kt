@@ -1,8 +1,11 @@
 package blackjack.controller
 
 import blackjack.domain.BlackJackGame
+import blackjack.domain.CardHand
 import blackjack.domain.CardPack
+import blackjack.domain.DrawState
 import blackjack.domain.GameResult
+import blackjack.domain.Player
 import blackjack.domain.PlayerGameResult
 import blackjack.view.InputView
 import blackjack.view.OutputView
@@ -12,26 +15,36 @@ class BlackJackController(
 ) {
     fun run() {
         runCatching {
-            startBlackJackGame()
-            onBlackJackGame()
-            endBlackJackGame(blackJackGame.judgeGameResults())
+            startGame()
+            inGame()
+            endGame(blackJackGame.judgeGameResults())
         }.onFailure { exception ->
             OutputView.printErrorMessage(exception)
         }
     }
 
-    private fun startBlackJackGame() {
-        blackJackGame.entryPlayers(InputView.requestPlayersName())
+    private fun startGame() {
+        blackJackGame.entryPlayers(InputView.requestPlayersName(), InputView::requestBetAmount)
         OutputView.printCardDividingMessage(blackJackGame.showParticipants())
     }
 
-    private fun onBlackJackGame() {
-        // TODO: 이거만 고치면 댐
-        blackJackGame.drawAdditionalCards()
+    private fun inGame() {
+        blackJackGame.showParticipants().second.forEach { player ->
+            drawAdditionalCard(player)
+        }
         OutputView.printIsDealerReceivedCard(blackJackGame.drawAdditionalCardForDealer())
     }
 
-    private fun endBlackJackGame(gameResults: Pair<List<PlayerGameResult>, List<GameResult>>) {
+    private fun drawAdditionalCard(player: Player) {
+        while (InputView.requestAdditionalDraw(player) && blackJackGame.drawAdditionalCardForPlayer(player) == DrawState.POSSIBLE) {
+            OutputView.printCardResults(player)
+        }
+        if (player.cardHand.size == CardHand.INITIAL_CARDS_SIZE) {
+            OutputView.printCardResults(player)
+        }
+    }
+
+    private fun endGame(gameResults: Pair<List<PlayerGameResult>, List<GameResult>>) {
         OutputView.printFinalCards(blackJackGame.showParticipants())
         OutputView.printGameResults(playerGameResults = gameResults.first, dealerGameResult = gameResults.second)
         OutputView.printBetResults(blackJackGame.judgeBetResults(playersGameResult = gameResults.first))

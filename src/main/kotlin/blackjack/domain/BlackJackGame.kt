@@ -1,45 +1,27 @@
 package blackjack.domain
 
-import blackjack.view.InputView
-import blackjack.view.OutputView
-
 class BlackJackGame(
     private val cardPack: CardPack,
     private val dealer: Dealer = Dealer(CardHand(listOf(cardPack.draw(), cardPack.draw()))),
     private var players: List<Player> = emptyList()
 ) {
-    fun entryPlayers(requestPlayersName: List<String>) {
+    fun entryPlayers(requestPlayersName: List<String>, requestBetAmount: (String) -> Int) {
         players = requestPlayersName.map { name ->
             Player(
                 name = PlayerName(name),
                 cardHand = CardHand(listOf(cardPack.draw(), cardPack.draw())),
-                betAmount = BetAmount(InputView.requestBetAmount(name))
+                betAmount = BetAmount(requestBetAmount(name))
             )
         }
     }
 
     fun showParticipants() = Pair(dealer, players)
 
-    fun drawAdditionalCards() = players.forEach { player ->
-        askToDrawAdditionalCardForPlayer(player)
-    }
-
-    private fun askToDrawAdditionalCardForPlayer(player: Player) {
-        do {
-            val drawFlag = InputView.requestAdditionalDraw(player)
-        } while (drawFlag && drawAdditionalCardForPlayer(player) == DrawState.POSSIBLE)
-
-        if (player.cardHand.size == CardHand.INITIAL_CARDS_SIZE) {
-            OutputView.printCardResults(player)
-        }
-    }
-
-    private fun drawAdditionalCardForPlayer(player: Player): DrawState {
+    fun drawAdditionalCardForPlayer(player: Player): DrawState {
         val drawState = player.drawCard(cardPack)
         if (cardPack.isEmpty()) {
             cardPack.addCardDeck()
         }
-        OutputView.printCardResults(player)
 
         return drawState
     }
