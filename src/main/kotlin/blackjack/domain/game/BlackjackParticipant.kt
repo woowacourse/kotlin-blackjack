@@ -10,11 +10,7 @@ class BlackjackParticipant private constructor(
 ) {
     companion object {
         fun of(dealer: Dealer, names: List<String>, money: (String) -> (BettingMoney)): BlackjackParticipant {
-            val players = mutableListOf<Player>()
-            names.forEach { name ->
-                players.add(Player(name, money(name)))
-            }
-            return BlackjackParticipant(dealer, players)
+            return BlackjackParticipant(dealer, names.map { Player(it, money(it)) })
         }
     }
 }
