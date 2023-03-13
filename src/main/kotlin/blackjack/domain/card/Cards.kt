@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.card
 
 class Cards(vararg cards: Card) {
     private val _items: MutableList<Card> by lazy { mutableListOf() }
@@ -30,6 +30,8 @@ class Cards(vararg cards: Card) {
     fun isStay(): Boolean = calculateTotalScore() >= STAY_SCORE
 
     private fun hasAce(): Boolean = _items.any(Card::isAce)
+
+    fun isBlackjack(): Boolean = (calculateTotalScore() == BLACKJACK_SCORE) && (items.size == 2)
 
     companion object {
         private const val BONUS_SCORE = 10

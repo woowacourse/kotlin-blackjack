@@ -1,14 +1,14 @@
 package blackjack.view
 
-import blackjack.domain.BlackjackResult
-import blackjack.domain.Card
-import blackjack.domain.CardNumber
-import blackjack.domain.CardResult
-import blackjack.domain.Dealer
-import blackjack.domain.MatchResult
-import blackjack.domain.Participant
-import blackjack.domain.Player
-import blackjack.domain.Suit
+import blackjack.domain.card.Card
+import blackjack.domain.card.CardNumber
+import blackjack.domain.card.Suit
+import blackjack.domain.participant.Dealer
+import blackjack.domain.participant.Participant
+import blackjack.domain.participant.Player
+import blackjack.domain.result.BlackjackResult
+import blackjack.domain.result.CardResult
+import blackjack.domain.result.MatchResult
 
 object OutputView {
     private const val SEPARATOR = ", "
@@ -51,7 +51,7 @@ object OutputView {
 
     private fun printFinalResult(matchResults: List<MatchResult>) {
         printInterval()
-        println("## 최종 승패")
+        println("## 최종 수익")
         printMatchResults(matchResults)
     }
 
@@ -65,14 +65,12 @@ object OutputView {
     }
 
     private fun printDealerResult(result: MatchResult) {
-        println("딜러: ${result.winCount}승 ${result.drawCount}무 ${result.loseCount}패")
+        println("딜러: ${result.total}")
     }
 
     private fun printPlayerResult(matchResult: MatchResult) {
-        val playerName = matchResult.participant.name
-        if (matchResult.winCount > 0) println("$playerName: 승")
-        if (matchResult.drawCount > 0) println("$playerName: 무")
-        if (matchResult.loseCount > 0) println("$playerName: 패")
+        val name: String = matchResult.participant.name
+        println("$name: ${matchResult.total}")
     }
 
     private fun Card.toText(): String = "${number.toText()}${suit.toText()}"

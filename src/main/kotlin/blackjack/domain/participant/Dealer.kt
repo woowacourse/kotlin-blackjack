@@ -1,4 +1,6 @@
-package blackjack.domain
+package blackjack.domain.participant
+
+import blackjack.domain.card.Card
 
 class Dealer : Participant(DEALER_NAME) {
     override fun getFirstOpenCards(): List<Card> = listOf(getFirstCard())
