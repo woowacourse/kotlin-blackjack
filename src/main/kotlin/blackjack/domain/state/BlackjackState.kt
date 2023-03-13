@@ -5,7 +5,9 @@ import blackjack.domain.card.Cards
 import blackjack.domain.money.BetMoney
 import blackjack.domain.money.Money
 
-class BlackjackState(cards: Cards, override val earningRate: Double = 1.5) : FinishedState(cards) {
+class BlackjackState(cards: Cards) : FinishedState(cards) {
+    override val earningRate: Double = 1.5
+
     constructor(vararg cards: Card) : this(Cards(*cards))
 
     init {

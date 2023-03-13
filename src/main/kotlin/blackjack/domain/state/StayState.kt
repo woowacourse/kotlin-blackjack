@@ -5,7 +5,9 @@ import blackjack.domain.card.Cards
 import blackjack.domain.money.BetMoney
 import blackjack.domain.money.Money
 
-class StayState(cards: Cards, override val earningRate: Double = 1.0) : FinishedState(cards) {
+class StayState(cards: Cards) : FinishedState(cards) {
+    override val earningRate: Double = 1.0
+
     constructor(vararg cards: Card) : this(Cards(*cards))
 
     override fun profit(other: CardState, betMoney: BetMoney): Money {

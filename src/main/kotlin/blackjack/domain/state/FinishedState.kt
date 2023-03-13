@@ -4,7 +4,7 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
 
 abstract class FinishedState(cards: Cards) : CardState(cards) {
-    abstract val earningRate: Double
+    protected abstract val earningRate: Double
     override val isRunning: Boolean = false
 
     init {
