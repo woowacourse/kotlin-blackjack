@@ -5,7 +5,7 @@ data class Players(val players: List<Player>) : List<Player> by players {
         require(players.size in PLAYER_MIN..PLAYER_MAX) { PLAYER_COUNT_ERROR }
     }
 
-    fun getGameProfitMoney(dealer: Participant): List<Result> = players.map { Result(it, it.getProfitMoney(dealer)) }
+    fun getGameProfitMoney(participant: Participant): List<Result> = players.map { Result(it, it.getProfitMoney(participant)) }
 
     companion object {
         private const val PLAYER_MIN = 1
