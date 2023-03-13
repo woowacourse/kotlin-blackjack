@@ -4,14 +4,16 @@ import blackjack.domain.card.CardDeck
 import blackjack.domain.result.GameResult
 
 class Participants(private val participants: List<Participant>) {
-    private val dealer = getDealer()
-    private val players = getPlayers()
+    private val dealer: Participant
+    private val players: List<Participant> = getPlayers()
 
     init {
         require(participants.size in MINIMUM_PARTICIPANTS..MAXIMUM_PARTICIPANTS) {
             "블랙잭은 딜러를 포함하여 최소 ${MINIMUM_PARTICIPANTS}명에서 최대 ${MAXIMUM_PARTICIPANTS}명의 플레이어가 참여 가능합니다. (현재 플레이어수 : ${participants.size}명)"
         }
-        requireNotNull(dealer) { "참여자에 딜러가 포함되어 있지 않습니다." }
+        this.dealer = requireNotNull(participants.find { it is Dealer }) {
+            "참여자에 딜러가 포함되어 있지 않습니다."
+        }
     }
 
     fun drawFirst(
@@ -57,11 +59,11 @@ class Participants(private val participants: List<Participant>) {
 
     fun getPlayers(): List<Participant> = participants.filterIsInstance<Player>()
 
-    fun getDealer(): Participant? = participants.firstOrNull { it is Dealer }
+    fun getDealer(): Participant = this.dealer
 
-    private fun dealerFirst(): List<Participant> = listOf(dealer!!) + players
+    private fun dealerFirst(): List<Participant> = listOf(this.dealer) + players
 
-    private fun playersFirst(): List<Participant> = players + dealer!!
+    private fun playersFirst(): List<Participant> = players + this.dealer
 
     companion object {
         private const val MINIMUM_PARTICIPANTS = 2
