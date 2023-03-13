@@ -86,7 +86,7 @@ class BlackjackManager(
 
     private fun provideCard(player: Player) {
         cardDeck.apply {
-            val card = provide() ?: return
+            val card = provide() ?: throw IllegalArgumentException(NO_CARD_MESSAGE)
             player.addCard(card)
         }
     }
@@ -95,5 +95,9 @@ class BlackjackManager(
         return participants.values.map {
             ParticipantProfit(it, it.calculateEarningRate(dealer))
         }
+    }
+
+    companion object {
+        private const val NO_CARD_MESSAGE = "[ERROR] 더 이상 발급할 수 있는 카드가 없습니다."
     }
 }
