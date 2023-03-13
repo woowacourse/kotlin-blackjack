@@ -36,16 +36,20 @@ class BlackJackGame(
     }
 
     private fun drawAdditionalCardForPlayer(player: Player): DrawState {
-        val drawState = player.drawCard(cardPack.draw())
-
+        val drawState = player.drawCard(cardPack)
+        if (cardPack.isEmpty()) {
+            cardPack.addCardDeck()
+        }
         OutputView.printCardResults(player)
 
         return drawState
     }
 
     fun drawAdditionalCardForDealer() {
-        val drawResult = dealer.drawCard(cardPack.draw())
-
+        val drawResult = dealer.drawCard(cardPack)
+        if (cardPack.isEmpty()) {
+            cardPack.addCardDeck()
+        }
         OutputView.printIsDealerReceivedCard(drawResult)
     }
 

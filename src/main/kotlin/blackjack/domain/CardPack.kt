@@ -3,22 +3,13 @@ package blackjack.domain
 import java.util.LinkedList
 
 class CardPack {
-    private val _cards: LinkedList<Card> = LinkedList(Card.ALL_CARDS.shuffled())
-    val cards
-        get() = LinkedList(_cards)
+    private val cards: LinkedList<Card> = LinkedList(Card.ALL_CARDS.shuffled())
 
-    init {
-        cards.shuffle()
-    }
+    fun draw(): Card = cards.removeFirst()
 
-    fun draw(): Card {
-        val card = _cards.removeFirst()
+    fun isEmpty() = cards.isEmpty()
 
-        if (cards.size == 0) {
-            _cards.addAll(Card.ALL_CARDS)
-            _cards.shuffle()
-        }
-
-        return card
+    fun addCardDeck() {
+        cards.addAll(LinkedList(Card.ALL_CARDS.shuffled()))
     }
 }

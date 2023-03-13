@@ -4,6 +4,7 @@ import blackjack.domain.BetAmount
 import blackjack.domain.Card
 import blackjack.domain.CardHand
 import blackjack.domain.CardNumber
+import blackjack.domain.CardPack
 import blackjack.domain.DrawState
 import blackjack.domain.Player
 import blackjack.domain.PlayerName
@@ -18,7 +19,7 @@ class PlayerTest {
         val player = createPlayer(CardNumber.K, CardNumber.K)
 
         assertThat(
-            player.drawCard(card)
+            player.drawCard(CardPack())
         ).isEqualTo(DrawState.IMPOSSIBLE)
     }
 

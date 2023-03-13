@@ -14,8 +14,11 @@ class Player(
         return DrawState.POSSIBLE
     }
 
-    fun drawCard(card: Card): DrawState {
-        cardHand.draw(card)
+    fun drawCard(cardPack: CardPack): DrawState {
+        if (cardPack.isEmpty()) {
+            cardPack.addCardDeck()
+        }
+        cardHand.draw(cardPack.draw())
 
         return isPossibleToDrawAdditionalCard()
     }

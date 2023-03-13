@@ -12,9 +12,13 @@ class Dealer(
         return DrawState.POSSIBLE
     }
 
-    fun drawCard(card: Card): DrawResult {
+    fun drawCard(cardPack: CardPack): DrawResult {
+        if (cardPack.isEmpty()) {
+            cardPack.addCardDeck()
+        }
+
         if (isPossibleToDraw() == DrawState.POSSIBLE) {
-            cardHand.draw(card)
+            cardHand.draw(cardPack.draw())
 
             return DrawResult.Success
         }

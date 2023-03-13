@@ -1,31 +1,35 @@
 package domain
 
+import blackjack.domain.Card
+import blackjack.domain.CardHand
+import blackjack.domain.CardNumber
 import blackjack.domain.CardPack
+import blackjack.domain.Dealer
+import blackjack.domain.Shape
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class CardPackTest {
 
     @Test
-    fun `게임 시작 시 카드팩은 56장으로 시작한다`() {
-        val cardPack = CardPack()
-
-        assertThat(cardPack.cards.size).isEqualTo(56)
-    }
-
-    @Test
-    fun `한장을 뽑으면 카드 팩에서 한장 제거된다`() {
-        val cardPack = CardPack()
-
-        cardPack.draw()
-        assertThat(cardPack.cards.size).isEqualTo(55)
-    }
-
-    @Test
-    fun `카드팩 내의 카드가 0장이 되면 카드 덱 하나를 추가한다`() {
+    fun `카드팩에서 카드덱 56장을 모두 뽑으면 카드팩이 빈다`() {
         val cardPack = CardPack()
 
         repeat(56) { cardPack.draw() }
-        assertThat(cardPack.cards.size).isEqualTo(56)
+        assertThat(cardPack.isEmpty()).isTrue
+    }
+
+    @Test
+    fun `카드팩이 비게되면 다음 카드 뽑기전 카드덱을 하나 추가하여 카드팩이 채워져있다`() {
+        val cardPack = CardPack()
+        val dealer = createDealer()
+
+        repeat(56) { cardPack.draw() }
+        dealer.drawCard(cardPack)
+        assertThat(cardPack.isEmpty()).isFalse
+    }
+
+    private fun createDealer(): Dealer {
+        return Dealer(CardHand(listOf(Card(CardNumber.TWO, Shape.SPADE), Card(CardNumber.FOUR, Shape.SPADE))))
     }
 }
