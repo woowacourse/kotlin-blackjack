@@ -36,8 +36,8 @@ class PlayerTest {
     @Test
     fun `카드의 합이 21이 넘지 않으면 카드를 뽑을 수 있는 상태이다`() {
         val cards = Cards(Card(Rank.KING, Suit.DIAMOND), Card(Rank.ACE, Suit.SPADE), Card(Rank.JACK, Suit.CLOVER))
-        val player = Player.of(cards, "jason", 1_000L)
-        assertThat(player.isPossibleDrawCard()).isTrue
+        val player = Player.of(cards, "jason", 1_000L) { true }
+        assertThat(player.isHit()).isTrue
     }
 
     @Test

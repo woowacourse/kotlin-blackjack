@@ -8,10 +8,8 @@ class Player private constructor(
 ) : Participant(cards, name) {
     override fun getFirstOpenCards(): Cards = cards
 
-    override fun isPossibleDrawCard(): Boolean = !isBust()
-
     override fun isHit(): Boolean {
-        return isPossibleDrawCard() && needToDraw(name.value)
+        return !isBust() && needToDraw(name.value)
     }
 
     override fun getProfitMoney(other: Participant): Profit {

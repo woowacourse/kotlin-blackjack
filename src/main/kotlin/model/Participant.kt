@@ -2,7 +2,6 @@ package model
 
 abstract class Participant(val cards: Cards, val name: Name) {
     abstract fun getFirstOpenCards(): Cards
-    abstract fun isPossibleDrawCard(): Boolean
     abstract fun isHit(): Boolean
     abstract fun getProfitMoney(other: Participant): Profit
     abstract fun isDealer(): Boolean

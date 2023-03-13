@@ -43,7 +43,7 @@ class DealerTest {
         val cardDeck = CardDeck(Card(Rank.JACK, Suit.DIAMOND), Card(Rank.SIX, Suit.CLOVER))
         val dealer = Dealer()
         dealer.drawFirst(cardDeck)
-        assertThat(dealer.isPossibleDrawCard()).isTrue
+        assertThat(dealer.isHit()).isTrue
     }
 
     @Test
@@ -51,7 +51,7 @@ class DealerTest {
         val cardDeck = CardDeck(Card(Rank.JACK, Suit.DIAMOND), Card(Rank.SEVEN, Suit.CLOVER))
         val dealer = Dealer()
         dealer.drawFirst(cardDeck)
-        assertThat(dealer.isPossibleDrawCard()).isFalse
+        assertThat(dealer.isHit()).isFalse
     }
 
     @Test
