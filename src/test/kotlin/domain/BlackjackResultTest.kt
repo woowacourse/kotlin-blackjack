@@ -18,10 +18,10 @@ class BlackjackResultTest {
     fun getResult() {
         val dealer = Dealer(Cards(mutableListOf(Card(Shape.SPADE, CardValue.TWO))))
         val players = listOf(Player("pingu", Cards(mutableListOf(Card(Shape.DIAMOND, CardValue.SIX))), Money(5000)))
-        val blackjackResult = BlackjackResult(dealer, players)
 
+        val blackjackResult = BlackjackResult(dealer, players).getResult()
         val expect = ParticipantsResult(dealer, listOf(PlayerResult(players.first(), 5000)))
 
-        assertThat(blackjackResult.getResult()).isEqualTo(expect)
+        assertThat(blackjackResult).isEqualTo(expect)
     }
 }

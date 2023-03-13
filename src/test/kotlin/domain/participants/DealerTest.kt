@@ -50,7 +50,10 @@ class DealerTest {
         )
         val player =
             Player("jack", Cards(mutableListOf(Card(Shape.HEART, CardValue.JACK), Card(Shape.HEART, CardValue.ACE))), Money(100))
-        assertThat(dealer.judgePlayerResult(player.ownCards)).isEqualTo(Result.DRAW)
+
+        val result = dealer.judgePlayerResult(player.ownCards)
+
+        assertThat(result).isEqualTo(Result.DRAW)
     }
 
     @Test
@@ -75,7 +78,10 @@ class DealerTest {
                 ),
                 Money(100)
             )
-        assertThat(dealer.judgePlayerResult(player.ownCards)).isEqualTo(Result.LOSS)
+
+        val result = dealer.judgePlayerResult(player.ownCards)
+
+        assertThat(result).isEqualTo(Result.LOSS)
     }
 
     @Test
@@ -90,7 +96,10 @@ class DealerTest {
             )
         )
         val player = Player("jack", Cards(mutableListOf(Card(Shape.HEART, CardValue.JACK))), Money(100))
-        assertThat(dealer.judgePlayerResult(player.ownCards)).isEqualTo(Result.WIN)
+
+        val result = dealer.judgePlayerResult(player.ownCards)
+
+        assertThat(result).isEqualTo(Result.WIN)
     }
 
     @Test
@@ -115,7 +124,10 @@ class DealerTest {
             ),
             Money(100)
         )
-        assertThat(dealer.judgePlayerResult(player.ownCards)).isEqualTo(Result.LOSS)
+
+        val result = dealer.judgePlayerResult(player.ownCards)
+
+        assertThat(result).isEqualTo(Result.LOSS)
     }
 
     @Test
@@ -132,7 +144,10 @@ class DealerTest {
             ),
             Money(100)
         )
-        assertThat(dealer.judgePlayerResult(player.ownCards)).isEqualTo(Result.LOSS)
+
+        val result = dealer.judgePlayerResult(player.ownCards)
+
+        assertThat(result).isEqualTo(Result.LOSS)
     }
 
     @Test
@@ -157,6 +172,9 @@ class DealerTest {
             ),
             Money(100)
         )
-        assertThat(dealer.judgePlayerResult(player.ownCards)).isEqualTo(Result.DRAW)
+
+        val result = dealer.judgePlayerResult(player.ownCards)
+
+        assertThat(result).isEqualTo(Result.DRAW)
     }
 }
