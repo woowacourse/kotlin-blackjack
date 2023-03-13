@@ -12,6 +12,8 @@ class Score(hardScore: Int, hasAce: Boolean = false) {
 
     val isBust: Boolean = value > BLACKJACK_NUMBER
 
+    val isDealerAvailable: Boolean = value < DEALER_MIN_NUMBER
+
     operator fun compareTo(score: Score): Int = value.compareTo(score.value)
 
     operator fun plus(score: Score): Score = Score(value + score.value)
@@ -20,5 +22,6 @@ class Score(hardScore: Int, hasAce: Boolean = false) {
         private const val BLACKJACK_NUMBER = 21
         private const val DIFF_SOFT_AND_HARD_ACE_SCORE = 10
         private const val SOFT_ACE_AVAILABLE_SCORE = 11
+        private const val DEALER_MIN_NUMBER = 17
     }
 }

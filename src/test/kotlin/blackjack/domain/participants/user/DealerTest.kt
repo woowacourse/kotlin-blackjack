@@ -18,6 +18,7 @@ class DealerTest {
         val dealer = Dealer()
         dealer.draw(CLOVER_QUEEN)
         dealer.draw(CLOVER_SEVEN)
+        dealer.stay()
         assertThat(dealer.state).isInstanceOf(Stay::class.java)
     }
 
@@ -41,12 +42,15 @@ class DealerTest {
 
         data.dealer.draw(CLOVER_NINE)
         data.dealer.draw(CLOVER_EIGHT)
+        data.dealer.stay()
 
         data.guests[0].draw(CLOVER_TEN)
         data.guests[0].draw(CLOVER_NINE)
+        data.guests[0].stay()
 
         data.guests[1].draw(CLOVER_NINE)
         data.guests[1].draw(CLOVER_SEVEN)
+        data.guests[1].stay()
 
         val profit = data.participants.dealer.calculateProfit(data.participants.guests)
         assertThat(profit).isEqualTo(1000)

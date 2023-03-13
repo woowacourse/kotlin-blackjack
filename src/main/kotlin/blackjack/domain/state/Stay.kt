@@ -17,7 +17,6 @@ class Stay(cards: Cards) : State(cards) {
             is Bust -> WIN
             is BlackJack -> compareBlackJack()
             is Stay -> compareScore(otherState.score)
-            is Hit -> compareScore(otherState.score)
             else -> throw IllegalStateException(ERROR_INVALID_STATE)
         }
     }

@@ -20,12 +20,17 @@ class BlackJackGame {
         }
 
     fun dealerTurn(dealer: Dealer, cardDeck: CardDeck, output: () -> Unit) {
-        if (dealer.isHit) dealer.draw(cardDeck.drawCard())
+        val card = cardDeck.drawCard()
+        dealer.draw(card).onFailure { cardDeck.putCard(card) }
+        dealer.stay()
         output()
     }
 
     fun guestsTurn(guests: List<Guest>, cardDeck: CardDeck, output: (User) -> Unit) =
-        guests.forEach { guest -> guestTurn(guest, cardDeck, output) }
+        guests.forEach { guest ->
+            guestTurn(guest, cardDeck, output)
+            guest.stay()
+        }
 
     private fun guestTurn(guest: Guest, cardDeck: CardDeck, output: (User) -> Unit) {
         if (guest.isHit.not()) return
@@ -36,8 +41,9 @@ class BlackJackGame {
     }
 
     private fun guestDraw(guest: Guest, cardDeck: CardDeck, output: (User) -> Unit) {
-        guest.draw(cardDeck.drawCard())
+        val card = cardDeck.drawCard()
+        guest.draw(card).onFailure { cardDeck.putCard(card) }
         output(guest)
-        if (guest.isHit) { guestTurn(guest, cardDeck, output) }
+        guestTurn(guest, cardDeck, output)
     }
 }

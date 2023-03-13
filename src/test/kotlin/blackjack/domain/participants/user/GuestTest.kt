@@ -31,12 +31,15 @@ class GuestTest {
 
         data.dealer.draw(CLOVER_NINE)
         data.dealer.draw(CLOVER_EIGHT)
+        data.dealer.stay()
 
         data.guests[0].draw(CLOVER_TEN)
         data.guests[0].draw(CLOVER_NINE)
+        data.guests[0].stay()
 
         data.guests[1].draw(CLOVER_NINE)
         data.guests[1].draw(CLOVER_SEVEN)
+        data.guests[1].stay()
 
         assertAll(
             { assertThat(data.guests[0].calculateProfit(data.dealer)).isEqualTo(1000) },

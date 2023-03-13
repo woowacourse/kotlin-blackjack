@@ -52,4 +52,16 @@ class HitTest {
         // then
         assertThat(state).isInstanceOf(Bust::class.java)
     }
+
+    @Test
+    fun `히트에서 스테이로 갈 수 있다`() {
+        // given
+        var state: State = FirstTurn().draw(CLOVER_KING).draw(CLOVER_NINE)
+
+        // when
+        state = state.stay()
+
+        // then
+        assertThat(state).isInstanceOf(Stay::class.java)
+    }
 }

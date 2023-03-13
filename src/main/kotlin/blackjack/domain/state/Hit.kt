@@ -9,9 +9,9 @@ class Hit(cards: Cards) : State(cards) {
         return when {
             newCards.calculateScore().isBlackJack -> BlackJack(newCards)
             newCards.calculateScore().isBust -> Bust(newCards)
-            else -> Hit(cards + card)
+            else -> Hit(newCards)
         }
     }
 
-    override fun matchWith(otherState: State): Outcome = Stay(cards).matchWith(otherState)
+    override fun stay(): Stay = Stay(cards)
 }

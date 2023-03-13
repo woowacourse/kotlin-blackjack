@@ -8,6 +8,7 @@ import blackjack.domain.state.Fixtures.CLOVER_NINE
 import blackjack.domain.state.Fixtures.CLOVER_QUEEN
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 class OutcomeTest {
     @Test
@@ -80,5 +81,13 @@ class OutcomeTest {
         val guestState = Stay(Cards(CLOVER_KING, CLOVER_NINE))
 
         assertThat(guestState.matchWith(dealerState)).isEqualTo(Outcome.LOSE)
+    }
+
+    @Test
+    fun `히트로 비교하면 에러가 발생한다`() {
+        val dealerState = Hit(Cards(CLOVER_KING, CLOVER_QUEEN))
+        val guestState = Hit(Cards(CLOVER_KING, CLOVER_NINE))
+
+        assertThrows<IllegalStateException> { guestState.matchWith(dealerState) }
     }
 }
