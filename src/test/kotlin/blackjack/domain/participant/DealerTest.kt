@@ -1,7 +1,10 @@
 package blackjack.domain.participant
 
+import blackjack.domain.DIAMOND_ACE
+import blackjack.domain.DIAMOND_JACK
 import blackjack.domain.SPADE_ACE
 import blackjack.domain.SPADE_FIVE
+import blackjack.domain.SPADE_FOUR
 import blackjack.domain.SPADE_JACK
 import blackjack.domain.SPADE_KING
 import blackjack.domain.SPADE_SIX
@@ -10,7 +13,11 @@ import blackjack.domain.SPADE_TWO
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
 import blackjack.domain.card.Suit
+import blackjack.domain.money.BetMoney
+import blackjack.domain.money.Money
+import blackjack.domain.state.BlackjackState
 import blackjack.domain.state.HitState
+import blackjack.domain.state.StayState
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -66,6 +73,36 @@ class DealerTest {
         assertThat(dealer.getCards()).isEqualTo(
             listOf(SPADE_ACE, SPADE_JACK)
         )
+    }
+
+    @Test
+    fun `딜러의 수익은 플레이어들 손익의 반대이다`() {
+        val dealer = Dealer(cardState = StayState(SPADE_KING, SPADE_JACK))
+        val actual = dealer.getProfit(
+            listOf(
+                // 수익 : -1000
+                Player(
+                    "buna",
+                    money = BetMoney(1000),
+                    cardState = StayState(SPADE_TWO, SPADE_THREE)
+                ),
+                // 수익 : -1000
+                Player(
+                    "bandal",
+                    money = BetMoney(1000),
+                    cardState = StayState(SPADE_FOUR, SPADE_FIVE)
+                ),
+                // 수익 : 6000
+                Player(
+                    "glo",
+                    money = BetMoney(4000),
+                    cardState = BlackjackState(DIAMOND_ACE, DIAMOND_JACK)
+                ),
+            )
+        )
+        val expected = Money(-4000)
+
+        assertThat(actual).isEqualTo(expected)
     }
 
     @ParameterizedTest
