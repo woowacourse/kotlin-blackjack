@@ -1,7 +1,9 @@
 package blackjack.domain.blackjack
 
 import blackjack.domain.card.CardDeck
-import blackjack.domain.participants.* // ktlint-disable no-wildcard-imports
+import blackjack.domain.participants.Dealer
+import blackjack.domain.participants.Guest
+import blackjack.domain.participants.User
 
 class BlackJackGame {
     lateinit var getCommand: (String) -> Boolean
