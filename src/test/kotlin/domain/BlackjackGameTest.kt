@@ -24,8 +24,8 @@ class BlackjackGameTest {
     )
 
     val names = Names(listOf("pingu"))
-    private fun insertBetAmount(): List<Money> {
-        return listOf(Money(1000))
+    private fun insertBetAmount(): Money {
+        return Money(1000)
     }
 
     private val blackjackGame = BlackjackGame(Names(listOf("pingu")), { insertBetAmount() }, deck)

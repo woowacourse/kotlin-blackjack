@@ -10,7 +10,7 @@ class BlackjackController {
 
     fun startGame() {
         val names = insertNames()
-        val blackjackGame = BlackjackGame(names, this::insertBetAmount)
+        val blackjackGame = BlackjackGame(names, this::repeatForRightAnswer)
         OutputView.printBlackjackSetting(blackjackGame.players, blackjackGame.dealer)
         val result = blackjackGame.play(
             InputView::inputRepeatGetCard,
@@ -25,12 +25,6 @@ class BlackjackController {
         return runCatching { Names(names) }
             .onFailure { println(it.message) }
             .getOrNull() ?: insertNames()
-    }
-
-    private fun insertBetAmount(names: Names): List<Money> {
-        return names.userNames.map {
-            repeatForRightAnswer(it)
-        }
     }
 
     private fun repeatForRightAnswer(player: String): Money {
