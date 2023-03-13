@@ -3,21 +3,25 @@ package blackjack.domain
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.MethodSource
+import java.util.stream.Stream
 
 class CardBunchTest {
     @Test
     fun `카드 묶음을 생성한다`() {
-        val card1 = Card(Shape.HEART, CardNumber.SEVEN)
-        val card2 = Card(Shape.HEART, CardNumber.SIX)
+        val card1 = Card.get(Shape.HEART, CardNumber.SEVEN)
+        val card2 = Card.get(Shape.HEART, CardNumber.SIX)
 
         assertDoesNotThrow { CardBunch(card1, card2) }
     }
 
     @Test
     fun `카드를 추가한다`() {
-        val card1 = Card(Shape.HEART, CardNumber.SEVEN)
-        val card2 = Card(Shape.HEART, CardNumber.SIX)
-        val card3 = Card(Shape.HEART, CardNumber.NINE)
+        val card1 = Card.get(Shape.HEART, CardNumber.SEVEN)
+        val card2 = Card.get(Shape.HEART, CardNumber.SIX)
+        val card3 = Card.get(Shape.HEART, CardNumber.NINE)
 
         val cardBunch = CardBunch(card1, card2)
         cardBunch.addCard(card3)
@@ -26,47 +30,11 @@ class CardBunchTest {
     }
 
     @Test
-    fun `6,7,9카드의 총합은 22다`() {
-        val card1 = Card(Shape.HEART, CardNumber.SEVEN)
-        val card2 = Card(Shape.HEART, CardNumber.SIX)
-        val card3 = Card(Shape.HEART, CardNumber.NINE)
-
-        val cardBunch = CardBunch(card1, card2, card3)
-
-        val totalScore = cardBunch.getSumOfCards()
-        assertThat(totalScore).isEqualTo(22)
-    }
-
-    @Test
-    fun `Ace,2,3카드의 총합은 16이다`() {
-        val card1 = Card(Shape.HEART, CardNumber.ACE)
-        val card2 = Card(Shape.HEART, CardNumber.TWO)
-        val card3 = Card(Shape.HEART, CardNumber.THREE)
-
-        val cardBunch = CardBunch(card1, card2, card3)
-
-        val totalScore = cardBunch.getSumOfCards()
-        assertThat(totalScore).isEqualTo(16)
-    }
-
-    @Test
-    fun `Ace,Jack,King카드의 총합은 21이다`() {
-        val card1 = Card(Shape.HEART, CardNumber.ACE)
-        val card2 = Card(Shape.HEART, CardNumber.JACK)
-        val card3 = Card(Shape.HEART, CardNumber.KING)
-
-        val cardBunch = CardBunch(card1, card2, card3)
-
-        val totalScore = cardBunch.getSumOfCards()
-        assertThat(totalScore).isEqualTo(21)
-    }
-
-    @Test
     fun `카드의 총합이 21이 넘었다면 isBurst함수가 true를 반환한다`() {
-        val card1 = Card(Shape.HEART, CardNumber.ACE)
-        val card2 = Card(Shape.HEART, CardNumber.JACK)
-        val card3 = Card(Shape.HEART, CardNumber.KING)
-        val card4 = Card(Shape.HEART, CardNumber.TWO)
+        val card1 = Card.get(Shape.HEART, CardNumber.ACE)
+        val card2 = Card.get(Shape.HEART, CardNumber.JACK)
+        val card3 = Card.get(Shape.HEART, CardNumber.KING)
+        val card4 = Card.get(Shape.HEART, CardNumber.TWO)
 
         val cardBunch = CardBunch(card1, card2, card3, card4)
 
@@ -77,9 +45,9 @@ class CardBunchTest {
 
     @Test
     fun `카드의 총합이 21이 넘었다면 isBurst함수가 false를 반환한다`() {
-        val card1 = Card(Shape.HEART, CardNumber.ACE)
-        val card2 = Card(Shape.HEART, CardNumber.JACK)
-        val card3 = Card(Shape.HEART, CardNumber.KING)
+        val card1 = Card.get(Shape.HEART, CardNumber.ACE)
+        val card2 = Card.get(Shape.HEART, CardNumber.JACK)
+        val card3 = Card.get(Shape.HEART, CardNumber.KING)
 
         val cardBunch = CardBunch(card1, card2, card3)
 
@@ -88,10 +56,10 @@ class CardBunchTest {
 
     @Test
     fun `ACE카드가 4장이면 합계는 14다`() {
-        val card1 = Card(Shape.HEART, CardNumber.ACE)
-        val card2 = Card(Shape.SPADE, CardNumber.ACE)
-        val card3 = Card(Shape.DIAMOND, CardNumber.ACE)
-        val card4 = Card(Shape.CLOVER, CardNumber.ACE)
+        val card1 = Card.get(Shape.HEART, CardNumber.ACE)
+        val card2 = Card.get(Shape.SPADE, CardNumber.ACE)
+        val card3 = Card.get(Shape.DIAMOND, CardNumber.ACE)
+        val card4 = Card.get(Shape.CLOVER, CardNumber.ACE)
 
         val cardBunch = CardBunch(card1, card2, card3, card4)
 
@@ -100,11 +68,73 @@ class CardBunchTest {
 
     @Test
     fun `ACE카드가 2장이면 합계는 12다`() {
-        val card1 = Card(Shape.HEART, CardNumber.ACE)
-        val card2 = Card(Shape.SPADE, CardNumber.ACE)
+        val card1 = Card.get(Shape.HEART, CardNumber.ACE)
+        val card2 = Card.get(Shape.SPADE, CardNumber.ACE)
 
         val cardBunch = CardBunch(card1, card2)
 
         assertThat(cardBunch.getSumOfCards()).isEqualTo(12)
+    }
+
+    @Test
+    fun `카드 리스트로 카드뭉치를 생성한다`() {
+        // given
+        val cards = mutableListOf(
+            Card.get(Shape.HEART, CardNumber.ACE), Card.get(Shape.HEART, CardNumber.TWO)
+        )
+
+        // when
+        val cardBunch = CardBunch(cards)
+
+        // then
+        assertThat(cardBunch.size()).isEqualTo(2)
+    }
+
+    @Test
+    fun `카드 뭉치는 외부에서 변경할 수 없다`() {
+        // given
+        val cards = mutableListOf(
+            Card.get(Shape.HEART, CardNumber.ACE), Card.get(Shape.HEART, CardNumber.TWO)
+        )
+
+        // when
+        val cardBunch = CardBunch(cards)
+        cards.clear()
+
+        // then
+        assertThat(cardBunch.size()).isEqualTo(2)
+    }
+
+    @ParameterizedTest(name = "카드의 합은 {3}이다")
+    @MethodSource("provideCards")
+    fun `합계 테스트`(card1: Card, card2: Card, card3: Card, sum: Int) {
+        val cardBunch = CardBunch(card1, card2, card3)
+        assertThat(cardBunch.getSumOfCards()).isEqualTo(sum)
+    }
+
+    companion object {
+        @JvmStatic
+        fun provideCards(): Stream<Arguments> {
+            return Stream.of(
+                Arguments.of(
+                    Card.get(Shape.HEART, CardNumber.SIX),
+                    Card.get(Shape.HEART, CardNumber.SEVEN),
+                    Card.get(Shape.HEART, CardNumber.NINE),
+                    22
+                ),
+                Arguments.of(
+                    Card.get(Shape.HEART, CardNumber.ACE),
+                    Card.get(Shape.HEART, CardNumber.JACK),
+                    Card.get(Shape.HEART, CardNumber.KING),
+                    21
+                ),
+                Arguments.of(
+                    Card.get(Shape.HEART, CardNumber.ACE),
+                    Card.get(Shape.HEART, CardNumber.TWO),
+                    Card.get(Shape.HEART, CardNumber.THREE),
+                    16
+                ),
+            )
+        }
     }
 }

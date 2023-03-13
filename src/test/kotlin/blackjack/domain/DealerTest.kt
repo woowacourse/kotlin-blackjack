@@ -5,134 +5,181 @@ import org.junit.jupiter.api.Test
 
 class DealerTest {
     @Test
-    fun `딜러 카드의 합이 16보다 작을경우 카드를 받을 수 있다`() {
-        val card1 = Card(Shape.HEART, CardNumber.SIX)
-        val card2 = Card(Shape.HEART, CardNumber.SEVEN)
-        val cardBunch = CardBunch(card1, card2)
+    fun `딜러 카드의 합이 16보다 작을경우 딜러는 카드를 받을 수 있다`() {
+        val cardBunch = CardBunch(
+            Card.get(Shape.HEART, CardNumber.SIX),
+            Card.get(Shape.HEART, CardNumber.SEVEN)
+        )
         val dealer = Dealer(cardBunch)
 
-        assertThat(dealer.canGetCard()).isTrue
+        assertThat(dealer.canHit()).isTrue
     }
 
     @Test
-    fun `딜러 카드의 합이 17보다 클경우 카드를 받을 수 없다`() {
-        val card1 = Card(Shape.HEART, CardNumber.SIX)
-        val card2 = Card(Shape.HEART, CardNumber.SEVEN)
-        val card3 = Card(Shape.HEART, CardNumber.NINE)
-        val cardBunch = CardBunch(card1, card2, card3)
+    fun `딜러 카드의 합이 17보다 클경우 딜러는 카드를 받을 수 없다`() {
+        val cardBunch = CardBunch(
+            Card.get(Shape.HEART, CardNumber.SIX),
+            Card.get(Shape.HEART, CardNumber.SEVEN),
+            Card.get(Shape.HEART, CardNumber.NINE)
+        )
         val dealer = Dealer(cardBunch)
 
-        assertThat(dealer.canGetCard()).isFalse
+        assertThat(dealer.canHit()).isFalse
     }
 
     @Test
     fun `플레이어보다 딜러의 점수가 높으면 딜러가 승리한다`() {
-        val card1 = Card(Shape.HEART, CardNumber.SIX)
-        val card2 = Card(Shape.HEART, CardNumber.SEVEN)
-        val card3 = Card(Shape.HEART, CardNumber.NINE)
-        val playerCardBunch = CardBunch(card1, card2)
-        val dealerCardBunch = CardBunch(card2, card3)
+        val playerCardBunch = CardBunch(
+            Card.get(Shape.HEART, CardNumber.SIX),
+            Card.get(Shape.HEART, CardNumber.SEVEN)
+        )
+        val dealerCardBunch = CardBunch(
+            Card.get(Shape.HEART, CardNumber.SEVEN),
+            Card.get(Shape.HEART, CardNumber.NINE)
+        )
 
-        val player1 = Player("krrong", playerCardBunch)
+        val player1 = Player("krrong", playerCardBunch, BettingMoney(1_000))
         val dealer = Dealer(dealerCardBunch)
 
         val actual = dealer.versusPlayers(listOf(player1))
 
-        assertThat(actual["krrong"]).isEqualTo(Consequence.LOSE)
+        assertThat(actual[player1]).isEqualTo(Consequence.LOSE)
     }
 
     @Test
-    fun `플레이어보다 딜러의 점수가 낮으면 플레이어가 승리한다`() {
-        val card1 = Card(Shape.HEART, CardNumber.SIX)
-        val card2 = Card(Shape.HEART, CardNumber.SEVEN)
-        val card3 = Card(Shape.HEART, CardNumber.NINE)
-        val playerCardBunch = CardBunch(card2, card3)
-        val dealerCardBunch = CardBunch(card1, card2)
+    fun `플레이어보다 딜러의 점수가 낮으면 딜러가 진다`() {
+        val playerCardBunch = CardBunch(
+            Card.get(Shape.HEART, CardNumber.SEVEN),
+            Card.get(Shape.HEART, CardNumber.NINE)
+        )
+        val dealerCardBunch = CardBunch(
+            Card.get(Shape.HEART, CardNumber.SIX),
+            Card.get(Shape.HEART, CardNumber.SEVEN)
+        )
 
-        val player1 = Player("krrong", playerCardBunch)
+        val player1 = Player("krrong", playerCardBunch, BettingMoney(1_000))
         val dealer = Dealer(dealerCardBunch)
 
         val actual = dealer.versusPlayers(listOf(player1))
 
-        assertThat(actual["krrong"]).isEqualTo(Consequence.WIN)
-    }
-
-    @Test
-    fun `딜러의 점수가 21이고 플레이어 점수가 21이 아닌 경우 딜러가 승리한다`() {
-        val card1 = Card(Shape.HEART, CardNumber.NINE)
-        val card2 = Card(Shape.HEART, CardNumber.JACK)
-        val card3 = Card(Shape.HEART, CardNumber.ACE)
-        val playerCardBunch = CardBunch(card1, card2)
-        val dealerCardBunch = CardBunch(card2, card3)
-
-        val player1 = Player("krrong", playerCardBunch)
-        val dealer = Dealer(dealerCardBunch)
-
-        val actual = dealer.versusPlayers(listOf(player1))
-
-        assertThat(actual["krrong"]).isEqualTo(Consequence.LOSE)
+        assertThat(actual[player1]).isEqualTo(Consequence.WIN)
     }
 
     @Test
     fun `플레이어와 딜러의 점수가 같으면 비긴다`() {
-        val card1 = Card(Shape.HEART, CardNumber.SIX)
-        val card2 = Card(Shape.HEART, CardNumber.SEVEN)
-        val playerCardBunch = CardBunch(card1, card2)
-        val dealerCardBunch = CardBunch(card1, card2)
+        val playerCardBunch = CardBunch(
+            Card.get(Shape.HEART, CardNumber.SIX),
+            Card.get(Shape.HEART, CardNumber.SEVEN)
+        )
+        val dealerCardBunch = CardBunch(
+            Card.get(Shape.HEART, CardNumber.SIX),
+            Card.get(Shape.HEART, CardNumber.SEVEN)
+        )
 
-        val player1 = Player("krrong", playerCardBunch)
+        val player1 = Player("krrong", playerCardBunch, BettingMoney(1_000))
         val dealer = Dealer(dealerCardBunch)
 
         val actual = dealer.versusPlayers(listOf(player1))
 
-        assertThat(actual["krrong"]).isEqualTo(Consequence.DRAW)
+        assertThat(actual[player1]).isEqualTo(Consequence.DRAW)
     }
 
     @Test
     fun `플레이어 점수가 21을 넘는 경우 딜러가 이긴다`() {
-        val card1 = Card(Shape.HEART, CardNumber.SIX)
-        val card2 = Card(Shape.HEART, CardNumber.SEVEN)
-        val card3 = Card(Shape.HEART, CardNumber.JACK)
-        val playerCardBunch = CardBunch(card1, card2, card3)
-        val dealerCardBunch = CardBunch(card1, card2)
+        val playerCardBunch = CardBunch(
+            Card.get(Shape.HEART, CardNumber.SIX),
+            Card.get(Shape.HEART, CardNumber.SEVEN),
+            Card.get(Shape.HEART, CardNumber.JACK)
+        )
+        val dealerCardBunch = CardBunch(
+            Card.get(Shape.HEART, CardNumber.SIX),
+            Card.get(Shape.HEART, CardNumber.SEVEN)
+        )
 
-        val player1 = Player("krrong", playerCardBunch)
+        val player1 = Player("krrong", playerCardBunch, BettingMoney(1_000))
         val dealer = Dealer(dealerCardBunch)
 
         val actual = dealer.versusPlayers(listOf(player1))
 
-        assertThat(actual["krrong"]).isEqualTo(Consequence.LOSE)
-    }
-
-    @Test
-    fun `플레이어 점수가 21을 넘는 경우 딜러의 점수가 21을 넘어도 딜러가 이긴다`() {
-        val card1 = Card(Shape.HEART, CardNumber.SIX)
-        val card2 = Card(Shape.HEART, CardNumber.SEVEN)
-        val card3 = Card(Shape.HEART, CardNumber.JACK)
-        val playerCardBunch = CardBunch(card1, card2, card3)
-        val dealerCardBunch = CardBunch(card1, card2, card3)
-
-        val player1 = Player("krrong", playerCardBunch)
-        val dealer = Dealer(dealerCardBunch)
-
-        val actual = dealer.versusPlayers(listOf(player1))
-
-        assertThat(actual["krrong"]).isEqualTo(Consequence.LOSE)
+        assertThat(actual[player1]).isEqualTo(Consequence.LOSE)
     }
 
     @Test
     fun `플레이어의 점수가 21보다 작고 딜러 점수가 21을 넘는 경우 딜러가 진다`() {
-        val card1 = Card(Shape.HEART, CardNumber.SIX)
-        val card2 = Card(Shape.HEART, CardNumber.SEVEN)
-        val card3 = Card(Shape.HEART, CardNumber.JACK)
-        val playerCardBunch = CardBunch(card1, card2)
-        val dealerCardBunch = CardBunch(card1, card2, card3)
+        val playerCardBunch = CardBunch(
+            Card.get(Shape.HEART, CardNumber.SIX),
+            Card.get(Shape.HEART, CardNumber.SEVEN)
+        )
+        val dealerCardBunch = CardBunch(
+            Card.get(Shape.HEART, CardNumber.SIX),
+            Card.get(Shape.HEART, CardNumber.SEVEN),
+            Card.get(Shape.HEART, CardNumber.JACK)
+        )
 
-        val player1 = Player("krrong", playerCardBunch)
+        val player1 = Player("krrong", playerCardBunch, BettingMoney(1_000))
         val dealer = Dealer(dealerCardBunch)
 
         val actual = dealer.versusPlayers(listOf(player1))
 
-        assertThat(actual["krrong"]).isEqualTo(Consequence.WIN)
+        assertThat(actual[player1]).isEqualTo(Consequence.WIN)
+    }
+
+    @Test
+    fun `플레이어와 딜러의 점수가 모두 21을 넘는경우 딜러가 이긴다`() {
+        val playerCardBunch = CardBunch(
+            Card.get(Shape.HEART, CardNumber.SIX),
+            Card.get(Shape.HEART, CardNumber.SEVEN),
+            Card.get(Shape.HEART, CardNumber.JACK)
+        )
+        val dealerCardBunch = CardBunch(
+            Card.get(Shape.HEART, CardNumber.SIX),
+            Card.get(Shape.HEART, CardNumber.SEVEN),
+            Card.get(Shape.HEART, CardNumber.JACK)
+        )
+
+        val player1 = Player("krrong", playerCardBunch, BettingMoney(1_000))
+        val dealer = Dealer(dealerCardBunch)
+
+        val actual = dealer.versusPlayers(listOf(player1))
+
+        assertThat(actual[player1]).isEqualTo(Consequence.LOSE)
+    }
+
+    @Test
+    fun `플레이어와 딜러 모두 블랙잭인 경우 비긴다`() {
+        val playerCardBunch = CardBunch(
+            Card.get(Shape.HEART, CardNumber.ACE),
+            Card.get(Shape.HEART, CardNumber.JACK)
+        )
+        val dealerCardBunch = CardBunch(
+            Card.get(Shape.HEART, CardNumber.ACE),
+            Card.get(Shape.HEART, CardNumber.JACK)
+        )
+
+        val player1 = Player("krrong", playerCardBunch, BettingMoney(1_000))
+        val dealer = Dealer(dealerCardBunch)
+
+        val actual = dealer.versusPlayers(listOf(player1))
+
+        assertThat(actual[player1]).isEqualTo(Consequence.DRAW)
+    }
+
+    @Test
+    fun `딜러가 블랙잭이고 플레이어가 블랙잭이 아닌 경우 딜러가 이긴다`() {
+        val playerCardBunch = CardBunch(
+            Card.get(Shape.HEART, CardNumber.TWO),
+            Card.get(Shape.HEART, CardNumber.JACK)
+        )
+        val dealerCardBunch = CardBunch(
+            Card.get(Shape.HEART, CardNumber.ACE),
+            Card.get(Shape.HEART, CardNumber.JACK)
+        )
+
+        val player1 = Player("krrong", playerCardBunch, BettingMoney(1_000))
+        val dealer = Dealer(dealerCardBunch)
+
+        val actual = dealer.versusPlayers(listOf(player1))
+
+        assertThat(actual[player1]).isEqualTo(Consequence.LOSE)
     }
 }

@@ -1,19 +1,34 @@
 package blackjack.domain
 
-data class Card(val shape: Shape, val cardNumber: CardNumber) {
-    init {
-        require(shape in Shape.values()) { SHAPE_ERROR }
-        require(cardNumber in CardNumber.values()) { NUMBER_ERROR }
+class Card private constructor(val shape: Shape, val cardNumber: CardNumber) {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Card
+
+        if (shape != other.shape) return false
+        if (cardNumber != other.cardNumber) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = shape.hashCode()
+        result = 31 * result + cardNumber.hashCode()
+        return result
     }
 
     companion object {
+        private const val ERROR_NO_CARD = "트럼프 카드에 해당 카드는 없습니다."
+
         private val CARDS: List<Card> = Shape.values().flatMap { shape ->
             CardNumber.all().map { number -> Card(shape, number) }
         }
 
-        fun getAllCards(): MutableList<Card> = CARDS.toMutableList()
+        fun all(): MutableList<Card> = CARDS.toMutableList()
 
-        const val SHAPE_ERROR = "모양은 하트, 다이아, 클로버, 스페이드 중 하나여야 합니다."
-        const val NUMBER_ERROR = "숫자는 2부터 10까지, ACE, JACK, QUEEN, KING만 가능합니다."
+        fun get(shape: Shape, cardNumber: CardNumber): Card =
+            CARDS.find { it == Card(shape, cardNumber) } ?: throw IllegalArgumentException(ERROR_NO_CARD)
     }
 }

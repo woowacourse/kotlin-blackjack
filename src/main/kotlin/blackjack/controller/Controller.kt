@@ -1,5 +1,6 @@
 package blackjack.controller
 
+import blackjack.domain.Calculator
 import blackjack.domain.CardBunch
 import blackjack.domain.CardDeck
 import blackjack.domain.Dealer
@@ -10,24 +11,24 @@ import blackjack.view.OutputView
 class Controller(private val cardDeck: CardDeck) {
     fun runGame() {
         val dealer = makeDealer()
-        val players = makePlayers(InputView.getPlayerNames())
+        val players = makePlayers()
         showInitialCard(dealer, players)
-        players.forEach { player -> askGetCard(player) }
+        players.forEach { player -> askHitPlayer(player) }
         printCardAndScore(dealer, players)
-        printFinalWinOrLose(dealer, players)
+        printFinalProfit(Calculator().calculateDividend(dealer.versusPlayers(players)))
     }
 
     private fun printCardAndScore(dealer: Dealer, players: List<Player>) {
-        showDealerState(dealer)
+        askHitDealer(dealer)
         OutputView.printCardAndScore(dealer, players)
     }
 
-    private fun makePlayers(names: List<String>): List<Player> =
-        names.map { Player(it, makeInitialCardBunch()) }
+    private fun makePlayers(): List<Player> {
+        val names = InputView.getPlayerNames()
+        return names.map { name -> Player(name, CardBunch(cardDeck.drawTwoCards()), InputView.getBettingMoney(name)) }
+    }
 
-    private fun makeDealer(): Dealer = Dealer(makeInitialCardBunch())
-
-    private fun makeInitialCardBunch(): CardBunch = CardBunch(cardDeck.drawCard(), cardDeck.drawCard())
+    private fun makeDealer(): Dealer = Dealer(CardBunch(cardDeck.drawTwoCards()))
 
     private fun showInitialCard(dealer: Dealer, players: List<Player>) {
         OutputView.printDistributeScript(players)
@@ -35,30 +36,24 @@ class Controller(private val cardDeck: CardDeck) {
         players.forEach { OutputView.printPlayerCard(it) }
     }
 
-    private fun askGetCard(player: Player) {
-        while (player.canGetCard()) {
-            if (!isSuccessAddCardToPlayer(player)) return
-        }
-    }
-
-    private fun isSuccessAddCardToPlayer(player: Player): Boolean {
-        if (InputView.getDecision(player)) {
+    private fun askHitPlayer(player: Player) {
+        while (player.canHit()) {
+            if (!InputView.getHitOrNot(player)) break
             player.receiveCard(cardDeck.drawCard())
             OutputView.printPlayerCard(player)
-            return true
         }
         OutputView.printPlayerCard(player)
-        return false
     }
 
-    private fun showDealerState(dealer: Dealer) {
-        val condition = dealer.canGetCard()
-        OutputView.printDealerOverCondition(condition)
-        if (condition) dealer.receiveCard(cardDeck.drawCard())
+    private fun askHitDealer(dealer: Dealer) {
+        while (dealer.canHit()) {
+            OutputView.printDealerState(dealer.canHit())
+            dealer.receiveCard(cardDeck.drawCard())
+        }
+        OutputView.printDealerState(dealer.canHit())
     }
 
-    private fun printFinalWinOrLose(dealer: Dealer, players: List<Player>) {
-        val gameResult = dealer.versusPlayers(players)
-        OutputView.printWinOrLose(gameResult)
+    private fun printFinalProfit(playerProfitBy: Map<Player, Int>) {
+        OutputView.printProfit(playerProfitBy)
     }
 }
