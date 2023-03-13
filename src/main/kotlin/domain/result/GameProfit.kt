@@ -3,22 +3,23 @@ package domain.result
 import domain.money.Money
 import domain.money.Profit
 import domain.person.Participants
+import domain.person.Person
 import domain.person.Player
 
 class GameProfit(
     private val bettingMoneys: Map<Player, Money>,
 ) {
 
-    fun getPlayersProfit(participants: Participants) =
-        participants.players.associateWith { player ->
-            val playerBettingMoney = requireNotNull(bettingMoneys[player]) { BETTING_MONEY_NOT_FOUND_ERROR }
-            player.getPlayerProfit(participants.dealer.state, playerBettingMoney)
+    fun getPersonsProfit(persons: List<Person>, other: Person) =
+        persons.associateWith { person ->
+            val playerBettingMoney = requireNotNull(bettingMoneys[person]) { BETTING_MONEY_NOT_FOUND_ERROR }
+            person.state.profit(other.state, playerBettingMoney)
         }
 
-    fun getDealersProfit(participants: Participants): Profit {
-        val result = participants.players.sumOf { player ->
-            val playerBettingMoney = requireNotNull(bettingMoneys[player]) { BETTING_MONEY_NOT_FOUND_ERROR }
-            participants.dealer.getPlayerProfit(player.state, playerBettingMoney).value
+    fun getPersonProfitTotal(person: Person, others: List<Person>): Profit {
+        val result = others.sumOf { other ->
+            val playerBettingMoney = requireNotNull(bettingMoneys[other]) { BETTING_MONEY_NOT_FOUND_ERROR }
+            person.state.profit(other.state, playerBettingMoney).value
         }
         return Profit(result)
     }

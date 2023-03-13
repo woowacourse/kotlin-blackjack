@@ -3,6 +3,7 @@ package domain
 import domain.card.Deck
 import domain.money.Profit
 import domain.person.Participants
+import domain.person.Person
 import domain.person.Player
 import domain.result.GameProfit
 import domain.state.Started
@@ -53,11 +54,11 @@ class BlackJackGame(private val deck: Deck, private val participants: Participan
     fun judgeResult(
         gameProfit: GameProfit,
         printCardsResult: (Participants) -> Unit,
-        printFinalResult: (Profit, Map<Player, Profit>) -> Unit,
+        printFinalResult: (Profit, Map<Person, Profit>) -> Unit,
     ) {
         printCardsResult(participants)
-        val dealerProfit = gameProfit.getDealersProfit(participants)
-        val playerProfit = gameProfit.getPlayersProfit(participants)
+        val dealerProfit = gameProfit.getPersonProfitTotal(person = participants.dealer, others = participants.players)
+        val playerProfit = gameProfit.getPersonsProfit(persons = participants.players, other = participants.dealer)
         printFinalResult(dealerProfit, playerProfit)
     }
 
