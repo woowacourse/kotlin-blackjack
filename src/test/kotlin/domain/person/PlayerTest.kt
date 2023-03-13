@@ -7,6 +7,8 @@ import domain.card.Hand
 import domain.money.Money
 import domain.money.Profit
 import domain.state.BlackJack
+import domain.state.Finished
+import domain.state.Started
 import domain.state.Stay
 import domain.state.dealerState.DealerFirstTurn
 import org.assertj.core.api.Assertions.assertThat
@@ -25,7 +27,7 @@ class PlayerTest {
             ),
         )
 
-        assertThat(player.isStarted()).isTrue
+        assertThat(player.state is Started).isTrue
     }
 
     @Test
@@ -40,7 +42,7 @@ class PlayerTest {
             ),
         )
 
-        assertThat(player.isFinished()).isTrue
+        assertThat(player.state is Finished).isTrue
     }
 
     @Test
@@ -103,6 +105,6 @@ class PlayerTest {
         val otherHand = Hand(Card(CardShape.HEART, CardNumber.SEVEN))
         val other = DealerFirstTurn(otherHand).draw(Card(CardShape.DIAMOND, CardNumber.TEN))
 
-        assertThat(player.getPlayerProfit(other, Money(10000))).isEqualTo(Profit(10000.0))
+        assertThat(player.state.profit(other, Money(10000))).isEqualTo(Profit(10000.0))
     }
 }

@@ -26,7 +26,7 @@ class DealerTest {
             ),
         )
 
-        assertThat(dealer.getHandCards()).isEqualTo(
+        assertThat(dealer.state.getHandCards()).isEqualTo(
             listOf(
                 Card(CardShape.HEART, CardNumber.TEN),
                 Card(CardShape.HEART, CardNumber.KING),

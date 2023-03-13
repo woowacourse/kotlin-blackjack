@@ -3,7 +3,7 @@ package domain.person
 import domain.card.Card
 import domain.card.CardNumber
 import domain.card.CardShape
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class PersonTest {
@@ -11,7 +11,7 @@ class PersonTest {
     fun `Person 은 이름을 가진다`() {
         val player = Player("베르")
 
-        Assertions.assertThat(player.name).isEqualTo("베르")
+        assertThat(player.name).isEqualTo("베르")
     }
 
     @Test
@@ -25,7 +25,7 @@ class PersonTest {
             ),
         )
 
-        Assertions.assertThat(player.getHandCards()).isEqualTo(
+        assertThat(player.state.getHandCards()).isEqualTo(
             listOf(
                 Card(CardShape.HEART, CardNumber.TEN),
                 Card(CardShape.HEART, CardNumber.KING),
@@ -44,7 +44,7 @@ class PersonTest {
             ),
         )
 
-        Assertions.assertThat(player.getHandCards()).isEqualTo(
+        assertThat(player.state.getHandCards()).isEqualTo(
             listOf(
                 Card(CardShape.HEART, CardNumber.KING),
                 Card(CardShape.HEART, CardNumber.TEN),

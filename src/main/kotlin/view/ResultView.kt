@@ -5,7 +5,6 @@ import domain.constant.BlackJackConstants.DEALER_STAND_CONDITION
 import domain.money.Profit
 import domain.person.Participants
 import domain.person.Person
-import domain.person.Player
 
 class ResultView {
     private fun cardToString(card: Card) =
@@ -22,7 +21,12 @@ class ResultView {
     }
 
     fun printPlayerCards(person: Person) {
-        println(INITIAL_CARDS_SCRIPT.format(person.name, person.getHandCards().joinToString(", ") { cardToString(it) }))
+        println(
+            INITIAL_CARDS_SCRIPT.format(
+                person.name,
+                person.state.getHandCards().joinToString(", ") { cardToString(it) },
+            ),
+        )
     }
 
     fun printDealerGetCardOrNot(isGetCard: Boolean) {
@@ -43,13 +47,13 @@ class ResultView {
         println(
             RESULT_CARDS_SCRIPT.format(
                 person.name,
-                person.getHandCards().joinToString(", ") { cardToString(it) },
+                person.state.getHandCards().joinToString(", ") { cardToString(it) },
                 person.score.value,
             ),
         )
     }
 
-    fun printFinalResult(dealerResult: Profit, playerResult: Map<Player, Profit>) {
+    fun printFinalResult(dealerResult: Profit, playerResult: Map<Person, Profit>) {
         println(FINAL_OUTCOME_SCRIPT)
         println(DEALER_SCRIPT + dealerResult.value)
         playerResult.entries.forEach { println("${it.key.name}: ${it.value.value}") }

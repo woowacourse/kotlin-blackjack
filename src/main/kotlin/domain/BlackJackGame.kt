@@ -5,6 +5,7 @@ import domain.money.Profit
 import domain.person.Participants
 import domain.person.Player
 import domain.result.GameProfit
+import domain.state.Started
 
 class BlackJackGame(private val deck: Deck, private val participants: Participants) {
 
@@ -26,7 +27,7 @@ class BlackJackGame(private val deck: Deck, private val participants: Participan
         isContinue: (String) -> Boolean,
         printPlayerCards: (Player) -> Unit,
     ) {
-        while (player.isStarted()) {
+        while (player.state is Started) {
             handOutCard(player, isContinue, printPlayerCards)
         }
     }
@@ -41,7 +42,7 @@ class BlackJackGame(private val deck: Deck, private val participants: Participan
     }
 
     fun handOutCardsToDealer(printDealerGetCardOrNot: (Boolean) -> Unit) {
-        if (participants.dealer.isStarted()) {
+        if (participants.dealer.state is Started) {
             participants.dealer.receiveCard(deck.getCards(GAME_CARD_COUNT))
             printDealerGetCardOrNot(true)
             return
