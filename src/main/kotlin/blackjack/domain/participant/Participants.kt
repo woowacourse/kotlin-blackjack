@@ -57,8 +57,7 @@ class Participants(private val participants: List<Participant>) {
     }
 
     private fun getDealerMatchResult(playerMatchResult: List<MatchResult>): MatchResult {
-        var total = 0
-        playerMatchResult.forEach { total += it.total }
+        val total = playerMatchResult.sumOf { it.total }
 
         return MatchResult(getDealer(), total.reverseSign())
     }
