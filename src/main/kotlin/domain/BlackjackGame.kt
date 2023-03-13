@@ -11,19 +11,12 @@ import domain.judge.Result
 
 class BlackjackGame(
     private val deck: Deck,
-    val dealer: Dealer = Dealer(Cards(emptyList())),
-    private var _players: Players = Players(emptyList())
+    val dealer: Dealer = Dealer(Cards(emptyList()))
 ) {
-    val players: Players get() = _players
-    fun startGame(names: List<String>) {
-        initPlayers(names)
+    fun startGame(players: Players) {
         deck.makeRandomDeck(Card.getAllCard().shuffled())
         dealer.makeStartDeck(deck)
-        _players.makeStartDecks(deck)
-    }
-
-    private fun initPlayers(names: List<String>) {
-        _players = Players(names.map { Player(it, Cards(listOf())) })
+        players.makeStartDecks(deck)
     }
 
     fun pickPlayerCard(player: Player) {
@@ -40,13 +33,13 @@ class BlackjackGame(
         return dealer.isAvailableForPick()
     }
 
-    fun getPlayersWinningResult(): Map<String, Result> = _players.getPlayersWinningResult(dealer)
+    fun getPlayersWinningResult(players: Players): Map<String, Result> = players.getPlayersWinningResult(dealer)
 
     fun judgeDealerResult(playersResult: Map<String, Result>): List<Result> =
         playersResult.map { it.value.reverseResult() }
 
-    fun getPlayerRewards(playersResult: Map<String, PlayerResultInfo>): Map<String, Int> =
-        _players.getPlayersReward(playersResult)
+    fun getPlayerRewards(players: Players, playersResult: Map<String, PlayerResultInfo>): Map<String, Int> =
+        players.getPlayersReward(playersResult)
 
     fun calculateDealerRewards(playerResults: List<Int>): Int = playerResults.sum() * -1
 }

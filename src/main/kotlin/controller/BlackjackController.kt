@@ -5,6 +5,8 @@ import domain.card.Card
 import domain.deck.Deck
 import domain.gamer.Participant
 import domain.gamer.Player
+import domain.gamer.Players
+import domain.gamer.cards.Cards
 import domain.judge.PlayerResultInfo
 import domain.money.Money
 import view.InputView
@@ -16,22 +18,23 @@ class BlackjackController() {
         val names = InputView.inputPlayerNames()
         val moneys = InputView.inputPlayerBets(names).map { Money(it) }
         val blackjackGame = BlackjackGame(Deck(Card.getAllCard()))
-        blackjackGame.startGame(names)
-        printBlackjackSetting(names, blackjackGame)
-        requestPickCard(blackjackGame)
+        val players = Players(names.map { Player(it, Cards(listOf())) })
+        blackjackGame.startGame(players)
+        printBlackjackSetting(blackjackGame, players)
+        requestPickCard(blackjackGame, players)
         dealerPickCard(blackjackGame)
-        printCardResult(blackjackGame)
-        printWinningResult(blackjackGame, moneys)
+        printCardResult(blackjackGame, players)
+        printWinningResult(blackjackGame, players, moneys)
     }
 
-    private fun printBlackjackSetting(names: List<String>, blackjackGame: BlackjackGame) {
-        OutputView.printDivideCard(names)
+    private fun printBlackjackSetting(blackjackGame: BlackjackGame, players: Players) {
+        OutputView.printDivideCard(players.players.map { it.name })
         OutputView.printDealerSettingCard(blackjackGame.dealer.cards.getCards()[0])
-        OutputView.printParticipantsCards(blackjackGame.players.players)
+        OutputView.printParticipantsCards(players.players)
     }
 
-    private fun printWinningResult(blackjackGame: BlackjackGame, moneys: List<Money>) {
-        val playerResults = blackjackGame.getPlayersWinningResult()
+    private fun printWinningResult(blackjackGame: BlackjackGame, players: Players, moneys: List<Money>) {
+        val playerResults = blackjackGame.getPlayersWinningResult(players)
         val dealerResult = blackjackGame.judgeDealerResult(playerResults)
         val playerResultInfos = mutableMapOf<String, PlayerResultInfo>().apply {
             playerResults.onEachIndexed { index, playerResult ->
@@ -39,28 +42,30 @@ class BlackjackController() {
             }
         }.toMap()
         OutputView.printWinningResult(dealerResult, playerResults)
-        printRevenue(blackjackGame, playerResultInfos)
+        printRevenue(blackjackGame, players, playerResultInfos)
     }
 
     private fun printRevenue(
         blackjackGame: BlackjackGame,
+        players: Players,
         playerResultInfos: Map<String, PlayerResultInfo>
+
     ) {
-        val playerWinnings = blackjackGame.getPlayerRewards(playerResultInfos)
+        val playerWinnings = blackjackGame.getPlayerRewards(players, playerResultInfos)
         val dealerWinning = blackjackGame.calculateDealerRewards(playerWinnings.map { it.value })
         OutputView.printRevenue(dealerWinning, playerWinnings)
     }
 
-    private fun printCardResult(blackjackGame: BlackjackGame) {
+    private fun printCardResult(blackjackGame: BlackjackGame, players: Players) {
         val cardResult = mutableMapOf<String, Participant>(DEALER to blackjackGame.dealer)
-        blackjackGame.players.players.map {
+        players.players.map {
             cardResult.put(it.name, it)
         }
         OutputView.printCardResult(cardResult)
     }
 
-    private fun requestPickCard(blackjackGame: BlackjackGame) {
-        blackjackGame.players.players.forEach {
+    private fun requestPickCard(blackjackGame: BlackjackGame, players: Players) {
+        players.players.forEach {
             repeatPickCard(blackjackGame, it)
         }
     }
