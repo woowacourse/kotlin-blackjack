@@ -12,7 +12,7 @@ class Player(
     private val money: BetMoney,
     val needToDraw: () -> Boolean = { true }
 ) : Participant(name, cardState) {
-    override fun getFirstOpenCards(): List<Card> = getCards()
+    override fun getFirstOpenCards(): List<Card> = getCards().take(FIRST_OPEN_CARDS_SIZE)
 
     override fun stay(): Participant = Player(name, cardState.stay(), money, needToDraw)
 
@@ -31,6 +31,7 @@ class Player(
     }
 
     companion object {
+        private const val FIRST_OPEN_CARDS_SIZE = 2
         private const val MAX_DRAWABLE_SCORE: Int = 21
     }
 }

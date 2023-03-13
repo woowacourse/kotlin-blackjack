@@ -23,7 +23,7 @@ class PlayerTest {
 
     @BeforeEach
     fun setUp() {
-        val player = Player("pobi", money = BetMoney(1000))
+        player = Player("pobi", money = BetMoney(1000))
     }
 
     @Test
@@ -83,8 +83,7 @@ class PlayerTest {
             name = "pobi",
             money = BetMoney(1000),
             cardState = HitState(SPADE_FOUR, SPADE_EIGHT)
-        )
-        player.draw(SPADE_KING)
+        ).draw(SPADE_KING)
 
         assertThat(player.getCards()).containsExactly(SPADE_FOUR, SPADE_EIGHT, SPADE_KING)
     }

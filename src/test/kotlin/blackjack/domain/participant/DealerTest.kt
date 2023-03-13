@@ -5,12 +5,12 @@ import blackjack.domain.SPADE_FIVE
 import blackjack.domain.SPADE_JACK
 import blackjack.domain.SPADE_KING
 import blackjack.domain.SPADE_SIX
+import blackjack.domain.SPADE_THREE
 import blackjack.domain.SPADE_TWO
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
 import blackjack.domain.card.Suit
 import blackjack.domain.state.HitState
-import blackjack.domain.state.StartState
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -25,38 +25,38 @@ class DealerTest {
 
     @Test
     fun `딜러가 처음 공개할 카드는 1장이다`() {
-        val dealer = Dealer(cardState = StartState(SPADE_JACK, SPADE_KING))
+        val dealer = Dealer(cardState = HitState(SPADE_JACK, SPADE_KING))
 
         assertThat(dealer.getFirstOpenCards().size).isEqualTo(1)
     }
 
     @Test
     fun `딜러는 자신이 처음 공개할 카드를 반환한다`() {
-        val dealer = Dealer(cardState = StartState(SPADE_JACK, SPADE_KING))
+        val dealer = Dealer(cardState = HitState(SPADE_JACK, SPADE_KING))
 
-        assertThat(dealer.getFirstOpenCards()).isEqualTo(listOf(SPADE_ACE))
+        assertThat(dealer.getFirstOpenCards()).isEqualTo(listOf(SPADE_JACK))
     }
 
     @Test
     fun `딜러는 카드의 합이 16점 이하면 카드를 뽑을 수 있다`() {
-        val dealer = Dealer(cardState = StartState(SPADE_ACE, SPADE_FIVE))
+        val dealer = Dealer(cardState = HitState(SPADE_ACE, SPADE_FIVE))
 
         assertThat(dealer.canDraw()).isTrue
     }
 
     @Test
     fun `딜러는 카드의 합이 17점 이상이면 더 이상 카드를 뽑을 수 없다`() {
-        val dealer = Dealer(cardState = StartState(SPADE_ACE, SPADE_SIX))
+        val dealer = Dealer(cardState = HitState(SPADE_ACE, SPADE_SIX))
 
         assertThat(dealer.canDraw()).isFalse
     }
 
     @Test
     fun `딜러는 카드 목록에 카드를 추가한다`() {
-        val dealer = Dealer(cardState = HitState(SPADE_ACE))
-        dealer.draw(SPADE_TWO)
+        val dealer = Dealer(cardState = HitState(SPADE_ACE, SPADE_TWO))
+            .draw(SPADE_THREE)
 
-        assertThat(dealer.getCards()).containsExactly(SPADE_ACE, SPADE_TWO)
+        assertThat(dealer.getCards()).containsExactly(SPADE_ACE, SPADE_TWO, SPADE_THREE)
     }
 
     @Test
