@@ -1,6 +1,6 @@
 package blackjack.domain.money
 
-class BetMoney(private val money: Money = Money()) {
+class BetMoney(private val money: Money) {
     constructor(amount: Int) : this(Money(amount))
 
     init {
@@ -12,8 +12,6 @@ class BetMoney(private val money: Money = Money()) {
     fun getAmount(): Int = money.getAmount()
 
     operator fun times(operand: Double): BetMoney = BetMoney(money * operand)
-
-    operator fun plus(operand: Money): BetMoney = BetMoney(money + operand)
 
     companion object {
         private const val MINIMUM_AMOUNT = 0

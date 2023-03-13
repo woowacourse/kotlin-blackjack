@@ -7,8 +7,6 @@ class Money(private val amount: Int = DEFAULT_AMOUNT) {
 
     operator fun times(operand: Double): Money = Money(amount * operand)
 
-    operator fun plus(operand: Money): Money = Money(amount + operand.amount)
-
     operator fun unaryMinus(): Money = Money(-amount)
 
     companion object {
