@@ -14,8 +14,8 @@ class Dealer(cardState: CardState = StartState()) : Participant(DEALER_NAME, car
 
     override fun canDraw(): Boolean = cardState.getTotalScore() < maxDrawableScore
 
-    override fun draw(card: Card, isFirstDraw: Boolean): Participant {
-        if (isFirstDraw || canDraw()) {
+    override fun draw(card: Card, justDraw: Boolean): Participant {
+        if (justDraw || canDraw()) {
             return Dealer(cardState = cardState.draw(card))
         }
         return stay()

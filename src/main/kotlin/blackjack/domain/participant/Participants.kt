@@ -22,8 +22,8 @@ class Participants(private val participants: List<Participant>) {
             dealerFirst()
                 .map { participant ->
                     participant
-                        .draw(deck.draw(), isFirstDraw = true)
-                        .draw(deck.draw(), isFirstDraw = true)
+                        .draw(deck.draw(), justDraw = true)
+                        .draw(deck.draw(), justDraw = true)
                 }
                 .onEach(onFirstDrawn)
         )

@@ -20,8 +20,8 @@ class Player(
 
     override fun canDraw(): Boolean = needToDraw() && cardState.getTotalScore() <= maxDrawableScore
 
-    override fun draw(card: Card, isFirstDraw: Boolean): Participant {
-        if (isFirstDraw || canDraw()) {
+    override fun draw(card: Card, justDraw: Boolean): Participant {
+        if (justDraw || canDraw()) {
             return Player(name, cardState.draw(card), money, needToDraw)
         }
         return stay()

@@ -10,7 +10,7 @@ abstract class Participant(val name: String, val cardState: CardState) {
 
     abstract fun getFirstOpenCards(): List<Card>
 
-    abstract fun draw(card: Card, isFirstDraw: Boolean = false): Participant
+    abstract fun draw(card: Card, justDraw: Boolean = false): Participant
 
     abstract fun stay(): Participant
 
