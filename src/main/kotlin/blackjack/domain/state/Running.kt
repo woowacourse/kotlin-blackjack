@@ -3,7 +3,7 @@ package blackjack.domain.state
 import blackjack.domain.Hand
 import blackjack.domain.Money
 
-abstract class Running(override val hand: Hand, override val bettingMoney: Money) : State {
+abstract class Running(override val hand: Hand, override val bettingMoney: Money?) : State {
 
     override fun betting(money: Money): State = throw IllegalStateException(ALREADY_BET_ERROR)
 

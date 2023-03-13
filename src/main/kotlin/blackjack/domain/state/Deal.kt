@@ -4,7 +4,7 @@ import blackjack.domain.Card
 import blackjack.domain.Hand
 import blackjack.domain.Money
 
-class Deal(override val hand: Hand, override val bettingMoney: Money = Money(0)) : Started(hand) {
+class Deal(override val hand: Hand, override val bettingMoney: Money?) : Started(hand) {
     override fun betting(money: Money): State = throw IllegalStateException(ALREADY_BET_ERROR)
 
     override fun draw(card: Card): State {

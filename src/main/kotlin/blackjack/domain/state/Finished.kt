@@ -4,7 +4,7 @@ import blackjack.domain.Card
 import blackjack.domain.Hand
 import blackjack.domain.Money
 
-abstract class Finished(override val hand: Hand, override val bettingMoney: Money) : State {
+abstract class Finished(override val hand: Hand, override val bettingMoney: Money?) : State {
 
     protected abstract val earningRate: Double
 
@@ -18,11 +18,13 @@ abstract class Finished(override val hand: Hand, override val bettingMoney: Mone
         throw IllegalStateException(CANT_CHANGE_STATE)
     }
 
-    override fun getProfit(): Double = bettingMoney.toInt() * earningRate
+    override fun getProfit(): Double =
+        bettingMoney?.toInt()?.times(earningRate) ?: throw IllegalStateException(NOT_BETTING_ERROR)
 
     companion object {
         private const val DRAW_MUST_RUNNING = "게임이 끝난 상태에서 드로우할 수 없습니다."
         private const val CANT_CHANGE_STATE = "게임이 끝난 상태에서 다른 상태가 될 수 없습니다."
         private const val ALREADY_BET_ERROR = "이미 베팅을 했습니다."
+        private const val NOT_BETTING_ERROR = "배팅을 하지 않았습니다."
     }
 }
