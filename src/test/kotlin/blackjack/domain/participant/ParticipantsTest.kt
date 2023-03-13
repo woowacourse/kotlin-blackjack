@@ -102,13 +102,13 @@ class ParticipantsTest {
     }
 
     @Test
-    fun `참여자들이 카드를 뽑을 수 있을 때까지 뽑는다`() {
+    fun `플레이어부터 카드를 뽑을 수 있을 때까지 뽑는다`() {
         val participants = Participants(Dealer(), Player("부나", money = BetMoney(1000)))
         val cardDeck = CardDeck(
             SPADE_TEN, SPADE_EIGHT, DIAMOND_KING,
             SPADE_KING, SPADE_JACK, DIAMOND_JACK
         )
-        val expectedCardSize = listOf(1, 2, 1, 2, 3)
+        val expectedCardSize = listOf(1, 2, 3, 1, 2)
         var sequence = 0
 
         participants.takeTurns(cardDeck) { player ->
