@@ -1,64 +1,38 @@
 package domain
 
+import domain.card.Card
+import domain.card.CardCategory
+import domain.card.CardNumber
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertAll
+import state.RateOfProfit
 
 class DealerTest {
     @Test
-    fun `게임 시작 시 딜러의 처음 카드를 하나 보여준다`() {
-        val dealer = Dealer(
-            Cards(
-                Card(CardCategory.CLOVER, CardNumber.EIGHT),
-                Card(CardCategory.SPADE, CardNumber.NINE)
-            )
-        )
-        val actual = dealer.showInitCards()
-        val expected = listOf(Card(CardCategory.CLOVER, CardNumber.EIGHT))
-        assertThat(actual).isEqualTo(expected)
-    }
-
-    @Test
     fun `카드의 총합이 16이하면 카드를 더 받아야 한다`() {
-        val dealer = Dealer(
-            Cards(
-                Card(CardCategory.CLOVER, CardNumber.EIGHT),
-                Card(CardCategory.SPADE, CardNumber.SIX)
-            )
-        )
+        val dealer = Dealer()
+        dealer.addCard(Card.of(CardCategory.CLOVER, CardNumber.EIGHT))
+        dealer.addCard(Card.of(CardCategory.SPADE, CardNumber.SIX))
         val actual = dealer.isPossibleDrawCard()
         assertThat(actual).isTrue
     }
 
     @Test
-    fun `자신의 종합 승패 결과를 반환한다`() {
-        val dealer = Dealer(
-            Cards(
-                Card(CardCategory.CLOVER, CardNumber.EIGHT),
-                Card(CardCategory.SPADE, CardNumber.SIX)
-            )
-        )
-        val players = Players(
-            Player(
-                Name("pobi"),
-                Cards(
-                    Card(CardCategory.CLOVER, CardNumber.EIGHT),
-                    Card(CardCategory.SPADE, CardNumber.NINE)
-                )
-            ),
-            Player(
-                Name("jason"),
-                Cards(
-                    Card(CardCategory.CLOVER, CardNumber.EIGHT),
-                    Card(CardCategory.SPADE, CardNumber.TWO)
-                )
-            )
-        )
-        val actual = dealer.getResult(players)
-        assertAll(
-            "check dealer gameResult",
-            { assertThat(actual[GameResult.WIN]).isEqualTo(1) },
-            { assertThat(actual[GameResult.LOSE]).isEqualTo(1) }
-        )
+    fun `딜러로부터 플레이어의 수익률이 계산된다`() {
+        val dealer = Dealer()
+        dealer.addCard(Card.of(CardCategory.CLOVER, CardNumber.EIGHT))
+        dealer.addCard(Card.of(CardCategory.SPADE, CardNumber.SIX))
+        dealer.addCard(Card.of(CardCategory.CLOVER, CardNumber.SIX))
+        dealer.stay()
+
+        val player = Player("mendel", 10000)
+        player.addCard(Card.of(CardCategory.CLOVER, CardNumber.SIX))
+        player.addCard(Card.of(CardCategory.SPADE, CardNumber.EIGHT))
+        player.addCard(Card.of(CardCategory.SPADE, CardNumber.FIVE))
+        player.stay()
+
+        val actual = dealer.getProfit(player)
+        val expected = RateOfProfit.LOSE_PROFIT
+        assertThat(actual).isEqualTo(expected)
     }
 }
