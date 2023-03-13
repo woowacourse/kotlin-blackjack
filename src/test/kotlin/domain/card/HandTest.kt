@@ -23,7 +23,7 @@ class HandTest {
     }
 
     @Test
-    fun `ACE 를 1개 넣으면 ACE 개수는 1개이다`() {
+    fun `ACE 를 가지고 있는지 확인할 수 있다`() {
         hand.add(Card(CardShape.HEART, CardNumber.ACE))
 
         assertThat(hand.hasAce()).isTrue
