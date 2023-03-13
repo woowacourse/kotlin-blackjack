@@ -2,6 +2,7 @@ package blackjack.model
 
 import model.Card
 import model.CardDeck
+import model.Cards
 import model.Dealer
 import model.Player
 import model.Rank
@@ -63,11 +64,13 @@ class DealerTest {
         )
         val dealer = Dealer()
         dealer.drawFirst(cardDeck)
-        val player = Player.of("jaosn", 1_000L)
+        val player = Player("jaosn", 1_000L)
         assertThat(dealer.getProfitMoney(player).value).isEqualTo(1_000L)
     }
 
     companion object {
         private fun CardDeck(vararg card: Card): CardDeck = CardDeck(card.toList())
+        private fun Dealer(): Dealer = Dealer(Cards(setOf()))
+        private fun Player(name: String, money: Long): Player = Player.of(Cards(setOf()), name, money)
     }
 }

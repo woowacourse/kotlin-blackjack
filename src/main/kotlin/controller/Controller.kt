@@ -2,6 +2,7 @@ package controller
 
 import domain.CardGame
 import model.CardDeck
+import model.Cards
 import model.Dealer
 import model.Participants
 import model.Player
@@ -11,7 +12,7 @@ import view.OutputView
 
 class Controller(private val inputView: InputView, private val outputView: OutputView) {
     fun run() {
-        val participants = Participants(listOf(Dealer()) + readPlayers())
+        val participants = Participants(listOf(Dealer(Cards(setOf()))) + readPlayers())
         val cardGame = CardGame(CardDeck.createCardDeck().shuffled(), participants)
         cardGame.readyToStart()
         outputView.printNoticeDistributeCards(participants)
@@ -23,6 +24,6 @@ class Controller(private val inputView: InputView, private val outputView: Outpu
 
     private fun readPlayers(): Players {
         val names = inputView.readName()
-        return Players(names.map { Player.of(it, inputView.readBettingMoney(it), inputView::readYesOrNo) })
+        return Players(names.map { Player.of(Cards(setOf()), it, inputView.readBettingMoney(it), inputView::readYesOrNo) })
     }
 }

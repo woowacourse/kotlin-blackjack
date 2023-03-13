@@ -2,6 +2,7 @@ package blackjack.model
 
 import model.Card
 import model.CardDeck
+import model.Cards
 import model.Dealer
 import model.Participants
 import model.Player
@@ -45,7 +46,8 @@ class ParticipantsTest {
     }
 
     companion object {
-        private fun Player(name: String): Player = Player.of(name, 1_000L)
+        private fun Dealer(): Dealer = Dealer(Cards(setOf()))
+        private fun Player(name: String): Player = Player.of(Cards(setOf()), name, 1_000L)
         private fun Participants(dealer: Dealer, players: Players): Participants = Participants(listOf(dealer) + players)
         private fun Players(vararg player: Player): Players = Players(player.toList())
         private fun CardDeck(vararg card: Card): CardDeck = CardDeck(card.toList())

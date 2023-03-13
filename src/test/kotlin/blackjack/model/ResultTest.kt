@@ -1,5 +1,6 @@
 package blackjack.model
 
+import model.Cards
 import model.Player
 import model.Profit
 import model.Result
@@ -15,6 +16,6 @@ class ResultTest {
     }
 
     companion object {
-        fun Player(name: String): Player = Player.of(name, 1_000L)
+        fun Player(name: String): Player = Player.of(Cards(setOf()), name, 1_000L)
     }
 }

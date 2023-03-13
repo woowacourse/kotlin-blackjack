@@ -3,6 +3,7 @@ package blackjack.domain
 import domain.CardGame
 import model.Card
 import model.CardDeck
+import model.Cards
 import model.Dealer
 import model.Participants
 import model.Player
@@ -18,7 +19,7 @@ class CardGameTest {
     fun `카드를 참가자별로 2장씩 지급한다`() {
         val player1 = Player("jason")
         val player2 = Player("pobi")
-        val cardGame = CardGame(cardDeck, Participants(Dealer(), Players(player1, player2)))
+        val cardGame = CardGame(cardDeck, Participants(Dealer(Cards(setOf())), Players(player1, player2)))
         cardGame.readyToStart()
         assertThat(player1.cards.size).isEqualTo(2)
         assertThat(player2.cards.size).isEqualTo(2)
@@ -27,22 +28,22 @@ class CardGameTest {
     @Test
     fun `플레이어는 bust가 아닐 때 계속해서 draw 의사가 있다면 bust 될 때까지 카드를 뽑는다`() {
         val needToDraw = true
-        val player = Player.of("jason", 1_000L) { needToDraw }
-        val cardGame = CardGame(cardDeck, Participants(Dealer(), Players(player)))
+        val player = Player.of(Cards(setOf()), "jason", 1_000L) { needToDraw }
+        val cardGame = CardGame(cardDeck, Participants(Dealer(Cards(setOf())), Players(player)))
         cardGame.drawCard(player, {})
         assertThat(player.isBust()).isTrue
     }
 
     @Test
     fun `딜러의 카드 합이 16 이하일 때 딜러는 16 초과가 될 때까지 카드를 뽑는다`() {
-        val dealer = Dealer()
+        val dealer = Dealer(Cards(setOf()))
         val cardGame = CardGame(cardDeck, Participants(dealer, Players(Player("tr"))))
         cardGame.drawCard(dealer, {})
         assertThat(dealer.isHit()).isFalse
     }
 
     @Test
-    fun `딜러가 진 경우 딜러의 수익은 플레이어 수익의 -1배이다`() {
+    fun `딜러가 진 경우 딜러의 수익은 플레이어 수익의 -1배인 -1_000이다`() {
         val deck = CardDeck(
             Card(Rank.SEVEN, Suit.DIAMOND),
             Card(Rank.TEN, Suit.SPADE),
@@ -52,8 +53,8 @@ class CardGameTest {
             Card(Rank.JACK, Suit.CLOVER)
         )
         val dealer = Dealer()
-        val player1 = Player.of("jason", 1_000L)
-        val player2 = Player.of("pobi", 1_000L)
+        val player1 = Player("jason", 1_000L)
+        val player2 = Player("pobi", 1_000L)
         val cardGame = CardGame(deck, Participants(dealer, Players(player1, player2)))
         cardGame.readyToStart()
         val result = cardGame.getGameResult()
@@ -71,8 +72,8 @@ class CardGameTest {
             Card(Rank.TEN, Suit.HEART)
         )
         val dealer = Dealer()
-        val player1 = Player.of("jason", 1_000L)
-        val player2 = Player.of("pobi", 1_000L)
+        val player1 = Player("jason", 1_000L)
+        val player2 = Player("pobi", 1_000L)
         val cardGame = CardGame(deck, Participants(dealer, Players(player1, player2)))
         cardGame.readyToStart()
         val result = cardGame.getGameResult()
@@ -88,7 +89,7 @@ class CardGameTest {
             Card(Rank.TEN, Suit.DIAMOND),
         )
         val dealer = Dealer()
-        val player1 = Player.of("jason", 1_000L)
+        val player1 = Player("jason", 1_000L)
         val cardGame = CardGame(deck, Participants(dealer, Players(player1)))
         cardGame.readyToStart()
         val result = cardGame.getGameResult()
@@ -107,8 +108,8 @@ class CardGameTest {
             Card(Rank.JACK, Suit.CLOVER)
         )
         val dealer = Dealer()
-        val player1 = Player.of("jason", 1_000L)
-        val player2 = Player.of("pobi", 1_000L)
+        val player1 = Player("jason", 1_000L)
+        val player2 = Player("pobi", 1_000L)
         val cardGame = CardGame(deck, Participants(dealer, Players(player1, player2)))
         cardGame.readyToStart()
         val result = cardGame.getGameResult()
@@ -126,8 +127,8 @@ class CardGameTest {
             Card(Rank.ACE, Suit.DIAMOND)
         )
         val dealer = Dealer()
-        val player1 = Player.of("jason", 1_000L)
-        val player2 = Player.of("pobi", 1_000L)
+        val player1 = Player("jason", 1_000L)
+        val player2 = Player("pobi", 1_000L)
         val cardGame = CardGame(deck, Participants(dealer, Players(player1, player2)))
         cardGame.readyToStart()
         val result = cardGame.getGameResult()
@@ -144,7 +145,7 @@ class CardGameTest {
             Card(Rank.NINE, Suit.CLOVER)
         )
         val dealer = Dealer()
-        val player1 = Player.of("jason", 1_000L)
+        val player1 = Player("jason", 1_000L)
         val cardGame = CardGame(deck, Participants(dealer, Players(player1)))
         cardGame.readyToStart()
         val result = cardGame.getGameResult()
@@ -160,7 +161,7 @@ class CardGameTest {
             Card(Rank.FIVE, Suit.CLOVER)
         )
         val dealer = Dealer()
-        val player1 = Player.of("jason", 1_000L)
+        val player1 = Player("jason", 1_000L)
         val cardGame = CardGame(deck, Participants(dealer, Players(player1)))
         cardGame.readyToStart()
         val result = cardGame.getGameResult()
@@ -169,7 +170,9 @@ class CardGameTest {
 
     companion object {
         private val cardDeck = CardDeck.createCardDeck()
-        private fun Player(name: String): Player = Player.of(name, 1_000L)
+        private fun Dealer(vararg card: Card): Dealer = Dealer(Cards(card.toSet()))
+        private fun Player(name: String): Player = Player.of(Cards(setOf()), name, 1_000L)
+        private fun Player(name: String, money: Long): Player = Player.of(Cards(setOf()), name, money)
         private fun Players(vararg player: Player): Players = Players(player.toList())
         private fun Participants(dealer: Dealer, players: Players): Participants = Participants(listOf(dealer) + players)
         private fun CardDeck(vararg card: Card): CardDeck = CardDeck(card.toList())
