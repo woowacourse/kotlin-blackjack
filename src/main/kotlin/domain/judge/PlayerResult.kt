@@ -4,10 +4,9 @@ import domain.money.Money
 
 data class PlayerResultInfo(val result: Result, val money: Money) {
 
-    fun calculateRevenue(): Int {
+    fun calculateRevenue(isBlackJack: Boolean): Int {
         return when (result) {
-            Result.BLACKJACK_WIN -> calculateBlackJackMoney()
-            Result.WIN -> money.value
+            Result.WIN -> if (isBlackJack) calculateBlackJackMoney() else money.value
             Result.LOSS -> calculateLossMoney()
             Result.DRAW -> calculateDrawMoney()
         }

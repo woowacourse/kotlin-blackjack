@@ -67,7 +67,7 @@ object OutputView {
         }
     }
 
-    fun printWinningResult(dealerResult: List<Result>, playerStates: Map<String, Result>) {
+    fun printWinningResult(dealerResult: List<Result>, playerStates: Map<Player, Result>) {
         println(FINAL_RESULT)
         printDealerWinningResult(dealerResult)
         printPlayerWinningResult(playerStates)
@@ -83,15 +83,15 @@ object OutputView {
     private fun formatResultCount(count: Int, result: Result) =
         if (count == 0) "" else count.toString() + printResultForm(result)
 
-    private fun printPlayerWinningResult(playerResult: Map<String, Result>) {
+    private fun printPlayerWinningResult(playerResult: Map<Player, Result>) {
         playerResult.forEach {
-            println("${it.key}: ${printResultForm(it.value)}")
+            println("${it.key.name}: ${printResultForm(it.value)}")
         }
     }
 
     private fun printResultForm(result: Result): String {
         return when (result) {
-            Result.WIN, Result.BLACKJACK_WIN -> "승"
+            Result.WIN -> "승"
             Result.DRAW -> "무"
             Result.LOSS -> "패"
         }

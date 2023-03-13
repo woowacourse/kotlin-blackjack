@@ -4,6 +4,8 @@ import domain.card.Card
 import domain.card.CardValue
 import domain.card.Shape
 import domain.deck.Deck
+import domain.gamer.Player
+import domain.gamer.cards.Cards
 import domain.judge.Result
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -16,9 +18,9 @@ class BlackjackGameTest {
                 Deck(listOf(Card(Shape.SPADE, CardValue.ACE)))
             ).judgeDealerResult(
                 mapOf(
-                    "jack" to Result.WIN,
-                    "king" to Result.LOSS,
-                    "queen" to Result.LOSS
+                    Player("jack", Cards(listOf())) to Result.WIN,
+                    Player("king", Cards(listOf())) to Result.LOSS,
+                    Player("queen", Cards(listOf())) to Result.LOSS
                 )
             )
         assertThat(actual).isEqualTo(listOf(Result.LOSS, Result.WIN, Result.WIN))

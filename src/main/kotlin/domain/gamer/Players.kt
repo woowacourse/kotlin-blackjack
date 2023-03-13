@@ -15,16 +15,16 @@ class Players(val players: List<Player>) {
         }
     }
 
-    fun getPlayersWinningResult(dealer: Dealer): Map<String, Result> = mutableMapOf<String, Result>().apply {
+    fun getPlayersWinningResult(dealer: Dealer): Map<Player, Result> = mutableMapOf<Player, Result>().apply {
         players.forEach {
-            this[it.name] = it.judgeResult(dealer.cards)
+            this[it] = it.judgeResult(dealer.cards)
         }
     }.toMap()
 
-    fun getPlayersReward(playersResult: Map<String, PlayerResultInfo>): MutableMap<String, Int> =
+    fun getPlayersReward(playersResult: Map<Player, PlayerResultInfo>): MutableMap<String, Int> =
         mutableMapOf<String, Int>().apply {
             playersResult.map {
-                put(it.key, it.value.calculateRevenue())
+                put(it.key.name, it.value.calculateRevenue(it.key.cards.checkBlackjack()))
             }
         }
 

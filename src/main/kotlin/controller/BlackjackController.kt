@@ -36,7 +36,7 @@ class BlackjackController() {
     private fun printWinningResult(blackjackGame: BlackjackGame, players: Players, moneys: List<Money>) {
         val playerResults = blackjackGame.getPlayersWinningResult(players)
         val dealerResult = blackjackGame.judgeDealerResult(playerResults)
-        val playerResultInfos = mutableMapOf<String, PlayerResultInfo>().apply {
+        val playerResultInfos = mutableMapOf<Player, PlayerResultInfo>().apply {
             playerResults.onEachIndexed { index, playerResult ->
                 put(playerResult.key, PlayerResultInfo(playerResult.value, moneys[index]))
             }
@@ -48,7 +48,7 @@ class BlackjackController() {
     private fun printRevenue(
         blackjackGame: BlackjackGame,
         players: Players,
-        playerResultInfos: Map<String, PlayerResultInfo>
+        playerResultInfos: Map<Player, PlayerResultInfo>
 
     ) {
         val playerWinnings = blackjackGame.getPlayerRewards(players, playerResultInfos)

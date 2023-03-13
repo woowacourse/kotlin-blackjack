@@ -17,9 +17,7 @@ class Player(val name: String, cards: Cards) : Participant(cards) {
                     playerSum
                 ) -> Result.LOSS
 
-            (cards.checkBlackjack() && !dealerCards.checkBlackjack()) -> Result.BLACKJACK_WIN
-
-            playerSum > dealerSum || dealerSum > CARD_SUM_MAX_VALUE -> Result.WIN
+            playerSum > dealerSum || dealerSum > CARD_SUM_MAX_VALUE || (!dealerCards.checkBlackjack() && cards.checkBlackjack()) -> Result.WIN
 
             else -> Result.DRAW
         }
