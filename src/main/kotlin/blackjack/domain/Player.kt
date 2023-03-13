@@ -1,7 +1,24 @@
 package blackjack.domain
 
+import blackjack.domain.state.Betting
+import blackjack.domain.state.State
+
 class Player(name: ParticipantName) : Participant(name) {
+
+    override var state: State = Betting(Hand(listOf()))
+    val bettingMoney: Money?
+        get() = state.bettingMoney
+
     constructor(name: String) : this(ParticipantName(name))
+
+    fun betting(money: Money) {
+        state = state.betting(money)
+    }
+
+    fun stay() {
+        state = state.stay()
+    }
+
     infix fun against(dealer: Dealer): ResultType {
         if (dealer.isBust()) return ResultType.WIN
         if (isBust()) return ResultType.LOSE
@@ -14,7 +31,8 @@ class Player(name: ParticipantName) : Participant(name) {
             else -> ResultType.LOSE
         }
     }
-    fun isBlackjack(): Boolean = cards.size == 2 && getScore() == TARGET_SCORE
+
+    fun getProfit(): Double = state.getProfit()
 
     override fun equals(other: Any?): Boolean = if (other is Player) name == other.name else false
     override fun hashCode(): Int = this.name.hashCode()

@@ -1,9 +1,10 @@
 package blackjack.view
 
 import blackjack.domain.*
+import blackjack.domain.state.Running
 
 object ResultView {
-    private const val SET_UP_MESSAGE = "\n%s와 %s에게 ${Participant.INIT_CARD_SIZE} 장의 카드를 나누었습니다."
+    private const val SET_UP_MESSAGE = "\n%s와 %s에게 ${Running.MIN_HAND_SIZE} 장의 카드를 나누었습니다."
     private const val FACE_UP_CARDS = "%s 카드: %s"
     private const val DEALER_HIT_MESSAGE = "\n%s는 ${Dealer.HIT_STANDARD_SCORE}이하라 한장의 카드를 더 받았습니다.\n"
     private const val SHOW_SCORE = " - 결과: %d"
@@ -56,9 +57,9 @@ object ResultView {
         )
     }
 
-    private fun Dealer.faceUpOnlyOne(): String = FACE_UP_CARDS.format(this.name, this.cards[0].name())
+    private fun Dealer.faceUpOnlyOne(): String = FACE_UP_CARDS.format(this.name, this.getHand()[0].name())
     private fun Participant.faceUp(): String =
-        FACE_UP_CARDS.format(this.name, this.cards.joinToString(", ") { it.name() })
+        FACE_UP_CARDS.format(this.name, this.getHand().joinToString(", ") { it.name() })
 
     private fun Participant.showScore(): String = SHOW_SCORE.format(this.getScore())
     private fun Card.name(): String = "${this.number.toMark()}${this.shape.toText()}"

@@ -7,7 +7,7 @@ class Players(private val players: Set<Player>) {
 
     constructor(players: List<Player>) : this(players.toSet())
 
-    fun haveInitialCards() = players.all { it.hasInitialCards() }
+    fun areFinished() = players.all { it.isFinished() }
     fun toList(): List<Player> = players.toList()
     fun <V> associateWith(valueSelector: (Player) -> V): Map<Player, V> {
         return players.associateWith { valueSelector(it) }

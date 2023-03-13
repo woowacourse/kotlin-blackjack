@@ -1,6 +1,7 @@
 package blackjack
 
 import blackjack.domain.*
+import blackjack.domain.state.Running
 import blackjack.view.InputView
 import blackjack.view.ResultView
 
@@ -15,7 +16,7 @@ fun main() {
     val deck = Deck()
     val players = getPlayers()
     val dealer = Dealer()
-    val playersBetAmount = getPlayersBetAmount(players)
+    setPlayersBetAmount(players)
 
     dealCards(players.toList() + dealer, deck)
     ResultView.printSetUp(dealer, players)
@@ -24,7 +25,7 @@ fun main() {
 
     checkDealerHitOrStand(dealer, deck)
 
-    ResultView.printResult(dealer, players, BlackjackResult.of(dealer, playersBetAmount))
+    ResultView.printResult(dealer, players, BlackjackResult.of(dealer, players))
 }
 
 private fun getPlayers(): Players {
@@ -35,15 +36,11 @@ private fun getPlayers(): Players {
     )
 }
 
-private fun getPlayersBetAmount(players: Players): Map<Player, Money> {
-    val playersBetAmount = mutableMapOf<Player, Money>()
-    players.forEach {
-        playersBetAmount[it] = getPlayerBetAmount(it)
-    }
-    return playersBetAmount
+private fun setPlayersBetAmount(players: Players) {
+    players.forEach { it.betting(askPlayerBetAmount(it)) }
 }
 
-private fun getPlayerBetAmount(player: Player): Money {
+private fun askPlayerBetAmount(player: Player): Money {
     ResultView.printMessage(INSERT_PLAYER_BET_AMOUNT.format(player.name))
     return ReadValueSureModifier.tryToReadValueAndModifyToTargetUntilNoErrorOccur(
         InputView::readNumber,
@@ -52,7 +49,7 @@ private fun getPlayerBetAmount(player: Player): Money {
 }
 
 private fun dealCards(participants: List<Participant>, deck: Deck) {
-    repeat(Participant.INIT_CARD_SIZE) {
+    repeat(Running.MIN_HAND_SIZE) {
         participants.forEach { tryToDraw(it, deck) }
     }
 }
@@ -66,9 +63,12 @@ private fun decideHitOrStand(players: Players, deck: Deck) {
 }
 
 private fun decideHitOrStand(player: Player, deck: Deck) {
-    while (deck.isNotExhausted() && player.canHit() && askPlayerWantToHitUntilGetCorrectAnswer(player)) {
+    while (deck.isNotExhausted() && player.isFinished().not() && askPlayerWantToHitUntilGetCorrectAnswer(player)) {
         tryToDraw(player, deck)
         ResultView.printCards(player)
+    }
+    if (player.isFinished().not()) {
+        player.stay()
     }
 }
 

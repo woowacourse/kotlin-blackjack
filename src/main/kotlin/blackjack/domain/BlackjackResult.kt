@@ -6,29 +6,23 @@ class BlackjackResult private constructor(private val playersRevenue: Map<Player
     fun getRevenueOf(player: Player): Int? = playersRevenue[player]
 
     companion object {
-        private const val DEALER_SHOULD_HIT_ERROR = "딜러가 히트해야 한다면 블랙잭 결과를 생성할 수 없습니다."
-        private const val PARTICIPANTS_SHOULD_HAVE_INITIAL_CARDS =
-            "모든 참여자는 ${Participant.INIT_CARD_SIZE}장 이상의 카드를 가지고 있어야 블랙잭 결과를 생성할 수 있습니다."
+        private const val PARTICIPANTS_SHOULD_FINISHED =
+            "모든 참여자는 게임이 끝난 상태여야 합니다."
 
-        fun of(dealer: Dealer, playersBetAmount: Map<Player, Money>): BlackjackResult {
-            val players = Players(playersBetAmount.keys)
-            require(dealer.hasInitialCards() && players.haveInitialCards()) { PARTICIPANTS_SHOULD_HAVE_INITIAL_CARDS }
-            require(dealer.shouldHit().not()) { DEALER_SHOULD_HIT_ERROR }
+        fun of(dealer: Dealer, players: Players): BlackjackResult {
+            require(dealer.isFinished() && players.areFinished()) { PARTICIPANTS_SHOULD_FINISHED }
 
-            val result = createResult(dealer, playersBetAmount)
+            val result = createResult(dealer, players)
 
             return BlackjackResult(result)
         }
 
-        private fun createResult(dealer: Dealer, playersBetAmount: Map<Player, Money>): Map<Player, Int> {
-            val players = Players(playersBetAmount.keys)
-
+        private fun createResult(dealer: Dealer, players: Players): Map<Player, Int> {
             return players.associateWith { it against dealer }.map { (player, result) ->
-                val playerBetAmount = playersBetAmount[player]?.toInt() ?: 0
                 when (result) {
-                    ResultType.WIN -> player to if (player.isBlackjack()) playerBetAmount + (playerBetAmount / 2) else playerBetAmount
+                    ResultType.WIN -> player to player.getProfit().toInt()
                     ResultType.TIE -> player to 0
-                    ResultType.LOSE -> player to -playerBetAmount
+                    ResultType.LOSE -> player to -player.bettingMoney!!.toInt()
                 }
             }.toMap()
         }
