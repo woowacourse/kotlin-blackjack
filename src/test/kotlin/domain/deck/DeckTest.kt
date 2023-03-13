@@ -20,17 +20,15 @@ class DeckTest {
     }
 
     @Test
-    fun `카드를 보유하지 않는 게임 덱에서 카드를 주면 IllegalStateException이 발생한다`() {
-        val deck = Deck(listOf())
+    fun `카드를 보유하지 않은 덱을 생성하면 IllegalStateException이 발생한다`() {
         assertThrows<IllegalStateException> {
-            deck.giveCard()
+            Deck(listOf())
         }
     }
 
     @Test
     fun `새로운 카드들을 덱에 저장한다`() {
-        val deck = Deck(emptyList())
-        deck.makeRandomDeck((SpadeCardsOf(FIVE, SIX, SEVEN).getCards()))
+        val deck = Deck((SpadeCardsOf(FIVE, SIX, SEVEN).getCards()))
         assertThat(deck.giveCard()).isEqualTo(Card(Shape.SPADE, FIVE))
         assertThat(deck.giveCard()).isEqualTo(Card(Shape.SPADE, SIX))
         assertThat(deck.giveCard()).isEqualTo(Card(Shape.SPADE, SEVEN))

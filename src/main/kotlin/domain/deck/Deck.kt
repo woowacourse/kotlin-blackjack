@@ -2,22 +2,28 @@ package domain.deck
 
 import domain.card.Card
 
-class Deck(private var deck: List<Card>) {
+class Deck(private val deck: List<Card>) {
+    private val _deck: MutableList<Card> = deck.toMutableList()
 
-    fun makeRandomDeck(randomDeck: List<Card>) {
-        deck = randomDeck
+    init {
+        check(!checkDeckEmpty()) { println(ERROR_EMPTY_DECK) }
     }
 
     fun giveCard(): Card {
-        checkDeckEmpty()
-        val card = deck.first()
-        deck = deck.minus(card)
+        if (checkDeckEmpty()) {
+            fillCards()
+        }
+        val card = _deck.first()
+        _deck.remove(card)
         return card
     }
 
-    private fun checkDeckEmpty() {
-        check(deck.isNotEmpty()) { println(ERROR_EMPTY_DECK) }
+    private fun fillCards() {
+        _deck.clear()
+        _deck.addAll(Card.getAllCard().shuffled())
     }
+
+    private fun checkDeckEmpty(): Boolean = deck.isEmpty()
 
     companion object {
         private const val ERROR_EMPTY_DECK = "[ERROR] 카드가 존재하지 않습니다."
