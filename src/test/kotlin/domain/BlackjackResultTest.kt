@@ -15,12 +15,29 @@ import org.junit.jupiter.api.Test
 class BlackjackResultTest {
 
     @Test
-    fun getResult() {
+    fun getResultTest() {
         val dealer = Dealer(Cards(mutableListOf(Card(Shape.SPADE, CardValue.TWO))))
         val players = listOf(Player("pingu", Cards(mutableListOf(Card(Shape.DIAMOND, CardValue.SIX))), Money(5000)))
 
         val blackjackResult = BlackjackResult(dealer, players).getResult()
         val expect = ParticipantsResult(dealer, listOf(PlayerResult(players.first(), 5000)))
+
+        assertThat(blackjackResult).isEqualTo(expect)
+    }
+
+    @Test
+    fun `플레이어가 블랙잭으로 이겼을 경우 1_5배를 한 수익을 반환한다`() {
+        val dealer = Dealer(Cards(mutableListOf(Card(Shape.SPADE, CardValue.TWO))))
+        val players = listOf(
+            Player(
+                "pingu",
+                Cards(mutableListOf(Card(Shape.DIAMOND, CardValue.JACK), Card(Shape.DIAMOND, CardValue.ACE))),
+                Money(5000)
+            )
+        )
+
+        val blackjackResult = BlackjackResult(dealer, players).getResult()
+        val expect = ParticipantsResult(dealer, listOf(PlayerResult(players.first(), (5000 * 1.5).toInt())))
 
         assertThat(blackjackResult).isEqualTo(expect)
     }
