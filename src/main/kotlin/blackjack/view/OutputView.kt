@@ -3,7 +3,9 @@ package blackjack.view
 import blackjack.domain.blackjack.BlackJack
 import blackjack.domain.card.CardMark
 import blackjack.domain.card.CardValue
+import blackjack.domain.participants.FinalProfit
 import blackjack.domain.participants.User
+import blackjack.domain.participants.UsersBettingMoney
 import blackjack.domain.result.Outcome
 
 class OutputView {
@@ -52,10 +54,29 @@ class OutputView {
 
     private fun outputOutcome(user: User, outcome: Outcome) {
         when (outcome) {
-            Outcome.WIN -> "승"
+            Outcome.WIN, Outcome.BLACKJACK -> "승"
             Outcome.DRAW -> "무"
             Outcome.LOSE -> "패"
         }.let { println("${user.name}: $it") }
+    }
+
+    fun outputProfits(blackJack: BlackJack, usersBettingMoney: UsersBettingMoney) {
+        blackJack.run {
+            val finalProfit = FinalProfit.playersFinalProfits(dealer, usersBettingMoney)
+            println("\n## 최종 수익")
+            println("${dealer.name}: ${finalProfit.getDealerProfit()}")
+            guests.forEach { user ->
+                outputUserProfits(
+                    user,
+                    finalProfit,
+                )
+            }
+        }
+    }
+
+    fun outputUserProfits(user: User, finalProfit: FinalProfit) {
+        val profit = finalProfit.getUserProfit(user)
+        println("${user.name}: $profit")
     }
 
     private fun CardMark.name(): String =

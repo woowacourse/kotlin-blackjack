@@ -16,6 +16,14 @@ class InputView {
         }
     }
 
+    fun inputBettingMoney(name: String): Int {
+        println("\n${name}의 베팅 금액은?")
+        return runCatching {
+            readln().toInt()
+        }.onFailure { println("베팅금액은 숫자여야 합니다") }
+            .getOrElse { inputBettingMoney(name) }
+    }
+
     companion object {
         private val DRAW_COMMANDS = listOf("Y", "y")
         private val END_TURN_COMMANDS = listOf("N", "n")

@@ -10,11 +10,16 @@ class BlackJackController(
     private val inputView: InputView,
     private val outputView: OutputView,
 ) {
+
     fun run() {
         val blackJack = setUpBlackJack()
+        val bettingMoney = blackJack.betMoney(inputView::inputBettingMoney)
         outputView.outputInitState(blackJack)
+
         startBlackJack(blackJack)
+
         outputView.outputResult(blackJack)
+        outputView.outputProfits(blackJack, bettingMoney)
     }
 
     private fun setUpBlackJack(): BlackJack = blackJack {
