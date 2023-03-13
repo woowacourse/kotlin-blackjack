@@ -9,7 +9,11 @@ class Deal(override val hand: Hand, override val bettingMoney: Money?) : Started
 
     override fun draw(card: Card): State {
         val nextHand = hand + card
-        return if (nextHand.size < Running.MIN_HAND_SIZE) Deal(nextHand, bettingMoney) else Hit(nextHand, bettingMoney)
+        return when {
+            nextHand.size < Running.MIN_HAND_SIZE -> Deal(nextHand, bettingMoney)
+            nextHand.isBlackjack() -> Blackjack(nextHand, bettingMoney)
+            else -> Hit(nextHand, bettingMoney)
+        }
     }
 
     companion object {

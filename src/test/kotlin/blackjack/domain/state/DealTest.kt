@@ -45,11 +45,21 @@ class DealTest {
     }
 
     @Test
-    fun `딜 상태이고 드로우 했을 때 핸드의 카드 개수가 2장 이상이면 히트 상태를 반환한다`() {
+    fun `딜 상태이고 드로우 했을 때 핸드의 카드 개수가 2장 이상이고 블랙잭이면 블랙잭 상태를 반환한다`() {
         var state: State = Deal(Hand(listOf()), null)
-        state = state.draw(getAnyCard())
+        state = state.draw(Card(CardNumber.JACK, CardShape.HEART))
 
-        state = state.draw(getAnyCard())
+        state = state.draw(Card(CardNumber.ACE, CardShape.HEART))
+
+        assertThat(state).isInstanceOf(Blackjack::class.java)
+    }
+
+    @Test
+    fun `딜 상태이고 드로우 했을 때 핸드의 카드 개수가 2장 이상이고 블랙잭이 아니면 히트 상태를 반환한다`() {
+        var state: State = Deal(Hand(listOf()), null)
+        state = state.draw(Card(CardNumber.JACK, CardShape.HEART))
+
+        state = state.draw(Card(CardNumber.EIGHT, CardShape.HEART))
 
         assertThat(state).isInstanceOf(Hit::class.java)
     }

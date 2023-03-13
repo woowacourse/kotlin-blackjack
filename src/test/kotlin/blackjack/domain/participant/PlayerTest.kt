@@ -90,6 +90,18 @@ class PlayerTest {
     }
 
     @Test
+    fun `플레이어가 카드를 받고 나서 핸드가 블랙잭이 되었다면 게임이 끝난 상태가 된다`() {
+        val player = Player("pobi").apply {
+            betting(Money(10000))
+            receive(Card(CardNumber.JACK, CardShape.HEART))
+        }
+
+        player.receive(Card(CardNumber.ACE, CardShape.HEART))
+
+        assertThat(player.isFinished()).isTrue
+    }
+
+    @Test
     fun `플레이어는 이름으로 구분된다`() {
         val player1 = Player("thomas")
         val player2 = Player("pobi")
