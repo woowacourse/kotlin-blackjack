@@ -42,8 +42,8 @@ class Participants(private val participants: List<Participant>) {
     ): Participant {
         var result = participant
         while (result.isRunning) {
-            val card = deck.draw()
-            result = result.draw(card).apply { if (isRunning) onDrawn(this) }
+            result = result.draw(deck.draw())
+            onDrawn(result)
         }
         return result
     }

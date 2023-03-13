@@ -14,7 +14,9 @@ class Dealer(cardState: CardState = StartState()) : Participant(DEALER_NAME, car
 
     override fun draw(card: Card, justDraw: Boolean): Participant {
         if (justDraw || canDraw()) {
-            return Dealer(cardState = cardState.draw(card))
+            val result = Dealer(cardState = cardState.draw(card))
+            if (result.canDraw()) return result
+            return result.stay()
         }
         return stay()
     }
