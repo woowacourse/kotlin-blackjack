@@ -19,7 +19,6 @@ class ParticipantsTest {
         val player1 = Player("jason")
         val player2 = Player("pobi")
         val actual = Participants(dealer, Players(player1, player2))
-        assertThat(actual.value.size).isEqualTo(3)
         assertThat(actual.dealer.name.value).isEqualTo("딜러")
         assertThat(actual.players[0].name.value).isEqualTo("jason")
         assertThat(actual.players[1].name.value).isEqualTo("pobi")

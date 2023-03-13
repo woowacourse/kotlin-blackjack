@@ -1,6 +1,6 @@
 package model
 
-data class Participants(val value: List<Participant>) {
+data class Participants(private val value: List<Participant>) {
     val dealer: Participant
         get() = value.find { it.isDealer() }!!
 
