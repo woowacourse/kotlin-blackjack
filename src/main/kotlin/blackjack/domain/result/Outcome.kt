@@ -12,7 +12,7 @@ enum class Outcome(val ratio: Double) {
             when {
                 other.getScore() > BLACKJACK_NUMBER && user.getScore() > BLACKJACK_NUMBER -> DRAW
                 other.getScore() == user.getScore() -> DRAW
-                user.isBlackJackSize() && user.isBlackJack() -> BLACKJACK
+                user.isSizeTwo() && user.isBlackJack() -> BLACKJACK
 
                 other.getScore() > BLACKJACK_NUMBER -> WIN
                 user.getScore() > BLACKJACK_NUMBER -> LOSE

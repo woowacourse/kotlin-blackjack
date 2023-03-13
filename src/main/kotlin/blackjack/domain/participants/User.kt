@@ -10,7 +10,7 @@ abstract class User(val name: Name) {
 
     fun isBlackJack(): Boolean = cards.result.score() == BLACKJACK_NUMBER
 
-    fun isBlackJackSize(): Boolean = cards.size == 2
+    fun isSizeTwo(): Boolean = cards.size == 2
 
     abstract val isContinue: Boolean
 
