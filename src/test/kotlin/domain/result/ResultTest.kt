@@ -7,15 +7,6 @@ import org.junit.jupiter.api.Test
 class ResultTest {
 
     @Test
-    fun `블랙잭이 나왔을 때 배팅금액의 1_5배를 반환한다`() {
-        val betAmount = Money(1000)
-
-        val result = Result.BLACKJACK_WIN.calculateProfit(betAmount)
-
-        assertThat(result).isEqualTo((betAmount * 1.5))
-    }
-
-    @Test
     fun `승 이 나왔을 때 배팅금액의 1배를 반환한다`() {
         val betAmount = Money(1000)
 

@@ -13,8 +13,18 @@ class BlackjackResult(private val dealer: Dealer, private val players: List<Play
         return players.map {
             PlayerResult(
                 it,
-                it.getWinningResult(dealer).calculateProfit(it.bettingMoney)
+                calculatePlayerProfit(it)
             )
         }
+    }
+
+    private fun calculatePlayerProfit(player: Player): Int {
+        if (player.ownCards.checkBlackJack())
+            return player.bettingMoney * BLACKJACK_PROFIT_RATE
+        return player.getWinningResult(dealer).calculateProfit(player.bettingMoney)
+    }
+
+    companion object {
+        private const val BLACKJACK_PROFIT_RATE = 1.5
     }
 }

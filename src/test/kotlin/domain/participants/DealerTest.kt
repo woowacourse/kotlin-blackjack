@@ -35,7 +35,7 @@ class DealerTest {
         val playerCards = Cards(mutableListOf(Card(Shape.HEART, CardValue.JACK), Card(Shape.HEART, CardValue.ACE)))
         val player = Player("jack", playerCards, Money(100))
 
-        assertThat(dealer.judgePlayerResult(player.ownCards)).isEqualTo(Result.BLACKJACK_WIN)
+        assertThat(dealer.judgePlayerResult(player.ownCards)).isEqualTo(Result.WIN)
     }
 
     @Test
