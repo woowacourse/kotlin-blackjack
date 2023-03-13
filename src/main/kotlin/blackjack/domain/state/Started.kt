@@ -1,6 +1,6 @@
 package blackjack.domain.state
 
-import blackjack.domain.Hand
+import blackjack.domain.card.Hand
 
 abstract class Started(override val hand: Hand) : State {
     override fun stay(): State {

@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.participant
 
 class Players(private val players: Set<Player>) {
     init {

@@ -1,7 +1,7 @@
 package blackjack.domain.state
 
-import blackjack.domain.Hand
 import blackjack.domain.Money
+import blackjack.domain.card.Hand
 
 abstract class Running(override val hand: Hand, override val bettingMoney: Money?) : State {
 

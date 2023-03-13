@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.card
 
 data class Hand(private val cards: List<Card>) {
     val size = cards.size

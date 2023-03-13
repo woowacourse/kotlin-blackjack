@@ -1,8 +1,8 @@
 package blackjack.domain.state
 
-import blackjack.domain.Card
-import blackjack.domain.Hand
 import blackjack.domain.Money
+import blackjack.domain.card.Card
+import blackjack.domain.card.Hand
 
 class Deal(override val hand: Hand, override val bettingMoney: Money?) : Started(hand) {
     override fun betting(money: Money): State = throw IllegalStateException(ALREADY_BET_ERROR)

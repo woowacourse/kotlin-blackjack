@@ -1,5 +1,6 @@
-package blackjack.domain
+package blackjack.domain.participant
 
+import blackjack.domain.card.Card
 import blackjack.domain.state.*
 
 abstract class Participant(name: ParticipantName) {

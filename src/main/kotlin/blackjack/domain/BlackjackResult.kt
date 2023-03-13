@@ -1,5 +1,9 @@
 package blackjack.domain
 
+import blackjack.domain.participant.Dealer
+import blackjack.domain.participant.Player
+import blackjack.domain.participant.Players
+
 class BlackjackResult private constructor(private val playersRevenue: Map<Player, Int>) {
     val dealerRevenue: Int = -playersRevenue.values.sum()
 

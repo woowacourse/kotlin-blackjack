@@ -1,5 +1,7 @@
-package blackjack.domain
+package blackjack.domain.participant
 
+import blackjack.domain.card.Card
+import blackjack.domain.card.Hand
 import blackjack.domain.state.Deal
 import blackjack.domain.state.Running
 import blackjack.domain.state.State

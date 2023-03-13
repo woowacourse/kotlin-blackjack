@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.participant
 
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
