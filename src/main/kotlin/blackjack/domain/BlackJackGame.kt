@@ -2,7 +2,6 @@ package blackjack.domain
 
 import blackjack.view.InputView
 import blackjack.view.OutputView
-import java.lang.StringBuilder
 
 class BlackJackGame(
     private val cardPack: CardPack,
@@ -19,7 +18,7 @@ class BlackJackGame(
         }
     }
 
-    fun showDividingCards(printCardDividing: (Dealer, List<Player>) -> Unit) = printCardDividing(dealer, players)
+    fun showParticipants() = Pair(dealer, players)
 
     fun drawAdditionalCards() = players.forEach { player ->
         askToDrawAdditionalCardForPlayer(player)
@@ -45,17 +44,15 @@ class BlackJackGame(
         return drawState
     }
 
-    fun drawAdditionalCardForDealer() {
+    fun drawAdditionalCardForDealer(): DrawResult {
         val drawResult = dealer.drawCard(cardPack)
         if (cardPack.isEmpty()) {
             cardPack.addCardDeck()
         }
-        OutputView.printIsDealerReceivedCard(drawResult)
+        return drawResult
     }
 
-    fun showFinalCards() = OutputView.printFinalCards(dealer, players)
-
-    fun judgeGameResults() {
+    fun judgeGameResults(): Pair<List<PlayerGameResult>, List<GameResult>> {
         val playersGameResult = players.map { player ->
             PlayerGameResult(player, BlackJackReferee.judgeGameResult(player, dealer))
         }
@@ -63,20 +60,19 @@ class BlackJackGame(
             !playerGameResult.gameResult
         }
 
-        OutputView.printGameResults(playersGameResult, dealerGameResult)
-        judgeBetResults(playersGameResult)
+        return Pair(playersGameResult, dealerGameResult)
     }
 
-    private fun judgeBetResults(playersGameResult: List<PlayerGameResult>) {
+    fun judgeBetResults(playersGameResult: List<PlayerGameResult>): Pair<BetAmount, Map<PlayerName, BetAmount>> {
         var dealerDividend = BetAmount(0)
-        val playersDividend = StringBuilder()
+        val playersDividend = mutableMapOf<PlayerName, BetAmount>()
 
         playersGameResult.forEach { playerGameResult ->
             val playerDividend = playerGameResult.player.betAmount * playerGameResult.gameResult.dividendRate
-            playersDividend.append(playerGameResult.player.name.value + ": " + (playerGameResult.player.betAmount * playerGameResult.gameResult.dividendRate).money + "\n")
+            playersDividend[playerGameResult.player.name] = playerDividend
             dealerDividend += (playerDividend * -1.0)
         }
 
-        OutputView.printBetResults(dealerDividend, playersDividend)
+        return Pair(dealerDividend, playersDividend)
     }
 }

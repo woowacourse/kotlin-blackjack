@@ -11,11 +11,13 @@ class BlackJackController(
     fun run() {
         runCatching {
             blackJackGame.entryPlayers(InputView.requestPlayersName())
-            blackJackGame.showDividingCards(OutputView::printCardDividingMessage)
+            OutputView.printCardDividingMessage(blackJackGame.showParticipants())
             blackJackGame.drawAdditionalCards()
-            blackJackGame.drawAdditionalCardForDealer()
-            blackJackGame.showFinalCards()
-            blackJackGame.judgeGameResults()
+            OutputView.printIsDealerReceivedCard(blackJackGame.drawAdditionalCardForDealer())
+            OutputView.printFinalCards(blackJackGame.showParticipants())
+            val gameResults = blackJackGame.judgeGameResults()
+            OutputView.printGameResults(playerGameResults = gameResults.first, dealerGameResult = gameResults.second)
+            OutputView.printBetResults(blackJackGame.judgeBetResults(playersGameResult = gameResults.first))
         }.onFailure { exception ->
             OutputView.printErrorMessage(exception)
         }
