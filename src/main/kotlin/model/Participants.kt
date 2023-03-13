@@ -17,7 +17,7 @@ data class Participants(val value: List<Participant>) {
 
     fun getParticipantsProfitResult(): ParticipantsProfitResult {
         return ParticipantsProfitResult(
-            listOf((dealer as Dealer).calculateDealerProfit(Participants(players))) +
+            listOf((dealer as Dealer).getGameProfitMoney(Participants(players))) +
                 Players(players.map { it as Player }).getGameProfitMoney(dealer)
         )
     }

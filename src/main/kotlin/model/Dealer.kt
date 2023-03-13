@@ -13,7 +13,7 @@ class Dealer(cards: Cards, name: Name = Name(DEALER)) : Participant(cards, name)
 
     override fun isDealer(): Boolean = true
 
-    fun calculateDealerProfit(participants: Participants): Result {
+    fun getGameProfitMoney(participants: Participants): Result {
         var profit = 0L
         participants.players.forEach { profit += getProfitMoney(it).value }
         return Result(this, Profit(profit))
