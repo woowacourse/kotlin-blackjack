@@ -21,10 +21,10 @@ data class BlackJack(
 
     fun getResult(): List<Outcome> = participants.guests.map { guest -> getOutcome(guest, participants.dealer) }
 
-    fun betMoney(input: (String) -> Int?): UsersBettingMoney {
+    fun betMoney(input: (String) -> Int): UsersBettingMoney {
         return UsersBettingMoney(
             participants.guests.map {
-                it to BettingMoney(input(it.name.toString())!!)
+                it to BettingMoney(input(it.name.toString()))
             }.toMap(),
         )
     }

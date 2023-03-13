@@ -16,12 +16,12 @@ class InputView {
         }
     }
 
-    fun inputBettingMoney(name: String): Int? {
+    fun inputBettingMoney(name: String): Int {
         println("\n${name}의 베팅 금액은?")
         return runCatching {
             readln().toInt()
         }.onFailure { println("베팅금액은 숫자여야 합니다") }
-            .getOrNull() ?: inputBettingMoney(name)
+            .getOrElse { inputBettingMoney(name) }
     }
 
     companion object {
