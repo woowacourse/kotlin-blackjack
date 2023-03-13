@@ -25,6 +25,10 @@ class Player private constructor(
     }
     override fun isDealer(): Boolean = false
 
+    override fun getResult(participants: Participants): Result {
+        return Result(this, getProfitMoney(participants.dealer))
+    }
+
     companion object {
         fun of(cards: Cards, name: String, money: Long, needToDraw: (String) -> Boolean = { false }): Player = Player(cards, Name(name), Money(money), needToDraw)
     }

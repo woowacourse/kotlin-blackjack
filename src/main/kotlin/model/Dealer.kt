@@ -11,13 +11,14 @@ class Dealer(cards: Cards, name: Name = Name(DEALER)) : Participant(cards, name)
 
     override fun isDealer(): Boolean = true
 
-    fun getGameProfitMoney(participants: Participants): Result {
-        var profit = 0L
+    override fun getResult(participants: Participants): Result {
+        var profit = INITIALIZE_PROFIT
         participants.players.forEach { profit += getProfitMoney(it).value }
         return Result(this, Profit(profit))
     }
 
     companion object {
         const val DEALER = "딜러"
+        private const val INITIALIZE_PROFIT = 0L
     }
 }
