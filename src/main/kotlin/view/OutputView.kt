@@ -1,9 +1,9 @@
 package view
 
 import domain.card.Card
-import domain.judge.ParticipantResult
-import domain.judge.Result
-import domain.player.Player
+import domain.participants.Dealer
+import domain.participants.Player
+import domain.result.ParticipantsResult
 
 object OutputView {
     private const val SEPARATOR = ", "
@@ -13,28 +13,34 @@ object OutputView {
     private const val DEALER = "딜러: "
     private const val PARTICIPANT_CARD = "카드:"
     private const val RESULT = " - 결과: "
-    private const val FINAL_RESULT = "\n## 최종 승패"
-    private const val PICK_CARD_OVER_SIXTEEN = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n"
+    private const val FINAL_RESULT = "\n## 최종 수익"
+    private const val PICK_CARD_OVER_SIXTEEN = "\n딜러는 16이하라 한장의 카드를 더 받았습니다."
 
-    fun printDivideCard(players: List<Player>) {
+    fun printBlackjackSetting(players: List<Player>, dealer: Dealer) {
+        printDivideCard(players)
+        printDealerSettingCard(dealer)
+        printPlayersSettingCards(players)
+    }
+
+    private fun printDivideCard(players: List<Player>) {
         println()
         val names = players.map { it.name }
         println(names.joinToString(SEPARATOR, WITH_DEALER, DIVIDE_TWO_CARDS))
     }
 
-    fun printDealerSettingCard(card: Card) {
-        println(DEALER + printCardForm(card))
+    private fun printDealerSettingCard(dealer: Dealer) {
+        println(DEALER + printCardForm(dealer.ownCards.cards.first()))
     }
 
-    fun printParticipantsCards(participants: List<Player>) {
-        participants.forEach {
-            printParticipantCards(it.name, it.ownCards.cards)
+    private fun printPlayersSettingCards(players: List<Player>) {
+        players.forEach {
+            printParticipantCards(it)
         }
         println()
     }
 
-    fun printParticipantCards(name: String, cards: List<Card>) {
-        println("${name}$PARTICIPANT_CARD ${cards.joinToString(SEPARATOR) { printCardForm(it) }}")
+    fun printParticipantCards(player: Player) {
+        println("${player.name}$PARTICIPANT_CARD ${player.ownCards.cards.joinToString { printCardForm(it) }}")
     }
 
     private fun printCardForm(card: Card): String {
@@ -45,33 +51,30 @@ object OutputView {
         println(PICK_CARD_OVER_SIXTEEN)
     }
 
-    fun printCardResult(participants: List<Player>) {
-        participants.forEach { (name, participant) ->
-            println("${name}$PARTICIPANT_CARD ${participant.cards.joinToString(SEPARATOR) { printCardForm(it) }}${RESULT}${participant.calculateCardSum()}")
-        }
-    }
+    fun printResult(result: ParticipantsResult, dealerProfit: Int) {
+        printDealerCardResult(result.dealer)
+        result.playerResult.forEach { printPlayerCardResult(it.player) }
 
-    fun printWinningResult(dealerResult: List<Result>, playerStates: List<ParticipantResult>) {
         println(FINAL_RESULT)
-        printDealerWinningResult(dealerResult)
-        printPlayerWinningResult(playerStates)
-    }
-
-    private fun printDealerWinningResult(dealerResult: List<Result>) {
-        println("$DEALER${countResult(dealerResult).joinToString()}")
-    }
-
-    private fun countResult(dealerResult: List<Result>): List<String> {
-        return Result.values().map { result ->
-            formatResultCount(dealerResult.count { it == result }, result)
+        println("$DEALER$dealerProfit")
+        result.playerResult.forEach {
+            println("${it.player.name}: ${it.profit}")
         }
     }
 
-    private fun formatResultCount(count: Int, result: Result) = if (count == 0) "" else "$count${result.result} "
+    private fun printDealerCardResult(dealer: Dealer) {
+        println(
+            "${dealer.name} $PARTICIPANT_CARD " +
+                dealer.ownCards.cards.joinToString { printCardForm(it) } +
+                "${RESULT}${dealer.ownCards.calculateCardSum()}"
+        )
+    }
 
-    private fun printPlayerWinningResult(playerResult: List<ParticipantResult>) {
-        playerResult.forEach {
-            println("${it.name}: ${it.result.result}")
-        }
+    private fun printPlayerCardResult(player: Player) {
+        println(
+            "${player.name}$PARTICIPANT_CARD " +
+                player.ownCards.cards.joinToString { printCardForm(it) } +
+                "${RESULT}${player.ownCards.calculateCardSum()}"
+        )
     }
 }

@@ -124,4 +124,42 @@ class DslTest {
         val language = mutableMapOf<String, Int>()
         infix fun String.level(other: Int) = language.put(this, other)
     }
+
+    data class Player(var name: String = "pingu", var betAmount: Int = 10000)
+
+    private fun makePlayer1(
+        makePlayerAction: (Player) -> Unit
+    ): Player {
+        val player = Player()
+        makePlayerAction(player)
+        return player
+    }
+
+    @Test
+    fun test() {
+        println(
+            makePlayer1 {
+                it.name = "james"
+                it.betAmount = 50000
+            }
+        )
+    }
+
+    private fun makePlayer2(
+        makePlayerAction: Player.() -> Unit
+    ): Player {
+        val player = Player()
+        player.makePlayerAction()
+        return player
+    }
+
+    @Test
+    fun test2() {
+        println(
+            makePlayer2 {
+                this.name = "james"
+                betAmount = 50000
+            }
+        )
+    }
 }

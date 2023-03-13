@@ -2,31 +2,25 @@ package domain
 
 import domain.card.Card
 import domain.card.CardMaker
+import domain.card.Cards
 import domain.deck.Deck
-import domain.gamer.cards.DealerCards
-import domain.gamer.cards.PlayerCards
-import domain.judge.ParticipantResult
-import domain.judge.Referee
-import domain.judge.Result
-import domain.player.Names
-import domain.player.Player
+import domain.participants.Dealer
+import domain.participants.Money
+import domain.participants.Names
+import domain.participants.Player
+import domain.result.ParticipantsResult
 
 class BlackjackGame(
     names: Names,
+    getBetAmount: (String) -> Money,
     private val deck: Deck = Deck(CardMaker().makeShuffledCards())
 ) {
-    val dealerState: DealerCards
+    val dealer: Dealer
     val players: List<Player>
 
     init {
-        dealerState = DealerCards(makeStartDeck())
-        players = makePlayer(names)
-    }
-
-    private fun makePlayer(names: Names): List<Player> {
-        return names.userNames.map {
-            Player(it, PlayerCards(makeStartDeck()))
-        }
+        dealer = Dealer(Cards(makeStartDeck()))
+        players = makePlayer(names, getBetAmount)
     }
 
     private fun makeStartDeck(): MutableList<Card> {
@@ -37,42 +31,56 @@ class BlackjackGame(
         return startDeck
     }
 
-    private fun pickPlayerCard(name: String) {
-        findPlayer(name).ownCards.pickCard(deck.giveCard())
-    }
-
-    private fun findPlayer(name: String): Player {
-        return players.first { it.name == name }
-    }
-
-    private fun pickDealerCard() {
-        dealerState.pickCard(deck.giveCard())
-    }
-
-    fun repeatPickCard(name: String, validatePickAnswer: () -> Boolean, printCards: () -> Unit) {
-        while (!checkBurst(name)) {
-            val answer = validatePickAnswer()
-            if (answer) pickPlayerCard(name) else return
-            printCards()
+    private fun makePlayer(names: Names, getMoney: (String) -> Money): List<Player> {
+        return names.userNames.map { name ->
+            Player(name, Cards(makeStartDeck()), getMoney(name))
         }
     }
 
-    private fun checkBurst(name: String) = findPlayer(name).ownCards.checkOverCondition()
+    fun play(
+        wantPickCard: (Player) -> Boolean,
+        onPickCard: (Player) -> Unit,
+        onDealerPickCard: () -> Unit
+    ): ParticipantsResult {
+        playsPlayerTurn(wantPickCard, onPickCard)
 
-    fun pickDealerCardIfPossible(): Boolean {
-        if (!dealerState.checkOverCondition()) {
-            pickDealerCard()
+        while (pickDealerCardIfPossible())
+            onDealerPickCard()
+
+        return BlackjackResult(dealer, players).getResult()
+    }
+
+    private fun playsPlayerTurn(
+        wantPickCard: (Player) -> Boolean,
+        onPickCard: (Player) -> Unit
+    ) {
+        players.forEach { player ->
+            repeatPickCard(
+                player,
+                { wantPickCard(player) },
+                { onPickCard(player) }
+            )
+        }
+    }
+
+    private fun repeatPickCard(
+        player: Player,
+        wantPickCard: () -> Boolean,
+        onPickCard: () -> Unit
+    ) {
+        while (!player.ownCards.checkBurst()) {
+            val answer = wantPickCard()
+            if (answer) player.ownCards.pickCard(deck.giveCard()) else return
+            onPickCard()
+        }
+    }
+
+    private fun pickDealerCardIfPossible(): Boolean {
+        if (!dealer.checkOverCondition()) {
+            dealer.ownCards.pickCard(deck.giveCard())
             return true
         }
         return false
-    }
-
-    fun getPlayerWinningResult(): List<ParticipantResult> = Referee(dealerState, players).judgePlayersResult()
-
-    fun judgeDealerResult(playersResult: List<ParticipantResult>): List<Result> {
-        return playersResult.map {
-            it.result.reverseResult()
-        }
     }
 
     companion object {
