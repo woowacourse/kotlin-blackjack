@@ -3,7 +3,6 @@ package blackjack.view
 import blackjack.domain.Card
 import blackjack.domain.CardBunch
 import blackjack.domain.CardNumber
-import blackjack.domain.Consequence
 import blackjack.domain.Participants
 import blackjack.domain.Player
 
@@ -13,9 +12,8 @@ object OutputView {
     private const val DISTRIBUTE_SCRIPT = "딜러와 %s에게 2장의 카드를 나누었습니다."
     private const val CAN_GET_CARD_SCRIPT = "딜러는 16이하라 한 장의 카드를 더 받았습니다."
     private const val CANNOT_GET_CARD_SCRIPT = "딜러는 17이상이라 카드를 더 받지 못합니다."
-    private const val DEALER_WIN = 0
-    private const val DEALER_LOSE = 1
-    private const val DRAW = 2
+    private const val FINAL_PRIZE_MONEY_SCRIPT = "## 최종수입"
+
     private fun makeCardString(card: Card): String = getCardNumberString(card.cardNumber) + card.shape.korean
 
     private fun makeBunchString(bunch: CardBunch): String =
@@ -26,7 +24,7 @@ object OutputView {
     }
 
     fun printPlayerCards(player: Player) {
-        val bunchString = makeBunchString(player.cardBunch)
+        val bunchString = makeBunchString(player.state.hand)
         println("${player.name}카드 : $bunchString")
     }
 
@@ -46,47 +44,12 @@ object OutputView {
     }
 
     fun printTotalScore(participants: Participants) {
-        println("딜러 카드 : ${makeBunchString(participants.dealer.cardBunch)} - 결과: ${participants.dealer.cardBunch.getTotalScore()}")
+        println("딜러 카드 : ${makeBunchString(participants.dealer.state.hand)} - 결과: ${participants.dealer.state.hand.getTotalScore()}")
         participants.players.value.forEach { player ->
-            val bunchString = makeBunchString(player.cardBunch)
-            println("${player.name}카드 : $bunchString - 결과: ${player.cardBunch.getTotalScore()}")
+            val bunchString = makeBunchString(player.state.hand)
+            println("${player.name}카드 : $bunchString - 결과: ${player.state.hand.getTotalScore()}")
         }
         println()
-    }
-
-    fun printWinOrLose(participants: Participants) {
-        println("##최종 승패")
-        printDealerResult(participants)
-        getResultString(participants)
-    }
-
-    private fun printDealerResult(participants: Participants) {
-        val result = mutableListOf(0, 0, 0)
-        participants.players.value.forEach { player ->
-            result[decideDealerResult(participants.getConsequence(player))]++
-        }
-        println("딜러: ${result[DEALER_WIN]}승 ${result[DEALER_LOSE]}패 ${result[DRAW]}무")
-    }
-
-    private fun decideDealerResult(consequence: Consequence): Int =
-        when (consequence) {
-            Consequence.WIN -> DEALER_LOSE
-            Consequence.LOSE -> DEALER_WIN
-            Consequence.DRAW -> DRAW
-        }
-
-    private fun getResultString(participants: Participants) {
-        var resultString = ""
-        participants.players.value.forEach { player ->
-            resultString += decidePlayerResult(participants.getConsequence(player), player)
-        }
-        println(resultString)
-    }
-
-    private fun decidePlayerResult(consequence: Consequence, player: Player) = when (consequence) {
-        Consequence.WIN -> "${player.name}: 승\n"
-        Consequence.LOSE -> "${player.name}: 패\n"
-        Consequence.DRAW -> "${player.name}: 무\n"
     }
 
     private fun getCardNumberString(cardNumber: CardNumber): String {
@@ -96,6 +59,22 @@ object OutputView {
             CardNumber.JACK -> "J"
             CardNumber.QUEEN -> "Q"
             CardNumber.KING -> "K"
+        }
+    }
+
+    fun printFinalPrizeMoney(dealerResultMoney: Int, playersPrizeMoney: List<Pair<String, Int>>) {
+        println(FINAL_PRIZE_MONEY_SCRIPT)
+        printDealerResultMoney(dealerResultMoney)
+        printPlayersPrizeMoney(playersPrizeMoney)
+    }
+
+    private fun printDealerResultMoney(dealerResultMoney: Int) {
+        println("딜러: $dealerResultMoney")
+    }
+
+    private fun printPlayersPrizeMoney(playersPrizeMoney: List<Pair<String, Int>>) {
+        playersPrizeMoney.forEach {
+            println("${it.first}: ${it.second}")
         }
     }
 }

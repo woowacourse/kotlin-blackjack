@@ -12,8 +12,7 @@ class CardBunchTest {
         val card2 = Card(Shape.HEART, CardNumber.SIX)
         val card3 = Card(Shape.HEART, CardNumber.NINE)
 
-        val cardBunch = CardBunch(card1, card2)
-        cardBunch.addCard(card3)
+        val cardBunch = CardBunch(card1, card2, card3)
 
         assertThat(cardBunch.cards.size).isEqualTo(3)
     }
@@ -24,8 +23,7 @@ class CardBunchTest {
         val card2 = Card(Shape.HEART, CardNumber.SIX)
         val card3 = Card(Shape.HEART, CardNumber.NINE)
 
-        val cardBunch = CardBunch(card1, card2)
-        cardBunch.addCard(card3)
+        val cardBunch = CardBunch(card1, card2, card3)
 
         val totalScore = cardBunch.getTotalScore()
         assertThat(totalScore).isEqualTo(22)
@@ -37,8 +35,7 @@ class CardBunchTest {
         val card2 = Card(Shape.HEART, CardNumber.TWO)
         val card3 = Card(Shape.HEART, CardNumber.THREE)
 
-        val cardBunch = CardBunch(card1, card2)
-        cardBunch.addCard(card3)
+        val cardBunch = CardBunch(card1, card2, card3)
 
         val totalScore = cardBunch.getTotalScore()
         assertThat(totalScore).isEqualTo(16)
@@ -50,35 +47,31 @@ class CardBunchTest {
         val card2 = Card(Shape.HEART, CardNumber.JACK)
         val card3 = Card(Shape.HEART, CardNumber.KING)
 
-        val cardBunch = CardBunch(card1, card2)
-        cardBunch.addCard(card3)
+        val cardBunch = CardBunch(card1, card2, card3)
 
         val totalScore = cardBunch.getTotalScore()
         assertThat(totalScore).isEqualTo(21)
     }
 
     @Test
-    fun `카드의 총합이 21이 넘었다면 True를 반환한다`() {
+    fun `카드의 총합이 21이 넘었다면 해당 카드 뭉치느 Burst된다`() {
         val card1 = Card(Shape.HEART, CardNumber.ACE)
         val card2 = Card(Shape.HEART, CardNumber.JACK)
         val card3 = Card(Shape.HEART, CardNumber.KING)
         val card4 = Card(Shape.HEART, CardNumber.TWO)
 
-        val cardBunch = CardBunch(card1, card2)
-        cardBunch.addCard(card3)
-        cardBunch.addCard(card4)
+        val cardBunch = CardBunch(card1, card2, card3, card4)
 
         assertThat(cardBunch.isBurst()).isTrue
     }
 
     @Test
-    fun `카드의 총합이 21이 넘지 않았다면 False를 반환한다`() {
+    fun `카드의 총합이 21이 넘지 않았다면 해당 카드뭉치는 Burst되지않는다`() {
         val card1 = Card(Shape.HEART, CardNumber.ACE)
         val card2 = Card(Shape.HEART, CardNumber.JACK)
         val card3 = Card(Shape.HEART, CardNumber.KING)
 
-        val cardBunch = CardBunch(card1, card2)
-        cardBunch.addCard(card3)
+        val cardBunch = CardBunch(card1, card2, card3)
 
         assertThat(cardBunch.isBurst()).isFalse
     }

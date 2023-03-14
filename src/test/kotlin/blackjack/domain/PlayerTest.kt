@@ -1,18 +1,20 @@
 package blackjack.domain
 
 import blackjack.Shape
+import blackjack.domain.state.DealerFirstTurn
+import blackjack.domain.state.FirstTurn
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 
 class PlayerTest {
     @Test
-    fun `이름과 카드뭉치를 넘겨받아 플레이어를 생성한다`() {
+    fun `이름과 상태 베팅금액 넘겨받아 플레이어를 생성한다`() {
         val name = "krrong"
         val card1 = Card(Shape.HEART, CardNumber.SIX)
         val card2 = Card(Shape.HEART, CardNumber.SEVEN)
-        val cardBunch = CardBunch(card1, card2)
-        assertDoesNotThrow { Player(name, cardBunch) }
+        val state = FirstTurn(CardBunch(card1)).draw(card2)
+        assertDoesNotThrow { Player(name, state, 1000) }
     }
 
     @Test
@@ -20,57 +22,80 @@ class PlayerTest {
         val name = "krrong"
         val card1 = Card(Shape.HEART, CardNumber.SIX)
         val card2 = Card(Shape.HEART, CardNumber.SEVEN)
-        val cardBunch = CardBunch(card1, card2)
+        val state = FirstTurn(CardBunch(card1)).draw(card2)
 
-        val player = Player(name, cardBunch)
+        val player = Player(name, state, 1000)
         val card3 = Card(Shape.HEART, CardNumber.NINE)
         player.receiveCard(card3)
 
-        assertThat(player.cardBunch.cards.size).isEqualTo(3)
+        assertThat(player.state.hand.cards.size).isEqualTo(3)
     }
 
     @Test
-    fun `딜러의 점수가 높을때 (플레이어총합13, 딜러총합20) 플레이어가 패배한다`() {
+    fun `블랙잭으로 이겼을때 반의 상금을 받는다`() {
+        val name = "krrong"
         val card1 = Card(Shape.HEART, CardNumber.JACK)
-        val card2 = Card(Shape.HEART, CardNumber.KING)
-        val cardBunch1 = CardBunch(card1, card2)
-        val dealer = Dealer(cardBunch1)
+        val card2 = Card(Shape.HEART, CardNumber.ACE)
+        val state = FirstTurn(CardBunch(card1)).draw(card2)
+        val player = Player(name, state, 1000)
 
-        val card3 = Card(Shape.HEART, CardNumber.SIX)
-        val card4 = Card(Shape.HEART, CardNumber.SEVEN)
-        val cardBunch2 = CardBunch(card3, card4)
-        val player = Player("krrong", cardBunch2)
-
-        assertThat(player.chooseWinner(dealer)).isEqualTo(Consequence.LOSE)
-    }
-
-    @Test
-    fun `플레이어의 점수가 높을때 (플레이어총합20, 딜러총합13) 플레이어가 승리한다`() {
-        val card1 = Card(Shape.HEART, CardNumber.SIX)
-        val card2 = Card(Shape.HEART, CardNumber.SEVEN)
-        val cardBunch1 = CardBunch(card1, card2)
-        val dealer = Dealer(cardBunch1)
-
-        val card3 = Card(Shape.HEART, CardNumber.JACK)
+        val card3 = Card(Shape.HEART, CardNumber.NINE)
         val card4 = Card(Shape.HEART, CardNumber.KING)
-        val cardBunch2 = CardBunch(card3, card4)
-        val player = Player("krrong", cardBunch2)
+        val state2 = DealerFirstTurn(CardBunch(card3)).draw(card4)
+        val dealer = Dealer(state2)
 
-        assertThat(player.chooseWinner(dealer)).isEqualTo(Consequence.WIN)
+        assertThat(player.getPrizeMoney(dealer)).isEqualTo(500)
     }
 
     @Test
-    fun `같은 점수라면 비긴다 각 총합 20`() {
-        val card1 = Card(Shape.HEART, CardNumber.QUEEN)
+    fun `플레이어가 이겼을대 1배의 상금을 돌려받는다`() {
+        val name = "krrong"
+        val card1 = Card(Shape.HEART, CardNumber.NINE)
         val card2 = Card(Shape.HEART, CardNumber.JACK)
-        val cardBunch1 = CardBunch(card1, card2)
-        val dealer = Dealer(cardBunch1)
+        val state = FirstTurn(CardBunch(card1)).draw(card2)
+        val player = Player(name, state, 1000)
 
-        val card3 = Card(Shape.HEART, CardNumber.JACK)
+        val card3 = Card(Shape.HEART, CardNumber.TWO)
         val card4 = Card(Shape.HEART, CardNumber.KING)
-        val cardBunch2 = CardBunch(card3, card4)
-        val player = Player("krrong", cardBunch2)
+        val card5 = Card(Shape.HEART, CardNumber.QUEEN)
+        val state2 = DealerFirstTurn(CardBunch(card3)).draw(card4).draw(card5)
+        val dealer = Dealer(state2)
 
-        assertThat(player.chooseWinner(dealer)).isEqualTo(Consequence.DRAW)
+        assertThat(player.getPrizeMoney(dealer)).isEqualTo(1000)
+    }
+
+    @Test
+    fun `플레이어가 졌을떄 -1만큼 잃는다 `() {
+        val name = "krrong"
+        val card1 = Card(Shape.HEART, CardNumber.TWO)
+        val card2 = Card(Shape.HEART, CardNumber.KING)
+        val card3 = Card(Shape.HEART, CardNumber.QUEEN)
+        val state = FirstTurn(CardBunch(card1)).draw(card2).draw(card3)
+        val player = Player(name, state, 1000)
+
+        val card4 = Card(Shape.HEART, CardNumber.NINE)
+        val card5 = Card(Shape.HEART, CardNumber.JACK)
+        val state2 = DealerFirstTurn(CardBunch(card4)).draw(card5)
+        val dealer = Dealer(state2)
+
+        assertThat(player.getPrizeMoney(dealer)).isEqualTo(-1000)
+    }
+
+    @Test
+    fun `비길경우 아무것도 받지않는다`() {
+        val name = "krrong"
+        val card1 = Card(Shape.HEART, CardNumber.TWO)
+        val card2 = Card(Shape.HEART, CardNumber.KING)
+        val card3 = Card(Shape.HEART, CardNumber.QUEEN)
+        val state = FirstTurn(CardBunch(card1)).draw(card2).draw(card3)
+        val player = Player(name, state, 1000)
+
+        val card4 = Card(Shape.HEART, CardNumber.TWO)
+        val card5 = Card(Shape.HEART, CardNumber.JACK)
+        val card6 = Card(Shape.HEART, CardNumber.QUEEN)
+        val state2 = DealerFirstTurn(CardBunch(card4)).draw(card5).draw(card6)
+        val dealer = Dealer(state2)
+
+        assertThat(player.getPrizeMoney(dealer)).isEqualTo(0)
     }
 }

@@ -59,3 +59,27 @@
 
 - [x] 최초 카드 분배 대사 출력
 
+#### 적용해보자 상태패턴
+- [x]State
+  - [x] ProgressAble
+    - [x] 카드를 뽑는다(draw)
+      - [x] Hit
+      - [x] FirstTurn
+      - [x] DealerFirstTurn
+      - [x] DealerHit
+  - [x] Stopped
+    - [x] Stay
+    - [x] BlackJack
+    - [x] Bust
+    
+#### step2 추가 기능목록
+- view
+  - InputView
+    - [x] 베팅금액을 입력받는다
+  -OutputView
+    - [ ] 최종수익을 출력한다.
+
+
+- 도메인 로직
+  - [ ] 상태에 따른 최종 수익을 계산한다.
+

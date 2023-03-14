@@ -8,7 +8,7 @@ import blackjack.view.OutputView
 
 class Controller() {
     fun runGame() {
-        val blackJackGame = BlackJackGame(InputView.getPlayerNames(), RandomCardDeck)
+        val blackJackGame = BlackJackGame(InputView.getPlayerNames(), RandomCardDeck, InputView::getBettingAmount)
         showInitialState(blackJackGame.participants)
         blackJackGame.progressPlayersAddCard(InputView::getDecision, OutputView::printPlayerCards)
         blackJackGame.progressDealerAddCard(OutputView::printDealerOverCondition)
@@ -17,12 +17,15 @@ class Controller() {
 
     private fun showInitialState(participants: Participants) {
         OutputView.printDistributeScript(participants.players.value)
-        OutputView.printDealerInitialCard(participants.dealer.cardBunch)
+        OutputView.printDealerInitialCard(participants.dealer.state.hand)
         OutputView.printAllPlayerCard(participants.players.value)
     }
 
     private fun printResult(blackJackGame: BlackJackGame) {
         OutputView.printTotalScore(blackJackGame.participants)
-        OutputView.printWinOrLose(blackJackGame.participants)
+        OutputView.printFinalPrizeMoney(
+            blackJackGame.participants.getDealerResultMoney(),
+            blackJackGame.participants.getPlayersPrizeMoney(),
+        )
     }
 }
