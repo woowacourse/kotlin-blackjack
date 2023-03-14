@@ -1,7 +1,10 @@
 package blackjack.domain.player
 
+import blackjack.domain.card.Card
+import blackjack.domain.card.CardNumber
+import blackjack.domain.card.CardShape
+import blackjack.domain.card.Cards
 import blackjack.domain.card.TestCardsGenerator
-import blackjack.domain.result.GameResult
 import org.assertj.core.api.SoftAssertions
 import org.junit.jupiter.api.Test
 
@@ -12,7 +15,7 @@ class BlackjackManagerTest {
     fun `게임을 시작하기 전에 모든 플레이어에게 카드를 2장씩 나눠준다`() {
 
         // when
-        val blackjackManager = BlackjackManager(TestCardsGenerator(), listOf("aaa", "bbb"))
+        val blackjackManager = BlackjackManager(TestCardsGenerator(cards), listOf("aaa", "bbb"))
         lateinit var dealer: Dealer
         lateinit var participants: Participants
         blackjackManager.setupCards { actualDealer, actualParticipants ->
@@ -32,20 +35,41 @@ class BlackjackManagerTest {
         // given
         var betAmountIndex = 0
         val blackjackManager =
-            BlackjackManager(TestCardsGenerator(), listOf("aaa", "bbb")) { listOf(10000, 20000)[betAmountIndex++] }
+            BlackjackManager(TestCardsGenerator(cards), listOf("aaa", "bbb")) { listOf(10000, 20000)[betAmountIndex++] }
 
         // when
         var moreCardIndex = 0
-        blackjackManager.playGame({ _: String -> listOf(true, false, false)[moreCardIndex++] }, {}, {})
-        lateinit var gameResult: GameResult
-        blackjackManager.calculatePlayersResult({ _, _ -> }, { actualGameResult -> gameResult = actualGameResult })
-        val dealerProfit = gameResult.dealerProfit
-        val participantsProfit = gameResult.participantsProfit
+        val gameResult = blackjackManager.playGame({ _: String -> listOf(true, false, false)[moreCardIndex++] }, {}, {})
+        val dealerProfit = gameResult.getDealerResult().profit
+        val participantsProfit = gameResult.getParticipantsResult().participantsResults
 
         // then
         softAssertions.assertThat(dealerProfit).isEqualTo(30000)
-        softAssertions.assertThat(participantsProfit[0].profit).isEqualTo(-10000)
-        softAssertions.assertThat(participantsProfit[1].profit).isEqualTo(-20000)
+        softAssertions.assertThat(participantsProfit[0].getProfit()).isEqualTo(-10000)
+        softAssertions.assertThat(participantsProfit[1].getProfit()).isEqualTo(-20000)
         softAssertions.assertAll()
+    }
+
+    companion object {
+        val cards = Cards(
+            listOf(
+                // dealer
+                Card(CardNumber.FOUR, CardShape.HEART),
+                Card(CardNumber.FIVE, CardShape.HEART),
+
+                // player1
+                Card(CardNumber.SIX, CardShape.DIAMOND),
+                Card(CardNumber.EIGHT, CardShape.DIAMOND),
+
+                // player2
+                Card(CardNumber.THREE, CardShape.CLOVER),
+                Card(CardNumber.FOUR, CardShape.CLOVER),
+
+                // 추가 발급
+                Card(CardNumber.FOUR, CardShape.SPADE),
+                Card(CardNumber.FIVE, CardShape.SPADE),
+                Card(CardNumber.SIX, CardShape.SPADE)
+            )
+        )
     }
 }

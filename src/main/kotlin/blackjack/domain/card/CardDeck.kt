@@ -8,6 +8,4 @@ class CardDeck(cardsGenerator: CardsGenerator) {
         cards.getOrNull(0) ?: return null
         return cards.removeAt(0)
     }
-
-    fun getCardsSize(): Int = cards.size
 }

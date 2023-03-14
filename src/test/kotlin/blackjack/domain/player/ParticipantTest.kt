@@ -4,6 +4,7 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
 import blackjack.domain.card.CardShape
 import blackjack.domain.card.Cards
+import blackjack.domain.result.Result
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -23,7 +24,7 @@ class ParticipantTest {
     }
 
     @Test
-    fun `참가자1 스코어는 Bust 딜러 스코어는 17일때, 참가자1의 수익률을 계산하면, -1_0이다`() {
+    fun `참가자1 스코어는 Bust 딜러 스코어는 17일때, 참가자1의 결과는 DRAW이다`() {
 
         // given
         val dealer = Dealer(
@@ -47,14 +48,14 @@ class ParticipantTest {
         )
 
         // when
-        val actual: Double = participant1.calculateResult(dealer).rate
+        val actual: Result = participant1.calculateResult(dealer)
 
         // then
-        assertThat(actual).isEqualTo(-1.0)
+        assertThat(actual).isEqualTo(Result.LOSE)
     }
 
     @Test
-    fun `참가자1 스코어는 17 딜러 스코어는 Bust 일때, 참가자1의 수익률을 계산하면, 1_0이다`() {
+    fun `참가자1 스코어는 17 딜러 스코어는 Bust 일때, 참가자1의 결과는 WIN이다`() {
 
         // given
         val dealer = Dealer(
@@ -77,43 +78,14 @@ class ParticipantTest {
         )
 
         // when
-        val actual: Double = participant1.calculateResult(dealer).rate
+        val actual: Result = participant1.calculateResult(dealer)
 
         // then
-        assertThat(actual).isEqualTo(1.0)
+        assertThat(actual).isEqualTo(Result.WIN)
     }
 
     @Test
-    fun `참가자1 스코어는 블랙잭 딜러 스코어는 17 일때, 참가자1의 수익률을 계산하면, 1_5이다`() {
-
-        // given
-        val dealer = Dealer(
-            cards = Cards(
-                listOf(
-                    Card(CardNumber.EIGHT, CardShape.DIAMOND),
-                    Card(CardNumber.NINE, CardShape.DIAMOND)
-                )
-            )
-        )
-        val participant1 = Participant(
-            "aaa",
-            cards = Cards(
-                listOf(
-                    Card(CardNumber.ACE, CardShape.DIAMOND),
-                    Card(CardNumber.TEN, CardShape.DIAMOND)
-                )
-            )
-        )
-
-        // when
-        val actual: Double = participant1.calculateResult(dealer).rate
-
-        // then
-        assertThat(actual).isEqualTo(1.5)
-    }
-
-    @Test
-    fun `참가자1 스코어는 블랙잭 딜러 스코어는 블랙잭 일때, 참가자1의 수익률을 계산하면, 0_0이다`() {
+    fun `참가자1 스코어는 블랙잭 딜러 스코어는 블랙잭 일때, 참가자1의 결과는 DRAW이다`() {
 
         // given
         val dealer = Dealer(
@@ -135,9 +107,9 @@ class ParticipantTest {
         )
 
         // when
-        val actual: Double = participant1.calculateResult(dealer).rate
+        val actual: Result = participant1.calculateResult(dealer)
 
         // then
-        assertThat(actual).isEqualTo(0.0)
+        assertThat(actual).isEqualTo(Result.DRAW)
     }
 }
