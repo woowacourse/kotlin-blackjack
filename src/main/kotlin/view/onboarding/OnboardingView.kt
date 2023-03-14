@@ -8,14 +8,10 @@ object OnboardingView {
         return OnboardingInput.inputNames { OnboardingOutput.printBlankError() }
     }
 
-    fun requestInputBets(names: List<String>): List<Double> {
-        val bets = mutableListOf<Double>()
-        names.forEach {
-            println()
-            OnboardingOutput.printRequestInputBet(it)
-            bets.add(OnboardingInput.inputBets { OnboardingOutput.printNotDoubleError() })
-        }
-        return bets
+    fun requestInputBet(name: String): Double {
+        println()
+        OnboardingOutput.printRequestInputBet(name)
+        return OnboardingInput.inputBets { OnboardingOutput.printNotDoubleError() }
     }
 
     fun printInitialSetting(persons: Persons) {

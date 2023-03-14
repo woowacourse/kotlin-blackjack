@@ -13,7 +13,7 @@ class BlackJackController {
     fun runBlackJack() {
         val deck = Deck()
         val persons = Persons.getPersons(OnboardingView.requestInputNames())
-        val bets = OnboardingView.requestInputBets(persons.players.map { it.name })
+        val bets = persons.players.map { OnboardingView.requestInputBet(it.name) }
 
         initialPhase(persons, deck)
         OnboardingView.printInitialSetting(persons)
