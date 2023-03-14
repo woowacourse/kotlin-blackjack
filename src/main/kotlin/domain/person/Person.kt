@@ -1,7 +1,6 @@
 package domain.person
 
 import domain.card.Card
-import domain.state.Bust
 import domain.state.InProgress
 import domain.state.State
 
@@ -18,6 +17,5 @@ abstract class Person {
 
     fun getTotal(): Int = state.handOfCards.getTotalCardSum()
 
-    fun isBust() = state is Bust
     fun isInProgress() = state is InProgress
 }

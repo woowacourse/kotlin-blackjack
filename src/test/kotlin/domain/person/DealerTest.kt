@@ -6,6 +6,7 @@ import domain.card.Card
 import domain.card.CardNumber
 import domain.card.CardShape.CLOVER
 import domain.card.CardShape.HEART
+import domain.state.Bust
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -56,7 +57,7 @@ class DealerTest {
         dealer.toNextState(Card(CLOVER, n1))
 
         // when
-        val actual = dealer.isBust()
+        val actual = dealer.state is Bust
 
         assertThat(actual).isEqualTo(expected)
     }

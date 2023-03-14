@@ -6,6 +6,7 @@ import domain.card.Card
 import domain.card.CardNumber
 import domain.card.CardShape.CLOVER
 import domain.card.CardShape.HEART
+import domain.state.Bust
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -67,7 +68,7 @@ class PlayerTest {
         player.toNextState(Card(CLOVER, n2))
 
         // when
-        val actual = player.isBust()
+        val actual = player.state is Bust
 
         assertThat(actual).isEqualTo(expected)
     }
