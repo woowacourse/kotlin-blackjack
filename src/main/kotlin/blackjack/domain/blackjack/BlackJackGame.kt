@@ -1,43 +1,49 @@
 package blackjack.domain.blackjack
 
 import blackjack.domain.card.CardDeck
-import blackjack.domain.participants.Dealer
-import blackjack.domain.participants.Guest
-import blackjack.domain.participants.User
+import blackjack.domain.participants.user.Dealer
+import blackjack.domain.participants.user.Guest
+import blackjack.domain.participants.user.Money
+import blackjack.domain.participants.user.Name
+import blackjack.domain.participants.user.User
 
 class BlackJackGame {
-    lateinit var getCommand: (String) -> String
+    var onDraw: (String) -> Boolean = { true }
 
-    fun guestsTurn(guests: List<Guest>, cardDeck: CardDeck, output: (User) -> Unit) =
-        guests.forEach { guest -> guestTurn(guest, cardDeck, output) }
+    fun setUp(getNames: () -> List<Name>, getBettingMoney: (String) -> Money): BlackJackData =
+        blackJackData {
+            participants {
+                dealer()
+                getNames().forEach { name -> guest(name, getBettingMoney(name.toString())) }
+            }
+            initDrawAll()
+        }
 
     fun dealerTurn(dealer: Dealer, cardDeck: CardDeck, output: () -> Unit) {
-        if (dealer.isBlackJack) return
-        if (dealer.isContinue) {
-            dealer.draw(cardDeck.nextCard())
-            output()
-        }
+        val card = cardDeck.drawCard()
+        dealer.draw(card).onFailure { cardDeck.putCard(card) }
+        dealer.stay()
+        output()
     }
+
+    fun guestsTurn(guests: List<Guest>, cardDeck: CardDeck, output: (User) -> Unit) =
+        guests.forEach { guest ->
+            guestTurn(guest, cardDeck, output)
+            guest.stay()
+        }
 
     private fun guestTurn(guest: Guest, cardDeck: CardDeck, output: (User) -> Unit) {
-        if (guest.isBlackJack) return
-        when (getCommand(guest.name.toString())) {
-            in DRAW_COMMANDS -> draw(guest, cardDeck, output)
-            in END_TURN_COMMANDS -> output(guest)
-            else -> this.guestTurn(guest, cardDeck, output)
+        if (guest.isHit.not()) return
+        when (onDraw(guest.name.toString())) {
+            true -> guestDraw(guest, cardDeck, output)
+            false -> output(guest)
         }
     }
 
-    private fun draw(guest: Guest, cardDeck: CardDeck, output: (User) -> Unit) {
-        guest.draw(cardDeck.nextCard())
+    private fun guestDraw(guest: Guest, cardDeck: CardDeck, output: (User) -> Unit) {
+        val card = cardDeck.drawCard()
+        guest.draw(card).onFailure { cardDeck.putCard(card) }
         output(guest)
-        if (guest.isContinue) {
-            guestTurn(guest, cardDeck, output)
-        }
-    }
-
-    companion object {
-        private val DRAW_COMMANDS = listOf("Y", "y")
-        private val END_TURN_COMMANDS = listOf("N", "n")
+        guestTurn(guest, cardDeck, output)
     }
 }

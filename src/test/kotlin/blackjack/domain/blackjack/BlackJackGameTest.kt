@@ -1,33 +1,28 @@
 package blackjack.domain.blackjack
 
-import blackjack.domain.card.Cards
-import blackjack.domain.participants.User
+import blackjack.domain.participants.user.Name
+import blackjack.domain.participants.user.User
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 
 class BlackJackGameTest {
     @Test
     fun `게임을 실행한다`() {
-        val blackJack = blackJack {
-            cardDeck(Cards.all())
+        val data = blackJackData {
             participants {
                 dealer()
-                guests(listOf("아크", "로피"))
+                guest(Name("아크"))
+                guest(Name("로피"))
             }
-            draw()
+            initDrawAll()
         }
 
         assertDoesNotThrow {
             BlackJackGame().apply {
-                getCommand = ::inputDrawMore
-                guestsTurn(blackJack.guests, blackJack.cardDeck, ::outputCard)
-                dealerTurn(blackJack.dealer, blackJack.cardDeck, ::outputDealer)
+                guestsTurn(data.guests, data.cardDeck, ::outputCard)
+                dealerTurn(data.dealer, data.cardDeck, ::outputDealer)
             }
         }
-    }
-
-    private fun inputDrawMore(string: String): String {
-        return "y"
     }
 
     private fun outputCard(user: User) = null

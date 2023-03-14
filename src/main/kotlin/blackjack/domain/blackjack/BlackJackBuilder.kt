@@ -1,27 +1,26 @@
 package blackjack.domain.blackjack
 
-import blackjack.domain.card.Card
 import blackjack.domain.card.CardDeck
+import blackjack.domain.card.Cards
 import blackjack.domain.participants.Participants
 import blackjack.domain.participants.ParticipantsBuilder
+import blackjack.domain.state.FirstTurn
 
-fun blackJack(block: BlackJackBuilder.() -> Unit): BlackJack {
+fun blackJackData(block: BlackJackBuilder.() -> Unit): BlackJackData {
     return BlackJackBuilder().apply(block).build()
 }
 
 class BlackJackBuilder {
-    private lateinit var cardDeck: CardDeck
-    private lateinit var participants: Participants
-    fun cardDeck(cards: List<Card>) { cardDeck = CardDeck(cards.shuffled()) }
+    private var cardDeck: CardDeck = CardDeck(Cards.all().shuffled())
+    var participants: Participants = Participants()
 
     fun participants(block: ParticipantsBuilder.() -> Unit) {
         participants = ParticipantsBuilder().apply(block).build()
     }
 
-    fun draw() = participants.all().forEach {
-        it.draw(cardDeck.nextCard())
-        it.draw(cardDeck.nextCard())
+    fun initDrawAll() = participants.all.forEach {
+        it.state = FirstTurn().draw(cardDeck.drawCard()).draw(cardDeck.drawCard())
     }
 
-    fun build(): BlackJack = BlackJack(cardDeck, participants)
+    fun build(): BlackJackData = BlackJackData(cardDeck, participants)
 }

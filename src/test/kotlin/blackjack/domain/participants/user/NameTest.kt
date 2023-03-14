@@ -1,4 +1,4 @@
-package blackjack.domain.participants
+package blackjack.domain.participants.user
 
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows

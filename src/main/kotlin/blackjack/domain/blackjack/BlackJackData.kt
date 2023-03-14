@@ -1,13 +1,11 @@
 package blackjack.domain.blackjack
 
 import blackjack.domain.card.CardDeck
-import blackjack.domain.participants.Dealer
-import blackjack.domain.participants.Guest
 import blackjack.domain.participants.Participants
-import blackjack.domain.result.Outcome
-import blackjack.domain.result.Outcome.Companion.winTo
+import blackjack.domain.participants.user.Dealer
+import blackjack.domain.participants.user.Guest
 
-data class BlackJack(
+class BlackJackData(
     val cardDeck: CardDeck,
     val participants: Participants,
 ) {
@@ -16,6 +14,4 @@ data class BlackJack(
 
     val guests: List<Guest>
         get() = participants.guests
-
-    fun getResult(): List<Outcome> = participants.guests.map { guest -> guest.winTo(participants.dealer) }
 }

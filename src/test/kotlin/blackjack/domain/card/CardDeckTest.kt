@@ -14,7 +14,7 @@ class CardDeckTest {
     @Test
     fun `카드를 뽑으면 숫자가 줄어든다`() {
         val cardDeck = CardDeck(Cards.all())
-        cardDeck.nextCard()
+        cardDeck.drawCard()
         assertThat(cardDeck.size).isEqualTo(51)
     }
 
@@ -30,5 +30,12 @@ class CardDeckTest {
         assertThrows<IllegalArgumentException> {
             CardDeck(Cards.all().take(26) + Cards.all().take(26))
         }
+    }
+
+    @Test
+    fun `덱에 카드가 없으면 에러난다`() {
+        val cardDeck = CardDeck(Cards.all())
+        repeat(52) { cardDeck.drawCard() }
+        assertThrows<IllegalArgumentException> { cardDeck.drawCard() }
     }
 }

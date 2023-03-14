@@ -1,20 +1,28 @@
 package blackjack.domain.card
 
-import blackjack.domain.participants.Score
+import blackjack.domain.state.Score
 
 class Cards(private val cards: Set<Card> = setOf()) {
-    val result = Score(this)
+    val size: Int = cards.size
 
-    val size: Int
-        get() = cards.size
+    val isContainsAce: Boolean = cards.any { it.isAce }
+
+    constructor(vararg cards: Card) : this(cards.toSet())
 
     fun toList() = cards.toList()
 
-    operator fun plus(card: Card): Cards = Cards(cards.plus(card))
+    fun calculateScore(): Score = Score(
+        cards.sumOf { it.value.value },
+        isContainsAce,
+    )
 
-    fun containsACE() = cards.map { it.value }.contains(CardValue.ACE)
+    operator fun plus(card: Card): Cards {
+        require(card !in cards) { ERROR_EXIST_DUPLICATE_CARD }
+        return Cards(cards.plus(card))
+    }
 
     companion object {
+        private const val ERROR_EXIST_DUPLICATE_CARD = "카드는 중복될 수 없습니다."
         private val CARDS: List<Card> = CardMark.values().flatMap { mark ->
             CardValue.values().map { value -> Card(mark, value) }
         }
