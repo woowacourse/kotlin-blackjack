@@ -21,7 +21,7 @@ class BlackjackController(
             outputView::printParticipantCards,
             outputView::printDealerHitCardMent
         )
-        outputView.printScoreResult(gameResult.dealer, gameResult.participants)
-        outputView.printPlayersProfit(gameResult.dealerProfit, gameResult.getParticipantsProfit())
+        outputView.printScoreResult(gameResult.getDealerResult(), gameResult.getParticipantsResult())
+        outputView.printPlayersProfit(gameResult.getDealerResult(), gameResult.getParticipantsResult())
     }
 }

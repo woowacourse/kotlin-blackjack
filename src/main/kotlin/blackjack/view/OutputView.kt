@@ -4,7 +4,8 @@ import blackjack.domain.player.Dealer
 import blackjack.domain.player.Participant
 import blackjack.domain.player.Participants
 import blackjack.domain.player.Player
-import blackjack.domain.result.PlayerProfit
+import blackjack.domain.result.DealerResult
+import blackjack.domain.result.ParticipantsResults
 
 class OutputView {
 
@@ -22,13 +23,13 @@ class OutputView {
         println(DEALER_HIT_CARD_MENT)
     }
 
-    fun printScoreResult(dealer: Dealer, participants: Participants) {
+    fun printScoreResult(dealerResult: DealerResult, participantsResults: ParticipantsResults) {
         println()
-        printPlayerCardsSumResult(dealer)
-        println(SUM_RESULT_MENT.format(dealer.cards.calculateScore()))
-        participants.values.forEach {
-            printPlayerCardsSumResult(it)
-            print(SUM_RESULT_MENT.format(it.cards.calculateScore()))
+        printPlayerCardsSumResult(dealerResult.dealer)
+        println(SUM_RESULT_MENT.format(dealerResult.dealer.cards.calculateScore()))
+        participantsResults.participantsResults.forEach {
+            printPlayerCardsSumResult(it.participant)
+            print(SUM_RESULT_MENT.format(it.participant.cards.calculateScore()))
             println()
         }
     }
@@ -41,14 +42,14 @@ class OutputView {
     }
 
     fun printPlayersProfit(
-        dealerProfit: PlayerProfit,
-        participantsProfit: List<PlayerProfit>
+        dealerResult: DealerResult,
+        participantsResults: ParticipantsResults
     ) {
         println()
         println(FINAL_RESULT_MENT)
-        println(FINAL_PARTICIPANT_RESULT_MENT.format(dealerProfit.player.name, dealerProfit.profit))
-        participantsProfit.forEach {
-            println(FINAL_PARTICIPANT_RESULT_MENT.format(it.player.name, it.profit))
+        println(FINAL_PARTICIPANT_RESULT_MENT.format(dealerResult.dealer.name, dealerResult.profit))
+        participantsResults.participantsResults.forEach {
+            println(FINAL_PARTICIPANT_RESULT_MENT.format(it.participant.name, it.getProfit()))
         }
     }
 
