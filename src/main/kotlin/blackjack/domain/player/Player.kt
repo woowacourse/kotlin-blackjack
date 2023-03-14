@@ -3,7 +3,6 @@ package blackjack.domain.player
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
 import blackjack.domain.card.MultiDeck
-import blackjack.domain.player.Player.Companion.CARD_SETTING_COUNT
 import blackjack.domain.result.GameResult
 import blackjack.domain.result.MatchResult
 
