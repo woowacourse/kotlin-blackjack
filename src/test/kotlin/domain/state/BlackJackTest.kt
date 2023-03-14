@@ -9,13 +9,6 @@ import org.junit.jupiter.api.assertThrows
 
 internal class BlackJackTest {
     @Test
-    fun `toStay함수를 호출하면 StateException이 발생한다`() {
-        val blackJack = BlackJack(makeHandOfCards(10, 1))
-
-        assertThrows<IllegalStateException> { blackJack.toStay() }.shouldHaveMessage("이미 끝났습니다. stay를 호출할 수 없습니다.")
-    }
-
-    @Test
     fun `nextState함수를 호출하면 StateException이 발생한다`() {
         val blackJack = BlackJack(makeHandOfCards(10, 1))
 

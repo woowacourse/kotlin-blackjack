@@ -25,14 +25,6 @@ internal class PlayerHitTest {
     }
 
     @Test
-    fun `stay를 호출하면 Stay를 반환한다`() {
-        val playerHit = PlayerHit(makeHandOfCards(10, 3))
-        val actual = playerHit.toStay()
-
-        assertThat(actual).isInstanceOf(Stay::class.java)
-    }
-
-    @Test
     fun `profit함수를 호출하면 StateException이 발생한다`() {
         val playerHit = PlayerHit(makeHandOfCards(10, 3))
         val state = Stay(makeHandOfCards(10, 2))

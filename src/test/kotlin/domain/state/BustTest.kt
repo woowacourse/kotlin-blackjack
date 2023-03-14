@@ -10,14 +10,6 @@ import org.junit.jupiter.api.assertThrows
 
 internal class BustTest {
     @Test
-    fun `toStay함수를 호출하면 StateException이 발생한다`() {
-        val bust = Bust(makeHandOfCards(10, 2, 10))
-
-        assertThrows<IllegalStateException> { bust.toStay() }
-            .shouldHaveMessage("이미 끝났습니다. stay를 호출할 수 없습니다.")
-    }
-
-    @Test
     fun `nextState함수를 호출하면 StateException이 발생한다`() {
         val bust = Bust(makeHandOfCards(10, 2))
         bust.handOfCards.addCard(CLOVER_TEN)

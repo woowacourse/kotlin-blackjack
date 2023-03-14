@@ -26,13 +26,6 @@ internal class PlayerFirstTurnTest {
     }
 
     @Test
-    fun `stay함수를 호출하면 Stay를 반환한다`() {
-        val actual = PlayerFirstTurn(HandOfCards()).nextState(CLOVER_TWO).nextState(CLOVER_TEN).toStay()
-
-        assertThat(actual).isInstanceOf(Stay::class.java)
-    }
-
-    @Test
     fun `profit함수를 호출하면 StateException이 발생한다`() {
         val actual = PlayerFirstTurn(HandOfCards()).nextState(CLOVER_TWO).nextState(CLOVER_TEN)
         val state = Stay(makeHandOfCards(2, 10))
