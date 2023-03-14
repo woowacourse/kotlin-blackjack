@@ -3,14 +3,16 @@ package blackjack.domain.result
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Participants
 
-class GameResult(val dealer: Dealer, val participants: Participants) {
+class GameResult(private val dealer: Dealer, private val participants: Participants) {
 
-    val dealerProfit = PlayerProfit(dealer, -getParticipantsProfit().sumOf { it.profit })
-
-    fun getParticipantsProfit(): List<PlayerProfit> {
-        return participants.values.map {
-            val profit: Int = (it.calculateEarningRate(dealer).rate * it.betAmount).toInt()
-            PlayerProfit(it, profit)
+    fun getParticipantsResult(): ParticipantsResults {
+        val participantsResults = participants.values.map {
+            ParticipantResult(it, it.calculateResult(dealer))
         }
+        return ParticipantsResults(participantsResults)
+    }
+
+    fun getDealerResult(): DealerResult {
+        return DealerResult(dealer, -getParticipantsResult().participantsResults.sumOf { it.getProfit() })
     }
 }
