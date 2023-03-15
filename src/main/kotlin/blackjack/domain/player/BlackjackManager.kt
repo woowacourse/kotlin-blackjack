@@ -1,45 +1,59 @@
 package blackjack.domain.player
 
 import blackjack.domain.card.CardDeck
+import blackjack.domain.card.Cards.Companion.CARD_SETTING_COUNT
 import blackjack.domain.card.CardsGenerator
 import blackjack.domain.card.RandomCardsGenerator
+import blackjack.domain.result.GameResult
 
 class BlackjackManager(
     cardsGenerator: CardsGenerator = RandomCardsGenerator(),
-    getPlayerNames: () -> List<String>
+    playerNames: List<String>,
+    getBetAmount: (String) -> Int = { 0 }
 ) {
 
     private val cardDeck = CardDeck(cardsGenerator)
-    val dealer = Dealer()
-    val participants: Participants
+    private val dealer = Dealer()
+    private val participants: Participants
 
     init {
         participants = Participants(
-            getPlayerNames().map {
-                Participant(it)
+            playerNames.map {
+                Participant(it, betAmount = getBetAmount(it))
             }
         )
     }
 
-    fun setup() {
+    fun setupCards(onSetUpCards: (Dealer, Participants) -> Unit) {
         repeat(CARD_SETTING_COUNT) { provideCard(dealer) }
         participants.values.forEach { participant ->
             repeat(CARD_SETTING_COUNT) {
                 provideCard(participant)
             }
         }
+        onSetUpCards(dealer, participants)
     }
 
-    fun playParticipantsTurns(
-        readMoreCard: (String) -> Boolean,
+    fun playGame(
+        requestMoreCard: (String) -> Boolean,
+        onProvideParticipantCard: (Participant) -> Unit,
+        onProvideDealerCard: () -> Unit
+    ): GameResult {
+        playParticipantsTurns(requestMoreCard, onProvideParticipantCard)
+        playDealerTurn(onProvideDealerCard)
+        return GameResult(dealer, participants)
+    }
+
+    private fun playParticipantsTurns(
+        requestMoreCard: (String) -> Boolean,
         onProvideCard: (Participant) -> Unit
     ) {
         participants.values.forEach {
-            playParticipantTurns(it, readMoreCard, onProvideCard)
+            playParticipantTurn(it, requestMoreCard, onProvideCard)
         }
     }
 
-    fun playParticipantTurns(
+    private fun playParticipantTurn(
         participant: Participant,
         requestMoreCard: (String) -> Boolean,
         onProvideCard: (Participant) -> Unit
@@ -54,7 +68,7 @@ class BlackjackManager(
         }
     }
 
-    fun playDealerTurns(onProvideCard: () -> Unit) {
+    private fun playDealerTurn(onProvideCard: () -> Unit) {
         while (true) {
             if (!dealer.checkProvideCardPossible()) break
             provideCard(dealer)
@@ -62,23 +76,14 @@ class BlackjackManager(
         }
     }
 
-    fun calculatePlayersResult(onCalculateResults: (ParticipantsResults, DealerResult) -> Unit) {
-        val playersResult = mutableListOf<ParticipantResult>()
-        participants.values.forEach {
-            playersResult.add(it.calculateResult(dealer))
-        }
-        val dealerResult = dealer.calculateResults(participants)
-        onCalculateResults(ParticipantsResults(playersResult), dealerResult)
-    }
-
     private fun provideCard(player: Player) {
         cardDeck.apply {
-            val card = provide() ?: return
+            val card = provide() ?: throw IllegalArgumentException(NO_CARD_MESSAGE)
             player.addCard(card)
         }
     }
 
     companion object {
-        private const val CARD_SETTING_COUNT = 2
+        private const val NO_CARD_MESSAGE = "[ERROR] 더 이상 발급할 수 있는 카드가 없습니다."
     }
 }

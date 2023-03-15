@@ -2,12 +2,10 @@ package blackjack.domain.card
 
 class CardDeck(cardsGenerator: CardsGenerator) {
 
-    private val _cards: MutableList<Card> = cardsGenerator.generate().toMutableList()
-    val cards: List<Card> get() = _cards.toList()
+    private val cards: MutableList<Card> = cardsGenerator.generate().values.toMutableList()
 
     fun provide(): Card? {
-        val card = _cards.getOrNull(0) ?: return null
-        _cards.removeAt(0)
-        return card
+        cards.getOrNull(0) ?: return null
+        return cards.removeAt(0)
     }
 }

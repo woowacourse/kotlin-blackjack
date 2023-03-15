@@ -7,11 +7,11 @@ class RandomCardsGeneratorTest {
     @Test
     fun `RandomCardsGenerator는 카드를 52장 생성한다`() {
         // given
-        val deckGenerator = RandomCardsGenerator()
+        val cardsGenerator = RandomCardsGenerator()
 
         // when
-        val cardDeck = deckGenerator.generate()
-        val actual = cardDeck.size
+        val cards: Cards = cardsGenerator.generate()
+        val actual = cards.getSize()
 
         // then
         assertThat(actual).isEqualTo(52)
@@ -20,15 +20,12 @@ class RandomCardsGeneratorTest {
     @Test
     fun `RandomCardsGenerator로 생성된 카드는 랜덤한 순서를 갖는다`() {
         // given
-        val deckGenerator1 = RandomCardsGenerator()
-        val deckGenerator2 = RandomCardsGenerator()
+        val cardsGenerator1 = RandomCardsGenerator()
+        val cardsGenerator2 = RandomCardsGenerator()
 
         // when
-        val cardDeck1 = deckGenerator1.generate()
-        val cardDeck2 = deckGenerator2.generate()
-
-        val actual1 = listOf(cardDeck1[0].number, cardDeck1[0].shape)
-        val actual2 = listOf(cardDeck2[0].number, cardDeck2[0].shape)
+        val actual1: Card = cardsGenerator1.generate().values[0]
+        val actual2: Card = cardsGenerator2.generate().values[0]
 
         // then
         assertThat(actual1).isNotEqualTo(actual2)

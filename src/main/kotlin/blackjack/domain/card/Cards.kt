@@ -1,5 +1,7 @@
 package blackjack.domain.card
 
+import java.util.Objects
+
 class Cards(_cards: List<Card> = listOf()) {
 
     private val _cards: MutableList<Card> = _cards.toMutableList()
@@ -10,30 +12,35 @@ class Cards(_cards: List<Card> = listOf()) {
         _cards.add(card)
     }
 
-    fun sumCardsNumber(): Int {
-        if (checkHavingAce()) return calculateAceSum()
+    fun calculateScore(): Int {
+        if (checkHavingAce()) return calculateHavingAceScore()
         return _cards.sumOf { it.number.value }
     }
 
-    fun isBlackjack(): Boolean {
-        if ((_cards.size == 2) and (sumCardsNumber() == MAX_SUM_NUMBER)) return true
-        return false
-    }
+    fun isBlackjack(): Boolean = ((_cards.size == CARD_SETTING_COUNT) and (calculateScore() == BUST_CRITERIA))
 
-    fun isBurst(): Boolean {
-        if (sumCardsNumber() > MAX_SUM_NUMBER) return true
-        return false
-    }
+    fun isBust(): Boolean = (calculateScore() > BUST_CRITERIA)
+
+    fun getSize(): Int = _cards.size
 
     private fun checkHavingAce(): Boolean = _cards.any { it.isAce() }
 
-    private fun calculateAceSum(): Int {
+    private fun calculateHavingAceScore(): Int {
         var result = _cards.sumOf { it.number.value }
-        if ((MAX_SUM_NUMBER - result) >= 10) result += 10
+        if ((BUST_CRITERIA - result) >= ACE_GAP) result += ACE_GAP
         return result
     }
 
+    override fun equals(other: Any?): Boolean {
+        if (other !is Cards) return false
+        return this.values == other.values
+    }
+
+    override fun hashCode(): Int = Objects.hash(_cards)
+
     companion object {
-        const val MAX_SUM_NUMBER = 21
+        const val BUST_CRITERIA = 21
+        const val ACE_GAP = 10
+        const val CARD_SETTING_COUNT = 2
     }
 }
