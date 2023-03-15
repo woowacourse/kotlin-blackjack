@@ -7,7 +7,6 @@ import blackjack.domain.card.Cards
 import blackjack.domain.result.GameResult
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertAll
 import org.junit.jupiter.api.assertDoesNotThrow
 
 class PlayerTest {
@@ -32,11 +31,91 @@ class PlayerTest {
     }
 
     @Test
-    fun `상대방의 카드와 비교해 게임 결과를 업데이트 한다`() {
+    fun `자신의 카드 숫자의 합이 21 초과라면 패배로 판단한다`() {
+        val otherPlayer = TestPlayer("딜러")
+        val player = TestPlayer(
+            "수달",
+            Cards(
+                Pair(CardNumber.KING, CardShape.DIAMOND),
+                Pair(CardNumber.QUEEN, CardShape.DIAMOND),
+                Pair(CardNumber.TWO, CardShape.DIAMOND)
+            )
+        )
+
+        player.decideGameResult(otherPlayer)
+
+        assertThat(player.matchResult.getResult()).isEqualTo(GameResult.LOSE)
+    }
+
+    @Test
+    fun `상대방 카드 숫자의 합이 21 초과라면 승리로 판단한다`() {
         val otherPlayer = TestPlayer(
             "딜러",
             Cards(
-                Pair(CardNumber.SEVEN, CardShape.HEART),
+                Pair(CardNumber.KING, CardShape.DIAMOND),
+                Pair(CardNumber.QUEEN, CardShape.DIAMOND),
+                Pair(CardNumber.TWO, CardShape.DIAMOND)
+            )
+        )
+        val player = TestPlayer("수달")
+
+        player.decideGameResult(otherPlayer)
+
+        assertThat(player.matchResult.getResult()).isEqualTo(GameResult.WIN)
+    }
+
+    @Test
+    fun `상대방 카드 숫자의 합이 자신의 카드 숫자 합보다 크다면 패배로 판단한다`() {
+        val otherPlayer = TestPlayer(
+            "딜러",
+            Cards(
+                Pair(CardNumber.KING, CardShape.DIAMOND),
+                Pair(CardNumber.QUEEN, CardShape.DIAMOND),
+                Pair(CardNumber.ONE, CardShape.DIAMOND)
+            )
+        )
+        val player = TestPlayer(
+            "수달",
+            Cards(
+                Pair(CardNumber.KING, CardShape.DIAMOND),
+                Pair(CardNumber.QUEEN, CardShape.DIAMOND)
+            )
+        )
+
+        player.decideGameResult(otherPlayer)
+
+        assertThat(player.matchResult.getResult()).isEqualTo(GameResult.LOSE)
+    }
+
+    @Test
+    fun `상대방 카드 숫자의 합이 자신의 카드 숫자 합보다 작다면 승리로 판단한다`() {
+        val otherPlayer = TestPlayer(
+            "딜러",
+            Cards(
+                Pair(CardNumber.KING, CardShape.DIAMOND),
+                Pair(CardNumber.QUEEN, CardShape.DIAMOND),
+            )
+        )
+        val player = TestPlayer(
+            "수달",
+            Cards(
+                Pair(CardNumber.KING, CardShape.DIAMOND),
+                Pair(CardNumber.QUEEN, CardShape.DIAMOND),
+                Pair(CardNumber.ONE, CardShape.DIAMOND)
+            )
+        )
+
+        player.decideGameResult(otherPlayer)
+
+        assertThat(player.matchResult.getResult()).isEqualTo(GameResult.WIN)
+    }
+
+    @Test
+    fun `상대방의 카드와 비교해 상대방 카드와 자신 카드 모두 블랙잭이라면 무승부로 판단한다`() {
+        val otherPlayer = TestPlayer(
+            "딜러",
+            Cards(
+                Pair(CardNumber.ONE, CardShape.HEART),
                 Pair(CardNumber.TEN, CardShape.HEART)
             )
         )
@@ -49,11 +128,30 @@ class PlayerTest {
         )
 
         player.decideGameResult(otherPlayer)
-        otherPlayer.decideGameResult(player)
-        assertAll(
-            { assertThat(player.matchResult.getResult()).isEqualTo(GameResult.BLACKJACK) },
-            { assertThat(otherPlayer.matchResult.getResult()).isEqualTo(GameResult.LOSE) },
+
+        assertThat(player.matchResult.getResult()).isEqualTo(GameResult.DRAW)
+    }
+
+    @Test
+    fun `상대방의 카드와 비교해 자신의 카드만 블랙잭이라면 블랙잭으로 판단한다`() {
+        val otherPlayer = TestPlayer(
+            "딜러",
+            Cards(
+                Pair(CardNumber.ONE, CardShape.HEART),
+                Pair(CardNumber.NINE, CardShape.HEART)
+            )
         )
+        val player = TestPlayer(
+            "수달",
+            Cards(
+                Pair(CardNumber.ONE, CardShape.DIAMOND),
+                Pair(CardNumber.KING, CardShape.DIAMOND)
+            )
+        )
+
+        player.decideGameResult(otherPlayer)
+
+        assertThat(player.matchResult.getResult()).isEqualTo(GameResult.BLACKJACK)
     }
 
     class TestPlayer(name: String, cards: Cards = Cards()) : Player(name, cards) {
