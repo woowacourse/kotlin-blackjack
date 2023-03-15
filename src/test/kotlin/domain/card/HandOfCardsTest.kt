@@ -1,7 +1,5 @@
 package domain.card
 
-import domain.card.strategy.SumStrategy.getAppropriateSum
-import domain.card.strategy.SumStrategy.getMinSum
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
@@ -12,10 +10,10 @@ internal class HandOfCardsTest {
     @Test
     fun `카드가 잘 추가되는지 확인한다`() {
         // given
-        val handOfCards = HandOfCards(
-            Card(CardShape.HEART, CardNumber.ACE),
-            Card(CardShape.DIAMOND, CardNumber.KING),
-        )
+        val handOfCards = HandOfCards().apply {
+            addCard(Card(CardShape.HEART, CardNumber.ACE))
+            addCard(Card(CardShape.DIAMOND, CardNumber.KING))
+        }
         val cardSize = handOfCards.cards.size
 
         // when
@@ -27,66 +25,15 @@ internal class HandOfCardsTest {
 
     @CsvSource(value = ["ACE,TEN,21", "ACE,ACE,12"])
     @ParameterizedTest
-    fun `최대한 21에 가깝고 21을 초과하지 않도록 카드 합계 계산`(number1: CardNumber, number2: CardNumber, expected: Int) {
+    fun `Ace를 잘 판단하여 카드 합계를 계산하는지 테스트`(number1: CardNumber, number2: CardNumber, expected: Int) {
         // given
-        val handOfCards = HandOfCards(
-            Card(CardShape.HEART, number1),
-            Card(CardShape.HEART, number2),
-        )
+        val handOfCards = HandOfCards().apply {
+            addCard(Card(CardShape.HEART, number1))
+            addCard(Card(CardShape.HEART, number2))
+        }
 
         // when
-        val actual = handOfCards.getAppropriateSum()
-
-        // then
-        assertThat(actual).isEqualTo(expected)
-    }
-
-    @CsvSource(value = ["ACE,TEN,11", "ACE,ACE,2"])
-    @ParameterizedTest
-    fun `최소한으로 합계 계산(ACE는 무조건 1로 계산)`(number1: CardNumber, number2: CardNumber, expected: Int) {
-        // given
-        val handOfCards = HandOfCards(
-            Card(CardShape.HEART, number1),
-            Card(CardShape.HEART, number2),
-        )
-
-        // when
-        val actual = handOfCards.getMinSum()
-
-        // then
-        assertThat(actual).isEqualTo(expected)
-    }
-
-    @Test
-    fun `Ace카드의 수를 센다`() {
-        val handOfCards = HandOfCards(
-            Card(CardShape.HEART, CardNumber.ACE),
-            Card(CardShape.DIAMOND, CardNumber.KING),
-        )
-        handOfCards.addCard(Card(CardShape.HEART, CardNumber.TWO))
-        handOfCards.addCard(Card(CardShape.CLOVER, CardNumber.ACE))
-        val expected = 2
-
-        // when
-        val actual = handOfCards.countAce()
-
-        // then
-        assertThat(actual).isEqualTo(expected)
-    }
-
-    @Test
-    fun `Ace 카드를 제외한 카드들의 총합을 계산한다`() {
-        // given
-        val handOfCards = HandOfCards(
-            Card(CardShape.HEART, CardNumber.ACE),
-            Card(CardShape.DIAMOND, CardNumber.KING),
-        )
-        handOfCards.addCard(Card(CardShape.HEART, CardNumber.TWO))
-        handOfCards.addCard(Card(CardShape.CLOVER, CardNumber.TEN))
-        val expected = 22
-
-        // when
-        val actual = handOfCards.getExceptAceSum()
+        val actual = handOfCards.getTotalCardSum()
 
         // then
         assertThat(actual).isEqualTo(expected)
@@ -95,10 +42,10 @@ internal class HandOfCardsTest {
     @Test
     fun `첫 번째 카드만 보여준다`() {
         // given
-        val handOfCards = HandOfCards(
-            Card(CardShape.HEART, CardNumber.ACE),
-            Card(CardShape.DIAMOND, CardNumber.KING),
-        )
+        val handOfCards = HandOfCards().apply {
+            addCard(Card(CardShape.HEART, CardNumber.ACE))
+            addCard(Card(CardShape.DIAMOND, CardNumber.KING))
+        }
         val expected = Card(CardShape.HEART, CardNumber.ACE)
 
         // when

@@ -1,13 +1,12 @@
 package domain.person
 
+import domain.Dummy.CLOVER_TWO
+import domain.Dummy.HEART_TWO
 import domain.card.Card
 import domain.card.CardNumber
 import domain.card.CardShape.CLOVER
-import domain.card.CardShape.DIAMOND
 import domain.card.CardShape.HEART
-import domain.card.HandOfCards
-import domain.card.strategy.SumStrategy.getAppropriateSum
-import domain.card.strategy.SumStrategy.getMinSum
+import domain.state.Bust
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -21,12 +20,15 @@ class PlayerTest {
 
     @BeforeEach
     private fun setUp() {
-        player = Player("베르", HandOfCards(Card(HEART, CardNumber.TWO), Card(DIAMOND, CardNumber.TWO)))
+        player = Player("베르").apply {
+            toNextState(HEART_TWO)
+            toNextState(CLOVER_TWO)
+        }
     }
 
     @Test
     fun `플레이어는 카드를 받아서 패에 추가할 수 있다`() {
-        player.receiveCard(Card(HEART, CardNumber.ACE))
+        player.toNextState(Card(HEART, CardNumber.ACE))
         assertThat(player.showHandOfCards().size).isEqualTo(3)
     }
 
@@ -36,36 +38,37 @@ class PlayerTest {
 
         assertAll(
             { assertThat(actual.size).isEqualTo(2) },
-            { assertThat(actual).isEqualTo(listOf(Card(HEART, CardNumber.TWO), Card(DIAMOND, CardNumber.TWO))) },
+            { assertThat(actual).isEqualTo(listOf(Card(HEART, CardNumber.TWO), Card(CLOVER, CardNumber.TWO))) },
         )
     }
 
     @CsvSource(value = ["ACE,SIX,21", "TWO,THREE,9"])
     @ParameterizedTest
     fun `카드 패의 총합을 계산한다 - 최적의 방법으로 계산`(number1: CardNumber, number2: CardNumber, sum: Int) {
-        player.receiveCard(Card(CLOVER, number1))
-        player.receiveCard(Card(CLOVER, number2))
+        player.toNextState(Card(CLOVER, number1))
+        player.toNextState(Card(CLOVER, number2))
 
-        assertThat(player.getTotalCardNumber { getAppropriateSum() }).isEqualTo(sum)
+        assertThat(player.getTotal()).isEqualTo(sum)
     }
 
     @CsvSource(value = ["ACE,TEN,15", "TWO,THREE,9"])
     @ParameterizedTest
     fun `카드 패의 총합을 계산한다 - 최소한으로 계산`(number1: CardNumber, number2: CardNumber, sum: Int) {
-        player.receiveCard(Card(CLOVER, number1))
-        player.receiveCard(Card(CLOVER, number2))
+        player.toNextState(Card(CLOVER, number1))
+        player.toNextState(Card(CLOVER, number2))
 
-        assertThat(player.getTotalCardNumber { getMinSum() }).isEqualTo(sum)
+        assertThat(player.getTotal()).isEqualTo(sum)
     }
 
     @CsvSource(value = ["ACE,ACE,false", "KING,QUEEN,true"])
     @ParameterizedTest
     fun `플레이어의 카드 총 합이 21을 넘었는지 체크할 수 있다`(n1: CardNumber, n2: CardNumber, expected: Boolean) {
         // given
-        player.receiveCard(Card(CLOVER, n1), Card(CLOVER, n2))
+        player.toNextState(Card(CLOVER, n1))
+        player.toNextState(Card(CLOVER, n2))
 
         // when
-        val actual = player.isBust()
+        val actual = player.state is Bust
 
         assertThat(actual).isEqualTo(expected)
     }
@@ -79,11 +82,11 @@ class PlayerTest {
     @ParameterizedTest
     fun `플레이어는 카드의 총합이 21초과인지 체크한다 (카드를 더 받을 수 있는지 체크한다)`(n1: CardNumber, n2: CardNumber, expected: Boolean) {
         // given
-        player.receiveCard(Card(HEART, n1))
-        player.receiveCard(Card(HEART, n2))
+        player.toNextState(Card(HEART, n1))
+        player.toNextState(Card(HEART, n2))
 
         // when
-        val actual = player.canReceiveMoreCard()
+        val actual = player.isInProgress()
 
         assertThat(actual).isEqualTo(expected)
     }

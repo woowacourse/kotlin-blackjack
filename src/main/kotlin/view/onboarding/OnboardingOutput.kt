@@ -7,16 +7,26 @@ import view.ViewCommon.toText
 
 object OnboardingOutput {
     private const val ERROR_INPUT_BLACK = "공백은 입력할 수 없습니다. 다시 입력하세요."
+    private const val ERROR_INPUT_NOT_DOUBLE = "숫자를 입력해야합니다. 다시 입력하세요"
     private const val NAME_INPUT_SCRIPT = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)"
     private const val SHARE_TWO_CARDS_SCRIPT = "%s와 %s에게 2장의 카드를 나누었습니다."
     private const val INITIAL_CARDS_SCRIPT = "%s 카드: %s"
+    private const val BET_INPUT_SCRIPT = "%s의 배팅 금액은?"
 
     fun printRequestInputName() {
         println(NAME_INPUT_SCRIPT)
     }
 
+    fun printRequestInputBet(name: String) {
+        println(BET_INPUT_SCRIPT.format(name))
+    }
+
     fun printBlankError() {
         println(ERROR_INPUT_BLACK)
+    }
+
+    fun printNotDoubleError() {
+        println(ERROR_INPUT_NOT_DOUBLE)
     }
 
     fun printShareTwoCards(persons: Persons) {

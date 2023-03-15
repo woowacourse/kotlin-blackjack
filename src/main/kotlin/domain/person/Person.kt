@@ -1,25 +1,21 @@
 package domain.person
 
-import constant.BlackJackConstants.BLACK_JACK
 import domain.card.Card
-import domain.card.HandOfCards
-import domain.card.strategy.SumStrategy.getMinSum
+import domain.state.InProgress
+import domain.state.State
 
-abstract class Person() {
+abstract class Person {
     abstract val name: String
-    protected abstract val handOfCards: HandOfCards
+    abstract var state: State
+        protected set
 
-    fun receiveCard(vararg card: Card) {
-        card.forEach { handOfCards.addCard(it) }
+    fun toNextState(card: Card) {
+        state = state.nextState(card)
     }
 
-    fun showHandOfCards(): List<Card> = handOfCards.cards
+    fun showHandOfCards(): List<Card> = state.handOfCards.cards
 
-    fun getTotalCardNumber(getSum: HandOfCards.() -> Int): Int {
-        return handOfCards.getSum()
-    }
+    fun getTotal(): Int = state.handOfCards.getTotalCardSum()
 
-    abstract fun canReceiveMoreCard(): Boolean
-
-    fun isBust(): Boolean = getTotalCardNumber { getMinSum() } > BLACK_JACK
+    fun isInProgress() = state is InProgress
 }

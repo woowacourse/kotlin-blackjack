@@ -9,4 +9,13 @@ object OnboardingInput {
         }
         return input.split(',').map { it.trim() }
     }
+
+    fun inputBets(showError: () -> Unit): Double {
+        val input = readln().toDoubleOrNull()
+        if (input == null) {
+            showError()
+            return inputBets(showError)
+        }
+        return input
+    }
 }

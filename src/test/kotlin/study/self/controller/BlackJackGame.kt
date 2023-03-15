@@ -1,3 +1,4 @@
+/*
 package domain
 
 import controller.BlackJackGameBluePrint
@@ -6,16 +7,17 @@ import domain.person.Dealer
 import domain.person.Decision
 import domain.person.Persons
 import domain.person.Player
-import domain.result.GameResult
+import domain.result.Casino
 
 class BlackJackGame : BlackJackGameBluePrint {
     private val deck = Deck()
 
-    override fun makePersons(names: List<String>): Persons = Persons.getPersons(names, deck)
+    override fun makePersons(names: List<String>): Persons = Persons.getPersons(names)
 
     override fun handOutCardsToDealer(dealer: Dealer, printDealerDrew: () -> Unit, printDealerDidNotDrew: () -> Unit) {
-        if (dealer.canReceiveMoreCard()) {
-            dealer.receiveCard(deck.getCard())
+        dealer.toNextState(deck.getCard())
+        if (dealer.isInProgress()) {
+            dealer.toNextState(deck.getCard())
             printDealerDrew()
             return
         }
@@ -38,14 +40,18 @@ class BlackJackGame : BlackJackGameBluePrint {
         printCards: (Player) -> Unit,
     ) {
         val decision = Decision.of(askDrawCard(player.name))
-        if (decision == Decision.NO) return
+        if (decision == Decision.NO) {
+            player.toStay()
+            return
+        }
 
-        player.receiveCard(deck.getCard())
+        player.toNextState(deck.getCard())
         printCards(player)
         if (player.isBust()) return
 
         playPlayerTurn(player, askDrawCard, printCards)
     }
 
-    override fun drawResult(persons: Persons): GameResult = GameResult(persons)
+    override fun drawResult(persons: Persons, bets: List<Double>) = Casino(persons, bets)
 }
+*/
