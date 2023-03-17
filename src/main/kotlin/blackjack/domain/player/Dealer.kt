@@ -11,7 +11,7 @@ class Dealer(
 
     fun getPayout(participants: Participants): Int {
         var sum = 0
-        participants.values.forEach { sum += it.bettingAmount.getPayout(it.matchResult.getResult()) }
+        participants.values.forEach { sum += it.bettingAmount.getPayout(it.matchResult.getUniqueCountResult()) }
         return sum * (-1)
     }
 

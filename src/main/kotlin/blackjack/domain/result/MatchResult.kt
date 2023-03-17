@@ -9,7 +9,7 @@ class MatchResult {
             this.countBy[gameResult]?.plus(1) ?: throw IllegalArgumentException()
     }
 
-    fun getResult(): GameResult =
+    fun getUniqueCountResult(): GameResult =
         this.countBy.filter { it.value == 1 }.keys.first()
 
     fun getResults(): Map<GameResult, Int> = this.countBy.toMap()

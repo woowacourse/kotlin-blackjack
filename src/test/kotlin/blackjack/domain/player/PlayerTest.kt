@@ -44,7 +44,7 @@ class PlayerTest {
 
         player.decideGameResult(otherPlayer)
 
-        assertThat(player.matchResult.getResult()).isEqualTo(GameResult.LOSE)
+        assertThat(player.matchResult.getUniqueCountResult()).isEqualTo(GameResult.LOSE)
     }
 
     @Test
@@ -61,7 +61,7 @@ class PlayerTest {
 
         player.decideGameResult(otherPlayer)
 
-        assertThat(player.matchResult.getResult()).isEqualTo(GameResult.WIN)
+        assertThat(player.matchResult.getUniqueCountResult()).isEqualTo(GameResult.WIN)
     }
 
     @Test
@@ -84,7 +84,7 @@ class PlayerTest {
 
         player.decideGameResult(otherPlayer)
 
-        assertThat(player.matchResult.getResult()).isEqualTo(GameResult.LOSE)
+        assertThat(player.matchResult.getUniqueCountResult()).isEqualTo(GameResult.LOSE)
     }
 
     @Test
@@ -107,7 +107,7 @@ class PlayerTest {
 
         player.decideGameResult(otherPlayer)
 
-        assertThat(player.matchResult.getResult()).isEqualTo(GameResult.WIN)
+        assertThat(player.matchResult.getUniqueCountResult()).isEqualTo(GameResult.WIN)
     }
 
     @Test
@@ -129,7 +129,7 @@ class PlayerTest {
 
         player.decideGameResult(otherPlayer)
 
-        assertThat(player.matchResult.getResult()).isEqualTo(GameResult.DRAW)
+        assertThat(player.matchResult.getUniqueCountResult()).isEqualTo(GameResult.DRAW)
     }
 
     @Test
@@ -151,7 +151,7 @@ class PlayerTest {
 
         player.decideGameResult(otherPlayer)
 
-        assertThat(player.matchResult.getResult()).isEqualTo(GameResult.BLACKJACK)
+        assertThat(player.matchResult.getUniqueCountResult()).isEqualTo(GameResult.BLACKJACK)
     }
 
     class TestPlayer(name: String, cards: Cards = Cards()) : Player(name, cards) {

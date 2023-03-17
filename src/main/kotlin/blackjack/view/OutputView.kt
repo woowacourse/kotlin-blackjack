@@ -42,7 +42,7 @@ class OutputView {
         println(FINAL_RESULT_MESSAGE)
 
         println("${dealer.name}: ${dealer.getPayout(participants)}")
-        participants.values.forEach { println("${it.name}: ${it.bettingAmount.getPayout(it.matchResult.getResult())}") }
+        participants.values.forEach { println("${it.name}: ${it.bettingAmount.getPayout(it.matchResult.getUniqueCountResult())}") }
     }
 
     private fun printParticipantsCards(participants: Participants) {

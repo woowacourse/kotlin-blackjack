@@ -16,7 +16,7 @@ class MatchResultTest {
     fun `카운트된 게임 결과 하나를 반환한다`() {
         val matchResult = MatchResult()
         matchResult.count(GameResult.WIN)
-        assertThat(matchResult.getResult()).isEqualTo(GameResult.WIN)
+        assertThat(matchResult.getUniqueCountResult()).isEqualTo(GameResult.WIN)
     }
 
     @Test
@@ -24,6 +24,6 @@ class MatchResultTest {
         val matchResult = MatchResult()
         matchResult.count(GameResult.WIN)
         matchResult.reversGameResult()
-        assertThat(matchResult.getResult()).isEqualTo(GameResult.LOSE)
+        assertThat(matchResult.getUniqueCountResult()).isEqualTo(GameResult.LOSE)
     }
 }
