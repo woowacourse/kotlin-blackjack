@@ -30,15 +30,12 @@ abstract class Player(
             otherPlayerCardsSum > MAX_SUM_NUMBER -> GameResult.WIN
             otherPlayerCardsSum > cardsSum -> GameResult.LOSE
             otherPlayerCardsSum == cardsSum -> GameResult.DRAW
-            isBlackjack() -> GameResult.BLACKJACK
+            cards.isBlackjack() -> GameResult.BLACKJACK
             else -> GameResult.WIN
         }
 
         matchResult.count(gameResult)
     }
-
-    private fun isBlackjack() =
-        (cards.size == CARD_SETTING_COUNT) && (cards.sum() == MAX_SUM_NUMBER)
 
     companion object {
         const val CARD_SETTING_COUNT = 2
