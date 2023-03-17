@@ -1,11 +1,19 @@
 package blackjack.domain.player
 
+import blackjack.domain.BettingAmount
+
 class Participants(val values: List<Participant>) {
     init {
         require(values.size in PARTICIPANTS_MIN_NUMBER..PARTICIPANTS_MAX_NUMBER) { ERROR_PARTICIPANTS_BOUNDARY }
     }
 
     constructor(vararg values: String) : this(values.map { Participant(it) }.toList())
+
+    fun bettingParticipants(getBettingAmount: (Participant) -> BettingAmount) {
+        values.forEach {
+            it.setBettingAmount(getBettingAmount(it))
+        }
+    }
 
     companion object {
         const val PARTICIPANTS_MIN_NUMBER = 2
