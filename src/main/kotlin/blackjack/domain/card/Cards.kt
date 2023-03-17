@@ -17,7 +17,7 @@ class Cards(cards: List<Card> = listOf()) {
         _cards.add(card)
     }
 
-    fun containsCardNumber(cardNumber: CardNumber): Boolean =
+    private fun containsCardNumber(cardNumber: CardNumber): Boolean =
         _cards.any { it.number == cardNumber }
 
     fun sum(): Int {

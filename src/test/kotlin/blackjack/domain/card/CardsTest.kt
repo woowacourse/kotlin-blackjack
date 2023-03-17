@@ -22,13 +22,4 @@ class CardsTest {
         )
         assertThat(cards.sum()).isEqualTo(21)
     }
-
-    @Test
-    fun `카드 숫자를 받아 해당 카드 숫자의 보유 여부를 반환한다`() {
-        val cards = Cards(
-            Pair(CardNumber.ONE, CardShape.DIAMOND),
-            Pair(CardNumber.JACK, CardShape.CLOVER)
-        )
-        assertThat(cards.containsCardNumber(CardNumber.ONE)).isTrue
-    }
 }
