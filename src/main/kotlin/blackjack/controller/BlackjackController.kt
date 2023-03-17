@@ -1,6 +1,8 @@
 package blackjack.controller
 
-import blackjack.domain.BlackjackGame
+import blackjack.domain.card.MultiDeck
+import blackjack.domain.player.Dealer
+import blackjack.domain.player.Participants
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -10,15 +12,51 @@ class BlackjackController(
 ) {
 
     fun run() {
-        val blackjackGame = BlackjackGame(participants = inputView.readParticipants())
-        blackjackGame.bettingParticipants(inputView::readParticipantBattingAmount)
-        blackjackGame.setFirstTurnPlayersCards(outputView::printFirstTurnSettingCards)
-        blackjackGame.hitPlayersCards(
-            inputView::readHitOrNot,
-            outputView::printPlayerCards,
-            outputView::printDealerHitOrNotMessage
-        )
-        blackjackGame.decidePlayersResult()
-        blackjackGame.printGameResult(outputView::printSumResult, outputView::printPlayersResults)
+        val deck: MultiDeck = MultiDeck()
+        val dealer: Dealer = Dealer()
+        val participants = inputView.readParticipants()
+
+        bettingParticipants(participants)
+        setFirstTurnPlayersCards(dealer, participants, deck)
+        hitPlayersCards(dealer, participants, deck)
+        decidePlayersResult(dealer, participants)
+        printGameResult(dealer, participants)
+    }
+
+    private fun bettingParticipants(participants: Participants) {
+        participants.values.forEach {
+            it.setBettingAmount(inputView.readParticipantBattingAmount(it))
+        }
+    }
+
+    private fun setFirstTurnPlayersCards(dealer: Dealer, participants: Participants, deck: MultiDeck) {
+        dealer.setFirstTurnCards(deck)
+        participants.values.forEach { it.setFirstTurnCards(deck) }
+        outputView.printFirstTurnSettingCards(dealer, participants)
+    }
+
+    private fun hitPlayersCards(dealer: Dealer, participants: Participants, deck: MultiDeck) {
+        participants.values.forEach { participant ->
+            while (participant.canHit() && inputView.readHitOrNot(participant.name)) {
+                participant.addCard(deck.draw())
+                outputView.printPlayerCards(participant, "")
+            }
+        }
+
+        while (dealer.canHit()) {
+            outputView.printDealerHitOrNotMessage(dealer.canHit())
+            dealer.addCard(deck.draw())
+        }
+    }
+
+    private fun decidePlayersResult(dealer: Dealer, participants: Participants) {
+        participants.values.forEach { it.decideGameResult(dealer) }
+        participants.values.forEach { dealer.decideGameResult(it) }
+        dealer.matchResult.reversGameResult()
+    }
+
+    private fun printGameResult(dealer: Dealer, participants: Participants) {
+        outputView.printSumResult(dealer, participants)
+        outputView.printPlayersResults(dealer, participants)
     }
 }
