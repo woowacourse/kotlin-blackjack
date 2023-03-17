@@ -11,7 +11,7 @@ class Participants(val values: List<Participant>) {
 
     fun bettingParticipants(getBettingAmount: (Participant) -> BettingAmount) {
         values.forEach {
-            it.setBettingAmount(getBettingAmount(it))
+            it.bettingAmount = getBettingAmount(it)
         }
     }
 
