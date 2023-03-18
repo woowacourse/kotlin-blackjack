@@ -1,12 +1,9 @@
 package blackjack.controller
 
-import blackjack.domain.card.Card
-import blackjack.domain.card.Cards
-import blackjack.domain.card.Deck
+import blackjack.domain.card.MultiDeck
 import blackjack.domain.player.Dealer
-import blackjack.domain.player.Participant
 import blackjack.domain.player.Participants
-import blackjack.domain.player.Player
+import blackjack.domain.result.MatchResult
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -15,60 +12,53 @@ class BlackjackController(
     private val outputView: OutputView = OutputView()
 ) {
 
-    private val deck: Deck = Deck()
-
     fun run() {
+        val deck: MultiDeck = MultiDeck()
         val dealer: Dealer = Dealer()
-        val participants: Participants = inputView.readParticipants()
-        setInitialPlayersCards(dealer, participants)
-        hitPlayerCards(dealer, participants)
-        decidePlayersResult(dealer, participants)
-        printResult(dealer, participants)
+        val participants = inputView.readParticipants()
+
+        setFirstTurnPlayersCards(dealer, participants, deck)
+        hitPlayersCards(dealer, participants, deck)
+        printGameResult(dealer, participants)
     }
 
-    private fun decidePlayersResult(dealer: Dealer, participants: Participants) {
-        participants.values.forEach { it.decideGameResult(dealer) }
-        participants.values.forEach { dealer.decideGameResult(it) }
+    private fun setFirstTurnPlayersCards(dealer: Dealer, participants: Participants, deck: MultiDeck) {
+        dealer.setFirstTurnCards(deck)
+        participants.values.forEach { it.setFirstTurnCards(deck) }
+        outputView.printFirstTurnSettingCards(dealer, participants)
     }
 
-    private fun setInitialPlayersCards(dealer: Dealer, participants: Participants) {
-        repeat(Player.CARD_SETTING_COUNT) { dealer.addCard(deck.draw()) }
-        participants.values.forEach {
-            val initCards: List<Card> = listOf(deck.draw(), deck.draw())
-            it.setInitialCards(Cards(initCards))
+    private fun hitPlayersCards(dealer: Dealer, participants: Participants, deck: MultiDeck) {
+        participants.values.forEach { participant ->
+            while (participant.canHit() && inputView.readHitOrNot(participant.name)) {
+                participant.addCard(deck.draw())
+                outputView.printPlayerCards(participant, "")
+            }
         }
-        outputView.printInitialSettingCard(dealer, participants)
-    }
 
-    private fun hitPlayerCards(dealer: Dealer, participants: Participants) {
-        hitParticipantsCards(dealer, participants)
-        hitDealerCard(dealer)
-    }
-
-    private fun hitParticipantsCards(dealer: Dealer, participants: Participants) {
-        participants.values.forEach {
-            hitParticipantCards(dealer, it)
-        }
-    }
-
-    private fun hitParticipantCards(dealer: Dealer, participant: Participant) {
-        while (participant.canHit() && inputView.readHitOrNot(participant.name)) {
-            participant.addCard(deck.draw())
-            outputView.printCurrentPlayerCards(participant)
-        }
-    }
-
-    private fun hitDealerCard(dealer: Dealer) {
-        if (dealer.canHit()) {
+        while (dealer.canHit()) {
+            outputView.printDealerHitOrNotMessage(dealer.canHit())
             dealer.addCard(deck.draw())
-            outputView.printDealerHitMessage()
-            return
         }
-        outputView.printDealerNotHitMessage()
     }
 
-    private fun printResult(dealer: Dealer, participants: Participants) {
+    private fun printGameResult(dealer: Dealer, participants: Participants) {
+        val participantsResults: List<MatchResult> = getParticipantsResults(dealer, participants)
+        val dealerResult: MatchResult = MatchResult()
+        participants.values.forEach { dealerResult.count(dealer.matchGameResult(it)) }
+
         outputView.printSumResult(dealer, participants)
-        outputView.printPlayersResults(dealer, participants)
+        outputView.printPlayersResults(
+            dealer, dealerResult,
+            participants, participantsResults
+        )
+    }
+
+    private fun getParticipantsResults(dealer: Dealer, participants: Participants): List<MatchResult> {
+        val results: List<MatchResult> = List(participants.values.size) { MatchResult() }
+        participants.values.forEachIndexed { index, it ->
+            results[index].count(it.matchGameResult(dealer))
+        }
+        return results
     }
 }

@@ -5,58 +5,56 @@ import blackjack.domain.card.CardShape
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Participants
 import blackjack.domain.player.Player
-import blackjack.domain.result.GameResult
+import blackjack.domain.result.MatchResult
 
 class OutputView {
 
-    fun printCurrentPlayerCards(player: Player, sumResultMessage: String = "") {
+    fun printPlayerCards(player: Player, sumResultMessage: String = "") {
         val cardsWord: String = player.cards.values.joinToString(", ") {
             it.number.toText() + it.shape.toEmoji()
         }
         println("${player.name} 카드: $cardsWord $sumResultMessage")
     }
 
-    fun printDealerHitMessage() {
-        println()
-        println(DEALER_HIT_MESSAGE)
-        println()
-    }
-
-    fun printDealerNotHitMessage() {
-        println()
-        println(DEALER_NOT_HIT_MESSAGE)
+    fun printDealerHitOrNotMessage(hitOrNot: Boolean) {
+        println(
+            if (hitOrNot) DEALER_HIT_MESSAGE
+            else DEALER_NOT_HIT_MESSAGE
+        )
         println()
     }
 
-    fun printInitialSettingCard(dealer: Dealer, participants: Participants) {
+    fun printFirstTurnSettingCards(dealer: Dealer, participants: Participants) {
         val participantsNames: List<String> = participants.values.map { it.name }
         println(INITIAL_SETTING_CARD_MESSAGE.format(participantsNames.joinToString(", ")))
         printFirstRoundDealerCards(dealer)
         printParticipantsCards(participants)
     }
 
-    fun printPlayersResults(dealer: Dealer, participants: Participants) {
+    fun printSumResult(dealer: Dealer, participants: Participants) {
+        printPlayerCards(dealer, "- 결과: ${dealer.cards.sum()}")
+        participants.values.forEach {
+            printPlayerCards(it, "- 결과: ${it.cards.sum()}")
+        }
+    }
+
+    fun printPlayersResults(
+        dealer: Dealer,
+        dealerResult: MatchResult,
+        participants: Participants,
+        participantsResults: List<MatchResult>
+    ) {
         println()
         println(FINAL_RESULT_MESSAGE)
 
-        val dealerResultMessage: StringBuilder = StringBuilder("${dealer.name}: ")
-        if (dealer.results[GameResult.WIN] != 0) dealerResultMessage.append("${dealer.results[GameResult.WIN]}${GameResult.WIN.toText()} ")
-        if (dealer.results[GameResult.LOSE] != 0) dealerResultMessage.append("${dealer.results[GameResult.LOSE]}${GameResult.LOSE.toText()} ")
-        if (dealer.results[GameResult.DRAW] != 0) dealerResultMessage.append("${dealer.results[GameResult.DRAW]}${GameResult.DRAW.toText()} ")
-        println(dealerResultMessage.toString())
-
-        participants.values.forEach { println("${it.name}: ${it.gameResult.toText()}") }
-    }
-
-    fun printSumResult(dealer: Dealer, participants: Participants) {
-        printCurrentPlayerCards(dealer, "- 결과: ${dealer.cards.sum()}")
-        participants.values.forEach {
-            printCurrentPlayerCards(it, "- 결과: ${it.cards.sum()}")
+        println("${dealer.name}: ${dealer.getPayout(participants, participantsResults)}")
+        participants.values.forEachIndexed { index, it ->
+            println("${it.name}: ${it.bettingAmount.getPayout(participantsResults[index].getUniqueCountResult())}")
         }
     }
 
     private fun printParticipantsCards(participants: Participants) {
-        participants.values.forEach { printCurrentPlayerCards(it) }
+        participants.values.forEach { printPlayerCards(it) }
         println()
     }
 
@@ -92,18 +90,10 @@ class OutputView {
         }
     }
 
-    private fun GameResult.toText(): String {
-        return when (this) {
-            GameResult.WIN -> "승"
-            GameResult.DRAW -> "무"
-            GameResult.LOSE -> "패"
-        }
-    }
-
     companion object {
         private const val INITIAL_SETTING_CARD_MESSAGE = "딜러와 %s에게 각각 2장의 카드를 나누었습니다."
         private const val DEALER_HIT_MESSAGE = "딜러는 16 이하라 한장의 카드를 더 받았습니다."
         private const val DEALER_NOT_HIT_MESSAGE = "딜러는 16 초과라 한장의 카드를 더 받지않았습니다."
-        private const val FINAL_RESULT_MESSAGE = "## 최종 승패"
+        private const val FINAL_RESULT_MESSAGE = "## 최종 수익"
     }
 }

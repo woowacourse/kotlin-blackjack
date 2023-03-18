@@ -1,40 +1,52 @@
 package blackjack.view
 
+import blackjack.domain.BettingAmount
 import blackjack.domain.player.Participant
 import blackjack.domain.player.Participants
+import java.lang.IllegalArgumentException
 
 class InputView {
 
     fun readParticipants(): Participants {
-        println(PROMPT_PARTICIPANTS_NAME)
+        println(PROMPT_MESSAGE_PARTICIPANTS_NAME)
 
-        val participants: Participants? = kotlin.runCatching {
+        return kotlin.runCatching {
             val participantsName = readln().split(",")
-            val participants = participantsName.map { Participant(it) }.toList()
             println()
+            val participants = participantsName.map {
+                Participant(name = it, bettingAmount = readParticipantBattingAmount(it))
+            }.toList()
             Participants(participants)
-        }.getOrNull()
+        }.getOrElse { readParticipants() }
+    }
 
-        return participants ?: readParticipants()
+    private fun readParticipantBattingAmount(participantName: String): BettingAmount {
+        return kotlin.runCatching {
+            println(PROMPT_FORMAT_MESSAGE_BETTING_AMOUNT.format(participantName))
+            val input = readln().toInt()
+            println()
+            BettingAmount(input)
+        }.getOrElse { readParticipantBattingAmount(participantName) }
     }
 
     fun readHitOrNot(name: String): Boolean {
-        println(ASK_MORE_CARD.format(name))
+        println(PROMPT_FORMAT_MESSAGE_HIT_CARD.format(name))
 
-        val hitOrNot = when (readln().lowercase()) {
-            ANSWER_HIT -> true
-            ANSWER_NOT_HIT -> false
-            else -> null
-        }
-
-        return hitOrNot ?: readHitOrNot(name)
+        return kotlin.runCatching {
+            val input = readln().lowercase()
+            if (input == ANSWER_HIT) return true
+            if (input == ANSWER_NOT_HIT) return false
+            throw IllegalArgumentException()
+        }.getOrElse { readHitOrNot(name) }
     }
 
     companion object {
         private const val ANSWER_HIT = "y"
         private const val ANSWER_NOT_HIT = "n"
 
-        private const val ASK_MORE_CARD = "%s은(는) 한장의 카드를 더 받겠습니까?(예는 $ANSWER_HIT, 아니오는 $ANSWER_NOT_HIT)"
-        private const val PROMPT_PARTICIPANTS_NAME = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)"
+        private const val PROMPT_FORMAT_MESSAGE_HIT_CARD =
+            "%s은(는) 한장의 카드를 더 받겠습니까?(예는 $ANSWER_HIT, 아니오는 $ANSWER_NOT_HIT)"
+        private const val PROMPT_MESSAGE_PARTICIPANTS_NAME = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)"
+        private const val PROMPT_FORMAT_MESSAGE_BETTING_AMOUNT = "%s의 배팅 금액은?"
     }
 }
