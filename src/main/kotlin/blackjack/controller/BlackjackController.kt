@@ -16,7 +16,6 @@ class BlackjackController(
         val dealer: Dealer = Dealer()
         val participants = inputView.readParticipants()
 
-        participants.bettingParticipants(inputView::readParticipantBattingAmount)
         setFirstTurnPlayersCards(dealer, participants, deck)
         hitPlayersCards(dealer, participants, deck)
         decidePlayersResult(dealer, participants)
