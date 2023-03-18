@@ -42,9 +42,9 @@ class PlayerTest {
             )
         )
 
-        player.decideGameResult(otherPlayer)
+        player.matchGameResult(otherPlayer)
 
-        assertThat(player.matchResult.getUniqueCountResult()).isEqualTo(GameResult.LOSE)
+        assertThat(player.matchGameResult(otherPlayer)).isEqualTo(GameResult.LOSE)
     }
 
     @Test
@@ -59,9 +59,9 @@ class PlayerTest {
         )
         val player = TestPlayer("수달")
 
-        player.decideGameResult(otherPlayer)
+        player.matchGameResult(otherPlayer)
 
-        assertThat(player.matchResult.getUniqueCountResult()).isEqualTo(GameResult.WIN)
+        assertThat(player.matchGameResult(otherPlayer)).isEqualTo(GameResult.WIN)
     }
 
     @Test
@@ -82,9 +82,9 @@ class PlayerTest {
             )
         )
 
-        player.decideGameResult(otherPlayer)
+        player.matchGameResult(otherPlayer)
 
-        assertThat(player.matchResult.getUniqueCountResult()).isEqualTo(GameResult.LOSE)
+        assertThat(player.matchGameResult(otherPlayer)).isEqualTo(GameResult.LOSE)
     }
 
     @Test
@@ -105,9 +105,9 @@ class PlayerTest {
             )
         )
 
-        player.decideGameResult(otherPlayer)
+        player.matchGameResult(otherPlayer)
 
-        assertThat(player.matchResult.getUniqueCountResult()).isEqualTo(GameResult.WIN)
+        assertThat(player.matchGameResult(otherPlayer)).isEqualTo(GameResult.WIN)
     }
 
     @Test
@@ -127,9 +127,9 @@ class PlayerTest {
             )
         )
 
-        player.decideGameResult(otherPlayer)
+        player.matchGameResult(otherPlayer)
 
-        assertThat(player.matchResult.getUniqueCountResult()).isEqualTo(GameResult.DRAW)
+        assertThat(player.matchGameResult(otherPlayer)).isEqualTo(GameResult.DRAW)
     }
 
     @Test
@@ -149,9 +149,9 @@ class PlayerTest {
             )
         )
 
-        player.decideGameResult(otherPlayer)
+        player.matchGameResult(otherPlayer)
 
-        assertThat(player.matchResult.getUniqueCountResult()).isEqualTo(GameResult.BLACKJACK)
+        assertThat(player.matchGameResult(otherPlayer)).isEqualTo(GameResult.BLACKJACK)
     }
 
     class TestPlayer(name: String, cards: Cards = Cards()) : Player(name, cards) {

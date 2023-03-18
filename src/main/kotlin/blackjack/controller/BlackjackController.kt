@@ -3,6 +3,7 @@ package blackjack.controller
 import blackjack.domain.card.MultiDeck
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Participants
+import blackjack.domain.result.MatchResult
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -18,7 +19,6 @@ class BlackjackController(
 
         setFirstTurnPlayersCards(dealer, participants, deck)
         hitPlayersCards(dealer, participants, deck)
-        decidePlayersResult(dealer, participants)
         printGameResult(dealer, participants)
     }
 
@@ -42,14 +42,23 @@ class BlackjackController(
         }
     }
 
-    private fun decidePlayersResult(dealer: Dealer, participants: Participants) {
-        participants.values.forEach { it.decideGameResult(dealer) }
-        participants.values.forEach { dealer.decideGameResult(it) }
-        dealer.matchResult.reversGameResult()
+    private fun printGameResult(dealer: Dealer, participants: Participants) {
+        val participantsResults: List<MatchResult> = getParticipantsResults(dealer, participants)
+        val dealerResult: MatchResult = MatchResult()
+        participants.values.forEach { dealerResult.count(dealer.matchGameResult(it)) }
+
+        outputView.printSumResult(dealer, participants)
+        outputView.printPlayersResults(
+            dealer, dealerResult,
+            participants, participantsResults
+        )
     }
 
-    private fun printGameResult(dealer: Dealer, participants: Participants) {
-        outputView.printSumResult(dealer, participants)
-        outputView.printPlayersResults(dealer, participants)
+    private fun getParticipantsResults(dealer: Dealer, participants: Participants): List<MatchResult> {
+        val results: List<MatchResult> = List(participants.values.size) { MatchResult() }
+        participants.values.forEachIndexed { index, it ->
+            results[index].count(it.matchGameResult(dealer))
+        }
+        return results
     }
 }

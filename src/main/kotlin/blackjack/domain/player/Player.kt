@@ -4,12 +4,10 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
 import blackjack.domain.card.MultiDeck
 import blackjack.domain.result.GameResult
-import blackjack.domain.result.MatchResult
 
 abstract class Player(
     val name: String,
-    val cards: Cards = Cards(),
-    val matchResult: MatchResult = MatchResult()
+    val cards: Cards = Cards()
 ) {
 
     abstract fun canHit(): Boolean
@@ -21,11 +19,11 @@ abstract class Player(
     fun setFirstTurnCards(multiDeck: MultiDeck) =
         repeat(CARD_SETTING_COUNT) { cards.add(multiDeck.draw()) }
 
-    fun decideGameResult(otherPlayer: Player) {
+    fun matchGameResult(otherPlayer: Player): GameResult {
         val otherPlayerCardsSum: Int = otherPlayer.cards.sum()
         val cardsSum = cards.sum()
 
-        val gameResult = when {
+        return when {
             cardsSum > MAX_SUM_NUMBER -> GameResult.LOSE
             otherPlayerCardsSum > MAX_SUM_NUMBER -> GameResult.WIN
             otherPlayerCardsSum > cardsSum -> GameResult.LOSE
@@ -33,8 +31,6 @@ abstract class Player(
             cards.isBlackjack() -> GameResult.BLACKJACK
             else -> GameResult.WIN
         }
-
-        matchResult.count(gameResult)
     }
 
     companion object {

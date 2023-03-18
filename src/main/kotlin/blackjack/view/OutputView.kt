@@ -5,6 +5,7 @@ import blackjack.domain.card.CardShape
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Participants
 import blackjack.domain.player.Player
+import blackjack.domain.result.MatchResult
 
 class OutputView {
 
@@ -37,12 +38,19 @@ class OutputView {
         }
     }
 
-    fun printPlayersResults(dealer: Dealer, participants: Participants) {
+    fun printPlayersResults(
+        dealer: Dealer,
+        dealerResult: MatchResult,
+        participants: Participants,
+        participantsResults: List<MatchResult>
+    ) {
         println()
         println(FINAL_RESULT_MESSAGE)
 
-        println("${dealer.name}: ${dealer.getPayout(participants)}")
-        participants.values.forEach { println("${it.name}: ${it.bettingAmount.getPayout(it.matchResult.getUniqueCountResult())}") }
+        println("${dealer.name}: ${dealer.getPayout(participants, participantsResults)}")
+        participants.values.forEachIndexed { index, it ->
+            println("${it.name}: ${it.bettingAmount.getPayout(participantsResults[index].getUniqueCountResult())}")
+        }
     }
 
     private fun printParticipantsCards(participants: Participants) {
