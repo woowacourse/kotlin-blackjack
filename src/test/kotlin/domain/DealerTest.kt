@@ -1,45 +1,37 @@
 package domain
 
-import domain.card.Card
-import domain.card.CardNumber
-import domain.card.Shape
-import domain.player.Dealer
+import model.domain.player.Dealer
+import model.tools.Money
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class DealerTest {
 
     @Test
-    fun `2장의 합이 16이하일 경우, false 반환한다`() {
+    fun `유저의 배팅금액 500이 딜러의 배팅금액이다`() {
         // given
-        val dealer = Dealer.create(
-            cards = mutableListOf<Card>(
-                Card.of(Shape.CLUBS, CardNumber.FIVE),
-                Card.of(Shape.DIAMONDS, CardNumber.THREE),
-            ),
-        )
+        val dealer = Dealer.from()
+        val userTotalMoney = Money(500)
 
         // when
-        val actual = dealer.isOverSumCondition()
+        dealer.betMoney(userTotalMoney)
+        val actual = dealer.money.amount
 
         // then
-        assertThat(actual).isFalse
+        assertThat(actual).isEqualTo(userTotalMoney.amount)
     }
 
     @Test
-    fun `2장의 합이 17이상인 경우, true를 반환한다`() {
+    fun `유저의 최종 합산금액이 500이 딜러의 수익이다`() {
         // given
-        val dealer = Dealer.create(
-            cards = mutableListOf<Card>(
-                Card.of(Shape.CLUBS, CardNumber.JACK),
-                Card.of(Shape.DIAMONDS, CardNumber.EIGHT),
-            ),
-        )
+        val dealer = Dealer.from()
+        val userTotalMoney = Money(-500)
 
         // when
-        val actual = dealer.isOverSumCondition()
+        dealer.calculateTotalMoney(userTotalMoney.amount)
+        val actual = dealer.money.amount
 
         // then
-        assertThat(actual).isTrue
+        assertThat(actual).isEqualTo(500)
     }
 }
