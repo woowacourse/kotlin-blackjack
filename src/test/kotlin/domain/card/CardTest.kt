@@ -1,4 +1,4 @@
-package domain
+package domain.card
 
 import model.domain.card.Card
 import model.tools.CardNumber
