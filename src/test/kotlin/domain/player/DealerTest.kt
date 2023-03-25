@@ -1,4 +1,4 @@
-package domain
+package domain.player
 
 import model.domain.player.Dealer
 import model.tools.Money

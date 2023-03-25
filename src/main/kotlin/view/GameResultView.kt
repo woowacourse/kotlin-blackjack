@@ -17,8 +17,8 @@ object GameResultView {
                     dealer.state.hand.cards.joinToString(SEPARATOR) { card ->
                         card.toCardInfo()
                     },
-                    dealer.state.hand.getTotalScoreWithAceCard()
-                )
+                    dealer.state.hand.getTotalScoreWithAceCard(),
+                ),
             )
             user.forEach { user ->
                 println(
@@ -27,8 +27,8 @@ object GameResultView {
                         user.state.hand.cards.joinToString(SEPARATOR) { card ->
                             card.toCardInfo()
                         },
-                        user.state.hand.getTotalScoreWithAceCard()
-                    )
+                        user.state.hand.getTotalScoreWithAceCard(),
+                    ),
                 )
             }
         }
@@ -40,15 +40,15 @@ object GameResultView {
             println(
                 PLAYER_RESULT_PROFIT.format(
                     dealer.name,
-                    dealer.money.amount
-                )
+                    dealer.money.amount,
+                ),
             )
             user.forEach { user ->
                 println(
                     PLAYER_RESULT_PROFIT.format(
                         user.name,
-                        user.money.amount
-                    )
+                        user.money.amount,
+                    ),
                 )
             }
         }

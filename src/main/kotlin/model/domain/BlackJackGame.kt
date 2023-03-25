@@ -4,9 +4,9 @@ import model.domain.card.Deck
 import model.domain.player.User
 import model.domain.result.Profit
 import model.domain.state.gameinprogress.Hit
-import view.tools.Answer
 import model.tools.Money
 import model.tools.Participant
+import view.tools.Answer
 
 class BlackJackGame(private val deck: Deck, private val participants: Participant) {
 

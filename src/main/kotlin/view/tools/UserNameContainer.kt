@@ -1,6 +1,7 @@
-package domain.player
+package view.tools
 
-class UserNameContainer(val names: List<String>) {
+@JvmInline
+value class UserNameContainer(val names: List<String>) {
 
     init {
         exceptDuplicatedName()

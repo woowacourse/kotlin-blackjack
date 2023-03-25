@@ -1,4 +1,4 @@
-package domain.card
+package model.tools
 
 enum class CardNumber(val number: Int, val cardSign: String) {
     ACE(1, "A"),

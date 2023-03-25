@@ -1,8 +1,8 @@
 package view
 
 import model.domain.player.User
-import view.tools.Answer
 import model.tools.Participant
+import view.tools.Answer
 import view.tools.UserNameContainer
 import view.util.toCardInfo
 

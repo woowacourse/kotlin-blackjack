@@ -1,8 +1,8 @@
-package domain
+package domain.tools
 
-import domain.player.UserNameContainer
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
+import view.tools.UserNameContainer
 
 class UserNameContainerTest {
 
