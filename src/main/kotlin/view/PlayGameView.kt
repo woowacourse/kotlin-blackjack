@@ -34,9 +34,8 @@ object PlayGameView {
 
     fun requestMoreCardIfWant(user: User): Answer {
         println(REQUEST_MORE_CARD.format(user.name))
-        val answer = readln()
 
-        return runCatching { Answer(answer) }
+        return runCatching { Answer(readln()) }
             .onFailure { println(ERROR_REQUEST_MORE_CARD) }
             .getOrElse { requestMoreCardIfWant(user) }
     }

@@ -3,12 +3,12 @@ package view.tools
 @JvmInline
 value class Answer(val answer: String) {
     init {
-        require(checkAnswerOnlyYes() and checkAnswerOnlyNo()) { ERROR_WRONG_ANSWER }
+        require(checkAnswerOnlyYes() or checkAnswerOnlyNo()) { ERROR_WRONG_ANSWER }
     }
 
-    private fun checkAnswerOnlyYes(): Boolean = ((answer == LOWER_YES) and (answer == UPPER_YES))
+    private fun checkAnswerOnlyYes(): Boolean = (answer == LOWER_YES) or (answer == UPPER_YES)
 
-    private fun checkAnswerOnlyNo(): Boolean = ((answer == LOWER_NO) and (answer == UPPER_NO))
+    private fun checkAnswerOnlyNo(): Boolean = (answer == LOWER_NO) or (answer == UPPER_NO)
 
     companion object {
         private const val ERROR_WRONG_ANSWER = "[ERROR] 올바른 문자를 입력해주세요"
