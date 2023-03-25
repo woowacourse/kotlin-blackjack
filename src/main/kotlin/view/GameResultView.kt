@@ -1,50 +1,56 @@
 package view
 
-import domain.player.Dealer
-import domain.player.Player
-import domain.player.User
+import model.tools.Participant
 import view.util.toCardInfo
 
-class GameResultView {
+object GameResultView {
+    private const val PLAYER_RESULT_PROFIT = "%s: %d"
+    private const val PLAYER_CARD_RESULT = "%s카드: %s - 결과: %d"
+    private const val SEPARATOR = ", "
+    private const val FINAL_RESULT = "\n## 최종 수익"
 
-    fun printCardResult(dealer: Dealer, users: List<User>) {
-        println(formatPlayerCard(dealer))
-        users.forEach { user ->
-            println(formatPlayerCard(user))
+    fun printFinalResult(participant: Participant) {
+        with(participant) {
+            println(
+                PLAYER_CARD_RESULT.format(
+                    dealer.name,
+                    dealer.state.hand.cards.joinToString(SEPARATOR) { card ->
+                        card.toCardInfo()
+                    },
+                    dealer.state.hand.getTotalScoreWithAceCard()
+                )
+            )
+            user.forEach { user ->
+                println(
+                    PLAYER_CARD_RESULT.format(
+                        user.name,
+                        user.state.hand.cards.joinToString(SEPARATOR) { card ->
+                            card.toCardInfo()
+                        },
+                        user.state.hand.getTotalScoreWithAceCard()
+                    )
+                )
+            }
         }
     }
 
-    fun printFinalResult(gameResult: List<GameResult>, users: List<User>) {
+    fun printFinalProfit(participants: Participant) {
         println(FINAL_RESULT)
-        println(formatDealerResult(gameResult))
-        users.forEachIndexed { index, user ->
-            println(USER_RESULT_FORMAT.format(user.name, gameResult[index].label))
+        with(participants) {
+            println(
+                PLAYER_RESULT_PROFIT.format(
+                    dealer.name,
+                    dealer.money.amount
+                )
+            )
+            user.forEach { user ->
+                println(
+                    PLAYER_RESULT_PROFIT.format(
+                        user.name,
+                        user.money.amount
+                    )
+                )
+            }
         }
-    }
-
-    private fun formatPlayerCard(player: Player) =
-        PLAYER_CARD_RESULT.format(
-            player.name,
-            player.cards.joinToString(SEPARATOR) { card ->
-                card.toCardInfo()
-            },
-            player.addScoreTenIfHasAce(),
-        )
-
-    private fun formatDealerResult(gameResult: List<GameResult>) = DEALER_RESULT_FORMAT.format(
-        gameResult.count { it == GameResult.LOSE },
-        GameResult.WIN.label,
-        gameResult.count { it == GameResult.DRAW },
-        GameResult.DRAW.label,
-        gameResult.count { it == GameResult.WIN },
-        GameResult.LOSE.label,
-    )
-
-    companion object {
-        private const val DEALER_RESULT_FORMAT = "딜러: %d%s %d%s %d%s"
-        private const val USER_RESULT_FORMAT = "%s: %s"
-        private const val PLAYER_CARD_RESULT = "%s: %s - 결과: %d"
-        private const val SEPARATOR = ", "
-        private const val FINAL_RESULT = "\n## 최종 승패"
     }
 }
