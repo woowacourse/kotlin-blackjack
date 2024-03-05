@@ -7,4 +7,8 @@ class Card(private val denomination: String, private val suite: String) {
         }
         return denomination.toInt()
     }
+
+    fun isA(): Boolean {
+        return denomination == "A"
+    }
 }

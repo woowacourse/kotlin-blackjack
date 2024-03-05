@@ -15,4 +15,15 @@ class CardTest {
         val actual = Card(denomination, suite).getValue()
         assertThat(actual).isEqualTo(expected)
     }
+
+    @CsvSource("A, 하트, true", "10, 다이아몬드, false")
+    @ParameterizedTest
+    fun `A인지 확인한다`(
+        denomination: String,
+        suite: String,
+        expected: Boolean,
+    ) {
+        val actual = Card(denomination, suite).isA()
+        assertThat(actual).isEqualTo(expected)
+    }
 }
