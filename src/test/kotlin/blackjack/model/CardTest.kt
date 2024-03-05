@@ -1,8 +1,5 @@
-package blackjack
+package blackjack.model
 
-import blackjack.model.Card
-import blackjack.model.CardNumber
-import blackjack.model.Pattern
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -15,7 +12,3 @@ class CardTest {
         println(CardNumber.ACE.value)
     }
 }
-
-
-
-
