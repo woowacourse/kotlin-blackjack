@@ -1,6 +1,6 @@
 package blackjack.model
 
-enum class TrumpCardType(val label: String) {
+enum class Suit(val label: String) {
     SPADE("스페이드"),
     HEART("하트"),
     DIAMOND("다이아"),
