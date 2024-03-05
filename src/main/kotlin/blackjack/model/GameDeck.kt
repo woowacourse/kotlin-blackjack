@@ -2,7 +2,7 @@ package blackjack.model
 
 import java.lang.IllegalStateException
 
-class Deck {
+class GameDeck(cards: List<Card> = listOf()) {
     private var _cards: MutableList<Card> = cards.toMutableList()
     val cards: List<Card>
         get() = _cards
