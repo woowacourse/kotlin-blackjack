@@ -1,6 +1,6 @@
 package blackjack.model
 
-class Player : Role() {
+class Player(private val name: PlayerName) : Role() {
     override fun isBurst(): Boolean {
         return cardSum >= BURST_CONDITION
     }

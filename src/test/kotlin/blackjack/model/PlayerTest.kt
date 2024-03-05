@@ -13,7 +13,7 @@ class PlayerTest {
         expected: Boolean,
     ) {
         // given
-        val player = Player()
+        val player = Player(PlayerName("olive"))
         cards.forEach { player.receiveCard(it) }
 
         // when
