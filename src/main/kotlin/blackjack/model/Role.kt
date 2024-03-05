@@ -1,7 +1,8 @@
 package blackjack.model
 
 abstract class Role {
-    private var cardSum = 0
+    var cardSum = 0
+        private set
 
     private val cards = mutableListOf<Card>()
 
@@ -9,4 +10,6 @@ abstract class Role {
         cards.add(card)
         cardSum += card.getValue()
     }
+
+    abstract fun isBurst(): Boolean
 }
