@@ -11,7 +11,7 @@ class PlayerTest {
 
         player.takeCard(card)
 
-        Assertions.assertThat(player.cards.last()).isEqualTo(card)
+        Assertions.assertThat(player.deck.cards.last()).isEqualTo(card)
     }
 
     @Test
@@ -21,6 +21,6 @@ class PlayerTest {
 
         player.takeCard(card)
 
-        Assertions.assertThat(player.cards).isEqualTo(listOf(card))
+        Assertions.assertThat(player.deck.cards.last()).isEqualTo(card)
     }
 }

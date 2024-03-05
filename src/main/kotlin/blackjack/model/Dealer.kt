@@ -2,12 +2,12 @@ package blackjack.model
 
 import blackjack.base.BaseHolder
 
-class Dealer(cards: List<Card> = emptyList()) : BaseHolder() {
-    private var _cards: List<Card> = cards
-    override val cards: List<Card>
-        get() = _cards
+class Dealer(deck: Deck = Deck()) : BaseHolder() {
+    private var _deck: Deck = deck
+    override val deck: Deck
+        get() = _deck
 
     override fun takeCard(card: Card) {
-        _cards += card
+        _deck += card
     }
 }
