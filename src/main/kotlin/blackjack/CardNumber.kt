@@ -1,7 +1,7 @@
 package blackjack
 
 enum class CardNumber(
-    number: Int,
+    val number: Int,
 ) {
     ONE(1),
     TWO(2),
