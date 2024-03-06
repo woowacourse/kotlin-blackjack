@@ -1,6 +1,9 @@
 package blackjack.model
 
-enum class CardValue(val title: String, val value: Int) {
+enum class CardValue(
+    val title: String,
+    val value: Int,
+) {
     ONE("1", 1),
     TWO("2", 2),
     THREE("3", 3),

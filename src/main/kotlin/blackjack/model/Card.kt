@@ -1,6 +1,10 @@
 package blackjack.model
 
-class Card private constructor(val shape: String, val title: String, val value: Int) {
+class Card private constructor(
+    val shape: String,
+    val title: String,
+    val value: Int,
+) {
     companion object {
         fun of(
             shape: Shape,

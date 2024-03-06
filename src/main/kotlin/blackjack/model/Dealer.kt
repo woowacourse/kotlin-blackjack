@@ -2,12 +2,29 @@ package blackjack.model
 
 class Dealer(
     val numberOfPlayers: Int,
+    cards: Set<Card> = emptySet(),
 ) {
+    private val _cards: MutableSet<Card> = cards.toMutableSet()
+    val cards: Set<Card>
+        get() = _cards
+
     init {
-        require(numberOfPlayers in PLAYER_NUM_RANGE) { EXCEPTION_NUMBER_OF_PLAYERS.format(numberOfPlayers) }
+        require(numberOfPlayers in PLAYER_NUM_RANGE) {
+            EXCEPTION_NUMBER_OF_PLAYERS.format(numberOfPlayers)
+        }
+    }
+
+    fun drawCard(generateCard: () -> Card) {
+        if (isDrawAvailable()) _cards.add(generateCard())
+    }
+
+    private fun isDrawAvailable(): Boolean {
+        val total = cards.sumOf { card -> card.value }
+        return total <= MAXIMUM_DRAW_THRESHOLD
     }
 
     companion object {
+        private const val MAXIMUM_DRAW_THRESHOLD = 16
         private const val MINIMUM_NUMBER_OF_PLAYERS = 2
         private const val MAXIMUM_NUMBER_OF_PLAYERS = 8
         private val PLAYER_NUM_RANGE = MINIMUM_NUMBER_OF_PLAYERS..MAXIMUM_NUMBER_OF_PLAYERS
