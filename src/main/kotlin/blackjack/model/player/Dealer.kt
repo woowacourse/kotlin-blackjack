@@ -1,4 +1,5 @@
 package blackjack.model.player
 
-class Dealer {
-}
+import blackjack.model.card.Hand
+
+class Dealer(val hand: Hand)

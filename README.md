@@ -88,8 +88,8 @@
 
 ### Dealer
 
-- [ ] 딜러의 Hand<17 이면 Hit
-- [ ] 딜러의 Hit 여부 확인하기
+- [x] 딜러객체 생성
+- [ ] 딜러의 Hand<17 이면 draw
 
 ### PlayerEntry
 
