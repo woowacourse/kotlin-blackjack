@@ -45,4 +45,94 @@ class BlackJackGame(
             }
         }
     }
+
+    fun matchResult() {
+        participants.players.forEach { player ->
+            if ((player.deck.state as GameState.Finished).state == UserState.BUST) {
+                player.deck.changeState(
+                    userState = (player.deck.state as GameState.Finished).state,
+                    result = (player.deck.state as GameState.Finished).result.deepCopy(newDefeat = 1),
+                )
+
+                dealer.deck.changeState(
+                    userState = (dealer.deck.state as GameState.Finished).state,
+                    result = (dealer.deck.state as GameState.Finished).result.deepCopy(newWin = 1),
+                )
+            }
+        }
+
+        participants.players.forEach { player ->
+            if ((player.deck.state as GameState.Finished).state != UserState.BUST) {
+                if ((dealer.deck.state as GameState.Finished).state == UserState.BUST) {
+                    dealer.deck.changeState(
+                        userState = (dealer.deck.state as GameState.Finished).state,
+                        result = (dealer.deck.state as GameState.Finished).result.deepCopy(newDefeat = 1),
+                    )
+
+                    player.deck.changeState(
+                        userState = (player.deck.state as GameState.Finished).state,
+                        result = (player.deck.state as GameState.Finished).result.deepCopy(newWin = 1),
+                    )
+                } else if ((dealer.deck.state as GameState.Finished).state == UserState.BLACKJACK) {
+                    if ((player.deck.state as GameState.Finished).state == UserState.BLACKJACK) {
+                        dealer.deck.changeState(
+                            userState = (dealer.deck.state as GameState.Finished).state,
+                            result = (dealer.deck.state as GameState.Finished).result.deepCopy(newPush = 1),
+                        )
+
+                        player.deck.changeState(
+                            userState = (player.deck.state as GameState.Finished).state,
+                            result = (player.deck.state as GameState.Finished).result.deepCopy(newPush = 1),
+                        )
+                    } else {
+                        dealer.deck.changeState(
+                            userState = (dealer.deck.state as GameState.Finished).state,
+                            result = (dealer.deck.state as GameState.Finished).result.deepCopy(newWin = 1),
+                        )
+
+                        player.deck.changeState(
+                            userState = (player.deck.state as GameState.Finished).state,
+                            result = (player.deck.state as GameState.Finished).result.deepCopy(newDefeat = 1),
+                        )
+                    }
+                } else {
+                    val dealerPoint = dealer.deck.calculate()
+                    val playerPoint = player.deck.calculate()
+
+                    if (dealerPoint == playerPoint) {
+                        dealer.deck.changeState(
+                            userState = (dealer.deck.state as GameState.Finished).state,
+                            result = (dealer.deck.state as GameState.Finished).result.deepCopy(newPush = 1),
+                        )
+
+                        player.deck.changeState(
+                            userState = (player.deck.state as GameState.Finished).state,
+                            result = (player.deck.state as GameState.Finished).result.deepCopy(newPush = 1),
+                        )
+                    } else if (dealerPoint > playerPoint) {
+                        dealer.deck.changeState(
+                            userState = (dealer.deck.state as GameState.Finished).state,
+                            result = (dealer.deck.state as GameState.Finished).result.deepCopy(newWin = 1),
+                        )
+
+                        player.deck.changeState(
+                            userState = (player.deck.state as GameState.Finished).state,
+                            result = (player.deck.state as GameState.Finished).result.deepCopy(newDefeat = 1),
+                        )
+                    } else {
+                        dealer.deck.changeState(
+                            userState = (dealer.deck.state as GameState.Finished).state,
+                            result = (dealer.deck.state as GameState.Finished).result.deepCopy(newDefeat = 1),
+                        )
+
+                        player.deck.changeState(
+                            userState = (player.deck.state as GameState.Finished).state,
+                            result = (player.deck.state as GameState.Finished).result.deepCopy(newWin = 1),
+                        )
+                    }
+                }
+            }
+            player.deck.state
+        }
+    }
 }
