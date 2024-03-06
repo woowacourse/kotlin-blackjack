@@ -4,7 +4,6 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class ParticipantTest {
-
     @Test
     fun `에이스가 없을 때 카드의 총 합을 구하는 기능`() {
         val jack = Card(CardNumber.JACK, Suit.HEART)
@@ -54,7 +53,6 @@ class ParticipantTest {
         val actual = participant.isBusted()
         assertThat(actual).isEqualTo(true)
     }
-
 
     @Test
     fun `카드 총 합이 21이면 true를 반환한다`() {

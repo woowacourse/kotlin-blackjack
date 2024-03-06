@@ -1,7 +1,6 @@
 package blackjack.model
 
 class Dealer : Participant() {
-
     fun judge(participant: Participant): GameResult {
         val dealerScore = this.getCardSum()
         val playerScore = participant.getCardSum()

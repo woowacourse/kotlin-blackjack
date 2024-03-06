@@ -2,6 +2,7 @@ package blackjack.model
 
 open class Participant {
     private val cardList: MutableList<Card> = mutableListOf()
+
     fun addCard(card: Card) {
         cardList.add(card)
     }
@@ -26,4 +27,3 @@ open class Participant {
         return threshold == score
     }
 }
-

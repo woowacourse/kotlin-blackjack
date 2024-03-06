@@ -4,5 +4,5 @@ enum class Suit {
     HEART,
     CLOVER,
     SPADE,
-    DIAMOND
+    DIAMOND,
 }
