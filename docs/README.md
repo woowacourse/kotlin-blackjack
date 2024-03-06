@@ -10,3 +10,6 @@
 - [x] : Cards 에 card 를 넣는 기능
 - [x] : Cards 에 다른 Cards 를 더하는 기능
 - [x] : Cards 에 card 가 있는지 확인하는 기능
+- [ ] : Player 와 Dealer 의 점수를 비교해서 승패를 결정한다(Compare)
+- [ ] : Cards 는 Card 점수 계산할 수 있다
+- [ ] : Player 와 Dealer 는 scoreBoard 를 갖는다 
