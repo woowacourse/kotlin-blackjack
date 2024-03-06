@@ -3,8 +3,14 @@ package blackjack.base
 import blackjack.model.Card
 import blackjack.model.Deck
 
-abstract class BaseHolder {
-    abstract val deck: Deck
+abstract class BaseHolder(deck: Deck = Deck()) {
+    abstract val name: String
 
-    abstract fun takeCard(card: Card)
+    private var _deck: Deck = deck
+    val deck: Deck
+        get() = _deck
+
+    fun takeCard(card: Card) {
+        _deck += card
+    }
 }
