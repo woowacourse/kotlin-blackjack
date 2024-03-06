@@ -1,6 +1,6 @@
 package blackjack
 
-class Dealer(private val cardHand: CardHand) : Role(cardHand) {
+class Dealer(override val cardHand: CardHand) : Role(cardHand) {
     override fun getState(hitCondition: Boolean): CardHandState {
         val sum = cardHand.sum()
 
