@@ -9,9 +9,9 @@ class Hand {
         _cards.add(deck.pop())
     }
 
-    fun getPoint(): Int {
+    fun getPoint(): Point {
         return _cards.sumOf { card ->
             card.value.amount
-        }
+        }.run { Point(this) }
     }
 }
