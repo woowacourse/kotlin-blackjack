@@ -4,11 +4,15 @@ abstract class Role {
     var cardSum = 0
         private set
 
-    private val cards = mutableListOf<Card>()
+    val handCard = HandCard()
 
     fun receiveCard(card: Card) {
-        cards.add(card)
-        cardSum += card.getValue()
+        handCard.add(card)
+        addCardSum(card.getValue())
+    }
+
+    fun addCardSum(value: Int) {
+        cardSum += value
     }
 
     abstract fun isBurst(): Boolean
