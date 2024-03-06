@@ -32,12 +32,12 @@
 
 -------------------
 ### Denomination
-- [ ] (2~11) 숫자 객체 생성
+- [x] (2~11) 숫자 객체 생성
   - A는 초기값 11
 ### Suit
-- [ ] 다이아, 클로버, 스페이드, 하트 문양 Enum Class
+- [x] 다이아, 클로버, 스페이드, 하트 문양 Enum Class
 ### Card
--[ ] Denomination, Suit 조합으로 된 객체 생성
+-[x] Denomination, Suit 조합으로 된 객체 생성
 ### Deck
 - [ ] Card의 종류 52가지 뭉치
 
