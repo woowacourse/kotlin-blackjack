@@ -14,13 +14,8 @@ class Dealer(
         }
     }
 
-    fun drawCard(generateCard: () -> Card): Boolean {
-        if (isDrawAvailable()) {
-            _cards.add(generateCard())
-            return true
-        } else {
-            return false
-        }
+    fun drawCard(generateCard: () -> Card) {
+        if (isDrawAvailable()) _cards.add(generateCard())
     }
 
     private fun isDrawAvailable(): Boolean {
