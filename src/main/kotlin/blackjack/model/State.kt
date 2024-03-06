@@ -1,22 +1,22 @@
 package blackjack.model
 
-sealed class State(val deck: Cards)
+sealed class State(val hand: Hand)
 
-open class Running(deck: Cards) : State(deck)
+open class Running(hand: Hand) : State(hand)
 
-open class Finished(deck: Cards) : State(deck)
+open class Finished(hand: Hand) : State(hand)
 
-class Hit(deck: Cards) : Running(deck) {
+class Hit(hand: Hand) : Running(hand) {
     fun draw(card: Card): State {
-        deck.cards.add(card)
-        return if (deck.isBust()) Bust(deck) else Hit(deck)
+        hand.cards.add(card)
+        return if (hand.isBust()) Bust(hand) else Hit(hand)
     }
 
-    fun stay(): State = Stay(deck)
+    fun stay(): State = Stay(hand)
 }
 
-class Stay(deck: Cards) : Finished(deck)
+class Stay(hand: Hand) : Finished(hand)
 
-class Blackjack(deck: Cards) : Finished(deck)
+class Blackjack(hand: Hand) : Finished(hand)
 
-class Bust(deck: Cards) : Finished(deck)
+class Bust(hand: Hand) : Finished(hand)
