@@ -1,3 +1,19 @@
 package blackjack
 
-class DealerTest
+import org.assertj.core.api.Assertions
+import org.junit.jupiter.api.Test
+
+class DealerTest {
+    @Test
+    fun `딜러의 카드 패 상태를 구한다`() {
+        val cardHand =
+            DealerCardHand(
+                Card(CardShape.HEART, CardNumber.SEVEN),
+                Card(CardShape.SPADE, CardNumber.SIX),
+            )
+
+        val dealer = Dealer(cardHand)
+
+        Assertions.assertThat(dealer.getState(true)).isEqualTo(CardHandState.HIT)
+    }
+}
