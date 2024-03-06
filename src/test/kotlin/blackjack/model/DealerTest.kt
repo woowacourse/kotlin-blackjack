@@ -23,6 +23,23 @@ class DealerTest {
         Assertions.assertThat(actual).isEqualTo(expected)
     }
 
+    @MethodSource("최적의 카드 값 계산 테스트 데이터")
+    @ParameterizedTest
+    fun `A가 있는 경우 딜러의 최적의 카드 값을 구한다`(
+        cards: List<Card>,
+        expected: Int,
+    ) {
+        // given
+        val dealer = Dealer()
+        cards.forEach { dealer.receiveCard(it) }
+
+        // when
+        val actual = dealer.getOptimizeCardSum()
+
+        // then
+        Assertions.assertThat(actual).isEqualTo(expected)
+    }
+
     companion object {
         @JvmStatic
         fun `기준치 판단 테스트 데이터`() =
@@ -30,6 +47,15 @@ class DealerTest {
                 Arguments.of(listOf(Card("10", "하트"), Card("6", "다이아몬드")), false),
                 Arguments.of(listOf(Card("10", "하트"), Card("7", "다이아몬드")), true),
                 Arguments.of(listOf(Card("10", "하트"), Card("8", "다이아몬드")), true),
+            )
+
+        @JvmStatic
+        fun `최적의 카드 값 계산 테스트 데이터`() =
+            listOf(
+                Arguments.of(listOf(Card("A", "하트")), 11),
+                Arguments.of(listOf(Card("A", "하트"), Card("A", "다이아몬드")), 12),
+                Arguments.of(listOf(Card("A", "하트"), Card("6", "다이아몬드")), 17),
+                Arguments.of(listOf(Card("A", "하트"), Card("7", "다이아몬드")), 8),
             )
     }
 }

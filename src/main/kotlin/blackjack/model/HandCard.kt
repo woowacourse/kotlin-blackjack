@@ -8,4 +8,8 @@ class HandCard {
     fun add(card: Card) {
         _cards.add(card)
     }
+
+    fun getAceCount(): Int {
+        return _cards.count { it.isAce() }
+    }
 }
