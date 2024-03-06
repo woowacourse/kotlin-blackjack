@@ -1,6 +1,7 @@
 package blackjack.model
 
 abstract class Role {
+    abstract val burstCondition: Int
     var cardSum = 0
         private set
 
@@ -15,5 +16,5 @@ abstract class Role {
         cardSum += value
     }
 
-    abstract fun isBurst(): Boolean
+    fun isBurst() = cardSum >= burstCondition
 }
