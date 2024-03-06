@@ -12,4 +12,12 @@ data class Result(
         if (defeat != 0) answer += "${defeat}패 "
         return answer
     }
+
+    fun deepCopy(
+        newWin: Int = 0,
+        newDefeat: Int = 0,
+        newPush: Int = 0,
+    ): Result {
+        return copy(win = win + newWin, defeat = defeat + newDefeat, push = push + newPush)
+    }
 }
