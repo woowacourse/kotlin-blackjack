@@ -20,17 +20,19 @@ class CardTest {
         assertThat(actual).isEqualTo(expected)
     }
 
-
-
     @ParameterizedTest
-    @ValueSource(ints = [17, 21])
-    fun `카드 총 합이 기준 점수 이상이면 true`(treshold: Int) {
-        val sum = 21
-        val actual = checkScore(treshold,sum)
+    @ValueSource(ints = [22, 23, 24])
+    fun `카드 총 합이 21 이상이면 Busted`(sum: Int) {
+        val actual = isBusted(sum)
         assertThat(actual).isEqualTo(true)
     }
 
     fun checkScore(threshold: Int, sum: Int): Boolean = threshold <= sum
+
+    fun isBusted(sum: Int): Boolean{
+        val threshold = 21
+        return checkScore(threshold, sum)
+    }
 }
 
 class Participant {
@@ -38,7 +40,9 @@ class Participant {
     fun addCard(card: Card) {
         cardList.add(card)
     }
+
     fun getCardSum(cardList: List<Card>): Int {
         return cardList.map { it.cardNumber.score }.sum()
     }
 }
+
