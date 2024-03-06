@@ -12,7 +12,7 @@ class Deck {
             Pattern.entries.flatMap { pattern ->
                 assignNumber(pattern)
             }
-        return cards.shuffled()
+        return CardMachineManager.shuffle(cards)
     }
 
     private fun assignNumber(pattern: Pattern) =
