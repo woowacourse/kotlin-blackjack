@@ -39,8 +39,8 @@
 ### Card
 -[x] Denomination, Suit 조합으로 된 객체 생성
 ### Deck
-- [ ] Card의 종류 52가지 뭉치
-
+- [x] Card의 종류 52가지 뭉치
+- [x] 카드 한장 빼기
 ### Hand
 - [ ] 2장 이상 존재해야함.
 - [ ] List<Card> 형태 객체 생성.
