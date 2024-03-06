@@ -19,4 +19,10 @@ class Dealer : Participant() {
             }
         }
     }
+
+    fun isHitable(): Boolean {
+        val score = getCardSum()
+        val threshold = 17
+        return score < threshold
+    }
 }

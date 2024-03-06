@@ -17,6 +17,8 @@ class Deck(count: Int = 1) {
     }
 
     companion object {
-        val oneDeck = Suit.entries.flatMap { suit -> CardNumber.entries.map { cardNumber -> Card(cardNumber, suit) } }
+        val oneDeck = Suit.entries.flatMap { suit ->
+            CardNumber.entries.map { cardNumber -> Card(cardNumber, suit) }
+        }
     }
 }
