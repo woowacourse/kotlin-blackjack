@@ -2,6 +2,7 @@ package blackjack.model
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
@@ -29,14 +30,20 @@ class DealerTest {
                         Card.of(Shape.CLOVER, CardValue.SIX, 0),
                         Card.of(Shape.HEART, CardValue.K, 6),
                     ),
-            ).apply {
-                drawCard {
-                    Card.of(Shape.CLOVER, CardValue.TWO, 16)
-                }
+            )
+
+        val actual =
+            dealer.drawCard {
+                Card.of(Shape.CLOVER, CardValue.TWO, 16)
             }
+
         val actualSize = dealer.cards.size
         val expectedSize = 3
-        assertThat(actualSize).isEqualTo(expectedSize)
+
+        assertAll(
+            { assertThat(actualSize).isEqualTo(expectedSize) },
+            { assertThat(actual).isTrue() },
+        )
     }
 
     @Test
@@ -49,14 +56,20 @@ class DealerTest {
                         Card.of(Shape.CLOVER, CardValue.SEVEN, 0),
                         Card.of(Shape.HEART, CardValue.K, 7),
                     ),
-            ).apply {
-                drawCard {
-                    Card.of(Shape.CLOVER, CardValue.TWO, 17)
-                }
+            )
+
+        val actual =
+            dealer.drawCard {
+                Card.of(Shape.CLOVER, CardValue.TWO, 17)
             }
+
         val actualSize = dealer.cards.size
         val expectedSize = 2
-        assertThat(actualSize).isEqualTo(expectedSize)
+
+        assertAll(
+            { assertThat(actualSize).isEqualTo(expectedSize) },
+            { assertThat(actual).isFalse() },
+        )
     }
 
     @Test
@@ -69,14 +82,22 @@ class DealerTest {
                         Card.of(Shape.CLOVER, CardValue.SIX, 0),
                         Card.of(Shape.HEART, CardValue.K, 6),
                     ),
-            ).apply {
-                drawCard {
-                    Card.of(Shape.CLOVER, CardValue.ONE, 16)
-                }
+            )
+
+        val actual =
+            dealer.drawCard {
+                Card.of(Shape.CLOVER, CardValue.ONE, 16)
             }
+
         val actualTotal = dealer.cards.sumOf { it.value }
         val expectedTotal = 17
-        assertThat(actualTotal).isEqualTo(expectedTotal)
+
+        assertAll(
+            {
+                assertThat(actualTotal).isEqualTo(expectedTotal)
+            },
+            { assertThat(actual).isTrue() },
+        )
     }
 
     @Test
@@ -89,14 +110,22 @@ class DealerTest {
                         Card.of(Shape.CLOVER, CardValue.SEVEN, 0),
                         Card.of(Shape.HEART, CardValue.K, 7),
                     ),
-            ).apply {
-                drawCard {
-                    Card.of(Shape.CLOVER, CardValue.ONE, 17)
-                }
+            )
+
+        val actual =
+            dealer.drawCard {
+                Card.of(Shape.CLOVER, CardValue.ONE, 17)
             }
+
         val actualTotal = dealer.cards.sumOf { it.value }
         val expectedTotal = 17
-        assertThat(actualTotal).isEqualTo(expectedTotal)
+
+        assertAll(
+            {
+                assertThat(actualTotal).isEqualTo(expectedTotal)
+            },
+            { assertThat(actual).isFalse() },
+        )
     }
 
     @ParameterizedTest
@@ -106,14 +135,21 @@ class DealerTest {
             Dealer(
                 numberOfPlayers = 2,
                 cards = providedCard.keys,
-            ).apply {
-                drawCard {
-                    Card.of(Shape.CLOVER, CardValue.ONE, cards.sumOf { it.value })
-                }
+            )
+        val actual =
+            dealer.drawCard {
+                Card.of(Shape.CLOVER, CardValue.ONE, dealer.cards.sumOf { it.value })
             }
+
         val actualTotal = dealer.cards.sumOf { it.value }
         val expectedTotal = providedCard.values.sum()
-        assertThat(actualTotal).isEqualTo(expectedTotal)
+
+        assertAll(
+            {
+                assertThat(actualTotal).isEqualTo(expectedTotal)
+            },
+            { assertThat(actual).isTrue() },
+        )
     }
 
     companion object {
