@@ -1,7 +1,7 @@
 package model
 
-class TrumpDeck : Deck {
-    val cards: MutableList<Card> =
+object TrumpDeck : Deck {
+    private val cards: MutableList<Card> =
         (0..51).map {
             Card.from(it)
         }.toMutableList()
