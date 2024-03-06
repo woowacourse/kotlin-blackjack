@@ -20,7 +20,8 @@ class CardDeckTest {
         repeat(CardDeck.MAX_DRAW_COUNT) {
             val card = cardDeck.draw().also { card ->
                 assertThat(actualCards.find { actualCard ->
-                    "${actualCard.getScore()}${actualCard.getSuit()}" == "${card.getScore()}${card.getSuit()}"
+                    actualCard.getCardDenomination() == card.getCardDenomination()
+                            && actualCard.getCardSuit()== card.getCardSuit()
                 }).isNotEqualTo(null)
             }
             actualCards = actualCards - card

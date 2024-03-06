@@ -8,7 +8,7 @@ class CardTest {
     fun `각 카드의 계급에 따라 올바른 점수를 반환하는지 테스트`() {
         Denomination.entries.forEach {
             val card = Card(it, Suit.SPADE)
-            assertThat(card.getScore()).isEqualTo(it.score)
+            assertThat(card.getCardDenomination().getScore()).isEqualTo(it.getScore())
         }
     }
 
@@ -16,7 +16,7 @@ class CardTest {
     fun `각 카드의 suit에 따라 올바른 suit 값을 반환하는지 테스트 `() {
         Suit.entries.forEach {
             val card = Card(Denomination.ACE, it)
-            assertThat(card.getSuit()).isEqualTo(it)
+            assertThat(card.getCardSuit()).isEqualTo(it)
         }
     }
 }

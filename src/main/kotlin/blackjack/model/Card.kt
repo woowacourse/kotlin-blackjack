@@ -5,11 +5,11 @@ class Card(
     private val suit: Suit
 ) {
 
-    fun getScore(): Int {
-        return denomination.score
+    fun getCardDenomination(): Denomination {
+        return denomination
     }
 
-    fun getSuit(): Suit {
+    fun getCardSuit(): Suit {
         return suit
     }
 }
