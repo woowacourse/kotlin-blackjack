@@ -1,6 +1,9 @@
 package blackjack.model
 
-data class Cards(val cards: List<Card>) {
+class Cards(
+    val cards: List<Card>,
+    private val pointCalculator: PointCalculator = DefaultPointCalculator(),
+) {
     constructor(vararg cards: Card) : this(cards.toList())
 
     operator fun plus(other: Cards): Cards {
@@ -20,6 +23,8 @@ data class Cards(val cards: List<Card>) {
     operator fun minus(other: Cards): Cards {
         return Cards(cards - other.cards.toSet())
     }
+
+    fun sumOrNull(): Int? = pointCalculator.sumOrNull(cards)
 
     companion object {
         val DECK: Cards = createDeck()
