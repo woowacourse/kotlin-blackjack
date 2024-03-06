@@ -13,5 +13,11 @@ open class Participant {
     }
 
     private fun hasAce() = cardList.filter { it.cardNumber == CardNumber.ACE }.isNotEmpty()
+
+    fun isBusted(): Boolean {
+        val score = getCardSum()
+        val threshold = 21
+        return threshold < score
+    }
 }
 

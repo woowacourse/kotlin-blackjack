@@ -2,10 +2,8 @@ package blackjack.model
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.ValueSource
 
-class CardTest {
+class ParticipantTest {
 
     @Test
     fun `에이스가 없을 때 카드의 총 합을 구하는 기능`() {
@@ -47,27 +45,13 @@ class CardTest {
         assertThat(actual).isEqualTo(expected)
     }
 
-    @ParameterizedTest
-    @ValueSource(ints = [22, 23, 24])
-    fun `카드 총 합이 21 이상이면 true를 반환한다`(sum: Int) {
-        val actual = isBusted(sum)
+    @Test
+    fun `카드 총 합이 21 이상이면 true를 반환한다`() {
+        val participant = Participant()
+        participant.addCard(Card(CardNumber.TEN, Suit.HEART))
+        participant.addCard(Card(CardNumber.TEN, Suit.HEART))
+        participant.addCard(Card(CardNumber.TWO, Suit.HEART))
+        val actual = participant.isBusted()
         assertThat(actual).isEqualTo(true)
-    }
-
-    @ParameterizedTest
-    @ValueSource(ints = [14, 15, 16])
-    fun `카드 총 합이 16 이하면 true를 반환한다`(sum: Int) {
-        val actual = isHitable(sum)
-        assertThat(actual).isEqualTo(true)
-    }
-
-    fun isHitable(score: Int): Boolean {
-        val threshold = 17
-        return score < threshold
-    }
-
-    fun isBusted(score: Int): Boolean {
-        val threshold = 21
-        return threshold < score
     }
 }
