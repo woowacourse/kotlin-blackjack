@@ -1,4 +1,8 @@
 package blackjack.model.card
 
-class Suit {
+enum class Suit {
+    CLUBS,
+    DIAMONDS,
+    HEARTS,
+    SPADES,
 }
