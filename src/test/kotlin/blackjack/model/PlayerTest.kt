@@ -41,6 +41,26 @@ class PlayerTest {
         assertThat(actual).isEqualTo(expected)
     }
 
+    @MethodSource("게임 결과 결정 테스트 데이터")
+    @ParameterizedTest
+    fun `카드 합계를 비교하여 게임 결과를 결정한다`(
+        cards1: List<Card>,
+        cards2: List<Card>,
+        expected: GameResult,
+    ) {
+        // given
+        val player1 = Player(PlayerName("olive"))
+        val player2 = Player(PlayerName("seogi"))
+        cards1.forEach { player1.receiveCard(it) }
+        cards2.forEach { player2.receiveCard(it) }
+
+        // when
+        val actual = player1.decideGameResult(player2)
+
+        // then
+        assertThat(actual).isEqualTo(expected)
+    }
+
     companion object {
         @JvmStatic
         fun `기준치 판단 테스트 데이터`() =
@@ -57,6 +77,14 @@ class PlayerTest {
                 Arguments.of(listOf(Card("A", "하트"), Card("A", "다이아몬드")), 12),
                 Arguments.of(listOf(Card("A", "하트"), Card("K", "다이아몬드")), 21),
                 Arguments.of(listOf(Card("5", "하트"), Card("5", "다이아몬드"), Card("A", "다이아몬드")), 21),
+            )
+
+        @JvmStatic
+        fun `게임 결과 결정 테스트 데이터`() =
+            listOf(
+                Arguments.of(listOf(Card("K", "하트")), listOf(Card("9", "하트")), GameResult.WIN),
+                Arguments.of(listOf(Card("K", "하트")), listOf(Card("Q", "하트")), GameResult.DRAW),
+                Arguments.of(listOf(Card("3", "하트")), listOf(Card("9", "하트")), GameResult.LOSE),
             )
     }
 }
