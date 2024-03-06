@@ -17,7 +17,25 @@ class Deck(
 
     operator fun plus(other: Card): Deck {
         _cards += other
-        return Deck(cards)
+        updateState()
+        return Deck(cards, state)
+    }
+
+    private fun updateState() {
+        _state =
+            when (calculate()) {
+                in 0..20 -> Running
+                21 -> {
+                    if (cards.size == 2) {
+                        Finished(UserState.BLACKJACK)
+                    } else {
+                        Finished(UserState.STAND)
+                    }
+                }
+
+                else -> Finished(UserState.BUST)
+            }
+    }
     }
 
     fun calculate(): Int {
