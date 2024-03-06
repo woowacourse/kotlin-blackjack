@@ -8,7 +8,7 @@ class CardHandTest {
     @Test
     fun `카드 핸드의 총 합을 구한다`() {
         val cardHand =
-            DealerCardHand(
+            CardHand(
                 Card(CardShape.CLOVER, CardNumber.ACE),
                 Card(CardShape.HEART, CardNumber.SEVEN),
                 Card(CardShape.SPADE, CardNumber.SIX),
@@ -21,7 +21,7 @@ class CardHandTest {
     @Test
     fun `카드 패의 ACE 가 없을 때 카드의 합을 계산한다`() {
         val cardHand =
-            PlayerCardHand(
+            CardHand(
                 Card(CardShape.SPADE, CardNumber.SEVEN),
                 Card(CardShape.HEART, CardNumber.SIX),
                 Card(CardShape.HEART, CardNumber.FIVE),
@@ -33,7 +33,7 @@ class CardHandTest {
     @Test
     fun `카드 패의 ACE 가 두 장 있을 때 한 장의 값은 1이 된다`() {
         val cardHand =
-            DealerCardHand(
+            CardHand(
                 Card(CardShape.SPADE, CardNumber.ACE),
                 Card(CardShape.HEART, CardNumber.ACE),
             )
@@ -44,7 +44,7 @@ class CardHandTest {
     @Test
     fun `카드 패의 ACE 가 세 장 있을 때 두 장의 값은 각각 1이 된다`() {
         val cardHand =
-            PlayerCardHand(
+            CardHand(
                 Card(CardShape.SPADE, CardNumber.ACE),
                 Card(CardShape.HEART, CardNumber.ACE),
                 Card(CardShape.HEART, CardNumber.ACE),
@@ -62,7 +62,7 @@ class CardHandTest {
             )
 
         cardHand.add(Card(CardShape.HEART, CardNumber.TEN))
-        val currentCardHand = DealerCardHand(cardHand)
+        val currentCardHand = CardHand(cardHand)
 
         val actual = currentCardHand.sum()
         assertThat(actual).isEqualTo(12)

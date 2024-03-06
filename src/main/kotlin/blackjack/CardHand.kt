@@ -1,10 +1,10 @@
 package blackjack
 
-abstract class CardHand(hand: List<Card>) {
+class CardHand(hand: List<Card>) {
     private val _hand = hand.toMutableList()
     val hand: List<Card> get() = _hand.toList()
 
-    abstract fun getCardHandState(isHit: Boolean): CardHandState
+    constructor(vararg card: Card) : this(card.toList())
 
     fun sum(): Int {
         var aceCount = hand.count { it.number == CardNumber.ACE }

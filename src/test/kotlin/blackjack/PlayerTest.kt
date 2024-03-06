@@ -7,7 +7,7 @@ class PlayerTest {
     @Test
     fun `플레이어 카드 패의 상태를 구한다`() {
         val cardHand =
-            PlayerCardHand(
+            CardHand(
                 Card(CardShape.HEART, CardNumber.SEVEN),
                 Card(CardShape.SPADE, CardNumber.SIX),
             )
