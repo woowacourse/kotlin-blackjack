@@ -1,48 +1,51 @@
-package blackjack
+package blackjack.model
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class DealerTest {
+class PlayerTest {
     @Test
-    fun `딜러의 카드 패 상태를 구한다`() {
+    fun `플레이어 카드 패의 상태를 구한다`() {
         val cardHand =
             CardHand(
                 Card(CardShape.HEART, CardNumber.SEVEN),
                 Card(CardShape.SPADE, CardNumber.SIX),
             )
 
-        val dealer = Dealer(cardHand)
+        val player = Player("해나", cardHand)
 
-        assertThat(dealer.getState(true)).isEqualTo(CardHandState.HIT)
+        assertThat(player.getState(true)).isEqualTo(CardHandState.HIT)
     }
 
     @Test
     fun `상태가 HIT 이면 카드 한 장을 더 뽑는다`() {
-        val dealer =
-            Dealer(
+        val player =
+            Player(
+                "해나",
                 CardHand(
                     Card(CardShape.SPADE, CardNumber.ACE),
                     Card(CardShape.SPADE, CardNumber.TWO),
                 ),
             )
 
-        dealer.runPhase(true)
+        player.runPhase(true)
 
-        assertThat(dealer.cardHand.hand.size).isEqualTo(3)
+        assertThat(player.cardHand.hand.size).isEqualTo(3)
     }
 
     @Test
-    fun `상태가 HIT 이 아니면 카드를 더 뽑지 않는다`() {
-        val dealer =
-            Dealer(
+    fun `상태가 HIT 이 아니면 카드 한 장을 더 뽑는다`() {
+        val player =
+            Player(
+                "해나",
                 CardHand(
                     Card(CardShape.SPADE, CardNumber.ACE),
-                    Card(CardShape.HEART, CardNumber.NINE),
+                    Card(CardShape.SPADE, CardNumber.TWO),
                 ),
             )
 
-        dealer.runPhase(true)
-        assertThat(dealer.cardHand.hand.size).isEqualTo(2)
+        player.runPhase(false)
+
+        assertThat(player.cardHand.hand.size).isEqualTo(2)
     }
 }

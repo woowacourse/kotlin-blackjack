@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.model
 
 abstract class Role(open val cardHand: CardHand) {
     abstract fun getState(hitCondition: Boolean): CardHandState

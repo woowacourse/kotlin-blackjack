@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.model
 
 object CardDeck {
     private val cardDeck =

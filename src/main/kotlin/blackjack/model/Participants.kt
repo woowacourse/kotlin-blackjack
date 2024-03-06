@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.model
 
 class Participants(val participants: List<Role>) {
     init {

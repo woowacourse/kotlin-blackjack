@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.model
 
 class Dealer(override val cardHand: CardHand) : Role(cardHand) {
     override fun getState(hitCondition: Boolean): CardHandState {
