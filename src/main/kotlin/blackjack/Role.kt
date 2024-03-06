@@ -8,4 +8,10 @@ abstract class Role(open val cardHand: CardHand) {
             cardHand.addNewCard()
         }
     }
+
+    fun runPhase(hitCondition: Boolean) {
+        if (getState(hitCondition) == CardHandState.HIT) {
+            cardHand.addNewCard()
+        }
+    }
 }
