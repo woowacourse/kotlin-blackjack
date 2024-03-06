@@ -8,7 +8,9 @@ abstract class Role {
         scoreBoard.add(card)
     }
 
-    fun getOptimizeCardSum() = scoreBoard.getOptimizeCardSum(burstCondition)
+    fun optimizeCardSum() = scoreBoard.optimizeCardSum(burstCondition)
 
     fun isBurst() = scoreBoard.cardSum >= burstCondition
+
+    fun getCardSum() = scoreBoard.cardSum
 }

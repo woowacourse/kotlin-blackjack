@@ -34,7 +34,8 @@ class DealerTest {
         cards.forEach { dealer.receiveCard(it) }
 
         // when
-        val actual = dealer.getOptimizeCardSum()
+        dealer.optimizeCardSum()
+        val actual = dealer.getCardSum()
 
         // then
         Assertions.assertThat(actual).isEqualTo(expected)

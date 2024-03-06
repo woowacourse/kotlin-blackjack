@@ -34,7 +34,8 @@ class PlayerTest {
         cards.forEach { player.receiveCard(it) }
 
         // when
-        val actual = player.getOptimizeCardSum()
+        player.optimizeCardSum()
+        val actual = player.getCardSum()
 
         // then
         assertThat(actual).isEqualTo(expected)

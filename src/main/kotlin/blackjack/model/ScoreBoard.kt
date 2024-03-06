@@ -10,12 +10,11 @@ class ScoreBoard {
         cardSum += card.getValue()
     }
 
-    fun getOptimizeCardSum(burstCondition: Int): Int {
+    fun optimizeCardSum(burstCondition: Int) {
         val aceCount = handCard.getAceCount()
         repeat(aceCount) {
             if (handleAceValue(burstCondition)) return@repeat
         }
-        return cardSum
     }
 
     private fun handleAceValue(burstCondition: Int): Boolean {
