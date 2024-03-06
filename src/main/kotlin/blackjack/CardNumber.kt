@@ -3,7 +3,7 @@ package blackjack
 enum class CardNumber(
     val number: Int,
 ) {
-    ONE(1),
+    ACE(11),
     TWO(2),
     THREE(3),
     FOUR(4),

@@ -6,7 +6,16 @@ abstract class CardHand(hand: List<Card>) {
 
     abstract fun getCardHandState(isHit: Boolean): CardHandState
 
-    protected fun sum(): Int = hand.sumOf { it.number.number }
+    fun sum(): Int {
+        var aceCount = hand.count { it.number == CardNumber.ACE }
+        var tempSum = hand.sumOf { it.number.number }
+
+        while (aceCount > 0 && tempSum > 21) {
+            aceCount--
+            tempSum -= 10
+        }
+        return tempSum
+    }
 
     fun addNewCard() {
         _hand.add(CardDeck.getRandomCard())

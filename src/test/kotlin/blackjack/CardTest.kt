@@ -7,7 +7,7 @@ import org.junit.jupiter.params.provider.CsvSource
 class CardTest {
     @ParameterizedTest
     @CsvSource(
-        "CLOVER, ONE",
+        "CLOVER, ACE",
         "HEART, TWO",
         "SPADE, KING",
     )
