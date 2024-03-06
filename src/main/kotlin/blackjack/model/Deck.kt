@@ -36,6 +36,12 @@ class Deck(
                 else -> Finished(UserState.BUST)
             }
     }
+
+    fun changeState(
+        userState: UserState,
+        result: Result = Result(),
+    ) {
+        _state = Finished(userState, result)
     }
 
     fun calculate(): Int {
