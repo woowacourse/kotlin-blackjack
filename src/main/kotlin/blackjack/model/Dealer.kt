@@ -14,8 +14,8 @@ class Dealer(
         }
     }
 
-    fun getResult(): PlayerStat {
-        return PlayerStat("딜러", cards.sumOf { it.value })
+    fun getResult(): Stat {
+        return Stat("딜러", cards.sumOf { it.value }, cards)
     }
 
     fun drawCard(generateCard: () -> Card): PickingState {

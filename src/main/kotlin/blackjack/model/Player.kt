@@ -9,8 +9,8 @@ class Player(
     val cards: Set<Card>
         get() = _cards
 
-    fun getResult(): PlayerStat {
-        return PlayerStat(name, cards.sumOf { it.value })
+    fun getResult(): Stat {
+        return Stat(name, cards.sumOf { it.value }, cards)
     }
 
     fun getCard(generateCard: () -> Card): PickingState {
