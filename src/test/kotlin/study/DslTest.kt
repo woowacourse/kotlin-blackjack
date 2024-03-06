@@ -2,18 +2,8 @@ package study
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.ValueSource
 
 class DslTest {
-    @ValueSource(strings = ["차람", "빙티"])
-    @ParameterizedTest
-    fun name1(value: String) {
-        val person: Person = introduce { // this: Person이 생김
-            name(value)
-        }
-        assertThat(person.name).isEqualTo(value)
-    }
 
     @Test
     fun company() {
@@ -38,9 +28,8 @@ class DslTest {
     }
 }
 
-fun introduce(block: PersonBuilder.() -> Unit): Person { // PersonBuilder의 메서드면 아무거나(Any) 다 받겠다는 뜻
+fun introduce(block: PersonBuilder.() -> Unit): Person {
     return PersonBuilder().apply(block).build()
-//    person.block() // block이 호출되면 람다가 실행됨!
 }
 
 class Person(val name: String, val company: String, val skills: Skill, val language: Language)
