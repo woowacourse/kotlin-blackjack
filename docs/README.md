@@ -13,3 +13,4 @@
 - [ ] : Player 와 Dealer 의 점수를 비교해서 승패를 결정한다(Compare)
 - [ ] : Cards 는 Card 점수 계산할 수 있다
 - [ ] : Player 와 Dealer 는 scoreBoard 를 갖는다 
+- [ ] : Card는 자신이 Ace인지 알 수 있다
