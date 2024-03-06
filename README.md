@@ -37,7 +37,7 @@
     - 하트, 다이아, 클로버, 스페이드의 값을 가진다.
 
 
-- [ ] Value (enum class)
+- [x] Value (enum class)
     - A(Ace), 2 부터 10 사이의 숫자, J, Q, K 의 값을 가진다.
 
 
