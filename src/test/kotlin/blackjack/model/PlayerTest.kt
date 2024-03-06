@@ -6,6 +6,21 @@ import org.junit.jupiter.api.assertAll
 
 class PlayerTest {
     @Test
+    fun `플레이어 카드의 총합을 계산한다`() {
+        val player =
+            Dealer(
+                numberOfPlayers = 2,
+                cards =
+                    setOf(
+                        Card.of(Shape.CLOVER, CardValue.SIX, 0),
+                        Card.of(Shape.HEART, CardValue.K, 6),
+                    ),
+            )
+
+        assertThat(player.getResult().total).isEqualTo(16)
+    }
+
+    @Test
     fun `플레이어가 카드를 더 받는다고 응답하면, 보유 카드에 추가한다`() {
         val cards = setOf(Card.of(Shape.HEART, CardValue.SIX, 0))
         val player = Player("haeum", cards) { "y" }

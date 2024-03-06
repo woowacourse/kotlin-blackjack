@@ -14,6 +14,10 @@ class Dealer(
         }
     }
 
+    fun getResult(): PlayerStat {
+        return PlayerStat("딜러", cards.sumOf { it.value })
+    }
+
     fun drawCard(generateCard: () -> Card): PickingState {
         if (isDrawAvailable()) {
             _cards.add(generateCard())

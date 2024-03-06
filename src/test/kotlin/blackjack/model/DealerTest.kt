@@ -21,6 +21,21 @@ class DealerTest {
     }
 
     @Test
+    fun `딜러 카드의 총합을 계산한다`() {
+        val dealer =
+            Dealer(
+                numberOfPlayers = 2,
+                cards =
+                    setOf(
+                        Card.of(Shape.CLOVER, CardValue.SIX, 0),
+                        Card.of(Shape.HEART, CardValue.K, 6),
+                    ),
+            )
+
+        assertThat(dealer.getResult().total).isEqualTo(16)
+    }
+
+    @Test
     fun `딜러의 카드 총합이 카드를 뽑을 수 있는 총합의 최댓값 이하일 때, 카드를 더 받을 수 있다`() {
         val dealer =
             Dealer(

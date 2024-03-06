@@ -9,6 +9,10 @@ class Player(
     val cards: Set<Card>
         get() = _cards
 
+    fun getResult(): PlayerStat {
+        return PlayerStat(name, cards.sumOf { it.value })
+    }
+
     fun getCard(generateCard: () -> Card): PickingState {
         return when (onInputDecision()) {
             HIT -> {
