@@ -15,8 +15,8 @@ class JudgeTest {
         val dealerStat = Stat("딜러", 21, cards)
         val playerStats = listOf(Stat("케이엠", 20, cards), Stat("해음", 22, cards))
         val judge = Judge(dealerStat, playerStats)
-        val c: DealerResult = judge.getDealerResult()
-        assertThat(c).isEqualTo(DealerResult(2, 0, 0))
+        val actualResult: Scoreboard = judge.getDealerResult()
+        assertThat(actualResult).isEqualTo(Scoreboard(2, 0, 0))
     }
 
     @Test
@@ -24,8 +24,8 @@ class JudgeTest {
         val dealerStat = Stat("딜러", 21, cards)
         val playerStats = listOf(Stat("케이엠", 21, cards), Stat("해음", 21, cards))
         val judge = Judge(dealerStat, playerStats)
-        val c: DealerResult = judge.getDealerResult()
-        assertThat(c).isEqualTo(DealerResult(0, 2, 0))
+        val actualResult: Scoreboard = judge.getDealerResult()
+        assertThat(actualResult).isEqualTo(Scoreboard(0, 2, 0))
     }
 
     @Test
@@ -33,8 +33,8 @@ class JudgeTest {
         val dealerStat = Stat("딜러", 22, cards)
         val playerStats = listOf(Stat("케이엠", 21, cards), Stat("해음", 21, cards))
         val judge = Judge(dealerStat, playerStats)
-        val c: DealerResult = judge.getDealerResult()
-        assertThat(c).isEqualTo(DealerResult(0, 0, 2))
+        val actualResult: Scoreboard = judge.getDealerResult()
+        assertThat(actualResult).isEqualTo(Scoreboard(0, 0, 2))
     }
 
     @Test
@@ -42,7 +42,35 @@ class JudgeTest {
         val dealerStat = Stat("딜러", 19, cards)
         val playerStats = listOf(Stat("케이엠", 20, cards), Stat("해음", 21, cards))
         val judge = Judge(dealerStat, playerStats)
-        val c: DealerResult = judge.getDealerResult()
-        assertThat(c).isEqualTo(DealerResult(0, 0, 2))
+        val actualResult: Scoreboard = judge.getDealerResult()
+        assertThat(actualResult).isEqualTo(Scoreboard(0, 0, 2))
+    }
+
+    @Test
+    fun `딜러가 버스트 되지 않았을 때, 플레이어와 딜러의 총합을 비교하여 플레이어의 승리, 패배, 무승부를 판단한다`() {
+        val dealerStat = Stat("딜러", 18, cards)
+        val playerStats =
+            listOf(
+                Stat("케이엠", 21, cards),
+                Stat("해음", 22, cards),
+                Stat("차람", 18, cards),
+            )
+        val judge = Judge(dealerStat, playerStats)
+        val actualResult = judge.getPlayerResults()
+        assertThat(actualResult).isEqualTo(listOf("승", "패", "무"))
+    }
+
+    @Test
+    fun `딜러가 버스트 되었을 때, 플레이어와 딜러의 총합을 비교하여 플레이어의 승리, 패배, 무승부를 판단한다`() {
+        val dealerStat = Stat("딜러", 22, cards)
+        val playerStats =
+            listOf(
+                Stat("케이엠", 21, cards),
+                Stat("해음", 22, cards),
+                Stat("차람", 18, cards),
+            )
+        val judge = Judge(dealerStat, playerStats)
+        val actualResult = judge.getPlayerResults()
+        assertThat(actualResult).isEqualTo(listOf("승", "무", "승"))
     }
 }
