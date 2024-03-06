@@ -64,12 +64,6 @@
 
 -----------
 
-### State
-
-### Running
-
-- [ ] state가 Hit 일때
-
 ### Action
 
 - [x] hit: Hand에 카드 1장 추가
@@ -103,7 +97,5 @@
 - [ ] Player수는 1개 이상
 
 ### Player
-
-- [ ] Hit 호출
-
+- [x] Player 객체 생성
 -------------------

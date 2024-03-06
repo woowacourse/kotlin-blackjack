@@ -1,3 +1,4 @@
 package blackjack.model.game
 
-class ScoreCalculation
+class ScoreCalculation() {
+}

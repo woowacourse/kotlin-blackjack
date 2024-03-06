@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test
 
 class ActionTest {
     @Test
-    fun `hit 검증`() {
+    fun `hit 카드 추가 확인`() {
         val cards = mutableListOf(Card(Denomination.ACE, Suit.HEARTS), Card(Denomination.SIX, Suit.SPADES))
         val hand = Hand(cards)
         val deck = Deck()
@@ -22,7 +22,7 @@ class ActionTest {
     }
 
     @Test
-    fun `hit return 검증`() {
+    fun `Running 확인`() {
         val cards = mutableListOf(Card(Denomination.ACE, Suit.HEARTS), Card(Denomination.SIX, Suit.SPADES))
         val hand = Hand(cards)
         val deck = Deck()
@@ -31,7 +31,7 @@ class ActionTest {
     }
 
     @Test
-    fun `stay return 검증`() {
+    fun `Finished 확인`() {
         val cards = mutableListOf(Card(Denomination.ACE, Suit.HEARTS), Card(Denomination.SIX, Suit.SPADES))
         val hand = Hand(cards)
         val deck = Deck()

@@ -2,7 +2,7 @@ package blackjack.model.card
 
 class Hand(val cards: MutableList<Card>) {
     init {
-        require(cards.size >= MINIMUM_CARDS_COUNT)
+        require(cards.size >= MINIMUM_CARDS_COUNT) { "손패는 2장 이상이어야 합니다." }
     }
 
     fun draw(card: Card) {
