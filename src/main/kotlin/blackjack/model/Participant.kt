@@ -19,5 +19,11 @@ open class Participant {
         val threshold = 21
         return threshold < score
     }
+
+    fun isBlackJack(): Boolean {
+        val score = getCardSum()
+        val threshold = 21
+        return threshold == score
+    }
 }
 

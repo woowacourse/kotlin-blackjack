@@ -54,4 +54,14 @@ class ParticipantTest {
         val actual = participant.isBusted()
         assertThat(actual).isEqualTo(true)
     }
+
+
+    @Test
+    fun `카드 총 합이 21이면 true를 반환한다`() {
+        val participant = Participant()
+        participant.addCard(Card(CardNumber.TEN, Suit.HEART))
+        participant.addCard(Card(CardNumber.ACE, Suit.HEART))
+        val actual = participant.isBlackJack()
+        assertThat(actual).isEqualTo(true)
+    }
 }
