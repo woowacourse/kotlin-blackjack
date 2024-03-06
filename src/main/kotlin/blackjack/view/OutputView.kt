@@ -1,6 +1,7 @@
 package blackjack.view
 
 import blackjack.model.Dealer
+import blackjack.model.GameState
 import blackjack.model.Participants
 import blackjack.model.Player
 
@@ -51,4 +52,14 @@ object OutputView {
         }
     }
 
+    fun printMatchResult(
+        dealer: Dealer,
+        participants: Participants,
+    ) {
+        println("## 최종 승패 ##")
+        println("${dealer.name}: ${(dealer.deck.state as GameState.Finished).result}")
+        participants.players.forEach { player ->
+            println("${player.name}: ${(player.deck.state as GameState.Finished).result}")
+        }
+    }
 }
