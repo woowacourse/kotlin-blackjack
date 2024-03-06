@@ -11,15 +11,16 @@ class CardTest {
     fun `카드의 총 합을 구하는 기능`() {
         val jack = Card(CardNumber.JACK, Suit.HEART)
         val two = Card(CardNumber.TWO, Suit.HEART)
+        val participant = Participant()
+        participant.addCard(jack)
+        participant.addCard(two)
         val cardList = listOf(jack, two)
-        val actual = sum(cardList)
+        val actual = participant.getCardSum(cardList)
         val expected = 12
         assertThat(actual).isEqualTo(expected)
     }
 
-    fun sum(cardList: List<Card>): Int {
-        return cardList.map { it.cardNumber.score }.sum()
-    }
+
 
     @ParameterizedTest
     @ValueSource(ints = [17, 21])
@@ -30,4 +31,14 @@ class CardTest {
     }
 
     fun checkScore(threshold: Int, sum: Int): Boolean = threshold <= sum
+}
+
+class Participant {
+    private val cardList: MutableList<Card> = mutableListOf()
+    fun addCard(card: Card) {
+        cardList.add(card)
+    }
+    fun getCardSum(cardList: List<Card>): Int {
+        return cardList.map { it.cardNumber.score }.sum()
+    }
 }
