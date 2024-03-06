@@ -1,7 +1,7 @@
 package blackjack.model
 
 enum class CardShape(
-    name: String,
+    val shape: String,
 ) {
     HEART("하트"),
     CLOVER("클로버"),
