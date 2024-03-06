@@ -2,17 +2,12 @@ package blackjack.model
 
 import java.lang.IllegalStateException
 
-class GameDeck(cards: List<Card> = listOf()) {
-    private var _cards: MutableList<Card> = cards.toMutableList()
+class GameDeck {
+    private var _cards: List<Card> = initDeck().shuffled()
     val cards: List<Card>
         get() = _cards
 
-    init {
-        _cards = initDeck()
-        shuffleCards()
-    }
-
-    private fun initDeck(): MutableList<Card> {
+    private fun initDeck(): List<Card> {
         val newCards = mutableListOf<Card>()
 
         Pattern.entries.forEach { pattern ->
@@ -23,13 +18,15 @@ class GameDeck(cards: List<Card> = listOf()) {
         return newCards
     }
 
-    private fun shuffleCards() {
-        _cards.shuffle()
+    fun reset() {
+        _cards = initDeck().shuffled()
     }
 
-    fun getCard(): Card {
+    fun drawCard(): Card {
         if (_cards.isNotEmpty()) {
-            return _cards.removeFirst()
+            return cards.last().also {
+                _cards = _cards.dropLast(1)
+            }
         }
         throw IllegalStateException()
     }
