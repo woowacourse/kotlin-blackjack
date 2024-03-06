@@ -7,7 +7,7 @@ open class Participant {
     }
 
     fun getCardSum(): Int {
-        val sum = cardList.map { it.cardNumber.score }.sum()
+        val sum = cardList.sumOf { it.cardNumber.score }
         val additionalScore = if (hasAce() && sum <= 11) 10 else 0
         return sum + additionalScore
     }
