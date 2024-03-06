@@ -7,6 +7,12 @@ class Participants(val participants: List<Role>) {
         }
     }
 
+    fun addInitialCards() {
+        participants.forEach {
+            it.addInitialCards()
+        }
+    }
+
     companion object {
         private const val MIN_PARTICIPANTS_COUNT = 2
         private const val MAX_PARTICIPANTS_COUNT = 7

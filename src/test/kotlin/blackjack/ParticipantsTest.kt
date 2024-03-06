@@ -1,5 +1,6 @@
 package blackjack
 
+import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
@@ -49,5 +50,27 @@ class ParticipantsTest {
             )
         }.isExactlyInstanceOf(IllegalArgumentException::class.java)
             .hasMessage("딜러를 포함한 참가자의 수가 2명 이상, 7명 이하여야 합니다.")
+    }
+
+    @Test
+    fun `참가자들에게 카드를 2장씩 준다`() {
+        val participants =
+            Participants(
+                listOf(
+                    Dealer(CardHand(emptyList())),
+                    Player("심지", CardHand(emptyList())),
+                    Player("해나", CardHand(emptyList())),
+                ),
+            )
+
+        participants.addInitialCards()
+
+        val cardHandSize1 = participants.participants[0].cardHand.hand.size
+        val cardHandSize2 = participants.participants[1].cardHand.hand.size
+        val cardHandSize3 = participants.participants[2].cardHand.hand.size
+
+        assertThat(cardHandSize1).isEqualTo(2)
+        assertThat(cardHandSize2).isEqualTo(2)
+        assertThat(cardHandSize3).isEqualTo(2)
     }
 }
