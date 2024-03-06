@@ -1,10 +1,19 @@
 package blackjack.model
 
 class Deck(count: Int = 1) {
-    var deck: List<Card>
+    private val deck: MutableList<Card>
+    private var idx = 0
 
     init {
-        deck = List(count) { oneDeck }.flatten().shuffled()
+        deck = List(count) { oneDeck }.flatten().shuffled().toMutableList()
+    }
+
+    fun pick(): Card {
+        if (idx == deck.size) {
+            idx = 0
+            deck.shuffle()
+        }
+        return deck[idx++]
     }
 
     companion object {
