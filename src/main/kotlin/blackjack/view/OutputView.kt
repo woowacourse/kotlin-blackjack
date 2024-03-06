@@ -33,4 +33,22 @@ object OutputView {
         println("딜러의 카드가 16이하 이므로, 1장의 카드를 더 받습니다.")
     }
 
+    fun printEveryCards(
+        dealer: Dealer,
+        participants: Participants,
+    ) {
+        showDealerCardsResult(dealer) // 딜러 패 출력
+        showPlayersCardsResult(participants)
+    }
+
+    private fun showDealerCardsResult(dealer: Dealer) {
+        println("${dealer.name}: ${dealer.deck.cards.joinToString(", ")} - 결과: ${dealer.deck.calculate()}")
+    }
+
+    private fun showPlayersCardsResult(participants: Participants) {
+        participants.players.forEach { player ->
+            println("${player.name}: ${player.deck.cards.joinToString(", ")} - 결과: ${player.deck.calculate()}")
+        }
+    }
+
 }
