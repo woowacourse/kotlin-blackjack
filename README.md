@@ -93,9 +93,11 @@
 
 ### PlayerEntry
 
-- [ ] Player List 생성
-- [ ] Player수는 1개 이상
+- [x] Player List 생성
+- [x] Player수는 1개 이상
 
 ### Player
+
 - [x] Player 객체 생성
+
 -------------------

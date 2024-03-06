@@ -1,4 +1,9 @@
 package blackjack.model.player
 
-class PlayerEntry() {
+import Player
+
+class PlayerEntry(val players: List<Player>) {
+    init {
+        require(players.isNotEmpty())
+    }
 }
