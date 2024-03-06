@@ -1,9 +1,11 @@
 package blackjack.model
 
-class PlayerName(private val name: String) {
+data class PlayerName(private val name: String) {
     init {
         require(NAME_RULE.toRegex().matches(name)) { INVALID_NAME_MESSAGE }
     }
+
+    override fun toString() = name
 
     companion object {
         private const val NAME_RULE = "^[a-z]{1,5}\$"
