@@ -5,7 +5,7 @@ object CardDeckGenerator {
         return CardDeck(
             CardNumber.entries.flatMap { number ->
                 generateCardsForNumber(number)
-            }.shuffled(),
+            }.shuffled().toMutableList(),
         )
     }
 
