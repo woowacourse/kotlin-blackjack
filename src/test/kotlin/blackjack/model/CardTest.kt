@@ -8,7 +8,7 @@ import org.junit.jupiter.params.provider.ValueSource
 class CardTest {
 
     @Test
-    fun `카드의 총 합을 구하는 기능`() {
+    fun `에이스가 없을 때 카드의 총 합을 구하는 기능`() {
         val jack = Card(CardNumber.JACK, Suit.HEART)
         val two = Card(CardNumber.TWO, Suit.HEART)
         val participant = Participant()
@@ -17,6 +17,36 @@ class CardTest {
         val cardList = listOf(jack, two)
         val actual = participant.getCardSum(cardList)
         val expected = 12
+        assertThat(actual).isEqualTo(expected)
+    }
+
+    @Test
+    fun `에이스가 11인 것이 유리할 때 카드의 총 합을 구하는 기능`() {
+        val ace = Card(CardNumber.ACE, Suit.HEART)
+        val jack = Card(CardNumber.JACK, Suit.HEART)
+        val participant = Participant()
+        participant.addCard(ace)
+        participant.addCard(jack)
+        val cardList = listOf(ace, jack)
+        val actual = participant.getCardSum(cardList)
+        val expected = 21
+        assertThat(actual).isEqualTo(expected)
+    }
+
+    @Test
+    fun `에이스가 1인 것이 유리할 때 카드의 총 합을 구하는 기능`() {
+        val ace = Card(CardNumber.ACE, Suit.HEART)
+        val jack = Card(CardNumber.JACK, Suit.HEART)
+        val two = Card(CardNumber.TWO, Suit.HEART)
+        val three = Card(CardNumber.THREE, Suit.HEART)
+        val participant = Participant()
+        participant.addCard(ace)
+        participant.addCard(jack)
+        participant.addCard(two)
+        participant.addCard(three)
+        val cardList = listOf(ace, jack, two, three)
+        val actual = participant.getCardSum(cardList)
+        val expected = 16
         assertThat(actual).isEqualTo(expected)
     }
 
@@ -52,7 +82,11 @@ class Participant {
     }
 
     fun getCardSum(cardList: List<Card>): Int {
-        return cardList.map { it.cardNumber.score }.sum()
+        val sum = cardList.map { it.cardNumber.score }.sum()
+        val additionalScore = if (hasAce() && sum <= 11) 10 else 0
+        return sum + additionalScore
     }
+
+    private fun hasAce() = cardList.filter { it.cardNumber == CardNumber.ACE }.isNotEmpty()
 }
 
