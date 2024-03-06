@@ -30,4 +30,19 @@ class BlackJackGame(
             }
         }
     }
+
+    fun drawDealerCard(
+        gameDeck: GameDeck,
+        output: () -> Unit,
+    ) {
+        while (dealer.deck.state == GameState.Running) {
+            // 사용자 입력
+            if (dealer.deck.calculate() <= 16) {
+                output()
+                dealer.takeCard(gameDeck.drawCard())
+            } else {
+                dealer.deck.changeState(UserState.STAND)
+            }
+        }
+    }
 }
