@@ -1,7 +1,6 @@
 package blackjack.model
 
-class Player(val name: String, private val playerCards: PlayerCards) {
-
+class Player(val name: String, val playerCards: PlayerCards) {
     fun addCard(isAdd: Boolean) {
         if (isAdd) {
             playerCards.add()

@@ -11,6 +11,7 @@ class TestCardMachine : CardMachine {
             Card(CardNumber.TWO, Pattern.SPADE),
             Card(CardNumber.EIGHTH, Pattern.CLOVER),
             Card(CardNumber.ACE, Pattern.HEART),
+            Card(CardNumber.TEN, Pattern.DIAMOND),
         )
     }
 }

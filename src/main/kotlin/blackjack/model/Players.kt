@@ -1,7 +1,7 @@
 package blackjack.model
 
-class Players(private val names: Set<String>, deck: Deck = Deck()) {
-    private val players: List<Player> = names.map { Player(it, PlayerCards(deck)) }
+class Players(private val names: Set<String>, deck: Deck) {
+    val players: List<Player> = names.map { Player(it, PlayerCards(deck)) }
 
     init {
         require(names.size in 1..6) { "1명 이상 6명 이하의 플레이어만 가능합니다." }
@@ -9,9 +9,9 @@ class Players(private val names: Set<String>, deck: Deck = Deck()) {
     }
 
     companion object {
-        fun playerNamesOf(names: List<String>): Players {
+        fun playerNamesOf(names: List<String>, deck: Deck): Players {
             validateDuplicateNames(names)
-            return Players(names.toSet())
+            return Players(names.toSet(), deck)
         }
 
         private fun validateDuplicateNames(numbers: List<String>) {
