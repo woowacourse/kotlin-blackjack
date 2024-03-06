@@ -2,19 +2,11 @@ package blackjack.model
 
 abstract class Role {
     abstract val burstCondition: Int
-    var cardSum = 0
-        private set
-
-    val handCard = HandCard()
+    private val scoreBoard = ScoreBoard()
 
     fun receiveCard(card: Card) {
-        handCard.add(card)
-        addCardSum(card.getValue())
+        scoreBoard.add(card)
     }
 
-    fun addCardSum(value: Int) {
-        cardSum += value
-    }
-
-    fun isBurst() = cardSum >= burstCondition
+    fun isBurst() = scoreBoard.cardSum >= burstCondition
 }
