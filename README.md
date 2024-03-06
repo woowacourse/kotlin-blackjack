@@ -70,10 +70,10 @@
 
 - [ ] state가 Hit 일때
 
-### Hit
+### Action
 
 - [x] hit: Hand에 카드 1장 추가
-- [ ] stay: Finished 상태로 변경
+- [x] stay: Finished 상태로 변경
 
 ### Finished
 

@@ -6,6 +6,7 @@ import blackjack.model.card.Denomination
 import blackjack.model.card.Hand
 import blackjack.model.card.Suit
 import blackjack.model.game.state.Action
+import blackjack.model.game.state.Finished
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -19,5 +20,14 @@ class ActionTest {
         val afterHand = action.hit()
 
         assertThat(afterHand.cards.size).isEqualTo(3)
+    }
+
+    @Test
+    fun `stay Finished 상태로 변경`() {
+        val cards = listOf(Card(Denomination.ACE, Suit.HEARTS), Card(Denomination.SIX, Suit.SPADES))
+        val hand = Hand(cards)
+        val deck = Deck()
+        val action = Action(hand, deck)
+        assertThat(action.stay()).isEqualTo(Finished.STAY)
     }
 }

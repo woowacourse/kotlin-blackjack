@@ -7,4 +7,8 @@ class Action(private val hand: Hand, private val deck: Deck) {
     fun hit(): Hand {
         return hand.draw(deck.dealCard())
     }
+
+    fun stay(): Finished {
+        return Finished.STAY
+    }
 }

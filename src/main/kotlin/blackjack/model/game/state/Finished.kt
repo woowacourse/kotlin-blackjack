@@ -1,4 +1,7 @@
 package blackjack.model.game.state
 
-class Finished {
+enum class Finished {
+    STAY,
+    BLACKJACK,
+    BUST,
 }
