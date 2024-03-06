@@ -1,9 +1,19 @@
 package blackjack.model
 
-class Deck(cards: List<Card> = emptyList()) {
+import blackjack.model.GameState.Finished
+import blackjack.model.GameState.Running
+
+class Deck(
+    cards: List<Card> = emptyList(),
+    state: GameState = Running,
+) {
     private var _cards: List<Card> = cards
     val cards: List<Card>
         get() = _cards
+
+    private var _state: GameState = state
+    val state: GameState
+        get() = _state
 
     operator fun plus(other: Card): Deck {
         _cards += other
