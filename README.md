@@ -73,23 +73,8 @@
 ### Action
 
 - [x] hit: Hand에 카드 1장 추가
-- [x] stay: Finished 상태로 변경
-
-### Finished
-
-- [ ] state가 Stay,Bust,Blackjack 일때
-
-### Blackjack
-
-- [ ] score==21일때 Finished로 상태 변경
-
-### Bust
-
-- [ ] score>21일때 Finished로 상태 변경
-
-### Stay
-
-- [ ] Finished로 상태 변경
+- [x] hit: return true
+- [x] stay: retrun false
 
 ### ScoreCalculation
 

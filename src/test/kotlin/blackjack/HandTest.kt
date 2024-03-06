@@ -11,7 +11,7 @@ import org.junit.jupiter.api.assertThrows
 class HandTest {
     @Test
     fun `Hand 객체 생성`() {
-        val cards = listOf(Card(Denomination.ACE, Suit.HEARTS), Card(Denomination.SIX, Suit.SPADES))
+        val cards = mutableListOf(Card(Denomination.ACE, Suit.HEARTS), Card(Denomination.SIX, Suit.SPADES))
         val hand = Hand(cards)
 
         assertThat(hand.cards).isEqualTo(cards)
@@ -19,16 +19,16 @@ class HandTest {
 
     @Test
     fun `2장 이상 존재해야함`() {
-        val cards = listOf(Card(Denomination.ACE, Suit.HEARTS))
+        val cards = mutableListOf(Card(Denomination.ACE, Suit.HEARTS))
         assertThrows<IllegalArgumentException> { Hand(cards) }
     }
 
     @Test
-    fun `draw`() {
-        val cards = listOf(Card(Denomination.ACE, Suit.HEARTS), Card(Denomination.SIX, Suit.SPADES))
-        var hand = Hand(cards)
+    fun `draw 카드 추가 확인`() {
+        val cards = mutableListOf(Card(Denomination.ACE, Suit.HEARTS), Card(Denomination.SIX, Suit.SPADES))
+        val hand = Hand(cards)
         val card = Card(Denomination.TWO, Suit.HEARTS)
-        hand = hand.draw(card)
+        hand.draw(card)
 
         assertThat(hand.cards.size).isEqualTo(3)
     }

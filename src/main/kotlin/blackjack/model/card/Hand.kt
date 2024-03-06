@@ -1,12 +1,12 @@
 package blackjack.model.card
 
-class Hand(val cards: List<Card>) {
+class Hand(val cards: MutableList<Card>) {
     init {
         require(cards.size >= MINIMUM_CARDS_COUNT)
     }
 
-    fun draw(card: Card): Hand {
-        return Hand(cards.plus(card))
+    fun draw(card: Card) {
+        cards.add(card)
     }
 
     companion object {
