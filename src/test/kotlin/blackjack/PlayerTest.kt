@@ -11,11 +11,10 @@ class PlayerTest {
     private lateinit var player: Player
 
     @BeforeEach
-    fun setUp(){
+    fun setUp() {
         CardMachineManager.machine = TestCardMachine()
         player = Player("채채", Deck())
     }
-
 
     @Test
     fun `플레이어는 카드를 추가로 받을 수 있다`() {
@@ -26,7 +25,7 @@ class PlayerTest {
     }
 
     @Test
-    fun `플레이어는 자신의 카드 결과값을 계산할 수 있다`(){
+    fun `플레이어는 자신의 카드 결과값을 계산할 수 있다`() {
         val result = player.calculateCardScore()
         assertThat(result).isEqualTo(TEST_INIT_CARD_SCORE)
     }
