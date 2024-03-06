@@ -8,5 +8,4 @@ class Participants {
     fun addPlayer(playerNames: List<String>) {
         _players = playerNames.map { Player(it) }
     }
-
 }
