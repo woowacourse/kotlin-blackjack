@@ -14,7 +14,8 @@ class PlayerCards(private val deck: Deck) {
     }
 
     fun calculateCardScore(): Int {
-        return cards.sumOf { it.cardNumber.score }
+        val baseScore = cards.sumOf { it.cardNumber.score }
+        val hasAce = cards.any { it.cardNumber == CardNumber.ACE }
+        return if (hasAce && baseScore + 10 <= 21) baseScore + 10 else baseScore
     }
-
 }
