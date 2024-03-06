@@ -49,6 +49,8 @@ class OutputView {
         printAllCardHand(role.cardHand)
     }
 
+    fun printDealerHit() = println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+
     companion object {
         private const val NAME_CARD_HAND_FORMAT = "%s카드: "
     }
