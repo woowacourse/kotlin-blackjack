@@ -23,7 +23,7 @@ class Player(
     }
 
     private fun checkBurst(): PickingState {
-        return if (cards.sumOf { it.value } > MAXIMUM_CARD_TOTAL) PickingState.STOP else PickingState.SUCCESS
+        return if (cards.sumOf { it.value } > MAXIMUM_CARD_TOTAL) PickingState.STOP else PickingState.CONTINUE
     }
 
     companion object {

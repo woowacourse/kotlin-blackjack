@@ -14,8 +14,13 @@ class Dealer(
         }
     }
 
-    fun drawCard(generateCard: () -> Card) {
-        if (isDrawAvailable()) _cards.add(generateCard())
+    fun drawCard(generateCard: () -> Card): PickingState {
+        if (isDrawAvailable()) {
+            _cards.add(generateCard())
+            return PickingState.CONTINUE
+        } else {
+            return PickingState.STOP
+        }
     }
 
     private fun isDrawAvailable(): Boolean {

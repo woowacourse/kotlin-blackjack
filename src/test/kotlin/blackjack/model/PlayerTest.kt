@@ -15,7 +15,7 @@ class PlayerTest {
             }
         assertAll(
             { assertThat(player.cards).hasSize(2) },
-            { assertThat(actualState).isEqualTo(PickingState.SUCCESS) },
+            { assertThat(actualState).isEqualTo(PickingState.CONTINUE) },
         )
     }
 

@@ -2,6 +2,7 @@ package blackjack.model
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
@@ -31,14 +32,19 @@ class DealerTest {
                     ),
             )
 
-        dealer.drawCard {
-            Card.of(Shape.CLOVER, CardValue.TWO, 16)
-        }
+        val pickingState =
+            dealer.drawCard {
+                Card.of(Shape.CLOVER, CardValue.TWO, 16)
+            }
 
         val actualSize = dealer.cards.size
         val expectedSize = 3
 
-        assertThat(actualSize).isEqualTo(expectedSize)
+        assertAll({
+            assertThat(actualSize).isEqualTo(expectedSize)
+        }, {
+            assertThat(pickingState).isEqualTo(PickingState.CONTINUE)
+        })
     }
 
     @Test
@@ -53,14 +59,19 @@ class DealerTest {
                     ),
             )
 
-        dealer.drawCard {
-            Card.of(Shape.CLOVER, CardValue.TWO, 17)
-        }
+        val pickingState =
+            dealer.drawCard {
+                Card.of(Shape.CLOVER, CardValue.TWO, 17)
+            }
 
         val actualSize = dealer.cards.size
         val expectedSize = 2
 
-        assertThat(actualSize).isEqualTo(expectedSize)
+        assertAll({
+            assertThat(actualSize).isEqualTo(expectedSize)
+        }, {
+            assertThat(pickingState).isEqualTo(PickingState.STOP)
+        })
     }
 
     @Test
