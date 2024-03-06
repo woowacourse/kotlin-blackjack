@@ -72,7 +72,7 @@
 
 ### ScoreCalculation
 
-- [ ] 스코어 계산하기
+- [x] 스코어 계산하기
 
 ### Result
 

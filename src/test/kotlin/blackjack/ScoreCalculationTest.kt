@@ -4,16 +4,18 @@ import blackjack.model.card.Card
 import blackjack.model.card.Denomination
 import blackjack.model.card.Hand
 import blackjack.model.card.Suit
-import blackjack.model.player.Dealer
+import blackjack.model.game.ScoreCalculation
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class DealerTest {
+class ScoreCalculationTest {
     @Test
-    fun `딜러객체 생성`() {
+    fun `스코어 계산하기`() {
         val cards = mutableListOf(Card(Denomination.ACE, Suit.HEARTS), Card(Denomination.SIX, Suit.SPADES))
         val hand = Hand(cards)
-        val dealer = Dealer(hand)
-        assertThat(dealer.hand).isEqualTo(hand)
+        val scoreCalculation = ScoreCalculation()
+        val totalScore = scoreCalculation.calculate(hand)
+
+        assertThat(totalScore).isEqualTo(17)
     }
 }

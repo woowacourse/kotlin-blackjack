@@ -1,6 +1,6 @@
 package blackjack.model.card
 
-enum class Denomination(private val score: Int) {
+enum class Denomination(val score: Int) {
     TWO(2),
     THREE(3),
     FOUR(4),

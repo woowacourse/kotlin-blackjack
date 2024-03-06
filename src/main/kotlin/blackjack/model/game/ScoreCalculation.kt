@@ -1,4 +1,9 @@
 package blackjack.model.game
 
-class ScoreCalculation() {
+import blackjack.model.card.Hand
+
+class ScoreCalculation {
+    fun calculate(hand: Hand): Int {
+        return hand.cards.sumOf { card -> card.denomination.score }
+    }
 }
