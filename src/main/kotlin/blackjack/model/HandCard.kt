@@ -1,8 +1,19 @@
 package blackjack.model
 
-class HandCard(private val cards: List<Card>) {
+class HandCard {
+    private var cards: Set<Card> = setOf()
 
-    fun totalSumCards(): Int {
-        return cards.sumOf { card -> card.getScore() }
+    fun addCard(card: Card) {
+        cards += card
+    }
+
+    fun getCards(): Set<Card> {
+        return cards
+    }
+
+    fun getTotalCardsSum(): Int {
+        return cards.sumOf { card ->
+            card.getCardDenomination().getScore()
+        }
     }
 }
