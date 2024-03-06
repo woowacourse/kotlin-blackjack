@@ -33,7 +33,7 @@
     - [ ] 인자의 값을 통해 본인의 value (1~10, J, Q, K)를 결정한다.
 
 
-- [ ] Mark (enum class)
+- [x] Mark (enum class)
     - 하트, 다이아, 클로버, 스페이드의 값을 가진다.
 
 
