@@ -44,7 +44,12 @@ class OutputView {
         )
     }
 
+    fun printPlayerCardHand(role: Role) {
+        print(NAME_CARD_HAND_FORMAT.format(role.name))
+        printAllCardHand(role.cardHand)
+    }
+
     companion object {
-        private const val NAME_CARD_HAND_FORMAT = "%s: "
+        private const val NAME_CARD_HAND_FORMAT = "%s카드: "
     }
 }
