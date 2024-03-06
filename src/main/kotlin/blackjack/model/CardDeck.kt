@@ -10,9 +10,12 @@ class CardDeck {
         }
     }.toSet()
 
+    init {
+        cards.shuffled()
+    }
+
     fun draw(): Card {
         val popCard = cards
-            .shuffled()
             .take(DRAW_COUNT)
             .firstOrNull() ?: throw IllegalArgumentException(EMPTY_CARD_DECK)
         cards -= popCard
