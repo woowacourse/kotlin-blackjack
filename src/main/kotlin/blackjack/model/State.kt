@@ -8,7 +8,7 @@ open class Finished(hand: Hand) : State(hand)
 
 class Hit(hand: Hand) : Running(hand) {
     fun draw(card: Card): State {
-        hand.cards.add(card)
+        hand.addCard(card)
         return if (hand.isBust()) Bust(hand) else Hit(hand)
     }
 
