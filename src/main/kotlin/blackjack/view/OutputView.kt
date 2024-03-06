@@ -28,4 +28,9 @@ object OutputView {
     fun showPlayerCards(player: Player) {
         println("${player.name}: ${player.deck.cards.joinToString(", ")}")
     }
+
+    fun printDealerDrawCard() {
+        println("딜러의 카드가 16이하 이므로, 1장의 카드를 더 받습니다.")
+    }
+
 }
