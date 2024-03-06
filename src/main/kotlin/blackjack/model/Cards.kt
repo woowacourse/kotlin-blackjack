@@ -27,11 +27,7 @@ class Cards(
     fun sumOrNull(): Int? = pointCalculator.sumOrNull(cards)
 
     companion object {
-        val DECK: Cards = createDeck()
-
-        init {
-            val cards: Cards = createDeck()
-        }
+        private val DECK: Cards = createDeck()
 
         @JvmStatic
         fun createDeck(size: Int = 1): Cards {

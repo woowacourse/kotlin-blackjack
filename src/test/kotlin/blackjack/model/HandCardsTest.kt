@@ -26,7 +26,7 @@ class HandCardsTest {
 }
 
 fun createHandCards(): HandCards {
-    val deck = Cards.DECK
+    val deck = Cards.createDeck()
     return HandCards(
         deck.cards
             .shuffled()
@@ -36,7 +36,7 @@ fun createHandCards(): HandCards {
 
 // 중복 있이 손패 뿌리기
 fun createHandCards(size: Int): List<Card> {
-    val deck = Cards.DECK
+    val deck = Cards.createDeck()
     return deck.cards
         .shuffled()
         .take(size)
