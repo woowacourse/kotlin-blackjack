@@ -14,8 +14,7 @@ class CardTest {
         val participant = Participant()
         participant.addCard(jack)
         participant.addCard(two)
-        val cardList = listOf(jack, two)
-        val actual = participant.getCardSum(cardList)
+        val actual = participant.getCardSum()
         val expected = 12
         assertThat(actual).isEqualTo(expected)
     }
@@ -27,8 +26,7 @@ class CardTest {
         val participant = Participant()
         participant.addCard(ace)
         participant.addCard(jack)
-        val cardList = listOf(ace, jack)
-        val actual = participant.getCardSum(cardList)
+        val actual = participant.getCardSum()
         val expected = 21
         assertThat(actual).isEqualTo(expected)
     }
@@ -44,8 +42,7 @@ class CardTest {
         participant.addCard(jack)
         participant.addCard(two)
         participant.addCard(three)
-        val cardList = listOf(ace, jack, two, three)
-        val actual = participant.getCardSum(cardList)
+        val actual = participant.getCardSum()
         val expected = 16
         assertThat(actual).isEqualTo(expected)
     }
@@ -74,19 +71,3 @@ class CardTest {
         return threshold < score
     }
 }
-
-class Participant {
-    private val cardList: MutableList<Card> = mutableListOf()
-    fun addCard(card: Card) {
-        cardList.add(card)
-    }
-
-    fun getCardSum(cardList: List<Card>): Int {
-        val sum = cardList.map { it.cardNumber.score }.sum()
-        val additionalScore = if (hasAce() && sum <= 11) 10 else 0
-        return sum + additionalScore
-    }
-
-    private fun hasAce() = cardList.filter { it.cardNumber == CardNumber.ACE }.isNotEmpty()
-}
-
