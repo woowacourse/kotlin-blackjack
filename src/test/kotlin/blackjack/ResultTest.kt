@@ -1,3 +1,0 @@
-package blackjack
-
-class ResultTest

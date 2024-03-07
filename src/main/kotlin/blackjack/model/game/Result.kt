@@ -1,3 +1,7 @@
 package blackjack.model.game
 
-class Result
+enum class Result {
+    DEALER_WIN,
+    PLAYER_WIN,
+    DRAW,
+}
