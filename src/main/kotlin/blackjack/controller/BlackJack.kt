@@ -56,22 +56,16 @@ class BlackJack(
     }
 
     private fun runPlayerPhase(it: Player) {
-        var getMore: Boolean
-        do {
-            getMore = inputView.readIsHit(it)
-            if (it.getState(getMore) == CardHandState.HIT) {
-                it.runPhase(getMore)
-            } else {
-                getMore = false
-            }
+        while (it.getState() == CardHandState.STAY && inputView.readIsHit(it)) {
+            it.runPhase()
             outputView.printPlayerCardHand(it)
-        } while (getMore)
+        }
     }
 
     private fun runDealerPhase(dealer: Dealer) {
-        if (dealer.getState(true) == CardHandState.HIT) {
+        if (dealer.getState() == CardHandState.HIT) {
             outputView.printDealerHit()
-            dealer.runPhase(true)
+            dealer.runPhase()
         }
     }
 

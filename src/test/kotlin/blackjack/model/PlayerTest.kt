@@ -14,7 +14,7 @@ class PlayerTest {
 
         val player = Player("해나", cardHand)
 
-        assertThat(player.getState(true)).isEqualTo(CardHandState.HIT)
+        assertThat(player.getState()).isEqualTo(CardHandState.STAY)
     }
 
     @Test
@@ -28,9 +28,9 @@ class PlayerTest {
                 ),
             )
 
-        player.runPhase(true)
+        player.runPhase()
 
-        assertThat(player.cardHand.hand.size).isEqualTo(3)
+        assertThat(player.cardHand.hand.size).isEqualTo(2)
     }
 
     @Test
@@ -44,7 +44,7 @@ class PlayerTest {
                 ),
             )
 
-        player.runPhase(false)
+        player.runPhase()
 
         assertThat(player.cardHand.hand.size).isEqualTo(2)
     }

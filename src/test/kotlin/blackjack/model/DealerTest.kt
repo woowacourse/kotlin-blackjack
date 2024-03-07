@@ -14,7 +14,7 @@ class DealerTest {
 
         val dealer = Dealer(cardHand)
 
-        assertThat(dealer.getState(true)).isEqualTo(CardHandState.HIT)
+        assertThat(dealer.getState()).isEqualTo(CardHandState.HIT)
     }
 
     @Test
@@ -27,7 +27,7 @@ class DealerTest {
                 ),
             )
 
-        dealer.runPhase(true)
+        dealer.runPhase()
 
         assertThat(dealer.cardHand.hand.size).isEqualTo(3)
     }
@@ -42,7 +42,7 @@ class DealerTest {
                 ),
             )
 
-        dealer.runPhase(true)
+        dealer.runPhase()
         assertThat(dealer.cardHand.hand.size).isEqualTo(2)
     }
 }

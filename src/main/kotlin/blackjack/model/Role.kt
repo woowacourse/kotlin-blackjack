@@ -1,7 +1,7 @@
 package blackjack.model
 
 abstract class Role(open val name: String, open val cardHand: CardHand) {
-    abstract fun getState(hitCondition: Boolean): CardHandState
+    abstract fun getState(): CardHandState
 
     fun addInitialCards() {
         repeat(2) {
@@ -9,9 +9,7 @@ abstract class Role(open val name: String, open val cardHand: CardHand) {
         }
     }
 
-    fun runPhase(hitCondition: Boolean) {
-        if (getState(hitCondition) == CardHandState.HIT) {
-            cardHand.addNewCard()
-        }
+    fun runPhase() {
+        if (getState() == CardHandState.HIT) cardHand.addNewCard()
     }
 }
