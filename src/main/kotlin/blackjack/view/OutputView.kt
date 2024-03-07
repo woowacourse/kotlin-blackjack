@@ -10,7 +10,6 @@ object OutputView {
     private const val MESSAGE_PARTICIPANT_CARD_RESULT = "%s - 결과: %d"
     private const val MESSAGE_TITLE_RESULT = "\n## 최종 승패"
     private const val MESSAGE_CARD_STATUS = "%s: %s"
-    private const val MESSAGE_PLAYER_RESULT = "%d%s"
     private const val EMPTY_STRING = ""
     private const val NEW_LINE = "\n"
 
