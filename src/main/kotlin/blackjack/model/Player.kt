@@ -30,7 +30,7 @@ class Player(
     }
 
     fun initializeCards(generateCard: () -> Card) {
-        repeat(2) {
+        repeat(INITIAL_DRAW_COUNT) {
             gameInfo.addCard(generateCard())
         }
     }
@@ -44,5 +44,6 @@ class Player(
         private const val HIT = "y"
         private const val STAY = "n"
         private const val EXCEPTION_PLAYER_INPUT = "y나 n을 입력해야 합니다."
+        private const val INITIAL_DRAW_COUNT = 2
     }
 }

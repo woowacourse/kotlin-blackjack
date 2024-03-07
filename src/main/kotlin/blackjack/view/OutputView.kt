@@ -4,9 +4,14 @@ import blackjack.model.GameInfo
 import blackjack.model.Scoreboard
 
 object OutputView {
-    private const val MESSAGE_DISTRIBUTION = "\n%s와 %s에게 2장의 카드를 나누었습니다."
+    private const val MESSAGE_DISTRIBUTION = "%s와 %s에게 2장의 카드를 나누었습니다."
     private const val MESSAGE_CARD_INFO = "%s카드: %s"
-    private const val MESSAGE_RESULT = "%s - 결과: %d"
+    private const val MESSAGE_DEALER_HIT = "%s는 16이하라 한장의 카드를 더 받았습니다."
+    private const val MESSAGE_PARTICIPANT_CARD_RESULT = "%s - 결과: %d"
+    private const val MESSAGE_TITLE_RESULT = "\n## 최종 승패"
+    private const val MESSAGE_CARD_STATUS = "%s: %s"
+    private const val MESSAGE_PLAYER_RESULT = "%d%s"
+    private const val EMPTY_STRING = ""
     private const val NEW_LINE = "\n"
 
     fun printInitialStats(
@@ -20,7 +25,7 @@ object OutputView {
     }
 
     fun printDealerHit(gameInfo: GameInfo) {
-        println("${gameInfo.name}는 16이하라 한장의 카드를 더 받았습니다.")
+        println(MESSAGE_DEALER_HIT.format(gameInfo.name))
     }
 
     fun printFinalCards(
@@ -29,7 +34,7 @@ object OutputView {
     ) {
         println()
         println(
-            MESSAGE_RESULT.format(
+            MESSAGE_PARTICIPANT_CARD_RESULT.format(
                 MESSAGE_CARD_INFO.format(
                     dealerGameInfo.name,
                     dealerGameInfo.cards.joinToString { "${it.value}${it.shape}" },
@@ -40,7 +45,7 @@ object OutputView {
 
         playersGameInfo.forEach { playerStat ->
             println(
-                MESSAGE_RESULT.format(
+                MESSAGE_PARTICIPANT_CARD_RESULT.format(
                     MESSAGE_CARD_INFO.format(
                         playerStat.name,
                         playerStat.cards.joinToString { "${it.value}${it.shape}" },
@@ -57,24 +62,10 @@ object OutputView {
         playersGameInfo: List<GameInfo>,
         dealerGameInfo: GameInfo,
     ) {
-        println()
-        println("## 최종 승패")
-        println("${dealerGameInfo.name}: ${getDealerResult(dealerResult)}")
+        println(MESSAGE_TITLE_RESULT)
+        println(MESSAGE_CARD_STATUS.format(dealerGameInfo.name, getDealerResult(dealerResult)))
         playersResult.zip(playersGameInfo) { result, stat ->
-            println("${stat.name}: $result")
-        }
-    }
-
-    private fun getDealerResult(dealerResult: Scoreboard): String {
-        val winningResult = if (dealerResult.win > 0) "${dealerResult.win}승 " else ""
-        val drawResult = if (dealerResult.draw > 0) "${dealerResult.draw}무 " else ""
-        val losingResult = if (dealerResult.lose > 0) "${dealerResult.lose}패" else ""
-        return winningResult + drawResult + losingResult
-    }
-
-    fun printPlayerCards(playersGameInfo: List<GameInfo>) {
-        playersGameInfo.forEach { playerStat ->
-            printSinglePlayerCards(playerStat)
+            println(MESSAGE_CARD_STATUS.format(stat.name, result))
         }
     }
 
@@ -88,6 +79,19 @@ object OutputView {
     }
 
     fun printNewLine() = print(NEW_LINE)
+
+    private fun printPlayerCards(playersGameInfo: List<GameInfo>) {
+        playersGameInfo.forEach { playerStat ->
+            printSinglePlayerCards(playerStat)
+        }
+    }
+
+    private fun getDealerResult(dealerResult: Scoreboard): String {
+        val winningResult = if (dealerResult.win > 0) "${dealerResult.win}승 " else EMPTY_STRING
+        val drawResult = if (dealerResult.draw > 0) "${dealerResult.draw}무 " else EMPTY_STRING
+        val losingResult = if (dealerResult.lose > 0) "${dealerResult.lose}패" else EMPTY_STRING
+        return winningResult + drawResult + losingResult
+    }
 
     private fun getDealerCardResult(gameInfo: GameInfo): String {
         return MESSAGE_CARD_INFO.format(
