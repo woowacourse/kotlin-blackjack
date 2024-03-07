@@ -6,12 +6,12 @@ import blackjack.model.UserState.STAY
 
 class Dealer(override val humanName: HumanName = HumanName(DEFAULT_DEALER_NAME)) : BaseHolder() {
     fun drawDealerCard(
-        gameDeck: GameDeck,
+        card: Card,
         printDealerDrawCard: () -> Unit,
     ) {
         while (hand.state == RUNNING) {
             if (shouldDrawCard()) {
-                drawCardAndPrint(gameDeck = gameDeck, printDealerDrawCard = printDealerDrawCard)
+                drawCardAndPrint(card = card, printDealerDrawCard = printDealerDrawCard)
             } else {
                 hand.changeState(userState = STAY)
             }
@@ -21,11 +21,11 @@ class Dealer(override val humanName: HumanName = HumanName(DEFAULT_DEALER_NAME))
     private fun shouldDrawCard(): Boolean = hand.calculate() <= THRESHOLD
 
     private fun drawCardAndPrint(
-        gameDeck: GameDeck,
+        card: Card,
         printDealerDrawCard: () -> Unit,
     ) {
         printDealerDrawCard()
-        takeCard(card = gameDeck.drawCard())
+        takeCard(card = card)
     }
 
     companion object {
