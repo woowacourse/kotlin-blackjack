@@ -14,5 +14,6 @@ class Controller(
         val dealer = Dealer()
         val deckManager = DeckManager()
         deckManager.initGame(dealer, players)
+        OutputView.printResult(dealer, players)
     }
 }
