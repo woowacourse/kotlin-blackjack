@@ -25,7 +25,7 @@ class OutputView {
             MESSAGE_RESULT.format(
                 MESSAGE_CARD_INFO.format(
                     dealerStat.name,
-                    dealerStat.cards.joinToString(SEPARATOR_CARDS) { "${it.value}${it.title}" },
+                    dealerStat.cards.joinToString { "${it.value}${it.title}" },
                 ),
             ),
         )
@@ -34,7 +34,7 @@ class OutputView {
             MESSAGE_RESULT.format(
                 MESSAGE_CARD_INFO.format(
                     playerStat.name,
-                    playerStat.cards.joinToString(SEPARATOR_CARDS) { "${it.value}${it.title}" },
+                    playerStat.cards.joinToString { "${it.value}${it.title}" },
                 ),
             )
         }
@@ -65,7 +65,7 @@ class OutputView {
             println(
                 MESSAGE_CARD_INFO.format(
                     playerStat.name,
-                    playerStat.cards.joinToString(SEPARATOR_CARDS) { "${it.value}${it.title}" },
+                    playerStat.cards.joinToString { "${it.value}${it.title}" },
                 ),
             )
         }
@@ -74,7 +74,7 @@ class OutputView {
     private fun getDealerCardResult(dealerStat: Stat): String {
         return MESSAGE_CARD_INFO.format(
             dealerStat.name,
-            dealerStat.cards.joinToString(SEPARATOR_CARDS) { "${it.value}${it.title}" },
+            dealerStat.cards.joinToString { "${it.value}${it.title}" },
         )
     }
 
@@ -82,7 +82,7 @@ class OutputView {
         playerStats: List<Stat>,
         dealerStat: Stat,
     ) {
-        val names = playerStats.joinToString(SEPARATOR_CARDS) { it.name }
+        val names = playerStats.joinToString { it.name }
         println(MESSAGE_DISTRIBUTION.format(dealerStat.name, names))
     }
 
@@ -90,6 +90,5 @@ class OutputView {
         private const val MESSAGE_DISTRIBUTION = "%s와 %s에게 2장의 카드를 나누었습니다."
         private const val MESSAGE_CARD_INFO = "%s카드: %s"
         private const val MESSAGE_RESULT = "%s - 결과: %d"
-        private const val SEPARATOR_CARDS = ", "
     }
 }
