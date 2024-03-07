@@ -1,47 +1,34 @@
 package blackjack.model
 
-import blackjack.model.GameState.Finished
-import blackjack.model.GameState.Running
-
-class Deck(
+class Hand(
     cards: List<Card> = emptyList(),
-    state: GameState = Running,
+    state: UserState = UserState.RUNNING,
 ) {
     private var _cards: List<Card> = cards
     val cards: List<Card>
         get() = _cards
 
-    private var _state: GameState = state
-    val state: GameState
+    private var _state: UserState = state
+    val state: UserState
         get() = _state
 
-    operator fun plus(other: Card): Deck {
+    operator fun plus(other: Card): Hand {
         _cards += other
         updateState()
-        return Deck(cards, state)
+        return Hand(cards, state)
     }
 
     private fun updateState() {
         _state =
             when (calculate()) {
-                in 0..20 -> Running
-                21 -> {
-                    if (cards.size == 2) {
-                        Finished(UserState.BLACKJACK)
-                    } else {
-                        Finished(UserState.STAND)
-                    }
-                }
-
-                else -> Finished(UserState.BUST)
+                in RUNNING_RANGE -> UserState.RUNNING
+                BLACKJACK_NUMBER -> if (cards.size == MIN_CARD_COUNTS) UserState.BLACKJACK else UserState.STAY
+                else -> UserState.BUST
             }
     }
 
-    fun changeState(
-        userState: UserState,
-        result: Result = Result(),
-    ) {
-        _state = Finished(userState, result)
+    fun changeState(userState: UserState) {
+        _state = userState
     }
 
     fun calculate(): Int {
@@ -52,12 +39,13 @@ class Deck(
             if (total <= BLACKJACK_NUMBER) return@repeat
             total -= DIFF_ACE_TO_ONE
         }
-
         return total
     }
 
     companion object {
         const val BLACKJACK_NUMBER = 21
         const val DIFF_ACE_TO_ONE = 10
+        const val MIN_CARD_COUNTS = 2
+        val RUNNING_RANGE = (0..20)
     }
 }
