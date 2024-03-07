@@ -39,7 +39,7 @@ class DealerTest {
     @Test
     fun `딜러는 플레이어와의 게임에서 결과를 반환한다`() {
         val players = Players.playerNamesOf(listOf("채채"), deck)
-        val result = dealer.gameResult(players.players)
+        val result = dealer.gameResult(players.gamePlayers)
         assertThat(result.values).containsAll(listOf(CompetitionResult.WIN))
     }
 
