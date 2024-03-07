@@ -5,12 +5,10 @@ object BlackjackGame {
         players: Players,
         dealer: Dealer,
     ) {
-        dealer.optimizeCardSum()
         players.playerGroup.forEach { player ->
-            player.optimizeCardSum()
-            val gameResult = player.decideGameResult(dealer)
-            players.playersResult.add(player.name, gameResult)
-            dealer.result.add(gameResult.reverse())
+            val gameResult = dealer.decideGameResult(player)
+            dealer.result.add(gameResult)
+            players.playersResult.add(player.name, gameResult.reverse())
         }
     }
 }

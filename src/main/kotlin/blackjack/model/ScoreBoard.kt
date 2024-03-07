@@ -7,21 +7,16 @@ class ScoreBoard {
 
     fun add(card: Card) {
         handCards.add(card)
-        cardSum += card.denomination.score
     }
 
     fun optimizeCardSum(burstCondition: Int) {
-        val aceCount = handCards.getAceCount()
-        repeat(aceCount) {
-            if (handleAceValue(burstCondition)) return@repeat
+        cardSum = 0
+        handCards.cards.forEach {
+            cardSum += it.denomination.score
         }
-    }
-
-    private fun handleAceValue(burstCondition: Int): Boolean {
-        if (cardSum + Denomination.ADDITIONAL_ACE_SCORE > burstCondition) {
-            return true
+        repeat(handCards.getAceCount()) {
+            if (cardSum + Denomination.ADDITIONAL_ACE_SCORE > burstCondition) return
+            cardSum += Denomination.ADDITIONAL_ACE_SCORE
         }
-        cardSum += Denomination.ADDITIONAL_ACE_SCORE
-        return false
     }
 }
