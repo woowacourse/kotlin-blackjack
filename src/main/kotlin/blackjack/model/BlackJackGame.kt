@@ -14,7 +14,7 @@ class BlackJackGame(
         showPlayerCards: (player: Player) -> Unit,
     ) {
         participants.playerGroup.drawPlayerCard(
-            gameDeck = gameDeck,
+            card = gameDeck.drawCard(),
             hitOrStay = hitOrStay,
             showPlayerCards = showPlayerCards,
         )
