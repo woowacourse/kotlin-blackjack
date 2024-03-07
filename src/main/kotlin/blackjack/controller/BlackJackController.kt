@@ -25,21 +25,25 @@ object BlackJackController {
         players: List<Player>,
     ) {
         val dealerStat = dealer.gameInfo
-        val playerStat = players.map { it.gameInfo }
+        val playerStat = players.map { player -> player.gameInfo }
         val judge = Judge(dealerStat, playerStat)
-        OutputView.printFinalCards(dealerStat, playerStat)
-        OutputView.printResult(judge.getDealerResult(), judge.getPlayerResults(), playerStat, dealerStat)
+        with(OutputView) {
+            printResult(judge.getDealerResult(), judge.getPlayerResults(), playerStat, dealerStat)
+            printFinalCards(dealerStat, playerStat)
+        }
     }
 
     private fun playRound(
         players: List<Player>,
         dealer: Dealer,
     ) {
-        players.forEach { player ->
-            player.drawForSingleParticipant(OutputView::printSinglePlayerCards)
+        with(OutputView) {
+            players.forEach { player ->
+                player.drawForSingleParticipant(::printSinglePlayerCards)
+            }
+            printNewLine()
+            dealer.drawForSingleParticipant(::printDealerHit)
         }
-        OutputView.printNewLine()
-        dealer.drawForSingleParticipant(OutputView::printDealerHit)
     }
 
     private fun getPlayerNames(): List<String> {
