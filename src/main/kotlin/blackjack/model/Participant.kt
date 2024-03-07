@@ -15,7 +15,7 @@ abstract class Participant(val name: String) {
         return sum + additionalScore
     }
 
-    private fun hasAce() = cardList.filter { it.cardNumber == CardNumber.A }.isNotEmpty()
+    private fun hasAce() = cardList.any { it.cardNumber == CardNumber.A }
 
     fun isBusted(): Boolean {
         val score = getCardSum()

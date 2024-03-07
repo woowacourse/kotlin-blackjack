@@ -11,13 +11,15 @@ class GameStatistics(
     }
 
     val dealerStatistics: Map<GameResult, Int> by lazy {
-        playerStatistics.values.map {
-            when (it) {
-                GameResult.`패` -> GameResult.`승`
-                GameResult.`승` -> GameResult.`패`
-                GameResult.`무` -> GameResult.`무`
-            }
+        playerStatistics.values.map { gameResult ->
+            reverseGameResult(gameResult)
         }.groupingBy { it }.eachCount()
+    }
+
+    private fun reverseGameResult(it: GameResult) = when (it) {
+        GameResult.`패` -> GameResult.`승`
+        GameResult.`승` -> GameResult.`패`
+        GameResult.`무` -> GameResult.`무`
     }
 
     private fun judge(player: Player, dealer: Dealer): GameResult {
