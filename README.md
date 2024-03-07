@@ -72,6 +72,7 @@
 
 ### PlayerWinning
 - [X] 참가자 이름과 게임 결과 상태를 가진다.
+- [X] 딜러의 최종 승패를 판단한다.
 
 ### WinningResultStatus
 - [X] 승리, 패배, 무승부를 저장하는 enum
