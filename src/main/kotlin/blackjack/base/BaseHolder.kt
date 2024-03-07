@@ -1,16 +1,17 @@
 package blackjack.base
 
 import blackjack.model.Card
-import blackjack.model.Deck
+import blackjack.model.Hand
 
-abstract class BaseHolder(deck: Deck = Deck()) {
-    abstract val name: String
+abstract class BaseHolder(
+    hand: Hand = Hand(),
+) : BaseHuman() {
+    private var _hand: Hand = hand
+    val hand: Hand
+        get() = _hand
 
-    private var _deck: Deck = deck
-    val deck: Deck
-        get() = _deck
 
     fun takeCard(card: Card) {
-        _deck += card
+        _hand += card
     }
 }
