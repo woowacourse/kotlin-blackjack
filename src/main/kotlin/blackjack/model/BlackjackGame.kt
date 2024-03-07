@@ -21,8 +21,8 @@ object BlackjackGame {
     }
 
     fun updateGameResult(
-        players: Players,
         dealer: Dealer,
+        players: Players,
     ) {
         players.playerGroup.forEach { player ->
             val gameResult = dealer.decideGameResult(player)

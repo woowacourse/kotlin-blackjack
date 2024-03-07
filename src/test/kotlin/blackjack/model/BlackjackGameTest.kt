@@ -16,7 +16,7 @@ class BlackjackGameTest {
         dealer.receiveCard(Card.of("8", "하트"))
 
         // when
-        BlackjackGame.updateGameResult(players, dealer)
+        BlackjackGame.updateGameResult(dealer, players)
 
         // then
         assertThat(players.playersResult.results)
