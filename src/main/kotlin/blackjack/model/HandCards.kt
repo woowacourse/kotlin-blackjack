@@ -11,4 +11,6 @@ data class HandCards(
     constructor(vararg cards: Card) : this(cards.toList())
 
     fun sumOrNull(): Int? = pointCalculator.sumOrNull(cards)
+
+    fun isBust(): Boolean = sumOrNull() == null
 }

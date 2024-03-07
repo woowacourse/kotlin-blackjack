@@ -9,7 +9,6 @@ class Player(val name: String, handCards: HandCards) {
     val handCards: HandCards get() = HandCards(_handCards.toList())
 
     // 카드를 받는 행동
-    fun isBust(): Boolean = handCards.sumOrNull() == null
 
     fun receiveHandCards(card: Card) {
         _handCards.add(card)

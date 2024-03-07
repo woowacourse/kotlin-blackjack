@@ -1,5 +1,7 @@
 package blackjack.model
 
+import blackjack.fixture.createCard
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
@@ -9,6 +11,21 @@ class HandCardsTest {
         assertThrows<IllegalArgumentException> {
             HandCards(emptyList())
         }
+    }
+
+    @Test
+    fun `HandCards의 합이 null이면 버스트된다`() {
+        // given
+        val handCards =
+            HandCards(
+                createCard(rank = Rank.Seven),
+                createCard(rank = Rank.Eight),
+                createCard(rank = Rank.Nine),
+            )
+        // when
+        val actual = handCards.isBust()
+        // then
+        assertThat(actual).isTrue()
     }
 }
 
