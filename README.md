@@ -51,6 +51,7 @@
 
 - [x] Card의 종류 52가지 뭉치
 - [x] 카드 한장 빼기
+- [ ] 중복카드 draw시 예외 처리
 
 ### Hand
 
@@ -74,7 +75,7 @@
 ### ScoreCalculation
 
 - [x] 스코어 계산하기
-- [ ] 만약 버스트 and ACE 가지고 있으면 ACE -> 1
+- [x] 만약 버스트 and ACE 가지고 있으면 ACE -> 1
 
 ### Result
 

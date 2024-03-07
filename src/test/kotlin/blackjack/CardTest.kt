@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 
 class CardTest {
     @Test
-    fun `Denomination, Suit 조합으로 된 객체 생성`()  {
+    fun `Denomination, Suit 조합으로 된 객체 생성`() {
         val denomination = Denomination.ACE
         val suit = Suit.HEARTS
         val card = Card(denomination, suit)
