@@ -1,6 +1,6 @@
 package model
 
-abstract class Human(open val hand: Hand) {
+abstract class Human(open val hand: Hand, open val name: Name) {
     fun getPointIncludingAce(): Point {
         return if (hand.cards.any { it.value.amount % 13 == 0 }) {
             decideAceValue()
@@ -11,7 +11,7 @@ abstract class Human(open val hand: Hand) {
 
     private fun decideAceValue(): Point {
         val point = hand.getPoint().amount
-        return if (point <= 11) {
+        return if (point <= 10) {
             Point(point + 10)
         } else {
             Point(point)
