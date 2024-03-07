@@ -3,8 +3,7 @@ package blackjack.model
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class
-HandCardTest {
+class HandCardTest {
 
     @Test
     fun `손패에서 카드들의 숫자를 올바르게 반환하는지 테스트`() {
@@ -27,7 +26,7 @@ HandCardTest {
     }
 
     @Test
-    fun  `HandCard에서 정확한 ACE 수를 반환하는지 테스트 `(){
+    fun `HandCard에서 정확한 ACE 수를 반환하는지 테스트 `() {
         val aceHandCard = HandCard()
         aceHandCard.apply {
             addCard(Card(Denomination.ACE, Suit.SPADE))
