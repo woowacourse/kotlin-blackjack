@@ -43,7 +43,7 @@ class OutputView {
     fun printGameResult(participants: Participants) {
         participants.participants.forEach {
             printPlayerCardHand(it)
-            println(CARD_HAND_SUM_FORMAT.format(it.cardHand.sum))
+            println(CARD_HAND_SUM_FORMAT.format(it.cardHand.sum()))
         }
     }
 
