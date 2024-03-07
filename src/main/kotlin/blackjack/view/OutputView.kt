@@ -42,4 +42,8 @@ object OutputView {
     fun printBustedMessage(participant: Participant) {
         println("${participant.name}는 버스트 됐습니다.")
     }
+
+    fun printDealerHitMessage() {
+        println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+    }
 }

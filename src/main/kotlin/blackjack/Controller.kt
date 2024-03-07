@@ -19,6 +19,7 @@ class Controller(
         players.forEach { player ->
             proceedPlayerTurn(player, deckManager)
         }
+        proceedDealerTurn(dealer, deckManager)
     }
 
     private fun proceedPlayerTurn(player: Player, deckManager: DeckManager) {
@@ -38,5 +39,12 @@ class Controller(
 
     private fun askPick(name: String): Boolean {
         return InputView.askPickAgain(name)
+    }
+
+    private fun proceedDealerTurn(dealer: Dealer, deckManager: DeckManager) {
+        while (dealer.isHitable()) {
+            deckManager giveCardTo dealer
+            OutputView.printDealerHitMessage()
+        }
     }
 }
