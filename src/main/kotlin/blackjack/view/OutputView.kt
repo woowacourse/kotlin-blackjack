@@ -11,6 +11,7 @@ class OutputView {
         printDistributionMessage(playerStats, dealerStat)
         println(getDealerCardResult(dealerStat))
         printPlayerCards(playerStats)
+        println()
     }
 
     fun printDealerHit(dealerStat: Stat) {
@@ -60,15 +61,19 @@ class OutputView {
         return winningResult + drawResult + losingResult
     }
 
-    private fun printPlayerCards(playerStats: List<Stat>) {
+    fun printPlayerCards(playerStats: List<Stat>) {
         playerStats.forEach { playerStat ->
-            println(
-                MESSAGE_CARD_INFO.format(
-                    playerStat.name,
-                    playerStat.cards.joinToString { "${it.value}${it.shape}" },
-                ),
-            )
+            printSinglePlayerCards(playerStat)
         }
+    }
+
+    fun printSinglePlayerCards(playerStat: Stat) {
+        println(
+            MESSAGE_CARD_INFO.format(
+                playerStat.name,
+                playerStat.cards.joinToString { "${it.value}${it.shape}" },
+            ),
+        )
     }
 
     private fun getDealerCardResult(dealerStat: Stat): String {
