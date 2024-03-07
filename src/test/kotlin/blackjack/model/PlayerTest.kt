@@ -1,15 +1,9 @@
 package blackjack.model
 
 import blackjack.fixture.createCard
+import blackjack.fixture.createPlayer
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-
-fun createPlayer(
-    name: String = "송둥",
-    handCards: HandCards,
-) = Player(name, handCards)
-
-fun createPlayer(vararg cards: Card) = Player("송둥", HandCards(*cards))
 
 class PlayerTest {
     @Test
