@@ -5,6 +5,7 @@ import blackjack.model.player.PlayerEntry
 
 const val DEALER_CARD_RESULT = "딜러: %s - 결과: %d"
 const val PLAYER_CARD_RESULT = "%s카드: - 결과: %d"
+const val FINAL_WIN_OR_LOSS = "## 최종 승패"
 
 fun showHandsScore(
     dealer: Dealer,
@@ -12,6 +13,10 @@ fun showHandsScore(
 ) {
     showDealerScore(dealer)
     showPlayersScore(playerEntry)
+}
+
+fun showFinalWinOrLoss() {
+    println(FINAL_WIN_OR_LOSS)
 }
 
 private fun showDealerScore(dealer: Dealer) {

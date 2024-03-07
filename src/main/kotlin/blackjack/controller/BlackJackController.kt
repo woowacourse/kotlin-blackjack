@@ -3,11 +3,14 @@ package blackjack.controller
 import Player
 import blackjack.model.card.Deck
 import blackjack.model.card.Hand
+import blackjack.model.game.Referee
+import blackjack.model.game.Result
 import blackjack.model.game.State
 import blackjack.model.player.Dealer
 import blackjack.model.player.PlayerEntry
 import blackjack.view.setGame
 import blackjack.view.showDealerDrawMessage
+import blackjack.view.showFinalWinOrLoss
 import blackjack.view.showHands
 import blackjack.view.showHandsScore
 import blackjack.view.showPlayerDrawMessage
@@ -42,6 +45,22 @@ object BlackJackController {
         }
 
         showHandsScore(dealer, playerEntry)
+        showFinalWinOrLoss()
+        val referee = Referee(dealer, playerEntry)
+        val results = referee.makeResults()
+
+        val winCount = results.count { it == Result.DEALER_WIN }
+        val defeatCount = results.count { it == Result.PLAYER_WIN }
+
+        println("딜러: ${winCount}승 ${defeatCount}패")
+        results.withIndex().forEach { (index, result) ->
+            val tmp =
+                when (result) {
+                    Result.PLAYER_WIN -> "승"
+                    else -> "패"
+                }
+            println("${playerEntry.players[index].name}: $tmp")
+        }
     }
 
     private fun drawOrNot(
