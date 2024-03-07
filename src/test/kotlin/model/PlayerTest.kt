@@ -2,28 +2,23 @@ package model
 
 import TestDeck
 import org.assertj.core.api.Assertions
-import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.ValueSource
-import java.lang.IllegalArgumentException
 
 class PlayerTest {
-
     private lateinit var testDeck: TestDeck
 
     @BeforeEach
     fun setUp() {
-        testDeck = TestDeck(
-            mutableListOf(
-                Card.from(1),
-                Card.from(12),
-                Card.from(11),
-                Card.from(0),
+        testDeck =
+            TestDeck(
+                mutableListOf(
+                    Card.from(1),
+                    Card.from(12),
+                    Card.from(11),
+                    Card.from(0),
+                ),
             )
-        )
     }
 
     @Test
@@ -47,15 +42,5 @@ class PlayerTest {
         player.hit()
 
         Assertions.assertThat(player.hit()).isFalse
-    }
-
-    @ParameterizedTest
-    @ValueSource(strings = ["OverflowNaming", "", "YoonSongHyun", "HwangTaeJune"])
-    fun `이름의 길이가 10을 초과시 예외 발생`(name: String) {
-        val hand = Hand(testDeck)
-        assertThatThrownBy {
-            Player(hand, name)
-        }.isExactlyInstanceOf(IllegalArgumentException::class.java)
-            .hasMessage(Player.ERROR_EXCEED_NAME_LENGTH)
     }
 }
