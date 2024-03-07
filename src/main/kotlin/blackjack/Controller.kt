@@ -2,6 +2,7 @@ package blackjack
 
 import blackjack.model.Dealer
 import blackjack.model.DeckManager
+import blackjack.model.GameStatistics
 import blackjack.model.Player
 import blackjack.view.InputView
 import blackjack.view.OutputView
@@ -21,7 +22,7 @@ class Controller(
         }
         proceedDealerTurn(dealer, deckManager)
 
-        OutputView.printResult(dealer, players)
+        printStatistics(dealer, players)
     }
 
     private fun proceedPlayerTurn(player: Player, deckManager: DeckManager) {
@@ -50,10 +51,10 @@ class Controller(
         }
     }
 
-}
-
-
-fun main() {
-    val s = Controller()
-    s.run()
+    private fun printStatistics(dealer: Dealer, players: List<Player>) {
+        OutputView.printResult(dealer, players)
+        val gameStatistics = GameStatistics(dealer, players)
+        OutputView.printDealerStatistics(gameStatistics.dealerStatistics)
+        OutputView.printPlayerStatistics(gameStatistics.playerStatistics)
+    }
 }

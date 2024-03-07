@@ -2,6 +2,7 @@ package blackjack.view
 
 import blackjack.model.Card
 import blackjack.model.Dealer
+import blackjack.model.GameResult
 import blackjack.model.Participant
 import blackjack.model.Player
 
@@ -58,4 +59,19 @@ object OutputView {
     fun printDealerHitMessage() {
         println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
     }
+
+    fun printDealerStatistics(dealerStatistics: Map<GameResult, Int>) {
+        println()
+        val dealerStatisticsString = dealerStatistics.map {
+            "${it.value}${it.key.name}"
+        }.joinToString(" ")
+        println("딜러: $dealerStatisticsString")
+    }
+
+    fun printPlayerStatistics(playerStatistics: Map<String, GameResult>) {
+        playerStatistics.forEach { playerStatistic ->
+            println("${playerStatistic.key}: ${playerStatistic.value.name}")
+        }
+    }
+
 }
