@@ -15,38 +15,56 @@ class HandCardsTest {
         }
     }
 
-    @Test
-    fun `HandCards의 합이 null이면 버스트된다`() {
+    @ParameterizedTest
+    @CsvSource(
+        value = [
+            "JACK:QUEEN:TWO:true",
+            "NINE:ACE:ACE:false",
+        ],
+        delimiter = ':',
+    )
+    fun `HandCards의 합이 null이면 버스트된다`(
+        rank: Rank,
+        rank2: Rank,
+        rank3: Rank,
+        isBust: Boolean,
+    ) {
         // given
         val handCards =
             HandCards(
-                createCard(rank = Rank.SEVEN),
-                createCard(rank = Rank.EIGHT),
-                createCard(rank = Rank.NINE),
+                createCard(rank = rank),
+                createCard(rank = rank2),
+                createCard(rank = rank3),
             )
         // when
         val actual = handCards.isBust()
         // then
-        assertThat(actual).isTrue()
+        assertThat(actual).isEqualTo(isBust)
     }
 
     @ParameterizedTest
     @CsvSource(
         value = [
-            "Jack",
+            "JACK:ACE:true",
+            "NINE:ACE:false",
         ],
+        delimiter = ':',
     )
-    fun `HandCards의 합이 21이고 2장이면 블랙잭이다`() {
+    fun `HandCards의 합이 21이고 2장이면 블랙잭이다`(
+        rank: Rank,
+        rank2: Rank,
+        isBlackJack: Boolean,
+    ) {
         // given
         val handCards =
             HandCards(
-                createCard(rank = Rank.JACK),
-                createCard(rank = Rank.ACE),
+                createCard(rank = rank),
+                createCard(rank = rank2),
             )
         // when
         val actual = handCards.isBlackjack()
         // then
-        assertThat(actual).isTrue()
+        assertThat(actual).isEqualTo(isBlackJack)
     }
 }
 
