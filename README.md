@@ -74,15 +74,15 @@
 
 - [ ] Result
     - [ ] Dealer 와 Players 간의 Hand를 비교하고 승/패 결과를 반환한다.
----
+---현
 - 📝 InputView
     - [x] 게임에 참여하는 사람의 이름 리스트를 입력 받을 수 있다.
     - [x] Player 들의 응답을 받을 수 있다.
 
 
-- [ ] OutputView
-    - [ ] Player의 이름을 출력한다.
+- [x] OutputView
+    - [x] Player의 이름을 출력한다.
         - (`ex. 딜러와 pobi, jason에게 2장의 나누었습니다.`)
-    - [ ] Dealer 와 Player의 핸드를 출력한다.
-    - [ ] Dealer 와 Player의 최종 핸드를 출력한다. (결과(최종합) 포함)
-    - [ ] 최종 승패 결과를 출력한다.
+    - [x] Dealer 와 Player의 핸드를 출력한다.
+    - [x] Dealer 와 Player의 최종 핸드를 출력한다. (결과(최종합) 포함)
+    - [x] 최종 승패 결과를 출력한다.
