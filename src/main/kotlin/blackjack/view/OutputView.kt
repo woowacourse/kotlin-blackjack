@@ -14,6 +14,18 @@ object OutputView {
         }
     }
 
+    fun printResult(dealer: Dealer, players: List<Player>) {
+        println()
+        printParticipantStatusWithSum(dealer)
+        players.forEach {
+            printParticipantStatusWithSum(it)
+        }
+    }
+
+    private fun printParticipantStatusWithSum(participant: Participant) {
+        println(buildParticipantCards(participant) + " - 결과: " + participant.getCardSum())
+    }
+
     fun printParticipantStatus(participant: Participant) {
         println(buildParticipantCards(participant))
     }

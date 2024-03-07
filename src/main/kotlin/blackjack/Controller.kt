@@ -20,6 +20,8 @@ class Controller(
             proceedPlayerTurn(player, deckManager)
         }
         proceedDealerTurn(dealer, deckManager)
+
+        OutputView.printResult(dealer, players)
     }
 
     private fun proceedPlayerTurn(player: Player, deckManager: DeckManager) {
@@ -47,4 +49,11 @@ class Controller(
             OutputView.printDealerHitMessage()
         }
     }
+
+}
+
+
+fun main() {
+    val s = Controller()
+    s.run()
 }
