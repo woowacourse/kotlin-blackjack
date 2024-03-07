@@ -1,12 +1,18 @@
 package blackjack.model
 
-class Player(val name: String, val handCards: HandCards) {
+class Player(val name: String, handCards: HandCards) {
     private val _scoreBoard: MutableMap<State, Int> = mutableMapOf()
     val scoreBoard: Map<State, Int> = _scoreBoard.toMap()
 
+    // TODO PLUS OPERATOR
+    private val _handCards: MutableList<Card> = handCards.cards.toMutableList()
+    val handCards: HandCards get() = HandCards(_handCards.toList())
+
     // 카드를 받는 행동
-    fun isBust(): Boolean {
-        return true
+    fun isBust(): Boolean = handCards.sumOrNull() == null
+
+    fun receiveHandCards(card: Card) {
+        _handCards.add(card)
     }
 
     fun updateScoreBoard(state: State) {
