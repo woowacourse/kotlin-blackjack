@@ -6,6 +6,7 @@ class BlackjackGame(private val deck: CardDeck, val participants: Participants) 
         displayParticipantsStatus: (Participant) -> Unit,
     ) {
         playRoundForPlayers(askForPlayerAction, displayParticipantsStatus)
+        playRoundForDealer(displayParticipantsStatus)
     }
 
     private fun playRoundForPlayers(
@@ -23,6 +24,19 @@ class BlackjackGame(private val deck: CardDeck, val participants: Participants) 
                 }
                 displayParticipantsStatus(player)
             }
+        }
+    }
+
+    private fun playRoundForDealer(displayParticipantsStatus: (dealer: Dealer) -> Unit) {
+        val dealer = participants.dealer
+        while (dealer.state is Running) {
+            val continuePlaying = dealer.isUnderHitThreshold()
+            if (continuePlaying) {
+                dealer.receiveCard(deck.pick())
+            } else {
+                dealer.finishRound()
+            }
+            displayParticipantsStatus(dealer)
         }
     }
 }
