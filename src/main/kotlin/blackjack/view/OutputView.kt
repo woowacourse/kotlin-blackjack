@@ -4,7 +4,9 @@ import blackjack.model.CardHand
 import blackjack.model.Dealer
 import blackjack.model.Participants
 import blackjack.model.Player
+import blackjack.model.PlayerWinning
 import blackjack.model.Role
+import blackjack.model.WinningResultStatus
 
 class OutputView {
     fun printInitialSetting(people: Participants) {
@@ -56,6 +58,41 @@ class OutputView {
     private fun printPlayerCardHand(role: Role) {
         print(NAME_CARD_HAND_FORMAT.format(role.name))
         printAllCardHand(role.cardHand)
+    }
+
+    fun printFinalResult(
+        dealerWinning: Map<WinningResultStatus, Int>,
+        playerWinning: PlayerWinning,
+    ) {
+        println("## 최종 승패")
+
+        print("딜러: ")
+        dealerWinning.forEach {
+            print(it.value.toString() + it.key.output + " ")
+        }
+        println()
+
+        playerWinning.result.forEach { (name, status) ->
+            println("$name: ${status.output}")
+        }
+        println()
+    }
+
+    fun printFinalDealerResult(dealerWinning: Map<WinningResultStatus, Int>) {
+        println("## 최종 승패")
+
+        print("딜러: ")
+        dealerWinning.forEach {
+            print(it.value.toString() + it.key.output + " ")
+        }
+        println()
+    }
+
+    fun printFinalPlayersResult(playerWinning: PlayerWinning) {
+        playerWinning.result.forEach { (name, status) ->
+            println("$name: ${status.output}")
+        }
+        println()
     }
 
     companion object {
