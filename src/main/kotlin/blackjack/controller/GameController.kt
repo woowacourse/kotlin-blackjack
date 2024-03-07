@@ -3,49 +3,62 @@ package blackjack.controller
 import blackjack.model.BlackJackGame
 import blackjack.model.Dealer
 import blackjack.model.GameDeck
+import blackjack.model.HumanName
 import blackjack.model.Participants
+import blackjack.model.PlayerGroup
 import blackjack.view.InputView
 import blackjack.view.OutputView
 import blackjack.view.OutputView.printDealerDrawCard
+import blackjack.view.OutputView.printEveryCards
+import blackjack.view.OutputView.printGameSetting
 import blackjack.view.OutputView.showPlayerCards
 
 class GameController {
     fun run() {
-        val participantsNames = InputView.inputParticipantsNames()
-        val participants = Participants()
-        // InputView 로부터 참가자 이름 입력 받기
-        participants.addPlayer(participantsNames)
-        // 블랙잭 게임 시작
+        val playerGroup = createPlayerGroup()
         val gameDeck = GameDeck()
-        val blackJackGame = BlackJackGame(Dealer(), participants)
+        val dealer = Dealer()
+        val participants = Participants(dealer, playerGroup)
 
-        blackJackGame.drawTwoCards(gameDeck)
+        playGame(gameDeck, participants)
 
-        OutputView.printGameSetting(blackJackGame.dealer, blackJackGame.participants)
+        participants.matchResult()
+        OutputView.printMatchResult(participants.dealer, participants.playerGroup)
+    }
 
-        blackJackGame.drawPlayerCard(
-            gameDeck = gameDeck,
-            input = { player ->
-                // InputView 로부터 카드를 더 받을지 입력 받기
-                val hitOrStay = InputView.askHitOrStand(player)
-                when (hitOrStay) {
-                    "y" -> true
-                    "n" -> false
-                    else -> false
-                }
-            },
-            output = ::showPlayerCards,
+    private fun playGame(
+        gameDeck: GameDeck,
+        participants: Participants,
+    ) {
+        val blackJackGame = BlackJackGame(participants, gameDeck)
+
+        blackJackGame.start(::printGameSetting)
+        blackJackGame.runPlayersTurn(
+            hitOrStay = ::hitOrStay,
+            showPlayerCards = ::showPlayerCards,
         )
+        blackJackGame.runDealerTurn(printDealerDrawCard = ::printDealerDrawCard)
+        blackJackGame.finish(printEveryCards = ::printEveryCards)
+    }
 
-        blackJackGame.drawDealerCard(
-            gameDeck = gameDeck,
-            output = ::printDealerDrawCard,
-        )
+    private fun createPlayerGroup(): PlayerGroup {
+        val playersNames = InputView.inputPlayersNames()
+        val participants = PlayerGroup()
+        participants.addPlayer(playersNames)
+        return participants
+    }
 
-        OutputView.printEveryCards(blackJackGame.dealer, blackJackGame.participants)
+    private fun hitOrStay(humanName: HumanName): Boolean {
+        val hitOrStay = InputView.askHitOrStay(humanName)
+        return when (hitOrStay) {
+            YES -> true
+            NO -> false
+            else -> false
+        }
+    }
 
-        blackJackGame.matchResult()
-
-        OutputView.printMatchResult(blackJackGame.dealer, blackJackGame.participants)
+    companion object {
+        private const val YES = "y"
+        private const val NO = "n"
     }
 }
