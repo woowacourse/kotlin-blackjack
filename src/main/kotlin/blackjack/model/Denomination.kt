@@ -21,9 +21,9 @@ enum class Denomination(
 
     companion object {
         fun aceTransferScore(): Int{
-            return ACE.score - BONUS_SCORE
+            return ACE.score - TRANSFER_ACE_SCORE
         }
 
-        private const val BONUS_SCORE :Int = 10
+        private const val TRANSFER_ACE_SCORE :Int = 10
     }
 }
