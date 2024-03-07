@@ -3,6 +3,7 @@ package blackjack.controller
 import Player
 import blackjack.model.card.Deck
 import blackjack.model.card.Hand
+import blackjack.model.game.State
 import blackjack.model.player.Dealer
 import blackjack.model.player.PlayerEntry
 import blackjack.view.setGame
@@ -28,16 +29,36 @@ object BlackJackController {
         showHands(dealer, playerEntry)
 
         playerEntry.players.forEach { player ->
-            while (drawOrNot(askPlayerDraw(player))) {
-                player.hand.draw(Deck.dealCard())
+            while (player.state == State.RUNNING) {
+                drawOrNot(askPlayerDraw(player), player)
                 showPlayerHand(player)
             }
         }
     }
 
-    private fun drawOrNot(drawOrNot: String?): Boolean {
-        if (drawOrNot == "y") return true
-        return false
+    private fun drawOrNot(
+        drawOrNot: String?,
+        player: Player,
+    ) {
+        if (drawOrNot == "y") {
+            determineState(player)
+        } else {
+            player.state = State.STAY
+        }
+    }
+
+    private fun determineState(player: Player) {
+        player.hand.draw(Deck.dealCard())
+        if (isBust(player)) player.state = State.BUST
+        if (isBlackjack(player)) player.state = State.BLACKJACK
+    }
+
+    private fun isBust(player: Player): Boolean {
+        return player.hand.totalScore > 21
+    }
+
+    private fun isBlackjack(player: Player): Boolean {
+        return player.hand.totalScore == 21
     }
 
     private fun readPlayersName(): List<String> {

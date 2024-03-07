@@ -1,26 +1,14 @@
 package blackjack.model.card
 
+import blackjack.model.game.ScoreCalculation
+
 class Hand(val cards: MutableList<Card>) {
     var aceCount = 0
-    var totalScore = 0
+    var totalScore = ScoreCalculation.calculate(this)
 
     fun draw(card: Card) {
         cards.add(card)
-        totalScore += card.denomination.score
-        isBust()
-        isBlackjack()
+        totalScore = ScoreCalculation.calculate(this)
         if (card.denomination == Denomination.ACE) aceCount++
-    }
-
-    private fun isBust(): Boolean {
-        return totalScore > 21
-    }
-
-    private fun isBlackjack(): Boolean {
-        return totalScore == 21
-    }
-
-    companion object {
-        const val MINIMUM_CARDS_COUNT = 2
     }
 }
