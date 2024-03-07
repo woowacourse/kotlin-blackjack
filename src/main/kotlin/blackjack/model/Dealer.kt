@@ -4,8 +4,6 @@ class Dealer(handCards: HandCards) {
     private val _handCards: MutableList<Card> = handCards.cards.toMutableList()
     val handCards: HandCards get() = HandCards(_handCards.toList())
 
-    // 카드를 받는 행동
-
     fun canHit(): Boolean {
         if (handCards.isBust()) return false
         return handCards.sumOptimized() < HIT_CONDITION
