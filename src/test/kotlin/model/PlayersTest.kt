@@ -8,7 +8,6 @@ import org.junit.jupiter.api.assertDoesNotThrow
 import java.lang.IllegalArgumentException
 
 class PlayersTest {
-
     private lateinit var hand: Hand
     private lateinit var deck: Deck
 
@@ -42,6 +41,5 @@ class PlayersTest {
         assertDoesNotThrow {
             Players.from(names, deck)
         }
-
     }
 }
