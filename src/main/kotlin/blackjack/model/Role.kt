@@ -1,7 +1,7 @@
 package blackjack.model
 
 abstract class Role {
-    abstract val burstCondition: Int
+    private val burstCondition = 21
     private val scoreBoard = ScoreBoard()
 
     fun receiveCard(card: Card) {
@@ -14,9 +14,15 @@ abstract class Role {
 
     fun getCardSum() = scoreBoard.cardSum
 
+    fun getCards() = scoreBoard.handCards.cards
+
     fun decideGameResult(orderRole: Role): GameResult {
-        if (scoreBoard.cardSum > orderRole.scoreBoard.cardSum) return GameResult.WIN
-        if (scoreBoard.cardSum == orderRole.scoreBoard.cardSum) return GameResult.DRAW
-        return GameResult.LOSE
+        return when {
+            isBurst() -> GameResult.LOSE
+            orderRole.isBurst() -> GameResult.WIN
+            scoreBoard.cardSum > orderRole.scoreBoard.cardSum -> GameResult.WIN
+            scoreBoard.cardSum == orderRole.scoreBoard.cardSum -> GameResult.DRAW
+            else -> GameResult.LOSE
+        }
     }
 }

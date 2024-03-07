@@ -1,10 +1,11 @@
 package blackjack.model
 
 class Dealer : Role() {
-    override val burstCondition = BURST_CONDITION
     val result = DealerResult()
 
+    fun decideMoreCard() = getCardSum() < MIN_CARD_SUM
+
     companion object {
-        private const val BURST_CONDITION = 17
+        private const val MIN_CARD_SUM = 17
     }
 }
