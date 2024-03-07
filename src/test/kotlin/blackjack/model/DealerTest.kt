@@ -6,24 +6,6 @@ import org.junit.jupiter.api.assertThrows
 
 class DealerTest {
 
-    class Dealer(name: String = DEFAULT_DEALER_NAME) : Participant(name) {
-
-        fun openFirstCard(): Card {
-            return getCards().firstOrNull() ?: throw IllegalArgumentException(ERROR_CARD_INDEX)
-        }
-
-        fun checkDealerScoreCondition(): Boolean {
-            return getBlackJackScore() <= MIN_HAND_CARD_SCORE
-        }
-
-        companion object {
-            private const val DEFAULT_DEALER_NAME = "딜러"
-            private const val ERROR_CARD_INDEX = "가지고 있는 카드가 없습니다."
-            private const val MIN_HAND_CARD_SCORE: Int = 16
-        }
-    }
-
-
     @Test
     fun `딜러는 첫번째 카드를 공개할 수 있다`() {
         val dealer = Dealer()
@@ -39,5 +21,23 @@ class DealerTest {
     fun `딜러는 첫번째 카드를 공개할 수 없으면, 에러를 던진다`() {
         val dealer = Dealer()
         assertThrows<IllegalArgumentException> { dealer.openFirstCard() }
+    }
+
+    @Test
+    fun `딜러는 손패의 합이 16을 초과하지 않으면 카드를 드로우 해야 한다`() {
+        val drawableDealer = Dealer()
+        drawableDealer.draw(Card(Denomination.FOUR, Suit.SPADE))
+        drawableDealer.draw(Card(Denomination.FOUR, Suit.DIAMOND))
+        drawableDealer.draw(Card(Denomination.FOUR, Suit.CLOVER))
+        drawableDealer.draw(Card(Denomination.FOUR, Suit.HEART))
+        assertThat(drawableDealer.checkDealerScoreCondition()).isTrue()
+    }
+
+    @Test
+    fun `딜러는 손패의 합이 16을 초과할 때 카드를 더 이상 드로우할 수 없다`() {
+        val unDrawableDealer = Dealer()
+        unDrawableDealer.draw(Card(Denomination.QUEEN, Suit.SPADE))
+        unDrawableDealer.draw(Card(Denomination.SEVEN, Suit.SPADE))
+        assertThat(unDrawableDealer.checkDealerScoreCondition()).isFalse()
     }
 }

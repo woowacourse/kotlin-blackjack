@@ -19,6 +19,10 @@ class BlackJack {
         return handCard.cards
     }
 
+    fun getHandCardScore(): Int {
+        return handCard.getTotalCardsSum()
+    }
+
     fun switchToStayState() {
         _state = State.Finish.Stay
     }
