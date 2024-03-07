@@ -10,13 +10,22 @@ class Dealer(override val humanName: HumanName = HumanName(DEFAULT_DEALER_NAME))
         printDealerDrawCard: () -> Unit,
     ) {
         while (hand.state == RUNNING) {
-            if (hand.calculate() <= THRESHOLD) {
-                printDealerDrawCard()
-                takeCard(card = gameDeck.drawCard())
+            if (shouldDrawCard()) {
+                drawCardAndPrint(gameDeck = gameDeck, printDealerDrawCard = printDealerDrawCard)
             } else {
                 hand.changeState(userState = STAY)
             }
         }
+    }
+
+    private fun shouldDrawCard(): Boolean = hand.calculate() <= THRESHOLD
+
+    private fun drawCardAndPrint(
+        gameDeck: GameDeck,
+        printDealerDrawCard: () -> Unit,
+    ) {
+        printDealerDrawCard()
+        takeCard(card = gameDeck.drawCard())
     }
 
     companion object {
