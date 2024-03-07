@@ -54,15 +54,13 @@ class Participants(
     }
 
     private fun compareWhenBothStay(player: Player) {
-        val dealerPoint = dealer.hand.calculate()
-        val playerPoint = player.hand.calculate()
+        val dealerPoints = dealer.hand.calculate()
+        val playerPoints = player.hand.calculate()
 
-        if (dealerPoint == playerPoint) {
-            draw(player = player, dealer = dealer)
-        } else if (dealerPoint > playerPoint) {
-            winAndLose(winner = dealer, loser = player)
-        } else {
-            winAndLose(winner = player, loser = dealer)
+        when {
+            dealerPoints == playerPoints -> draw(player = player, dealer = dealer)
+            dealerPoints > playerPoints -> winAndLose(winner = dealer, loser = player)
+            else -> winAndLose(winner = player, loser = dealer)
         }
     }
 
