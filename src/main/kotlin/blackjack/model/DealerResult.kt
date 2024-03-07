@@ -6,6 +6,10 @@ class DealerResult {
         get() = _results.toMap()
 
     fun add(gameResult: GameResult) {
-        _results[gameResult] = _results.getOrDefault(gameResult, 0) + 1
+        _results[gameResult] = _results.getOrDefault(gameResult, GAME_RESULT_DEFAULT_COUNT) + 1
+    }
+
+    companion object {
+        private const val GAME_RESULT_DEFAULT_COUNT = 0
     }
 }
