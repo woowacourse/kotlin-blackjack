@@ -5,10 +5,8 @@ class GameStatistics(
     players: List<Player>
 ) {
     val playerStatistics: Map<String, GameResult> by lazy {
-        val dealerScore = dealer.getCardSum()
         players.associate { player ->
-            val playerScore = player.getCardSum()
-            player.name to judge(playerScore, dealerScore)
+            player.name to judge(player, dealer)
         }
     }
 
@@ -22,19 +20,27 @@ class GameStatistics(
         }.groupingBy { it }.eachCount()
     }
 
-    private fun judge(playerScore: Int, dealerScore: Int): GameResult {
+    private fun judge(player: Player, dealer: Dealer): GameResult {
+        val playerScore = player.getCardSum()
+        val dealerScore = dealer.getCardSum()
+
         return when {
-            (dealerScore < playerScore) -> {
-                GameResult.`승`
+            player.isBusted() ||
+                    (playerScore < dealerScore && !dealer.isBusted()) ||
+                    !player.isBlackJack() && dealer.isBlackJack()
+            -> {
+                GameResult.`패`
             }
 
-            (dealerScore == playerScore) -> {
+            (dealer.isBlackJack() && player.isBlackJack()) -> {
                 GameResult.`무`
             }
 
-            else -> {
-                GameResult.`패`
+            dealer.isBusted() || (dealerScore < playerScore) || player.isBlackJack() -> {
+                GameResult.`승`
             }
+
+            else -> GameResult.무
         }
     }
 }

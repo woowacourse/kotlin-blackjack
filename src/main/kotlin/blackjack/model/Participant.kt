@@ -29,5 +29,7 @@ abstract class Participant(val name: String) {
         return threshold == score
     }
 
+    fun isBlackJack(): Boolean = cardList.size == 2 && isMaxScore()
+
     abstract fun isHitable(): Boolean
 }
