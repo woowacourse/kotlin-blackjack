@@ -1,6 +1,7 @@
 package blackjack.view
 
 import blackjack.model.GameInfo
+import blackjack.model.Judge
 import blackjack.model.Scoreboard
 
 object OutputView {
@@ -55,16 +56,13 @@ object OutputView {
         }
     }
 
-    fun printResult(
-        dealerResult: Scoreboard,
-        playersResult: List<String>,
-        playersGameInfo: List<GameInfo>,
-        dealerGameInfo: GameInfo,
-    ) {
+    fun printResult(judge: Judge) {
         println(MESSAGE_TITLE_RESULT)
-        println(MESSAGE_CARD_STATUS.format(dealerGameInfo.name, getDealerResult(dealerResult)))
-        playersResult.zip(playersGameInfo) { result, stat ->
-            println(MESSAGE_CARD_STATUS.format(stat.name, result))
+        with(judge) {
+            println(MESSAGE_CARD_STATUS.format(dealerInfo.name, getDealerResult(getDealerResult())))
+            getPlayerResults().zip(playersInfo) { result, stat ->
+                println(MESSAGE_CARD_STATUS.format(stat.name, result))
+            }
         }
     }
 

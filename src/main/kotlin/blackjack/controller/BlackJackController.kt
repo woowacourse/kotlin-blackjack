@@ -14,23 +14,34 @@ object BlackJackController {
         val playerNames = getPlayerNames()
         val dealer = Dealer(playerNames)
         val players =
-            List(playerNames.size) { Player(GameInfo(playerNames[it]), onInputDecision = { askPlayerHit(playerNames[it]) }) }
+            List(playerNames.size) {
+                Player(gameInfo = GameInfo(playerNames[it]), onInputDecision = { askPlayerHit(playerNames[it]) })
+            }
         initializeParticipantsCards(dealer, players)
         playRound(players, dealer)
         displayResult(dealer, players)
     }
 
-    private fun displayResult(
+    private fun getPlayerNames(): List<String> {
+        return runCatching {
+            InputView.readPlayerNames() ?: getPlayerNames()
+        }.onFailure {
+            println(it.message)
+            return getPlayerNames()
+        }.getOrThrow()
+    }
+
+    private fun initializeParticipantsCards(
         dealer: Dealer,
         players: List<Player>,
     ) {
-        val dealerStat = dealer.gameInfo
-        val playerStat = players.map { player -> player.gameInfo }
-        val judge = Judge(dealerStat, playerStat)
-        with(OutputView) {
-            printResult(judge.getDealerResult(), judge.getPlayerResults(), playerStat, dealerStat)
-            printFinalCards(dealerStat, playerStat)
+        dealer.drawCard { CardDeck.pick() }
+
+        players.forEach { player ->
+            player.initializeCards { CardDeck.pick() }
         }
+
+        displayInitializedCards(dealer.gameInfo, players.map { it.gameInfo })
     }
 
     private fun playRound(
@@ -46,13 +57,17 @@ object BlackJackController {
         }
     }
 
-    private fun getPlayerNames(): List<String> {
-        return runCatching {
-            InputView.readPlayerNames() ?: getPlayerNames()
-        }.onFailure {
-            println(it.message)
-            return getPlayerNames()
-        }.getOrThrow()
+    private fun displayResult(
+        dealer: Dealer,
+        players: List<Player>,
+    ) {
+        val dealerInfo = dealer.gameInfo
+        val playersInfo = players.map { player -> player.gameInfo }
+        val judge = Judge(dealerInfo, playersInfo)
+        with(OutputView) {
+            printResult(judge)
+            printFinalCards(dealerInfo, playersInfo)
+        }
     }
 
     private fun Participant.drawForSingleParticipant(printCards: (GameInfo) -> Unit) {
@@ -66,18 +81,5 @@ object BlackJackController {
         playersInfo: List<GameInfo>,
     ) {
         OutputView.printInitialStats(dealerInfo, playersInfo)
-    }
-
-    private fun initializeParticipantsCards(
-        dealer: Dealer,
-        players: List<Player>,
-    ) {
-        dealer.drawCard { CardDeck.pick() }
-
-        players.forEach { player ->
-            player.initializeCards { CardDeck.pick() }
-        }
-
-        displayInitializedCards(dealer.gameInfo, players.map { it.gameInfo })
     }
 }
