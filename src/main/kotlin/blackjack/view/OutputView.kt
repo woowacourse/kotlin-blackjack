@@ -13,26 +13,37 @@ class OutputView {
         players: Players,
     ) {
         val playersNameMessage = players.playerGroup.map { it.name }.joinToString(PLAYERS_NAME_SEPARATOR)
+        lineBreak()
         println(DIVIDE_CARD_FINISH_MESSAGE.format(playersNameMessage))
         println("딜러: ${dealer.getDealerInitCardsMessage()}")
 
         players.playerGroup.forEach {
             println(it.getPlayerCardsMessage())
         }
+        lineBreak()
     }
 
-    fun Player.getPlayerCardsMessage() = "${name}카드: ${getCardsMessage()}"
+    fun printPlayerCardsMessage(player: Player) {
+        println("${player.name}카드: ${player.getCardsMessage()}")
+    }
 
-    fun printDealerAdditionalCardMessage() = println(DEALER_ADDITIONAL_CARD_MESSAGE)
+    private fun Player.getPlayerCardsMessage() = "${name}카드: ${getCardsMessage()}"
+
+    fun printDealerAdditionalCardMessage() {
+        lineBreak()
+        println(DEALER_ADDITIONAL_CARD_MESSAGE)
+    }
 
     fun printPlayersCardResult(
         dealer: Dealer,
         players: Players,
     ) {
+        lineBreak()
         println(dealer.getDealerCardsMessage() + dealer.getPlayerCardResult())
         players.playerGroup.forEach {
             println(it.getPlayerCardsMessage() + it.getPlayerCardResult())
         }
+        lineBreak()
     }
 
     fun printFinalGameResult(
@@ -43,13 +54,15 @@ class OutputView {
         print("딜러: ")
         printDealerFinalGameResult(dealer)
         printPlayersFinalGameResult(players)
+        lineBreak()
     }
 
     private fun printDealerFinalGameResult(dealer: Dealer) {
         GameResult.entries.forEach { gameResult ->
             val count = dealer.result.results[gameResult] ?: return@forEach
-            print("${count}${gameResult.message}")
+            print("${count}${gameResult.message} ")
         }
+        lineBreak()
     }
 
     private fun printPlayersFinalGameResult(players: Players) {
@@ -68,9 +81,11 @@ class OutputView {
         return getCards().joinToString(separator = CARDS_SEPARATOR, transform = { it.toCardMessage() })
     }
 
-    private fun Card.toCardMessage() = "${this.denomination}${this.suite}"
+    private fun Card.toCardMessage() = "${denomination.value}${suite.value}"
 
     private fun Role.getPlayerCardResult() = " - 결과: ${getCardSum()}"
+
+    private fun lineBreak() = println()
 
     companion object {
         private const val PLAYERS_NAME_SEPARATOR = ", "
