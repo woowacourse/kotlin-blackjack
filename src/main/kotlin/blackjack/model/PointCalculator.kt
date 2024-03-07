@@ -10,10 +10,6 @@ class DefaultPointCalculator : PointCalculator {
         return sumIfIncludeAce(cards)
     }
 
-    private fun List<Card>.hasAce(): Boolean {
-        return any { it.isAce() }
-    }
-
     private fun sumIfExcludeAce(cards: List<Card>): Int? {
         val sum = cards.sum()
         if (sum > 21) return null
@@ -21,24 +17,17 @@ class DefaultPointCalculator : PointCalculator {
     }
 
     private fun sumIfIncludeAce(cards: List<Card>): Int? {
-        val (aceCards, notAceCards) = cards.partition { it.isAce() }
         val condition = 21
-        val min = minSumOf(aceCards, notAceCards)
-        val max = maxSumOf(aceCards, notAceCards)
+        val min = cards.sum()
+        val max = min + Rank.ACE.bonusNumber
         if (min > condition) return null
         if (max <= condition) return max
         return min
     }
 
-    private fun minSumOf(
-        aceCards: List<Card>,
-        notAceCards: List<Card>,
-    ) = aceCards.size + notAceCards.sum()
-
-    private fun maxSumOf(
-        aceCards: List<Card>,
-        notAceCards: List<Card>,
-    ) = minSumOf(aceCards, notAceCards) + 10
-
     private fun List<Card>.sum() = sumOf { it.rank.point }
+
+    private fun List<Card>.hasAce(): Boolean {
+        return any { it.isAce() }
+    }
 }
