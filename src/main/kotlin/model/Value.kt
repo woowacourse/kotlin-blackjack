@@ -1,6 +1,6 @@
 package model
 
-enum class Value(name: String, val amount: Int) {
+enum class Value(val rank: String, val amount: Int) {
     ACE("A", 1),
     TWO("2", 2),
     THREE("3", 3),
