@@ -22,7 +22,7 @@ class DealerTest {
 
     @Test
     fun `딜러는 게임이 시작될 때 카드 2장을 받는다`() {
-        assertThat(dealer.getAllCard().split(", ").size).isEqualTo(INIT_CARD_SIZE)
+        assertThat(dealer.getAllCards().split(", ").size).isEqualTo(INIT_CARD_SIZE)
     }
 
     @Test
@@ -33,7 +33,7 @@ class DealerTest {
     @Test
     fun `딜러는 카드를 추가로 받을 수 있다`() {
         dealer.addCard()
-        assertThat(dealer.getAllCard().split(", ").size).isEqualTo(3)
+        assertThat(dealer.getAllCards().split(", ").size).isEqualTo(3)
     }
 
     @Test

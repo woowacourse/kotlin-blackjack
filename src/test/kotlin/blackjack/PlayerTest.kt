@@ -14,15 +14,14 @@ class PlayerTest {
     @BeforeEach
     fun setUp() {
         CardMachineManager.machine = TestCardMachine()
-        val handCards = HandCards(Deck())
-        player = Player("채채", handCards)
+        player = Player("채채", Deck())
     }
 
     @Test
     fun `플레이어는 카드를 추가로 받을 수 있다`() {
-        assertThat(player.getCards().split(", ").size).isEqualTo(START_CARD_SIZE)
+        assertThat(player.getAllCards().split(", ").size).isEqualTo(START_CARD_SIZE)
         player.addCard(true)
-        assertThat(player.getCards().split(", ").size).isEqualTo(START_CARD_SIZE + 1)
+        assertThat(player.getAllCards().split(", ").size).isEqualTo(START_CARD_SIZE + 1)
     }
 
     companion object {
