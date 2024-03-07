@@ -3,6 +3,7 @@ package blackjack.controller
 import blackjack.model.participant.Dealer
 import blackjack.model.deck.Deck
 import blackjack.model.participant.Player
+import blackjack.model.participant.Players
 import blackjack.view.IsAddCardInputView
 import blackjack.view.OutputView
 import blackjack.view.PlayersInputView
@@ -13,20 +14,25 @@ class BlackjackController(
     private val outputView: OutputView = OutputView(),
 ) {
     private val deck = Deck()
+    private val dealer = Dealer(deck)
+    private lateinit var players: Players
 
     fun play() {
-        val dealer = Dealer(deck)
-        val players = playersInputView.readPlayerNames(deck)
-        outputView.printInitCard(dealer, players)
+        setUpGame()
+        gamePlayersTurn()
+        dealerTurn(dealer)
+        showResult()
+    }
 
+    private fun setUpGame() {
+        players = playersInputView.readPlayerNames(deck)
+        outputView.printInitCard(dealer, players)
+    }
+
+    private fun gamePlayersTurn() {
         players.gamePlayers.forEach { player ->
             playerTurn(player)
         }
-
-        dealerTurn(dealer)
-
-        outputView.printCardResult(dealer, players)
-        outputView.printGameResult(dealer.gameResult(players.gamePlayers))
     }
 
     private tailrec fun playerTurn(player: Player) {
@@ -45,5 +51,10 @@ class BlackjackController(
             outputView.printDealerAddCard()
             dealerTurn(dealer)
         }
+    }
+
+    private fun showResult() {
+        outputView.printCardResult(dealer, players)
+        outputView.printGameResult(dealer.gameResult(players.gamePlayers))
     }
 }
