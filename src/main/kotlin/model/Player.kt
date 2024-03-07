@@ -1,10 +1,10 @@
 package model
 
-class Player(override val hand: Hand, val name: Name = Name.fromInput("Player")) : Human(hand) {
+class Player(override val hand: Hand, override val name: Name = Name.fromInput("Player")) : Human(hand, name) {
     override fun hit(): Boolean {
         if (isPossible()) {
             hand.draw()
-            return true
+            return isPossible()
         }
         return false
     }

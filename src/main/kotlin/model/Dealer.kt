@@ -1,6 +1,6 @@
 package model
 
-class Dealer(override val hand: Hand) : Human(hand) {
+class Dealer(override val hand: Hand, override val name: Name = Name.fromInput("딜러")) : Human(hand, name) {
     fun play() {
         while (hit()) ;
     }
@@ -8,7 +8,7 @@ class Dealer(override val hand: Hand) : Human(hand) {
     override fun hit(): Boolean {
         if (isPossible()) {
             hand.draw()
-            return true
+            return isPossible()
         }
         return false
     }
