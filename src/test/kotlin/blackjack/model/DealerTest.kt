@@ -9,8 +9,8 @@ import org.junit.jupiter.params.provider.MethodSource
 import org.junit.jupiter.params.provider.ValueSource
 import java.util.stream.Stream
 
-fun getPlayers(numberOfPlayers: Int): Set<String> {
-    return List(numberOfPlayers) { "player$it" }.toSet()
+fun getPlayers(numberOfPlayers: Int): List<String> {
+    return List(numberOfPlayers) { "player$it" }
 }
 
 class DealerTest {
@@ -23,6 +23,16 @@ class DealerTest {
                 Dealer(players)
             }
         assertThat(exception.message).isEqualTo("플레이어의 수로 ${players.size}를 입력했습니다. 플레이어 수는 2부터 8까지 가능합니다.")
+    }
+
+    @Test
+    fun `참여자 이름이 중복이 있으면, 예외를 발생시킨다`() {
+        val players = listOf("케이엠", "케이엠", "해음")
+        val exception =
+            assertThrows<IllegalArgumentException> {
+                Dealer(players)
+            }
+        assertThat(exception.message).isEqualTo("중복된 플레이어의 이름을 입력하셨습니다.")
     }
 
     @Test

@@ -1,10 +1,13 @@
 package blackjack.model
 
 class Dealer(
-    val players: Set<String>,
+    val players: List<String>,
     val gameInfo: GameInfo = GameInfo("딜러"),
 ) : Participant {
     init {
+        require(players.distinct().size == players.size) {
+            EXCEPTION_DUPLICATED_PLAYERS
+        }
         require(players.size in PLAYER_NUM_RANGE) {
             EXCEPTION_NUMBER_OF_PLAYERS.format(players.size)
         }
@@ -43,5 +46,7 @@ class Dealer(
         private val PLAYER_NUM_RANGE = MINIMUM_NUMBER_OF_PLAYERS..MAXIMUM_NUMBER_OF_PLAYERS
         private const val EXCEPTION_NUMBER_OF_PLAYERS =
             "플레이어의 수로 %d를 입력했습니다. 플레이어 수는 ${MINIMUM_NUMBER_OF_PLAYERS}부터 ${MAXIMUM_NUMBER_OF_PLAYERS}까지 가능합니다."
+        private const val EXCEPTION_DUPLICATED_PLAYERS =
+            "중복된 플레이어의 이름을 입력하셨습니다."
     }
 }
