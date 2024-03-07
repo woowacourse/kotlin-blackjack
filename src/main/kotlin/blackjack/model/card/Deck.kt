@@ -1,21 +1,17 @@
 package blackjack.model.card
 
-class Deck {
-    var cards: List<Card>
+object Deck {
+    val cards: MutableList<Card> = mutableListOf()
 
-    init {
-        val allCards = mutableListOf<Card>()
+    fun initialize() {
+        cards.clear()
         for (suit in Suit.entries) {
             for (denomination in Denomination.entries) {
-                allCards.add(Card(denomination, suit))
+                cards.add(Card(denomination, suit))
             }
         }
-        cards = allCards.shuffled()
+        cards.shuffle()
     }
 
-    fun dealCard(): Card {
-        val card = cards.first()
-        cards = cards.drop(1)
-        return card
-    }
+    fun dealCard(): Card = cards.removeAt(0)
 }

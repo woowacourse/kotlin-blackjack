@@ -13,8 +13,7 @@ class ScoreCalculationTest {
     fun `스코어 계산하기`() {
         val cards = mutableListOf(Card(Denomination.ACE, Suit.HEARTS), Card(Denomination.SIX, Suit.SPADES))
         val hand = Hand(cards)
-        val scoreCalculation = ScoreCalculation()
-        val totalScore = scoreCalculation.calculate(hand)
+        val totalScore = ScoreCalculation.calculate(hand)
 
         assertThat(totalScore).isEqualTo(17)
     }

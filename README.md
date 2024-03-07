@@ -3,6 +3,7 @@
 ## Class 다이어그램
 
 ![ClassDiagram.png](image%2FClassDiagram.png)
+
 <br>
 
 ## 기능 구현 사항
@@ -73,6 +74,7 @@
 ### ScoreCalculation
 
 - [x] 스코어 계산하기
+- [ ] 만약 버스트 and ACE 가지고 있으면 ACE -> 1
 
 ### Result
 
@@ -89,7 +91,7 @@
 ### Dealer
 
 - [x] 딜러객체 생성
-- [ ] 딜러의 Hand<17 이면 draw
+- [x] 딜러의 Hand의 합이 17 이하면 draw
 
 ### PlayerEntry
 
