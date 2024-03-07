@@ -1,13 +1,6 @@
 package blackjack.controller
 
-import blackjack.model.BlackjackGame
-import blackjack.model.CardDeck
-import blackjack.model.CardDeckGenerator
-import blackjack.model.Dealer
-import blackjack.model.Hand
-import blackjack.model.Participants
-import blackjack.model.Player
-import blackjack.model.State
+import blackjack.model.*
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -33,7 +26,7 @@ class BlackjackController {
     ): Participants {
         val dealer = Dealer(state = State.initializeSetting(Hand(deck.initialDistribute())))
         val players: List<Player> =
-            names.map { Player(it, State.initializeSetting(Hand(deck.initialDistribute()))) }
+            names.map { Player(ParticipantName(it), State.initializeSetting(Hand(deck.initialDistribute()))) }
 
         return Participants(dealer, players)
     }

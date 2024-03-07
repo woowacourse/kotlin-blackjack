@@ -1,6 +1,6 @@
 package blackjack.model
 
-abstract class Participant(val name: String, state: State) {
+abstract class Participant(val name: ParticipantName, state: State) {
     var state = state
         private set
 

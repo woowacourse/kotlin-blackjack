@@ -2,7 +2,7 @@ package blackjack.model
 
 class BlackjackGame(private val deck: CardDeck, val participants: Participants) {
     fun playRound(
-        askForPlayerAction: (name: String) -> Boolean,
+        askForPlayerAction: (name: ParticipantName) -> Boolean,
         displayParticipantsStatus: (Participant) -> Unit,
     ) {
         playRoundForPlayers(askForPlayerAction, displayParticipantsStatus)
@@ -10,7 +10,7 @@ class BlackjackGame(private val deck: CardDeck, val participants: Participants) 
     }
 
     private fun playRoundForPlayers(
-        askForPlayerAction: (name: String) -> Boolean,
+        askForPlayerAction: (name: ParticipantName) -> Boolean,
         displayParticipantsStatus: (player: Player) -> Unit,
     ) {
         participants.players.forEach { player ->

@@ -15,7 +15,7 @@ private fun createPlayer(
     vararg numbers: Int,
 ): Player {
     val hand = Hand(numbers.map { Card(it) })
-    return Player(name, state = Hit(hand))
+    return Player(ParticipantName(name), state = Hit(hand))
 }
 
 private fun Card(value: Int): Card {
