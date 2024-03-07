@@ -10,7 +10,8 @@ class Player(
                 gameInfo.addCard(generateCard())
                 checkBurst()
             }
-            STAY -> PickingState.STOP
+
+            STAY -> PickingState.STAND
             else -> throw IllegalArgumentException(EXCEPTION_PLAYER_INPUT)
         }
     }
@@ -19,13 +20,11 @@ class Player(
         generateCard: () -> Card,
         printCards: (GameInfo) -> Unit,
     ) {
-        while (true) {
-            val pickingState = drawCard { generateCard() }
-            printCards(gameInfo)
-            when (pickingState) {
-                PickingState.CONTINUE -> continue
-                PickingState.STOP -> break
-            }
+        val pickingState = drawCard { generateCard() }
+        printCards(gameInfo)
+        when (pickingState) {
+            PickingState.HIT -> drawUntilSatisfaction(generateCard, printCards)
+            PickingState.STAND -> return
         }
     }
 
@@ -36,7 +35,7 @@ class Player(
     }
 
     private fun checkBurst(): PickingState {
-        return if (gameInfo.total > MAXIMUM_CARD_TOTAL) PickingState.STOP else PickingState.CONTINUE
+        return if (gameInfo.total > MAXIMUM_CARD_TOTAL) PickingState.STAND else PickingState.HIT
     }
 
     companion object {

@@ -52,7 +52,7 @@ class PlayerTest {
             }
         assertAll(
             { assertThat(player.gameInfo.cards).hasSize(1) },
-            { assertThat(actualState).isEqualTo(PickingState.STOP) },
+            { assertThat(actualState).isEqualTo(PickingState.STAND) },
         )
     }
 
@@ -70,7 +70,7 @@ class PlayerTest {
             }
         assertAll(
             { assertThat(player.gameInfo.cards).hasSize(3) },
-            { assertThat(actualState).isEqualTo(PickingState.STOP) },
+            { assertThat(actualState).isEqualTo(PickingState.STAND) },
         )
     }
 }

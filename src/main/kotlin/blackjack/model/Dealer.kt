@@ -16,25 +16,21 @@ class Dealer(
     override fun drawCard(generateCard: () -> Card): PickingState {
         if (isDrawAvailable()) {
             gameInfo.addCard(generateCard())
-            return PickingState.CONTINUE
-        } else {
-            return PickingState.STOP
+            return PickingState.HIT
         }
+        return PickingState.STAND
     }
 
     override fun drawUntilSatisfaction(
         generateCard: () -> Card,
         printCards: (GameInfo) -> Unit,
     ) {
-        while (true) {
-            val pickingState = drawCard { generateCard() }
-            when (pickingState) {
-                PickingState.CONTINUE -> {
-                    printCards(gameInfo)
-                }
-                PickingState.STOP -> break
-            }
+        val pickingState = drawCard { generateCard() }
+        when (pickingState) {
+            PickingState.HIT -> printCards(gameInfo)
+            PickingState.STAND -> return
         }
+        drawUntilSatisfaction(generateCard, printCards)
     }
 
     private fun isDrawAvailable(): Boolean = gameInfo.total <= MAXIMUM_DRAW_THRESHOLD

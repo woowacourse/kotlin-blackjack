@@ -78,7 +78,7 @@ class DealerTest {
 
         assertAll(
             { assertThat(actualSize).isEqualTo(expectedSize) },
-            { assertThat(pickingState).isEqualTo(PickingState.CONTINUE) },
+            { assertThat(pickingState).isEqualTo(PickingState.HIT) },
         )
     }
 
@@ -108,7 +108,7 @@ class DealerTest {
         assertAll({
             assertThat(actualSize).isEqualTo(expectedSize)
         }, {
-            assertThat(pickingState).isEqualTo(PickingState.STOP)
+            assertThat(pickingState).isEqualTo(PickingState.STAND)
         })
     }
 
