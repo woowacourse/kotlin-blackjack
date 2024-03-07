@@ -65,26 +65,26 @@ class PlayerTest {
         @JvmStatic
         fun `기준치 판단 테스트 데이터`() =
             listOf(
-                Arguments.of(listOf(Card("10", "하트"), Card("K", "다이아몬드")), false),
-                Arguments.of(listOf(Card("10", "하트"), Card("K", "다이아몬드"), Card("1", "다이아몬드")), true),
-                Arguments.of(listOf(Card("10", "하트"), Card("K", "다이아몬드"), Card("2", "다이아몬드")), true),
+                Arguments.of(listOf(Card.of("10", "하트"), Card.of("K", "다이아몬드")), false),
+                Arguments.of(listOf(Card.of("10", "하트"), Card.of("K", "다이아몬드"), Card.of("2", "다이아몬드")), true),
+                Arguments.of(listOf(Card.of("10", "하트"), Card.of("K", "다이아몬드"), Card.of("3", "다이아몬드")), true),
             )
 
         @JvmStatic
         fun `최적의 카드 값 계산 테스트 데이터`() =
             listOf(
-                Arguments.of(listOf(Card("A", "하트")), 11),
-                Arguments.of(listOf(Card("A", "하트"), Card("A", "다이아몬드")), 12),
-                Arguments.of(listOf(Card("A", "하트"), Card("K", "다이아몬드")), 21),
-                Arguments.of(listOf(Card("5", "하트"), Card("5", "다이아몬드"), Card("A", "다이아몬드")), 21),
+                Arguments.of(listOf(Card.of("A", "하트")), 11),
+                Arguments.of(listOf(Card.of("A", "하트"), Card.of("A", "다이아몬드")), 12),
+                Arguments.of(listOf(Card.of("A", "하트"), Card.of("K", "다이아몬드")), 21),
+                Arguments.of(listOf(Card.of("5", "하트"), Card.of("5", "다이아몬드"), Card.of("A", "다이아몬드")), 21),
             )
 
         @JvmStatic
         fun `게임 결과 결정 테스트 데이터`() =
             listOf(
-                Arguments.of(listOf(Card("K", "하트")), listOf(Card("9", "하트")), GameResult.WIN),
-                Arguments.of(listOf(Card("K", "하트")), listOf(Card("Q", "하트")), GameResult.DRAW),
-                Arguments.of(listOf(Card("3", "하트")), listOf(Card("9", "하트")), GameResult.LOSE),
+                Arguments.of(listOf(Card.of("K", "하트")), listOf(Card.of("9", "하트")), GameResult.WIN),
+                Arguments.of(listOf(Card.of("K", "하트")), listOf(Card.of("Q", "하트")), GameResult.DRAW),
+                Arguments.of(listOf(Card.of("3", "하트")), listOf(Card.of("9", "하트")), GameResult.LOSE),
             )
     }
 }

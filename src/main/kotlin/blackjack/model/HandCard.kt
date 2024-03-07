@@ -10,6 +10,6 @@ class HandCard {
     }
 
     fun getAceCount(): Int {
-        return _cards.count { it.isAce() }
+        return _cards.count { it.denomination.isAce() }
     }
 }

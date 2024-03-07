@@ -4,6 +4,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.MethodSource
 import org.junit.jupiter.params.provider.ValueSource
 
@@ -22,6 +23,16 @@ class DenominationTest {
         expected: Denomination,
     ) {
         val actual = Denomination.from(denomination)
+        assertThat(actual).isEqualTo(expected)
+    }
+
+    @CsvSource("A, true", "10, false")
+    @ParameterizedTest
+    fun `A인지 확인한다`(
+        denomination: String,
+        expected: Boolean,
+    ) {
+        val actual = Denomination.from(denomination)?.isAce()
         assertThat(actual).isEqualTo(expected)
     }
 

@@ -13,10 +13,10 @@ class BlackjackGameTest {
         val players = Players(listOf(player1, player2, player3))
         val dealer = Dealer()
 
-        player1.receiveCard(Card("2", "하트"))
-        player2.receiveCard(Card("K", "하트"))
-        player3.receiveCard(Card("8", "다이아몬드"))
-        dealer.receiveCard(Card("8", "하트"))
+        player1.receiveCard(Card.of("2", "하트"))
+        player2.receiveCard(Card.of("K", "하트"))
+        player3.receiveCard(Card.of("8", "다이아몬드"))
+        dealer.receiveCard(Card.of("8", "하트"))
 
         // when
         BlackjackGame.updateGameResult(players, dealer)

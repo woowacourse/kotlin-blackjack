@@ -7,7 +7,7 @@ class ScoreBoard {
 
     fun add(card: Card) {
         handCard.add(card)
-        cardSum += card.getValue()
+        cardSum += card.denomination.score
     }
 
     fun optimizeCardSum(burstCondition: Int) {
@@ -18,10 +18,10 @@ class ScoreBoard {
     }
 
     private fun handleAceValue(burstCondition: Int): Boolean {
-        if (cardSum + Card.ADDITIONAL_ACE_VALUE > burstCondition) {
+        if (cardSum + Denomination.ADDITIONAL_ACE_SCORE > burstCondition) {
             return true
         }
-        cardSum += Card.ADDITIONAL_ACE_VALUE
+        cardSum += Denomination.ADDITIONAL_ACE_SCORE
         return false
     }
 }

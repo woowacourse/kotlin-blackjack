@@ -45,18 +45,18 @@ class DealerTest {
         @JvmStatic
         fun `기준치 판단 테스트 데이터`() =
             listOf(
-                Arguments.of(listOf(Card("10", "하트"), Card("6", "다이아몬드")), false),
-                Arguments.of(listOf(Card("10", "하트"), Card("7", "다이아몬드")), true),
-                Arguments.of(listOf(Card("10", "하트"), Card("8", "다이아몬드")), true),
+                Arguments.of(listOf(Card.of("10", "하트"), Card.of("6", "다이아몬드")), false),
+                Arguments.of(listOf(Card.of("10", "하트"), Card.of("7", "다이아몬드")), true),
+                Arguments.of(listOf(Card.of("10", "하트"), Card.of("8", "다이아몬드")), true),
             )
 
         @JvmStatic
         fun `최적의 카드 값 계산 테스트 데이터`() =
             listOf(
-                Arguments.of(listOf(Card("A", "하트")), 11),
-                Arguments.of(listOf(Card("A", "하트"), Card("A", "다이아몬드")), 12),
-                Arguments.of(listOf(Card("A", "하트"), Card("6", "다이아몬드")), 17),
-                Arguments.of(listOf(Card("A", "하트"), Card("7", "다이아몬드")), 8),
+                Arguments.of(listOf(Card.of("A", "하트")), 11),
+                Arguments.of(listOf(Card.of("A", "하트"), Card.of("A", "다이아몬드")), 12),
+                Arguments.of(listOf(Card.of("A", "하트"), Card.of("6", "다이아몬드")), 17),
+                Arguments.of(listOf(Card.of("A", "하트"), Card.of("7", "다이아몬드")), 8),
             )
     }
 }
