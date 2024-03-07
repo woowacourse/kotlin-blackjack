@@ -2,35 +2,24 @@ package blackjack.model
 
 class Dealer(
     val players: Set<String>,
-    cards: Set<Card> = emptySet(),
+    val gameInfo: GameInfo = GameInfo("딜러"),
 ) {
-    private val _cards: MutableSet<Card> = cards.toMutableSet()
-    val cards: Set<Card>
-        get() = _cards
-
     init {
         require(players.size in PLAYER_NUM_RANGE) {
             EXCEPTION_NUMBER_OF_PLAYERS.format(players.size)
         }
     }
 
-    fun getStat(): Stat {
-        return Stat("딜러", cards.sumOf { it.value }, cards)
-    }
-
     fun drawCard(generateCard: () -> Card): PickingState {
         if (isDrawAvailable()) {
-            _cards.add(generateCard())
+            gameInfo.addCard(generateCard())
             return PickingState.CONTINUE
         } else {
             return PickingState.STOP
         }
     }
 
-    private fun isDrawAvailable(): Boolean {
-        val total = cards.sumOf { card -> card.value }
-        return total <= MAXIMUM_DRAW_THRESHOLD
-    }
+    private fun isDrawAvailable(): Boolean = gameInfo.total <= MAXIMUM_DRAW_THRESHOLD
 
     companion object {
         private const val MAXIMUM_DRAW_THRESHOLD = 16

@@ -2,6 +2,7 @@ package blackjack.controller
 
 import blackjack.model.CardDeck
 import blackjack.model.Dealer
+import blackjack.model.GameInfo
 import blackjack.model.Judge
 import blackjack.model.PickingState
 import blackjack.model.Player
@@ -20,7 +21,7 @@ class BlackJackController(
         val playerNames = getPlayerNames()
         dealer = Dealer(playerNames.toSet())
         players =
-            List(playerNames.size) { Player(playerNames[it], onInputDecision = { askPlayerHit(playerNames[it]) }) }
+            List(playerNames.size) { Player(GameInfo(playerNames[it]), onInputDecision = { askPlayerHit(playerNames[it]) }) }
         dealer.drawCard { cardDeck.pick() }
         initializePlayerCards()
         displayInitializedCards()
@@ -35,14 +36,14 @@ class BlackJackController(
             val pickingState = dealer.drawCard { cardDeck.pick() }
             when (pickingState) {
                 PickingState.CONTINUE -> {
-                    outputView.printDealerHit(dealer.getStat())
+                    outputView.printDealerHit(dealer.gameInfo)
                 }
                 PickingState.STOP -> break
             }
         }
 
-        val dealerStat = dealer.getStat()
-        val playerStat = players.map { it.getStat() }
+        val dealerStat = dealer.gameInfo
+        val playerStat = players.map { it.gameInfo }
 
         val judge = Judge(dealerStat, playerStat)
 
@@ -55,7 +56,7 @@ class BlackJackController(
             val pickingState = player.drawCard { cardDeck.pick() }
             when (pickingState) {
                 PickingState.CONTINUE -> {
-                    outputView.printSinglePlayerCards(playerStat = player.getStat())
+                    outputView.printSinglePlayerCards(gameInfo = player.gameInfo)
                 }
 
                 PickingState.STOP -> break
@@ -66,8 +67,8 @@ class BlackJackController(
     private fun askPlayerHit(playerName: String): String = inputView.readContinueInput(playerName) ?: askPlayerHit(playerName)
 
     private fun displayInitializedCards() {
-        val dealerStat = dealer.getStat()
-        val playersStats = players.map { it.getStat() }
+        val dealerStat = dealer.gameInfo
+        val playersStats = players.map { it.gameInfo }
         outputView.printInitialStats(dealerStat, playersStats)
     }
 

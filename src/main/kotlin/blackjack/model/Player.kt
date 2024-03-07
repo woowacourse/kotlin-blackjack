@@ -1,39 +1,28 @@
 package blackjack.model
 
 class Player(
-    val name: String,
-    cards: Set<Card> = emptySet(),
+    val gameInfo: GameInfo,
     val onInputDecision: () -> String,
 ) {
-    private val _cards: MutableSet<Card> = cards.toMutableSet()
-    val cards: Set<Card>
-        get() = _cards
-
-    fun getStat(): Stat {
-        return Stat(name, cards.sumOf { it.value }, cards)
-    }
-
     fun drawCard(generateCard: () -> Card): PickingState {
         return when (onInputDecision()) {
             HIT -> {
-                _cards.add(generateCard())
+                gameInfo.addCard(generateCard())
                 checkBurst()
             }
-
             STAY -> PickingState.STOP
-
             else -> throw IllegalArgumentException(EXCEPTION_PLAYER_INPUT)
         }
     }
 
     fun initializeCards(generateCard: () -> Card) {
         repeat(2) {
-            _cards.add(generateCard())
+            gameInfo.addCard(generateCard())
         }
     }
 
     private fun checkBurst(): PickingState {
-        return if (cards.sumOf { it.value } > MAXIMUM_CARD_TOTAL) PickingState.STOP else PickingState.CONTINUE
+        return if (gameInfo.total > MAXIMUM_CARD_TOTAL) PickingState.STOP else PickingState.CONTINUE
     }
 
     companion object {

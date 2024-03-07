@@ -30,14 +30,17 @@ class DealerTest {
         val dealer =
             Dealer(
                 players = getPlayers(2),
-                cards =
-                    setOf(
-                        Card.of(Shape.CLOVER, CardValue.SIX, 0),
-                        Card.of(Shape.HEART, CardValue.K, 6),
+                gameInfo =
+                    GameInfo(
+                        "딜러",
+                        setOf(
+                            Card.of(Shape.CLOVER, CardValue.SIX, 0),
+                            Card.of(Shape.HEART, CardValue.K, 6),
+                        ),
                     ),
             )
 
-        assertThat(dealer.getStat().total).isEqualTo(16)
+        assertThat(dealer.gameInfo.total).isEqualTo(16)
     }
 
     @Test
@@ -45,10 +48,13 @@ class DealerTest {
         val dealer =
             Dealer(
                 players = getPlayers(2),
-                cards =
-                    setOf(
-                        Card.of(Shape.CLOVER, CardValue.SIX, 0),
-                        Card.of(Shape.HEART, CardValue.K, 6),
+                gameInfo =
+                    GameInfo(
+                        "딜러",
+                        setOf(
+                            Card.of(Shape.CLOVER, CardValue.SIX, 0),
+                            Card.of(Shape.HEART, CardValue.K, 6),
+                        ),
                     ),
             )
 
@@ -57,14 +63,13 @@ class DealerTest {
                 Card.of(Shape.CLOVER, CardValue.TWO, 16)
             }
 
-        val actualSize = dealer.cards.size
+        val actualSize = dealer.gameInfo.cards.size
         val expectedSize = 3
 
-        assertAll({
-            assertThat(actualSize).isEqualTo(expectedSize)
-        }, {
-            assertThat(pickingState).isEqualTo(PickingState.CONTINUE)
-        })
+        assertAll(
+            { assertThat(actualSize).isEqualTo(expectedSize) },
+            { assertThat(pickingState).isEqualTo(PickingState.CONTINUE) },
+        )
     }
 
     @Test
@@ -72,10 +77,13 @@ class DealerTest {
         val dealer =
             Dealer(
                 players = getPlayers(2),
-                cards =
-                    setOf(
-                        Card.of(Shape.CLOVER, CardValue.SEVEN, 0),
-                        Card.of(Shape.HEART, CardValue.K, 7),
+                gameInfo =
+                    GameInfo(
+                        "딜러",
+                        setOf(
+                            Card.of(Shape.CLOVER, CardValue.SEVEN, 0),
+                            Card.of(Shape.HEART, CardValue.K, 7),
+                        ),
                     ),
             )
 
@@ -84,7 +92,7 @@ class DealerTest {
                 Card.of(Shape.CLOVER, CardValue.TWO, 17)
             }
 
-        val actualSize = dealer.cards.size
+        val actualSize = dealer.gameInfo.cards.size
         val expectedSize = 2
 
         assertAll({
@@ -99,10 +107,13 @@ class DealerTest {
         val dealer =
             Dealer(
                 players = getPlayers(2),
-                cards =
-                    setOf(
-                        Card.of(Shape.CLOVER, CardValue.SIX, 0),
-                        Card.of(Shape.HEART, CardValue.K, 6),
+                gameInfo =
+                    GameInfo(
+                        "딜러",
+                        setOf(
+                            Card.of(Shape.CLOVER, CardValue.SIX, 0),
+                            Card.of(Shape.HEART, CardValue.K, 6),
+                        ),
                     ),
             )
 
@@ -110,7 +121,7 @@ class DealerTest {
             Card.of(Shape.CLOVER, CardValue.ONE, 16)
         }
 
-        val actualTotal = dealer.cards.sumOf { it.value }
+        val actualTotal = dealer.gameInfo.cards.sumOf { it.value }
         val expectedTotal = 17
 
         assertThat(actualTotal).isEqualTo(expectedTotal)
@@ -121,10 +132,13 @@ class DealerTest {
         val dealer =
             Dealer(
                 players = getPlayers(2),
-                cards =
-                    setOf(
-                        Card.of(Shape.CLOVER, CardValue.SEVEN, 0),
-                        Card.of(Shape.HEART, CardValue.K, 7),
+                gameInfo =
+                    GameInfo(
+                        "딜러",
+                        setOf(
+                            Card.of(Shape.CLOVER, CardValue.SEVEN, 0),
+                            Card.of(Shape.HEART, CardValue.K, 7),
+                        ),
                     ),
             )
 
@@ -132,7 +146,7 @@ class DealerTest {
             Card.of(Shape.CLOVER, CardValue.ONE, 17)
         }
 
-        val actualTotal = dealer.cards.sumOf { it.value }
+        val actualTotal = dealer.gameInfo.cards.sumOf { it.value }
         val expectedTotal = 17
 
         assertThat(actualTotal).isEqualTo(expectedTotal)
@@ -144,13 +158,13 @@ class DealerTest {
         val dealer =
             Dealer(
                 players = getPlayers(2),
-                cards = providedCard.keys,
+                gameInfo = GameInfo("딜러", providedCard.keys),
             )
         dealer.drawCard {
-            Card.of(Shape.CLOVER, CardValue.ONE, dealer.cards.sumOf { it.value })
+            Card.of(Shape.CLOVER, CardValue.ONE, dealer.gameInfo.cards.sumOf { it.value })
         }
 
-        val actualTotal = dealer.cards.sumOf { it.value }
+        val actualTotal = dealer.gameInfo.cards.sumOf { it.value }
         val expectedTotal = providedCard.values.sum()
 
         assertThat(actualTotal).isEqualTo(expectedTotal)

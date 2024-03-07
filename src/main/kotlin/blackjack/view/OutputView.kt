@@ -1,39 +1,39 @@
 package blackjack.view
 
+import blackjack.model.GameInfo
 import blackjack.model.Scoreboard
-import blackjack.model.Stat
 
 class OutputView {
     fun printInitialStats(
-        dealerStat: Stat,
-        playerStats: List<Stat>,
+        dealerGameInfo: GameInfo,
+        playersGameInfo: List<GameInfo>,
     ) {
-        printDistributionMessage(playerStats, dealerStat)
-        println(getDealerCardResult(dealerStat))
-        printPlayerCards(playerStats)
+        printDistributionMessage(playersGameInfo, dealerGameInfo)
+        println(getDealerCardResult(dealerGameInfo))
+        printPlayerCards(playersGameInfo)
         println()
     }
 
-    fun printDealerHit(dealerStat: Stat) {
-        println("${dealerStat.name}는 16이하라 한장의 카드를 더 받았습니다.")
+    fun printDealerHit(gameInfo: GameInfo) {
+        println("${gameInfo.name}는 16이하라 한장의 카드를 더 받았습니다.")
     }
 
     fun printFinalCards(
-        dealerStat: Stat,
-        playerStats: List<Stat>,
+        dealerGameInfo: GameInfo,
+        playersGameInfo: List<GameInfo>,
     ) {
         println()
         println(
             MESSAGE_RESULT.format(
                 MESSAGE_CARD_INFO.format(
-                    dealerStat.name,
-                    dealerStat.cards.joinToString { "${it.value}${it.shape}" },
+                    dealerGameInfo.name,
+                    dealerGameInfo.cards.joinToString { "${it.value}${it.shape}" },
                 ),
-                dealerStat.total,
+                dealerGameInfo.total,
             ),
         )
 
-        playerStats.forEach { playerStat ->
+        playersGameInfo.forEach { playerStat ->
             println(
                 MESSAGE_RESULT.format(
                     MESSAGE_CARD_INFO.format(
@@ -48,14 +48,14 @@ class OutputView {
 
     fun printResult(
         dealerResult: Scoreboard,
-        playerResult: List<String>,
-        playerStats: List<Stat>,
-        dealerStat: Stat,
+        playersResult: List<String>,
+        playersGameInfo: List<GameInfo>,
+        dealerGameInfo: GameInfo,
     ) {
         println()
         println("## 최종 승패")
-        println("${dealerStat.name}: ${getDealerResult(dealerResult)}")
-        playerResult.zip(playerStats) { result, stat ->
+        println("${dealerGameInfo.name}: ${getDealerResult(dealerResult)}")
+        playersResult.zip(playersGameInfo) { result, stat ->
             println("${stat.name}: $result")
         }
     }
@@ -67,34 +67,34 @@ class OutputView {
         return winningResult + drawResult + losingResult
     }
 
-    fun printPlayerCards(playerStats: List<Stat>) {
-        playerStats.forEach { playerStat ->
+    fun printPlayerCards(playersGameInfo: List<GameInfo>) {
+        playersGameInfo.forEach { playerStat ->
             printSinglePlayerCards(playerStat)
         }
     }
 
-    fun printSinglePlayerCards(playerStat: Stat) {
+    fun printSinglePlayerCards(gameInfo: GameInfo) {
         println(
             MESSAGE_CARD_INFO.format(
-                playerStat.name,
-                playerStat.cards.joinToString { "${it.value}${it.shape}" },
+                gameInfo.name,
+                gameInfo.cards.joinToString { "${it.value}${it.shape}" },
             ),
         )
     }
 
-    private fun getDealerCardResult(dealerStat: Stat): String {
+    private fun getDealerCardResult(gameInfo: GameInfo): String {
         return MESSAGE_CARD_INFO.format(
-            dealerStat.name,
-            dealerStat.cards.joinToString { "${it.value}${it.shape}" },
+            gameInfo.name,
+            gameInfo.cards.joinToString { "${it.value}${it.shape}" },
         )
     }
 
     private fun printDistributionMessage(
-        playerStats: List<Stat>,
-        dealerStat: Stat,
+        playersGameInfo: List<GameInfo>,
+        dealerGameInfo: GameInfo,
     ) {
-        val names = playerStats.joinToString { it.name }
-        println(MESSAGE_DISTRIBUTION.format(dealerStat.name, names))
+        val names = playersGameInfo.joinToString { it.name }
+        println(MESSAGE_DISTRIBUTION.format(dealerGameInfo.name, names))
     }
 
     companion object {
