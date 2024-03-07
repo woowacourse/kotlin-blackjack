@@ -3,7 +3,7 @@ package blackjack.model
 class Dealer(
     val players: Set<String>,
     val gameInfo: GameInfo = GameInfo("딜러"),
-) : CardDrawer {
+) : Participant {
     init {
         require(players.size in PLAYER_NUM_RANGE) {
             EXCEPTION_NUMBER_OF_PLAYERS.format(players.size)
@@ -16,6 +16,21 @@ class Dealer(
             return PickingState.CONTINUE
         } else {
             return PickingState.STOP
+        }
+    }
+
+    override fun drawUntilSatisfaction(
+        generateCard: () -> Card,
+        printCards: (GameInfo) -> Unit,
+    ) {
+        while (true) {
+            val pickingState = drawCard { generateCard() }
+            when (pickingState) {
+                PickingState.CONTINUE -> {
+                    printCards(gameInfo)
+                }
+                PickingState.STOP -> break
+            }
         }
     }
 

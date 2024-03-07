@@ -3,7 +3,7 @@ package blackjack.model
 class Player(
     val gameInfo: GameInfo,
     val onInputDecision: () -> String,
-) : CardDrawer {
+) : Participant {
     override fun drawCard(generateCard: () -> Card): PickingState {
         return when (onInputDecision()) {
             HIT -> {
@@ -12,6 +12,20 @@ class Player(
             }
             STAY -> PickingState.STOP
             else -> throw IllegalArgumentException(EXCEPTION_PLAYER_INPUT)
+        }
+    }
+
+    override fun drawUntilSatisfaction(
+        generateCard: () -> Card,
+        printCards: (GameInfo) -> Unit,
+    ) {
+        while (true) {
+            val pickingState = drawCard { generateCard() }
+            printCards(gameInfo)
+            when (pickingState) {
+                PickingState.CONTINUE -> continue
+                PickingState.STOP -> break
+            }
         }
     }
 

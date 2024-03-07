@@ -1,6 +1,6 @@
 package blackjack.model
 
-class CardDeck {
+object CardDeck {
     private val selectedCards: MutableSet<Card> = mutableSetOf()
 
     fun pick(): Card {
