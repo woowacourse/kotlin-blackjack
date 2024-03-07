@@ -2,6 +2,7 @@ package blackjack.view
 
 import blackjack.model.Card
 import blackjack.model.Dealer
+import blackjack.model.GameResult
 import blackjack.model.Player
 import blackjack.model.Players
 import blackjack.model.Role
@@ -31,6 +32,29 @@ class OutputView {
         println(dealer.getDealerCardsMessage() + dealer.getPlayerCardResult())
         players.playerGroup.forEach {
             println(it.getPlayerCardsMessage() + it.getPlayerCardResult())
+        }
+    }
+
+    fun printFinalGameResult(
+        dealer: Dealer,
+        players: Players,
+    ) {
+        println("## 최종 승패")
+        print("딜러: ")
+        printDealerFinalGameResult(dealer)
+        printPlayersFinalGameResult(players)
+    }
+
+    private fun printDealerFinalGameResult(dealer: Dealer) {
+        GameResult.entries.forEach { gameResult ->
+            val count = dealer.result.results[gameResult] ?: return@forEach
+            print("${count}${gameResult.message}")
+        }
+    }
+
+    private fun printPlayersFinalGameResult(players: Players) {
+        players.playerGroup.forEach {
+            println("${it.name}: ${players.playersResult.results[it.name]?.message}")
         }
     }
 
