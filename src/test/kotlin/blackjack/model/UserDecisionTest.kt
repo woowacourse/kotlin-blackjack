@@ -1,27 +1,11 @@
 package blackjack.model
 
+import blackjack.model.user.UserDecision
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 class UserDecisionTest {
-
-    enum class UserDecision(
-        private val userDecision: String
-    ) {
-        YES("y"),
-        NO("n");
-
-        companion object {
-            private const val ERROR_DECISION = "잘못 된 결정입니다."
-
-            fun getUserDecision(input: String): UserDecision {
-                return UserDecision.entries.find {
-                    it.userDecision == input
-                } ?: throw IllegalArgumentException(ERROR_DECISION)
-            }
-        }
-    }
 
     @Test
     fun `정상적인 사용자 결정 테스트`() {
