@@ -1,7 +1,5 @@
 package blackjack.model
 
-import blackjack.fixture.createCard
-import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
@@ -12,8 +10,6 @@ class HandCardsTest {
             HandCards(emptyList())
         }
     }
-
-
 }
 
 fun createHandCards(): HandCards {
