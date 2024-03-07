@@ -22,7 +22,7 @@ fun showHands(
 }
 
 fun showPlayerHand(player: Player) {
-    println(PLAYER_CARD.format(player.name, player.hand.cards.joinToString(", ")))
+    println(PLAYER_CARD.format(player.name, player.hand.cards))
 }
 
 fun showDealerDrawMessage() {

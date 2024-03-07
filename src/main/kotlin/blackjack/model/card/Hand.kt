@@ -11,4 +11,8 @@ class Hand(val cards: MutableList<Card>) {
         totalScore = ScoreCalculation.calculate(this)
         if (card.denomination == Denomination.ACE) aceCount++
     }
+
+    override fun toString(): String {
+        return cards.joinToString(", ")
+    }
 }

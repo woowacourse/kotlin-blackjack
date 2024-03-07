@@ -9,6 +9,7 @@ import blackjack.model.player.PlayerEntry
 import blackjack.view.setGame
 import blackjack.view.showDealerDrawMessage
 import blackjack.view.showHands
+import blackjack.view.showHandsScore
 import blackjack.view.showPlayerDrawMessage
 import blackjack.view.showPlayerHand
 import blackjack.view.showPlayersNameReadMessage
@@ -39,6 +40,8 @@ object BlackJackController {
             showDealerDrawMessage()
             dealer.hand.draw(Deck.dealCard())
         }
+
+        showHandsScore(dealer, playerEntry)
     }
 
     private fun drawOrNot(
