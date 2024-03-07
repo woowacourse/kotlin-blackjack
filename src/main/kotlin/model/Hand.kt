@@ -1,11 +1,11 @@
 package model
 
-class Hand {
+class Hand(private val deck: Deck = TrumpDeck) {
     private var _cards: MutableList<Card> = mutableListOf()
     val cards: List<Card>
         get() = _cards
 
-    fun hit(deck: Deck) {
+    fun draw() {
         _cards.add(deck.pop())
     }
 
