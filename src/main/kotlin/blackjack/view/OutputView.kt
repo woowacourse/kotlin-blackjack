@@ -52,6 +52,7 @@ class OutputView {
         playerStats: List<Stat>,
         dealerStat: Stat,
     ) {
+        println()
         println("## 최종 승패")
         println("${dealerStat.name}: ${getDealerResult(dealerResult)}")
         playerResult.zip(playerStats) { result, stat ->

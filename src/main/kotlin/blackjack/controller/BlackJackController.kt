@@ -2,6 +2,7 @@ package blackjack.controller
 
 import blackjack.model.CardDeck
 import blackjack.model.Dealer
+import blackjack.model.Judge
 import blackjack.model.PickingState
 import blackjack.model.Player
 import blackjack.view.InputView
@@ -40,7 +41,13 @@ class BlackJackController(
             }
         }
 
-        outputView.printFinalCards(dealer.getStat(), players.map { it.getStat() })
+        val dealerStat = dealer.getStat()
+        val playerStat = players.map { it.getStat() }
+
+        val judge = Judge(dealerStat, playerStat)
+
+        outputView.printFinalCards(dealerStat, playerStat)
+        outputView.printResult(judge.getDealerResult(), judge.getPlayerResults(), playerStat, dealerStat)
     }
 
     private fun drawSinglePlayer(player: Player) {
