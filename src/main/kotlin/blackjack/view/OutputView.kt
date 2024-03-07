@@ -16,11 +16,9 @@ class OutputView {
 
         val players = participants.filterIsInstance<Player>()
         println(dealer.name + "와 " + players.joinToString { it.name } + "에게 2장씩 카드를 나눴습니다")
-
-        printInitialCardHands(dealer, players)
     }
 
-    private fun printInitialCardHands(
+    fun printInitialCardHands(
         dealer: Role,
         players: List<Player>,
     ) {
@@ -30,6 +28,7 @@ class OutputView {
         players.forEach {
             print(NAME_CARD_HAND_FORMAT.format(it.name))
             printAllCardHand(it.cardHand)
+            println()
         }
     }
 
@@ -38,9 +37,10 @@ class OutputView {
         println(number.number.toString() + shape.shape)
     }
 
-    fun printDealerHit() = println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+    fun printDealerHit() = println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.")
 
     fun printGameResult(participants: Participants) {
+        println("\n")
         participants.participants.forEach {
             printPlayerCardHand(it)
             println(CARD_HAND_SUM_FORMAT.format(it.cardHand.sum()))
@@ -55,31 +55,13 @@ class OutputView {
         )
     }
 
-    private fun printPlayerCardHand(role: Role) {
+    fun printPlayerCardHand(role: Role) {
         print(NAME_CARD_HAND_FORMAT.format(role.name))
         printAllCardHand(role.cardHand)
     }
 
-    fun printFinalResult(
-        dealerWinning: Map<WinningResultStatus, Int>,
-        playerWinning: PlayerWinning,
-    ) {
-        println("## 최종 승패")
-
-        print("딜러: ")
-        dealerWinning.forEach {
-            print(it.value.toString() + it.key.output + " ")
-        }
-        println()
-
-        playerWinning.result.forEach { (name, status) ->
-            println("$name: ${status.output}")
-        }
-        println()
-    }
-
     fun printFinalDealerResult(dealerWinning: Map<WinningResultStatus, Int>) {
-        println("## 최종 승패")
+        println("\n## 최종 승패")
 
         print("딜러: ")
         dealerWinning.forEach {

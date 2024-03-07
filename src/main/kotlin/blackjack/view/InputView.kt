@@ -12,6 +12,7 @@ class InputView {
     }
 
     fun readIsHit(player: Player): Boolean {
+        println()
         println(
             player.name + "는 한장의 카드를 더 받겠습니까?(${Decision.YES.output}는 ${Decision.YES.input}, ${Decision.NO.output}는 ${Decision.NO.input})",
         )
