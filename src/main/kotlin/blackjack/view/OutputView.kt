@@ -11,7 +11,7 @@ class OutputView {
         dealerFirstCard: Card,
         players: List<Player>,
     ) {
-        println("딜러와 ${players.joinToString { it.name }}에게 2장의 카드를 나누었습니다.")
+        println(MESSAGE_DIVIDED_CARDS.format(players.joinToString { it.name }))
         println(MESSAGE_PLAYER_HAND_CARDS.format(DEALER_NAME, dealerFirstCard.format()))
         players.forEach(::showPlayerHandCards)
     }
@@ -22,7 +22,7 @@ class OutputView {
     }
 
     fun showDealerHitCard() {
-        println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+        println(MESSAGE_DEALER_HIT)
     }
 
     fun showDealerScore(
@@ -47,7 +47,7 @@ class OutputView {
     }
 
     fun showScoreBoard(scoreBoard: ScoreBoard) {
-        println("## 최종 승패")
+        println(MESSAGE_FINAL_RESULT)
         val (playersResult, dealerResult) = scoreBoard
         println(dealerResult.format())
         playersResult.forEach {
@@ -77,8 +77,11 @@ class OutputView {
     }
 
     companion object {
-        const val DEALER_NAME = "딜러"
-        const val MESSAGE_PLAYER_HAND_CARDS = "%s 카드: %s"
-        const val MESSAGE_PARTICIPANT_RESULT = "%s 카드: %s - 결과 : %d"
+        private const val DEALER_NAME = "딜러"
+        private const val MESSAGE_PLAYER_HAND_CARDS = "%s 카드: %s"
+        private const val MESSAGE_PARTICIPANT_RESULT = "%s 카드: %s - 결과 : %d"
+        private const val MESSAGE_DIVIDED_CARDS = "딜러와 %s에게 2장의 카드를 나누었습니다."
+        private const val MESSAGE_DEALER_HIT = "딜러는 16이하라 한장의 카드를 더 받았습니다."
+        private const val MESSAGE_FINAL_RESULT = "## 최종 승패"
     }
 }
