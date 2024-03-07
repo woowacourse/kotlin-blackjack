@@ -36,22 +36,30 @@ class OutputView {
         println(number.number.toString() + shape.shape)
     }
 
+    fun printDealerHit() = println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+
+    fun printGameResult(participants: Participants) {
+        participants.participants.forEach {
+            printPlayerCardHand(it)
+            println(CARD_HAND_SUM_FORMAT.format(it.cardHand.sum))
+        }
+    }
+
     private fun printAllCardHand(cardHand: CardHand) {
-        println(
+        print(
             cardHand.hand.joinToString {
-                it.number.number.toString() + it.shape.shape
+                it.number.output + it.shape.shape
             },
         )
     }
 
-    fun printPlayerCardHand(role: Role) {
+    private fun printPlayerCardHand(role: Role) {
         print(NAME_CARD_HAND_FORMAT.format(role.name))
         printAllCardHand(role.cardHand)
     }
 
-    fun printDealerHit() = println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
-
     companion object {
-        private const val NAME_CARD_HAND_FORMAT = "%s카드: "
+        private const val NAME_CARD_HAND_FORMAT = "%s 카드: "
+        private const val CARD_HAND_SUM_FORMAT = " - 결과: %d"
     }
 }
