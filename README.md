@@ -72,9 +72,16 @@
 - [x] Point
 
 
-- [ ] Result
-    - [ ] Dealer 와 Players 간의 Hand를 비교하고 승/패 결과를 반환한다.
----현
+- [x] Result (enum class)
+    - 승/패/무 의 값을 가진다.
+
+
+- [x] Judge
+  - [x] 플레이어들의 결과를 반환한다.
+  - [x] 딜러의 최종 결과를 반환한다.
+
+
+---
 - 📝 InputView
     - [x] 게임에 참여하는 사람의 이름 리스트를 입력 받을 수 있다.
     - [x] Player 들의 응답을 받을 수 있다.
