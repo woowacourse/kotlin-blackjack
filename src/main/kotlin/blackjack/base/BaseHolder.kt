@@ -26,6 +26,11 @@ abstract class BaseHolder(
         newDefeat: Int = DEFAULT_RESULT_VALUE,
         newPush: Int = DEFAULT_RESULT_VALUE,
     ) {
-        _gameResult = gameResult.deepCopy(newWin = newWin, newDefeat = newDefeat, newPush = newPush)
+        _gameResult =
+            gameResult.deepCopy(
+                newWin = newWin,
+                newDefeat = newDefeat,
+                newPush = newPush,
+            )
     }
 }
