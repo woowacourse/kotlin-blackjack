@@ -65,7 +65,7 @@ class OutputView {
         }
 
     fun Card.format(): String {
-        return "${rank.point}${suit.label}"
+        return "${rank.label}${suit.label}"
     }
 
     private fun List<Card>.format(): String {
