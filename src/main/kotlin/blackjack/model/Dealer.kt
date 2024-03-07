@@ -7,7 +7,7 @@ class Dealer(handCards: HandCards) {
     // 카드를 받는 행동
 
     fun canHit(): Boolean {
-        val sum = handCards.sumOrNull() ?: return false
+        val sum = handCards.sumOptimizedOrNull() ?: return false
         return sum < HIT_CONDITION
     }
 

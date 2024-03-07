@@ -10,11 +10,16 @@ class HandCards(
 
     constructor(vararg cards: Card) : this(cards.toList())
 
-    fun sumOrNull(): Int? = pointCalculator.sumOrNull(cards)
+    fun sumOptimizedOrNull(): Int? = pointCalculator.sumOrNull(cards)
 
-    fun isBust(): Boolean = sumOrNull() == null
+    fun sumOptimized(): Int {
+        val sum = sumOptimizedOrNull()
+        return sum ?: throw IllegalArgumentException("$sum 은 21 이하여야함")
+    }
 
-    fun isBlackjack(): Boolean = (sumOrNull() == 21) && (cards.size == 2)
+    fun isBust(): Boolean = sumOptimizedOrNull() == null
+
+    fun isBlackjack(): Boolean = (sumOptimizedOrNull() == 21) && (cards.size == 2)
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
