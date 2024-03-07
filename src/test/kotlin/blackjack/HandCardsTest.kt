@@ -3,6 +3,7 @@ package blackjack
 import blackjack.model.deck.CardMachineManager
 import blackjack.model.deck.Deck
 import blackjack.model.deck.HandCards
+import blackjack.testmachine.NormalCardMachine
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -16,14 +17,14 @@ class HandCardsTest {
 
     @Test
     fun `Cards 점수를 계산할 수 있다`() {
-        CardMachineManager.machine = TestCardMachine()
+        CardMachineManager.machine = NormalCardMachine()
         val cards = HandCards(Deck())
         assertThat(cards.calculateCardScore()).isEqualTo(TEST_INIT_CARD_SCORE)
     }
 
     @Test
     fun `ACE가 있을 경우, 총합이 21보다 작으면 11로 계산해서 반환한다`() {
-        CardMachineManager.machine = TestCardMachine()
+        CardMachineManager.machine = NormalCardMachine()
         val cards = HandCards(Deck())
         cards.add() // Ace 추가
         assertThat(cards.calculateCardScore()).isEqualTo(TEST_INIT_CARD_SCORE + 11)

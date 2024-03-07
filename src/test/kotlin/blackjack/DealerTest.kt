@@ -5,6 +5,9 @@ import blackjack.model.deck.CardMachineManager
 import blackjack.model.deck.Deck
 import blackjack.model.participant.Dealer
 import blackjack.model.participant.Players
+import blackjack.testmachine.BlackjackCardMachine
+import blackjack.testmachine.BustCardMachine
+import blackjack.testmachine.NormalCardMachine
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -15,7 +18,7 @@ class DealerTest {
 
     @BeforeEach
     fun setUp() {
-        CardMachineManager.machine = TestCardMachine()
+        CardMachineManager.machine = NormalCardMachine()
         deck = Deck()
         dealer = Dealer(deck)
     }
@@ -37,7 +40,26 @@ class DealerTest {
     }
 
     @Test
+    fun `딜러의 카드의 합이 21 초과일 시 버스트된다`() {
+        CardMachineManager.machine = BustCardMachine()
+        val deck = Deck()
+        val dealer = Dealer(deck)
+        dealer.addCard()
+        assertThat(dealer.isBust()).isTrue()
+    }
+
+    @Test
+    fun `딜러는 블랙잭 여부를 반환할 수 있다`() {
+        CardMachineManager.machine = BlackjackCardMachine()
+        val deck = Deck()
+        val dealer = Dealer(deck)
+        assertThat(dealer.isBlackjack()).isTrue()
+    }
+
+    @Test
     fun `딜러는 플레이어와의 게임에서 결과를 반환한다`() {
+        CardMachineManager.machine = BlackjackCardMachine()
+        val deck = Deck()
         val players = Players.playerNamesOf(listOf("채채"), deck)
         val result = dealer.gameResult(players.gamePlayers)
         assertThat(result.values).containsAll(listOf(CompetitionResult.WIN))
