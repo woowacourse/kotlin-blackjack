@@ -1,4 +1,6 @@
-package blackjack.model
+package blackjack.model.participant
+
+import blackjack.model.deck.HandCards
 
 abstract class GameParticipant(protected val handCards: HandCards) {
     fun isBust(): Boolean = handCards.calculateCardScore() > BLACKJACK_NUMBER

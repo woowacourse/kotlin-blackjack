@@ -1,4 +1,8 @@
-package blackjack.model
+package blackjack.model.participant
+
+import blackjack.model.CompetitionResult
+import blackjack.model.deck.Deck
+import blackjack.model.deck.HandCards
 
 class Dealer(deck: Deck) : GameParticipant(HandCards(deck)) {
     fun getFirstCard() =

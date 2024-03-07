@@ -1,7 +1,7 @@
 package blackjack.view
 
-import blackjack.model.Deck
-import blackjack.model.Players
+import blackjack.model.deck.Deck
+import blackjack.model.participant.Players
 
 class PlayersInputView {
     fun readPlayerNames(deck: Deck): Players {

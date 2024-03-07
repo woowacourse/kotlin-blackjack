@@ -1,10 +1,10 @@
 package blackjack
 
-import blackjack.model.CardMachineManager
+import blackjack.model.deck.CardMachineManager
 import blackjack.model.CompetitionResult
-import blackjack.model.Dealer
-import blackjack.model.Deck
-import blackjack.model.Players
+import blackjack.model.participant.Dealer
+import blackjack.model.deck.Deck
+import blackjack.model.participant.Players
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test

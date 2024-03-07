@@ -1,8 +1,8 @@
 package blackjack
 
-import blackjack.model.CardMachineManager
-import blackjack.model.Deck
-import blackjack.model.HandCards
+import blackjack.model.deck.CardMachineManager
+import blackjack.model.deck.Deck
+import blackjack.model.deck.HandCards
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

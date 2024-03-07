@@ -1,9 +1,9 @@
 package blackjack
 
-import blackjack.model.Card
-import blackjack.model.CardMachine
-import blackjack.model.CardNumber
-import blackjack.model.Pattern
+import blackjack.model.deck.Card
+import blackjack.model.deck.CardMachine
+import blackjack.model.deck.CardNumber
+import blackjack.model.deck.Pattern
 
 class TestCardMachine : CardMachine {
     override fun shuffle(cards: List<Card>): List<Card> {

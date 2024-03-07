@@ -1,4 +1,4 @@
-package blackjack.model
+package blackjack.model.deck
 
 object CardMachineManager {
     var machine: CardMachine = ShuffleCardMachine()
