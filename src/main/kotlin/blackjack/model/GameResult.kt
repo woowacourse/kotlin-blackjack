@@ -21,10 +21,10 @@ class GameResult(
         return State.from(compared)
     }
 
-    enum class State {
-        WIN,
-        LOSS,
-        DRAW,
+    enum class State(val label: String) {
+        WIN("승"),
+        LOSS("패"),
+        DRAW("무"),
         ;
 
         fun reversed(): State {
