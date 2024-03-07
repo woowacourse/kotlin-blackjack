@@ -1,5 +1,6 @@
 package blackjack.model
 
+import blackjack.fixture.createCard
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -12,17 +13,7 @@ class HandCardsTest {
         }
     }
 
-    @Test
-    fun `카드를 2장씩 묶어서 손패를 만든다`() {
-        val cards: List<Card> = createHandCards(6 + 2)
-        val expectedHandCardsSize = 4
-        assertThat(cards.chunked(2)).hasSize(expectedHandCardsSize)
-        // TODO : 2장씩 뿌리는 함수 만들기
-        val hands = cards.chunked(2).map { HandCards(it) }
-        val playerHands: List<HandCards> = hands.drop(1)
-        val dealer = hands.take(1)
-        // List<Hand> -> List<Player> + Dealer
-    }
+
 }
 
 fun createHandCards(): HandCards {
