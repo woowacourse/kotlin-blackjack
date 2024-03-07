@@ -6,5 +6,5 @@ import blackjack.model.Suit
 
 fun createCard(
     type: Suit = Suit.SPADE,
-    rank: Rank = Rank.Six,
+    rank: Rank = Rank.SIX,
 ) = Card(type, rank)

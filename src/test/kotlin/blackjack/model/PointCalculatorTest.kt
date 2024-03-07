@@ -16,7 +16,7 @@ class PointCalculatorTest {
     @Test
     fun `에이스가 없을 때 - 카드의 합이 21에 가장 가까운 수 반환`() {
         // given
-        val cards = listOf(createCard(rank = Rank.Six), createCard(rank = Rank.Five))
+        val cards = listOf(createCard(rank = Rank.SIX), createCard(rank = Rank.FIVE))
         val expected = 11
         // when
         val actual = pointCalculator.sumOrNull(cards)
@@ -27,7 +27,7 @@ class PointCalculatorTest {
     @Test
     fun `에이스가 없을 때 - 카드의 합이 21보다 크면 null`() {
         // given
-        val cards = List(3) { createCard(rank = Rank.Queen) }
+        val cards = List(3) { createCard(rank = Rank.QUEEN) }
         // when
         val actual = pointCalculator.sumOrNull(cards)
         // then
@@ -47,7 +47,7 @@ class PointCalculatorTest {
     @Test
     fun `에이스가 있을 때 - 21에 가장 가까운 수 반환 - 2`() {
         // given
-        val cards = listOf(createCard(rank = Rank.ACE), createCard(rank = Rank.Ten))
+        val cards = listOf(createCard(rank = Rank.ACE), createCard(rank = Rank.TEN))
         val expected = 21
         // when
         val actual = pointCalculator.sumOrNull(cards)
@@ -58,7 +58,7 @@ class PointCalculatorTest {
     @Test
     fun `에이스가 있을 때 - 21에 가장 가까운 수 반환 - 3`() {
         // given
-        val cards = listOf(createCard(rank = Rank.ACE), createCard(rank = Rank.ACE), createCard(rank = Rank.Queen))
+        val cards = listOf(createCard(rank = Rank.ACE), createCard(rank = Rank.ACE), createCard(rank = Rank.QUEEN))
         val expected = 12
         // when
         val actual = pointCalculator.sumOrNull(cards)
@@ -80,7 +80,7 @@ class PointCalculatorTest {
     @Test
     fun `에이스가 있을 때 - 21에 가장 가까운 수 반환 - 5`() {
         // given
-        val cards = listOf(createCard(rank = Rank.ACE), createCard(rank = Rank.Ten))
+        val cards = listOf(createCard(rank = Rank.ACE), createCard(rank = Rank.TEN))
         val expected = 21
         // when
         val actual = pointCalculator.sumOrNull(cards)

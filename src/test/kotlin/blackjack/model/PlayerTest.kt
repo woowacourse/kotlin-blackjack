@@ -11,15 +11,15 @@ class PlayerTest {
         // given
         val player =
             createPlayer(
-                createCard(rank = Rank.Six),
-                createCard(rank = Rank.Seven),
+                createCard(rank = Rank.SIX),
+                createCard(rank = Rank.SEVEN),
             )
-        val addedCard = createCard(rank = Rank.Eight)
+        val addedCard = createCard(rank = Rank.EIGHT)
         val expect =
             HandCards(
-                createCard(rank = Rank.Six),
-                createCard(rank = Rank.Seven),
-                createCard(rank = Rank.Eight),
+                createCard(rank = Rank.SIX),
+                createCard(rank = Rank.SEVEN),
+                createCard(rank = Rank.EIGHT),
             )
         // when
         player.receiveHandCards(addedCard)

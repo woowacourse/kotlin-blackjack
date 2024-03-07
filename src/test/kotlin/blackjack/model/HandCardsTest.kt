@@ -4,6 +4,8 @@ import blackjack.fixture.createCard
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 
 class HandCardsTest {
     @Test
@@ -18,9 +20,9 @@ class HandCardsTest {
         // given
         val handCards =
             HandCards(
-                createCard(rank = Rank.Seven),
-                createCard(rank = Rank.Eight),
-                createCard(rank = Rank.Nine),
+                createCard(rank = Rank.SEVEN),
+                createCard(rank = Rank.EIGHT),
+                createCard(rank = Rank.NINE),
             )
         // when
         val actual = handCards.isBust()
@@ -28,12 +30,17 @@ class HandCardsTest {
         assertThat(actual).isTrue()
     }
 
-    @Test
+    @ParameterizedTest
+    @CsvSource(
+        value = [
+            "Jack",
+        ],
+    )
     fun `HandCards의 합이 21이고 2장이면 블랙잭이다`() {
         // given
         val handCards =
             HandCards(
-                createCard(rank = Rank.Jack),
+                createCard(rank = Rank.JACK),
                 createCard(rank = Rank.ACE),
             )
         // when
