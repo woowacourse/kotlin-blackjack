@@ -14,8 +14,8 @@ class CardHandTest {
                 Card(CardShape.SPADE, CardNumber.SIX),
                 Card(CardShape.CLOVER, CardNumber.QUEEN),
             )
-        val actual = cardHand.sum()
-        assertThat(actual).isEqualTo(24)
+
+        assertThat(cardHand.sum).isEqualTo(24)
     }
 
     @Test
@@ -26,8 +26,8 @@ class CardHandTest {
                 Card(CardShape.HEART, CardNumber.SIX),
                 Card(CardShape.HEART, CardNumber.FIVE),
             )
-        val actual = cardHand.sum()
-        assertThat(actual).isEqualTo(18)
+
+        assertThat(cardHand.sum).isEqualTo(18)
     }
 
     @Test
@@ -37,8 +37,8 @@ class CardHandTest {
                 Card(CardShape.SPADE, CardNumber.ACE),
                 Card(CardShape.HEART, CardNumber.ACE),
             )
-        val actual = cardHand.sum()
-        assertThat(actual).isEqualTo(12)
+
+        assertThat(cardHand.sum).isEqualTo(12)
     }
 
     @Test
@@ -49,8 +49,8 @@ class CardHandTest {
                 Card(CardShape.HEART, CardNumber.ACE),
                 Card(CardShape.HEART, CardNumber.ACE),
             )
-        val actual = cardHand.sum()
-        assertThat(actual).isEqualTo(13)
+
+        assertThat(cardHand.sum).isEqualTo(13)
     }
 
     @Test
@@ -64,7 +64,7 @@ class CardHandTest {
         cardHand.add(Card(CardShape.HEART, CardNumber.TEN))
         val currentCardHand = CardHand(cardHand)
 
-        val actual = currentCardHand.sum()
+        val actual = currentCardHand.sum
         assertThat(actual).isEqualTo(12)
     }
 }
