@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test
 
 class PlayerTest {
     @Test
-    fun `플레이어가 카드를 받으면 손패가 하나 증가한다`() {
+    fun `플레이어가 hit 하면 손패가 하나 증가한다`() {
         // given
         val player =
             createPlayer(
@@ -22,7 +22,7 @@ class PlayerTest {
                 createCard(rank = Rank.EIGHT),
             )
         // when
-        player.receiveHandCards(addedCard)
+        player.hit(addedCard)
         val actual = player.handCards
         // then
         assertThat(actual).isEqualTo(expect)
