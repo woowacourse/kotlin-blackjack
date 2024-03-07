@@ -59,7 +59,7 @@ class PlayerTest {
         val participant = Player("홍길동")
         participant.addCard(Card(CardNumber.`10`, Suit.`하트`))
         participant.addCard(Card(CardNumber.A, Suit.`하트`))
-        val actual = participant.isBlackJack()
+        val actual = participant.isMaxScore()
         assertThat(actual).isEqualTo(true)
     }
 }

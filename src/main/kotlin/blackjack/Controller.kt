@@ -14,6 +14,29 @@ class Controller(
         val dealer = Dealer()
         val deckManager = DeckManager()
         deckManager.initGame(dealer, players)
-        OutputView.printResult(dealer, players)
+        OutputView.printInitialResult(dealer, players)
+
+        players.forEach { player ->
+            proceedPlayerTurn(player, deckManager)
+        }
+    }
+
+    private fun proceedPlayerTurn(player: Player, deckManager: DeckManager) {
+        if (player.isMaxScore()) {
+            OutputView.printBlackJackMessage(player)
+            return
+        }
+        while (player.isHitable() && askPick(player.name)) {
+            deckManager giveCardTo player
+            OutputView.printParticipantStatus(player)
+        }
+        if (player.isBusted()) {
+            OutputView.printBustedMessage(player)
+            return
+        }
+    }
+
+    private fun askPick(name: String): Boolean {
+        return InputView.askPickAgain(name)
     }
 }

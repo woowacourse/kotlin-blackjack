@@ -23,7 +23,7 @@ abstract class Participant(val name: String) {
         return threshold < score
     }
 
-    fun isBlackJack(): Boolean {
+    fun isMaxScore(): Boolean {
         val score = getCardSum()
         val threshold = 21
         return threshold == score

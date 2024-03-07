@@ -8,4 +8,13 @@ object InputView {
         if (input.all { it.isNotEmpty() }) return input
         return getNames()
     }
+
+    tailrec fun askPickAgain(name: String): Boolean {
+        println("${name}은(는) 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
+        return when (readln()) {
+            "y" -> true
+            "n" -> false
+            else -> askPickAgain(name)
+        }
+    }
 }

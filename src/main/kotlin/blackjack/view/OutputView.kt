@@ -7,16 +7,20 @@ import blackjack.model.Player
 
 object OutputView {
 
-    fun printResult(dealer: Dealer, players: List<Player>) {
-        println(buildParticipantOneCard(dealer))
+    fun printInitialResult(dealer: Dealer, players: List<Player>) {
+        println(buildDealerInitialCard(dealer))
         players.forEach {
-            println(buildParticipantCards(it))
+            printParticipantStatus(it)
         }
     }
 
-    private fun buildParticipantOneCard(participant: Participant): String {
-        val name = participant.name
-        val card = listOf(participant.showCard()[0])
+    fun printParticipantStatus(participant: Participant) {
+        println(buildParticipantCards(participant))
+    }
+
+    private fun buildDealerInitialCard(dealer: Dealer): String {
+        val name = dealer.name
+        val card = listOf(dealer.showCard()[0])
         return buildParticipantCardsString(name, card)
     }
 
@@ -29,5 +33,13 @@ object OutputView {
     private fun buildParticipantCardsString(name: String, cards: List<Card>): String {
         val cardStrings = cards.map { it.cardNumber.name + it.suit.name }.joinToString(", ")
         return "${name}카드: $cardStrings"
+    }
+
+    fun printBlackJackMessage(participant: Participant) {
+        println("${participant.name}는 블랙잭 입니다.")
+    }
+
+    fun printBustedMessage(participant: Participant) {
+        println("${participant.name}는 버스트 됐습니다.")
     }
 }
