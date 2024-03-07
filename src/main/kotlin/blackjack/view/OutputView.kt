@@ -3,7 +3,10 @@ package blackjack.view
 import blackjack.model.Card
 import blackjack.model.CardNumber
 import blackjack.model.CardShape
+import blackjack.model.Dealer
+import blackjack.model.Participant
 import blackjack.model.Participants
+import blackjack.model.Player
 
 object OutputView {
     fun printInitialStatus(participants: Participants) {
@@ -18,6 +21,36 @@ object OutputView {
             println("${it.name}카드: ${it.state.hand().cards.map { cardToString(it) }.joinToString(", ")}")
         }
         println()
+    }
+
+    fun printParticipantStatus(participant: Participant) {
+        when (participant) {
+            is Player -> printPlayerStatus(participant)
+            is Dealer -> printDealerStatus(participant)
+        }
+    }
+
+    private fun printPlayerStatus(player: Player) {
+        println("${player.name}카드 ${player.state.hand().cards.map { cardToString(it) }.joinToString(", ")}")
+    }
+
+    private fun printDealerStatus(dealer: Dealer) {
+        val count = dealer.state.hand().cards.size
+        println()
+        if (count > 2) {
+            println("${dealer.name}는 16이하라 ${count - 2}의 카드를 더 받았습니다.")
+        }
+    }
+
+    fun printStatusAndScore(participants: Participants) {
+        println()
+        participants.getAllParticipants().forEach { participant ->
+            println(
+                "${participant.name}카드 ${
+                    participant.state.hand().cards.map { cardToString(it) }.joinToString(", ")
+                } - 결과: ${participant.state.hand().calculateSum()}",
+            )
+        }
     }
 
     private fun cardToString(card: Card): String {
