@@ -22,6 +22,8 @@ class OutputView {
 
     fun Player.getPlayerCardsMessage() = "${name}카드: ${getCardsMessage()}"
 
+    fun printDealerAdditionalCardMessage() = println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+
     private fun Role.getDealerInitCardsMessage(): String {
         return getCards()[0].toCardMessage()
     }
