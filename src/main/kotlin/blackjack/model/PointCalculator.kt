@@ -6,12 +6,12 @@ fun interface PointCalculator {
 
 class DefaultPointCalculator : PointCalculator {
     override fun sumOrNull(cards: List<Card>): Int? {
-        if (cards.hasAce()) return sumIfExcludeAce(cards)
-        return sumOfIncludeAce(cards)
+        if (cards.hasAce().not()) return sumIfExcludeAce(cards)
+        return sumIfIncludeAce(cards)
     }
 
     private fun List<Card>.hasAce(): Boolean {
-        return all { !it.isAce() }
+        return any { it.isAce() }
     }
 
     private fun sumIfExcludeAce(cards: List<Card>): Int? {
@@ -20,7 +20,7 @@ class DefaultPointCalculator : PointCalculator {
         return sum
     }
 
-    private fun sumOfIncludeAce(cards: List<Card>): Int? {
+    private fun sumIfIncludeAce(cards: List<Card>): Int? {
         val (aceCards, notAceCards) = cards.partition { it.isAce() }
         val condition = 21
         val min = minSumOf(aceCards, notAceCards)
