@@ -2,8 +2,9 @@ package blackjack.model
 
 enum class CardNumber(
     val number: Int,
+    val output: String = number.toString(),
 ) {
-    ACE(11),
+    ACE(11, "A"),
     TWO(2),
     THREE(3),
     FOUR(4),
