@@ -39,4 +39,23 @@ class BlackjackGameTest {
         val dealerAfterRound = game.participants.dealer
         assertThat(dealerAfterRound.state.hand().calculateSum()).isEqualTo(17)
     }
+
+    @Test
+    fun `최종 승패 계산 테스트`() {
+        val deck = createCardDeckFrom(6, 7, 11, 11, 10, 5)
+        val dealer = createDealer(8, 9)
+        val players =
+            listOf(
+                createPlayer("leo", 10, 8),
+                createPlayer("yenni", 11, 10),
+            )
+
+        val gameParticipants = Participants(dealer, players)
+        val game = BlackjackGame(deck, gameParticipants)
+        val result = game.calculateResult()
+
+        assertThat(result[dealer]).isEqualTo(WinningState(wins = 0, losses = 2))
+        assertThat(result[players[0]]).isEqualTo(WinningState(wins = 1, losses = 0))
+        assertThat(result[players[1]]).isEqualTo(WinningState(wins = 1, losses = 0))
+    }
 }
