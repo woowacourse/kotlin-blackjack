@@ -10,5 +10,9 @@ class Controller(
 ) {
     fun run() {
         val names: List<String> = InputView.getNames()
+        val players = names.map { Player(it) }
+        val dealer = Dealer()
+        val deckManager = DeckManager()
+        deckManager.initGame(dealer, players)
     }
 }
