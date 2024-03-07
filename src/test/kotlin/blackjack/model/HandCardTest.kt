@@ -25,4 +25,15 @@ HandCardTest {
         assertThat(card.getCardDenomination()).isEqualTo(Denomination.KING)
         assertThat(card.getCardSuit()).isEqualTo(Suit.SPADE)
     }
+
+    @Test
+    fun  `HandCard에서 정확한 ACE 수를 반환하는지 테스트 `(){
+        val aceHandCard = HandCard()
+        aceHandCard.apply {
+            addCard(Card(Denomination.ACE, Suit.SPADE))
+            addCard(Card(Denomination.ACE, Suit.HEART))
+            addCard(Card(Denomination.ACE, Suit.DIAMOND))
+        }
+        assertThat(aceHandCard.getAceCount()).isEqualTo(3)
+    }
 }

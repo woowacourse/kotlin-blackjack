@@ -13,4 +13,10 @@ class HandCard {
             card.getCardDenomination().getScore()
         }
     }
+
+    fun getAceCount(): Int {
+        return cards.count { card ->
+            card.getCardDenomination() == Denomination.ACE
+        }
+    }
 }
