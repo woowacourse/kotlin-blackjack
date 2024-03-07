@@ -30,11 +30,12 @@ class GameController {
         gameDeck: GameDeck,
         participants: Participants,
     ) {
-        val blackJackGame = BlackJackGame(participants = participants, gameDeck = gameDeck)
-        blackJackGame.start(printGameSetting = ::printGameSetting)
-        blackJackGame.runPlayersTurn(hitOrStay = ::askHitOrStay, showPlayerCards = ::showPlayerCards)
-        blackJackGame.runDealerTurn(printDealerDrawCard = ::printDealerDrawCard)
-        blackJackGame.finish(printEveryCards = ::printEveryCards)
+        BlackJackGame(participants = participants, gameDeck = gameDeck).apply {
+            start(printGameSetting = ::printGameSetting)
+            runPlayersTurn(hitOrStay = ::askHitOrStay, showPlayerCards = ::showPlayerCards)
+            runDealerTurn(printDealerDrawCard = ::printDealerDrawCard)
+            finish(printEveryCards = ::printEveryCards)
+        }
     }
 
     private fun createPlayerGroup(): PlayerGroup {
