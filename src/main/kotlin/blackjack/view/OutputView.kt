@@ -24,13 +24,27 @@ class OutputView {
 
     fun printDealerAdditionalCardMessage() = println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
 
+    fun printPlayersCardResult(
+        dealer: Dealer,
+        players: Players,
+    ) {
+        println(dealer.getDealerCardsMessage() + dealer.getPlayerCardResult())
+        players.playerGroup.forEach {
+            println(it.getPlayerCardsMessage() + it.getPlayerCardResult())
+        }
+    }
+
     private fun Role.getDealerInitCardsMessage(): String {
         return getCards()[0].toCardMessage()
     }
+
+    private fun Dealer.getDealerCardsMessage() = "딜러: ${getCardsMessage()}"
 
     private fun Role.getCardsMessage(): String {
         return getCards().joinToString(separator = ", ", transform = { it.toCardMessage() })
     }
 
     private fun Card.toCardMessage() = "${this.denomination}${this.suite}"
+
+    private fun Role.getPlayerCardResult() = " - 결과: ${getCardSum()}"
 }
