@@ -7,7 +7,6 @@ class BlackJack {
     private var _state: State = State.Action.Hit
     val state: State get() = _state
 
-    //TODO checkDrawState -> (y : addCard -> changeState, n : switchToStayState)
     fun checkDrawState(): Boolean {
         return when (state) {
             is State.Action.Hit -> true

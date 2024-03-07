@@ -1,7 +1,5 @@
 package blackjack.model
 
-import blackjack.state.State
-
 abstract class Participant(
     private val name : String,
     private val blackJack: BlackJack = BlackJack()
@@ -12,7 +10,7 @@ abstract class Participant(
     }
 
     fun checkHitState(): Boolean{
-        return blackJack.state == State.Action.Hit
+        return blackJack.checkDrawState()
     }
 
     fun getName(): String{
