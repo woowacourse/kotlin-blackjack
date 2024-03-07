@@ -12,8 +12,8 @@ class OutputView {
         dealer: Dealer,
         players: Players,
     ) {
-        val playersNameMessage = players.playerGroup.map { it.name }.joinToString(", ")
-        println("딜러와 ${playersNameMessage}에게 2장의 나누었습니다.")
+        val playersNameMessage = players.playerGroup.map { it.name }.joinToString(PLAYERS_NAME_SEPARATOR)
+        println(DIVIDE_CARD_FINISH_MESSAGE.format(playersNameMessage))
         println("딜러: ${dealer.getDealerInitCardsMessage()}")
 
         players.playerGroup.forEach {
@@ -23,7 +23,7 @@ class OutputView {
 
     fun Player.getPlayerCardsMessage() = "${name}카드: ${getCardsMessage()}"
 
-    fun printDealerAdditionalCardMessage() = println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+    fun printDealerAdditionalCardMessage() = println(DEALER_ADDITIONAL_CARD_MESSAGE)
 
     fun printPlayersCardResult(
         dealer: Dealer,
@@ -39,7 +39,7 @@ class OutputView {
         dealer: Dealer,
         players: Players,
     ) {
-        println("## 최종 승패")
+        println(FINAL_GAME_RESULT_MESSAGE)
         print("딜러: ")
         printDealerFinalGameResult(dealer)
         printPlayersFinalGameResult(players)
@@ -62,13 +62,21 @@ class OutputView {
         return getCards()[0].toCardMessage()
     }
 
-    private fun Dealer.getDealerCardsMessage() = "딜러: ${getCardsMessage()}"
+    private fun Dealer.getDealerCardsMessage() = "딜러 카드: ${getCardsMessage()}"
 
     private fun Role.getCardsMessage(): String {
-        return getCards().joinToString(separator = ", ", transform = { it.toCardMessage() })
+        return getCards().joinToString(separator = CARDS_SEPARATOR, transform = { it.toCardMessage() })
     }
 
     private fun Card.toCardMessage() = "${this.denomination}${this.suite}"
 
     private fun Role.getPlayerCardResult() = " - 결과: ${getCardSum()}"
+
+    companion object {
+        private const val PLAYERS_NAME_SEPARATOR = ", "
+        private const val CARDS_SEPARATOR = ", "
+        private const val DIVIDE_CARD_FINISH_MESSAGE = "딜러와 %s에게 2장의 나누었습니다."
+        private const val DEALER_ADDITIONAL_CARD_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다."
+        private const val FINAL_GAME_RESULT_MESSAGE = "## 최종 승패"
+    }
 }
