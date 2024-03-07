@@ -1,7 +1,7 @@
 package blackjack.model
 
 import blackjack.fixture.createCard
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class ParticipantsHandCardsTest {
@@ -20,6 +20,6 @@ class ParticipantsHandCardsTest {
         // when
         val actual = ParticipantsHandCards.from(cards)
         // then
-        Assertions.assertThat(actual).isEqualTo(expect)
+        assertThat(actual).isEqualTo(expect)
     }
 }
