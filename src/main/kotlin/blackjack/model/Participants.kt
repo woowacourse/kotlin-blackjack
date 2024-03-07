@@ -13,6 +13,13 @@ class Participants(val participants: List<Role>) {
         }
     }
 
+    fun getDealerSum(): Int = participants.filterIsInstance<Dealer>()[0].cardHand.sum
+
+    fun getPlayerResult(): Map<String, Int> =
+        participants.filterIsInstance<Player>().associate {
+            it.name to it.cardHand.sum
+        }
+
     companion object {
         private const val MIN_PARTICIPANTS_COUNT = 2
         private const val MAX_PARTICIPANTS_COUNT = 7
