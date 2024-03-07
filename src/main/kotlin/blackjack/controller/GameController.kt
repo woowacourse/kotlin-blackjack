@@ -3,10 +3,10 @@ package blackjack.controller
 import blackjack.model.BlackJackGame
 import blackjack.model.Dealer
 import blackjack.model.GameDeck
-import blackjack.model.HumanName
 import blackjack.model.Participants
 import blackjack.model.PlayerGroup
 import blackjack.view.InputView
+import blackjack.view.InputView.askHitOrStay
 import blackjack.view.OutputView
 import blackjack.view.OutputView.printDealerDrawCard
 import blackjack.view.OutputView.printEveryCards
@@ -34,7 +34,7 @@ class GameController {
 
         blackJackGame.start(::printGameSetting)
         blackJackGame.runPlayersTurn(
-            hitOrStay = ::hitOrStay,
+            hitOrStay = ::askHitOrStay,
             showPlayerCards = ::showPlayerCards,
         )
         blackJackGame.runDealerTurn(printDealerDrawCard = ::printDealerDrawCard)
@@ -46,19 +46,5 @@ class GameController {
         val participants = PlayerGroup()
         participants.addPlayer(playersNames)
         return participants
-    }
-
-    private fun hitOrStay(humanName: HumanName): Boolean {
-        val hitOrStay = InputView.askHitOrStay(humanName)
-        return when (hitOrStay) {
-            YES -> true
-            NO -> false
-            else -> false
-        }
-    }
-
-    companion object {
-        private const val YES = "y"
-        private const val NO = "n"
     }
 }
