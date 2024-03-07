@@ -15,11 +15,10 @@ data class Card(
             cardValue: CardValue,
             total: Int,
         ): Card {
-            return if (cardValue.value == LOW_ACE_VALUE && total <= MAXIMUM_HIGH_ACE_THRESHOLD) {
-                Card(shape.title, cardValue.title, HIGH_ACE_VALUE)
-            } else {
-                Card(shape.title, cardValue.title, cardValue.value)
+            if (cardValue.value == LOW_ACE_VALUE && total <= MAXIMUM_HIGH_ACE_THRESHOLD) {
+                return Card(shape.title, cardValue.title, HIGH_ACE_VALUE)
             }
+            return Card(shape.title, cardValue.title, cardValue.value)
         }
     }
 }

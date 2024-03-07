@@ -15,7 +15,5 @@ object CardDeck {
         }
     }
 
-    private fun isAvailable(card: Card): Boolean {
-        return card !in selectedCards
-    }
+    private fun isAvailable(card: Card): Boolean = card !in selectedCards
 }

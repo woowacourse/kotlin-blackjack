@@ -1,6 +1,6 @@
 package blackjack.model
 
-enum class PickingState {
-    HIT,
-    STAND,
+enum class PickingState(val value: String) {
+    HIT("y"),
+    STAND("n"),
 }

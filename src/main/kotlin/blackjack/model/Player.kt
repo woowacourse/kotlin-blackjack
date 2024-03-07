@@ -5,14 +5,15 @@ class Player(
     val onInputDecision: () -> String,
 ) : Participant {
     override fun drawCard(generateCard: () -> Card): PickingState {
-        return when (onInputDecision()) {
-            HIT -> {
+        val pickingState =
+            PickingState.entries.find { it.value == onInputDecision() }
+                ?: throw IllegalArgumentException(EXCEPTION_PLAYER_INPUT)
+        return when (pickingState) {
+            PickingState.HIT -> {
                 gameInfo.addCard(generateCard())
                 checkBurst()
             }
-
-            STAY -> PickingState.STAND
-            else -> throw IllegalArgumentException(EXCEPTION_PLAYER_INPUT)
+            PickingState.STAND -> PickingState.STAND
         }
     }
 
@@ -35,13 +36,14 @@ class Player(
     }
 
     private fun checkBurst(): PickingState {
-        return if (gameInfo.total > MAXIMUM_CARD_TOTAL) PickingState.STAND else PickingState.HIT
+        if (gameInfo.total > MAXIMUM_CARD_TOTAL) {
+            return PickingState.STAND
+        }
+        return PickingState.HIT
     }
 
     companion object {
         private const val MAXIMUM_CARD_TOTAL = 21
-        private const val HIT = "y"
-        private const val STAY = "n"
         private const val EXCEPTION_PLAYER_INPUT = "y나 n을 입력해야 합니다."
         private const val INITIAL_DRAW_COUNT = 2
     }
