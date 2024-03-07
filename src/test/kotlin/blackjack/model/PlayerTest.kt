@@ -9,7 +9,7 @@ class PlayerTest {
     fun `플레이어 카드의 총합을 계산한다`() {
         val player =
             Dealer(
-                numberOfPlayers = 2,
+                players = setOf("케이엠", "해음"),
                 cards =
                     setOf(
                         Card.of(Shape.CLOVER, CardValue.SIX, 0),
@@ -17,7 +17,7 @@ class PlayerTest {
                     ),
             )
 
-        assertThat(player.getResult().total).isEqualTo(16)
+        assertThat(player.getStat().total).isEqualTo(16)
     }
 
     @Test
@@ -25,7 +25,7 @@ class PlayerTest {
         val cards = setOf(Card.of(Shape.HEART, CardValue.SIX, 0))
         val player = Player("haeum", cards) { "y" }
         val actualState =
-            player.getCard {
+            player.drawCard {
                 Card(Shape.DIAMOND.title, CardValue.SEVEN.title, CardValue.SEVEN.value)
             }
         assertAll(
@@ -39,7 +39,7 @@ class PlayerTest {
         val cards = setOf(Card.of(Shape.HEART, CardValue.SIX, 0))
         val player = Player("haeum", cards) { "n" }
         val actualState =
-            player.getCard {
+            player.drawCard {
                 Card(Shape.DIAMOND.title, CardValue.SEVEN.title, CardValue.SEVEN.value)
             }
         assertAll(
@@ -57,7 +57,7 @@ class PlayerTest {
             )
         val player = Player("haeum", cards) { "y" }
         val actualState =
-            player.getCard {
+            player.drawCard {
                 Card(Shape.DIAMOND.title, CardValue.TWO.title, CardValue.TWO.value)
             }
         assertAll(

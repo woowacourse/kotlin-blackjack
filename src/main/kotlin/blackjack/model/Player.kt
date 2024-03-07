@@ -9,11 +9,11 @@ class Player(
     val cards: Set<Card>
         get() = _cards
 
-    fun getResult(): Stat {
+    fun getStat(): Stat {
         return Stat(name, cards.sumOf { it.value }, cards)
     }
 
-    fun getCard(generateCard: () -> Card): PickingState {
+    fun drawCard(generateCard: () -> Card): PickingState {
         return when (onInputDecision()) {
             HIT -> {
                 _cards.add(generateCard())
@@ -23,6 +23,12 @@ class Player(
             STAY -> PickingState.STOP
 
             else -> throw IllegalArgumentException(EXCEPTION_PLAYER_INPUT)
+        }
+    }
+
+    fun initializeCards(generateCard: () -> Card) {
+        repeat(2) {
+            _cards.add(generateCard())
         }
     }
 

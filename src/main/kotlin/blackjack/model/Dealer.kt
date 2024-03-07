@@ -1,7 +1,7 @@
 package blackjack.model
 
 class Dealer(
-    val numberOfPlayers: Int,
+    val players: Set<String>,
     cards: Set<Card> = emptySet(),
 ) {
     private val _cards: MutableSet<Card> = cards.toMutableSet()
@@ -9,12 +9,12 @@ class Dealer(
         get() = _cards
 
     init {
-        require(numberOfPlayers in PLAYER_NUM_RANGE) {
-            EXCEPTION_NUMBER_OF_PLAYERS.format(numberOfPlayers)
+        require(players.size in PLAYER_NUM_RANGE) {
+            EXCEPTION_NUMBER_OF_PLAYERS.format(players.size)
         }
     }
 
-    fun getResult(): Stat {
+    fun getStat(): Stat {
         return Stat("딜러", cards.sumOf { it.value }, cards)
     }
 
