@@ -3,17 +3,24 @@ package blackjack.model
 class Dealer(deck: Deck) {
     private val handCards = HandCards(deck)
 
-    fun getFirstCard() = with(handCards.cards.first()){
-        "${cardNumber}${pattern}"
-    }
+    fun getFirstCard() =
+        with(handCards.cards.first()) {
+            "${cardNumber.value}${pattern.shape}"
+        }
 
-    fun getAllCard() = handCards.cards.joinToString(", ") { "${it.cardNumber}${it.pattern}" }
-
-    fun isAdd(): Boolean = handCards.calculateCardScore() <= 16
+    fun getAllCard() = handCards.cards.joinToString(", ") { "${it.cardNumber.value}${it.pattern.shape}" }
 
     fun isBust(): Boolean = handCards.calculateCardScore() > 21
 
-    fun add() = handCards.add()
+    fun addCard(): Boolean =
+        if (isAdd()) {
+            handCards.add()
+            true
+        } else {
+            false
+        }
+
+    private fun isAdd(): Boolean = handCards.calculateCardScore() <= 16
 
     fun getScore() = handCards.calculateCardScore()
 
@@ -28,8 +35,8 @@ class Dealer(deck: Deck) {
             when {
                 player.isBust() -> CompetitionResult.LOSE
                 isBust() -> CompetitionResult.WIN
-                player.handCards.calculateCardScore() < getScore() -> CompetitionResult.LOSE
-                player.handCards.calculateCardScore() > getScore() -> CompetitionResult.WIN
+                player.getScore() < getScore() -> CompetitionResult.LOSE
+                player.getScore() > getScore() -> CompetitionResult.WIN
                 else -> CompetitionResult.SAME
             }
         return result
