@@ -1,0 +1,58 @@
+package blackjack.model
+
+import blackjack.fixture.createCard
+import blackjack.fixture.createDealer
+import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
+
+class DealerTest {
+    @ParameterizedTest
+    @CsvSource(
+        value = [
+            "SIX:TEN:true",
+            "SEVEN:TEN:false",
+        ],
+        delimiter = ':',
+    )
+    fun `손패합이 17 미만 이면, hit 할 수 있다`(
+        rank: Rank,
+        rank2: Rank,
+        canHit: Boolean,
+    ) {
+        // given
+        val dealer =
+            Dealer(
+                HandCards(
+                    createCard(rank = rank),
+                    createCard(rank = rank2),
+                ),
+            )
+        // when
+        val actual = dealer.canHit()
+        // then
+        assertThat(actual).isEqualTo(canHit)
+    }
+
+    @Test
+    fun `딜러가 hit 하면 손패가 하나 증가한다`() {
+        val dealer =
+            createDealer(
+                createCard(rank = Rank.SIX),
+                createCard(rank = Rank.SEVEN),
+            )
+        val addedCard = createCard(rank = Rank.EIGHT)
+        val expect =
+            HandCards(
+                createCard(rank = Rank.SIX),
+                createCard(rank = Rank.SEVEN),
+                createCard(rank = Rank.EIGHT),
+            )
+        // when
+        dealer.hit(addedCard)
+        val actual = dealer.handCards
+        // then
+        assertThat(actual).isEqualTo(expect)
+    }
+}
