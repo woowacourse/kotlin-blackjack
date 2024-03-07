@@ -18,7 +18,11 @@ data class GameResult(
         newDefeat: Int = DEFAULT_RESULT_VALUE,
         newPush: Int = DEFAULT_RESULT_VALUE,
     ): GameResult {
-        return copy(win = win + newWin, defeat = defeat + newDefeat, push = push + newPush)
+        return copy(
+            win = win + newWin,
+            defeat = defeat + newDefeat,
+            push = push + newPush,
+        )
     }
 
     companion object {
