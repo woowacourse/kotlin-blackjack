@@ -1,30 +1,10 @@
 package blackjack.model
 
-class Cards(
+@JvmInline
+value class Cards(
     val cards: List<Card>,
-    private val pointCalculator: PointCalculator = DefaultPointCalculator(),
-) {
+) : List<Card> by cards {
     constructor(vararg cards: Card) : this(cards.toList())
-
-    operator fun plus(other: Cards): Cards {
-        return Cards(cards + other.cards)
-    }
-
-    operator fun plus(card: Card): Cards {
-        return Cards(cards + card)
-    }
-
-    // TODO : 안쓰면 지우기
-    operator fun minus(card: Card): Cards {
-        return Cards(cards - card)
-    }
-
-    // TODO : 안쓰면 지우기 2
-    operator fun minus(other: Cards): Cards {
-        return Cards(cards - other.cards.toSet())
-    }
-
-    fun sumOrNull(): Int? = pointCalculator.sumOrNull(cards)
 
     companion object {
         private val DECK: Cards = createDeck()
