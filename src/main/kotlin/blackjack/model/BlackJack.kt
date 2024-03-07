@@ -15,6 +15,10 @@ class BlackJack {
         }
     }
 
+    fun getCards(): Set<Card>{
+        return handCard.cards
+    }
+
     fun switchToStayState() {
         _state = State.Finish.Stay
     }
