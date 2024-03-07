@@ -7,15 +7,12 @@ class BlackjackGameTest {
     @Test
     fun `게임 승패 결과 계산 테스트`() {
         // given
-        val player1 = Player(PlayerName("olive"))
-        val player2 = Player(PlayerName("seogi"))
-        val player3 = Player(PlayerName("chae"))
-        val players = Players(listOf(player1, player2, player3))
+        val players = Players.from(listOf("olive", "seogi", "chae"))
         val dealer = Dealer()
 
-        player1.receiveCard(Card.of("2", "하트"))
-        player2.receiveCard(Card.of("K", "하트"))
-        player3.receiveCard(Card.of("8", "다이아몬드"))
+        players.playerGroup.forEachIndexed { idx, player ->
+            player.receiveCard(Card.of(denominationValues[idx], "하트"))
+        }
         dealer.receiveCard(Card.of("8", "하트"))
 
         // when
@@ -31,5 +28,9 @@ class BlackjackGameTest {
             .containsEntry(GameResult.LOSE, 1)
             .containsEntry(GameResult.WIN, 1)
             .containsEntry(GameResult.DRAW, 1)
+    }
+
+    companion object {
+        private val denominationValues = listOf("2", "K", "8")
     }
 }
