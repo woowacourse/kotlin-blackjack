@@ -1,8 +1,5 @@
 package blackjack.model
 
-import blackjack.model.UserState.RUNNING
-import blackjack.model.UserState.STAY
-
 class PlayerGroup {
     private var _players: List<Player> = emptyList()
     val players: List<Player>
@@ -19,14 +16,7 @@ class PlayerGroup {
         showPlayerCards: (player: Player) -> Unit,
     ) {
         players.forEach { player ->
-            while (player.hand.state == RUNNING) {
-                if (hitOrStay(player.humanName)) {
-                    player.takeCard(card = gameDeck.drawCard())
-                    showPlayerCards(player)
-                } else {
-                    player.hand.changeState(userState = STAY)
-                }
-            }
+            player.drawCardsForPlayer(gameDeck, hitOrStay, showPlayerCards)
         }
     }
 
