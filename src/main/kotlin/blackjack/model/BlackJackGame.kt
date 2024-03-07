@@ -5,7 +5,7 @@ class BlackJackGame(
     private val gameDeck: GameDeck,
 ) {
     fun start(printGameSetting: (dealer: Dealer, playerGroup: PlayerGroup) -> Unit) {
-        participants.initSetting(gameDeck)
+        participants.initSetting(gameDeck = gameDeck)
         printGameSetting(participants.dealer, participants.playerGroup)
     }
 
@@ -21,10 +21,7 @@ class BlackJackGame(
     }
 
     fun runDealerTurn(printDealerDrawCard: () -> Unit) {
-        participants.dealer.drawDealerCard(
-            gameDeck = gameDeck,
-            printDealerDrawCard = printDealerDrawCard,
-        )
+        participants.dealer.drawDealerCard(gameDeck = gameDeck, printDealerDrawCard = printDealerDrawCard)
     }
 
     fun finish(printEveryCards: (dealer: Dealer, playerGroup: PlayerGroup) -> Unit) {

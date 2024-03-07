@@ -1,18 +1,20 @@
 package blackjack.model
 
 import blackjack.base.BaseHolder
+import blackjack.model.UserState.RUNNING
+import blackjack.model.UserState.STAY
 
 class Dealer(override val humanName: HumanName = HumanName(DEFAULT_DEALER_NAME)) : BaseHolder() {
     fun drawDealerCard(
         gameDeck: GameDeck,
         printDealerDrawCard: () -> Unit,
     ) {
-        while (hand.state == UserState.RUNNING) {
+        while (hand.state == RUNNING) {
             if (hand.calculate() <= THRESHOLD) {
                 printDealerDrawCard()
-                takeCard(gameDeck.drawCard())
+                takeCard(card = gameDeck.drawCard())
             } else {
-                hand.changeState(UserState.STAY)
+                hand.changeState(userState = STAY)
             }
         }
     }

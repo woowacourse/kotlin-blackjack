@@ -18,25 +18,21 @@ class GameController {
         val playerGroup = createPlayerGroup()
         val gameDeck = GameDeck()
         val dealer = Dealer()
-        val participants = Participants(dealer, playerGroup)
+        val participants = Participants(dealer = dealer, playerGroup = playerGroup)
 
-        playGame(gameDeck, participants)
+        playGame(gameDeck = gameDeck, participants = participants)
 
         participants.matchResult()
-        OutputView.printMatchResult(participants.dealer, participants.playerGroup)
+        OutputView.printMatchResult(dealer = participants.dealer, playerGroup = participants.playerGroup)
     }
 
     private fun playGame(
         gameDeck: GameDeck,
         participants: Participants,
     ) {
-        val blackJackGame = BlackJackGame(participants, gameDeck)
-
-        blackJackGame.start(::printGameSetting)
-        blackJackGame.runPlayersTurn(
-            hitOrStay = ::askHitOrStay,
-            showPlayerCards = ::showPlayerCards,
-        )
+        val blackJackGame = BlackJackGame(participants = participants, gameDeck = gameDeck)
+        blackJackGame.start(printGameSetting = ::printGameSetting)
+        blackJackGame.runPlayersTurn(hitOrStay = ::askHitOrStay, showPlayerCards = ::showPlayerCards)
         blackJackGame.runDealerTurn(printDealerDrawCard = ::printDealerDrawCard)
         blackJackGame.finish(printEveryCards = ::printEveryCards)
     }
@@ -44,7 +40,7 @@ class GameController {
     private fun createPlayerGroup(): PlayerGroup {
         val playersNames = InputView.inputPlayersNames()
         val participants = PlayerGroup()
-        participants.addPlayer(playersNames)
+        participants.addPlayer(playerNames = playersNames)
         return participants
     }
 }

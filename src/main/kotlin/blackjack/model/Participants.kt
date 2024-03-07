@@ -11,9 +11,9 @@ class Participants(
 ) {
     fun initSetting(gameDeck: GameDeck) {
         repeat(INITIAL_CARD_COUNTS) {
-            dealer.takeCard(gameDeck.drawCard())
+            dealer.takeCard(card = gameDeck.drawCard())
             playerGroup.players.forEach { player ->
-                player.takeCard(gameDeck.drawCard())
+                player.takeCard(card = gameDeck.drawCard())
             }
         }
     }
@@ -49,7 +49,7 @@ class Participants(
         if (player.hand.state == BUST) {
             winAndLose(winner = dealer, loser = player)
         } else {
-            compareWhenBothStay(player)
+            compareWhenBothStay(player = player)
         }
     }
 

@@ -1,8 +1,13 @@
 package blackjack.model
 
+import blackjack.model.UserState.BLACKJACK
+import blackjack.model.UserState.BUST
+import blackjack.model.UserState.RUNNING
+import blackjack.model.UserState.STAY
+
 class Hand(
     cards: List<Card> = emptyList(),
-    state: UserState = UserState.RUNNING,
+    state: UserState = RUNNING,
 ) {
     private var _cards: List<Card> = cards
     val cards: List<Card>
@@ -21,9 +26,9 @@ class Hand(
     private fun updateState() {
         _state =
             when (calculate()) {
-                in RUNNING_RANGE -> UserState.RUNNING
-                BLACKJACK_NUMBER -> if (cards.size == MIN_CARD_COUNTS) UserState.BLACKJACK else UserState.STAY
-                else -> UserState.BUST
+                in RUNNING_RANGE -> RUNNING
+                BLACKJACK_NUMBER -> if (cards.size == MIN_CARD_COUNTS) BLACKJACK else STAY
+                else -> BUST
             }
     }
 
