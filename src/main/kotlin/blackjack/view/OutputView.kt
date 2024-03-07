@@ -7,6 +7,7 @@ import blackjack.model.Dealer
 import blackjack.model.Participant
 import blackjack.model.Participants
 import blackjack.model.Player
+import blackjack.model.WinningState
 
 object OutputView {
     fun printInitialStatus(participants: Participants) {
@@ -51,6 +52,38 @@ object OutputView {
                 } - 결과: ${participant.state.hand().calculateSum()}",
             )
         }
+    }
+
+    fun printResult(result: Map<Participant, WinningState>) {
+        println("\n## 최종 승패")
+        result.entries.reversed().forEach { (participant, winningState) ->
+            when (participant) {
+                is Dealer -> printDealerResult(participant, winningState, result.size - 1)
+                else -> printParticipantResult(participant, winningState)
+            }
+        }
+    }
+
+    private fun printDealerResult(
+        dealer: Dealer,
+        winningState: WinningState,
+        playerCount: Int,
+    ) {
+        val drawCount = playerCount - (winningState.wins + winningState.losses)
+        println("${dealer.name}: ${winningState.wins}승 ${winningState.losses}패 ${drawCount}무")
+    }
+
+    private fun printParticipantResult(
+        participant: Participant,
+        winningState: WinningState,
+    ) {
+        val resultMessage =
+            when {
+                winningState.wins == 1 -> "승"
+                winningState.losses == 1 -> "패"
+                else -> "무"
+            }
+        println("${participant.name}: $resultMessage")
     }
 
     private fun cardToString(card: Card): String {
