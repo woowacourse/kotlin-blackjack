@@ -15,22 +15,31 @@ object BlackJackController {
         val dealer = Dealer(playerNames.toSet())
         val players =
             List(playerNames.size) { Player(GameInfo(playerNames[it]), onInputDecision = { askPlayerHit(playerNames[it]) }) }
-        dealer.drawCard { CardDeck.pick() }
-        initializePlayerCards(players)
-        displayInitializedCards(dealer.gameInfo, players.map { it.gameInfo })
+        initializeParticipantsCards(dealer, players)
+        playRound(players, dealer)
+        displayResult(dealer, players)
+    }
 
+    private fun displayResult(
+        dealer: Dealer,
+        players: List<Player>,
+    ) {
+        val dealerStat = dealer.gameInfo
+        val playerStat = players.map { it.gameInfo }
+        val judge = Judge(dealerStat, playerStat)
+        OutputView.printFinalCards(dealerStat, playerStat)
+        OutputView.printResult(judge.getDealerResult(), judge.getPlayerResults(), playerStat, dealerStat)
+    }
+
+    private fun playRound(
+        players: List<Player>,
+        dealer: Dealer,
+    ) {
         players.forEach { player ->
             player.drawForSingleParticipant(OutputView::printSinglePlayerCards)
         }
+        OutputView.printNewLine()
         dealer.drawForSingleParticipant(OutputView::printDealerHit)
-
-        val dealerStat = dealer.gameInfo
-        val playerStat = players.map { it.gameInfo }
-
-        val judge = Judge(dealerStat, playerStat)
-
-        OutputView.printFinalCards(dealerStat, playerStat)
-        OutputView.printResult(judge.getDealerResult(), judge.getPlayerResults(), playerStat, dealerStat)
     }
 
     private fun getPlayerNames(): List<String> {
@@ -55,9 +64,16 @@ object BlackJackController {
         OutputView.printInitialStats(dealerInfo, playersInfo)
     }
 
-    private fun initializePlayerCards(players: List<Player>) {
+    private fun initializeParticipantsCards(
+        dealer: Dealer,
+        players: List<Player>,
+    ) {
+        dealer.drawCard { CardDeck.pick() }
+
         players.forEach { player ->
             player.initializeCards { CardDeck.pick() }
         }
+
+        displayInitializedCards(dealer.gameInfo, players.map { it.gameInfo })
     }
 }

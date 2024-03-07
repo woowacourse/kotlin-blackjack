@@ -7,6 +7,7 @@ object OutputView {
     private const val MESSAGE_DISTRIBUTION = "\n%s와 %s에게 2장의 카드를 나누었습니다."
     private const val MESSAGE_CARD_INFO = "%s카드: %s"
     private const val MESSAGE_RESULT = "%s - 결과: %d"
+    private const val NEW_LINE = "\n"
 
     fun printInitialStats(
         dealerGameInfo: GameInfo,
@@ -85,6 +86,8 @@ object OutputView {
             ),
         )
     }
+
+    fun printNewLine() = print(NEW_LINE)
 
     private fun getDealerCardResult(gameInfo: GameInfo): String {
         return MESSAGE_CARD_INFO.format(
