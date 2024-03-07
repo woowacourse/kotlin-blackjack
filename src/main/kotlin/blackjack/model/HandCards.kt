@@ -13,4 +13,6 @@ data class HandCards(
     fun sumOrNull(): Int? = pointCalculator.sumOrNull(cards)
 
     fun isBust(): Boolean = sumOrNull() == null
+
+    fun isBlackjack(): Boolean = (sumOrNull() == 21) && (cards.size == 2)
 }

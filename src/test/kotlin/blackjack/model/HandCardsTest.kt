@@ -27,6 +27,20 @@ class HandCardsTest {
         // then
         assertThat(actual).isTrue()
     }
+
+    @Test
+    fun `HandCards의 합이 21이고 2장이면 블랙잭이다`() {
+        // given
+        val handCards =
+            HandCards(
+                createCard(rank = Rank.Jack),
+                createCard(rank = Rank.ACE),
+            )
+        // when
+        val actual = handCards.isBlackjack()
+        // then
+        assertThat(actual).isTrue()
+    }
 }
 
 fun createHandCards(): HandCards {
