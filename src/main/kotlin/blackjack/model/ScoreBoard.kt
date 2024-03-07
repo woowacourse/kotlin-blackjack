@@ -1,17 +1,17 @@
 package blackjack.model
 
 class ScoreBoard {
-    val handCard = HandCard()
+    val handCards = HandCards()
     var cardSum = 0
         private set
 
     fun add(card: Card) {
-        handCard.add(card)
+        handCards.add(card)
         cardSum += card.denomination.score
     }
 
     fun optimizeCardSum(burstCondition: Int) {
-        val aceCount = handCard.getAceCount()
+        val aceCount = handCards.getAceCount()
         repeat(aceCount) {
             if (handleAceValue(burstCondition)) return@repeat
         }
