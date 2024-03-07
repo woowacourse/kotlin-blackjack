@@ -10,21 +10,16 @@ import blackjack.view.InputView
 import blackjack.view.OutputView
 
 class BlackJackController(
-    private val inputView: InputView,
-    private val outputView: OutputView,
     private val cardDeck: CardDeck,
 ) {
-    private lateinit var dealer: Dealer
-    private lateinit var players: List<Player>
-
     fun startGame() {
         val playerNames = getPlayerNames()
-        dealer = Dealer(playerNames.toSet())
-        players =
+        val dealer = Dealer(playerNames.toSet())
+        val players =
             List(playerNames.size) { Player(GameInfo(playerNames[it]), onInputDecision = { askPlayerHit(playerNames[it]) }) }
         dealer.drawCard { cardDeck.pick() }
-        initializePlayerCards()
-        displayInitializedCards()
+        initializePlayerCards(players)
+        displayInitializedCards(dealer.gameInfo, players.map { it.gameInfo })
 
         players.forEach { player ->
             drawSinglePlayer(player)
@@ -36,7 +31,7 @@ class BlackJackController(
             val pickingState = dealer.drawCard { cardDeck.pick() }
             when (pickingState) {
                 PickingState.CONTINUE -> {
-                    outputView.printDealerHit(dealer.gameInfo)
+                    OutputView.printDealerHit(dealer.gameInfo)
                 }
                 PickingState.STOP -> break
             }
@@ -47,42 +42,39 @@ class BlackJackController(
 
         val judge = Judge(dealerStat, playerStat)
 
-        outputView.printFinalCards(dealerStat, playerStat)
-        outputView.printResult(judge.getDealerResult(), judge.getPlayerResults(), playerStat, dealerStat)
+        OutputView.printFinalCards(dealerStat, playerStat)
+        OutputView.printResult(judge.getDealerResult(), judge.getPlayerResults(), playerStat, dealerStat)
     }
 
     private fun drawSinglePlayer(player: Player) {
         while (true) {
             val pickingState = player.drawCard { cardDeck.pick() }
+            OutputView.printSinglePlayerCards(gameInfo = player.gameInfo)
             when (pickingState) {
-                PickingState.CONTINUE -> {
-                    outputView.printSinglePlayerCards(gameInfo = player.gameInfo)
-                }
-
+                PickingState.CONTINUE -> continue
                 PickingState.STOP -> break
             }
         }
     }
 
-    private fun askPlayerHit(playerName: String): String = inputView.readContinueInput(playerName) ?: askPlayerHit(playerName)
+    private fun askPlayerHit(playerName: String): String = InputView.readContinueInput(playerName) ?: askPlayerHit(playerName)
 
-    private fun displayInitializedCards() {
-        val dealerStat = dealer.gameInfo
-        val playersStats = players.map { it.gameInfo }
-        outputView.printInitialStats(dealerStat, playersStats)
+    private fun displayInitializedCards(
+        dealerInfo: GameInfo,
+        playersInfo: List<GameInfo>,
+    ) {
+        OutputView.printInitialStats(dealerInfo, playersInfo)
     }
 
-    private fun initializePlayerCards() {
+    private fun initializePlayerCards(players: List<Player>) {
         players.forEach { player ->
-            player.initializeCards {
-                cardDeck.pick()
-            }
+            player.initializeCards { cardDeck.pick() }
         }
     }
 
     private fun getPlayerNames(): List<String> {
         return runCatching {
-            inputView.readPlayerNames() ?: getPlayerNames()
+            InputView.readPlayerNames() ?: getPlayerNames()
         }.onFailure {
             println(it.message)
             return getPlayerNames()

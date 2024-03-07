@@ -3,7 +3,11 @@ package blackjack.view
 import blackjack.model.GameInfo
 import blackjack.model.Scoreboard
 
-class OutputView {
+object OutputView {
+    private const val MESSAGE_DISTRIBUTION = "\n%s와 %s에게 2장의 카드를 나누었습니다."
+    private const val MESSAGE_CARD_INFO = "%s카드: %s"
+    private const val MESSAGE_RESULT = "%s - 결과: %d"
+
     fun printInitialStats(
         dealerGameInfo: GameInfo,
         playersGameInfo: List<GameInfo>,
@@ -95,11 +99,5 @@ class OutputView {
     ) {
         val names = playersGameInfo.joinToString { it.name }
         println(MESSAGE_DISTRIBUTION.format(dealerGameInfo.name, names))
-    }
-
-    companion object {
-        private const val MESSAGE_DISTRIBUTION = "\n%s와 %s에게 2장의 카드를 나누었습니다."
-        private const val MESSAGE_CARD_INFO = "%s카드: %s"
-        private const val MESSAGE_RESULT = "%s - 결과: %d"
     }
 }
