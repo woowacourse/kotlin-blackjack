@@ -20,9 +20,9 @@ class PlayerTest {
 
     @Test
     fun `플레이어는 카드를 추가로 받을 수 있다`() {
-        assertThat(player.getCards().size).isEqualTo(START_CARD_SIZE)
+        assertThat(player.getCards().split(", ").size).isEqualTo(START_CARD_SIZE)
         player.addCard(true)
-        assertThat(player.getCards().size).isEqualTo(START_CARD_SIZE + 1)
+        assertThat(player.getCards().split(", ").size).isEqualTo(START_CARD_SIZE + 1)
     }
 
     companion object {

@@ -9,5 +9,5 @@ class Player(val name: String, val handCards: HandCards) {
 
     fun isBust(): Boolean = handCards.calculateCardScore() > 21
 
-    fun getCards() = handCards.cards
+    fun getCards() = handCards.cards.joinToString(", ") { "${it.cardNumber}${it.pattern}" }
 }

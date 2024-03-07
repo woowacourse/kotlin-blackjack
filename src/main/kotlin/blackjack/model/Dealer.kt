@@ -3,9 +3,11 @@ package blackjack.model
 class Dealer(deck: Deck) {
     private val handCards = HandCards(deck)
 
-    fun getFirstCard() = handCards.cards.first()
+    fun getFirstCard() = with(handCards.cards.first()){
+        "${cardNumber}${pattern}"
+    }
 
-    fun getAllCard() = handCards.cards
+    fun getAllCard() = handCards.cards.joinToString(", ") { "${it.cardNumber}${it.pattern}" }
 
     fun isAdd(): Boolean = handCards.calculateCardScore() <= 16
 
