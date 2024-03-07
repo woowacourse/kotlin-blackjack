@@ -14,7 +14,9 @@ class Dealer(deck: Deck) : GameParticipant(HandCards(deck)) {
         if (handCards.calculateCardScore() < DEALER_HIT_THRESHOLD) {
             handCards.add()
             true
-        } else false
+        } else {
+            false
+        }
 
     fun gameResult(players: List<Player>): Map<String, CompetitionResult> =
         players.associate { player ->
