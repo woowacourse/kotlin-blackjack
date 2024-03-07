@@ -7,6 +7,8 @@ class Hand(val cards: MutableList<Card>) {
     fun draw(card: Card) {
         cards.add(card)
         totalScore += card.denomination.score
+        isBust()
+        isBlackjack()
         if (card.denomination == Denomination.ACE) aceCount++
     }
 
