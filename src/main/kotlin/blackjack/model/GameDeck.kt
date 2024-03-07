@@ -25,9 +25,14 @@ class GameDeck {
     fun drawCard(): Card {
         if (_cards.isNotEmpty()) {
             return cards.last().also {
-                _cards = _cards.dropLast(1)
+                _cards = _cards.dropLast(DRAW_COUNT)
             }
         }
-        throw IllegalStateException()
+        throw IllegalStateException("카드 덱에 카드가 없습니다")
+    }
+
+    companion object {
+        const val DECK_SIZE = 52
+        const val DRAW_COUNT = 1
     }
 }

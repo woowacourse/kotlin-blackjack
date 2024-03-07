@@ -7,7 +7,6 @@ class GameDeckTest {
     @Test
     fun `카드 덱의 크기는 52개이다`() {
         val gameDeck = GameDeck()
-        println(gameDeck.cards)
-        Assertions.assertThat(gameDeck.cards.size).isEqualTo(52)
+        Assertions.assertThat(gameDeck.cards.size).isEqualTo(GameDeck.DECK_SIZE)
     }
 }
