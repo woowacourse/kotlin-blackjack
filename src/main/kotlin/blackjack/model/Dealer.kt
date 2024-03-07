@@ -8,9 +8,9 @@ class Dealer(deck: Deck) {
             "${cardNumber.value}${pattern.shape}"
         }
 
-    fun getAllCard() = handCards.cards.joinToString(", ") { "${it.cardNumber.value}${it.pattern.shape}" }
+    fun getAllCard() = handCards.cards.joinToString(SPLIT_DELIMITER) { "${it.cardNumber.value}${it.pattern.shape}" }
 
-    private fun isBust(): Boolean = handCards.calculateCardScore() > 21
+    private fun isBust(): Boolean = handCards.calculateCardScore() > BLACKJACK_NUMBER
 
     fun addCard(): Boolean =
         if (isAdd()) {
@@ -20,7 +20,7 @@ class Dealer(deck: Deck) {
             false
         }
 
-    private fun isAdd(): Boolean = handCards.calculateCardScore() <= 16
+    private fun isAdd(): Boolean = handCards.calculateCardScore() < DEALER_HIT_THRESHOLD
 
     fun getScore() = handCards.calculateCardScore()
 
@@ -40,5 +40,11 @@ class Dealer(deck: Deck) {
                 else -> CompetitionResult.SAME
             }
         return result
+    }
+
+    companion object {
+        private const val SPLIT_DELIMITER = ", "
+        private const val BLACKJACK_NUMBER = 21
+        private const val DEALER_HIT_THRESHOLD = 17
     }
 }

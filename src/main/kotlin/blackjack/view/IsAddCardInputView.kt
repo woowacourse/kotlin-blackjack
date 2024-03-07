@@ -2,7 +2,7 @@ package blackjack.view
 
 class IsAddCardInputView {
     fun readIsAddCard(playerName: String): Boolean {
-        println("${playerName}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
+        println("${playerName}는 한 장의 카드를 더 받겠습니까?(예는 ${YES}, 아니오는 ${NO})")
         val input = readln()
         validateChoice(input)
         return input == YES

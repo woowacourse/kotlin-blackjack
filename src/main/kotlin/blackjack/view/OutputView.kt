@@ -10,7 +10,7 @@ class OutputView {
         dealer: Dealer,
         players: Players,
     ) {
-        println("\n딜러와 ${players.gamePlayers.joinToString(", ") { it.name }}명의 플레이어에게 2장의 카드를 나누었습니다.")
+        println("\n딜러와 ${players.gamePlayers.joinToString(SPLIT_DELIMITER) { it.name }}명의 플레이어에게 2장의 카드를 나누었습니다.")
         println("딜러: ${dealer.getFirstCard()}")
         players.gamePlayers.forEach { player ->
             println("${player.name}카드: ${player.getCards()}")
@@ -19,6 +19,10 @@ class OutputView {
 
     fun printPlayerCard(player: Player) {
         println("${player.name} 카드: ${player.getCards()}")
+    }
+
+    fun printBustMessage() {
+        println("Bust! 더이상 카드를 받을 수 없습니다.")
     }
 
     fun printDealerAddCard() {
@@ -39,13 +43,18 @@ class OutputView {
         println("\n## 최종 승패")
 
         val counts = result.values.groupingBy { it }.eachCount()
-        val wins = counts.getOrDefault(CompetitionResult.WIN, 0)
-        val losses = counts.getOrDefault(CompetitionResult.LOSE, 0)
-        val draws = counts.getOrDefault(CompetitionResult.SAME, 0)
+        val wins = counts.getOrDefault(CompetitionResult.WIN, DEFAULT_COMPETITION_RESULT)
+        val losses = counts.getOrDefault(CompetitionResult.LOSE, DEFAULT_COMPETITION_RESULT)
+        val draws = counts.getOrDefault(CompetitionResult.SAME, DEFAULT_COMPETITION_RESULT)
 
         println("딜러: ${losses}승 ${wins}패 ${draws}무")
         result.forEach { (playerName, competitionResult) ->
             println("$playerName: ${competitionResult.result}")
         }
+    }
+
+    companion object {
+        private const val SPLIT_DELIMITER = ", "
+        private const val DEFAULT_COMPETITION_RESULT = 0
     }
 }

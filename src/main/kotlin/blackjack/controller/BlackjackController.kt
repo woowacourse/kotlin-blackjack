@@ -31,7 +31,7 @@ class BlackjackController(
 
     private tailrec fun playerTurn(player: Player) {
         if (player.isBust()) {
-            println("Bust! 더이상 카드를 받을 수 없습니다.")
+            outputView.printBustMessage()
             return
         }
         if (player.addCard(isAddCardInputView.readIsAddCard(player.name))) {
