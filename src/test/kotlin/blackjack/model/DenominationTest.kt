@@ -11,7 +11,7 @@ class DenominationTest {
     @ValueSource(strings = ["a", "B", "k", "0", "11"])
     @ParameterizedTest
     fun `유효하지 않은 카드 숫자 혹은 알파벳일 경우 null을 반환한다`(denomination: String) {
-        val actual = Denomination.of(denomination)
+        val actual = Denomination.from(denomination)
         assertNull(actual)
     }
 
@@ -21,7 +21,7 @@ class DenominationTest {
         denomination: String,
         expected: Denomination,
     ) {
-        val actual = Denomination.of(denomination)
+        val actual = Denomination.from(denomination)
         assertThat(actual).isEqualTo(expected)
     }
 

@@ -7,7 +7,7 @@ enum class Suite(val value: String) {
     SPADE("스페이드"), ;
 
     companion object {
-        fun of(value: String): Suite? {
+        fun from(value: String): Suite? {
             return entries.find { it.value == value }
         }
     }

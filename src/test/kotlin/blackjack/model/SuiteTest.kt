@@ -11,7 +11,7 @@ class SuiteTest {
     @ValueSource(strings = ["하드", "heart", "다이어몬드", "diamond", "스폐이드", "clover"])
     @ParameterizedTest
     fun `유효하지 않은 모양일 경우 null을 반환한다`(suite: String) {
-        val actual = Suite.of(suite)
+        val actual = Suite.from(suite)
         Assertions.assertNull(actual)
     }
 
@@ -21,7 +21,7 @@ class SuiteTest {
         suite: String,
         expected: Suite,
     ) {
-        val actual = Suite.of(suite)
+        val actual = Suite.from(suite)
         assertThat(actual).isEqualTo(expected)
     }
 

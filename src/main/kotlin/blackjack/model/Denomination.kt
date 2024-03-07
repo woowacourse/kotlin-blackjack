@@ -16,7 +16,7 @@ enum class Denomination(val value: String, val score: Int) {
     JACK("J", 10), ;
 
     companion object {
-        fun of(value: String): Denomination? {
+        fun from(value: String): Denomination? {
             return entries.find { it.value == value }
         }
     }
