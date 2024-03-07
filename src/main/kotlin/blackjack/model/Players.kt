@@ -9,7 +9,10 @@ class Players(private val names: Set<String>, deck: Deck) {
     }
 
     companion object {
-        fun playerNamesOf(names: List<String>, deck: Deck): Players {
+        fun playerNamesOf(
+            names: List<String>,
+            deck: Deck,
+        ): Players {
             validateDuplicateNames(names)
             return Players(names.toSet(), deck)
         }

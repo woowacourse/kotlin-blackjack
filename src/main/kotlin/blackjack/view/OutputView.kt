@@ -6,31 +6,37 @@ import blackjack.model.Player
 import blackjack.model.Players
 
 class OutputView {
-    fun printInitCard(dealer: Dealer, players: Players) {
-        println("딜러와 ${players.gamePlayers.joinToString(", ") { it.name }}명의 플레이어에게 2장의 카드를 나누었습니다.")
-        println("딜러의 카드: ${dealer.getFirstCard()}")
+    fun printInitCard(
+        dealer: Dealer,
+        players: Players,
+    ) {
+        println("\n딜러와 ${players.gamePlayers.joinToString(", ") { it.name }}명의 플레이어에게 2장의 카드를 나누었습니다.")
+        println("딜러: ${dealer.getFirstCard()}")
         players.gamePlayers.forEach { player ->
             println("${player.name}카드: ${player.getCards()}")
         }
     }
 
     fun printPlayerCard(player: Player) {
-        println("${player.name}카드: ${player.getCards()}")
+        println("${player.name} 카드: ${player.getCards()}")
     }
 
     fun printDealerAddCard() {
-        println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+        println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.")
     }
 
-    fun printCardResult(dealer: Dealer, players: Players) {
-        println("딜러 카드: ${dealer.getAllCard()}")
+    fun printCardResult(
+        dealer: Dealer,
+        players: Players,
+    ) {
+        println("\n딜러 카드: ${dealer.getAllCard()} - 결과: ${dealer.getScore()}")
         players.gamePlayers.forEach { player ->
-            println("${player.name}카드: ${player.getCards()}")
+            println("${player.name}카드: ${player.getCards()} - 결과: ${player.getScore()}")
         }
     }
 
     fun printGameResult(result: Map<String, CompetitionResult>) {
-        println("## 최종 승패")
+        println("\n## 최종 승패")
 
         val counts = result.values.groupingBy { it }.eachCount()
         val wins = counts.getOrDefault(CompetitionResult.WIN, 0)
