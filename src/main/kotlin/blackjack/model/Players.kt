@@ -1,7 +1,7 @@
 package blackjack.model
 
 class Players(private val names: Set<String>, deck: Deck) {
-    val players: List<Player> = names.map { Player(it, PlayerCards(deck)) }
+    val players: List<Player> = names.map { Player(it, HandCards(deck)) }
 
     init {
         require(names.size in 1..6) { "1명 이상 6명 이하의 플레이어만 가능합니다." }

@@ -1,19 +1,19 @@
 package blackjack.model
 
 class Dealer(deck: Deck) {
-    private val playerCards = PlayerCards(deck)
+    private val handCards = HandCards(deck)
 
-    fun getFirstCard() = playerCards.cards.first()
+    fun getFirstCard() = handCards.cards.first()
 
-    fun getAllCard() = playerCards.cards
+    fun getAllCard() = handCards.cards
 
-    fun isAdd(): Boolean = playerCards.calculateCardScore() <= 16
+    fun isAdd(): Boolean = handCards.calculateCardScore() <= 16
 
-    fun isBust(): Boolean = playerCards.calculateCardScore() > 21
+    fun isBust(): Boolean = handCards.calculateCardScore() > 21
 
-    fun add() = playerCards.add()
+    fun add() = handCards.add()
 
-    fun getScore() = playerCards.calculateCardScore()
+    fun getScore() = handCards.calculateCardScore()
 
     fun gameResult(players: List<Player>): Map<String, CompetitionResult> =
         players.associate { player ->
@@ -26,8 +26,8 @@ class Dealer(deck: Deck) {
             when {
                 player.isBust() -> CompetitionResult.LOSE
                 isBust() -> CompetitionResult.WIN
-                player.playerCards.calculateCardScore() < getScore() -> CompetitionResult.LOSE
-                player.playerCards.calculateCardScore() > getScore() -> CompetitionResult.WIN
+                player.handCards.calculateCardScore() < getScore() -> CompetitionResult.LOSE
+                player.handCards.calculateCardScore() > getScore() -> CompetitionResult.WIN
                 else -> CompetitionResult.SAME
             }
         return result

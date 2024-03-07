@@ -1,13 +1,13 @@
 package blackjack.model
 
-class Player(val name: String, val playerCards: PlayerCards) {
+class Player(val name: String, val handCards: HandCards) {
     fun addCard(isAdd: Boolean) {
         if (isAdd) {
-            playerCards.add()
+            handCards.add()
         }
     }
 
-    fun isBust(): Boolean = playerCards.calculateCardScore() > 21
+    fun isBust(): Boolean = handCards.calculateCardScore() > 21
 
-    fun getCards() = playerCards.cards
+    fun getCards() = handCards.cards
 }

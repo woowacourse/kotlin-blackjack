@@ -3,7 +3,7 @@ package blackjack
 import blackjack.model.CardMachineManager
 import blackjack.model.Deck
 import blackjack.model.Player
-import blackjack.model.PlayerCards
+import blackjack.model.HandCards
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -14,8 +14,8 @@ class PlayerTest {
     @BeforeEach
     fun setUp() {
         CardMachineManager.machine = TestCardMachine()
-        val playerCards = PlayerCards(Deck())
-        player = Player("채채", playerCards)
+        val handCards = HandCards(Deck())
+        player = Player("채채", handCards)
     }
 
     @Test
