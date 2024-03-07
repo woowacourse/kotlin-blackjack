@@ -10,7 +10,7 @@ class Dealer(deck: Deck) {
 
     fun getAllCard() = handCards.cards.joinToString(", ") { "${it.cardNumber.value}${it.pattern.shape}" }
 
-    fun isBust(): Boolean = handCards.calculateCardScore() > 21
+    private fun isBust(): Boolean = handCards.calculateCardScore() > 21
 
     fun addCard(): Boolean =
         if (isAdd()) {
