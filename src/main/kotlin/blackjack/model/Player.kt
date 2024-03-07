@@ -3,8 +3,8 @@ package blackjack.model
 class Player(
     val gameInfo: GameInfo,
     val onInputDecision: () -> String,
-) {
-    fun drawCard(generateCard: () -> Card): PickingState {
+) : CardDrawer {
+    override fun drawCard(generateCard: () -> Card): PickingState {
         return when (onInputDecision()) {
             HIT -> {
                 gameInfo.addCard(generateCard())

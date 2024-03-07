@@ -3,14 +3,14 @@ package blackjack.model
 class Dealer(
     val players: Set<String>,
     val gameInfo: GameInfo = GameInfo("딜러"),
-) {
+) : CardDrawer {
     init {
         require(players.size in PLAYER_NUM_RANGE) {
             EXCEPTION_NUMBER_OF_PLAYERS.format(players.size)
         }
     }
 
-    fun drawCard(generateCard: () -> Card): PickingState {
+    override fun drawCard(generateCard: () -> Card): PickingState {
         if (isDrawAvailable()) {
             gameInfo.addCard(generateCard())
             return PickingState.CONTINUE
