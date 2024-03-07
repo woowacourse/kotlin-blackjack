@@ -1,3 +1,10 @@
 package blackjack.model
 
-class Player(val name: String) : Participant()
+class Player(name: String) : Participant(name) {
+
+    override fun isHitable(): Boolean {
+        val score = getCardSum()
+        val threshold = 21
+        return score < threshold
+    }
+}

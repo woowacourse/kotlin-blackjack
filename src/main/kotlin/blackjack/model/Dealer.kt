@@ -1,6 +1,6 @@
 package blackjack.model
 
-class Dealer : Participant() {
+class Dealer (name: String = "딜러") : Participant(name) {
     fun judge(participant: Participant): GameResult {
         val dealerScore = this.getCardSum()
         val playerScore = participant.getCardSum()
@@ -19,7 +19,7 @@ class Dealer : Participant() {
         }
     }
 
-    fun isHitable(): Boolean {
+    override fun isHitable(): Boolean {
         val score = getCardSum()
         val threshold = 17
         return score < threshold

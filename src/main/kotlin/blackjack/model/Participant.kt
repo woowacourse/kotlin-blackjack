@@ -1,11 +1,13 @@
 package blackjack.model
 
-open class Participant {
+abstract class Participant(val name: String) {
     private val cardList: MutableList<Card> = mutableListOf()
 
     fun addCard(card: Card) {
         cardList.add(card)
     }
+
+    fun showCard(): List<Card> = cardList.toList()
 
     fun getCardSum(): Int {
         val sum = cardList.sumOf { it.cardNumber.score }
@@ -13,7 +15,7 @@ open class Participant {
         return sum + additionalScore
     }
 
-    private fun hasAce() = cardList.filter { it.cardNumber == CardNumber.ACE }.isNotEmpty()
+    private fun hasAce() = cardList.filter { it.cardNumber == CardNumber.A }.isNotEmpty()
 
     fun isBusted(): Boolean {
         val score = getCardSum()
@@ -26,4 +28,6 @@ open class Participant {
         val threshold = 21
         return threshold == score
     }
+
+    abstract fun isHitable(): Boolean
 }
