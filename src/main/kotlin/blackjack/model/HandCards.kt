@@ -19,6 +19,8 @@ class HandCards(private val deck: Deck) {
         return if (hasAce && baseScore + ANOTHER_CARD_SCORE <= BLACKJACK_NUMBER) baseScore + ANOTHER_CARD_SCORE else baseScore
     }
 
+    fun isBlackjackCard(): Boolean = cards.size == 2 && calculateCardScore() == BLACKJACK_NUMBER
+
     companion object {
         private const val INIT_CARD_AMOUNT = 2
         private const val HIT_CARD_AMOUNT = 1

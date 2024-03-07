@@ -13,6 +13,8 @@ class Player(val name: String, private val handCards: HandCards) {
 
     fun isBust(): Boolean = handCards.calculateCardScore() > BLACKJACK_NUMBER
 
+    fun isBlackjack(): Boolean = handCards.isBlackjackCard()
+
     fun getCards() = handCards.cards.joinToString(SPLIT_DELIMITER) { "${it.cardNumber.value}${it.pattern.shape}" }
 
     fun getScore() = handCards.calculateCardScore()

@@ -12,6 +12,8 @@ class Dealer(deck: Deck) {
 
     private fun isBust(): Boolean = handCards.calculateCardScore() > BLACKJACK_NUMBER
 
+    private fun isBlackjack(): Boolean = handCards.isBlackjackCard()
+
     fun addCard(): Boolean =
         if (isAdd()) {
             handCards.add()
@@ -30,17 +32,18 @@ class Dealer(deck: Deck) {
             player.name to result
         }
 
-    private fun competitionResult(player: Player): CompetitionResult {
-        val result =
-            when {
-                player.isBust() -> CompetitionResult.LOSE
-                isBust() -> CompetitionResult.WIN
-                player.getScore() < getScore() -> CompetitionResult.LOSE
-                player.getScore() > getScore() -> CompetitionResult.WIN
-                else -> CompetitionResult.SAME
-            }
-        return result
-    }
+    private fun competitionResult(player: Player): CompetitionResult =
+        when {
+            player.isBust() -> CompetitionResult.LOSE
+            isBust() -> CompetitionResult.WIN
+            player.isBlackjack() && isBlackjack() -> CompetitionResult.SAME
+            player.isBlackjack() -> CompetitionResult.WIN
+            isBlackjack() -> CompetitionResult.LOSE
+            player.getScore() < getScore() -> CompetitionResult.LOSE
+            player.getScore() > getScore() -> CompetitionResult.WIN
+            else -> CompetitionResult.SAME
+        }
+
 
     companion object {
         private const val SPLIT_DELIMITER = ", "
