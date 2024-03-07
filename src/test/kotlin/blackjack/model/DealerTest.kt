@@ -11,7 +11,7 @@ class DealerTest {
         val player = Player("철수")
         player.addCard(Card(CardNumber.`2`, Suit.`하트`))
         val actual = dealer.judge(player)
-        assertThat(actual).isEqualTo(GameResult.LOSE)
+        assertThat(actual).isEqualTo(GameResult.`패`)
     }
 
     @Test
@@ -21,7 +21,7 @@ class DealerTest {
         val player = Player("철수")
         player.addCard(Card(CardNumber.`3`, Suit.`하트`))
         val actual = dealer.judge(player)
-        assertThat(actual).isEqualTo(GameResult.DRAW)
+        assertThat(actual).isEqualTo(GameResult.`무`)
     }
 
     @Test
@@ -31,7 +31,7 @@ class DealerTest {
         val player = Player("철수")
         player.addCard(Card(CardNumber.`4`, Suit.`하트`))
         val actual = dealer.judge(player)
-        assertThat(actual).isEqualTo(GameResult.WIN)
+        assertThat(actual).isEqualTo(GameResult.`승`)
     }
 
     @Test
