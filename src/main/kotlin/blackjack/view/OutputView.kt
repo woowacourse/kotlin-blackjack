@@ -22,20 +22,25 @@ class OutputView {
         dealerStat: Stat,
         playerStats: List<Stat>,
     ) {
+        println()
         println(
             MESSAGE_RESULT.format(
                 MESSAGE_CARD_INFO.format(
                     dealerStat.name,
-                    dealerStat.cards.joinToString { "${it.value}${it.title}" },
+                    dealerStat.cards.joinToString { "${it.value}${it.shape}" },
                 ),
+                dealerStat.total,
             ),
         )
 
         playerStats.forEach { playerStat ->
-            MESSAGE_RESULT.format(
-                MESSAGE_CARD_INFO.format(
-                    playerStat.name,
-                    playerStat.cards.joinToString { "${it.value}${it.title}" },
+            println(
+                MESSAGE_RESULT.format(
+                    MESSAGE_CARD_INFO.format(
+                        playerStat.name,
+                        playerStat.cards.joinToString { "${it.value}${it.shape}" },
+                    ),
+                    playerStat.total,
                 ),
             )
         }

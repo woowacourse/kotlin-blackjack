@@ -39,6 +39,8 @@ class BlackJackController(
                 PickingState.STOP -> break
             }
         }
+
+        outputView.printFinalCards(dealer.getStat(), players.map { it.getStat() })
     }
 
     private fun drawSinglePlayer(player: Player) {
