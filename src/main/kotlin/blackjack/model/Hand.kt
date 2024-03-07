@@ -5,13 +5,19 @@ class Hand(cards: List<Card>) {
     val cards: List<Card>
         get() = _cards.toList()
 
-    fun isBust(): Boolean = cards.sumOf { it.number.value } > THRESHOLD_BUST
-
     fun addCard(card: Card) {
         _cards.add(card)
     }
 
-    companion object {
-        const val THRESHOLD_BUST = 21
+    fun calculateSum(): Int {
+        val sumWithoutAces = cards.filterNot { it.number == CardNumber.ACE }.sumOf { it.number.value }
+        val acesCount = cards.count { it.number == CardNumber.ACE }
+        var totalSum = sumWithoutAces + acesCount
+
+        repeat(acesCount) {
+            val tempSum = totalSum + 10
+            if (tempSum <= State.THRESHOLD_BUST) totalSum = tempSum else return totalSum
+        }
+        return totalSum
     }
 }
