@@ -22,9 +22,9 @@
     - [x] 이름의 길이는 10글자 이내로 한다.
 
 
-- [ ] Players
-    - [ ] Player의 List를 가진다.
-    - [ ] 1~10명의 Player가 존재하는지 검증한다.
+- [x] Players
+    - [x] Player의 List를 가진다.
+    - [x] 1~10명의 Player가 존재하는지 검증한다.
 
 
 - [x] Card
