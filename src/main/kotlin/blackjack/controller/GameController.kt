@@ -16,20 +16,17 @@ import blackjack.view.OutputView.showPlayerCards
 class GameController {
     fun run() {
         val playerGroup = createPlayerGroup()
-        val gameDeck = GameDeck()
         val dealer = Dealer()
         val participants = Participants(dealer, playerGroup)
 
-        playGame(gameDeck, participants)
+        playGame(participants)
 
         participants.matchResult()
         OutputView.printMatchResult(participants.dealer, participants.playerGroup)
     }
 
-    private fun playGame(
-        gameDeck: GameDeck,
-        participants: Participants,
-    ) {
+    private fun playGame(participants: Participants) {
+        val gameDeck = GameDeck()
         val blackJackGame = BlackJackGame(participants, gameDeck)
 
         blackJackGame.start(::printGameSetting)
@@ -43,8 +40,8 @@ class GameController {
 
     private fun createPlayerGroup(): PlayerGroup {
         val playersNames = InputView.inputPlayersNames()
-        val participants = PlayerGroup()
-        participants.addPlayer(playersNames)
-        return participants
+        val playerGroup = PlayerGroup()
+        playerGroup.addPlayer(playersNames)
+        return playerGroup
     }
 }
