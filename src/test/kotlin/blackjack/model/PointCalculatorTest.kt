@@ -4,6 +4,8 @@ import blackjack.fixture.createCard
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 
 class PointCalculatorTest {
     private lateinit var pointCalculator: PointCalculator
@@ -24,47 +26,21 @@ class PointCalculatorTest {
         assertThat(actual).isEqualTo(expected)
     }
 
-    @Test
-    fun `에이스가 있을 때 - 21에 가장 가까운 수 반환 - 2`() {
+    @ParameterizedTest
+    @CsvSource(
+        value = ["ACE:TEN:21", "ACE:ACE:12"],
+        delimiter = ':',
+    )
+    fun `에이스가 있을 때 - 21에 가장 가까운 수 반환`(
+        rank: Rank,
+        rank2: Rank,
+        expectedSum: Int,
+    ) {
         // given
-        val cards = listOf(createCard(rank = Rank.ACE), createCard(rank = Rank.TEN))
-        val expected = 21
+        val cards = listOf(createCard(rank = rank), createCard(rank = rank2))
         // when
         val actual = pointCalculator.sumOf(cards)
         // then
-        assertThat(actual).isEqualTo(expected)
-    }
-
-    @Test
-    fun `에이스가 있을 때 - 21에 가장 가까운 수 반환 - 3`() {
-        // given
-        val cards = listOf(createCard(rank = Rank.ACE), createCard(rank = Rank.ACE), createCard(rank = Rank.QUEEN))
-        val expected = 12
-        // when
-        val actual = pointCalculator.sumOf(cards)
-        // then
-        assertThat(actual).isEqualTo(expected)
-    }
-
-    @Test
-    fun `에이스가 있을 때 - 21에 가장 가까운 수 반환 - 4`() {
-        // given
-        val cards = listOf(createCard(rank = Rank.ACE), createCard(rank = Rank.ACE))
-        val expected = 12
-        // when
-        val actual = pointCalculator.sumOf(cards)
-        // then
-        assertThat(actual).isEqualTo(expected)
-    }
-
-    @Test
-    fun `에이스가 있을 때 - 21에 가장 가까운 수 반환 - 5`() {
-        // given
-        val cards = listOf(createCard(rank = Rank.ACE), createCard(rank = Rank.TEN))
-        val expected = 21
-        // when
-        val actual = pointCalculator.sumOf(cards)
-        // then
-        assertThat(actual).isEqualTo(expected)
+        assertThat(actual).isEqualTo(expectedSum)
     }
 }
