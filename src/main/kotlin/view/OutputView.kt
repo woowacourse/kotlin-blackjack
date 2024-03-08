@@ -74,4 +74,7 @@ object OutputView {
             println("${player.humanName.name}: ${playersResult.result.getOrDefault(player.humanName, ResultType.DRAW).word}")
         }
     }
-}
+
+    fun showThrowable(t: Throwable) {
+        println(t.message)
+    }}

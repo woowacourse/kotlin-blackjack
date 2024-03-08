@@ -14,10 +14,10 @@ import view.OutputView
 class GameController(private val deck: Deck) {
     fun start() {
         val dealer = Dealer(Hand(deck))
-        val players = readPlayers()
+        val players = handleException { readPlayers() }
 
         initGame(dealer = dealer, players = players)
-        playGame(dealer = dealer, players = players)
+        handleException { playGame(dealer = dealer, players = players) }
 
         showGameResult(dealer = dealer, players = players)
     }
@@ -102,4 +102,10 @@ class GameController(private val deck: Deck) {
         OutputView.showDealerResult(dealerResult)
         OutputView.showPlayersResult(players, playersResult)
     }
+
+    private fun <T> handleException(block: () -> T): T =
+        runCatching { block() }.getOrElse {
+            OutputView.showThrowable(it)
+            handleException(block)
+        }
 }
