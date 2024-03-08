@@ -11,6 +11,7 @@ class OutputView {
         dealerFirstCard: Card,
         players: List<Player>,
     ) {
+        println()
         println(MESSAGE_DIVIDED_CARDS.format(players.joinToString { it.name }))
         println(MESSAGE_PLAYER_HAND_CARDS.format(DEALER_NAME, dealerFirstCard.format()))
         players.forEach(::showPlayerHandCards)
@@ -29,6 +30,7 @@ class OutputView {
         cards: List<Card>,
         score: Int,
     ) {
+        println()
         showPlayerScore(DEALER_NAME, cards, score)
     }
 
@@ -61,11 +63,12 @@ class OutputView {
             GameResult.State.entries.forEach {
                 append(map[it] ?: 0)
                 append(it.label)
+                append(" ")
             }
         }
 
-    fun Card.format(): String {
-        return "${rank.label}${suit.label}"
+    private fun Card.format(): String {
+        return "${rank.label}${suit.label} "
     }
 
     private fun List<Card>.format(): String {
@@ -79,9 +82,9 @@ class OutputView {
     companion object {
         private const val DEALER_NAME = "딜러"
         private const val MESSAGE_PLAYER_HAND_CARDS = "%s 카드: %s"
-        private const val MESSAGE_PARTICIPANT_RESULT = "%s 카드: %s - 결과 : %d"
+        private const val MESSAGE_PARTICIPANT_RESULT = "%s 카드: %s- 결과 : %d"
         private const val MESSAGE_DIVIDED_CARDS = "딜러와 %s에게 2장의 카드를 나누었습니다."
-        private const val MESSAGE_DEALER_HIT = "딜러는 16이하라 한장의 카드를 더 받았습니다."
-        private const val MESSAGE_FINAL_RESULT = "## 최종 승패"
+        private const val MESSAGE_DEALER_HIT = "\n딜러는 16이하라 한장의 카드를 더 받았습니다."
+        private const val MESSAGE_FINAL_RESULT = "\n## 최종 승패"
     }
 }
