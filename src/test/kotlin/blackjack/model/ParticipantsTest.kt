@@ -1,6 +1,6 @@
 package blackjack.model
 
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
@@ -23,9 +23,9 @@ class ParticipantsTest {
     fun `게임이 시작되면 플레이어와 딜러에게 카드를 2장씩 나눠준다`() {
         participants.initSetting(gameDeck)
 
-        Assertions.assertThat(dealer.hand.cards.size).isEqualTo(Participants.INITIAL_CARD_COUNTS)
+        assertThat(dealer.hand.cards.size).isEqualTo(Participants.INITIAL_CARD_COUNTS)
         participants.playerGroup.players.forEach { player ->
-            Assertions.assertThat(player.hand.cards.size).isEqualTo(Participants.INITIAL_CARD_COUNTS)
+            assertThat(player.hand.cards.size).isEqualTo(Participants.INITIAL_CARD_COUNTS)
         }
     }
 }
