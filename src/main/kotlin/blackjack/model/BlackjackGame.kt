@@ -25,9 +25,9 @@ object BlackjackGame {
         players: Players,
     ) {
         players.playerGroup.forEach { player ->
-            val gameResult = dealer.decideGameResult(player)
-            dealer.result.add(gameResult)
-            players.playersResult.add(player.name, gameResult.reverse())
+            val gameResultType = dealer.decideGameResultType(player)
+            dealer.result.add(gameResultType)
+            players.playersResult.add(player.name, gameResultType.reverse())
         }
     }
 }

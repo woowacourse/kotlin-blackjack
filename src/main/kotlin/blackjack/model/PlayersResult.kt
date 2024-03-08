@@ -1,14 +1,14 @@
 package blackjack.model
 
 class PlayersResult {
-    private val _results = mutableMapOf<PlayerName, GameResult>()
-    val results: Map<PlayerName, GameResult>
+    private val _results = mutableMapOf<PlayerName, GameResultType>()
+    val results: Map<PlayerName, GameResultType>
         get() = _results.toMap()
 
     fun add(
         playerName: PlayerName,
-        gameResult: GameResult,
+        gameResultType: GameResultType,
     ) {
-        _results[playerName] = gameResult
+        _results[playerName] = gameResultType
     }
 }

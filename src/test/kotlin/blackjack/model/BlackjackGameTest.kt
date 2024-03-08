@@ -20,14 +20,14 @@ class BlackjackGameTest {
 
         // then
         assertThat(players.playersResult.results)
-            .containsEntry(PlayerName("olive"), GameResult.LOSE)
-            .containsEntry(PlayerName("seogi"), GameResult.WIN)
-            .containsEntry(PlayerName("chae"), GameResult.DRAW)
+            .containsEntry(PlayerName("olive"), GameResultType.LOSE)
+            .containsEntry(PlayerName("seogi"), GameResultType.WIN)
+            .containsEntry(PlayerName("chae"), GameResultType.DRAW)
 
         assertThat(dealer.result.results)
-            .containsEntry(GameResult.LOSE, 1)
-            .containsEntry(GameResult.WIN, 1)
-            .containsEntry(GameResult.DRAW, 1)
+            .containsEntry(GameResultType.LOSE, 1)
+            .containsEntry(GameResultType.WIN, 1)
+            .containsEntry(GameResultType.DRAW, 1)
     }
 
     companion object {

@@ -5,13 +5,13 @@ class Dealer : Role() {
 
     override fun decideMoreCard() = getCardSum() < MIN_CARD_SUM
 
-    fun decideGameResult(player: Player): GameResult {
+    fun decideGameResultType(player: Player): GameResultType {
         return when {
-            player.isBurst() -> GameResult.WIN
-            isBurst() -> GameResult.LOSE
-            getCardSum() > player.getCardSum() -> GameResult.WIN
-            getCardSum() == player.getCardSum() -> GameResult.DRAW
-            else -> GameResult.LOSE
+            player.isBurst() -> GameResultType.WIN
+            isBurst() -> GameResultType.LOSE
+            getCardSum() > player.getCardSum() -> GameResultType.WIN
+            getCardSum() == player.getCardSum() -> GameResultType.DRAW
+            else -> GameResultType.LOSE
         }
     }
 

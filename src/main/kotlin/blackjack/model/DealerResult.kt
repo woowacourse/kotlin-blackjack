@@ -1,12 +1,12 @@
 package blackjack.model
 
 class DealerResult {
-    private val _results = mutableMapOf<GameResult, Int>()
-    val results: Map<GameResult, Int>
+    private val _results = mutableMapOf<GameResultType, Int>()
+    val results: Map<GameResultType, Int>
         get() = _results.toMap()
 
-    fun add(gameResult: GameResult) {
-        _results[gameResult] = _results.getOrDefault(gameResult, GAME_RESULT_DEFAULT_COUNT) + 1
+    fun add(gameResultType: GameResultType) {
+        _results[gameResultType] = _results.getOrDefault(gameResultType, GAME_RESULT_DEFAULT_COUNT) + 1
     }
 
     companion object {

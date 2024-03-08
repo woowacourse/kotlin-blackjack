@@ -2,7 +2,7 @@ package blackjack.view
 
 import blackjack.model.Card
 import blackjack.model.Dealer
-import blackjack.model.GameResult
+import blackjack.model.GameResultType
 import blackjack.model.Player
 import blackjack.model.Players
 import blackjack.model.Role
@@ -56,7 +56,7 @@ class OutputView {
     }
 
     private fun printDealerFinalGameResult(dealer: Dealer) {
-        GameResult.entries.forEach { gameResult ->
+        GameResultType.entries.forEach { gameResult ->
             val count = dealer.result.results[gameResult] ?: return@forEach
             print("${count}${gameResult.message} ")
         }

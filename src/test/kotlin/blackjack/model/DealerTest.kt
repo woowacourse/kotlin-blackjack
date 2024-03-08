@@ -45,7 +45,7 @@ class DealerTest {
     fun `카드 합계를 비교하여 게임 결과를 결정한다`(
         dealerCards: List<Card>,
         playerCards: List<Card>,
-        expected: GameResult,
+        expected: GameResultType,
     ) {
         // given
         val dealer = Dealer()
@@ -54,7 +54,7 @@ class DealerTest {
         playerCards.forEach { player.receiveCard(it) }
 
         // when
-        val actual = dealer.decideGameResult(player)
+        val actual = dealer.decideGameResultType(player)
 
         // then
         assertThat(actual).isEqualTo(expected)
@@ -86,19 +86,19 @@ class DealerTest {
                 Arguments.of(
                     listOf(Card.of("K", "하트"), Card.of("J", "하트"), Card.of("6", "하트")),
                     listOf(Card.of("K", "하트"), Card.of("Q", "하트"), Card.of("2", "하트")),
-                    GameResult.WIN,
+                    GameResultType.WIN,
                 ),
                 Arguments.of(
                     listOf(Card.of("K", "하트")),
                     listOf(Card.of("K", "하트"), Card.of("Q", "하트"), Card.of("2", "하트")),
-                    GameResult.WIN,
+                    GameResultType.WIN,
                 ),
                 Arguments.of(
                     listOf(Card.of("K", "하트"), Card.of("J", "하트"), Card.of("6", "하트")),
                     listOf(Card.of("K", "하트")),
-                    GameResult.LOSE,
+                    GameResultType.LOSE,
                 ),
-                Arguments.of(listOf(Card.of("K", "하트")), listOf(Card.of("Q", "하트")), GameResult.DRAW),
+                Arguments.of(listOf(Card.of("K", "하트")), listOf(Card.of("Q", "하트")), GameResultType.DRAW),
             )
     }
 }
