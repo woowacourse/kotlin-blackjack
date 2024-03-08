@@ -7,22 +7,38 @@ import blackjack.model.Player
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
-class Controller(
-) {
+class Controller {
+
+    private val deckManager = DeckManager()
     fun run() {
-        val names: List<String> = InputView.getNames()
-        val players = names.map { Player(it) }
+        val players = makePlayers()
         val dealer = Dealer()
-        val deckManager = DeckManager()
+        initParticipantsCard(dealer, players)
+        proceedParticipantsTure(dealer, players)
+        printStatistics(dealer, players)
+    }
+
+    private fun makePlayers(): List<Player> {
+        val names: List<String> = InputView.getNames()
+        return names.map { Player(it) }
+    }
+
+    private fun initParticipantsCard(
+        dealer: Dealer,
+        players: List<Player>
+    ) {
         deckManager.initGame(dealer, players)
         OutputView.printInitialResult(dealer, players)
+    }
 
+    private fun proceedParticipantsTure(
+        dealer: Dealer,
+        players: List<Player>,
+    ) {
         players.forEach { player ->
             proceedPlayerTurn(player, deckManager)
         }
         proceedDealerTurn(dealer, deckManager)
-
-        printStatistics(dealer, players)
     }
 
     private fun proceedPlayerTurn(player: Player, deckManager: DeckManager) {
@@ -36,7 +52,6 @@ class Controller(
         }
         if (player.isBusted()) {
             OutputView.printBustedMessage(player)
-            return
         }
     }
 
