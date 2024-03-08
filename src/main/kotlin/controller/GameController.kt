@@ -33,6 +33,7 @@ class GameController(private val deck: Deck) {
 
     private fun initDealer(dealer: Dealer) {
         dealer.hit()
+        dealer.hit()
     }
 
     private fun initPlayers(players: Players) {

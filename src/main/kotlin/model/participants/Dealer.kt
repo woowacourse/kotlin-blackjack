@@ -2,13 +2,14 @@ package model.participants
 
 class Dealer(override val hand: Hand, override val humanName: HumanName = HumanName.fromInput("딜러")) : Human(hand, humanName) {
     fun play(): Int {
-        var hitCountExceptFirst = -1
-        do {
-            hit()
-            hitCountExceptFirst++
-        } while (canHit())
+        var hitCount = 0
 
-        return hitCountExceptFirst
+        while (canHit()) {
+            hit()
+            hitCount++
+        }
+
+        return hitCount
     }
 
     override fun hit(): Boolean {

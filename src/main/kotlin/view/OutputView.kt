@@ -29,17 +29,21 @@ object OutputView {
         dealer: Dealer,
         players: Players,
     ) {
-        showHumanHand(dealer)
+        showDealerHandOnlyOne(dealer)
         showPlayersHand(players)
         println()
     }
 
+    private fun showDealerHandOnlyOne(dealer: Dealer) {
+        println("${dealer.humanName.name}: ${getFirstCardFromHand(dealer.hand)}")
+    }
+
     fun showHumanHand(human: Human) {
-        println("${human.humanName.name}: ${getCardFromHand(human.hand)}")
+        println("${human.humanName.name}: ${getCardsFromHand(human.hand)}")
     }
 
     fun showHumanHandWithResult(human: Human) {
-        println("${human.humanName.name}: ${getCardFromHand(human.hand)} - 결과: ${human.getPointIncludingAce().amount}")
+        println("${human.humanName.name}: ${getCardsFromHand(human.hand)} - 결과: ${human.getPointIncludingAce().amount}")
     }
 
     fun showPlayersHandWithResult(players: Players) {
@@ -52,7 +56,9 @@ object OutputView {
         }
     }
 
-    private fun getCardFromHand(hand: Hand): String = hand.cards.joinToString(", ") { it.valueType.rank + it.markType.mark }
+    private fun getCardsFromHand(hand: Hand): String = hand.cards.joinToString(", ") { it.valueType.rank + it.markType.mark }
+
+    private fun getFirstCardFromHand(hand: Hand): String = hand.cards.first().valueType.rank + hand.cards.first().markType.mark
 
     fun showDealerHit() = println(HEADER_DRAW_CARDS_FOR_DEALER)
 
@@ -77,4 +83,5 @@ object OutputView {
 
     fun showThrowable(t: Throwable) {
         println(t.message)
-    }}
+    }
+}

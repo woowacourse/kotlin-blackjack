@@ -3,6 +3,7 @@ package model.participants
 import model.card.Card
 import model.card.Deck
 import model.card.TrumpDeck
+import model.card.ValueType
 import model.result.Point
 
 class Hand(private val deck: Deck = TrumpDeck) {
@@ -24,10 +25,6 @@ class Hand(private val deck: Deck = TrumpDeck) {
     }
 
     fun hasAce(): Boolean {
-        return _cards.any { it.valueType.amount.rem(CARD_DIVIDER) == 0 }
-    }
-
-    companion object {
-        const val CARD_DIVIDER = 13
+        return _cards.any { it.valueType == ValueType.ACE }
     }
 }
