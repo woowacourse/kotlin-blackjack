@@ -13,18 +13,15 @@ class DefaultPointCalculator : PointCalculator {
     }
 
     private fun sumIfExcludeAce(cards: List<Card>): Int {
-        val sum = cards.sum()
-        if (sum > BLACKJACK_NUMBER) return sum
-        return sum
+        return cards.sum()
     }
 
     private fun sumIfIncludeAce(cards: List<Card>): Int {
-        val condition = BLACKJACK_NUMBER
-        val min = cards.sum()
-        val max = min + Rank.ACE.bonusNumber
-        if (min > condition) return min
-        if (max <= condition) return max
-        return min
+        val sumOfCards = cards.sum()
+        if (sumOfCards <= BLACKJACK_NUMBER - Rank.ACE.bonusNumber) {
+            return sumOfCards + Rank.ACE.bonusNumber
+        }
+        return sumOfCards
     }
 
     private fun List<Card>.sum() = sumOf { it.rank.point }
