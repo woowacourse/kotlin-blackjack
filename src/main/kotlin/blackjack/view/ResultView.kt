@@ -1,7 +1,7 @@
 package blackjack.view
 
 import blackjack.model.game.Result
-import blackjack.model.game.State
+import blackjack.model.game.State.Finished
 import blackjack.model.player.Dealer
 import blackjack.model.player.PlayerEntry
 
@@ -15,7 +15,7 @@ const val WIN_STRING = "승"
 const val LOSE_STRING = "패"
 const val DRAW_STRING = "무"
 const val PLAYER_GAME_RESULT = "%s: %s"
-const val DEALER_GAME_RESULT = "딜러: %d승 %s무 %d패"
+const val DEALER_GAME_RESULT = "딜러: %d승%s %d패"
 
 fun showHandsScore(
     dealer: Dealer,
@@ -32,8 +32,8 @@ private fun showFinalWinOrLoss() {
 private fun showDealerScore(dealer: Dealer) {
     val state =
         when (dealer.state) {
-            State.BUST -> BUST_STRING
-            State.BLACKJACK -> BLACKJACK_STRING
+            Finished.Bust -> BUST_STRING
+            Finished.BlackJack -> BLACKJACK_STRING
             else -> EMPTY_STRING
         }
 
@@ -50,8 +50,8 @@ private fun showPlayersScore(playerEntry: PlayerEntry) {
     playerEntry.players.forEach { player ->
         val state =
             when (player.state) {
-                State.BUST -> BUST_STRING
-                State.BLACKJACK -> BLACKJACK_STRING
+                Finished.Bust -> BUST_STRING
+                Finished.BlackJack -> BLACKJACK_STRING
                 else -> EMPTY_STRING
             }
 
@@ -104,5 +104,11 @@ private fun showDealerWinsOrLoses(
     drawCount: Int,
     defeatCount: Int,
 ) {
-    println(DEALER_GAME_RESULT.format(winCount, drawCount.takeIf { drawCount != 0 } ?: "", defeatCount))
+    println(
+        DEALER_GAME_RESULT.format(
+            winCount,
+            ("$drawCount 무").takeIf { drawCount != 0 } ?: "",
+            defeatCount,
+        ),
+    )
 }

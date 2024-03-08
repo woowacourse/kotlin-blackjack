@@ -1,7 +1,7 @@
 package blackjack.view
 
 import Player
-import blackjack.model.game.State
+import blackjack.model.game.State.Finished
 import blackjack.model.player.Dealer
 import blackjack.model.player.PlayerEntry
 
@@ -27,8 +27,8 @@ fun showHands(
 fun showPlayerHand(player: Player) {
     val state =
         when (player.state) {
-            State.BUST -> " (Bust)"
-            State.BLACKJACK -> " (BlackJack)"
+            Finished.Bust -> " (Bust)"
+            Finished.BlackJack -> " (BlackJack)"
             else -> ""
         }
     println(
@@ -58,8 +58,8 @@ private fun showDealerOneHand(dealer: Dealer) {
 private fun showDealerHand(dealer: Dealer) {
     val state =
         when (dealer.state) {
-            State.BUST -> " (Bust)"
-            State.BLACKJACK -> " (BlackJack)"
+            Finished.Bust -> " (Bust)"
+            Finished.BlackJack -> " (BlackJack)"
             else -> ""
         }
     println(DEALER_CARD.format(dealer.hand.cards.joinToString()) + state)

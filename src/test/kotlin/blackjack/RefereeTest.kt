@@ -87,7 +87,7 @@ class RefereeTest {
                     ),
                 ),
             )
-        player.state = State.BUST
+        player.state = State.Finished.Bust
         val players = listOf(player)
         val playerEntry = PlayerEntry(players)
         val referee = Referee(dealer, playerEntry)
@@ -112,7 +112,7 @@ class RefereeTest {
                 "채드",
                 Hand(mutableListOf(Card(Denomination.ACE, Suit.HEARTS), Card(Denomination.JACK, Suit.SPADES))),
             )
-        dealer.state = State.BUST
+        dealer.state = State.Finished.Bust
         val players = listOf(player)
         val playerEntry = PlayerEntry(players)
         val referee = Referee(dealer, playerEntry)

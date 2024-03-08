@@ -1,8 +1,15 @@
 package blackjack.model.game
 
-enum class State {
-    RUNNING,
-    BLACKJACK,
-    STAY,
-    BUST,
+sealed interface State {
+    sealed interface Running : State {
+        data object Hit : Running
+    }
+
+    sealed interface Finished : State {
+        data object Bust : Finished
+
+        data object Stay : Finished
+
+        data object BlackJack : Finished
+    }
 }

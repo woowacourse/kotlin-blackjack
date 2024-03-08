@@ -60,6 +60,7 @@ object BlackJackController {
     private fun showDealerDraw(dealer: Dealer) {
         while (dealer.judgeDraw()) {
             dealer.hand.draw(Deck.dealCard())
+            determineDealerstate(dealer)
             showDealerDrawMessage(dealer)
         }
     }
@@ -69,9 +70,16 @@ object BlackJackController {
     }
 
     private fun askPlayerDraw(player: Player) {
-        while (player.state == State.RUNNING) {
-            drawOrNot(askPlayersDraw(player), player)
-            showPlayerHand(player)
+        while (player.state is State.Running.Hit) {
+            val drawOrNot = askPlayersDraw(player)
+            if (drawOrNot == DRAW_DECISION) {
+                player.hand.draw(Deck.dealCard())
+                drawOrNot(drawOrNot, player)
+                showPlayerHand(player)
+                determinestate(player)
+            } else {
+                player.state = State.Finished.Stay
+            }
         }
     }
 
@@ -117,24 +125,42 @@ object BlackJackController {
         player: Player,
     ) {
         if (drawOrNot == DRAW_DECISION) {
-            determineState(player)
+            determinestate(player)
         } else {
-            player.state = State.STAY
+            player.state = State.Finished.Stay
         }
     }
 
-    private fun determineState(player: Player) {
-        player.hand.draw(Deck.dealCard())
-        if (isBust(player)) player.state = State.BUST
-        if (isBlackjack(player)) player.state = State.BLACKJACK
+    private fun determinestate(player: Player) {
+        if (isBust(player)) {
+            player.state = State.Finished.Bust
+        } else if (isBlackjack(player)) {
+            player.state = State.Finished.BlackJack
+        }
+    }
+
+    private fun determineDealerstate(dealer: Dealer) {
+        if (isDealerBust(dealer)) {
+            dealer.state = State.Finished.Bust
+        } else if (isDealerBlackjack(dealer)) {
+            dealer.state = State.Finished.BlackJack
+        }
     }
 
     private fun isBust(player: Player): Boolean {
         return player.hand.totalScore > BLACKJACK_SCORE
     }
 
+    private fun isDealerBust(dealer: Dealer): Boolean {
+        return dealer.hand.totalScore > BLACKJACK_SCORE
+    }
+
     private fun isBlackjack(player: Player): Boolean {
         return player.hand.totalScore == BLACKJACK_SCORE
+    }
+
+    private fun isDealerBlackjack(dealer: Dealer): Boolean {
+        return dealer.hand.totalScore == BLACKJACK_SCORE
     }
 
     private fun readPlayersName(): List<String> {

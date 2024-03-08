@@ -5,7 +5,7 @@ import blackjack.model.game.ScoreCalculation
 import blackjack.model.game.State
 
 class Dealer(val hand: Hand) {
-    var state = State.RUNNING
+    var state: State = State.Running.Hit
 
     fun judgeDraw(): Boolean {
         return ScoreCalculation.calculate(hand) <= 16
