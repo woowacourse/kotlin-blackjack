@@ -42,7 +42,7 @@ class BlackJackController {
     private fun playPlayer(player: Player) {
         while (player.checkHitState() && InputView.inputPlayerDecision(player.getName()) == UserDecision.YES) {
             gameManger.applyUserDrawDecision(player)
-            OutputView.outputPlayerCurrentHandCard(player as Player)
+            OutputView.outputPlayerCurrentHandCard(player)
         }
     }
 

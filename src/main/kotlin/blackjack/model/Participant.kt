@@ -3,15 +3,15 @@ package blackjack.model
 import blackjack.state.State
 
 abstract class Participant(
-    private val name : String,
+    private val name: String,
     private val blackJack: BlackJack = BlackJack()
 ) {
 
-    fun draw(card: Card){
+    fun draw(card: Card) {
         blackJack.addCard(card)
     }
 
-    fun checkHitState(): Boolean{
+    fun checkHitState(): Boolean {
         return blackJack.checkDrawState()
     }
 
@@ -19,11 +19,11 @@ abstract class Participant(
         return blackJack.state
     }
 
-    fun getName(): String{
+    fun getName(): String {
         return name
     }
 
-    fun getCards(): Set<Card>{
+    fun getCards(): Set<Card> {
         return blackJack.getCards()
     }
 

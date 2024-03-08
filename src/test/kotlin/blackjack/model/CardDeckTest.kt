@@ -21,7 +21,7 @@ class CardDeckTest {
             val card = cardDeck.draw().also { card ->
                 assertThat(actualCards.find { actualCard ->
                     actualCard.getCardDenomination() == card.getCardDenomination()
-                            && actualCard.getCardSuit()== card.getCardSuit()
+                            && actualCard.getCardSuit() == card.getCardSuit()
                 }).isNotEqualTo(null)
             }
             actualCards = actualCards - card
