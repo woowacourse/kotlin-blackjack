@@ -2,11 +2,11 @@ package blackjack.view
 
 import blackjack.model.CardHand
 import blackjack.model.Dealer
+import blackjack.model.DealerWinning
 import blackjack.model.Participants
 import blackjack.model.Player
 import blackjack.model.PlayerWinning
 import blackjack.model.Role
-import blackjack.model.WinningResultStatus
 
 class OutputView {
     fun printInitialSetting(people: Participants) {
@@ -60,11 +60,11 @@ class OutputView {
         printAllCardHand(role.cardHand)
     }
 
-    fun printFinalDealerResult(dealerWinning: Map<WinningResultStatus, Int>) {
+    fun printFinalDealerResult(dealerWinning: DealerWinning) {
         println("\n## 최종 승패")
 
         print("딜러: ")
-        dealerWinning.forEach {
+        dealerWinning.result.forEach {
             print(it.value.toString() + it.key.output + " ")
         }
         println()

@@ -17,10 +17,12 @@ class PlayerWinningTest {
             )
         val actual = playerWinning.judgeDealerWinningResult()
         Assertions.assertThat(actual).isEqualTo(
-            mapOf(
-                WinningResultStatus.VICTORY to 1,
-                WinningResultStatus.DRAW to 1,
-                WinningResultStatus.DEFEAT to 2,
+            DealerWinning(
+                mapOf(
+                    WinningResultStatus.VICTORY to 1,
+                    WinningResultStatus.DRAW to 1,
+                    WinningResultStatus.DEFEAT to 2,
+                ),
             ),
         )
     }
