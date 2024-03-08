@@ -2,6 +2,7 @@
 
 ## Class 다이어그램
 
+초기 설계
 ![ClassDiagram.png](image%2FClassDiagram.png)
 
 <br>
