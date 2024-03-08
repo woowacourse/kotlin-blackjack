@@ -27,7 +27,9 @@ class DealerTest {
                 ),
             )
 
-        dealer.runPhase()
+        if (dealer.getState() == CardHandState.HIT) {
+            dealer.runPhase()
+        }
 
         assertThat(dealer.cardHand.hand.size).isEqualTo(3)
     }
@@ -42,7 +44,10 @@ class DealerTest {
                 ),
             )
 
-        dealer.runPhase()
+        if (dealer.getState() == CardHandState.HIT) {
+            dealer.runPhase()
+        }
+
         assertThat(dealer.cardHand.hand.size).isEqualTo(2)
     }
 }

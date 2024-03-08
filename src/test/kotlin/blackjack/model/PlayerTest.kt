@@ -12,7 +12,7 @@ class PlayerTest {
                 Card(CardShape.SPADE, CardNumber.SIX),
             )
 
-        val player = Player("해나", cardHand)
+        val player = Player(PlayerName("해나"), cardHand)
 
         assertThat(player.getState()).isEqualTo(CardHandState.STAY)
     }
@@ -21,15 +21,16 @@ class PlayerTest {
     fun `상태가 HIT 이면 카드 한 장을 더 뽑는다`() {
         val player =
             Player(
-                "해나",
+                PlayerName("해나"),
                 CardHand(
                     Card(CardShape.SPADE, CardNumber.ACE),
                     Card(CardShape.SPADE, CardNumber.TWO),
                 ),
             )
 
-        player.runPhase()
-
+        if (player.getState() == CardHandState.HIT) {
+            player.runPhase()
+        }
         assertThat(player.cardHand.hand.size).isEqualTo(2)
     }
 
@@ -37,14 +38,16 @@ class PlayerTest {
     fun `상태가 HIT 이 아니면 카드 한 장을 더 뽑는다`() {
         val player =
             Player(
-                "해나",
+                PlayerName("해나"),
                 CardHand(
                     Card(CardShape.SPADE, CardNumber.ACE),
                     Card(CardShape.SPADE, CardNumber.TWO),
                 ),
             )
 
-        player.runPhase()
+        if (player.getState() == CardHandState.HIT) {
+            player.runPhase()
+        }
 
         assertThat(player.cardHand.hand.size).isEqualTo(2)
     }
