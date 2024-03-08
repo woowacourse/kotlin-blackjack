@@ -13,9 +13,8 @@ class Hand(cards: List<Card>) {
         val sumWithoutAces = cards.filterNot { it.number == CardNumber.ACE }.sumOf { it.number.value }
         val acesCount = cards.count { it.number == CardNumber.ACE }
         var totalSum = sumWithoutAces + acesCount
-
         repeat(acesCount) {
-            val tempSum = totalSum + 10
+            val tempSum = totalSum + CardNumber.ACE_VALUE_INCREMENT
             if (tempSum <= State.THRESHOLD_BUST) totalSum = tempSum else return totalSum
         }
         return totalSum

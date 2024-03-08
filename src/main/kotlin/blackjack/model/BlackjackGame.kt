@@ -16,7 +16,6 @@ class BlackjackGame(private val deck: CardDeck, val participants: Participants) 
         participants.players.forEach { player ->
             while (player.state is Running) {
                 val continuePlaying = askForPlayerAction(player.name)
-
                 if (continuePlaying) {
                     player.receiveCard(deck.pick())
                 } else {
@@ -42,36 +41,43 @@ class BlackjackGame(private val deck: CardDeck, val participants: Participants) 
 
     fun calculateResult(): Map<Participant, WinningState> {
         val (dealer, players) = participants
-        val outcomes = getPlayersWinningState(dealer, players)
-
-        val dealerWinCount = outcomes.values.count { it.wins == 0 && it.losses == 1 }
-        val dealerLoseCount = outcomes.values.count { it.wins == 1 && it.losses == 0 }
-        return outcomes.plus(mapOf(dealer to WinningState(dealerWinCount, dealerLoseCount)))
+        val playersResult = calculatePlayersResult(dealer, players)
+        val dealerResult = calculateDealerResult(dealer, playersResult)
+        return dealerResult.plus(playersResult)
     }
 
-    private fun getPlayersWinningState(
+    private fun calculatePlayersResult(
         dealer: Dealer,
         players: List<Player>,
     ): Map<Participant, WinningState> {
         return players.associate { player ->
             player to
                 when (dealer.state) {
-                    is Blackjack -> whenDealerIsBlackjack(player.state)
-                    is Bust -> whenDealerIsBust(player.state)
+                    is Blackjack -> whenDealerIsBlackjack(player)
+                    is Bust -> whenDealerIsBust(player)
                     else -> whenDealerIsStay(player, dealer)
                 }
         }
     }
 
-    private fun whenDealerIsBlackjack(playerState: State): WinningState {
-        return when (playerState) {
+    private fun calculateDealerResult(
+        dealer: Dealer,
+        outcomes: Map<Participant, WinningState>,
+    ): Map<Participant, WinningState> {
+        val dealerWinCount = outcomes.values.count { it.wins == 0 && it.losses == 1 }
+        val dealerLoseCount = outcomes.values.count { it.wins == 1 && it.losses == 0 }
+        return mapOf(dealer to WinningState(dealerWinCount, dealerLoseCount))
+    }
+
+    private fun whenDealerIsBlackjack(player: Player): WinningState {
+        return when (player.state) {
             is Blackjack -> WinningState(0, 0)
             else -> WinningState(0, 1)
         }
     }
 
-    private fun whenDealerIsBust(playerState: State): WinningState {
-        return when (playerState) {
+    private fun whenDealerIsBust(player: Player): WinningState {
+        return when (player.state) {
             is Bust -> WinningState(0, 1)
             else -> WinningState(1, 0)
         }
@@ -81,8 +87,8 @@ class BlackjackGame(private val deck: CardDeck, val participants: Participants) 
         player: Player,
         dealer: Dealer,
     ): WinningState {
-        val dealerScore = dealer.state.hand().calculateSum()
-        val playerScore = player.state.hand().calculateSum()
+        val dealerScore = dealer.calculateHandSum()
+        val playerScore = player.calculateHandSum()
 
         return when {
             player.state is Bust || playerScore < dealerScore -> WinningState(0, 1)

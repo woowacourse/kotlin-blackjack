@@ -1,14 +1,12 @@
 package blackjack.model
 
-sealed interface State {
-    fun draw(card: Card): State
+sealed class State(val hand: Hand) {
+    abstract fun draw(card: Card): State
 
-    fun stay(): State
-
-    fun hand(): Hand
+    abstract fun stay(): State
 
     companion object {
-        fun initializeSetting(
+        fun setupState(
             hand: Hand,
             threshold: Int = THRESHOLD_BLACKJACK,
         ): State {
@@ -19,43 +17,38 @@ sealed interface State {
         }
 
         const val THRESHOLD_BUST = 21
+        const val THRESHOLD_HIT_FOR_DEALER = 16
         private const val THRESHOLD_BLACKJACK = 21
     }
 }
 
-sealed class Running : State
+sealed class Running(hand: Hand) : State(hand)
 
-sealed class Finished : State {
-    override fun draw(card: Card): State = this
+sealed class Finished(hand: Hand) : State(hand) {
+    override fun draw(card: Card): State {
+        return this
+    }
 
-    override fun stay(): State = this
+    override fun stay(): State {
+        return this
+    }
 }
 
-class Hit(private val hand: Hand) : Running() {
+class Hit(hand: Hand) : Running(hand) {
     override fun draw(card: Card): State {
         hand.addCard(card)
-        return if (hand.calculateSum() > State.THRESHOLD_BUST) {
-            Bust(hand)
-        } else if (hand.calculateSum() == State.THRESHOLD_BUST) {
-            Stay(hand)
-        } else {
-            Hit(hand)
+        return when {
+            hand.calculateSum() > THRESHOLD_BUST -> Bust(hand)
+            hand.calculateSum() == THRESHOLD_BUST -> Stay(hand)
+            else -> Hit(hand)
         }
     }
 
     override fun stay(): State = Stay(hand)
-
-    override fun hand(): Hand = hand
 }
 
-class Stay(private val hand: Hand) : Finished() {
-    override fun hand(): Hand = hand
-}
+class Stay(hand: Hand) : Finished(hand)
 
-class Blackjack(private val hand: Hand) : Finished() {
-    override fun hand(): Hand = hand
-}
+class Blackjack(hand: Hand) : Finished(hand)
 
-class Bust(private val hand: Hand) : Finished() {
-    override fun hand(): Hand = hand
-}
+class Bust(hand: Hand) : Finished(hand)

@@ -34,10 +34,10 @@ class BlackjackGameTest {
         game.playRound({ true }, { })
 
         val playerAfterRound = game.participants.players.first()
-        assertThat(playerAfterRound.state.hand().calculateSum()).isEqualTo(21)
+        assertThat(playerAfterRound.calculateHandSum()).isEqualTo(21)
 
         val dealerAfterRound = game.participants.dealer
-        assertThat(dealerAfterRound.state.hand().calculateSum()).isEqualTo(17)
+        assertThat(dealerAfterRound.calculateHandSum()).isEqualTo(17)
     }
 
     @Test

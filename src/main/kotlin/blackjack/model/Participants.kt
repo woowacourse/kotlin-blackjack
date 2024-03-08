@@ -5,7 +5,7 @@ data class Participants(
     val players: List<Player>,
 ) {
     init {
-        require(players.size <= 5) { PLAYER_SIZE_ERROR_MESSAGE }
+        require(players.size <= MAX_PLAYER_SIZE) { PLAYER_SIZE_ERROR_MESSAGE }
     }
 
     fun getAllParticipants(): List<Participant> = listOf(dealer) + players

@@ -14,4 +14,9 @@ enum class CardNumber(val value: Int) {
     QUEEN(10),
     KING(10),
     ACE(11),
+    ;
+
+    companion object {
+        const val ACE_VALUE_INCREMENT = 10
+    }
 }
