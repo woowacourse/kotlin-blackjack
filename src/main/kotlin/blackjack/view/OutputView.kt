@@ -15,18 +15,18 @@ class OutputView {
         requireNotNull(dealer) { "예기치 못한 오류입니다. 관리자에게 문의해주세요." }
 
         val players = participants.filterIsInstance<Player>()
-        println(dealer.name + "와 " + players.joinToString { it.name } + "에게 2장씩 카드를 나눴습니다")
+        println(dealer.name.name + "와 " + players.joinToString { it.name.name } + "에게 2장씩 카드를 나눴습니다")
     }
 
     fun printInitialCardHands(
         dealer: Role,
         players: List<Player>,
     ) {
-        print(NAME_CARD_HAND_FORMAT.format(dealer.name))
+        print(NAME_CARD_HAND_FORMAT.format(dealer.name.name))
         printFirstCardHand(dealer.cardHand)
 
         players.forEach {
-            print(NAME_CARD_HAND_FORMAT.format(it.name))
+            print(NAME_CARD_HAND_FORMAT.format(it.name.name))
             printAllCardHand(it.cardHand)
             println()
         }
@@ -56,7 +56,7 @@ class OutputView {
     }
 
     fun printPlayerCardHand(role: Role) {
-        print(NAME_CARD_HAND_FORMAT.format(role.name))
+        print(NAME_CARD_HAND_FORMAT.format(role.name.name))
         printAllCardHand(role.cardHand)
     }
 
@@ -72,7 +72,7 @@ class OutputView {
 
     fun printFinalPlayersResult(playerWinning: PlayerWinning) {
         playerWinning.result.forEach { (name, status) ->
-            println("$name: ${status.output}")
+            println("${name.name}: ${status.output}")
         }
         println()
     }

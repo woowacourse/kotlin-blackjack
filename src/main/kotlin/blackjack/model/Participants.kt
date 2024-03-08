@@ -15,7 +15,7 @@ data class Participants(val participants: List<Role>) {
 
     fun getDealerSum(): Int = participants.filterIsInstance<Dealer>()[0].cardHand.sum()
 
-    fun getPlayerResult(): Map<String, Int> =
+    fun getPlayerResult(): Map<PlayerName, Int> =
         participants.filterIsInstance<Player>().associate {
             it.name to it.cardHand.sum()
         }

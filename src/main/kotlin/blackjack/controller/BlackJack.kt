@@ -5,6 +5,7 @@ import blackjack.model.CardHandState
 import blackjack.model.Dealer
 import blackjack.model.Participants
 import blackjack.model.Player
+import blackjack.model.PlayerName
 import blackjack.model.Referee
 import blackjack.model.Role
 import blackjack.view.InputView
@@ -32,7 +33,7 @@ class BlackJack(
         val players = (
             inputView.readPlayersName()
                 .map {
-                    Player(it, CardHand())
+                    Player(PlayerName(it), CardHand())
                 }
         )
         return players

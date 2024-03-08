@@ -1,6 +1,6 @@
 package blackjack.model
 
-data class Dealer(override val cardHand: CardHand) : Role(name = "딜러", cardHand) {
+data class Dealer(override val cardHand: CardHand) : Role(name = PlayerName(DEALER), cardHand) {
     override fun getState(): CardHandState {
         val sum = cardHand.sum()
 
@@ -10,5 +10,9 @@ data class Dealer(override val cardHand: CardHand) : Role(name = "딜러", cardH
             sum <= 16 -> CardHandState.HIT
             else -> CardHandState.STAY
         }
+    }
+
+    companion object {
+        private const val DEALER = "딜러"
     }
 }

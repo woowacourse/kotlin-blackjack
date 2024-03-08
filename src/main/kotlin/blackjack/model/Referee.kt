@@ -3,7 +3,7 @@ package blackjack.model
 class Referee {
     fun judgeWinningResult(
         dealerSum: Int,
-        playerResult: Map<String, Int>,
+        playerResult: Map<PlayerName, Int>,
     ): PlayerWinning =
         PlayerWinning(
             playerResult.mapValues { (_, playerSum) ->

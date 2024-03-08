@@ -1,6 +1,6 @@
 package blackjack.model
 
-abstract class Role(open val name: String, open val cardHand: CardHand) {
+abstract class Role(open val name: PlayerName, open val cardHand: CardHand) {
     abstract fun getState(): CardHandState
 
     fun addInitialCards() {
