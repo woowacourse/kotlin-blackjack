@@ -13,8 +13,8 @@ class GameResult(
     }
 
     private fun Player.comparePoints(dealer: Dealer): State {
-        val playerCards = handCards
-        val dealerCards = dealer.handCards
+        val playerCards = hand
+        val dealerCards = dealer.hand
         if (playerCards.isBust()) return State.LOSS
         if (dealerCards.isBust()) return State.WIN
         val compared = playerCards.sumOptimized() compareTo dealerCards.sumOptimized()

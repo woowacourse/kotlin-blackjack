@@ -4,7 +4,7 @@ import blackjack.model.Dealer
 import blackjack.model.Deck
 import blackjack.model.GameResult
 import blackjack.model.Participant
-import blackjack.model.ParticipantsHandCards
+import blackjack.model.ParticipantHands
 import blackjack.model.Player
 import blackjack.view.InputView
 import blackjack.view.OutputView
@@ -28,7 +28,7 @@ class BlackJackController(
     ) {
         hitPlayers(players, deck)
         hitDealer(dealer, deck)
-        outputView.showDealerScore(dealer.handCards.cards, dealer.handCards.sumOptimized())
+        outputView.showDealerScore(dealer.hand.cards, dealer.hand.sumOptimized())
     }
 
     private fun showScoreBoard(
@@ -37,7 +37,7 @@ class BlackJackController(
     ) {
         players.forEach {
             val name = it.name
-            val handCards = it.handCards
+            val handCards = it.hand
             outputView.showPlayerScore(name, handCards.cards, handCards.sumOptimized())
         }
         val scoreBoard = GameResult(dealer, players).createScoreBoard()
@@ -78,7 +78,7 @@ class BlackJackController(
         playersNames: List<String>,
     ): Participant {
         val (playerHand, dealerHand) =
-            ParticipantsHandCards.from(deck.spread(playersNames.size))
+            ParticipantHands.from(deck.spread(playersNames.size))
         val dealer = Dealer(dealerHand)
         val players: List<Player> = Player.createPlayers(playersNames, playerHand)
         outputView.showDivided(dealerHand.first(), players)
@@ -87,5 +87,6 @@ class BlackJackController(
 
     companion object {
         const val BLACKJACK_NUMBER = 21
+        const val INIT_HANDS_COUNT = 2
     }
 }

@@ -7,11 +7,11 @@ import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
-class HandCardsTest {
+class HandTest {
     @Test
     fun `손패는 2장 이상이다`() {
         assertThrows<IllegalArgumentException> {
-            HandCards(emptyList())
+            Hand(emptyList())
         }
     }
 
@@ -30,14 +30,14 @@ class HandCardsTest {
         isBust: Boolean,
     ) {
         // given
-        val handCards =
-            HandCards(
+        val hand =
+            Hand(
                 createCard(rank = rank),
                 createCard(rank = rank2),
                 createCard(rank = rank3),
             )
         // when
-        val actual = handCards.isBust()
+        val actual = hand.isBust()
         // then
         assertThat(actual).isEqualTo(isBust)
     }
@@ -56,13 +56,13 @@ class HandCardsTest {
         isBlackJack: Boolean,
     ) {
         // given
-        val handCards =
-            HandCards(
+        val hand =
+            Hand(
                 createCard(rank = rank),
                 createCard(rank = rank2),
             )
         // when
-        val actual = handCards.isBlackjack()
+        val actual = hand.isBlackjack()
         // then
         assertThat(actual).isEqualTo(isBlackJack)
     }

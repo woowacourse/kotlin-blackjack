@@ -24,7 +24,7 @@ class DealerTest {
         // given
         val dealer =
             Dealer(
-                HandCards(
+                Hand(
                     createCard(rank = rank),
                     createCard(rank = rank2),
                 ),
@@ -44,14 +44,14 @@ class DealerTest {
             )
         val addedCard = createCard(rank = Rank.EIGHT)
         val expect =
-            HandCards(
+            Hand(
                 createCard(rank = Rank.SIX),
                 createCard(rank = Rank.SEVEN),
                 createCard(rank = Rank.EIGHT),
             )
         // when
         dealer.hit(addedCard)
-        val actual = dealer.handCards
+        val actual = dealer.hand
         // then
         assertThat(actual).isEqualTo(expect)
     }

@@ -1,7 +1,9 @@
 package blackjack.model
 
-@JvmInline
-value class Deck private constructor(
+import blackjack.controller.BlackJackController.Companion.INIT_HANDS_COUNT
+
+
+data class Deck(
     val cards: List<Card>,
 ) : List<Card> by cards {
 
@@ -10,13 +12,12 @@ value class Deck private constructor(
     }
 
     fun spread(playerSize: Int): List<Card> {
-        return cards.take(DEFAULT_CARDS_COUNT * (DEALER_COUNT + playerSize))
+        return cards.take(INIT_HANDS_COUNT * (DEALER_COUNT + playerSize))
     }
 
     companion object {
         private val DECK: Deck = create()
         private const val DEFAULT_DECK_SIZE = 1
-        private const val DEFAULT_CARDS_COUNT = 2
         private const val DEALER_COUNT = 1
 
         @JvmStatic

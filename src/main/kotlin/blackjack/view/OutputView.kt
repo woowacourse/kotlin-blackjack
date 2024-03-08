@@ -18,7 +18,7 @@ class OutputView {
     }
 
     fun showPlayerHandCards(player: Player) {
-        val cards: List<Card> = player.handCards.cards
+        val cards: List<Card> = player.hand.cards
         println(MESSAGE_PLAYER_HAND_CARDS.format(player.name, cards.format()))
     }
 
@@ -61,7 +61,7 @@ class OutputView {
         buildString {
             append("${DEALER_NAME}: ")
             GameResult.State.entries.forEach {
-                append(map[it] ?: 0)
+                append(map[it] ?: INIT_SCORE)
                 append(it.label)
                 append(" ")
             }
@@ -80,6 +80,7 @@ class OutputView {
     }
 
     companion object {
+        private const val INIT_SCORE = 0
         private const val DEALER_NAME = "딜러"
         private const val MESSAGE_PLAYER_HAND_CARDS = "%s 카드: %s"
         private const val MESSAGE_PARTICIPANT_RESULT = "%s 카드: %s- 결과 : %d"
