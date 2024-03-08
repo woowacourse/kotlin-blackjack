@@ -56,7 +56,7 @@ object OutputView {
 
     fun printResult(result: Map<Participant, WinningState>) {
         println("\n## 최종 승패")
-        result.entries.reversed().forEach { (participant, winningState) ->
+        result.entries.forEach { (participant, winningState) ->
             when (participant) {
                 is Dealer -> printDealerResult(participant, winningState, result.size - 1)
                 is Player -> printParticipantResult(participant, winningState)

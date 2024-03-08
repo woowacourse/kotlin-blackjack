@@ -23,7 +23,7 @@ class BlackjackController {
             { participant -> OutputView.printParticipantStatus(participant) },
         )
 
-        OutputView.printStatusAndScore(blackjackGame.participants)
+        OutputView.printStatusAndScore(participants)
         OutputView.printResult(blackjackGame.calculateResult())
     }
 

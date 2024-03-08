@@ -27,17 +27,14 @@ class BlackjackGameTest {
     fun `게임 참가자 카드 뽑기 테스트`() {
         val deck = createCardDeckFrom(6, 7, 11, 11, 10, 5)
         val dealer = createDealer(8, 9)
-        val players = createPlayer("leo", 2, 2)
+        val player = createPlayer("leo", 2, 2)
 
-        val gameParticipants = Participants(dealer, listOf(players))
+        val gameParticipants = Participants(dealer, listOf(player))
         val game = BlackjackGame(deck, gameParticipants)
         game.playRound({ true }, { })
 
-        val playerAfterRound = game.participants.players.first()
-        assertThat(playerAfterRound.calculateHandSum()).isEqualTo(21)
-
-        val dealerAfterRound = game.participants.dealer
-        assertThat(dealerAfterRound.calculateHandSum()).isEqualTo(17)
+        assertThat(player.calculateHandSum()).isEqualTo(21)
+        assertThat(dealer.calculateHandSum()).isEqualTo(17)
     }
 
     @Test

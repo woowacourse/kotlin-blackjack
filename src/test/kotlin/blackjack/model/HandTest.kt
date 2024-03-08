@@ -8,7 +8,7 @@ private fun Hand(vararg cards: Card): Hand {
 }
 
 private fun Card(value: Int): Card {
-    return Card(CardNumber.entries.find { it.value == value }!!, CardShape.HEART)
+    return Card(CardNumber.entries.find { it.value == value }!!, CardShape.DIAMOND)
 }
 
 class HandTest {
@@ -24,13 +24,13 @@ class HandTest {
 
     @Test
     fun `ACE(1 혹은 11)을 최적으로 계산하여 합계를 구한다 - Ace가 1로 계산되는 경우`() {
-        val hand = Hand(Card(10), Card(9), Card(10))
+        val hand = Hand(Card(11), Card(9), Card(10))
         assertThat(hand.calculateSum()).isEqualTo(20)
     }
 
     @Test
     fun `ACE(1 혹은 11)을 최적으로 계산하여 합계를 구한다 - Ace가 11로 계산되는 경우`() {
-        val hand = Hand(Card(10), Card(2), Card(8))
+        val hand = Hand(Card(11), Card(2), Card(8))
         assertThat(hand.calculateSum()).isEqualTo(21)
     }
 }

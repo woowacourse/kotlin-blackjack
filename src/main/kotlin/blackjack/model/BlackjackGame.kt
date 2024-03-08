@@ -1,6 +1,6 @@
 package blackjack.model
 
-class BlackjackGame(private val deck: CardDeck, val participants: Participants) {
+class BlackjackGame(private val deck: CardDeck, private val participants: Participants) {
     fun playRound(
         askForPlayerAction: (name: ParticipantName) -> Boolean,
         displayParticipantsStatus: (Participant) -> Unit,
@@ -14,7 +14,7 @@ class BlackjackGame(private val deck: CardDeck, val participants: Participants) 
         displayParticipantsStatus: (player: Player) -> Unit,
     ) {
         participants.players.forEach { player ->
-            while (player.state is Running) {
+            while (player.isRunning()) {
                 val continuePlaying = askForPlayerAction(player.name)
                 if (continuePlaying) {
                     player.receiveCard(deck.pick())
@@ -28,7 +28,7 @@ class BlackjackGame(private val deck: CardDeck, val participants: Participants) 
 
     private fun playRoundForDealer(displayParticipantsStatus: (dealer: Dealer) -> Unit) {
         val dealer = participants.dealer
-        while (dealer.state is Running) {
+        while (dealer.isRunning()) {
             val continuePlaying = dealer.isUnderHitThreshold()
             if (continuePlaying) {
                 dealer.receiveCard(deck.pick())

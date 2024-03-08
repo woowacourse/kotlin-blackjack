@@ -14,6 +14,8 @@ sealed class Participant(val name: ParticipantName, var state: State) {
     fun getCards(): List<Card> {
         return state.hand.cards
     }
+
+    fun isRunning() = state is Running
 }
 
 class Dealer(name: ParticipantName = ParticipantName(ParticipantName.DEALER_NAME), state: State) :
