@@ -1,4 +1,6 @@
-package blackjack.model
+package blackjack.model.participant
+
+import blackjack.model.result.GameResultType
 
 class Dealer : Role() {
     override fun decideMoreCard() = getCardSum() < MIN_CARD_SUM

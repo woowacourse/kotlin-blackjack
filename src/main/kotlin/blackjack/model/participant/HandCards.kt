@@ -1,4 +1,6 @@
-package blackjack.model
+package blackjack.model.participant
+
+import blackjack.model.card.Card
 
 class HandCards {
     private val _cards = mutableListOf<Card>()

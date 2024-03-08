@@ -1,4 +1,4 @@
-package blackjack.model
+package blackjack.model.card
 
 enum class Suite(val value: String) {
     HEART("하트"),

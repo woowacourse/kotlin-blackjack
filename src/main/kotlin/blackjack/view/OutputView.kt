@@ -1,14 +1,14 @@
 package blackjack.view
 
-import blackjack.model.Card
-import blackjack.model.Dealer
-import blackjack.model.DealerResult
-import blackjack.model.GameResultStorage
-import blackjack.model.GameResultType
-import blackjack.model.Player
-import blackjack.model.Players
-import blackjack.model.PlayersResult
-import blackjack.model.Role
+import blackjack.model.card.Card
+import blackjack.model.participant.Dealer
+import blackjack.model.participant.Player
+import blackjack.model.participant.Players
+import blackjack.model.participant.Role
+import blackjack.model.result.DealerResult
+import blackjack.model.result.GameResultStorage
+import blackjack.model.result.GameResultType
+import blackjack.model.result.PlayersResult
 
 class OutputView {
     fun printInitCard(

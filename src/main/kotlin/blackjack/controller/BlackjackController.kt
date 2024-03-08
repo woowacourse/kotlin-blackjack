@@ -1,11 +1,11 @@
 package blackjack.controller
 
 import blackjack.model.BlackjackGame
-import blackjack.model.Card
-import blackjack.model.CardProvider
-import blackjack.model.Dealer
-import blackjack.model.Player
-import blackjack.model.Players
+import blackjack.model.card.Card
+import blackjack.model.card.CardProvider
+import blackjack.model.participant.Dealer
+import blackjack.model.participant.Player
+import blackjack.model.participant.Players
 import blackjack.util.retryWhileNotException
 import blackjack.view.InputView
 import blackjack.view.OutputView

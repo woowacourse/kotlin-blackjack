@@ -1,7 +1,7 @@
 package blackjack
 
 import blackjack.controller.BlackjackController
-import blackjack.model.RandomCardProvider
+import blackjack.model.card.RandomCardProvider
 import blackjack.view.InputView
 import blackjack.view.OutputView
 

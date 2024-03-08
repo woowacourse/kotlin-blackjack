@@ -1,4 +1,4 @@
-package blackjack.model
+package blackjack.model.participant
 
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows

@@ -1,4 +1,4 @@
-package blackjack.model
+package blackjack.model.card
 
 class Card private constructor(val denomination: Denomination, val suite: Suite) {
     companion object {

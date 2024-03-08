@@ -1,4 +1,4 @@
-package blackjack.model
+package blackjack.model.result
 
 class DealerResult {
     private val _results = mutableMapOf<GameResultType, Int>()

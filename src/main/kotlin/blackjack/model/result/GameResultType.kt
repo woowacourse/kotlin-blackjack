@@ -1,4 +1,4 @@
-package blackjack.model
+package blackjack.model.result
 
 enum class GameResultType(val message: String) {
     WIN("승"),

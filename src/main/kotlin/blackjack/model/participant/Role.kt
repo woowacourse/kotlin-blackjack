@@ -1,4 +1,6 @@
-package blackjack.model
+package blackjack.model.participant
+
+import blackjack.model.card.Card
 
 abstract class Role {
     private val scoreBoard = ScoreBoard()
