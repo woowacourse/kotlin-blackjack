@@ -23,6 +23,14 @@ class GameController(private val deck: Deck) {
         showGameResult(dealer = dealer, players = players)
     }
 
+    private fun readPlayers(): Players {
+        return ExceptionHandler.handleInputValue {
+            InputView.readPlayerNames().run {
+                Players.ofList(this, deck)
+            }
+        }
+    }
+
     private fun initGame(
         dealer: Dealer,
         players: Players,
@@ -46,28 +54,12 @@ class GameController(private val deck: Deck) {
         dealer: Dealer,
         players: Players,
     ) {
-        players.players.forEach (::playOfOnePlayer)
+        players.players.forEach(::playOfOnePlayer)
         dealer.hit()
 
         while (dealer.getPointIncludingAce().amount < 17) {
             OutputView.drawCardForDealer()
             dealer.hit()
-        }
-    }
-
-    private fun readPlayers(): Players {
-        return ExceptionHandler.handleInputValue {
-            InputView.readPlayerNames().run {
-                Players.ofList(this, deck)
-            }
-        }
-    }
-
-    private fun readAnswer(humanName: HumanName): Answer {
-        return ExceptionHandler.handleInputValue {
-            InputView.readAnswer(humanName).run {
-                Answer.fromInput(this)
-            }
         }
     }
 
@@ -86,6 +78,14 @@ class GameController(private val deck: Deck) {
             }
         OutputView.showPlayerHand(player)
         return isBusted
+    }
+
+    private fun readAnswer(humanName: HumanName): Answer {
+        return ExceptionHandler.handleInputValue {
+            InputView.readAnswer(humanName).run {
+                Answer.fromInput(this)
+            }
+        }
     }
 
     private fun showGameResult(

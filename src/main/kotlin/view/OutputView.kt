@@ -5,7 +5,6 @@ import model.ResultType
 import model.human.Dealer
 import model.human.Human
 import model.human.HumanName
-import model.human.Player
 import model.human.Players
 
 object OutputView {
@@ -32,15 +31,27 @@ object OutputView {
         players: Players,
     ) {
         showDealerHand(dealer)
-        showPlayerHands(players)
+        showPlayersHand(players)
         println()
     }
 
-    fun showDealerHand(dealer: Dealer) {
-        println("딜러: ${getHand(dealer.hand)}")
+    private fun showDealerHand(dealer: Dealer) {
+        showPlayerHand(dealer)
     }
 
-    fun showHandWithResult(human: Human) {
+    private fun showPlayersHand(players: Players) {
+        players.players.forEach {
+            showPlayerHand(it)
+        }
+    }
+
+    fun showPlayerHand(human: Human) {
+        println("${human.humanName.name}: ${getHand(human.hand)}")
+    }
+
+    private fun getHand(hand: Hand): String = hand.cards.joinToString(", ") { it.valueType.rank + it.markType.mark }
+
+    private fun showHandWithResult(human: Human) {
         println("${human.humanName.name}: ${getHand(human.hand)} - 결과: ${human.getPointIncludingAce().amount}")
     }
 
@@ -55,27 +66,17 @@ object OutputView {
         }
     }
 
-    fun showPlayerHands(players: Players) {
-        players.players.forEach {
-            showPlayerHand(it)
-        }
-    }
-
-    fun showPlayerHand(player: Player) {
-        println("${player.humanName.name}: ${getHand(player.hand)}")
-    }
-
-    fun getHand(hand: Hand): String = hand.cards.joinToString(", ") { it.valueType.rank + it.markType.mark }
-
     fun drawCardForDealer() = println(HEADER_DRAW_CARDS_FOR_DEALER)
 
     fun showResultHeader() = println(HEADER_RESULT)
 
     fun showDealerResult(dealerResultType: Map<ResultType, Int>) {
         println(
-            DEALER_HAND.format(dealerResultType.map {
-                it.value.toString() + it.key.word
-            }.joinToString(SPACE))
+            DEALER_HAND.format(
+                dealerResultType.map {
+                    it.value.toString() + it.key.word
+                }.joinToString(SPACE),
+            ),
         )
     }
 

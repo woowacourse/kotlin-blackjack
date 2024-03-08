@@ -2,11 +2,10 @@ package model.human
 
 import model.Hand
 import model.Point
-import model.card.ValueType
 
 abstract class Human(open val hand: Hand, open val humanName: HumanName) {
     fun getPointIncludingAce(): Point {
-        return if (hand.cards.any { it.valueType == ValueType.ACE }) {
+        return if (hand.hasAce()) {
             decideAceValue()
         } else {
             hand.getPoint()
@@ -15,8 +14,8 @@ abstract class Human(open val hand: Hand, open val humanName: HumanName) {
 
     private fun decideAceValue(): Point {
         val point = hand.getPoint().amount
-        return if (point <= 10) {
-            Point(point + 10)
+        return if (point <= ACE_POINT) {
+            Point(point + ACE_POINT)
         } else {
             Point(point)
         }
@@ -37,4 +36,8 @@ abstract class Human(open val hand: Hand, open val humanName: HumanName) {
     }
 
     abstract fun isPossible(): Boolean
+
+    companion object {
+        private const val ACE_POINT = 10
+    }
 }
