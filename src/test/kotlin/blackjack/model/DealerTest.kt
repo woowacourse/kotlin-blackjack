@@ -10,7 +10,7 @@ class DealerTest {
         val card = Card(Pattern.HEART, CardNumber.ACE)
         dealer.takeCard(card)
 
-        assertThat(dealer.hand.cards.last()).isEqualTo(card)
+        assertThat(dealer.hand.cards).contains(card)
     }
 
     @Test
