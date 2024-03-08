@@ -200,7 +200,7 @@ class GameStatisticsTest {
         }
 
         @Test
-        fun `터짐 -_-`() {
+        fun `딜러만 버스트 된 경우 플레이어가 승리한다`() {
             val dealer = buildDealer(CardNumber.`6`, CardNumber.`10`, CardNumber.`9`)
 
             val player1 = buildPlayer("a", CardNumber.`5`, CardNumber.`7`, CardNumber.`6`)
