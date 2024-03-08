@@ -67,20 +67,3 @@ class HandCardsTest {
         assertThat(actual).isEqualTo(isBlackJack)
     }
 }
-
-fun createHandCards(): HandCards {
-    val deck = Cards.createDeck()
-    return HandCards(
-        deck.cards
-            .shuffled()
-            .take(2),
-    )
-}
-
-// 중복 있이 손패 뿌리기
-fun createHandCards(size: Int): List<Card> {
-    val deck = Cards.createDeck()
-    return deck.cards
-        .shuffled()
-        .take(size)
-}
