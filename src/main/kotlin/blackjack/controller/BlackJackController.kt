@@ -4,18 +4,23 @@ import Player
 import blackjack.model.card.Deck
 import blackjack.model.card.Hand
 import blackjack.model.game.Referee
-import blackjack.model.game.Result
 import blackjack.model.game.State
 import blackjack.model.player.Dealer
 import blackjack.model.player.PlayerEntry
 import blackjack.view.setGame
 import blackjack.view.showDealerDrawMessage
-import blackjack.view.showFinalWinOrLoss
+import blackjack.view.showFinalWinOrLossResult
 import blackjack.view.showHands
 import blackjack.view.showHandsScore
-import blackjack.view.showPlayerDrawMessage
+import blackjack.view.showPlayerDrawDecision
 import blackjack.view.showPlayerHand
 import blackjack.view.showPlayersNameReadMessage
+
+private const val INVALID_PLAYER_NAME = "[ERROR] 공백이 아닌 플레이어의 이름을 입력해주세요."
+private const val INVALID_DRAW_DECISION = "[ERROR] 카드를 더 받을지 말지는 y 또는 n으로 입력해주세요."
+private const val BLACKJACK_SCORE = 21
+private const val DRAW_DECISION = "y"
+private const val STAY_DECISION = "n"
 
 object BlackJackController {
     fun run() {
@@ -50,29 +55,14 @@ object BlackJackController {
         showHandsScore(dealer, playerEntry)
         val referee = Referee(dealer, playerEntry)
         val results = referee.makeResults()
-        val winCount = results.count { it == Result.DEALER_WIN }
-        val defeatCount = results.count { it == Result.PLAYER_WIN }
-        val drawCount = results.count { it == Result.DRAW }
-
-        println()
-        showFinalWinOrLoss()
-        println("딜러: ${winCount}승${" ${drawCount}무 ".takeIf { drawCount != 0 } ?: ""}${defeatCount}패")
-        results.withIndex().forEach { (index, result) ->
-            val winOrLose =
-                when (result) {
-                    Result.PLAYER_WIN -> "승"
-                    Result.DEALER_WIN -> "패"
-                    else -> "무"
-                }
-            println("${playerEntry.players[index].name}: $winOrLose")
-        }
+        showFinalWinOrLossResult(results, playerEntry)
     }
 
     private fun drawOrNot(
         drawOrNot: String?,
         player: Player,
     ) {
-        if (drawOrNot == "y") {
+        if (drawOrNot == DRAW_DECISION) {
             determineState(player)
         } else {
             player.state = State.STAY
@@ -86,18 +76,18 @@ object BlackJackController {
     }
 
     private fun isBust(player: Player): Boolean {
-        return player.hand.totalScore > 21
+        return player.hand.totalScore > BLACKJACK_SCORE
     }
 
     private fun isBlackjack(player: Player): Boolean {
-        return player.hand.totalScore == 21
+        return player.hand.totalScore == BLACKJACK_SCORE
     }
 
     private fun readPlayersName(): List<String> {
         showPlayersNameReadMessage()
         return try {
             val playersName = readln().split(',').map { it.trim() }
-            require(playersName.all { it.isNotBlank() }) { "[ERROR] 공백이 아닌 플레이어의 이름을 입력해주세요." }
+            require(playersName.all { it.isNotBlank() }) { INVALID_PLAYER_NAME }
             playersName
         } catch (e: IllegalArgumentException) {
             println(e.message)
@@ -106,11 +96,11 @@ object BlackJackController {
     }
 
     private fun askPlayerDraw(player: Player): String? {
-        showPlayerDrawMessage(player)
+        showPlayerDrawDecision(player)
         return try {
-            val drawMessage = readlnOrNull()?.trim()?.lowercase()
-            require(drawMessage == "y" || drawMessage == "n") { "[ERROR] 카드를 더 받을지 말지는 y 또는 n으로 입력해주세요." }
-            drawMessage
+            val drawDecision = readlnOrNull()?.trim()?.lowercase()
+            require(drawDecision == DRAW_DECISION || drawDecision == STAY_DECISION) { INVALID_DRAW_DECISION }
+            drawDecision
         } catch (e: IllegalArgumentException) {
             println(e.message)
             askPlayerDraw(player)

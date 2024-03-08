@@ -9,7 +9,7 @@ fun showPlayersNameReadMessage() {
     println(GAME_START)
 }
 
-fun showPlayerDrawMessage(player: Player) {
+fun showPlayerDrawDecision(player: Player) {
     println()
     println(DRAW_ASK.format(player.name))
 }
