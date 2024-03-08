@@ -25,7 +25,7 @@ value class Cards(
             val deck: List<Card> =
                 suits.flatMap { suit ->
                     ranks.map { rank -> Card(suit, rank) }
-                }
+                }.shuffled()
             return Cards(deck)
         }
     }
