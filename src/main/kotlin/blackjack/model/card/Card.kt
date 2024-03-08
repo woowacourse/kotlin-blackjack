@@ -18,6 +18,6 @@ class Card(val denomination: Denomination, val suit: Suit) {
                 Suit.HEARTS -> "하트"
                 Suit.SPADES -> "스페이드"
             }
-        return "${number}$shape"
+        return "$number$shape"
     }
 }

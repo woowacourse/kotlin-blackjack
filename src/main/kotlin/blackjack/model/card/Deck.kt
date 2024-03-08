@@ -10,11 +10,7 @@ object Deck {
     fun initialize() {
         cards.clear()
         cards.addAll(
-            Suit.entries.flatMap { suit ->
-                Denomination.entries.map { denomination ->
-                    Card(denomination, suit)
-                }
-            },
+            Suit.entries.flatMap { suit -> Denomination.entries.map { denomination -> Card(denomination, suit) } },
         )
         cards.shuffle()
     }
