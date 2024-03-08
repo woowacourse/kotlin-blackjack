@@ -4,6 +4,7 @@ import Player
 import blackjack.model.card.Deck
 import blackjack.model.card.Hand
 import blackjack.model.game.Referee
+import blackjack.model.game.ScoreCalculation.BLACKJACK_SCORE
 import blackjack.model.game.State
 import blackjack.model.player.Dealer
 import blackjack.model.player.PlayerEntry
@@ -18,7 +19,6 @@ import blackjack.view.showPlayersNameReadMessage
 
 private const val INVALID_PLAYER_NAME = "[ERROR] 공백이 아닌 플레이어의 이름을 입력해주세요."
 private const val INVALID_DRAW_DECISION = "[ERROR] 카드를 더 받을지 말지는 y 또는 n으로 입력해주세요."
-private const val BLACKJACK_SCORE = 21
 private const val DRAW_DECISION = "y"
 private const val STAY_DECISION = "n"
 

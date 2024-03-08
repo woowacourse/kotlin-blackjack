@@ -4,6 +4,9 @@ import blackjack.model.card.Denomination
 import blackjack.model.card.Hand
 
 object ScoreCalculation {
+    const val BLACKJACK_SCORE = 21
+    private const val CONVERT_ACE = 10
+
     fun calculate(hand: Hand): Int {
         val totalScore = calculateTotalScore(hand)
         return convertAceToOne(totalScore, hand)
@@ -17,11 +20,7 @@ object ScoreCalculation {
     ): Int {
         var score = totalScore
         val aceCount = hand.cards.count { it.denomination == Denomination.ACE }
-        repeat(aceCount) {
-            if (score > 21) {
-                score -= 10
-            }
-        }
+        repeat(aceCount) { if (score > BLACKJACK_SCORE) score -= CONVERT_ACE }
         return score
     }
 }
