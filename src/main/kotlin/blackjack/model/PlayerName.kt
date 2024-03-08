@@ -3,7 +3,7 @@ package blackjack.model
 @JvmInline
 value class PlayerName(val name: String) {
     init {
-        require(name.length in NAME_LENGTH_RANGE) { "이름은 2자 이상 5자 이하여야 합니다." }
+        require(name.length in NAME_LENGTH_RANGE) { "이름은 ${MIN_NAME_LENGTH}자 이상 ${MAX_NAME_LENGTH}자 이하여야 합니다." }
     }
 
     companion object {

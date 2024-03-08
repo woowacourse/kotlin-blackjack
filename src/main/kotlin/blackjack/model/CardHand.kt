@@ -9,9 +9,9 @@ class CardHand(hand: List<Card>) {
     fun sum(): Int {
         var aceCount = hand.count { it.number == CardNumber.ACE }
         var tempSum = hand.sumOf { it.number.number }
-        while (aceCount > 0 && tempSum > 21) {
+        while (aceCount >= MIN_ACE_COUNT && tempSum > BLACK_JACK) {
             aceCount--
-            tempSum -= 10
+            tempSum -= SUBTRACTION_BETWEEN_MAX_AND_MIN
         }
         return tempSum
     }
@@ -22,5 +22,11 @@ class CardHand(hand: List<Card>) {
 
     override fun toString(): String {
         return "CardHand(hand=$hand)"
+    }
+
+    companion object {
+        private const val MIN_ACE_COUNT = 1
+        private const val BLACK_JACK = 21
+        private const val SUBTRACTION_BETWEEN_MAX_AND_MIN = 10
     }
 }

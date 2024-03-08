@@ -5,13 +5,13 @@ data class Player(override val name: PlayerName, override val cardHand: CardHand
         val sum = cardHand.sum()
 
         return when {
-            sum > 21 -> CardHandState.BURST
-            sum == 21 -> CardHandState.BLACKJACK
+            sum > BLACK_JACK -> CardHandState.BURST
+            sum == BLACK_JACK -> CardHandState.BLACKJACK
             else -> CardHandState.STAY
         }
     }
 
     companion object {
-        private const val BLACKJACK = 21
+        private const val BLACK_JACK = 21
     }
 }
