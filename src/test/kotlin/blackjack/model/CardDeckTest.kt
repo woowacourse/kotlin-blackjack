@@ -26,7 +26,7 @@ class CardDeckTest {
                             val compareDenomination = actualCard.getCardDenomination() == card.getCardDenomination()
                             val compareSuit = actualCard.getCardSuit() == card.getCardSuit()
                             compareDenomination && compareSuit
-                        }
+                        },
                     ).isNotEqualTo(null)
                 }
             actualCards = actualCards - card

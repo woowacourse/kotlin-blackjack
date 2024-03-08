@@ -43,7 +43,7 @@ class GameResultTest {
                     Card(
                         Denomination.SEVEN,
                         Suit.HEART,
-                    )
+                    ),
                 )
             }
         val player =

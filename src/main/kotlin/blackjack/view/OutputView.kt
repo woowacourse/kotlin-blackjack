@@ -124,7 +124,7 @@ object OutputView {
             dealerResults.map { (result, count) ->
                 getDealerResult(result, count)
             }
-        println("${dealerName}: ${dealerResultNames.joinToString(SPACE)}")
+        println("$dealerName: ${dealerResultNames.joinToString(SPACE)}")
     }
 
     fun outputPlayersResult(playersResult: MutableMap<Player, Result>) {
@@ -140,19 +140,24 @@ object OutputView {
         name: String,
         playerResult: Result,
     ) {
-        println(getGameResultWithName(name, playerResult))
+        println(
+            getGameResultWithName(
+                name = name,
+                result = playerResult,
+            ),
+        )
     }
 
     private fun getGameResultWithName(
         name: String,
         result: Result,
     ): String {
-        return "${name}: ${getResultName(result)}"
+        return "$name: ${getResultName(result)}"
     }
 
     private fun getDealerResult(
         result: Result,
-        count: Int
+        count: Int,
     ): String {
         return "${count}${getResultName(result)}"
     }
