@@ -1,6 +1,6 @@
 package blackjack.model
 
-import blackjack.controller.BlackJackController.Companion.BLACKJACK_NUMBER
+import blackjack.model.GameResult.Companion.BLACKJACK_NUMBER
 
 class HandCards(
     val cards: List<Card>,

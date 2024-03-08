@@ -44,4 +44,8 @@ class GameResult(
             }
         }
     }
+
+    companion object {
+        const val BLACKJACK_NUMBER = 21
+    }
 }

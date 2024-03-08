@@ -1,5 +1,7 @@
 package blackjack.model
 
+import blackjack.model.GameResult.Companion.BLACKJACK_NUMBER
+
 fun interface PointCalculator {
     fun sumOf(cards: List<Card>): Int
 }
@@ -26,9 +28,5 @@ class DefaultPointCalculator : PointCalculator {
 
     private fun List<Card>.hasAce(): Boolean {
         return any { it.isAce() }
-    }
-
-    companion object {
-        const val BLACKJACK_NUMBER = 21
     }
 }
