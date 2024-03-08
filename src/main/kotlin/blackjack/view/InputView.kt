@@ -5,7 +5,7 @@ import blackjack.model.Player
 class InputView {
     fun inputPlayerNames(): List<String> {
         println(MESSAGE_INPUT_PLAYERS_NAME)
-        return readln().split(",").map { it.trim() }
+        return readln().split(DELIMITER).map { it.trim() }
     }
 
     tailrec fun inputWhetherHit(player: Player): Boolean {
@@ -25,5 +25,6 @@ class InputView {
         private const val HIT = "y"
         private const val STAY = "n"
         private const val MESSAGE_INPUT_WHETHER_HIT = "\n%s는 한장의 카드를 더 받겠습니까?(예는 $HIT, 아니오는 $STAY)"
+        private const val DELIMITER = ","
     }
 }
