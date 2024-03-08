@@ -4,13 +4,13 @@ import blackjack.base.BaseHolder
 
 class Player(override val humanName: HumanName) : BaseHolder() {
     fun drawCardsForPlayer(
-        card: Card,
+        gameDeck: GameDeck,
         hitOrStay: (humanName: HumanName) -> Boolean,
         showPlayerCards: (player: Player) -> Unit,
     ) {
         while (hand.state == UserState.RUNNING) {
             if (hitOrStay(humanName)) {
-                takeCard(card = card)
+                takeCard(card = gameDeck.drawCard())
                 showPlayerCards(this)
             } else {
                 hand.changeState(userState = UserState.STAY)

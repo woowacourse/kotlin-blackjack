@@ -6,16 +6,17 @@ import blackjack.model.UserState.STAY
 
 class Dealer(override val humanName: HumanName = HumanName(DEFAULT_DEALER_NAME)) : BaseHolder() {
     fun drawDealerCard(
-        card: Card,
+        gameDeck: GameDeck,
         printDealerDrawCard: () -> Unit,
-    ) {
+    ): GameDeck {
         while (hand.state == RUNNING) {
             if (shouldDrawCard()) {
-                drawCardAndPrint(card = card, printDealerDrawCard = printDealerDrawCard)
+                drawCardAndPrint(card = gameDeck.drawCard(), printDealerDrawCard = printDealerDrawCard)
             } else {
                 hand.changeState(userState = STAY)
             }
         }
+        return gameDeck
     }
 
     private fun shouldDrawCard(): Boolean = hand.calculate() <= THRESHOLD

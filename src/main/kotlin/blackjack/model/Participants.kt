@@ -9,13 +9,14 @@ class Participants(
     val dealer: Dealer,
     val playerGroup: PlayerGroup,
 ) {
-    fun initSetting(gameDeck: GameDeck) {
+    fun initSetting(gameDeck: GameDeck): GameDeck {
         repeat(INITIAL_CARD_COUNTS) {
             dealer.takeCard(card = gameDeck.drawCard())
             playerGroup.players.forEach { player ->
                 player.takeCard(card = gameDeck.drawCard())
             }
         }
+        return gameDeck
     }
 
     fun matchResult() {
