@@ -10,6 +10,6 @@ abstract class Role(open val name: String, open val cardHand: CardHand) {
     }
 
     fun runPhase() {
-        if (getState() == CardHandState.HIT) cardHand.addNewCard()
+        cardHand.addNewCard()
     }
 }
