@@ -4,16 +4,16 @@ import Player
 import blackjack.model.card.Deck
 import blackjack.model.card.Hand
 import blackjack.model.game.Referee
+import blackjack.model.game.Result
 import blackjack.model.game.ScoreCalculation.BLACKJACK_SCORE
 import blackjack.model.game.State
 import blackjack.model.player.Dealer
 import blackjack.model.player.PlayerEntry
-import blackjack.view.setGame
 import blackjack.view.showDealerDrawMessage
 import blackjack.view.showFinalWinOrLossResult
 import blackjack.view.showHands
 import blackjack.view.showHandsScore
-import blackjack.view.showPlayerDrawDecision
+import blackjack.view.showPlayerEntry
 import blackjack.view.showPlayerHand
 import blackjack.view.showPlayersNameReadMessage
 
@@ -25,37 +25,90 @@ private const val STAY_DECISION = "n"
 object BlackJackController {
     fun run() {
         val playersName = readPlayersName()
+        val (dealer, playerEntry) = showInitialSettingCard(playersName)
+        playGame(playerEntry, dealer)
+        showGameResult(dealer, playerEntry)
+    }
 
-        setGame(playersName.joinToString(", "))
-        val hands = List(playersName.size + 1) { Hand(mutableListOf()) }
-        repeat(2) { hands.forEach { hand -> hand.draw(Deck.dealCard()) } }
+    private fun showGameResult(
+        dealer: Dealer,
+        playerEntry: PlayerEntry,
+    ) {
+        showHandsScore(dealer, playerEntry)
+        val results = judgeOfWinOrLose(dealer, playerEntry)
+        showFinalWinOrLossResult(results, playerEntry)
+    }
 
-        val dealer = Dealer(hands[0])
+    private fun judgeOfWinOrLose(
+        dealer: Dealer,
+        playerEntry: PlayerEntry,
+    ): List<Result> {
+        val referee = Referee(dealer, playerEntry)
+        val results = referee.makeResults()
+        return results
+    }
 
-        val players =
-            playersName.withIndex().map { (index, playerName) ->
-                Player(playerName, hands[index + 1])
-            }
+    private fun playGame(
+        playerEntry: PlayerEntry,
+        dealer: Dealer,
+    ) {
+        askPlayersDraw(playerEntry)
+        showDealerDraw(dealer)
+    }
 
-        val playerEntry = PlayerEntry(players)
-        showHands(dealer, playerEntry)
-
-        playerEntry.players.forEach { player ->
-            while (player.state == State.RUNNING) {
-                drawOrNot(askPlayerDraw(player), player)
-                showPlayerHand(player)
-            }
-        }
-
+    private fun showDealerDraw(dealer: Dealer) {
         while (dealer.judgeDraw()) {
             dealer.hand.draw(Deck.dealCard())
             showDealerDrawMessage(dealer)
         }
+    }
 
-        showHandsScore(dealer, playerEntry)
-        val referee = Referee(dealer, playerEntry)
-        val results = referee.makeResults()
-        showFinalWinOrLossResult(results, playerEntry)
+    private fun askPlayersDraw(playerEntry: PlayerEntry) {
+        playerEntry.players.forEach { player -> askPlayerDraw(player) }
+    }
+
+    private fun askPlayerDraw(player: Player) {
+        while (player.state == State.RUNNING) {
+            drawOrNot(askPlayersDraw(player), player)
+            showPlayerHand(player)
+        }
+    }
+
+    private fun showInitialSettingCard(playersName: List<String>): Pair<Dealer, PlayerEntry> {
+        showPlayerEntry(playersName.joinToString(", "))
+        val hands = dealingCards(playersName)
+        val dealer = setDealer(hands)
+        val playerEntry = setPlayerEntry(playersName, hands)
+        showHands(dealer, playerEntry)
+        return Pair(dealer, playerEntry)
+    }
+
+    private fun setPlayerEntry(
+        playersName: List<String>,
+        hands: List<Hand>,
+    ): PlayerEntry {
+        val players =
+            setPlayers(playersName, hands)
+        val playerEntry = PlayerEntry(players)
+        return playerEntry
+    }
+
+    private fun setPlayers(
+        playersName: List<String>,
+        hands: List<Hand>,
+    ) = playersName.withIndex().map { (index, playerName) ->
+        Player(playerName, hands[index + 1])
+    }
+
+    private fun setDealer(hands: List<Hand>): Dealer {
+        val dealer = Dealer(hands[0])
+        return dealer
+    }
+
+    private fun dealingCards(playersName: List<String>): List<Hand> {
+        val hands = List(playersName.size + 1) { Hand(mutableListOf()) }
+        repeat(2) { hands.forEach { hand -> hand.draw(Deck.dealCard()) } }
+        return hands
     }
 
     private fun drawOrNot(
@@ -95,15 +148,15 @@ object BlackJackController {
         }
     }
 
-    private fun askPlayerDraw(player: Player): String? {
-        showPlayerDrawDecision(player)
+    private fun askPlayersDraw(player: Player): String? {
+        askPlayersDraw(player)
         return try {
             val drawDecision = readlnOrNull()?.trim()?.lowercase()
             require(drawDecision == DRAW_DECISION || drawDecision == STAY_DECISION) { INVALID_DRAW_DECISION }
             drawDecision
         } catch (e: IllegalArgumentException) {
             println(e.message)
-            askPlayerDraw(player)
+            askPlayersDraw(player)
         }
     }
 }

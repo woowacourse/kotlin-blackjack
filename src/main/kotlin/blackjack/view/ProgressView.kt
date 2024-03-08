@@ -10,7 +10,7 @@ const val DEALER_CARD = "딜러: %s"
 const val PLAYER_CARD = "%s카드: %s"
 const val DEALER_DRAW_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다."
 
-fun setGame(names: String) {
+fun showPlayerEntry(names: String) {
     println()
     println(GAME_SETTING.format(names))
 }
