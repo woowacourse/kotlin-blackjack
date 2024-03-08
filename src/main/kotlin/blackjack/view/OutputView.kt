@@ -11,15 +11,15 @@ import blackjack.model.WinningState
 
 object OutputView {
     fun printInitialStatus(participants: Participants) {
-        println()
+        val dealer = participants.dealer
         println(
-            "${participants.dealer.name}와 ${
+            "\n${participants.dealer.name}와 ${
                 participants.players.map { it.name }.joinToString(", ")
             }에게 2장을 나눠줬습니다.",
         )
-        println("${participants.dealer.name} : ${cardToString(participants.dealer.state.hand().cards[0])}")
+        println("${dealer.name} : ${cardToString(dealer.getCards()[0])}")
         participants.players.forEach {
-            println("${it.name}카드: ${it.state.hand().cards.map { cardToString(it) }.joinToString(", ")}")
+            println("${it.name}카드: ${it.getCards().joinToString(", ") { cardToString(it) }}")
         }
         println()
     }
@@ -32,11 +32,11 @@ object OutputView {
     }
 
     private fun printPlayerStatus(player: Player) {
-        println("${player.name}카드 ${player.state.hand().cards.map { cardToString(it) }.joinToString(", ")}")
+        println("${player.name}카드 ${player.getCards().map { cardToString(it) }.joinToString(", ")}")
     }
 
     private fun printDealerStatus(dealer: Dealer) {
-        val count = dealer.state.hand().cards.size
+        val count = dealer.getCards().size
         println()
         if (count > 2) {
             println("${dealer.name}는 16이하라 ${count - 2}의 카드를 더 받았습니다.")
@@ -48,7 +48,7 @@ object OutputView {
         participants.getAllParticipants().forEach { participant ->
             println(
                 "${participant.name}카드 ${
-                    participant.state.hand().cards.map { cardToString(it) }.joinToString(", ")
+                    participant.getCards().joinToString(", ") { cardToString(it) }
                 } - 결과: ${participant.state.hand().calculateSum()}",
             )
         }
@@ -59,7 +59,7 @@ object OutputView {
         result.entries.reversed().forEach { (participant, winningState) ->
             when (participant) {
                 is Dealer -> printDealerResult(participant, winningState, result.size - 1)
-                else -> printParticipantResult(participant, winningState)
+                is Player -> printParticipantResult(participant, winningState)
             }
         }
     }

@@ -5,13 +5,9 @@ object CardDeckGenerator {
         return CardDeck(
             CardNumber.entries.flatMap { number ->
                 generateCardsForNumber(number)
-            }.shuffled().toMutableList(),
+            }.shuffled(),
         )
     }
 
-    private fun generateCardsForNumber(number: CardNumber): List<Card> {
-        return CardShape.entries.map { shape ->
-            Card(number, shape)
-        }
-    }
+    private fun generateCardsForNumber(number: CardNumber): List<Card> = CardShape.entries.map { shape -> Card(number, shape) }
 }

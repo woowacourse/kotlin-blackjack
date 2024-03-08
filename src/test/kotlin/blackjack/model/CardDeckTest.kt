@@ -8,7 +8,7 @@ class CardDeckTest {
     fun `카드를 한장씩 뽑아서 반환한다`() {
         val deck =
             CardDeck(
-                mutableListOf(
+                listOf(
                     Card(CardNumber.ACE, CardShape.CLOVER),
                     Card(CardNumber.TEN, CardShape.DIAMOND),
                     Card(CardNumber.FIVE, CardShape.SPADE),

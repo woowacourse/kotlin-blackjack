@@ -29,7 +29,9 @@ sealed class Running(private val hand: Hand) : State {
 
 sealed class Finished(private val hand: Hand) : State {
     override fun draw(card: Card): State = this
+
     override fun stay(): State = this
+
     override fun hand(): Hand = hand
 }
 
@@ -47,5 +49,7 @@ class Hit(private val hand: Hand) : Running(hand) {
 }
 
 class Stay(hand: Hand) : Finished(hand)
+
 class Blackjack(hand: Hand) : Finished(hand)
+
 class Bust(hand: Hand) : Finished(hand)
