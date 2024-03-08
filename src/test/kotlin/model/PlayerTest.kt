@@ -1,6 +1,8 @@
 package model
 
 import TestDeck
+import model.card.Card
+import model.human.Player
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -15,8 +17,8 @@ class PlayerTest {
                 mutableListOf(
                     Card.from(1),
                     Card.from(12),
-                    Card.from(11),
-                    Card.from(0),
+                    Card.from(2),
+                    Card.from(10),
                 ),
             )
     }

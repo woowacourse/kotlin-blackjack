@@ -1,17 +1,19 @@
 package view
 
-import model.Dealer
 import model.Hand
-import model.Human
-import model.Name
-import model.Player
-import model.Players
-import model.Result
+import model.ResultType
+import model.human.Dealer
+import model.human.Human
+import model.human.HumanName
+import model.human.Player
+import model.human.Players
 
 object OutputView {
     private const val HEADER_GAME_INITIAL_STATE = "\n딜러와 %s에게 2장의 카드를 나누었습니다."
     private const val HEADER_DRAW_CARDS_FOR_DEALER = "\n딜러는 16이하라 한장의 카드를 더 받았습니다."
     private const val HEADER_RESULT = "\n## 최종승패"
+    private const val DEALER_HAND = "딜러: %s"
+    private const val SPACE = " "
 
     fun showGameInit(
         dealer: Dealer,
@@ -22,7 +24,7 @@ object OutputView {
     }
 
     private fun showInitHeader(players: Players) {
-        println(HEADER_GAME_INITIAL_STATE.format(players.players.joinToString(", ") { it.name.name }))
+        println(HEADER_GAME_INITIAL_STATE.format(players.players.joinToString(", ") { it.humanName.name }))
     }
 
     private fun showHands(
@@ -39,7 +41,7 @@ object OutputView {
     }
 
     fun showHandWithResult(human: Human) {
-        println("${human.name.name}: ${getHand(human.hand)} - 결과: ${human.getPointIncludingAce().amount}")
+        println("${human.humanName.name}: ${getHand(human.hand)} - 결과: ${human.getPointIncludingAce().amount}")
     }
 
     fun showDealerHandWithResult(dealer: Dealer) {
@@ -60,29 +62,29 @@ object OutputView {
     }
 
     fun showPlayerHand(player: Player) {
-        println("${player.name.name}: ${getHand(player.hand)}")
+        println("${player.humanName.name}: ${getHand(player.hand)}")
     }
 
-    fun getHand(hand: Hand): String = hand.cards.joinToString(", ") { it.value.rank + it.mark.mark }
+    fun getHand(hand: Hand): String = hand.cards.joinToString(", ") { it.valueType.rank + it.markType.mark }
 
     fun drawCardForDealer() = println(HEADER_DRAW_CARDS_FOR_DEALER)
 
     fun showResultHeader() = println(HEADER_RESULT)
 
-    fun showDealerResult(dealerResult: Map<Result, Int>) {
+    fun showDealerResult(dealerResultType: Map<ResultType, Int>) {
         println(
-            "딜러: ${dealerResult.map {
+            DEALER_HAND.format(dealerResultType.map {
                 it.value.toString() + it.key.word
-            }.joinToString(" ")}",
+            }.joinToString(SPACE))
         )
     }
 
     fun showPlayersResult(
         players: Players,
-        playersResult: Map<Name, Result>,
+        playersResultType: Map<HumanName, ResultType>,
     ) {
         players.players.forEach { player ->
-            println("${player.name.name}: ${playersResult.getOrDefault(player.name, Result.DRAW).word}")
+            println("${player.humanName.name}: ${playersResultType.getOrDefault(player.humanName, ResultType.DRAW).word}")
         }
     }
 }

@@ -1,6 +1,6 @@
 package view
 
-import model.Name
+import model.human.HumanName
 
 object InputView {
     private const val HEADER_READ_PLAYER_NAMES = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)"
@@ -11,8 +11,8 @@ object InputView {
         return readln().split(",").map { it.trim() }.toList()
     }
 
-    fun readAnswer(name: Name): String {
-        println(HEADER_READ_ANSWER.format(name.name))
+    fun readAnswer(humanName: HumanName): String {
+        println(HEADER_READ_ANSWER.format(humanName.name))
         return readln()
     }
 }

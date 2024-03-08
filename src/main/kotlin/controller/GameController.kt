@@ -1,13 +1,14 @@
 package controller
 
+import ExceptionHandler
 import model.Answer
-import model.Dealer
-import model.Deck
 import model.Hand
 import model.Judge
-import model.Name
-import model.Player
-import model.Players
+import model.card.Deck
+import model.human.Dealer
+import model.human.HumanName
+import model.human.Player
+import model.human.Players
 import view.InputView
 import view.OutputView
 
@@ -19,7 +20,7 @@ class GameController(private val deck: Deck) {
         initGame(dealer = dealer, players = players)
         playGame(dealer = dealer, players = players)
 
-        showFinalResult(dealer = dealer, players = players)
+        showGameResult(dealer = dealer, players = players)
     }
 
     private fun initGame(
@@ -32,13 +33,12 @@ class GameController(private val deck: Deck) {
     }
 
     private fun initDealer(dealer: Dealer) {
-        dealer.hit()
+        dealer.hits(1)
     }
 
     private fun initPlayers(players: Players) {
         players.players.forEach {
-            it.hit()
-            it.hit()
+            it.hits(2)
         }
     }
 
@@ -46,10 +46,7 @@ class GameController(private val deck: Deck) {
         dealer: Dealer,
         players: Players,
     ) {
-        players.players.forEach {
-            playOfOnePlayer(it)
-            OutputView.getHand(it.hand)
-        }
+        players.players.forEach (::playOfOnePlayer)
         dealer.hit()
 
         while (dealer.getPointIncludingAce().amount < 17) {
@@ -59,34 +56,39 @@ class GameController(private val deck: Deck) {
     }
 
     private fun readPlayers(): Players {
-        return InputView.readPlayerNames().run {
-            Players.from(this, deck)
+        return ExceptionHandler.handleInputValue {
+            InputView.readPlayerNames().run {
+                Players.ofList(this, deck)
+            }
         }
     }
 
-    private fun readAnswer(name: Name): Answer {
-        return InputView.readAnswer(name).run {
-            Answer.fromInput(this)
+    private fun readAnswer(humanName: HumanName): Answer {
+        return ExceptionHandler.handleInputValue {
+            InputView.readAnswer(humanName).run {
+                Answer.fromInput(this)
+            }
         }
-    }
-
-    fun switchAnswer(
-        answer: Answer,
-        player: Player,
-    ): Boolean {
-        var flag = false
-        if (answer == Answer.YES) {
-            flag = player.hit()
-        }
-        OutputView.showPlayerHand(player)
-        return flag
     }
 
     private fun playOfOnePlayer(player: Player) {
-        while (switchAnswer(readAnswer(player.name), player));
+        while (playByAnswer(readAnswer(player.humanName), player));
     }
 
-    fun showFinalResult(
+    private fun playByAnswer(
+        answer: Answer,
+        player: Player,
+    ): Boolean {
+        val isBusted =
+            when (answer) {
+                Answer.YES -> player.hit()
+                Answer.NO -> false
+            }
+        OutputView.showPlayerHand(player)
+        return isBusted
+    }
+
+    private fun showGameResult(
         dealer: Dealer,
         players: Players,
     ) {
@@ -96,7 +98,7 @@ class GameController(private val deck: Deck) {
         judge(players = players, dealer = dealer)
     }
 
-    fun judge(
+    private fun judge(
         players: Players,
         dealer: Dealer,
     ) {

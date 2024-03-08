@@ -1,6 +1,8 @@
 package model
 
 import TestDeck
+import model.card.Card
+import model.card.Deck
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test

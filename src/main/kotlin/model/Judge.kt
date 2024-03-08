@@ -1,49 +1,53 @@
 package model
 
+import model.human.Dealer
+import model.human.HumanName
+import model.human.Players
+
 object Judge {
     fun getPlayersResult(
         players: Players,
         dealer: Dealer,
-    ): Map<Name, Result> {
+    ): Map<HumanName, ResultType> {
         val dealerPoint = dealer.getPointIncludingAce().amount
-        val playersResult = mutableMapOf<Name, Result>()
+        val playersResultType = mutableMapOf<HumanName, ResultType>()
 
         players.players.forEach { player ->
             val playerPoint = player.getPointIncludingAce().amount
             val result = calculateResult(playerPoint, dealerPoint)
-            playersResult[player.name] = result
+            playersResultType[player.humanName] = result
         }
 
-        return playersResult
+        return playersResultType
     }
 
     private fun calculateResult(
         playerPoint: Int,
         dealerPoint: Int,
-    ): Result {
+    ): ResultType {
         return when {
-            playerPoint > 21 -> Result.LOSE
-            dealerPoint > 21 -> Result.WIN
-            playerPoint > dealerPoint -> Result.WIN
-            playerPoint == dealerPoint -> Result.DRAW
-            else -> Result.LOSE
+            playerPoint > 21 -> ResultType.LOSE
+            dealerPoint > 21 -> ResultType.WIN
+            playerPoint > dealerPoint -> ResultType.WIN
+            playerPoint == dealerPoint -> ResultType.DRAW
+            else -> ResultType.LOSE
         }
     }
 
-    fun getDealerResult(playersResult: Map<Name, Result>): Map<Result, Int> {
-        val dealerResult = mutableMapOf<Result, Int>()
-        playersResult.forEach {
+    fun getDealerResult(playersResultType: Map<HumanName, ResultType>): Map<ResultType, Int> {
+        val dealerResultType = mutableMapOf<ResultType, Int>()
+        playersResultType.forEach {
             val key = switchResult(it.value)
-            dealerResult[key] = (dealerResult[key] ?: 0) + 1
+            dealerResultType[key] = (dealerResultType[key] ?: 0) + 1
         }
-        return dealerResult
+        return dealerResultType
     }
 
-    private fun switchResult(result: Result): Result {
-        return when (result) {
-            Result.WIN -> Result.LOSE
-            Result.DRAW -> Result.DRAW
-            Result.LOSE -> Result.WIN
+    private fun switchResult(resultType: ResultType): ResultType {
+        return when (resultType) {
+            ResultType.WIN -> ResultType.LOSE
+            ResultType.DRAW -> ResultType.DRAW
+            ResultType.LOSE -> ResultType.WIN
         }
     }
 }

@@ -1,5 +1,5 @@
 import controller.GameController
-import model.TrumpDeck
+import model.card.TrumpDeck
 
 fun main() {
     GameController(TrumpDeck).start()
