@@ -10,5 +10,6 @@ fun showPlayersNameReadMessage() {
 }
 
 fun showPlayerDrawMessage(player: Player) {
+    println()
     println(DRAW_ASK.format(player.name))
 }

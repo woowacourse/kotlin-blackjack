@@ -1,6 +1,7 @@
 package blackjack.view
 
 import Player
+import blackjack.model.game.State
 import blackjack.model.player.Dealer
 import blackjack.model.player.PlayerEntry
 
@@ -10,6 +11,7 @@ const val PLAYER_CARD = "%s카드: %s"
 const val DEALER_DRAW_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다."
 
 fun setGame(names: String) {
+    println()
     println(GAME_SETTING.format(names))
 }
 
@@ -17,16 +19,30 @@ fun showHands(
     dealer: Dealer,
     playerEntry: PlayerEntry,
 ) {
-    showDealerHand(dealer)
+    println()
+    showDealerOneHand(dealer)
     showPlayersHand(playerEntry)
 }
 
 fun showPlayerHand(player: Player) {
-    println(PLAYER_CARD.format(player.name, player.hand.cards))
+    val state =
+        when (player.state) {
+            State.BUST -> " (Bust)"
+            State.BLACKJACK -> " (BlackJack)"
+            else -> ""
+        }
+    println(
+        PLAYER_CARD.format(
+            player.name,
+            player.hand.cards.joinToString(),
+        ) + state,
+    )
 }
 
-fun showDealerDrawMessage() {
+fun showDealerDrawMessage(dealer: Dealer) {
+    println()
     println(DEALER_DRAW_MESSAGE)
+    showDealerHand(dealer)
 }
 
 private fun showPlayersHand(playerEntry: PlayerEntry) {
@@ -35,6 +51,16 @@ private fun showPlayersHand(playerEntry: PlayerEntry) {
     }
 }
 
-private fun showDealerHand(dealer: Dealer) {
+private fun showDealerOneHand(dealer: Dealer) {
     println(DEALER_CARD.format(dealer.hand.cards[0]))
+}
+
+private fun showDealerHand(dealer: Dealer) {
+    val state =
+        when (dealer.state) {
+            State.BUST -> " (Bust)"
+            State.BLACKJACK -> " (BlackJack)"
+            else -> ""
+        }
+    println(DEALER_CARD.format(dealer.hand.cards.joinToString()) + state)
 }

@@ -24,13 +24,4 @@ class HandTest {
             .draw(card)
         assertThat(hand.cards.size).isEqualTo(3)
     }
-
-    @Test
-    fun `ACE draw시 aceCount 증가 확인`() {
-        val cards = mutableListOf(Card(Denomination.SIX, Suit.SPADES), Card(Denomination.SEVEN, Suit.SPADES))
-        val hand = Hand(cards)
-        val card = Card(Denomination.ACE, Suit.HEARTS)
-        hand.draw(card)
-        assertThat(hand.aceCount).isEqualTo(1)
-    }
 }

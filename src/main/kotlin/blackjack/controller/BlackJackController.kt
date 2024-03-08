@@ -23,13 +23,15 @@ object BlackJackController {
 
         setGame(playersName.joinToString(", "))
         val hands = List(playersName.size + 1) { Hand(mutableListOf()) }
-        Deck.initialize()
         repeat(2) { hands.forEach { hand -> hand.draw(Deck.dealCard()) } }
+
         val dealer = Dealer(hands[0])
+
         val players =
             playersName.withIndex().map { (index, playerName) ->
                 Player(playerName, hands[index + 1])
             }
+
         val playerEntry = PlayerEntry(players)
         showHands(dealer, playerEntry)
 
@@ -39,27 +41,30 @@ object BlackJackController {
                 showPlayerHand(player)
             }
         }
+
         while (dealer.judgeDraw()) {
-            showDealerDrawMessage()
             dealer.hand.draw(Deck.dealCard())
+            showDealerDrawMessage(dealer)
         }
 
         showHandsScore(dealer, playerEntry)
-        showFinalWinOrLoss()
         val referee = Referee(dealer, playerEntry)
         val results = referee.makeResults()
-
         val winCount = results.count { it == Result.DEALER_WIN }
         val defeatCount = results.count { it == Result.PLAYER_WIN }
+        val drawCount = results.count { it == Result.DRAW }
 
-        println("딜러: ${winCount}승 ${defeatCount}패")
+        println()
+        showFinalWinOrLoss()
+        println("딜러: ${winCount}승${" ${drawCount}무 ".takeIf { drawCount != 0 } ?: ""}${defeatCount}패")
         results.withIndex().forEach { (index, result) ->
-            val tmp =
+            val winOrLose =
                 when (result) {
                     Result.PLAYER_WIN -> "승"
-                    else -> "패"
+                    Result.DEALER_WIN -> "패"
+                    else -> "무"
                 }
-            println("${playerEntry.players[index].name}: $tmp")
+            println("${playerEntry.players[index].name}: $winOrLose")
         }
     }
 
@@ -92,9 +97,10 @@ object BlackJackController {
         showPlayersNameReadMessage()
         return try {
             val playersName = readln().split(',').map { it.trim() }
+            require(playersName.all { it.isNotBlank() }) { "[ERROR] 공백이 아닌 플레이어의 이름을 입력해주세요." }
             playersName
         } catch (e: IllegalArgumentException) {
-            println("플레이어는 최소 1명 이상이어야 합니다.")
+            println(e.message)
             readPlayersName()
         }
     }
@@ -103,10 +109,10 @@ object BlackJackController {
         showPlayerDrawMessage(player)
         return try {
             val drawMessage = readlnOrNull()?.trim()?.lowercase()
-            require(drawMessage == "y" || drawMessage == "n")
+            require(drawMessage == "y" || drawMessage == "n") { "[ERROR] 카드를 더 받을지 말지는 y 또는 n으로 입력해주세요." }
             drawMessage
         } catch (e: IllegalArgumentException) {
-            println("플레이어의 이름을 입력해주세요.")
+            println(e.message)
             askPlayerDraw(player)
         }
     }

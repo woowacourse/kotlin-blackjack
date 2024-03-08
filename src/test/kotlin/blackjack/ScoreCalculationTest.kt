@@ -20,9 +20,9 @@ class ScoreCalculationTest {
 
     @Test
     fun `만약 버스트 and ACE 가지고 있으면 ACE를 1로 변환`() {
-        val cards = mutableListOf(Card(Denomination.ACE, Suit.HEARTS), Card(Denomination.ACE, Suit.SPADES))
+        val cards =
+            mutableListOf(Card(Denomination.ACE, Suit.HEARTS), Card(Denomination.ACE, Suit.SPADES), Card(Denomination.JACK, Suit.SPADES))
         val hand = Hand(cards)
-        hand.aceCount = 1
         val totalScore = ScoreCalculation.calculate(hand)
         assertThat(totalScore).isEqualTo(12)
     }
