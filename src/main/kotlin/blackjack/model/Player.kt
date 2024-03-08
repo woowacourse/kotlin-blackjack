@@ -11,10 +11,10 @@ class Player(override val humanName: HumanName) : BaseHolder() {
         while (hand.state == UserState.RUNNING) {
             if (hitOrStay(humanName)) {
                 takeCard(gameDeck.drawCard())
-                showPlayerCards(this)
             } else {
                 hand.changeState(UserState.STAY)
             }
+            showPlayerCards(this)
         }
     }
 }
