@@ -15,6 +15,7 @@ object OutputView {
         )
         showDealerInitCard(dealer)
         showPlayersInitCards(playerGroup)
+        println()
     }
 
     private fun showDealerInitCard(dealer: Dealer) {
