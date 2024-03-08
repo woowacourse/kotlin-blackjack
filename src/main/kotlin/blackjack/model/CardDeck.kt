@@ -7,8 +7,8 @@ class CardDeck(cards: List<Card>) {
 
     fun pick() = _cards.removeLast()
 
-    fun initialDistribute(): List<Card> {
-        return List(INITIAL_DISTRIBUTE_COUNT) { pick() }
+    fun initialDistribute(): Hand {
+        return Hand(List(INITIAL_DISTRIBUTE_COUNT) { pick() })
     }
 
     companion object {

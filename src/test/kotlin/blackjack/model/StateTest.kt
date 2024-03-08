@@ -22,8 +22,7 @@ class StateTest {
     @Test
     fun `카드의 숫자합이 기준점이면 상태는 Blackjack이다`() {
         val threshold = 21
-        val state =
-            State.initializeSetting(Hand(Card(10), Card(11)), threshold)
+        val state = State.initializeSetting(Hand(Card(10), Card(11)), threshold)
         assertThat(state is Blackjack).isTrue()
     }
 
