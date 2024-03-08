@@ -58,7 +58,7 @@ class BlackjackGame(private val deck: CardDeck, val participants: Participants) 
                 when (dealer.state) {
                     is Blackjack -> whenDealerIsBlackjack(player.state)
                     is Bust -> whenDealerIsBust(player.state)
-                    else -> whenDealerIsStay(player, dealer)
+                    is Stay, is Hit -> whenDealerIsStay(player, dealer)
                 }
         }
     }

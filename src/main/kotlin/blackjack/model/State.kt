@@ -8,6 +8,9 @@ sealed interface State {
     fun hand(): Hand
 
     companion object {
+        const val THRESHOLD_BUST = 21
+        private const val THRESHOLD_BLACKJACK = 21
+
         fun initializeSetting(
             hand: Hand,
             threshold: Int = THRESHOLD_BLACKJACK,
@@ -17,45 +20,32 @@ sealed interface State {
                 else -> Hit(hand)
             }
         }
-
-        const val THRESHOLD_BUST = 21
-        private const val THRESHOLD_BLACKJACK = 21
     }
 }
 
-sealed class Running : State
-
-sealed class Finished : State {
-    override fun draw(card: Card): State = this
-
-    override fun stay(): State = this
+sealed class Running(private val hand: Hand) : State {
+    override fun hand(): Hand = hand
 }
 
-class Hit(private val hand: Hand) : Running() {
+sealed class Finished(private val hand: Hand) : State {
+    override fun draw(card: Card): State = this
+    override fun stay(): State = this
+    override fun hand(): Hand = hand
+}
+
+class Hit(private val hand: Hand) : Running(hand) {
     override fun draw(card: Card): State {
         hand.addCard(card)
-        return if (hand.calculateSum() > State.THRESHOLD_BUST) {
-            Bust(hand)
-        } else if (hand.calculateSum() == State.THRESHOLD_BUST) {
-            Stay(hand)
-        } else {
-            Hit(hand)
+        return when {
+            hand.calculateSum() > State.THRESHOLD_BUST -> Bust(hand)
+            hand.calculateSum() == State.THRESHOLD_BUST -> Stay(hand)
+            else -> Hit(hand)
         }
     }
 
     override fun stay(): State = Stay(hand)
-
-    override fun hand(): Hand = hand
 }
 
-class Stay(private val hand: Hand) : Finished() {
-    override fun hand(): Hand = hand
-}
-
-class Blackjack(private val hand: Hand) : Finished() {
-    override fun hand(): Hand = hand
-}
-
-class Bust(private val hand: Hand) : Finished() {
-    override fun hand(): Hand = hand
-}
+class Stay(hand: Hand) : Finished(hand)
+class Blackjack(hand: Hand) : Finished(hand)
+class Bust(hand: Hand) : Finished(hand)
