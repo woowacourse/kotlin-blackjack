@@ -5,7 +5,7 @@ class HandCards {
     val cards: List<Card>
         get() = _cards.toList()
 
-    fun add(card: Card) {
+    fun addCard(card: Card) {
         _cards.add(card)
     }
 

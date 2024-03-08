@@ -5,11 +5,15 @@ class ScoreBoard {
     var cardSum = 0
         private set
 
-    fun add(card: Card) {
-        handCards.add(card)
+    fun applyReceivedCard(
+        card: Card,
+        burstCondition: Int,
+    ) {
+        handCards.addCard(card)
+        updateCardSum(burstCondition)
     }
 
-    fun optimizeCardSum(burstCondition: Int) {
+    private fun updateCardSum(burstCondition: Int) {
         cardSum = 0
         handCards.cards.forEach {
             cardSum += it.denomination.score
