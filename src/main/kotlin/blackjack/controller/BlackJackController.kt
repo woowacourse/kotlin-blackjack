@@ -13,6 +13,7 @@ import blackjack.view.showDealerDrawMessage
 import blackjack.view.showFinalWinOrLossResult
 import blackjack.view.showHands
 import blackjack.view.showHandsScore
+import blackjack.view.showPlayerDrawDecision
 import blackjack.view.showPlayerEntry
 import blackjack.view.showPlayerHand
 import blackjack.view.showPlayersNameReadMessage
@@ -149,7 +150,7 @@ object BlackJackController {
     }
 
     private fun askPlayersDraw(player: Player): String? {
-        askPlayersDraw(player)
+        showPlayerDrawDecision(player)
         return try {
             val drawDecision = readlnOrNull()?.trim()?.lowercase()
             require(drawDecision == DRAW_DECISION || drawDecision == STAY_DECISION) { INVALID_DRAW_DECISION }
