@@ -1,8 +1,6 @@
 package blackjack.model
 
 class Players private constructor(val playerGroup: List<Player>) {
-    val playersResult: PlayersResult = PlayersResult()
-
     companion object {
         private const val MIN_SIZE = 2
         private const val MAX_SIZE = 8

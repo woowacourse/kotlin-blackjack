@@ -1,8 +1,6 @@
 package blackjack.model
 
 class Dealer : Role() {
-    val result = DealerResult()
-
     override fun decideMoreCard() = getCardSum() < MIN_CARD_SUM
 
     fun decideGameResultType(player: Player): GameResultType {

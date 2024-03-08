@@ -2,9 +2,12 @@ package blackjack.view
 
 import blackjack.model.Card
 import blackjack.model.Dealer
+import blackjack.model.DealerResult
+import blackjack.model.GameResultStorage
 import blackjack.model.GameResultType
 import blackjack.model.Player
 import blackjack.model.Players
+import blackjack.model.PlayersResult
 import blackjack.model.Role
 
 class OutputView {
@@ -45,27 +48,30 @@ class OutputView {
     }
 
     fun printFinalGameResult(
-        dealer: Dealer,
         players: Players,
+        gameResultStorage: GameResultStorage,
     ) {
         println(FINAL_GAME_RESULT_MESSAGE)
         print("딜러: ")
-        printDealerFinalGameResult(dealer)
-        printPlayersFinalGameResult(players)
+        printDealerFinalGameResult(gameResultStorage.dealerResult)
+        printPlayersFinalGameResult(players, gameResultStorage.playersResult)
         lineBreak()
     }
 
-    private fun printDealerFinalGameResult(dealer: Dealer) {
+    private fun printDealerFinalGameResult(dealerResult: DealerResult) {
         GameResultType.entries.forEach { gameResult ->
-            val count = dealer.result.results[gameResult] ?: return@forEach
+            val count = dealerResult.results[gameResult] ?: return@forEach
             print("${count}${gameResult.message} ")
         }
         lineBreak()
     }
 
-    private fun printPlayersFinalGameResult(players: Players) {
+    private fun printPlayersFinalGameResult(
+        players: Players,
+        playersResult: PlayersResult,
+    ) {
         players.playerGroup.forEach {
-            println("${it.name}: ${players.playersResult.results[it.name]?.message}")
+            println("${it.name}: ${playersResult.results[it.name]?.message}")
         }
     }
 

@@ -60,8 +60,8 @@ class BlackjackController(
         dealer: Dealer,
         players: Players,
     ) {
-        BlackjackGame.updateGameResult(dealer, players)
+        val gameResultStorage = BlackjackGame.calculateGameResult(dealer, players)
         outputView.printPlayersCardResult(dealer, players)
-        outputView.printFinalGameResult(dealer, players)
+        outputView.printFinalGameResult(players, gameResultStorage)
     }
 }

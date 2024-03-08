@@ -20,14 +20,18 @@ object BlackjackGame {
         }
     }
 
-    fun updateGameResult(
+    fun calculateGameResult(
         dealer: Dealer,
         players: Players,
-    ) {
+    ): GameResultStorage {
+        val dealerResult = DealerResult()
+        val playersResult = PlayersResult()
+
         players.playerGroup.forEach { player ->
             val gameResultType = dealer.decideGameResultType(player)
-            dealer.result.add(gameResultType)
-            players.playersResult.add(player.name, gameResultType.reverse())
+            dealerResult.add(gameResultType)
+            playersResult.add(player.name, gameResultType.reverse())
         }
+        return GameResultStorage(dealerResult, playersResult)
     }
 }

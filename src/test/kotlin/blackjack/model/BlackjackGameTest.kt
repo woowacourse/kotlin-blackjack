@@ -16,15 +16,15 @@ class BlackjackGameTest {
         dealer.receiveCard(Card.of("8", "하트"))
 
         // when
-        BlackjackGame.updateGameResult(dealer, players)
+        val gameResultStorage = BlackjackGame.calculateGameResult(dealer, players)
 
         // then
-        assertThat(players.playersResult.results)
+        assertThat(gameResultStorage.playersResult.results)
             .containsEntry(PlayerName("olive"), GameResultType.LOSE)
             .containsEntry(PlayerName("seogi"), GameResultType.WIN)
             .containsEntry(PlayerName("chae"), GameResultType.DRAW)
 
-        assertThat(dealer.result.results)
+        assertThat(gameResultStorage.dealerResult.results)
             .containsEntry(GameResultType.LOSE, 1)
             .containsEntry(GameResultType.WIN, 1)
             .containsEntry(GameResultType.DRAW, 1)
