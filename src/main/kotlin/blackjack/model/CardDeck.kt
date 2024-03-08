@@ -8,11 +8,7 @@ class CardDeck {
                 suit = suit
             )
         }
-    }.toSet()
-
-    init {
-        cards.shuffled()
-    }
+    }.shuffled().toSet()
 
     fun draw(): Card {
         val popCard = cards

@@ -19,9 +19,9 @@ class Participants(private val participants: List<Participant>) {
         }
     }
 
-    fun getAliveParticipants(): List<Participant> {
-        return participants.filter {
-            it.checkHitState()
+    fun getAlivePlayers(): List<Participant> {
+        return participants.filter { participant ->
+            participant.checkHitState() && participant !is Dealer
         }
     }
 

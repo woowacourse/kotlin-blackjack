@@ -14,7 +14,7 @@ class ParticipantsTest {
         val mockKkosangParticipant = MockParticipant("꼬상")
         val participants = Participants(listOf(dealer, mockNunuParticipant, mockKkosangParticipant))
 
-        assertThat(participants.getAliveParticipants().size).isEqualTo(3)
+        assertThat(participants.getAlivePlayers().size).isEqualTo(2)
     }
 
     @Test

@@ -28,6 +28,7 @@ class BlackJack {
 
     fun addCard(card: Card) {
         handCard.addCard(card)
+        changeState()
     }
 
     fun changeState() {
