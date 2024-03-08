@@ -15,9 +15,13 @@ class Hand(cards: List<Card>) {
         var totalSum = sumWithoutAces + acesCount
 
         repeat(acesCount) {
-            val tempSum = totalSum + 10
+            val tempSum = totalSum + ACE_OPTIMIZED_VALUE
             if (tempSum <= State.THRESHOLD_BUST) totalSum = tempSum else return totalSum
         }
         return totalSum
+    }
+
+    companion object {
+        const val ACE_OPTIMIZED_VALUE = 10
     }
 }

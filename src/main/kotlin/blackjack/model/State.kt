@@ -38,9 +38,10 @@ sealed class Finished(private val hand: Hand) : State {
 class Hit(private val hand: Hand) : Running(hand) {
     override fun draw(card: Card): State {
         hand.addCard(card)
+        val sumOfCard = hand.calculateSum()
         return when {
-            hand.calculateSum() > State.THRESHOLD_BUST -> Bust(hand)
-            hand.calculateSum() == State.THRESHOLD_BUST -> Stay(hand)
+            sumOfCard > State.THRESHOLD_BUST -> Bust(hand)
+            sumOfCard == State.THRESHOLD_BUST -> Stay(hand)
             else -> Hit(hand)
         }
     }
