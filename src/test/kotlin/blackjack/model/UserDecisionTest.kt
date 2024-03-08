@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 class UserDecisionTest {
-
     @Test
     fun `정상적인 사용자 결정 테스트`() {
         assertThat(UserDecision.getUserDecision("y")).isEqualTo(UserDecision.YES)

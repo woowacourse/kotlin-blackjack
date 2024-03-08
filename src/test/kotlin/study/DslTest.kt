@@ -9,27 +9,29 @@ class DslTest {
     @ValueSource(strings = ["꼬상", "누누"])
     @ParameterizedTest
     fun introduce(value: String) {
-        val person = introduce {
-            name(value)
-        }
+        val person =
+            introduce {
+                name(value)
+            }
         assertThat(person.name).isEqualTo(value)
     }
 
     @Test
     fun company() {
-        val personNunu = introduce {
-            name("누누")
-            company("우아한형제들")
-            skills {
-                soft("A passion for problem solving")
-                soft("Good communication skills")
-                hard("Kotlin")
+        val personNunu =
+            introduce {
+                name("누누")
+                company("우아한형제들")
+                skills {
+                    soft("A passion for problem solving")
+                    soft("Good communication skills")
+                    hard("Kotlin")
+                }
+                languages {
+                    "Korean" level 5
+                    "English" level 3
+                }
             }
-            languages {
-                "Korean" level 5
-                "English" level 3
-            }
-        }
         assertThat(personNunu.name).isEqualTo("누누")
         assertThat(personNunu.company).isEqualTo("우아한형제들")
         assertThat(personNunu.skills.softSkills).isEqualTo(
@@ -42,19 +44,20 @@ class DslTest {
         assertThat(personNunu.languages["Korean"]).isEqualTo(5)
         assertThat(personNunu.languages["English"]).isEqualTo(3)
 
-        val personKkosang = introduce {
-            name("꼬상")
-            company("우아한형제들")
-            skills {
-                soft("A passion for problem solving")
-                soft("Good communication skills")
-                hard("Kotlin")
+        val personKkosang =
+            introduce {
+                name("꼬상")
+                company("우아한형제들")
+                skills {
+                    soft("A passion for problem solving")
+                    soft("Good communication skills")
+                    hard("Kotlin")
+                }
+                languages {
+                    "Korean" level 5
+                    "English" level 3
+                }
             }
-            languages {
-                "Korean" level 5
-                "English" level 3
-            }
-        }
         assertThat(personKkosang.name).isEqualTo("꼬상")
         assertThat(personKkosang.company).isEqualTo("우아한형제들")
         assertThat(personKkosang.skills.softSkills).isEqualTo(

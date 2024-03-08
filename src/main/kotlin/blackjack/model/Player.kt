@@ -8,10 +8,9 @@ class Player(name: String) : Participant(name) {
     }
 
     companion object {
-
         fun checkDuplication(
             name: String,
-            playerNames: Set<String>
+            playerNames: Set<String>,
         ) {
             require(!playerNames.contains(name)) {
                 ERROR_DUPLICATION_NAME

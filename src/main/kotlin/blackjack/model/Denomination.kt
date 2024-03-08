@@ -1,7 +1,7 @@
 package blackjack.model
 
 enum class Denomination(
-    private val score: Int
+    private val score: Int,
 ) {
     TWO(2),
     THREE(3),
@@ -15,7 +15,7 @@ enum class Denomination(
     JACK(10),
     QUEEN(10),
     KING(10),
-    ACE(11);
+    ACE(11), ;
 
     fun getScore(): Int = score
 

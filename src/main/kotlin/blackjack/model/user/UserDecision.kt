@@ -1,10 +1,10 @@
 package blackjack.model.user
 
 enum class UserDecision(
-    private val userDecision: String
+    private val userDecision: String,
 ) {
     YES("y"),
-    NO("n");
+    NO("n"), ;
 
     companion object {
         private const val ERROR_DECISION = "잘못 된 결정입니다."

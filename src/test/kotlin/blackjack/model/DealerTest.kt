@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 class DealerTest {
-
     @Test
     fun `딜러는 첫번째 카드를 공개할 수 있다`() {
         val dealer = Dealer()

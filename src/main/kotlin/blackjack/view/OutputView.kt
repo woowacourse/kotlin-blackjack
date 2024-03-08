@@ -24,14 +24,32 @@ object OutputView {
     private const val DRAW_NAME = "무"
     private const val LOSE_NAME = "패"
 
-    fun outputParticipantsName(dealerName: String, players: List<Player>) {
+    fun outputParticipantsName(
+        dealerName: String,
+        players: List<Player>,
+    ) {
         val participantNames = players.joinToString(COMMA) { it.getName() }
         println()
-        println(OUTPUT_MESSAGE_PARTICIPANTS_NAME.format(dealerName, participantNames))
+        println(
+            OUTPUT_MESSAGE_PARTICIPANTS_NAME
+                .format(
+                    dealerName,
+                    participantNames,
+                ),
+        )
     }
 
-    fun outputDealerCurrentHandCard(name: String, firstCard: Card) {
-        println(OUTPUT_MESSAGE_SHOW_DEALER_HAND_CARD.format(name, joinCardInfo(firstCard)))
+    fun outputDealerCurrentHandCard(
+        name: String,
+        firstCard: Card,
+    ) {
+        println(
+            OUTPUT_MESSAGE_SHOW_DEALER_HAND_CARD
+                .format(
+                    name,
+                    joinCardInfo(firstCard),
+                ),
+        )
     }
 
     fun outputPlayersCurrentHandCard(players: List<Player>) {
@@ -43,10 +61,11 @@ object OutputView {
 
     fun outputPlayerCurrentHandCard(player: Player) {
         println(
-            OUTPUT_MESSAGE_PARTICIPANTS_CURRENT_HAND_CARD.format(
-                player.getName(),
-                joinCardsInfo(player.getCards())
-            )
+            OUTPUT_MESSAGE_PARTICIPANTS_CURRENT_HAND_CARD
+                .format(
+                    player.getName(),
+                    joinCardsInfo(player.getCards()),
+                ),
         )
     }
 
@@ -83,11 +102,12 @@ object OutputView {
 
     private fun outputParticipantHandCard(participant: Participant) {
         println(
-            OUTPUT_MESSAGE_PARTICIPANTS_FINISH_HAND_CARD.format(
-                participant.getName(),
-                joinCardsInfo(participant.getCards()),
-                participant.getBlackJackScore()
-            )
+            OUTPUT_MESSAGE_PARTICIPANTS_FINISH_HAND_CARD
+                .format(
+                    participant.getName(),
+                    joinCardsInfo(participant.getCards()),
+                    participant.getBlackJackScore(),
+                ),
         )
     }
 
@@ -96,24 +116,37 @@ object OutputView {
         println(OUTPUT_MESSAGE_BLACKJACK_RESULT)
     }
 
-    fun outputDealerResult(dealerName: String, dealerResults: MutableMap<Result, Int>) {
-        val dealerResultNames = dealerResults.map { (result, count) ->
-            getDealerResult(result, count)
-        }
+    fun outputDealerResult(
+        dealerName: String,
+        dealerResults: MutableMap<Result, Int>,
+    ) {
+        val dealerResultNames =
+            dealerResults.map { (result, count) ->
+                getDealerResult(result, count)
+            }
         println("${dealerName}: ${dealerResultNames.joinToString(SPACE)}")
     }
 
     fun outputPlayersResult(playersResult: MutableMap<Player, Result>) {
         playersResult.forEach { (player, result) ->
-            outputPlayerResult(player.getName(), result)
+            outputPlayerResult(
+                name = player.getName(),
+                playerResult = result,
+            )
         }
     }
 
-    private fun outputPlayerResult(name: String, playerResult: Result) {
+    private fun outputPlayerResult(
+        name: String,
+        playerResult: Result,
+    ) {
         println(getGameResultWithName(name, playerResult))
     }
 
-    private fun getGameResultWithName(name: String, result: Result): String {
+    private fun getGameResultWithName(
+        name: String,
+        result: Result,
+    ): String {
         return "${name}: ${getResultName(result)}"
     }
 

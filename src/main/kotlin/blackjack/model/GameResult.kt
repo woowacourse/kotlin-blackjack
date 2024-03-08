@@ -52,7 +52,7 @@ class GameResult(
 
     private fun applyPlayerResult(
         player: Player,
-        dealerResult: Result
+        dealerResult: Result,
     ) {
         when (dealerResult) {
             Result.WIN -> playerResults[player] = Result.LOSE

@@ -1,6 +1,6 @@
 package blackjack.model
 
-class GameManger {
+class GameManager {
     private val cardDeck = CardDeck()
 
     fun setGame(participants: Participants) {

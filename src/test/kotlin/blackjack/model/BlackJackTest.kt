@@ -5,7 +5,6 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class BlackJackTest {
-
     @Test
     fun `유저가 더 이상 카드를 드로우 하지 않을 경우 테스트`() {
         val blackJack = BlackJack()

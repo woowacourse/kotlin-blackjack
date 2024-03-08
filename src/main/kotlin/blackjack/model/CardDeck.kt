@@ -1,19 +1,21 @@
 package blackjack.model
 
 class CardDeck {
-    private var cards: Set<Card> = Denomination.entries.flatMap { denomination ->
-        Suit.entries.map { suit ->
-            Card(
-                denomination = denomination,
-                suit = suit
-            )
-        }
-    }.shuffled().toSet()
+    private var cards: Set<Card> =
+        Denomination.entries.flatMap { denomination ->
+            Suit.entries.map { suit ->
+                Card(
+                    denomination = denomination,
+                    suit = suit,
+                )
+            }
+        }.shuffled().toSet()
 
     fun draw(): Card {
-        val popCard = cards
-            .take(DRAW_COUNT)
-            .firstOrNull() ?: throw IllegalArgumentException(EMPTY_CARD_DECK)
+        val popCard =
+            cards
+                .take(DRAW_COUNT)
+                .firstOrNull() ?: throw IllegalArgumentException(EMPTY_CARD_DECK)
         cards -= popCard
         return popCard
     }

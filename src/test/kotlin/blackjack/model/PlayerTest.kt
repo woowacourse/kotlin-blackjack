@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 class PlayerTest {
-
     @Test
     fun `올바르지 않은 플레이어 이름 테스트`() {
         assertThrows<IllegalArgumentException> {

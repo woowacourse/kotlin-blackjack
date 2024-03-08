@@ -4,9 +4,8 @@ import blackjack.state.State
 
 abstract class Participant(
     private val name: String,
-    private val blackJack: BlackJack = BlackJack()
+    private val blackJack: BlackJack = BlackJack(),
 ) {
-
     fun draw(card: Card) {
         blackJack.addCard(card)
     }
@@ -30,5 +29,4 @@ abstract class Participant(
     fun getBlackJackScore(): Int {
         return blackJack.getHandCardScore()
     }
-
 }
