@@ -12,7 +12,7 @@ object InputView {
     }
 
     fun askHitOrStay(humanName: HumanName): Boolean {
-        println("${humanName}은(는) 한 장의 카드를 더 받겠습니까? (예는 y, 아니오는 n)")
+        println("\n${humanName}은(는) 한 장의 카드를 더 받겠습니까? (예는 y, 아니오는 n)")
         while (true) {
             when (readln()) {
                 YES -> return true
