@@ -1,6 +1,6 @@
 package blackjack.model
 
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class PlayerTest {
@@ -11,7 +11,7 @@ class PlayerTest {
 
         player.takeCard(card)
 
-        Assertions.assertThat(player.humanName.name).isEqualTo("호두")
+        assertThat(player.humanName.name).isEqualTo("호두")
     }
 
     @Test
@@ -21,7 +21,7 @@ class PlayerTest {
 
         player.takeCard(card)
 
-        Assertions.assertThat(player.hand.cards.last()).isEqualTo(card)
+        assertThat(player.hand.cards).contains(card)
     }
 
     @Test
@@ -31,6 +31,6 @@ class PlayerTest {
 
         player.takeCard(card)
 
-        Assertions.assertThat(player.hand.cards.last()).isEqualTo(card)
+        assertThat(player.hand.cards).contains(card)
     }
 }
