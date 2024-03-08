@@ -24,7 +24,7 @@ class BlackJackGame(
         participants.dealer.drawDealerCard(gameDeck = gameDeck, printDealerDrawCard = printDealerDrawCard)
     }
 
-    fun finish(printEveryCards: (dealer: Dealer, playerGroup: PlayerGroup) -> Unit) {
-        printEveryCards(participants.dealer, participants.playerGroup)
+    fun finish(printEveryCards: (participants: Participants) -> Unit) {
+        printEveryCards(participants)
     }
 }

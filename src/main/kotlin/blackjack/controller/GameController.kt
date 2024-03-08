@@ -8,7 +8,6 @@ import blackjack.view.InputView
 import blackjack.view.InputView.askHitOrStay
 import blackjack.view.OutputView
 import blackjack.view.OutputView.printDealerDrawCard
-import blackjack.view.OutputView.printEveryCards
 import blackjack.view.OutputView.printGameSetting
 import blackjack.view.OutputView.showPlayerCards
 
@@ -20,7 +19,6 @@ class GameController {
 
         playGame(participants = participants)
 
-        participants.matchResult()
         OutputView.printMatchResult(dealer = participants.dealer, playerGroup = participants.playerGroup)
     }
 
@@ -29,7 +27,10 @@ class GameController {
             start(printGameSetting = ::printGameSetting)
             runPlayersTurn(hitOrStay = ::askHitOrStay, showPlayerCards = ::showPlayerCards)
             runDealerTurn(printDealerDrawCard = ::printDealerDrawCard)
-            finish(printEveryCards = ::printEveryCards)
+            finish { participants ->
+                participants.matchResult()
+                OutputView.printEveryCards(participants.dealer, participants.playerGroup)
+            }
         }
     }
 
