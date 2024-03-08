@@ -7,7 +7,7 @@ class RoleTest {
     @Test
     fun `처음 카드를 2장 받는다`() {
         val dealer = Dealer(CardHand(emptyList()))
-        val player = Player("해나", CardHand(emptyList()))
+        val player = Player(PlayerName("해나"), CardHand(emptyList()))
 
         dealer.addInitialCards()
         player.addInitialCards()

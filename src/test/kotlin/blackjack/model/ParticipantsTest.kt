@@ -17,28 +17,28 @@ class ParticipantsTest {
                     ),
                 ),
                 Player(
-                    "심지",
+                    PlayerName("심지"),
                     CardHand(
                         Card(CardShape.CLOVER, CardNumber.FIVE),
                         Card(CardShape.SPADE, CardNumber.KING),
                     ),
                 ),
                 Player(
-                    "해나",
+                    PlayerName("해나"),
                     CardHand(
                         Card(CardShape.HEART, CardNumber.SIX),
                         Card(CardShape.DIAMOND, CardNumber.QUEEN),
                     ),
                 ),
                 Player(
-                    "악어",
+                    PlayerName("악어"),
                     CardHand(
                         Card(CardShape.HEART, CardNumber.SEVEN),
                         Card(CardShape.CLOVER, CardNumber.THREE),
                     ),
                 ),
                 Player(
-                    "팡태",
+                    PlayerName("팡태"),
                     CardHand(
                         Card(CardShape.DIAMOND, CardNumber.ACE),
                         Card(CardShape.SPADE, CardNumber.SIX),
@@ -53,8 +53,8 @@ class ParticipantsTest {
             Participants(
                 listOf(
                     Dealer(CardHand(emptyList())),
-                    Player("심지", CardHand(emptyList())),
-                    Player("해나", CardHand(emptyList())),
+                    Player(PlayerName("심지"), CardHand(emptyList())),
+                    Player(PlayerName("해나"), CardHand(emptyList())),
                 ),
             )
         }
@@ -78,14 +78,17 @@ class ParticipantsTest {
             Participants(
                 listOf(
                     Dealer(CardHand(emptyList())),
-                    Player("심지", CardHand(emptyList())),
-                    Player("해나", CardHand(emptyList())),
-                    Player("악어", CardHand(emptyList())),
-                    Player("팡태", CardHand(emptyList())),
-                    Player("채채", CardHand(emptyList())),
-                    Player("서기", CardHand(emptyList())),
-                    Player("벼리", CardHand(emptyList())),
-                    Player("올리브", CardHand(emptyList())),
+                    Player(PlayerName("심지"), CardHand(emptyList())),
+                    Player(PlayerName("해나"), CardHand(emptyList())),
+                    Player(PlayerName("악어"), CardHand(emptyList())),
+                    Player(PlayerName("팡태"), CardHand(emptyList())),
+                    Player(PlayerName("채채"), CardHand(emptyList())),
+                    Player(PlayerName("서기"), CardHand(emptyList())),
+                    Player(
+                        PlayerName("벼리"),
+                        CardHand(emptyList()),
+                    ),
+                    Player(PlayerName("올리브"), CardHand(emptyList())),
                 ),
             )
         }.isExactlyInstanceOf(IllegalArgumentException::class.java)
@@ -98,8 +101,8 @@ class ParticipantsTest {
             Participants(
                 listOf(
                     Dealer(CardHand(emptyList())),
-                    Player("심지", CardHand(emptyList())),
-                    Player("해나", CardHand(emptyList())),
+                    Player(PlayerName("심지"), CardHand(emptyList())),
+                    Player(PlayerName("해나"), CardHand(emptyList())),
                 ),
             )
 
@@ -127,10 +130,10 @@ class ParticipantsTest {
 
         assertThat(actual).isEqualTo(
             mapOf(
-                "심지" to 15,
-                "해나" to 16,
-                "악어" to 10,
-                "팡태" to 17,
+                PlayerName("심지") to 15,
+                PlayerName("해나") to 16,
+                PlayerName("악어") to 10,
+                PlayerName("팡태") to 17,
             ),
         )
     }

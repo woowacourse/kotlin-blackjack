@@ -9,10 +9,10 @@ class PlayerWinningTest {
         val playerWinning =
             PlayerWinning(
                 mapOf(
-                    "심지" to WinningResultStatus.DEFEAT,
-                    "해나" to WinningResultStatus.DRAW,
-                    "악어" to WinningResultStatus.VICTORY,
-                    "팡태" to WinningResultStatus.VICTORY,
+                    PlayerName("심지") to WinningResultStatus.DEFEAT,
+                    PlayerName("해나") to WinningResultStatus.DRAW,
+                    PlayerName("악어") to WinningResultStatus.VICTORY,
+                    PlayerName("팡태") to WinningResultStatus.VICTORY,
                 ),
             )
         val actual = playerWinning.judgeDealerWinningResult()
