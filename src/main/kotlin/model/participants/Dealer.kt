@@ -1,0 +1,27 @@
+package model.participants
+
+class Dealer(override val hand: Hand, override val humanName: HumanName = HumanName.fromInput("딜러")) : Human(hand, humanName) {
+    fun play(): Int {
+        var hitCountExceptFirst = -1
+        do {
+            hit()
+            hitCountExceptFirst++
+        } while (canHit())
+
+        return hitCountExceptFirst
+    }
+
+    override fun hit(): Boolean {
+        if (canHit()) {
+            hand.draw()
+            return canHit()
+        }
+        return false
+    }
+
+    override fun canHit(): Boolean = getPointIncludingAce().amount <= HIT_THRESHOLD
+
+    companion object {
+        private const val HIT_THRESHOLD = 16
+    }
+}

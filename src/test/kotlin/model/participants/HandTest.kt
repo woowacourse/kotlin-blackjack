@@ -1,6 +1,9 @@
-package model
+package model.participants
 
 import TestDeck
+import model.card.Card
+import model.card.Deck
+import model.result.Point
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -35,6 +38,6 @@ class HandTest {
     fun `핸드 내의 카드 값의 합을 구할 수 있다`() {
         hand.draw()
         hand.draw()
-        assertThat(hand.getPoint()).isEqualTo(Point(5))
+        assertThat(hand.point == Point(5))
     }
 }

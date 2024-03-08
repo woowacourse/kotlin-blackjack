@@ -1,13 +1,13 @@
 package controller
 
-import model.Answer
-import model.Dealer
-import model.Deck
-import model.Hand
-import model.Judge
-import model.Name
-import model.Player
-import model.Players
+import model.card.Deck
+import model.participants.Answer
+import model.participants.Dealer
+import model.participants.Hand
+import model.participants.HumanName
+import model.participants.Player
+import model.participants.Players
+import model.result.Judge
 import view.InputView
 import view.OutputView
 
@@ -19,7 +19,7 @@ class GameController(private val deck: Deck) {
         initGame(dealer = dealer, players = players)
         playGame(dealer = dealer, players = players)
 
-        showFinalResult(dealer = dealer, players = players)
+        showGameResult(dealer = dealer, players = players)
     }
 
     private fun initGame(
@@ -46,59 +46,54 @@ class GameController(private val deck: Deck) {
         dealer: Dealer,
         players: Players,
     ) {
-        players.players.forEach {
-            playOfOnePlayer(it)
-            OutputView.getHand(it.hand)
-        }
-        dealer.hit()
+        players.players.forEach(::playOfOnePlayer)
 
-        while (dealer.getPointIncludingAce().amount < 17) {
-            OutputView.drawCardForDealer()
-            dealer.hit()
-        }
+        val hitCount = dealer.play()
+        repeat(hitCount) { OutputView.showDealerHit() }
     }
 
     private fun readPlayers(): Players {
         return InputView.readPlayerNames().run {
-            Players.from(this, deck)
+            Players.ofList(this, deck)
         }
     }
 
-    private fun readAnswer(name: Name): Answer {
-        return InputView.readAnswer(name).run {
+    private fun readAnswer(humanName: HumanName): Answer {
+        return InputView.readAnswer(humanName).run {
             Answer.fromInput(this)
         }
     }
 
-    fun switchAnswer(
+    private fun playByAnswer(
         answer: Answer,
         player: Player,
     ): Boolean {
-        var flag = false
-        if (answer == Answer.YES) {
-            flag = player.hit()
-        }
-        OutputView.showPlayerHand(player)
-        return flag
+        val isBusted =
+            when (answer) {
+                Answer.YES -> player.hit()
+                Answer.NO -> false
+            }
+        OutputView.showHumanHand(player)
+        return isBusted
     }
 
     private fun playOfOnePlayer(player: Player) {
-        while (switchAnswer(readAnswer(player.name), player));
+        while (playByAnswer(readAnswer(player.humanName), player)) ;
     }
 
-    fun showFinalResult(
+    private fun showGameResult(
         dealer: Dealer,
         players: Players,
     ) {
-        OutputView.showDealerHandWithResult(dealer)
+        OutputView.showHumanHandWithResult(dealer)
         OutputView.showPlayersHandWithResult(players)
 
         judge(players = players, dealer = dealer)
     }
 
-    fun judge(
-        players: Players,
+    private fun judge(
         dealer: Dealer,
+        players: Players,
     ) {
         val playersResult = Judge.getPlayersResult(players, dealer)
         val dealerResult = Judge.getDealerResult(playersResult)

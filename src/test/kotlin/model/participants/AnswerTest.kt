@@ -1,4 +1,4 @@
-package model
+package model.participants
 
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.assertDoesNotThrow

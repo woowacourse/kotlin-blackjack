@@ -6,19 +6,20 @@ import org.junit.jupiter.api.Test
 class DslTest {
     @Test
     fun introduce() {
-        val person: Person = introduce {
-            name("황태준")
-            company("황태준컴퍼니")
-            skills {
-                soft("problem solving")
-                soft("Good communication")
-                hard("Kotlin")
+        val person: Person =
+            introduce {
+                name("황태준")
+                company("황태준컴퍼니")
+                skills {
+                    soft("problem solving")
+                    soft("Good communication")
+                    hard("Kotlin")
+                }
+                languages {
+                    "Korean" level 5
+                    "English" level 3
+                }
             }
-            languages {
-                "Korean" level 5
-                "English" level 3
-            }
-        }
         assertThat(person.name).isEqualTo("황태준")
         assertThat(person.company).isEqualTo("황태준컴퍼니")
         assertThat(person.skill.softSkills).hasSize(2)
@@ -66,7 +67,6 @@ class PersonBuilder {
     fun build(): Person {
         return Person(name, company, skill, languages)
     }
-
 }
 
 class Skill {
@@ -90,4 +90,4 @@ class Languages {
     }
 }
 
-class Person(val name: String, val company: String,  val skill: Skill, val languages: Languages)
+class Person(val name: String, val company: String, val skill: Skill, val languages: Languages)

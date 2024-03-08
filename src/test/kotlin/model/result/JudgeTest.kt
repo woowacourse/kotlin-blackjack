@@ -1,6 +1,11 @@
-package model
+package model.result
 
 import TestDeck
+import model.card.Card
+import model.participants.Dealer
+import model.participants.Hand
+import model.participants.HumanName
+import model.participants.Players
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -28,7 +33,7 @@ class JudgeTest {
 
     @Test
     fun `게임을 플레이 했을 때 결과를 판단할 수 있다`() {
-        val players = Players.from(listOf("pang", "ack"), testDeck)
+        val players = Players.ofList(listOf("pang", "ack"), testDeck)
         val dealer = Dealer(Hand(testDeck))
         players.players.forEach {
             it.hit()
@@ -37,17 +42,18 @@ class JudgeTest {
 
         dealer.play()
 
-        val expected = mapOf(Name.fromInput("pang") to Result.DRAW, Name.fromInput("ack") to Result.LOSE)
+        val expected = mapOf(HumanName.fromInput("pang") to ResultType.DRAW, HumanName.fromInput("ack") to ResultType.LOSE)
         val result = Judge.getPlayersResult(players, dealer)
-        assertThat(result.values == expected.values)
+        assertThat(result.result.values == expected.values)
     }
 
     @Test
     fun testGetDealerResult() {
-        val playersResult = mapOf(Name.fromInput("pang") to Result.DRAW, Name.fromInput("ack") to Result.LOSE)
+        val playersResult =
+            PlayersResult(mapOf(HumanName.fromInput("pang") to ResultType.DRAW, HumanName.fromInput("ack") to ResultType.LOSE))
         val dealerResult = Judge.getDealerResult(playersResult)
 
-        val expected = mapOf(Result.DRAW to 1, Result.WIN to 1)
-        assertThat(dealerResult.values == expected.values)
+        val expected = mapOf(ResultType.DRAW to 1, ResultType.WIN to 1)
+        assertThat(dealerResult.result.values == expected.values)
     }
 }

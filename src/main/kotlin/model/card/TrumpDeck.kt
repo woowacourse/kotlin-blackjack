@@ -1,4 +1,4 @@
-package model
+package model.card
 
 object TrumpDeck : Deck {
     private val cards: MutableList<Card> =

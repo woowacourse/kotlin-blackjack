@@ -1,6 +1,6 @@
-package model
+package model.card
 
-enum class Value(val rank: String, val amount: Int) {
+enum class ValueType(val rank: String, val amount: Int) {
     ACE("A", 1),
     TWO("2", 2),
     THREE("3", 3),

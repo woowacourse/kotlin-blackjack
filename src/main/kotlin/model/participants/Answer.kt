@@ -1,9 +1,9 @@
-package model
+package model.participants
 
-enum class Answer {
-    YES,
-    NO,
-    ;
+sealed class Answer {
+    data object YES : Answer()
+
+    data object NO : Answer()
 
     companion object {
         const val ERROR_INVALID_FORMAT = "y 또는 n만 입력해주세요"
@@ -14,9 +14,7 @@ enum class Answer {
             return when (input.lowercase()) {
                 POSITIVE -> YES
                 NEGATIVE -> NO
-                else -> {
-                    throw IllegalArgumentException(ERROR_INVALID_FORMAT)
-                }
+                else -> throw IllegalArgumentException(ERROR_INVALID_FORMAT)
             }
         }
     }

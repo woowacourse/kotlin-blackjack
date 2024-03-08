@@ -1,6 +1,8 @@
-package model
+package model.participants
 
 import TestDeck
+import model.card.Card
+import model.result.Point.Companion.compareTo
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -26,6 +28,6 @@ class DealerTest {
         val dealer = Dealer(Hand(testDeck))
         dealer.play()
 
-        assertThat(dealer.hand.getPoint().amount >= 17).isTrue
+        assertThat(dealer.hand.point >= 17).isTrue
     }
 }
