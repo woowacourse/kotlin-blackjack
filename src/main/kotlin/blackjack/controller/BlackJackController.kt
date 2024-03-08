@@ -1,7 +1,7 @@
 package blackjack.controller
 
-import blackjack.model.Cards
 import blackjack.model.Dealer
+import blackjack.model.Deck
 import blackjack.model.GameResult
 import blackjack.model.ParticipantsHandCards
 import blackjack.model.Player
@@ -14,22 +14,23 @@ class BlackJackController(
 ) {
     fun start() {
         val playersNames: List<String> = inputView.inputPlayerNames()
-        val deck: Cards = Cards.createDeck()
-        val (playerHandCards, dealerHandCards) = ParticipantsHandCards.from(deck.take(2 * (1 + playersNames.size)))
-        val dealer = Dealer(dealerHandCards)
-        val players: List<Player> = playersNames.zip(playerHandCards).map(::Player)
-        outputView.showDivided(dealerHandCards.cards.first(), players)
+        val deck: Deck = Deck.create()
+        val (playerHand, dealerHand) =
+            ParticipantsHandCards.from(deck.spread(playersNames.size))
+        val dealer = Dealer(dealerHand)
+        val players: List<Player> = Player.createPlayers(playersNames, playerHand)
+        outputView.showDivided(dealerHand.first(), players)
 
         players.forEach { player ->
             while (inputView.inputWhetherHit(player)) {
-                player.hit(deck.shuffled().first())
+                player.hit(deck.pull())
                 outputView.showPlayerHandCards(player)
             }
         }
 
         while (dealer.canHit()) {
             outputView.showDealerHitCard()
-            dealer.hit(deck.shuffled().first())
+            dealer.hit(deck.pull())
         }
 
         outputView.showDealerScore(dealer.handCards.cards, dealer.handCards.sumOptimized())

@@ -9,4 +9,14 @@ class Player(val name: String, handCards: HandCards) {
     fun hit(card: Card) {
         _handCards.add(card)
     }
+
+    companion object {
+        @JvmStatic
+        fun createPlayers(
+            names: List<String>,
+            hands: List<HandCards>,
+        ): List<Player> {
+            return names.zip(hands).map(::Player)
+        }
+    }
 }

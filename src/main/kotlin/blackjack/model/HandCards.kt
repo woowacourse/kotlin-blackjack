@@ -12,6 +12,8 @@ class HandCards(
 
     constructor(vararg cards: Card) : this(cards.toList())
 
+    fun first(): Card = cards.first()
+
     fun sumOptimized(): Int = pointCalculator.sumOf(cards)
 
     fun isBust(): Boolean = sumOptimized() > BLACKJACK_NUMBER
