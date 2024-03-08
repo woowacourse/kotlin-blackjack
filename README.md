@@ -70,6 +70,7 @@
 
 
 - [x] Point
+  - 카드의 총 합 점수를 담는 Int 래퍼 클래스
 
 
 - [x] Result (enum class)
