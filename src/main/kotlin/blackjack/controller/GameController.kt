@@ -36,8 +36,8 @@ class GameController {
 
     private fun createPlayerGroup(): PlayerGroup {
         val playersNames = InputView.inputPlayersNames()
-        val participants = PlayerGroup()
-        participants.addPlayer(playerNames = playersNames)
-        return participants
+        val playerGroup = PlayerGroup()
+        playerGroup.addPlayer(playerNames = playersNames)
+        return playerGroup
     }
 }
