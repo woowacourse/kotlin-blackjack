@@ -1,8 +1,5 @@
 package blackjack.model
 
-import blackjack.controller.BlackJackController.Companion.INIT_HANDS_COUNT
-
-
 data class Deck(
     val cards: List<Card>,
 ) : List<Card> by cards {
@@ -16,6 +13,7 @@ data class Deck(
     }
 
     companion object {
+        private const val INIT_HANDS_COUNT = 2
         private val DECK: Deck = create()
         private const val DEFAULT_DECK_SIZE = 1
         private const val DEALER_COUNT = 1

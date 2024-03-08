@@ -1,10 +1,8 @@
 package blackjack.model
 
-import blackjack.controller.BlackJackController.Companion.BLACKJACK_NUMBER
-
 class Hand(
     val cards: List<Card>,
-    private val pointCalculator: PointCalculator = DefaultPointCalculator(),
+    private val pointCalculator: PointCalculator = DefaultPointCalculator(BLACKJACK_NUMBER),
 ) {
     init {
         require(cards.size >= MIN_HAND_CARDS_SIZE) { "손패는 $MIN_HAND_CARDS_SIZE 장 이상임" }
@@ -34,6 +32,7 @@ class Hand(
     }
 
     companion object {
+        private const val BLACKJACK_NUMBER = 21
         private const val MIN_HAND_CARDS_SIZE = 2
     }
 }

@@ -84,9 +84,4 @@ class BlackJackController(
         outputView.showDivided(dealerHand.first(), players)
         return Participant(dealer, players)
     }
-
-    companion object {
-        const val BLACKJACK_NUMBER = 21
-        const val INIT_HANDS_COUNT = 2
-    }
 }

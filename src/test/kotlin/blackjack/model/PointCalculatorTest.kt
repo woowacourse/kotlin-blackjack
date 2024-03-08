@@ -12,7 +12,7 @@ class PointCalculatorTest {
 
     @BeforeEach
     fun setUp() {
-        pointCalculator = DefaultPointCalculator()
+        pointCalculator = DefaultPointCalculator(21)
     }
 
     @Test
