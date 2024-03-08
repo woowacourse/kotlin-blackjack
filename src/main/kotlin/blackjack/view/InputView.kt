@@ -17,11 +17,13 @@ class InputView {
         if (input == STAY) {
             return false
         }
+        println(MESSAGE_INVALID_INPUT)
         return inputWhetherHit(player)
     }
 
     companion object {
         private const val DELIMITER = ","
+        private const val MESSAGE_INVALID_INPUT = "y or n 로 다시 입력해주세요."
         private const val MESSAGE_INPUT_PLAYERS_NAME = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)"
         private const val HIT = "y"
         private const val STAY = "n"
