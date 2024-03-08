@@ -6,8 +6,8 @@ import blackjack.model.Dealer
 import blackjack.model.Participants
 import blackjack.model.Player
 import blackjack.model.PlayerName
+import blackjack.model.Players
 import blackjack.model.Referee
-import blackjack.model.Role
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -18,40 +18,33 @@ class BlackJack(
     fun gameStart() {
         val dealer = Dealer(CardHand())
         val players = initPlayers()
-        val participants =
-            Participants(
-                dealer + players,
-            )
 
-        dealInitialCards(participants, dealer, players)
+        val participants = Participants(dealer, players)
+
+        dealInitialCards(participants)
         runPlayersPhase(players)
+
         runDealerPhase(dealer)
         showFinalWinning(participants)
     }
 
-    private fun initPlayers(): List<Player> {
-        val players = (
+    private fun initPlayers(): Players =
+        Players(
             inputView.readPlayersName()
                 .map {
                     Player(PlayerName(it), CardHand())
-                }
+                },
         )
-        return players
-    }
 
-    private fun dealInitialCards(
-        participants: Participants,
-        dealer: Dealer,
-        players: List<Player>,
-    ) {
+    private fun dealInitialCards(participants: Participants) {
         outputView.printInitialSetting(participants)
 
         participants.addInitialCards()
-        outputView.printInitialCardHands(dealer, players)
+        outputView.printInitialCardHands(participants)
     }
 
-    private fun runPlayersPhase(players: List<Player>) {
-        players.forEach {
+    private fun runPlayersPhase(players: Players) {
+        players.players.forEach {
             runPlayerPhase(it)
         }
     }
@@ -79,10 +72,4 @@ class BlackJack(
         outputView.printFinalDealerResult(dealerWinning)
         outputView.printFinalPlayersResult(playerWinning)
     }
-}
-
-operator fun Dealer.plus(players: List<Role>): List<Role> {
-    val tempPlayers = players.toMutableList()
-    tempPlayers.add(0, this)
-    return tempPlayers.toList()
 }
