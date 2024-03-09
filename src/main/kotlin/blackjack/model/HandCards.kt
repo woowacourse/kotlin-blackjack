@@ -18,7 +18,9 @@ class HandCards(
 
     fun isBust(): Boolean = sumOptimized() > BLACKJACK_NUMBER
 
-    fun isBlackjack(): Boolean = (sumOptimized() == BLACKJACK_NUMBER) && (cards.size == MIN_HAND_CARDS_SIZE)
+    fun isBlackjack(): Boolean  {
+        return (sumOptimized() == BLACKJACK_NUMBER) && (cards.size == MIN_HAND_CARDS_SIZE)
+    }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
