@@ -3,8 +3,6 @@ package blackjack.model
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-val playerNames = setOf("케이엠", "해음", "차람")
-
 val burstDealerInfo: GameInfo =
     GameInfo(
         "딜러",
