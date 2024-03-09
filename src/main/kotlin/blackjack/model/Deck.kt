@@ -1,9 +1,7 @@
 package blackjack.model
 
 @JvmInline
-value class Deck(
-    val cards: List<Card>,
-) : List<Card> by cards {
+value class Deck(val cards: List<Card>) : List<Card> by cards {
     fun pull(): Card {
         return cards.shuffled().first()
     }
