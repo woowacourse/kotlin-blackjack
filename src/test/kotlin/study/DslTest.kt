@@ -41,15 +41,13 @@ class DslTest {
         assertThat(person.company).isEqualTo("네이버")
         assertThat(person.skill).isEqualTo(
             Skill(
-                soft =
-                    listOf(
-                        "A passion for problem solving",
-                        "Good communication skills",
-                    ),
-                hard =
-                    listOf(
-                        "Kotlin",
-                    ),
+                soft = listOf(
+                    "A passion for problem solving",
+                    "Good communication skills",
+                ),
+                hard = listOf(
+                    "Kotlin",
+                ),
             ),
         )
     }
@@ -75,14 +73,14 @@ class DslTest {
         assertThat(person.skill).isEqualTo(
             Skill(
                 soft =
-                    listOf(
-                        "A passion for problem solving",
-                        "Good communication skills",
-                    ),
+                listOf(
+                    "A passion for problem solving",
+                    "Good communication skills",
+                ),
                 hard =
-                    listOf(
-                        "Kotlin",
-                    ),
+                listOf(
+                    "Kotlin",
+                ),
             ),
         )
         assertThat(person.language).isEqualTo(Language(mapOf("Korean" to 5, "English" to 3)))

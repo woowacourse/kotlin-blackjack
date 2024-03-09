@@ -9,14 +9,13 @@ class PlayerTest {
     fun `플레이어 카드의 총합을 계산한다`() {
         val player =
             Player(
-                gameInfo =
-                    GameInfo(
-                        "해음",
-                        setOf(
-                            Card(Shape.CLOVER, CardValue.SIX),
-                            Card(Shape.HEART, CardValue.K),
-                        ),
+                gameInfo = GameInfo(
+                    "해음",
+                    setOf(
+                        Card(Shape.CLOVER, CardValue.SIX),
+                        Card(Shape.HEART, CardValue.K),
                     ),
+                ),
             ) { "y" }
 
         assertThat(player.gameInfo.sumCardValues()).isEqualTo(16)
@@ -27,13 +26,13 @@ class PlayerTest {
         val player =
             Player(
                 gameInfo =
-                    GameInfo(
-                        "해음",
-                        setOf(
-                            Card(Shape.CLOVER, CardValue.SIX),
-                            Card(Shape.HEART, CardValue.K),
-                        ),
+                GameInfo(
+                    "해음",
+                    setOf(
+                        Card(Shape.CLOVER, CardValue.SIX),
+                        Card(Shape.HEART, CardValue.K),
                     ),
+                ),
             ) { "y" }
 
         player.drawCard {

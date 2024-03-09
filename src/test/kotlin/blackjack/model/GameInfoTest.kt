@@ -6,11 +6,10 @@ import org.junit.jupiter.api.Test
 fun getGameInfo(): GameInfo =
     GameInfo(
         name = "케이엠",
-        cards =
-            setOf(
-                Card(Shape.CLOVER, CardValue.SIX),
-                Card(Shape.HEART, CardValue.K),
-            ),
+        cards = setOf(
+            Card(Shape.CLOVER, CardValue.SIX),
+            Card(Shape.HEART, CardValue.K),
+        ),
     )
 
 class GameInfoTest {

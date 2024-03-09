@@ -74,7 +74,8 @@ object BlackJackController {
         drawUntilSatisfaction(CardDeck::pick, printCards)
     }
 
-    private fun askPlayerHit(playerName: String): String = InputView.readContinueInput(playerName) ?: askPlayerHit(playerName)
+    private fun askPlayerHit(playerName: String): String =
+        InputView.readContinueInput(playerName) ?: askPlayerHit(playerName)
 
     private fun displayInitializedCards(
         dealerInfo: GameInfo,

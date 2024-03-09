@@ -40,14 +40,13 @@ class DealerTest {
         val dealer =
             Dealer(
                 players = getPlayers(2),
-                gameInfo =
-                    GameInfo(
-                        "딜러",
-                        setOf(
-                            Card(Shape.CLOVER, CardValue.SIX),
-                            Card(Shape.HEART, CardValue.K),
-                        ),
+                gameInfo = GameInfo(
+                    "딜러",
+                    setOf(
+                        Card(Shape.CLOVER, CardValue.SIX),
+                        Card(Shape.HEART, CardValue.K),
                     ),
+                ),
             )
 
         assertThat(dealer.gameInfo.sumCardValues()).isEqualTo(16)
@@ -59,13 +58,13 @@ class DealerTest {
             Dealer(
                 players = getPlayers(2),
                 gameInfo =
-                    GameInfo(
-                        "딜러",
-                        setOf(
-                            Card(Shape.CLOVER, CardValue.SIX),
-                            Card(Shape.HEART, CardValue.K),
-                        ),
+                GameInfo(
+                    "딜러",
+                    setOf(
+                        Card(Shape.CLOVER, CardValue.SIX),
+                        Card(Shape.HEART, CardValue.K),
                     ),
+                ),
             )
 
         val pickingState =
@@ -88,13 +87,13 @@ class DealerTest {
             Dealer(
                 players = getPlayers(2),
                 gameInfo =
-                    GameInfo(
-                        "딜러",
-                        setOf(
-                            Card(Shape.CLOVER, CardValue.SEVEN),
-                            Card(Shape.HEART, CardValue.K),
-                        ),
+                GameInfo(
+                    "딜러",
+                    setOf(
+                        Card(Shape.CLOVER, CardValue.SEVEN),
+                        Card(Shape.HEART, CardValue.K),
                     ),
+                ),
             )
 
         val pickingState =
@@ -105,11 +104,14 @@ class DealerTest {
         val actualSize = dealer.gameInfo.cards.size
         val expectedSize = 2
 
-        assertAll({
-            assertThat(actualSize).isEqualTo(expectedSize)
-        }, {
-            assertThat(pickingState).isEqualTo(PickingState.STAND)
-        })
+        assertAll(
+            {
+                assertThat(actualSize).isEqualTo(expectedSize)
+            },
+            {
+                assertThat(pickingState).isEqualTo(PickingState.STAND)
+            },
+        )
     }
 
     @Test
@@ -118,13 +120,13 @@ class DealerTest {
             Dealer(
                 players = getPlayers(2),
                 gameInfo =
-                    GameInfo(
-                        "딜러",
-                        setOf(
-                            Card(Shape.CLOVER, CardValue.SIX),
-                            Card(Shape.HEART, CardValue.K),
-                        ),
+                GameInfo(
+                    "딜러",
+                    setOf(
+                        Card(Shape.CLOVER, CardValue.SIX),
+                        Card(Shape.HEART, CardValue.K),
                     ),
+                ),
             )
 
         dealer.drawCard {
@@ -143,13 +145,13 @@ class DealerTest {
             Dealer(
                 players = getPlayers(2),
                 gameInfo =
-                    GameInfo(
-                        "딜러",
-                        setOf(
-                            Card(Shape.CLOVER, CardValue.SEVEN),
-                            Card(Shape.HEART, CardValue.K),
-                        ),
+                GameInfo(
+                    "딜러",
+                    setOf(
+                        Card(Shape.CLOVER, CardValue.SEVEN),
+                        Card(Shape.HEART, CardValue.K),
                     ),
+                ),
             )
 
         dealer.drawCard {
