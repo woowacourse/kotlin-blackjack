@@ -19,7 +19,7 @@ class PlayerTest {
                     ),
             ) { "y" }
 
-        assertThat(player.gameInfo.total).isEqualTo(16)
+        assertThat(player.gameInfo.sumCardValues()).isEqualTo(16)
     }
 
     @Test

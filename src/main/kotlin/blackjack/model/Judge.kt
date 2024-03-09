@@ -9,10 +9,10 @@ class Judge(
         var draw = 0
         var lose = 0
 
-        val dealerTotal = dealerInfo.calculateTotal()
+        val dealerTotal = dealerInfo.sumCardValues()
 
         playersInfo.forEach { playerStat ->
-            val playerTotal = playerStat.calculateTotal()
+            val playerTotal = playerStat.sumCardValues()
 
             when {
                 dealerTotal > CRITERIA_NUMBER && playerTotal > CRITERIA_NUMBER -> draw++
@@ -28,10 +28,10 @@ class Judge(
     }
 
     fun getPlayerResults(): List<String> {
-        val dealerTotal = dealerInfo.calculateTotal()
+        val dealerTotal = dealerInfo.sumCardValues()
 
         return playersInfo.map { playerStat ->
-            val playerTotal = playerStat.calculateTotal()
+            val playerTotal = playerStat.sumCardValues()
 
             when {
                 dealerTotal > CRITERIA_NUMBER && playerTotal > CRITERIA_NUMBER -> RESULT_DRAW

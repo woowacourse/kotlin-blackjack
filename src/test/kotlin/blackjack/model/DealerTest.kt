@@ -50,7 +50,7 @@ class DealerTest {
                     ),
             )
 
-        assertThat(dealer.gameInfo.total).isEqualTo(16)
+        assertThat(dealer.gameInfo.sumCardValues()).isEqualTo(16)
     }
 
     @Test
@@ -128,7 +128,7 @@ class DealerTest {
             )
 
         dealer.drawCard {
-            Card.of(Shape.CLOVER, CardValue.ONE, 16)
+            Card.of(Shape.CLOVER, CardValue.ACE, 16)
         }
 
         val actualTotal = dealer.gameInfo.cards.sumOf { it.value }
@@ -153,7 +153,7 @@ class DealerTest {
             )
 
         dealer.drawCard {
-            Card.of(Shape.CLOVER, CardValue.ONE, 17)
+            Card.of(Shape.CLOVER, CardValue.ACE, 17)
         }
 
         val actualTotal = dealer.gameInfo.cards.sumOf { it.value }
@@ -171,7 +171,7 @@ class DealerTest {
                 gameInfo = GameInfo("딜러", providedCard.keys),
             )
         dealer.drawCard {
-            Card.of(Shape.CLOVER, CardValue.ONE, dealer.gameInfo.cards.sumOf { it.value })
+            Card.of(Shape.CLOVER, CardValue.ACE, dealer.gameInfo.cards.sumOf { it.value })
         }
 
         val actualTotal = dealer.gameInfo.cards.sumOf { it.value }
@@ -185,7 +185,7 @@ class DealerTest {
         fun provideCards(): Stream<Map<Card, Int>> {
             return Stream.of(
                 mapOf(Card.of(Shape.HEART, CardValue.K, 0) to 21),
-                mapOf(Card.of(Shape.HEART, CardValue.ONE, 0) to 12),
+                mapOf(Card.of(Shape.HEART, CardValue.ACE, 0) to 12),
             )
         }
     }
