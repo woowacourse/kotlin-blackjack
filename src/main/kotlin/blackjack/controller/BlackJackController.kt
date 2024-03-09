@@ -2,6 +2,7 @@ package blackjack.controller
 
 import blackjack.model.CardDeck
 import blackjack.model.DrawDecision
+import blackjack.model.GameState
 import blackjack.model.Participant.Dealer
 import blackjack.model.Participant.Player
 import blackjack.model.ParticipantName
@@ -13,6 +14,7 @@ object BlackJackController {
     fun run() {
         val participants = registerParticipants()
         blackJackGameStart(participants)
+        displayGameResult(participants)
     }
 
     private fun registerParticipants(): Participants {
@@ -41,18 +43,29 @@ object BlackJackController {
         val cardDeck = CardDeck()
         participants.dealer.initialCardDealing(participants, cardDeck)
         OutputView.outputCardDistribution(participants)
-        decideDrawOrNot(participants, cardDeck)
+        decidePlayerDecisions(participants, cardDeck)
     }
 
-    private fun decideDrawOrNot(
+    private fun decidePlayerDecisions(
         participants: Participants,
         cardDeck: CardDeck,
     ) {
         participants.players.forEach { player ->
-            while (readDrawDecision(player.name)) {
+            decidePlayerDecision(player, cardDeck)
+        }
+    }
+
+    private fun decidePlayerDecision(
+        player: Player,
+        cardDeck: CardDeck,
+    ) {
+        while (player.gameInformation.state is GameState.Running) {
+            val wantDraw = readDrawDecision(player.name)
+            if (wantDraw) {
                 player.gameInformation.drawCard(cardDeck.pickCard())
                 OutputView.outputParticipantCard(player)
             }
+            if (!wantDraw) player.gameInformation.changeState(GameState.Finished.STAY)
         }
     }
 
@@ -63,5 +76,9 @@ object BlackJackController {
             print(error.message)
             return readDrawDecision(name)
         }.getOrThrow()
+    }
+
+    private fun displayGameResult(participants: Participants) {
+        OutputView.outputGameScores(participants)
     }
 }

@@ -6,7 +6,7 @@ class DrawDecision(private val decision: String) {
     }
 
     fun judgeDecision(): Boolean {
-        return if (decision == YES) true else false
+        return decision == YES
     }
 
     companion object {

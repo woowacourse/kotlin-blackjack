@@ -12,6 +12,7 @@ object OutputView {
     private const val MESSAGE_CARD_DISTRIBUTION = "\n%s와 %s에게 2장의 카드를 나누었습니다."
     private const val MESSAGE_DEALER_CARD_INFORMATION = "%s: %s"
     private const val MESSAGE_PARTICIPANT_CARD_INFORMATION = "%s 카드: %s"
+    private const val MESSAGE_PARTICIPANT_GAME_SCORE = "%s 카드: %s - 결과: %d"
     private const val COMMA = ", "
 
     fun outputCardDistribution(participants: Participants) {
@@ -33,14 +34,38 @@ object OutputView {
         )
     }
 
+    fun outputGameScores(participants: Participants) {
+        outputGameScore(participants.dealer)
+        participants.players.forEach { player ->
+            outputGameScore(player)
+        }
+    }
+
     private fun outputInitialDealerCard(dealer: Dealer) {
-        println(MESSAGE_DEALER_CARD_INFORMATION.format(dealer.name, dealer.gameInformation.cards.elementAt(0)))
+        println(
+            MESSAGE_DEALER_CARD_INFORMATION.format(
+                dealer.name,
+                dealer.gameInformation.cards.elementAt(0).convertToString(),
+            ),
+        )
     }
 
     private fun outputPlayersCards(players: List<Player>) {
         players.forEach { player ->
             outputParticipantCard(player)
         }
+    }
+
+    private fun outputGameScore(participant: Participant) {
+        println(
+            MESSAGE_PARTICIPANT_GAME_SCORE.format(
+                participant.name,
+                participant.gameInformation.cards.joinToString(separator = ", ") { card ->
+                    card.convertToString()
+                },
+                participant.gameInformation.score,
+            ),
+        )
     }
 
     private fun Card.convertToString(): String {

@@ -1,7 +1,8 @@
 package blackjack.model
 
 sealed class Participant(val name: ParticipantName, val gameInformation: GameInformation) {
-    class Player(name: ParticipantName, gameInformation: GameInformation = GameInformation()) : Participant(name, gameInformation)
+    class Player(name: ParticipantName, gameInformation: GameInformation = GameInformation()) :
+        Participant(name, gameInformation)
 
     class Dealer(name: ParticipantName = DEFAULT_DEALER_NAME, gameInformation: GameInformation = GameInformation()) :
         Participant(name, gameInformation) {
@@ -9,27 +10,35 @@ sealed class Participant(val name: ParticipantName, val gameInformation: GameInf
             participants: Participants,
             cardDeck: CardDeck,
         ) {
-            val initialParticipants = makeInitialParticipants(participants)
             repeat(INITIAL_DEALING_COUNT) {
-                initialParticipants.forEach { participant ->
-                    dealCard(participant, cardDeck.pickCard())
-                }
+                dealing(participants, cardDeck)
             }
+            changeStateToHit(participants)
         }
 
-        private fun makeInitialParticipants(participants: Participants): MutableList<Participant> {
-            val initialParticipants = mutableListOf<Participant>()
-            initialParticipants.add(participants.dealer)
-            initialParticipants.addAll(participants.players)
-            return initialParticipants
+        private fun dealing(
+            participants: Participants,
+            cardDeck: CardDeck,
+        ) {
+            dealCard(participants.dealer, cardDeck.pickCard())
+            participants.players.forEach { player ->
+                dealCard(player, cardDeck.pickCard())
+            }
         }
 
         private fun dealCard(
             participant: Participant,
             card: Card,
         ) {
-            if (participant.gameInformation.state is GameState.Running.Hit) {
+            if (participant.gameInformation.state is GameState.Running) {
                 participant.gameInformation.drawCard(card)
+            }
+        }
+
+        private fun changeStateToHit(participants: Participants) {
+            participants.dealer.gameInformation.changeState(GameState.Running.HIT)
+            participants.players.forEach { player ->
+                player.gameInformation.changeState(GameState.Running.HIT)
             }
         }
 

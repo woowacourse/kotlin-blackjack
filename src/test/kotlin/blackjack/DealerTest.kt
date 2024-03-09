@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 
 class DealerTest {
     @Test
-    fun `초기 카드 세팅`() {
+    fun `초기 카드 2장 딜링 확인`() {
         val dealer = Dealer()
         val players =
             listOf(

@@ -1,15 +1,14 @@
 package blackjack.model
 
 sealed interface GameState {
-    sealed interface Running : GameState {
-        data object Hit : Running
+    enum class Running : GameState {
+        READY,
+        HIT,
     }
 
-    sealed interface Finished : GameState {
-        data object Stay : Finished
-
-        data object Bust : Finished
-
-        data object BlackJack : Finished
+    enum class Finished : GameState {
+        STAY,
+        BUST,
+        BLACKJACK,
     }
 }
