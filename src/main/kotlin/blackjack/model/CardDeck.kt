@@ -1,4 +1,4 @@
-package blackjack.model.card
+package blackjack.model
 
 class CardDeck(cards: List<Card>) {
     private val _cards: MutableSet<Card> = cards.toMutableSet()

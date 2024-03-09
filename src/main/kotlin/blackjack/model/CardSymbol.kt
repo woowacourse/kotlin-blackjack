@@ -1,4 +1,4 @@
-package blackjack.model.card
+package blackjack.model
 
 enum class CardSymbol {
     DIAMOND,
