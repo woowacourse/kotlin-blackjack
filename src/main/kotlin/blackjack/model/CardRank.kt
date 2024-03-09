@@ -1,7 +1,7 @@
 package blackjack.model
 
-enum class CardValue(
-    val title: String,
+enum class CardRank(
+    val symbol: String,
     val value: Int,
 ) {
     ACE("A", 1),

@@ -13,9 +13,9 @@ class GameInfo(
     }
 
     fun sumCardValues(): Int {
-        var total = cards.sumOf { it.cardValue.value }
+        var total = cards.sumOf { it.cardRank.value }
 
-        if (total <= 11 && cards.any { it.cardValue == CardValue.ACE }) {
+        if (total <= 11 && cards.any { it.cardRank == CardRank.ACE }) {
             total += 10
         }
 

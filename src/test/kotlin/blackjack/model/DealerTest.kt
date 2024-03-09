@@ -43,8 +43,8 @@ class DealerTest {
                 gameInfo = GameInfo(
                     "딜러",
                     setOf(
-                        Card(Shape.CLOVER, CardValue.SIX),
-                        Card(Shape.HEART, CardValue.K),
+                        Card(Shape.CLOVER, CardRank.SIX),
+                        Card(Shape.HEART, CardRank.K),
                     ),
                 ),
             )
@@ -61,15 +61,15 @@ class DealerTest {
                 GameInfo(
                     "딜러",
                     setOf(
-                        Card(Shape.CLOVER, CardValue.SIX),
-                        Card(Shape.HEART, CardValue.K),
+                        Card(Shape.CLOVER, CardRank.SIX),
+                        Card(Shape.HEART, CardRank.K),
                     ),
                 ),
             )
 
         val pickingState =
             dealer.drawCard {
-                Card(Shape.CLOVER, CardValue.TWO)
+                Card(Shape.CLOVER, CardRank.TWO)
             }
 
         val actualSize = dealer.gameInfo.cards.size
@@ -90,15 +90,15 @@ class DealerTest {
                 GameInfo(
                     "딜러",
                     setOf(
-                        Card(Shape.CLOVER, CardValue.SEVEN),
-                        Card(Shape.HEART, CardValue.K),
+                        Card(Shape.CLOVER, CardRank.SEVEN),
+                        Card(Shape.HEART, CardRank.K),
                     ),
                 ),
             )
 
         val pickingState =
             dealer.drawCard {
-                Card(Shape.CLOVER, CardValue.TWO)
+                Card(Shape.CLOVER, CardRank.TWO)
             }
 
         val actualSize = dealer.gameInfo.cards.size
@@ -123,14 +123,14 @@ class DealerTest {
                 GameInfo(
                     "딜러",
                     setOf(
-                        Card(Shape.CLOVER, CardValue.SIX),
-                        Card(Shape.HEART, CardValue.K),
+                        Card(Shape.CLOVER, CardRank.SIX),
+                        Card(Shape.HEART, CardRank.K),
                     ),
                 ),
             )
 
         dealer.drawCard {
-            Card(Shape.CLOVER, CardValue.ACE)
+            Card(Shape.CLOVER, CardRank.ACE)
         }
 
         val actualTotal = dealer.gameInfo.sumCardValues()
@@ -148,14 +148,14 @@ class DealerTest {
                 GameInfo(
                     "딜러",
                     setOf(
-                        Card(Shape.CLOVER, CardValue.SEVEN),
-                        Card(Shape.HEART, CardValue.K),
+                        Card(Shape.CLOVER, CardRank.SEVEN),
+                        Card(Shape.HEART, CardRank.K),
                     ),
                 ),
             )
 
         dealer.drawCard {
-            Card(Shape.CLOVER, CardValue.ACE)
+            Card(Shape.CLOVER, CardRank.ACE)
         }
 
         val actualTotal = dealer.gameInfo.sumCardValues()
@@ -173,7 +173,7 @@ class DealerTest {
                 gameInfo = GameInfo("딜러", providedCard.keys),
             )
         dealer.drawCard {
-            Card(Shape.CLOVER, CardValue.ACE)
+            Card(Shape.CLOVER, CardRank.ACE)
         }
 
         val actualTotal = dealer.gameInfo.sumCardValues()
@@ -186,8 +186,8 @@ class DealerTest {
         @JvmStatic
         fun provideCards(): Stream<Map<Card, Int>> {
             return Stream.of(
-                mapOf(Card(Shape.HEART, CardValue.K) to 21),
-                mapOf(Card(Shape.HEART, CardValue.ACE) to 12),
+                mapOf(Card(Shape.HEART, CardRank.K) to 21),
+                mapOf(Card(Shape.HEART, CardRank.ACE) to 12),
             )
         }
     }

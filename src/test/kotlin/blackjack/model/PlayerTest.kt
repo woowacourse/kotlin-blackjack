@@ -12,8 +12,8 @@ class PlayerTest {
                 gameInfo = GameInfo(
                     "해음",
                     setOf(
-                        Card(Shape.CLOVER, CardValue.SIX),
-                        Card(Shape.HEART, CardValue.K),
+                        Card(Shape.CLOVER, CardRank.SIX),
+                        Card(Shape.HEART, CardRank.K),
                     ),
                 ),
             ) { "y" }
@@ -29,25 +29,25 @@ class PlayerTest {
                 GameInfo(
                     "해음",
                     setOf(
-                        Card(Shape.CLOVER, CardValue.SIX),
-                        Card(Shape.HEART, CardValue.K),
+                        Card(Shape.CLOVER, CardRank.SIX),
+                        Card(Shape.HEART, CardRank.K),
                     ),
                 ),
             ) { "y" }
 
         player.drawCard {
-            Card(Shape.DIAMOND, CardValue.SEVEN)
+            Card(Shape.DIAMOND, CardRank.SEVEN)
         }
         assertThat(player.gameInfo.cards).hasSize(3)
     }
 
     @Test
     fun `플레이어가 카드를 더 받지 않겠다고 응답하면, 현재 보유 카드에 변경이 없도록 한다`() {
-        val cards = setOf(Card(Shape.HEART, CardValue.SIX))
+        val cards = setOf(Card(Shape.HEART, CardRank.SIX))
         val player = Player(GameInfo("haeum", cards)) { "n" }
         val actualState =
             player.drawCard {
-                Card(Shape.DIAMOND, CardValue.SEVEN)
+                Card(Shape.DIAMOND, CardRank.SEVEN)
             }
         assertAll(
             { assertThat(player.gameInfo.cards).hasSize(1) },
@@ -59,13 +59,13 @@ class PlayerTest {
     fun `플레이어가 카드를 뽑았을 때, 최대 가능 총합을 초과하면, 입력 종료를 의미하는 클래스를 반환한다`() {
         val cards =
             setOf(
-                Card(Shape.HEART, CardValue.TEN),
-                Card(Shape.DIAMOND, CardValue.TEN),
+                Card(Shape.HEART, CardRank.TEN),
+                Card(Shape.DIAMOND, CardRank.TEN),
             )
         val player = Player(GameInfo("haeum", cards)) { "y" }
         val actualState =
             player.drawCard {
-                Card(Shape.DIAMOND, CardValue.TWO)
+                Card(Shape.DIAMOND, CardRank.TWO)
             }
         assertAll(
             { assertThat(player.gameInfo.cards).hasSize(3) },

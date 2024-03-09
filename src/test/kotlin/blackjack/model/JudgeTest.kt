@@ -7,9 +7,9 @@ val burstDealerInfo: GameInfo =
     GameInfo(
         "딜러",
         setOf(
-            Card(Shape.CLOVER, CardValue.SIX),
-            Card(Shape.HEART, CardValue.K),
-            Card(Shape.DIAMOND, CardValue.K),
+            Card(Shape.CLOVER, CardRank.SIX),
+            Card(Shape.HEART, CardRank.K),
+            Card(Shape.DIAMOND, CardRank.K),
         ),
     )
 
@@ -17,8 +17,8 @@ val aliveDealerInfo: GameInfo =
     GameInfo(
         "딜러",
         setOf(
-            Card(Shape.CLOVER, CardValue.SIX),
-            Card(Shape.HEART, CardValue.K),
+            Card(Shape.CLOVER, CardRank.SIX),
+            Card(Shape.HEART, CardRank.K),
         ),
     )
 
@@ -27,22 +27,22 @@ val playersInfo: List<GameInfo> =
         GameInfo(
             "케이엠",
             setOf(
-                Card(Shape.DIAMOND, CardValue.SEVEN),
-                Card(Shape.DIAMOND, CardValue.K),
+                Card(Shape.DIAMOND, CardRank.SEVEN),
+                Card(Shape.DIAMOND, CardRank.K),
             ),
         ),
         GameInfo(
             "해음",
             setOf(
-                Card(Shape.DIAMOND, CardValue.SIX),
-                Card(Shape.SPADE, CardValue.K),
+                Card(Shape.DIAMOND, CardRank.SIX),
+                Card(Shape.SPADE, CardRank.K),
             ),
         ),
         GameInfo(
             "차람",
             setOf(
-                Card(Shape.DIAMOND, CardValue.FIVE),
-                Card(Shape.CLOVER, CardValue.K),
+                Card(Shape.DIAMOND, CardRank.FIVE),
+                Card(Shape.CLOVER, CardRank.K),
             ),
         ),
     )

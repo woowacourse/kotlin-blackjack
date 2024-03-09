@@ -15,7 +15,7 @@ object CardDeck {
     private fun shuffledCards(): LinkedList<Card> {
         return LinkedList(
             Shape.entries.flatMap { shape ->
-                CardValue.entries.map { cardValue ->
+                CardRank.entries.map { cardValue ->
                     Card(shape, cardValue)
                 }
             }.shuffled(),
