@@ -11,7 +11,6 @@ class Player(val name: String, handCards: HandCards) {
     }
 
     companion object {
-        @JvmStatic
         fun createPlayers(
             names: List<String>,
             hands: List<HandCards>,
