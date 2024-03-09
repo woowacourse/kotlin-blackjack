@@ -27,7 +27,7 @@ class BlackJackController(
         dealer: Dealer,
     ) {
         hitPlayers(players, deck)
-        hitDealer(dealer, deck)
+        dealer.hitUntilBust(deck)
         outputView.showDealerScore(dealer.handCards.cards, dealer.handCards.sumOptimized())
     }
 
@@ -42,16 +42,6 @@ class BlackJackController(
         }
         val scoreBoard = GameResult(dealer, players).createScoreBoard()
         outputView.showScoreBoard(scoreBoard)
-    }
-
-    private fun hitDealer(
-        dealer: Dealer,
-        deck: Deck,
-    ) {
-        while (dealer.canHit()) {
-            outputView.showDealerHitCard()
-            dealer.hit(deck.pull())
-        }
     }
 
     private fun hitPlayers(

@@ -10,8 +10,12 @@ class Dealer(handCards: HandCards) {
     }
 
     fun hit(card: Card) {
-        if (canHit()) {
-            _handCards.add(card)
+        _handCards.add(card)
+    }
+
+    fun hitUntilBust(deck: Deck) {
+        while (canHit()) {
+            hit(deck.pull())
         }
     }
 
