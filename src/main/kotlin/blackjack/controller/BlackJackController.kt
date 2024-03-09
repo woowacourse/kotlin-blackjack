@@ -12,7 +12,7 @@ import blackjack.view.OutputView
 object BlackJackController {
     fun startGame() {
         val playerNames = getPlayerNames()
-        val dealer = Dealer(playerNames)
+        val dealer = Dealer()
         val players = Players.of(playerNames, ::askPlayerHit)
         initializeParticipantsCards(dealer, players)
         playRound(dealer, players)
