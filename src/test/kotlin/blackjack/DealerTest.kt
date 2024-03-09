@@ -29,7 +29,7 @@ class DealerTest {
         val cards = mutableListOf(Card(Denomination.ACE, Suit.HEARTS), Card(Denomination.FOUR, Suit.SPADES))
         val hand = Hand(cards)
         val dealer = Dealer(hand)
-        dealer.hand.draw(Deck.dealCard())
-        assertThat(hand.cards.size).isEqualTo(3)
+
+        assertThat(dealer.judgeDraw()).isTrue
     }
 }
