@@ -4,8 +4,6 @@ package blackjack.model
 value class Deck(
     val cards: List<Card>,
 ) : List<Card> by cards {
-    constructor(vararg cards: Card) : this(cards.toList())
-
     fun pull(): Card {
         return cards.shuffled().first()
     }
