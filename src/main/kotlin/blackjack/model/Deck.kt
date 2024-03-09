@@ -1,5 +1,8 @@
 package blackjack.model
 
+import blackjack.model.ParticipantsHand.Companion.DEALER_COUNT
+import blackjack.model.ParticipantsHand.Companion.DEFAULT_CARDS_COUNT
+
 @JvmInline
 value class Deck(val cards: List<Card>) : List<Card> by cards {
     fun pull(): Card {
@@ -11,11 +14,6 @@ value class Deck(val cards: List<Card>) : List<Card> by cards {
     }
 
     companion object {
-        private val DECK: Deck = create()
-        private const val DEFAULT_DECK_SIZE = 1
-        private const val DEFAULT_CARDS_COUNT = 2
-        private const val DEALER_COUNT = 1
-
         fun create(size: Int = DEFAULT_DECK_SIZE): Deck {
             require(size >= DEFAULT_DECK_SIZE)
             if (size == DEFAULT_DECK_SIZE) return DECK
@@ -33,5 +31,8 @@ value class Deck(val cards: List<Card>) : List<Card> by cards {
                 }.shuffled()
             return Deck(deck)
         }
+
+        private val DECK: Deck = create()
+        private const val DEFAULT_DECK_SIZE = 1
     }
 }
