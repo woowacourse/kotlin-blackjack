@@ -4,20 +4,31 @@ class Card(val denomination: Denomination, val suit: Suit) {
     override fun toString(): String {
         val number =
             when (denomination) {
-                Denomination.JACK -> "J"
-                Denomination.QUEEN -> "Q"
-                Denomination.KING -> "K"
-                Denomination.ACE -> "A"
+                Denomination.JACK -> JACK
+                Denomination.QUEEN -> QUEEN
+                Denomination.KING -> KING
+                Denomination.ACE -> ACE
                 else -> denomination.score
             }
 
         val shape =
             when (suit) {
-                Suit.CLUBS -> "클로버"
-                Suit.DIAMONDS -> "다이아몬드"
-                Suit.HEARTS -> "하트"
-                Suit.SPADES -> "스페이드"
+                Suit.CLUBS -> CLOVER
+                Suit.DIAMONDS -> DIAMOND
+                Suit.HEARTS -> HEART
+                Suit.SPADES -> SPADE
             }
         return "$number$shape"
+    }
+
+    companion object {
+        const val CLOVER = "클로버"
+        const val DIAMOND = "다이아몬드"
+        const val HEART = "하트"
+        const val SPADE = "스페이드"
+        const val JACK = "J"
+        const val QUEEN = "Q"
+        const val KING = "K"
+        const val ACE = "A"
     }
 }
