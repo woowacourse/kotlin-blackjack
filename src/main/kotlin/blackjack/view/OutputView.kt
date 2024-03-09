@@ -1,5 +1,8 @@
 package blackjack.view
 
+import blackjack.model.Card
+import blackjack.model.CardNumber
+import blackjack.model.CardSymbol
 import blackjack.model.Participant.Dealer
 import blackjack.model.Participant.Player
 import blackjack.model.Participants
@@ -27,9 +30,34 @@ object OutputView {
             println(
                 MESSAGE_PLAYER_CARD_INFORMATION.format(
                     player.name,
-                    player.gameInformation.cards.joinToString(),
+                    player.gameInformation.cards.joinToString(separator = ", ") { card ->
+                        card.convertToString()
+                    },
                 ),
             )
+        }
+    }
+
+    private fun Card.convertToString(): String {
+        return number.convertCardNumber() + symbol.convertToString()
+    }
+
+    private fun CardNumber.convertCardNumber(): String {
+        return when (this) {
+            CardNumber.JACK -> "J"
+            CardNumber.QUEEN -> "Q"
+            CardNumber.KING -> "K"
+            CardNumber.ACE -> "A"
+            else -> value.toString()
+        }
+    }
+
+    private fun CardSymbol.convertToString(): String {
+        return when (this) {
+            CardSymbol.DIAMOND -> "다이아몬드"
+            CardSymbol.HEART -> "하트"
+            CardSymbol.SPADE -> "스페이드"
+            CardSymbol.CLOVER -> "클로버"
         }
     }
 }

@@ -1,9 +1,9 @@
 package blackjack.model
 
 sealed class Participant(val name: ParticipantName, val gameInformation: GameInformation) {
-    class Player(name: ParticipantName, gameInformation: GameInformation) : Participant(name, gameInformation)
+    class Player(name: ParticipantName, gameInformation: GameInformation = GameInformation()) : Participant(name, gameInformation)
 
-    class Dealer(name: ParticipantName = DEFAULT_DEALER_NAME, gameInformation: GameInformation) :
+    class Dealer(name: ParticipantName = DEFAULT_DEALER_NAME, gameInformation: GameInformation = GameInformation()) :
         Participant(name, gameInformation) {
         fun initialDealing(
             participants: Participants,
