@@ -20,7 +20,6 @@ value class Deck(
         private const val DEFAULT_CARDS_COUNT = 2
         private const val DEALER_COUNT = 1
 
-        @JvmStatic
         fun create(size: Int = DEFAULT_DECK_SIZE): Deck {
             require(size >= DEFAULT_DECK_SIZE)
             if (size == DEFAULT_DECK_SIZE) return DECK
@@ -29,7 +28,6 @@ value class Deck(
             )
         }
 
-        @JvmStatic
         private fun create(): Deck {
             val suits = Suit.entries
             val ranks = Rank.entries
