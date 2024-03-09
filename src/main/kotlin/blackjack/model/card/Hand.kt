@@ -1,4 +1,7 @@
-package blackjack.model
+package blackjack.model.card
+
+import blackjack.model.DefaultPointCalculator
+import blackjack.model.PointCalculator
 
 class Hand(
     val cards: List<Card>,

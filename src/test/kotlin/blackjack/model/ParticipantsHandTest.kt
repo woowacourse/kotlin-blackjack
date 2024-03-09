@@ -1,6 +1,8 @@
 package blackjack.model
 
 import blackjack.fixture.createCard
+import blackjack.model.card.Hand
+import blackjack.model.card.ParticipantHands
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

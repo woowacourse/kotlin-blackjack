@@ -1,4 +1,7 @@
-package blackjack.model
+package blackjack.model.participant
+
+import blackjack.model.card.Card
+import blackjack.model.card.Hand
 
 class Player(val name: String, hand: Hand) {
     private val _handCards: MutableList<Card> = hand.cards.toMutableList()

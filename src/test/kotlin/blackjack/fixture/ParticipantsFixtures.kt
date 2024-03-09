@@ -1,9 +1,9 @@
 package blackjack.fixture
 
-import blackjack.model.Card
-import blackjack.model.Dealer
-import blackjack.model.Hand
-import blackjack.model.Player
+import blackjack.model.card.Card
+import blackjack.model.card.Hand
+import blackjack.model.participant.Dealer
+import blackjack.model.participant.Player
 
 fun createPlayer(
     name: String = "송둥",

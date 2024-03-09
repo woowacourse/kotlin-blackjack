@@ -1,10 +1,10 @@
 package blackjack.view
 
-import blackjack.model.Card
 import blackjack.model.DealerResult
 import blackjack.model.GameResult
-import blackjack.model.Player
 import blackjack.model.ScoreBoard
+import blackjack.model.card.Card
+import blackjack.model.participant.Player
 
 class OutputView {
     fun showDivided(

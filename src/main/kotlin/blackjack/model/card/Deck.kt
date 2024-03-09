@@ -1,9 +1,11 @@
-package blackjack.model
+package blackjack.model.card
+
+import blackjack.model.Rank
+import blackjack.model.Suit
 
 data class Deck(
     val cards: List<Card>,
 ) : List<Card> by cards {
-
     fun pull(): Card {
         return cards.shuffled().first()
     }

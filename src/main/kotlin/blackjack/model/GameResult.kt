@@ -1,5 +1,8 @@
 package blackjack.model
 
+import blackjack.model.participant.Dealer
+import blackjack.model.participant.Player
+
 class GameResult(
     private val dealer: Dealer,
     private val players: List<Player>,

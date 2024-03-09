@@ -2,7 +2,7 @@
 
 ## Project 구조
 - [x] : ktlint hook 설정
-- [ ] : package 분리
+- [x] : package 분리
 ## Domain
 
 - [ ] : 딜러와 플레이어에서 발생하는 중복 코드를 제거(Participant super class)

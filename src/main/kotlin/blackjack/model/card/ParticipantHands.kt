@@ -1,4 +1,4 @@
-package blackjack.model
+package blackjack.model.card
 
 data class ParticipantHands(
     val playerHandCards: List<Hand>,
