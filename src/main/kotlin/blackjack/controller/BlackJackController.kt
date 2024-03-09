@@ -4,7 +4,7 @@ import blackjack.model.Dealer
 import blackjack.model.Deck
 import blackjack.model.GameResult
 import blackjack.model.Participant
-import blackjack.model.ParticipantsHandCards
+import blackjack.model.ParticipantsHand
 import blackjack.model.Player
 import blackjack.view.InputView
 import blackjack.view.OutputView
@@ -68,7 +68,7 @@ class BlackJackController(
         playersNames: List<String>,
     ): Participant {
         val (playerHand, dealerHand) =
-            ParticipantsHandCards.from(deck.spread(playersNames.size))
+            ParticipantsHand.from(deck.spread(playersNames.size))
         val dealer = Dealer(dealerHand)
         val players: List<Player> = Player.createPlayers(playersNames, playerHand)
         outputView.showDivided(dealerHand.first(), players)
