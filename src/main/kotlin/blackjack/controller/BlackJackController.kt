@@ -5,7 +5,7 @@ import blackjack.model.Dealer
 import blackjack.model.GameInfo
 import blackjack.model.Judge
 import blackjack.model.Participant
-import blackjack.model.Player
+import blackjack.model.Players
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -13,12 +13,9 @@ object BlackJackController {
     fun startGame() {
         val playerNames = getPlayerNames()
         val dealer = Dealer(playerNames)
-        val players =
-            List(playerNames.size) {
-                Player(gameInfo = GameInfo(playerNames[it]), onInputDecision = { askPlayerHit(playerNames[it]) })
-            }
+        val players = Players.of(playerNames, ::askPlayerHit)
         initializeParticipantsCards(dealer, players)
-        playRound(players, dealer)
+        playRound(dealer, players)
         displayResult(dealer, players)
     }
 
@@ -33,23 +30,18 @@ object BlackJackController {
 
     private fun initializeParticipantsCards(
         dealer: Dealer,
-        players: List<Player>,
+        players: Players,
     ) {
-        dealer.drawCard { CardDeck.pick() }
-
-        players.forEach { player ->
-            player.initializeCards { CardDeck.pick() }
-        }
-
-        displayInitializedCards(dealer.gameInfo, players.map { it.gameInfo })
+        dealer.drawCard(CardDeck::pick)
+        displayInitializedCards(dealer.gameInfo, players.value.map { it.gameInfo })
     }
 
     private fun playRound(
-        players: List<Player>,
         dealer: Dealer,
+        players: Players,
     ) {
         with(OutputView) {
-            players.forEach { player ->
+            players.value.forEach { player ->
                 player.drawForSingleParticipant(::printSinglePlayerCards)
             }
             printNewLine()
@@ -59,14 +51,14 @@ object BlackJackController {
 
     private fun displayResult(
         dealer: Dealer,
-        players: List<Player>,
+        players: Players,
     ) {
         val dealerInfo = dealer.gameInfo
-        val playersInfo = players.map { player -> player.gameInfo }
+        val playersInfo = players.value.map { player -> player.gameInfo }
         val judge = Judge(dealerInfo, playersInfo)
         with(OutputView) {
-            printResult(judge)
             printFinalCards(dealerInfo, playersInfo)
+            printResult(judge)
         }
     }
 
