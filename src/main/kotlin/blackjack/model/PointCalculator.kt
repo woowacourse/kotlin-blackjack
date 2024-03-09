@@ -1,6 +1,6 @@
 package blackjack.model
 
-import blackjack.model.GameResult.Companion.BLACKJACK_NUMBER
+import blackjack.model.Dealer.Companion.BLACKJACK_NUMBER
 
 fun interface PointCalculator {
     fun sumOf(cards: List<Card>): Int

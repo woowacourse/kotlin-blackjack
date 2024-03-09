@@ -21,5 +21,6 @@ class Dealer(hand: Hand) {
 
     companion object {
         const val HIT_CONDITION = 17
+        const val BLACKJACK_NUMBER = 21
     }
 }
