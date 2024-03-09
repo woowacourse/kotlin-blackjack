@@ -16,7 +16,7 @@ object CardDeck {
         return LinkedList(
             Shape.entries.flatMap { shape ->
                 CardValue.entries.map { cardValue ->
-                    Card(shape.title, cardValue.title, cardValue.value)
+                    Card(shape, cardValue)
                 }
             }.shuffled(),
         )

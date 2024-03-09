@@ -37,7 +37,7 @@ object OutputView {
             MESSAGE_PARTICIPANT_CARD_RESULT.format(
                 MESSAGE_CARD_INFO.format(
                     dealerGameInfo.name,
-                    dealerGameInfo.cards.joinToString { "${it.value}${it.shape}" },
+                    dealerGameInfo.cards.joinToString { "${it.cardValue.title}${it.shape.title}" },
                 ),
                 dealerGameInfo.sumCardValues(),
             ),
@@ -48,7 +48,7 @@ object OutputView {
                 MESSAGE_PARTICIPANT_CARD_RESULT.format(
                     MESSAGE_CARD_INFO.format(
                         playerStat.name,
-                        playerStat.cards.joinToString { "${it.value}${it.shape}" },
+                        playerStat.cards.joinToString { "${it.cardValue.title}${it.shape.title}" },
                     ),
                     playerStat.sumCardValues(),
                 ),
@@ -70,7 +70,7 @@ object OutputView {
         println(
             MESSAGE_CARD_INFO.format(
                 gameInfo.name,
-                gameInfo.cards.joinToString { "${it.value}${it.shape}" },
+                gameInfo.cards.joinToString { "${it.cardValue.title}${it.shape.title}" },
             ),
         )
     }
@@ -93,7 +93,7 @@ object OutputView {
     private fun getDealerCardResult(gameInfo: GameInfo): String {
         return MESSAGE_CARD_INFO.format(
             gameInfo.name,
-            gameInfo.cards.joinToString { "${it.value}${it.shape}" },
+            gameInfo.cards.joinToString { "${it.cardValue.title}${it.shape.title}" },
         )
     }
 

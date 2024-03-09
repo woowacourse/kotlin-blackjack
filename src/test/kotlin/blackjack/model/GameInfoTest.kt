@@ -8,8 +8,8 @@ fun getGameInfo(): GameInfo =
         name = "케이엠",
         cards =
             setOf(
-                Card.of(Shape.CLOVER, CardValue.SIX, 0),
-                Card.of(Shape.HEART, CardValue.K, 6),
+                Card(Shape.CLOVER, CardValue.SIX),
+                Card(Shape.HEART, CardValue.K),
             ),
     )
 
@@ -17,7 +17,7 @@ class GameInfoTest {
     @Test
     fun `카드를 한 장 추가하면, 카드의 개수가 하나 증가한다`() {
         val gameInfo = getGameInfo()
-        gameInfo.addCard(Card.of(Shape.SPADE, CardValue.TWO, total = 16))
+        gameInfo.addCard(Card(Shape.SPADE, CardValue.TWO))
 
         assertThat(gameInfo.cards).hasSize(3)
     }

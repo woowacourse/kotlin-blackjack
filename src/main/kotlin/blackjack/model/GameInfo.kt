@@ -13,14 +13,9 @@ class GameInfo(
     }
 
     fun sumCardValues(): Int {
-        var total = cards.sumOf { it.value }
+        var total = cards.sumOf { it.cardValue.value }
 
-        if (total <= 11 &&
-            cards.contains(Card(Shape.HEART.title, "A", 1)) ||
-            cards.contains(Card(Shape.DIAMOND.title, "A", 1)) ||
-            cards.contains(Card(Shape.CLOVER.title, "A", 1)) ||
-            cards.contains(Card(Shape.SPADE.title, "A", 1))
-        ) {
+        if (total <= 11 && cards.any { it.cardValue == CardValue.ACE }) {
             total += 10
         }
 
