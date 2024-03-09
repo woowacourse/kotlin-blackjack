@@ -20,7 +20,6 @@ class DslTest {
                 name("홍길동")
                 company("네이버")
             }
-
         assertThat(person.name).isEqualTo("홍길동")
         assertThat(person.company).isEqualTo("네이버")
     }
