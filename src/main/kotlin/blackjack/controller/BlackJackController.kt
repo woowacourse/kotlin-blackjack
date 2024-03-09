@@ -4,7 +4,7 @@ import blackjack.model.GameResult
 import blackjack.model.card.Deck
 import blackjack.model.card.ParticipantHands
 import blackjack.model.participant.Dealer
-import blackjack.model.participant.Participant
+import blackjack.model.participant.ParticipantModel
 import blackjack.model.participant.Player
 import blackjack.view.InputView
 import blackjack.view.OutputView
@@ -50,7 +50,7 @@ class BlackJackController(
     ) {
         while (dealer.canHit()) {
             outputView.showDealerHitCard()
-            dealer.hit(deck.pull())
+            dealer.hit(deck.draw())
         }
     }
 
@@ -68,7 +68,7 @@ class BlackJackController(
         deck: Deck,
     ) {
         while (inputView.inputWhetherHit(player)) {
-            player.hit(deck.pull())
+            player.hit(deck.draw())
             outputView.showPlayerHandCards(player)
         }
     }
@@ -76,12 +76,12 @@ class BlackJackController(
     private fun spreadCards(
         deck: Deck,
         playersNames: List<String>,
-    ): Participant {
+    ): ParticipantModel {
         val (playerHand, dealerHand) =
-            ParticipantHands.from(deck.spread(playersNames.size))
+            ParticipantHands.from(deck.drawMultiple(playersNames.size))
         val dealer = Dealer(dealerHand)
         val players: List<Player> = Player.createPlayers(playersNames, playerHand)
         outputView.showDivided(dealerHand.first(), players)
-        return Participant(dealer, players)
+        return ParticipantModel(dealer, players)
     }
 }

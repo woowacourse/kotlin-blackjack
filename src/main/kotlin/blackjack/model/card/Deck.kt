@@ -3,41 +3,31 @@ package blackjack.model.card
 import blackjack.model.Rank
 import blackjack.model.Suit
 
-data class Deck(
-    val cards: List<Card>,
-) : List<Card> by cards {
-    fun pull(): Card {
-        return cards.shuffled().first()
+class Deck(
+    cards: List<Card>,
+) {
+    private val cards = cards.toMutableList()
+
+    fun draw(): Card {
+        if (cards.isEmpty()) cards.addAll(create().cards)
+        return cards.removeLast()
     }
 
-    fun spread(playerSize: Int): List<Card> {
-        return cards.take(INIT_HANDS_COUNT * (DEALER_COUNT + playerSize))
+    fun drawMultiple(size: Int): List<Card> {
+        return List(size) { draw() }
     }
 
     companion object {
-        private const val INIT_HANDS_COUNT = 2
-        private val DECK: Deck = create()
-        private const val DEFAULT_DECK_SIZE = 1
-        private const val DEALER_COUNT = 1
-
         @JvmStatic
-        fun create(size: Int = DEFAULT_DECK_SIZE): Deck {
-            require(size >= DEFAULT_DECK_SIZE)
-            if (size == DEFAULT_DECK_SIZE) return DECK
-            return Deck(
-                List(size) { create().cards }.flatten(),
-            )
-        }
-
-        @JvmStatic
-        private fun create(): Deck {
+        fun create(): Deck {
             val suits = Suit.entries
             val ranks = Rank.entries
-            val deck: List<Card> =
+            val cards =
                 suits.flatMap { suit ->
                     ranks.map { rank -> Card(suit, rank) }
-                }.shuffled()
-            return Deck(deck)
+                        .shuffled()
+                }.toMutableList()
+            return Deck(cards)
         }
     }
 }
