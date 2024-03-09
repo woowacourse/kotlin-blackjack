@@ -5,7 +5,7 @@ sealed class Participant(val name: ParticipantName, val gameInformation: GameInf
 
     class Dealer(name: ParticipantName = DEFAULT_DEALER_NAME, gameInformation: GameInformation = GameInformation()) :
         Participant(name, gameInformation) {
-        fun initialDealing(
+        fun initialCardDealing(
             participants: Participants,
             cardDeck: CardDeck,
         ) {

@@ -1,6 +1,7 @@
 package blackjack.controller
 
 import blackjack.model.CardDeck
+import blackjack.model.DrawDecision
 import blackjack.model.Participant.Dealer
 import blackjack.model.Participant.Player
 import blackjack.model.ParticipantName
@@ -16,22 +17,21 @@ object BlackJackController {
 
     private fun registerParticipants(): Participants {
         val dealer = Dealer()
-        val players = registerPlayers()
-
+        val players = initializePlayers()
         return Participants(dealer, players)
     }
 
-    private fun registerPlayerNames(): List<ParticipantName> {
+    private fun readPlayerNames(): List<ParticipantName> {
         return runCatching {
             InputView.inputPlayerNames().map { name -> ParticipantName(name) }
         }.onFailure { error ->
             println(error.message)
-            return registerPlayerNames()
+            return readPlayerNames()
         }.getOrThrow()
     }
 
-    private fun registerPlayers(): List<Player> {
-        val playerNames = registerPlayerNames()
+    private fun initializePlayers(): List<Player> {
+        val playerNames = readPlayerNames()
         return playerNames.map { name ->
             Player(name)
         }
@@ -39,7 +39,29 @@ object BlackJackController {
 
     private fun blackJackGameStart(participants: Participants) {
         val cardDeck = CardDeck()
-        participants.dealer.initialDealing(participants, cardDeck)
+        participants.dealer.initialCardDealing(participants, cardDeck)
         OutputView.outputCardDistribution(participants)
+        decideDrawOrNot(participants, cardDeck)
+    }
+
+    private fun decideDrawOrNot(
+        participants: Participants,
+        cardDeck: CardDeck,
+    ) {
+        participants.players.forEach { player ->
+            while (readDrawDecision(player.name)) {
+                player.gameInformation.drawCard(cardDeck.pickCard())
+                OutputView.outputParticipantCard(player)
+            }
+        }
+    }
+
+    private fun readDrawDecision(name: ParticipantName): Boolean {
+        return runCatching {
+            DrawDecision(InputView.inputDrawDecision(name)).judgeDecision()
+        }.onFailure { error ->
+            print(error.message)
+            return readDrawDecision(name)
+        }.getOrThrow()
     }
 }

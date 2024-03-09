@@ -24,7 +24,7 @@ class DealerTest {
             )
         val cardDeck = CardDeck()
 
-        dealer.initialDealing(participants, cardDeck)
+        dealer.initialCardDealing(participants, cardDeck)
 
         assertThat(participants.dealer.gameInformation.cards.size).isEqualTo(2)
         assertThat(participants.players.all { it.gameInformation.cards.size == 2 }).isTrue()
