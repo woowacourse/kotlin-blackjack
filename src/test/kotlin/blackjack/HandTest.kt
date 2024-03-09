@@ -24,4 +24,25 @@ class HandTest {
             .draw(card)
         assertThat(hand.cards.size).isEqualTo(3)
     }
+
+    @Test
+    fun `스코어 계산하기`() {
+        val cards = mutableListOf(Card(Denomination.ACE, Suit.HEARTS), Card(Denomination.SIX, Suit.SPADES))
+        val hand = Hand(cards)
+        hand.draw(Card(Denomination.FOUR, Suit.HEARTS))
+
+        assertThat(hand.totalScore).isEqualTo(21)
+    }
+
+    @Test
+    fun `만약 버스트 and ACE 가지고 있으면 ACE를 1로 변환`() {
+        val cards =
+            mutableListOf(
+                Card(Denomination.ACE, Suit.HEARTS),
+                Card(Denomination.JACK, Suit.SPADES),
+            )
+        val hand = Hand(cards)
+        hand.draw(Card(Denomination.ACE, Suit.SPADES))
+        assertThat(hand.totalScore).isEqualTo(12)
+    }
 }

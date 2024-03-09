@@ -3,9 +3,9 @@ package blackjack.controller
 import Player
 import blackjack.model.card.Deck
 import blackjack.model.card.Hand
+import blackjack.model.card.Hand.Companion.BLACKJACK_SCORE
 import blackjack.model.game.Referee
 import blackjack.model.game.Result
-import blackjack.model.game.ScoreCalculation.BLACKJACK_SCORE
 import blackjack.model.game.State
 import blackjack.model.player.Dealer
 import blackjack.model.player.PlayerEntry
