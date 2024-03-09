@@ -1,19 +1,21 @@
 package blackjack.model
 
+import java.util.LinkedList
+import java.util.Queue
+
 object CardDeck {
-    private val selectedCards: MutableSet<Card> = mutableSetOf()
+    private var cards: Queue<Card> = shuffledCards()
 
-    fun pick(): Card {
-        val shape = Shape.entries.shuffled().first()
-        val cardValue = CardValue.entries.shuffled().first()
-        val card = Card(shape.title, cardValue.title, cardValue.value)
-
-        return if (isAvailable(card)) {
-            card.also { selectedCards.add(card) }
-        } else {
-            pick()
-        }
+    fun pick(): Card = cards.poll() ?: run {
+        cards = shuffledCards()
+        pick()
     }
 
-    private fun isAvailable(card: Card): Boolean = card !in selectedCards
+    private fun shuffledCards(): LinkedList<Card> {
+        return LinkedList(Shape.entries.flatMap { shape ->
+            CardValue.entries.map { cardValue ->
+                Card(shape.title, cardValue.title, cardValue.value)
+            }
+        }.shuffled())
+    }
 }
