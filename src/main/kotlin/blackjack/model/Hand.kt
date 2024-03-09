@@ -2,7 +2,7 @@ package blackjack.model
 
 import blackjack.model.GameResult.Companion.BLACKJACK_NUMBER
 
-class HandCards(
+class Hand(
     val cards: List<Card>,
     private val pointCalculator: PointCalculator = DefaultPointCalculator(),
 ) {
@@ -26,7 +26,7 @@ class HandCards(
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as HandCards
+        other as Hand
 
         return cards == other.cards
     }

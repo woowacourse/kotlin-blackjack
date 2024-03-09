@@ -18,7 +18,7 @@ class OutputView {
     }
 
     fun showPlayerHandCards(player: Player) {
-        val cards: List<Card> = player.handCards.cards
+        val cards: List<Card> = player.hand.cards
         println(MESSAGE_PLAYER_HAND_CARDS.format(player.name, cards.format()))
     }
 

@@ -13,9 +13,9 @@ class ParticipantsHandTest {
             ParticipantsHand(
                 playerHandCards =
                     listOf(
-                        HandCards(createCard(), createCard()),
+                        Hand(createCard(), createCard()),
                     ),
-                dealerHandCards = HandCards(createCard(), createCard()),
+                dealerHand = Hand(createCard(), createCard()),
             )
         // when
         val actual = ParticipantsHand.from(cards)

@@ -16,14 +16,14 @@ class PlayerTest {
             )
         val addedCard = createCard(rank = Rank.EIGHT)
         val expect =
-            HandCards(
+            Hand(
                 createCard(rank = Rank.SIX),
                 createCard(rank = Rank.SEVEN),
                 createCard(rank = Rank.EIGHT),
             )
         // when
         player.hit(addedCard)
-        val actual = player.handCards
+        val actual = player.hand
         // then
         assertThat(actual).isEqualTo(expect)
     }
