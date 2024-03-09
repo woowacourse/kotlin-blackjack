@@ -4,8 +4,8 @@ import blackjack.model.card.Card
 import blackjack.model.card.Hand
 
 class Dealer(hand: Hand) {
-    private val _handCards: MutableList<Card> = hand.cards.toMutableList()
-    val hand: Hand get() = Hand(_handCards.toList())
+    private val handCards: MutableList<Card> = hand.cards.toMutableList()
+    val hand: Hand get() = Hand(handCards.toList())
 
     fun canHit(): Boolean {
         if (hand.isBust()) return false
@@ -14,7 +14,7 @@ class Dealer(hand: Hand) {
 
     fun hit(card: Card) {
         if (canHit()) {
-            _handCards.add(card)
+            handCards.add(card)
         }
     }
 

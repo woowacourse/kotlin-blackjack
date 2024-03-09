@@ -4,13 +4,13 @@ import blackjack.model.card.Card
 import blackjack.model.card.Hand
 
 class Player(val name: String, hand: Hand) {
-    private val _handCards: MutableList<Card> = hand.cards.toMutableList()
-    val hand: Hand get() = Hand(_handCards.toList())
+    private val handCards: MutableList<Card> = hand.cards.toMutableList()
+    val hand: Hand get() = Hand(handCards.toList())
 
     constructor(pair: Pair<String, Hand>) : this(pair.first, pair.second)
 
     fun hit(card: Card) {
-        _handCards.add(card)
+        handCards.add(card)
     }
 
     companion object {
