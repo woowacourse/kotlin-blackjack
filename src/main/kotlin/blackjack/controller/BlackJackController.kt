@@ -2,7 +2,6 @@ package blackjack.controller
 
 import blackjack.model.Dealer
 import blackjack.model.Deck
-import blackjack.model.GameResult
 import blackjack.model.Participant
 import blackjack.model.ParticipantsHand
 import blackjack.model.Player
@@ -40,7 +39,7 @@ class BlackJackController(
             val handCards = it.hand
             outputView.showPlayerScore(name, handCards.cards, handCards.sumOptimized())
         }
-        val scoreBoard = GameResult(dealer, players).createScoreBoard()
+        val scoreBoard = dealer.createScoreBoard(players)
         outputView.showScoreBoard(scoreBoard)
     }
 

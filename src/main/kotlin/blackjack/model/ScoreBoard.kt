@@ -9,7 +9,7 @@ data class ScoreBoard(
             val dealerResult =
                 DealerResult(
                     playersResult
-                        .groupingBy { it.state.reversed() }
+                        .groupingBy { it.winningState.reversed() }
                         .eachCount(),
                 )
             return ScoreBoard(playersResult, dealerResult)

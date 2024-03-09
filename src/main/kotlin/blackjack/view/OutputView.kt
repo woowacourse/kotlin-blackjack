@@ -2,9 +2,9 @@ package blackjack.view
 
 import blackjack.model.Card
 import blackjack.model.DealerResult
-import blackjack.model.GameResult
 import blackjack.model.Player
 import blackjack.model.ScoreBoard
+import blackjack.model.WinningState
 
 class OutputView {
     fun showDivided(
@@ -53,14 +53,14 @@ class OutputView {
         val (playersResult, dealerResult) = scoreBoard
         println(dealerResult.format())
         playersResult.forEach {
-            println("${it.name}: ${it.state.label}")
+            println("${it.name}: ${it.winningState.label}")
         }
     }
 
     private fun DealerResult.format() =
         buildString {
             append("${DEALER_NAME}: ")
-            GameResult.State.entries.forEach {
+            WinningState.entries.forEach {
                 append(map[it] ?: 0)
                 append(it.label)
                 append(" ")

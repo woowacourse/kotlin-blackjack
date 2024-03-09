@@ -1,6 +1,6 @@
 package blackjack.model
 
-import blackjack.model.GameResult.Companion.BLACKJACK_NUMBER
+import blackjack.model.Dealer.Companion.BLACKJACK_NUMBER
 
 class Hand(
     val cards: List<Card>,

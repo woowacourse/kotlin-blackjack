@@ -19,6 +19,23 @@ class Dealer(hand: Hand) {
         }
     }
 
+    fun createScoreBoard(players: List<Player>): ScoreBoard {
+        val results: List<PlayerResult> =
+            players.map { player ->
+                PlayerResult(player.name, player.comparePoints(this))
+            }
+        return ScoreBoard.from(results)
+    }
+
+    private fun Player.comparePoints(dealer: Dealer): WinningState {
+        val playerCards = hand
+        val dealerCards = dealer.hand
+        if (playerCards.isBust()) return WinningState.LOSS
+        if (dealerCards.isBust()) return WinningState.WIN
+        val compared = playerCards.sumOptimized() compareTo dealerCards.sumOptimized()
+        return WinningState.from(compared)
+    }
+
     companion object {
         const val HIT_CONDITION = 17
         const val BLACKJACK_NUMBER = 21
