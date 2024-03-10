@@ -10,5 +10,21 @@ object CardDeck {
 
     private var cardIndex = 0
 
-    fun getRandomCard(): Card = cardDeck[cardIndex++]
+    private fun shuffleDeck(): List<Card> = cardDeck.shuffled().toList()
+
+    fun getRandomCard(): Card {
+        val result =
+            runCatching {
+                cardDeck[cardIndex++]
+            }
+        return result.getOrElse {
+            resetCardDeck()
+            getRandomCard()
+        }
+    }
+
+    private fun resetCardDeck() {
+        cardIndex = 0
+        shuffleDeck()
+    }
 }
