@@ -3,14 +3,21 @@ package blackjack.model
 import blackjack.model.Dealer.Companion.BLACKJACK_NUMBER
 
 class Hand(
-    val cards: List<Card>,
+    cards: MutableList<Card>,
     private val pointCalculator: PointCalculator = DefaultPointCalculator(),
 ) {
+    private val _cards: MutableList<Card> = cards
+    val cards: List<Card> get() = _cards
+
     init {
         require(cards.size >= MIN_HAND_CARDS_SIZE) { "손패는 $MIN_HAND_CARDS_SIZE 장 이상임" }
     }
 
-    constructor(vararg cards: Card) : this(cards.toList())
+    constructor(vararg cards: Card) : this(cards.toMutableList())
+
+    fun add(card: Card) {
+        _cards.add(card)
+    }
 
     fun first(): Card = cards.first()
 

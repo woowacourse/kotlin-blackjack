@@ -1,16 +1,13 @@
 package blackjack.model
 
-class Dealer(hand: Hand) {
-    private val _hand: MutableList<Card> = hand.cards.toMutableList()
-    val hand: Hand get() = Hand(_hand.toList())
-
+class Dealer(val hand: Hand) {
     fun canHit(): Boolean {
         if (hand.isBust()) return false
         return hand.sumOptimized() < HIT_CONDITION
     }
 
     fun hit(card: Card) {
-        _hand.add(card)
+        hand.add(card)
     }
 
     fun hitUntilBust(deck: Deck) {

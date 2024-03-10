@@ -11,7 +11,7 @@ class HandTest {
     @Test
     fun `손패는 2장 이상이다`() {
         assertThrows<IllegalArgumentException> {
-            Hand(emptyList())
+            Hand(mutableListOf())
         }
     }
 
