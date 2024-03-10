@@ -36,7 +36,7 @@ class PlayerTest {
                     ),
             ) { "y" }
 
-        player.drawCard {
+        player.drawSingleCard {
             Card(Shape.DIAMOND.title, CardValue.SEVEN.title, CardValue.SEVEN.value)
         }
         assertThat(player.gameInfo.cards).hasSize(3)
@@ -47,7 +47,7 @@ class PlayerTest {
         val cards = setOf(Card.of(Shape.HEART, CardValue.SIX, 0))
         val player = Player(GameInfo("haeum", cards)) { "n" }
         val actualState =
-            player.drawCard {
+            player.drawSingleCard {
                 Card(Shape.DIAMOND.title, CardValue.SEVEN.title, CardValue.SEVEN.value)
             }
         assertAll(
@@ -65,7 +65,7 @@ class PlayerTest {
             )
         val player = Player(GameInfo("haeum", cards)) { "y" }
         val actualState =
-            player.drawCard {
+            player.drawSingleCard {
                 Card(Shape.DIAMOND.title, CardValue.TWO.title, CardValue.TWO.value)
             }
         assertAll(

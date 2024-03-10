@@ -8,7 +8,19 @@ class Player(
         require(gameInfo.name.isNotEmpty() && gameInfo.name.isNotBlank()) { EXCEPTION_PLAYER_NAME }
     }
 
-    override fun drawCard(generateCard: () -> Card?): PickingState {
+    override fun drawCardsUntilStand(
+        generateCard: () -> Card?,
+        printCards: (GameInfo) -> Unit,
+    ) {
+        val pickingState = drawSingleCard { generateCard() }
+        printCards(gameInfo)
+        when (pickingState) {
+            PickingState.HIT -> drawCardsUntilStand(generateCard, printCards)
+            PickingState.STAND -> return
+        }
+    }
+
+    override fun drawSingleCard(generateCard: () -> Card?): PickingState {
         val inputDecision = onInputDecision()
         val pickingState =
             PickingState.entries.find { it.value == inputDecision }
@@ -20,18 +32,6 @@ class Player(
                 checkBurst()
             }
             PickingState.STAND -> PickingState.STAND
-        }
-    }
-
-    override fun drawUntilSatisfaction(
-        generateCard: () -> Card?,
-        printCards: (GameInfo) -> Unit,
-    ) {
-        val pickingState = drawCard { generateCard() }
-        printCards(gameInfo)
-        when (pickingState) {
-            PickingState.HIT -> drawUntilSatisfaction(generateCard, printCards)
-            PickingState.STAND -> return
         }
     }
 

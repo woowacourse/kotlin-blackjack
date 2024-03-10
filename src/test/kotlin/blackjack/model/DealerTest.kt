@@ -25,7 +25,7 @@ class DealerTest {
             )
 
         val pickingState =
-            dealer.drawCard {
+            dealer.drawSingleCard {
                 Card.of(Shape.CLOVER, CardValue.TWO, 16)
             }
 
@@ -46,7 +46,7 @@ class DealerTest {
             )
 
         val pickingState =
-            dealer.drawCard {
+            dealer.drawSingleCard {
                 Card.of(Shape.CLOVER, CardValue.TWO, 17)
             }
 
@@ -66,7 +66,7 @@ class DealerTest {
                 gameInfo = createHitDealerGameInfo(),
             )
 
-        dealer.drawCard {
+        dealer.drawSingleCard {
             Card.of(Shape.CLOVER, CardValue.ONE, 16)
         }
 
@@ -82,7 +82,7 @@ class DealerTest {
                 gameInfo = createStandDealerGameInfo(),
             )
 
-        dealer.drawCard {
+        dealer.drawSingleCard {
             Card.of(Shape.CLOVER, CardValue.ONE, 17)
         }
 
@@ -98,7 +98,7 @@ class DealerTest {
             Dealer(
                 gameInfo = GameInfo("딜러", providedCard.keys),
             )
-        dealer.drawCard {
+        dealer.drawSingleCard {
             Card.of(Shape.CLOVER, CardValue.ONE, dealer.gameInfo.cards.sumOf { it.value })
         }
 

@@ -1,10 +1,10 @@
 package blackjack.model
 
 interface Participant {
-    fun drawCard(generateCard: () -> Card?): PickingState
-
-    fun drawUntilSatisfaction(
+    fun drawCardsUntilStand(
         generateCard: () -> Card?,
         printCards: (GameInfo) -> Unit,
     )
+
+    fun drawSingleCard(generateCard: () -> Card?): PickingState
 }

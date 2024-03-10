@@ -40,7 +40,7 @@ object BlackJackController {
     }
 
     private fun initializeParticipantsCards() {
-        dealer.drawCard(CardDeck::pick)
+        dealer.drawSingleCard(CardDeck::pick)
         displayInitializedCards(dealer.gameInfo, players.value.map { it.gameInfo })
     }
 
@@ -65,7 +65,7 @@ object BlackJackController {
     }
 
     private fun Participant.drawForSingleParticipant(printCards: (GameInfo) -> Unit) {
-        drawUntilSatisfaction(CardDeck::pick, printCards)
+        drawCardsUntilStand(CardDeck::pick, printCards)
     }
 
     private fun askPlayerHit(playerName: String): String =
