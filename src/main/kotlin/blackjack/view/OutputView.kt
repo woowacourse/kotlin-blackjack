@@ -1,5 +1,6 @@
 package blackjack.view
 
+import blackjack.model.deck.Card
 import blackjack.model.participant.Dealer
 import blackjack.model.participant.Player
 import blackjack.model.participant.Players
@@ -11,14 +12,16 @@ class OutputView {
         players: Players,
     ) {
         println("\n딜러와 ${players.gamePlayers.joinToString(SPLIT_DELIMITER) { it.name }}에게 플레이어에게 2장의 카드를 나누었습니다.")
-        println("딜러: ${dealer.getFirstCard()}")
+        println("딜러: ${getFirstCardString(dealer)}")
         players.gamePlayers.forEach { player ->
-            println("${player.name}카드: ${player.getAllCards()}")
+            println("${player.name}카드: ${player.getAllCards().printCards()}")
         }
     }
 
+    private fun getFirstCardString(dealer: Dealer) = "${dealer.getFirstCard().cardNumber}${dealer.getFirstCard().shape}"
+
     fun printPlayerCard(player: Player) {
-        println("${player.name} 카드: ${player.getAllCards()}")
+        println("${player.name} 카드: ${player.getAllCards().printCards()}")
     }
 
     fun printBustMessage() {
@@ -33,9 +36,9 @@ class OutputView {
         dealer: Dealer,
         players: Players,
     ) {
-        println("\n딜러 카드: ${dealer.getAllCards()} - 결과: ${dealer.getScore()}")
+        println("\n딜러 카드: ${dealer.getAllCards().printCards()} - 결과: ${dealer.getScore()}")
         players.gamePlayers.forEach { player ->
-            println("${player.name}카드: ${player.getAllCards()} - 결과: ${player.getScore()}")
+            println("${player.name}카드: ${player.getAllCards().printCards()} - 결과: ${player.getScore()}")
         }
     }
 
@@ -52,6 +55,8 @@ class OutputView {
             println("$playerName: ${competitionResult.result}")
         }
     }
+
+    private fun List<Card>.printCards() = joinToString(SPLIT_DELIMITER) { "${it.cardNumber.value}${it.shape.value}" }
 
     companion object {
         private const val SPLIT_DELIMITER = ", "

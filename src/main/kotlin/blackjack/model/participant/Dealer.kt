@@ -9,10 +9,7 @@ class Dealer(private val deck: Deck) : GameParticipant(HandCards()) {
         handCards.create(deck)
     }
 
-    fun getFirstCard() =
-        with(handCards.cards.first()) {
-            "${cardNumber.value}${shape.value}"
-        }
+    fun getFirstCard() = handCards.cards.first()
 
     fun addCard(): Boolean =
         if (handCards.calculateCardScore() < DEALER_HIT_THRESHOLD) {
