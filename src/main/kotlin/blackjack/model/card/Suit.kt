@@ -1,4 +1,4 @@
-package blackjack.model
+package blackjack.model.card
 
 enum class Suit(val label: String) {
     SPADE("스페이드"),

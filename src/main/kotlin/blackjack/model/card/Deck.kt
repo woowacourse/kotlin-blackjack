@@ -1,8 +1,5 @@
 package blackjack.model.card
 
-import blackjack.model.Rank
-import blackjack.model.Suit
-
 class Deck(
     cards: List<Card>,
 ) {

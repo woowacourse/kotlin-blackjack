@@ -1,7 +1,7 @@
 package blackjack.fixture
 
-import blackjack.model.Rank
-import blackjack.model.Suit
+import blackjack.model.card.Rank
+import blackjack.model.card.Suit
 import blackjack.model.card.Card
 
 fun createCard(

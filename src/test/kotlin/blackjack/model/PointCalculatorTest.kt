@@ -1,6 +1,7 @@
 package blackjack.model
 
 import blackjack.fixture.createCard
+import blackjack.model.card.Rank
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
