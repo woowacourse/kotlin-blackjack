@@ -8,13 +8,24 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
 class CardTest {
-    @CsvSource("1, 다이아몬드", "A, Diamond", "13, 하트")
+    @CsvSource("0, 다이아몬드", "B, 스페이드", "11, 하트")
     @ParameterizedTest
-    fun `유효하지 않은 카드의 구성요소인 경우 예외가 발생한다`(
+    fun `유효하지 않은 카드의 번호인 경우 예외가 발생한다`(
         denomination: String,
         suite: String,
     ) {
-        assertThrows<IllegalArgumentException> { Card.of(denomination, suite) }
+        val exception = assertThrows<IllegalArgumentException> { Card.of(denomination, suite) }
+        assertThat(exception.message).isEqualTo("유효하지 않은 카드의 숫자 혹은 알파벳입니다.")
+    }
+
+    @CsvSource("A, diamond", "2, 다Oㅣ아몬드", "10, 하트1")
+    @ParameterizedTest
+    fun `유효하지 않은 카드의 모양인 경우 예외가 발생한다`(
+        denomination: String,
+        suite: String,
+    ) {
+        val exception = assertThrows<IllegalArgumentException> { Card.of(denomination, suite) }
+        assertThat(exception.message).isEqualTo("유효하지 않은 카드의 모양입니다.")
     }
 
     @CsvSource("A, 다이아몬드", "10, 하트", "K, 스페이드")
