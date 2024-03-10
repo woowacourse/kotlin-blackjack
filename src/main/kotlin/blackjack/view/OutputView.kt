@@ -3,10 +3,12 @@ package blackjack.view
 import blackjack.model.Card
 import blackjack.model.CardNumber
 import blackjack.model.CardSymbol
+import blackjack.model.GameResult
 import blackjack.model.Participant
 import blackjack.model.Participant.Dealer
 import blackjack.model.Participant.Player
 import blackjack.model.Participants
+import blackjack.model.Result
 
 object OutputView {
     private const val MESSAGE_CARD_DISTRIBUTION = "\n%s와 %s에게 2장의 카드를 나누었습니다."
@@ -14,6 +16,9 @@ object OutputView {
     private const val MESSAGE_PARTICIPANT_CARD_INFORMATION = "%s 카드: %s"
     private const val MESSAGE_DEALER_DRAW = "%s는 16이하라 한장의 카드를 더 받았습니다.\n"
     private const val MESSAGE_PARTICIPANT_GAME_SCORE = "%s 카드: %s - 결과: %d"
+    private const val MESSAGE_GAME_RESULT = "\n## 최종 승패"
+    private const val MESSAGE_DEALER_RESULT = "%s: %d승 %d패 %d무"
+    private const val MESSAGE_PLAYER_RESULT = "%s: %s"
     private const val COMMA = ", "
 
     fun outputCardDistribution(participants: Participants) {
@@ -43,6 +48,26 @@ object OutputView {
         outputGameScore(participants.dealer)
         participants.players.forEach { player ->
             outputGameScore(player)
+        }
+    }
+
+    fun outputGameResult(gameResult: GameResult) {
+        println(MESSAGE_GAME_RESULT)
+        println(
+            MESSAGE_DEALER_RESULT.format(
+                gameResult.dealer.name,
+                gameResult.dealerResult[Result.DEALER_WIN],
+                gameResult.dealerResult[Result.PLAYER_WIN],
+                gameResult.dealerResult[Result.TIE],
+            ),
+        )
+        gameResult.playerResults.withIndex().map { (index, playerResult) ->
+            println(
+                MESSAGE_PLAYER_RESULT.format(
+                    gameResult.players[index].name,
+                    playerResult.convertToString(),
+                ),
+            )
         }
     }
 
@@ -93,6 +118,14 @@ object OutputView {
             CardSymbol.HEART -> "하트"
             CardSymbol.SPADE -> "스페이드"
             CardSymbol.CLOVER -> "클로버"
+        }
+    }
+
+    private fun Result.convertToString(): String {
+        return when (this) {
+            Result.PLAYER_WIN -> "승"
+            Result.TIE -> "무"
+            Result.DEALER_WIN -> "패"
         }
     }
 }

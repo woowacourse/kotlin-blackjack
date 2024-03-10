@@ -2,6 +2,7 @@ package blackjack.controller
 
 import blackjack.model.CardDeck
 import blackjack.model.DrawDecision
+import blackjack.model.GameResult
 import blackjack.model.GameState
 import blackjack.model.Participant.Dealer
 import blackjack.model.Participant.Player
@@ -46,6 +47,7 @@ object BlackJackController {
         initialCardDealing(participants, cardDeck)
         OutputView.outputCardDistribution(participants)
         decideParticipantDecisions(participants, cardDeck)
+        OutputView.outputGameScores(participants)
     }
 
     private fun initialCardDealing(
@@ -100,6 +102,7 @@ object BlackJackController {
     }
 
     private fun displayGameResult(participants: Participants) {
-        OutputView.outputGameScores(participants)
+        val gameResult = GameResult(participants.dealer, participants.players)
+        OutputView.outputGameResult(gameResult)
     }
 }
