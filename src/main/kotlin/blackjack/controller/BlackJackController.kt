@@ -11,6 +11,8 @@ import blackjack.view.InputView
 import blackjack.view.OutputView
 
 object BlackJackController {
+    private const val INITIAL_DEALING_COUNT = 2
+
     fun run() {
         val participants = registerParticipants()
         blackJackGameStart(participants)
@@ -41,9 +43,24 @@ object BlackJackController {
 
     private fun blackJackGameStart(participants: Participants) {
         val cardDeck = CardDeck()
-        participants.dealer.initialCardDealing(participants, cardDeck)
+        initialCardDealing(participants, cardDeck)
         OutputView.outputCardDistribution(participants)
         decidePlayerDecisions(participants, cardDeck)
+        judgeDealerDraw(participants.dealer, cardDeck)
+    }
+
+    private fun initialCardDealing(
+        participants: Participants,
+        cardDeck: CardDeck,
+    ) {
+        repeat(INITIAL_DEALING_COUNT) {
+            participants.getParticipants().forEach { participant ->
+                participant.draw(cardDeck.pickCard())
+            }
+        }
+        participants.getParticipants().forEach { participant ->
+            participant.changeStateToHit()
+        }
     }
 
     private fun decidePlayerDecisions(
@@ -76,6 +93,15 @@ object BlackJackController {
             print(error.message)
             return readDrawDecision(name)
         }.getOrThrow()
+    }
+
+    private fun judgeDealerDraw(
+        dealer: Dealer,
+        cardDeck: CardDeck,
+    ) {
+        if (dealer.gameInformation.score <= 16) {
+            dealer.gameInformation.drawCard(cardDeck.pickCard())
+        }
     }
 
     private fun displayGameResult(participants: Participants) {
