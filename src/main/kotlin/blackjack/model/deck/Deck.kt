@@ -1,5 +1,8 @@
 package blackjack.model.deck
 
+import blackjack.model.util.CardNumber
+import blackjack.model.util.Pattern
+
 class Deck {
     private val cards: MutableList<Card>
 
