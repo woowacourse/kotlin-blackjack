@@ -25,7 +25,7 @@ private const val STAY_DECISION = "n"
 object BlackJackController {
     fun run() {
         val playersName = readPlayersName()
-        val (dealer, playerEntry) = showInitialSettingCard(playersName)
+        val (dealer, playerEntry) = setInitialCard(playersName)
         playGame(playerEntry, dealer)
         showGameResult(dealer, playerEntry)
     }
@@ -82,7 +82,7 @@ object BlackJackController {
         }
     }
 
-    private fun showInitialSettingCard(playersName: List<String>): Pair<Dealer, PlayerEntry> {
+    private fun setInitialCard(playersName: List<String>): Pair<Dealer, PlayerEntry> {
         showPlayerEntry(playersName.joinToString(", "))
         val hands = dealingCards(playersName)
         val dealer = setDealer(hands)
