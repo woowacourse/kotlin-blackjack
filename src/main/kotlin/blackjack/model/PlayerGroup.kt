@@ -7,12 +7,12 @@ class PlayerGroup {
 
     fun addPlayer(playerNames: List<String>) {
         require(_players.size + playerNames.size in PLAYERS_COUNT_RANGE) { "플레이어의 수는 1 ~ 8명 사이여야 합니다" }
-        _players += playerNames.map { Player(humanName = HumanName(it)) }
+        _players += playerNames.map { Player(nickname = Nickname(it)) }
     }
 
     fun drawPlayerCard(
         gameDeck: GameDeck,
-        hitOrStay: (humanName: HumanName) -> Boolean,
+        hitOrStay: (nickname: Nickname) -> Boolean,
         showPlayerCards: (player: Player) -> Unit,
     ): GameDeck {
         players.forEach { player ->

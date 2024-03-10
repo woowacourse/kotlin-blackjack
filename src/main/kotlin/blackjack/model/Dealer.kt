@@ -3,7 +3,7 @@ package blackjack.model
 import blackjack.state.State.Finished.Stay
 import blackjack.state.State.Running.Hit
 
-class Dealer(override val humanName: HumanName = HumanName(DEFAULT_DEALER_NAME)) : BaseHolder() {
+class Dealer(val nickname: Nickname = Nickname(DEFAULT_DEALER_NAME)) : CardHolder() {
     fun drawDealerCard(
         gameDeck: GameDeck,
         printDealerDrawCard: () -> Unit,

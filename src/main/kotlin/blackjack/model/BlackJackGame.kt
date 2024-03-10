@@ -10,7 +10,7 @@ class BlackJackGame(
     }
 
     fun runPlayersTurn(
-        hitOrStay: (humanName: HumanName) -> Boolean,
+        hitOrStay: (nickname: Nickname) -> Boolean,
         showPlayerCards: (player: Player) -> Unit,
     ) {
         participants.playerGroup.drawPlayerCard(

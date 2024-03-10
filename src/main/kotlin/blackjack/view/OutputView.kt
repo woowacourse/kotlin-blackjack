@@ -11,7 +11,7 @@ object OutputView {
         playerGroup: PlayerGroup,
     ) {
         println(
-            "\n${dealer.humanName}와 ${playerGroup.players.joinToString(", ") { it.humanName.name }}에게 ${INITIAL_CARD_COUNTS}장의 카드를 나누었습니다.",
+            "\n${dealer.nickname}와 ${playerGroup.players.joinToString(", ") { it.nickname.name }}에게 ${INITIAL_CARD_COUNTS}장의 카드를 나누었습니다.",
         )
         showDealerInitCard(dealer)
         showPlayersInitCards(playerGroup)
@@ -19,7 +19,7 @@ object OutputView {
 
     private fun showDealerInitCard(dealer: Dealer) {
         val showCard = dealer.hand.cards.first()
-        println("${dealer.humanName}: $showCard")
+        println("${dealer.nickname}: $showCard")
     }
 
     private fun showPlayersInitCards(playerGroup: PlayerGroup) {
@@ -29,7 +29,7 @@ object OutputView {
     }
 
     fun showPlayerCards(player: Player) {
-        println("${player.humanName}: ${player.hand.cards.joinToString(", ")}")
+        println("${player.nickname}: ${player.hand.cards.joinToString(", ")}")
     }
 
     fun printDealerDrawCard() {
@@ -46,12 +46,12 @@ object OutputView {
     }
 
     private fun showDealerCardsResult(dealer: Dealer) {
-        println("${dealer.humanName}: ${dealer.hand.cards.joinToString(", ")} - 결과: ${dealer.hand.calculate()}")
+        println("${dealer.nickname}: ${dealer.hand.cards.joinToString(", ")} - 결과: ${dealer.hand.calculate()}")
     }
 
     private fun showPlayersCardsResult(playerGroup: PlayerGroup) {
         playerGroup.players.forEach { player ->
-            println("${player.humanName}: ${player.hand.cards.joinToString(", ")} - 결과: ${player.hand.calculate()}")
+            println("${player.nickname}: ${player.hand.cards.joinToString(", ")} - 결과: ${player.hand.calculate()}")
         }
     }
 
