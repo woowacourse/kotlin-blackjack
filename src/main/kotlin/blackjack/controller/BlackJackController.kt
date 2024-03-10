@@ -39,7 +39,7 @@ object BlackJackController {
             player.initializeCards { CardDeck.pick() }
         }
 
-        displayInitializedCards(dealer.gameInfo, players.players.map { it.gameInfo })
+        displayInitializedCards(dealer.gameInfo, players.getPlayersGameInfo())
     }
 
     private fun playRound(
@@ -60,7 +60,7 @@ object BlackJackController {
         players: Players,
     ) {
         val dealerInfo = dealer.gameInfo
-        val playersInfo = players.players.map { player -> player.gameInfo }
+        val playersInfo = players.getPlayersGameInfo()
         val judge = Judge(dealerInfo, playersInfo)
         with(OutputView) {
             printResult(judge)

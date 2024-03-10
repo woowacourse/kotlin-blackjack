@@ -18,6 +18,8 @@ class Players(
         }
     }
 
+    fun getPlayersGameInfo(): List<GameInfo> = players.map { it.gameInfo }
+
     companion object {
         private const val MINIMUM_NUMBER_OF_PLAYERS = 2
         private const val MAXIMUM_NUMBER_OF_PLAYERS = 8
