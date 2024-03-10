@@ -10,7 +10,7 @@ class OutputView {
         dealer: Dealer,
         players: Players,
     ) {
-        println("\n딜러와 ${players.gamePlayers.joinToString(SPLIT_DELIMITER) { it.name }}명의 플레이어에게 2장의 카드를 나누었습니다.")
+        println("\n딜러와 ${players.gamePlayers.joinToString(SPLIT_DELIMITER) { it.name }}에게 플레이어에게 2장의 카드를 나누었습니다.")
         println("딜러: ${dealer.getFirstCard()}")
         players.gamePlayers.forEach { player ->
             println("${player.name}카드: ${player.getAllCards()}")
