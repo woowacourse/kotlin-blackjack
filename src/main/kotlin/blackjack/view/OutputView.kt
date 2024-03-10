@@ -60,9 +60,9 @@ object OutputView {
         playerGroup: PlayerGroup,
     ) {
         println("\n[ 최종 승패 ]")
-        println("${dealer.humanName}: ${dealer.gameResult}")
+        println("${dealer.nickname}: ${dealer.hand.gameResult}")
         playerGroup.players.forEach { player ->
-            println("${player.humanName}: ${player.gameResult}")
+            println("${player.nickname}: ${player.hand.gameResult}")
         }
     }
 }
