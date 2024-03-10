@@ -24,9 +24,10 @@ private const val STAY_DECISION = "n"
 
 object BlackJackController {
     fun run() {
+        val deck = Deck()
         val playersName = readPlayersName()
-        val (dealer, playerEntry) = setInitialCard(playersName)
-        playGame(playerEntry, dealer)
+        val (dealer, playerEntry) = setInitialCard(playersName, deck)
+        playGame(playerEntry, dealer, deck)
         showGameResult(dealer, playerEntry)
     }
 
@@ -51,28 +52,38 @@ object BlackJackController {
     private fun playGame(
         playerEntry: PlayerEntry,
         dealer: Dealer,
+        deck: Deck,
     ) {
-        askPlayersDraw(playerEntry)
-        showDealerDraw(dealer)
+        askPlayersDraw(playerEntry, deck)
+        showDealerDraw(dealer, deck)
     }
 
-    private fun showDealerDraw(dealer: Dealer) {
+    private fun showDealerDraw(
+        dealer: Dealer,
+        deck: Deck,
+    ) {
         while (dealer.judgeDraw()) {
-            dealer.hand.draw(Deck.dealCard())
+            dealer.hand.draw(deck.dealCard())
             determineDealerstate(dealer)
             showDealerDrawMessage(dealer)
         }
     }
 
-    private fun askPlayersDraw(playerEntry: PlayerEntry) {
-        playerEntry.players.forEach { player -> askPlayerDraw(player) }
+    private fun askPlayersDraw(
+        playerEntry: PlayerEntry,
+        deck: Deck,
+    ) {
+        playerEntry.players.forEach { player -> askPlayerDraw(player, deck) }
     }
 
-    private fun askPlayerDraw(player: Player) {
+    private fun askPlayerDraw(
+        player: Player,
+        deck: Deck,
+    ) {
         while (player.state is State.Running.Hit) {
             val drawOrNot = askPlayersDraw(player)
             if (drawOrNot == DRAW_DECISION) {
-                player.hand.draw(Deck.dealCard())
+                player.hand.draw(deck.dealCard())
                 drawOrNot(drawOrNot, player)
                 showPlayerHand(player)
                 determinestate(player)
@@ -82,9 +93,12 @@ object BlackJackController {
         }
     }
 
-    private fun setInitialCard(playersName: List<String>): Pair<Dealer, PlayerEntry> {
+    private fun setInitialCard(
+        playersName: List<String>,
+        deck: Deck,
+    ): Pair<Dealer, PlayerEntry> {
         showPlayerEntry(playersName.joinToString(", "))
-        val hands = dealingCards(playersName)
+        val hands = dealingCards(playersName, deck)
         val dealer = setDealer(hands)
         val playerEntry = setPlayerEntry(playersName, hands)
         showHands(dealer, playerEntry)
@@ -113,9 +127,12 @@ object BlackJackController {
         return dealer
     }
 
-    private fun dealingCards(playersName: List<String>): List<Hand> {
+    private fun dealingCards(
+        playersName: List<String>,
+        deck: Deck,
+    ): List<Hand> {
         val hands = List(playersName.size + 1) { Hand(mutableListOf()) }
-        repeat(2) { hands.forEach { hand -> hand.draw(Deck.dealCard()) } }
+        repeat(2) { hands.forEach { hand -> hand.draw(deck.dealCard()) } }
         return hands
     }
 
