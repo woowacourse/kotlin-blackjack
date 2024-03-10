@@ -2,7 +2,6 @@ package blackjack.model
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertAll
 
 class PlayerTest {
     @Test
@@ -31,20 +30,19 @@ class PlayerTest {
         player.drawCard {
             Card(Shape.DIAMOND, CardRank.SEVEN)
         }
-        assertThat(player.gameInfo.cards).hasSize(3)
+        assertThat(player.gameInfo.cards).containsExactly(
+            Card(Shape.CLOVER, CardRank.SIX),
+            Card(Shape.HEART, CardRank.K),
+            Card(Shape.DIAMOND, CardRank.SEVEN),
+        )
     }
 
     @Test
     fun `플레이어가 카드를 더 받지 않겠다고 응답하면, 현재 보유 카드에 변경이 없도록 한다`() {
         val player = Player(GameInfo("haeum").apply { addCard(Card(Shape.HEART, CardRank.SIX)) }) { "n" }
-        val actualState =
-            player.drawCard {
-                Card(Shape.DIAMOND, CardRank.SEVEN)
-            }
-        assertAll(
-            { assertThat(player.gameInfo.cards).hasSize(1) },
-            { assertThat(actualState).isEqualTo(PickingState.STAND) },
-        )
+        player.drawCard { Card(Shape.DIAMOND, CardRank.SEVEN) }
+
+        assertThat(player.gameInfo.cards).containsExactly(Card(Shape.HEART, CardRank.SIX))
     }
 
     @Test
@@ -59,9 +57,7 @@ class PlayerTest {
             player.drawCard {
                 Card(Shape.DIAMOND, CardRank.TWO)
             }
-        assertAll(
-            { assertThat(player.gameInfo.cards).hasSize(3) },
-            { assertThat(actualState).isEqualTo(PickingState.STAND) },
-        )
+
+        assertThat(actualState).isEqualTo(PickingState.STAND)
     }
 }

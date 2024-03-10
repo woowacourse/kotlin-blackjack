@@ -4,14 +4,6 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class GameInfoTest {
-    @Test
-    fun `카드를 한 장 추가하면, 카드의 개수가 하나 증가한다`() {
-        val gameInfo = GameInfo("해음").apply {
-            addCard(Card(Shape.SPADE, CardRank.TWO))
-        }
-
-        assertThat(gameInfo.cards).hasSize(1)
-    }
 
     @Test
     fun `추가한 카드가 카드 뭉치에 추가된다`() {
