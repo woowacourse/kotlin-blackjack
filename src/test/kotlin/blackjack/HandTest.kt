@@ -20,8 +20,7 @@ class HandTest {
         val cards = mutableListOf(Card(Denomination.ACE, Suit.HEARTS), Card(Denomination.SIX, Suit.SPADES))
         val hand = Hand(cards)
         val card = Card(Denomination.TWO, Suit.HEARTS)
-        hand
-            .draw(card)
+        hand.draw(card)
         assertThat(hand.cards.size).isEqualTo(3)
     }
 

@@ -33,8 +33,6 @@ class RefereeTest {
             Dealer(Hand(mutableListOf(Card(Denomination.ACE, Suit.HEARTS), Card(Denomination.SIX, Suit.SPADES))))
         val player =
             Player("채드", Hand(mutableListOf(Card(Denomination.ACE, Suit.SPADES), Card(Denomination.NINE, Suit.HEARTS))))
-        dealer.hand.totalScore = 17
-        player.hand.totalScore = 20
         val players = listOf(player)
         val playerEntry = PlayerEntry(players)
         val referee = Referee(dealer, playerEntry)
@@ -48,8 +46,6 @@ class RefereeTest {
             Dealer(Hand(mutableListOf(Card(Denomination.ACE, Suit.HEARTS), Card(Denomination.JACK, Suit.SPADES))))
         val player =
             Player("채드", Hand(mutableListOf(Card(Denomination.ACE, Suit.SPADES), Card(Denomination.NINE, Suit.HEARTS))))
-        dealer.hand.totalScore = 21
-        player.hand.totalScore = 20
         val players = listOf(player)
         val playerEntry = PlayerEntry(players)
         val referee = Referee(dealer, playerEntry)
@@ -63,8 +59,6 @@ class RefereeTest {
             Dealer(Hand(mutableListOf(Card(Denomination.ACE, Suit.HEARTS), Card(Denomination.JACK, Suit.SPADES))))
         val player =
             Player("채드", Hand(mutableListOf(Card(Denomination.ACE, Suit.SPADES), Card(Denomination.JACK, Suit.HEARTS))))
-        dealer.hand.totalScore = 21
-        player.hand.totalScore = 21
         val players = listOf(player)
         val playerEntry = PlayerEntry(players)
         val referee = Referee(dealer, playerEntry)

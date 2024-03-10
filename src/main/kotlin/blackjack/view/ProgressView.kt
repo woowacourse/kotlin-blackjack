@@ -7,12 +7,11 @@ import blackjack.model.player.PlayerEntry
 
 const val GAME_SETTING = "딜러와 %s에게 2장을 나누었습니다."
 const val DEALER_CARD = "딜러: %s"
-const val PLAYER_CARD = "%s카드: %s"
+const val PLAYER_CARD = "%s 카드: %s"
 const val DEALER_DRAW_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다."
 
 fun showPlayerEntry(names: String) {
-    println()
-    println(GAME_SETTING.format(names))
+    println("\n$GAME_SETTING".format(names))
 }
 
 fun showHands(
@@ -25,23 +24,11 @@ fun showHands(
 }
 
 fun showPlayerHand(player: Player) {
-    val state =
-        when (player.state) {
-            Finished.Bust -> " (Bust)"
-            Finished.BlackJack -> " (BlackJack)"
-            else -> ""
-        }
-    println(
-        PLAYER_CARD.format(
-            player.name,
-            player.hand.cards.joinToString(),
-        ) + state,
-    )
+    println("$PLAYER_CARD${getPlayerState(player)}".format(player.name, player.hand.cards.joinToString()))
 }
 
 fun showDealerDrawMessage(dealer: Dealer) {
-    println()
-    println(DEALER_DRAW_MESSAGE)
+    println("\n$DEALER_DRAW_MESSAGE")
     showDealerHand(dealer)
 }
 
@@ -52,15 +39,25 @@ private fun showPlayersHand(playerEntry: PlayerEntry) {
 }
 
 private fun showDealerOneHand(dealer: Dealer) {
-    println(DEALER_CARD.format(dealer.hand.cards[0]))
+    dealer.hand.cards.getOrNull(0)?.let {
+        println(DEALER_CARD.format(it))
+    } ?: println("딜러 카드 정보 없음")
 }
 
 private fun showDealerHand(dealer: Dealer) {
-    val state =
-        when (dealer.state) {
-            Finished.Bust -> " (Bust)"
-            Finished.BlackJack -> " (BlackJack)"
-            else -> ""
-        }
-    println(DEALER_CARD.format(dealer.hand.cards.joinToString()) + state)
+    println("$DEALER_CARD${getPlayerState(dealer)}".format(dealer.hand.cards.joinToString()))
 }
+
+private fun getPlayerState(player: Player): String =
+    when (player.state) {
+        Finished.Bust -> " (Bust)"
+        Finished.BlackJack -> " (BlackJack)"
+        else -> ""
+    }
+
+private fun getPlayerState(dealer: Dealer): String =
+    when (dealer.state) {
+        Finished.Bust -> " (Bust)"
+        Finished.BlackJack -> " (BlackJack)"
+        else -> ""
+    }
