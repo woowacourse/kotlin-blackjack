@@ -1,6 +1,6 @@
 package blackjack.model
 
-class Player private constructor(val name: String, hand: Hand) {
+class Player(val name: String, hand: Hand) {
     private val _hand: MutableList<Card> = hand.cards.toMutableList()
     val hand: Hand get() = Hand(_hand.toList())
 
