@@ -1,7 +1,7 @@
 package blackjack.model
 
 data class Card(
-    val shape: String,
+    val shape: Shape,
     val title: String,
     val value: Int,
 ) {
@@ -16,9 +16,9 @@ data class Card(
             total: Int,
         ): Card {
             if (cardValue.value == LOW_ACE_VALUE && total <= MAXIMUM_HIGH_ACE_THRESHOLD) {
-                return Card(shape.title, cardValue.title, HIGH_ACE_VALUE)
+                return Card(shape, cardValue.title, HIGH_ACE_VALUE)
             }
-            return Card(shape.title, cardValue.title, cardValue.value)
+            return Card(shape, cardValue.title, cardValue.value)
         }
     }
 }

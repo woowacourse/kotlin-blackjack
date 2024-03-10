@@ -37,7 +37,7 @@ class PlayerTest {
             ) { "y" }
 
         player.drawSingleCard {
-            Card(Shape.DIAMOND.title, CardValue.SEVEN.title, CardValue.SEVEN.value)
+            Card(Shape.DIAMOND, CardValue.SEVEN.title, CardValue.SEVEN.value)
         }
         assertThat(player.gameInfo.cards).hasSize(3)
     }
@@ -48,7 +48,7 @@ class PlayerTest {
         val player = Player(GameInfo("haeum", cards)) { "n" }
         val actualState =
             player.drawSingleCard {
-                Card(Shape.DIAMOND.title, CardValue.SEVEN.title, CardValue.SEVEN.value)
+                Card(Shape.DIAMOND, CardValue.SEVEN.title, CardValue.SEVEN.value)
             }
         assertAll(
             { assertThat(player.gameInfo.cards).hasSize(1) },
@@ -66,7 +66,7 @@ class PlayerTest {
         val player = Player(GameInfo("haeum", cards)) { "y" }
         val actualState =
             player.drawSingleCard {
-                Card(Shape.DIAMOND.title, CardValue.TWO.title, CardValue.TWO.value)
+                Card(Shape.DIAMOND, CardValue.TWO.title, CardValue.TWO.value)
             }
         assertAll(
             { assertThat(player.gameInfo.cards).hasSize(3) },
