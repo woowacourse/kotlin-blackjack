@@ -12,6 +12,7 @@ object OutputView {
     private const val MESSAGE_CARD_DISTRIBUTION = "\n%s와 %s에게 2장의 카드를 나누었습니다."
     private const val MESSAGE_DEALER_CARD_INFORMATION = "%s: %s"
     private const val MESSAGE_PARTICIPANT_CARD_INFORMATION = "%s 카드: %s"
+    private const val MESSAGE_DEALER_DRAW = "%s는 16이하라 한장의 카드를 더 받았습니다.\n"
     private const val MESSAGE_PARTICIPANT_GAME_SCORE = "%s 카드: %s - 결과: %d"
     private const val COMMA = ", "
 
@@ -32,6 +33,10 @@ object OutputView {
                 },
             ),
         )
+    }
+
+    fun outputDealerDraw(dealer: Dealer) {
+        println(MESSAGE_DEALER_DRAW.format(dealer.name))
     }
 
     fun outputGameScores(participants: Participants) {

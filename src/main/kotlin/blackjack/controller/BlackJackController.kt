@@ -45,8 +45,7 @@ object BlackJackController {
         val cardDeck = CardDeck()
         initialCardDealing(participants, cardDeck)
         OutputView.outputCardDistribution(participants)
-        decidePlayerDecisions(participants, cardDeck)
-        judgeDealerDraw(participants.dealer, cardDeck)
+        decideParticipantDecisions(participants, cardDeck)
     }
 
     private fun initialCardDealing(
@@ -63,24 +62,29 @@ object BlackJackController {
         }
     }
 
+    private fun decideParticipantDecisions(
+        participants: Participants,
+        cardDeck: CardDeck,
+    ) {
+        decidePlayerDecisions(participants, cardDeck)
+        participants.dealer.additionalDraw(cardDeck) { OutputView.outputDealerDraw(participants.dealer) }
+    }
+
     private fun decidePlayerDecisions(
         participants: Participants,
         cardDeck: CardDeck,
     ) {
-        participants.players.forEach { player ->
-            decidePlayerDecision(player, cardDeck)
-        }
+        participants.players.forEach { player -> judgePlayerDraw(player, cardDeck) }
     }
 
-    private fun decidePlayerDecision(
+    private fun judgePlayerDraw(
         player: Player,
         cardDeck: CardDeck,
     ) {
         while (player.gameInformation.state is GameState.Running) {
             val wantDraw = readDrawDecision(player.name)
             if (wantDraw) {
-                player.gameInformation.drawCard(cardDeck.pickCard())
-                OutputView.outputParticipantCard(player)
+                player.additionalDraw(cardDeck) { OutputView.outputParticipantCard(player) }
             }
             if (!wantDraw) player.gameInformation.changeState(GameState.Finished.STAY)
         }
@@ -93,15 +97,6 @@ object BlackJackController {
             print(error.message)
             return readDrawDecision(name)
         }.getOrThrow()
-    }
-
-    private fun judgeDealerDraw(
-        dealer: Dealer,
-        cardDeck: CardDeck,
-    ) {
-        if (dealer.gameInformation.score <= 16) {
-            dealer.gameInformation.drawCard(cardDeck.pickCard())
-        }
     }
 
     private fun displayGameResult(participants: Participants) {
