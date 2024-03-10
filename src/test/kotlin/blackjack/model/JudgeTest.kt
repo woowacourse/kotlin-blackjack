@@ -4,47 +4,34 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 val burstDealerInfo: GameInfo =
-    GameInfo(
-        "딜러",
-        setOf(
-            Card(Shape.CLOVER, CardRank.SIX),
-            Card(Shape.HEART, CardRank.K),
-            Card(Shape.DIAMOND, CardRank.K),
-        ),
-    )
+    GameInfo("딜러").apply {
+        addCard(Card(Shape.CLOVER, CardRank.SIX))
+        addCard(Card(Shape.HEART, CardRank.K))
+        addCard(Card(Shape.DIAMOND, CardRank.K))
+    }
 
 val aliveDealerInfo: GameInfo =
     GameInfo(
         "딜러",
-        setOf(
-            Card(Shape.CLOVER, CardRank.SIX),
-            Card(Shape.HEART, CardRank.K),
-        ),
-    )
+    ).apply {
+        addCard(Card(Shape.CLOVER, CardRank.SIX))
+        addCard(Card(Shape.HEART, CardRank.K))
+    }
 
 val playersInfo: List<GameInfo> =
     listOf(
-        GameInfo(
-            "케이엠",
-            setOf(
-                Card(Shape.DIAMOND, CardRank.SEVEN),
-                Card(Shape.DIAMOND, CardRank.K),
-            ),
-        ),
-        GameInfo(
-            "해음",
-            setOf(
-                Card(Shape.DIAMOND, CardRank.SIX),
-                Card(Shape.SPADE, CardRank.K),
-            ),
-        ),
-        GameInfo(
-            "차람",
-            setOf(
-                Card(Shape.DIAMOND, CardRank.FIVE),
-                Card(Shape.CLOVER, CardRank.K),
-            ),
-        ),
+        GameInfo("케이엠").apply {
+            addCard(Card(Shape.DIAMOND, CardRank.SEVEN))
+            addCard(Card(Shape.DIAMOND, CardRank.K))
+        },
+        GameInfo("해음").apply {
+            addCard(Card(Shape.DIAMOND, CardRank.SIX))
+            addCard(Card(Shape.SPADE, CardRank.K))
+        },
+        GameInfo("차람").apply {
+            addCard(Card(Shape.DIAMOND, CardRank.FIVE))
+            addCard(Card(Shape.CLOVER, CardRank.K))
+        },
     )
 
 class JudgeTest {
