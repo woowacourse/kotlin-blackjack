@@ -1,18 +1,24 @@
 package blackjack.model.card
 
-class Deck(private val shuffleStrategy: (MutableList<Card>) -> Unit = { it.shuffle() }) {
-    val cards: MutableList<Card> = mutableListOf()
+class Deck(cardsInput: MutableList<Card>? = null) {
+    val cards: MutableList<Card> = cardsInput ?: mutableListOf()
 
     init {
-        initialize()
+        if (cards.isEmpty()) {
+            initializeDeck()
+        }
     }
 
-    fun initialize() {
+    private fun initializeDeck() {
         cards.clear()
         cards.addAll(
-            Suit.entries.flatMap { suit -> Denomination.entries.map { denomination -> Card(denomination, suit) } },
+            Suit.entries.flatMap { suit ->
+                Denomination.entries.map { denomination ->
+                    Card(denomination, suit)
+                }
+            },
         )
-        shuffleStrategy(cards)
+        cards.shuffle()
     }
 
     fun dealCard(): Card = if (cards.isNotEmpty()) cards.removeAt(0) else throw NoSuchElementException("Deck is empty")
