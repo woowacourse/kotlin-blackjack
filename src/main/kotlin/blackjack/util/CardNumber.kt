@@ -1,4 +1,4 @@
-package blackjack.model.util
+package blackjack.util
 
 enum class CardNumber(val value: String, val score: Int) {
     TWO("2", 2),

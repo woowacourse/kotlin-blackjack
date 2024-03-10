@@ -1,6 +1,6 @@
 package blackjack.view
 
-import blackjack.model.CompetitionResult
+import blackjack.util.CompetitionResult
 import blackjack.model.participant.Dealer
 import blackjack.model.participant.Player
 import blackjack.model.participant.Players

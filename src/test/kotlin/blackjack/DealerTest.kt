@@ -1,6 +1,6 @@
 package blackjack
 
-import blackjack.model.CompetitionResult
+import blackjack.util.CompetitionResult
 import blackjack.model.deck.CardMachineManager
 import blackjack.model.deck.Deck
 import blackjack.model.participant.Dealer
