@@ -19,11 +19,15 @@ class ScoreBoard {
     private fun updateCardSum(burstCondition: Int) {
         cardSum = 0
         handCards.cards.forEach {
-            cardSum += it.denomination.score
+            addCardSum(it.denomination.score)
         }
         repeat(handCards.getAceCount()) {
             if (cardSum + Denomination.ADDITIONAL_ACE_SCORE > burstCondition) return
-            cardSum += Denomination.ADDITIONAL_ACE_SCORE
+            addCardSum(Denomination.ADDITIONAL_ACE_SCORE)
         }
+    }
+
+    private fun addCardSum(score: Int) {
+        cardSum += score
     }
 }
