@@ -1,7 +1,7 @@
 package blackjack.model.deck
 
 import blackjack.util.CardNumber
-import blackjack.util.Pattern
+import blackjack.util.Shape
 
 class Deck {
     private val cards: MutableList<Card>
@@ -12,15 +12,15 @@ class Deck {
 
     private fun createCards(): List<Card> {
         val cards: List<Card> =
-            Pattern.entries.flatMap { pattern ->
+            Shape.entries.flatMap { pattern ->
                 assignNumber(pattern)
             }
         return CardMachineManager.handle(cards)
     }
 
-    private fun assignNumber(pattern: Pattern) =
+    private fun assignNumber(shape: Shape) =
         CardNumber.entries.map { cardNumber ->
-            Card(cardNumber, pattern)
+            Card(cardNumber, shape)
         }
 
     fun draw(cardAmount: Int): List<Card> {

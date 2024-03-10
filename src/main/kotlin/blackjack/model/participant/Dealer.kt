@@ -1,13 +1,13 @@
 package blackjack.model.participant
 
-import blackjack.util.CompetitionResult
 import blackjack.model.deck.Deck
 import blackjack.model.deck.HandCards
+import blackjack.util.CompetitionResult
 
 class Dealer(deck: Deck) : GameParticipant(HandCards(deck)) {
     fun getFirstCard() =
         with(handCards.cards.first()) {
-            "${cardNumber.value}${pattern.shape}"
+            "${cardNumber.value}${shape.value}"
         }
 
     fun addCard(): Boolean =
