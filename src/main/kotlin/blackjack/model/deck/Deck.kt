@@ -3,7 +3,7 @@ package blackjack.model.deck
 import blackjack.util.CardNumber
 import blackjack.util.Shape
 
-class Deck {
+class Deck(private val cardMachine: CardMachine = ShuffleCardMachine()) {
     private val cards: MutableList<Card>
 
     init {
@@ -15,7 +15,7 @@ class Deck {
             Shape.entries.flatMap { pattern ->
                 assignNumber(pattern)
             }
-        return CardMachineManager.handle(cards)
+        return cardMachine.handle(cards)
     }
 
     private fun assignNumber(shape: Shape) =
