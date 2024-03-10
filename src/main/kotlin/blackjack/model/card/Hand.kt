@@ -25,6 +25,14 @@ class Hand(val cards: MutableList<Card>) {
         return score
     }
 
+    fun isBust(): Boolean {
+        return totalScore > BLACKJACK_SCORE
+    }
+
+    fun isBlackjack(): Boolean {
+        return totalScore == BLACKJACK_SCORE
+    }
+
     companion object {
         const val BLACKJACK_SCORE = 21
         private const val CONVERT_ACE = 10

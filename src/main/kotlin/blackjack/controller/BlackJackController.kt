@@ -3,7 +3,6 @@ package blackjack.controller
 import Player
 import blackjack.model.card.Deck
 import blackjack.model.card.Hand
-import blackjack.model.card.Hand.Companion.BLACKJACK_SCORE
 import blackjack.model.game.Referee
 import blackjack.model.game.Result
 import blackjack.model.game.State
@@ -132,35 +131,19 @@ object BlackJackController {
     }
 
     private fun determinestate(player: Player) {
-        if (isBust(player)) {
+        if (player.hand.isBust()) {
             player.state = State.Finished.Bust
-        } else if (isBlackjack(player)) {
+        } else if (player.hand.isBlackjack()) {
             player.state = State.Finished.BlackJack
         }
     }
 
     private fun determineDealerstate(dealer: Dealer) {
-        if (isDealerBust(dealer)) {
+        if (dealer.hand.isBust()) {
             dealer.state = State.Finished.Bust
-        } else if (isDealerBlackjack(dealer)) {
+        } else if (dealer.hand.isBlackjack()) {
             dealer.state = State.Finished.BlackJack
         }
-    }
-
-    private fun isBust(player: Player): Boolean {
-        return player.hand.totalScore > BLACKJACK_SCORE
-    }
-
-    private fun isDealerBust(dealer: Dealer): Boolean {
-        return dealer.hand.totalScore > BLACKJACK_SCORE
-    }
-
-    private fun isBlackjack(player: Player): Boolean {
-        return player.hand.totalScore == BLACKJACK_SCORE
-    }
-
-    private fun isDealerBlackjack(dealer: Dealer): Boolean {
-        return dealer.hand.totalScore == BLACKJACK_SCORE
     }
 
     private fun readPlayersName(): List<String> {
