@@ -4,7 +4,11 @@ import blackjack.model.deck.Deck
 import blackjack.model.deck.HandCards
 import blackjack.util.CompetitionResult
 
-class Dealer(deck: Deck) : GameParticipant(HandCards(deck)) {
+class Dealer(private val deck: Deck) : GameParticipant(HandCards()) {
+    init {
+        handCards.create(deck)
+    }
+
     fun getFirstCard() =
         with(handCards.cards.first()) {
             "${cardNumber.value}${shape.value}"
@@ -12,7 +16,7 @@ class Dealer(deck: Deck) : GameParticipant(HandCards(deck)) {
 
     fun addCard(): Boolean =
         if (handCards.calculateCardScore() < DEALER_HIT_THRESHOLD) {
-            handCards.add()
+            handCards.add(deck)
             true
         } else {
             false

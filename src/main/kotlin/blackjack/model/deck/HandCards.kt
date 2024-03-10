@@ -2,16 +2,16 @@ package blackjack.model.deck
 
 import blackjack.util.CardNumber
 
-class HandCards(private val deck: Deck) {
+class HandCards {
     private val _cards: MutableList<Card> = mutableListOf()
     val cards: List<Card>
         get() = _cards.toList()
 
-    init {
+    fun create(deck: Deck) {
         _cards.addAll(deck.draw(INIT_CARD_AMOUNT))
     }
 
-    fun add() {
+    fun add(deck: Deck) {
         _cards.addAll(deck.draw(HIT_CARD_AMOUNT))
     }
 
