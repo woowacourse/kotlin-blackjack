@@ -1,19 +1,10 @@
 package blackjack.model
 
 object CardDeck {
-    private val selectedCards: MutableSet<Card> = mutableSetOf()
+    private val leftCards: MutableList<Card> =
+        Shape.entries.flatMap { shape ->
+            CardValue.entries.map { cardValue -> Card(shape.title, cardValue.title, cardValue.value) }
+        }.shuffled().toMutableList()
 
-    fun pick(): Card {
-        val shape = Shape.entries.shuffled().first()
-        val cardValue = CardValue.entries.shuffled().first()
-        val card = Card(shape.title, cardValue.title, cardValue.value)
-
-        return if (isAvailable(card)) {
-            card.also { selectedCards.add(card) }
-        } else {
-            pick()
-        }
-    }
-
-    private fun isAvailable(card: Card): Boolean = card !in selectedCards
+    fun pick(): Card? = leftCards.removeLastOrNull()
 }

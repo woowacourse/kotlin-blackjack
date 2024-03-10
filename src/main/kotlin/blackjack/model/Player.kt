@@ -6,7 +6,7 @@ class Player(
 ) : Participant {
     private var lastDecision: String? = null
 
-    override fun drawCard(generateCard: () -> Card): PickingState {
+    override fun drawCard(generateCard: () -> Card?): PickingState {
         val inputDecision = lastDecision ?: onInputDecision()
         lastDecision = null
         val pickingState =
@@ -15,7 +15,7 @@ class Player(
 
         return when (pickingState) {
             PickingState.HIT -> {
-                gameInfo.addCard(generateCard())
+                gameInfo.addCard(generateCard() ?: return PickingState.STAND)
                 checkBurst()
             }
             PickingState.STAND -> PickingState.STAND
@@ -23,7 +23,7 @@ class Player(
     }
 
     override fun drawUntilSatisfaction(
-        generateCard: () -> Card,
+        generateCard: () -> Card?,
         printCards: (GameInfo) -> Unit,
     ) {
         val pickingState = drawCard { generateCard() }
@@ -34,9 +34,9 @@ class Player(
         }
     }
 
-    fun initializeCards(generateCard: () -> Card) {
+    fun initializeCards(generateCard: () -> Card?) {
         repeat(INITIAL_DRAW_COUNT) {
-            gameInfo.addCard(generateCard())
+            gameInfo.addCard(generateCard() ?: return)
         }
     }
 

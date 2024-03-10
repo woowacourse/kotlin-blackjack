@@ -3,19 +3,19 @@ package blackjack.model
 class Dealer(
     val gameInfo: GameInfo = GameInfo(NAME_DEALER),
 ) : Participant {
-    override fun drawCard(generateCard: () -> Card): PickingState {
+    override fun drawCard(generateCard: () -> Card?): PickingState {
         if (isDrawAvailable()) {
-            gameInfo.addCard(generateCard())
+            gameInfo.addCard(generateCard() ?: return PickingState.STAND)
             return PickingState.HIT
         }
         return PickingState.STAND
     }
 
     override fun drawUntilSatisfaction(
-        generateCard: () -> Card,
+        generateCard: () -> Card?,
         printCards: (GameInfo) -> Unit,
     ) {
-        val pickingState = drawCard { generateCard() }
+        val pickingState = drawCard(generateCard)
         when (pickingState) {
             PickingState.HIT -> printCards(gameInfo)
             PickingState.STAND -> return
