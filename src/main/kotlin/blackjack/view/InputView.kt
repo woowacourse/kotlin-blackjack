@@ -12,14 +12,26 @@ object InputView {
     fun inputPlayers(): List<Player> {
         println(INPUT_MESSAGE_PLAYER_NAMES)
         val input = readlnOrNull().orEmpty()
-        val validatorPlayers = UserInputValidator.checkPlayers(input.split(COMMA))
-        return validatorPlayers ?: inputPlayers()
+        val result = UserInputValidator.checkPlayers(input.split(COMMA))
+
+        return if (result.isSuccess) {
+            result.getOrNull() ?: inputPlayers()
+        } else {
+            println("${result.exceptionOrNull()?.message}")
+            inputPlayers()
+        }
     }
 
     fun inputPlayerDecision(playerName: String): UserDecision {
         println(INPUT_MESSAGE_PLAYER_DRAW.format(playerName))
         val input = readlnOrNull().orEmpty()
-        val validatorDecision = UserInputValidator.checkUserDecision(input)
-        return validatorDecision ?: inputPlayerDecision(playerName)
+        val result = UserInputValidator.checkUserDecision(input)
+
+        return if (result.isSuccess) {
+            result.getOrNull() ?: inputPlayerDecision(playerName)
+        } else {
+            println("${result.exceptionOrNull()?.message}")
+            inputPlayerDecision(playerName)
+        }
     }
 }
