@@ -81,8 +81,8 @@ class BlackjackGame(private val deck: CardDeck, val participants: Participants) 
         player: Player,
         dealer: Dealer,
     ): WinningState {
-        val dealerScore = dealer.state.hand().sumUpCardValues()
-        val playerScore = player.state.hand().sumUpCardValues()
+        val dealerScore = dealer.getSumOfCards()
+        val playerScore = player.getSumOfCards()
 
         return when {
             player.state is Bust || playerScore < dealerScore -> WinningState(0, 1)

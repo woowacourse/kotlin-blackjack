@@ -13,6 +13,8 @@ sealed class Participant(val name: ParticipantName, state: State) {
     }
 
     fun getCards(): List<Card> = state.hand().cards
+
+    fun getSumOfCards(): Int = state.hand().sumUpCardValues()
 }
 
 class Player(name: ParticipantName, state: State) : Participant(name, state)
