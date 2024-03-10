@@ -5,15 +5,14 @@ class Player(
     val onInputDecision: () -> String,
 ) : Participant {
     override fun drawCard(generateCard: () -> Card): PickingState {
-        val pickingState =
-            PickingState.entries.find { it.value == onInputDecision() }
-                ?: throw IllegalArgumentException(EXCEPTION_PLAYER_INPUT)
-        return when (pickingState) {
-            PickingState.HIT -> {
+        return when (onInputDecision()) {
+            PickingState.HIT.value -> {
                 gameInfo.addCard(generateCard())
                 checkBurst()
             }
-            PickingState.STAND -> PickingState.STAND
+
+            PickingState.STAND.value -> PickingState.STAND
+            else -> throw IllegalArgumentException(EXCEPTION_PLAYER_INPUT)
         }
     }
 
