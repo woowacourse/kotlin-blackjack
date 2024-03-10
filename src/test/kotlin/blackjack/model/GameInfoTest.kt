@@ -14,7 +14,7 @@ class GameInfoTest {
     @Test
     fun `현재 보유하고 있는 카드들의 올바른 총합을 반환한다`() {
         val gameInfo = createSinglePlayerGameInfo()
-        val actualTotal = gameInfo.total
+        val actualTotal = gameInfo.sumOfCards
         val expectedTotal = 16
         assertThat(actualTotal).isEqualTo(expectedTotal)
     }

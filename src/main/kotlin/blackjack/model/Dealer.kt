@@ -23,7 +23,7 @@ class Dealer(
         drawUntilSatisfaction(generateCard, printCards)
     }
 
-    private fun isDrawAvailable(): Boolean = gameInfo.total <= MAXIMUM_DRAW_THRESHOLD
+    private fun isDrawAvailable(): Boolean = gameInfo.sumOfCards <= MAXIMUM_DRAW_THRESHOLD
 
     companion object {
         private const val NAME_DEALER = "딜러"

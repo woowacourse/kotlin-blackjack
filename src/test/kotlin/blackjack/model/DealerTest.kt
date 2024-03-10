@@ -14,7 +14,7 @@ class DealerTest {
             Dealer(
                 gameInfo = createHitDealerGameInfo(),
             )
-        assertThat(dealer.gameInfo.total).isEqualTo(16)
+        assertThat(dealer.gameInfo.sumOfCards).isEqualTo(16)
     }
 
     @Test

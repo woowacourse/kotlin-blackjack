@@ -10,11 +10,10 @@ import blackjack.view.InputView
 import blackjack.view.OutputView
 
 object BlackJackController {
-    private lateinit var dealer: Dealer
     private lateinit var players: Players
+    private val dealer: Dealer = Dealer()
 
     fun startGame() {
-        dealer = Dealer()
         initializePlayers()
         initializeParticipantsCards()
         playRound()

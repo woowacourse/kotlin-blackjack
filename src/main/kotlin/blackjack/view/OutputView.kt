@@ -39,7 +39,7 @@ object OutputView {
                     dealerGameInfo.name,
                     dealerGameInfo.cards.joinToString { "${it.title}${it.shape}" },
                 ),
-                dealerGameInfo.total,
+                dealerGameInfo.sumOfCards,
             ),
         )
 
@@ -50,7 +50,7 @@ object OutputView {
                         playerStat.name,
                         playerStat.cards.joinToString { "${it.title}${it.shape}" },
                     ),
-                    playerStat.total,
+                    playerStat.sumOfCards,
                 ),
             )
         }

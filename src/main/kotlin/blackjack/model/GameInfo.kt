@@ -8,7 +8,7 @@ class GameInfo(
     val cards: Set<Card>
         get() = _cards
 
-    val total: Int
+    val sumOfCards: Int
         get() = cards.sumOf { it.value }
 
     fun addCard(card: Card) {
