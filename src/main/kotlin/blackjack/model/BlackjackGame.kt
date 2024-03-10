@@ -9,30 +9,25 @@ import blackjack.model.result.DealerResult
 import blackjack.model.result.GameResultStorage
 import blackjack.model.result.PlayersResult
 
-object BlackjackGame {
-    private const val INIT_RECEIVE_CARD_COUNT = 2
+class BlackjackGame(private val dealer: Dealer, private val players: Players, private val cardProvider: CardProvider) {
+    init {
+        initDeal()
+    }
 
-    fun initCard(
-        dealer: Dealer,
-        players: Players,
-        cardProvider: CardProvider,
-    ) {
-        dealer.initReceiveCard(cardProvider)
+    private fun initDeal() {
+        dealer.initReceiveCard()
         players.playerGroup.forEach {
-            it.initReceiveCard(cardProvider)
+            it.initReceiveCard()
         }
     }
 
-    private fun Role.initReceiveCard(cardProvider: CardProvider) {
+    private fun Role.initReceiveCard() {
         repeat(INIT_RECEIVE_CARD_COUNT) {
             receiveCard(Card.from(cardProvider))
         }
     }
 
-    fun calculateGameResult(
-        dealer: Dealer,
-        players: Players,
-    ): GameResultStorage {
+    fun calculateGameResult(): GameResultStorage {
         val dealerResult = DealerResult()
         val playersResult = PlayersResult()
 
@@ -42,5 +37,9 @@ object BlackjackGame {
             playersResult.add(player.name, gameResultType.reverse())
         }
         return GameResultStorage(dealerResult, playersResult)
+    }
+
+    companion object {
+        private const val INIT_RECEIVE_CARD_COUNT = 2
     }
 }

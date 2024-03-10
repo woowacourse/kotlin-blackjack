@@ -18,19 +18,12 @@ class BlackjackController(
     fun run() {
         val dealer = Dealer()
         val players = retryWhileNotException { Players.from(inputView.readPlayersName()) }
+        val blackjackGame = BlackjackGame(dealer, players, cardProvider)
+        outputView.printInitCard(dealer, players)
 
-        initHandCards(dealer, players)
         takePlayersTurn(players)
         takeDealerTurn(dealer)
-        showGameResult(dealer, players)
-    }
-
-    private fun initHandCards(
-        dealer: Dealer,
-        players: Players,
-    ) {
-        BlackjackGame.initCard(dealer, players, cardProvider)
-        outputView.printInitCard(dealer, players)
+        showGameResult(dealer, players, blackjackGame)
     }
 
     private fun takePlayersTurn(players: Players) {
@@ -59,8 +52,9 @@ class BlackjackController(
     private fun showGameResult(
         dealer: Dealer,
         players: Players,
+        blackjackGame: BlackjackGame,
     ) {
-        val gameResultStorage = BlackjackGame.calculateGameResult(dealer, players)
+        val gameResultStorage = blackjackGame.calculateGameResult()
         outputView.printPlayersCardResult(dealer, players)
         outputView.printFinalGameResult(players, gameResultStorage)
     }
