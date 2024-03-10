@@ -2,6 +2,7 @@ package blackjack.view
 
 import blackjack.model.Card
 import blackjack.model.Dealer
+import blackjack.model.Denomination
 import blackjack.model.Participant
 import blackjack.model.Player
 import blackjack.model.Result
@@ -16,7 +17,7 @@ object OutputView {
     private const val OUTPUT_MESSAGE_BLACKJACK_RESULT = "## 최종 승패"
     private const val COMMA = ", "
     private const val SPACE = " "
-    private const val SPACE_NAME = "스페이스"
+    private const val SPADE_NAME = "스페이드"
     private const val CLOVER_NAME = "클로버"
     private const val HEART_NAME = "하트"
     private const val DIAMOND_NAME = "다이아몬드"
@@ -76,12 +77,22 @@ object OutputView {
     }
 
     private fun joinCardInfo(card: Card): String {
-        return "${card.getCardDenomination().getScore()}${getCardSuitName(card.getCardSuit())}"
+        return "${getCardDenomination(card.getCardDenomination())}${getCardSuitName(card.getCardSuit())}"
+    }
+
+    private fun getCardDenomination(denomination: Denomination): String {
+        return when (denomination) {
+            Denomination.ACE -> "A"
+            Denomination.KING -> "K"
+            Denomination.QUEEN -> "Q"
+            Denomination.JACK -> "J"
+            else -> denomination.getScore().toString()
+        }
     }
 
     private fun getCardSuitName(suit: Suit): String {
         return when (suit) {
-            Suit.SPADE -> SPACE_NAME
+            Suit.SPADE -> SPADE_NAME
             Suit.CLOVER -> CLOVER_NAME
             Suit.HEART -> HEART_NAME
             Suit.DIAMOND -> DIAMOND_NAME
