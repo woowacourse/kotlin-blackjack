@@ -34,11 +34,7 @@ object BlackJackController {
         players: Players,
     ) {
         dealer.drawCard { CardDeck.pick() }
-
-        players.players.forEach { player ->
-            player.initializeCards { CardDeck.pick() }
-        }
-
+        players.initializeCards { CardDeck.pick() }
         displayInitializedCards(dealer.gameInfo, players.getPlayersGameInfo())
     }
 

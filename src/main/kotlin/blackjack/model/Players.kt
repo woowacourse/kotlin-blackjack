@@ -6,8 +6,8 @@ class Players(
 ) {
     private val _players: Sequence<Player> = names.asSequence()
         .map { name -> Player(GameInfo(name)) { readContinueInput(name) } }
-    val players: List<Player>
-        get() = _players.toList().take(names.size)
+
+    val players: List<Player> = _players.toList().take(names.size)
 
     init {
         require(names.distinct().size == names.size) {
@@ -15,6 +15,12 @@ class Players(
         }
         require(names.size in PLAYER_NUM_RANGE) {
             EXCEPTION_NUMBER_OF_PLAYERS.format(names.size)
+        }
+    }
+
+    fun initializeCards(generateCard: () -> Card) {
+        players.forEach { player ->
+            player.initializeCards { generateCard() }
         }
     }
 
