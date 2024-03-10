@@ -8,7 +8,7 @@ class ScoreBoard {
     var cardSum = 0
         private set
 
-    fun applyReceivedCard(
+    fun addCardAndUpdateCardSum(
         card: Card,
         burstCondition: Int,
     ) {

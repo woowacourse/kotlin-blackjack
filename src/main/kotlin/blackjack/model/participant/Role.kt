@@ -8,7 +8,7 @@ abstract class Role {
     abstract fun decideMoreCard(): Boolean
 
     fun receiveCard(card: Card) {
-        scoreBoard.applyReceivedCard(card, BLACKJACK_VALUE)
+        scoreBoard.addCardAndUpdateCardSum(card, BLACKJACK_VALUE)
     }
 
     fun isBurst() = scoreBoard.cardSum > BLACKJACK_VALUE
