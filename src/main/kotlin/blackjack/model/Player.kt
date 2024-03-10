@@ -1,6 +1,7 @@
 package blackjack.model
 
-import blackjack.base.BaseHolder
+import blackjack.state.State.Finished.Stay
+import blackjack.state.State.Running.Hit
 
 class Player(override val humanName: HumanName) : BaseHolder() {
     fun drawCardsForPlayer(
@@ -8,12 +9,12 @@ class Player(override val humanName: HumanName) : BaseHolder() {
         hitOrStay: (humanName: HumanName) -> Boolean,
         showPlayerCards: (player: Player) -> Unit,
     ) {
-        while (hand.state == UserState.RUNNING) {
-            if (hitOrStay(humanName)) {
+        while (state is Hit) {
+            if (hitOrStay(nickname)) {
                 takeCard(card = gameDeck.drawCard())
                 showPlayerCards(this)
             } else {
-                hand.changeState(userState = UserState.STAY)
+                changeState(state = Stay)
             }
         }
     }

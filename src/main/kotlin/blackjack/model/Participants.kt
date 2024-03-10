@@ -1,9 +1,8 @@
 package blackjack.model
 
-import blackjack.base.BaseHolder
-import blackjack.model.UserState.BLACKJACK
-import blackjack.model.UserState.BUST
-import blackjack.model.UserState.STAY
+import blackjack.state.State.Finished.Blackjack
+import blackjack.state.State.Finished.Bust
+import blackjack.state.State.Finished.Stay
 
 class Participants(
     val dealer: Dealer,
@@ -21,17 +20,17 @@ class Participants(
 
     fun matchResult() {
         playerGroup.players.forEach { player ->
-            when (dealer.hand.state) {
-                BUST -> checkBust(player = player)
-                BLACKJACK -> checkBlackJack(player = player)
-                STAY -> checkStay(player = player)
+            when (dealer.state) {
+                is Bust -> checkBust(player = player)
+                is Blackjack -> checkBlackJack(player = player)
+                is Stay -> checkStay(player = player)
                 else -> throw IllegalStateException()
             }
         }
     }
 
     private fun checkBust(player: Player) {
-        if (player.hand.state == BUST) {
+        if (player.state is Bust) {
             winAndLose(winner = dealer, loser = player)
         } else {
             winAndLose(winner = player, loser = dealer)
@@ -39,7 +38,7 @@ class Participants(
     }
 
     private fun checkBlackJack(player: Player) {
-        if (player.hand.state == BLACKJACK) {
+        if (player.state is Blackjack) {
             draw(player = player, dealer = dealer)
         } else {
             winAndLose(winner = dealer, loser = player)
@@ -47,7 +46,7 @@ class Participants(
     }
 
     private fun checkStay(player: Player) {
-        if (player.hand.state == BUST) {
+        if (player.state is Bust) {
             winAndLose(winner = dealer, loser = player)
         } else {
             compareWhenBothStay(player = player)
@@ -66,19 +65,19 @@ class Participants(
     }
 
     private fun winAndLose(
-        winner: BaseHolder,
-        loser: BaseHolder,
+        winner: CardHolder,
+        loser: CardHolder,
     ) {
-        winner.changeResult(newWin = INCREASING_COUNT)
-        loser.changeResult(newDefeat = INCREASING_COUNT)
+        winner.hand.changeResult(newWin = INCREASING_COUNT)
+        loser.hand.changeResult(newDefeat = INCREASING_COUNT)
     }
 
     private fun draw(
-        player: BaseHolder,
-        dealer: BaseHolder,
+        player: CardHolder,
+        dealer: CardHolder,
     ) {
-        player.changeResult(newPush = INCREASING_COUNT)
-        dealer.changeResult(newPush = INCREASING_COUNT)
+        player.hand.changeResult(newPush = INCREASING_COUNT)
+        dealer.hand.changeResult(newPush = INCREASING_COUNT)
     }
 
     companion object {
