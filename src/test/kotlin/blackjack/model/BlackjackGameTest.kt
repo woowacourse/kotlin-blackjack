@@ -17,10 +17,10 @@ class BlackjackGameTest {
         val players = Players.from(listOf("olive", "seogi"))
 
         // when
-        BlackjackGame.initCard(dealer, players, TestCardProvider)
+        BlackjackGame(dealer, players, TestCardProvider)
 
         // then
-        val expected = listOf(Card.of("K", "하트"), Card.of("K", "하트"))
+        val expected = listOf(Card.of("2", "하트"), Card.of("2", "하트"))
         assertThat(dealer.getCards()).isEqualTo(expected)
         players.playerGroup.forEach {
             assertThat(it.getCards()).isEqualTo(expected)
@@ -39,7 +39,7 @@ class BlackjackGameTest {
         }
 
         // when
-        val gameResultStorage = BlackjackGame.calculateGameResult(dealer, players)
+        val gameResultStorage = BlackjackGame(dealer, players, TestCardProvider).calculateGameResult()
 
         // then
         assertThat(gameResultStorage.dealerResult.results)
