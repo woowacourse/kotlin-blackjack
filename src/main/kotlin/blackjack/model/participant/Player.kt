@@ -8,8 +8,8 @@ class Player(val name: String, private val deck: Deck) : GameParticipant(HandCar
         handCards.create(deck)
     }
 
-    fun addCard(playerInput: Boolean): Boolean =
-        if (isCanAddCard(playerInput)) {
+    fun addCard(isWantAddCard: Boolean): Boolean =
+        if (isCanAddCard(isWantAddCard)) {
             handCards.add(deck)
             true
         } else {
