@@ -18,7 +18,7 @@ sealed class Participant(val name: ParticipantName, state: State) {
 class Player(name: ParticipantName, state: State) : Participant(name, state)
 
 class Dealer(name: ParticipantName = ParticipantName(DEALER_NAME), state: State) : Participant(name, state) {
-    fun isUnderHitThreshold(threshold: Int = THRESHOLD_HIT): Boolean = state.hand().calculateSum() <= threshold
+    fun isUnderHitThreshold(threshold: Int = THRESHOLD_HIT): Boolean = state.hand().sumUpCardValues() <= threshold
 
     companion object {
         const val THRESHOLD_HIT = 16

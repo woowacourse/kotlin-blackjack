@@ -15,14 +15,14 @@ class StateTest {
     @Test
     fun `카드의 숫자합이 기준점을 넘지 않으면 초기 카드 상태는 Hit이다`() {
         val threshold = 21
-        val state = State.initializeSetting(Hand(Card(10), Card(9)), threshold)
+        val state = State.determineInitialGameState(Hand(Card(10), Card(9)), threshold)
         assertThat(state is Hit).isTrue()
     }
 
     @Test
     fun `카드의 숫자합이 기준점이면 상태는 Blackjack이다`() {
         val threshold = 21
-        val state = State.initializeSetting(Hand(Card(10), Card(11)), threshold)
+        val state = State.determineInitialGameState(Hand(Card(10), Card(11)), threshold)
         assertThat(state is Blackjack).isTrue()
     }
 

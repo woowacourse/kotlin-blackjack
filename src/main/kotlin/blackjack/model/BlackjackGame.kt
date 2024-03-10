@@ -2,32 +2,32 @@ package blackjack.model
 
 class BlackjackGame(private val deck: CardDeck, val participants: Participants) {
     fun playRound(
-        askForPlayerAction: (name: ParticipantName) -> Boolean,
-        displayParticipantsStatus: (Participant) -> Unit,
+        isPlayerActionContinued: (name: ParticipantName) -> Boolean,
+        updateParticipantStatus: (Participant) -> Unit,
     ) {
-        playRoundForPlayers(askForPlayerAction, displayParticipantsStatus)
-        playRoundForDealer(displayParticipantsStatus)
+        playRoundForPlayers(isPlayerActionContinued, updateParticipantStatus)
+        playRoundForDealer(updateParticipantStatus)
     }
 
     private fun playRoundForPlayers(
-        askForPlayerAction: (name: ParticipantName) -> Boolean,
-        displayParticipantsStatus: (player: Player) -> Unit,
+        isPlayerActionContinued: (name: ParticipantName) -> Boolean,
+        updateParticipantStatus: (player: Player) -> Unit,
     ) {
         participants.players.forEach { player ->
             while (player.state is Running) {
-                val continuePlaying = askForPlayerAction(player.name)
+                val continuePlaying = isPlayerActionContinued(player.name)
 
                 if (continuePlaying) {
                     player.receiveCard(deck.pick())
                 } else {
                     player.finishRound()
                 }
-                displayParticipantsStatus(player)
+                updateParticipantStatus(player)
             }
         }
     }
 
-    private fun playRoundForDealer(displayParticipantsStatus: (dealer: Dealer) -> Unit) {
+    private fun playRoundForDealer(updateParticipantStatus: (dealer: Dealer) -> Unit) {
         val dealer = participants.dealer
         while (dealer.state is Running) {
             val continuePlaying = dealer.isUnderHitThreshold()
@@ -36,7 +36,7 @@ class BlackjackGame(private val deck: CardDeck, val participants: Participants) 
             } else {
                 dealer.finishRound()
             }
-            displayParticipantsStatus(dealer)
+            updateParticipantStatus(dealer)
         }
     }
 
@@ -81,8 +81,8 @@ class BlackjackGame(private val deck: CardDeck, val participants: Participants) 
         player: Player,
         dealer: Dealer,
     ): WinningState {
-        val dealerScore = dealer.state.hand().calculateSum()
-        val playerScore = player.state.hand().calculateSum()
+        val dealerScore = dealer.state.hand().sumUpCardValues()
+        val playerScore = player.state.hand().sumUpCardValues()
 
         return when {
             player.state is Bust || playerScore < dealerScore -> WinningState(0, 1)

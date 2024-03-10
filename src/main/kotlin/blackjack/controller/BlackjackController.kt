@@ -14,7 +14,7 @@ import blackjack.view.OutputView
 class BlackjackController {
     fun play() {
         val deck = CardDeckGenerator.generate()
-        val participants = initialSetting(deck, InputView.readNames())
+        val participants = initializeCardSetting(deck, InputView.readNames())
         OutputView.printInitialStatus(participants)
 
         val blackjackGame = BlackjackGame(deck, participants)
@@ -26,13 +26,13 @@ class BlackjackController {
         OutputView.printResult(blackjackGame.calculateResult())
     }
 
-    private fun initialSetting(
+    private fun initializeCardSetting(
         deck: CardDeck,
         names: List<String>,
     ): Participants {
-        val dealer = Dealer(state = State.initializeSetting(deck.initialDistribute()))
+        val dealer = Dealer(state = State.determineInitialGameState(deck.initialDistribute()))
         val players: List<Player> =
-            names.map { Player(ParticipantName(it), State.initializeSetting(deck.initialDistribute())) }
+            names.map { Player(ParticipantName(it), State.determineInitialGameState(deck.initialDistribute())) }
 
         return Participants(dealer, players)
     }

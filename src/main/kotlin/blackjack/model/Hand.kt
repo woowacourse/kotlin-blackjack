@@ -9,7 +9,7 @@ class Hand(cards: List<Card>) {
         _cards.add(card)
     }
 
-    fun calculateSum(): Int {
+    fun sumUpCardValues(): Int {
         val sumWithoutAces = cards.filterNot { it.number == CardNumber.ACE }.sumOf { it.number.value }
         val acesCount = cards.count { it.number == CardNumber.ACE }
         var totalSum = sumWithoutAces + acesCount

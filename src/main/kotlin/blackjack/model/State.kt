@@ -11,11 +11,11 @@ sealed interface State {
         const val THRESHOLD_BUST = 21
         private const val THRESHOLD_BLACKJACK = 21
 
-        fun initializeSetting(
+        fun determineInitialGameState(
             hand: Hand,
             threshold: Int = THRESHOLD_BLACKJACK,
         ): State {
-            return when (hand.calculateSum()) {
+            return when (hand.sumUpCardValues()) {
                 threshold -> Blackjack(hand)
                 else -> Hit(hand)
             }
@@ -38,7 +38,7 @@ sealed class Finished(private val hand: Hand) : State {
 class Hit(private val hand: Hand) : Running(hand) {
     override fun draw(card: Card): State {
         hand.addCard(card)
-        val sumOfCard = hand.calculateSum()
+        val sumOfCard = hand.sumUpCardValues()
         return when {
             sumOfCard > State.THRESHOLD_BUST -> Bust(hand)
             sumOfCard == State.THRESHOLD_BUST -> Stay(hand)

@@ -49,7 +49,7 @@ object OutputView {
             println(
                 "${participant.name}카드 ${
                     participant.getCards().joinToString(", ") { cardToString(it) }
-                } - 결과: ${participant.state.hand().calculateSum()}",
+                } - 결과: ${participant.state.hand().sumUpCardValues()}",
             )
         }
     }
