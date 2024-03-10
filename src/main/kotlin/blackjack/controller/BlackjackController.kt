@@ -1,10 +1,8 @@
 package blackjack.controller
 
 import blackjack.model.BlackjackGame
-import blackjack.model.card.Card
 import blackjack.model.card.CardProvider
 import blackjack.model.participant.Dealer
-import blackjack.model.participant.Player
 import blackjack.model.participant.Players
 import blackjack.util.retryWhileNotException
 import blackjack.view.InputView
@@ -21,30 +19,20 @@ class BlackjackController(
         val blackjackGame = BlackjackGame(dealer, players, cardProvider)
         outputView.printInitCard(dealer, players)
 
-        takePlayersTurn(players)
-        takeDealerTurn(dealer)
+        takePlayersTurn(blackjackGame)
+        takeDealerTurn(blackjackGame)
         showGameResult(dealer, players, blackjackGame)
     }
 
-    private fun takePlayersTurn(players: Players) {
-        players.playerGroup.forEach {
-            takePlayerTurn(it)
-        }
+    private fun takePlayersTurn(blackjackGame: BlackjackGame) {
+        blackjackGame.startPlayersTurn(
+            { player -> inputView.readMoreCardDecision(player) },
+            { player -> outputView.printPlayerCardsMessage(player) },
+        )
     }
 
-    private fun takePlayerTurn(player: Player) {
-        while (player.decideMoreCard()) {
-            val inputMoreCardDecision = inputView.readMoreCardDecision(player)
-            if (!inputMoreCardDecision) break
-
-            player.receiveCard(Card.from(cardProvider))
-            outputView.printPlayerCardsMessage(player)
-        }
-    }
-
-    private fun takeDealerTurn(dealer: Dealer) {
-        while (dealer.decideMoreCard()) {
-            dealer.receiveCard(Card.from(cardProvider))
+    private fun takeDealerTurn(blackjackGame: BlackjackGame) {
+        blackjackGame.startDealerTurn {
             outputView.printDealerAdditionalCardMessage()
         }
     }
