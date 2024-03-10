@@ -1,6 +1,5 @@
 package blackjack
 
-import blackjack.util.CompetitionResult
 import blackjack.model.deck.CardMachineManager
 import blackjack.model.deck.Deck
 import blackjack.model.participant.Dealer
@@ -8,6 +7,7 @@ import blackjack.model.participant.Players
 import blackjack.testmachine.BlackjackCardMachine
 import blackjack.testmachine.BustCardMachine
 import blackjack.testmachine.NormalCardMachine
+import blackjack.util.CompetitionResult
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test

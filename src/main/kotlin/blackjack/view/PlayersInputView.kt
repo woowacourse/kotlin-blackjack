@@ -9,18 +9,20 @@ class PlayersInputView {
         return retryWhileNoException(deck)
     }
 
-    private fun retryWhileNoException(deck: Deck) = runCatching {
-        val names =
-            readln().splitNames()
-        Players.playerNamesOf(names, deck)
-    }.onFailure {
-        println(it.message)
-        return readPlayerNames(deck)
-    }.getOrThrow()
+    private fun retryWhileNoException(deck: Deck) =
+        runCatching {
+            val names =
+                readln().splitNames()
+            Players.playerNamesOf(names, deck)
+        }.onFailure {
+            println(it.message)
+            return readPlayerNames(deck)
+        }.getOrThrow()
 
-    private fun String.splitNames() = split(SPLIT_DELIMITER)
-        .map { it.trim() }
-        .filterNot { it.isBlank() }
+    private fun String.splitNames() =
+        split(SPLIT_DELIMITER)
+            .map { it.trim() }
+            .filterNot { it.isBlank() }
 
     companion object {
         private const val SPLIT_DELIMITER = ","
