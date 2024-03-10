@@ -5,15 +5,15 @@ object InputView {
     private const val MESSAGE_CONTINUE_INPUT = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)"
     private const val DELIMITER_NAMES = ","
 
-    fun readPlayerNames(): List<String>? {
+    fun readPlayerNames(): List<String> {
         println(MESSAGE_INPUT_PARTICIPANT_NAMES)
         return readln().split(DELIMITER_NAMES).map { name ->
-            name.trim().ifEmpty { return null }
+            name.trim()
         }
     }
 
-    fun readContinueInput(name: String): String? {
+    fun readContinueInput(name: String): String {
         println(MESSAGE_CONTINUE_INPUT.format(name))
-        return readln().trim().ifEmpty { return null }
+        return readln().trim()
     }
 }
