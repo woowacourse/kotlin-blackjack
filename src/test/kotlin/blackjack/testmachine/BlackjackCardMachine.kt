@@ -6,7 +6,7 @@ import blackjack.model.util.CardNumber
 import blackjack.model.util.Pattern
 
 class BlackjackCardMachine : CardMachine {
-    override fun shuffle(cards: List<Card>): List<Card> {
+    override fun handle(cards: List<Card>): List<Card> {
         return listOf(
             Card(CardNumber.ACE, Pattern.SPADE),
             Card(CardNumber.JACK, Pattern.CLOVER),
