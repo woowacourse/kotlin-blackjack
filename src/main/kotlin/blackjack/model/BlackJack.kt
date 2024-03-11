@@ -48,11 +48,11 @@ class BlackJack {
         while (aceCount > 0 && state == State.Finish.Bust) {
             aceCount -= 1
             currentScore -= Denomination.ACE.getScore() + Denomination.aceTransferScore()
-            checkCurrentScore(currentScore)
+            updateStateActionHit(currentScore)
         }
     }
 
-    private fun checkCurrentScore(currentScore: Int) {
+    private fun updateStateActionHit(currentScore: Int) {
         if (currentScore < BUST_SCORE) {
             _state = State.Action.Hit
         }
