@@ -18,13 +18,13 @@ class GameController {
         val participants = Participants(dealer = dealer, playerGroup = playerGroup)
 
         while (true) {
-            playGame(participants = participants)
-                .onSuccess {
-                    OutputView.printMatchResult(dealer = participants.dealer, playerGroup = participants.playerGroup)
-                    return
-                }.onFailure { e ->
-                    OutputView.printError(e)
-                }
+            playGame(participants = participants).onSuccess {
+                OutputView.printMatchResult(dealer = participants.dealer, playerGroup = participants.playerGroup)
+                return
+            }.onFailure { e ->
+                handReset(participants = participants)
+                OutputView.printError(e)
+            }
         }
     }
 
@@ -47,5 +47,10 @@ class GameController {
         val playerGroup = PlayerGroup()
         playerGroup.addPlayer(playerNames = playersNames)
         return playerGroup
+    }
+
+    private fun handReset(participants: Participants) {
+        participants.playerGroup.players.forEach { player -> player.hand.reset() }
+        participants.dealer.hand.reset()
     }
 }

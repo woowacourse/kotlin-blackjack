@@ -21,6 +21,10 @@ class Hand(cards: List<Card> = emptyList()) {
         return Hand(cards)
     }
 
+    fun reset() {
+        _cards = emptyList()
+    }
+
     fun determineState(): State {
         return when (calculate()) {
             in RUNNING_RANGE -> Hit
