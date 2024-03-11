@@ -4,7 +4,6 @@ import blackjack.model.CardDeck
 import blackjack.model.Dealer
 import blackjack.model.GameInfo
 import blackjack.model.Judge
-import blackjack.model.Participant
 import blackjack.model.Players
 import blackjack.view.InputView
 import blackjack.view.OutputView
@@ -45,27 +44,19 @@ object BlackJackController {
     }
 
     private fun playRound() {
-        with(OutputView) {
-            players.value.forEach { player ->
-                player.drawForSingleParticipant(::printSinglePlayerCards)
-            }
-            printNewLine()
-            dealer.drawForSingleParticipant(::printDealerHit)
+        players.value.forEach { player ->
+            player.drawCardsUntilStand(CardDeck::pick, OutputView::printSinglePlayerCards)
         }
+        OutputView.printNewLine()
+        dealer.drawCardsUntilStand(CardDeck::pick, OutputView::printDealerHit)
     }
 
     private fun displayResult() {
-        val dealerInfo = dealer.gameInfo
-        val playersInfo = players.value.map { player -> player.gameInfo }
-        val judge = Judge(dealerInfo, playersInfo)
+        val judge = Judge(dealer, players)
         with(OutputView) {
-            printFinalCards(dealerInfo, playersInfo)
+            printFinalCards(dealer, players)
             printResult(judge)
         }
-    }
-
-    private fun Participant.drawForSingleParticipant(printCards: (GameInfo) -> Unit) {
-        drawCardsUntilStand(CardDeck::pick, printCards)
     }
 
     private fun askPlayerHit(playerName: String): String =

@@ -1,7 +1,9 @@
 package blackjack.view
 
+import blackjack.model.Dealer
 import blackjack.model.GameInfo
 import blackjack.model.Judge
+import blackjack.model.Players
 import blackjack.model.Scoreboard
 
 object OutputView {
@@ -29,28 +31,28 @@ object OutputView {
     }
 
     fun printFinalCards(
-        dealerGameInfo: GameInfo,
-        playersGameInfo: List<GameInfo>,
+        dealer: Dealer,
+        players: Players,
     ) {
         println()
         println(
             MESSAGE_PARTICIPANT_CARD_RESULT.format(
                 MESSAGE_CARD_INFO.format(
-                    dealerGameInfo.name,
-                    dealerGameInfo.cards.joinToString { "${it.title}${it.shape.title}" },
+                    dealer.gameInfo.name,
+                    dealer.gameInfo.cards.joinToString { "${it.title}${it.shape.title}" },
                 ),
-                dealerGameInfo.sumOfCards,
+                dealer.gameInfo.sumOfCards,
             ),
         )
 
-        playersGameInfo.forEach { playerStat ->
+        players.value.forEach { player ->
             println(
                 MESSAGE_PARTICIPANT_CARD_RESULT.format(
                     MESSAGE_CARD_INFO.format(
-                        playerStat.name,
-                        playerStat.cards.joinToString { "${it.title}${it.shape.title}" },
+                        player.gameInfo.name,
+                        player.gameInfo.cards.joinToString { "${it.title}${it.shape.title}" },
                     ),
-                    playerStat.sumOfCards,
+                    player.gameInfo.sumOfCards,
                 ),
             )
         }
@@ -59,9 +61,9 @@ object OutputView {
     fun printResult(judge: Judge) {
         println(MESSAGE_TITLE_RESULT)
         with(judge) {
-            println(MESSAGE_CARD_STATUS.format(dealerInfo.name, getDealerResult(getDealerResult())))
-            getPlayerResults().zip(playersInfo) { result, stat ->
-                println(MESSAGE_CARD_STATUS.format(stat.name, result))
+            println(MESSAGE_CARD_STATUS.format(dealer.gameInfo.name, getDealerResult(getDealerResult())))
+            getPlayerResults().zip(players.value) { result, player ->
+                println(MESSAGE_CARD_STATUS.format(player.gameInfo.name, result))
             }
         }
     }
