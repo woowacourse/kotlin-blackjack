@@ -3,8 +3,7 @@ package blackjack.model
 import blackjack.state.State
 
 class GameManager(
-    private val dealer: Dealer,
-    private val players: List<Player>,
+    private val participants: Participants
 ) {
     private val cardDeck = CardDeck()
     private val dealerResults: MutableMap<Result, Int> = Result.entries.associateWith { 0 }.toMutableMap()
@@ -19,14 +18,14 @@ class GameManager(
     }
 
     fun judgeBlackJackScores() {
-        players.forEach { player ->
+        participants.getPlayers().forEach { player ->
             judgeBlackJackScore(player)
         }
     }
 
-    fun setGame(participants: Participants) {
+    fun setGame() {
         repeat(INIT_HAND_CARD_COUNT) {
-            participants.getParticipants().forEach { participant ->
+            getParticipants().forEach { participant ->
                 participant.draw(cardDeck.draw())
             }
         }
@@ -34,6 +33,18 @@ class GameManager(
 
     fun applyUserDrawDecision(participant: Participant) {
         participant.draw(cardDeck.draw())
+    }
+
+    fun getParticipants(): List<Participant> {
+        return participants.getPlayers() + participants.getDealer()
+    }
+
+    fun getDealer(): Dealer {
+        return participants.getDealer()
+    }
+
+    fun getAlivePlayers(): List<Participant> {
+        return participants.getAlivePlayers()
     }
 
     private fun judgeBlackJackScore(player: Player) {
@@ -46,7 +57,7 @@ class GameManager(
     }
 
     private fun applyBlackJackState(player: Player) {
-        if (dealer.getBlackJackState() == State.Finish.BlackJack) {
+        if (participants.getDealer().getBlackJackState() == State.Finish.BlackJack) {
             addDealerDraw(player)
         } else {
             addDealerLose(player)
@@ -54,7 +65,7 @@ class GameManager(
     }
 
     private fun compareToResult(player: Player) {
-        val dealerScore = dealer.getBlackJackScore()
+        val dealerScore = participants.getDealer().getBlackJackScore()
         val playerScore = player.getBlackJackScore()
         when {
             dealerScore > playerScore -> addDealerWin(player)

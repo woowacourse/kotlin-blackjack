@@ -25,10 +25,6 @@ class Participants(private val participants: List<Participant>) {
         }
     }
 
-    fun getParticipants(): List<Participant> {
-        return participants
-    }
-
     fun getDealer(): Dealer {
         return participants.first() as Dealer
     }

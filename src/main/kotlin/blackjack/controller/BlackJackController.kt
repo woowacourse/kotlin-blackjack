@@ -9,22 +9,20 @@ import blackjack.view.InputView
 import blackjack.view.OutputView
 
 class BlackJackController {
-    private lateinit var participants: Participants
     private lateinit var gameManager: GameManager
 
     fun startGameFlow() {
         val dealer = Dealer()
         val players = InputView.inputPlayers()
-        participants =
+        val participants =
             Participants(
                 participants = listOf(dealer) + players,
             )
         gameManager =
             GameManager(
-                dealer = participants.getDealer(),
-                players = participants.getPlayers(),
+                participants = participants,
             )
-        gameManager.setGame(participants)
+        gameManager.setGame()
         OutputView.outputParticipantsName(
             dealerName = dealer.getName(),
             players = participants.getPlayers(),
@@ -37,7 +35,7 @@ class BlackJackController {
     }
 
     fun playGame() {
-        participants.getAlivePlayers().forEach { player ->
+        gameManager.getAlivePlayers().forEach { player ->
             playPlayer(player as Player)
         }
         playDealer()
@@ -51,7 +49,7 @@ class BlackJackController {
     }
 
     private fun playDealer() {
-        val dealer = participants.getDealer()
+        val dealer = gameManager.getDealer()
         while (dealer.checkDealerScoreCondition()) {
             OutputView.outputDealerRule()
             gameManager.applyUserDrawDecision(dealer)
@@ -60,10 +58,10 @@ class BlackJackController {
     }
 
     fun showResult() {
-        OutputView.outputParticipantsHandCard(participants.getParticipants())
+        OutputView.outputParticipantsHandCard(gameManager.getParticipants())
         OutputView.outputBlackResult()
         OutputView.outputDealerResult(
-            dealerName = participants.getDealer().getName(),
+            dealerName = gameManager.getDealer().getName(),
             dealerResults = gameManager.getDealerResults(),
         )
         OutputView.outputPlayersResult(
