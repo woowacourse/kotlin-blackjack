@@ -5,10 +5,7 @@ import blackjack.model.deck.Deck
 import blackjack.model.deck.HandCards
 
 class Dealer(deck: Deck) : GameParticipant(HandCards(deck)) {
-    fun getFirstCard(): String =
-        with(handCards.cards.first()) {
-            "${cardNumber.value}${pattern.shape}"
-        }
+    fun getFirstCard(): String = handCards.getFirstCard()
 
     fun addCard(): Boolean =
         if (handCards.calculateCardScore() < DEALER_HIT_THRESHOLD) {

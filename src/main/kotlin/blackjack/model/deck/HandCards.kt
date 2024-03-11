@@ -13,6 +13,10 @@ class HandCards(private val deck: Deck) {
         _cards.addAll(deck.draw(HIT_CARD_AMOUNT))
     }
 
+    fun getFirstCard(): String = "${cards.first().cardNumber.value}${cards.first().pattern.shape}"
+
+    fun getAllCards(): String = cards.joinToString(SPLIT_DELIMITER) { "${it.cardNumber.value}${it.pattern.shape}" }
+
     fun calculateCardScore(): Int {
         val baseScore = cards.sumOf { it.cardNumber.score }
         val hasAce = cards.any { it.cardNumber == CardNumber.ACE }
@@ -23,6 +27,7 @@ class HandCards(private val deck: Deck) {
     fun isBlackjackCard(): Boolean = cards.size == 2 && calculateCardScore() == BLACKJACK_NUMBER
 
     companion object {
+        const val SPLIT_DELIMITER = ", "
         private const val INIT_CARD_AMOUNT = 2
         private const val HIT_CARD_AMOUNT = 1
         private const val ACE_EXTRA_SCORE = 10

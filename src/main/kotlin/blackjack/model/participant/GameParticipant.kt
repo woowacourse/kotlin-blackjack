@@ -7,7 +7,7 @@ abstract class GameParticipant(protected val handCards: HandCards) {
 
     fun isBlackjack(): Boolean = handCards.isBlackjackCard()
 
-    fun getAllCards(): String = handCards.cards.joinToString(SPLIT_DELIMITER) { "${it.cardNumber.value}${it.pattern.shape}" }
+    fun getAllCards(): String = handCards.getAllCards()
 
     fun getScore(): Int = handCards.calculateCardScore()
 
