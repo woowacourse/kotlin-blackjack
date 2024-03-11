@@ -32,9 +32,9 @@ class GameController {
         blackJackGame.start(::printGameSetting)
         blackJackGame.runPlayersTurn(
             hitOrStay = ::askHitOrStay,
-            showPlayerCards = ::showPlayerCards,
+            getPlayerInfo = ::showPlayerCards,
         )
-        blackJackGame.runDealerTurn(printDealerDrawCard = ::printDealerDrawCard)
+        blackJackGame.runDealerTurn(alert = ::printDealerDrawCard)
         blackJackGame.finish(printEveryCards = ::printEveryCards)
     }
 

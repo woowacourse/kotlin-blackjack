@@ -5,11 +5,11 @@ import blackjack.base.BaseHolder
 class Dealer(override val humanName: HumanName = HumanName(DEFAULT_DEALER_NAME)) : BaseHolder() {
     fun drawDealerCard(
         gameDeck: GameDeck,
-        printDealerDrawCard: () -> Unit,
+        alert: () -> Unit,
     ) {
         while (hand.state == UserState.RUNNING) {
             if (hand.calculate() <= THRESHOLD) {
-                printDealerDrawCard()
+                alert()
                 takeCard(gameDeck.drawCard())
             } else {
                 hand.changeState(UserState.STAY)

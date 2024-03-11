@@ -6,7 +6,7 @@ class Player(override val humanName: HumanName) : BaseHolder() {
     fun chooseHitOrStay(
         gameDeck: GameDeck,
         hitOrStay: (humanName: HumanName) -> Boolean,
-        showPlayerCards: (player: Player) -> Unit,
+        returnPlayerInfo: (player: Player) -> Unit,
     ) {
         while (hand.state == UserState.RUNNING) {
             if (hitOrStay(humanName)) {
@@ -14,7 +14,7 @@ class Player(override val humanName: HumanName) : BaseHolder() {
             } else {
                 hand.changeState(UserState.STAY)
             }
-            showPlayerCards(this)
+            returnPlayerInfo(this)
         }
     }
 }

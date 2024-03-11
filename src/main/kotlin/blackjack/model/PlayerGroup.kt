@@ -13,10 +13,10 @@ class PlayerGroup {
     fun drawPlayerCard(
         gameDeck: GameDeck,
         hitOrStay: (humanName: HumanName) -> Boolean,
-        showPlayerCards: (player: Player) -> Unit,
+        getPlayerInfo: (player: Player) -> Unit,
     ) {
         players.forEach { player ->
-            player.chooseHitOrStay(gameDeck, hitOrStay, showPlayerCards)
+            player.chooseHitOrStay(gameDeck, hitOrStay, getPlayerInfo)
         }
     }
 

@@ -11,19 +11,19 @@ class BlackJackGame(
 
     fun runPlayersTurn(
         hitOrStay: (humanName: HumanName) -> Boolean,
-        showPlayerCards: (player: Player) -> Unit,
+        getPlayerInfo: (player: Player) -> Unit,
     ) {
         participants.playerGroup.drawPlayerCard(
             gameDeck = gameDeck,
             hitOrStay = hitOrStay,
-            showPlayerCards = showPlayerCards,
+            getPlayerInfo = getPlayerInfo,
         )
     }
 
-    fun runDealerTurn(printDealerDrawCard: () -> Unit) {
+    fun runDealerTurn(alert: () -> Unit) {
         participants.dealer.drawDealerCard(
             gameDeck = gameDeck,
-            printDealerDrawCard = printDealerDrawCard,
+            alert = alert,
         )
     }
 
