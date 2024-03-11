@@ -22,7 +22,7 @@ object BlackJackController {
     fun run() {
         val deck = Deck()
         val playersName = readPlayersName()
-        val (dealer, playerEntry) = setInitialCard(playersName, deck)
+        val (dealer, playerEntry) = getDealerAndPlayerEntry(playersName, deck)
         playGame(playerEntry, dealer, deck)
         showGameResult(dealer, playerEntry)
     }
@@ -86,7 +86,7 @@ object BlackJackController {
         }
     }
 
-    private fun setInitialCard(
+    private fun getDealerAndPlayerEntry(
         playersName: List<String>,
         deck: Deck,
     ): Pair<Dealer, PlayerEntry> {
