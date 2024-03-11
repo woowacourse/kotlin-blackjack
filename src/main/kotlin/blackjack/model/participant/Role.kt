@@ -3,21 +3,21 @@ package blackjack.model.participant
 import blackjack.model.card.Card
 
 abstract class Role {
-    private val scoreBoard = ScoreBoard()
+    private val handCards = HandCards()
 
     abstract fun decideMoreCard(): Boolean
 
     fun receiveCard(card: Card) {
-        scoreBoard.applyReceivedCard(card, BLACKJACK_VALUE)
+        handCards.addCard(card)
     }
 
-    fun isBurst() = scoreBoard.cardSum > BLACKJACK_VALUE
+    fun isBurst() = handCards.getCardSum(BLACKJACK_VALUE) > BLACKJACK_VALUE
 
-    fun isBlackjack() = scoreBoard.cardSum == BLACKJACK_VALUE
+    fun isBlackjack() = handCards.getCardSum(BLACKJACK_VALUE) == BLACKJACK_VALUE
 
-    fun getCardSum() = scoreBoard.cardSum
+    fun getCardSum() = handCards.getCardSum(BLACKJACK_VALUE)
 
-    fun getCards() = scoreBoard.handCards.cards
+    fun getCards() = handCards.cards
 
     companion object {
         private const val BLACKJACK_VALUE = 21
