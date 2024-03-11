@@ -1,22 +1,7 @@
 package blackjack.model
 
-class Player(val name: String, val hand: Hand) {
+class Player(val name: String, hand: Hand) : Participant(hand) {
     constructor(pair: Pair<String, Hand>) : this(pair.first, pair.second)
-
-    fun hit(card: Card) {
-        hand.add(card)
-    }
-
-    fun hitIfConditionTrue(
-        deck: Deck,
-        condition: () -> Boolean,
-        view: () -> Unit,
-    ) {
-        while (condition()) {
-            hit(deck.pull())
-            view()
-        }
-    }
 
     fun comparePoints(dealer: Dealer): WinningState {
         val playerCards = hand

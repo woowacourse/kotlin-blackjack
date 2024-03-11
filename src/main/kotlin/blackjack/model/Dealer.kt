@@ -1,23 +1,9 @@
 package blackjack.model
 
-class Dealer(val hand: Hand) {
+class Dealer(hand: Hand) : Participant(hand) {
     fun canHit(): Boolean {
         if (hand.isBust()) return false
         return hand.sumOptimized() < HIT_CONDITION
-    }
-
-    fun hit(card: Card) {
-        hand.add(card)
-    }
-
-    fun hitUntilBust(
-        deck: Deck,
-        view: () -> Unit,
-    ) {
-        while (canHit()) {
-            hit(deck.pull())
-            view()
-        }
     }
 
     fun createScoreBoard(players: List<Player>): ScoreBoard {

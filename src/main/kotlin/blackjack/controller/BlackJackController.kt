@@ -2,7 +2,7 @@ package blackjack.controller
 
 import blackjack.model.Dealer
 import blackjack.model.Deck
-import blackjack.model.Participant
+import blackjack.model.ParticipantData
 import blackjack.model.ParticipantsHand
 import blackjack.model.Player
 import blackjack.view.InputView
@@ -23,13 +23,13 @@ class BlackJackController(
     private fun spreadCards(
         deck: Deck,
         playersNames: List<String>,
-    ): Participant {
+    ): ParticipantData {
         val (playerHand, dealerHand) =
             ParticipantsHand.from(deck.spread(playersNames.size))
         val dealer = Dealer(dealerHand)
         val players: List<Player> = Player.createPlayers(playersNames, playerHand)
         outputView.showDivided(dealerHand.first(), players)
-        return Participant(dealer, players)
+        return ParticipantData(dealer, players)
     }
 
     private fun hitParticipant(
@@ -38,7 +38,10 @@ class BlackJackController(
         dealer: Dealer,
     ) {
         hitPlayers(players, deck)
-        dealer.hitUntilBust(deck) { outputView.showDealerHitCard() }
+        dealer.hitIfConditionTrue(
+            deck,
+            { dealer.canHit() },
+        ) { outputView.showDealerHitCard() }
         outputView.showDealerScore(dealer.hand.cards, dealer.hand.sumOptimized())
     }
 
