@@ -58,9 +58,8 @@ object BlackJackController {
         dealer: Dealer,
         deck: Deck,
     ) {
-        while (dealer.judgeDraw()) {
+        while (dealer.state == State.Running.Hit) {
             dealer.hand.draw(deck.dealCard())
-            determineDealerstate(dealer)
             showDealerDrawMessage(dealer)
         }
     }
@@ -80,11 +79,9 @@ object BlackJackController {
             val drawOrNot = judgePlayersDraw(player)
             if (drawOrNot == DRAW_DECISION) {
                 player.hand.draw(deck.dealCard())
-                drawOrNot(drawOrNot, player)
                 showPlayerHand(player)
-                determinestate(player)
             } else {
-                player.state = State.Finished.Stay
+                break
             }
         }
     }
@@ -130,32 +127,5 @@ object BlackJackController {
         val hands = List(playersName.size + 1) { Hand(mutableListOf()) }
         repeat(2) { hands.forEach { hand -> hand.draw(deck.dealCard()) } }
         return hands
-    }
-
-    private fun drawOrNot(
-        drawOrNot: String?,
-        player: Player,
-    ) {
-        if (drawOrNot == DRAW_DECISION) {
-            determinestate(player)
-        } else {
-            player.state = State.Finished.Stay
-        }
-    }
-
-    private fun determinestate(player: Player) {
-        if (player.hand.isBust()) {
-            player.state = State.Finished.Bust
-        } else if (player.hand.isBlackjack()) {
-            player.state = State.Finished.BlackJack
-        }
-    }
-
-    private fun determineDealerstate(dealer: Dealer) {
-        if (dealer.hand.isBust()) {
-            dealer.state = State.Finished.Bust
-        } else if (dealer.hand.isBlackjack()) {
-            dealer.state = State.Finished.BlackJack
-        }
     }
 }

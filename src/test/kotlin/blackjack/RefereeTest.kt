@@ -7,7 +7,6 @@ import blackjack.model.card.Hand
 import blackjack.model.card.Suit
 import blackjack.model.game.Referee
 import blackjack.model.game.Result
-import blackjack.model.game.State
 import blackjack.model.player.Dealer
 import blackjack.model.player.PlayerEntry
 import org.assertj.core.api.Assertions.assertThat
@@ -81,7 +80,6 @@ class RefereeTest {
                     ),
                 ),
             )
-        player.state = State.Finished.Bust
         val players = listOf(player)
         val playerEntry = PlayerEntry(players)
         val referee = Referee(dealer, playerEntry)
@@ -106,7 +104,6 @@ class RefereeTest {
                 "채드",
                 Hand(mutableListOf(Card(Denomination.ACE, Suit.HEARTS), Card(Denomination.JACK, Suit.SPADES))),
             )
-        dealer.state = State.Finished.Bust
         val players = listOf(player)
         val playerEntry = PlayerEntry(players)
         val referee = Referee(dealer, playerEntry)
