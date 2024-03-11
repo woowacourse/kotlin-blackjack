@@ -1,9 +1,12 @@
 package blackjack.model
 
+import blackjack.exception.ErrorCode.INVALID_NAME_LENGTH_ERROR
+import blackjack.exception.ExceptionsHandler.handleValidation
+
 @JvmInline
 value class Nickname(val name: String) {
     init {
-        require(name.length in NAME_RANGE) { "이름의 길이는 1에서 20 사이여야 합니다" }
+        handleValidation(INVALID_NAME_LENGTH_ERROR) { name.length in NAME_RANGE }
     }
 
     override fun toString(): String = name
