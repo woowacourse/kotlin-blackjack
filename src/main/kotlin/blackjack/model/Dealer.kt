@@ -6,15 +6,15 @@ class Dealer(name: String = "딜러") : Participant(name) {
         val playerScore = participant.getCardSum()
         return when {
             (dealerScore < playerScore) -> {
-                GameResult.`승`
+                GameResult.WIN
             }
 
             (dealerScore == playerScore) -> {
-                GameResult.`무`
+                GameResult.DRAW
             }
 
             else -> {
-                GameResult.`패`
+                GameResult.LOSE
             }
         }
     }

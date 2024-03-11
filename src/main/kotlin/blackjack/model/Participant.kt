@@ -16,7 +16,7 @@ abstract class Participant(val name: String) {
         return sum + additionalAceScore
     }
 
-    private fun hasAce() = cardList.any { it.cardNumber == CardNumber.A }
+    private fun hasAce() = cardList.any { it.cardNumber == CardNumber.ACE }
 
     fun isBusted(): Boolean {
         return MAX_SCORE < getCardSum()

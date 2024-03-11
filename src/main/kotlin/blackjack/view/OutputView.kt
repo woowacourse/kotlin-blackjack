@@ -7,15 +7,20 @@ import blackjack.model.Participant
 import blackjack.model.Player
 
 object OutputView {
-
-    fun printInitialResult(dealer: Dealer, players: List<Player>) {
+    fun printInitialResult(
+        dealer: Dealer,
+        players: List<Player>,
+    ) {
         println(buildDealerInitialCard(dealer))
         players.forEach {
             printParticipantStatus(it)
         }
     }
 
-    fun printResult(dealer: Dealer, players: List<Player>) {
+    fun printResult(
+        dealer: Dealer,
+        players: List<Player>,
+    ) {
         println()
         printParticipantStatusWithSum(dealer)
         players.forEach {
@@ -43,8 +48,11 @@ object OutputView {
         return buildParticipantCardsString(name, cards)
     }
 
-    private fun buildParticipantCardsString(name: String, cards: List<Card>): String {
-        val cardStrings = cards.map { it.cardNumber.name + it.suit.name }.joinToString(", ")
+    private fun buildParticipantCardsString(
+        name: String,
+        cards: List<Card>,
+    ): String {
+        val cardStrings = cards.map { it.cardNumber.text + it.suit.text }.joinToString(", ")
         return "${name}카드: $cardStrings"
     }
 
@@ -62,16 +70,14 @@ object OutputView {
 
     fun printDealerStatistics(dealerStatistics: Map<GameResult, Int>) {
         println()
-        val dealerStatisticsString = dealerStatistics.map {
-            "${it.value}${it.key.name}"
-        }.joinToString(" ")
+        val dealerStatisticsString =
+            dealerStatistics.map { "${it.value}${it.key.text}" }.joinToString(" ")
         println("딜러: $dealerStatisticsString")
     }
 
     fun printPlayerStatistics(playerStatistics: Map<String, GameResult>) {
         playerStatistics.forEach { playerStatistic ->
-            println("${playerStatistic.key}: ${playerStatistic.value.name}")
+            println("${playerStatistic.key}: ${playerStatistic.value.text}")
         }
     }
-
 }

@@ -3,7 +3,10 @@ package blackjack.model
 class DeckManager {
     private val deck: Deck = Deck()
 
-    fun initGame(dealer: Dealer, players: List<Player>) {
+    fun initGame(
+        dealer: Dealer,
+        players: List<Player>,
+    ) {
         players.forEach { player ->
             player.initCard()
         }
@@ -19,5 +22,3 @@ class DeckManager {
         this.addCard(deck.pick())
     }
 }
-
-

@@ -2,7 +2,7 @@ package blackjack.model
 
 class GameStatistics(
     dealer: Dealer,
-    players: List<Player>
+    players: List<Player>,
 ) {
     val playerStatistics: Map<String, GameResult> by lazy {
         players.associate { player ->
@@ -16,28 +16,35 @@ class GameStatistics(
         }.groupingBy { it }.eachCount()
     }
 
-    private fun reverseGameResult(it: GameResult) = when (it) {
-        GameResult.`패` -> GameResult.`승`
-        GameResult.`승` -> GameResult.`패`
-        GameResult.`무` -> GameResult.`무`
-    }
+    private fun reverseGameResult(it: GameResult) =
+        when (it) {
+            GameResult.LOSE -> GameResult.WIN
+            GameResult.WIN -> GameResult.LOSE
+            GameResult.DRAW -> GameResult.DRAW
+        }
 
-    private fun judge(dealer: Dealer, player: Player): GameResult {
+    private fun judge(
+        dealer: Dealer,
+        player: Player,
+    ): GameResult {
         return when {
-            player.isBusted() -> GameResult.`패`
-            dealer.isBusted() -> GameResult.`승`
-            player.isBlackJack() && dealer.isBlackJack() -> GameResult.`무`
-            player.isBlackJack() -> GameResult.`승`
-            dealer.isBlackJack() -> GameResult.`패`
+            player.isBusted() -> GameResult.LOSE
+            dealer.isBusted() -> GameResult.WIN
+            player.isBlackJack() && dealer.isBlackJack() -> GameResult.DRAW
+            player.isBlackJack() -> GameResult.WIN
+            dealer.isBlackJack() -> GameResult.LOSE
             else -> compareScore(player.getCardSum(), dealer.getCardSum())
         }
     }
 
-    private fun compareScore(playerScore: Int, dealerScore: Int): GameResult {
+    private fun compareScore(
+        playerScore: Int,
+        dealerScore: Int,
+    ): GameResult {
         return when {
-            (playerScore > dealerScore) -> GameResult.`승`
-            (playerScore < dealerScore) -> GameResult.`패`
-            else -> GameResult.`무`
+            (playerScore > dealerScore) -> GameResult.WIN
+            (playerScore < dealerScore) -> GameResult.LOSE
+            else -> GameResult.DRAW
         }
     }
 }

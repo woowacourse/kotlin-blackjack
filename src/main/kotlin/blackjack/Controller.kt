@@ -8,8 +8,8 @@ import blackjack.view.InputView
 import blackjack.view.OutputView
 
 class Controller {
-
     private val deckManager = DeckManager()
+
     fun run() {
         val players = makePlayers()
         val dealer = Dealer()
@@ -25,7 +25,7 @@ class Controller {
 
     private fun initParticipantsCard(
         dealer: Dealer,
-        players: List<Player>
+        players: List<Player>,
     ) {
         deckManager.initGame(dealer, players)
         OutputView.printInitialResult(dealer, players)
@@ -41,7 +41,10 @@ class Controller {
         proceedDealerTurn(dealer, deckManager)
     }
 
-    private fun proceedPlayerTurn(player: Player, deckManager: DeckManager) {
+    private fun proceedPlayerTurn(
+        player: Player,
+        deckManager: DeckManager,
+    ) {
         if (player.isMaxScore()) {
             OutputView.printBlackJackMessage(player)
             return
@@ -59,14 +62,20 @@ class Controller {
         return InputView.askPickAgain(name)
     }
 
-    private fun proceedDealerTurn(dealer: Dealer, deckManager: DeckManager) {
+    private fun proceedDealerTurn(
+        dealer: Dealer,
+        deckManager: DeckManager,
+    ) {
         while (dealer.isHitable()) {
             deckManager giveCardTo dealer
             OutputView.printDealerHitMessage()
         }
     }
 
-    private fun printStatistics(dealer: Dealer, players: List<Player>) {
+    private fun printStatistics(
+        dealer: Dealer,
+        players: List<Player>,
+    ) {
         OutputView.printResult(dealer, players)
         val gameStatistics = GameStatistics(dealer, players)
         OutputView.printDealerStatistics(gameStatistics.dealerStatistics)
