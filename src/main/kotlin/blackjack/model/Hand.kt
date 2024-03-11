@@ -34,8 +34,12 @@ class Hand(cards: List<Card> = emptyList()) {
         val aceCount = cards.count { it.number == CardNumber.ACE }
 
         repeat(aceCount) {
-            if (total <= BLACKJACK_NUMBER) return@repeat
-            total -= DIFF_ACE_TO_ONE
+            total += DIFF_ACE_TO_ONE
+
+            if (total > BLACKJACK_NUMBER) {
+                total -= DIFF_ACE_TO_ONE
+                return@repeat
+            }
         }
         return total
     }
