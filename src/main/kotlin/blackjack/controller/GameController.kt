@@ -28,9 +28,9 @@ class GameController {
         }
     }
 
-    private fun playGame(participants: Participants): Result<BlackJackGame> {
+    private fun playGame(participants: Participants): Result<Unit> {
         return runCatching {
-            BlackJackGame(participants = participants).apply {
+            with(BlackJackGame(participants = participants)) {
                 start(printGameSetting = ::printGameSetting)
                 runPlayersTurn(hitOrStay = ::askHitOrStay, showPlayerCards = ::showPlayerCards)
                 runDealerTurn(printDealerDrawCard = ::printDealerDrawCard)
