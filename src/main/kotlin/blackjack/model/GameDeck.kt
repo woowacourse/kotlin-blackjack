@@ -1,6 +1,6 @@
 package blackjack.model
 
-import blackjack.exception.ErrorCode.*
+import blackjack.exception.ErrorCode.NO_CARDS_ERROR
 import blackjack.exception.Exceptions.NoCardErrorException
 
 class GameDeck(initCards: List<Card> = ShuffleGeneratorImpl.shuffleGameDeck()) {
