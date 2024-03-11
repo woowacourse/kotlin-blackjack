@@ -7,9 +7,9 @@ abstract class GameParticipant(protected val handCards: HandCards) {
 
     fun isBlackjack(): Boolean = handCards.isBlackjackCard()
 
-    fun getAllCards() = handCards.cards.joinToString(SPLIT_DELIMITER) { "${it.cardNumber.value}${it.pattern.shape}" }
+    fun getAllCards(): String = handCards.cards.joinToString(SPLIT_DELIMITER) { "${it.cardNumber.value}${it.pattern.shape}" }
 
-    fun getScore() = handCards.calculateCardScore()
+    fun getScore(): Int = handCards.calculateCardScore()
 
     companion object {
         const val SPLIT_DELIMITER = ", "

@@ -12,5 +12,5 @@ class Player(val name: String, deck: Deck) : GameParticipant(HandCards(deck)) {
             false
         }
 
-    private fun isCanAddCard(isAdd: Boolean) = isAdd && !isBust()
+    private fun isCanAddCard(isAdd: Boolean): Boolean = isAdd && !isBust()
 }

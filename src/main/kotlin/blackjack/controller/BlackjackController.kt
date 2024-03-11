@@ -13,8 +13,8 @@ class BlackjackController(
     private val isAddCardInputView: IsAddCardInputView = IsAddCardInputView(),
     private val outputView: OutputView = OutputView(),
 ) {
-    private val deck = Deck()
-    private val dealer = Dealer(deck)
+    private val deck: Deck = Deck()
+    private val dealer: Dealer = Dealer(deck)
     private lateinit var players: Players
 
     fun play() {
@@ -30,7 +30,7 @@ class BlackjackController(
     }
 
     private fun gamePlayersTurn() {
-        players.gamePlayers.forEach { player ->
+        players.gamePlayers.forEach { player: Player ->
             playerTurn(player)
         }
     }

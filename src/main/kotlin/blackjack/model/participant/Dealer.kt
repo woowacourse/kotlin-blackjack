@@ -5,7 +5,7 @@ import blackjack.model.deck.Deck
 import blackjack.model.deck.HandCards
 
 class Dealer(deck: Deck) : GameParticipant(HandCards(deck)) {
-    fun getFirstCard() =
+    fun getFirstCard(): String =
         with(handCards.cards.first()) {
             "${cardNumber.value}${pattern.shape}"
         }

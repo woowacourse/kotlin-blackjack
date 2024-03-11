@@ -9,14 +9,14 @@ class Deck {
 
     private fun createCards(): List<Card> {
         val cards: List<Card> =
-            Pattern.entries.flatMap { pattern ->
+            Pattern.entries.flatMap { pattern: Pattern ->
                 assignNumber(pattern)
             }
         return CardMachineManager.shuffle(cards)
     }
 
-    private fun assignNumber(pattern: Pattern) =
-        CardNumber.entries.map { cardNumber ->
+    private fun assignNumber(pattern: Pattern): List<Card> =
+        CardNumber.entries.map { cardNumber: CardNumber ->
             Card(cardNumber, pattern)
         }
 
