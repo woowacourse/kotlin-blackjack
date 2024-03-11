@@ -1,10 +1,12 @@
 package blackjack.view
 
 import blackjack.model.Card
+import blackjack.model.CardNumber
 import blackjack.model.Dealer
 import blackjack.model.GameResult
 import blackjack.model.Participant
 import blackjack.model.Player
+import blackjack.model.Suit
 
 object OutputView {
     fun printInitialResult(
@@ -52,8 +54,35 @@ object OutputView {
         name: String,
         cards: List<Card>,
     ): String {
-        val cardStrings = cards.map { it.cardNumber.text + it.suit.text }.joinToString(", ")
+        val cardStrings = cards.joinToString(", ") { getCardNumberText(it.cardNumber) + getSuitText(it.suit) }
         return "${name}카드: $cardStrings"
+    }
+
+    private fun getCardNumberText(cardNumber: CardNumber): String {
+        return when (cardNumber) {
+            CardNumber.ACE -> "A"
+            CardNumber.TWO -> "2"
+            CardNumber.THREE -> "3"
+            CardNumber.FOUR -> "4"
+            CardNumber.FIVE -> "5"
+            CardNumber.SIX -> "6"
+            CardNumber.SEVEN -> "7"
+            CardNumber.EIGHT -> "8"
+            CardNumber.NINE -> "9"
+            CardNumber.TEN -> "10"
+            CardNumber.JACK -> "J"
+            CardNumber.QUEEN -> "Q"
+            CardNumber.KING -> "K"
+        }
+    }
+
+    private fun getSuitText(suit: Suit): String {
+        return when (suit) {
+            Suit.HEART -> "하트"
+            Suit.CLOVER -> "클로버"
+            Suit.SPADE -> "스페이드"
+            Suit.DIAMOND -> "다이아몬드"
+        }
     }
 
     fun printBlackJackMessage(participant: Participant) {
@@ -69,15 +98,23 @@ object OutputView {
     }
 
     fun printDealerStatistics(dealerStatistics: Map<GameResult, Int>) {
-        println()
+        println("\n## 최종 승패")
         val dealerStatisticsString =
-            dealerStatistics.map { "${it.value}${it.key.text}" }.joinToString(" ")
+            dealerStatistics.map { "${it.value}${getGameResultText(it.key)}" }.joinToString(" ")
         println("딜러: $dealerStatisticsString")
     }
 
     fun printPlayerStatistics(playerStatistics: Map<String, GameResult>) {
         playerStatistics.forEach { playerStatistic ->
-            println("${playerStatistic.key}: ${playerStatistic.value.text}")
+            println("${playerStatistic.key}: ${getGameResultText(playerStatistic.value)}")
+        }
+    }
+
+    private fun getGameResultText(gameResult: GameResult): String {
+        return when (gameResult) {
+            GameResult.WIN -> "승"
+            GameResult.DRAW -> "무"
+            GameResult.LOSE -> "패"
         }
     }
 }

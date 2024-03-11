@@ -1,7 +1,7 @@
 package blackjack.model
 
-enum class GameResult(val text: String) {
-    WIN("승"),
-    DRAW("무"),
-    LOSE("패"),
+enum class GameResult {
+    WIN,
+    DRAW,
+    LOSE,
 }
