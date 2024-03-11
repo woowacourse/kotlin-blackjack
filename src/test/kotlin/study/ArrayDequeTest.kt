@@ -2,12 +2,11 @@ package study
 
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
-import java.util.*
+import java.util.LinkedList
 import kotlin.collections.ArrayDeque
 import kotlin.time.measureTime
 
 class ArrayDequeTest {
-
     @Nested
     inner class MutableListVsArrayDeque {
         /**
@@ -20,16 +19,18 @@ class ArrayDequeTest {
                 val mutableList = MutableList(10_000_000) { it }
                 val arrayD = ArrayDeque(mutableList)
                 // when
-                val arrayDTime = measureTime {
-                    while (arrayD.isNotEmpty()) {
-                        arrayD.removeLast()
+                val arrayDTime =
+                    measureTime {
+                        while (arrayD.isNotEmpty()) {
+                            arrayD.removeLast()
+                        }
                     }
-                }
-                val mutableListTime = measureTime {
-                    while (mutableList.isNotEmpty()) {
-                        mutableList.removeLast()
+                val mutableListTime =
+                    measureTime {
+                        while (mutableList.isNotEmpty()) {
+                            mutableList.removeLast()
+                        }
                     }
-                }
                 // then
                 println("ArrayDeque: ${arrayDTime.inWholeMilliseconds}ms")
                 println("MutableList: ${mutableListTime.inWholeMilliseconds}ms")
@@ -48,12 +49,14 @@ class ArrayDequeTest {
                 val mutableList: MutableList<Int> = ArrayList(10_000_000)
                 val arrayD = ArrayDeque(mutableList)
                 // when
-                val mutableListTime = measureTime {
-                    repeat(10_000_000) { mutableList.add(it) }
-                }
-                val arrayDTime = measureTime {
-                    repeat(10_000_000) { arrayD.add(it) }
-                }
+                val mutableListTime =
+                    measureTime {
+                        repeat(10_000_000) { mutableList.add(it) }
+                    }
+                val arrayDTime =
+                    measureTime {
+                        repeat(10_000_000) { arrayD.add(it) }
+                    }
                 // then
                 println("ArrayDeque: ${arrayDTime.inWholeMilliseconds}ms")
                 println("MutableList: ${mutableListTime.inWholeMilliseconds}ms")
@@ -65,7 +68,6 @@ class ArrayDequeTest {
 
     @Nested
     inner class LinkedListVsArrayDeque() {
-
         /**
          * (대부분) ArrayDeque 가 addFirst() 연산이 압도적으로 빠르다.
          * */
@@ -76,12 +78,14 @@ class ArrayDequeTest {
                 val q = LinkedList<Int>()
                 val arrayD = ArrayDeque(q)
                 // when
-                val qTime = measureTime {
-                    repeat(5_000_000) { q.addFirst(it) }
-                }
-                val arrayDTime = measureTime {
-                    repeat(5_000_000) { arrayD.addFirst(it) }
-                }
+                val qTime =
+                    measureTime {
+                        repeat(5_000_000) { q.addFirst(it) }
+                    }
+                val arrayDTime =
+                    measureTime {
+                        repeat(5_000_000) { arrayD.addFirst(it) }
+                    }
                 // then
                 println("ArrayDeque: ${arrayDTime.inWholeMilliseconds}ms")
                 println("LinkedList: ${qTime.inWholeMilliseconds}ms")
@@ -101,12 +105,14 @@ class ArrayDequeTest {
                 val q = LinkedList(mutableList)
                 val arrayD = ArrayDeque(mutableList)
                 // when
-                val arrayDTime = measureTime {
-                    repeat(5_000_000) { arrayD.removeFirst() }
-                }
-                val qTime = measureTime {
-                    repeat(5_000_000) { q.poll() }
-                }
+                val arrayDTime =
+                    measureTime {
+                        repeat(5_000_000) { arrayD.removeFirst() }
+                    }
+                val qTime =
+                    measureTime {
+                        repeat(5_000_000) { q.poll() }
+                    }
                 // then
                 println("ArrayDeque: ${arrayDTime.inWholeMilliseconds}ms")
                 println("LinkedList: ${qTime.inWholeMilliseconds}ms")
