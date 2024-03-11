@@ -5,11 +5,5 @@ class CardDeck(cards: List<Card>) {
     val cards: List<Card>
         get() = _cards.toList()
 
-    fun pick() = _cards.removeLast()
-
-    fun initialDistribute(): Hand = Hand(List(INITIAL_DISTRIBUTE_COUNT) { pick() })
-
-    companion object {
-        private const val INITIAL_DISTRIBUTE_COUNT = 2
-    }
+    fun pick(): Card = _cards.removeLast()
 }
