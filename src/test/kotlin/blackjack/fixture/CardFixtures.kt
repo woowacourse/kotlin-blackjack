@@ -7,4 +7,4 @@ import blackjack.model.Suit
 fun createCard(
     type: Suit = Suit.SPADE,
     rank: Rank = Rank.SIX,
-) = Card(type, rank)
+) = Card.from(type, rank)
