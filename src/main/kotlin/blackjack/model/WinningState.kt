@@ -17,8 +17,7 @@ enum class WinningState(val label: String) {
             return when {
                 compared == 0 -> DRAW
                 compared > 0 -> WIN
-                compared < 0 -> LOSS
-                else -> throw IllegalArgumentException("왈왈")
+                else -> DRAW
             }
         }
     }
