@@ -16,5 +16,5 @@ enum class CardNumber(
     TEN(10),
     KING(10),
     QUEEN(10),
-    JUMP(10),
+    JACK(10),
 }
