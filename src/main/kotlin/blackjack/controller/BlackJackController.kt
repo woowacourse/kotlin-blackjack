@@ -68,27 +68,29 @@ object BlackJackController {
         participants: Participants,
         cardDeck: CardDeck,
     ) {
-        decidePlayerDecisions(participants, cardDeck)
-        participants.dealer.additionalDraw(cardDeck) { OutputView.outputDealerDraw(participants.dealer) }
+        judgePlayerDraw(participants.players, cardDeck)
+        judgeDealerDraw(participants.dealer, cardDeck)
     }
 
-    private fun decidePlayerDecisions(
-        participants: Participants,
+    private fun judgeDealerDraw(
+        dealer: Dealer,
         cardDeck: CardDeck,
     ) {
-        participants.players.forEach { player -> judgePlayerDraw(player, cardDeck) }
+        dealer.additionalDraw(cardDeck) { OutputView.outputDealerDraw(dealer) }
     }
 
     private fun judgePlayerDraw(
-        player: Player,
+        players: List<Player>,
         cardDeck: CardDeck,
     ) {
-        while (player.gameInformation.state is GameState.Running) {
-            val wantDraw = readDrawDecision(player.name)
-            if (wantDraw) {
-                player.additionalDraw(cardDeck) { OutputView.outputParticipantCard(player) }
+        players.forEach { player ->
+            while (player.gameInformation.state is GameState.Running) {
+                val wantDraw = readDrawDecision(player.name)
+                if (wantDraw) {
+                    player.additionalDraw(cardDeck) { OutputView.outputParticipantCard(player) }
+                }
+                if (!wantDraw) player.gameInformation.changeState(GameState.Finished.STAY)
             }
-            if (!wantDraw) player.gameInformation.changeState(GameState.Finished.STAY)
         }
     }
 
