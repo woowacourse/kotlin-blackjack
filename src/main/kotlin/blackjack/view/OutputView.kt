@@ -45,8 +45,11 @@ object OutputView {
         }
     }
 
-    private fun convertHolderCardsToString(holder: BaseHolder) =
-        "${holder.humanName}: ${holder.hand.cards.joinToString(", ")}"
+    private fun convertPlayerCardsToString(player: Player) =
+        "${player.name}: ${player.hand.cards.joinToString(", ")}"
+
+    private fun convertDealerCardsToString(dealer: Dealer) =
+        "딜러: ${dealer.hand.cards.joinToString(", ")}"
 
     fun printDealerDrawCard() {
         println("\n딜러의 카드가 ${Dealer.THRESHOLD}이하 이므로, 1장의 카드를 더 받습니다.")
