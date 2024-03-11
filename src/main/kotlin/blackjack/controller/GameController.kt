@@ -17,19 +17,27 @@ class GameController {
         val dealer = Dealer()
         val participants = Participants(dealer = dealer, playerGroup = playerGroup)
 
-        playGame(participants = participants)
-
-        OutputView.printMatchResult(dealer = participants.dealer, playerGroup = participants.playerGroup)
+        while (true) {
+            playGame(participants = participants)
+                .onSuccess {
+                    OutputView.printMatchResult(dealer = participants.dealer, playerGroup = participants.playerGroup)
+                    return
+                }.onFailure { e ->
+                    OutputView.printError(e)
+                }
+        }
     }
 
-    private fun playGame(participants: Participants) {
-        BlackJackGame(participants = participants).apply {
-            start(printGameSetting = ::printGameSetting)
-            runPlayersTurn(hitOrStay = ::askHitOrStay, showPlayerCards = ::showPlayerCards)
-            runDealerTurn(printDealerDrawCard = ::printDealerDrawCard)
-            finish { participants ->
-                participants.matchResult()
-                OutputView.printEveryCards(participants.dealer, participants.playerGroup)
+    private fun playGame(participants: Participants): Result<BlackJackGame> {
+        return runCatching {
+            BlackJackGame(participants = participants).apply {
+                start(printGameSetting = ::printGameSetting)
+                runPlayersTurn(hitOrStay = ::askHitOrStay, showPlayerCards = ::showPlayerCards)
+                runDealerTurn(printDealerDrawCard = ::printDealerDrawCard)
+                finish { participants ->
+                    participants.matchResult()
+                    OutputView.printEveryCards(participants.dealer, participants.playerGroup)
+                }
             }
         }
     }

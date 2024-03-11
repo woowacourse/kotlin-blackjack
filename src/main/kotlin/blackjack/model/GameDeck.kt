@@ -1,6 +1,7 @@
 package blackjack.model
 
-import java.lang.IllegalStateException
+import blackjack.exception.ErrorCode.*
+import blackjack.exception.Exceptions.NoCardErrorException
 
 class GameDeck(initCards: List<Card> = ShuffleGeneratorImpl.shuffleGameDeck()) {
     private var _cards: List<Card> = initCards
@@ -19,7 +20,7 @@ class GameDeck(initCards: List<Card> = ShuffleGeneratorImpl.shuffleGameDeck()) {
                 _cards = _cards.dropLast(DRAW_COUNT)
             }
         }
-        throw IllegalStateException("카드 덱에 카드가 없습니다")
+        throw NoCardErrorException(NO_CARDS_ERROR.reason)
     }
 
     companion object {

@@ -1,5 +1,8 @@
 package blackjack.view
 
+import blackjack.exception.Exceptions.InvalidNameLengthErrorException
+import blackjack.exception.Exceptions.InvalidPlayersCountErrorException
+import blackjack.exception.Exceptions.NoCardErrorException
 import blackjack.model.Dealer
 import blackjack.model.Participants.Companion.INITIAL_CARD_COUNTS
 import blackjack.model.Player
@@ -63,6 +66,14 @@ object OutputView {
         println("${dealer.nickname}: ${dealer.hand.gameResult}")
         playerGroup.players.forEach { player ->
             println("${player.nickname}: ${player.hand.gameResult}")
+        }
+    }
+
+    fun printError(e: Throwable) {
+        when (e) {
+            is NoCardErrorException -> println(e.reason)
+            is InvalidNameLengthErrorException -> println(e.reason)
+            is InvalidPlayersCountErrorException -> println(e.reason)
         }
     }
 }
