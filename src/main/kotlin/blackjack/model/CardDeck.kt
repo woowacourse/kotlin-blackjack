@@ -10,5 +10,10 @@ object CardDeck {
 
     private var cardIndex = 0
 
-    fun getRandomCard(): Card = cardDeck[cardIndex++]
+    fun getRandomCard(): Card {
+        if (cardIndex == cardDeck.size) {
+            cardIndex = 0
+        }
+        return cardDeck[cardIndex++]
+    }
 }
