@@ -1,16 +1,16 @@
 package blackjack.controller
 
+import blackjack.model.CardDeck
 import blackjack.model.Dealer
-import blackjack.model.GameManager
 import blackjack.model.GameResult
+import blackjack.model.Participant
 import blackjack.model.Participants
 import blackjack.model.Player
 import blackjack.model.user.UserDecision
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
-class BlackJackController {
-    private val gameManager = GameManager()
+class BlackJackController(private val cardDeck: CardDeck) {
     private lateinit var participants: Participants
     private lateinit var gameResult: GameResult
 
@@ -21,7 +21,7 @@ class BlackJackController {
             Participants(
                 participants = listOf(dealer) + players,
             )
-        gameManager.setGame(participants)
+        setParticipants(participants)
         OutputView.outputParticipantsName(
             dealerName = dealer.getName(),
             players = participants.getPlayers(),
@@ -33,6 +33,14 @@ class BlackJackController {
         OutputView.outputPlayersCurrentHandCard(participants.getPlayers())
     }
 
+    private fun setParticipants(participants: Participants) {
+        participants.getParticipants().forEach { participant ->
+            repeat(Participant.INIT_HAND_CARD_COUNT) {
+                participant.draw(cardDeck.draw())
+            }
+        }
+    }
+
     fun playGame() {
         participants.getAlivePlayers().forEach { player ->
             playPlayer(player as Player)
@@ -42,7 +50,7 @@ class BlackJackController {
 
     private fun playPlayer(player: Player) {
         while (player.checkHitState() && InputView.inputPlayerDecision(player.getName()) == UserDecision.YES) {
-            gameManager.applyUserDrawDecision(player)
+            player.draw(cardDeck.draw())
             OutputView.outputPlayerCurrentHandCard(player)
         }
     }
@@ -51,7 +59,7 @@ class BlackJackController {
         val dealer = participants.getDealer()
         while (dealer.checkDealerScoreCondition()) {
             OutputView.outputDealerRule()
-            gameManager.applyUserDrawDecision(dealer)
+            dealer.draw(cardDeck.draw())
         }
     }
 

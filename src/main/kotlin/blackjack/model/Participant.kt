@@ -29,4 +29,8 @@ abstract class Participant(
     fun getBlackJackScore(): Int {
         return blackJack.getHandCardScore()
     }
+
+    companion object {
+        const val INIT_HAND_CARD_COUNT: Int = 2
+    }
 }
