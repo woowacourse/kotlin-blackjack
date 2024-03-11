@@ -3,7 +3,6 @@ package blackjack.controller
 import blackjack.model.CardDeck
 import blackjack.model.Dealer
 import blackjack.model.GameResult
-import blackjack.model.Participant
 import blackjack.model.Participants
 import blackjack.model.Player
 import blackjack.model.user.UserDecision
@@ -35,9 +34,7 @@ class BlackJackController(private val cardDeck: CardDeck) {
 
     private fun setParticipants(participants: Participants) {
         participants.getParticipants().forEach { participant ->
-            repeat(Participant.INIT_HAND_CARD_COUNT) {
-                participant.draw(cardDeck.draw())
-            }
+                participant.initDraw(cardDeck)
         }
     }
 

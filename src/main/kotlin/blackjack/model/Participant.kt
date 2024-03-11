@@ -6,6 +6,12 @@ abstract class Participant(
     private val name: String,
     private val blackJack: BlackJack = BlackJack(),
 ) {
+    fun initDraw(cardDeck: CardDeck) {
+        repeat(INIT_HAND_CARD_COUNT) {
+            blackJack.addCard(cardDeck.draw())
+        }
+    }
+
     fun draw(card: Card) {
         blackJack.addCard(card)
     }

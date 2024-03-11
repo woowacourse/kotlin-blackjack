@@ -14,13 +14,11 @@ class ParticipantTest {
     }
 
     @Test
-    fun `블랙잭 게임 초기상태 설정 확인 테스트, (2장씩 갖고 있어야 함)`() {
+    fun `참가자들은 게임 시작시 2장의 카드를 갖고 시작 해야한다`() {
         val cardDeck = CardDeck()
         val participant = MockParticipant(name = "꼬상")
 
-        repeat(Participant.INIT_HAND_CARD_COUNT) {
-            participant.draw(cardDeck.draw())
-        }
+        participant.initDraw(cardDeck)
         assertThat(participant.getCards().size).isEqualTo(Participant.INIT_HAND_CARD_COUNT)
     }
 }
