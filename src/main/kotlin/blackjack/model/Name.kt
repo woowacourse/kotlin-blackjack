@@ -1,7 +1,7 @@
 package blackjack.model
 
 @JvmInline
-value class HumanName(val name: String) {
+value class Name(val name: String) {
     init {
         require(name.length in NAME_RANGE) { "이름의 길이는 1에서 20 사이여야 합니다" }
     }

@@ -1,7 +1,7 @@
 package blackjack.base
 
 import blackjack.model.Dealer
-import blackjack.model.HumanName
+import blackjack.model.Name
 import blackjack.model.Player
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.params.ParameterizedTest
@@ -15,9 +15,9 @@ class BaseHolderTest {
         push: Int,
         defeat: Int,
     ) {
-        val winner = Player(HumanName("레오"))
-        val loser = Player(HumanName("호두"))
-        val dealer = Dealer(HumanName("에디"))
+        val winner = Player(Name("레오"))
+        val loser = Player(Name("호두"))
+        val dealer = Dealer()
 
         winner.changeResult(newWin = win)
         loser.changeResult(newDefeat = defeat)
