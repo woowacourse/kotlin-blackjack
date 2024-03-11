@@ -7,6 +7,17 @@ class Player(val name: String, val hand: Hand) {
         hand.add(card)
     }
 
+    fun hitIfConditionTrue(
+        deck: Deck,
+        condition: () -> Boolean,
+        view: () -> Unit,
+    ) {
+        while (condition()) {
+            hit(deck.pull())
+            view()
+        }
+    }
+
     fun comparePoints(dealer: Dealer): WinningState {
         val playerCards = hand
         val dealerCards = dealer.hand

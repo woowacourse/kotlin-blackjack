@@ -48,17 +48,10 @@ class BlackJackController(
         deck: Deck,
     ) {
         players.forEach { player ->
-            hitPlayer(player, deck)
-        }
-    }
-
-    private fun hitPlayer(
-        player: Player,
-        deck: Deck,
-    ) {
-        while (inputView.inputWhetherHit(player)) {
-            player.hit(deck.pull())
-            outputView.showPlayerHandCards(player)
+            player.hitIfConditionTrue(
+                deck,
+                { inputView.inputWhetherHit(player) },
+            ) { outputView.showPlayerHandCards(player) }
         }
     }
 
