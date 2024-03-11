@@ -15,7 +15,7 @@ class HandCards {
     fun getCardSum(burstCondition: Int): Int {
         var cardSum = 0
         _cards.forEach {
-            cardSum += it.denomination.score
+            cardSum += it.getScore()
         }
         repeat(getAceCount()) {
             if (cardSum + Denomination.ADDITIONAL_ACE_SCORE > burstCondition) return cardSum
@@ -25,6 +25,6 @@ class HandCards {
     }
 
     private fun getAceCount(): Int {
-        return _cards.count { it.denomination.isAce() }
+        return _cards.count { it.isAce() }
     }
 }

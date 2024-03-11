@@ -1,6 +1,10 @@
 package blackjack.model.card
 
 class Card private constructor(val denomination: Denomination, val suite: Suite) {
+    fun getScore() = denomination.score
+
+    fun isAce() = denomination.isAce()
+
     companion object {
         private const val INVALID_DENOMINATION = "유효하지 않은 카드의 숫자 혹은 알파벳입니다."
         private const val INVALID_SUITE = "유효하지 않은 카드의 모양입니다."
