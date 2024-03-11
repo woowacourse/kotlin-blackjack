@@ -26,7 +26,7 @@ class BlackJackController(
         dealer: Dealer,
     ) {
         hitPlayers(players, deck)
-        dealer.hitUntilBust(deck)
+        dealer.hitUntilBust(deck) { outputView.showDealerHitCard() }
         outputView.showDealerScore(dealer.hand.cards, dealer.hand.sumOptimized())
     }
 

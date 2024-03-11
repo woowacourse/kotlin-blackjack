@@ -10,9 +10,13 @@ class Dealer(val hand: Hand) {
         hand.add(card)
     }
 
-    fun hitUntilBust(deck: Deck) {
+    fun hitUntilBust(
+        deck: Deck,
+        view: () -> Unit,
+    ) {
         while (canHit()) {
             hit(deck.pull())
+            view()
         }
     }
 
