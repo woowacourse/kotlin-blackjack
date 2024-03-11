@@ -5,7 +5,7 @@ class Deck(private val deck: MutableList<Card>) {
 
     private var idx = 0
 
-    fun pick(): Card {
+    private fun pick(): Card {
         if (idx == deck.size) {
             idx = 0
             deck.shuffle()
@@ -18,7 +18,7 @@ class Deck(private val deck: MutableList<Card>) {
     }
 
     companion object {
-        val oneDeck =
+        private val oneDeck =
             Suit.entries.flatMap { suit ->
                 productNumberAndSuit(suit)
             }

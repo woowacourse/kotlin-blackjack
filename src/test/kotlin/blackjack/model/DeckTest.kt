@@ -62,11 +62,11 @@ class DeckTest {
                 Card(CardNumber.King, Suit.Spade),
                 Card(CardNumber.King, Suit.Diamond),
             )
-        val temporary = mutableListOf<Card>()
+        val player = Player("cheolsoo")
         repeat(52) {
-            temporary.add(deck.pick())
+            deck giveCardTo player
         }
-        val actual = temporary.toSet().intersect(oneDeck.toSet()).size
+        val actual = player.showCard().toSet().intersect(oneDeck.toSet()).size
         assertThat(actual).isEqualTo(52)
     }
 }
