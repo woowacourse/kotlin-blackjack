@@ -16,14 +16,10 @@ class Referee {
         playerSum: Int,
     ): WinningResultStatus =
         when {
-            playerSum > BLACK_JACK -> WinningResultStatus.DEFEAT
-            dealerSum > BLACK_JACK -> WinningResultStatus.VICTORY
+            playerSum > CardHandState.BLACKJACK.precondition -> WinningResultStatus.DEFEAT
+            dealerSum > CardHandState.BLACKJACK.precondition -> WinningResultStatus.VICTORY
             dealerSum > playerSum -> WinningResultStatus.DEFEAT
             dealerSum == playerSum -> WinningResultStatus.DRAW
             else -> WinningResultStatus.VICTORY
         }
-
-    companion object {
-        private const val BLACK_JACK = 21
-    }
 }

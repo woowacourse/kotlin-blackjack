@@ -9,7 +9,7 @@ class CardHand(hand: List<Card>) {
     fun sum(): Int {
         var aceCount = hand.count { it.number == CardNumber.ACE }
         var tempSum = hand.sumOf { it.number.number }
-        while (aceCount >= MIN_ACE_COUNT && tempSum > BLACK_JACK) {
+        while (aceCount >= MIN_ACE_COUNT && tempSum > CardHandState.BLACKJACK.precondition) {
             aceCount--
             tempSum -= SUBTRACTION_BETWEEN_MAX_AND_MIN
         }
@@ -26,7 +26,6 @@ class CardHand(hand: List<Card>) {
 
     companion object {
         private const val MIN_ACE_COUNT = 1
-        private const val BLACK_JACK = 21
         private const val SUBTRACTION_BETWEEN_MAX_AND_MIN = 10
     }
 }
