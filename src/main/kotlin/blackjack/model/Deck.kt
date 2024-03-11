@@ -4,13 +4,18 @@ import blackjack.model.ParticipantsHand.Companion.DEALER_COUNT
 import blackjack.model.ParticipantsHand.Companion.DEFAULT_CARDS_COUNT
 
 @JvmInline
-value class Deck(val cards: List<Card>) : List<Card> by cards {
+value class Deck(val cards: MutableList<Card>) {
     fun pull(): Card {
-        return cards.shuffled().first()
+        return cards.removeFirst()
     }
 
-    fun spread(playerSize: Int): List<Card> {
-        return cards.take(DEFAULT_CARDS_COUNT * (DEALER_COUNT + playerSize))
+    fun spread(playerSize: Int): MutableList<Card> {
+        val spreadCount = DEFAULT_CARDS_COUNT * (DEALER_COUNT + playerSize)
+        val spreadCards = cards.take(spreadCount).toMutableList()
+        repeat(spreadCount) {
+            cards.removeFirst()
+        }
+        return spreadCards
     }
 
     companion object {
@@ -18,17 +23,17 @@ value class Deck(val cards: List<Card>) : List<Card> by cards {
             require(size >= DEFAULT_DECK_SIZE)
             if (size == DEFAULT_DECK_SIZE) return DECK
             return Deck(
-                List(size) { create().cards }.flatten(),
+                List(size) { create().cards }.flatten().toMutableList(),
             )
         }
 
         private fun create(): Deck {
             val suits = Suit.entries
             val ranks = Rank.entries
-            val deck: List<Card> =
+            val deck: MutableList<Card> =
                 suits.flatMap { suit ->
                     ranks.map { rank -> Card(suit, rank) }
-                }.shuffled()
+                }.shuffled().toMutableList()
             return Deck(deck)
         }
 

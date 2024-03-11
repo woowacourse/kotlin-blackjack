@@ -18,7 +18,7 @@ class ParticipantsHandTest {
                 dealerHand = Hand(createCard(), createCard()),
             )
         // when
-        val actual = ParticipantsHand.from(cards)
+        val actual = ParticipantsHand.from(cards.toMutableList())
         // then
         assertThat(actual).isEqualTo(expect)
     }
