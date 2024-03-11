@@ -10,8 +10,8 @@ import blackjack.view.InputView
 import blackjack.view.OutputView
 
 class Controller {
-
     private val deck = Deck()
+
     fun run() {
         val players = makePlayers()
         val dealer = Dealer()
@@ -71,7 +71,10 @@ class Controller {
         }
     }
 
-    private fun printStatistics(dealer: Dealer, players: List<Player>) {
+    private fun printStatistics(
+        dealer: Dealer,
+        players: List<Player>,
+    ) {
         OutputView.printResult(dealer, players)
         val dealerStatistics = DealerStatistics(dealer, players)
         val playerStatistics = PlayerStatistics(dealer, players)

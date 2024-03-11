@@ -9,15 +9,20 @@ import blackjack.model.Player
 import blackjack.model.PlayerStatistics
 
 object OutputView {
-
-    fun printInitialResult(dealer: Dealer, players: List<Player>) {
+    fun printInitialResult(
+        dealer: Dealer,
+        players: List<Player>,
+    ) {
         println(buildDealerInitialCard(dealer))
         players.forEach {
             printParticipantStatus(it)
         }
     }
 
-    fun printResult(dealer: Dealer, players: List<Player>) {
+    fun printResult(
+        dealer: Dealer,
+        players: List<Player>,
+    ) {
         println()
         printParticipantStatusWithSum(dealer)
         players.forEach {
@@ -45,7 +50,10 @@ object OutputView {
         return buildParticipantCardsString(name, cards)
     }
 
-    private fun buildParticipantCardsString(name: String, cards: List<Card>): String {
+    private fun buildParticipantCardsString(
+        name: String,
+        cards: List<Card>,
+    ): String {
         val cardStrings = cards.map { it.cardNumber.name + it.suit.name }.joinToString(", ")
         return "${name}카드: $cardStrings"
     }
@@ -67,16 +75,17 @@ object OutputView {
         println("딜러: $dealerStatisticsString")
     }
 
-    private fun buildDealerStatisticsString(dealerStatistics: DealerStatistics): String = buildString {
-        val appendString: (Int, String) -> Unit = { count, resultName ->
-            if (count != 0) {
-                append("${count}$resultName ")
+    private fun buildDealerStatisticsString(dealerStatistics: DealerStatistics): String =
+        buildString {
+            val appendString: (Int, String) -> Unit = { count, resultName ->
+                if (count != 0) {
+                    append("${count}$resultName ")
+                }
             }
+            appendString(dealerStatistics.getWinCount(), GameResult.Win.name)
+            appendString(dealerStatistics.getLoseCount(), GameResult.Lose.name)
+            appendString(dealerStatistics.getDrawCount(), GameResult.Draw.name)
         }
-        appendString(dealerStatistics.getWinCount(), GameResult.승.name)
-        appendString(dealerStatistics.getLoseCount(), GameResult.패.name)
-        appendString(dealerStatistics.getDrawCount(), GameResult.무.name)
-    }
 
     fun printPlayerStatistics(playerStatistics: PlayerStatistics) {
         playerStatistics.forEach { playerStatistic ->

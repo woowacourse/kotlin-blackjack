@@ -4,22 +4,22 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class DslTest {
-
     @Test
     fun company() {
-        val person: Person = introduce {
-            name("빙티")
-            company("구글")
-            skills {
-                soft("A passion for problem solving")
-                soft("Good communication skills")
-                hard("Kotlin")
+        val person: Person =
+            introduce {
+                name("빙티")
+                company("구글")
+                skills {
+                    soft("A passion for problem solving")
+                    soft("Good communication skills")
+                    hard("Kotlin")
+                }
+                languages {
+                    "Korean" level 5
+                    "English" level 3
+                }
             }
-            languages {
-                "Korean" level 5
-                "English" level 3
-            }
-        }
         assertThat(person.name).isEqualTo("빙티")
         assertThat(person.company).isEqualTo("구글")
         assertThat(person.skills.soft).isEqualTo(listOf("A passion for problem solving", "Good communication skills"))
@@ -60,7 +60,6 @@ class PersonBuilder {
         return Person(name, company, skill, language)
     }
 }
-
 
 class Skill(val soft: List<String>, val hard: List<String>)
 

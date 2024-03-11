@@ -14,6 +14,7 @@ class Cards {
         val threshold = 21
         return threshold == score
     }
+
     fun isBlackJack(): Boolean = cards.size == 2 && isMaxScore()
 
     fun addCard(card: Card) {
@@ -28,5 +29,5 @@ class Cards {
         return sum + additionalScore
     }
 
-    private fun hasAce() = cards.any { it.cardNumber == CardNumber.A }
+    private fun hasAce() = cards.any { it.cardNumber == CardNumber.Ace }
 }

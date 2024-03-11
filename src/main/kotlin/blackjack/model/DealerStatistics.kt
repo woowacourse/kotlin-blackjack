@@ -10,7 +10,9 @@ class DealerStatistics(
         }.groupingBy { it }.eachCount()
     }
 
-    fun getWinCount(): Int = dealerStatistics[GameResult.승] ?: 0
-    fun getLoseCount(): Int = dealerStatistics[GameResult.패] ?: 0
-    fun getDrawCount(): Int = dealerStatistics[GameResult.무] ?: 0
+    fun getWinCount(): Int = dealerStatistics[GameResult.Win] ?: 0
+
+    fun getLoseCount(): Int = dealerStatistics[GameResult.Lose] ?: 0
+
+    fun getDrawCount(): Int = dealerStatistics[GameResult.Draw] ?: 0
 }

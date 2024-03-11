@@ -12,6 +12,7 @@ class Deck(private val deck: MutableList<Card>) {
         }
         return deck[idx++]
     }
+
     infix fun giveCardTo(participant: Participant) {
         participant.addCard(pick())
     }

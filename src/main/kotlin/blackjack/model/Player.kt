@@ -1,7 +1,6 @@
 package blackjack.model
 
 class Player(name: String) : Participant(name, PlayerScorePolicy()) {
-
     override fun isHitable(): Boolean {
         val score = cards.sum()
         val threshold = 21
