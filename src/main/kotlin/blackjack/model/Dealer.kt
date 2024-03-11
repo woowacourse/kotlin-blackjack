@@ -12,6 +12,12 @@ data class Dealer(override val cardHand: CardHand) : Role(name = PlayerName(DEAL
         }
     }
 
+    fun judgeDealerWinningResult(playerWinning: PlayerWinning): DealerWinning =
+        DealerWinning(
+            playerWinning.result.values.groupingBy { it.reverse() }
+                .eachCount(),
+        )
+
     fun judgePlayerWinningResult(playerResult: Map<PlayerName, Int>): PlayerWinning =
         PlayerWinning(
             playerResult.mapValues { (_, playerSum) ->
