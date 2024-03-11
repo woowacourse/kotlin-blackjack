@@ -17,8 +17,8 @@ class DealerTest {
     fun `딜러가 뽑은 카드의 총 합은 16을 넘어야한다`() {
         val dealer = Dealer()
         val gameDeck = GameDeck()
-        dealer.drawDealerCard(gameDeck.drawCard()) {}
+        dealer.drawDealerCard(gameDeck) {}
 
-        assertThat(dealer.hand.calculate() > Dealer.THRESHOLD).isTrue()
+        assertThat(dealer.hand.calculate() > Dealer.DEALER_CARD_DRAW_THRESHOLD).isTrue()
     }
 }
