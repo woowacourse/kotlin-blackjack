@@ -9,6 +9,10 @@ class GameManager(
     private val dealerResults: MutableMap<Result, Int> = Result.entries.associateWith { 0 }.toMutableMap()
     private val playerResults: MutableMap<Player, Result> = mutableMapOf()
 
+    init {
+        cardDeck.cardShuffle()
+    }
+
     fun getDealerResults(): MutableMap<Result, Int> {
         return dealerResults
     }

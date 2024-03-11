@@ -1,8 +1,10 @@
 package blackjack.model
 
 class CardDeck {
-    private var cards: Set<Card> =
-        Denomination.entries.flatMap { denomination ->
+    private var cards: Set<Card> = setOf()
+
+    fun cardShuffle() {
+        cards = Denomination.entries.flatMap { denomination ->
             Suit.entries.map { suit ->
                 Card(
                     denomination = denomination,
@@ -10,6 +12,7 @@ class CardDeck {
                 )
             }
         }.shuffled().toSet()
+    }
 
     fun draw(): Card {
         val popCard =
