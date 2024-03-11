@@ -12,6 +12,25 @@ data class Dealer(override val cardHand: CardHand) : Role(name = PlayerName(DEAL
         }
     }
 
+    fun judgePlayerWinningResult(playerResult: Map<PlayerName, Int>): PlayerWinning =
+        PlayerWinning(
+            playerResult.mapValues { (_, playerSum) ->
+                determineGameResult(playerSum)
+            },
+        )
+
+    private fun determineGameResult(playerSum: Int): WinningResultStatus {
+        val dealerSum = cardHand.sum()
+
+        return when {
+            playerSum > CardHandState.BLACKJACK.precondition -> WinningResultStatus.DEFEAT
+            dealerSum > CardHandState.BLACKJACK.precondition -> WinningResultStatus.VICTORY
+            dealerSum > playerSum -> WinningResultStatus.DEFEAT
+            dealerSum == playerSum -> WinningResultStatus.DRAW
+            else -> WinningResultStatus.VICTORY
+        }
+    }
+
     companion object {
         private const val DEALER = "딜러"
         private const val DEALER_MAX_HIT_SUM = 16

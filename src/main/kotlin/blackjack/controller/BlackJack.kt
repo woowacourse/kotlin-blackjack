@@ -7,7 +7,6 @@ import blackjack.model.Participants
 import blackjack.model.Player
 import blackjack.model.PlayerName
 import blackjack.model.Players
-import blackjack.model.Referee
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -66,7 +65,7 @@ class BlackJack(
     private fun showFinalWinning(participants: Participants) {
         outputView.printGameResult(participants)
 
-        val playerWinning = Referee().judgeWinningResult(participants.getDealerSum(), participants.getPlayerResult())
+        val playerWinning = participants.dealer.judgePlayerWinningResult(participants.getPlayerResult())
         val dealerWinning = playerWinning.judgeDealerWinningResult()
 
         outputView.printFinalDealerResult(dealerWinning)
