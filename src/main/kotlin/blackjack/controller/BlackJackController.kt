@@ -52,7 +52,7 @@ class BlackJackController {
 
     private fun playDealer() {
         val dealer = gameManager.getDealer()
-        while (dealer.checkDealerScoreCondition()) {
+        while (dealer.checkShouldDealerDrawCard()) {
             OutputView.outputDealerRule()
             gameManager.applyUserDrawDecision(dealer)
         }
