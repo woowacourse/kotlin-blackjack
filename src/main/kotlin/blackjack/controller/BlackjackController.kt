@@ -1,9 +1,9 @@
 package blackjack.controller
 
-import blackjack.model.BlackjackGame
 import blackjack.model.CardDeck
 import blackjack.model.CardDeckGenerator
 import blackjack.model.Dealer
+import blackjack.model.Hand
 import blackjack.model.ParticipantName
 import blackjack.model.Participants
 import blackjack.model.Player
@@ -16,24 +16,40 @@ class BlackjackController {
         val deck = CardDeckGenerator.generate()
         val participants = initializeCardSetting(deck, InputView.readNames())
         OutputView.printInitialStatus(participants)
-
-        val blackjackGame = BlackjackGame(deck, participants)
-        blackjackGame.playRound(
-            { playerName -> InputView.askMoreCard(playerName) },
-            { participant -> OutputView.printParticipantStatus(participant) },
-        )
-        OutputView.printStatusAndScore(blackjackGame.participants)
-        OutputView.printResult(blackjackGame.calculateResult())
+        playRound(deck, participants)
     }
 
     private fun initializeCardSetting(
         deck: CardDeck,
         names: List<String>,
     ): Participants {
-        val dealer = Dealer(state = State.determineInitialGameState(deck.initialDistribute()))
+        val dealer =
+            Dealer(state = State.determineInitialGameState(Hand(List(INITIAL_DISTRIBUTE_COUNT) { deck.pick() })))
         val players: List<Player> =
-            names.map { Player(ParticipantName(it), State.determineInitialGameState(deck.initialDistribute())) }
-
+            names.map {
+                Player(ParticipantName(it), State.determineInitialGameState(Hand(List(INITIAL_DISTRIBUTE_COUNT) { deck.pick() })))
+            }
         return Participants(dealer, players)
+    }
+
+    private fun playRound(
+        deck: CardDeck,
+        participants: Participants,
+    ) {
+        participants.players.forEach { player ->
+            player.playRound(
+                deck,
+                { playerName -> InputView.askMoreCard(playerName) },
+                { participant -> OutputView.printParticipantStatus(participant) },
+            )
+        }
+        participants.dealer.playRound(deck) { participant -> OutputView.printParticipantStatus(participant) }
+
+        OutputView.printStatusAndScore(participants)
+        OutputView.printResult(participants.getDealerWinningState(), participants.getPlayerWinningState())
+    }
+
+    companion object {
+        const val INITIAL_DISTRIBUTE_COUNT = 2
     }
 }
