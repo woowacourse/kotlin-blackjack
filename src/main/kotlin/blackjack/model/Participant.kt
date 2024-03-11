@@ -44,7 +44,7 @@ sealed class Participant(val name: ParticipantName, val gameInformation: GameInf
                 draw(cardDeck.pickCard())
                 output(this)
             }
-            if (gameInformation.score < 21) {
+            if (gameInformation.score < BLACKJACK_SCORE) {
                 gameInformation.changeState(GameState.Finished.STAY)
             }
         }
@@ -53,6 +53,7 @@ sealed class Participant(val name: ParticipantName, val gameInformation: GameInf
             private val DEFAULT_DEALER_NAME = ParticipantName("딜러")
             private const val INITIAL_DEALING_COUNT = 2
             private const val ADDITIONAL_DRAW_CRITERIA = 16
+            private const val BLACKJACK_SCORE = 21
         }
     }
 }
