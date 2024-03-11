@@ -18,7 +18,7 @@ class Dealer(val nickname: Nickname = Nickname(DEFAULT_DEALER_NAME)) : CardHolde
         return gameDeck
     }
 
-    private fun shouldDrawCard(): Boolean = hand.calculate() <= THRESHOLD
+    private fun shouldDrawCard(): Boolean = hand.calculate() <= DEALER_CARD_DRAW_THRESHOLD
 
     private fun drawCardAndPrint(
         card: Card,
