@@ -10,7 +10,7 @@ import blackjack.view.OutputView
 
 object BlackJackController {
     private lateinit var players: Players
-    private val dealer: Dealer = Dealer()
+    private lateinit var dealer: Dealer
 
     fun startGame() {
         initializePlayers()
@@ -39,7 +39,7 @@ object BlackJackController {
     }
 
     private fun initializeParticipantsCards() {
-        dealer.drawSingleCard(CardDeck::pick)
+        dealer = Dealer.of(CardDeck::pick)
         displayInitializedCards(dealer.gameInfo, players.value.map { it.gameInfo })
     }
 
