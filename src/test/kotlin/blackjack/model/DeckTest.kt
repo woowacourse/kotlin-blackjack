@@ -5,6 +5,16 @@ import org.junit.jupiter.api.Test
 
 class DeckTest {
     @Test
+    fun `카드 뭉치에 A 스페이드 카드가 있을 때 카드를 한 장 뽑는다면 A 스페이드이다`() {
+        val deck = Deck(mutableListOf(Card(CardNumber.Ace, Suit.Spade)))
+        val player = Player("cheolsoo")
+        deck giveCardTo player
+        val actual = player.showCard()[0]
+        val expected = Card(CardNumber.Ace, Suit.Spade)
+        assertThat(actual).isEqualTo(expected)
+    }
+
+    @Test
     fun `덱 하나에는 조커를 제외한 모든 트럼프 카드 52장이 들어있다`() {
         val deck = Deck()
         val oneDeck =
