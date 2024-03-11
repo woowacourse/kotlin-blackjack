@@ -1,6 +1,6 @@
 package blackjack.model.deck
 
-class Deck {
+class Deck(private val cardMachine: CardMachine = ShuffleCardMachine()) {
     private val cards: MutableList<Card>
 
     init {
@@ -12,7 +12,7 @@ class Deck {
             Pattern.entries.flatMap { pattern: Pattern ->
                 assignNumber(pattern)
             }
-        return CardMachineManager.shuffle(cards)
+        return cardMachine.shuffle(cards)
     }
 
     private fun assignNumber(pattern: Pattern): List<Card> =

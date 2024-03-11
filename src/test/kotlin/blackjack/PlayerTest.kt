@@ -1,6 +1,5 @@
 package blackjack
 
-import blackjack.model.deck.CardMachineManager
 import blackjack.model.deck.Deck
 import blackjack.model.participant.Player
 import blackjack.testmachine.BlackjackCardMachine
@@ -15,8 +14,7 @@ class PlayerTest {
 
     @BeforeEach
     fun setUp() {
-        CardMachineManager.machine = NormalCardMachine()
-        player = Player("채채", Deck())
+        player = Player("채채", Deck(NormalCardMachine()))
     }
 
     @Test
@@ -28,8 +26,7 @@ class PlayerTest {
 
     @Test
     fun `플레이어의 카드의 합이 21 초과일 시 버스트된다`() {
-        CardMachineManager.machine = BustCardMachine()
-        val deck = Deck()
+        val deck = Deck(BustCardMachine())
         val player = Player("채채", deck)
         player.addCard(true)
         assertThat(player.isBust()).isTrue()
@@ -37,8 +34,7 @@ class PlayerTest {
 
     @Test
     fun `플레이어는 블랙잭 여부를 반환할 수 있다`() {
-        CardMachineManager.machine = BlackjackCardMachine()
-        val deck = Deck()
+        val deck = Deck(BlackjackCardMachine())
         val player = Player("채채", deck)
         assertThat(player.isBlackjack()).isTrue()
     }
