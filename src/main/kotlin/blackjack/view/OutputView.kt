@@ -1,6 +1,7 @@
 package blackjack.view
 
 import blackjack.model.CardHand
+import blackjack.model.CardShape
 import blackjack.model.DealerWinning
 import blackjack.model.Participants
 import blackjack.model.PlayerWinning
@@ -27,7 +28,7 @@ class OutputView {
 
     private fun printFirstCardHand(cardHand: CardHand) {
         val (shape, number) = cardHand.hand.first()
-        println(number.number.toString() + shape.shape)
+        println(number.number.toString() + convertCardShapeFormat(shape))
     }
 
     fun printDealerHit() = println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.")
@@ -47,9 +48,18 @@ class OutputView {
     private fun printAllCardHand(cardHand: CardHand) {
         print(
             cardHand.hand.joinToString {
-                it.number.output + it.shape.shape
+                it.number.output + convertCardShapeFormat(it.shape)
             },
         )
+    }
+
+    private fun convertCardShapeFormat(shape: CardShape): String {
+        return when (shape) {
+            CardShape.HEART -> HEART_OUTPUT_FORMAT
+            CardShape.CLOVER -> CLOVER_OUTPUT_FORMAT
+            CardShape.SPADE -> SPADE_OUTPUT_FORMAT
+            CardShape.DIAMOND -> DIAMOND_OUTPUT_FORMAT
+        }
     }
 
     fun printPlayerCardHand(role: Role) {
@@ -77,5 +87,9 @@ class OutputView {
     companion object {
         private const val NAME_CARD_HAND_FORMAT = "%s 카드: "
         private const val CARD_HAND_SUM_FORMAT = " - 결과: %d"
+        private const val HEART_OUTPUT_FORMAT = "하트"
+        private const val CLOVER_OUTPUT_FORMAT = "클로버"
+        private const val SPADE_OUTPUT_FORMAT = "스페이드"
+        private const val DIAMOND_OUTPUT_FORMAT = "다이아몬드"
     }
 }
