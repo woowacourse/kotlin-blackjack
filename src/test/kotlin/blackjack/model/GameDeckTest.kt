@@ -1,9 +1,11 @@
 package blackjack.model
 
+import blackjack.exception.Exceptions.NoCardErrorException
 import blackjack.model.CardNumber.ACE
 import blackjack.model.Pattern.HEART
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 class GameDeckTest {
     @Test
@@ -17,5 +19,11 @@ class GameDeckTest {
         val card = Card(pattern = HEART, number = ACE)
         val gameDeck = GameDeck(ShuffleGeneratorImpl.shuffleGameDeck(listOf(card)))
         Assertions.assertThat(gameDeck.cards.first()).isEqualTo(card)
+    }
+
+    @Test
+    fun `카드 덱에 카드가 없다면 NoCardErrorException이 발생한다`() {
+        val gameDeck = GameDeck(ShuffleGeneratorImpl.shuffleGameDeck(listOf()))
+        assertThrows<NoCardErrorException> { gameDeck.drawCard() }
     }
 }
