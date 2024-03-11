@@ -30,6 +30,6 @@ class Dealer(val nickname: Nickname = Nickname(DEFAULT_DEALER_NAME)) : CardHolde
 
     companion object {
         private const val DEFAULT_DEALER_NAME = "딜러"
-        const val THRESHOLD = 16
+        const val DEALER_CARD_DRAW_THRESHOLD = 16
     }
 }
