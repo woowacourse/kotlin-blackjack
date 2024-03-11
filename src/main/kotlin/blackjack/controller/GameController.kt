@@ -2,6 +2,9 @@ package blackjack.controller
 
 import blackjack.model.BlackJackGame
 import blackjack.model.Dealer
+import blackjack.model.GameState
+import blackjack.model.GameState.End
+import blackjack.model.GameState.Play
 import blackjack.model.Participants
 import blackjack.model.PlayerGroup
 import blackjack.view.InputView
@@ -11,20 +14,39 @@ import blackjack.view.OutputView.printDealerDrawCard
 import blackjack.view.OutputView.printGameSetting
 import blackjack.view.OutputView.showPlayerCards
 
-class GameController {
+class GameController(private var gameState: GameState = Play) {
     fun run() {
-        val playerGroup = createPlayerGroup()
-        val dealer = Dealer()
-        val participants = Participants(dealer = dealer, playerGroup = playerGroup)
-
         while (true) {
-            playGame(participants = participants).onSuccess {
-                OutputView.printMatchResult(dealer = participants.dealer, playerGroup = participants.playerGroup)
-                return
-            }.onFailure { e ->
-                handReset(participants = participants)
-                OutputView.printError(e)
+            when (gameState) {
+                Play -> play()
+                End -> break
             }
+        }
+    }
+
+    private fun play() {
+        createParticipants().onSuccess { participants ->
+            startGame(participants = participants)
+        }.onFailure { e ->
+            OutputView.printError(e)
+        }
+    }
+
+    private fun createParticipants(): Result<Participants> {
+        return runCatching {
+            val playerGroup = createPlayerGroup()
+            val dealer = Dealer()
+            Participants(dealer = dealer, playerGroup = playerGroup)
+        }
+    }
+
+    private fun startGame(participants: Participants) {
+        playGame(participants = participants).onSuccess {
+            OutputView.printMatchResult(dealer = participants.dealer, playerGroup = participants.playerGroup)
+            gameState = End
+        }.onFailure { e ->
+            handReset(participants = participants)
+            OutputView.printError(e)
         }
     }
 

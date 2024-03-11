@@ -6,7 +6,7 @@ import blackjack.exception.ExceptionsHandler.handleValidation
 @JvmInline
 value class Nickname(val name: String) {
     init {
-        handleValidation(INVALID_NAME_LENGTH_ERROR) { name.length in NAME_RANGE }
+        handleValidation(INVALID_NAME_LENGTH_ERROR, name) { name.length in NAME_RANGE }
     }
 
     override fun toString(): String = name

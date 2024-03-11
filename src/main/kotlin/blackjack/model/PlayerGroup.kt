@@ -9,7 +9,7 @@ class PlayerGroup {
         get() = _players
 
     fun addPlayer(playerNames: List<String>) {
-        handleValidation(INVALID_PLAYERS_COUNT_ERROR) { _players.size + playerNames.size in PLAYERS_COUNT_RANGE }
+        handleValidation<String>(INVALID_PLAYERS_COUNT_ERROR) { _players.size + playerNames.size in PLAYERS_COUNT_RANGE }
         _players += playerNames.map { Player(nickname = Nickname(it)) }
     }
 
