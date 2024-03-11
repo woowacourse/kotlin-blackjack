@@ -2,24 +2,30 @@ package blackjack.model
 
 sealed class Participant(val name: ParticipantName, val gameInformation: GameInformation) {
     fun draw(card: Card) {
-        if (gameInformation.state is GameState.Running) {
+        if (isRunning()) {
             gameInformation.drawCard(card)
         }
     }
 
-    abstract fun additionalDraw(
-        cardDeck: CardDeck,
-        output: (Participant) -> Unit,
-    )
+    fun isRunning(): Boolean {
+        return gameInformation.state is GameState.Running
+    }
 
     class Player(name: ParticipantName, gameInformation: GameInformation = GameInformation()) :
         Participant(name, gameInformation) {
-        override fun additionalDraw(
+        fun judgeDrawOrNot(
             cardDeck: CardDeck,
-            output: (Participant) -> Unit,
+            readDecision: () -> Boolean,
+            output: () -> Unit,
         ) {
-            draw(cardDeck.pickCard())
-            output(this)
+            while (isRunning()) {
+                if (readDecision()) {
+                    draw(cardDeck.pickCard())
+                    output()
+                } else {
+                    gameInformation.changeState(GameState.Finished.STAY)
+                }
+            }
         }
     }
 
@@ -36,13 +42,13 @@ sealed class Participant(val name: ParticipantName, val gameInformation: GameInf
             }
         }
 
-        override fun additionalDraw(
+        fun judgeDrawOrNot(
             cardDeck: CardDeck,
-            output: (Participant) -> Unit,
+            output: () -> Unit,
         ) {
             while (gameInformation.score <= ADDITIONAL_DRAW_CRITERIA) {
                 draw(cardDeck.pickCard())
-                output(this)
+                output()
             }
             if (gameInformation.score < BLACKJACK_SCORE) {
                 gameInformation.changeState(GameState.Finished.STAY)

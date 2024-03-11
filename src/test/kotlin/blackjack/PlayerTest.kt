@@ -29,11 +29,28 @@ class PlayerTest {
     }
 
     @Test
-    fun `카드 추가로 뽑기`() {
+    fun `추가 드로우 의사가 있을때 카드 추가로 뽑기`() {
         player.draw(Card(CardNumber.TWO, CardSymbol.SPADE))
         player.draw(Card(CardNumber.THREE, CardSymbol.SPADE))
-        player.additionalDraw(cardDeck) { OutputView.outputParticipantCard(player) }
+
+        fun readDecision(): Boolean {
+            return if (player.gameInformation.cards.size == 2) true else false
+        }
+        player.judgeDrawOrNot(cardDeck, { readDecision() }) { OutputView.outputParticipantCard(player) }
 
         assertThat(player.gameInformation.cards.size == 3).isTrue
+    }
+
+    @Test
+    fun `추가 드로우 의사가 없을때`() {
+        player.draw(Card(CardNumber.TWO, CardSymbol.SPADE))
+        player.draw(Card(CardNumber.THREE, CardSymbol.SPADE))
+
+        fun readDecision(): Boolean {
+            return false
+        }
+        player.judgeDrawOrNot(cardDeck, { readDecision() }) { OutputView.outputParticipantCard(player) }
+
+        assertThat(player.gameInformation.cards.size == 2).isTrue
     }
 }

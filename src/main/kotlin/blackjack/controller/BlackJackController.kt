@@ -3,7 +3,6 @@ package blackjack.controller
 import blackjack.model.CardDeck
 import blackjack.model.DrawDecision
 import blackjack.model.GameResult
-import blackjack.model.GameState
 import blackjack.model.Participant
 import blackjack.model.Participant.Dealer
 import blackjack.model.Participant.Player
@@ -48,37 +47,21 @@ object BlackJackController {
         val cardDeck = CardDeck()
         participants.getDealer().initialCardDealing(participants, cardDeck)
         OutputView.outputCardDistribution(participants)
-        decideParticipantDecisions(participants, cardDeck)
+        judgePlayersDraw(participants.getPlayers(), cardDeck)
+        participants.getDealer().judgeDrawOrNot(cardDeck) { OutputView.outputDealerDraw(participants.getDealer()) }
         OutputView.outputGameScores(participants)
     }
 
-    private fun decideParticipantDecisions(
-        participants: Participants,
-        cardDeck: CardDeck,
-    ) {
-        judgePlayerDraw(participants.getPlayers(), cardDeck)
-        judgeDealerDraw(participants.getDealer(), cardDeck)
-    }
-
-    private fun judgeDealerDraw(
-        dealer: Dealer,
-        cardDeck: CardDeck,
-    ) {
-        dealer.additionalDraw(cardDeck) { OutputView.outputDealerDraw(dealer) }
-    }
-
-    private fun judgePlayerDraw(
+    private fun judgePlayersDraw(
         players: List<Player>,
         cardDeck: CardDeck,
     ) {
         players.forEach { player ->
-            while (player.gameInformation.state is GameState.Running) {
-                val wantDraw = readDrawDecision(player.name)
-                if (wantDraw) {
-                    player.additionalDraw(cardDeck) { OutputView.outputParticipantCard(player) }
-                }
-                if (!wantDraw) player.gameInformation.changeState(GameState.Finished.STAY)
-            }
+            player.judgeDrawOrNot(
+                cardDeck,
+                { readDrawDecision(player.name) },
+                { OutputView.outputParticipantCard(player) },
+            )
         }
     }
 

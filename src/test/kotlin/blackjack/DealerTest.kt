@@ -32,7 +32,7 @@ class DealerTest {
     fun `카드 추가로 뽑기`() {
         dealer.draw(Card(CardNumber.TWO, CardSymbol.SPADE))
         dealer.draw(Card(CardNumber.THREE, CardSymbol.SPADE))
-        dealer.additionalDraw(cardDeck) { OutputView.outputDealerDraw(dealer) }
+        dealer.judgeDrawOrNot(cardDeck) { OutputView.outputDealerDraw(dealer) }
 
         assertThat(dealer.gameInformation.cards.size >= 3).isTrue
         assertThat(dealer.gameInformation.state != GameState.Running.HIT).isTrue
