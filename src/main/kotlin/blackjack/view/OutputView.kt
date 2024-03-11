@@ -1,12 +1,14 @@
 package blackjack.view
 
 import blackjack.model.Card
+import blackjack.model.CardNumber
 import blackjack.model.Dealer
 import blackjack.model.DealerStatistics
 import blackjack.model.GameResult
 import blackjack.model.Participant
 import blackjack.model.Player
 import blackjack.model.PlayerStatistics
+import blackjack.model.Suit
 
 object OutputView {
     fun printInitialResult(
@@ -54,7 +56,7 @@ object OutputView {
         name: String,
         cards: List<Card>,
     ): String {
-        val cardStrings = cards.map { it.cardNumber.name + it.suit.name }.joinToString(", ")
+        val cardStrings = cards.joinToString(", ") { it.cardNumber.getName() + it.suit.getName() }
         return "${name}카드: $cardStrings"
     }
 
@@ -82,14 +84,46 @@ object OutputView {
                     append("${count}$resultName ")
                 }
             }
-            appendString(dealerStatistics.getWinCount(), GameResult.Win.name)
-            appendString(dealerStatistics.getLoseCount(), GameResult.Lose.name)
-            appendString(dealerStatistics.getDrawCount(), GameResult.Draw.name)
+            appendString(dealerStatistics.getWinCount(), GameResult.Win.getName())
+            appendString(dealerStatistics.getLoseCount(), GameResult.Lose.getName())
+            appendString(dealerStatistics.getDrawCount(), GameResult.Draw.getName())
         }
 
     fun printPlayerStatistics(playerStatistics: PlayerStatistics) {
         playerStatistics.forEach { playerStatistic ->
-            println("${playerStatistic.player.name}: ${playerStatistic.gameResult.name}")
+            println("${playerStatistic.player.name}: ${playerStatistic.gameResult.getName()}")
         }
     }
+
+    private fun Suit.getName(): String =
+        when (this) {
+            Suit.Club -> "클로버"
+            Suit.Diamond -> "다이아몬드"
+            Suit.Spade -> "스페이드"
+            Suit.Heart -> "하트"
+        }
+
+    private fun CardNumber.getName(): String =
+        when (this) {
+            CardNumber.Ace -> "A"
+            CardNumber.Two -> "2"
+            CardNumber.Three -> "3"
+            CardNumber.Four -> "4"
+            CardNumber.Five -> "5"
+            CardNumber.Six -> "6"
+            CardNumber.Seven -> "7"
+            CardNumber.Eight -> "8"
+            CardNumber.Nine -> "9"
+            CardNumber.Ten -> "10"
+            CardNumber.Jack -> "J"
+            CardNumber.Queen -> "Q"
+            CardNumber.King -> "K"
+        }
+
+    private fun GameResult.getName(): String =
+        when (this) {
+            GameResult.Draw -> "무"
+            GameResult.Win -> "승"
+            GameResult.Lose -> "패"
+        }
 }
