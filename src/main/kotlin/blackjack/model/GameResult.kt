@@ -13,7 +13,7 @@ data class GameResult(
         return answer
     }
 
-    fun deepCopy(
+    fun setResultTo(
         newWin: Int = DEFAULT_RESULT_VALUE,
         newDefeat: Int = DEFAULT_RESULT_VALUE,
         newPush: Int = DEFAULT_RESULT_VALUE,
