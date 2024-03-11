@@ -2,7 +2,6 @@ package blackjack.controller
 
 import blackjack.model.CardDeck
 import blackjack.model.Dealer
-import blackjack.model.GameInfo
 import blackjack.model.Judge
 import blackjack.model.Players
 import blackjack.view.InputView
@@ -10,11 +9,11 @@ import blackjack.view.OutputView
 
 object BlackJackController {
     private lateinit var players: Players
-    private lateinit var dealer: Dealer
+    private val dealer: Dealer = Dealer.of(CardDeck::pick)
 
     fun startGame() {
         initializePlayers()
-        initializeParticipantsCards()
+        displayInitializedCards()
         playRound()
         displayResult()
     }
@@ -29,18 +28,8 @@ object BlackJackController {
         }
     }
 
-    private fun getPlayerNames(): List<String> {
-        return runCatching {
-            InputView.readPlayerNames()
-        }.onFailure {
-            println(it.message)
-            return getPlayerNames()
-        }.getOrThrow()
-    }
-
-    private fun initializeParticipantsCards() {
-        dealer = Dealer.of(CardDeck::pick)
-        displayInitializedCards(dealer.gameInfo, players.value.map { it.gameInfo })
+    private fun displayInitializedCards() {
+        OutputView.printInitialStats(dealer.gameInfo, players.value.map { it.gameInfo })
     }
 
     private fun playRound() {
@@ -61,17 +50,19 @@ object BlackJackController {
         }
     }
 
+    private fun getPlayerNames(): List<String> {
+        return runCatching {
+            InputView.readPlayerNames()
+        }.onFailure {
+            println(it.message)
+            return getPlayerNames()
+        }.getOrThrow()
+    }
+
     private fun askPlayerHit(playerName: String): String =
         runCatching {
             InputView.readContinueInput(playerName)
         }.onFailure {
             return askPlayerHit(playerName)
         }.getOrThrow()
-
-    private fun displayInitializedCards(
-        dealerInfo: GameInfo,
-        playersInfo: List<GameInfo>,
-    ) {
-        OutputView.printInitialStats(dealerInfo, playersInfo)
-    }
 }
