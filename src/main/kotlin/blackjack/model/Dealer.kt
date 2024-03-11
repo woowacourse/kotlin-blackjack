@@ -1,8 +1,8 @@
 package blackjack.model
 
 class Dealer(name: String = DEFAULT_DEALER_NAME) : Participant(name) {
-    fun openFirstCard(): Card {
-        return getCards().firstOrNull() ?: throw IllegalArgumentException(ERROR_CARD_INDEX)
+    fun openFirstCard(): Card? {
+        return getCards().firstOrNull()
     }
 
     fun checkDealerScoreCondition(): Boolean {

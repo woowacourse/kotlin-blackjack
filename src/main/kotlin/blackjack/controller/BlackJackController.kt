@@ -27,10 +27,12 @@ class BlackJackController {
             dealerName = dealer.getName(),
             players = participants.getPlayers(),
         )
-        OutputView.outputDealerCurrentHandCard(
-            name = dealer.getName(),
-            firstCard = dealer.openFirstCard(),
-        )
+        dealer.openFirstCard()?.let { firstCard ->
+            OutputView.outputDealerCurrentHandCard(
+                name = dealer.getName(),
+                firstCard = firstCard,
+            )
+        }
         OutputView.outputPlayersCurrentHandCard(participants.getPlayers())
     }
 
