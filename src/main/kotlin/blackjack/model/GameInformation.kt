@@ -1,6 +1,6 @@
 package blackjack.model
 
-class GameInformation(cards: Set<Card> = emptySet(), state: GameState = GameState.Running.READY) {
+class GameInformation(cards: Set<Card> = emptySet(), state: GameState = GameState.Running.HIT) {
     private val _cards: MutableSet<Card> = cards.toMutableSet()
     val cards: Set<Card>
         get() = _cards.toSet()

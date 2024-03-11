@@ -4,7 +4,6 @@ import blackjack.model.Card
 import blackjack.model.CardDeck
 import blackjack.model.CardNumber
 import blackjack.model.CardSymbol
-import blackjack.model.GameState
 import blackjack.model.Participant.Player
 import blackjack.model.ParticipantName
 import blackjack.view.OutputView
@@ -27,13 +26,6 @@ class PlayerTest {
         player.draw(cardDeck.pickCard())
 
         assertThat(player.gameInformation.cards.size).isEqualTo(1)
-    }
-
-    @Test
-    fun `상태 HIT로 전환`() {
-        player.changeStateToHit()
-
-        assertThat(player.gameInformation.state).isEqualTo(GameState.Running.HIT)
     }
 
     @Test

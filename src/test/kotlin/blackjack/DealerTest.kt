@@ -29,13 +29,6 @@ class DealerTest {
     }
 
     @Test
-    fun `상태 HIT로 전환`() {
-        dealer.changeStateToHit()
-
-        assertThat(dealer.gameInformation.state).isEqualTo(GameState.Running.HIT)
-    }
-
-    @Test
     fun `카드 추가로 뽑기`() {
         dealer.draw(Card(CardNumber.TWO, CardSymbol.SPADE))
         dealer.draw(Card(CardNumber.THREE, CardSymbol.SPADE))
