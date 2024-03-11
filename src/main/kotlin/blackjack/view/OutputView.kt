@@ -2,9 +2,11 @@ package blackjack.view
 
 import blackjack.model.Card
 import blackjack.model.Dealer
+import blackjack.model.DealerStatistics
 import blackjack.model.GameResult
 import blackjack.model.Participant
 import blackjack.model.Player
+import blackjack.model.PlayerStatistics
 
 object OutputView {
 
@@ -60,18 +62,25 @@ object OutputView {
         println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
     }
 
-    fun printDealerStatistics(dealerStatistics: Map<GameResult, Int>) {
-        println()
-        val dealerStatisticsString = dealerStatistics.map {
-            "${it.value}${it.key.name}"
-        }.joinToString(" ")
+    fun printDealerStatistics(dealerStatistics: DealerStatistics) {
+        val dealerStatisticsString = buildDealerStatisticsString(dealerStatistics)
         println("딜러: $dealerStatisticsString")
     }
 
-    fun printPlayerStatistics(playerStatistics: Map<String, GameResult>) {
-        playerStatistics.forEach { playerStatistic ->
-            println("${playerStatistic.key}: ${playerStatistic.value.name}")
+    private fun buildDealerStatisticsString(dealerStatistics: DealerStatistics): String = buildString {
+        val appendString: (Int, String) -> Unit = { count, resultName ->
+            if (count != 0) {
+                append("${count}$resultName ")
+            }
         }
+        appendString(dealerStatistics.getWinCount(), GameResult.승.name)
+        appendString(dealerStatistics.getLoseCount(), GameResult.패.name)
+        appendString(dealerStatistics.getDrawCount(), GameResult.무.name)
     }
 
+    fun printPlayerStatistics(playerStatistics: PlayerStatistics) {
+        playerStatistics.forEach { playerStatistic ->
+            println("${playerStatistic.player.name}: ${playerStatistic.gameResult.name}")
+        }
+    }
 }

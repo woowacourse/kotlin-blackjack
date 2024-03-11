@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test
 
 class GameStatisticsTest {
 
-
     @Nested
     @DisplayName("dealerStatistics가 적절한 값을 갖는지 테스트")
     inner class DealerStatisticsTest {
@@ -19,9 +18,8 @@ class GameStatisticsTest {
 
             val player1 = buildPlayer("a", CardNumber.`3`)
 
-            val statistics = GameStatistics(dealer, listOf(player1))
-            val actual = statistics.dealerStatistics
-            val expected = mapOf(GameResult.`승` to 1)
+            val actual = DealerStatistics(dealer, listOf(player1)).getWinCount()
+            val expected = 1
             assertThat(actual).isEqualTo(expected)
         }
 
@@ -33,9 +31,8 @@ class GameStatisticsTest {
             val player1 = buildPlayer("a", CardNumber.`3`)
             val player2 = buildPlayer("b", CardNumber.`3`)
 
-            val statistics = GameStatistics(dealer, listOf(player1, player2))
-            val actual = statistics.dealerStatistics
-            val expected = mapOf(GameResult.`승` to 2)
+            val actual = DealerStatistics(dealer, listOf(player1, player2)).getWinCount()
+            val expected = 2
             assertThat(actual).isEqualTo(expected)
         }
 
@@ -47,12 +44,10 @@ class GameStatisticsTest {
             val player1 = buildPlayer("a", CardNumber.`3`)
             val player2 = buildPlayer("b", CardNumber.`3`)
 
-            val statistics = GameStatistics(dealer, listOf(player1, player2))
-            val actual = statistics.dealerStatistics
-            val expected = mapOf(GameResult.`패` to 2)
+            val actual = DealerStatistics(dealer, listOf(player1, player2)).getLoseCount()
+            val expected = 2
             assertThat(actual).isEqualTo(expected)
         }
-
 
         @Test
         fun `플레이어 2명이 비겼을 때 딜러는 2번 비긴다`() {
@@ -62,9 +57,8 @@ class GameStatisticsTest {
             val player1 = buildPlayer("a", CardNumber.`3`)
             val player2 = buildPlayer("b", CardNumber.`3`)
 
-            val statistics = GameStatistics(dealer, listOf(player1, player2))
-            val actual = statistics.dealerStatistics
-            val expected = mapOf(GameResult.`무` to 2)
+            val actual = DealerStatistics(dealer, listOf(player1, player2)).getDrawCount()
+            val expected = 2
             assertThat(actual).isEqualTo(expected)
         }
 
@@ -75,13 +69,16 @@ class GameStatisticsTest {
 
             val player1 = buildPlayer("a", CardNumber.`2`)
             val player2 = buildPlayer("b", CardNumber.`4`)
+            val dealerStatistics = DealerStatistics(dealer, listOf(player1, player2))
 
-            val statistics = GameStatistics(dealer, listOf(player1, player2))
-            val actual = statistics.dealerStatistics
-            val expected = mapOf(GameResult.`승` to 1, GameResult.`패` to 1)
-            assertThat(actual).isEqualTo(expected)
+            val actual_1 = dealerStatistics.getWinCount()
+            val expected_1 = 1
+            assertThat(actual_1).isEqualTo(expected_1)
+
+            val actual_2 = dealerStatistics.getLoseCount()
+            val expected_2 = 1
+            assertThat(actual_2).isEqualTo(expected_2)
         }
-
     }
 
     @Test
@@ -91,12 +88,10 @@ class GameStatisticsTest {
 
         val player1 = buildPlayer("a", CardNumber.`3`)
 
-        val statistics = GameStatistics(dealer, listOf(player1))
-        val actual = statistics.playerStatistics
-        val expected = mapOf("a" to GameResult.`패`)
+        val actual = PlayerStatistics(dealer, listOf(player1)).iterator().next()
+        val expected = PlayerStatistic(player1, GameResult.`패`)
         assertThat(actual).isEqualTo(expected)
     }
-
 
     @Nested
     @DisplayName("승패 판정 테스트")
@@ -104,14 +99,12 @@ class GameStatisticsTest {
 
         @Test
         fun `플레이어만 bust될 때 무조건 패배한다`() {
-            val dealer = Dealer()
-            dealer.addCard(Card(CardNumber.`4`, Suit.`하트`))
+            val dealer = buildDealer(CardNumber.`4`)
 
-            val player1 = buildPlayer("a", CardNumber.`J`, CardNumber.`Q`, CardNumber.`K`)
+            val player = buildPlayer("a", CardNumber.`J`, CardNumber.`Q`, CardNumber.`K`)
 
-            val statistics = GameStatistics(dealer, listOf(player1))
-            val actual = statistics.playerStatistics
-            val expected = mapOf("a" to GameResult.`패`)
+            val actual = player versus dealer
+            val expected = GameResult.`패`
             assertThat(actual).isEqualTo(expected)
         }
 
@@ -119,11 +112,10 @@ class GameStatisticsTest {
         fun `딜러와 플레이어가 둘 다 bust될 때 플레이어가 패배한다`() {
             val dealer = buildDealer(CardNumber.`J`, CardNumber.`Q`, CardNumber.`K`)
 
-            val player1 = buildPlayer("a", CardNumber.`J`, CardNumber.`Q`, CardNumber.`K`)
+            val player = buildPlayer("a", CardNumber.`J`, CardNumber.`Q`, CardNumber.`K`)
 
-            val statistics = GameStatistics(dealer, listOf(player1))
-            val actual = statistics.playerStatistics
-            val expected = mapOf("a" to GameResult.`패`)
+            val actual = player versus dealer
+            val expected = GameResult.`패`
             assertThat(actual).isEqualTo(expected)
         }
 
@@ -131,11 +123,10 @@ class GameStatisticsTest {
         fun `둘 다 블랙잭인 경우 무승부로 한다`() {
             val dealer = buildDealer(CardNumber.`J`, CardNumber.`A`)
 
-            val player1 = buildPlayer("a", CardNumber.`J`, CardNumber.`A`)
+            val player = buildPlayer("a", CardNumber.`J`, CardNumber.`A`)
 
-            val statistics = GameStatistics(dealer, listOf(player1))
-            val actual = statistics.playerStatistics
-            val expected = mapOf("a" to GameResult.`무`)
+            val actual = player versus dealer
+            val expected = GameResult.`무`
             assertThat(actual).isEqualTo(expected)
         }
 
@@ -143,11 +134,10 @@ class GameStatisticsTest {
         fun `딜러가 블랙잭이고 플레이어가 21인 경우 패배한다`() {
             val dealer = buildDealer(CardNumber.`J`, CardNumber.`A`)
 
-            val player1 = buildPlayer("a", CardNumber.`J`, CardNumber.`5`, CardNumber.`6`)
+            val player = buildPlayer("a", CardNumber.`J`, CardNumber.`5`, CardNumber.`6`)
 
-            val statistics = GameStatistics(dealer, listOf(player1))
-            val actual = statistics.playerStatistics
-            val expected = mapOf("a" to GameResult.`패`)
+            val actual = player versus dealer
+            val expected = GameResult.`패`
             assertThat(actual).isEqualTo(expected)
         }
 
@@ -155,11 +145,10 @@ class GameStatisticsTest {
         fun `플레이어가 블랙잭이고 딜러가 21인 경우 승리한다`() {
             val dealer = buildDealer(CardNumber.`J`, CardNumber.`5`, CardNumber.`6`)
 
-            val player1 = buildPlayer("a", CardNumber.`J`, CardNumber.`A`)
+            val player = buildPlayer("a", CardNumber.`J`, CardNumber.`A`)
 
-            val statistics = GameStatistics(dealer, listOf(player1))
-            val actual = statistics.playerStatistics
-            val expected = mapOf("a" to GameResult.`승`)
+            val actual = player versus dealer
+            val expected = GameResult.`승`
             assertThat(actual).isEqualTo(expected)
         }
 
@@ -167,11 +156,10 @@ class GameStatisticsTest {
         fun `모두 블랙잭이 아니고 플레이어의 점수가 클 경우 플레이어가 승리한다`() {
             val dealer = buildDealer(CardNumber.`2`, CardNumber.`3`)
 
-            val player1 = buildPlayer("a", CardNumber.`4`, CardNumber.`5`)
+            val player = buildPlayer("a", CardNumber.`4`, CardNumber.`5`)
 
-            val statistics = GameStatistics(dealer, listOf(player1))
-            val actual = statistics.playerStatistics
-            val expected = mapOf("a" to GameResult.`승`)
+            val actual = player versus dealer
+            val expected = GameResult.`승`
             assertThat(actual).isEqualTo(expected)
         }
 
@@ -179,11 +167,10 @@ class GameStatisticsTest {
         fun `모두 블랙잭이 아니고 플레이어의 점수가 작을 경우 플레이어가 패배한다`() {
             val dealer = buildDealer(CardNumber.`4`, CardNumber.`5`)
 
-            val player1 = buildPlayer("a", CardNumber.`2`, CardNumber.`3`)
+            val player = buildPlayer("a", CardNumber.`2`, CardNumber.`3`)
 
-            val statistics = GameStatistics(dealer, listOf(player1))
-            val actual = statistics.playerStatistics
-            val expected = mapOf("a" to GameResult.`패`)
+            val actual = player versus dealer
+            val expected = GameResult.`패`
             assertThat(actual).isEqualTo(expected)
         }
 
@@ -191,24 +178,21 @@ class GameStatisticsTest {
         fun `모두 블랙잭이 아니고 점수가 같을 경우 무승부로 한다`() {
             val dealer = buildDealer(CardNumber.`2`, CardNumber.`3`)
 
-            val player1 = buildPlayer("a", CardNumber.`2`, CardNumber.`3`)
+            val player = buildPlayer("a", CardNumber.`2`, CardNumber.`3`)
 
-            val statistics = GameStatistics(dealer, listOf(player1))
-            val actual = statistics.playerStatistics
-            val expected = mapOf("a" to GameResult.`무`)
+            val actual = player versus dealer
+            val expected = GameResult.`무`
             assertThat(actual).isEqualTo(expected)
         }
 
         @Test
-        fun `딜러만 버스트 된 경우 플레이어가 승리한다`() {
+        fun `딜러가 버스트 된 경우 플레이어가 승리한다`() {
             val dealer = buildDealer(CardNumber.`6`, CardNumber.`10`, CardNumber.`9`)
 
-            val player1 = buildPlayer("a", CardNumber.`5`, CardNumber.`7`, CardNumber.`6`)
-            val player2 = buildPlayer("b", CardNumber.`A`, CardNumber.`3`, CardNumber.`8`)
+            val player = buildPlayer("a", CardNumber.`5`, CardNumber.`7`, CardNumber.`6`)
 
-            val statistics = GameStatistics(dealer, listOf(player1, player2))
-            val actual = statistics.playerStatistics
-            val expected = mapOf("a" to GameResult.`승`, "b" to GameResult.`승`)
+            val actual = player versus dealer
+            val expected = GameResult.`승`
             assertThat(actual).isEqualTo(expected)
         }
     }
