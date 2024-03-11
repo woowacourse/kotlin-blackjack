@@ -41,4 +41,16 @@ class CardDeckTest {
         }
         assertThrows<IllegalArgumentException> { cardDeck.draw() }
     }
+
+    @Test
+    fun `덱에 특정 카드 한장이 남아있다면 draw 시 해당 카드가 나와야 한다`() {
+        val customCard =
+            Card(
+                denomination = Denomination.ACE,
+                suit = Suit.SPADE,
+            )
+
+        val customDeck = CardDeck(setOf(customCard))
+        assertThat(customDeck.draw()).isEqualTo(customCard)
+    }
 }
