@@ -21,7 +21,7 @@ class PlayersTest {
         val players = listOf("케이엠", "케이엠", "해음")
         val exception =
             org.junit.jupiter.api.assertThrows<IllegalArgumentException> {
-                val playersData = Players.of(players) { "y" }
+                val playersData = Players(players.map { Player(GameInfo("player")) { "y" } })
                 println(playersData.value)
             }
         assertThat(exception.message).isEqualTo("중복된 플레이어의 이름을 입력하셨습니다.")

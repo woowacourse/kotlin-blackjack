@@ -1,17 +1,17 @@
 package blackjack.model
 
 class Judge(
-    val dealer: Dealer,
-    val players: Players,
+    val dealer: GameInfo,
+    val players: List<GameInfo>,
 ) {
     fun getDealerResult(): Scoreboard {
         var win = 0
         var draw = 0
         var lose = 0
 
-        players.value.forEach { player ->
-            val dealerDifference = CRITERIA_NUMBER - dealer.gameInfo.sumOfCards
-            val playerDifference = CRITERIA_NUMBER - player.gameInfo.sumOfCards
+        players.forEach { playerStat ->
+            val dealerDifference = CRITERIA_NUMBER - dealer.sumOfCards
+            val playerDifference = CRITERIA_NUMBER - playerStat.sumOfCards
 
             when {
                 dealerDifference < 0 && playerDifference < 0 -> draw++
@@ -27,9 +27,9 @@ class Judge(
     }
 
     fun getPlayerResults(): List<String> {
-        return players.value.map { player ->
-            val dealerDifference = CRITERIA_NUMBER - dealer.gameInfo.sumOfCards
-            val playerDifference = CRITERIA_NUMBER - player.gameInfo.sumOfCards
+        return players.map { playerStat ->
+            val dealerDifference = CRITERIA_NUMBER - dealer.sumOfCards
+            val playerDifference = CRITERIA_NUMBER - playerStat.sumOfCards
 
             when {
                 dealerDifference < 0 && playerDifference < 0 -> RESULT_DRAW

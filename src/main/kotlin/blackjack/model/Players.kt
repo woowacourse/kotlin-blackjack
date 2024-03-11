@@ -1,16 +1,11 @@
 package blackjack.model
 
-class Players(val value: List<Player>) {
+class Players(
+    val value: List<Player>,
+) {
     init {
         require(value.map { it.gameInfo.name }.distinct().size == value.size) { EXCEPTION_DUPLICATED_PLAYERS }
         require(value.size in PLAYER_NUM_RANGE) { EXCEPTION_NUMBER_OF_PLAYERS.format(value.size) }
-        initializeCards()
-    }
-
-    private fun initializeCards() {
-        value.forEach { player ->
-            player.initializeCards(CardDeck::pick)
-        }
     }
 
     companion object {
@@ -25,10 +20,15 @@ class Players(val value: List<Player>) {
         fun of(
             playerNames: List<String>,
             onInputDecision: (String) -> String,
+            generateCard: () -> Card?,
         ): Players {
             return playerNames
                 .map { name ->
-                    Player(gameInfo = GameInfo(name), onInputDecision = { onInputDecision(name) })
+                    Player.of(
+                        gameInfo = GameInfo(name),
+                        onInputDecision = { onInputDecision(name) },
+                        generateCard = generateCard,
+                    )
                 }
                 .run { Players(this) }
         }

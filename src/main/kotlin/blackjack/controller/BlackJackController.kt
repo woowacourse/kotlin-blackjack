@@ -22,7 +22,7 @@ object BlackJackController {
     private fun initializePlayers() {
         runCatching {
             val playerNames = getPlayerNames()
-            players = Players.of(playerNames, ::askPlayerHit)
+            players = Players.of(playerNames, ::askPlayerHit, CardDeck::pick)
         }.onFailure {
             println(it.message)
             initializePlayers()
@@ -52,9 +52,11 @@ object BlackJackController {
     }
 
     private fun displayResult() {
-        val judge = Judge(dealer, players)
+        val dealerInfo = dealer.gameInfo
+        val playersInfo = players.value.map { player -> player.gameInfo }
+        val judge = Judge(dealerInfo, playersInfo)
         with(OutputView) {
-            printFinalCards(dealer, players)
+            printFinalCards(dealerInfo, playersInfo)
             printResult(judge)
         }
     }

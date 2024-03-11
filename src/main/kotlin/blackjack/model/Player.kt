@@ -35,12 +35,6 @@ class Player(
         }
     }
 
-    fun initializeCards(generateCard: () -> Card?) {
-        repeat(INITIAL_DRAW_COUNT) {
-            gameInfo.addCard(generateCard() ?: return)
-        }
-    }
-
     private fun checkBurst(): PickingState {
         if (gameInfo.sumOfCards > MAXIMUM_CARD_TOTAL) {
             return PickingState.STAND
@@ -53,5 +47,17 @@ class Player(
         private const val EXCEPTION_PLAYER_NAME = "플레이어의 이름은 0자 혹은 공백이 될 수 없습니다."
         private const val EXCEPTION_PLAYER_INPUT = "y나 n을 입력해야 합니다."
         private const val INITIAL_DRAW_COUNT = 2
+
+        fun of(
+            gameInfo: GameInfo,
+            onInputDecision: () -> String,
+            generateCard: () -> Card?,
+        ): Player {
+            repeat(INITIAL_DRAW_COUNT) {
+                gameInfo.addCard(generateCard() ?: return@repeat)
+            }
+
+            return Player(gameInfo, onInputDecision)
+        }
     }
 }
