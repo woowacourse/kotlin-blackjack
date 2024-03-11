@@ -20,12 +20,12 @@ class GameResultTest {
     fun setUp() {
         dealer = Dealer()
         players = listOf(Player(ParticipantName("채드")))
+        dealer.draw(Card(CardNumber.TEN, CardSymbol.SPADE))
+        dealer.draw(Card(CardNumber.TEN, CardSymbol.HEART))
     }
 
     @Test
     fun `딜러 승, 플레이어 패`() {
-        dealer.draw(Card(CardNumber.TEN, CardSymbol.SPADE))
-        dealer.draw(Card(CardNumber.TEN, CardSymbol.HEART))
         players.forEach { player ->
             player.draw(Card(CardNumber.JACK, CardSymbol.SPADE))
             player.draw(Card(CardNumber.NINE, CardSymbol.SPADE))
@@ -39,8 +39,6 @@ class GameResultTest {
 
     @Test
     fun `딜러 패, 플레이어 승`() {
-        dealer.draw(Card(CardNumber.TEN, CardSymbol.SPADE))
-        dealer.draw(Card(CardNumber.TEN, CardSymbol.HEART))
         players.forEach { player ->
             player.draw(Card(CardNumber.JACK, CardSymbol.SPADE))
             player.draw(Card(CardNumber.ACE, CardSymbol.SPADE))
@@ -54,8 +52,6 @@ class GameResultTest {
 
     @Test
     fun `딜러, 플레이어 무승부`() {
-        dealer.draw(Card(CardNumber.TEN, CardSymbol.SPADE))
-        dealer.draw(Card(CardNumber.TEN, CardSymbol.HEART))
         players.forEach { player ->
             player.draw(Card(CardNumber.JACK, CardSymbol.SPADE))
             player.draw(Card(CardNumber.QUEEN, CardSymbol.SPADE))
