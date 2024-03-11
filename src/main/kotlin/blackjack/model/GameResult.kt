@@ -5,14 +5,6 @@ data class GameResult(
     val defeat: Int = DEFAULT_RESULT_VALUE,
     val push: Int = DEFAULT_RESULT_VALUE,
 ) {
-    override fun toString(): String {
-        var answer = ""
-        if (win != DEFAULT_RESULT_VALUE) answer += "${win}승 "
-        if (push != DEFAULT_RESULT_VALUE) answer += "${push}무 "
-        if (defeat != DEFAULT_RESULT_VALUE) answer += "${defeat}패 "
-        return answer
-    }
-
     fun deepCopy(
         newWin: Int = DEFAULT_RESULT_VALUE,
         newDefeat: Int = DEFAULT_RESULT_VALUE,

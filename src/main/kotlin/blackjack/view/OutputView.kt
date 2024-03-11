@@ -5,6 +5,7 @@ import blackjack.exception.Exceptions.InvalidPlayersCountErrorException
 import blackjack.exception.Exceptions.NoCardErrorException
 import blackjack.model.Dealer
 import blackjack.model.Dealer.Companion.DEALER_CARD_DRAW_THRESHOLD
+import blackjack.model.GameResult
 import blackjack.model.Participants.Companion.INITIAL_CARD_COUNTS
 import blackjack.model.Player
 import blackjack.model.PlayerGroup
@@ -64,10 +65,18 @@ object OutputView {
         playerGroup: PlayerGroup,
     ) {
         println("\n[ 최종 승패 ]")
-        println("${dealer.nickname}: ${dealer.hand.gameResult}")
+        println("${dealer.nickname}: ${printResult(dealer.hand.gameResult)}")
         playerGroup.players.forEach { player ->
-            println("${player.nickname}: ${player.hand.gameResult}")
+            println("${player.nickname}: ${printResult(player.hand.gameResult)}")
         }
+    }
+
+    private fun printResult(gameResult: GameResult): String {
+        var answer = ""
+        if (gameResult.win != GameResult.DEFAULT_RESULT_VALUE) answer += "${gameResult.win}승 "
+        if (gameResult.push != GameResult.DEFAULT_RESULT_VALUE) answer += "${gameResult.push}무 "
+        if (gameResult.defeat != GameResult.DEFAULT_RESULT_VALUE) answer += "${gameResult.defeat}패 "
+        return answer
     }
 
     fun printError(e: Throwable) {
