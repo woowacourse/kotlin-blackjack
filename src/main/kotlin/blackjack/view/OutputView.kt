@@ -22,11 +22,11 @@ object OutputView {
     private const val COMMA = ", "
 
     fun outputCardDistribution(participants: Participants) {
-        val dealerName = participants.dealer.name
-        val playerNames = participants.players.map { player -> player.name }.joinToString(COMMA)
+        val dealerName = participants.getDealer().name
+        val playerNames = participants.getPlayers().map { player -> player.name }.joinToString(COMMA)
         println(MESSAGE_CARD_DISTRIBUTION.format(dealerName, playerNames))
-        outputInitialDealerCard(participants.dealer)
-        outputPlayersCards(participants.players)
+        outputInitialDealerCard(participants.getDealer())
+        outputPlayersCards(participants.getPlayers())
     }
 
     fun outputParticipantCard(participant: Participant) {
@@ -45,8 +45,8 @@ object OutputView {
     }
 
     fun outputGameScores(participants: Participants) {
-        outputGameScore(participants.dealer)
-        participants.players.forEach { player ->
+        outputGameScore(participants.getDealer())
+        participants.getPlayers().forEach { player ->
             outputGameScore(player)
         }
     }

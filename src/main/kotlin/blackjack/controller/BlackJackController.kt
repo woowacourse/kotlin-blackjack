@@ -4,6 +4,7 @@ import blackjack.model.CardDeck
 import blackjack.model.DrawDecision
 import blackjack.model.GameResult
 import blackjack.model.GameState
+import blackjack.model.Participant
 import blackjack.model.Participant.Dealer
 import blackjack.model.Participant.Player
 import blackjack.model.ParticipantName
@@ -23,7 +24,10 @@ object BlackJackController {
     private fun registerParticipants(): Participants {
         val dealer = Dealer()
         val players = initializePlayers()
-        return Participants(dealer, players)
+        val participants = mutableListOf<Participant>()
+        participants.add(dealer)
+        participants.addAll(players)
+        return Participants(participants)
     }
 
     private fun readPlayerNames(): List<ParticipantName> {
@@ -55,11 +59,11 @@ object BlackJackController {
         cardDeck: CardDeck,
     ) {
         repeat(INITIAL_DEALING_COUNT) {
-            participants.getParticipants().forEach { participant ->
+            participants.participants.forEach { participant ->
                 participant.draw(cardDeck.pickCard())
             }
         }
-        participants.getParticipants().forEach { participant ->
+        participants.participants.forEach { participant ->
             participant.changeStateToHit()
         }
     }
@@ -68,8 +72,8 @@ object BlackJackController {
         participants: Participants,
         cardDeck: CardDeck,
     ) {
-        judgePlayerDraw(participants.players, cardDeck)
-        judgeDealerDraw(participants.dealer, cardDeck)
+        judgePlayerDraw(participants.getPlayers(), cardDeck)
+        judgeDealerDraw(participants.getDealer(), cardDeck)
     }
 
     private fun judgeDealerDraw(
@@ -104,7 +108,7 @@ object BlackJackController {
     }
 
     private fun displayGameResult(participants: Participants) {
-        val gameResult = GameResult(participants.dealer, participants.players)
+        val gameResult = GameResult(participants.getDealer(), participants.getPlayers())
         OutputView.outputGameResult(gameResult)
     }
 }
