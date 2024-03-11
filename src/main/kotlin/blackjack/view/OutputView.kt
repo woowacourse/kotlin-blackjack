@@ -21,7 +21,7 @@ object OutputView {
     }
 
     private fun showDealerInitCard(dealer: Dealer) {
-        val showCard = dealer.hand.cards.first()
+        val showCard = dealer.status.hand.cards.first()
         println("딜러: $showCard")
     }
 
@@ -37,7 +37,7 @@ object OutputView {
     }
 
     private fun showStateOfPlayer(player: Player) {
-        when (player.hand.state) {
+        when (player.status.state) {
             UserState.BUST -> println("${player.name}의 카드가 ${Hand.BLACKJACK_NUMBER}을 초과하여 Bust되었습니다.")
             UserState.STAY -> println("${player.name}이(가) Stay에 성공하였습니다.")
             UserState.BLACKJACK -> println("${player.name}이(가) BlackJack을 달성했습니다.")
@@ -46,10 +46,10 @@ object OutputView {
     }
 
     private fun convertPlayerCardsToString(player: Player) =
-        "${player.name}: ${player.hand.cards.joinToString(", ")}"
+        "${player.name}: ${player.status.hand.cards.joinToString(", ")}"
 
     private fun convertDealerCardsToString(dealer: Dealer) =
-        "딜러: ${dealer.hand.cards.joinToString(", ")}"
+        "딜러: ${dealer.status.hand.cards.joinToString(", ")}"
 
     fun printDealerDrawCard() {
         println("\n딜러의 카드가 ${Dealer.THRESHOLD}이하 이므로, 1장의 카드를 더 받습니다.")
@@ -65,12 +65,12 @@ object OutputView {
     }
 
     private fun showDealerCardsResult(dealer: Dealer) {
-        println("${convertDealerCardsToString(dealer)} - 결과: ${dealer.hand.calculate()}")
+        println("${convertDealerCardsToString(dealer)} - 결과: ${dealer.status.hand.calculate()}")
     }
 
     private fun showPlayersCardsResult(playerGroup: PlayerGroup) {
         playerGroup.players.forEach { player ->
-            println("${convertPlayerCardsToString(player)} - 결과: ${player.hand.calculate()}")
+            println("${convertPlayerCardsToString(player)} - 결과: ${player.status.hand.calculate()}")
         }
     }
 

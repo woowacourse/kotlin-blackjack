@@ -20,7 +20,7 @@ class Participants(
 
     fun matchResult() {
         playerGroup.players.forEach { player ->
-            when (dealer.hand.state) {
+            when (dealer.status.state) {
                 BUST -> checkBust(player = player)
                 BLACKJACK -> checkBlackJack(player = player)
                 STAY -> checkStay(player = player)
@@ -30,7 +30,7 @@ class Participants(
     }
 
     private fun checkBust(player: Player) {
-        if (player.hand.state == BUST) {
+        if (player.status.state == BUST) {
             winAndLose(winner = dealer, loser = player)
         } else {
             winAndLose(winner = player, loser = dealer)
@@ -38,7 +38,7 @@ class Participants(
     }
 
     private fun checkBlackJack(player: Player) {
-        if (player.hand.state == BLACKJACK) {
+        if (player.status.state == BLACKJACK) {
             draw(player = player, dealer = dealer)
         } else {
             winAndLose(winner = dealer, loser = player)
@@ -46,7 +46,7 @@ class Participants(
     }
 
     private fun checkStay(player: Player) {
-        if (player.hand.state == BUST) {
+        if (player.status.state == BUST) {
             winAndLose(winner = dealer, loser = player)
         } else {
             compareWhenBothStay(player)
@@ -54,8 +54,8 @@ class Participants(
     }
 
     private fun compareWhenBothStay(player: Player) {
-        val dealerPoint = dealer.hand.calculate()
-        val playerPoint = player.hand.calculate()
+        val dealerPoint = dealer.status.hand.calculate()
+        val playerPoint = player.status.hand.calculate()
 
         if (dealerPoint == playerPoint) {
             draw(player = player, dealer = dealer)

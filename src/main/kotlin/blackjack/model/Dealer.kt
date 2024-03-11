@@ -7,12 +7,12 @@ class Dealer : BaseHolder() {
         gameDeck: GameDeck,
         alert: () -> Unit,
     ) {
-        while (hand.state == UserState.RUNNING) {
-            if (hand.calculate() <= THRESHOLD) {
+        while (status.state == UserState.RUNNING) {
+            if (status.hand.calculate() <= THRESHOLD) {
                 alert()
                 takeCard(gameDeck.drawCard())
             } else {
-                hand.changeState(UserState.STAY)
+                status.changeState(UserState.STAY)
             }
         }
     }
