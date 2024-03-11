@@ -16,6 +16,17 @@ class HandCardTest {
     }
 
     @Test
+    fun `손패에 ACE가 있고 카드들의 합이 Bust일 때, ACE 점수 변환 테스트`() {
+        val bustCard = HandCard()
+        bustCard.apply {
+            addCard(Card(Denomination.ACE, Suit.SPADE))
+            addCard(Card(Denomination.TWO, Suit.SPADE))
+            addCard(Card(Denomination.KING, Suit.SPADE))
+        }
+        assertThat(bustCard.getTotalCardsSum()).isEqualTo(13)
+    }
+
+    @Test
     fun `손패에서 동일한 카드가 추가되는지 테스트`() {
         val card = Card(Denomination.KING, Suit.SPADE)
         val handCard = HandCard()

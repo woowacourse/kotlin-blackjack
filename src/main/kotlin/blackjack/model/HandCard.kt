@@ -9,9 +9,19 @@ class HandCard {
     }
 
     fun getTotalCardsSum(): Int {
-        return cards.sumOf { card ->
-            card.getCardDenomination().getScore()
+        var aceCount = getAceCount()
+
+        var totalScore =
+            cards.sumOf { card ->
+                card.getCardDenomination().getScore()
+            }
+
+        while (aceCount > 0 && totalScore > BlackJack.BUST_SCORE) {
+            totalScore -= Denomination.ACE.getScore() - Denomination.aceTransferScore()
+            aceCount--
         }
+
+        return totalScore
     }
 
     fun getAceCount(): Int {
