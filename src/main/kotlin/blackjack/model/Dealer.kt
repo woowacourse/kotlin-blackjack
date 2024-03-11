@@ -2,7 +2,7 @@ package blackjack.model
 
 import blackjack.base.BaseHolder
 
-class Dealer(override val humanName: HumanName = HumanName(DEFAULT_DEALER_NAME)) : BaseHolder() {
+class Dealer : BaseHolder() {
     fun drawDealerCard(
         gameDeck: GameDeck,
         alert: () -> Unit,
@@ -18,7 +18,6 @@ class Dealer(override val humanName: HumanName = HumanName(DEFAULT_DEALER_NAME))
     }
 
     companion object {
-        private const val DEFAULT_DEALER_NAME = "딜러"
         const val THRESHOLD = 16
     }
 }

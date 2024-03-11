@@ -8,7 +8,7 @@ import blackjack.model.Hand
 abstract class BaseHolder(
     hand: Hand = Hand(),
     gameResult: GameResult = GameResult(),
-) : BaseHuman() {
+) {
     private var _hand: Hand = hand
     val hand: Hand
         get() = _hand
