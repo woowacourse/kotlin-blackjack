@@ -1,6 +1,8 @@
 package blackjack.view
 
 import blackjack.model.card.Card
+import blackjack.model.card.Rank
+import blackjack.model.card.Suit
 import blackjack.model.participant.GameResult
 
 class OutputView {
@@ -78,7 +80,7 @@ class OutputView {
         }
 
     private fun Card.format(): String {
-        return "${rank.label}${suit.label} "
+        return "${rank.format()}${suit.format()} "
     }
 
     private fun List<Card>.format(): String {
@@ -88,6 +90,31 @@ class OutputView {
             }
         }
     }
+
+    private fun Suit.format(): String =
+        when (this) {
+            Suit.SPADE -> "스페이드"
+            Suit.HEART -> "하트"
+            Suit.DIAMOND -> "다이아"
+            Suit.CLUB -> "클로버"
+        }
+
+    private fun Rank.format() =
+        when (this) {
+            Rank.ACE -> "A"
+            Rank.TWO -> "2"
+            Rank.THREE -> "3"
+            Rank.FOUR -> "4"
+            Rank.FIVE -> "5"
+            Rank.SIX -> "6"
+            Rank.SEVEN -> "7"
+            Rank.EIGHT -> "8"
+            Rank.NINE -> "9"
+            Rank.TEN -> "10"
+            Rank.JACK -> "J"
+            Rank.QUEEN -> "Q"
+            Rank.KING -> "K"
+        }
 
     companion object {
         private const val CONDITION_COUNT = 0
