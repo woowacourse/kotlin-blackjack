@@ -1,15 +1,13 @@
 package blackjack.view
 
-import blackjack.model.participant.Player
-
 class InputView {
-    fun inputPlayerNames(): List<String> {
+    fun fetchPlayerNames(): List<String> {
         println(MESSAGE_INPUT_PLAYERS_NAME)
         return readln().split(DELIMITER).map { it.trim() }
     }
 
-    tailrec fun inputWhetherHit(player: Player): Boolean {
-        println(MESSAGE_INPUT_WHETHER_HIT.format(player.name))
+    tailrec fun determineHit(name: String): Boolean {
+        println(MESSAGE_INPUT_WHETHER_HIT.format(name))
         val input = readln()
         if (input == HIT) {
             return true
@@ -18,7 +16,7 @@ class InputView {
             return false
         }
         println(MESSAGE_INVALID_INPUT)
-        return inputWhetherHit(player)
+        return determineHit(name)
     }
 
     companion object {

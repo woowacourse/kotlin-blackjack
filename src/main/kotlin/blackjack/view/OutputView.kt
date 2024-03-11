@@ -1,46 +1,38 @@
 package blackjack.view
 
-import blackjack.model.DealerResult
-import blackjack.model.GameResult
-import blackjack.model.ScoreBoard
 import blackjack.model.card.Card
-import blackjack.model.participant.Player
+import blackjack.model.participant.GameResult
 
 class OutputView {
-    fun showDivided(
-        dealerFirstCard: Card,
-        players: List<Player>,
+    fun showFirstDraw(
+        dealer: ParticipantUiModel,
+        dealerFirstCard: Card = dealer.cards.first(),
+        players: List<ParticipantUiModel>,
     ) {
         println()
-        println(MESSAGE_DIVIDED_CARDS.format(players.joinToString { it.name }))
-        println(MESSAGE_PLAYER_HAND_CARDS.format(DEALER_NAME, dealerFirstCard.format()))
+        println(FORMAT_DIVIDED_CARDS.format(players.joinToString { it.name }))
+        println(FORMAT_PLAYER_HAND_CARDS.format(dealer.name, dealerFirstCard.format()))
         players.forEach(::showPlayerHandCards)
     }
 
-    fun showPlayerHandCards(player: Player) {
-        val cards: List<Card> = player.hand.cards
-        println(MESSAGE_PLAYER_HAND_CARDS.format(player.name, cards.format()))
+    fun showPlayerHandCards(player: ParticipantUiModel) {
+        val cards: List<Card> = player.cards
+        println(FORMAT_PLAYER_HAND_CARDS.format(player.name, cards.format()))
     }
 
     fun showDealerHitCard() {
         println(MESSAGE_DEALER_HIT)
     }
 
-    fun showDealerScore(
-        cards: List<Card>,
-        score: Int,
-    ) {
+    fun showParticipantsScore(participants: List<ParticipantUiModel>) {
         println()
-        showPlayerScore(DEALER_NAME, cards, score)
+        participants.forEach(::showParticipantScore)
     }
 
-    fun showPlayerScore(
-        name: String,
-        cards: List<Card>,
-        score: Int,
-    ) {
+    private fun showParticipantScore(participant: ParticipantUiModel) {
+        val (name, cards, score) = participant
         println(
-            MESSAGE_PARTICIPANT_RESULT.format(
+            FORMAT_PARTICIPANT_SCORE.format(
                 name,
                 cards.format(),
                 score,
@@ -48,23 +40,41 @@ class OutputView {
         )
     }
 
-    fun showScoreBoard(scoreBoard: ScoreBoard) {
+    fun showGameResult(
+        dealerResult: DealerResultUiModel,
+        playerResult: List<PlayerResultUiModel>,
+    ) {
         println(MESSAGE_FINAL_RESULT)
-        val (playersResult, dealerResult) = scoreBoard
-        println(dealerResult.format())
-        playersResult.forEach {
-            println("${it.name}: ${it.state.label}")
-        }
+        showDealerResult(dealerResult)
+        playerResult.forEach(::showPlayerResult)
     }
 
-    private fun DealerResult.format() =
+    private fun showDealerResult(gameResult: DealerResultUiModel) {
+        val (name, winCount, drawCount, loseCount) = gameResult
+        println(FORMAT_PARTICIPANT_RESULT.format(name, dealerScoreFormat(winCount, drawCount, loseCount)))
+    }
+
+    private fun showPlayerResult(gameResult: PlayerResultUiModel) {
+        val (name, result) = gameResult
+        println(FORMAT_PARTICIPANT_RESULT.format(name, playerScoreFormat(result)))
+    }
+
+    private fun dealerScoreFormat(
+        winCount: Int,
+        drawCount: Int,
+        loseCount: Int,
+    ): String =
         buildString {
-            append("${DEALER_NAME}: ")
-            GameResult.State.entries.forEach {
-                append(map[it] ?: INIT_SCORE)
-                append(it.label)
-                append(" ")
-            }
+            if (winCount > CONDITION_COUNT) append(FORMAT_WIN.format(winCount))
+            if (drawCount > CONDITION_COUNT) append(FORMAT_DRAW.format(drawCount))
+            if (loseCount > CONDITION_COUNT) append(FORMAT_LOSE.format(loseCount))
+        }
+
+    private fun playerScoreFormat(result: GameResult) =
+        when (result) {
+            GameResult.WIN -> "승"
+            GameResult.LOSE -> "패"
+            GameResult.DRAW -> "무"
         }
 
     private fun Card.format(): String {
@@ -80,12 +90,18 @@ class OutputView {
     }
 
     companion object {
-        private const val INIT_SCORE = 0
-        private const val DEALER_NAME = "딜러"
-        private const val MESSAGE_PLAYER_HAND_CARDS = "%s 카드: %s"
-        private const val MESSAGE_PARTICIPANT_RESULT = "%s 카드: %s- 결과 : %d"
-        private const val MESSAGE_DIVIDED_CARDS = "딜러와 %s에게 2장의 카드를 나누었습니다."
+        private const val CONDITION_COUNT = 0
+        private const val MESSAGE_WIN = "승"
+        private const val MESSAGE_DRAW = "무"
+        private const val MESSAGE_LOSE = "패"
         private const val MESSAGE_DEALER_HIT = "\n딜러는 16이하라 한장의 카드를 더 받았습니다."
         private const val MESSAGE_FINAL_RESULT = "\n## 최종 승패"
+        private const val FORMAT_WIN = "%d$MESSAGE_WIN "
+        private const val FORMAT_DRAW = "%d$MESSAGE_DRAW "
+        private const val FORMAT_LOSE = "%d$MESSAGE_LOSE"
+        private const val FORMAT_PLAYER_HAND_CARDS = "%s 카드: %s"
+        private const val FORMAT_PARTICIPANT_SCORE = "%s 카드: %s- 결과 : %d"
+        private const val FORMAT_PARTICIPANT_RESULT = "%s : %s"
+        private const val FORMAT_DIVIDED_CARDS = "딜러와 %s에게 2장의 카드를 나누었습니다."
     }
 }

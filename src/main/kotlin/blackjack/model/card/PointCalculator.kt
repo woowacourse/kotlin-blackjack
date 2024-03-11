@@ -1,7 +1,4 @@
-package blackjack.model
-
-import blackjack.model.card.Card
-import blackjack.model.card.Rank
+package blackjack.model.card
 
 fun interface PointCalculator {
     fun sumOf(cards: List<Card>): Int

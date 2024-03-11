@@ -1,87 +1,50 @@
 package blackjack.controller
 
-import blackjack.model.GameResult
 import blackjack.model.card.Deck
-import blackjack.model.card.ParticipantHands
+import blackjack.model.card.Hand
 import blackjack.model.participant.Dealer
-import blackjack.model.participant.ParticipantModel
+import blackjack.model.participant.Participant
 import blackjack.model.participant.Player
+import blackjack.state.State
 import blackjack.view.InputView
 import blackjack.view.OutputView
+import blackjack.view.ParticipantUiModel
+import blackjack.view.toUiModel
+import blackjack.view.toUiModelWith
 
 class BlackJackController(
     private val inputView: InputView,
     private val outputView: OutputView,
 ) {
     fun start() {
-        val playersNames: List<String> = inputView.inputPlayerNames()
+        val playersNames: List<String> = inputView.fetchPlayerNames()
         val deck: Deck = Deck.create()
-        val (dealer, players) = spreadCards(deck, playersNames)
-        hitParticipant(players, deck, dealer)
-        showScoreBoard(players, dealer)
-    }
+        val players = playersNames.map { Player(it, State.Running(Hand(deck.drawMultiple(FIRST_DRAW_CAR_COUNT)))) }
+        val dealer = Dealer(State.Running(Hand(deck.drawMultiple(FIRST_DRAW_CAR_COUNT))))
 
-    private fun hitParticipant(
-        players: List<Player>,
-        deck: Deck,
-        dealer: Dealer,
-    ) {
-        hitPlayers(players, deck)
-        hitDealer(dealer, deck)
-        outputView.showDealerScore(dealer.hand.cards, dealer.hand.sumOptimized())
-    }
+        outputView.showFirstDraw(dealer = dealer.toUiModel(), players = players.map(Participant::toUiModel))
 
-    private fun showScoreBoard(
-        players: List<Player>,
-        dealer: Dealer,
-    ) {
-        players.forEach {
-            val name = it.name
-            val handCards = it.hand
-            outputView.showPlayerScore(name, handCards.cards, handCards.sumOptimized())
-        }
-        val scoreBoard = GameResult(dealer, players).createScoreBoard()
-        outputView.showScoreBoard(scoreBoard)
-    }
-
-    private fun hitDealer(
-        dealer: Dealer,
-        deck: Deck,
-    ) {
-        while (dealer.canHit()) {
-            outputView.showDealerHitCard()
-            dealer.hit(deck.draw())
-        }
-    }
-
-    private fun hitPlayers(
-        players: List<Player>,
-        deck: Deck,
-    ) {
         players.forEach { player ->
-            hitPlayer(player, deck)
+            player.play(
+                onHit = inputView::determineHit,
+                onDraw = deck::draw,
+                onDone = { outputView.showPlayerHandCards(it.toUiModel()) },
+            )
         }
+
+        dealer.play(
+            onDraw = deck::draw,
+            onDone = outputView::showDealerHitCard,
+        )
+        val participants: List<ParticipantUiModel> = (listOf(dealer) + players).map(Participant::toUiModel)
+        outputView.showParticipantsScore(participants)
+
+        val dealerResult = dealer.judge(players).toUiModelWith(dealer.name)
+        val playersResult = players.map { it.judge(dealer).toUiModelWith(it.name) }
+        outputView.showGameResult(dealerResult, playersResult)
     }
 
-    private fun hitPlayer(
-        player: Player,
-        deck: Deck,
-    ) {
-        while (inputView.inputWhetherHit(player)) {
-            player.hit(deck.draw())
-            outputView.showPlayerHandCards(player)
-        }
-    }
-
-    private fun spreadCards(
-        deck: Deck,
-        playersNames: List<String>,
-    ): ParticipantModel {
-        val (playerHand, dealerHand) =
-            ParticipantHands.from(deck.drawMultiple(playersNames.size))
-        val dealer = Dealer(dealerHand)
-        val players: List<Player> = Player.createPlayers(playersNames, playerHand)
-        outputView.showDivided(dealerHand.first(), players)
-        return ParticipantModel(dealer, players)
+    companion object {
+        private const val FIRST_DRAW_CAR_COUNT = 2
     }
 }
