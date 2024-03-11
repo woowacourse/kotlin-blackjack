@@ -1,6 +1,6 @@
 package blackjack.model
 
-data class Participants(
+class Participants(
     val dealer: Dealer,
     val players: List<Player>,
 ) {
@@ -9,6 +9,16 @@ data class Participants(
     }
 
     fun getAllParticipants(): List<Participant> = listOf(dealer) + players
+
+    fun getPlayerWinningState(): Map<Player, WinningResult> {
+        return players.associateWith { player -> player.getWinningResult(dealer) }
+    }
+
+    fun getDealerWinningState(): Map<WinningResult, Int> {
+        return players.map { player ->
+            dealer.getWinningResult(player)
+        }.groupingBy { it }.eachCount()
+    }
 
     companion object {
         private const val MAX_PLAYER_SIZE = 5
