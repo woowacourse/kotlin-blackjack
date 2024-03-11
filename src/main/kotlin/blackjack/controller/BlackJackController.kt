@@ -8,19 +8,15 @@ import blackjack.model.game.Result
 import blackjack.model.game.State
 import blackjack.model.player.Dealer
 import blackjack.model.player.PlayerEntry
+import blackjack.view.DRAW_DECISION
+import blackjack.view.judgePlayersDraw
+import blackjack.view.readPlayersName
 import blackjack.view.showDealerDrawMessage
 import blackjack.view.showFinalWinOrLossResult
 import blackjack.view.showHands
 import blackjack.view.showHandsScore
-import blackjack.view.showPlayerDrawDecision
 import blackjack.view.showPlayerEntry
 import blackjack.view.showPlayerHand
-import blackjack.view.showPlayersNameReadMessage
-
-private const val INVALID_PLAYER_NAME = "[ERROR] 공백이 아닌 플레이어의 이름을 입력해주세요."
-private const val INVALID_DRAW_DECISION = "[ERROR] 카드를 더 받을지 말지는 y 또는 n으로 입력해주세요."
-private const val DRAW_DECISION = "y"
-private const val STAY_DECISION = "n"
 
 object BlackJackController {
     fun run() {
@@ -81,7 +77,7 @@ object BlackJackController {
         deck: Deck,
     ) {
         while (player.state is State.Running.Hit) {
-            val drawOrNot = askPlayersDraw(player)
+            val drawOrNot = judgePlayersDraw(player)
             if (drawOrNot == DRAW_DECISION) {
                 player.hand.draw(deck.dealCard())
                 drawOrNot(drawOrNot, player)
@@ -160,30 +156,6 @@ object BlackJackController {
             dealer.state = State.Finished.Bust
         } else if (dealer.hand.isBlackjack()) {
             dealer.state = State.Finished.BlackJack
-        }
-    }
-
-    private fun readPlayersName(): List<String> {
-        showPlayersNameReadMessage()
-        return try {
-            val playersName = readln().split(',').map { it.trim() }
-            require(playersName.all { it.isNotBlank() }) { INVALID_PLAYER_NAME }
-            playersName
-        } catch (e: IllegalArgumentException) {
-            println(e.message)
-            readPlayersName()
-        }
-    }
-
-    private fun askPlayersDraw(player: Player): String? {
-        showPlayerDrawDecision(player)
-        return try {
-            val drawDecision = readlnOrNull()?.trim()?.lowercase()
-            require(drawDecision == DRAW_DECISION || drawDecision == STAY_DECISION) { INVALID_DRAW_DECISION }
-            drawDecision
-        } catch (e: IllegalArgumentException) {
-            println(e.message)
-            askPlayersDraw(player)
         }
     }
 }
