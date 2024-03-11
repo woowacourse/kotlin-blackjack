@@ -15,7 +15,7 @@ class CardDeckTest {
     }
 
     @Test
-    fun `카드 한장 뽑아서 제거`() {
+    fun `카드 한장 뽑아서 제거 후 남은 개수 확인`() {
         val deck = CardDeck()
 
         deck.pickCard()
