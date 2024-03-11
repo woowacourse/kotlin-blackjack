@@ -2,8 +2,19 @@ package blackjack.model
 
 class Cards {
     private val cards: MutableList<Card> = mutableListOf()
-    val size: Int
-        get() = cards.size
+
+    fun isBusted(): Boolean {
+        val score = sum()
+        val threshold = 21
+        return threshold < score
+    }
+
+    fun isMaxScore(): Boolean {
+        val score = sum()
+        val threshold = 21
+        return threshold == score
+    }
+    fun isBlackJack(): Boolean = cards.size == 2 && isMaxScore()
 
     fun addCard(card: Card) {
         cards.add(card)

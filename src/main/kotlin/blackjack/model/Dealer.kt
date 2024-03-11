@@ -1,6 +1,6 @@
 package blackjack.model
 
-class Dealer(name: String = "딜러") : Participant(name) {
+class Dealer(name: String = "딜러") : Participant(name, DealerScorePolicy()) {
 
     override fun isHitable(): Boolean {
         val score = cards.sum()

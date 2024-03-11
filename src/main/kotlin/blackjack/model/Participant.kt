@@ -1,24 +1,21 @@
 package blackjack.model
 
-abstract class Participant(val name: String) {
+abstract class Participant(val name: String, private val scorePolicy: ScorePolicy) {
 
     protected val cards = Cards()
+    private val score: Int
+        get() = scorePolicy.score(cards)
 
-    fun isBusted(): Boolean {
-        val score = cards.sum()
-        val threshold = 21
-        return threshold < score
-    }
-
-    fun isMaxScore(): Boolean {
-        val score = cards.sum()
-        val threshold = 21
-        return threshold == score
-    }
-
-    fun isBlackJack(): Boolean = cards.size == 2 && isMaxScore()
+    fun isBusted(): Boolean = cards.isBusted()
+    fun isMaxScore(): Boolean = cards.isMaxScore()
     fun addCard(card: Card) = cards.addCard(card)
     fun getCardSum(): Int = cards.sum()
     fun showCard() = cards.showCard()
     abstract fun isHitable(): Boolean
+
+    infix fun versus(other: Participant): GameResult = when {
+        this.score > other.score -> GameResult.승
+        this.score == other.score -> GameResult.무
+        else -> GameResult.패
+    }
 }
