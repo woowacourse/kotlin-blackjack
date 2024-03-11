@@ -1,6 +1,7 @@
 package blackjack.view
 
 import blackjack.model.CardHand
+import blackjack.model.CardNumber
 import blackjack.model.CardShape
 import blackjack.model.DealerWinning
 import blackjack.model.Participants
@@ -48,7 +49,7 @@ class OutputView {
     private fun printAllCardHand(cardHand: CardHand) {
         print(
             cardHand.hand.joinToString {
-                it.number.output + convertCardShapeFormat(it.shape)
+                convertCardNumberFormat(it.number) + convertCardShapeFormat(it.shape)
             },
         )
     }
@@ -59,6 +60,14 @@ class OutputView {
             CardShape.CLOVER -> CLOVER_OUTPUT_FORMAT
             CardShape.SPADE -> SPADE_OUTPUT_FORMAT
             CardShape.DIAMOND -> DIAMOND_OUTPUT_FORMAT
+        }
+    }
+
+    private fun convertCardNumberFormat(number: CardNumber): String {
+        return if (number == CardNumber.ACE) {
+            ACE_OUTPUT_FORMAT
+        } else {
+            number.number.toString()
         }
     }
 
@@ -91,5 +100,6 @@ class OutputView {
         private const val CLOVER_OUTPUT_FORMAT = "클로버"
         private const val SPADE_OUTPUT_FORMAT = "스페이드"
         private const val DIAMOND_OUTPUT_FORMAT = "다이아몬드"
+        private const val ACE_OUTPUT_FORMAT = "A"
     }
 }
