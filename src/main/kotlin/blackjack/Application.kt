@@ -7,7 +7,6 @@ fun main() {
     blackJackController.apply {
         startGameFlow()
         playGame()
-        calculateResult()
         showResult()
     }
 }

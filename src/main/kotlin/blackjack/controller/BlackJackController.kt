@@ -2,7 +2,6 @@ package blackjack.controller
 
 import blackjack.model.Dealer
 import blackjack.model.GameManager
-import blackjack.model.GameResult
 import blackjack.model.Participants
 import blackjack.model.Player
 import blackjack.model.user.UserDecision
@@ -10,9 +9,8 @@ import blackjack.view.InputView
 import blackjack.view.OutputView
 
 class BlackJackController {
-    private val gameManager = GameManager()
     private lateinit var participants: Participants
-    private lateinit var gameResult: GameResult
+    private lateinit var gameManager: GameManager
 
     fun startGameFlow() {
         val dealer = Dealer()
@@ -20,6 +18,11 @@ class BlackJackController {
         participants =
             Participants(
                 participants = listOf(dealer) + players,
+            )
+        gameManager =
+            GameManager(
+                dealer = participants.getDealer(),
+                players = participants.getPlayers(),
             )
         gameManager.setGame(participants)
         OutputView.outputParticipantsName(
@@ -53,15 +56,7 @@ class BlackJackController {
             OutputView.outputDealerRule()
             gameManager.applyUserDrawDecision(dealer)
         }
-    }
-
-    fun calculateResult() {
-        gameResult =
-            GameResult(
-                dealer = participants.getDealer(),
-                players = participants.getPlayers(),
-            )
-        gameResult.judgeBlackJackScores()
+        gameManager.judgeBlackJackScores()
     }
 
     fun showResult() {
@@ -69,10 +64,10 @@ class BlackJackController {
         OutputView.outputBlackResult()
         OutputView.outputDealerResult(
             dealerName = participants.getDealer().getName(),
-            dealerResults = gameResult.getDealerResults(),
+            dealerResults = gameManager.getDealerResults(),
         )
         OutputView.outputPlayersResult(
-            playersResult = gameResult.getPlayerResults(),
+            playersResult = gameManager.getPlayerResults(),
         )
     }
 }

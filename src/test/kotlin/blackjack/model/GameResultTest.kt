@@ -17,15 +17,15 @@ class GameResultTest {
                 draw(Card(Denomination.KING, Suit.HEART))
             }
         val winPlayers = listOf(player)
-        val gameResult =
-            GameResult(
+        val gameManager =
+            GameManager(
                 dealer = dealer,
                 players = winPlayers,
             )
-        gameResult.judgeBlackJackScores()
-        val dealerResults = gameResult.getDealerResults()
+        gameManager.judgeBlackJackScores()
+        val dealerResults = gameManager.getDealerResults()
         assertThat(dealerResults.getOrDefault(Result.LOSE, 0)).isEqualTo(1)
-        val playerResults = gameResult.getPlayerResults()
+        val playerResults = gameManager.getPlayerResults()
         assertThat(playerResults.getOrDefault(player, Result.LOSE)).isEqualTo(Result.WIN)
     }
 
@@ -62,15 +62,15 @@ class GameResultTest {
                 )
             }
         val drawPlayers = listOf(player)
-        val gameResult =
-            GameResult(
+        val gameManager =
+            GameManager(
                 dealer = dealer,
                 players = drawPlayers,
             )
-        gameResult.judgeBlackJackScores()
-        val dealerResults = gameResult.getDealerResults()
+        gameManager.judgeBlackJackScores()
+        val dealerResults = gameManager.getDealerResults()
         assertThat(dealerResults.getOrDefault(Result.DRAW, 0)).isEqualTo(1)
-        val playerResults = gameResult.getPlayerResults()
+        val playerResults = gameManager.getPlayerResults()
         assertThat(playerResults.getOrDefault(player, Result.WIN)).isEqualTo(Result.DRAW)
     }
 
@@ -87,15 +87,15 @@ class GameResultTest {
                 draw(Card(Denomination.SIX, Suit.HEART))
             }
         val losePlayers = listOf(player)
-        val gameResult =
-            GameResult(
+        val gameManager =
+            GameManager(
                 dealer = dealer,
                 players = losePlayers,
             )
-        gameResult.judgeBlackJackScores()
-        val dealerResults = gameResult.getDealerResults()
+        gameManager.judgeBlackJackScores()
+        val dealerResults = gameManager.getDealerResults()
         assertThat(dealerResults.getOrDefault(Result.WIN, 0)).isEqualTo(1)
-        val playerResults = gameResult.getPlayerResults()
+        val playerResults = gameManager.getPlayerResults()
         assertThat(playerResults.getOrDefault(player, Result.WIN)).isEqualTo(Result.LOSE)
     }
 }
