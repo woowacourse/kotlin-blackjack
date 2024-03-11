@@ -54,10 +54,10 @@ class Hand(cards: List<Card> = emptyList()) {
         newPush: Int = DEFAULT_RESULT_VALUE,
     ) {
         _gameResult =
-            gameResult.deepCopy(
-                newWin = newWin,
-                newDefeat = newDefeat,
-                newPush = newPush,
+            GameResult(
+                win = gameResult.win + newWin,
+                defeat = gameResult.defeat + newDefeat,
+                push = gameResult.push + newPush,
             )
     }
 

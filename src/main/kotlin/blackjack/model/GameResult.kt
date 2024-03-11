@@ -5,18 +5,6 @@ data class GameResult(
     val defeat: Int = DEFAULT_RESULT_VALUE,
     val push: Int = DEFAULT_RESULT_VALUE,
 ) {
-    fun deepCopy(
-        newWin: Int = DEFAULT_RESULT_VALUE,
-        newDefeat: Int = DEFAULT_RESULT_VALUE,
-        newPush: Int = DEFAULT_RESULT_VALUE,
-    ): GameResult {
-        return copy(
-            win = win + newWin,
-            defeat = defeat + newDefeat,
-            push = push + newPush,
-        )
-    }
-
     companion object {
         const val DEFAULT_RESULT_VALUE = 0
     }
