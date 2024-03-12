@@ -26,7 +26,7 @@ class Hand(
     fun isBust(): Boolean = sumOptimized() > BLACKJACK_NUMBER
 
     fun isBlackjack(): Boolean {
-        return (sumOptimized() == BLACKJACK_NUMBER) && (cards.size == MIN_HAND_CARDS_SIZE)
+        return (sumOptimized() == BLACKJACK_NUMBER) && (cards.size == INITIAL_SET_CARDS_SIZE)
     }
 
     override fun equals(other: Any?): Boolean {
@@ -44,5 +44,6 @@ class Hand(
 
     companion object {
         private const val MIN_HAND_CARDS_SIZE = 0
+        private const val INITIAL_SET_CARDS_SIZE = 2
     }
 }
