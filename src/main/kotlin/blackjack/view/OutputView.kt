@@ -1,6 +1,8 @@
 package blackjack.view
 
 import blackjack.model.card.Card
+import blackjack.model.card.Denomination
+import blackjack.model.card.Suite
 import blackjack.model.participant.Dealer
 import blackjack.model.participant.Player
 import blackjack.model.participant.Players
@@ -61,7 +63,7 @@ class OutputView {
     private fun printDealerFinalGameResult(dealerResult: DealerResult) {
         GameResultType.entries.forEach { gameResult ->
             val count = dealerResult.results[gameResult] ?: return@forEach
-            print("${count}${gameResult.message} ")
+            print("${count}${gameResult.message()} ")
         }
         lineBreak()
     }
@@ -71,7 +73,7 @@ class OutputView {
         playersResult: PlayersResult,
     ) {
         players.playerGroup.forEach {
-            println("${it.name}: ${playersResult.results[it.name]?.message}")
+            println("${it.name}: ${playersResult.results[it.name]?.message()}")
         }
     }
 
@@ -83,11 +85,43 @@ class OutputView {
         return "${name}카드: ${getCards().joinToString(separator = CARDS_SEPARATOR, transform = { it.toCardMessage() })}"
     }
 
-    private fun Card.toCardMessage() = "${denomination.value}${suite.value}"
+    private fun Card.toCardMessage() = "${denomination.value()}${suite.value()}"
 
     private fun Role.getPlayerCardResult() = " - 결과: ${getCardSum()}"
 
     private fun lineBreak() = println()
+
+    private fun Suite.value(): String =
+        when (this) {
+            Suite.CLOVER -> "클로버"
+            Suite.HEART -> "하트"
+            Suite.SPADE -> "스페이드"
+            Suite.DIAMOND -> "다이아몬드`"
+        }
+
+    private fun Denomination.value(): String =
+        when (this) {
+            Denomination.ACE -> "A"
+            Denomination.TWO -> "2"
+            Denomination.THREE -> "3"
+            Denomination.FOUR -> "4"
+            Denomination.FIVE -> "5"
+            Denomination.SIX -> "6"
+            Denomination.SEVEN -> "7"
+            Denomination.EIGHT -> "8"
+            Denomination.NINE -> "9"
+            Denomination.TEN -> "10"
+            Denomination.KING -> "K"
+            Denomination.QUEEN -> "Q"
+            Denomination.JACK -> "J"
+        }
+
+    private fun GameResultType.message(): String =
+        when (this) {
+            GameResultType.WIN -> "승"
+            GameResultType.LOSE -> "패"
+            GameResultType.DRAW -> "무"
+        }
 
     companion object {
         private const val PLAYERS_NAME_SEPARATOR = ", "
