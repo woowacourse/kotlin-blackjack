@@ -67,4 +67,11 @@ class CardHandTest {
         val actual = currentCardHand.sum()
         assertThat(actual).isEqualTo(12)
     }
+
+    @Test
+    fun `카드 손 패에 카드를 추가한다`() {
+        val cardHand = CardHand()
+        cardHand.addNewCard(Card(CardShape.SPADE, CardNumber.ACE))
+        assertThat(cardHand).isEqualTo(CardHand(Card(CardShape.SPADE, CardNumber.ACE)))
+    }
 }
