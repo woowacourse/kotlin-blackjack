@@ -25,11 +25,13 @@ class BlackjackController {
         deck: CardDeck,
         names: List<String>,
     ): Participants {
-        val dealer = Dealer(hand = Hand(List(INITIAL_DISTRIBUTE_COUNT) { deck.pick() }))
-        val players = names.map { Player(ParticipantName(it), Hand(List(INITIAL_DISTRIBUTE_COUNT) { deck.pick() })) }
+        val dealer = Dealer(hand = createInitialHand(deck))
+        val players = names.map { Player(ParticipantName(it), createInitialHand(deck)) }
 
         return Participants(dealer, players)
     }
+
+    private fun createInitialHand(deck: CardDeck): Hand = Hand(List(INITIAL_DISTRIBUTE_COUNT) { deck.pick() })
 
     private fun playRound(
         deck: CardDeck,
