@@ -11,7 +11,7 @@ class Players private constructor(names: Set<String>) {
 
     private fun initPlayersCard(deck: Deck) {
         gamePlayers.forEach { player ->
-            player.initCards(deck.draw(2))
+            player.initCards(deck.draw(INIT_CARD_AMOUNT))
         }
     }
 
