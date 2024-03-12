@@ -3,20 +3,9 @@ package blackjack.model
 import java.lang.IllegalStateException
 
 class GameDeck {
-    private var _cards: List<Card> = initDeck().shuffled()
+    private var _cards: List<Card> = initDeck()
     val cards: List<Card>
         get() = _cards
-
-    private fun initDeck(): List<Card> {
-        val newCards = mutableListOf<Card>()
-
-        Pattern.entries.forEach { pattern ->
-            CardNumber.entries.forEach { number ->
-                newCards.add(Card(pattern = pattern, number = number))
-            }
-        }
-        return newCards
-    }
 
     fun reset() {
         _cards = initDeck().shuffled()
@@ -34,5 +23,16 @@ class GameDeck {
     companion object {
         const val DECK_SIZE = 52
         const val DRAW_COUNT = 1
+
+        private val initialCards: List<Card> =
+            Pattern.entries.flatMap { pattern ->
+                CardNumber.entries.map { number ->
+                    Card(pattern = pattern, number = number)
+                }
+            }
+
+        fun initDeck(): List<Card> {
+            return initialCards.shuffled()
+        }
     }
 }
