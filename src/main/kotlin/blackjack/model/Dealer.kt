@@ -1,21 +1,25 @@
 package blackjack.model
 
 class Dealer(name: String = "딜러") : Participant(name) {
-    fun judge(participant: Participant): GameResult {
-        val dealerScore = this.getCardSum()
-        val playerScore = participant.getCardSum()
+    fun judge(player: Player): GameResult {
         return when {
-            (dealerScore < playerScore) -> {
-                GameResult.WIN
-            }
+            player.isBusted() -> GameResult.LOSE
+            this.isBusted() -> GameResult.WIN
+            player.isBlackJack() && this.isBlackJack() -> GameResult.DRAW
+            player.isBlackJack() -> GameResult.WIN
+            this.isBlackJack() -> GameResult.LOSE
+            else -> compareScore(player.getCardSum(), this.getCardSum())
+        }
+    }
 
-            (dealerScore == playerScore) -> {
-                GameResult.DRAW
-            }
-
-            else -> {
-                GameResult.LOSE
-            }
+    private fun compareScore(
+        playerScore: Int,
+        dealerScore: Int,
+    ): GameResult {
+        return when {
+            (playerScore > dealerScore) -> GameResult.WIN
+            (playerScore < dealerScore) -> GameResult.LOSE
+            else -> GameResult.DRAW
         }
     }
 
