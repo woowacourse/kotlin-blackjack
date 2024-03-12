@@ -34,7 +34,7 @@ class HandTest {
     }
 
     @Test
-    fun `만약 버스트 and ACE 가지고 있으면 ACE를 1로 변환`() {
+    fun `카드의 총합이 22점 이상이라면, 에이스 카드는 1점으로 계산한다`() {
         val cards =
             mutableListOf(
                 Card(Denomination.ACE, Suit.HEARTS),
@@ -43,5 +43,16 @@ class HandTest {
         val hand = Hand(cards)
         hand.draw(Card(Denomination.ACE, Suit.SPADES))
         assertThat(hand.totalScore).isEqualTo(12)
+    }
+
+    @Test
+    fun `카드의 총합이 21점 이하라면, 에이스 카드는 11점으로 계산한다`() {
+        val cards =
+            mutableListOf(
+                Card(Denomination.ACE, Suit.HEARTS),
+                Card(Denomination.TWO, Suit.SPADES),
+            )
+        val hand = Hand(cards)
+        assertThat(hand.totalScore).isEqualTo(13)
     }
 }
