@@ -5,7 +5,7 @@ data class Dealer(override val cardHand: CardHand) : Role(name = PlayerName(DEAL
         val sum = cardHand.sum()
 
         return when {
-            sum > CardHandState.BLACKJACK.precondition -> CardHandState.BURST
+            sum > CardHandState.BLACKJACK.precondition -> CardHandState.BUST
             sum == CardHandState.BLACKJACK.precondition -> CardHandState.BLACKJACK
             sum <= DEALER_MAX_HIT_SUM -> CardHandState.HIT
             else -> CardHandState.STAY

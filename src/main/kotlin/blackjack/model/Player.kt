@@ -5,7 +5,7 @@ data class Player(override val name: PlayerName, override val cardHand: CardHand
         val sum = cardHand.sum()
 
         return when {
-            sum > CardHandState.BLACKJACK.precondition -> CardHandState.BURST
+            sum > CardHandState.BLACKJACK.precondition -> CardHandState.BUST
             sum == CardHandState.BLACKJACK.precondition -> CardHandState.BLACKJACK
             else -> CardHandState.STAY
         }
