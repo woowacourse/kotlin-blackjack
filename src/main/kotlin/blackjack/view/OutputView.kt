@@ -1,14 +1,21 @@
 package blackjack.view
 
+import blackjack.model.CardNumber
 import blackjack.model.Dealer
 import blackjack.model.Dealer.Companion.DEALER_CARD_DRAW_THRESHOLD
 import blackjack.model.GameResult
 import blackjack.model.Participants
 import blackjack.model.Participants.Companion.INITIAL_CARD_COUNTS
+import blackjack.model.Pattern
 import blackjack.model.Player
 import blackjack.model.PlayerGroup
 
 object OutputView {
+    private const val SPACE_NAME = "스페이스"
+    private const val CLOVER_NAME = "클로버"
+    private const val HEART_NAME = "하트"
+    private const val DIAMOND_NAME = "다이아몬드"
+
     fun printGameSetting(participants: Participants) {
         println(
             "\n${participants.dealer.nickname}와 ${
@@ -23,7 +30,7 @@ object OutputView {
 
     private fun showDealerInitCard(dealer: Dealer) {
         val showCard = dealer.hand.cards.first()
-        println("${dealer.nickname}: $showCard")
+        println("${dealer.nickname}: ${getCardNumberName(showCard.number)}${getCardPatternName(showCard.pattern)}")
     }
 
     private fun showPlayersInitCards(playerGroup: PlayerGroup) {
@@ -33,7 +40,13 @@ object OutputView {
     }
 
     fun showPlayerCards(player: Player) {
-        println("${player.nickname}: ${player.hand.cards.joinToString(", ")}")
+        println(
+            "${player.nickname}: ${
+                player.hand.cards.joinToString(", ") { card ->
+                    getCardNumberName(card.number) + getCardPatternName(card.pattern)
+                }
+            }",
+        )
     }
 
     fun printDealerDrawCard() {
@@ -47,12 +60,43 @@ object OutputView {
     }
 
     private fun showDealerCardsResult(dealer: Dealer) {
-        println("${dealer.nickname}: ${dealer.hand.cards.joinToString(", ")} - 결과: ${dealer.hand.calculate()}")
+        println(
+            "${dealer.nickname}: ${
+                dealer.hand.cards.joinToString(", ") { card ->
+                    getCardNumberName(card.number) + getCardPatternName(card.pattern)
+                }
+            } - 결과: ${dealer.hand.calculate()}",
+        )
     }
 
     private fun showPlayersCardsResult(playerGroup: PlayerGroup) {
         playerGroup.players.forEach { player ->
-            println("${player.nickname}: ${player.hand.cards.joinToString(", ")} - 결과: ${player.hand.calculate()}")
+            println(
+                "${player.nickname}: ${
+                    player.hand.cards.joinToString(", ") { card ->
+                        getCardNumberName(card.number) + getCardPatternName(card.pattern)
+                    }
+                } - 결과: ${player.hand.calculate()}",
+            )
+        }
+    }
+
+    private fun getCardNumberName(cardNumber: CardNumber): String {
+        return when (cardNumber) {
+            CardNumber.ACE -> "A"
+            CardNumber.KING -> "K"
+            CardNumber.JACK -> "J"
+            CardNumber.QUEEN -> "Q"
+            else -> cardNumber.value.toString()
+        }
+    }
+
+    private fun getCardPatternName(pattern: Pattern): String {
+        return when (pattern) {
+            Pattern.SPADE -> SPACE_NAME
+            Pattern.CLOVER -> CLOVER_NAME
+            Pattern.HEART -> HEART_NAME
+            Pattern.DIAMOND -> DIAMOND_NAME
         }
     }
 

@@ -1,8 +1,6 @@
 package blackjack.model
 
 class Card private constructor(val pattern: Pattern, val number: CardNumber) {
-    override fun toString(): String = "${number.displayName}${pattern.displayName}"
-
     companion object {
         fun createDeck(): List<Card> {
             val newCards = mutableListOf<Card>()
