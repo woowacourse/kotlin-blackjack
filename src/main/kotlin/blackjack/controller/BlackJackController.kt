@@ -6,6 +6,7 @@ import blackjack.model.Judge
 import blackjack.model.Players
 import blackjack.view.InputView
 import blackjack.view.OutputView
+import blackjack.view.ResultView
 
 object BlackJackController {
     private lateinit var players: Players
@@ -50,7 +51,7 @@ object BlackJackController {
         val dealerInfo = dealer.dealerGameInfo
         val playersInfo = players.value.map { player -> player.gameInfo }
         val judge = Judge(dealerInfo, playersInfo)
-        with(OutputView) {
+        with(ResultView) {
             printFinalCards(dealerInfo, playersInfo)
             printResult(judge)
         }

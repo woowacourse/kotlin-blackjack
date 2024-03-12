@@ -5,7 +5,7 @@ class Dealer(
 ) : Participant(dealerGameInfo) {
     override fun drawSingleCard(generateCard: () -> Card?): PickingState {
         if (isDrawAvailable()) {
-            dealerGameInfo.addCard(generateCard() ?: throw IllegalArgumentException(EXCEPTION_NO_CARDS_LEFT))
+            dealerGameInfo.addCard(generateCard() ?: throw IllegalStateException(EXCEPTION_NO_CARDS_LEFT))
             return PickingState.HIT
         }
         return PickingState.STAND
@@ -20,7 +20,7 @@ class Dealer(
 
         fun of(generateCard: () -> Card?): Dealer {
             val gameInfo = GameInfo(NAME_DEALER)
-            gameInfo.addCard(generateCard() ?: throw IllegalArgumentException(EXCEPTION_NO_CARDS_LEFT))
+            gameInfo.addCard(generateCard() ?: throw IllegalStateException(EXCEPTION_NO_CARDS_LEFT))
 
             return Dealer(gameInfo)
         }

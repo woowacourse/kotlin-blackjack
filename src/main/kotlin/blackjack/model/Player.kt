@@ -12,11 +12,11 @@ class Player(
         val inputDecision = onInputDecision()
         val pickingState =
             PickingState.entries.find { it.value == inputDecision }
-                ?: throw IllegalArgumentException(EXCEPTION_PLAYER_INPUT)
+                ?: throw IllegalStateException(EXCEPTION_PLAYER_INPUT)
 
         return when (pickingState) {
             PickingState.HIT -> {
-                gameInfo.addCard(generateCard() ?: throw IllegalArgumentException(EXCEPTION_NO_CARDS_LEFT))
+                gameInfo.addCard(generateCard() ?: throw IllegalStateException(EXCEPTION_NO_CARDS_LEFT))
                 checkBurst()
             }
             PickingState.STAND -> PickingState.STAND
@@ -43,7 +43,7 @@ class Player(
             generateCard: () -> Card?,
         ): Player {
             repeat(INITIAL_DRAW_COUNT) {
-                gameInfo.addCard(generateCard() ?: throw IllegalArgumentException(EXCEPTION_NO_CARDS_LEFT))
+                gameInfo.addCard(generateCard() ?: throw IllegalStateException(EXCEPTION_NO_CARDS_LEFT))
             }
 
             return Player(gameInfo, onInputDecision)
