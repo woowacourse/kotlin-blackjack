@@ -3,7 +3,6 @@ package blackjack.model.playing.participants
 import blackjack.model.playing.cardhand.CardHand
 import blackjack.model.playing.cardhand.CardHandState
 import blackjack.model.playing.participants.player.PlayerName
-import blackjack.model.winning.DealerWinning
 import blackjack.model.winning.PlayerWinning
 import blackjack.model.winning.WinningResultStatus
 
@@ -20,12 +19,6 @@ data class Dealer(override val cardHand: CardHand) : Role(name = PlayerName(DEAL
     }
 
     fun canDraw(): Boolean = this.getState() == CardHandState.HIT
-
-    fun judgeDealerWinningResult(playerWinning: PlayerWinning): DealerWinning =
-        DealerWinning(
-            playerWinning.result.values.groupingBy { it.reverse() }
-                .eachCount(),
-        )
 
     fun judgePlayerWinningResult(playerResult: Map<PlayerName, Int>): PlayerWinning =
         PlayerWinning(

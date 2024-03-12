@@ -8,7 +8,6 @@ import blackjack.model.card.generator.RandomCardGenerator
 import blackjack.model.playing.cardhand.CardHand
 import blackjack.model.playing.cardhand.CardHandState
 import blackjack.model.playing.participants.player.PlayerName
-import blackjack.model.winning.DealerWinning
 import blackjack.model.winning.PlayerWinning
 import blackjack.model.winning.WinningResultStatus
 import org.assertj.core.api.Assertions.assertThat
@@ -111,36 +110,5 @@ class DealerTest {
             )
         val winningResult = dealer.judgePlayerWinningResult(playerResult)
         assertThat(winningResult).isEqualTo(result)
-    }
-
-    @Test
-    fun `딜러의 최종 승패를 판단한다`() {
-        val cardHand =
-            CardHand(
-                Card(CardShape.HEART, CardNumber.EIGHT),
-                Card(CardShape.SPADE, CardNumber.TEN),
-            )
-        val dealer = Dealer(cardHand)
-
-        val playerWinning =
-            PlayerWinning(
-                mapOf(
-                    PlayerName("심지") to WinningResultStatus.DEFEAT,
-                    PlayerName("해나") to WinningResultStatus.DRAW,
-                    PlayerName("악어") to WinningResultStatus.VICTORY,
-                    PlayerName("팡태") to WinningResultStatus.VICTORY,
-                ),
-            )
-
-        val actual = dealer.judgeDealerWinningResult(playerWinning)
-        assertThat(actual).isEqualTo(
-            DealerWinning(
-                mapOf(
-                    WinningResultStatus.VICTORY to 1,
-                    WinningResultStatus.DRAW to 1,
-                    WinningResultStatus.DEFEAT to 2,
-                ),
-            ),
-        )
     }
 }

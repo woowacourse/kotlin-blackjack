@@ -5,8 +5,8 @@ import blackjack.model.card.CardShape
 import blackjack.model.playing.cardhand.CardHand
 import blackjack.model.playing.participants.Participants
 import blackjack.model.playing.participants.Role
-import blackjack.model.winning.DealerWinning
 import blackjack.model.winning.PlayerWinning
+import blackjack.model.winning.WinningResultStatus
 
 class OutputView {
     fun printInitialSetting(participants: Participants) {
@@ -76,11 +76,11 @@ class OutputView {
         printAllCardHand(role.cardHand)
     }
 
-    fun printFinalDealerResult(dealerWinning: DealerWinning) {
+    fun printFinalDealerResult(dealerWinning: Map<WinningResultStatus, Int>) {
         println("\n## 최종 승패")
 
         print("딜러: ")
-        dealerWinning.result.forEach {
+        dealerWinning.forEach {
             print(it.value.toString() + it.key.output + " ")
         }
         println()
