@@ -9,7 +9,9 @@ import blackjack.view.OutputView
 
 object BlackJackController {
     private lateinit var players: Players
-    private val dealer: Dealer = Dealer.of(CardDeck::pick)
+    private val dealer: Dealer by lazy {
+        Dealer.of(CardDeck::pick)
+    }
 
     fun startGame() {
         initializePlayers()
