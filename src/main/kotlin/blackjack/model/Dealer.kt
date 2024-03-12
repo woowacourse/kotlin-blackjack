@@ -6,22 +6,23 @@ import blackjack.state.State.Running.Hit
 class Dealer(val nickname: Nickname = Nickname(DEFAULT_DEALER_NAME)) : CardHolder() {
     fun drawDealerCard(printDealerDrawCard: () -> Unit) {
         while (state is Hit) {
-            if (shouldDrawCard()) {
-                drawCardAndPrint(card = GameDeck.drawCard(), printDealerDrawCard = printDealerDrawCard)
-            } else {
-                changeState(state = Stay)
-            }
+            drawDecision(printDealerDrawCard)
+        }
+    }
+
+    private fun drawDecision(printDealerDrawCard: () -> Unit) {
+        if (shouldDrawCard()) {
+            drawCardAndPrint(printDealerDrawCard = printDealerDrawCard)
+        } else {
+            changeState(state = Stay)
         }
     }
 
     private fun shouldDrawCard(): Boolean = hand.calculate() <= DEALER_CARD_DRAW_THRESHOLD
 
-    private fun drawCardAndPrint(
-        card: Card,
-        printDealerDrawCard: () -> Unit,
-    ) {
+    private fun drawCardAndPrint(printDealerDrawCard: () -> Unit) {
         printDealerDrawCard()
-        addCard(card = card)
+        addCard(card = GameDeck.drawCard())
     }
 
     companion object {
