@@ -1,9 +1,9 @@
 package blackjack.model
 
-abstract class Participant(val name: String, private val scorePolicy: ScorePolicy) {
+abstract class Participant(val name: String, private val strengthPolicy: StrengthPolicy) {
     protected val cards = Cards()
-    private val score: Int
-        get() = scorePolicy.score(cards)
+    private val strength: Int
+        get() = strengthPolicy.strength(cards)
 
     fun isBusted(): Boolean = cards.isBusted()
 
@@ -15,12 +15,16 @@ abstract class Participant(val name: String, private val scorePolicy: ScorePolic
 
     fun showCard() = cards.toList()
 
+    fun showFirstCard(): Card {
+        return showCard()[0]
+    }
+
     abstract fun isHitable(): Boolean
 
     infix fun versus(other: Participant): GameResult =
         when {
-            this.score > other.score -> GameResult.Win
-            this.score == other.score -> GameResult.Draw
+            this.strength > other.strength -> GameResult.Win
+            this.strength == other.strength -> GameResult.Draw
             else -> GameResult.Lose
         }
 }

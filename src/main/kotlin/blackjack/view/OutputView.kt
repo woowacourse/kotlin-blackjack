@@ -15,7 +15,7 @@ object OutputView {
         dealer: Dealer,
         players: List<Player>,
     ) {
-        println(buildDealerInitialCard(dealer))
+        println(buildParticipantFirstCardString(dealer))
         players.forEach {
             printParticipantStatus(it)
         }
@@ -40,10 +40,11 @@ object OutputView {
         println(buildParticipantCards(participant))
     }
 
-    private fun buildDealerInitialCard(dealer: Dealer): String {
-        val name = dealer.name
-        val card = listOf(dealer.showCard()[0])
-        return buildParticipantCardsString(name, card)
+    private fun buildParticipantFirstCardString(participant: Participant): String {
+        val name = participant.name
+        val card = participant.showFirstCard()
+        val cardString = card.cardNumber.getName() + card.suit.getName()
+        return "${name}카드: $cardString"
     }
 
     private fun buildParticipantCards(participant: Participant): String {
