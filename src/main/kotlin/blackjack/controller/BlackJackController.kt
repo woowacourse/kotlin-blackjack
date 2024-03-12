@@ -1,12 +1,10 @@
 package blackjack.controller
 
 import blackjack.model.CardDeck
-import blackjack.model.DrawDecision
 import blackjack.model.GameResult
 import blackjack.model.Participant
 import blackjack.model.Participant.Dealer
 import blackjack.model.Participant.Player
-import blackjack.model.ParticipantName
 import blackjack.model.Participants
 import blackjack.view.InputView
 import blackjack.view.OutputView
@@ -50,19 +48,10 @@ object BlackJackController {
         players.forEach { player ->
             player.judgeDrawOrNot(
                 cardDeck,
-                { readDrawDecision(player.name) },
+                { InputView.inputDrawDecision(player.name) },
                 { OutputView.outputParticipantCard(player) },
             )
         }
-    }
-
-    private fun readDrawDecision(name: ParticipantName): Boolean {
-        return runCatching {
-            DrawDecision(InputView.inputDrawDecision(name)).judgeDecision()
-        }.onFailure { error ->
-            print(error.message)
-            return readDrawDecision(name)
-        }.getOrThrow()
     }
 
     private fun displayGameResult(participants: Participants) {

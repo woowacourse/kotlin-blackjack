@@ -1,5 +1,6 @@
 package blackjack.view
 
+import blackjack.model.DrawDecision
 import blackjack.model.ParticipantName
 
 object InputView {
@@ -19,8 +20,14 @@ object InputView {
         }
     }
 
-    fun inputDrawDecision(name: ParticipantName): String {
+    fun inputDrawDecision(name: ParticipantName): Boolean {
         println(INPUT_MESSAGE_DRAW_DECISION.format(name))
-        return readlnOrNull() ?: NO_INPUT
+        return try {
+            val drawDecision = readlnOrNull() ?: NO_INPUT
+            DrawDecision(drawDecision).judgeDecision()
+        } catch (exception: IllegalArgumentException) {
+            println(exception.message)
+            inputDrawDecision(name)
+        }
     }
 }
