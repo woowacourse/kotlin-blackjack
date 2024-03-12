@@ -47,7 +47,7 @@ class CardHandTest {
     }
 
     @Test
-    fun `카드 패의 ACE 가 두 장 있을 때 한 장의 값은 1이 된다`() {
+    fun `카드 패의 ACE 가 두 장 있을 때 한 장의 값은 11이 된다`() {
         val cardHand =
             CardHand(
                 Card(CardShape.SPADE, CardNumber.ACE),
@@ -58,7 +58,7 @@ class CardHandTest {
     }
 
     @Test
-    fun `카드 패의 ACE 가 세 장 있을 때 두 장의 값은 각각 1이 된다`() {
+    fun `카드 패의 ACE 가 세 장 있을 때 한 장만 11이 된다`() {
         val cardHand =
             CardHand(
                 Card(CardShape.SPADE, CardNumber.ACE),
