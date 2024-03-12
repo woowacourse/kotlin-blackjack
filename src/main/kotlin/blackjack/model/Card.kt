@@ -1,3 +1,10 @@
 package blackjack.model
 
-data class Card(val number: CardNumber, val symbol: CardSymbol)
+import blackjack.model.CardNumber.Companion.convertCardNumber
+import blackjack.model.CardSymbol.Companion.convertCardSymbol
+
+class Card(val number: CardNumber, private val symbol: CardSymbol) {
+    fun convertCard(): String {
+        return convertCardNumber(number) + convertCardSymbol(symbol)
+    }
+}

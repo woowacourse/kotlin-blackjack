@@ -13,5 +13,17 @@ enum class CardNumber(val value: Int) {
     TEN(10),
     JACK(10),
     QUEEN(10),
-    KING(10),
+    KING(10), ;
+
+    companion object {
+        fun convertCardNumber(cardNumber: CardNumber): String {
+            return when (cardNumber) {
+                JACK -> "J"
+                QUEEN -> "Q"
+                KING -> "K"
+                ACE -> "A"
+                else -> cardNumber.value.toString()
+            }
+        }
+    }
 }

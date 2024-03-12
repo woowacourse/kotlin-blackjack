@@ -1,8 +1,5 @@
 package blackjack.view
 
-import blackjack.model.Card
-import blackjack.model.CardNumber
-import blackjack.model.CardSymbol
 import blackjack.model.GameResult
 import blackjack.model.Participant
 import blackjack.model.Participant.Dealer
@@ -34,7 +31,7 @@ object OutputView {
             MESSAGE_PARTICIPANT_CARD_INFORMATION.format(
                 participant.name,
                 participant.gameInformation.cards.joinToString(separator = ", ") { card ->
-                    card.convertToString()
+                    card.convertCard()
                 },
             ),
         )
@@ -65,7 +62,7 @@ object OutputView {
             println(
                 MESSAGE_PLAYER_RESULT.format(
                     gameResult.participants.getPlayers()[index].name,
-                    playerResult.convertToString(),
+                    playerResult.convertResult(),
                 ),
             )
         }
@@ -75,7 +72,7 @@ object OutputView {
         println(
             MESSAGE_DEALER_CARD_INFORMATION.format(
                 dealer.name,
-                dealer.gameInformation.cards.elementAt(0).convertToString(),
+                dealer.gameInformation.cards.elementAt(0),
             ),
         )
     }
@@ -91,41 +88,10 @@ object OutputView {
             MESSAGE_PARTICIPANT_GAME_SCORE.format(
                 participant.name,
                 participant.gameInformation.cards.joinToString(separator = ", ") { card ->
-                    card.convertToString()
+                    card.convertCard()
                 },
                 participant.gameInformation.score,
             ),
         )
-    }
-
-    private fun Card.convertToString(): String {
-        return number.convertCardNumber() + symbol.convertToString()
-    }
-
-    private fun CardNumber.convertCardNumber(): String {
-        return when (this) {
-            CardNumber.JACK -> "J"
-            CardNumber.QUEEN -> "Q"
-            CardNumber.KING -> "K"
-            CardNumber.ACE -> "A"
-            else -> value.toString()
-        }
-    }
-
-    private fun CardSymbol.convertToString(): String {
-        return when (this) {
-            CardSymbol.DIAMOND -> "다이아몬드"
-            CardSymbol.HEART -> "하트"
-            CardSymbol.SPADE -> "스페이드"
-            CardSymbol.CLOVER -> "클로버"
-        }
-    }
-
-    private fun Result.convertToString(): String {
-        return when (this) {
-            Result.PLAYER_WIN -> "승"
-            Result.TIE -> "무"
-            Result.DEALER_WIN -> "패"
-        }
     }
 }
