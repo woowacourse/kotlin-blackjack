@@ -17,7 +17,7 @@ enum class WinningState(val label: String) {
             return when {
                 compared == 0 -> DRAW
                 compared > 0 -> WIN
-                else -> DRAW
+                else -> LOSS
             }
         }
     }
