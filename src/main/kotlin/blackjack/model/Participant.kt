@@ -23,7 +23,7 @@ sealed class Participant(val name: ParticipantName, val gameInformation: GameInf
                     draw(cardDeck.pickCard())
                     output()
                 } else {
-                    gameInformation.changeState(GameState.Finished.STAY)
+                    gameInformation.changeStateToStay()
                 }
             }
         }
@@ -51,7 +51,7 @@ sealed class Participant(val name: ParticipantName, val gameInformation: GameInf
                 output()
             }
             if (gameInformation.score < BLACKJACK_SCORE) {
-                gameInformation.changeState(GameState.Finished.STAY)
+                gameInformation.changeStateToStay()
             }
         }
 

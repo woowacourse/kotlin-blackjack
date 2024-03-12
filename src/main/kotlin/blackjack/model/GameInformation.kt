@@ -19,21 +19,17 @@ class GameInformation(cards: Set<Card> = emptySet(), state: GameState = GameStat
         judgeState()
     }
 
-    fun changeState(state: GameState) {
-        _state = state
+    fun changeStateToStay() {
+        _state = GameState.Finished.STAY
     }
 
     private fun judgeState() {
-        if (isBust()) changeState(GameState.Finished.BUST)
-        if (isBlackJack()) changeState(GameState.Finished.BLACKJACK)
-    }
-
-    private fun isBust(): Boolean {
-        return score > BLACKJACK_SCORE
-    }
-
-    private fun isBlackJack(): Boolean {
-        return score == BLACKJACK_SCORE
+        _state =
+            when {
+                score > BLACKJACK_SCORE -> GameState.Finished.BUST
+                score == BLACKJACK_SCORE -> GameState.Finished.BLACKJACK
+                else -> GameState.Running.HIT
+            }
     }
 
     companion object {
