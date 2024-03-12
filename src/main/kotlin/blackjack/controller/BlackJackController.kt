@@ -4,9 +4,9 @@ import blackjack.model.Dealer
 import blackjack.model.GameManager
 import blackjack.model.Participants
 import blackjack.model.Player
-import blackjack.model.user.UserDecision
 import blackjack.view.InputView
 import blackjack.view.OutputView
+import blackjack.view.user.UserDecision
 import kotlin.system.exitProcess
 
 class BlackJackController {
