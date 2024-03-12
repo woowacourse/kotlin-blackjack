@@ -8,9 +8,15 @@ object InputView {
     private const val NO_INPUT = ""
     private const val DELIMITER_NAMES = ","
 
-    fun inputPlayerNames(): List<String> {
+    fun inputPlayersName(): List<ParticipantName> {
         println(INPUT_MESSAGE_PLAYER_NAMES)
-        return (readlnOrNull() ?: NO_INPUT).split(DELIMITER_NAMES).map { name -> name.trim() }
+        return try {
+            val playersName = (readlnOrNull() ?: NO_INPUT).split(DELIMITER_NAMES).map { name -> name.trim() }
+            playersName.map { name -> ParticipantName(name) }
+        } catch (exception: IllegalArgumentException) {
+            println(exception.message)
+            inputPlayersName()
+        }
     }
 
     fun inputDrawDecision(name: ParticipantName): String {

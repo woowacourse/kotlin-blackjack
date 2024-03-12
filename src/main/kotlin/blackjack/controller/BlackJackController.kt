@@ -27,17 +27,8 @@ object BlackJackController {
         return Participants(participants)
     }
 
-    private fun readPlayerNames(): List<ParticipantName> {
-        return runCatching {
-            InputView.inputPlayerNames().map { name -> ParticipantName(name) }
-        }.onFailure { error ->
-            println(error.message)
-            return readPlayerNames()
-        }.getOrThrow()
-    }
-
     private fun initializePlayers(): List<Player> {
-        val playerNames = readPlayerNames()
+        val playerNames = InputView.inputPlayersName()
         return playerNames.map { name ->
             Player(name)
         }
