@@ -81,16 +81,24 @@ class OutputView {
 
         print("딜러: ")
         dealerWinning.forEach {
-            print(it.value.toString() + it.key.output + " ")
+            print(it.value.toString() + convertWinningResultFormat(it.key) + " ")
         }
         println()
     }
 
     fun printFinalPlayersResult(playerWinning: PlayerWinning) {
         playerWinning.result.forEach { (name, status) ->
-            println("${name.name}: ${status.output}")
+            println("${name.name}: ${convertWinningResultFormat(status)}")
         }
         println()
+    }
+
+    private fun convertWinningResultFormat(status: WinningResultStatus): String {
+        return when (status) {
+            WinningResultStatus.VICTORY -> VICTORY_OUTPUT_FORMAT
+            WinningResultStatus.DEFEAT -> DEFEAT_OUTPUT_FORMAT
+            WinningResultStatus.DRAW -> PUSH_OUTPUT_FORMAT
+        }
     }
 
     companion object {
@@ -101,5 +109,8 @@ class OutputView {
         private const val SPADE_OUTPUT_FORMAT = "스페이드"
         private const val DIAMOND_OUTPUT_FORMAT = "다이아몬드"
         private const val ACE_OUTPUT_FORMAT = "A"
+        private const val VICTORY_OUTPUT_FORMAT = "승"
+        private const val DEFEAT_OUTPUT_FORMAT = "패"
+        private const val PUSH_OUTPUT_FORMAT = "무"
     }
 }
