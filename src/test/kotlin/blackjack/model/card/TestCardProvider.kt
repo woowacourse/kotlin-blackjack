@@ -1,7 +1,9 @@
 package blackjack.model.card
 
+import blackjack.model.Card
+
 object TestCardProvider : CardProvider {
     override fun provide(cardBundle: List<Card>): Card {
-        return Card.of("2", "하트")
+        return Card(Denomination.TWO, Suite.HEART)
     }
 }

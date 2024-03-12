@@ -1,5 +1,6 @@
 package blackjack.model.participant
 
+import blackjack.model.Card
 import blackjack.model.card.Card
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.params.ParameterizedTest
@@ -45,19 +46,19 @@ class PlayerTest {
         @JvmStatic
         fun `카드 받을 수 있는지 여부 판단 테스트 데이터`() =
             listOf(
-                Arguments.of(listOf(Card.of("3", "하트"), Card.of("5", "다이아몬드")), true),
-                Arguments.of(listOf(Card.of("10", "하트"), Card.of("K", "다이아몬드")), true),
-                Arguments.of(listOf(Card.of("9", "하트"), Card.of("K", "다이아몬드"), Card.of("2", "다이아몬드")), false),
-                Arguments.of(listOf(Card.of("10", "하트"), Card.of("K", "다이아몬드"), Card.of("3", "다이아몬드")), false),
+                Arguments.of(listOf(Card("3"), Card("5")), true),
+                Arguments.of(listOf(Card("10"), Card("K")), true),
+                Arguments.of(listOf(Card("9"), Card("K"), Card("2")), false),
+                Arguments.of(listOf(Card("10"), Card("K"), Card("3")), false),
             )
 
         @JvmStatic
         fun `카드 값 계산 테스트 데이터`() =
             listOf(
-                Arguments.of(listOf(Card.of("5", "하트"), Card.of("3", "하트")), 8),
-                Arguments.of(listOf(Card.of("A", "하트")), 11),
-                Arguments.of(listOf(Card.of("A", "하트"), Card.of("A", "다이아몬드")), 12),
-                Arguments.of(listOf(Card.of("A", "하트"), Card.of("K", "다이아몬드")), 21),
+                Arguments.of(listOf(Card("5"), Card("3")), 8),
+                Arguments.of(listOf(Card("A")), 11),
+                Arguments.of(listOf(Card("A"), Card("A")), 12),
+                Arguments.of(listOf(Card("A"), Card("K")), 21),
             )
     }
 }

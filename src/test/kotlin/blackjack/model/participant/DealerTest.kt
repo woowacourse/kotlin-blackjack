@@ -1,5 +1,6 @@
 package blackjack.model.participant
 
+import blackjack.model.Card
 import blackjack.model.card.Card
 import blackjack.model.result.GameResultType
 import org.assertj.core.api.Assertions.assertThat
@@ -66,41 +67,43 @@ class DealerTest {
         @JvmStatic
         fun `카드 받을 수 있는지 여부 판단 테스트 데이터`() =
             listOf(
-                Arguments.of(listOf(Card.of("10", "하트"), Card.of("5", "다이아몬드")), true),
-                Arguments.of(listOf(Card.of("10", "하트"), Card.of("5", "다이아몬드"), Card.of("A", "다이아몬드")), true),
-                Arguments.of(listOf(Card.of("10", "하트"), Card.of("K", "다이아몬드")), false),
-                Arguments.of(listOf(Card.of("10", "하트"), Card.of("7", "다이아몬드")), false),
+                Arguments.of(listOf(Card("10"), Card("5")), true),
+                Arguments.of(listOf(Card("10"), Card("5"), Card("A")), true),
+                Arguments.of(listOf(Card("10"), Card("K")), false),
+                Arguments.of(listOf(Card("10"), Card("7")), false),
             )
 
         @JvmStatic
         fun `카드 값 계산 테스트 데이터`() =
             listOf(
-                Arguments.of(listOf(Card.of("5", "하트"), Card.of("3", "하트")), 8),
-                Arguments.of(listOf(Card.of("A", "하트")), 11),
-                Arguments.of(listOf(Card.of("A", "하트"), Card.of("A", "다이아몬드")), 12),
-                Arguments.of(listOf(Card.of("A", "하트"), Card.of("6", "다이아몬드")), 17),
-                Arguments.of(listOf(Card.of("A", "하트"), Card.of("7", "다이아몬드")), 18),
+                Arguments.of(listOf(Card("5"), Card("3")), 8),
+                Arguments.of(listOf(Card("A")), 11),
+                Arguments.of(listOf(Card("A"), Card("A")), 12),
+                Arguments.of(listOf(Card("A"), Card("6")), 17),
+                Arguments.of(
+                    listOf(Card("A"), Card("7"), 18),
+                ),
             )
 
         @JvmStatic
         fun `게임 결과 결정 테스트 데이터`() =
             listOf(
                 Arguments.of(
-                    listOf(Card.of("K", "하트"), Card.of("J", "하트"), Card.of("6", "하트")),
-                    listOf(Card.of("K", "하트"), Card.of("Q", "하트"), Card.of("2", "하트")),
+                    listOf(Card("K"), Card("J"), Card("6")),
+                    listOf(Card("K"), Card("Q"), Card("2")),
                     GameResultType.WIN,
                 ),
                 Arguments.of(
-                    listOf(Card.of("K", "하트")),
-                    listOf(Card.of("K", "하트"), Card.of("Q", "하트"), Card.of("2", "하트")),
+                    listOf(Card("K")),
+                    listOf(Card("K"), Card("Q"), Card("2")),
                     GameResultType.WIN,
                 ),
                 Arguments.of(
-                    listOf(Card.of("K", "하트"), Card.of("J", "하트"), Card.of("6", "하트")),
-                    listOf(Card.of("K", "하트")),
+                    listOf(Card("K"), Card("J"), Card("6")),
+                    listOf(Card("K")),
                     GameResultType.LOSE,
                 ),
-                Arguments.of(listOf(Card.of("K", "하트")), listOf(Card.of("Q", "하트")), GameResultType.DRAW),
+                Arguments.of(listOf(Card("K")), listOf(Card("Q")), GameResultType.DRAW),
             )
     }
 }
