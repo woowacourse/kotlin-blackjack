@@ -1,5 +1,7 @@
 package view
 
+import model.card.MarkType
+import model.card.ValueType
 import model.participants.Dealer
 import model.participants.Hand
 import model.participants.Human
@@ -56,9 +58,9 @@ object OutputView {
         }
     }
 
-    private fun getCardsFromHand(hand: Hand): String = hand.cards.joinToString(", ") { it.valueType.rank + it.markType.mark }
+    private fun getCardsFromHand(hand: Hand): String = hand.cards.joinToString(", ") { getValueFromType(it.valueType) + getMarkFromType(it.markType) }
 
-    private fun getFirstCardFromHand(hand: Hand): String = hand.cards.first().valueType.rank + hand.cards.first().markType.mark
+    private fun getFirstCardFromHand(hand: Hand): String = getValueFromType(hand.cards.first().valueType) + getMarkFromType(hand.cards.first().markType)
 
     fun showDealerHit() = println(HEADER_DRAW_CARDS_FOR_DEALER)
 
@@ -83,5 +85,31 @@ object OutputView {
 
     fun showThrowable(t: Throwable) {
         println(t.message)
+    }
+
+    private fun getMarkFromType(markType: MarkType): String {
+        return when(markType) {
+            MarkType.SPADE -> "스페이드"
+            MarkType.CLOVER -> "클로버"
+            MarkType.HEART -> "하트"
+            MarkType.DIAMOND -> "다이아몬드"
+        }
+    }
+    private fun getValueFromType(valueType: ValueType): String {
+        return when(valueType) {
+            ValueType.ACE -> "A"
+            ValueType.TWO -> "2"
+            ValueType.THREE -> "3"
+            ValueType.FOUR -> "4"
+            ValueType.FIVE -> "5"
+            ValueType.SIX -> "6"
+            ValueType.SEVEN -> "7"
+            ValueType.EIGHT -> "8"
+            ValueType.NINE -> "9"
+            ValueType.TEN -> "10"
+            ValueType.JACK -> "J"
+            ValueType.QUEEN -> "Q"
+            ValueType.KING -> "K"
+        }
     }
 }
