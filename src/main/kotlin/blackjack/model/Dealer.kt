@@ -5,16 +5,17 @@ import blackjack.base.BaseHolder
 class Dealer : BaseHolder() {
     fun drawDealerCard(
         gameDeck: GameDeck,
-        alert: () -> Unit,
-    ) {
+    ): Int {
+        var drawCount = 0
         while (status.state == UserState.RUNNING) {
             if (status.hand.calculate() <= THRESHOLD) {
-                alert()
                 takeCard(gameDeck.drawCard())
+                drawCount++
             } else {
                 status.changeState(UserState.STAY)
             }
         }
+        return drawCount
     }
 
     companion object {

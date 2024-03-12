@@ -51,8 +51,8 @@ object OutputView {
     private fun convertDealerCardsToString(dealer: Dealer) =
         "딜러: ${dealer.status.hand.cards.joinToString(", ")}"
 
-    fun printDealerDrawCard() {
-        println("\n딜러의 카드가 ${Dealer.THRESHOLD}이하 이므로, 1장의 카드를 더 받습니다.")
+    fun printDealerDrawCard(drawCount: Int) {
+        repeat(drawCount) { println("\n딜러의 카드가 ${Dealer.THRESHOLD}이하 이므로, 1장의 카드를 더 받습니다.") }
     }
 
     fun printEveryCards(

@@ -20,11 +20,8 @@ class BlackJackGame(
         )
     }
 
-    fun runDealerTurn(alert: () -> Unit) {
-        participants.dealer.drawDealerCard(
-            gameDeck = gameDeck,
-            alert = alert,
-        )
+    fun runDealerTurn(alert: (drawCount: Int) -> Unit) {
+        alert(participants.dealer.drawDealerCard(gameDeck = gameDeck))
     }
 
     fun finish(printEveryCards: (dealer: Dealer, playerGroup: PlayerGroup) -> Unit) {
