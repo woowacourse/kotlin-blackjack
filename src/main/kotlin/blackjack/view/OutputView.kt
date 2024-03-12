@@ -12,15 +12,14 @@ import blackjack.model.Player
 import blackjack.model.PlayerGroup
 
 object OutputView {
-    fun printGameSetting(
-        dealer: Dealer,
-        playerGroup: PlayerGroup,
-    ) {
+    fun printGameSetting(participants: Participants) {
         println(
-            "\n${dealer.nickname}와 ${playerGroup.players.joinToString(", ") { it.nickname.name }}에게 ${INITIAL_CARD_COUNTS}장의 카드를 나누었습니다.",
+            "\n${participants.dealer.nickname}와 ${participants.playerGroup.players.joinToString(
+                ", ",
+            ) { it.nickname.name }}에게 ${INITIAL_CARD_COUNTS}장의 카드를 나누었습니다.",
         )
-        showDealerInitCard(dealer)
-        showPlayersInitCards(playerGroup)
+        showDealerInitCard(participants.dealer)
+        showPlayersInitCards(participants.playerGroup)
     }
 
     private fun showDealerInitCard(dealer: Dealer) {
@@ -42,10 +41,10 @@ object OutputView {
         println("\n딜러의 카드가 ${DEALER_CARD_DRAW_THRESHOLD}이하 이므로, 1장의 카드를 더 받습니다.")
     }
 
-    fun printEveryCards(printEveryCards: Participants) {
+    fun printEveryCards(participants: Participants) {
         println()
-        showDealerCardsResult(printEveryCards.dealer) // 딜러 패 출력
-        showPlayersCardsResult(printEveryCards.playerGroup)
+        showDealerCardsResult(participants.dealer) // 딜러 패 출력
+        showPlayersCardsResult(participants.playerGroup)
     }
 
     private fun showDealerCardsResult(dealer: Dealer) {
@@ -58,13 +57,10 @@ object OutputView {
         }
     }
 
-    fun printMatchResult(
-        dealer: Dealer,
-        playerGroup: PlayerGroup,
-    ) {
+    fun printMatchResult(participants: Participants) {
         println("\n[ 최종 승패 ]")
-        println("${dealer.nickname}: ${printResult(dealer.hand.gameResult)}")
-        playerGroup.players.forEach { player ->
+        println("${participants.dealer.nickname}: ${printResult(participants.dealer.hand.gameResult)}")
+        participants.playerGroup.players.forEach { player ->
             println("${player.nickname}: ${printResult(player.hand.gameResult)}")
         }
     }

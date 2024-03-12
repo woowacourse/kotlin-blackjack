@@ -8,40 +8,19 @@ class Participants(
     val dealer: Dealer,
     val playerGroup: PlayerGroup,
 ) {
-    fun start(printGameSetting: (dealer: Dealer, playerGroup: PlayerGroup) -> Unit) {
-        initSetting()
-        printGameSetting(dealer, playerGroup)
-    }
-
-    fun initSetting() {
-        repeat(INITIAL_CARD_COUNTS) {
-            dealer.takeCard(card = GameDeck.drawCard())
-            playerGroup.players.forEach { player ->
-                player.takeCard(card = GameDeck.drawCard())
-            }
+    fun initParticipantsDeck() {
+        dealer.takeCard(card = GameDeck.drawCard())
+        playerGroup.players.forEach { player ->
+            player.takeCard(card = GameDeck.drawCard())
         }
     }
 
-    fun runPlayersTurn(
-        hitOrStay: (nickname: Nickname) -> Boolean,
-        showPlayerCards: (player: Player) -> Unit,
-    ) {
-        playerGroup.drawPlayerCard(
-            hitOrStay = hitOrStay,
-            showPlayerCards = showPlayerCards,
-        )
+    fun resetHand() {
+        playerGroup.players.forEach { player -> player.hand.reset() }
+        dealer.hand.reset()
     }
 
-    fun runDealerTurn(printDealerDrawCard: () -> Unit) {
-        dealer.drawDealerCard(printDealerDrawCard = printDealerDrawCard)
-    }
-
-    fun finish(printEveryCards: (participants: Participants) -> Unit) {
-        matchResult()
-        printEveryCards(this)
-    }
-
-    private fun matchResult() {
+    fun matchResult() {
         playerGroup.players.forEach { player ->
             when (dealer.state) {
                 is Bust -> checkBust(player = player)
@@ -105,6 +84,6 @@ class Participants(
 
     companion object {
         const val INITIAL_CARD_COUNTS = 2
-        private const val INCREASING_COUNT = 1
+        const val INCREASING_COUNT = 1
     }
 }

@@ -6,6 +6,7 @@ import blackjack.model.GameState
 import blackjack.model.GameState.End
 import blackjack.model.GameState.Play
 import blackjack.model.Participants
+import blackjack.model.Participants.Companion.INITIAL_CARD_COUNTS
 import blackjack.model.PlayerGroup
 import blackjack.view.InputView
 import blackjack.view.InputView.askHitOrStay
@@ -42,27 +43,6 @@ class GameController(private var gameState: GameState = Play) {
         }
     }
 
-    private fun startGame(participants: Participants) {
-        playGame(participants = participants).onSuccess {
-            OutputView.printMatchResult(dealer = participants.dealer, playerGroup = participants.playerGroup)
-            gameState = End
-        }.onFailure { e ->
-            handReset(participants = participants)
-            OutputView.printError(e)
-        }
-    }
-
-    private fun playGame(participants: Participants): Result<Unit> {
-        return runCatching {
-            with(participants) {
-                start(printGameSetting = ::printGameSetting)
-                runPlayersTurn(hitOrStay = ::askHitOrStay, showPlayerCards = ::showPlayerCards)
-                runDealerTurn(printDealerDrawCard = ::printDealerDrawCard)
-                finish(printEveryCards = ::printEveryCards)
-            }
-        }
-    }
-
     private fun createPlayerGroup(): PlayerGroup {
         val playersNames = InputView.inputPlayersNames()
         val playerGroup = PlayerGroup()
@@ -70,8 +50,46 @@ class GameController(private var gameState: GameState = Play) {
         return playerGroup
     }
 
-    private fun handReset(participants: Participants) {
-        participants.playerGroup.players.forEach { player -> player.hand.reset() }
-        participants.dealer.hand.reset()
+    private fun startGame(participants: Participants) {
+        playGame(participants = participants).onSuccess {
+            OutputView.printMatchResult(participants = participants)
+            gameState = End
+        }.onFailure { e ->
+            participants.resetHand()
+            OutputView.printError(e)
+        }
+    }
+
+    private fun playGame(participants: Participants): Result<Unit> {
+        return runCatching {
+            start(participants = participants)
+            finish(participants = participants)
+        }
+    }
+
+    private fun start(participants: Participants) {
+        initSetting(participants = participants)
+        runPlayersTurn(playerGroup = participants.playerGroup)
+        runDealerTurn(dealer = participants.dealer)
+    }
+
+    private fun initSetting(participants: Participants) {
+        repeat(INITIAL_CARD_COUNTS) {
+            participants.initParticipantsDeck()
+        }
+        printGameSetting(participants = participants)
+    }
+
+    private fun runPlayersTurn(playerGroup: PlayerGroup) {
+        playerGroup.drawPlayerCard(hitOrStay = ::askHitOrStay, showPlayerCards = ::showPlayerCards)
+    }
+
+    private fun runDealerTurn(dealer: Dealer) {
+        dealer.drawDealerCard(printDealerDrawCard = ::printDealerDrawCard)
+    }
+
+    private fun finish(participants: Participants) {
+        participants.matchResult()
+        printEveryCards(participants = participants)
     }
 }
