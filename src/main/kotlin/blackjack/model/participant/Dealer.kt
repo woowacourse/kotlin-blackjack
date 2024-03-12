@@ -4,17 +4,17 @@ import blackjack.model.card.Card
 import blackjack.state.State
 
 class Dealer(state: State) : Participant(DEALER_NAME, state) {
-    fun play(
+    override fun play(
         onDraw: () -> Card,
-        onDone: () -> Unit,
+        onDone: (Participant) -> Unit,
     ) {
         if (state.sumScore() < HIT_CONDITION) {
             state = State.Running(hand).hit(onDraw())
-            onDone()
+            onDone(this)
             play(onDraw, onDone)
         } else {
             state = State.Running(hand).stay()
-            onDone()
+            onDone(this)
         }
     }
 

@@ -51,7 +51,7 @@ class BlackJackController(
     ) {
         dealer.play(
             onDraw = deck::draw,
-            onDone = outputView::showDealerHitCard,
+            onDone = { outputView.showDealerHitCard(dealer.toUiModel()) },
         )
     }
 
@@ -61,7 +61,6 @@ class BlackJackController(
     ) {
         players.forEach { player ->
             player.play(
-                onHit = inputView::determineHit,
                 onDraw = deck::draw,
                 onDone = { outputView.showPlayerHandCards(it.toUiModel()) },
             )
@@ -71,7 +70,13 @@ class BlackJackController(
     private fun createPlayers(
         playersNames: List<String>,
         deck: Deck,
-    ) = playersNames.map { Player(it, State.Running(Hand(deck.drawMultiple(FIRST_DRAW_CAR_COUNT)))) }
+    ) = playersNames.map {
+        Player(
+            name = it,
+            state = State.Running(Hand(deck.drawMultiple(FIRST_DRAW_CAR_COUNT))),
+            onDetermineHit = inputView::determineHit,
+        )
+    }
 
     private fun createDealer(deck: Deck) = Dealer(State.Running(Hand(deck.drawMultiple(FIRST_DRAW_CAR_COUNT))))
 

@@ -3,16 +3,15 @@ package blackjack.model.participant
 import blackjack.model.card.Card
 import blackjack.state.State
 
-class Player(name: String, state: State) : Participant(name, state) {
-    fun play(
-        onHit: (String) -> Boolean,
+class Player(name: String, state: State, private val onDetermineHit: (String) -> Boolean) : Participant(name, state) {
+    override fun play(
         onDraw: () -> Card,
-        onDone: (Player) -> Unit,
+        onDone: (Participant) -> Unit,
     ) {
-        if (onHit(name)) {
+        if (onDetermineHit(name)) {
             state = State.Running(hand).hit(onDraw())
             onDone(this)
-            play(onHit, onDraw, onDone)
+            play(onDraw, onDone)
         } else {
             state = State.Running(hand).stay()
             onDone(this)
