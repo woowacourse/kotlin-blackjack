@@ -5,7 +5,7 @@ object GameDeck : ShuffleGenerator {
     private const val CARD_DRAW_DEFAULT_INDEX = 0
 
     private val deck: List<Card> = createGameDeck()
-    private val currentDeck: MutableList<Card> = mutableListOf()
+    private val currentDeck: MutableList<Card> = deck.shuffled().toMutableList()
     private var index: Int = CARD_DRAW_DEFAULT_INDEX
 
     override fun resetCurrentDeck(cards: List<Card>?) {
