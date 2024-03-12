@@ -8,7 +8,7 @@ class PlayerTest {
     fun `플레이어는 이름을 갖는다`() {
         val player = Player(Nickname("호두"))
         val cards = Card.of(listOf(Pair(Pattern.HEART, CardNumber.ACE)))
-        player.takeCard(cards.first())
+        player.addCard(cards.first())
 
         Assertions.assertThat(player.nickname.name).isEqualTo("호두")
     }
@@ -18,7 +18,7 @@ class PlayerTest {
         val player = Player(Nickname("호두"))
         val cards = Card.of(listOf(Pair(Pattern.HEART, CardNumber.ACE)))
 
-        player.takeCard(cards.first())
+        player.addCard(cards.first())
 
         Assertions.assertThat(player.hand.cards.last()).isEqualTo(cards.first())
     }

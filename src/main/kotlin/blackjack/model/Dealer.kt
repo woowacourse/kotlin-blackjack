@@ -21,7 +21,7 @@ class Dealer(val nickname: Nickname = Nickname(DEFAULT_DEALER_NAME)) : CardHolde
         printDealerDrawCard: () -> Unit,
     ) {
         printDealerDrawCard()
-        takeCard(card = card)
+        addCard(card = card)
     }
 
     companion object {

@@ -10,7 +10,7 @@ class DealerTest {
         val cards = Card.of(listOf(Pair(Pattern.HEART, CardNumber.TWO)))
         val card = cards.last()
         GameDeck.shuffleGameDeck(cards)
-        dealer.takeCard(GameDeck.drawCard())
+        dealer.addCard(GameDeck.drawCard())
 
         assertThat(dealer.hand.cards.last()).isEqualTo(card)
     }
@@ -20,8 +20,8 @@ class DealerTest {
         val dealer = Dealer()
         val cards = Card.of(listOf(Pair(Pattern.HEART, CardNumber.KING), Pair(Pattern.HEART, CardNumber.ACE)))
         GameDeck.shuffleGameDeck(cards)
-        dealer.takeCard(GameDeck.drawCard())
-        dealer.takeCard(GameDeck.drawCard())
+        dealer.addCard(GameDeck.drawCard())
+        dealer.addCard(GameDeck.drawCard())
         println(dealer.hand.calculate())
         assertThat(dealer.hand.calculate() > Dealer.DEALER_CARD_DRAW_THRESHOLD).isTrue()
     }

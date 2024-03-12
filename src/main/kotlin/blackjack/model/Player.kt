@@ -10,7 +10,7 @@ class Player(val nickname: Nickname) : CardHolder() {
     ) {
         while (state is Hit) {
             if (hitOrStay(nickname)) {
-                takeCard(card = GameDeck.drawCard())
+                addCard(card = GameDeck.drawCard())
                 showPlayerCards(this)
             } else {
                 changeState(state = Stay)

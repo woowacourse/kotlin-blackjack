@@ -9,9 +9,9 @@ class Participants(
     val playerGroup: PlayerGroup,
 ) {
     fun initParticipantsDeck() {
-        dealer.takeCard(card = GameDeck.drawCard())
+        dealer.addCard(card = GameDeck.drawCard())
         playerGroup.players.forEach { player ->
-            player.takeCard(card = GameDeck.drawCard())
+            player.addCard(card = GameDeck.drawCard())
         }
     }
 

@@ -12,7 +12,7 @@ abstract class CardHolder {
     val state: State
         get() = _state
 
-    fun takeCard(card: Card) {
+    fun addCard(card: Card) {
         _hand += card
         updateState()
     }
