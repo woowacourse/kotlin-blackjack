@@ -1,8 +1,8 @@
 package blackjack
 
 import blackjack.model.Card
-import blackjack.model.DealingShoe
 import blackjack.model.Dealer
+import blackjack.model.DealingShoe
 import blackjack.model.GameStatistics
 import blackjack.model.Player
 import blackjack.view.InputView
