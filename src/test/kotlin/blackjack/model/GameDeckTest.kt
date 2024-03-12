@@ -18,7 +18,7 @@ class GameDeckTest {
 
     @Test
     fun `카드 덱에 카드가 없다면 NoCardErrorException이 발생한다`() {
-        val gameDeck = GameDeck(ShuffleGeneratorImpl.shuffleGameDeck(listOf()))
-        assertThrows<NoCardErrorException> { gameDeck.drawCard() }
+        GameDeck.shuffleGameDeck(listOf())
+        assertThrows<NoCardErrorException> { GameDeck.drawCard() }
     }
 }

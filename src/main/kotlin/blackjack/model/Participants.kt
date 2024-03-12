@@ -8,17 +8,40 @@ class Participants(
     val dealer: Dealer,
     val playerGroup: PlayerGroup,
 ) {
-    fun initSetting(gameDeck: GameDeck): GameDeck {
-        repeat(INITIAL_CARD_COUNTS) {
-            dealer.takeCard(card = gameDeck.drawCard())
-            playerGroup.players.forEach { player ->
-                player.takeCard(card = gameDeck.drawCard())
-            }
-        }
-        return gameDeck
+    fun start(printGameSetting: (dealer: Dealer, playerGroup: PlayerGroup) -> Unit) {
+        initSetting()
+        printGameSetting(dealer, playerGroup)
     }
 
-    fun matchResult() {
+    fun initSetting() {
+        repeat(INITIAL_CARD_COUNTS) {
+            dealer.takeCard(card = GameDeck.drawCard())
+            playerGroup.players.forEach { player ->
+                player.takeCard(card = GameDeck.drawCard())
+            }
+        }
+    }
+
+    fun runPlayersTurn(
+        hitOrStay: (nickname: Nickname) -> Boolean,
+        showPlayerCards: (player: Player) -> Unit,
+    ) {
+        playerGroup.drawPlayerCard(
+            hitOrStay = hitOrStay,
+            showPlayerCards = showPlayerCards,
+        )
+    }
+
+    fun runDealerTurn(printDealerDrawCard: () -> Unit) {
+        dealer.drawDealerCard(printDealerDrawCard = printDealerDrawCard)
+    }
+
+    fun finish(printEveryCards: (participants: Participants) -> Unit) {
+        matchResult()
+        printEveryCards(this)
+    }
+
+    private fun matchResult() {
         playerGroup.players.forEach { player ->
             when (dealer.state) {
                 is Bust -> checkBust(player = player)

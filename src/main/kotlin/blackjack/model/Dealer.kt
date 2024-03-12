@@ -4,18 +4,14 @@ import blackjack.state.State.Finished.Stay
 import blackjack.state.State.Running.Hit
 
 class Dealer(val nickname: Nickname = Nickname(DEFAULT_DEALER_NAME)) : CardHolder() {
-    fun drawDealerCard(
-        gameDeck: GameDeck,
-        printDealerDrawCard: () -> Unit,
-    ): GameDeck {
+    fun drawDealerCard(printDealerDrawCard: () -> Unit) {
         while (state is Hit) {
             if (shouldDrawCard()) {
-                drawCardAndPrint(card = gameDeck.drawCard(), printDealerDrawCard = printDealerDrawCard)
+                drawCardAndPrint(card = GameDeck.drawCard(), printDealerDrawCard = printDealerDrawCard)
             } else {
                 changeState(state = Stay)
             }
         }
-        return gameDeck
     }
 
     private fun shouldDrawCard(): Boolean = hand.calculate() <= DEALER_CARD_DRAW_THRESHOLD

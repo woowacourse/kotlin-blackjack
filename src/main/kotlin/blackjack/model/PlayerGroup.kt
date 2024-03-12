@@ -14,14 +14,12 @@ class PlayerGroup {
     }
 
     fun drawPlayerCard(
-        gameDeck: GameDeck,
         hitOrStay: (nickname: Nickname) -> Boolean,
         showPlayerCards: (player: Player) -> Unit,
-    ): GameDeck {
+    ) {
         players.forEach { player ->
-            player.drawCardsForPlayer(gameDeck, hitOrStay, showPlayerCards)
+            player.drawCardsForPlayer(hitOrStay, showPlayerCards)
         }
-        return gameDeck
     }
 
     companion object {

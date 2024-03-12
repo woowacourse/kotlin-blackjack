@@ -1,7 +1,7 @@
 package blackjack.controller
 
-import blackjack.model.BlackJackGame
 import blackjack.model.Dealer
+import blackjack.model.GameDeck
 import blackjack.model.GameState
 import blackjack.model.GameState.End
 import blackjack.model.GameState.Play
@@ -11,6 +11,7 @@ import blackjack.view.InputView
 import blackjack.view.InputView.askHitOrStay
 import blackjack.view.OutputView
 import blackjack.view.OutputView.printDealerDrawCard
+import blackjack.view.OutputView.printEveryCards
 import blackjack.view.OutputView.printGameSetting
 import blackjack.view.OutputView.showPlayerCards
 
@@ -26,6 +27,7 @@ class GameController(private var gameState: GameState = Play) {
 
     private fun play() {
         createParticipants().onSuccess { participants ->
+            GameDeck.shuffleGameDeck()
             startGame(participants = participants)
         }.onFailure { e ->
             OutputView.printError(e)
@@ -52,14 +54,11 @@ class GameController(private var gameState: GameState = Play) {
 
     private fun playGame(participants: Participants): Result<Unit> {
         return runCatching {
-            with(BlackJackGame(participants = participants)) {
+            with(participants) {
                 start(printGameSetting = ::printGameSetting)
                 runPlayersTurn(hitOrStay = ::askHitOrStay, showPlayerCards = ::showPlayerCards)
                 runDealerTurn(printDealerDrawCard = ::printDealerDrawCard)
-                finish { participants ->
-                    participants.matchResult()
-                    OutputView.printEveryCards(participants.dealer, participants.playerGroup)
-                }
+                finish(printEveryCards = ::printEveryCards)
             }
         }
     }

@@ -1,30 +1,34 @@
 package blackjack.model
 
-import blackjack.exception.ErrorCode.NO_CARDS_ERROR
-import blackjack.exception.Exceptions.NoCardErrorException
+import blackjack.exception.ErrorCode
+import blackjack.exception.Exceptions
 
-class GameDeck(initCards: List<Card> = ShuffleGeneratorImpl.shuffleGameDeck()) {
-    private var _cards: List<Card> = initCards
-    val cards: List<Card>
-        get() = _cards
+object GameDeck : ShuffleGenerator {
+    private const val CARD_DRAW_DEFAULT_INDEX = 0
 
-    fun reset(newCards: List<Card>? = null) {
-        _cards = newCards?.let {
-            ShuffleGeneratorImpl.shuffleGameDeck(it)
-        } ?: ShuffleGeneratorImpl.shuffleGameDeck()
+    private val deck: List<Card> = createGameDeck()
+    private val userDeck: MutableList<Card> = mutableListOf()
+    private var index: Int = CARD_DRAW_DEFAULT_INDEX
+
+    override fun shuffleGameDeck() {
+        userDeck.clear()
+        userDeck.addAll(deck.shuffled())
+        index = CARD_DRAW_DEFAULT_INDEX
+    }
+
+    override fun shuffleGameDeck(cards: List<Card>) {
+        userDeck.clear()
+        userDeck.addAll(cards)
+        index = CARD_DRAW_DEFAULT_INDEX
     }
 
     fun drawCard(): Card {
-        if (_cards.isNotEmpty()) {
-            return cards.last().also {
-                _cards = _cards.dropLast(DRAW_COUNT)
-            }
+        if (index < userDeck.size) {
+            return userDeck[index++]
         }
-        throw NoCardErrorException(NO_CARDS_ERROR.reason)
+        shuffleGameDeck()
+        throw Exceptions.NoCardErrorException(ErrorCode.NO_CARDS_ERROR.reason)
     }
 
-    companion object {
-        const val DECK_SIZE = 52
-        const val DRAW_COUNT = 1
-    }
+    private fun createGameDeck(): List<Card> = Card.createDeck()
 }

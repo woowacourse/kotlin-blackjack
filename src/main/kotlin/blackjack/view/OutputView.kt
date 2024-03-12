@@ -6,6 +6,7 @@ import blackjack.exception.Exceptions.NoCardErrorException
 import blackjack.model.Dealer
 import blackjack.model.Dealer.Companion.DEALER_CARD_DRAW_THRESHOLD
 import blackjack.model.GameResult
+import blackjack.model.Participants
 import blackjack.model.Participants.Companion.INITIAL_CARD_COUNTS
 import blackjack.model.Player
 import blackjack.model.PlayerGroup
@@ -41,13 +42,10 @@ object OutputView {
         println("\n딜러의 카드가 ${DEALER_CARD_DRAW_THRESHOLD}이하 이므로, 1장의 카드를 더 받습니다.")
     }
 
-    fun printEveryCards(
-        dealer: Dealer,
-        playerGroup: PlayerGroup,
-    ) {
+    fun printEveryCards(printEveryCards: Participants) {
         println()
-        showDealerCardsResult(dealer) // 딜러 패 출력
-        showPlayersCardsResult(playerGroup)
+        showDealerCardsResult(printEveryCards.dealer) // 딜러 패 출력
+        showPlayersCardsResult(printEveryCards.playerGroup)
     }
 
     private fun showDealerCardsResult(dealer: Dealer) {
