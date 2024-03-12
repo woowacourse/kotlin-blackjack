@@ -5,6 +5,6 @@ interface ScorePolicy {
 
     companion object {
         @JvmStatic
-        val BLACKJACK = 22
+        val BLACKJACK_SCORE = 22
     }
 }

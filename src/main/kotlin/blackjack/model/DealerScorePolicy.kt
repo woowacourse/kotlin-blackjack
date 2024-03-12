@@ -3,7 +3,7 @@ package blackjack.model
 class DealerScorePolicy : ScorePolicy {
     override fun score(cards: Cards): Int =
         when {
-            cards.isBlackJack() -> ScorePolicy.BLACKJACK
+            cards.isBlackJack() -> ScorePolicy.BLACKJACK_SCORE
             cards.isBusted() -> BUSTED_SCORE
             else -> cards.sum()
         }
