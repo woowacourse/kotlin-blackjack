@@ -33,12 +33,13 @@ class BlackJack {
 
     private fun updateGameStateWithScore() {
         when (val totalScore = handCard.getTotalCardsSum()) {
-            in MIN_SCORE until BLACK_JACK_SCORE -> _state = State.Action.Hit
-            BLACK_JACK_SCORE -> _state = State.Finish.BlackJack
-            in BUST_SCORE..MAX_SCORE -> {
-                _state = State.Finish.Bust
+            in MIN_SCORE until BLACK_JACK_SCORE -> {
+                _state = State.Action.Hit
                 updateGameStateWithAceCount(totalScore)
             }
+
+            BLACK_JACK_SCORE -> _state = State.Finish.BlackJack
+            in BUST_SCORE..MAX_SCORE -> _state = State.Finish.Bust
         }
     }
 
@@ -49,8 +50,8 @@ class BlackJack {
     }
 
     private fun checkCurrentScore(currentScore: Int) {
-        if (currentScore < BUST_SCORE) {
-            _state = State.Action.Hit
+        if (currentScore == BLACK_JACK_SCORE) {
+            _state = State.Finish.BlackJack
         }
     }
 

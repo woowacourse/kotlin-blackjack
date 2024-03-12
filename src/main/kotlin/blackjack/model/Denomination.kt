@@ -15,7 +15,7 @@ enum class Denomination(
     JACK(10),
     QUEEN(10),
     KING(10),
-    ACE(11), ;
+    ACE(1), ;
 
     fun getScore(): Int = score
 

@@ -17,10 +17,13 @@ class GameResultTest {
                 draw(Card(Denomination.KING, Suit.HEART))
             }
         val winPlayers = listOf(player)
+        val participants =
+            Participants(
+                participants = listOf(dealer) + winPlayers,
+            )
         val gameManager =
             GameManager(
-                dealer = dealer,
-                players = winPlayers,
+                participants = participants,
             )
         gameManager.judgeBlackJackScores()
         val dealerResults = gameManager.getDealerResults()
@@ -62,10 +65,13 @@ class GameResultTest {
                 )
             }
         val drawPlayers = listOf(player)
+        val participants =
+            Participants(
+                participants = listOf(dealer) + drawPlayers,
+            )
         val gameManager =
             GameManager(
-                dealer = dealer,
-                players = drawPlayers,
+                participants = participants,
             )
         gameManager.judgeBlackJackScores()
         val dealerResults = gameManager.getDealerResults()
@@ -87,10 +93,13 @@ class GameResultTest {
                 draw(Card(Denomination.SIX, Suit.HEART))
             }
         val losePlayers = listOf(player)
+        val participants =
+            Participants(
+                participants = listOf(dealer) + losePlayers,
+            )
         val gameManager =
             GameManager(
-                dealer = dealer,
-                players = losePlayers,
+                participants = participants,
             )
         gameManager.judgeBlackJackScores()
         val dealerResults = gameManager.getDealerResults()
