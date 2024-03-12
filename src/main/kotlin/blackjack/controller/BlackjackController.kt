@@ -25,7 +25,7 @@ class BlackjackController(
     }
 
     private fun setUpGame() {
-        players = playersInputView.readPlayerNames(deck)
+        players = playersInputView.read(deck)
         outputView.printInitCard(dealer, players)
     }
 
@@ -40,7 +40,7 @@ class BlackjackController(
             outputView.printBustMessage()
             return
         }
-        if (isAddCardInputView.readIsAddCard(player.name)) {
+        if (isAddCardInputView.read(player.name)) {
             player.add(deck.draw(1))
             outputView.printPlayerCard(player)
             playerTurn(player)
