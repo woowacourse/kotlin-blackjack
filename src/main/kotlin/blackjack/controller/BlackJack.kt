@@ -35,8 +35,8 @@ class BlackJack(
     private fun initPlayers(): Players =
         Players(
             inputView.readPlayersName()
-                .map {
-                    Player(PlayerName(it), CardHand())
+                .map { name ->
+                    Player(PlayerName(name), CardHand())
                 },
         )
 
@@ -48,15 +48,15 @@ class BlackJack(
     }
 
     private fun runPlayersPhase(players: Players) {
-        players.players.forEach {
-            runPlayerPhase(it)
+        players.players.forEach { player ->
+            runPlayerPhase(player)
         }
     }
 
-    private fun runPlayerPhase(it: Player) {
-        while (it.canDraw() && askDraw(it)) {
-            it.runPhase(randomCardGenerator)
-            outputView.printPlayerCardHand(it)
+    private fun runPlayerPhase(player: Player) {
+        while (player.canDraw() && askDraw(player)) {
+            player.runPhase(randomCardGenerator)
+            outputView.printPlayerCardHand(player)
         }
     }
 
