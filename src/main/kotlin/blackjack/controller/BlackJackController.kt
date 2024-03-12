@@ -2,6 +2,7 @@ package blackjack.controller
 
 import blackjack.model.Dealer
 import blackjack.model.GameManager
+import blackjack.model.Participant
 import blackjack.model.Participants
 import blackjack.model.Player
 import blackjack.view.InputView
@@ -40,11 +41,12 @@ class BlackJackController {
             playPlayer(player as Player)
         }
         playDealer()
+        gameManager.judgeBlackJackScores()
     }
 
     private fun playPlayer(player: Player) {
         while (player.checkHitState() && InputView.inputPlayerDecision(player.getName()) == UserDecision.YES) {
-            gameManager.applyUserDrawDecision(player)
+            if (!setUserDecision(player)) return
             OutputView.outputPlayerCurrentHandCard(player)
         }
     }
@@ -53,9 +55,8 @@ class BlackJackController {
         val dealer = gameManager.getDealer()
         while (dealer.checkShouldDealerDrawCard()) {
             OutputView.outputDealerRule()
-            gameManager.applyUserDrawDecision(dealer)
+            if (!setUserDecision(dealer)) return
         }
-        gameManager.judgeBlackJackScores()
     }
 
     fun showResult() {
@@ -68,6 +69,16 @@ class BlackJackController {
         OutputView.outputPlayersResult(
             playersResult = gameManager.getPlayerResults(),
         )
+    }
+
+    private fun setUserDecision(participant: Participant): Boolean {
+        return try {
+            gameManager.applyUserDrawDecision(participant)
+            true
+        } catch (e: IllegalArgumentException) {
+            println(e.message)
+            false
+        }
     }
 
     private fun makeParticipants(
