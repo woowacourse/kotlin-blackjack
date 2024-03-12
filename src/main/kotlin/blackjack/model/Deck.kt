@@ -22,6 +22,6 @@ class Deck(count: Int = 1) {
                 productNumberAndSuit(suit)
             }
 
-        private fun productNumberAndSuit(suit: Suit) = CardNumber.entries.map { cardNumber -> Card(cardNumber, suit) }
+        private fun productNumberAndSuit(suit: Suit): List<Card> = CardNumber.entries.map { cardNumber -> Card(cardNumber, suit) }
     }
 }
