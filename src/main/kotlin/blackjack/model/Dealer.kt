@@ -5,6 +5,16 @@ class Dealer(name: String = DEFAULT_DEALER_NAME) : Participant(name) {
         return getCards().firstOrNull() ?: throw IllegalArgumentException(ERROR_CARD_INDEX)
     }
 
+    fun drawAdditionalDraw(
+        deck: CardDeck,
+        outputAction: (() -> Unit),
+    ) {
+        while (checkDealerScoreCondition()) {
+            draw(deck.draw())
+            outputAction()
+        }
+    }
+
     fun checkDealerScoreCondition(): Boolean {
         return getBlackJackScore() <= MIN_HAND_CARD_SCORE
     }

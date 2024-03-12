@@ -5,7 +5,6 @@ import blackjack.model.Dealer
 import blackjack.model.GameResult
 import blackjack.model.Participants
 import blackjack.model.Player
-import blackjack.model.user.UserDecision
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -46,18 +45,25 @@ class BlackJackController(private val cardDeck: CardDeck) {
     }
 
     private fun playPlayer(player: Player) {
-        while (player.checkHitState() && InputView.inputPlayerDecision(player.getName()) == UserDecision.YES) {
-            player.draw(cardDeck.draw())
-            OutputView.outputPlayerCurrentHandCard(player)
-        }
+        player.drawAdditionalCard(
+            deck = cardDeck,
+            inputDecision = { name ->
+                InputView.inputPlayerDecision(name)
+            },
+            outputAction = { player ->
+                OutputView.outputPlayerCurrentHandCard(player)
+            },
+        )
     }
 
     private fun playDealer() {
         val dealer = participants.getDealer()
-        while (dealer.checkDealerScoreCondition()) {
-            OutputView.outputDealerRule()
-            dealer.draw(cardDeck.draw())
-        }
+        dealer.drawAdditionalDraw(
+            deck = cardDeck,
+            outputAction = {
+                OutputView.outputDealerRule()
+            },
+        )
     }
 
     fun calculateResult() {

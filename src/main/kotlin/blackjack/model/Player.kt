@@ -1,9 +1,22 @@
 package blackjack.model
 
+import blackjack.model.user.UserDecision
+
 class Player(name: String) : Participant(name) {
     init {
         require(name.length <= MAX_NAME_LENGTH) {
             ERROR_NAME_LENGTH
+        }
+    }
+
+    fun drawAdditionalCard(
+        deck: CardDeck,
+        inputDecision: (String) -> UserDecision,
+        outputAction: ((Player) -> Unit),
+    ) {
+        while (checkHitState() && inputDecision(getName()) == UserDecision.YES) {
+            draw(deck.draw())
+            outputAction(this)
         }
     }
 
