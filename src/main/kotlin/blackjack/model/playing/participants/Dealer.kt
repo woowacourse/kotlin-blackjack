@@ -19,6 +19,8 @@ data class Dealer(override val cardHand: CardHand) : Role(name = PlayerName(DEAL
         }
     }
 
+    fun canDraw(): Boolean = this.getState() == CardHandState.HIT
+
     fun judgeDealerWinningResult(playerWinning: PlayerWinning): DealerWinning =
         DealerWinning(
             playerWinning.result.values.groupingBy { it.reverse() }

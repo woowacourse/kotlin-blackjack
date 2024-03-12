@@ -3,7 +3,6 @@ package blackjack.controller
 import blackjack.model.card.CardDeck
 import blackjack.model.card.generator.RandomCardGenerator
 import blackjack.model.playing.cardhand.CardHand
-import blackjack.model.playing.cardhand.CardHandState
 import blackjack.model.playing.participants.Dealer
 import blackjack.model.playing.participants.Participants
 import blackjack.model.playing.participants.player.Player
@@ -63,7 +62,7 @@ class BlackJack(
     private fun askDraw(player: Player) = inputView.readIsHit(player)
 
     private fun runDealerPhase(dealer: Dealer) {
-        if (dealer.getState() == CardHandState.HIT) {
+        if (dealer.canDraw()) {
             outputView.printDealerHit()
             dealer.runPhase(randomCardGenerator)
         }
