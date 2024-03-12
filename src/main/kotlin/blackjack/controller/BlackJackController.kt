@@ -2,8 +2,6 @@ package blackjack.controller
 
 import blackjack.model.Dealer
 import blackjack.model.Deck
-import blackjack.model.ParticipantData
-import blackjack.model.ParticipantsHand
 import blackjack.model.Player
 import blackjack.view.InputView
 import blackjack.view.OutputView
@@ -15,21 +13,11 @@ class BlackJackController(
     fun start() {
         val playersNames: List<String> = inputView.inputPlayerNames()
         val deck: Deck = Deck.create(1)
-        val (dealer, players) = spreadCards(deck, playersNames)
+        val players = Player.createPlayers(playersNames, deck)
+        val dealer = Dealer.createDealer(deck)
+        outputView.showDivided(dealer.hand.first(), players)
         hitParticipant(players, deck, dealer)
         showScoreBoard(players, dealer)
-    }
-
-    private fun spreadCards(
-        deck: Deck,
-        playersNames: List<String>,
-    ): ParticipantData {
-        val (playerHand, dealerHand) =
-            ParticipantsHand.from(deck.spread(playersNames.size))
-        val dealer = Dealer(dealerHand)
-        val players: List<Player> = Player.createPlayers(playersNames, playerHand)
-        outputView.showDivided(dealerHand.first(), players)
-        return ParticipantData(dealer, players)
     }
 
     private fun hitParticipant(

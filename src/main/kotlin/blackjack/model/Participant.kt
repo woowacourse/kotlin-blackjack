@@ -5,6 +5,12 @@ abstract class Participant(val hand: Hand) {
         hand.add(card)
     }
 
+    fun initialSetHand(deck: Deck) {
+        repeat(INITIAL_HAND_COUNT) {
+            hit(deck.pull())
+        }
+    }
+
     fun hitIfConditionTrue(
         deck: Deck,
         condition: () -> Boolean,
@@ -14,5 +20,9 @@ abstract class Participant(val hand: Hand) {
             hit(deck.pull())
             view()
         }
+    }
+
+    companion object {
+        private const val INITIAL_HAND_COUNT = 2
     }
 }

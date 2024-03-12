@@ -15,6 +15,12 @@ class Dealer(hand: Hand) : Participant(hand) {
     }
 
     companion object {
+        fun createDealer(deck: Deck): Dealer {
+            val dealer = Dealer(Hand(listOf()))
+            dealer.initialSetHand(deck)
+            return dealer
+        }
+
         const val HIT_CONDITION = 17
         const val BLACKJACK_NUMBER = 21
     }

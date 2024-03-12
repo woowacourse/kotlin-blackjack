@@ -1,8 +1,6 @@
 package blackjack.model
 
 class Player(val name: String, hand: Hand) : Participant(hand) {
-    constructor(pair: Pair<String, Hand>) : this(pair.first, pair.second)
-
     fun comparePoints(dealer: Dealer): WinningState {
         val playerCards = hand
         val dealerCards = dealer.hand
@@ -15,9 +13,11 @@ class Player(val name: String, hand: Hand) : Participant(hand) {
     companion object {
         fun createPlayers(
             names: List<String>,
-            hands: List<Hand>,
+            deck: Deck,
         ): List<Player> {
-            return names.zip(hands).map(::Player)
+            val players = names.map { Player(it, Hand(listOf())) }
+            players.map { it.initialSetHand(deck) }
+            return players
         }
     }
 }

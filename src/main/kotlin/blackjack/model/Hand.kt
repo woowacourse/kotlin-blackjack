@@ -43,6 +43,6 @@ class Hand(
     }
 
     companion object {
-        private const val MIN_HAND_CARDS_SIZE = 2
+        private const val MIN_HAND_CARDS_SIZE = 0
     }
 }

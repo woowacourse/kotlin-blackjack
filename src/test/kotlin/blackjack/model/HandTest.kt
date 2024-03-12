@@ -9,7 +9,7 @@ import org.junit.jupiter.params.provider.CsvSource
 
 class HandTest {
     @Test
-    fun `손패는 2장 이상이다`() {
+    fun `손패는 0장 이상이다`() {
         assertThrows<IllegalArgumentException> {
             Hand(mutableListOf())
         }

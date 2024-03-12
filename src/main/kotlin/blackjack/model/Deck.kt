@@ -1,21 +1,9 @@
 package blackjack.model
 
-import blackjack.model.ParticipantsHand.Companion.DEALER_COUNT
-import blackjack.model.ParticipantsHand.Companion.DEFAULT_CARDS_COUNT
-
 @JvmInline
 value class Deck(val cards: MutableList<Card>) {
     fun pull(): Card {
         return cards.removeFirst()
-    }
-
-    fun spread(playerSize: Int): MutableList<Card> {
-        val spreadCount = DEFAULT_CARDS_COUNT * (DEALER_COUNT + playerSize)
-        val spreadCards = cards.take(spreadCount).toMutableList()
-        repeat(spreadCount) {
-            cards.removeFirst()
-        }
-        return spreadCards
     }
 
     companion object {
