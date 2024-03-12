@@ -54,13 +54,13 @@ class GameManager(
     private fun judgeBlackJackScore(player: Player) {
         when (player.getBlackJackState()) {
             is State.Finish.Bust -> addDealerWin(player)
-            is State.Finish.BlackJack -> applyBlackJackState(player)
+            is State.Finish.BlackJack -> checkBlackJackState(player)
             is State.Finish.Stay, State.Action.Hit ->
                 compareToResult(player)
         }
     }
 
-    private fun applyBlackJackState(player: Player) {
+    private fun checkBlackJackState(player: Player) {
         if (participants.getDealer().getBlackJackState() == State.Finish.BlackJack) {
             addDealerDraw(player)
         } else {
