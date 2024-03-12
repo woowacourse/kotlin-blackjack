@@ -28,10 +28,10 @@ class BlackJack {
 
     fun addCard(card: Card) {
         handCard.addCard(card)
-        changeState()
+        updateGameStateWithScore()
     }
 
-    fun changeState() {
+    private fun updateGameStateWithScore() {
         when (val totalScore = handCard.getTotalCardsSum()) {
             in MIN_SCORE until BLACK_JACK_SCORE -> _state = State.Action.Hit
             BLACK_JACK_SCORE -> _state = State.Finish.BlackJack

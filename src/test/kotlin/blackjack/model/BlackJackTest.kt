@@ -25,7 +25,6 @@ class BlackJackTest {
             addCard(Card(Denomination.NINE, Suit.SPADE))
             addCard(Card(Denomination.SEVEN, Suit.CLOVER))
         }
-        blackJack.changeState()
         assertThat(blackJack.state).isEqualTo(State.Action.Hit)
     }
 
@@ -36,7 +35,6 @@ class BlackJackTest {
             addCard(Card(Denomination.ACE, Suit.SPADE))
             addCard(Card(Denomination.JACK, Suit.CLOVER))
         }
-        blackJack.changeState()
         assertThat(blackJack.state).isEqualTo(State.Finish.BlackJack)
     }
 
@@ -48,7 +46,6 @@ class BlackJackTest {
             addCard(Card(Denomination.KING, Suit.CLOVER))
             addCard(Card(Denomination.KING, Suit.DIAMOND))
         }
-        bustBlackJack.changeState()
         assertThat(bustBlackJack.state).isEqualTo(State.Finish.Bust)
     }
 
@@ -60,7 +57,6 @@ class BlackJackTest {
             addCard(Card(Denomination.KING, Suit.CLOVER))
             addCard(Card(Denomination.NINE, Suit.DIAMOND))
         }
-        aceBlackJack.changeState()
         assertThat(aceBlackJack.state).isEqualTo(State.Action.Hit)
     }
 
@@ -75,7 +71,6 @@ class BlackJackTest {
             addCard(Card(Denomination.SEVEN, Suit.DIAMOND))
             addCard(Card(Denomination.NINE, Suit.SPADE))
         }
-        aceBlackJack.changeState()
         assertThat(aceBlackJack.state).isEqualTo(State.Action.Hit)
     }
 }
