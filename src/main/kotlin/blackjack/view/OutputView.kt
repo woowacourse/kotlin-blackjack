@@ -33,9 +33,9 @@ class OutputView {
         dealer: Dealer,
         players: Players,
     ) {
-        println(DEALER_FINAL_CARDS_MESSAGE.format(dealer.getAllCards(), dealer.getScore()))
+        println(DEALER_FINAL_CARDS_MESSAGE.format(dealer.getAllCards(), dealer.calculateScore()))
         players.gamePlayers.forEach { player ->
-            println(PLAYER_FINAL_CARDS_MESSAGE.format(player.name, player.getAllCards(), player.getScore()))
+            println(PLAYER_FINAL_CARDS_MESSAGE.format(player.name, player.getAllCards(), player.calculateScore()))
         }
     }
 

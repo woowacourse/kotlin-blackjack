@@ -39,7 +39,16 @@ class PlayerTest {
         assertThat(player.isBlackjack()).isTrue()
     }
 
+    @Test
+    fun `ACE가 있을 경우, 11을 더해 총합이 21보다 작으면 11로 계산해서 반환한다`() {
+        val deck = Deck(NormalCardMachine())
+        val player = Player("채채", deck)
+        player.addCard() // Ace 추가
+        assertThat(player.calculateScore()).isEqualTo(TEST_INIT_CARD_SCORE + 11)
+    }
+
     companion object {
         private const val START_CARD_SIZE = 2
+        private const val TEST_INIT_CARD_SCORE = 10
     }
 }
