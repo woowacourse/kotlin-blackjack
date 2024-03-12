@@ -30,7 +30,8 @@ class BlackjackController(
         dealer: Dealer,
         players: Players,
     ) {
-        BlackjackGame.initCard(dealer, players, cardProvider)
+        dealer.initCard(cardProvider)
+        players.playerGroup.forEach { it.initCard(cardProvider) }
         outputView.printInitCard(dealer, players)
     }
 

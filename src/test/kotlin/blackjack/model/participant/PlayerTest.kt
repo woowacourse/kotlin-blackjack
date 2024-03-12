@@ -1,7 +1,9 @@
 package blackjack.model.participant
 
 import blackjack.model.card.Card
+import blackjack.model.card.TestCardProvider
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
@@ -39,6 +41,19 @@ class PlayerTest {
 
         // then
         assertThat(actual).isEqualTo(expected)
+    }
+
+    @Test
+    fun `게임 시작 시 플레이어가 2장의 카드를 받는다`() {
+        // given
+        val player = Player(PlayerName("olive"))
+
+        // when
+        player.initCard(TestCardProvider)
+
+        // then
+        val expected = listOf(Card.of("K", "하트"), Card.of("K", "하트"))
+        assertThat(player.getCards()).isEqualTo(expected)
     }
 
     companion object {

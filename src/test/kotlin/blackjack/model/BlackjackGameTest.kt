@@ -1,7 +1,6 @@
 package blackjack.model
 
 import blackjack.model.card.Card
-import blackjack.model.card.TestCardProvider
 import blackjack.model.participant.Dealer
 import blackjack.model.participant.PlayerName
 import blackjack.model.participant.Players
@@ -10,23 +9,6 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class BlackjackGameTest {
-    @Test
-    fun `게임 시작 시 딜러와 플레이어가 2장의 카드를 받는다`() {
-        // given
-        val dealer = Dealer()
-        val players = Players.from(listOf("olive", "seogi"))
-
-        // when
-        BlackjackGame.initCard(dealer, players, TestCardProvider)
-
-        // then
-        val expected = listOf(Card.of("K", "하트"), Card.of("K", "하트"))
-        assertThat(dealer.getCards()).isEqualTo(expected)
-        players.playerGroup.forEach {
-            assertThat(it.getCards()).isEqualTo(expected)
-        }
-    }
-
     @Test
     fun `게임의 최종 승패 결과를 계산한다`() {
         // given
