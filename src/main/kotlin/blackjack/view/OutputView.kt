@@ -1,12 +1,12 @@
 package blackjack.view
 
-import blackjack.model.CardHand
-import blackjack.model.CardNumber
-import blackjack.model.CardShape
-import blackjack.model.DealerWinning
-import blackjack.model.Participants
-import blackjack.model.PlayerWinning
-import blackjack.model.Role
+import blackjack.model.card.CardNumber
+import blackjack.model.card.CardShape
+import blackjack.model.playing.cardhand.CardHand
+import blackjack.model.playing.participants.Participants
+import blackjack.model.playing.participants.Role
+import blackjack.model.winning.DealerWinning
+import blackjack.model.winning.PlayerWinning
 
 class OutputView {
     fun printInitialSetting(participants: Participants) {
