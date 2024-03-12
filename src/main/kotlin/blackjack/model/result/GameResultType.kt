@@ -1,9 +1,9 @@
 package blackjack.model.result
 
-enum class GameResultType(val message: String) {
-    WIN("승"),
-    LOSE("패"),
-    DRAW("무"), ;
+enum class GameResultType {
+    WIN,
+    LOSE,
+    DRAW, ;
 
     fun reverse(): GameResultType {
         return when (this) {
