@@ -16,7 +16,7 @@ class BlackJackGame(
         participants.playerGroup.drawPlayerCard(
             gameDeck = gameDeck,
             hitOrStay = hitOrStay,
-            getPlayerInfo = getPlayerInfo,
+            returnPlayerInfo = getPlayerInfo,
         )
     }
 
