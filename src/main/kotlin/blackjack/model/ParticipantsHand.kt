@@ -1,5 +1,7 @@
 package blackjack.model
 
+import blackjack.model.ParticipantsHand.Companion.removeSeveral
+
 data class ParticipantsHand(
     val playerHandCards: List<Hand>,
     val dealerHand: Hand,
@@ -10,10 +12,14 @@ data class ParticipantsHand(
             val playerHands: List<Hand> = hands.drop(DEALER_COUNT)
             val dealerHands = hands.first()
             val spreadCardsCount = hands.count() * 2
-            repeat(spreadCardsCount) {
-                cards.removeFirst()
-            }
+            cards.removeSeveral(spreadCardsCount)
             return ParticipantsHand(playerHands, dealerHands)
+        }
+
+        private fun MutableList<Card>.removeSeveral(num: Int) {
+            repeat(num) {
+                this.removeFirst()
+            }
         }
 
         const val DEFAULT_CARDS_COUNT = 2
