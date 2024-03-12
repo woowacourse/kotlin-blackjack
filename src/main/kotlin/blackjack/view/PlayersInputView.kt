@@ -13,7 +13,7 @@ class PlayersInputView {
         runCatching {
             val names =
                 readln().splitNames()
-            Players.playerNamesOf(names, deck)
+            Players.withInitCards(names, deck)
         }.onFailure {
             println(it.message)
             return readPlayerNames(deck)

@@ -7,12 +7,8 @@ class HandCards {
     val cards: List<Card>
         get() = _cards.toList()
 
-    fun create(deck: Deck) {
-        _cards.addAll(deck.draw(INIT_CARD_AMOUNT))
-    }
-
-    fun add(deck: Deck) {
-        _cards.addAll(deck.draw(HIT_CARD_AMOUNT))
+    fun add(cards: List<Card>) {
+        _cards.addAll(cards)
     }
 
     fun calculateCardScore(): Int {
@@ -24,8 +20,6 @@ class HandCards {
     fun isBlackjackCard(): Boolean = cards.size == 2 && calculateCardScore() == BLACKJACK_NUMBER
 
     companion object {
-        private const val INIT_CARD_AMOUNT = 2
-        private const val HIT_CARD_AMOUNT = 1
         private const val ANOTHER_CARD_SCORE = 10
         private const val BLACKJACK_NUMBER = 21
     }

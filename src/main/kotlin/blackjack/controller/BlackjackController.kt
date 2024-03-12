@@ -14,7 +14,7 @@ class BlackjackController(
     private val outputView: OutputView = OutputView(),
 ) {
     private val deck = Deck()
-    private val dealer = Dealer(deck)
+    private val dealer = Dealer.withInitCards(deck)
     private lateinit var players: Players
 
     fun play() {
@@ -40,14 +40,15 @@ class BlackjackController(
             outputView.printBustMessage()
             return
         }
-        if (player.addCard(isAddCardInputView.readIsAddCard(player.name))) {
+        if (isAddCardInputView.readIsAddCard(player.name)) {
+            player.add(deck.draw(1))
             outputView.printPlayerCard(player)
             playerTurn(player)
         }
     }
 
     private tailrec fun dealerTurn(dealer: Dealer) {
-        if (dealer.addCard()) {
+        if (dealer.add(deck.draw(1))) {
             outputView.printDealerAddCard()
             dealerTurn(dealer)
         }

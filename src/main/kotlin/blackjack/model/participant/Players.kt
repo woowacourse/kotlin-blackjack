@@ -2,23 +2,30 @@ package blackjack.model.participant
 
 import blackjack.model.deck.Deck
 
-class Players(names: Set<String>, deck: Deck) {
-    val gamePlayers: List<Player> = names.map { Player(it, deck) }
+class Players private constructor(names: Set<String>) {
+    val gamePlayers: List<Player> = names.map { Player(it) }
 
     init {
         require(names.size in MIN_PLAYER_COUNT..MAX_PLAYER_COUNT) { "${MIN_PLAYER_COUNT}명 이상 ${MAX_PLAYER_COUNT}명 이하의 플레이어만 가능합니다." }
     }
 
+    private fun initPlayersCard(deck: Deck) {
+        gamePlayers.forEach { player ->
+            player.initCards(deck.draw(2))
+        }
+    }
+
     companion object {
         private const val MIN_PLAYER_COUNT = 1
         private const val MAX_PLAYER_COUNT = 6
+        private const val INIT_CARD_AMOUNT = 2
 
-        fun playerNamesOf(
+        fun withInitCards(
             names: List<String>,
             deck: Deck,
         ): Players {
             validateDuplicateNames(names)
-            return Players(names.toSet(), deck)
+            return Players(names.toSet()).also { it.initPlayersCard(deck) }
         }
 
         private fun validateDuplicateNames(numbers: List<String>) {

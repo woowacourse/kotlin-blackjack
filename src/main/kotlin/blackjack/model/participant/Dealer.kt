@@ -1,19 +1,16 @@
 package blackjack.model.participant
 
+import blackjack.model.deck.Card
 import blackjack.model.deck.Deck
 import blackjack.model.deck.HandCards
 import blackjack.util.CompetitionResult
 
-class Dealer(private val deck: Deck) : GameParticipant(HandCards()) {
-    init {
-        handCards.create(deck)
-    }
-
+class Dealer private constructor() : GameParticipant(HandCards()) {
     fun getFirstCard() = handCards.cards.first()
 
-    fun addCard(): Boolean =
+    override fun add(cards: List<Card>): Boolean =
         if (handCards.calculateCardScore() < DEALER_HIT_THRESHOLD) {
-            handCards.add(deck)
+            handCards.add(cards)
             true
         } else {
             false
@@ -39,5 +36,10 @@ class Dealer(private val deck: Deck) : GameParticipant(HandCards()) {
 
     companion object {
         private const val DEALER_HIT_THRESHOLD = 17
+        private const val INIT_CARD_AMOUNT = 2
+
+        fun withInitCards(deck: Deck): Dealer {
+            return Dealer().also { it.initCards(deck.draw(INIT_CARD_AMOUNT)) }
+        }
     }
 }
