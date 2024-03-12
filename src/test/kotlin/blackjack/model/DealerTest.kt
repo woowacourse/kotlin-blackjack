@@ -16,21 +16,57 @@ class DealerTest {
     }
 
     @Test
-    fun `딜러의 총 합이 플레이어의 총 합보다 크면 LOSE를 반환한다`() {
+    fun `플레이어만 버스트되면 LOSE를 반환한다`() {
+        player.addCard(TEN_CARD)
+        player.addCard(TEN_CARD)
+        player.addCard(TEN_CARD)
+
+        val actual = dealer.judge(player)
+        assertThat(actual).isEqualTo(GameResult.LOSE)
+    }
+
+    @Test
+    fun `모두 버스트되면 LOSE를 반환한다`() {
+        player.addCard(TEN_CARD)
+        player.addCard(TEN_CARD)
+        player.addCard(TEN_CARD)
+
+        dealer.addCard(TEN_CARD)
+        dealer.addCard(TEN_CARD)
+        dealer.addCard(TEN_CARD)
+
+        val actual = dealer.judge(player)
+        assertThat(actual).isEqualTo(GameResult.LOSE)
+    }
+
+    @Test
+    fun `딜러만 버스트되면 WIN을 반환한다`() {
+        player.addCard(TWO_CARD)
+
+        dealer.addCard(TEN_CARD)
+        dealer.addCard(TEN_CARD)
+        dealer.addCard(TEN_CARD)
+
+        val actual = dealer.judge(player)
+        assertThat(actual).isEqualTo(GameResult.WIN)
+    }
+
+    @Test
+    fun `모두 버스트 되지 않았을 때, 딜러의 총 합이 플레이어의 총 합보다 크면 LOSE를 반환한다`() {
         player.addCard(TWO_CARD)
         val actual = dealer.judge(player)
         assertThat(actual).isEqualTo(GameResult.LOSE)
     }
 
     @Test
-    fun `딜러의 총 합이 플레이어의 총 합과 같으면 DRAW를 반환한다`() {
+    fun `모두 버스트 되지 않았을 때, 딜러의 총 합이 플레이어의 총 합과 같으면 DRAW를 반환한다`() {
         player.addCard(Card(CardNumber.THREE, Suit.HEART))
         val actual = dealer.judge(player)
         assertThat(actual).isEqualTo(GameResult.DRAW)
     }
 
     @Test
-    fun `딜러의 총 합이 플레이어의 총 합보다 작으면 WIN을 반환한다`() {
+    fun `모두 버스트 되지 않았을 때, 딜러의 총 합이 플레이어의 총 합보다 작으면 WIN을 반환한다`() {
         player.addCard(FOUR_CARD)
         val actual = dealer.judge(player)
         assertThat(actual).isEqualTo(GameResult.WIN)

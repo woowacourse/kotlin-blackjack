@@ -11,8 +11,7 @@ class GameStatisticsTest {
     inner class DealerStatisticsTest {
         @Test
         fun `플레이어 1명이 졌을 때 딜러는 1번 승리한다`() {
-            val dealer = Dealer()
-            dealer.addCard(Card(CardNumber.FOUR, Suit.HEART))
+            val dealer = buildDealer(CardNumber.FOUR)
 
             val player1 = buildPlayer("a", CardNumber.THREE)
 
@@ -24,8 +23,7 @@ class GameStatisticsTest {
 
         @Test
         fun `플레이어 2명이 졌을 때 딜러는 2번 승리한다`() {
-            val dealer = Dealer()
-            dealer.addCard(Card(CardNumber.FOUR, Suit.HEART))
+            val dealer = buildDealer(CardNumber.FOUR)
 
             val player1 = buildPlayer("a", CardNumber.THREE)
             val player2 = buildPlayer("b", CardNumber.THREE)
@@ -38,8 +36,7 @@ class GameStatisticsTest {
 
         @Test
         fun `플레이어 2명이 이겼을 때 딜러는 2번 패배한다`() {
-            val dealer = Dealer()
-            dealer.addCard(Card(CardNumber.TWO, Suit.HEART))
+            val dealer = buildDealer(CardNumber.TWO)
 
             val player1 = buildPlayer("a", CardNumber.THREE)
             val player2 = buildPlayer("b", CardNumber.THREE)
@@ -52,8 +49,7 @@ class GameStatisticsTest {
 
         @Test
         fun `플레이어 2명이 비겼을 때 딜러는 2번 비긴다`() {
-            val dealer = Dealer()
-            dealer.addCard(Card(CardNumber.THREE, Suit.HEART))
+            val dealer = buildDealer(CardNumber.THREE)
 
             val player1 = buildPlayer("a", CardNumber.THREE)
             val player2 = buildPlayer("b", CardNumber.THREE)
@@ -66,8 +62,7 @@ class GameStatisticsTest {
 
         @Test
         fun `플레이어 1명이 이기고 1명이 졌을 때 딜러는 1번 승리하고 1번 패배한다`() {
-            val dealer = Dealer()
-            dealer.addCard(Card(CardNumber.THREE, Suit.HEART))
+            val dealer = buildDealer(CardNumber.THREE)
 
             val player1 = buildPlayer("a", CardNumber.TWO)
             val player2 = buildPlayer("b", CardNumber.FOUR)
@@ -81,8 +76,7 @@ class GameStatisticsTest {
 
     @Test
     fun `딜러와 플레이어를 받아 플레이어들의 통계를 생성한다`() {
-        val dealer = Dealer()
-        dealer.addCard(Card(CardNumber.FOUR, Suit.HEART))
+        val dealer = buildDealer(CardNumber.FOUR)
 
         val player1 = buildPlayer("a", CardNumber.THREE)
 
@@ -97,8 +91,7 @@ class GameStatisticsTest {
     inner class JudgeTest {
         @Test
         fun `플레이어만 bust될 때 무조건 패배한다`() {
-            val dealer = Dealer()
-            dealer.addCard(Card(CardNumber.FOUR, Suit.HEART))
+            val dealer = buildDealer(CardNumber.FOUR)
 
             val player1 = buildPlayer("a", CardNumber.JACK, CardNumber.QUEEN, CardNumber.KING)
 
