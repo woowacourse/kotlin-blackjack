@@ -37,18 +37,14 @@ class BlackJack {
             BLACK_JACK_SCORE -> _state = State.Finish.BlackJack
             in BUST_SCORE..MAX_SCORE -> {
                 _state = State.Finish.Bust
-                changeAceScore(totalScore)
+                updateGameStateWithAceCount(totalScore)
             }
         }
     }
 
-    private fun changeAceScore(totalScore: Int) {
-        var currentScore = totalScore
-        var aceCount = handCard.getAceCount()
-        while (aceCount > 0 && state == State.Finish.Bust) {
-            aceCount -= 1
-            currentScore -= Denomination.ACE.getScore() + Denomination.aceTransferScore()
-            checkCurrentScore(currentScore)
+    private fun updateGameStateWithAceCount(totalScore: Int) {
+        if (handCard.getAceCount() > MIN_ACE_COUNT) {
+            checkCurrentScore(totalScore + Denomination.TRANSFER_ACE_SCORE)
         }
     }
 
@@ -61,6 +57,7 @@ class BlackJack {
     companion object {
         private const val BLACK_JACK_SCORE: Int = 21
         private const val MIN_SCORE: Int = 0
+        private const val MIN_ACE_COUNT: Int = 0
         private const val BUST_SCORE: Int = 22
         private const val MAX_SCORE: Int = 61
     }

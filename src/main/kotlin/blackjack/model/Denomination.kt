@@ -24,6 +24,6 @@ enum class Denomination(
             return ACE.score - TRANSFER_ACE_SCORE
         }
 
-        private const val TRANSFER_ACE_SCORE: Int = 10
+        const val TRANSFER_ACE_SCORE: Int = 10
     }
 }
