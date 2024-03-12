@@ -1,6 +1,5 @@
 package blackjack.controller
 
-import blackjack.model.BlackjackGame
 import blackjack.model.card.CardProvider
 import blackjack.model.participant.Dealer
 import blackjack.model.participant.Player
@@ -53,7 +52,7 @@ class BlackjackController(
         dealer: Dealer,
         players: Players,
     ) {
-        val gameResultStorage = BlackjackGame.calculateGameResult(dealer, players)
+        val gameResultStorage = dealer.calculateGameResult(players)
         outputView.printPlayersCardResult(dealer, players)
         outputView.printFinalGameResult(players, gameResultStorage)
     }

@@ -44,26 +44,6 @@ class DealerTest {
         assertThat(actual).isEqualTo(expected)
     }
 
-    @MethodSource("게임 결과 결정 테스트 데이터")
-    @ParameterizedTest
-    fun `카드 합계를 비교하여 게임 결과를 결정한다`(
-        dealerCards: List<Card>,
-        playerCards: List<Card>,
-        expected: GameResultType,
-    ) {
-        // given
-        val dealer = Dealer()
-        val player = Player(PlayerName("seogi"))
-        dealer.receiveCard(dealerCards)
-        player.receiveCard(playerCards)
-
-        // when
-        val actual = dealer.decideGameResultType(player)
-
-        // then
-        assertThat(actual).isEqualTo(expected)
-    }
-
     @Test
     fun `게임 시작 시 딜러가 2장의 카드를 받는다`() {
         // given
@@ -77,7 +57,34 @@ class DealerTest {
         assertThat(dealer.getCards()).isEqualTo(expected)
     }
 
+    @Test
+    fun `게임의 최종 승패 결과를 계산한다`() {
+        // given
+        val dealer = Dealer()
+        val players = Players.from(listOf("olive", "seogi", "chae"))
+
+        dealer.receiveCard(listOf(Card.of("8", "하트")))
+        players.playerGroup.forEachIndexed { idx, player ->
+            player.receiveCard(listOf(Card.of(denominationValues[idx], "하트")))
+        }
+
+        // when
+        val gameResultStorage = dealer.calculateGameResult(players)
+
+        // then
+        assertThat(gameResultStorage.dealerResult.results)
+            .containsEntry(GameResultType.LOSE, 1)
+            .containsEntry(GameResultType.WIN, 1)
+            .containsEntry(GameResultType.DRAW, 1)
+        assertThat(gameResultStorage.playersResult.results)
+            .containsEntry(PlayerName("olive"), GameResultType.LOSE)
+            .containsEntry(PlayerName("seogi"), GameResultType.WIN)
+            .containsEntry(PlayerName("chae"), GameResultType.DRAW)
+    }
+
     companion object {
+        private val denominationValues = listOf("2", "K", "8")
+
         @JvmStatic
         fun `카드 받을 수 있는지 여부 판단 테스트 데이터`() =
             listOf(
@@ -95,27 +102,6 @@ class DealerTest {
                 Arguments.of(listOf(Card.of("A", "하트"), Card.of("A", "다이아몬드")), 12),
                 Arguments.of(listOf(Card.of("A", "하트"), Card.of("6", "다이아몬드")), 17),
                 Arguments.of(listOf(Card.of("A", "하트"), Card.of("7", "다이아몬드")), 18),
-            )
-
-        @JvmStatic
-        fun `게임 결과 결정 테스트 데이터`() =
-            listOf(
-                Arguments.of(
-                    listOf(Card.of("K", "하트"), Card.of("J", "하트"), Card.of("6", "하트")),
-                    listOf(Card.of("K", "하트"), Card.of("Q", "하트"), Card.of("2", "하트")),
-                    GameResultType.WIN,
-                ),
-                Arguments.of(
-                    listOf(Card.of("K", "하트")),
-                    listOf(Card.of("K", "하트"), Card.of("Q", "하트"), Card.of("2", "하트")),
-                    GameResultType.WIN,
-                ),
-                Arguments.of(
-                    listOf(Card.of("K", "하트"), Card.of("J", "하트"), Card.of("6", "하트")),
-                    listOf(Card.of("K", "하트")),
-                    GameResultType.LOSE,
-                ),
-                Arguments.of(listOf(Card.of("K", "하트")), listOf(Card.of("Q", "하트")), GameResultType.DRAW),
             )
     }
 }
