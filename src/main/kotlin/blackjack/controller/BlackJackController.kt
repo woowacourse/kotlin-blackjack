@@ -7,6 +7,7 @@ import blackjack.model.Player
 import blackjack.model.user.UserDecision
 import blackjack.view.InputView
 import blackjack.view.OutputView
+import kotlin.system.exitProcess
 
 class BlackJackController {
     private lateinit var gameManager: GameManager
@@ -15,9 +16,7 @@ class BlackJackController {
         val dealer = Dealer()
         val players = InputView.inputPlayers()
         val participants =
-            Participants(
-                participants = listOf(dealer) + players,
-            )
+            makeParticipants(dealer, players) ?: exitProcess(1)
         gameManager =
             GameManager(
                 participants = participants,
@@ -69,5 +68,19 @@ class BlackJackController {
         OutputView.outputPlayersResult(
             playersResult = gameManager.getPlayerResults(),
         )
+    }
+
+    private fun makeParticipants(
+        dealer: Dealer,
+        players: List<Player>,
+    ): Participants? {
+        return try {
+            Participants(
+                participants = listOf(dealer) + players,
+            )
+        } catch (e: IllegalArgumentException) {
+            println(e.message)
+            null
+        }
     }
 }
