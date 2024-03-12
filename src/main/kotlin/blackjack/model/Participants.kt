@@ -1,8 +1,8 @@
 package blackjack.model
 
-import blackjack.state.State.Finished.Blackjack
-import blackjack.state.State.Finished.Bust
-import blackjack.state.State.Finished.Stay
+import blackjack.state.BlackjackState.Finished.Blackjack
+import blackjack.state.BlackjackState.Finished.Bust
+import blackjack.state.BlackjackState.Finished.Stay
 
 class Participants(
     val dealer: Dealer,
@@ -22,7 +22,7 @@ class Participants(
 
     fun matchResult() {
         playerGroup.players.forEach { player ->
-            when (dealer.state) {
+            when (dealer.blackjackState) {
                 is Bust -> checkBust(player = player)
                 is Blackjack -> checkBlackJack(player = player)
                 is Stay -> checkStay(player = player)
@@ -32,7 +32,7 @@ class Participants(
     }
 
     private fun checkBust(player: Player) {
-        if (player.state is Bust) {
+        if (player.blackjackState is Bust) {
             winAndLose(winner = dealer, loser = player)
         } else {
             winAndLose(winner = player, loser = dealer)
@@ -40,7 +40,7 @@ class Participants(
     }
 
     private fun checkBlackJack(player: Player) {
-        if (player.state is Blackjack) {
+        if (player.blackjackState is Blackjack) {
             draw(player = player, dealer = dealer)
         } else {
             winAndLose(winner = dealer, loser = player)
@@ -48,7 +48,7 @@ class Participants(
     }
 
     private fun checkStay(player: Player) {
-        if (player.state is Bust) {
+        if (player.blackjackState is Bust) {
             winAndLose(winner = dealer, loser = player)
         } else {
             compareWhenBothStay(player = player)

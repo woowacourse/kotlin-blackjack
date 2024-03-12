@@ -1,11 +1,11 @@
 package blackjack.model
 
-import blackjack.state.State.Finished.Stay
-import blackjack.state.State.Running.Hit
+import blackjack.state.BlackjackState.Finished.Stay
+import blackjack.state.BlackjackState.Running.Hit
 
 class Dealer(val nickname: Nickname = Nickname(DEFAULT_DEALER_NAME)) : CardHolder() {
     fun drawDealerCard(printDealerDrawCard: () -> Unit) {
-        while (state is Hit) {
+        while (blackjackState is Hit) {
             drawDecision(printDealerDrawCard)
         }
     }
@@ -14,7 +14,7 @@ class Dealer(val nickname: Nickname = Nickname(DEFAULT_DEALER_NAME)) : CardHolde
         if (shouldDrawCard()) {
             drawCardAndPrint(printDealerDrawCard = printDealerDrawCard)
         } else {
-            changeState(state = Stay)
+            changeState(blackjackState = Stay)
         }
     }
 

@@ -1,14 +1,14 @@
 package blackjack.model
 
-import blackjack.state.State.Finished.Stay
-import blackjack.state.State.Running.Hit
+import blackjack.state.BlackjackState.Finished.Stay
+import blackjack.state.BlackjackState.Running.Hit
 
 class Player(val nickname: Nickname) : CardHolder() {
     fun drawCardsForPlayer(
         hitOrStay: (nickname: Nickname) -> Boolean,
         showPlayerCards: (player: Player) -> Unit,
     ) {
-        while (state is Hit) {
+        while (blackjackState is Hit) {
             drawDecision(hitOrStay = hitOrStay, showPlayerCards = showPlayerCards)
         }
     }
@@ -21,7 +21,7 @@ class Player(val nickname: Nickname) : CardHolder() {
             addCard(card = GameDeck.drawCard())
             showPlayerCards(this)
         } else {
-            changeState(state = Stay)
+            changeState(blackjackState = Stay)
         }
     }
 }

@@ -1,11 +1,11 @@
 package blackjack.model
 
 import blackjack.model.GameResult.Companion.DEFAULT_RESULT_VALUE
-import blackjack.state.State
-import blackjack.state.State.Finished.Blackjack
-import blackjack.state.State.Finished.Bust
-import blackjack.state.State.Finished.Stay
-import blackjack.state.State.Running.Hit
+import blackjack.state.BlackjackState
+import blackjack.state.BlackjackState.Finished.Blackjack
+import blackjack.state.BlackjackState.Finished.Bust
+import blackjack.state.BlackjackState.Finished.Stay
+import blackjack.state.BlackjackState.Running.Hit
 
 class Hand(cards: List<Card> = emptyList()) {
     private var _cards: List<Card> = cards
@@ -24,7 +24,7 @@ class Hand(cards: List<Card> = emptyList()) {
         _cards = emptyList()
     }
 
-    fun determineState(): State {
+    fun determineState(): BlackjackState {
         return when (calculate()) {
             in RUNNING_RANGE -> Hit
             BLACKJACK_NUMBER -> if (cards.size == MIN_CARD_COUNTS) Blackjack else Stay

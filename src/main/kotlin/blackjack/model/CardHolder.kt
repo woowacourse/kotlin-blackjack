@@ -1,16 +1,16 @@
 package blackjack.model
 
-import blackjack.state.State
-import blackjack.state.State.Running.Hit
+import blackjack.state.BlackjackState
+import blackjack.state.BlackjackState.Running.Hit
 
 abstract class CardHolder {
     private var _hand: Hand = Hand()
     val hand: Hand
         get() = _hand
 
-    private var _state: State = Hit
-    val state: State
-        get() = _state
+    private var _blackjackState: BlackjackState = Hit
+    val blackjackState: BlackjackState
+        get() = _blackjackState
 
     fun addCard(card: Card) {
         _hand.plus(card)
@@ -18,10 +18,10 @@ abstract class CardHolder {
     }
 
     private fun updateState() {
-        _state = hand.determineState()
+        _blackjackState = hand.determineState()
     }
 
-    fun changeState(state: State) {
-        _state = state
+    fun changeState(blackjackState: BlackjackState) {
+        _blackjackState = blackjackState
     }
 }
