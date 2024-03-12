@@ -35,11 +35,15 @@ object BlackJackController {
     }
 
     private fun playRound() {
-        players.value.forEach { player ->
-            player.drawCardsUntilStand(CardDeck::pick, OutputView::printSinglePlayerCards)
+        runCatching {
+            players.value.forEach { player ->
+                player.drawCardsUntilStand(CardDeck::pick, OutputView::printSinglePlayerCards)
+            }
+            OutputView.printNewLine()
+            dealer.drawCardsUntilStand(CardDeck::pick, OutputView::printDealerHit)
+        }.onFailure {
+            println(it.message)
         }
-        OutputView.printNewLine()
-        dealer.drawCardsUntilStand(CardDeck::pick, OutputView::printDealerHit)
     }
 
     private fun displayResult() {
