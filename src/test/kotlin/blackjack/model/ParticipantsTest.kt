@@ -18,12 +18,12 @@ class ParticipantsTest {
     }
 
     @Test
-    fun `게임이 시작되면 플레이어와 딜러에게 카드를 2장씩 나눠준다`() {
-        participants.initSetting()
+    fun `게임이 시작되면 플레이어와 딜러에게 카드를 1장씩 나눠준다`() {
+        participants.initParticipantsDeck()
 
-        Assertions.assertThat(dealer.hand.cards.size).isEqualTo(Participants.INITIAL_CARD_COUNTS)
+        Assertions.assertThat(dealer.hand.cards.size).isEqualTo(1)
         participants.playerGroup.players.forEach { player ->
-            Assertions.assertThat(player.hand.cards.size).isEqualTo(Participants.INITIAL_CARD_COUNTS)
+            Assertions.assertThat(player.hand.cards.size).isEqualTo(1)
         }
     }
 }
