@@ -54,11 +54,13 @@ class BlackJack(
     }
 
     private fun runPlayerPhase(it: Player) {
-        while (it.getState() == CardHandState.STAY && inputView.readIsHit(it)) {
+        while (it.canDraw() && askDraw(it)) {
             it.runPhase(randomCardGenerator)
             outputView.printPlayerCardHand(it)
         }
     }
+
+    private fun askDraw(player: Player) = inputView.readIsHit(player)
 
     private fun runDealerPhase(dealer: Dealer) {
         if (dealer.getState() == CardHandState.HIT) {

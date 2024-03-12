@@ -11,7 +11,9 @@ data class Player(override val name: PlayerName, override val cardHand: CardHand
         return when {
             sum > CardHandState.BLACKJACK.precondition -> CardHandState.BUST
             sum == CardHandState.BLACKJACK.precondition -> CardHandState.BLACKJACK
-            else -> CardHandState.STAY
+            else -> CardHandState.DRAW_POSSIBILITY
         }
     }
+
+    fun canDraw() = this.getState() == CardHandState.DRAW_POSSIBILITY
 }

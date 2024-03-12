@@ -23,7 +23,7 @@ class PlayerTest {
 
         val player = Player(PlayerName("해나"), cardHand)
 
-        assertThat(player.getState()).isEqualTo(CardHandState.STAY)
+        assertThat(player.getState()).isEqualTo(CardHandState.DRAW_POSSIBILITY)
     }
 
     @Test

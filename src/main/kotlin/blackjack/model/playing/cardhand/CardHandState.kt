@@ -5,6 +5,7 @@ enum class CardHandState(
 ) {
     BLACKJACK(21),
     BUST,
+    DRAW_POSSIBILITY,
     STAY,
     HIT,
 }
