@@ -5,7 +5,7 @@ import blackjack.model.card.CardHandState
 
 data class Player(override val name: PlayerName, override val cardHand: CardHand) : Role(name, cardHand) {
     override fun getState(): CardHandState {
-        val sum = cardHand.sum()
+        val sum = cardHand.calculateScore()
 
         return when {
             sum > BLACK_JACK -> CardHandState.BURST

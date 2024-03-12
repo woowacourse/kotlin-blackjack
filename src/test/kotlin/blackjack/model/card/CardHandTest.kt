@@ -6,18 +6,18 @@ import org.junit.jupiter.api.Test
 class CardHandTest {
     // 딜러나 플레이어 카드 패의 합을 구하는 동작은 완전히 같다.
     @Test
-    fun `카드 패에 ace 가 있고 숫자 합이 11 이하일 때 카드 패의 총 합을 구한다`() {
+    fun `카드 패에 ace 가 있고 숫자 합이 11 이하일 때 카드 패의 점수를 구한다`() {
         val cardHand =
             CardHand(
                 Card(CardShape.CLOVER, CardNumber.ACE),
                 Card(CardShape.CLOVER, CardNumber.QUEEN),
             )
 
-        assertThat(cardHand.sum()).isEqualTo(21)
+        assertThat(cardHand.calculateScore()).isEqualTo(21)
     }
 
     @Test
-    fun `카드 패에 ace 가 있지만 숫자 합이 11 초과일 때 카드 패의 총 합을 구한다`() {
+    fun `카드 패에 ace 가 있지만 숫자 합이 11 초과일 때 카드 패의 점수를 구한다`() {
         val cardHand =
             CardHand(
                 Card(CardShape.CLOVER, CardNumber.ACE),
@@ -25,11 +25,11 @@ class CardHandTest {
                 Card(CardShape.DIAMOND, CardNumber.FIVE),
             )
 
-        assertThat(cardHand.sum()).isEqualTo(13)
+        assertThat(cardHand.calculateScore()).isEqualTo(13)
     }
 
     @Test
-    fun `카드 패의 ACE 가 없을 때 카드의 합을 계산한다`() {
+    fun `카드 패의 ACE 가 없을 때 카드 패의 점수를 계산한다`() {
         val cardHand =
             CardHand(
                 Card(CardShape.SPADE, CardNumber.SEVEN),
@@ -37,7 +37,7 @@ class CardHandTest {
                 Card(CardShape.HEART, CardNumber.FIVE),
             )
 
-        assertThat(cardHand.sum()).isEqualTo(18)
+        assertThat(cardHand.calculateScore()).isEqualTo(18)
     }
 
     @Test

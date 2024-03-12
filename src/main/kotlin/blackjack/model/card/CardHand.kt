@@ -6,7 +6,7 @@ class CardHand(hand: List<Card>) {
 
     constructor(vararg card: Card) : this(card.toList())
 
-    fun sum(): Int {
+    fun calculateScore(): Int {
         val numbersSum = numbersSum()
         if (canGetBonusPoint()) return numbersSum + BONUS_POINT
         return numbersSum
