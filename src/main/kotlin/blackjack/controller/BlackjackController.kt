@@ -44,14 +44,14 @@ class BlackjackController(
             val inputMoreCardDecision = inputView.readMoreCardDecision(player)
             if (!inputMoreCardDecision) break
 
-            player.receiveCard(Card.from(cardProvider))
+            player.receiveCard(Card.provideCards(cardProvider))
             outputView.printPlayerCardsMessage(player)
         }
     }
 
     private fun takeDealerTurn(dealer: Dealer) {
         while (dealer.decideMoreCard()) {
-            dealer.receiveCard(Card.from(cardProvider))
+            dealer.receiveCard(Card.provideCards(cardProvider))
             outputView.printDealerAdditionalCardMessage()
         }
     }

@@ -18,7 +18,7 @@ class Card private constructor(val denomination: Denomination, val suite: Suite)
             }
         }
 
-        fun from(
+        fun provideCards(
             cardProvider: CardProvider,
             cardCount: Int = 1,
         ): List<Card> {

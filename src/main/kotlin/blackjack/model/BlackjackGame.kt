@@ -24,7 +24,7 @@ object BlackjackGame {
     }
 
     private fun Role.initReceiveCard(cardProvider: CardProvider) {
-        receiveCard(Card.from(cardProvider, INIT_RECEIVE_CARD_COUNT))
+        receiveCard(Card.provideCards(cardProvider, INIT_RECEIVE_CARD_COUNT))
     }
 
     fun calculateGameResult(
