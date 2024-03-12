@@ -13,7 +13,7 @@ object GameDeck : ShuffleGenerator {
     override fun resetCurrentDeck(cards: List<Card>?) {
         currentDeck.clear()
         index = CARD_DRAW_DEFAULT_INDEX
-        cards?.let { currentDeck.addAll(it) } ?: { currentDeck.addAll(deck.shuffled()) }
+        cards?.let { currentDeck.addAll(it) } ?: run { currentDeck.addAll(deck.shuffled()) }
     }
 
     fun drawCard(): Card {
