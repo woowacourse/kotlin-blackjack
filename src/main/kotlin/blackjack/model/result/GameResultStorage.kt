@@ -1,3 +1,8 @@
 package blackjack.model.result
 
-class GameResultStorage(val dealerResult: DealerResult, val playersResult: PlayersResult)
+import blackjack.model.participant.PlayerName
+
+class GameResultStorage(
+    val dealerResult: Map<GameResultType, Int>,
+    val playersResult: Map<PlayerName, GameResultType>,
+)

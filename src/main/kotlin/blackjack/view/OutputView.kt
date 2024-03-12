@@ -3,12 +3,11 @@ package blackjack.view
 import blackjack.model.card.Card
 import blackjack.model.participant.Dealer
 import blackjack.model.participant.Player
+import blackjack.model.participant.PlayerName
 import blackjack.model.participant.Players
 import blackjack.model.participant.Role
-import blackjack.model.result.DealerResult
 import blackjack.model.result.GameResultStorage
 import blackjack.model.result.GameResultType
-import blackjack.model.result.PlayersResult
 
 class OutputView {
     fun printInitCard(
@@ -58,9 +57,9 @@ class OutputView {
         lineBreak()
     }
 
-    private fun printDealerFinalGameResult(dealerResult: DealerResult) {
+    private fun printDealerFinalGameResult(dealerResult: Map<GameResultType, Int>) {
         GameResultType.entries.forEach { gameResult ->
-            val count = dealerResult.results[gameResult] ?: return@forEach
+            val count = dealerResult[gameResult] ?: return@forEach
             print("${count}${gameResult.message} ")
         }
         lineBreak()
@@ -68,10 +67,10 @@ class OutputView {
 
     private fun printPlayersFinalGameResult(
         players: Players,
-        playersResult: PlayersResult,
+        playersResult: Map<PlayerName, GameResultType>,
     ) {
         players.playerGroup.forEach {
-            println("${it.name}: ${playersResult.results[it.name]?.message}")
+            println("${it.name}: ${playersResult[it.name]?.message}")
         }
     }
 

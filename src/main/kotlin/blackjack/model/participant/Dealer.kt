@@ -2,10 +2,8 @@ package blackjack.model.participant
 
 import blackjack.model.card.Card
 import blackjack.model.card.CardProvider
-import blackjack.model.result.DealerResult
 import blackjack.model.result.GameResultStorage
 import blackjack.model.result.GameResultType
-import blackjack.model.result.PlayersResult
 
 class Dealer : Role() {
     override fun decideMoreCard() = getCardSum() < MIN_CARD_SUM
@@ -21,14 +19,17 @@ class Dealer : Role() {
     }
 
     fun calculateGameResult(players: Players): GameResultStorage {
-        val dealerResult = DealerResult()
-        val playersResult = PlayersResult()
+        val playersResult =
+            players.playerGroup.associate { player ->
+                val dealerGameResultType = decideGameResultType(player)
+                player.name to dealerGameResultType.reverse()
+            }
 
-        players.playerGroup.forEach { player ->
-            val gameResultType = decideGameResultType(player)
-            dealerResult.add(gameResultType)
-            playersResult.add(player.name, gameResultType.reverse())
-        }
+        val dealerResult =
+            playersResult
+                .map { it.value }
+                .groupingBy { it }
+                .eachCount()
         return GameResultStorage(dealerResult, playersResult)
     }
 

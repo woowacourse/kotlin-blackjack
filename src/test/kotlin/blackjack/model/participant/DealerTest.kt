@@ -72,11 +72,11 @@ class DealerTest {
         val gameResultStorage = dealer.calculateGameResult(players)
 
         // then
-        assertThat(gameResultStorage.dealerResult.results)
+        assertThat(gameResultStorage.dealerResult)
             .containsEntry(GameResultType.LOSE, 1)
             .containsEntry(GameResultType.WIN, 1)
             .containsEntry(GameResultType.DRAW, 1)
-        assertThat(gameResultStorage.playersResult.results)
+        assertThat(gameResultStorage.playersResult)
             .containsEntry(PlayerName("olive"), GameResultType.LOSE)
             .containsEntry(PlayerName("seogi"), GameResultType.WIN)
             .containsEntry(PlayerName("chae"), GameResultType.DRAW)
