@@ -5,13 +5,13 @@ import model.card.Deck
 import model.card.ValueType
 import model.result.Point
 
-class Hand() {
+class Hand {
     private var _cards: MutableList<Card> = mutableListOf()
     val cards: List<Card>
         get() = _cards
 
-    fun draw(deck: Deck) {
-        _cards.add(deck.pop())
+    fun draw(card: Card) {
+        _cards.add(card)
     }
 
     val point: Point

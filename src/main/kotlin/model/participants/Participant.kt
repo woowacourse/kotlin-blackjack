@@ -23,7 +23,7 @@ abstract class Participant(open val hand: Hand, open val participantName: Partic
         }
     }
 
-    abstract fun hit(deck: Deck): Boolean
+    abstract fun hit(card: Card): Boolean
 
     abstract fun canHit(): Boolean
 

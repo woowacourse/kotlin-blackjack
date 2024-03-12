@@ -1,5 +1,6 @@
 package model.participants
 
+import model.card.Card
 import model.card.Deck
 
 class Dealer(
@@ -13,16 +14,16 @@ class Dealer(
         var hitCount = 0
 
         while (canHit()) {
-            hit(deck)
+            hit(deck.pop())
             hitCount++
         }
 
         return hitCount
     }
 
-    override fun hit(deck: Deck): Boolean {
+    override fun hit(card: Card): Boolean {
         if (canHit()) {
-            hand.draw(deck)
+            hand.draw(card)
             return canHit()
         }
         return false

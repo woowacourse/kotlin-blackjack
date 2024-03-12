@@ -33,18 +33,18 @@ class PlayerTest {
     fun `핸드의 합이 21 미만인 경우, hit 시에 버스트 되지 않는다`() {
         val player = Player(hand)
 
-        player.hit(testDeck)
+        player.hit(testDeck.pop())
 
-        Assertions.assertThat(player.hit(testDeck)).isTrue
+        Assertions.assertThat(player.hit(testDeck.pop())).isTrue
     }
 
     @Test
     fun `핸드의 합이 21 이상인 경우, hit 시에 버스트 된다`() {
         val player = Player(hand)
 
-        player.hit(testDeck)
-        player.hit(testDeck)
+        player.hit(testDeck.pop())
+        player.hit(testDeck.pop())
 
-        Assertions.assertThat(player.hit(testDeck)).isFalse
+        Assertions.assertThat(player.hit(testDeck.pop())).isFalse
     }
 }

@@ -39,8 +39,8 @@ class GameController() {
         dealer: Dealer,
         deck: Deck,
     ) {
-        dealer.hit(deck)
-        dealer.hit(deck)
+        dealer.hit(deck.pop())
+        dealer.hit(deck.pop())
     }
 
     private fun initPlayers(
@@ -48,8 +48,8 @@ class GameController() {
         deck: Deck,
     ) {
         players.players.forEach {
-            it.hit(deck)
-            it.hit(deck)
+            it.hit(deck.pop())
+            it.hit(deck.pop())
         }
     }
 
@@ -85,7 +85,7 @@ class GameController() {
     ): Boolean {
         val isBusted =
             when (answer) {
-                Answer.YES -> player.hit(deck)
+                Answer.YES -> player.hit(deck.pop())
                 Answer.NO -> false
             }
         OutputView.showHumanHand(player)

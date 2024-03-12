@@ -39,8 +39,8 @@ class JudgeTest {
         val players = Players.ofList(listOf("pang", "ack"))
         val dealer = Dealer(Hand())
         players.players.forEach {
-            it.hit(testDeck)
-            it.hit(testDeck)
+            it.hit(testDeck.pop())
+            it.hit(testDeck.pop())
         }
 
         dealer.play(testDeck)
