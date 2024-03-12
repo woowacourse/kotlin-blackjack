@@ -20,11 +20,10 @@ class PlayerTest {
     }
 
     @Test
-    fun `중복 테스트에 대한 검증 테스트()`() {
-        val names = setOf("꼬상", "누누")
-        val nunuName = "누누"
+    fun `중복 이름에 대한 검증 테스트()`() {
+        val names = listOf("꼬상", "누누", "누누")
         assertThrows<IllegalArgumentException> {
-            Player.checkDuplication(nunuName, names)
+            Player.checkDuplication(names)
         }
     }
 }

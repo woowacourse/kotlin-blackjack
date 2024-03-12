@@ -8,11 +8,8 @@ class Player(name: String) : Participant(name) {
     }
 
     companion object {
-        fun checkDuplication(
-            name: String,
-            playerNames: Set<String>,
-        ) {
-            require(!playerNames.contains(name)) {
+        fun checkDuplication(playerNames: List<String>) {
+            require(playerNames.size == playerNames.toSet().size) {
                 ERROR_DUPLICATION_NAME
             }
         }

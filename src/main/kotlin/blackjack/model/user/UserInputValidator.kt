@@ -5,6 +5,7 @@ import blackjack.model.Player
 object UserInputValidator {
     fun checkPlayers(input: List<String>): Result<List<Player>> {
         return runCatching {
+            Player.checkDuplication(input)
             input.map { name -> Player(name) }
         }
     }
