@@ -27,7 +27,7 @@ class GameController(private var gameState: GameState = Play) {
 
     private fun play() {
         createParticipants().onSuccess { participants ->
-            GameDeck.shuffleGameDeck()
+            GameDeck.resetCurrentDeck()
             startGame(participants = participants)
         }.onFailure { e ->
             OutputView.printError(e)
