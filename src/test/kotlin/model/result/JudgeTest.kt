@@ -1,7 +1,10 @@
 package model.result
 
-import TestDeck
+import DeckExplicitGeneration
 import model.card.Card
+import model.card.Deck
+import model.card.MarkType
+import model.card.ValueType
 import model.participants.Dealer
 import model.participants.Hand
 import model.participants.ParticipantName
@@ -11,36 +14,36 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class JudgeTest {
-    private lateinit var testDeck: TestDeck
+    private lateinit var testDeck: Deck
 
     @BeforeEach
     fun setUp() {
         testDeck =
-            TestDeck(
-                mutableListOf(
-                    Card.from(11),
-                    Card.from(11),
-                    Card.from(5),
-                    Card.from(3),
-                    Card.from(11),
-                    Card.from(11),
-                    Card.from(11),
-                    Card.from(22),
-                    Card.from(25),
+            Deck.create(
+                DeckExplicitGeneration(
+                    mutableListOf(
+                        Card(ValueType.JACK, MarkType.SPADE),
+                        Card(ValueType.JACK, MarkType.SPADE),
+                        Card(ValueType.SIX, MarkType.SPADE),
+                        Card(ValueType.FOUR, MarkType.SPADE),
+                        Card(ValueType.JACK, MarkType.SPADE),
+                        Card(ValueType.JACK, MarkType.SPADE),
+                        Card(ValueType.JACK, MarkType.SPADE),
+                    ),
                 ),
             )
     }
 
     @Test
     fun `게임을 플레이 했을 때 결과를 판단할 수 있다`() {
-        val players = Players.ofList(listOf("pang", "ack"), testDeck)
-        val dealer = Dealer(Hand(testDeck))
+        val players = Players.ofList(listOf("pang", "ack"))
+        val dealer = Dealer(Hand())
         players.players.forEach {
-            it.hit()
-            it.hit()
+            it.hit(testDeck)
+            it.hit(testDeck)
         }
 
-        dealer.play()
+        dealer.play(testDeck)
 
         val expected = mapOf(ParticipantName.fromInput("pang") to ResultType.DRAW, ParticipantName.fromInput("ack") to ResultType.LOSE)
         val result = Judge.getPlayersResult(players, dealer)

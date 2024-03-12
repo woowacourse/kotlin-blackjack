@@ -1,8 +1,10 @@
 package model.participants
 
-import TestDeck
+import DeckExplicitGeneration
 import model.card.Card
 import model.card.Deck
+import model.card.MarkType
+import model.card.ValueType
 import model.result.Point
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
@@ -15,29 +17,29 @@ class HandTest {
 
     @BeforeEach
     fun setUp() {
-        deck = TestDeck(mutableListOf(Card.from(1), Card.from(2)))
-        hand = Hand(deck)
+        deck = Deck.create(DeckExplicitGeneration(mutableListOf(Card(ValueType.TWO, MarkType.SPADE), Card(ValueType.THREE, MarkType.SPADE))))
+        hand = Hand()
     }
 
     @Test
     fun `카드를 한장 추가할 수 있다`() {
         assertDoesNotThrow {
-            hand.draw()
+            hand.draw(deck)
         }
     }
 
     @Test
     fun `카드를 한장 추가할 경우 핸드의 사이즈는 1 증가한다`() {
         val size = hand.cards.size
-        hand.draw()
+        hand.draw(deck)
 
         assertThat(hand.cards.size).isEqualTo(size + 1)
     }
 
     @Test
     fun `핸드 내의 카드 값의 합을 구할 수 있다`() {
-        hand.draw()
-        hand.draw()
+        hand.draw(deck)
+        hand.draw(deck)
         assertThat(hand.point == Point(5))
     }
 }

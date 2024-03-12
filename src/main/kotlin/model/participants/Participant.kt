@@ -1,6 +1,7 @@
 package model.participants
 
 import model.card.Card
+import model.card.Deck
 import model.result.Point
 import model.result.Point.Companion.compareTo
 
@@ -22,7 +23,7 @@ abstract class Participant(open val hand: Hand, open val participantName: Partic
         }
     }
 
-    abstract fun hit(): Boolean
+    abstract fun hit(deck: Deck): Boolean
 
     abstract fun canHit(): Boolean
 

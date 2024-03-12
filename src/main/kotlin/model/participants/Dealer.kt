@@ -1,5 +1,7 @@
 package model.participants
 
+import model.card.Deck
+
 class Dealer(
     override val hand: Hand,
     override val participantName: ParticipantName =
@@ -7,20 +9,20 @@ class Dealer(
             "딜러",
         ),
 ) : Participant(hand, participantName) {
-    fun play(): Int {
+    fun play(deck: Deck): Int {
         var hitCount = 0
 
         while (canHit()) {
-            hit()
+            hit(deck)
             hitCount++
         }
 
         return hitCount
     }
 
-    override fun hit(): Boolean {
+    override fun hit(deck: Deck): Boolean {
         if (canHit()) {
-            hand.draw()
+            hand.draw(deck)
             return canHit()
         }
         return false

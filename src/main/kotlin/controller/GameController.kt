@@ -1,6 +1,7 @@
 package controller
 
 import model.card.Deck
+import model.card.DeckRandomGeneration
 import model.participants.Answer
 import model.participants.Dealer
 import model.participants.Hand
@@ -11,13 +12,15 @@ import model.result.Judge
 import view.InputView
 import view.OutputView
 
-class GameController(private val deck: Deck) {
+class GameController() {
     fun start() {
-        val dealer = Dealer(Hand(deck))
+        val deck = Deck.create(DeckRandomGeneration())
+
+        val dealer = Dealer(Hand())
         val players = handleException { readPlayers() }
 
-        initGame(dealer = dealer, players = players)
-        handleException { playGame(dealer = dealer, players = players) }
+        initGame(dealer = dealer, players = players, deck)
+        handleException { playGame(dealer = dealer, players = players, deck) }
 
         showGameResult(dealer = dealer, players = players)
     }
@@ -25,37 +28,47 @@ class GameController(private val deck: Deck) {
     private fun initGame(
         dealer: Dealer,
         players: Players,
+        deck: Deck,
     ) {
-        initDealer(dealer)
-        initPlayers(players)
+        initDealer(dealer, deck)
+        initPlayers(players, deck)
         OutputView.showGameInit(dealer, players)
     }
 
-    private fun initDealer(dealer: Dealer) {
-        dealer.hit()
-        dealer.hit()
+    private fun initDealer(
+        dealer: Dealer,
+        deck: Deck,
+    ) {
+        dealer.hit(deck)
+        dealer.hit(deck)
     }
 
-    private fun initPlayers(players: Players) {
+    private fun initPlayers(
+        players: Players,
+        deck: Deck,
+    ) {
         players.players.forEach {
-            it.hit()
-            it.hit()
+            it.hit(deck)
+            it.hit(deck)
         }
     }
 
     private fun playGame(
         dealer: Dealer,
         players: Players,
+        deck: Deck,
     ) {
-        players.players.forEach(::playOfOnePlayer)
+        players.players.forEach {
+            playOfOnePlayer(it, deck)
+        }
 
-        val hitCount = dealer.play()
+        val hitCount = dealer.play(deck)
         repeat(hitCount) { OutputView.showDealerHit() }
     }
 
     private fun readPlayers(): Players {
         return InputView.readPlayerNames().run {
-            Players.ofList(this, deck)
+            Players.ofList(this)
         }
     }
 
@@ -68,18 +81,22 @@ class GameController(private val deck: Deck) {
     private fun playByAnswer(
         answer: Answer,
         player: Player,
+        deck: Deck,
     ): Boolean {
         val isBusted =
             when (answer) {
-                Answer.YES -> player.hit()
+                Answer.YES -> player.hit(deck)
                 Answer.NO -> false
             }
         OutputView.showHumanHand(player)
         return isBusted
     }
 
-    private fun playOfOnePlayer(player: Player) {
-        while (playByAnswer(readAnswer(player.participantName), player)) ;
+    private fun playOfOnePlayer(
+        player: Player,
+        deck: Deck,
+    ) {
+        while (playByAnswer(readAnswer(player.participantName), player, deck)) ;
     }
 
     private fun showGameResult(

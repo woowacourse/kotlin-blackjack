@@ -2,16 +2,15 @@ package model.participants
 
 import model.card.Card
 import model.card.Deck
-import model.card.TrumpDeck
 import model.card.ValueType
 import model.result.Point
 
-class Hand(private val deck: Deck = TrumpDeck) {
+class Hand() {
     private var _cards: MutableList<Card> = mutableListOf()
     val cards: List<Card>
         get() = _cards
 
-    fun draw() {
+    fun draw(deck: Deck) {
         _cards.add(deck.pop())
     }
 

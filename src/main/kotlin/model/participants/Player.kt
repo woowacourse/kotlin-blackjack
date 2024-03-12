@@ -1,5 +1,6 @@
 package model.participants
 
+import model.card.Deck
 import model.result.Point.Companion.compareTo
 
 class Player(
@@ -9,9 +10,9 @@ class Player(
             "Player",
         ),
 ) : Participant(hand, participantName) {
-    override fun hit(): Boolean {
+    override fun hit(deck: Deck): Boolean {
         if (canHit()) {
-            hand.draw()
+            hand.draw(deck)
             return canHit()
         }
         return false
