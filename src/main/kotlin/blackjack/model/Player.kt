@@ -9,12 +9,19 @@ class Player(val nickname: Nickname) : CardHolder() {
         showPlayerCards: (player: Player) -> Unit,
     ) {
         while (state is Hit) {
-            if (hitOrStay(nickname)) {
-                addCard(card = GameDeck.drawCard())
-                showPlayerCards(this)
-            } else {
-                changeState(state = Stay)
-            }
+            drawDecision(hitOrStay = hitOrStay, showPlayerCards = showPlayerCards)
+        }
+    }
+
+    private fun drawDecision(
+        hitOrStay: (nickname: Nickname) -> Boolean,
+        showPlayerCards: (player: Player) -> Unit,
+    ) {
+        if (hitOrStay(nickname)) {
+            addCard(card = GameDeck.drawCard())
+            showPlayerCards(this)
+        } else {
+            changeState(state = Stay)
         }
     }
 }
