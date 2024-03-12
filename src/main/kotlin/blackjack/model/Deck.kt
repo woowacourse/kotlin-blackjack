@@ -19,9 +19,9 @@ class Deck(count: Int = 1) {
     companion object {
         val oneDeck =
             Suit.entries.flatMap { suit ->
-                productNumberAndSuit(suit)
+                combineCardSymbol(suit)
             }
 
-        private fun productNumberAndSuit(suit: Suit): List<Card> = CardNumber.entries.map { cardNumber -> Card(cardNumber, suit) }
+        private fun combineCardSymbol(suit: Suit): List<Card> = CardNumber.entries.map { cardNumber -> Card(cardNumber, suit) }
     }
 }
