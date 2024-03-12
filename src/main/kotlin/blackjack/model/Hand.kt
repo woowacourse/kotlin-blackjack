@@ -16,9 +16,8 @@ class Hand(cards: List<Card> = emptyList()) {
     val gameResult: GameResult
         get() = _gameResult
 
-    operator fun plus(other: Card): Hand {
+    operator fun plus(other: Card) {
         _cards += other
-        return Hand(cards)
     }
 
     fun reset() {

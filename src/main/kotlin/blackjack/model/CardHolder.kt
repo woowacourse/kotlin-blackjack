@@ -13,7 +13,7 @@ abstract class CardHolder {
         get() = _state
 
     fun addCard(card: Card) {
-        _hand += card
+        _hand.plus(card)
         updateState()
     }
 
