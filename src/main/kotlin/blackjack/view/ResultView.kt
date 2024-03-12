@@ -17,98 +17,100 @@ const val DRAW_STRING = "무"
 const val PLAYER_GAME_RESULT = "%s: %s"
 const val DEALER_GAME_RESULT = "딜러: %d승%s %d패"
 
-fun showHandsScore(
-    dealer: Dealer,
-    playerEntry: PlayerEntry,
-) {
-    showDealerScore(dealer)
-    showPlayersScore(playerEntry)
-}
+object ResultView {
+    fun showHandsScore(
+        dealer: Dealer,
+        playerEntry: PlayerEntry,
+    ) {
+        showDealerScore(dealer)
+        showPlayersScore(playerEntry)
+    }
 
-private fun showFinalWinOrLoss() {
-    println(FINAL_WIN_OR_LOSS)
-}
+    private fun showFinalWinOrLoss() {
+        println(FINAL_WIN_OR_LOSS)
+    }
 
-private fun showDealerScore(dealer: Dealer) {
-    val state =
-        when (dealer.state) {
-            Finished.Bust -> BUST_STRING
-            Finished.BlackJack -> BLACKJACK_STRING
-            else -> EMPTY_STRING
-        }
-
-    println(
-        DEALER_CARD_RESULT.format(
-            dealer.hand.cards.joinToString(),
-            dealer.hand.totalScore,
-        ) + state,
-    )
-}
-
-private fun showPlayersScore(playerEntry: PlayerEntry) {
-    println()
-    playerEntry.players.forEach { player ->
+    private fun showDealerScore(dealer: Dealer) {
         val state =
-            when (player.state) {
+            when (dealer.state) {
                 Finished.Bust -> BUST_STRING
                 Finished.BlackJack -> BLACKJACK_STRING
                 else -> EMPTY_STRING
             }
 
         println(
-            PLAYER_CARD_RESULT.format(
-                player.name,
-                player.hand.cards.joinToString(),
-                player.hand.totalScore,
+            DEALER_CARD_RESULT.format(
+                dealer.hand.cards.joinToString(),
+                dealer.hand.totalScore,
             ) + state,
         )
     }
-}
 
-fun showFinalWinOrLossResult(
-    results: List<Result>,
-    playerEntry: PlayerEntry,
-) {
-    val winCount = results.count { it == Result.DEALER_WIN }
-    val defeatCount = results.count { it == Result.PLAYER_WIN }
-    val drawCount = results.count { it == Result.DRAW }
+    private fun showPlayersScore(playerEntry: PlayerEntry) {
+        println()
+        playerEntry.players.forEach { player ->
+            val state =
+                when (player.state) {
+                    Finished.Bust -> BUST_STRING
+                    Finished.BlackJack -> BLACKJACK_STRING
+                    else -> EMPTY_STRING
+                }
 
-    showFinalWinOrLoss()
-    showDealerWinsOrLoses(winCount, drawCount, defeatCount)
-    results.withIndex().forEach { (index, result) ->
-        val winOrLose = winOrLoseReturn(result)
-        playerWinOrLose(playerEntry, index, winOrLose)
-    }
-}
-
-private fun playerWinOrLose(
-    playerEntry: PlayerEntry,
-    index: Int,
-    winOrLose: String,
-) {
-    println(PLAYER_GAME_RESULT.format(playerEntry.players[index].name, winOrLose))
-}
-
-private fun winOrLoseReturn(result: Result): String {
-    val winOrLose =
-        when (result) {
-            Result.PLAYER_WIN -> WIN_STRING
-            Result.DEALER_WIN -> LOSE_STRING
-            else -> DRAW_STRING
+            println(
+                PLAYER_CARD_RESULT.format(
+                    player.name,
+                    player.hand.cards.joinToString(),
+                    player.hand.totalScore,
+                ) + state,
+            )
         }
-    return winOrLose
-}
+    }
 
-private fun showDealerWinsOrLoses(
-    winCount: Int,
-    drawCount: Int,
-    defeatCount: Int,
-) {
-    println(
-        DEALER_GAME_RESULT.format(
-            winCount,
-            ("$drawCount 무").takeIf { drawCount != 0 } ?: "",
-            defeatCount,
-        ),
-    )
+    fun showFinalWinOrLossResult(
+        results: List<Result>,
+        playerEntry: PlayerEntry,
+    ) {
+        val winCount = results.count { it == Result.DEALER_WIN }
+        val defeatCount = results.count { it == Result.PLAYER_WIN }
+        val drawCount = results.count { it == Result.DRAW }
+
+        showFinalWinOrLoss()
+        showDealerWinsOrLoses(winCount, drawCount, defeatCount)
+        results.withIndex().forEach { (index, result) ->
+            val winOrLose = winOrLoseReturn(result)
+            playerWinOrLose(playerEntry, index, winOrLose)
+        }
+    }
+
+    private fun playerWinOrLose(
+        playerEntry: PlayerEntry,
+        index: Int,
+        winOrLose: String,
+    ) {
+        println(PLAYER_GAME_RESULT.format(playerEntry.players[index].name, winOrLose))
+    }
+
+    private fun winOrLoseReturn(result: Result): String {
+        val winOrLose =
+            when (result) {
+                Result.PLAYER_WIN -> WIN_STRING
+                Result.DEALER_WIN -> LOSE_STRING
+                else -> DRAW_STRING
+            }
+        return winOrLose
+    }
+
+    private fun showDealerWinsOrLoses(
+        winCount: Int,
+        drawCount: Int,
+        defeatCount: Int,
+    ) {
+        println(
+            DEALER_GAME_RESULT.format(
+                winCount,
+                (" ${drawCount}무").takeIf { drawCount != 0 } ?: "",
+                defeatCount,
+            ),
+        )
+    }
 }

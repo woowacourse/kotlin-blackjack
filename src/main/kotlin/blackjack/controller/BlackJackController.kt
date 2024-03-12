@@ -3,37 +3,34 @@ package blackjack.controller
 import Player
 import blackjack.model.card.Deck
 import blackjack.model.card.Hand
+import blackjack.model.game.GameResult
 import blackjack.model.game.Referee
 import blackjack.model.game.Result
 import blackjack.model.game.State
 import blackjack.model.player.Dealer
 import blackjack.model.player.PlayerEntry
-import blackjack.view.DRAW_DECISION
-import blackjack.view.judgePlayersDraw
-import blackjack.view.readPlayersName
-import blackjack.view.showDealerDrawMessage
-import blackjack.view.showFinalWinOrLossResult
-import blackjack.view.showHands
-import blackjack.view.showHandsScore
-import blackjack.view.showPlayerEntry
-import blackjack.view.showPlayerHand
+import blackjack.view.InputView.DRAW_DECISION
+import blackjack.view.InputView.judgePlayersDraw
+import blackjack.view.InputView.readPlayersName
+import blackjack.view.ProgressView.showDealerDrawMessage
+import blackjack.view.ProgressView.showHands
+import blackjack.view.ProgressView.showPlayerEntry
+import blackjack.view.ProgressView.showPlayerHand
+import blackjack.view.ResultView.showFinalWinOrLossResult
+import blackjack.view.ResultView.showHandsScore
 
 object BlackJackController {
     fun run() {
         val deck = Deck()
         val playersName = readPlayersName()
         val (dealer, playerEntry) = getDealerAndPlayerEntry(playersName, deck)
-        playGame(playerEntry, dealer, deck)
-        showGameResult(dealer, playerEntry)
+        val gameResult = playGame(playerEntry, dealer, deck)
+        showGameResult(gameResult)
     }
 
-    private fun showGameResult(
-        dealer: Dealer,
-        playerEntry: PlayerEntry,
-    ) {
-        showHandsScore(dealer, playerEntry)
-        val results = judgeOfWinOrLose(dealer, playerEntry)
-        showFinalWinOrLossResult(results, playerEntry)
+    private fun showGameResult(gameResult: GameResult) {
+        showHandsScore(gameResult.dealer, gameResult.playerEntry)
+        showFinalWinOrLossResult(gameResult.results, gameResult.playerEntry)
     }
 
     private fun judgeOfWinOrLose(
@@ -49,9 +46,11 @@ object BlackJackController {
         playerEntry: PlayerEntry,
         dealer: Dealer,
         deck: Deck,
-    ) {
+    ): GameResult {
         askPlayersDraw(playerEntry, deck)
         showDealerDraw(dealer, deck)
+        val results = judgeOfWinOrLose(dealer, playerEntry)
+        return GameResult(dealer, playerEntry, results)
     }
 
     private fun showDealerDraw(
