@@ -22,9 +22,6 @@ class Player(name: String, state: State, private val onDetermineHit: (String) ->
         when {
             isBust() -> GameResult.LOSE
             other.isBust() -> GameResult.WIN
-            isBlackJack() && other.isBlackJack() -> GameResult.DRAW
-            isBlackJack() -> GameResult.WIN
-            other.isBlackJack() -> GameResult.LOSE
             else -> {
                 val compared = sumScore() compareTo other.sumScore()
                 GameResult.from(compared)

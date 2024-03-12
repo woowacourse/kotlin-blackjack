@@ -22,9 +22,6 @@ class Dealer(state: State) : Participant(DEALER_NAME, state) {
         when {
             other.isBust() -> GameResult.WIN
             isBust() -> GameResult.LOSE
-            isBlackJack() && other.isBlackJack() -> GameResult.DRAW
-            isBlackJack() -> GameResult.WIN
-            other.isBlackJack() -> GameResult.LOSE
             else -> {
                 val compared = sumScore() compareTo other.sumScore()
                 GameResult.from(compared)
