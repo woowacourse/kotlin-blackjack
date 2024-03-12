@@ -4,16 +4,14 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 private fun createDealer(vararg numbers: Int): Dealer {
-    val hand = Hand(numbers.map { Card(it) }.toList())
-    return Dealer(state = Stay(hand))
+    return Dealer(hand = Hand(numbers.map<Card> { Card(it) }.toList())).apply { finishRound() }
 }
 
-private fun createPlayer(
+private fun createFinishedPlayer(
     name: String,
     vararg numbers: Int,
 ): Player {
-    val hand = Hand(numbers.map { Card(it) })
-    return Player(ParticipantName(name), Stay(hand))
+    return Player(ParticipantName(name), Hand(numbers.map { Card(it) })).apply { finishRound() }
 }
 
 private fun Card(value: Int): Card {
@@ -24,7 +22,7 @@ class ParticipantsTest {
     @Test
     fun `게임 결과 생성 테스트`() {
         val dealer = createDealer(8, 9)
-        val players = listOf(createPlayer("leo", 10, 6), createPlayer("yenny", 9, 11))
+        val players = listOf(createFinishedPlayer("leo", 10, 6), createFinishedPlayer("yenny", 9, 11))
         val gameParticipants = Participants(dealer, players)
 
         val dealerResult = gameParticipants.getDealerWinningState()

@@ -7,28 +7,27 @@ import blackjack.model.Hand
 import blackjack.model.ParticipantName
 import blackjack.model.Participants
 import blackjack.model.Player
-import blackjack.model.State
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
 class BlackjackController {
-    fun play() {
+    fun start() {
         val deck = CardDeckGenerator.generate()
-        val participants = initializeCardSetting(deck, InputView.readNames())
+        val participants = initializeGameSetting(deck, InputView.readNames())
         OutputView.printInitialStatus(participants)
+
         playRound(deck, participants)
+        OutputView.printStatusAndScore(participants)
+        OutputView.printResult(participants.getDealerWinningState(), participants.getPlayerWinningState())
     }
 
-    private fun initializeCardSetting(
+    private fun initializeGameSetting(
         deck: CardDeck,
         names: List<String>,
     ): Participants {
-        val dealer =
-            Dealer(state = State.determineInitialGameState(Hand(List(INITIAL_DISTRIBUTE_COUNT) { deck.pick() })))
-        val players: List<Player> =
-            names.map {
-                Player(ParticipantName(it), State.determineInitialGameState(Hand(List(INITIAL_DISTRIBUTE_COUNT) { deck.pick() })))
-            }
+        val dealer = Dealer(hand = Hand(List(INITIAL_DISTRIBUTE_COUNT) { deck.pick() }))
+        val players = names.map { Player(ParticipantName(it), Hand(List(INITIAL_DISTRIBUTE_COUNT) { deck.pick() })) }
+
         return Participants(dealer, players)
     }
 
@@ -44,9 +43,6 @@ class BlackjackController {
             )
         }
         participants.dealer.playRound(deck) { participant -> OutputView.printParticipantStatus(participant) }
-
-        OutputView.printStatusAndScore(participants)
-        OutputView.printResult(participants.getDealerWinningState(), participants.getPlayerWinningState())
     }
 
     companion object {

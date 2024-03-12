@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 private fun createCardDeckFrom(vararg numbers: Int): CardDeck = CardDeck(numbers.map { Card(it) })
 
 private fun createDealer(vararg numbers: Card): Dealer {
-    return Dealer(state = Hit(Hand(numbers.toList())))
+    return Dealer(hand = Hand(numbers.toList()))
 }
 
 private fun Card(value: Int): Card {

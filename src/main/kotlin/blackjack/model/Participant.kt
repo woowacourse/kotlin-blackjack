@@ -2,8 +2,12 @@ package blackjack.model
 
 import blackjack.controller.BlackjackController.Companion.INITIAL_DISTRIBUTE_COUNT
 
-sealed class Participant(val name: ParticipantName, state: State) {
-    var state = state
+sealed class Participant(val name: ParticipantName, hand: Hand) {
+    var state =
+        when (hand.sumUpCardValues()) {
+            State.THRESHOLD_BLACKJACK -> Blackjack(hand)
+            else -> Hit(hand)
+        }
         private set
 
     fun receiveCard(card: Card) {
@@ -21,7 +25,7 @@ sealed class Participant(val name: ParticipantName, state: State) {
     fun getWinningResult(opponent: Participant): WinningResult = state.calculateWinningResult(opponent)
 }
 
-class Player(name: ParticipantName, state: State) : Participant(name, state) {
+class Player(name: ParticipantName, hand: Hand) : Participant(name, hand) {
     fun playRound(
         cardDeck: CardDeck,
         isPlayerActionContinued: (name: ParticipantName) -> Boolean,
@@ -38,7 +42,7 @@ class Player(name: ParticipantName, state: State) : Participant(name, state) {
     }
 }
 
-class Dealer(name: ParticipantName = ParticipantName(DEALER_NAME), state: State) : Participant(name, state) {
+class Dealer(name: ParticipantName = ParticipantName(DEALER_NAME), hand: Hand) : Participant(name, hand) {
     fun playRound(
         cardDeck: CardDeck,
         updateDealerStatus: (dealer: Dealer) -> Unit,

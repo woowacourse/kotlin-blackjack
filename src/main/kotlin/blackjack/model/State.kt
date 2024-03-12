@@ -11,17 +11,7 @@ sealed interface State {
 
     companion object {
         const val THRESHOLD_BUST = 21
-        private const val THRESHOLD_BLACKJACK = 21
-
-        fun determineInitialGameState(
-            hand: Hand,
-            threshold: Int = THRESHOLD_BLACKJACK,
-        ): State {
-            return when (hand.sumUpCardValues()) {
-                threshold -> Blackjack(hand)
-                else -> Hit(hand)
-            }
-        }
+        const val THRESHOLD_BLACKJACK = 21
     }
 }
 
