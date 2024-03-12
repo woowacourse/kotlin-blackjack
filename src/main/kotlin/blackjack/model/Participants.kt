@@ -1,14 +1,24 @@
 package blackjack.model
 
-data class Participants(
-    val dealer: Dealer,
-    val players: List<Player>,
-) {
+class Participants(private val dealer: Dealer, private val players: List<Player>) {
     init {
         require(players.size <= MAX_PLAYER_SIZE) { PLAYER_SIZE_ERROR_MESSAGE }
     }
 
-    fun getAllParticipants(): List<Participant> = listOf(dealer) + players
+    fun getDealer(): Dealer = dealer
+
+    fun getPlayers(): List<Player> = players.toList()
+
+    fun getAllParticipants() = listOf(dealer) + players
+
+    fun calculateResult(): Map<Participant, WinningState> {
+        val result = mutableMapOf<Participant, WinningState>()
+        players.forEach { player ->
+            result[dealer] = dealer.calculateWinningStateWith(player)
+            result[player] = player.calculateWinningStateWith(dealer)
+        }
+        return result.toMap()
+    }
 
     companion object {
         private const val MAX_PLAYER_SIZE = 5
