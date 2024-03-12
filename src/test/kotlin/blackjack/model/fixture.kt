@@ -12,6 +12,27 @@ fun buildCards(vararg card: Card): Cards {
     return cards
 }
 
+fun buildPlayer(
+    name: String,
+    vararg card: Card,
+): Player {
+    val player = Player(name)
+    val cardList = listOf(*card)
+    cardList.forEach {
+        player.addCard(it)
+    }
+    return player
+}
+
+fun buildDealer(vararg card: Card): Dealer {
+    val dealer = Dealer()
+    val cardList = listOf(*card)
+    cardList.forEach {
+        dealer.addCard(it)
+    }
+    return dealer
+}
+
 val ace = buildCard(CardNumber.Ace)
 val two = buildCard(CardNumber.Two)
 val three = buildCard(CardNumber.Three)
