@@ -13,18 +13,13 @@ class HandCards {
     }
 
     fun getCardSum(burstCondition: Int): Int {
-        var cardSum = 0
-        _cards.forEach {
-            cardSum += it.getScore()
-        }
-        repeat(getAceCount()) {
-            if (cardSum + Denomination.ADDITIONAL_ACE_SCORE > burstCondition) return cardSum
-            cardSum += Denomination.ADDITIONAL_ACE_SCORE
-        }
+        var cardSum = _cards.sumOf { it.getScore() }
+        cardSum =
+            _cards.fold(cardSum) { total, card ->
+                if (!card.isAce()) return@fold total
+                if (total + Denomination.ADDITIONAL_ACE_SCORE > burstCondition) return total
+                total + Denomination.ADDITIONAL_ACE_SCORE
+            }
         return cardSum
-    }
-
-    private fun getAceCount(): Int {
-        return _cards.count { it.isAce() }
     }
 }
