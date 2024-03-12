@@ -79,7 +79,7 @@ class DealerTest {
                 mapOf(
                     PlayerName("해나") to WinningResultStatus.DEFEAT,
                     PlayerName("심지") to WinningResultStatus.VICTORY,
-                    PlayerName("악어") to WinningResultStatus.DRAW,
+                    PlayerName("악어") to WinningResultStatus.PUSH,
                     PlayerName("팡태") to WinningResultStatus.DEFEAT,
                 ),
             )

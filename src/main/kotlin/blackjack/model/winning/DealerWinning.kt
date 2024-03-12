@@ -5,7 +5,7 @@ class DealerWinning(playerWinning: PlayerWinning) {
         return mapOf(
             WinningResultStatus.VICTORY to getVictoryCount(),
             WinningResultStatus.DEFEAT to getDefeatCount(),
-            WinningResultStatus.DRAW to getPushCount(),
+            WinningResultStatus.PUSH to getPushCount(),
         )
     }
 
@@ -15,5 +15,5 @@ class DealerWinning(playerWinning: PlayerWinning) {
 
     private fun getDefeatCount(): Int = playerWinningResult.filter { it == WinningResultStatus.VICTORY }.size
 
-    private fun getPushCount(): Int = playerWinningResult.filter { it == WinningResultStatus.DRAW }.size
+    private fun getPushCount(): Int = playerWinningResult.filter { it == WinningResultStatus.PUSH }.size
 }

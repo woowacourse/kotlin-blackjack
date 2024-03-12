@@ -97,7 +97,7 @@ class OutputView {
         return when (status) {
             WinningResultStatus.VICTORY -> VICTORY_OUTPUT_FORMAT
             WinningResultStatus.DEFEAT -> DEFEAT_OUTPUT_FORMAT
-            WinningResultStatus.DRAW -> PUSH_OUTPUT_FORMAT
+            WinningResultStatus.PUSH -> PUSH_OUTPUT_FORMAT
         }
     }
 

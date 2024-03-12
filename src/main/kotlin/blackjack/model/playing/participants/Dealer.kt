@@ -34,7 +34,7 @@ data class Dealer(override val cardHand: CardHand) : Role(name = PlayerName(DEAL
             playerSum > CardHandState.BLACKJACK.precondition -> WinningResultStatus.DEFEAT
             dealerSum > CardHandState.BLACKJACK.precondition -> WinningResultStatus.VICTORY
             dealerSum > playerSum -> WinningResultStatus.DEFEAT
-            dealerSum == playerSum -> WinningResultStatus.DRAW
+            dealerSum == playerSum -> WinningResultStatus.PUSH
             else -> WinningResultStatus.VICTORY
         }
     }
