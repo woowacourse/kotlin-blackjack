@@ -7,21 +7,21 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
-class PointCalculatorTest {
-    private lateinit var pointCalculator: PointCalculator
+class SumPointStrategyTest {
+    private lateinit var sumPointStrategy: SumPointStrategy
 
     @BeforeEach
     fun setUp() {
-        pointCalculator = DefaultPointCalculator(21)
+        sumPointStrategy = OptimalSumPointStrategy(21)
     }
 
     @Test
-    fun `에이스가 없을 때 - 카드의 합이 21에 가장 가까운 수 반환`() {
+    fun `에이스가 없을 때 - 카드의 합이 21 에 가장 가까운 수 반환`() {
         // given
         val cards = listOf(createCard(rank = Rank.SIX), createCard(rank = Rank.FIVE))
         val expected = 11
         // when
-        val actual = pointCalculator.sumOf(cards)
+        val actual = sumPointStrategy.sumOf(cards)
         // then
         assertThat(actual).isEqualTo(expected)
     }
@@ -39,7 +39,7 @@ class PointCalculatorTest {
         // given
         val cards = listOf(createCard(rank = rank), createCard(rank = rank2))
         // when
-        val actual = pointCalculator.sumOf(cards)
+        val actual = sumPointStrategy.sumOf(cards)
         // then
         assertThat(actual).isEqualTo(expectedSum)
     }

@@ -4,7 +4,7 @@ import blackjack.model.card.Card
 import blackjack.model.card.Hand
 
 sealed class State(val hand: Hand) {
-    fun sumScore(): Int = hand.sumOptimized()
+    fun sumScore(): Int = hand.sum()
 
     class Running(hand: Hand) : State(hand) {
         fun hit(card: Card): State {

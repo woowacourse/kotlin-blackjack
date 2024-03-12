@@ -1,8 +1,8 @@
 package blackjack.model.card
 
-class Hand(
+@JvmInline
+value class Hand(
     val cards: List<Card>,
-    private val pointCalculator: PointCalculator = DefaultPointCalculator(BLACKJACK_NUMBER),
 ) {
     init {
         require(cards.size >= MIN_HAND_CARDS_SIZE) { "손패는 $MIN_HAND_CARDS_SIZE 장 이상임" }
@@ -12,14 +12,17 @@ class Hand(
 
     operator fun plus(card: Card): Hand = Hand(cards = cards + card)
 
-    fun sumOptimized(): Int = pointCalculator.sumOf(cards)
+    fun sum(): Int = sumWith(DefaultSumPointStrategy)
 
-    fun isBust(): Boolean = sumOptimized() > BLACKJACK_NUMBER
+    fun sumWith(sumPointStrategy: SumPointStrategy) = sumPointStrategy.sumOf(cards)
 
-    fun isBlackjack(): Boolean = (sumOptimized() == BLACKJACK_NUMBER) && (cards.size == MIN_HAND_CARDS_SIZE)
+    fun isBust(): Boolean = sum() > BLACKJACK_NUMBER
+
+    fun isBlackjack(): Boolean = (sum() == BLACKJACK_NUMBER) && (cards.size == MIN_HAND_CARDS_SIZE)
 
     companion object {
         private const val BLACKJACK_NUMBER = 21
         private const val MIN_HAND_CARDS_SIZE = 2
+        private val DefaultSumPointStrategy = OptimalSumPointStrategy(BLACKJACK_NUMBER)
     }
 }
