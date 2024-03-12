@@ -10,16 +10,10 @@ object GameDeck : ShuffleGenerator {
     private val userDeck: MutableList<Card> = mutableListOf()
     private var index: Int = CARD_DRAW_DEFAULT_INDEX
 
-    override fun shuffleGameDeck() {
+    override fun shuffleGameDeck(cards: List<Card>?) {
         userDeck.clear()
-        userDeck.addAll(deck.shuffled())
         index = CARD_DRAW_DEFAULT_INDEX
-    }
-
-    override fun shuffleGameDeck(cards: List<Card>) {
-        userDeck.clear()
-        userDeck.addAll(cards)
-        index = CARD_DRAW_DEFAULT_INDEX
+        cards?.let { userDeck.addAll(it) } ?: { userDeck.addAll(deck.shuffled()) }
     }
 
     fun drawCard(): Card {
