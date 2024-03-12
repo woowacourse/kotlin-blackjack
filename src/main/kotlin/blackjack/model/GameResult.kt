@@ -1,9 +1,8 @@
 package blackjack.model
 
-import blackjack.model.Participant.Dealer
 import blackjack.model.Participant.Player
 
-class GameResult(val dealer: Dealer, val players: List<Player>) {
+class GameResult(val participants: Participants) {
     private val _playerResults: MutableList<Result> = mutableListOf()
     val playerResults: List<Result>
         get() = _playerResults.toList()
@@ -18,16 +17,16 @@ class GameResult(val dealer: Dealer, val players: List<Player>) {
     }
 
     private fun generatePlayerResults() {
-        players.forEach { player ->
+        participants.getPlayers().forEach { player ->
             _playerResults.add(determineWinner(player))
         }
     }
 
     private fun determineWinner(player: Player): Result {
         if (player.gameInformation.state == GameState.Finished.BUST) return Result.DEALER_WIN
-        if (dealer.gameInformation.state == GameState.Finished.BUST) return Result.PLAYER_WIN
+        if (participants.getDealer().gameInformation.state == GameState.Finished.BUST) return Result.PLAYER_WIN
         val playerScore = player.gameInformation.score
-        val dealerScore = dealer.gameInformation.score
+        val dealerScore = participants.getDealer().gameInformation.score
         return when {
             playerScore > dealerScore -> Result.PLAYER_WIN
             playerScore < dealerScore -> Result.DEALER_WIN

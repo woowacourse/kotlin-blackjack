@@ -75,7 +75,7 @@ object BlackJackController {
     }
 
     private fun displayGameResult(participants: Participants) {
-        val gameResult = GameResult(participants.getDealer(), participants.getPlayers())
+        val gameResult = GameResult(participants)
         OutputView.outputGameResult(gameResult)
     }
 }

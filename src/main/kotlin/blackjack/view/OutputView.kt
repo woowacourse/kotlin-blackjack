@@ -55,7 +55,7 @@ object OutputView {
         println(MESSAGE_GAME_RESULT)
         println(
             MESSAGE_DEALER_RESULT.format(
-                gameResult.dealer.name,
+                gameResult.participants.getDealer().name,
                 gameResult.dealerResult[Result.DEALER_WIN],
                 gameResult.dealerResult[Result.PLAYER_WIN],
                 gameResult.dealerResult[Result.TIE],
@@ -64,7 +64,7 @@ object OutputView {
         gameResult.playerResults.withIndex().map { (index, playerResult) ->
             println(
                 MESSAGE_PLAYER_RESULT.format(
-                    gameResult.players[index].name,
+                    gameResult.participants.getPlayers()[index].name,
                     playerResult.convertToString(),
                 ),
             )
