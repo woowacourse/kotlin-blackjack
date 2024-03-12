@@ -5,6 +5,10 @@ class Card(val denomination: Denomination, val suite: Suite) {
         validateCardInfo(denomination, suite)
     }
 
+    fun getScore(): Int {
+        return denomination.score
+    }
+
     companion object {
         private const val INVALID_DENOMINATION = "유효하지 않은 카드의 숫자 혹은 알파벳입니다."
         private const val INVALID_SUITE = "유효하지 않은 카드의 모양입니다."
