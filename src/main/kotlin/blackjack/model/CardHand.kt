@@ -16,8 +16,8 @@ class CardHand(hand: List<Card>) {
         return tempSum
     }
 
-    fun addNewCard() {
-        _hand.add(CardDeck.getRandomCard())
+    fun addNewCard(cardGenerator: CardGenerator) {
+        _hand.add(cardGenerator.draw())
     }
 
     override fun toString(): String {

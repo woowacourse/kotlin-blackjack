@@ -1,10 +1,10 @@
 package blackjack.model
 
 data class Participants(val dealer: Dealer, val players: Players) {
-    fun addInitialCards() {
-        dealer.addInitialCards()
+    fun addInitialCards(cardGenerator: CardGenerator) {
+        dealer.addInitialCards(cardGenerator)
         players.players.forEach {
-            it.addInitialCards()
+            it.addInitialCards(cardGenerator)
         }
     }
 

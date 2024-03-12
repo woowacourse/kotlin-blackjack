@@ -3,14 +3,14 @@ package blackjack.model
 abstract class Role(open val name: PlayerName, open val cardHand: CardHand) {
     abstract fun getState(): CardHandState
 
-    fun addInitialCards() {
+    fun addInitialCards(cardGenerator: CardGenerator) {
         repeat(INITIAL_CARDS_COUNT) {
-            cardHand.addNewCard()
+            cardHand.addNewCard(cardGenerator)
         }
     }
 
-    fun runPhase() {
-        cardHand.addNewCard()
+    fun runPhase(cardGenerator: CardGenerator) {
+        cardHand.addNewCard(cardGenerator)
     }
 
     companion object {

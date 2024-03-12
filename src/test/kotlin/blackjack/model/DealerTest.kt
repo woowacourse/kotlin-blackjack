@@ -4,6 +4,8 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class DealerTest {
+    private val cardDeck = CardDeck.cardDeck
+
     @Test
     fun `딜러의 카드 패 상태를 구한다`() {
         val cardHand =
@@ -28,7 +30,7 @@ class DealerTest {
             )
 
         if (dealer.getState() == CardHandState.HIT) {
-            dealer.runPhase()
+            dealer.runPhase(RandomCardGenerator(cardDeck))
         }
 
         assertThat(dealer.cardHand.hand.size).isEqualTo(3)
@@ -45,7 +47,7 @@ class DealerTest {
             )
 
         if (dealer.getState() == CardHandState.HIT) {
-            dealer.runPhase()
+            dealer.runPhase(RandomCardGenerator(cardDeck))
         }
 
         assertThat(dealer.cardHand.hand.size).isEqualTo(2)

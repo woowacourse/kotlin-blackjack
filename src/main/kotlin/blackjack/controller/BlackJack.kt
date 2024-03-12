@@ -1,5 +1,6 @@
 package blackjack.controller
 
+import blackjack.model.CardDeck
 import blackjack.model.CardHand
 import blackjack.model.CardHandState
 import blackjack.model.Dealer
@@ -7,6 +8,7 @@ import blackjack.model.Participants
 import blackjack.model.Player
 import blackjack.model.PlayerName
 import blackjack.model.Players
+import blackjack.model.RandomCardGenerator
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -14,6 +16,9 @@ class BlackJack(
     private val inputView: InputView,
     private val outputView: OutputView,
 ) {
+    private val cardDeck = CardDeck.cardDeck
+    private val randomCardGenerator = RandomCardGenerator(cardDeck)
+
     fun gameStart() {
         val dealer = Dealer(CardHand())
         val players = initPlayers()
@@ -38,7 +43,7 @@ class BlackJack(
     private fun dealInitialCards(participants: Participants) {
         outputView.printInitialSetting(participants)
 
-        participants.addInitialCards()
+        participants.addInitialCards(randomCardGenerator)
         outputView.printInitialCardHands(participants)
     }
 
@@ -50,7 +55,7 @@ class BlackJack(
 
     private fun runPlayerPhase(it: Player) {
         while (it.getState() == CardHandState.STAY && inputView.readIsHit(it)) {
-            it.runPhase()
+            it.runPhase(randomCardGenerator)
             outputView.printPlayerCardHand(it)
         }
     }
@@ -58,7 +63,7 @@ class BlackJack(
     private fun runDealerPhase(dealer: Dealer) {
         if (dealer.getState() == CardHandState.HIT) {
             outputView.printDealerHit()
-            dealer.runPhase()
+            dealer.runPhase(randomCardGenerator)
         }
     }
 

@@ -5,6 +5,18 @@ import org.junit.jupiter.api.Test
 
 class CardHandTest {
     // 딜러나 플레이어 카드 패의 합을 구하는 동작은 완전히 같다.
+    private val explicitCardDeck =
+        listOf(
+            Card(CardShape.CLOVER, CardNumber.FIVE),
+            Card(CardShape.DIAMOND, CardNumber.THREE),
+            Card(CardShape.HEART, CardNumber.SEVEN),
+            Card(CardShape.SPADE, CardNumber.SIX),
+            Card(CardShape.DIAMOND, CardNumber.FOUR),
+            Card(CardShape.CLOVER, CardNumber.EIGHT),
+            Card(CardShape.SPADE, CardNumber.TWO),
+            Card(CardShape.HEART, CardNumber.NINE),
+        )
+
     @Test
     fun `카드 핸드의 총 합을 구한다`() {
         val cardHand =
@@ -66,5 +78,17 @@ class CardHandTest {
 
         val actual = currentCardHand.sum()
         assertThat(actual).isEqualTo(12)
+    }
+
+    @Test
+    fun `카드가 랜덤으로 뽑히는 지 명시적으로 지정하여 테스트`() {
+        val cardHand =
+            CardHand(
+                Card(CardShape.SPADE, CardNumber.TWO),
+                Card(CardShape.HEART, CardNumber.FIVE),
+            )
+
+        cardHand.addNewCard(ExplicitCardGenerator(explicitCardDeck))
+        assertThat(cardHand.hand.last()).isEqualTo(ExplicitCardGenerator(explicitCardDeck).draw())
     }
 }
