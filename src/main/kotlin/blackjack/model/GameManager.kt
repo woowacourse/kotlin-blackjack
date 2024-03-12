@@ -3,7 +3,7 @@ package blackjack.model
 import blackjack.state.State
 
 class GameManager(
-    private val participants: Participants
+    private val participants: Participants,
 ) {
     private val cardDeck = CardDeck()
     private val dealerResults: MutableMap<Result, Int> = Result.entries.associateWith { 0 }.toMutableMap()

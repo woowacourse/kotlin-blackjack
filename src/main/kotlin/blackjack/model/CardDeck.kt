@@ -15,7 +15,7 @@ class CardDeck {
                         suit = suit,
                     )
                 }
-            }
+            },
         )
     }
 

@@ -22,9 +22,7 @@ object UserInputValidator {
         }
     }
 
-    private fun checkPlayerNameDuplication(
-        playerNames: List<String>
-    ) {
+    private fun checkPlayerNameDuplication(playerNames: List<String>) {
         require(playerNames.size == playerNames.toSet().size) {
             Player.ERROR_DUPLICATION_NAME
         }
