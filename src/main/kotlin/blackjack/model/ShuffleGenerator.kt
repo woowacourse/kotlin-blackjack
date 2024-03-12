@@ -1,5 +1,5 @@
 package blackjack.model
 
 interface ShuffleGenerator {
-    fun resetUserDeck(cards: List<Card>? = null)
+    fun resetCurrentDeck(cards: List<Card>? = null)
 }
