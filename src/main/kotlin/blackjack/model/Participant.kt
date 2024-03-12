@@ -1,10 +1,17 @@
 package blackjack.model
 
-interface Participant {
+abstract class Participant(val gameInfo: GameInfo) {
     fun drawCardsUntilStand(
         generateCard: () -> Card?,
         printCards: (GameInfo) -> Unit,
-    )
+    ) {
+        val pickingState = drawSingleCard(generateCard)
+        printCards(gameInfo)
+        when (pickingState) {
+            PickingState.HIT -> drawCardsUntilStand(generateCard, printCards)
+            PickingState.STAND -> return
+        }
+    }
 
-    fun drawSingleCard(generateCard: () -> Card?): PickingState
+    abstract fun drawSingleCard(generateCard: () -> Card?): PickingState
 }

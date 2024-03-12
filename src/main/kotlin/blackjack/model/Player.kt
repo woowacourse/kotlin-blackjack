@@ -1,23 +1,11 @@
 package blackjack.model
 
 class Player(
-    val gameInfo: GameInfo,
+    playerGameInfo: GameInfo,
     val onInputDecision: () -> String,
-) : Participant {
+) : Participant(playerGameInfo) {
     init {
         require(gameInfo.name.isNotEmpty() && gameInfo.name.isNotBlank()) { EXCEPTION_PLAYER_NAME }
-    }
-
-    override fun drawCardsUntilStand(
-        generateCard: () -> Card?,
-        printCards: (GameInfo) -> Unit,
-    ) {
-        val pickingState = drawSingleCard { generateCard() }
-        printCards(gameInfo)
-        when (pickingState) {
-            PickingState.HIT -> drawCardsUntilStand(generateCard, printCards)
-            PickingState.STAND -> return
-        }
     }
 
     override fun drawSingleCard(generateCard: () -> Card?): PickingState {

@@ -9,7 +9,7 @@ class PlayerTest {
     fun `플레이어 카드의 총합을 계산한다`() {
         val player =
             Player(
-                gameInfo =
+                playerGameInfo =
                     GameInfo(
                         "해음",
                         setOf(
@@ -26,7 +26,7 @@ class PlayerTest {
     fun `플레이어가 카드를 더 받는다고 응답하면, 보유 카드에 추가한다`() {
         val player =
             Player(
-                gameInfo =
+                playerGameInfo =
                     GameInfo(
                         "해음",
                         setOf(
