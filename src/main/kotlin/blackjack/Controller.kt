@@ -16,7 +16,7 @@ class Controller {
         val players = makePlayers()
         val dealer = Dealer()
         initParticipantsCard(dealer, players)
-        proceedParticipantsTure(dealer, players)
+        proceedParticipantsTrue(dealer, players)
         printStatistics(dealer, players)
     }
 
@@ -36,7 +36,7 @@ class Controller {
         OutputView.printInitialResult(dealer, players)
     }
 
-    private fun proceedParticipantsTure(
+    private fun proceedParticipantsTrue(
         dealer: Dealer,
         players: List<Player>,
     ) {
