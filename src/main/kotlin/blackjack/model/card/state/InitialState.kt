@@ -5,9 +5,8 @@ import blackjack.model.card.CardHand
 
 class InitialState(cardHand: CardHand) : Decide(cardHand) {
     override fun draw(card: Card): CardsState {
-        if (cardHand.hand.size < INITIAL_CARD_COUNT) {
+        while (cardHand.hand.size < INITIAL_CARD_COUNT) {
             cardHand.addNewCard(card)
-            return InitialState(cardHand)
         }
         return Hit(cardHand)
     }
