@@ -14,10 +14,8 @@ object InputView {
         val input = readlnOrNull().orEmpty()
         val result = UserInputValidator.checkPlayers(input.split(COMMA))
 
-        return if (result.isSuccess) {
-            result.getOrNull() ?: inputPlayers()
-        } else {
-            println("${result.exceptionOrNull()?.message}")
+        return result.getOrElse { throwable ->
+            println("${throwable.message}")
             inputPlayers()
         }
     }
@@ -27,10 +25,8 @@ object InputView {
         val input = readlnOrNull().orEmpty()
         val result = UserInputValidator.checkUserDecision(input)
 
-        return if (result.isSuccess) {
-            result.getOrNull() ?: inputPlayerDecision(playerName)
-        } else {
-            println("${result.exceptionOrNull()?.message}")
+        return result.getOrElse { throwable ->
+            println("${throwable.message}")
             inputPlayerDecision(playerName)
         }
     }
