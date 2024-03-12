@@ -1,6 +1,6 @@
 package blackjack.model.card
 
-class Card(val denomination: Denomination, val suite: Suite) {
+data class Card(val denomination: Denomination, val suite: Suite) {
     init {
         validateCardInfo(denomination, suite)
     }

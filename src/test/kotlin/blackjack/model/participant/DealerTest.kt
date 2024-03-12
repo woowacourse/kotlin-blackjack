@@ -80,9 +80,6 @@ class DealerTest {
                 Arguments.of(listOf(Card("A")), 11),
                 Arguments.of(listOf(Card("A"), Card("A")), 12),
                 Arguments.of(listOf(Card("A"), Card("6")), 17),
-                Arguments.of(
-                    listOf(Card("A"), Card("7"), 18),
-                ),
             )
 
         @JvmStatic
