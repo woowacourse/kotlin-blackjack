@@ -1,6 +1,9 @@
 package blackjack.model
 
-abstract class Participant(val name: String, private val strengthPolicy: StrengthPolicy) {
+abstract class Participant(
+    val name: String,
+    private val strengthPolicy: StrengthPolicy,
+) {
     protected val cards = Cards()
     private val strength: Int
         get() = strengthPolicy.strength(cards)
