@@ -33,9 +33,9 @@ class BlackjackGameTest {
         val dealer = Dealer()
         val players = Players.from(listOf("olive", "seogi", "chae"))
 
-        dealer.receiveCard(Card.of("8", "하트"))
+        dealer.receiveCard(listOf(Card.of("8", "하트")))
         players.playerGroup.forEachIndexed { idx, player ->
-            player.receiveCard(Card.of(denominationValues[idx], "하트"))
+            player.receiveCard(listOf(Card.of(denominationValues[idx], "하트")))
         }
 
         // when

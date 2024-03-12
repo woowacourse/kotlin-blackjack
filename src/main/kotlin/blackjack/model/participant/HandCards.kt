@@ -8,8 +8,8 @@ class HandCards {
     val cards: List<Card>
         get() = _cards.toList()
 
-    fun addCard(card: Card) {
-        _cards.add(card)
+    fun addCard(cards: List<Card>) {
+        _cards.addAll(cards)
     }
 
     fun getCardSum(burstCondition: Int): Int {

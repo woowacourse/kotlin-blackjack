@@ -28,7 +28,7 @@ class CardTest {
 
     @Test
     fun `캐싱된 카드를 가져오는지 확인한다`() {
-        val actual = Card.from(TestCardProvider)
+        val actual = Card.from(TestCardProvider).first()
         assertThat(actual).isSameAs(Card.of("K", "하트"))
     }
 }

@@ -18,8 +18,11 @@ class Card private constructor(val denomination: Denomination, val suite: Suite)
             }
         }
 
-        fun from(cardProvider: CardProvider): Card {
-            return cardProvider.provide(bundle)
+        fun from(
+            cardProvider: CardProvider,
+            cardCount: Int = 1,
+        ): List<Card> {
+            return cardProvider.provide(bundle, cardCount)
         }
 
         fun of(

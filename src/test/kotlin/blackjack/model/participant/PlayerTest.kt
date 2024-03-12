@@ -15,7 +15,7 @@ class PlayerTest {
     ) {
         // given
         val player = Player(PlayerName("olive"))
-        cards.forEach { player.receiveCard(it) }
+        player.receiveCard(cards)
 
         // when
         val actual = player.decideMoreCard()
@@ -34,7 +34,7 @@ class PlayerTest {
         val player = Player(PlayerName("hi"))
 
         // when
-        cards.forEach { player.receiveCard(it) }
+        player.receiveCard(cards)
         val actual = player.getCardSum()
 
         // then

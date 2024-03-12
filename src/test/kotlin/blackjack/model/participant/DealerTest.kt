@@ -16,7 +16,7 @@ class DealerTest {
     ) {
         // given
         val dealer = Dealer()
-        cards.forEach { dealer.receiveCard(it) }
+        dealer.receiveCard(cards)
 
         // when
         val actual = dealer.decideMoreCard()
@@ -33,7 +33,7 @@ class DealerTest {
     ) {
         // given
         val dealer = Dealer()
-        cards.forEach { dealer.receiveCard(it) }
+        dealer.receiveCard(cards)
 
         // when
         val actual = dealer.getCardSum()
@@ -52,8 +52,8 @@ class DealerTest {
         // given
         val dealer = Dealer()
         val player = Player(PlayerName("seogi"))
-        dealerCards.forEach { dealer.receiveCard(it) }
-        playerCards.forEach { player.receiveCard(it) }
+        dealer.receiveCard(dealerCards)
+        player.receiveCard(playerCards)
 
         // when
         val actual = dealer.decideGameResultType(player)
