@@ -1,15 +1,9 @@
 package blackjack.model
 
+import blackjack.model.TestUtils.Card
+import blackjack.model.TestUtils.Hand
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-
-private fun Hand(vararg cards: Card): Hand {
-    return Hand(cards.toList())
-}
-
-private fun Card(value: Int): Card {
-    return Card(CardNumber.entries.find { it.value == value }!!, CardShape.HEART)
-}
 
 class HandTest {
     @Test

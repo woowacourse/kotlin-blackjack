@@ -1,16 +1,12 @@
 package blackjack.model
 
+import blackjack.model.TestUtils.Card
+import blackjack.model.TestUtils.createCardDeckFrom
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-private fun createCardDeckFrom(vararg numbers: Int): CardDeck = CardDeck(numbers.map { Card(it) })
-
 private fun createDealer(vararg numbers: Card): Dealer {
     return Dealer(hand = Hand(numbers.toList()))
-}
-
-private fun Card(value: Int): Card {
-    return Card(CardNumber.entries.find { it.value == value }!!, CardShape.HEART)
 }
 
 class DealerTest {

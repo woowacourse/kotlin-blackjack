@@ -1,28 +1,27 @@
 package blackjack.model
 
+import blackjack.model.TestUtils.Card
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-private fun createDealer(vararg numbers: Int): Dealer {
-    return Dealer(hand = Hand(numbers.map<Card> { Card(it) }.toList())).apply { finishRound() }
+private fun createFinishedDealer(vararg numbers: Card): Dealer {
+    return Dealer(hand = Hand(numbers.toList())).apply { finishRound() }
 }
 
 private fun createFinishedPlayer(
     name: String,
-    vararg numbers: Int,
-): Player {
-    return Player(ParticipantName(name), Hand(numbers.map { Card(it) })).apply { finishRound() }
-}
-
-private fun Card(value: Int): Card {
-    return Card(CardNumber.entries.find { it.value == value }!!, CardShape.HEART)
-}
+    vararg numbers: Card,
+): Player = Player(ParticipantName(name), Hand(numbers.toList())).apply { finishRound() }
 
 class ParticipantsTest {
     @Test
     fun `게임 결과 생성 테스트`() {
-        val dealer = createDealer(8, 9)
-        val players = listOf(createFinishedPlayer("leo", 10, 6), createFinishedPlayer("yenny", 9, 11))
+        val dealer = createFinishedDealer(Card(8), Card(9))
+        val players =
+            listOf(
+                createFinishedPlayer("leo", Card(10), Card(6)),
+                createFinishedPlayer("yenny", Card(9), Card(11)),
+            )
         val gameParticipants = Participants(dealer, players)
 
         val dealerResult = gameParticipants.getDealerWinningState()
