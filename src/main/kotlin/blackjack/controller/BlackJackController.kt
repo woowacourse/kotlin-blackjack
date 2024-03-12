@@ -8,6 +8,7 @@ import blackjack.model.Participant.Player
 import blackjack.model.Participants
 import blackjack.view.InputView
 import blackjack.view.OutputView
+import blackjack.view.ResultView
 
 object BlackJackController {
     fun run() {
@@ -38,7 +39,7 @@ object BlackJackController {
         OutputView.outputCardDistribution(participants)
         judgePlayersDraw(participants.getPlayers(), cardDeck)
         participants.getDealer().judgeDrawOrNot(cardDeck) { OutputView.outputDealerDraw(participants.getDealer()) }
-        OutputView.outputGameScores(participants)
+        ResultView.outputGameScores(participants)
     }
 
     private fun judgePlayersDraw(
@@ -56,6 +57,6 @@ object BlackJackController {
 
     private fun displayGameResult(participants: Participants) {
         val gameResult = GameResult(participants)
-        OutputView.outputGameResult(gameResult)
+        ResultView.outputGameResult(gameResult)
     }
 }
