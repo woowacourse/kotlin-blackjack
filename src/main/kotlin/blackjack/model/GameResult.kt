@@ -1,11 +1,6 @@
 package blackjack.model
 
-import blackjack.state.State
-
-class GameResult(
-    private val dealer: Dealer,
-    private val players: List<Player>,
-) {
+class GameResult {
     private val dealerResults: MutableMap<Result, Int> = Result.entries.associateWith { 0 }.toMutableMap()
     private val playerResults: MutableMap<Player, Result> = mutableMapOf()
 
@@ -17,37 +12,23 @@ class GameResult(
         return playerResults
     }
 
-    fun judgeBlackJackScores() {
+    fun calculateResult(
+        dealer: Dealer,
+        players: List<Player>,
+    ) {
         players.forEach { player ->
-            judgeBlackJackScore(player)
+            val playerResult = player.judgeBlackState(dealer)
+            val dealerResult = dealer.calculateDealerResult(playerResult)
+            updateResults(player, dealerResult)
         }
     }
 
-    private fun judgeBlackJackScore(player: Player) {
-        when (player.getBlackJackState()) {
-            is State.Finish.Bust -> addDealerWin(player)
-            is State.Finish.BlackJack -> applyBlackJackState(player)
-            is State.Finish.Stay, State.Action.Hit ->
-                compareToResult(player)
-        }
-    }
-
-    private fun applyBlackJackState(player: Player) {
-        if (dealer.getBlackJackState() == State.Finish.BlackJack) {
-            addDealerDraw(player)
-        } else {
-            addDealerLose(player)
-        }
-    }
-
-    private fun compareToResult(player: Player) {
-        val dealerScore = dealer.getBlackJackScore()
-        val playerScore = player.getBlackJackScore()
-        when {
-            dealerScore > playerScore -> addDealerWin(player)
-            dealerScore == playerScore -> addDealerDraw(player)
-            dealerScore < playerScore -> addDealerLose(player)
-        }
+    private fun updateResults(
+        player: Player,
+        dealerResult: Result,
+    ) {
+        applyDealerResult(dealerResult)
+        applyPlayerResult(player, dealerResult)
     }
 
     private fun applyPlayerResult(
@@ -63,24 +44,6 @@ class GameResult(
 
     private fun applyDealerResult(dealerResult: Result) {
         dealerResults[dealerResult] = dealerResults.getOrDefault(dealerResult, DEFAULT_COUNT) + ADD_RESULT_COUNT
-    }
-
-    private fun addDealerWin(player: Player) {
-        val dealerResult = Result.WIN
-        applyDealerResult(dealerResult)
-        applyPlayerResult(player, dealerResult)
-    }
-
-    private fun addDealerDraw(player: Player) {
-        val dealerResult = Result.DRAW
-        applyDealerResult(dealerResult)
-        applyPlayerResult(player, dealerResult)
-    }
-
-    private fun addDealerLose(player: Player) {
-        val dealerResult = Result.LOSE
-        applyDealerResult(dealerResult)
-        applyPlayerResult(player, dealerResult)
     }
 
     companion object {

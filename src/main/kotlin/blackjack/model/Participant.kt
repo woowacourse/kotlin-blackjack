@@ -36,6 +36,35 @@ abstract class Participant(
         return blackJack.getHandCardScore()
     }
 
+    fun judgeBlackState(otherParticipant: Participant): Result {
+        return when (blackJack.state) {
+            is State.Finish.Bust -> Result.LOSE
+            is State.Finish.BlackJack -> applyBlackJackState(otherParticipant)
+            is State.Finish.Stay, State.Action.Hit ->
+                judgeBlackJackScore(otherParticipant)
+        }
+    }
+
+    private fun applyBlackJackState(otherParticipant: Participant): Result {
+        return if (otherParticipant.getBlackJackState() == State.Finish.BlackJack) {
+            Result.DRAW
+        } else {
+            Result.WIN
+        }
+    }
+
+    private fun judgeBlackJackScore(otherParticipant: Participant): Result {
+        val myScore = this.getBlackJackScore()
+        val otherScore = otherParticipant.getBlackJackScore()
+
+        return when {
+            otherScore >= BlackJack.BUST_SCORE -> Result.WIN
+            myScore > otherScore -> Result.WIN
+            myScore < otherScore -> Result.LOSE
+            else -> Result.DRAW
+        }
+    }
+
     companion object {
         const val INIT_HAND_CARD_COUNT: Int = 2
     }

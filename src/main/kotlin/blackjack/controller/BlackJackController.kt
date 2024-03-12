@@ -34,7 +34,7 @@ class BlackJackController(private val cardDeck: CardDeck) {
 
     private fun setParticipants(participants: Participants) {
         participants.getParticipants().forEach { participant ->
-                participant.initDraw(cardDeck)
+            participant.initDraw(cardDeck)
         }
     }
 
@@ -61,12 +61,11 @@ class BlackJackController(private val cardDeck: CardDeck) {
     }
 
     fun calculateResult() {
-        gameResult =
-            GameResult(
-                dealer = participants.getDealer(),
-                players = participants.getPlayers(),
-            )
-        gameResult.judgeBlackJackScores()
+        gameResult = GameResult()
+        gameResult.calculateResult(
+            participants.getDealer(),
+            participants.getPlayers(),
+        )
     }
 
     fun showResult() {

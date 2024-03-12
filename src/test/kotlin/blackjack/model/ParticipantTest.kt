@@ -21,4 +21,18 @@ class ParticipantTest {
         participant.initDraw(cardDeck)
         assertThat(participant.getCards().size).isEqualTo(Participant.INIT_HAND_CARD_COUNT)
     }
+
+    @Test
+    fun `참가자는 다른 참가자와 정상적으로 승부를 판단한다`() {
+        val winPlayer = MockParticipant(name = "꼬상")
+        val losePlayer = MockParticipant(name = "누누")
+
+        val aceCard = Card(Denomination.ACE, Suit.SPADE)
+        val kingCard = Card(Denomination.KING, Suit.SPADE)
+        winPlayer.draw(aceCard)
+        losePlayer.draw(kingCard)
+
+        val result = winPlayer.judgeBlackState(losePlayer)
+        assertThat(result).isEqualTo(Result.WIN)
+    }
 }
