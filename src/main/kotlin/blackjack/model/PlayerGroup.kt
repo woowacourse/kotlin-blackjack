@@ -1,15 +1,12 @@
 package blackjack.model
 
-import blackjack.exception.ErrorCode.INVALID_PLAYERS_COUNT_ERROR
-import blackjack.exception.ExceptionsHandler.handleValidation
-
 class PlayerGroup {
     private var _players: List<Player> = emptyList()
     val players: List<Player>
         get() = _players
 
     fun addPlayer(playerNames: List<String>) {
-        handleValidation<String>(INVALID_PLAYERS_COUNT_ERROR) { _players.size + playerNames.size in PLAYERS_COUNT_RANGE }
+        require(_players.size + playerNames.size in PLAYERS_COUNT_RANGE) { INVALID_PLAYERS_COUNT_ERROR_MESSAGE }
         _players += playerNames.map { Player(nickname = Nickname(it)) }
     }
 
@@ -24,5 +21,7 @@ class PlayerGroup {
 
     companion object {
         val PLAYERS_COUNT_RANGE = 1..8
+
+        const val INVALID_PLAYERS_COUNT_ERROR_MESSAGE = "플레이어의 수는 1 ~ 8명 사이여야 합니다"
     }
 }

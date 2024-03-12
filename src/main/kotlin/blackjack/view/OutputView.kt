@@ -1,8 +1,5 @@
 package blackjack.view
 
-import blackjack.exception.Exceptions.InvalidNameLengthErrorException
-import blackjack.exception.Exceptions.InvalidPlayersCountErrorException
-import blackjack.exception.Exceptions.NoCardErrorException
 import blackjack.model.Dealer
 import blackjack.model.Dealer.Companion.DEALER_CARD_DRAW_THRESHOLD
 import blackjack.model.GameResult
@@ -14,9 +11,11 @@ import blackjack.model.PlayerGroup
 object OutputView {
     fun printGameSetting(participants: Participants) {
         println(
-            "\n${participants.dealer.nickname}와 ${participants.playerGroup.players.joinToString(
-                ", ",
-            ) { it.nickname.name }}에게 ${INITIAL_CARD_COUNTS}장의 카드를 나누었습니다.",
+            "\n${participants.dealer.nickname}와 ${
+                participants.playerGroup.players.joinToString(
+                    ", ",
+                ) { it.nickname.name }
+            }에게 ${INITIAL_CARD_COUNTS}장의 카드를 나누었습니다.",
         )
         showDealerInitCard(participants.dealer)
         showPlayersInitCards(participants.playerGroup)
@@ -74,10 +73,6 @@ object OutputView {
     }
 
     fun printError(e: Throwable) {
-        when (e) {
-            is NoCardErrorException -> println(e.reason)
-            is InvalidNameLengthErrorException -> println(e.reason)
-            is InvalidPlayersCountErrorException -> println(e.reason)
-        }
+        println(e)
     }
 }
