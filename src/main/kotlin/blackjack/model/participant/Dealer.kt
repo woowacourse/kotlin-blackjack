@@ -18,15 +18,11 @@ class Dealer(state: State) : Participant(DEALER_NAME, state) {
         }
     }
 
-    override fun judge(other: Participant): GameResult =
-        when {
-            other.isBust() -> GameResult.WIN
-            isBust() -> GameResult.LOSE
-            else -> {
-                val compared = sumScore() compareTo other.sumScore()
-                GameResult.from(compared)
-            }
-        }
+    override fun judge(other: Participant): GameResult {
+        if (other.ratePoint == State.BUST_RATE_POINT) return GameResult.WIN
+        val compared = ratePoint compareTo other.ratePoint
+        return GameResult.from(compared)
+    }
 
     fun judge(other: List<Participant>): Map<GameResult, Int> {
         return other.map { judge(it) }

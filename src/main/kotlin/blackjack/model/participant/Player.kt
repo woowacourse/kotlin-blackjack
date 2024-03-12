@@ -18,13 +18,9 @@ class Player(name: String, state: State, private val onDetermineHit: (String) ->
         }
     }
 
-    override fun judge(other: Participant): GameResult =
-        when {
-            isBust() -> GameResult.LOSE
-            other.isBust() -> GameResult.WIN
-            else -> {
-                val compared = sumScore() compareTo other.sumScore()
-                GameResult.from(compared)
-            }
-        }
+    override fun judge(other: Participant): GameResult {
+        if (ratePoint == State.BUST_RATE_POINT) return GameResult.LOSE
+        val compared = ratePoint compareTo other.ratePoint
+        return GameResult.from(compared)
+    }
 }
