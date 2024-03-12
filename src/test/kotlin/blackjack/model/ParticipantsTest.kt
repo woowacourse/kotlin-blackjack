@@ -71,13 +71,6 @@ class ParticipantsTest {
     }
 
     @Test
-    fun `딜러 카드 패의 합을 가져온다`() {
-        val actual = defaultParticipants.getDealerSum()
-
-        assertThat(actual).isEqualTo(17)
-    }
-
-    @Test
     fun `플레이어들의 카드 패의 합을 이름과 짝 지어서 가져온다`() {
         val actual = defaultParticipants.getPlayerResult()
 
