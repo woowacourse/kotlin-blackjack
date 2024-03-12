@@ -1,10 +1,10 @@
 package blackjack.view
 
-import blackjack.model.CardHand
 import blackjack.model.DealerWinning
 import blackjack.model.Participants
 import blackjack.model.PlayerWinning
 import blackjack.model.Role
+import blackjack.model.card.CardHand
 
 class OutputView {
     fun printInitialSetting(participants: Participants) {

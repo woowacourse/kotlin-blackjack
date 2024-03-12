@@ -1,5 +1,6 @@
 package blackjack.model
 
+import blackjack.model.card.CardHand
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow

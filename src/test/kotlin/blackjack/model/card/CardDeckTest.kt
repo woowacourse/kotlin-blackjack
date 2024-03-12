@@ -1,4 +1,4 @@
-package blackjack.model
+package blackjack.model.card
 
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow

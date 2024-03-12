@@ -1,5 +1,8 @@
 package blackjack.model
 
+import blackjack.model.card.CardHand
+import blackjack.model.card.CardHandState
+
 data class Player(override val name: PlayerName, override val cardHand: CardHand) : Role(name, cardHand) {
     override fun getState(): CardHandState {
         val sum = cardHand.sum()

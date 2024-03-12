@@ -1,4 +1,4 @@
-package blackjack.model
+package blackjack.model.card
 
 enum class CardNumber(
     val number: Int,

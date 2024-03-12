@@ -1,4 +1,4 @@
-package blackjack.model
+package blackjack.model.card
 
 class CardHand(hand: List<Card>) {
     private val _hand = hand.toMutableList()

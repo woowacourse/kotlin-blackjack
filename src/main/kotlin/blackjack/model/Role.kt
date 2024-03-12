@@ -1,5 +1,8 @@
 package blackjack.model
 
+import blackjack.model.card.CardHand
+import blackjack.model.card.CardHandState
+
 abstract class Role(open val name: PlayerName, open val cardHand: CardHand) {
     abstract fun getState(): CardHandState
 
