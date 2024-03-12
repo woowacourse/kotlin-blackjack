@@ -13,6 +13,7 @@ import blackjack.view.ResultView
 object BlackJackController {
     fun run() {
         val participants = registerParticipants()
+
         blackJackGameStart(participants)
         displayGameResult(participants)
     }
@@ -34,12 +35,16 @@ object BlackJackController {
     }
 
     private fun blackJackGameStart(participants: Participants) {
-        val cardDeck = CardDeck()
-        participants.getDealer().initialCardDealing(participants, cardDeck)
-        OutputView.outputCardDistribution(participants)
-        judgePlayersDraw(participants.getPlayers(), cardDeck)
-        participants.getDealer().judgeDrawOrNot(cardDeck) { OutputView.outputDealerDraw(participants.getDealer()) }
-        ResultView.outputGameScores(participants)
+        try {
+            val cardDeck = CardDeck()
+            participants.getDealer().initialCardDealing(participants, cardDeck)
+            OutputView.outputCardDistribution(participants)
+            judgePlayersDraw(participants.getPlayers(), cardDeck)
+            participants.getDealer().judgeDrawOrNot(cardDeck) { OutputView.outputDealerDraw(participants.getDealer()) }
+            ResultView.outputGameScores(participants)
+        } catch (exception: IllegalArgumentException) {
+            println(exception.message)
+        }
     }
 
     private fun judgePlayersDraw(
