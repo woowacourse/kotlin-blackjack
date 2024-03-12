@@ -7,13 +7,9 @@ class CardHand(hand: List<Card>) {
     constructor(vararg card: Card) : this(card.toList())
 
     fun sum(): Int {
-        var aceCount = hand.count { it.number == CardNumber.ACE }
-        var tempSum = hand.sumOf { it.number.number }
-        while (aceCount >= MIN_ACE_COUNT && tempSum > BLACK_JACK) {
-            aceCount--
-            tempSum -= SUBTRACTION_BETWEEN_MAX_AND_MIN
-        }
-        return tempSum
+        val numbersSum = numbersSum()
+        if (canGetBonusPoint()) return numbersSum + BONUS_POINT
+        return numbersSum
     }
 
     fun addNewCard() {
@@ -23,6 +19,12 @@ class CardHand(hand: List<Card>) {
     fun addNewCard(card: Card) {
         _hand.add(card)
     }
+
+    private fun canGetBonusPoint(): Boolean = hasAce() && (numbersSum() <= MAX_NUMBER_SUM_FOR_BONUS_POINT)
+
+    private fun hasAce(): Boolean = hand.any { card -> card.number == CardNumber.ACE }
+
+    private fun numbersSum(): Int = hand.sumOf { card -> card.number.number }
 
     override fun toString(): String {
         return "CardHand(hand=$hand)"
@@ -44,8 +46,7 @@ class CardHand(hand: List<Card>) {
     }
 
     companion object {
-        private const val MIN_ACE_COUNT = 1
-        private const val BLACK_JACK = 21
-        private const val SUBTRACTION_BETWEEN_MAX_AND_MIN = 10
+        private const val MAX_NUMBER_SUM_FOR_BONUS_POINT = 11
+        private const val BONUS_POINT = 10
     }
 }

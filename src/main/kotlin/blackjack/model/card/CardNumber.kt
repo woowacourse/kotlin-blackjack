@@ -4,7 +4,7 @@ enum class CardNumber(
     val number: Int,
     val output: String = number.toString(),
 ) {
-    ACE(11, "A"),
+    ACE(1, "A"),
     TWO(2),
     THREE(3),
     FOUR(4),
