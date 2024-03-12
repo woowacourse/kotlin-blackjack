@@ -1,11 +1,15 @@
 package blackjack.model
 
 object CardDeckGenerator {
+    private val totalCards =
+        CardNumber.entries.flatMap { number ->
+            generateCardsForNumber(number)
+        }.toMutableList()
+
     fun generate(): CardDeck {
+        totalCards.shuffle()
         return CardDeck(
-            CardNumber.entries.flatMap { number ->
-                generateCardsForNumber(number)
-            }.shuffled().toMutableList(),
+            totalCards,
         )
     }
 

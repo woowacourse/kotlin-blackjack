@@ -1,15 +1,15 @@
 package blackjack.model
 
-class CardDeck(cards: List<Card>) {
-    private val _cards: MutableList<Card> = cards.toMutableList()
-    val cards: List<Card>
-        get() = _cards.toList()
+class CardDeck(private val cards: MutableList<Card>) {
+    fun getCards(): List<Card> {
+        return cards.toList()
+    }
 
-    fun pick() = _cards.removeLast()
+    fun pick(): Card = cards.removeLast()
 
-    fun initialDistribute(): Hand {
+    fun createStartHand(): Hand {
         return Hand(
-            List(INITIAL_DISTRIBUTE_COUNT) { pick() },
+            MutableList(INITIAL_DISTRIBUTE_COUNT) { pick() },
         )
     }
 
