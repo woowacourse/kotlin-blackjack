@@ -2,7 +2,7 @@ package blackjack.model.deck
 
 class HandCards(private val deck: Deck) {
     private val _cards: MutableList<Card> = mutableListOf()
-    val cards: List<Card>
+    private val cards: List<Card>
         get() = _cards.toList()
 
     init {
@@ -17,20 +17,15 @@ class HandCards(private val deck: Deck) {
 
     fun getAllCards(): String = cards.joinToString(SPLIT_DELIMITER) { "${it.cardNumber.value}${it.pattern.shape}" }
 
-    fun calculateCardScore(): Int {
-        val baseScore = cards.sumOf { it.cardNumber.score }
-        val hasAce = cards.any { it.cardNumber == CardNumber.ACE }
-        val adjustedScore = baseScore + ACE_EXTRA_SCORE
-        return if (hasAce && adjustedScore <= BLACKJACK_NUMBER) adjustedScore else baseScore
-    }
+    fun getCardsScore(): Int = cards.sumOf { it.cardNumber.score }
 
-    fun isBlackjackCard(): Boolean = cards.size == 2 && calculateCardScore() == BLACKJACK_NUMBER
+    fun hasAce(): Boolean = cards.any { it.cardNumber == CardNumber.ACE }
+
+    fun getCardsSize(): Int = cards.size
 
     companion object {
         const val SPLIT_DELIMITER = ", "
         private const val INIT_CARD_AMOUNT = 2
         private const val HIT_CARD_AMOUNT = 1
-        private const val ACE_EXTRA_SCORE = 10
-        private const val BLACKJACK_NUMBER = 21
     }
 }

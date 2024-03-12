@@ -7,7 +7,7 @@ import blackjack.model.deck.HandCards
 class Dealer(deck: Deck) : GameParticipant(HandCards(deck)) {
     fun getFirstCard(): String = handCards.getFirstCard()
 
-    fun isAddCard(): Boolean = handCards.calculateCardScore() < DEALER_HIT_THRESHOLD
+    fun isAddCard(): Boolean = calculateScore() < DEALER_HIT_THRESHOLD
 
     fun gameResult(players: List<Player>): Map<String, CompetitionResult> =
         players.associate { player ->
@@ -22,8 +22,8 @@ class Dealer(deck: Deck) : GameParticipant(HandCards(deck)) {
             player.isBlackjack() && isBlackjack() -> CompetitionResult.SAME
             player.isBlackjack() -> CompetitionResult.WIN
             isBlackjack() -> CompetitionResult.LOSE
-            player.getScore() < getScore() -> CompetitionResult.LOSE
-            player.getScore() > getScore() -> CompetitionResult.WIN
+            player.calculateScore() < calculateScore() -> CompetitionResult.LOSE
+            player.calculateScore() > calculateScore() -> CompetitionResult.WIN
             else -> CompetitionResult.SAME
         }
 
