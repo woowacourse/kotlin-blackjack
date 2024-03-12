@@ -1,6 +1,7 @@
 package blackjack.view
 
 import blackjack.model.Dealer
+import blackjack.model.GameResult
 import blackjack.model.Hand
 import blackjack.model.Participants.Companion.INITIAL_CARD_COUNTS
 import blackjack.model.Player
@@ -79,9 +80,17 @@ object OutputView {
         playerGroup: PlayerGroup,
     ) {
         println("\n[ 최종 승패 ]")
-        println("딜러: ${dealer.gameResult}")
+        println("딜러: ${dealer.gameResult.display()}")
         playerGroup.players.forEach { player ->
-            println("${player.name}: ${player.gameResult}")
+            println("${player.name}: ${player.gameResult.display()}")
         }
+    }
+
+    private fun GameResult.display(): String {
+        var answer = ""
+        if (win != GameResult.DEFAULT_RESULT_VALUE) answer += "${win}승 "
+        if (push != GameResult.DEFAULT_RESULT_VALUE) answer += "${push}무 "
+        if (defeat != GameResult.DEFAULT_RESULT_VALUE) answer += "${defeat}패 "
+        return answer
     }
 }
