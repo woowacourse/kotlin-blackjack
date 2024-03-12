@@ -10,7 +10,7 @@ object GameDeck : ShuffleGenerator {
     private val userDeck: MutableList<Card> = mutableListOf()
     private var index: Int = CARD_DRAW_DEFAULT_INDEX
 
-    override fun shuffleGameDeck(cards: List<Card>?) {
+    override fun resetUserDeck(cards: List<Card>?) {
         userDeck.clear()
         index = CARD_DRAW_DEFAULT_INDEX
         cards?.let { userDeck.addAll(it) } ?: { userDeck.addAll(deck.shuffled()) }
@@ -20,7 +20,7 @@ object GameDeck : ShuffleGenerator {
         if (index < userDeck.size) {
             return userDeck[index++]
         }
-        shuffleGameDeck()
+        resetUserDeck()
         throw Exceptions.NoCardErrorException(ErrorCode.NO_CARDS_ERROR.reason)
     }
 
