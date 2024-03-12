@@ -1,27 +1,28 @@
 package blackjack.controller
 
 import blackjack.model.BlackjackGame
-import blackjack.model.card.Card
 import blackjack.model.card.CardProvider
 import blackjack.model.participant.Dealer
 import blackjack.model.participant.Player
 import blackjack.model.participant.Players
 import blackjack.util.retryWhileNotException
-import blackjack.view.InputView
+import blackjack.view.CardDecision
 import blackjack.view.OutputView
+import blackjack.view.PlayersNameInputView
 
 class BlackjackController(
-    private val inputView: InputView,
+    private val playersNameInputView: PlayersNameInputView,
+    private val cardDecision: CardDecision,
     private val outputView: OutputView,
     private val cardProvider: CardProvider,
 ) {
     fun run() {
         val dealer = Dealer()
-        val players = retryWhileNotException { Players.from(inputView.readPlayersName()) }
+        val players = retryWhileNotException { Players.from(playersNameInputView.read()) }
 
         initHandCards(dealer, players)
-        takePlayersTurn(players)
-        takeDealerTurn(dealer)
+        players.takePlayersTurn()
+        dealer.takeDealerTurn()
         showGameResult(dealer, players)
     }
 
@@ -33,27 +34,18 @@ class BlackjackController(
         outputView.printInitCard(dealer, players)
     }
 
-    private fun takePlayersTurn(players: Players) {
-        players.playerGroup.forEach {
-            takePlayerTurn(it)
+    private fun Players.takePlayersTurn() {
+        playerGroup.forEach { it.takePlayerTurn() }
+    }
+
+    private fun Player.takePlayerTurn() {
+        takeTurn(cardProvider, cardDecision) {
+            outputView.printPlayerCardsMessage(it)
         }
     }
 
-    private fun takePlayerTurn(player: Player) {
-        while (player.decideMoreCard()) {
-            val inputMoreCardDecision = inputView.readMoreCardDecision(player)
-            if (!inputMoreCardDecision) break
-
-            player.receiveCard(Card.provideCards(cardProvider))
-            outputView.printPlayerCardsMessage(player)
-        }
-    }
-
-    private fun takeDealerTurn(dealer: Dealer) {
-        while (dealer.decideMoreCard()) {
-            dealer.receiveCard(Card.provideCards(cardProvider))
-            outputView.printDealerAdditionalCardMessage()
-        }
+    private fun Dealer.takeDealerTurn() {
+        takeTurn(cardProvider) { outputView.printDealerAdditionalCardMessage() }
     }
 
     private fun showGameResult(

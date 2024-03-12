@@ -1,5 +1,7 @@
 package blackjack.model.participant
 
+import blackjack.model.card.Card
+import blackjack.model.card.CardProvider
 import blackjack.model.result.GameResultType
 
 class Dealer : Role() {
@@ -15,6 +17,16 @@ class Dealer : Role() {
             cardSum > playerCardSum -> GameResultType.WIN
             cardSum == playerCardSum -> GameResultType.DRAW
             else -> GameResultType.LOSE
+        }
+    }
+
+    fun takeTurn(
+        cardProvider: CardProvider,
+        endRoundAction: () -> Unit,
+    ) {
+        while (decideMoreCard()) {
+            receiveCard(Card.provideCards(cardProvider))
+            endRoundAction()
         }
     }
 
