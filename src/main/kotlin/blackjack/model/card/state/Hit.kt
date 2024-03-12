@@ -5,10 +5,13 @@ import blackjack.model.card.CardHand
 
 class Hit(cardHand: CardHand) : Decide(cardHand) {
     override fun draw(card: Card): CardsState {
+        cardHand.addNewCard(card)
+        if (cardHand.sum() > 21) return Bust(cardHand)
         return Hit(cardHand)
     }
 
     override fun stay(): CardsState {
-        return Hit(cardHand)
+        if (cardHand.sum() == 21) return BlackJack(cardHand)
+        return Stay(cardHand)
     }
 }
