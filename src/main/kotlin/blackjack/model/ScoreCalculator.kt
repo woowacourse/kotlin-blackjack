@@ -5,20 +5,24 @@ object ScoreCalculator {
     private const val BONUS_SCORE = 10
 
     fun calculateScore(cards: Set<Card>): Int {
-        var score = cards.sumOf { card -> card.number.value }
-        score = calculateBonusScore(cards, score)
-        return score
+        val score = cards.sumOf { card -> card.number.value }
+        val bonusScore = calculateBonusScore(cards, score)
+        return score + bonusScore
     }
 
     private fun calculateBonusScore(
         cards: Set<Card>,
         score: Int,
     ): Int {
+        var bonusScore = 0
         var totalScore = score
         val numberOfAce = cards.count { card -> card.number == CardNumber.ACE }
         repeat(numberOfAce) {
-            if (totalScore <= BONUS_SCORE_CRITERIA) totalScore += BONUS_SCORE
+            if (totalScore <= BONUS_SCORE_CRITERIA) {
+                totalScore += BONUS_SCORE
+                bonusScore += BONUS_SCORE
+            }
         }
-        return totalScore
+        return bonusScore
     }
 }
