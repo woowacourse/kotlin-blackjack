@@ -13,7 +13,7 @@ abstract class Participant(val name: String, private val scorePolicy: ScorePolic
 
     fun getCardSum(): Int = cards.sum()
 
-    fun showCard() = cards.showCard()
+    fun showCard() = cards.toList()
 
     abstract fun isHitable(): Boolean
 

@@ -4,7 +4,6 @@ interface ScorePolicy {
     fun score(cards: Cards): Int
 
     companion object {
-        @JvmStatic
-        val BLACKJACK_SCORE = 22
+        const val BLACKJACK_SCORE = 22
     }
 }

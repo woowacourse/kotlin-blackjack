@@ -21,7 +21,7 @@ class Cards {
         cards.add(card)
     }
 
-    fun showCard(): List<Card> = cards.toList()
+    fun toList(): List<Card> = cards.toList()
 
     fun sum(): Int {
         val sum = cards.sumOf { it.cardNumber.score }
