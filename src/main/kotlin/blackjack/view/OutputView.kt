@@ -54,12 +54,12 @@ object OutputView {
         name: String,
         cards: List<Card>,
     ): String {
-        val cardStrings = cards.joinToString(", ") { getCardNumberText(it.cardNumber) + getSuitText(it.suit) }
+        val cardStrings = cards.joinToString(", ") { it.cardNumber.format() + it.suit.format() }
         return "${name}카드: $cardStrings"
     }
 
-    private fun getCardNumberText(cardNumber: CardNumber): String {
-        return when (cardNumber) {
+    private fun CardNumber.format(): String {
+        return when (this) {
             CardNumber.ACE -> "A"
             CardNumber.TWO -> "2"
             CardNumber.THREE -> "3"
@@ -76,8 +76,8 @@ object OutputView {
         }
     }
 
-    private fun getSuitText(suit: Suit): String {
-        return when (suit) {
+    private fun Suit.format(): String {
+        return when (this) {
             Suit.HEART -> "하트"
             Suit.CLOVER -> "클로버"
             Suit.SPADE -> "스페이드"
