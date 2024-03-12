@@ -4,9 +4,9 @@ class BlackJackGame(
     private val participants: Participants,
     private val gameDeck: GameDeck,
 ) {
-    fun start(printGameSetting: (dealer: Dealer, playerGroup: PlayerGroup) -> Unit) {
+    fun start(printGameSetting: (dealerCard: Card, playerGroup: PlayerGroup) -> Unit) {
         participants.initSetting(gameDeck)
-        printGameSetting(participants.dealer, participants.playerGroup)
+        printGameSetting(participants.dealer.status.hand.cards.first(), participants.playerGroup)
     }
 
     fun runPlayersTurn(
@@ -24,7 +24,7 @@ class BlackJackGame(
         alert(participants.dealer.drawDealerCard(gameDeck = gameDeck))
     }
 
-    fun finish(printEveryCards: (dealer: Dealer, playerGroup: PlayerGroup) -> Unit) {
-        printEveryCards(participants.dealer, participants.playerGroup)
+    fun finish(printEveryCards: (dealerHand: Hand, playerGroup: PlayerGroup) -> Unit) {
+        printEveryCards(participants.dealer.status.hand, participants.playerGroup)
     }
 }

@@ -22,7 +22,7 @@ class GameController {
         playGame(participants)
 
         participants.matchResult()
-        OutputView.printMatchResult(participants.dealer, participants.playerGroup)
+        OutputView.printMatchResult(participants.dealer.gameResult, participants.playerGroup)
     }
 
     private fun playGame(participants: Participants) {
