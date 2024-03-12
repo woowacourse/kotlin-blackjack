@@ -1,6 +1,8 @@
 package blackjack.view
 
 import blackjack.model.deck.Card
+import blackjack.model.deck.CardNumber
+import blackjack.model.deck.Shape
 import blackjack.model.participant.CompetitionResult
 import blackjack.model.participant.Dealer
 import blackjack.model.participant.Player
@@ -18,7 +20,7 @@ class OutputView {
         }
     }
 
-    private fun getFirstCardString(dealer: Dealer) = "${dealer.getFirstCard().cardNumber}${dealer.getFirstCard().shape}"
+    private fun getFirstCardString(dealer: Dealer) = "${dealer.getFirstCard().cardNumber.toPrint()}${dealer.getFirstCard().shape.toPrint()}"
 
     fun printPlayerCard(player: Player) {
         println("${player.name} 카드: ${player.getAllCards().printCards()}")
@@ -56,7 +58,32 @@ class OutputView {
         }
     }
 
-    private fun List<Card>.printCards() = joinToString(SPLIT_DELIMITER) { "${it.cardNumber.value}${it.shape.value}" }
+    private fun List<Card>.printCards() = joinToString(SPLIT_DELIMITER) { "${it.cardNumber.toPrint()}${it.shape.toPrint()}" }
+
+    private fun CardNumber.toPrint() =
+        when (this) {
+            CardNumber.TWO -> "2"
+            CardNumber.THIRD -> "3"
+            CardNumber.FOURTH -> "4"
+            CardNumber.FIFTH -> "5"
+            CardNumber.SIXTH -> "6"
+            CardNumber.SEVENTH -> "7"
+            CardNumber.EIGHTH -> "8"
+            CardNumber.NINTH -> "9"
+            CardNumber.TEN -> "10"
+            CardNumber.JACK -> "J"
+            CardNumber.QUEEN -> "Q"
+            CardNumber.KING -> "K"
+            CardNumber.ACE -> "A"
+        }
+
+    private fun Shape.toPrint() =
+        when (this) {
+            Shape.SPADE -> "스페이드"
+            Shape.HEART -> "하트"
+            Shape.DIAMOND -> "다이아몬드"
+            Shape.CLOVER -> "클로버"
+        }
 
     companion object {
         private const val SPLIT_DELIMITER = ", "
