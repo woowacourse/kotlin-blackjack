@@ -3,6 +3,8 @@ package blackjack.model.participant
 import blackjack.model.deck.Card
 import blackjack.model.deck.Deck
 import blackjack.model.deck.HandCards
+import blackjack.model.participant.state.Bust
+import blackjack.model.participant.state.ParticipantState
 import blackjack.util.CompetitionResult
 
 class Dealer private constructor() : GameParticipant(HandCards()) {
@@ -18,21 +20,17 @@ class Dealer private constructor() : GameParticipant(HandCards()) {
 
     fun gameResult(players: List<Player>): Map<String, CompetitionResult> =
         players.associate { player ->
-            val result = competitionResult(player)
+            val result = competitionResult(player.getState())
             player.name to result
         }
 
-    private fun competitionResult(player: Player): CompetitionResult =
-        when {
-            player.isBust() -> CompetitionResult.LOSE
+    private fun competitionResult(playerState: ParticipantState): CompetitionResult {
+        return when {
+            playerState is Bust -> CompetitionResult.LOSE
             isBust() -> CompetitionResult.WIN
-            player.isBlackjack() && isBlackjack() -> CompetitionResult.SAME
-            player.isBlackjack() -> CompetitionResult.WIN
-            isBlackjack() -> CompetitionResult.LOSE
-            player.getScore() < getScore() -> CompetitionResult.LOSE
-            player.getScore() > getScore() -> CompetitionResult.WIN
-            else -> CompetitionResult.SAME
+            else -> playerState.getResult(getScore())
         }
+    }
 
     companion object {
         private const val DEALER_HIT_THRESHOLD = 17
