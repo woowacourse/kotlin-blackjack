@@ -10,56 +10,50 @@ import blackjack.model.Player
 import blackjack.model.WinningState
 
 object OutputView {
-    fun printInitialStatus(participants: Participants) {
-        val dealer = participants.dealer
-        val players = participants.players
+    fun printParticipantsStatus(participants: Participants) {
+        val dealer = participants.getDealer()
+        val players = participants.getPlayers()
         println()
         println(
-            "${dealer.name}와 ${
-                players.map { it.name }.joinToString(", ")
+            "${dealer.getName()}와 ${
+                players.map { it.getName() }.joinToString(", ")
             }에게 2장을 나눠줬습니다.",
         )
-        println("${dealer.name} : ${cardToString(dealer.getCards().first())}")
-        players.forEach { println("${it.name}카드: ${it.getCards().joinToString(", ") { cardToString(it) }}") }
+        println("${dealer.getName()} : ${cardToString(dealer.getCards().first())}")
+        players.forEach { println("${it.getName()}카드: ${it.getCards().joinToString(", ") { cardToString(it) }}") }
         println()
     }
 
-    fun printParticipantStatus(participant: Participant) {
-        when (participant) {
-            is Player -> printPlayerStatus(participant)
-            is Dealer -> printDealerStatus(participant)
-        }
+    fun printPlayerStatus(player: Player) {
+        println("${player.getName()}카드 ${player.getCards().joinToString(", ") { cardToString(it) }}")
     }
 
-    private fun printPlayerStatus(player: Player) {
-        println("${player.name}카드 ${player.getCards().joinToString(", ") { cardToString(it) }}")
-    }
-
-    private fun printDealerStatus(dealer: Dealer) {
+    fun printDealerStatus(dealer: Dealer) {
         val count = dealer.getCards().size
         println()
         if (count > 2) {
-            println("${dealer.name}는 16이하라 ${count - 2}의 카드를 더 받았습니다.")
+            println("${dealer.getName()}는 16이하라 ${count - 2}의 카드를 더 받았습니다.")
         }
     }
 
-    fun printStatusAndScore(participants: Participants) {
+    fun printParticipantsStatusAndScore(participants: Participants) {
         println()
         participants.getAllParticipants().forEach { participant ->
             println(
-                "${participant.name}카드 ${
+                "${participant.getName()}카드 ${
                     participant.getCards().joinToString(", ") { cardToString(it) }
-                } - 결과: ${participant.calculateHandSum()}",
+                } - 결과: ${participant.getCardsSum()}",
             )
         }
     }
 
-    fun printResult(result: Map<Participant, WinningState>) {
+    fun printGameResult(result: Map<Participant, WinningState>) {
+        val playersCount = result.size - 1
         println("\n## 최종 승패")
         result.entries.forEach { (participant, winningState) ->
             when (participant) {
-                is Dealer -> printDealerResult(participant, winningState, result.size - 1)
-                is Player -> printParticipantResult(participant, winningState)
+                is Dealer -> printDealerResult(participant, winningState, playersCount)
+                is Player -> printPlayerResult(participant, winningState)
             }
         }
     }
@@ -67,13 +61,13 @@ object OutputView {
     private fun printDealerResult(
         dealer: Dealer,
         winningState: WinningState,
-        playerCount: Int,
+        playersCount: Int,
     ) {
-        val drawCount = playerCount - (winningState.wins + winningState.losses)
-        println("${dealer.name}: ${winningState.wins}승 ${winningState.losses}패 ${drawCount}무")
+        val drawCount = playersCount - (winningState.wins + winningState.losses)
+        println("${dealer.getName()}: ${winningState.wins}승 ${winningState.losses}패 ${drawCount}무")
     }
 
-    private fun printParticipantResult(
+    private fun printPlayerResult(
         participant: Participant,
         winningState: WinningState,
     ) {
@@ -83,7 +77,7 @@ object OutputView {
                 winningState.losses == 1 -> "패"
                 else -> "무"
             }
-        println("${participant.name}: $resultMessage")
+        println("${participant.getName()}: $resultMessage")
     }
 
     private fun cardToString(card: Card): String {

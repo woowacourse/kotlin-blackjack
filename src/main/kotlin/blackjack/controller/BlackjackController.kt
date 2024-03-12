@@ -1,40 +1,65 @@
 package blackjack.controller
 
-import blackjack.model.BlackjackGame
 import blackjack.model.CardDeck
 import blackjack.model.CardDeckGenerator
 import blackjack.model.Dealer
 import blackjack.model.ParticipantName
 import blackjack.model.Participants
 import blackjack.model.Player
-import blackjack.model.State
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
 class BlackjackController {
     fun play() {
         val deck = CardDeckGenerator.generate()
-        val participants = initialSetting(deck, InputView.readNames())
-        val blackjackGame = BlackjackGame(deck, participants)
-        OutputView.printInitialStatus(participants)
+        val participants = setupParticipants(deck, InputView.readNames())
+        OutputView.printParticipantsStatus(participants)
 
-        blackjackGame.playRound(
-            { playerName -> InputView.askMoreCard(playerName) },
-            { participant -> OutputView.printParticipantStatus(participant) },
-        )
+        playRound(deck, participants)
 
-        OutputView.printStatusAndScore(participants)
-        OutputView.printResult(blackjackGame.calculateResult())
+        OutputView.printParticipantsStatusAndScore(participants)
+        OutputView.printGameResult(participants.calculateResult())
     }
 
-    private fun initialSetting(
+    private fun setupParticipants(
         deck: CardDeck,
         names: List<String>,
     ): Participants {
-        val dealer = Dealer(state = State.setupState(deck.initialDistribute()))
+        val dealer = Dealer(hand = deck.createStartHand())
         val players: List<Player> =
-            names.map { Player(ParticipantName(it), State.setupState(deck.initialDistribute())) }
+            names.map { Player(ParticipantName(it), deck.createStartHand()) }
 
         return Participants(dealer, players)
+    }
+
+    private fun playRound(
+        deck: CardDeck,
+        participants: Participants,
+    ) {
+        playRoundForPlayers(deck, participants.getPlayers())
+        playRoundForDealer(deck, participants.getDealer())
+    }
+
+    private fun playRoundForPlayers(
+        deck: CardDeck,
+        players: List<Player>,
+    ) {
+        players.forEach { player ->
+            player.playRound(
+                { playerName -> InputView.askMoreCard(playerName) },
+                { playerAfterRound -> OutputView.printPlayerStatus(playerAfterRound) },
+                deck,
+            )
+        }
+    }
+
+    private fun playRoundForDealer(
+        deck: CardDeck,
+        dealer: Dealer,
+    ) {
+        dealer.playRound(
+            { dealerAfterRound -> OutputView.printDealerStatus(dealerAfterRound) },
+            deck,
+        )
     }
 }
