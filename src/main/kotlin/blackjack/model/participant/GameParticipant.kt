@@ -11,8 +11,9 @@ abstract class GameParticipant(protected val handCards: HandCards) {
 
     fun getScore(): Int = handCards.calculateCardScore()
 
+    fun addCard() = handCards.add()
+
     companion object {
-        const val SPLIT_DELIMITER = ", "
         const val BLACKJACK_NUMBER = 21
     }
 }

@@ -7,13 +7,7 @@ import blackjack.model.deck.HandCards
 class Dealer(deck: Deck) : GameParticipant(HandCards(deck)) {
     fun getFirstCard(): String = handCards.getFirstCard()
 
-    fun addCard(): Boolean =
-        if (handCards.calculateCardScore() < DEALER_HIT_THRESHOLD) {
-            handCards.add()
-            true
-        } else {
-            false
-        }
+    fun isAddCard(): Boolean = handCards.calculateCardScore() < DEALER_HIT_THRESHOLD
 
     fun gameResult(players: List<Player>): Map<String, CompetitionResult> =
         players.associate { player ->

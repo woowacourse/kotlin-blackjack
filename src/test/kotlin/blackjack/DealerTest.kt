@@ -28,7 +28,7 @@ class DealerTest {
 
     @Test
     fun `딜러 카드 합은 16이하이므로 카드 한장을 더 받을 수 있다`() {
-        assertThat(dealer.addCard()).isTrue
+        assertThat(dealer.isAddCard()).isTrue
     }
 
     @Test

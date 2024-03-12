@@ -20,7 +20,7 @@ class PlayerTest {
     @Test
     fun `플레이어는 카드의 합이 21 이하일 시 카드를 추가로 받을 수 있다`() {
         assertThat(player.getAllCards().split(", ").size).isEqualTo(START_CARD_SIZE)
-        player.addCard(true)
+        player.addCard()
         assertThat(player.getAllCards().split(", ").size).isEqualTo(START_CARD_SIZE + 1)
     }
 
@@ -28,7 +28,7 @@ class PlayerTest {
     fun `플레이어의 카드의 합이 21 초과일 시 버스트된다`() {
         val deck = Deck(BustCardMachine())
         val player = Player("채채", deck)
-        player.addCard(true)
+        player.addCard()
         assertThat(player.isBust()).isTrue()
     }
 

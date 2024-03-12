@@ -20,7 +20,7 @@ class BlackjackController(
     fun play() {
         setUpGame()
         gamePlayersTurn()
-        dealerTurn(dealer)
+        dealerTurn()
         showResult()
     }
 
@@ -39,17 +39,18 @@ class BlackjackController(
         if (player.isBust()) {
             outputView.printBustMessage()
             return
-        }
-        if (player.addCard(isAddCardInputView.readIsAddCard(player.name))) {
+        } else if (isAddCardInputView.readIsAddCard(player.name)) {
+            player.addCard()
             outputView.printPlayerCard(player)
             playerTurn(player)
         }
     }
 
-    private tailrec fun dealerTurn(dealer: Dealer) {
-        if (dealer.addCard()) {
+    private tailrec fun dealerTurn() {
+        if (dealer.isAddCard()) {
+            dealer.addCard()
             outputView.printDealerAddCard()
-            dealerTurn(dealer)
+            dealerTurn()
         }
     }
 
