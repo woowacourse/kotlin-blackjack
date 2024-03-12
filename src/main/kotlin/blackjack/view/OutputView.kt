@@ -1,10 +1,10 @@
 package blackjack.view
 
 import blackjack.model.deck.Card
+import blackjack.model.participant.CompetitionResult
 import blackjack.model.participant.Dealer
 import blackjack.model.participant.Player
 import blackjack.model.participant.Players
-import blackjack.util.CompetitionResult
 
 class OutputView {
     fun printInitCard(

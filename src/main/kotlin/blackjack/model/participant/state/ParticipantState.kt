@@ -1,6 +1,6 @@
 package blackjack.model.participant.state
 
-import blackjack.util.CompetitionResult
+import blackjack.model.participant.CompetitionResult
 
 fun interface ParticipantState {
     fun getResult(opponentScore: Int): CompetitionResult

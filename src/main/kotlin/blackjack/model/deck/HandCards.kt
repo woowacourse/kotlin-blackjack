@@ -1,7 +1,5 @@
 package blackjack.model.deck
 
-import blackjack.util.CardNumber
-
 class HandCards {
     private val _cards: MutableList<Card> = mutableListOf()
     val cards: List<Card>

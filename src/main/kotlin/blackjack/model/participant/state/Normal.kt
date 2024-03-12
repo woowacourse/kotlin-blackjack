@@ -1,6 +1,6 @@
 package blackjack.model.participant.state
 
-import blackjack.util.CompetitionResult
+import blackjack.model.participant.CompetitionResult
 
 class Normal(private val myScore: Int) : ParticipantState {
     override fun getResult(opponentScore: Int): CompetitionResult {

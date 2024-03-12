@@ -1,9 +1,9 @@
 package blackjack
 
 import blackjack.model.deck.Card
+import blackjack.model.deck.CardNumber
 import blackjack.model.deck.HandCards
-import blackjack.util.CardNumber
-import blackjack.util.Shape
+import blackjack.model.deck.Shape
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test

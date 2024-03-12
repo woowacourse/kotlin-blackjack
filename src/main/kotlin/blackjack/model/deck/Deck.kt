@@ -1,8 +1,5 @@
 package blackjack.model.deck
 
-import blackjack.util.CardNumber
-import blackjack.util.Shape
-
 class Deck(private val cardMachine: CardMachine = ShuffleCardMachine()) {
     private val cards: MutableList<Card>
 

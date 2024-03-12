@@ -5,7 +5,6 @@ import blackjack.model.deck.Deck
 import blackjack.model.deck.HandCards
 import blackjack.model.participant.state.Bust
 import blackjack.model.participant.state.ParticipantState
-import blackjack.util.CompetitionResult
 
 class Dealer private constructor() : GameParticipant(HandCards()) {
     fun getFirstCard() = handCards.cards.first()

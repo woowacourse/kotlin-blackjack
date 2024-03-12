@@ -1,4 +1,4 @@
-package blackjack.util
+package blackjack.model.deck
 
 enum class Shape(val value: String) {
     SPADE("스페이드"),

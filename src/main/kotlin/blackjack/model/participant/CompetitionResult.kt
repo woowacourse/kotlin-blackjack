@@ -1,4 +1,4 @@
-package blackjack.util
+package blackjack.model.participant
 
 enum class CompetitionResult(val result: String) {
     WIN("승"),
