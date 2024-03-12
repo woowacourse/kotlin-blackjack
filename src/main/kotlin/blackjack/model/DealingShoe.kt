@@ -1,6 +1,6 @@
 package blackjack.model
 
-class DeckManager {
+class DealingShoe {
     private val deck: Deck = Deck()
 
     fun initGame(

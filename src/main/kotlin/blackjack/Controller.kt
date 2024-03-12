@@ -1,14 +1,14 @@
 package blackjack
 
 import blackjack.model.Dealer
-import blackjack.model.DeckManager
+import blackjack.model.DealingShoe
 import blackjack.model.GameStatistics
 import blackjack.model.Player
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
 class Controller {
-    private val deckManager = DeckManager()
+    private val dealingShoe = DealingShoe()
 
     fun run() {
         val players = makePlayers()
@@ -27,7 +27,7 @@ class Controller {
         dealer: Dealer,
         players: List<Player>,
     ) {
-        deckManager.initGame(dealer, players)
+        dealingShoe.initGame(dealer, players)
         OutputView.printInitialResult(dealer, players)
     }
 
@@ -36,21 +36,21 @@ class Controller {
         players: List<Player>,
     ) {
         players.forEach { player ->
-            proceedPlayerTurn(player, deckManager)
+            proceedPlayerTurn(player, dealingShoe)
         }
-        proceedDealerTurn(dealer, deckManager)
+        proceedDealerTurn(dealer, dealingShoe)
     }
 
     private fun proceedPlayerTurn(
         player: Player,
-        deckManager: DeckManager,
+        dealingShoe: DealingShoe,
     ) {
         if (player.isMaxScore()) {
             OutputView.printBlackJackMessage(player)
             return
         }
         while (player.isHitable() && askPick(player.name)) {
-            deckManager giveCardTo player
+            dealingShoe giveCardTo player
             OutputView.printParticipantStatus(player)
         }
         if (player.isBusted()) {
@@ -64,10 +64,10 @@ class Controller {
 
     private fun proceedDealerTurn(
         dealer: Dealer,
-        deckManager: DeckManager,
+        dealingShoe: DealingShoe,
     ) {
         while (dealer.isHitable()) {
-            deckManager giveCardTo dealer
+            dealingShoe giveCardTo dealer
             OutputView.printDealerHitMessage()
         }
     }
