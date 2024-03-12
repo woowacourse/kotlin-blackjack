@@ -21,15 +21,15 @@ class Participants(
     fun matchResult() {
         playerGroup.players.forEach { player ->
             when (dealer.status.state) {
-                BUST -> checkBust(player = player)
-                BLACKJACK -> checkBlackJack(player = player)
-                STAY -> checkStay(player = player)
+                BUST -> decideWinnerOnBust(player = player)
+                BLACKJACK -> decideWinnerOnBlackJack(player = player)
+                STAY -> decideWinnerOnStay(player = player)
                 else -> throw IllegalStateException()
             }
         }
     }
 
-    private fun checkBust(player: Player) {
+    private fun decideWinnerOnBust(player: Player) {
         if (player.status.state == BUST) {
             winAndLose(winner = dealer, loser = player)
         } else {
@@ -37,7 +37,7 @@ class Participants(
         }
     }
 
-    private fun checkBlackJack(player: Player) {
+    private fun decideWinnerOnBlackJack(player: Player) {
         if (player.status.state == BLACKJACK) {
             draw(player = player, dealer = dealer)
         } else {
@@ -45,7 +45,7 @@ class Participants(
         }
     }
 
-    private fun checkStay(player: Player) {
+    private fun decideWinnerOnStay(player: Player) {
         if (player.status.state == BUST) {
             winAndLose(winner = dealer, loser = player)
         } else {
