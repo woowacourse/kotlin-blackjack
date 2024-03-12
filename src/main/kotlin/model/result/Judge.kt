@@ -1,7 +1,7 @@
 package model.result
 
 import model.participants.Dealer
-import model.participants.HumanName
+import model.participants.ParticipantName
 import model.participants.Players
 import model.result.Point.Companion.compareTo
 
@@ -11,12 +11,12 @@ object Judge {
         dealer: Dealer,
     ): PlayersResult {
         val dealerPoint = dealer.getPointIncludingAce()
-        val playersResult = mutableMapOf<HumanName, ResultType>()
+        val playersResult = mutableMapOf<ParticipantName, ResultType>()
 
         players.players.forEach { player ->
             val playerPoint = player.getPointIncludingAce()
             val result = calculateResult(playerPoint, dealerPoint)
-            playersResult[player.humanName] = result
+            playersResult[player.participantName] = result
         }
 
         return PlayersResult(playersResult)

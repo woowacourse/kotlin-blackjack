@@ -4,7 +4,7 @@ import model.card.Deck
 import model.participants.Answer
 import model.participants.Dealer
 import model.participants.Hand
-import model.participants.HumanName
+import model.participants.ParticipantName
 import model.participants.Player
 import model.participants.Players
 import model.result.Judge
@@ -59,8 +59,8 @@ class GameController(private val deck: Deck) {
         }
     }
 
-    private fun readAnswer(humanName: HumanName): Answer {
-        return InputView.readAnswer(humanName).run {
+    private fun readAnswer(participantName: ParticipantName): Answer {
+        return InputView.readAnswer(participantName).run {
             Answer.fromInput(this)
         }
     }
@@ -79,7 +79,7 @@ class GameController(private val deck: Deck) {
     }
 
     private fun playOfOnePlayer(player: Player) {
-        while (playByAnswer(readAnswer(player.humanName), player)) ;
+        while (playByAnswer(readAnswer(player.participantName), player)) ;
     }
 
     private fun showGameResult(

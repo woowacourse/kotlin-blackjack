@@ -4,7 +4,7 @@ import TestDeck
 import model.card.Card
 import model.participants.Dealer
 import model.participants.Hand
-import model.participants.HumanName
+import model.participants.ParticipantName
 import model.participants.Players
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
@@ -42,7 +42,7 @@ class JudgeTest {
 
         dealer.play()
 
-        val expected = mapOf(HumanName.fromInput("pang") to ResultType.DRAW, HumanName.fromInput("ack") to ResultType.LOSE)
+        val expected = mapOf(ParticipantName.fromInput("pang") to ResultType.DRAW, ParticipantName.fromInput("ack") to ResultType.LOSE)
         val result = Judge.getPlayersResult(players, dealer)
         assertThat(result.result.values == expected.values)
     }
@@ -50,7 +50,7 @@ class JudgeTest {
     @Test
     fun testGetDealerResult() {
         val playersResult =
-            PlayersResult(mapOf(HumanName.fromInput("pang") to ResultType.DRAW, HumanName.fromInput("ack") to ResultType.LOSE))
+            PlayersResult(mapOf(ParticipantName.fromInput("pang") to ResultType.DRAW, ParticipantName.fromInput("ack") to ResultType.LOSE))
         val dealerResult = Judge.getDealerResult(playersResult)
 
         val expected = mapOf(ResultType.DRAW to 1, ResultType.WIN to 1)

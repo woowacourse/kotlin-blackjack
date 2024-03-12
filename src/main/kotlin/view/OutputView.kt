@@ -4,7 +4,7 @@ import model.card.MarkType
 import model.card.ValueType
 import model.participants.Dealer
 import model.participants.Hand
-import model.participants.Human
+import model.participants.Participant
 import model.participants.Players
 import model.result.DealerResult
 import model.result.PlayersResult
@@ -24,7 +24,7 @@ object OutputView {
     }
 
     private fun showInitHeader(players: Players) {
-        println(HEADER_GAME_INITIAL_STATE.format(players.players.joinToString(", ") { it.humanName.name }))
+        println(HEADER_GAME_INITIAL_STATE.format(players.players.joinToString(", ") { it.participantName.name }))
     }
 
     private fun showHands(
@@ -37,15 +37,17 @@ object OutputView {
     }
 
     private fun showDealerHandOnlyOne(dealer: Dealer) {
-        println("${dealer.humanName.name}: ${getFirstCardFromHand(dealer.hand)}")
+        println("${dealer.participantName.name}: ${getFirstCardFromHand(dealer.hand)}")
     }
 
-    fun showHumanHand(human: Human) {
-        println("${human.humanName.name}: ${getCardsFromHand(human.hand)}")
+    fun showHumanHand(participant: Participant) {
+        println("${participant.participantName.name}: ${getCardsFromHand(participant.hand)}")
     }
 
-    fun showHumanHandWithResult(human: Human) {
-        println("${human.humanName.name}: ${getCardsFromHand(human.hand)} - 결과: ${human.getPointIncludingAce().amount}")
+    fun showHumanHandWithResult(participant: Participant) {
+        println(
+            "${participant.participantName.name}: ${getCardsFromHand(participant.hand)} - 결과: ${participant.getPointIncludingAce().amount}",
+        )
     }
 
     fun showPlayersHandWithResult(players: Players) {
@@ -58,9 +60,13 @@ object OutputView {
         }
     }
 
-    private fun getCardsFromHand(hand: Hand): String = hand.cards.joinToString(", ") { getValueFromType(it.valueType) + getMarkFromType(it.markType) }
+    private fun getCardsFromHand(hand: Hand): String =
+        hand.cards.joinToString(", ") {
+            getValueFromType(it.valueType) + getMarkFromType(it.markType)
+        }
 
-    private fun getFirstCardFromHand(hand: Hand): String = getValueFromType(hand.cards.first().valueType) + getMarkFromType(hand.cards.first().markType)
+    private fun getFirstCardFromHand(hand: Hand): String =
+        getValueFromType(hand.cards.first().valueType) + getMarkFromType(hand.cards.first().markType)
 
     fun showDealerHit() = println(HEADER_DRAW_CARDS_FOR_DEALER)
 
@@ -79,7 +85,7 @@ object OutputView {
         playersResult: PlayersResult,
     ) {
         players.players.forEach { player ->
-            println("${player.humanName.name}: ${playersResult.result.getOrDefault(player.humanName, ResultType.DRAW).word}")
+            println("${player.participantName.name}: ${playersResult.result.getOrDefault(player.participantName, ResultType.DRAW).word}")
         }
     }
 
@@ -88,15 +94,16 @@ object OutputView {
     }
 
     private fun getMarkFromType(markType: MarkType): String {
-        return when(markType) {
+        return when (markType) {
             MarkType.SPADE -> "스페이드"
             MarkType.CLOVER -> "클로버"
             MarkType.HEART -> "하트"
             MarkType.DIAMOND -> "다이아몬드"
         }
     }
+
     private fun getValueFromType(valueType: ValueType): String {
-        return when(valueType) {
+        return when (valueType) {
             ValueType.ACE -> "A"
             ValueType.TWO -> "2"
             ValueType.THREE -> "3"

@@ -1,6 +1,12 @@
 package model.participants
 
-class Dealer(override val hand: Hand, override val humanName: HumanName = HumanName.fromInput("딜러")) : Human(hand, humanName) {
+class Dealer(
+    override val hand: Hand,
+    override val participantName: ParticipantName =
+        ParticipantName.fromInput(
+            "딜러",
+        ),
+) : Participant(hand, participantName) {
     fun play(): Int {
         var hitCount = 0
 

@@ -4,7 +4,7 @@ import model.card.Card
 import model.result.Point
 import model.result.Point.Companion.compareTo
 
-abstract class Human(open val hand: Hand, open val humanName: HumanName) {
+abstract class Participant(open val hand: Hand, open val participantName: ParticipantName) {
     fun getPointIncludingAce(): Point {
         return if (hand.hasAce()) {
             decideAceValue()

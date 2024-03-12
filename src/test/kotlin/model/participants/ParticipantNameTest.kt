@@ -5,13 +5,13 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 import java.lang.IllegalArgumentException
 
-class HumanNameTest {
+class ParticipantNameTest {
     @ParameterizedTest
     @ValueSource(strings = ["OverflowNaming", "", "YoonSongHyun", "HwangTaeJune"])
     fun `이름의 길이가 10을 초과시 예외 발생`(name: String) {
         assertThatThrownBy {
-            HumanName.fromInput(name)
+            ParticipantName.fromInput(name)
         }.isExactlyInstanceOf(IllegalArgumentException::class.java)
-            .hasMessage(HumanName.ERROR_INVALID_LENGTH)
+            .hasMessage(ParticipantName.ERROR_INVALID_LENGTH)
     }
 }

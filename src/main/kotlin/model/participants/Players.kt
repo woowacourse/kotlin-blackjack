@@ -11,7 +11,7 @@ class Players private constructor(val players: List<Player>) {
             deck: Deck,
         ): Players {
             return names.validateLength().map {
-                Player(Hand(deck), HumanName.fromInput(it))
+                Player(Hand(deck), ParticipantName.fromInput(it))
             }.run {
                 Players(this)
             }
