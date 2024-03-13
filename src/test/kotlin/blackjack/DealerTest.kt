@@ -22,14 +22,14 @@ class DealerTest {
     }
 
     @Test
-    fun `카드 한장 뽑기`() {
+    fun `카드 한장 뽑아서 딜러의 손패에 추가하기`() {
         dealer.draw(cardDeck.pickCard())
 
         assertThat(dealer.gameInformation.cards.size).isEqualTo(1)
     }
 
     @Test
-    fun `카드 추가로 뽑기`() {
+    fun `딜러 카드 자동으로 추가로 뽑을때 손패 및 상태 변경 확인`() {
         dealer.draw(Card(CardNumber.TWO, CardSymbol.SPADE))
         dealer.draw(Card(CardNumber.THREE, CardSymbol.SPADE))
         dealer.judgeDrawOrNot(cardDeck) { OutputView.outputDealerDraw(dealer) }
