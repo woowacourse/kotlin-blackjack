@@ -92,22 +92,22 @@ object BlackJackController {
         showPlayerEntry(playersName.joinToString(", "))
         val hands = dealingCards(playersName, deck)
         val dealer = setDealer(hands)
-        val playerEntry = setPlayerEntry(playersName, hands)
+        val playerEntry = makePlayerEntry(playersName, hands)
         showHands(dealer, playerEntry)
         return Pair(dealer, playerEntry)
     }
 
-    private fun setPlayerEntry(
+    private fun makePlayerEntry(
         playersName: List<String>,
         hands: List<Hand>,
     ): PlayerEntry {
         val players =
-            setPlayers(playersName, hands)
+            makePlayers(playersName, hands)
         val playerEntry = PlayerEntry(players)
         return playerEntry
     }
 
-    private fun setPlayers(
+    private fun makePlayers(
         playersName: List<String>,
         hands: List<Hand>,
     ) = playersName.withIndex().map { (index, playerName) ->
