@@ -41,7 +41,6 @@ class BlackJackController {
             playPlayer(participant)
         }
         playDealer()
-        gameManager.judgeBlackJackScores()
     }
 
     private fun playPlayer(participant: Participant) {
@@ -72,12 +71,13 @@ class BlackJackController {
     fun showResult() {
         OutputView.outputParticipantsHandCard(gameManager.getParticipants())
         OutputView.outputBlackResult()
+        val gameResult = gameManager.calculateGameResult()
         OutputView.outputDealerResult(
             dealerName = gameManager.getDealer().getName(),
-            dealerResults = gameManager.getDealerResults(),
+            dealerResults = gameResult.dealerResult,
         )
         OutputView.outputPlayersResult(
-            playersResult = gameManager.getPlayerResults(),
+            playersResult = gameResult.playerResults,
         )
     }
 

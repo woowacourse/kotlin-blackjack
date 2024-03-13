@@ -118,7 +118,7 @@ object OutputView {
 
     fun outputDealerResult(
         dealerName: String,
-        dealerResults: MutableMap<Result, Int>,
+        dealerResults: Map<Result, Int>,
     ) {
         val dealerResultNames =
             dealerResults.map { (result, count) ->
@@ -127,7 +127,7 @@ object OutputView {
         println("$dealerName: ${dealerResultNames.joinToString(SPACE)}")
     }
 
-    fun outputPlayersResult(playersResult: MutableMap<Player, Result>) {
+    fun outputPlayersResult(playersResult: Map<Player, Result>) {
         playersResult.forEach { (player, result) ->
             outputPlayerResult(
                 name = player.getName(),
