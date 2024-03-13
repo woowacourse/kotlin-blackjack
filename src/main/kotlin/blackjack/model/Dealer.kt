@@ -7,11 +7,25 @@ class Dealer(hand: Hand) : Participant(hand) {
     }
 
     fun createScoreBoard(players: List<Player>): ScoreBoard {
+        val results = comparePoints(players)
+        return ScoreBoard.from(results)
+    }
+
+    private fun comparePoints(players: List<Player>): List<PlayerResult> {
         val results: List<PlayerResult> =
             players.map { player ->
-                PlayerResult(player.name, player.comparePoints(this))
+                comparePointsEachPlayer(player)
             }
-        return ScoreBoard.from(results)
+        return results
+    }
+
+    private fun comparePointsEachPlayer(player: Player): PlayerResult {
+        val dealerCards = this.hand
+        val playerCards = player.hand
+        val compared = playerCards.sumOptimized() compareTo dealerCards.sumOptimized()
+        if (playerCards.isBust()) return PlayerResult(player.name, WinningState.LOSS)
+        if (dealerCards.isBust()) return PlayerResult(player.name, WinningState.WIN)
+        return PlayerResult(player.name, WinningState.from(compared))
     }
 
     companion object {
