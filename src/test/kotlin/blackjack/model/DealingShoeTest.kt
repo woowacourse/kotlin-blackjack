@@ -14,6 +14,14 @@ class DealingShoeTest {
     private lateinit var player: Player
     private lateinit var dealingShoe: DealingShoe
 
+    @Test
+    fun `2하트가 남아 있을 때, draw 시 2하트가 나와야 한다`() {
+        val dealingShoeWithTwoHeart = DealingShoe(listOf(twoHeartCard))
+        dealingShoeWithTwoHeart giveCardTo player
+        val actual = player.showCard()
+        assertThat(actual).isEqualTo(listOf(twoHeartCard))
+    }
+
     @BeforeEach
     fun `딜러와 빙티, 4장의 카드로 테스트를 진행한다`() {
         dealer = Dealer()
