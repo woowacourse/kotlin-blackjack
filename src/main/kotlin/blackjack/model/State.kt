@@ -35,7 +35,6 @@ class Hit(private val hand: Hand) : Running(hand) {
         val sumOfCard = hand.sumUpCardValues()
         return when {
             sumOfCard > State.THRESHOLD_BUST -> Bust(hand)
-            sumOfCard == State.THRESHOLD_BUST -> Stay(hand)
             else -> Hit(hand)
         }
     }
