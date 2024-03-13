@@ -1,7 +1,9 @@
 package blackjack.model
 
-class Deck(private val deck: MutableList<Card>) {
-    constructor() : this(oneDeck.shuffled().toMutableList())
+class Deck(cardList: List<Card>) {
+    private val deck: MutableList<Card> = cardList.toMutableList()
+
+    constructor() : this(oneDeck.shuffled())
 
     private var idx = 0
 
