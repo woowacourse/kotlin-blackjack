@@ -22,7 +22,8 @@ class GameInformation(cards: Set<Card> = emptySet(), state: GameState = GameStat
         _state =
             when {
                 ScoreCalculator.calculateScore(cards) > BLACKJACK_SCORE -> GameState.Finished.BUST
-                ScoreCalculator.calculateScore(cards) == BLACKJACK_SCORE -> GameState.Finished.BLACKJACK
+                ScoreCalculator.calculateScore(cards) == BLACKJACK_SCORE ->
+                    if (cards.size == 2) GameState.Finished.BLACKJACK else GameState.Finished.STAY
                 else -> GameState.Running.HIT
             }
     }
