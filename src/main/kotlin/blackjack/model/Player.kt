@@ -7,6 +7,10 @@ class Player(name: String) : Participant(name) {
         }
     }
 
+    override fun openInitCards(): List<Card>? {
+        return getCards().take(2).ifEmpty { null }
+    }
+
     companion object {
         private const val MAX_NAME_LENGTH = 8
         private const val ERROR_NAME_LENGTH = "사용자 이름은 최대 ${MAX_NAME_LENGTH}자 입니다."

@@ -6,6 +6,8 @@ abstract class Participant(
     private val name: String,
     private val blackJack: BlackJack = BlackJack(),
 ) {
+    abstract fun openInitCards(): List<Card>?
+
     fun draw(card: Card) {
         blackJack.addCard(card)
     }
