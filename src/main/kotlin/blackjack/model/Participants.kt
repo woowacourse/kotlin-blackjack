@@ -1,5 +1,7 @@
 package blackjack.model
 
+import blackjack.model.role.PlayerName
+
 data class Participants(val dealer: Dealer, val players: Players) {
     fun addInitialCards() {
         dealer.addInitialCards()

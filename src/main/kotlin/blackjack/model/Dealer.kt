@@ -2,6 +2,7 @@ package blackjack.model
 
 import blackjack.model.card.CardHand
 import blackjack.model.card.CardHandState
+import blackjack.model.role.PlayerName
 
 data class Dealer(override val cardHand: CardHand) : Role(name = PlayerName(DEALER), cardHand) {
     override fun getState(): CardHandState {

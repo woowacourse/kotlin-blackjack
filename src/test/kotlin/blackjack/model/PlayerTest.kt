@@ -5,6 +5,7 @@ import blackjack.model.card.CardHand
 import blackjack.model.card.CardHandState
 import blackjack.model.card.CardNumber
 import blackjack.model.card.CardShape
+import blackjack.model.role.PlayerName
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

@@ -1,5 +1,7 @@
 package blackjack.model
 
+import blackjack.model.role.PlayerName
+
 class Referee {
     fun judgeWinningResult(
         dealerSum: Int,

@@ -3,11 +3,11 @@ package blackjack.controller
 import blackjack.model.Dealer
 import blackjack.model.Participants
 import blackjack.model.Player
-import blackjack.model.PlayerName
 import blackjack.model.Players
 import blackjack.model.Referee
 import blackjack.model.card.CardHand
 import blackjack.model.card.CardHandState
+import blackjack.model.role.PlayerName
 import blackjack.view.InputView
 import blackjack.view.OutputView
 

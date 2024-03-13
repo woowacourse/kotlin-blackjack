@@ -1,4 +1,4 @@
-package blackjack.model
+package blackjack.model.role
 
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test

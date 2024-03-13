@@ -1,4 +1,4 @@
-package blackjack.model
+package blackjack.model.role
 
 @JvmInline
 value class PlayerName(val name: String) {

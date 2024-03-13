@@ -1,5 +1,6 @@
 package blackjack.model
 
+import blackjack.model.role.PlayerName
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
