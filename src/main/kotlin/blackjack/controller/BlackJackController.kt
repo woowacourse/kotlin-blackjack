@@ -79,7 +79,7 @@ class BlackJackController {
 
     private fun setUserDecision(participant: Participant): Boolean {
         return try {
-            gameManager.applyUserDrawDecision(participant)
+            gameManager.drawCardForParticipant(participant)
             true
         } catch (e: IllegalArgumentException) {
             println(e.message)

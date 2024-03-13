@@ -35,7 +35,7 @@ class GameManager(
         }
     }
 
-    fun applyUserDrawDecision(participant: Participant) {
+    fun drawCardForParticipant(participant: Participant) {
         participant.draw(cardDeck.draw())
     }
 
