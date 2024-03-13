@@ -1,15 +1,17 @@
 package model.participants
 
+import model.ParticipantState
 import model.card.Card
 import model.card.Deck
+import model.result.Point.Companion.compareTo
 
 class Dealer(
-    override val hand: Hand,
+    override var participantState: ParticipantState,
     override val participantName: ParticipantName =
         ParticipantName.fromInput(
-            "딜러",
+            DEFAULT_NAME,
         ),
-) : Participant(hand, participantName) {
+) : Participant(participantState, participantName) {
     fun play(deck: Deck): Int {
         var hitCount = 0
 
@@ -20,18 +22,10 @@ class Dealer(
 
         return hitCount
     }
-
-    override fun hit(card: Card): Boolean {
-        if (canHit()) {
-            hand.draw(card)
-            return canHit()
-        }
-        return false
-    }
-
-    override fun canHit(): Boolean = getPointIncludingAce().amount <= HIT_THRESHOLD
+    override fun canHit(): Boolean = getPointWithAce() <= HIT_THRESHOLD
 
     companion object {
         private const val HIT_THRESHOLD = 16
+        private const val DEFAULT_NAME = "딜러"
     }
 }

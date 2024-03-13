@@ -1,23 +1,19 @@
 package model.participants
 
+import model.ParticipantState
 import model.card.Card
-import model.card.Deck
 import model.result.Point.Companion.compareTo
 
 class Player(
-    override val hand: Hand,
+    override var participantState: ParticipantState,
     override val participantName: ParticipantName =
         ParticipantName.fromInput(
-            "Player",
+            DEFAULT_NAME
         ),
-) : Participant(hand, participantName) {
-    override fun hit(card: Card): Boolean {
-        if (canHit()) {
-            hand.draw(card)
-            return canHit()
-        }
-        return false
-    }
+) : Participant(participantState, participantName) {
+    override fun canHit(): Boolean = getPointWithAce() < BUST_BOUND
 
-    override fun canHit(): Boolean = getPointIncludingAce() < BUST_BOUND
+    companion object {
+        const val DEFAULT_NAME = "Player"
+    }
 }

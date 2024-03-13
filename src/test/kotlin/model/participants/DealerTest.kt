@@ -1,6 +1,7 @@
 package model.participants
 
 import DeckExplicitGeneration
+import model.ParticipantState
 import model.card.Card
 import model.card.Deck
 import model.card.MarkType
@@ -30,9 +31,9 @@ class DealerTest {
 
     @Test
     fun `play가 끝나면 핸드의 합은 17 이상이다`() {
-        val dealer = Dealer(Hand())
+        val dealer = Dealer(ParticipantState.Playing(Hand()))
         dealer.play(testDeck)
 
-        assertThat(dealer.hand.point >= 17).isTrue
+        assertThat(dealer.participantState.hand.point >= 17).isTrue
     }
 }

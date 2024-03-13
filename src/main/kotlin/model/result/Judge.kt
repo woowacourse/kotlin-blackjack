@@ -10,11 +10,11 @@ object Judge {
         players: Players,
         dealer: Dealer,
     ): PlayersResult {
-        val dealerPoint = dealer.getPointIncludingAce()
+        val dealerPoint = dealer.getPointWithAce()
         val playersResult = mutableMapOf<ParticipantName, ResultType>()
 
         players.players.forEach { player ->
-            val playerPoint = player.getPointIncludingAce()
+            val playerPoint = player.getPointWithAce()
             val result = calculateResult(playerPoint, dealerPoint)
             playersResult[player.participantName] = result
         }

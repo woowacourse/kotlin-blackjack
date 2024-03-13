@@ -1,6 +1,7 @@
 package model.result
 
 import DeckExplicitGeneration
+import model.ParticipantState
 import model.card.Card
 import model.card.Deck
 import model.card.MarkType
@@ -37,7 +38,7 @@ class JudgeTest {
     @Test
     fun `게임을 플레이 했을 때 결과를 판단할 수 있다`() {
         val players = Players.ofList(listOf("pang", "ack"))
-        val dealer = Dealer(Hand())
+        val dealer = Dealer(ParticipantState.Playing(Hand()))
         players.players.forEach {
             it.hit(testDeck.pop())
             it.hit(testDeck.pop())

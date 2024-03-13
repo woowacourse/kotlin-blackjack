@@ -37,16 +37,16 @@ object OutputView {
     }
 
     private fun showDealerHandOnlyOne(dealer: Dealer) {
-        println("${dealer.participantName.name}: ${getFirstCardFromHand(dealer.hand)}")
+        println("${dealer.participantName.name}: ${getFirstCardFromHand(dealer.participantState.hand)}")
     }
 
     fun showHumanHand(participant: Participant) {
-        println("${participant.participantName.name}: ${getCardsFromHand(participant.hand)}")
+        println("${participant.participantName.name}: ${getCardsFromHand(participant.participantState.hand)}")
     }
 
     fun showHumanHandWithResult(participant: Participant) {
         println(
-            "${participant.participantName.name}: ${getCardsFromHand(participant.hand)} - 결과: ${participant.getPointIncludingAce().amount}",
+            "${participant.participantName.name}: ${getCardsFromHand(participant.participantState.hand)} - 결과: ${participant.getPointWithAce().amount}",
         )
     }
 

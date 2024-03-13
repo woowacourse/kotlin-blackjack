@@ -1,5 +1,6 @@
 package controller
 
+import model.ParticipantState
 import model.card.Deck
 import model.card.DeckRandomGeneration
 import model.participants.Answer
@@ -16,7 +17,7 @@ class GameController() {
     fun start() {
         val deck = Deck.create(DeckRandomGeneration())
 
-        val dealer = Dealer(Hand())
+        val dealer = Dealer(ParticipantState.Playing(Hand()))
         val players = handleException { readPlayers() }
 
         initGame(dealer = dealer, players = players, deck)
@@ -83,20 +84,23 @@ class GameController() {
         player: Player,
         deck: Deck,
     ): Boolean {
-        val isBusted =
-            when (answer) {
-                Answer.YES -> player.hit(deck.pop())
-                Answer.NO -> false
+        when(answer) {
+            Answer.YES -> {
+                player.hit(deck.pop())
             }
+            Answer.NO -> {
+
+            }
+        }
         OutputView.showHumanHand(player)
-        return isBusted
+        return answer == Answer.YES
     }
 
     private fun playOfOnePlayer(
         player: Player,
         deck: Deck,
     ) {
-        while (playByAnswer(readAnswer(player.participantName), player, deck)) ;
+        while (player.participantState is ParticipantState.Playing && playByAnswer(readAnswer(player.participantName), player, deck)) ;
     }
 
     private fun showGameResult(
