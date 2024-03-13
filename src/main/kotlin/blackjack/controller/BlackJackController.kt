@@ -74,7 +74,8 @@ object BlackJackController {
         deck: Deck,
     ): Pair<Dealer, PlayerEntry> {
         ProgressView.showPlayerEntry(playersName.joinToString(", "))
-        val hands = dealingCards(playersName, deck)
+        val playerSize = playersName.size + 1
+        val hands = dealingCards(playerSize, deck)
         val dealer = setDealer(hands)
         val playerEntry = makePlayerEntry(playersName, hands)
         ProgressView.showHands(dealer, playerEntry)
@@ -92,11 +93,11 @@ object BlackJackController {
     }
 
     private fun dealingCards(
-        playersName: List<String>,
+        playersSize: Int,
         deck: Deck,
     ): List<Hand> {
         val allDrawnCards = mutableListOf<List<Card>>()
-        repeat(playersName.size + 1) {
+        repeat(playersSize) {
             val drawnCards = mutableListOf<Card>()
             repeat(2) { drawnCards.add(deck.dealCard()) }
             allDrawnCards.add(drawnCards)
