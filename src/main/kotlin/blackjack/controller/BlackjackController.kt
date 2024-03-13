@@ -1,5 +1,6 @@
 package blackjack.controller
 
+import blackjack.model.BetAmount
 import blackjack.model.CardDeck
 import blackjack.model.CardDeckGenerator
 import blackjack.model.Dealer
@@ -29,9 +30,11 @@ class BlackjackController {
         deck: CardDeck,
         playerNames: List<ParticipantName>,
     ): Participants {
-        val players = playerNames.map { Player(it, createInitialHand(deck), InputView.readBetAmount(it)) }
+        val players =
+            playerNames.map { playerName ->
+                Player(playerName, createInitialHand(deck), BetAmount(InputView.readBetAmount(playerName)))
+            }
         val dealer = Dealer(hand = createInitialHand(deck))
-
         return Participants(dealer, players)
     }
 

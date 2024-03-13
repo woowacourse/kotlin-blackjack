@@ -12,7 +12,7 @@ private fun createFinishedPlayer(
     name: String,
     vararg numbers: Card,
     betAmount: Double = 1000.0,
-): Player = Player(ParticipantName(name), Hand(numbers.toList()), betAmount).apply { finishRound() }
+): Player = Player(ParticipantName(name), Hand(numbers.toList()), BetAmount(betAmount)).apply { finishRound() }
 
 class ParticipantsTest {
     @Test
