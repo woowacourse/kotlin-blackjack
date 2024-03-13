@@ -2,7 +2,11 @@ package view
 
 import model.card.MarkType
 import model.card.ValueType
-import model.participants.*
+import model.participants.Participants
+import model.participants.Dealer
+import model.participants.Players
+import model.participants.Hand
+import model.participants.Participant
 import model.result.DealerResult
 import model.result.PlayersResult
 import model.result.ResultType
@@ -71,7 +75,7 @@ object OutputView {
     fun showDealerResult(dealerResult: DealerResult) {
         println(
             "딜러: ${dealerResult.result.map {
-                it.value.toString() + it.key.word
+                it.value.toString() + getResultFromType(it.key)
             }.joinToString(" ")}",
         )
     }
@@ -81,7 +85,11 @@ object OutputView {
         playersResult: PlayersResult,
     ) {
         players.players.forEach { player ->
-            println("${player.participantName.name}: ${playersResult.result.getOrDefault(player.participantName, ResultType.DRAW).word}")
+            println(
+                "${player.participantName.name}: ${getResultFromType(
+                    playersResult.result.getOrDefault(player.participantName, ResultType.DRAW),
+                )}",
+            )
         }
     }
 
@@ -113,6 +121,14 @@ object OutputView {
             ValueType.JACK -> "J"
             ValueType.QUEEN -> "Q"
             ValueType.KING -> "K"
+        }
+    }
+
+    private fun getResultFromType(resultType: ResultType): String {
+        return when (resultType) {
+            ResultType.WIN -> "승"
+            ResultType.DRAW -> "무"
+            ResultType.LOSE -> "패"
         }
     }
 }

@@ -1,10 +1,10 @@
 package controller
 
-import model.participants.ParticipantState
 import model.card.Deck
 import model.participants.Dealer
 import model.participants.Hand
 import model.participants.ParticipantName
+import model.participants.ParticipantState
 import model.participants.Participants
 import model.participants.Player
 import model.participants.Players
