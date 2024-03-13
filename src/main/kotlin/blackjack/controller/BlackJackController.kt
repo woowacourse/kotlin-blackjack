@@ -71,6 +71,7 @@ object BlackJackController {
                 player.hand.draw(deck.dealCard())
                 showPlayerHand(player)
             } else {
+                player.state = State.Finished.Stay
                 break
             }
         }
