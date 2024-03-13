@@ -7,10 +7,7 @@ class BlackJack {
     private var state: State = State.Action.Hit
 
     fun checkDrawState(): Boolean {
-        return when (state) {
-            is State.Action.Hit -> true
-            is State.Finish -> false
-        }
+        return state.checkDrawState()
     }
 
     fun getBlackJackState(): State {
