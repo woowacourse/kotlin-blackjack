@@ -2,7 +2,7 @@ package blackjack.view
 
 import blackjack.model.GameInfo
 
-object OutputView {
+object GameRoundView {
     private const val MESSAGE_DISTRIBUTION = "%s와 %s에게 2장의 카드를 나누었습니다."
     private const val MESSAGE_CARD_INFO = "%s카드: %s"
     private const val MESSAGE_DEALER_HIT = "%s는 16이하라 한장의 카드를 더 받았습니다."

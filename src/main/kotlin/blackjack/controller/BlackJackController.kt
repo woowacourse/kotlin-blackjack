@@ -4,8 +4,8 @@ import blackjack.model.CardDeck
 import blackjack.model.Dealer
 import blackjack.model.Judge
 import blackjack.model.Players
+import blackjack.view.GameRoundView
 import blackjack.view.InputView
-import blackjack.view.OutputView
 import blackjack.view.ResultView
 
 object BlackJackController {
@@ -32,16 +32,16 @@ object BlackJackController {
     }
 
     private fun displayInitializedCards() {
-        OutputView.printInitialStats(dealer.dealerGameInfo, players.value.map { it.gameInfo })
+        GameRoundView.printInitialStats(dealer.dealerGameInfo, players.value.map { it.gameInfo })
     }
 
     private fun playRound() {
         runCatching {
             players.value.forEach { player ->
-                player.drawCardsUntilStand(CardDeck::pick, OutputView::printSinglePlayerCards)
+                player.drawCardsUntilStand(CardDeck::pick, GameRoundView::printSinglePlayerCards)
             }
-            OutputView.printNewLine()
-            dealer.drawCardsUntilStand(CardDeck::pick, OutputView::printDealerHit)
+            GameRoundView.printNewLine()
+            dealer.drawCardsUntilStand(CardDeck::pick, GameRoundView::printDealerHit)
         }.onFailure {
             println(it.message)
         }
