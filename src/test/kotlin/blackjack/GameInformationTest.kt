@@ -40,7 +40,7 @@ class GameInformationTest {
     }
 
     @Test
-    fun `카드 2장 뽑았을때 BlackJack 상태 변경 확인`() {
+    fun `카드 2장 뽑았을때 21일때 BlackJack 상태 변경 확인`() {
         gameInformation.drawCard(Card(CardNumber.JACK, CardSymbol.SPADE))
         gameInformation.drawCard(Card(CardNumber.ACE, CardSymbol.HEART))
 
@@ -57,6 +57,6 @@ class GameInformationTest {
 
         val actual = gameInformation.state
 
-        assertThat(actual).isEqualTo(GameState.Finished.STAY)
+        assertThat(actual).isEqualTo(GameState.Running.HIT)
     }
 }
