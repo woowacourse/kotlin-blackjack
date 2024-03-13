@@ -21,6 +21,11 @@ class Controller(cards: List<Card>) {
         }
     }
 
+    private fun makePlayers(): List<Player> {
+        val names: List<String> = InputView.getNames()
+        return names.map { Player(it) }
+    }
+
     private fun play(
         dealer: Dealer,
         players: List<Player>,
@@ -30,16 +35,12 @@ class Controller(cards: List<Card>) {
         printStatistics(dealer, players)
     }
 
-    private fun makePlayers(): List<Player> {
-        val names: List<String> = InputView.getNames()
-        return names.map { Player(it) }
-    }
-
     private fun initParticipantsCard(
         dealer: Dealer,
         players: List<Player>,
     ) {
-        dealingShoe.initGame(dealer, players)
+        dealer initFrom dealingShoe
+        players.forEach { player -> player initFrom dealingShoe }
         OutputView.printInitialResult(dealer, players)
     }
 
@@ -59,7 +60,7 @@ class Controller(cards: List<Card>) {
             return
         }
         while (player.isHitable() && askPick(player.name)) {
-            dealingShoe giveCardTo player
+            player hitFrom dealingShoe
             OutputView.printParticipantStatus(player)
         }
         if (player.isBusted()) {
@@ -73,7 +74,7 @@ class Controller(cards: List<Card>) {
 
     private fun proceedDealerTurn(dealer: Dealer) {
         while (dealer.isHitable()) {
-            dealingShoe giveCardTo dealer
+            dealer hitFrom dealingShoe
             OutputView.printDealerHitMessage()
         }
     }

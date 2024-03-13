@@ -7,11 +7,27 @@ import org.junit.jupiter.api.Test
 class DealerTest {
     private lateinit var dealer: Dealer
     private lateinit var player: Player
+    private val dealingShoe = DealingShoe(listOf(FOUR_CARD, TWO_CARD))
 
     @BeforeEach
     fun `모든 테스트에 딜러와 플레이어 한 명이 참가하며, 딜러는 3하트 카드를 갖도록 세팅한다`() {
         player = Player("빙티")
         dealer = creatDealer(THREE_CARD)
+    }
+
+    @Test
+    fun `딜러가 초기 카드를 2장 가져와 3장을 가진다`() {
+        dealer initFrom dealingShoe
+        val actual = dealer.showCard()
+        assertThat(actual.size).isEqualTo(3)
+        assertThat(actual).isEqualTo(listOf(THREE_CARD, FOUR_CARD, TWO_CARD))
+    }
+
+    @Test
+    fun `딜러가 딜링슈에서 맨 앞의 2하트 카드를 한 개 뽑아 가져온다`() {
+        dealer hitFrom dealingShoe
+        val actual = dealer.showCard()
+        assertThat(actual).isEqualTo(listOf(THREE_CARD, FOUR_CARD))
     }
 
     @Test
