@@ -117,4 +117,8 @@ object OutputView {
             GameResult.LOSE -> "패"
         }
     }
+
+    fun printExceptionMessage(e: IllegalStateException) {
+        println(e.message)
+    }
 }

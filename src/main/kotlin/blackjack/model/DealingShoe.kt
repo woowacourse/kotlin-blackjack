@@ -31,6 +31,6 @@ class DealingShoe(cards: List<Card>) {
     }
 
     companion object {
-        const val EXCEPTION_EMPTY_CARD_MESSAGE = "모든 카드를 소진했습니다."
+        const val EXCEPTION_EMPTY_CARD_MESSAGE = "모든 카드를 소진해 게임을 종료합니다."
     }
 }

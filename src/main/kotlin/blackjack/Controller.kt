@@ -14,6 +14,17 @@ class Controller(cards: List<Card>) {
     fun run() {
         val players = makePlayers()
         val dealer = Dealer()
+        try {
+            play(dealer, players)
+        } catch (e: IllegalStateException) {
+            OutputView.printExceptionMessage(e)
+        }
+    }
+
+    private fun play(
+        dealer: Dealer,
+        players: List<Player>,
+    ) {
         initParticipantsCard(dealer, players)
         proceedParticipantsTure(dealer, players)
         printStatistics(dealer, players)

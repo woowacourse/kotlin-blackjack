@@ -53,6 +53,6 @@ class DealingShoeTest {
                     dealingShoe giveCardTo player
                 }
             }.message
-        assertThat(exception).isEqualTo("모든 카드를 소진했습니다.")
+        assertThat(exception).isEqualTo("모든 카드를 소진해 게임을 종료합니다.")
     }
 }
