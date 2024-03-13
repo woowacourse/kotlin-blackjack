@@ -1,9 +1,11 @@
 package blackjack.model
 
-@JvmInline
-value class Deck(val cards: MutableList<Card>) {
+class Deck(cards: List<Card>) {
+    private val _cards: MutableList<Card> = cards.toMutableList()
+    val cards get() = _cards
+
     fun pull(): Card {
-        return cards.removeFirst()
+        return _cards.removeFirst()
     }
 
     companion object {
