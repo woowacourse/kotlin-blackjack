@@ -32,7 +32,7 @@ class BlackJackController {
                 name = dealer.getName(),
                 firstCard = firstCard,
             )
-        }
+        } ?: println(ERROR_CARD_INDEX)
         OutputView.outputPlayersCurrentHandCard(participants.getPlayers())
     }
 
@@ -45,7 +45,7 @@ class BlackJackController {
     }
 
     private fun playPlayer(player: Player) {
-        while (player.checkHitState() && InputView.inputPlayerDecision(player.getName()) == UserDecision.YES) {
+        while (player.checkHitState()) {
             when (InputView.inputPlayerDecision(player.getName())) {
                 UserDecision.YES -> {
                     if (!setUserDecision(player)) return
@@ -99,5 +99,9 @@ class BlackJackController {
             println(e.message)
             null
         }
+    }
+
+    companion object {
+        const val ERROR_CARD_INDEX = "딜러가 가지고 있는 카드가 없습니다."
     }
 }
