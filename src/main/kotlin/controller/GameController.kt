@@ -70,9 +70,7 @@ class GameController(private val deck: Deck) {
         return hitDecision
     }
 
-    private fun playOfOnePlayer(
-        player: Player,
-    ) {
+    private fun playOfOnePlayer(player: Player) {
         while (player.participantState is ParticipantState.Playing &&
             playByDecision(readHitDecision(player.participantName), player)
             ) ;

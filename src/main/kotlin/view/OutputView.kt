@@ -2,11 +2,11 @@ package view
 
 import model.card.MarkType
 import model.card.ValueType
-import model.participants.Participants
 import model.participants.Dealer
-import model.participants.Players
 import model.participants.Hand
 import model.participants.Participant
+import model.participants.Participants
+import model.participants.Players
 import model.result.DealerResult
 import model.result.PlayersResult
 import model.result.ResultType

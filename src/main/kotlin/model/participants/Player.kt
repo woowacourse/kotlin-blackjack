@@ -10,7 +10,6 @@ class Player(
             DEFAULT_NAME,
         ),
 ) : Participant(participantState, participantName) {
-
     override fun judge(other: Participant): ResultType {
         return when {
             participantState is ParticipantState.Bust -> ResultType.LOSE
