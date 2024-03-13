@@ -33,16 +33,4 @@ class HandTest {
         val hand = Hand(Card(11), Card(2), Card(8))
         assertThat(hand.calculateCardsSum()).isEqualTo(21)
     }
-
-    @Test
-    fun `카드의 합이 버스트 기준점을 초과하면 Bust를 반환한다`() {
-        val hand = Hand(Card(8), Card(9), Card(10))
-        assertThat(hand.calculateState()).isInstanceOf(Bust::class.java)
-    }
-
-    @Test
-    fun `카드의 합이 블랙잭 기준점이고 카드의 갯수가 2개라고 Blackjack을 반환한다`() {
-        val hand = Hand(Card(11), Card(10))
-        assertThat(hand.calculateState()).isInstanceOf(Blackjack::class.java)
-    }
 }

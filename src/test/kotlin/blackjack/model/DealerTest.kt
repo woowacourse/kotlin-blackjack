@@ -17,17 +17,21 @@ private fun createPlayer(vararg numbers: Card): Player {
 
 class DealerTest {
     @Test
-    fun `딜러의 카드의 합이 카드를 뽑는 기준점을 넘는 경우, False를 반환한다`() {
+    fun `카드의 합이 버스트 기준점을 초과하지 않으면 Normal을 반환한다`() {
         val dealer = createDealer(Card(8), Card(9))
-        val threshold = 16
-        assertThat(dealer.shouldDrawCardForDealer(threshold)).isFalse()
+        assertThat(dealer.getState()).isInstanceOf(Normal::class.java)
     }
 
     @Test
-    fun `딜러의 카드의 합이 카드를 뽑는 기준점을 넘지 않는 경우, true를 반환한다`() {
-        val dealer = createDealer(Card(7), Card(2))
-        val threshold = 16
-        assertThat(dealer.shouldDrawCardForDealer(threshold)).isTrue()
+    fun `카드의 합이 버스트 기준점을 초과하면 Bust를 반환한다`() {
+        val dealer = createDealer(Card(8), Card(9), Card(10))
+        assertThat(dealer.getState()).isInstanceOf(Bust::class.java)
+    }
+
+    @Test
+    fun `카드의 합이 블랙잭 기준점이고 카드의 갯수가 2개라면 Blackjack을 반환한다`() {
+        val dealer = createDealer(Card(11), Card(10))
+        assertThat(dealer.getState()).isInstanceOf(Blackjack::class.java)
     }
 
     @Test
@@ -75,6 +79,47 @@ class DealerTest {
         val player = createPlayer(Card(8), Card(9))
         val winningState = dealer.calculateWinningStateAgainst(player)
 
+        assertThat(winningState).isEqualTo(WinningState(0, 1))
+    }
+
+    @Test
+    fun `딜러의 카드 합이 플레이어보다 높을 때, 딜러가 승리한다`() {
+        val dealer = createDealer(Card(10), Card(9))
+        val player = createPlayer(Card(8), Card(9))
+        val winningState = dealer.calculateWinningStateAgainst(player)
+        assertThat(winningState).isEqualTo(WinningState(1, 0))
+    }
+
+    @Test
+    fun `딜러가 블랙잭일때, 플레이어가 블랙잭이 아닐 경우 승리한다`() {
+        val dealer = createDealer(Card(11), Card(10))
+        val player = createPlayer(Card(11), Card(5))
+        val winningState = dealer.calculateWinningStateAgainst(player)
+        assertThat(winningState).isEqualTo(WinningState(1, 0))
+    }
+
+    @Test
+    fun `딜러가 블랙잭일때, 플레이어가 블랙잭일 경우에는 비긴다`() {
+        val dealer = createDealer(Card(11), Card(10))
+        val player = createPlayer(Card(11), Card(10))
+        val winningState = dealer.calculateWinningStateAgainst(player)
+        assertThat(winningState).isEqualTo(WinningState(0, 0))
+    }
+
+    @Test
+    fun `딜러가 버스트일때, 플레이의 카드가 버스트일 경우에만 이긴다`() {
+        val dealer = createDealer(Card(10), Card(9), Card(10))
+        println(dealer.getState())
+        val player = createPlayer(Card(10), Card(10), Card(10))
+        val winningState = dealer.calculateWinningStateAgainst(player)
+        assertThat(winningState).isEqualTo(WinningState(1, 0))
+    }
+
+    @Test
+    fun `딜러가 버스트일때, 플레이의 카드가 버스트가 아닐 경우 진다`() {
+        val dealer = createDealer(Card(10), Card(10), Card(2))
+        val player = createPlayer(Card(11), Card(5))
+        val winningState = dealer.calculateWinningStateAgainst(player)
         assertThat(winningState).isEqualTo(WinningState(0, 1))
     }
 }

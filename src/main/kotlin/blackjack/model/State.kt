@@ -16,7 +16,7 @@ class Blackjack : State() {
         self: Participant,
         opponent: Participant,
     ): WinningState {
-        if (opponent.getState() == this) return WinningState(0, 0)
+        if (opponent.getState() is Blackjack) return WinningState(0, 0)
         return WinningState(1, 0)
     }
 }
@@ -28,7 +28,7 @@ class Bust : State() {
         self: Participant,
         opponent: Participant,
     ): WinningState {
-        if (self is Dealer && opponent.getState() == this) return WinningState(1, 0)
+        if (self is Dealer && opponent.getState() is Bust) return WinningState(1, 0)
         return WinningState(0, 1)
     }
 }
@@ -41,9 +41,9 @@ class Normal : State() {
         opponent: Participant,
     ): WinningState {
         return when {
-            self.getCardsSum() > opponent.getCardsSum() -> WinningState(1, 0)
-            self.getCardsSum() == opponent.getCardsSum() -> WinningState(0, 0)
-            else -> WinningState(0, 1)
+            opponent.getState() is Bust || self.getCardsSum() > opponent.getCardsSum() -> WinningState(1, 0)
+            opponent.getState() is Blackjack || self.getCardsSum() < opponent.getCardsSum() -> WinningState(0, 1)
+            else -> WinningState(0, 0)
         }
     }
 }

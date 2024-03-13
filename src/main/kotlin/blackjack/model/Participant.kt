@@ -7,20 +7,32 @@ sealed class Participant(private val name: ParticipantName, private val hand: Ha
 
     fun getCardsSum() = hand.calculateCardsSum()
 
-    fun drawCard(card: Card) {
+    protected fun drawCard(card: Card) {
         hand.addCard(card)
     }
 
-    fun getState() = hand.calculateState()
+    fun getState(): State {
+        return when {
+            hand.calculateCardsSum() == THRESHOLD_BLACKJACK && hand.getCards().size == BLACKJACK_CARD_SIZE -> Blackjack()
+            hand.calculateCardsSum() > THRESHOLD_BUST -> Bust()
+            else -> Normal()
+        }
+    }
 
-    fun isGameFinished() = getState().isFinished
+    protected fun isGameFinished() = getState().isFinished
 
     fun calculateWinningStateAgainst(opponent: Participant) = getState().calculateWinningState(this, opponent)
+
+    companion object {
+        private const val BLACKJACK_CARD_SIZE = 2
+        private const val THRESHOLD_BLACKJACK = 21
+        const val THRESHOLD_BUST = 21
+    }
 }
 
 class Dealer(name: ParticipantName = ParticipantName(ParticipantName.DEALER_NAME), hand: Hand) :
     Participant(name, hand) {
-    fun shouldDrawCardForDealer(threshold: Int = THRESHOLD_DRAW_FOR_DEALER): Boolean = getCardsSum() <= threshold
+    private fun shouldDrawCardForDealer(threshold: Int = THRESHOLD_DRAW_FOR_DEALER): Boolean = getCardsSum() <= threshold
 
     fun playRound(
         updateDealerInfo: (Dealer) -> Unit,

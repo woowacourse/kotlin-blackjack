@@ -14,10 +14,30 @@ class Participants(private val dealer: Dealer, private val players: List<Player>
     fun calculateResult(): Map<Participant, WinningState> {
         val result = mutableMapOf<Participant, WinningState>()
         players.forEach { player ->
-            result[dealer] = dealer.calculateWinningStateAgainst(player)
-            result[player] = player.calculateWinningStateAgainst(dealer)
+            calculateDealerResult(result, player)
+            calculatePlayerResult(result, player)
         }
         return result.toMap()
+    }
+
+    private fun calculateDealerResult(
+        result: MutableMap<Participant, WinningState>,
+        player: Player,
+    ) {
+        val originalDealerWinningState = result.getOrDefault(dealer, WinningState(0, 0))
+        val addDealerWinningState = dealer.calculateWinningStateAgainst(player)
+        result[dealer] =
+            WinningState(
+                originalDealerWinningState.wins + addDealerWinningState.wins,
+                originalDealerWinningState.losses + addDealerWinningState.losses,
+            )
+    }
+
+    private fun calculatePlayerResult(
+        result: MutableMap<Participant, WinningState>,
+        player: Player,
+    ) {
+        result[player] = player.calculateWinningStateAgainst(dealer)
     }
 
     companion object {

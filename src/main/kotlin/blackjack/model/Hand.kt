@@ -12,23 +12,13 @@ class Hand(private val cards: MutableList<Card>) {
         val acesCount = cards.count { it.number == CardNumber.ACE }
         var totalSum = sumWithoutAces + acesCount
         repeat(acesCount) {
-            val tempSum = totalSum + CardNumber.ACE_VALUE_INCREMENT
-            if (tempSum <= THRESHOLD_BUST) totalSum = tempSum else return totalSum
+            val tempSum = totalSum + ACE_VALUE_INCREMENT
+            if (tempSum <= Participant.THRESHOLD_BUST) totalSum = tempSum else return totalSum
         }
         return totalSum
     }
 
-    fun calculateState(): State {
-        return when {
-            calculateCardsSum() == THRESHOLD_BLACKJACK && cards.size == BLACKJACK_CARD_SIZE -> Blackjack()
-            calculateCardsSum() > THRESHOLD_BUST -> Bust()
-            else -> Normal()
-        }
-    }
-
     companion object {
-        private const val BLACKJACK_CARD_SIZE = 2
-        private const val THRESHOLD_BUST = 21
-        private const val THRESHOLD_BLACKJACK = 21
+        const val ACE_VALUE_INCREMENT = 10
     }
 }
