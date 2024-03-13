@@ -59,12 +59,12 @@ object OutputView {
         println()
     }
 
-    fun outputPlayerCurrentHandCard(player: Player) {
+    fun outputPlayerCurrentHandCard(participant: Participant) {
         println(
             OUTPUT_MESSAGE_PARTICIPANTS_CURRENT_HAND_CARD
                 .format(
-                    player.getName(),
-                    joinCardsInfo(player.getCards()),
+                    participant.getName(),
+                    joinCardsInfo(participant.getCards()),
                 ),
         )
     }

@@ -37,23 +37,27 @@ class BlackJackController {
     }
 
     fun playGame() {
-        gameManager.getAlivePlayers().forEach { player ->
-            playPlayer(player as Player)
+        gameManager.getAlivePlayers().forEach { participant ->
+            playPlayer(participant)
         }
         playDealer()
         gameManager.judgeBlackJackScores()
     }
 
-    private fun playPlayer(player: Player) {
-        while (player.checkHitState()) {
-            when (InputView.inputPlayerDecision(player.getName())) {
-                UserDecision.YES -> {
-                    if (!setUserDecision(player)) return
-                    OutputView.outputPlayerCurrentHandCard(player)
-                }
+    private fun playPlayer(participant: Participant) {
+        while (participant.checkHitState()) {
+            processPlayerDecision(participant)
+        }
+    }
 
-                UserDecision.NO -> player.transitionToStayState()
+    private fun processPlayerDecision(participant: Participant) {
+        when (InputView.inputPlayerDecision(participant.getName())) {
+            UserDecision.YES -> {
+                if (!setUserDecision(participant)) return
+                OutputView.outputPlayerCurrentHandCard(participant)
             }
+
+            UserDecision.NO -> participant.transitionToStayState()
         }
     }
 
