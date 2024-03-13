@@ -76,7 +76,7 @@ object OutputView {
     }
 
     private fun joinCardInfo(card: Card): String {
-        return "${card.getCardDenomination().getScore()}${getCardSuitName(card.getCardSuit())}"
+        return "${card.denomination.getScore()}${getCardSuitName(card.suit)}"
     }
 
     private fun getCardSuitName(suit: Suit): String {

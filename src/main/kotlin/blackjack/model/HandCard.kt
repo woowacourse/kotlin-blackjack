@@ -10,13 +10,13 @@ class HandCard {
 
     fun getTotalCardsSum(): Int {
         return cards.sumOf { card ->
-            card.getCardDenomination().getScore()
+            card.denomination.getScore()
         }
     }
 
     fun getAceCount(): Int {
         return cards.count { card ->
-            card.getCardDenomination() == Denomination.ACE
+            card.denomination == Denomination.ACE
         }
     }
 
