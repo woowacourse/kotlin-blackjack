@@ -2,7 +2,8 @@ package blackjack.view
 
 import blackjack.model.GameResult
 import blackjack.model.Participant
-import blackjack.model.Participants
+import blackjack.model.Participant.Dealer
+import blackjack.model.Participant.Player
 import blackjack.model.Result
 
 object ResultView {
@@ -11,9 +12,12 @@ object ResultView {
     private const val MESSAGE_DEALER_RESULT = "%s: %d승 %d패 %d무"
     private const val MESSAGE_PLAYER_RESULT = "%s: %s"
 
-    fun outputGameScores(participants: Participants) {
-        outputGameScore(participants.getDealer())
-        participants.getPlayers().forEach { player ->
+    fun outputGameScores(
+        dealer: Dealer,
+        players: List<Player>,
+    ) {
+        outputGameScore(dealer)
+        players.forEach { player ->
             outputGameScore(player)
         }
     }
@@ -22,7 +26,7 @@ object ResultView {
         println(MESSAGE_GAME_RESULT)
         println(
             MESSAGE_DEALER_RESULT.format(
-                gameResult.participants.getDealer().name,
+                gameResult.dealer.name,
                 gameResult.dealerResult[Result.DEALER_WIN],
                 gameResult.dealerResult[Result.PLAYER_WIN],
                 gameResult.dealerResult[Result.TIE],
@@ -31,7 +35,7 @@ object ResultView {
         gameResult.playerResults.withIndex().map { (index, playerResult) ->
             println(
                 MESSAGE_PLAYER_RESULT.format(
-                    gameResult.participants.getPlayers()[index].name,
+                    gameResult.players[index].name,
                     playerResult.label,
                 ),
             )

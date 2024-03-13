@@ -32,11 +32,12 @@ sealed class Participant(val name: ParticipantName, val gameInformation: GameInf
     class Dealer(name: ParticipantName = DEFAULT_DEALER_NAME, gameInformation: GameInformation = GameInformation()) :
         Participant(name, gameInformation) {
         fun initialCardDealing(
-            participants: Participants,
+            players: List<Player>,
             cardDeck: CardDeck,
         ) {
             repeat(INITIAL_DEALING_COUNT) {
-                participants.participants.forEach { participant ->
+                draw(cardDeck.pickCard())
+                players.forEach { participant ->
                     participant.draw(cardDeck.pickCard())
                 }
             }
