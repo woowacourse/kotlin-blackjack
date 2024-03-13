@@ -19,7 +19,7 @@ abstract class Participant(
     }
 
     fun getBlackJackState(): State {
-        return blackJack.state
+        return blackJack.getBlackJackState()
     }
 
     fun getName(): String {

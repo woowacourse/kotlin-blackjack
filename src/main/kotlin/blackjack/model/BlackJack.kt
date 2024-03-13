@@ -4,14 +4,17 @@ import blackjack.state.State
 
 class BlackJack {
     private val handCard = HandCard()
-    private var _state: State = State.Action.Hit
-    val state: State get() = _state
+    private var state: State = State.Action.Hit
 
     fun checkDrawState(): Boolean {
         return when (state) {
             is State.Action.Hit -> true
             is State.Finish -> false
         }
+    }
+
+    fun getBlackJackState(): State {
+        return state
     }
 
     fun getCards(): Set<Card> {
@@ -23,7 +26,7 @@ class BlackJack {
     }
 
     fun switchToStayState() {
-        _state = State.Finish.Stay
+        state = State.Finish.Stay
     }
 
     fun addCard(card: Card) {
@@ -40,24 +43,24 @@ class BlackJack {
     private fun updateGameStateWithScore() {
         when (val totalScore = handCard.getTotalCardsSum()) {
             in MIN_SCORE until BLACK_JACK_SCORE -> {
-                _state = State.Action.Hit
+                state = State.Action.Hit
                 applyGameStateWithAceCount(totalScore)
             }
 
             BLACK_JACK_SCORE -> applyBlackJackStateWithCardCount()
-            in BUST_SCORE..MAX_SCORE -> _state = State.Finish.Bust
+            in BUST_SCORE..MAX_SCORE -> state = State.Finish.Bust
         }
     }
 
     private fun applyGameStateWithAceCount(totalScore: Int) {
         if (handCard.updateGameStateWithAceCount(totalScore)) {
-            _state = State.Finish.BlackJack
+            state = State.Finish.BlackJack
         }
     }
 
     private fun applyBlackJackStateWithCardCount() {
         if (handCard.checkBlackJackStateWithCardCount()) {
-            _state = State.Finish.BlackJack
+            state = State.Finish.BlackJack
         }
     }
 
