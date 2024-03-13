@@ -9,19 +9,14 @@ import blackjack.model.game.Referee
 import blackjack.model.game.State
 import blackjack.model.player.Dealer
 import blackjack.model.player.PlayerEntry
-import blackjack.view.InputView.DRAW_DECISION
-import blackjack.view.InputView.judgePlayersDraw
-import blackjack.view.InputView.readPlayersName
-import blackjack.view.ProgressView.showDealerDrawMessage
-import blackjack.view.ProgressView.showHands
-import blackjack.view.ProgressView.showPlayerEntry
-import blackjack.view.ProgressView.showPlayerHand
+import blackjack.view.InputView
+import blackjack.view.ProgressView
 import blackjack.view.ResultView
 
 object BlackJackController {
     fun run() {
         val deck = Deck()
-        val playersName = readPlayersName()
+        val playersName = InputView.readPlayersName()
         val (dealer, playerEntry) = getDealerAndPlayerEntry(playersName, deck)
         val gameResult = playGame(playerEntry, dealer, deck)
         showGameResult(gameResult)
@@ -37,18 +32,18 @@ object BlackJackController {
         deck: Deck,
     ): GameResult {
         askPlayersDraw(playerEntry, deck)
-        showDealerDraw(dealer, deck)
+        makeDealerDraw(dealer, deck)
         val referee = Referee(dealer, playerEntry)
         return referee.judgeGame()
     }
 
-    private fun showDealerDraw(
+    private fun makeDealerDraw(
         dealer: Dealer,
         deck: Deck,
     ) {
-        while (dealer.state == State.Running.Hit) {
+        while (dealer.judgeDraw()) {
             dealer.hand.draw(deck.dealCard())
-            showDealerDrawMessage(dealer)
+            ProgressView.showDealerDrawMessage(dealer)
         }
     }
 
@@ -64,12 +59,11 @@ object BlackJackController {
         deck: Deck,
     ) {
         while (player.state is State.Running.Hit) {
-            val drawOrNot = judgePlayersDraw(player)
-            if (drawOrNot == DRAW_DECISION) {
+            val drawOrNot = InputView.judgePlayersDraw(player)
+            if (drawOrNot == InputView.DRAW_DECISION) {
                 player.hand.draw(deck.dealCard())
-                showPlayerHand(player)
+                ProgressView.showPlayerHand(player)
             } else {
-                player.state = State.Finished.Stay
                 break
             }
         }
@@ -79,11 +73,11 @@ object BlackJackController {
         playersName: List<String>,
         deck: Deck,
     ): Pair<Dealer, PlayerEntry> {
-        showPlayerEntry(playersName.joinToString(", "))
+        ProgressView.showPlayerEntry(playersName.joinToString(", "))
         val hands = dealingCards(playersName, deck)
         val dealer = setDealer(hands)
         val playerEntry = makePlayerEntry(playersName, hands)
-        showHands(dealer, playerEntry)
+        ProgressView.showHands(dealer, playerEntry)
         return Pair(dealer, playerEntry)
     }
 
