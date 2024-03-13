@@ -41,7 +41,39 @@ class PlayerTest {
         val player = createPlayer("yenny", Card(11), Card(10))
         player.playRound(deck, { true }, { })
 
-        Assertions.assertThat(player.getCards().size).isEqualTo(2)
-        Assertions.assertThat(player.getSumOfCards()).isEqualTo(21)
+        assertThat(player.getCards().size).isEqualTo(2)
+        assertThat(player.getSumOfCards()).isEqualTo(21)
+    }
+
+    @Test
+    fun `게임에서 질 경우, 배팅 금액을 모두 잃게 된다`() {
+        val betAmount = 1000.0
+        val player = createPlayer("yenny", Card(6), Card(8), betAmount = betAmount).apply { finishRound() }
+        val result = player.calculateProfit(WinningResult.LOSE)
+        assertThat(result).isEqualTo(-1000.0)
+    }
+
+    @Test
+    fun `블랙잭으로 승리할 경우, 베팅 금액의 특정 배수 만큼 수익을 얻는다`() {
+        val betAmount = 1000.0
+        val player = createPlayer("yenny", Card(10), Card(11), betAmount = betAmount).apply { finishRound() }
+        val result = player.calculateProfit(WinningResult.WIN)
+        assertThat(result).isEqualTo(1500.0)
+    }
+
+    @Test
+    fun `블랙잭은 아니지만 딜러보다 카드 점수가 높아서 이긴 경우, 베팅 금액 만큼 수익을 얻는다`() {
+        val betAmount = 1000.0
+        val player = createPlayer("yenny", Card(8), Card(11), betAmount = betAmount).apply { finishRound() }
+        val result = player.calculateProfit(WinningResult.WIN)
+        assertThat(result).isEqualTo(1000.0)
+    }
+
+    @Test
+    fun `딜러와 동점인 경우, 플레이어는 베팅한 금액을 돌려받는다`() {
+        val betAmount = 1000.0
+        val player = createPlayer("yenny", Card(10), Card(11), betAmount = betAmount).apply { finishRound() }
+        val result = player.calculateProfit(WinningResult.DRAW)
+        assertThat(result).isEqualTo(0.0)
     }
 }
