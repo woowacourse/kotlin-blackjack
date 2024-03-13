@@ -11,19 +11,12 @@ import blackjack.view.ResultView
 object BlackJackController {
     fun run() {
         val dealer = Dealer()
-        val players = registerParticipants()
+        val players = InputView.inputPlayers()
         try {
             blackJackGameStart(dealer, players)
             displayGameResult(dealer, players)
         } catch (exception: IllegalArgumentException) {
             println(exception.message)
-        }
-    }
-
-    private fun registerParticipants(): List<Player> {
-        val playerNames = InputView.inputPlayersName()
-        return playerNames.map { name ->
-            Player(name)
         }
     }
 
@@ -45,7 +38,7 @@ object BlackJackController {
         players.forEach { player ->
             player.judgeDrawOrNot(
                 cardDeck,
-                { InputView.inputDrawDecision(player.name) },
+                { InputView.inputDrawDecision(player.name).judgeDecision() },
                 { OutputView.outputParticipantCard(player) },
             )
         }

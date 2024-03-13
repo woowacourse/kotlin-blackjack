@@ -1,6 +1,7 @@
 package blackjack.view
 
 import blackjack.model.DrawDecision
+import blackjack.model.Participant.Player
 import blackjack.model.ParticipantName
 
 object InputView {
@@ -11,23 +12,25 @@ object InputView {
     private const val DELIMITER_NAMES = ","
     private const val MAX_PLAYERS_SIZE = 8
 
-    fun inputPlayersName(): List<ParticipantName> {
+    fun inputPlayers(): List<Player> {
         println(INPUT_MESSAGE_PLAYER_NAMES)
         return try {
             val playersName = (readlnOrNull() ?: NO_INPUT).split(DELIMITER_NAMES).map { name -> name.trim() }
             require(playersName.size <= MAX_PLAYERS_SIZE) { ERROR_MESSAGE_PLAYERS_SIZE }
-            playersName.map { name -> ParticipantName(name) }
+            playersName.map { name ->
+                Player(ParticipantName(name))
+            }
         } catch (exception: IllegalArgumentException) {
             println(exception.message)
-            inputPlayersName()
+            inputPlayers()
         }
     }
 
-    fun inputDrawDecision(name: ParticipantName): Boolean {
+    fun inputDrawDecision(name: ParticipantName): DrawDecision {
         println(INPUT_MESSAGE_DRAW_DECISION.format(name))
         return try {
             val drawDecision = readlnOrNull() ?: NO_INPUT
-            DrawDecision(drawDecision).judgeDecision()
+            DrawDecision(drawDecision)
         } catch (exception: IllegalArgumentException) {
             println(exception.message)
             inputDrawDecision(name)
