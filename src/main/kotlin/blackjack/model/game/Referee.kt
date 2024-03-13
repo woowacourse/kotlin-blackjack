@@ -23,6 +23,9 @@ class Referee(val dealer: Dealer, val playerEntry: PlayerEntry) {
         dealer: Dealer,
         player: Player,
     ): Result {
+        if (player.hand.isBlackjack() && dealer.hand.isBlackjack()) return Result.DRAW
+        if (player.hand.isBlackjack()) return Result.PLAYER_WIN
+        if (dealer.hand.isBlackjack()) return Result.DEALER_WIN
         if (player.state == State.Finished.Bust) return Result.DEALER_WIN
         if (dealer.state == State.Finished.Bust) return Result.PLAYER_WIN
         val playerScore = player.hand.totalScore
