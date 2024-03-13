@@ -20,10 +20,6 @@ enum class Denomination(
     fun getScore(): Int = score
 
     companion object {
-        fun aceTransferScore(): Int {
-            return ACE.score - TRANSFER_ACE_SCORE
-        }
-
         const val TRANSFER_ACE_SCORE: Int = 10
     }
 }
