@@ -1,7 +1,6 @@
 package model.participants
 
-import DeckExplicitGeneration
-import model.ParticipantState
+import DeckExplicitGenerationStrategy
 import model.card.Card
 import model.card.Deck
 import model.card.MarkType
@@ -12,14 +11,13 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class ParticipantsTest {
-
     private lateinit var testDeck: Deck
 
     @BeforeEach
     fun setUp() {
         testDeck =
             Deck.create(
-                DeckExplicitGeneration(
+                DeckExplicitGenerationStrategy(
                     mutableListOf(
                         Card(ValueType.JACK, MarkType.SPADE),
                         Card(ValueType.JACK, MarkType.SPADE),
@@ -69,4 +67,3 @@ class ParticipantsTest {
         Assertions.assertThat(result.result.values == expected.values)
     }
 }
-

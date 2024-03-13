@@ -1,5 +1,5 @@
 package model.card
 
-interface DeckGeneration {
+interface DeckGenerationStrategy {
     fun generate(): List<Card>
 }

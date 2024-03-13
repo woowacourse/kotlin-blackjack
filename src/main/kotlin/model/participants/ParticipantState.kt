@@ -1,7 +1,6 @@
-package model
+package model.participants
 
 import model.card.Card
-import model.participants.Hand
 import model.result.Point.Companion.compareTo
 
 sealed class ParticipantState(val hand: Hand) {

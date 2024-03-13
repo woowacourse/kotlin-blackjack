@@ -1,6 +1,6 @@
 package model.participants
 
-import DeckExplicitGeneration
+import DeckExplicitGenerationStrategy
 import model.card.Card
 import model.card.Deck
 import model.card.MarkType
@@ -15,7 +15,7 @@ class PlayerTest {
     fun setUp() {
         testDeck =
             Deck.create(
-                DeckExplicitGeneration(
+                DeckExplicitGenerationStrategy(
                     mutableListOf(
                         Card(ValueType.TWO, MarkType.SPADE),
                         Card(ValueType.JACK, MarkType.SPADE),

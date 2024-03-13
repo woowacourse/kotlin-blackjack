@@ -1,6 +1,6 @@
 package model.participants
 
-import DeckExplicitGeneration
+import DeckExplicitGenerationStrategy
 import model.card.Card
 import model.card.Deck
 import model.card.MarkType
@@ -17,7 +17,15 @@ class HandTest {
 
     @BeforeEach
     fun setUp() {
-        deck = Deck.create(DeckExplicitGeneration(mutableListOf(Card(ValueType.TWO, MarkType.SPADE), Card(ValueType.THREE, MarkType.SPADE))))
+        deck =
+            Deck.create(
+                DeckExplicitGenerationStrategy(
+                    mutableListOf(
+                        Card(ValueType.TWO, MarkType.SPADE),
+                        Card(ValueType.THREE, MarkType.SPADE),
+                    ),
+                ),
+            )
         hand = Hand()
     }
 

@@ -2,10 +2,7 @@ package view
 
 import model.card.MarkType
 import model.card.ValueType
-import model.participants.Dealer
-import model.participants.Hand
-import model.participants.Participant
-import model.participants.Players
+import model.participants.*
 import model.result.DealerResult
 import model.result.PlayersResult
 import model.result.ResultType
@@ -15,12 +12,9 @@ object OutputView {
     private const val HEADER_DRAW_CARDS_FOR_DEALER = "\n딜러는 16이하라 한장의 카드를 더 받았습니다."
     private const val HEADER_RESULT = "\n## 최종승패"
 
-    fun showGameInit(
-        dealer: Dealer,
-        players: Players,
-    ) {
-        showInitHeader(players)
-        showHands(dealer, players)
+    fun showGameInit(participants: Participants) {
+        showInitHeader(participants.getPlayers())
+        showHands(participants.getDealer(), participants.getPlayers())
     }
 
     private fun showInitHeader(players: Players) {

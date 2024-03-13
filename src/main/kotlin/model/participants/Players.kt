@@ -1,7 +1,5 @@
 package model.participants
 
-import model.ParticipantState
-
 class Players(val players: List<Player>) {
     companion object {
         const val ERROR_EXCEED_PLAYERS = "플레이어의 수는 1 ~ 10 사이여야 합니다."

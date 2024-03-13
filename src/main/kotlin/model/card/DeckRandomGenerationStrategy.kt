@@ -1,6 +1,6 @@
 package model.card
 
-class DeckRandomGeneration : DeckGeneration {
+class DeckRandomGenerationStrategy : DeckGenerationStrategy {
     override fun generate(): List<Card> {
         return MarkType.entries.flatMap { markType ->
             associateMark(markType) // List<Card>

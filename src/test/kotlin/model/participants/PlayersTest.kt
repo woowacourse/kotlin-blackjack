@@ -1,7 +1,10 @@
 package model.participants
 
-import DeckExplicitGeneration
-import model.card.*
+import DeckExplicitGenerationStrategy
+import model.card.Card
+import model.card.Deck
+import model.card.MarkType
+import model.card.ValueType
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -14,7 +17,12 @@ class PlayersTest {
 
     @BeforeEach
     fun setUp() {
-        deck = Deck.create(DeckExplicitGeneration(mutableListOf(Card(ValueType.TWO, MarkType.SPADE), Card(ValueType.THREE, MarkType.SPADE))))
+        deck =
+            Deck.create(
+                DeckExplicitGenerationStrategy(
+                    mutableListOf(Card(ValueType.TWO, MarkType.SPADE), Card(ValueType.THREE, MarkType.SPADE)),
+                ),
+            )
         hand = Hand()
     }
 

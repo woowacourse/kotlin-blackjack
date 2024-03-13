@@ -6,8 +6,8 @@ class Deck private constructor(private val cards: MutableList<Card>) {
     }
 
     companion object {
-        fun create(deckGeneration: DeckGeneration): Deck {
-            return Deck(deckGeneration.generate().toMutableList())
+        fun create(deckGenerationStrategy: DeckGenerationStrategy): Deck {
+            return Deck(deckGenerationStrategy.generate().toMutableList())
         }
     }
 }

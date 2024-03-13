@@ -1,6 +1,5 @@
 package model.participants
 
-import model.ParticipantState
 import model.card.Deck
 import model.result.Point.Companion.compareTo
 import model.result.ResultType
