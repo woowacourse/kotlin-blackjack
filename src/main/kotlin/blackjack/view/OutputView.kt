@@ -8,7 +8,6 @@ import blackjack.model.Dealer.Companion.DEALER_NAME
 import blackjack.model.Participant
 import blackjack.model.Participants
 import blackjack.model.Player
-import blackjack.model.WinningResult
 
 object OutputView {
     fun printInitialStatus(participants: Participants) {
@@ -50,36 +49,16 @@ object OutputView {
         }
     }
 
-    fun printResult(
-        dealerResult: Map<WinningResult, Int>,
-        playerResult: Map<Player, WinningResult>,
+    fun printProfit(
+        dealerResult: Double,
+        playerResult: Map<Player, Double>,
     ) {
-        println("\n## 최종 승패")
-        printDealerResult(dealerResult)
-        printPlayerResult(playerResult)
-    }
-
-    private fun printDealerResult(dealerResult: Map<WinningResult, Int>) {
-        println(
-            "${DEALER_NAME}: " +
-                "${dealerResult.getOrDefault(WinningResult.WIN, 0)}승 " +
-                "${dealerResult.getOrDefault(WinningResult.LOSE, 0)}패 " +
-                "${dealerResult.getOrDefault(WinningResult.DRAW, 0)}무",
-        )
-    }
-
-    private fun printPlayerResult(playerResult: Map<Player, WinningResult>) {
-        playerResult.entries.forEach { (player, result) ->
-            println("${player.name} : ${getWinningResultString(result)}")
+        println("\n## 최종 수익")
+        println("${DEALER_NAME}: $dealerResult")
+        playerResult.entries.forEach { (player, profit) ->
+            println("${player.name}: $profit")
         }
     }
-
-    private fun getWinningResultString(result: WinningResult): String =
-        when (result) {
-            WinningResult.WIN -> "승"
-            WinningResult.LOSE -> "패"
-            WinningResult.DRAW -> "무"
-        }
 
     private fun cardToString(card: Card): String {
         val cardNumber =

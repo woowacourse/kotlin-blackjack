@@ -13,20 +13,24 @@ import blackjack.view.OutputView
 class BlackjackController {
     fun start() {
         val deck = CardDeckGenerator.generate()
-        val participants = initializeGameSetting(deck, InputView.readNames())
+        val playerNames = InputView.readNames().map { ParticipantName(it) }
+        val participants = initializeGameSetting(deck, playerNames)
         OutputView.printInitialStatus(participants)
 
         playRound(deck, participants)
         OutputView.printStatusAndScore(participants)
-        OutputView.printResult(participants.getDealerWinningState(), participants.getPlayerWinningState())
+
+        val playerProfits = participants.getPlayerProfits()
+        val dealerProfits = participants.getDealerProfits(playerProfits)
+        OutputView.printProfit(dealerProfits, playerProfits)
     }
 
     private fun initializeGameSetting(
         deck: CardDeck,
-        names: List<String>,
+        playerNames: List<ParticipantName>,
     ): Participants {
+        val players = playerNames.map { Player(it, createInitialHand(deck), InputView.readBetAmount(it)) }
         val dealer = Dealer(hand = createInitialHand(deck))
-        val players = names.map { Player(ParticipantName(it), createInitialHand(deck)) }
 
         return Participants(dealer, players)
     }
