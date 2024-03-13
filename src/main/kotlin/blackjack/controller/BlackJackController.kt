@@ -13,6 +13,7 @@ class BlackJackController(private val cardDeck: CardDeck) {
     private lateinit var gameResult: GameResult
 
     fun startGameFlow() {
+        cardDeck.cardShuffle()
         val dealer = Dealer()
         val players = InputView.inputPlayers()
         participants =

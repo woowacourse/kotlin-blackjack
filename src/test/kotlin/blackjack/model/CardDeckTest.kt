@@ -1,36 +1,40 @@
 package blackjack.model
 
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 class CardDeckTest {
-    @Test
-    fun `올바른 카드 덱 생성 테스트`() {
-        var actualCards: Set<Card> =
-            Denomination.entries.flatMap { denomination ->
-                Suit.entries.map { suit ->
-                    Card(
-                        denomination = denomination,
-                        suit = suit,
-                    )
-                }
-            }.toSet()
+    private lateinit var cardDeck: CardDeck
+    private lateinit var expectedCards: MutableList<Card>
 
-        val cardDeck = CardDeck()
-        repeat(CardDeck.MAX_DRAW_COUNT) {
-            val card =
-                cardDeck.draw().also { card ->
-                    assertThat(
-                        actualCards.find { actualCard ->
-                            val compareDenomination = actualCard.getCardDenomination() == card.getCardDenomination()
-                            val compareSuit = actualCard.getCardSuit() == card.getCardSuit()
-                            compareDenomination && compareSuit
-                        },
-                    ).isNotEqualTo(null)
-                }
-            actualCards = actualCards - card
+    @BeforeEach
+    fun setUp() {
+        cardDeck = CardDeck()
+        expectedCards = mutableListOf()
+        Denomination.entries.forEach { denomination ->
+            Suit.entries.forEach { suit ->
+                expectedCards.add(Card(denomination, suit))
+            }
         }
+    }
+
+    @Test
+    fun `n장의 덱을 생성하여 뽑았을 때 예상하는 순서대로 카드가 나온다`() {
+        expectedCards.forEach { expectedCard ->
+            assertThat(cardDeck.draw()).isEqualTo(expectedCard)
+        }
+    }
+
+    @Test
+    fun `생성된 카드를 셔플했을 때 예상하지 못하게 카드가 나온다`() {
+        cardDeck.cardShuffle()
+        val isAnyCardNotEqual =
+            expectedCards.any { expectedCard ->
+                cardDeck.draw() != expectedCard
+            }
+        assertThat(isAnyCardNotEqual).isTrue()
     }
 
     @Test
@@ -40,17 +44,5 @@ class CardDeckTest {
             cardDeck.draw()
         }
         assertThrows<IllegalArgumentException> { cardDeck.draw() }
-    }
-
-    @Test
-    fun `덱에 특정 카드 한장이 남아있다면 draw 시 해당 카드가 나와야 한다`() {
-        val customCard =
-            Card(
-                denomination = Denomination.ACE,
-                suit = Suit.SPADE,
-            )
-
-        val customDeck = CardDeck(setOf(customCard))
-        assertThat(customDeck.draw()).isEqualTo(customCard)
     }
 }
