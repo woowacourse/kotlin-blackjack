@@ -16,11 +16,11 @@ class Dealer(val hand: Hand) {
                 State.Finished.Stay
             }
 
-    fun judgeDraw(): Boolean {
+    private fun judgeDraw(): Boolean {
         return hand.totalScore <= 16
     }
 
-    fun judgeBlackJack(): Boolean {
+    private fun judgeBlackJack(): Boolean {
         return hand.totalScore == 21
     }
 }

@@ -41,7 +41,7 @@ object BlackJackController {
         dealer: Dealer,
         deck: Deck,
     ) {
-        while (dealer.judgeDraw()) {
+        while (dealer.state == State.Running.Hit) {
             dealer.hand.draw(deck.dealCard())
             ProgressView.showDealerDrawMessage(dealer)
         }
