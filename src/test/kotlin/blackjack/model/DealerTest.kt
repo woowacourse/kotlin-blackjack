@@ -11,8 +11,7 @@ class DealerTest {
     @BeforeEach
     fun `모든 테스트에 딜러와 플레이어 한 명이 참가하며, 딜러는 3하트 카드를 갖도록 세팅한다`() {
         player = Player("빙티")
-        dealer = Dealer()
-        dealer.addCard(THREE_CARD)
+        dealer = creatDealer(THREE_CARD)
     }
 
     @Test
@@ -84,6 +83,14 @@ class DealerTest {
         dealer.addCard(SEVEN_CARD)
         val actual = dealer.isHitable()
         assertThat(actual).isEqualTo(false)
+    }
+
+    private fun creatDealer(vararg cards: Card): Dealer {
+        val dealer = Dealer()
+        cards.forEach {
+            dealer.addCard(it)
+        }
+        return dealer
     }
 
     companion object {
