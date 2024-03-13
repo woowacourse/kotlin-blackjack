@@ -66,7 +66,7 @@ class GameController(private val deck: Deck) {
         player: Player,
     ): Boolean {
         if (hitDecision) player.hit(deck.pop())
-        OutputView.showHumanHand(player)
+        OutputView.showParticipantHand(player)
         return hitDecision
     }
 
@@ -77,8 +77,7 @@ class GameController(private val deck: Deck) {
     }
 
     private fun showGameResult(participants: Participants) {
-        OutputView.showHumanHandWithResult(participants.getDealer())
-        OutputView.showPlayersHandWithResult(participants.getPlayers())
+        OutputView.showParticipantsHandWithResult(participants)
         judge(participants)
     }
 

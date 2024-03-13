@@ -2,11 +2,7 @@ package view
 
 import model.card.MarkType
 import model.card.ValueType
-import model.participants.Dealer
-import model.participants.Hand
-import model.participants.Participant
-import model.participants.Participants
-import model.participants.Players
+import model.participants.*
 import model.result.DealerResult
 import model.result.PlayersResult
 import model.result.ResultType
@@ -17,47 +13,52 @@ object OutputView {
     private const val HEADER_RESULT = "\n## 최종승패"
 
     fun showGameInit(participants: Participants) {
-        showInitHeader(participants.getPlayers())
-        showHands(participants.getDealer(), participants.getPlayers())
+        showInitHeader(participants)
+        showParticipantsHandOut(participants)
     }
 
-    private fun showInitHeader(players: Players) {
-        println(HEADER_GAME_INITIAL_STATE.format(players.players.joinToString(", ") { it.participantName.name }))
+    private fun showInitHeader(participants: Participants) {
+        println(HEADER_GAME_INITIAL_STATE.format(participants.getPlayers().players.joinToString(", ") { it.participantName.name }))
     }
 
-    private fun showHands(
-        dealer: Dealer,
-        players: Players,
-    ) {
-        showDealerHandOnlyOne(dealer)
-        showPlayersHand(players)
+    private fun showParticipantsHandOut(participants: Participants) {
+        participants.getAll().forEach { participant ->
+            switchParticipantHandOut(participant)
+        }
         println()
     }
 
-    private fun showDealerHandOnlyOne(dealer: Dealer) {
-        println("${dealer.participantName.name}: ${getFirstCardFromHand(dealer.participantState.hand)}")
+    private fun switchParticipantHandOut(participant: Participant) {
+        when(participant) {
+            is Player -> {
+                showParticipantHand(participant)
+            }
+            is Dealer -> {
+                showParticipantHandOnlyOne(participant)
+            }
+        }
     }
 
-    fun showHumanHand(participant: Participant) {
+    private fun showParticipantHandOnlyOne(participant: Participant) {
+        println("${participant.participantName.name}: ${getFirstCardFromHand(participant.participantState.hand)}")
+    }
+
+    fun showParticipantHand(participant: Participant) {
         println("${participant.participantName.name}: ${getCardsFromHand(participant.participantState.hand)}")
     }
 
-    fun showHumanHandWithResult(participant: Participant) {
+    fun showParticipantsHandWithResult(participants: Participants) {
+        participants.getAll().forEach { participant ->
+            showParticipantHandWithResult(participant)
+        }
+    }
+
+    private fun showParticipantHandWithResult(participant: Participant) {
         println(
             "${participant.participantName.name}: ${getCardsFromHand(
                 participant.participantState.hand,
             )} - 결과: ${participant.getPointWithAce().amount}",
         )
-    }
-
-    fun showPlayersHandWithResult(players: Players) {
-        players.players.forEach(::showHumanHandWithResult)
-    }
-
-    private fun showPlayersHand(players: Players) {
-        players.players.forEach {
-            showHumanHand(it)
-        }
     }
 
     private fun getCardsFromHand(hand: Hand): String =
