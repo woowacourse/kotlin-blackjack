@@ -18,25 +18,24 @@ class GameController(private val deck: Deck) {
 
         val participants = Participants.of(dealer, players)
 
-        initGame(participants)
+        handOut(participants)
         handleException { playGame(participants) }
 
         showGameResult(participants)
     }
 
-    private fun initGame(participants: Participants) {
-        initDealer(participants.getDealer())
-        initPlayers(participants.getPlayers())
-
+    private fun handOut(participants: Participants) {
+        handOutDealer(participants.getDealer())
+        handOutPlayers(participants.getPlayers())
         OutputView.showGameInit(participants)
     }
 
-    private fun initDealer(dealer: Dealer) {
+    private fun handOutDealer(dealer: Dealer) {
         dealer.hit(deck.pop())
         dealer.hit(deck.pop())
     }
 
-    private fun initPlayers(players: Players) {
+    private fun handOutPlayers(players: Players) {
         players.players.forEach {
             it.hit(deck.pop())
             it.hit(deck.pop())
@@ -45,7 +44,7 @@ class GameController(private val deck: Deck) {
 
     private fun playGame(participants: Participants) {
         participants.getPlayers().players.forEach {
-            playOfOnePlayer(it, deck)
+            playOfOnePlayer(it)
         }
 
         val hitCount = participants.getDealer().play(deck)
@@ -65,7 +64,6 @@ class GameController(private val deck: Deck) {
     private fun playByDecision(
         hitDecision: Boolean,
         player: Player,
-        deck: Deck,
     ): Boolean {
         if (hitDecision) player.hit(deck.pop())
         OutputView.showHumanHand(player)
@@ -74,17 +72,15 @@ class GameController(private val deck: Deck) {
 
     private fun playOfOnePlayer(
         player: Player,
-        deck: Deck,
     ) {
         while (player.participantState is ParticipantState.Playing &&
-            playByDecision(readHitDecision(player.participantName), player, deck)
+            playByDecision(readHitDecision(player.participantName), player)
             ) ;
     }
 
     private fun showGameResult(participants: Participants) {
         OutputView.showHumanHandWithResult(participants.getDealer())
         OutputView.showPlayersHandWithResult(participants.getPlayers())
-
         judge(participants)
     }
 

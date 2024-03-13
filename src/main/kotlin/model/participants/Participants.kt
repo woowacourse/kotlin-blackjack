@@ -13,10 +13,6 @@ class Participants private constructor(private val participants: List<Participan
         return Players(participants.filterIsInstance<Player>())
     }
 
-    fun getAll(): List<Participant> {
-        return participants
-    }
-
     fun getPlayersResult(): PlayersResult {
         val result: MutableMap<ParticipantName, ResultType> = mutableMapOf()
 
