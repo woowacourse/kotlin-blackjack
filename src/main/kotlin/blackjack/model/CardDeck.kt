@@ -3,24 +3,36 @@ package blackjack.model
 import java.util.LinkedList
 import java.util.Queue
 
-class CardDeck {
-    private val cards: Queue<Card> = LinkedList()
+interface ShuffleCardDeck {
+    fun <T> shuffle(deck: MutableList<T>): MutableList<T>
+}
+
+class RandomShuffleCardDeck : ShuffleCardDeck {
+    override fun <T> shuffle(deck: MutableList<T>): MutableList<T> {
+        return deck.shuffled().toMutableList()
+    }
+}
+
+class CardDeck(
+    private val shuffleCardDeck: ShuffleCardDeck = RandomShuffleCardDeck(),
+    cards: Queue<Card> = LinkedList()
+) {
+    private val cards: Queue<Card> = LinkedList(cards)
 
     init {
-        cards.addAll(
-            Denomination.entries.flatMap { denomination ->
-                Suit.entries.map { suit ->
-                    Card(
-                        denomination = denomination,
-                        suit = suit,
-                    )
+        if (this.cards.isEmpty()) {
+            this.cards.addAll(
+                Denomination.entries.flatMap { denomination ->
+                    Suit.entries.map { suit ->
+                        Card(denomination, suit)
+                    }
                 }
-            },
-        )
+            )
+        }
     }
 
     fun cardShuffle() {
-        val shuffledCards = cards.shuffled()
+        val shuffledCards = shuffleCardDeck.shuffle(cards.toList().toMutableList())
         cards.clear()
         cards.addAll(shuffledCards)
     }
