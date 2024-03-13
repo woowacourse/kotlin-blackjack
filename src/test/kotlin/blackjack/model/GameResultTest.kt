@@ -6,16 +6,16 @@ import org.junit.jupiter.params.provider.CsvSource
 
 class GameResultTest {
     @ParameterizedTest
-    @CsvSource(value = ["1/0/1", "0/2/0", "2/2/2"], delimiter = '/')
-    fun `승리, 무승부, 패배의 정보를 갖는다`(
+    @CsvSource(value = ["1/1", "0/1", "2/2"], delimiter = '/')
+    fun `승리, 패배의 정보를 갖는다`(
         win: Int,
-        push: Int,
-        defeat: Int,
+        lose: Int,
     ) {
-        val gameResult = GameResult(win = win, push = push, defeat = defeat)
+        println(win)
+        println(lose)
+        val gameResult = GameResult(win = win, lose = lose)
 
         assertThat(gameResult.win).isEqualTo(win)
-        assertThat(gameResult.push).isEqualTo(push)
-        assertThat(gameResult.defeat).isEqualTo(defeat)
+        assertThat(gameResult.lose).isEqualTo(lose)
     }
 }

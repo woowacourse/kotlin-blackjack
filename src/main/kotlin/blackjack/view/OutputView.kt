@@ -9,6 +9,7 @@ import blackjack.model.Participants.Companion.INITIAL_CARD_COUNTS
 import blackjack.model.Pattern
 import blackjack.model.Player
 import blackjack.model.PlayerGroup
+import blackjack.model.WinningState
 
 object OutputView {
     private const val SPACE_NAME = "스페이스"
@@ -100,23 +101,40 @@ object OutputView {
         }
     }
 
-    fun printMatchResult(participants: Participants) {
+    fun printError(e: Throwable) {
+        println(e)
+    }
+
+    fun printGameResult(winningState: WinningState) {
+        val playersCount = winningState.state.size - 1
         println("\n[ 최종 승패 ]")
-        println("${participants.dealer.nickname}: ${printResult(participants.dealer.hand.gameResult)}")
-        participants.playerGroup.players.forEach { player ->
-            println("${player.nickname}: ${printResult(player.hand.gameResult)}")
+        winningState.state.entries.forEach { (participant, winningState) ->
+            when (participant) {
+                is Dealer -> printDealerResult(participant, winningState, playersCount)
+                is Player -> printPlayerResult(participant, winningState)
+            }
         }
     }
 
-    private fun printResult(gameResult: GameResult): String {
-        var answer = ""
-        if (gameResult.win != GameResult.DEFAULT_RESULT_VALUE) answer += "${gameResult.win}승 "
-        if (gameResult.push != GameResult.DEFAULT_RESULT_VALUE) answer += "${gameResult.push}무 "
-        if (gameResult.defeat != GameResult.DEFAULT_RESULT_VALUE) answer += "${gameResult.defeat}패 "
-        return answer
+    private fun printDealerResult(
+        dealer: Dealer,
+        gameResult: GameResult,
+        playersCount: Int,
+    ) {
+        val drawCount = playersCount - (gameResult.win + gameResult.lose)
+        println("${dealer.nickname}: ${gameResult.win}승 ${gameResult.lose}패 ${drawCount}무")
     }
 
-    fun printError(e: Throwable) {
-        println(e)
+    private fun printPlayerResult(
+        player: Player,
+        gameResult: GameResult,
+    ) {
+        val resultMessage =
+            when {
+                gameResult.win == 1 -> "승"
+                gameResult.lose == 1 -> "패"
+                else -> "무"
+            }
+        println("${player.nickname}: $resultMessage")
     }
 }

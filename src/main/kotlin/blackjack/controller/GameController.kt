@@ -8,6 +8,7 @@ import blackjack.model.GameState.Play
 import blackjack.model.Participants
 import blackjack.model.Participants.Companion.INITIAL_CARD_COUNTS
 import blackjack.model.PlayerGroup
+import blackjack.model.WinningState
 import blackjack.view.InputView
 import blackjack.view.InputView.askHitOrStay
 import blackjack.view.OutputView
@@ -51,8 +52,8 @@ class GameController(private var gameState: GameState = Play) {
     }
 
     private fun startGame(participants: Participants) {
-        playGame(participants = participants).onSuccess {
-            OutputView.printMatchResult(participants = participants)
+        playGame(participants = participants).onSuccess { winningState ->
+            OutputView.printGameResult(winningState)
             gameState = End
         }.onFailure { e ->
             participants.resetHand()
@@ -60,7 +61,7 @@ class GameController(private var gameState: GameState = Play) {
         }
     }
 
-    private fun playGame(participants: Participants): Result<Unit> {
+    private fun playGame(participants: Participants): Result<WinningState> {
         return runCatching {
             start(participants = participants)
             finish(participants = participants)
@@ -80,8 +81,9 @@ class GameController(private var gameState: GameState = Play) {
 
     private fun runPlayersTurn(playerGroup: PlayerGroup) {
         playerGroup.drawPlayerCard { player ->
+            val order = askHitOrStay(player.nickname)
             showPlayerCards(player)
-            askHitOrStay(player.nickname)
+            order
         }
     }
 
@@ -92,8 +94,8 @@ class GameController(private var gameState: GameState = Play) {
         }
     }
 
-    private fun finish(participants: Participants) {
-        participants.matchResult()
+    private fun finish(participants: Participants): WinningState {
         printEveryCards(participants = participants)
+        return participants.calculateResult()
     }
 }
