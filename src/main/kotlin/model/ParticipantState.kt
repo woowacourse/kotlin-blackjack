@@ -10,7 +10,12 @@ sealed class ParticipantState(val hand: Hand) {
     class Playing(hand: Hand) : ParticipantState(hand) {
         override fun hit(card: Card): ParticipantState {
             hand.draw(card)
-            return if (hand.point >= Hand.BUST_BOUND) Bust(hand) else Playing(hand)
+
+            return when {
+                hand.point > Hand.BUST_BOUND -> Bust(hand)
+                hand.point < Hand.BUST_BOUND -> Playing(hand)
+                else -> BlackJack(hand)
+            }
         }
     }
 

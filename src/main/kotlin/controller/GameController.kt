@@ -3,13 +3,7 @@ package controller
 import model.ParticipantState
 import model.card.Deck
 import model.card.DeckRandomGeneration
-import model.participants.Answer
-import model.participants.Dealer
-import model.participants.Hand
-import model.participants.ParticipantName
-import model.participants.Player
-import model.participants.Players
-import model.result.Judge
+import model.participants.*
 import view.InputView
 import view.OutputView
 
@@ -20,10 +14,12 @@ class GameController() {
         val dealer = Dealer(ParticipantState.Playing(Hand()))
         val players = handleException { readPlayers() }
 
+        val participants = Participants.of(dealer, players)
+
         initGame(dealer = dealer, players = players, deck)
         handleException { playGame(dealer = dealer, players = players, deck) }
 
-        showGameResult(dealer = dealer, players = players)
+        showGameResult(participants)
     }
 
     private fun initGame(
@@ -103,25 +99,23 @@ class GameController() {
     }
 
     private fun showGameResult(
-        dealer: Dealer,
-        players: Players,
+        participants: Participants
     ) {
-        OutputView.showHumanHandWithResult(dealer)
-        OutputView.showPlayersHandWithResult(players)
+        OutputView.showHumanHandWithResult(participants.getDealer())
+        OutputView.showPlayersHandWithResult(participants.getPlayers())
 
-        judge(players = players, dealer = dealer)
+        judge(participants)
     }
 
     private fun judge(
-        dealer: Dealer,
-        players: Players,
+        participants: Participants
     ) {
-        val playersResult = Judge.getPlayersResult(players, dealer)
-        val dealerResult = Judge.getDealerResult(playersResult)
+        val playersResult = participants.getPlayersResult()
+        val dealerResult = participants.getDealerResult()
 
         OutputView.showResultHeader()
         OutputView.showDealerResult(dealerResult)
-        OutputView.showPlayersResult(players, playersResult)
+        OutputView.showPlayersResult(participants.getPlayers(), playersResult)
     }
 
     private fun <T> handleException(block: () -> T): T =

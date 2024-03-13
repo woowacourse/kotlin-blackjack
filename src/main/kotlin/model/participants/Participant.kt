@@ -7,15 +7,8 @@ import model.result.Point.Companion.compareTo
 import model.result.ResultType
 
 abstract class Participant(open var participantState: ParticipantState, open val participantName: ParticipantName) {
-    fun judge(other: Participant): ResultType {
-        return when {
-            participantState is ParticipantState.Bust -> ResultType.LOSE
-            other.participantState is ParticipantState.Bust -> ResultType.WIN
-            this.getPointWithAce() > other.getPointWithAce() -> ResultType.WIN
-            this.getPointWithAce() == other.getPointWithAce() -> ResultType.DRAW
-            else -> ResultType.LOSE
-        }
-    }
+
+    abstract fun judge(other: Participant): ResultType
 
     fun hit(card: Card) {
         when (val currentState = participantState) {

@@ -3,6 +3,7 @@ package model.participants
 import model.ParticipantState
 import model.card.Deck
 import model.result.Point.Companion.compareTo
+import model.result.ResultType
 
 class Dealer(
     override var participantState: ParticipantState,
@@ -23,6 +24,16 @@ class Dealer(
     }
 
     override fun canHit(): Boolean = getPointWithAce() <= HIT_THRESHOLD
+
+    override fun judge(other: Participant): ResultType {
+        return when {
+            other.participantState is ParticipantState.Bust -> ResultType.WIN
+            participantState is ParticipantState.Bust -> ResultType.LOSE
+            this.getPointWithAce() > other.getPointWithAce() -> ResultType.WIN
+            this.getPointWithAce() == other.getPointWithAce() -> ResultType.DRAW
+            else -> ResultType.LOSE
+        }
+    }
 
     companion object {
         private const val HIT_THRESHOLD = 16
