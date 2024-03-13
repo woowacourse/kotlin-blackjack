@@ -46,7 +46,9 @@ object OutputView {
 
     fun showHumanHandWithResult(participant: Participant) {
         println(
-            "${participant.participantName.name}: ${getCardsFromHand(participant.participantState.hand)} - 결과: ${participant.getPointWithAce().amount}",
+            "${participant.participantName.name}: ${getCardsFromHand(
+                participant.participantState.hand,
+            )} - 결과: ${participant.getPointWithAce().amount}",
         )
     }
 

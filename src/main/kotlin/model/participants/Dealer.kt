@@ -1,7 +1,6 @@
 package model.participants
 
 import model.ParticipantState
-import model.card.Card
 import model.card.Deck
 import model.result.Point.Companion.compareTo
 
@@ -22,6 +21,7 @@ class Dealer(
 
         return hitCount
     }
+
     override fun canHit(): Boolean = getPointWithAce() <= HIT_THRESHOLD
 
     companion object {

@@ -18,15 +18,13 @@ abstract class Participant(open var participantState: ParticipantState, open val
     }
 
     fun hit(card: Card) {
-        when(val currentState = participantState) {
+        when (val currentState = participantState) {
             is ParticipantState.Playing -> {
                 participantState = currentState.hit(card)
             }
             is ParticipantState.Bust -> {
-
             }
             is ParticipantState.BlackJack -> {
-
             }
         }
     }

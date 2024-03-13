@@ -84,12 +84,11 @@ class GameController() {
         player: Player,
         deck: Deck,
     ): Boolean {
-        when(answer) {
+        when (answer) {
             Answer.YES -> {
                 player.hit(deck.pop())
             }
             Answer.NO -> {
-
             }
         }
         OutputView.showHumanHand(player)

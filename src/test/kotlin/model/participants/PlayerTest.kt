@@ -1,14 +1,11 @@
 package model.participants
 
 import DeckExplicitGeneration
-import model.ParticipantState
 import model.card.Card
 import model.card.Deck
 import model.card.MarkType
 import model.card.ValueType
-import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
 
 class PlayerTest {
     private lateinit var testDeck: Deck

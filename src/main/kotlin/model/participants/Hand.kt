@@ -5,7 +5,6 @@ import model.card.ValueType
 import model.result.Point
 
 class Hand {
-
     private var _cards: MutableList<Card> = mutableListOf()
     val cards: List<Card>
         get() = _cards
