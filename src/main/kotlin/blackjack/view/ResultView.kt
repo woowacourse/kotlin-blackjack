@@ -5,6 +5,7 @@ import blackjack.model.Participant
 import blackjack.model.Participant.Dealer
 import blackjack.model.Participant.Player
 import blackjack.model.Result
+import blackjack.model.ScoreCalculator
 
 object ResultView {
     private const val MESSAGE_PARTICIPANT_GAME_SCORE = "%s 카드: %s - 결과: %d"
@@ -49,7 +50,7 @@ object ResultView {
                 participant.gameInformation.cards.joinToString(separator = ", ") { card ->
                     card.convertCard()
                 },
-                participant.gameInformation.score,
+                ScoreCalculator.calculateScore(participant.gameInformation.cards),
             ),
         )
     }

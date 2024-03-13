@@ -9,13 +9,8 @@ class GameInformation(cards: Set<Card> = emptySet(), state: GameState = GameStat
     val state: GameState
         get() = _state
 
-    private var _score: Int = 0
-    val score: Int
-        get() = _score
-
     fun drawCard(card: Card) {
         _cards.add(card)
-        _score = ScoreCalculator.calculateScore(cards)
         judgeState()
     }
 
@@ -26,8 +21,8 @@ class GameInformation(cards: Set<Card> = emptySet(), state: GameState = GameStat
     private fun judgeState() {
         _state =
             when {
-                score > BLACKJACK_SCORE -> GameState.Finished.BUST
-                score == BLACKJACK_SCORE -> GameState.Finished.BLACKJACK
+                ScoreCalculator.calculateScore(cards) > BLACKJACK_SCORE -> GameState.Finished.BUST
+                ScoreCalculator.calculateScore(cards) == BLACKJACK_SCORE -> GameState.Finished.BLACKJACK
                 else -> GameState.Running.HIT
             }
     }

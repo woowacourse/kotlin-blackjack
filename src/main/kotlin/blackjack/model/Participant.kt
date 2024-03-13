@@ -47,11 +47,11 @@ sealed class Participant(val name: ParticipantName, val gameInformation: GameInf
             cardDeck: CardDeck,
             output: () -> Unit,
         ) {
-            while (gameInformation.score <= ADDITIONAL_DRAW_CRITERIA) {
+            while (ScoreCalculator.calculateScore(gameInformation.cards) <= ADDITIONAL_DRAW_CRITERIA) {
                 draw(cardDeck.pickCard())
                 output()
             }
-            if (gameInformation.score < BLACKJACK_SCORE) {
+            if (ScoreCalculator.calculateScore(gameInformation.cards) < BLACKJACK_SCORE) {
                 gameInformation.changeStateToStay()
             }
         }

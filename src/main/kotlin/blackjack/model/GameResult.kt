@@ -26,8 +26,8 @@ class GameResult(val dealer: Dealer, val players: List<Player>) {
     private fun determineWinner(player: Participant): Result {
         if (player.gameInformation.state == GameState.Finished.BUST) return Result.DEALER_WIN
         if (dealer.gameInformation.state == GameState.Finished.BUST) return Result.PLAYER_WIN
-        val playerScore = player.gameInformation.score
-        val dealerScore = dealer.gameInformation.score
+        val playerScore = ScoreCalculator.calculateScore(player.gameInformation.cards)
+        val dealerScore = ScoreCalculator.calculateScore(dealer.gameInformation.cards)
         return when {
             playerScore > dealerScore -> Result.PLAYER_WIN
             playerScore < dealerScore -> Result.DEALER_WIN
