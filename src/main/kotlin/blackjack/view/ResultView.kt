@@ -23,7 +23,7 @@ const val PLAYER_GAME_RESULT = "%s: %s"
 const val DEALER_GAME_RESULT = "딜러: %d승%s %d패"
 
 object ResultView {
-    fun showHandsScore(gameResult: GameResult) {
+    private fun showHandsScore(gameResult: GameResult) {
         showDealerScore(gameResult.dealer)
         showPlayersScore(gameResult.playerResults)
     }
@@ -91,7 +91,7 @@ object ResultView {
         }
     }
 
-    fun showFinalWinOrLossResult(gameResult: GameResult) {
+    private fun showFinalWinOrLossResult(gameResult: GameResult) {
         val winCount = gameResult.playerResults.count { it.result == Result.PLAYER_WIN }
         val defeatCount = gameResult.playerResults.count { it.result == Result.DEALER_WIN }
         val drawCount = gameResult.playerResults.count { it.result == Result.DRAW }
@@ -126,5 +126,10 @@ object ResultView {
                 defeatCount,
             ),
         )
+    }
+
+    fun showResult(gameResult: GameResult) {
+        showHandsScore(gameResult)
+        showFinalWinOrLossResult(gameResult)
     }
 }

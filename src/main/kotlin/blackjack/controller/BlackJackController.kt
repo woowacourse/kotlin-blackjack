@@ -16,8 +16,7 @@ import blackjack.view.ProgressView.showDealerDrawMessage
 import blackjack.view.ProgressView.showHands
 import blackjack.view.ProgressView.showPlayerEntry
 import blackjack.view.ProgressView.showPlayerHand
-import blackjack.view.ResultView.showFinalWinOrLossResult
-import blackjack.view.ResultView.showHandsScore
+import blackjack.view.ResultView
 
 object BlackJackController {
     fun run() {
@@ -29,8 +28,7 @@ object BlackJackController {
     }
 
     private fun showGameResult(gameResult: GameResult) {
-        showHandsScore(gameResult)
-        showFinalWinOrLossResult(gameResult)
+        ResultView.showResult(gameResult)
     }
 
     private fun playGame(
