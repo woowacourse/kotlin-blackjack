@@ -6,7 +6,6 @@ import blackjack.model.card.Deck
 import blackjack.model.card.Hand
 import blackjack.model.game.GameResult
 import blackjack.model.game.Referee
-import blackjack.model.game.Result
 import blackjack.model.game.State
 import blackjack.model.player.Dealer
 import blackjack.model.player.PlayerEntry
@@ -30,17 +29,8 @@ object BlackJackController {
     }
 
     private fun showGameResult(gameResult: GameResult) {
-        showHandsScore(gameResult.dealer, gameResult.playerEntry)
-        showFinalWinOrLossResult(gameResult.results, gameResult.playerEntry)
-    }
-
-    private fun judgeOfWinOrLose(
-        dealer: Dealer,
-        playerEntry: PlayerEntry,
-    ): List<Result> {
-        val referee = Referee(dealer, playerEntry)
-        val results = referee.makeResults()
-        return results
+        showHandsScore(gameResult)
+        showFinalWinOrLossResult(gameResult)
     }
 
     private fun playGame(
@@ -50,8 +40,8 @@ object BlackJackController {
     ): GameResult {
         askPlayersDraw(playerEntry, deck)
         showDealerDraw(dealer, deck)
-        val results = judgeOfWinOrLose(dealer, playerEntry)
-        return GameResult(dealer, playerEntry, results)
+        val referee = Referee(dealer, playerEntry)
+        return referee.judgeGame()
     }
 
     private fun showDealerDraw(

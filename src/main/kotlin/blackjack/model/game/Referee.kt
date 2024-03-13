@@ -3,10 +3,20 @@ package blackjack.model.game
 import Player
 import blackjack.model.player.Dealer
 import blackjack.model.player.PlayerEntry
+import blackjack.model.player.PlayerResult
 
 class Referee(val dealer: Dealer, val playerEntry: PlayerEntry) {
     fun makeResults(): List<Result> {
         return playerEntry.players.map { player -> determineWinner(dealer, player) }
+    }
+
+    fun judgeGame(): GameResult {
+        val playerResults =
+            playerEntry.players.map { player ->
+                val result = determineWinner(dealer, player)
+                PlayerResult(player, result)
+            }
+        return GameResult(dealer, playerResults)
     }
 
     private fun determineWinner(
