@@ -1,17 +1,26 @@
 package blackjack.model
 
 class Dealer(
-    val dealerGameInfo: GameInfo = GameInfo(NAME_DEALER),
-) : Participant(dealerGameInfo) {
+    val gameInfo: GameInfo = GameInfo(NAME_DEALER),
+) : Participant() {
+    override fun drawCardsUntilStand(
+        generateCard: () -> Card?,
+        printCards: (GameInfo) -> Unit,
+    ) {
+        val pickingState = drawSingleCard(generateCard)
+        printCards(gameInfo)
+        determineContinuation(pickingState, generateCard, printCards)
+    }
+
     override fun drawSingleCard(generateCard: () -> Card?): PickingState {
         if (isDrawAvailable()) {
-            dealerGameInfo.addCard(generateCard() ?: throw IllegalStateException(EXCEPTION_NO_CARDS_LEFT))
+            gameInfo.addCard(generateCard() ?: throw IllegalStateException(EXCEPTION_NO_CARDS_LEFT))
             return PickingState.HIT
         }
         return PickingState.STAND
     }
 
-    private fun isDrawAvailable(): Boolean = dealerGameInfo.sumOfCards <= MAXIMUM_DRAW_THRESHOLD
+    private fun isDrawAvailable(): Boolean = gameInfo.sumOfCards <= MAXIMUM_DRAW_THRESHOLD
 
     companion object {
         private const val NAME_DEALER = "딜러"

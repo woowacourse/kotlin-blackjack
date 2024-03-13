@@ -1,12 +1,16 @@
 package blackjack.model
 
-abstract class Participant(val gameInfo: GameInfo) {
-    fun drawCardsUntilStand(
+abstract class Participant {
+    abstract fun drawCardsUntilStand(
+        generateCard: () -> Card?,
+        printCards: (GameInfo) -> Unit,
+    )
+
+    fun determineContinuation(
+        pickingState: PickingState,
         generateCard: () -> Card?,
         printCards: (GameInfo) -> Unit,
     ) {
-        val pickingState = drawSingleCard(generateCard)
-        printCards(gameInfo)
         when (pickingState) {
             PickingState.HIT -> drawCardsUntilStand(generateCard, printCards)
             PickingState.STAND -> return

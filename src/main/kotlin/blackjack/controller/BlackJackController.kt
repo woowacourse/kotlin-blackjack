@@ -32,7 +32,7 @@ object BlackJackController {
     }
 
     private fun displayInitializedCards() {
-        GameRoundView.printInitialStats(dealer.dealerGameInfo, players.value.map { it.gameInfo })
+        GameRoundView.printInitialStats(dealer.gameInfo, players.value.map { it.gameInfo })
     }
 
     private fun playRound() {
@@ -48,7 +48,7 @@ object BlackJackController {
     }
 
     private fun displayResult() {
-        val dealerInfo = dealer.dealerGameInfo
+        val dealerInfo = dealer.gameInfo
         val playersInfo = players.value.map { player -> player.gameInfo }
         val judge = Judge(dealerInfo, playersInfo)
         with(ResultView) {
