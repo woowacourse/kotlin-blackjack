@@ -20,7 +20,8 @@ class GameManager(
                 player = player,
                 onResult = { result ->
                     playerResults[player] = result
-                    dealerResults[result.reverse()]?.plus(ADD_RESULT_COUNT)
+                    dealerResults[result.reverse()] =
+                        dealerResults.getOrDefault(result.reverse(), 0) + ADD_RESULT_COUNT
                 },
             )
         }
@@ -36,8 +37,8 @@ class GameManager(
         }
     }
 
-    fun drawCardForParticipant(participant: Participant) {
-        participant.draw(cardDeck.draw())
+    fun returnCardForParticipant(): Card {
+        return cardDeck.draw()
     }
 
     fun getParticipants(): List<Participant> {
@@ -84,9 +85,9 @@ class GameManager(
         val dealerScore = participants.dealer.getBlackJackScore()
         val playerScore = player.getBlackJackScore()
         when {
-            dealerScore > playerScore -> onResult(Result.WIN)
+            dealerScore < playerScore -> onResult(Result.WIN)
             dealerScore == playerScore -> onResult(Result.DRAW)
-            dealerScore < playerScore -> onResult(Result.LOSE)
+            dealerScore > playerScore -> onResult(Result.LOSE)
         }
     }
 
