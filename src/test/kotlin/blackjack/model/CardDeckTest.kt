@@ -23,8 +23,8 @@ class CardDeckTest {
                 cardDeck.draw().also { card ->
                     assertThat(
                         actualCards.find { actualCard ->
-                            val compareDenomination = actualCard.getCardDenomination() == card.getCardDenomination()
-                            val compareSuit = actualCard.getCardSuit() == card.getCardSuit()
+                            val compareDenomination = actualCard.denomination == card.denomination
+                            val compareSuit = actualCard.suit == card.suit
                             compareDenomination && compareSuit
                         },
                     ).isNotEqualTo(null)

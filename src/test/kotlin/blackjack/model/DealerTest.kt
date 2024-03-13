@@ -11,8 +11,8 @@ class DealerTest {
 
         dealer.draw(card)
         val firstDealerCard = dealer.openFirstCard()
-        assertThat(firstDealerCard?.getCardSuit()).isEqualTo(card.getCardSuit())
-        assertThat(firstDealerCard?.getCardDenomination()).isEqualTo(card.getCardDenomination())
+        assertThat(firstDealerCard?.suit).isEqualTo(card.suit)
+        assertThat(firstDealerCard?.denomination).isEqualTo(card.denomination)
     }
 
     @Test
@@ -28,7 +28,7 @@ class DealerTest {
         drawableDealer.draw(Card(Denomination.FOUR, Suit.DIAMOND))
         drawableDealer.draw(Card(Denomination.FOUR, Suit.CLOVER))
         drawableDealer.draw(Card(Denomination.FOUR, Suit.HEART))
-        assertThat(drawableDealer.checkShouldDealerDrawCard()).isTrue()
+        assertThat(drawableDealer.checkShouldDrawCard()).isTrue()
     }
 
     @Test
@@ -36,6 +36,6 @@ class DealerTest {
         val unDrawableDealer = Dealer()
         unDrawableDealer.draw(Card(Denomination.QUEEN, Suit.SPADE))
         unDrawableDealer.draw(Card(Denomination.SEVEN, Suit.SPADE))
-        assertThat(unDrawableDealer.checkShouldDealerDrawCard()).isFalse()
+        assertThat(unDrawableDealer.checkShouldDrawCard()).isFalse()
     }
 }

@@ -4,7 +4,15 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class ParticipantTest {
-    class MockParticipant(name: String) : Participant(name)
+    class MockParticipant(name: String) : Participant(name) {
+        override fun openInitCards(): List<Card>? {
+            TODO("Not yet implemented")
+        }
+
+        override fun checkShouldDrawCard(): Boolean {
+            TODO("Not yet implemented")
+        }
+    }
 
     @Test
     fun `정상적인 Hit 상태 체크 테스트 `() {

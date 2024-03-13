@@ -9,7 +9,7 @@ class BlackJackTest {
     fun `유저가 더 이상 카드를 드로우 하지 않을 경우 테스트`() {
         val blackJack = BlackJack()
         blackJack.switchToStayState()
-        assertThat(blackJack.state).isEqualTo(State.Finish.Stay)
+        assertThat(blackJack.getBlackJackState()).isEqualTo(State.Finish.Stay)
     }
 
     @Test
@@ -25,7 +25,7 @@ class BlackJackTest {
             addCard(Card(Denomination.NINE, Suit.SPADE))
             addCard(Card(Denomination.SEVEN, Suit.CLOVER))
         }
-        assertThat(blackJack.state).isEqualTo(State.Action.Hit)
+        assertThat(blackJack.getBlackJackState()).isEqualTo(State.Action.Hit)
     }
 
     @Test
@@ -35,7 +35,7 @@ class BlackJackTest {
             addCard(Card(Denomination.ACE, Suit.SPADE))
             addCard(Card(Denomination.JACK, Suit.CLOVER))
         }
-        assertThat(blackJack.state).isEqualTo(State.Finish.BlackJack)
+        assertThat(blackJack.getBlackJackState()).isEqualTo(State.Finish.BlackJack)
     }
 
     @Test
@@ -46,7 +46,7 @@ class BlackJackTest {
             addCard(Card(Denomination.KING, Suit.CLOVER))
             addCard(Card(Denomination.KING, Suit.DIAMOND))
         }
-        assertThat(bustBlackJack.state).isEqualTo(State.Finish.Bust)
+        assertThat(bustBlackJack.getBlackJackState()).isEqualTo(State.Finish.Bust)
     }
 
     @Test
@@ -57,7 +57,7 @@ class BlackJackTest {
             addCard(Card(Denomination.KING, Suit.CLOVER))
             addCard(Card(Denomination.NINE, Suit.DIAMOND))
         }
-        assertThat(aceBlackJack.state).isEqualTo(State.Action.Hit)
+        assertThat(aceBlackJack.getBlackJackState()).isEqualTo(State.Action.Hit)
     }
 
     @Test
@@ -71,6 +71,6 @@ class BlackJackTest {
             addCard(Card(Denomination.SEVEN, Suit.DIAMOND))
             addCard(Card(Denomination.NINE, Suit.SPADE))
         }
-        assertThat(aceBlackJack.state).isEqualTo(State.Action.Hit)
+        assertThat(aceBlackJack.getBlackJackState()).isEqualTo(State.Action.Hit)
     }
 }

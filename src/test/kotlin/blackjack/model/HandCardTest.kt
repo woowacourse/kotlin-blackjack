@@ -20,8 +20,8 @@ class HandCardTest {
         val card = Card(Denomination.KING, Suit.SPADE)
         val handCard = HandCard()
         handCard.addCard(card)
-        assertThat(card.getCardDenomination()).isEqualTo(Denomination.KING)
-        assertThat(card.getCardSuit()).isEqualTo(Suit.SPADE)
+        assertThat(card.denomination).isEqualTo(Denomination.KING)
+        assertThat(card.suit).isEqualTo(Suit.SPADE)
     }
 
     @Test
