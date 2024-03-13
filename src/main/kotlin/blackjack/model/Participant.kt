@@ -25,7 +25,7 @@ sealed class Participant(val name: ParticipantName, hand: Hand) {
     fun getWinningResult(opponent: Participant): WinningResult = state.calculateWinningResult(opponent)
 }
 
-class Player(name: ParticipantName, hand: Hand) : Participant(name, hand) {
+class Player(name: ParticipantName, hand: Hand, private val betAmount: Double) : Participant(name, hand) {
     fun playRound(
         cardDeck: CardDeck,
         isPlayerActionContinued: (name: ParticipantName) -> Boolean,
@@ -38,6 +38,14 @@ class Player(name: ParticipantName, hand: Hand) : Participant(name, hand) {
                 finishRound()
             }
             updatePlayerStatus(this)
+        }
+    }
+
+    fun calculateProfit(winningResult: WinningResult): Double {
+        return when (winningResult) {
+            WinningResult.WIN -> betAmount * state.getEarningRate()
+            WinningResult.DRAW -> 0.0
+            WinningResult.LOSE -> -betAmount
         }
     }
 }
