@@ -28,37 +28,42 @@ class BlackJack {
 
     fun addCard(card: Card) {
         handCard.addCard(card)
-        updateGameStateWithScore()
+        if (!checkStayState()) {
+            updateGameStateWithScore()
+        }
+    }
+
+    private fun checkStayState(): Boolean {
+        return state == State.Finish.Stay
     }
 
     private fun updateGameStateWithScore() {
         when (val totalScore = handCard.getTotalCardsSum()) {
             in MIN_SCORE until BLACK_JACK_SCORE -> {
                 _state = State.Action.Hit
-                updateGameStateWithAceCount(totalScore)
+                applyGameStateWithAceCount(totalScore)
             }
 
-            BLACK_JACK_SCORE -> _state = State.Finish.BlackJack
+            BLACK_JACK_SCORE -> applyBlackJackStateWithCardCount()
             in BUST_SCORE..MAX_SCORE -> _state = State.Finish.Bust
         }
     }
 
-    private fun updateGameStateWithAceCount(totalScore: Int) {
-        if (handCard.getAceCount() > MIN_ACE_COUNT) {
-            checkCurrentScore(totalScore + Denomination.TRANSFER_ACE_SCORE)
+    private fun applyGameStateWithAceCount(totalScore: Int) {
+        if (handCard.updateGameStateWithAceCount(totalScore)) {
+            _state = State.Finish.BlackJack
         }
     }
 
-    private fun checkCurrentScore(currentScore: Int) {
-        if (currentScore == BLACK_JACK_SCORE) {
+    private fun applyBlackJackStateWithCardCount() {
+        if (handCard.checkBlackJackStateWithCardCount()) {
             _state = State.Finish.BlackJack
         }
     }
 
     companion object {
-        private const val BLACK_JACK_SCORE: Int = 21
+        const val BLACK_JACK_SCORE: Int = 21
         private const val MIN_SCORE: Int = 0
-        private const val MIN_ACE_COUNT: Int = 0
         private const val BUST_SCORE: Int = 22
         private const val MAX_SCORE: Int = 61
     }

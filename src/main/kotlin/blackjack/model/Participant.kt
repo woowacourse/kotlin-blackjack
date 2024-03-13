@@ -10,6 +10,10 @@ abstract class Participant(
         blackJack.addCard(card)
     }
 
+    fun transitionToStayState() {
+        blackJack.switchToStayState()
+    }
+
     fun checkHitState(): Boolean {
         return blackJack.checkDrawState()
     }

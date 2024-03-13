@@ -46,8 +46,14 @@ class BlackJackController {
 
     private fun playPlayer(player: Player) {
         while (player.checkHitState() && InputView.inputPlayerDecision(player.getName()) == UserDecision.YES) {
-            if (!setUserDecision(player)) return
-            OutputView.outputPlayerCurrentHandCard(player)
+            when (InputView.inputPlayerDecision(player.getName())) {
+                UserDecision.YES -> {
+                    if (!setUserDecision(player)) return
+                    OutputView.outputPlayerCurrentHandCard(player)
+                }
+
+                UserDecision.NO -> player.transitionToStayState()
+            }
         }
     }
 
