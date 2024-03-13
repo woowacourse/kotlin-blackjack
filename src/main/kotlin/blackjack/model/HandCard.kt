@@ -1,8 +1,8 @@
 package blackjack.model
 
 class HandCard {
-    private var _cards: Set<Card> = setOf()
-    val cards: Set<Card> get() = _cards
+    private var _cards: List<Card> = listOf()
+    val cards: List<Card> get() = _cards
 
     fun addCard(card: Card) {
         _cards += card
@@ -10,7 +10,7 @@ class HandCard {
 
     fun getTotalCardsSum(): Int {
         return cards.sumOf { card ->
-            card.denomination.getScore()
+            card.denomination.score
         }
     }
 

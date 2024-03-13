@@ -1,7 +1,6 @@
 package blackjack.model
 
 class Player(name: String) : Participant(name) {
-
     override fun openInitCards(): List<Card>? {
         return getCards().take(2).ifEmpty { null }
     }

@@ -8,32 +8,28 @@ import blackjack.model.Player
 import blackjack.view.InputView
 import blackjack.view.OutputView
 import blackjack.view.user.UserDecision
-import kotlin.system.exitProcess
 
 class BlackJackController {
     private lateinit var gameManager: GameManager
 
     fun startGameFlow() {
-        val dealer = Dealer()
-        val players = InputView.inputPlayers()
-        val participants =
-            makeParticipants(dealer, players) ?: exitProcess(1)
+        val participants = makeParticipants()
         gameManager =
             GameManager(
                 participants = participants,
             )
         gameManager.setGame()
         OutputView.outputParticipantsName(
-            dealerName = dealer.getName(),
-            players = participants.getPlayers(),
+            dealerName = participants.dealer.getName(),
+            players = participants.players,
         )
-        dealer.openFirstCard()?.let { firstCard ->
+        participants.dealer.openInitCards()?.firstOrNull()?.let { firstCard ->
             OutputView.outputDealerCurrentHandCard(
-                name = dealer.getName(),
+                name = participants.dealer.getName(),
                 firstCard = firstCard,
             )
         } ?: println(ERROR_CARD_INDEX)
-        OutputView.outputPlayersCurrentHandCard(participants.getPlayers())
+        OutputView.outputPlayersCurrentHandCard(participants.players)
     }
 
     fun playGame() {
@@ -83,7 +79,7 @@ class BlackJackController {
 
     private fun setUserDecision(participant: Participant): Boolean {
         return try {
-            gameManager.drawCardForParticipant(participant)
+            participant.draw(gameManager.returnCardForParticipant())
             true
         } catch (e: IllegalArgumentException) {
             println(e.message)
@@ -91,13 +87,20 @@ class BlackJackController {
         }
     }
 
-    private fun makeParticipants(
+    private fun makeParticipants(): Participants {
+        val dealer = Dealer()
+        val players = InputView.inputPlayers()
+        return checkParticipants(dealer, players) ?: makeParticipants()
+    }
+
+    private fun checkParticipants(
         dealer: Dealer,
         players: List<Player>,
     ): Participants? {
         return try {
             Participants(
-                participants = listOf(dealer) + players,
+                dealer = dealer,
+                players = players,
             )
         } catch (e: IllegalArgumentException) {
             println(e.message)

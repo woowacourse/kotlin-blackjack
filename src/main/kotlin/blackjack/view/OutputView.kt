@@ -52,31 +52,33 @@ object OutputView {
         )
     }
 
-    fun outputPlayersCurrentHandCard(players: List<Player>) {
+    fun outputPlayersCurrentHandCard(players: List<Participant>) {
         players.forEach { player ->
             outputPlayerCurrentHandCard(player)
         }
         println()
     }
 
-    fun outputPlayerCurrentHandCard(participant: Participant) {
-        println(
-            OUTPUT_MESSAGE_PARTICIPANTS_CURRENT_HAND_CARD
-                .format(
-                    participant.getName(),
-                    joinCardsInfo(participant.getCards()),
-                ),
-        )
+    fun outputPlayerCurrentHandCard(player: Participant) {
+        player.openInitCards()?.let { playerInitCards ->
+            println(
+                OUTPUT_MESSAGE_PARTICIPANTS_CURRENT_HAND_CARD
+                    .format(
+                        player.getName(),
+                        joinCardsInfo(playerInitCards),
+                    ),
+            )
+        }
     }
 
-    private fun joinCardsInfo(cards: Set<Card>): String {
+    private fun joinCardsInfo(cards: List<Card>): String {
         return cards.joinToString(COMMA) { card ->
             joinCardInfo(card = card)
         }
     }
 
     private fun joinCardInfo(card: Card): String {
-        return "${card.denomination.getScore()}${getCardSuitName(card.suit)}"
+        return "${card.denomination.score}${getCardSuitName(card.suit)}"
     }
 
     private fun getCardSuitName(suit: Suit): String {

@@ -22,6 +22,4 @@ sealed interface State {
             override fun checkDrawState() = false
         }
     }
-
-    companion object
 }

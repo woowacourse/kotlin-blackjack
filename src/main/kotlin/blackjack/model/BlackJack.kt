@@ -14,7 +14,7 @@ class BlackJack {
         return state
     }
 
-    fun getCards(): Set<Card> {
+    fun getCards(): List<Card> {
         return handCard.cards
     }
 

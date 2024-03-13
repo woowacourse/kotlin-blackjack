@@ -36,7 +36,7 @@ abstract class Participant(
         return name
     }
 
-    fun getCards(): Set<Card> {
+    fun getCards(): List<Card> {
         return blackJack.getCards()
     }
 
