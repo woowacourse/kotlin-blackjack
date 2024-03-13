@@ -10,7 +10,6 @@ class Player(
             DEFAULT_NAME,
         ),
 ) : Participant(participantState, participantName) {
-    override fun canHit(): Boolean = getPointWithAce() < BUST_BOUND
 
     override fun judge(other: Participant): ResultType {
         return when {

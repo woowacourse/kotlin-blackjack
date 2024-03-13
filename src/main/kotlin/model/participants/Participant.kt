@@ -36,10 +36,4 @@ abstract class Participant(open var participantState: ParticipantState, open val
             else -> point
         }
     }
-
-    abstract fun canHit(): Boolean
-
-    companion object {
-        const val BUST_BOUND = 21
-    }
 }
