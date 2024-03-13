@@ -63,14 +63,12 @@ class GameManager(
             is State.Finish.Stay, State.Action.Hit ->
                 compareToResult(
                     player = player,
-                    onResult = onResult
+                    onResult = onResult,
                 )
         }
     }
 
-    private fun checkBlackJackState(
-        onResult: (Result) -> Unit,
-    ) {
+    private fun checkBlackJackState(onResult: (Result) -> Unit) {
         if (participants.dealer.getBlackJackState() == State.Finish.BlackJack) {
             onResult(Result.DRAW)
         } else {
@@ -80,7 +78,7 @@ class GameManager(
 
     private fun compareToResult(
         player: Player,
-        onResult: (Result) -> Unit
+        onResult: (Result) -> Unit,
     ) {
         val dealerScore = participants.dealer.getBlackJackScore()
         val playerScore = player.getBlackJackScore()

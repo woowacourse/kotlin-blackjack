@@ -5,7 +5,7 @@ import java.util.Queue
 
 class CardDeck(
     private val shuffleCardDeck: ShuffleCardDeck = RandomShuffleCardDeck(),
-    cards: Queue<Card> = LinkedList()
+    cards: Queue<Card> = LinkedList(),
 ) {
     private val cards: Queue<Card> = LinkedList(cards)
 
@@ -16,7 +16,7 @@ class CardDeck(
                     Suit.entries.map { suit ->
                         Card(denomination, suit)
                     }
-                }
+                },
             )
         }
     }
