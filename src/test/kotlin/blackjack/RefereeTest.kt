@@ -35,8 +35,10 @@ class RefereeTest {
         val players = listOf(player)
         val playerEntry = PlayerEntry(players)
         val referee = Referee(dealer, playerEntry)
-        val results = referee.makeResults()
-        assertThat(results).isEqualTo(listOf(Result.PLAYER_WIN))
+        val results = referee.judgeGame()
+        val expectedResults = listOf(Result.PLAYER_WIN)
+        val actualResults = results.playerResults.map { it.result }
+        assertThat(actualResults).isEqualTo(expectedResults)
     }
 
     @Test
@@ -48,8 +50,10 @@ class RefereeTest {
         val players = listOf(player)
         val playerEntry = PlayerEntry(players)
         val referee = Referee(dealer, playerEntry)
-        val results = referee.makeResults()
-        assertThat(results).isEqualTo(listOf(Result.DEALER_WIN))
+        val results = referee.judgeGame()
+        val expectedResults = listOf(Result.DEALER_WIN)
+        val actualResults = results.playerResults.map { it.result }
+        assertThat(actualResults).isEqualTo(expectedResults)
     }
 
     @Test
@@ -61,8 +65,10 @@ class RefereeTest {
         val players = listOf(player)
         val playerEntry = PlayerEntry(players)
         val referee = Referee(dealer, playerEntry)
-        val results = referee.makeResults()
-        assertThat(results).isEqualTo(listOf(Result.DRAW))
+        val results = referee.judgeGame()
+        val expectedResults = listOf(Result.DRAW)
+        val actualResults = results.playerResults.map { it.result }
+        assertThat(actualResults).isEqualTo(expectedResults)
     }
 
     @Test
@@ -83,8 +89,10 @@ class RefereeTest {
         val players = listOf(player)
         val playerEntry = PlayerEntry(players)
         val referee = Referee(dealer, playerEntry)
-        val results = referee.makeResults()
-        assertThat(results).isEqualTo(listOf(Result.DEALER_WIN))
+        val results = referee.judgeGame()
+        val expectedResults = listOf(Result.DEALER_WIN)
+        val actualResults = results.playerResults.map { it.result }
+        assertThat(actualResults).isEqualTo(expectedResults)
     }
 
     @Test
@@ -107,7 +115,9 @@ class RefereeTest {
         val players = listOf(player)
         val playerEntry = PlayerEntry(players)
         val referee = Referee(dealer, playerEntry)
-        val results = referee.makeResults()
-        assertThat(results).isEqualTo(listOf(Result.PLAYER_WIN))
+        val results = referee.judgeGame()
+        val expectedResults = listOf(Result.PLAYER_WIN)
+        val actualResults = results.playerResults.map { it.result }
+        assertThat(actualResults).isEqualTo(expectedResults)
     }
 }
