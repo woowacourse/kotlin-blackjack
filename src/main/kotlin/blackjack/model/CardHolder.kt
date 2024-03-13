@@ -21,7 +21,21 @@ abstract class CardHolder {
         _blackjackState = hand.determineState()
     }
 
-    fun changeState(blackjackState: BlackjackState) {
+    private fun changeState(blackjackState: BlackjackState) {
         _blackjackState = blackjackState
+    }
+
+    fun drawCard(shouldDrawCard: () -> Boolean) {
+        while (blackjackState is Hit) {
+            drawDecision(shouldDrawCard)
+        }
+    }
+
+    private fun drawDecision(shouldDrawCard: () -> Boolean) {
+        if (shouldDrawCard()) {
+            addCard(card = GameDeck.drawCard())
+        } else {
+            changeState(blackjackState = BlackjackState.Finished.Stay)
+        }
     }
 }

@@ -49,13 +49,13 @@ object OutputView {
         )
     }
 
-    fun printDealerDrawCard() {
-        println("\n딜러의 카드가 ${DEALER_CARD_DRAW_THRESHOLD}이하 이므로, 1장의 카드를 더 받습니다.")
+    fun printDealerDrawCard(dealer: Dealer) {
+        println("\n${dealer.nickname}의 카드가 ${DEALER_CARD_DRAW_THRESHOLD}이하 이므로, 1장의 카드를 더 받습니다.")
     }
 
     fun printEveryCards(participants: Participants) {
         println()
-        showDealerCardsResult(participants.dealer) // 딜러 패 출력
+        showDealerCardsResult(participants.dealer)
         showPlayersCardsResult(participants.playerGroup)
     }
 

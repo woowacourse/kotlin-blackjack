@@ -74,18 +74,22 @@ class GameController(private var gameState: GameState = Play) {
     }
 
     private fun initSetting(participants: Participants) {
-        repeat(INITIAL_CARD_COUNTS) {
-            participants.initParticipantsDeck()
-        }
+        repeat(INITIAL_CARD_COUNTS) { participants.initParticipantsDeck() }
         printGameSetting(participants = participants)
     }
 
     private fun runPlayersTurn(playerGroup: PlayerGroup) {
-        playerGroup.drawPlayerCard(hitOrStay = ::askHitOrStay, showPlayerCards = ::showPlayerCards)
+        playerGroup.drawPlayerCard { player ->
+            showPlayerCards(player)
+            askHitOrStay(player.nickname)
+        }
     }
 
     private fun runDealerTurn(dealer: Dealer) {
-        dealer.drawDealerCard(printDealerDrawCard = ::printDealerDrawCard)
+        dealer.drawCard {
+            printDealerDrawCard(dealer = dealer)
+            dealer.shouldDrawCard()
+        }
     }
 
     private fun finish(participants: Participants) {

@@ -10,12 +10,9 @@ class PlayerGroup {
         _players += playerNames.map { Player(nickname = Nickname(it)) }
     }
 
-    fun drawPlayerCard(
-        hitOrStay: (nickname: Nickname) -> Boolean,
-        showPlayerCards: (player: Player) -> Unit,
-    ) {
+    fun drawPlayerCard(shouldDrawCard: (player: Player) -> Boolean) {
         players.forEach { player ->
-            player.drawCardsForPlayer(hitOrStay, showPlayerCards)
+            player.drawCard { shouldDrawCard(player) }
         }
     }
 
