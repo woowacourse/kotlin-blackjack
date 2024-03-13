@@ -20,14 +20,15 @@ class Hand(private val cards: MutableList<Card>) {
 
     fun calculateState(): State {
         return when {
-            calculateCardsSum() == THRESHOLD_BLACKJACK && cards.size == 2 -> State.Blackjack
-            calculateCardsSum() > THRESHOLD_BUST -> State.Bust
-            else -> State.Normal
+            calculateCardsSum() == THRESHOLD_BLACKJACK && cards.size == BLACKJACK_CARD_SIZE -> Blackjack()
+            calculateCardsSum() > THRESHOLD_BUST -> Bust()
+            else -> Normal()
         }
     }
 
     companion object {
-        const val THRESHOLD_BUST = 21
-        const val THRESHOLD_BLACKJACK = 21
+        private const val BLACKJACK_CARD_SIZE = 2
+        private const val THRESHOLD_BUST = 21
+        private const val THRESHOLD_BLACKJACK = 21
     }
 }

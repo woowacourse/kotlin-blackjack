@@ -40,7 +40,7 @@ class DealerTest {
             deck,
         )
 
-        assertThat(dealer.getState()).isEqualTo(State.Normal)
+        assertThat(dealer.getState()).isInstanceOf(Normal::class.java)
     }
 
     @Test
@@ -53,7 +53,7 @@ class DealerTest {
             deck,
         )
 
-        assertThat(dealer.getState()).isEqualTo(State.Normal)
+        assertThat(dealer.getState()).isInstanceOf(Normal::class.java)
     }
 
     @Test
@@ -66,14 +66,14 @@ class DealerTest {
             deck,
         )
 
-        assertThat(dealer.getState()).isEqualTo(State.Bust)
+        assertThat(dealer.getState()).isInstanceOf(Bust::class.java)
     }
 
     @Test
     fun `딜러가 플레이어보다 점수가 낮으면 패배한다`() {
         val dealer = createDealer(Card(5), Card(9))
         val player = createPlayer(Card(8), Card(9))
-        val winningState = dealer.calculateWinningStateWith(player)
+        val winningState = dealer.calculateWinningStateAgainst(player)
 
         assertThat(winningState).isEqualTo(WinningState(0, 1))
     }

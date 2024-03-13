@@ -27,7 +27,7 @@ class PlayerTest {
             deck,
         )
 
-        assertThat(player.getState()).isEqualTo(State.Bust)
+        assertThat(player.getState()).isInstanceOf(Bust::class.java)
     }
 
     @Test
@@ -35,7 +35,7 @@ class PlayerTest {
         val dealer = createDealer(Card(5), Card(9))
         val player = createPlayer(Card(8), Card(9))
 
-        val winningState = player.calculateWinningStateWith(dealer)
+        val winningState = player.calculateWinningStateAgainst(dealer)
 
         assertThat(winningState).isEqualTo(WinningState(1, 0))
     }
