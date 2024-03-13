@@ -32,7 +32,7 @@ object ResultView {
             println(
                 MESSAGE_PLAYER_RESULT.format(
                     gameResult.participants.getPlayers()[index].name,
-                    playerResult.convertResult(),
+                    playerResult.label,
                 ),
             )
         }
