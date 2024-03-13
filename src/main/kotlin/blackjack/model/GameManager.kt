@@ -15,7 +15,7 @@ class GameManager(
         val dealerResults = mutableMapOf<Result, Int>()
         val playerResults = mutableMapOf<Player, Result>()
 
-        participants.getPlayers().forEach { player ->
+        participants.players.forEach { player ->
             judgeBlackJackScore(
                 player = player,
                 onResult = { result ->
@@ -41,11 +41,11 @@ class GameManager(
     }
 
     fun getParticipants(): List<Participant> {
-        return participants.getPlayers() + participants.getDealer()
+        return participants.players + participants.dealer
     }
 
     fun getDealer(): Dealer {
-        return participants.getDealer()
+        return participants.dealer
     }
 
     fun getAlivePlayers(): List<Participant> {
@@ -70,7 +70,7 @@ class GameManager(
     private fun checkBlackJackState(
         onResult: (Result) -> Unit,
     ) {
-        if (participants.getDealer().getBlackJackState() == State.Finish.BlackJack) {
+        if (participants.dealer.getBlackJackState() == State.Finish.BlackJack) {
             onResult(Result.DRAW)
         } else {
             onResult(Result.WIN)
@@ -81,7 +81,7 @@ class GameManager(
         player: Player,
         onResult: (Result) -> Unit
     ) {
-        val dealerScore = participants.getDealer().getBlackJackScore()
+        val dealerScore = participants.dealer.getBlackJackScore()
         val playerScore = player.getBlackJackScore()
         when {
             dealerScore > playerScore -> onResult(Result.WIN)
