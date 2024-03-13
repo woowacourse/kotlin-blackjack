@@ -1,6 +1,7 @@
 package blackjack.controller
 
 import Player
+import blackjack.model.card.Card
 import blackjack.model.card.Deck
 import blackjack.model.card.Hand
 import blackjack.model.game.GameResult
@@ -107,6 +108,20 @@ object BlackJackController {
         return playerEntry
     }
 
+    private fun dealingCards(
+        playersName: List<String>,
+        deck: Deck,
+    ): List<Hand> {
+        val allDrawnCards = mutableListOf<List<Card>>()
+        repeat(playersName.size + 1) {
+            val drawnCards = mutableListOf<Card>()
+            repeat(2) { drawnCards.add(deck.dealCard()) }
+            allDrawnCards.add(drawnCards)
+        }
+        val hands = allDrawnCards.map { drawnCards -> Hand(drawnCards.toMutableList()) }
+        return hands
+    }
+
     private fun makePlayers(
         playersName: List<String>,
         hands: List<Hand>,
@@ -117,14 +132,5 @@ object BlackJackController {
     private fun setDealer(hands: List<Hand>): Dealer {
         val dealer = Dealer(hands[0])
         return dealer
-    }
-
-    private fun dealingCards(
-        playersName: List<String>,
-        deck: Deck,
-    ): List<Hand> {
-        val hands = List(playersName.size + 1) { Hand(mutableListOf()) }
-        repeat(2) { hands.forEach { hand -> hand.draw(deck.dealCard()) } }
-        return hands
     }
 }
