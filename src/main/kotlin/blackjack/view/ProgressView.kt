@@ -25,7 +25,16 @@ object ProgressView {
     }
 
     fun showPlayerHand(player: Player) {
-        println("$PLAYER_CARD${getPlayerState(player)}".format(player.name, player.hand.cards.joinToString()))
+        println(
+            "$PLAYER_CARD${getPlayerState(player)}".format(
+                player.name,
+                player.hand.cards.joinToString { card ->
+                    ResultView.displayCard(
+                        card,
+                    )
+                },
+            ),
+        )
     }
 
     fun showDealerDrawMessage(dealer: Dealer) {
@@ -41,12 +50,20 @@ object ProgressView {
 
     private fun showDealerOneHand(dealer: Dealer) {
         dealer.hand.cards.getOrNull(0)?.let {
-            println(DEALER_CARD.format(it))
+            println(DEALER_CARD.format(ResultView.displayCard(it)))
         } ?: println("딜러 카드 정보 없음")
     }
 
     private fun showDealerHand(dealer: Dealer) {
-        println("$DEALER_CARD${getPlayerState(dealer)}".format(dealer.hand.cards.joinToString()))
+        println(
+            "$DEALER_CARD${getPlayerState(dealer)}".format(
+                dealer.hand.cards.joinToString { card ->
+                    ResultView.displayCard(
+                        card,
+                    )
+                },
+            ),
+        )
     }
 
     private fun getPlayerState(player: Player): String =

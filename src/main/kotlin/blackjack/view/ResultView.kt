@@ -1,6 +1,10 @@
 package blackjack.view
 
+import blackjack.model.card.Card
+import blackjack.model.card.Denomination
+import blackjack.model.card.Suit
 import blackjack.model.game.Result
+import blackjack.model.game.State
 import blackjack.model.game.State.Finished
 import blackjack.model.player.Dealer
 import blackjack.model.player.PlayerEntry
@@ -30,17 +34,37 @@ object ResultView {
         println(FINAL_WIN_OR_LOSS)
     }
 
+    fun displayCard(card: Card): String {
+        val suit = displaySuit(card.suit)
+        val denomination = displayDenomination(card.denomination)
+        return "$suit$denomination"
+    }
+
+    private fun displayDenomination(denomination: Denomination): String {
+        return when (denomination) {
+            Denomination.JACK -> "J"
+            Denomination.QUEEN -> "Q"
+            Denomination.KING -> "K"
+            Denomination.ACE -> "A"
+            else -> denomination.score.toString()
+        }
+    }
+
+    private fun displaySuit(suit: Suit): String {
+        return when (suit) {
+            Suit.CLUBS -> "♣" // 이모티콘 또는 이미지 경로로 변경 가능
+            Suit.DIAMONDS -> "♦"
+            Suit.HEARTS -> "♥"
+            Suit.SPADES -> "♠"
+        }
+    }
+
     private fun showDealerScore(dealer: Dealer) {
-        val state =
-            when (dealer.state) {
-                Finished.Bust -> BUST_STRING
-                Finished.BlackJack -> BLACKJACK_STRING
-                else -> EMPTY_STRING
-            }
+        val state = getStateString(dealer.state)
 
         println(
             DEALER_CARD_RESULT.format(
-                dealer.hand.cards.joinToString(),
+                dealer.hand.cards.joinToString { card -> displayCard(card) },
                 dealer.hand.totalScore,
             ) + state,
         )
@@ -49,20 +73,23 @@ object ResultView {
     private fun showPlayersScore(playerEntry: PlayerEntry) {
         println()
         playerEntry.players.forEach { player ->
-            val state =
-                when (player.state) {
-                    Finished.Bust -> BUST_STRING
-                    Finished.BlackJack -> BLACKJACK_STRING
-                    else -> EMPTY_STRING
-                }
+            val state = getStateString(player.state)
 
             println(
                 PLAYER_CARD_RESULT.format(
                     player.name,
-                    player.hand.cards.joinToString(),
+                    player.hand.cards.joinToString { card -> displayCard(card) },
                     player.hand.totalScore,
                 ) + state,
             )
+        }
+    }
+
+    private fun getStateString(state: State): String {
+        return when (state) {
+            Finished.Bust -> BUST_STRING
+            Finished.BlackJack -> BLACKJACK_STRING
+            else -> EMPTY_STRING
         }
     }
 
