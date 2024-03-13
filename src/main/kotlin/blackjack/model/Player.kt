@@ -1,19 +1,12 @@
 package blackjack.model
 
 class Player(name: String) : Participant(name) {
-    init {
-        require(name.length <= MAX_NAME_LENGTH) {
-            ERROR_NAME_LENGTH
-        }
-    }
 
     override fun openInitCards(): List<Card>? {
         return getCards().take(2).ifEmpty { null }
     }
 
     companion object {
-        private const val MAX_NAME_LENGTH = 8
-        private const val ERROR_NAME_LENGTH = "사용자 이름은 최대 ${MAX_NAME_LENGTH}자 입니다."
         const val ERROR_DUPLICATION_NAME = "사용자 이름은 중복이 불가능 합니다."
     }
 }
