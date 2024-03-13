@@ -23,12 +23,13 @@ class GameInformation(cards: Set<Card> = emptySet(), state: GameState = GameStat
             when {
                 ScoreCalculator.calculateScore(cards) > BLACKJACK_SCORE -> GameState.Finished.BUST
                 ScoreCalculator.calculateScore(cards) == BLACKJACK_SCORE ->
-                    if (cards.size == 2) GameState.Finished.BLACKJACK else GameState.Finished.STAY
+                    if (cards.size == BLACKJACK_CARD_SIZE) GameState.Finished.BLACKJACK else GameState.Finished.STAY
                 else -> GameState.Running.HIT
             }
     }
 
     companion object {
+        private const val BLACKJACK_CARD_SIZE = 2
         private const val BLACKJACK_SCORE = 21
     }
 }
