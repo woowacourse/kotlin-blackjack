@@ -34,7 +34,7 @@ class GameController {
             hitOrStay = ::askHitOrStay,
             getPlayerInfo = ::showPlayerCards,
         )
-        blackJackGame.runDealerTurn(alert = ::printDealerDrawCard)
+        blackJackGame.runDealerTurn(alertCountOfDraw = ::printDealerDrawCard)
         blackJackGame.finish(printEveryCards = ::printEveryCards)
     }
 
