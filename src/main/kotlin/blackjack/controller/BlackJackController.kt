@@ -45,7 +45,7 @@ class BlackJackController {
     }
 
     private fun playPlayer(participant: Participant) {
-        while (participant.checkHitState()) {
+        while (participant.checkShouldDrawCard()) {
             processPlayerDecision(participant)
         }
     }
@@ -63,7 +63,7 @@ class BlackJackController {
 
     private fun playDealer() {
         val dealer = gameManager.getDealer()
-        while (dealer.checkShouldDealerDrawCard()) {
+        while (dealer.checkShouldDrawCard()) {
             OutputView.outputDealerRule()
             if (!setUserDecision(dealer)) return
         }

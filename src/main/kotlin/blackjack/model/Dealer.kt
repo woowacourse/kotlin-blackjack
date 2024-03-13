@@ -9,7 +9,7 @@ class Dealer(name: String = DEFAULT_DEALER_NAME) : Participant(name) {
         return getCards().firstOrNull()?.let { listOf(it) }
     }
 
-    fun checkShouldDealerDrawCard(): Boolean {
+    override fun checkShouldDrawCard(): Boolean {
         return getBlackJackScore() <= MIN_HAND_CARD_SCORE
     }
 

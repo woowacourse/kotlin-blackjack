@@ -14,6 +14,8 @@ abstract class Participant(
 
     abstract fun openInitCards(): List<Card>?
 
+    abstract fun checkShouldDrawCard(): Boolean
+
     fun draw(card: Card) {
         blackJack.addCard(card)
     }
