@@ -1,7 +1,6 @@
 package blackjack.controller
 
 import blackjack.model.Dealer
-import blackjack.model.GameDeck
 import blackjack.model.GameState
 import blackjack.model.GameState.End
 import blackjack.model.GameState.Play
@@ -29,7 +28,6 @@ class GameController(private var gameState: GameState = Play) {
 
     private fun play() {
         createParticipants().onSuccess { participants ->
-            GameDeck.resetCurrentDeck()
             playGame(participants)
         }.onFailure { e ->
             OutputView.printError(e)

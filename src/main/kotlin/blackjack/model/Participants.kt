@@ -13,10 +13,11 @@ class Participants(
         printEveryCards: (participants: Participants) -> Unit,
     ): Result<ProfitResults> {
         return runCatching {
+            val gameDeck = GameDeck()
             initBetting(inputPlayerBettingAmount)
-            initSetting(printGameSetting)
-            runPlayersTurn(askHitOrStay, showPlayerCards)
-            runDealerTurn(printDealerDrawCard)
+            initSetting(gameDeck, printGameSetting)
+            runPlayersTurn(gameDeck, askHitOrStay, showPlayerCards)
+            runDealerTurn(printDealerDrawCard, gameDeck)
             finish(printEveryCards)
         }
     }
@@ -27,23 +28,32 @@ class Participants(
         }
     }
 
-    private fun initSetting(printGameSetting: (participants: Participants) -> Unit) {
-        repeat(INITIAL_CARD_COUNTS) { initParticipantsDeck() }
+    private fun initSetting(
+        gameDeck: GameDeck,
+        printGameSetting: (participants: Participants) -> Unit,
+    ) {
+        repeat(INITIAL_CARD_COUNTS) { initParticipantsDeck(gameDeck) }
         printGameSetting(this)
     }
 
     private fun runPlayersTurn(
+        gameDeck: GameDeck,
         askHitOrStay: (nickname: Nickname) -> Boolean,
         showPlayerCards: (player: Player) -> Unit,
     ) {
         playerGroup.drawPlayerCard(
+            gameDeck = gameDeck,
             shouldDrawCard = { player -> askHitOrStay(player.userInfo.nickname) },
             newPlayer = { player -> showPlayerCards(player) },
         )
     }
 
-    private fun runDealerTurn(printDealerDrawCard: (dealer: Dealer) -> Unit) {
+    private fun runDealerTurn(
+        printDealerDrawCard: (dealer: Dealer) -> Unit,
+        gameDeck: GameDeck,
+    ) {
         dealer.drawCard(
+            gameDeck = gameDeck,
             shouldDrawCard = { dealer.shouldDrawCard() },
             newCardHolder = { printDealerDrawCard(it as Dealer) },
         )
@@ -54,10 +64,10 @@ class Participants(
         return calculateResult()
     }
 
-    fun initParticipantsDeck() {
-        dealer.addCard(card = GameDeck.drawCard())
+    fun initParticipantsDeck(gameDeck: GameDeck) {
+        dealer.addCard(card = gameDeck.drawCard())
         playerGroup.players.forEach { player ->
-            player.addCard(card = GameDeck.drawCard())
+            player.addCard(card = gameDeck.drawCard())
         }
     }
 
