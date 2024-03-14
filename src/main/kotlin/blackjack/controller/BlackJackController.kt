@@ -47,7 +47,7 @@ class BlackJackController(private val cardDeck: CardDeck) {
 
     private fun playPlayer(player: Player) {
         player.drawAdditionalCard(
-            deck = cardDeck,
+            drawFunction = { cardDeck.draw() },
             inputDecision = { name ->
                 InputView.inputPlayerDecision(name)
             },
@@ -60,7 +60,7 @@ class BlackJackController(private val cardDeck: CardDeck) {
     private fun playDealer() {
         val dealer = participants.getDealer()
         dealer.drawAdditionalDraw(
-            deck = cardDeck,
+            drawFunction = { cardDeck.draw() },
             outputAction = {
                 OutputView.outputDealerRule()
             },

@@ -10,12 +10,12 @@ class Player(name: String) : Participant(name) {
     }
 
     fun drawAdditionalCard(
-        deck: CardDeck,
+        drawFunction: () -> Card,
         inputDecision: (String) -> UserDecision,
         outputAction: ((Player) -> Unit),
     ) {
         while (checkHitState() && inputDecision(getName()) == UserDecision.YES) {
-            draw(deck.draw())
+            draw(drawFunction())
             outputAction(this)
         }
     }
