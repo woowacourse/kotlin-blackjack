@@ -3,13 +3,13 @@ package blackjack.model
 data class Wallet(
     val name: String
 ) {
-    private var money: Int = 0
+    private var balance: Int = 0
 
-    fun setResultMoney(resultMoney: Int) {
-        money = resultMoney
+    fun setMoney(money: Int) {
+        balance = money
     }
 
-    fun getMoney(): Int {
-        return money
+    fun getBalance(): Int {
+        return balance
     }
 }
