@@ -1,4 +1,4 @@
-package blackjack.model
+package blackjack.model.entitiy
 
 enum class CardRank(
     val symbol: String,
