@@ -12,7 +12,7 @@ data class Dealer(override val cardHand: CardHand) : Role(name = PlayerName(DEAL
 
         return when {
             sum > CardHandState.BLACKJACK.precondition -> CardHandState.BUST
-            sum == CardHandState.BLACKJACK.precondition -> CardHandState.BLACKJACK
+            cardHand.hand.size == BLACK_JACK_CARD_HAND_SIZE && sum == CardHandState.BLACKJACK.precondition -> CardHandState.BLACKJACK
             sum <= DEALER_MAX_HIT_SUM -> CardHandState.HIT
             else -> CardHandState.STAY
         }
@@ -42,5 +42,6 @@ data class Dealer(override val cardHand: CardHand) : Role(name = PlayerName(DEAL
     companion object {
         private const val DEALER = "딜러"
         private const val DEALER_MAX_HIT_SUM = 16
+        private const val BLACK_JACK_CARD_HAND_SIZE = 2
     }
 }
