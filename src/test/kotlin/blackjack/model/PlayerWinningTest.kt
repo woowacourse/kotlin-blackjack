@@ -1,5 +1,8 @@
 package blackjack.model
 
+import blackjack.model.result.DealerWinning
+import blackjack.model.result.PlayerWinning
+import blackjack.model.result.WinningResultStatus
 import blackjack.model.role.PlayerName
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test

@@ -1,4 +1,4 @@
-package blackjack.model
+package blackjack.model.result
 
 import blackjack.model.role.PlayerName
 

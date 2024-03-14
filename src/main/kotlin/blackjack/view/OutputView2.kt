@@ -1,7 +1,7 @@
 package blackjack.view
 
-import blackjack.model.DealerWinning
-import blackjack.model.PlayerWinning
+import blackjack.model.result.DealerWinning
+import blackjack.model.result.PlayerWinning
 import blackjack.model.card.CardHand
 import blackjack.model.role.Dealer
 import blackjack.model.role.Players

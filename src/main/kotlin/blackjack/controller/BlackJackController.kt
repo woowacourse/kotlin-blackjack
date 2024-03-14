@@ -1,6 +1,6 @@
 package blackjack.controller
 
-import blackjack.model.ScoreBoard
+import blackjack.model.result.ScoreBoard
 import blackjack.model.role.Dealer
 import blackjack.model.role.Player
 import blackjack.model.role.PlayerName
