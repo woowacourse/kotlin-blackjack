@@ -83,7 +83,8 @@ class Dealer(val hand: Hand) : Participant() {
         return when {
             dealerHand.sumOptimized() == playerHand.sumOptimized() -> WinningState.DRAW
             dealerHand.sumOptimized() < playerHand.sumOptimized() -> WinningState.WIN
-            else -> WinningState.LOSS
+            dealerHand.sumOptimized() > playerHand.sumOptimized() -> WinningState.LOSS
+            else -> throw IllegalArgumentException()
         }
     }
 
