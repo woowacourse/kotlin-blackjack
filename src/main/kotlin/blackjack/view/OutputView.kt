@@ -5,6 +5,7 @@ import blackjack.model.card.CardNumber
 import blackjack.model.card.CardShape
 import blackjack.model.result.DealerWinning
 import blackjack.model.result.PlayerWinning
+import blackjack.model.result.WinningResultStatus
 import blackjack.model.role.Dealer
 import blackjack.model.role.Players
 import blackjack.model.role.Role
@@ -77,15 +78,15 @@ class OutputView {
 
     private fun printPlayerWinningResult(playerWinning: PlayerWinning) {
         playerWinning.result.forEach { (name, status) ->
-            println("${name.name}: ${status.output}")
+            println("${name.name}: ${status.toOutput()}")
         }
         println()
     }
 
     private fun printDealerWinningResult(dealerWinning: DealerWinning) {
         print("딜러: ")
-        dealerWinning.result.forEach {
-            print(it.value.toString() + it.key.output + " ")
+        dealerWinning.result.forEach { (winningResultStatus, score) ->
+            print(score.toString() + winningResultStatus.toOutput() + " ")
         }
         println()
     }
@@ -94,20 +95,27 @@ class OutputView {
         print(cardHand.hand.joinToString { it.number.toOutput() + it.shape.toOutput() })
     }
 
-    private fun CardNumber.toOutput(): String {
-        if (this == CardNumber.ACE) return "A"
-        return this.number.toString()
-    }
-
-    private fun CardShape.toOutput(): String = when (this) {
-        CardShape.HEART -> "하트"
-        CardShape.CLOVER -> "클로버"
-        CardShape.SPADE -> "스페이드"
-        CardShape.DIAMOND -> "다이아몬드"
-    }
 
     companion object {
         private const val NAME_CARD_HAND_FORMAT = "%s 카드: "
         private const val CARD_HAND_SUM_FORMAT = " - 결과: %d"
     }
+}
+
+private fun CardNumber.toOutput(): String {
+    if (this == CardNumber.ACE) return "A"
+    return this.number.toString()
+}
+
+private fun CardShape.toOutput(): String = when (this) {
+    CardShape.HEART -> "하트"
+    CardShape.CLOVER -> "클로버"
+    CardShape.SPADE -> "스페이드"
+    CardShape.DIAMOND -> "다이아몬드"
+}
+
+private fun WinningResultStatus.toOutput(): String = when (this) {
+    WinningResultStatus.VICTORY -> "승"
+    WinningResultStatus.DEFEAT -> "패"
+    WinningResultStatus.DRAW -> "무"
 }
