@@ -1,5 +1,7 @@
 package blackjack.model.card
 
+import blackjack.model.result.Score
+
 class CardHand(hand: List<Card>) {
     private val _hand = hand.toMutableList()
     val hand: List<Card> get() = _hand.toList()
@@ -12,8 +14,10 @@ class CardHand(hand: List<Card>) {
         return numbersSum
     }
 
-    fun addNewCard() {
-        _hand.add(CardDeck.getRandomCard())
+    fun calculateScore2(): Score {
+        val numbersSum = numbersSum()
+        if (canGetBonusPoint()) return Score(numbersSum + BONUS_POINT)
+        return Score(numbersSum)
     }
 
     fun addNewCard(card: Card) {
