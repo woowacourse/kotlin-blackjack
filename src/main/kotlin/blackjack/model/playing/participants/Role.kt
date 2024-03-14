@@ -1,6 +1,6 @@
 package blackjack.model.playing.participants
 
-import blackjack.model.card.generator.CardGenerator
+import blackjack.model.card.CardDeck
 import blackjack.model.playing.cardhand.CardHand
 import blackjack.model.playing.cardhand.CardHandState
 import blackjack.model.playing.participants.player.PlayerName
@@ -10,14 +10,14 @@ abstract class Role(open val name: PlayerName, open val cardHand: CardHand) {
 
     abstract fun canDraw(): Boolean
 
-    fun addInitialCards(cardGenerator: CardGenerator) {
+    fun addInitialCards(cardDeck: CardDeck) {
         repeat(INITIAL_CARDS_COUNT) {
-            cardHand.addNewCard(cardGenerator)
+            cardHand.addNewCard(cardDeck)
         }
     }
 
-    fun runPhase(cardGenerator: CardGenerator) {
-        cardHand.addNewCard(cardGenerator)
+    fun runPhase(cardDeck: CardDeck) {
+        cardHand.addNewCard(cardDeck)
     }
 
     companion object {

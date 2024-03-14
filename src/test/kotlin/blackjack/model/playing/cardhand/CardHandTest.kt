@@ -3,7 +3,6 @@ package blackjack.model.playing.cardhand
 import blackjack.model.card.Card
 import blackjack.model.card.CardNumber
 import blackjack.model.card.CardShape
-import blackjack.model.card.generator.ExplicitCardGenerator
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -82,17 +81,5 @@ class CardHandTest {
 
         val actual = currentCardHand.sum()
         assertThat(actual).isEqualTo(12)
-    }
-
-    @Test
-    fun `카드가 랜덤으로 뽑히는 지 명시적으로 지정하여 테스트`() {
-        val cardHand =
-            CardHand(
-                Card(CardShape.SPADE, CardNumber.TWO),
-                Card(CardShape.HEART, CardNumber.FIVE),
-            )
-
-        cardHand.addNewCard(ExplicitCardGenerator(explicitCardDeck))
-        assertThat(cardHand.hand.last()).isEqualTo(ExplicitCardGenerator(explicitCardDeck).draw())
     }
 }

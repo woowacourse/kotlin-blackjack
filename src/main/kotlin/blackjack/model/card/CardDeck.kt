@@ -1,11 +1,12 @@
 package blackjack.model.card
 
-class CardDeck {
-    var cardDeck = listOf<Card>()
+import blackjack.model.card.generator.CardGenerator
+import blackjack.model.card.generator.RandomCardGenerator
 
-    init {
-        cardDeck = create()
-    }
+class CardDeck(private val cardGenerator: CardGenerator = RandomCardGenerator) {
+    private val _cardDeck: List<Card> = create()
+    val cardDeck: List<Card>
+        get() = _cardDeck
 
     private fun create(): List<Card> =
         CardShape.entries.flatMap { shape ->
@@ -13,4 +14,6 @@ class CardDeck {
                 Card(shape, number)
             }
         }.shuffled()
+
+    fun draw(): Card = cardGenerator.draw(cardDeck)
 }

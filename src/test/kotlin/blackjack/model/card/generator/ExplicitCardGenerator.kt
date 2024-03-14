@@ -2,10 +2,10 @@ package blackjack.model.card.generator
 
 import blackjack.model.card.Card
 
-class ExplicitCardGenerator(private val cardDeck: List<Card>) : CardGenerator {
+class ExplicitCardGenerator : CardGenerator {
     private var cardIndex = 0
 
-    override fun draw(): Card {
+    override fun draw(cardDeck: List<Card>): Card {
         if (cardIndex == cardDeck.size) {
             cardIndex = 0
         }

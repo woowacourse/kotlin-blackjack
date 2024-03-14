@@ -4,7 +4,6 @@ import blackjack.model.card.Card
 import blackjack.model.card.CardDeck
 import blackjack.model.card.CardNumber
 import blackjack.model.card.CardShape
-import blackjack.model.card.generator.RandomCardGenerator
 import blackjack.model.playing.cardhand.CardHand
 import blackjack.model.playing.participants.player.Player
 import blackjack.model.playing.participants.player.PlayerName
@@ -68,7 +67,7 @@ class ParticipantsTest {
                 ),
             )
 
-        participants.addInitialCards(RandomCardGenerator(CardDeck().cardDeck))
+        participants.addInitialCards(CardDeck())
 
         val cardHandSize1 = participants.dealer.cardHand.hand.size
         val cardHandSize2 = participants.players.players[0].cardHand.hand.size

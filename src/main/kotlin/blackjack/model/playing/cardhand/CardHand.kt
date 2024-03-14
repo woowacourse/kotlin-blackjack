@@ -1,8 +1,8 @@
 package blackjack.model.playing.cardhand
 
 import blackjack.model.card.Card
+import blackjack.model.card.CardDeck
 import blackjack.model.card.CardNumber
-import blackjack.model.card.generator.CardGenerator
 
 class CardHand(hand: List<Card>) {
     private val _hand = hand.toMutableList()
@@ -21,8 +21,8 @@ class CardHand(hand: List<Card>) {
         return tempSum
     }
 
-    fun addNewCard(cardGenerator: CardGenerator) {
-        _hand.add(cardGenerator.draw())
+    fun addNewCard(cardDeck: CardDeck) {
+        _hand.add(cardDeck.draw())
     }
 
     override fun toString(): String {

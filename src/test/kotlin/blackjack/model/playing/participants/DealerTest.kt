@@ -4,7 +4,6 @@ import blackjack.model.card.Card
 import blackjack.model.card.CardDeck
 import blackjack.model.card.CardNumber
 import blackjack.model.card.CardShape
-import blackjack.model.card.generator.RandomCardGenerator
 import blackjack.model.playing.cardhand.CardHand
 import blackjack.model.playing.cardhand.CardHandState
 import blackjack.model.playing.participants.player.PlayerName
@@ -14,7 +13,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class DealerTest {
-    private val cardDeck = CardDeck().cardDeck
+    private val cardDeck = CardDeck()
 
     @Test
     fun `딜러의 카드 패 상태를 구한다`() {
@@ -40,7 +39,7 @@ class DealerTest {
             )
 
         if (dealer.getState() == CardHandState.HIT) {
-            dealer.runPhase(RandomCardGenerator(cardDeck))
+            dealer.runPhase(cardDeck)
         }
 
         assertThat(dealer.cardHand.hand.size).isEqualTo(3)
@@ -57,7 +56,7 @@ class DealerTest {
             )
 
         if (dealer.getState() == CardHandState.HIT) {
-            dealer.runPhase(RandomCardGenerator(cardDeck))
+            dealer.runPhase(cardDeck)
         }
 
         assertThat(dealer.cardHand.hand.size).isEqualTo(2)
