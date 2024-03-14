@@ -1,7 +1,6 @@
 package blackjack.view
 
 import blackjack.model.domain.ParticipantInfo
-import blackjack.model.store.Store
 
 object OutputView {
     private const val MESSAGE_DISTRIBUTION = "%s와 %s에게 2장의 카드를 나누었습니다."
@@ -13,11 +12,12 @@ object OutputView {
     private const val NEW_LINE = "\n"
 
     fun printInitialStats(
-        store: Store,
+        playersInfo: List<ParticipantInfo>,
+        dealerInfo: ParticipantInfo,
     ) {
-        printDistributionMessage(store)
-        println(getDealerCardResult(store))
-        printPlayerCards(store)
+        printDistributionMessage(playersInfo, dealerInfo)
+        println(getDealerCardResult(dealerInfo))
+        printPlayerCards(playersInfo)
         println()
     }
 
@@ -26,37 +26,38 @@ object OutputView {
     }
 
     fun printFinalCards(
-        store: Store,
+        playersInfo: List<ParticipantInfo>,
+        dealerInfo: ParticipantInfo,
     ) {
         println()
         println(
             MESSAGE_PARTICIPANT_CARD_RESULT.format(
                 MESSAGE_CARD_INFO.format(
-                    store.dealerInfo.name,
-                    store.dealerInfo.cards.joinToString { "${it.cardRank.symbol}${it.shape.label}" },
+                    dealerInfo.name,
+                    dealerInfo.cards.joinToString { "${it.cardRank.symbol}${it.shape.label}" },
                 ),
-                store.dealerInfo.sumCardValues(),
+                dealerInfo.sumCardValues(),
             ),
         )
 
-        store.playersInfo.forEach { participantInfo ->
+        playersInfo.forEach { playerInfo ->
             println(
                 MESSAGE_PARTICIPANT_CARD_RESULT.format(
                     MESSAGE_CARD_INFO.format(
-                        participantInfo.name,
-                        participantInfo.cards.joinToString { "${it.cardRank.symbol}${it.shape.label}" },
+                        playerInfo.name,
+                        playerInfo.cards.joinToString { "${it.cardRank.symbol}${it.shape.label}" },
                     ),
-                    participantInfo.sumCardValues(),
+                    playerInfo.sumCardValues(),
                 ),
             )
         }
     }
 
-    fun printResult(store: Store) {
+    fun printResult(playersInfo: List<ParticipantInfo>, dealerInfo: ParticipantInfo) {
         println(MESSAGE_TITLE_RESULT)
-        println(MESSAGE_CARD_STATUS.format(store.dealerInfo.name, getDealerResult(store)))
+        println(MESSAGE_CARD_STATUS.format(dealerInfo.name, getDealerResult(playersInfo)))
 
-        store.playersInfo.forEach {
+        playersInfo.forEach {
             println(MESSAGE_CARD_STATUS.format(it.name, it.batingAmount))
         }
     }
@@ -72,23 +73,21 @@ object OutputView {
 
     fun printNewLine() = print(NEW_LINE)
 
-    private fun printPlayerCards(store: Store) {
-        store.playersInfo.forEach { playerStat ->
-            printSinglePlayerCards(playerStat)
+    private fun printDistributionMessage(playersInfo: List<ParticipantInfo>, dealerInfo: ParticipantInfo) {
+        val names = playersInfo.joinToString { it.name }
+        println("\n${MESSAGE_DISTRIBUTION.format(dealerInfo.name, names)})")
+    }
+
+    private fun getDealerResult(playersInfo: List<ParticipantInfo>): Int = playersInfo.sumOf { it.batingAmount.unaryMinus() }
+
+    private fun printPlayerCards(playersInfo: List<ParticipantInfo>) {
+        playersInfo.forEach { playerInfo ->
+            printSinglePlayerCards(playerInfo)
         }
     }
 
-    private fun getDealerResult(store: Store): Int {
-        return store.playersInfo.sumOf { it.batingAmount.unaryMinus() }
-    }
-
-    private fun getDealerCardResult(store: Store): String {
-        val (shape, cardRank) = store.dealerInfo.cards.first()
-        return MESSAGE_CARD_INFO.format(store.dealerInfo.name, "${cardRank.value}${shape.label}")
-    }
-
-    private fun printDistributionMessage(store: Store) {
-        val names = store.playersInfo.joinToString { it.name }
-        println("\n${MESSAGE_DISTRIBUTION.format(store.dealerInfo.name, names)})")
+    private fun getDealerCardResult(dealerInfo: ParticipantInfo): String {
+        val (shape, cardRank) = dealerInfo.cards.first()
+        return MESSAGE_CARD_INFO.format(dealerInfo.name, "${cardRank.value}${shape.label}")
     }
 }

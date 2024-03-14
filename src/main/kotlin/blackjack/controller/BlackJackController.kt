@@ -12,11 +12,15 @@ class BlackJackController(
     private val store: Store,
 ) {
     fun startGame() {
-        dispatcher.dispatch(Action.ReadNames(getPlayerNames()))
-        dispatcher.dispatch(Action.ReadBatingAmount(::getBatingAmount))
+        initPlayers()
         initializeParticipantsCards()
         playRound()
         displayResult()
+    }
+
+    private fun initPlayers() {
+        dispatcher.dispatch(Action.ReadNames(getPlayerNames()))
+        dispatcher.dispatch(Action.ReadBatingAmount(::getBatingAmount))
     }
 
     private fun getPlayerNames(): List<String> {
@@ -38,9 +42,7 @@ class BlackJackController(
     }
 
     private fun initializeParticipantsCards() {
-        dispatcher.dispatch(
-            Action.InitDealerCard { CardDeck.pick() },
-        )
+        dispatcher.dispatch(Action.InitDealerCard { CardDeck.pick() })
         dispatcher.dispatch(Action.InitPlayersCard { CardDeck.pick() })
         displayInitializedCards()
     }
@@ -68,8 +70,8 @@ class BlackJackController(
         dispatcher.dispatch(Action.FindWinner(store.dealerInfo))
 
         with(OutputView) {
-            printFinalCards(store)
-            printResult(store)
+            printFinalCards(store.playersInfo, store.dealerInfo)
+            printResult(store.playersInfo, store.dealerInfo)
         }
     }
 
@@ -77,6 +79,6 @@ class BlackJackController(
         InputView.readContinueInput(playerName) ?: askPlayerHit(playerName)
 
     private fun displayInitializedCards() {
-        OutputView.printInitialStats(store)
+        OutputView.printInitialStats(store.playersInfo, store.dealerInfo)
     }
 }
