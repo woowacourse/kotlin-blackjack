@@ -5,7 +5,6 @@ import blackjack.model.Dealer
 import blackjack.model.GameResult
 import blackjack.model.Participant
 import blackjack.model.Player
-import blackjack.model.Result
 import blackjack.model.Suit
 
 object OutputView {
@@ -14,16 +13,12 @@ object OutputView {
     private const val OUTPUT_MESSAGE_PARTICIPANTS_CURRENT_HAND_CARD = "%s카드: %s"
     private const val OUTPUT_MESSAGE_DEALER_RULE = "딜러는 %d이하라 한장의 카드를 더 받았습니다."
     private const val OUTPUT_MESSAGE_PARTICIPANTS_FINISH_HAND_CARD = "%s카드: %s - 결과:%d"
-    private const val OUTPUT_MESSAGE_BLACKJACK_RESULT = "## 최종 승패"
+    private const val OUTPUT_MESSAGE_BETTING_RESULT = "## 최종 수익"
     private const val COMMA = ", "
-    private const val SPACE = " "
     private const val SPACE_NAME = "스페이스"
     private const val CLOVER_NAME = "클로버"
     private const val HEART_NAME = "하트"
     private const val DIAMOND_NAME = "다이아몬드"
-    private const val WIN_NAME = "승"
-    private const val DRAW_NAME = "무"
-    private const val LOSE_NAME = "패"
 
     fun outputParticipantsName(
         dealerName: String,
@@ -118,79 +113,30 @@ object OutputView {
 
     fun outputBlackResult() {
         println()
-        println(OUTPUT_MESSAGE_BLACKJACK_RESULT)
+        println(OUTPUT_MESSAGE_BETTING_RESULT)
     }
 
     fun outputParticipantResult(
-        dealerName: String,
+        dealer: Dealer,
         gameResult: GameResult,
     ) {
-        outputDealerResult(
-            dealerName = dealerName,
-            gameResult = gameResult,
-        )
+        outputDealerResult(dealer)
         outputPlayersResult(
-            resultPlayers = gameResult.getResultPlayers(),
-            gameResult = gameResult,
+            resultPlayers = gameResult.getResultPlayers()
         )
     }
 
-    private fun outputDealerResult(
-        dealerName: String,
-        gameResult: GameResult,
-    ) {
-        val dealerResultNames =
-            Result.entries.map { result ->
-                getDealerResult(result, gameResult.getDealerResult(result))
-            }
-        println("$dealerName: ${dealerResultNames.joinToString(SPACE)}")
+    private fun outputDealerResult(dealer: Dealer) {
+        println("${dealer.getName()}: ${dealer.getBettingMoney()}")
     }
 
-    private fun outputPlayersResult(
-        resultPlayers: Set<Player>,
-        gameResult: GameResult,
-    ) {
+    private fun outputPlayersResult(resultPlayers: Set<Player>) {
         resultPlayers.forEach { player ->
-            gameResult.getPlayerResult(player)?.let { result ->
-                outputPlayerResult(
-                    name = player.getName(),
-                    playerResult = result,
-                )
-            }
+            outputPlayerResult(player)
         }
     }
 
-    private fun outputPlayerResult(
-        name: String,
-        playerResult: Result,
-    ) {
-        println(
-            getGameResultWithName(
-                name = name,
-                result = playerResult,
-            ),
-        )
-    }
-
-    private fun getGameResultWithName(
-        name: String,
-        result: Result,
-    ): String {
-        return "$name: ${getResultName(result)}"
-    }
-
-    private fun getDealerResult(
-        result: Result,
-        count: Int,
-    ): String {
-        return "${count}${getResultName(result)}"
-    }
-
-    private fun getResultName(result: Result): String {
-        return when (result) {
-            Result.WIN -> WIN_NAME
-            Result.DRAW -> DRAW_NAME
-            Result.LOSE -> LOSE_NAME
-        }
+    private fun outputPlayerResult(player: Player) {
+        println("${player.getName()}: ${player.getBettingMoney()}")
     }
 }
