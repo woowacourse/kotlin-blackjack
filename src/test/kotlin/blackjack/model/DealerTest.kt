@@ -11,7 +11,7 @@ class DealerTest {
     fun `딜러가 초기 카드를 2장 가져온다`() {
         val dealingShoe = DealingShoe(listOf(FOUR_CARD, TWO_CARD))
         dealer = creatDealer()
-        dealer initFrom dealingShoe
+        dealer.pickCard(dealingShoe, 2)
         val actual = dealer.showCard()
 
         assertThat(actual.size).isEqualTo(2)
@@ -22,7 +22,7 @@ class DealerTest {
     fun `딜러가 딜링슈에서 맨 앞의 2하트 카드를 한 개 뽑아 가져온다`() {
         val dealingShoe = DealingShoe(listOf(FOUR_CARD, TWO_CARD))
         dealer = creatDealer()
-        dealer hitFrom dealingShoe
+        dealer.pickCard(dealingShoe)
         val actual = dealer.showCard()
 
         assertThat(actual).isEqualTo(listOf(FOUR_CARD))

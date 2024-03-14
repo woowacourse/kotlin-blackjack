@@ -3,13 +3,13 @@ package blackjack.model
 abstract class Participant(val name: String) {
     private val cardList: MutableList<Card> = mutableListOf()
 
-    infix fun initFrom(dealingShoe: DealingShoe) {
-        addCard(dealingShoe.pickCard())
-        addCard(dealingShoe.pickCard())
-    }
-
-    infix fun hitFrom(dealingShoe: DealingShoe) {
-        addCard(dealingShoe.pickCard())
+    fun pickCard(
+        dealingShoe: DealingShoe,
+        repeatSize: Int = 1,
+    ) {
+        repeat(repeatSize) {
+            addCard(dealingShoe.pickCard())
+        }
     }
 
     fun addCard(card: Card) {

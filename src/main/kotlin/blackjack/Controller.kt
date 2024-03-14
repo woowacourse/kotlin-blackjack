@@ -39,8 +39,10 @@ class Controller(cards: List<Card>) {
         dealer: Dealer,
         players: List<Player>,
     ) {
-        dealer initFrom dealingShoe
-        players.forEach { player -> player initFrom dealingShoe }
+        dealer.pickCard(dealingShoe, 2)
+        players.forEach { player ->
+            player.pickCard(dealingShoe, 2)
+        }
         OutputView.printInitialResult(dealer, players)
     }
 
@@ -60,7 +62,7 @@ class Controller(cards: List<Card>) {
             return
         }
         while (player.isHitable() && askPick(player.name)) {
-            player hitFrom dealingShoe
+            player.pickCard(dealingShoe)
             OutputView.printParticipantStatus(player)
         }
         if (player.isBusted()) {
@@ -74,7 +76,7 @@ class Controller(cards: List<Card>) {
 
     private fun proceedDealerTurn(dealer: Dealer) {
         while (dealer.isHitable()) {
-            dealer hitFrom dealingShoe
+            dealer.pickCard(dealingShoe)
             OutputView.printDealerHitMessage()
         }
     }
