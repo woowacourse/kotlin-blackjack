@@ -17,7 +17,7 @@ class MoneyTest {
         val money1 = Money(1000)
         val money2 = Money(2000)
         val actualResult = money1 + money2
-        assertThat(actualResult).isEqualTo(Money(3000))
+        assertThat(actualResult.amount).isEqualTo(3000)
     }
 
     @Test
@@ -25,6 +25,13 @@ class MoneyTest {
         val money1 = Money(2000)
         val money2 = Money(2000)
         val actualResult = money1 - money2
-        assertThat(actualResult).isEqualTo(Money(0))
+        assertThat(actualResult.amount).isEqualTo(0)
+    }
+
+    @Test
+    fun `Money에 특정 소수를 곱하였을 때, 올바른 금액을 가진 Money를 반환한다`() {
+        val money = Money(2000)
+        val actualResult = money * 1.5
+        assertThat(actualResult.amount).isEqualTo(3000)
     }
 }
