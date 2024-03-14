@@ -31,7 +31,7 @@ sealed class CardHolder(val userInfo: UserInfo) {
 
     fun getSumOfCards(): Int = blackjackState.hand().calculate()
 
-    fun calculateProfit(opponent: CardHolder): Double {
+    fun calculateProfit(opponent: Dealer): Double {
         val gameResult = (blackjackState as Finished).calculate(this, opponent)
         return (blackjackState as Finished).profit(betAmount = userInfo.betAmount, gameResult = gameResult)
     }
