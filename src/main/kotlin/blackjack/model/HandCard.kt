@@ -24,7 +24,7 @@ class HandCard {
         }
     }
 
-    fun checkBlackJackStateWithCardCount(): Boolean {
+    fun checkStateWithCardCount(): Boolean {
         return cards.size == GameManager.INIT_HAND_CARD_COUNT
     }
 }

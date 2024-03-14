@@ -41,7 +41,7 @@ class BlackJack {
     }
 
     private fun applyBlackJackStateWithCardCount() {
-        if (handCard.checkBlackJackStateWithCardCount()) {
+        if (handCard.checkStateWithCardCount()) {
             state = State.Finish.BlackJack
         }
     }
