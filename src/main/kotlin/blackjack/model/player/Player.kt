@@ -3,7 +3,7 @@ import blackjack.model.game.BettingMoney
 import blackjack.model.game.Result
 import blackjack.model.game.State
 
-class Player(val name: String, val hand: Hand, val bettingMoney: BettingMoney) {
+class Player(val name: String, val hand: Hand, val bettingMoney: BettingMoney = BettingMoney()) {
     var profit: Int = 0
 
     fun updateProfit(result: Result) {

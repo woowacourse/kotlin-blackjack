@@ -24,7 +24,9 @@ object BlackJackController {
             bettingAmounts[playerName] = bettingMoney
         }
         val (dealer, playerEntry) = getDealerAndPlayerEntry(playersName, deck, bettingAmounts)
+
         val gameResult = playGame(playerEntry, dealer, deck)
+        gameResult.calculateFinalProfits()
         showGameResult(gameResult)
     }
 
@@ -86,6 +88,7 @@ object BlackJackController {
         val dealer = makeDealer(hands.first())
         val players =
             makePlayers(playersName, hands, bettingAmounts)
+        ProgressView.showHands(dealer, PlayerEntry(players))
         return Pair(dealer, PlayerEntry(players))
     }
 

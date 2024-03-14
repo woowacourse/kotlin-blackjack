@@ -13,21 +13,23 @@ class GameResult(
 
     fun getDrawCount(): Int = playerResults.count { it.result == Result.DRAW }
 
-    class GameResult(val dealer: Dealer, val playerResults: List<PlayerResult>) {
-        fun calculateFinalProfits() {
-            playerResults.forEach { playerResult ->
-                playerResult.player.updateProfit(playerResult.result)
-            }
-            val dealerProfit =
-                playerResults.sumOf { playerResult ->
-                    when (playerResult.result) {
-                        Result.DEALER_WIN -> playerResult.player.bettingMoney.bettingMoney
-                        Result.PLAYER_WIN -> -playerResult.player.bettingMoney.bettingMoney
-                        else -> 0 // 무승부
-                    }
+    fun calculateFinalProfits() {
+        val dealerBlackjack = dealer.hand.isBlackjack()
+        playerResults.forEach { playerResult ->
+            val player = playerResult.player
+            val playerBlackjack = player.hand.isBlackjack()
+            if (playerBlackjack && !dealerBlackjack) {
+                val winnings = (player.bettingMoney.bettingMoney * 1.5).toInt()
+                player.profit += winnings
+            } else if (playerBlackjack && dealerBlackjack) {
+            } else {
+                when (playerResult.result) {
+                    Result.PLAYER_WIN -> player.profit += player.bettingMoney.bettingMoney
+                    Result.DEALER_WIN -> player.profit -= player.bettingMoney.bettingMoney
+                    Result.DRAW -> {} // 무승부 (profit 변화 없음)
                 }
-            // 딜러 객체에 profit 필드가 있다고 가정하고 업데이트
-            dealer.profit += dealerProfit
+            }
         }
+        dealer.profit = playerResults.sumOf { -it.player.profit }
     }
 }

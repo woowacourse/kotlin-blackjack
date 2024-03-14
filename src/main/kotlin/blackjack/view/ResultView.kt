@@ -121,9 +121,9 @@ object ResultView {
     ) {
         println(
             DEALER_GAME_RESULT.format(
-                winCount,
-                (" ${drawCount}무").takeIf { drawCount != 0 } ?: "",
                 defeatCount,
+                (" ${drawCount}무").takeIf { drawCount != 0 } ?: "",
+                winCount,
             ),
         )
     }
