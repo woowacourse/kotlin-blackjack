@@ -11,7 +11,7 @@ class Judge(
             val playerDifference = CRITERIA_NUMBER - playerStat.sumOfCards
 
             when {
-                isBlackjack(playerStat) && dealerDifference != 0 ->
+                isPlayerBlackjack(playerStat) && dealerDifference != 0 ->
                     currentAmount - (playerStat.moneyAmount * BLACKJACK_BONUS_MULTIPLIER)
                 dealerDifference != 0 && playerDifference == 0 -> currentAmount -= (playerStat.moneyAmount)
                 dealerDifference < 0 && playerDifference >= 0 -> currentAmount -= playerStat.moneyAmount
@@ -36,7 +36,7 @@ class Judge(
         val playerDifference = CRITERIA_NUMBER - playerGameInfo.sumOfCards
 
         return when {
-            isBlackjack(playerGameInfo) && dealerDifference != 0 ->
+            isPlayerBlackjack(playerGameInfo) && dealerDifference != 0 ->
                 playerGameInfo.moneyAmount * BLACKJACK_BONUS_MULTIPLIER
             dealerDifference != 0 && playerDifference == 0 -> playerGameInfo.moneyAmount
             dealerDifference < 0 && playerDifference >= 0 -> playerGameInfo.moneyAmount
@@ -47,7 +47,8 @@ class Judge(
         }
     }
 
-    private fun isBlackjack(playerGameInfo: GameInfo) = playerGameInfo.cards.take(INITIAL_CARD_SIZE).sumOf { it.value } == CRITERIA_NUMBER
+    private fun isPlayerBlackjack(playerGameInfo: GameInfo): Boolean =
+        playerGameInfo.cards.take(INITIAL_CARD_SIZE).sumOf { it.value } == CRITERIA_NUMBER
 
     companion object {
         private const val INITIAL_CARD_SIZE = 2
