@@ -28,7 +28,6 @@ class BlackJackController(
         hitPlayers(players, deck)
         dealer.hitIfConditionTrue(
             deck,
-            { dealer.canHit() },
         ) { outputView.showDealerHitCard() }
         outputView.showDealerScore(dealer.hand.cards, dealer.hand.sumOptimized())
     }
