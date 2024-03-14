@@ -13,7 +13,7 @@ class PlayerGroup {
     fun startBetting(amount: (player: Player) -> String) {
         players.forEach { player ->
             val betAmount = BetAmount.from(amount(player))
-            player.userInfo.betting(betAmount)
+            player.userInfo.plusBet(betAmount)
         }
     }
 

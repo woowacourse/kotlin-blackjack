@@ -5,8 +5,13 @@ import blackjack.model.GameResult
 import blackjack.model.Hand
 
 class Blackjack(hand: Hand) : Finished(hand) {
-    override fun calculate(opponent: CardHolder): GameResult {
-        if (opponent.getState() is Blackjack) return GameResult(0, 0)
-        return GameResult(1, 0)
+    override fun earningRate(): Double = 1.5
+
+    override fun calculate(
+        self: CardHolder,
+        opponent: CardHolder,
+    ): GameResult {
+        if (opponent.getState() is Blackjack) return GameResult.Draw
+        return GameResult.BlackjackWin
     }
 }

@@ -5,7 +5,7 @@ class UserInfo(val nickname: Nickname) {
     val betAmount: BetAmount
         get() = _betAmount
 
-    fun betting(amount: BetAmount) {
+    fun plusBet(amount: BetAmount) {
         _betAmount += amount
     }
 

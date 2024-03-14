@@ -9,6 +9,7 @@ class Hit(private val hand: Hand = Hand()) : Running(hand) {
         val sumOfCard = hand.calculate()
         return when {
             sumOfCard > THRESHOLD_BUST -> Bust(hand)
+            sumOfCard == THRESHOLD_BUST && hand.cards.size == 2 -> Blackjack(hand)
             sumOfCard == THRESHOLD_BUST -> Stay(hand)
             else -> Hit(hand)
         }

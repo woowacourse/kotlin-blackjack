@@ -8,7 +8,7 @@ import blackjack.model.GameState.Play
 import blackjack.model.Participants
 import blackjack.model.Participants.Companion.INITIAL_CARD_COUNTS
 import blackjack.model.PlayerGroup
-import blackjack.model.WinningState
+import blackjack.model.ProfitResults
 import blackjack.view.InputView
 import blackjack.view.InputView.askHitOrStay
 import blackjack.view.InputView.inputPlayerBettingAmount
@@ -53,8 +53,8 @@ class GameController(private var gameState: GameState = Play) {
     }
 
     private fun startGame(participants: Participants) {
-        playGame(participants = participants).onSuccess { winningState ->
-            OutputView.printGameResult(winningState)
+        playGame(participants = participants).onSuccess { profitResults ->
+            OutputView.printGameResult(profitResults)
             gameState = End
         }.onFailure { e ->
             participants.resetHand()
@@ -62,7 +62,7 @@ class GameController(private var gameState: GameState = Play) {
         }
     }
 
-    private fun playGame(participants: Participants): Result<WinningState> {
+    private fun playGame(participants: Participants): Result<ProfitResults> {
         return runCatching {
             start(participants = participants)
             finish(participants = participants)
@@ -101,7 +101,7 @@ class GameController(private var gameState: GameState = Play) {
         )
     }
 
-    private fun finish(participants: Participants): WinningState {
+    private fun finish(participants: Participants): ProfitResults {
         printEveryCards(participants = participants)
         return participants.calculateResult()
     }

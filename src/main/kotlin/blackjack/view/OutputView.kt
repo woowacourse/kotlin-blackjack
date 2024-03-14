@@ -1,16 +1,16 @@
 package blackjack.view
 
-import blackjack.model.BetAmount
+import blackjack.model.CardHolder
 import blackjack.model.CardNumber
 import blackjack.model.Dealer
 import blackjack.model.Dealer.Companion.DEALER_CARD_DRAW_THRESHOLD
-import blackjack.model.GameResult
 import blackjack.model.Participants
 import blackjack.model.Participants.Companion.INITIAL_CARD_COUNTS
 import blackjack.model.Pattern
 import blackjack.model.Player
 import blackjack.model.PlayerGroup
-import blackjack.model.WinningState
+import blackjack.model.Profit
+import blackjack.model.ProfitResults
 
 object OutputView {
     private const val SPACE_NAME = "스페이스"
@@ -106,27 +106,17 @@ object OutputView {
         println(e)
     }
 
-    fun printGameResult(winningState: WinningState) {
+    fun printGameResult(profitResults: ProfitResults) {
         println("\n[ 최종 승익 ]")
-        winningState.state.entries.forEach { (participant, winningState) ->
-            when (participant) {
-                is Dealer -> printDealerResult(participant, winningState)
-                is Player -> printPlayerResult(participant, winningState)
-            }
+        profitResults.result.forEach { profitResult ->
+            printProfitResult(profitResult.cardHolder, profitResult.profit)
         }
     }
 
-    private fun printDealerResult(
-        dealer: Dealer,
-        gameResult: GameResult,
+    private fun printProfitResult(
+        cardHolder: CardHolder,
+        profit: Profit,
     ) {
-        println("${dealer.userInfo.nickname}: ${gameResult.calculate(BetAmount(1000))}")
-    }
-
-    private fun printPlayerResult(
-        player: Player,
-        gameResult: GameResult,
-    ) {
-        println("${player.userInfo.nickname}: ${gameResult.calculate(player.userInfo.betAmount)}")
+        println("${cardHolder.userInfo.nickname}: ${profit.value}")
     }
 }

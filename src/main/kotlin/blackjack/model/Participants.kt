@@ -16,33 +16,18 @@ class Participants(
         dealer.getState().hand().reset()
     }
 
-    fun calculateResult(): WinningState {
-        val result = mutableMapOf<CardHolder, GameResult>()
+    fun calculateResult(): ProfitResults {
+        val result = mutableListOf<ProfitResult>()
+        var totalProfit = 0.0
+
         playerGroup.players.forEach { player ->
-            calculateDealerResult(result, player)
-            calculatePlayerResult(result, player)
+            val profit = player.calculateProfit(dealer)
+            result.add(ProfitResult(player, Profit((profit))))
+            totalProfit += profit
         }
-        return WinningState(result)
-    }
+        result.add(0, ProfitResult(dealer, Profit((-totalProfit))))
 
-    private fun calculateDealerResult(
-        result: MutableMap<CardHolder, GameResult>,
-        player: Player,
-    ) {
-        val originalDealerWinningState = result.getOrDefault(dealer, GameResult(0, 0))
-        val addDealerWinningState = dealer.calculateWinningStateAgainst(player)
-        result[dealer] =
-            GameResult(
-                win = originalDealerWinningState.win + addDealerWinningState.win,
-                lose = originalDealerWinningState.lose + addDealerWinningState.lose,
-            )
-    }
-
-    private fun calculatePlayerResult(
-        result: MutableMap<CardHolder, GameResult>,
-        player: Player,
-    ) {
-        result[player] = player.calculateWinningStateAgainst(dealer)
+        return ProfitResults(result.toList())
     }
 
     companion object {
