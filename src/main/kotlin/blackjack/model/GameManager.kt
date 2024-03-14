@@ -16,12 +16,14 @@ class GameManager(
                 player = player,
                 onResult = { result ->
                     playerResults[player] = result
-                    dealerResults[result.reverse()] =
-                        dealerResults.getOrDefault(result.reverse(), 0) + ADD_RESULT_COUNT
+                    dealerResults[result.reverse()] = dealerResults.getOrDefault(result.reverse(), 0) + ADD_RESULT_COUNT
                 },
             )
         }
-
+        participants.dealer.settleBettingMoneys(
+            playerResults.keys.toList(),
+            playerResults.values.toList(),
+        )
         return GameResult(dealerResults, playerResults)
     }
 
@@ -56,11 +58,10 @@ class GameManager(
         when (player.getGameState()) {
             is State.Finish.Bust -> onResult(Result.LOSE)
             is State.Finish.BlackJack -> checkBlackJackState(onResult)
-            is State.Finish.Stay ->
-                matchToResult(
-                    player = player,
-                    onResult = onResult,
-                )
+            is State.Finish.Stay -> matchToResult(
+                player = player,
+                onResult = onResult,
+            )
 
             is State.Action.Hit -> {}
         }
