@@ -1,11 +1,11 @@
 package blackjack.view
 
+import blackjack.model.BlackjackGameStatistics
 import blackjack.model.Card
 import blackjack.model.CardNumber
 import blackjack.model.Dealer
 import blackjack.model.DealerStatistics
 import blackjack.model.GameResult
-import blackjack.model.BlackjackGameStatistics
 import blackjack.model.Participant
 import blackjack.model.Player
 import blackjack.model.PlayerStatistics

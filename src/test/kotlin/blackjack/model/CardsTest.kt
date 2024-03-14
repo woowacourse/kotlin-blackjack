@@ -27,6 +27,7 @@ class CardsTest {
         val expected = 16
         assertThat(actual).isEqualTo(expected)
     }
+
     @Test
     fun `카드 총 합이 21을 초과하면 Busted된다`() {
         val cards = buildCards(ten, ten, two)

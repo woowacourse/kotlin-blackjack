@@ -30,6 +30,7 @@ class Cards {
     }
 
     private fun hasAce() = cards.any { it.cardNumber == CardNumber.Ace }
+
     companion object {
         private const val BLACKJACK_THRESHOLD = 21
     }

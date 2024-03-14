@@ -21,6 +21,7 @@ abstract class Participant(
     fun showFirstCard(): Card {
         return showCard().getOrNull(0) ?: throw NoSuchElementException("$name : 손에 보여줄 카드가 없습니다.")
     }
+
     infix fun pick(deck: Deck) {
         this.addCard(deck.pop())
     }
