@@ -5,12 +5,12 @@ import blackjack.model.role.Dealer
 import blackjack.model.role.Player
 import blackjack.model.role.PlayerName
 import blackjack.model.role.Players
-import blackjack.view.InputView2
-import blackjack.view.OutputView2
+import blackjack.view.InputView
+import blackjack.view.OutputView
 
 class BlackJackController(
-    private val inputView: InputView2,
-    private val outputView: OutputView2,
+    private val inputView: InputView,
+    private val outputView: OutputView,
 ) {
     fun gameStart() {
         val dealer = Dealer()

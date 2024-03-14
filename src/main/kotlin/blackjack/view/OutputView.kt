@@ -7,7 +7,7 @@ import blackjack.model.role.Dealer
 import blackjack.model.role.Players
 import blackjack.model.role.Role
 
-class OutputView2 {
+class OutputView {
     fun printInitialDealing(
         dealer: Dealer,
         players: Players,
