@@ -1,6 +1,6 @@
 package blackjack.model
 
-import blackjack.model.user.UserDecision
+import blackjack.view.user.UserDecision
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows

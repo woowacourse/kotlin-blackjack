@@ -1,6 +1,6 @@
 package blackjack.model
 
-import blackjack.model.user.UserDecision
+import blackjack.view.user.UserDecision
 
 class Player(name: String) : Participant(name) {
     init {

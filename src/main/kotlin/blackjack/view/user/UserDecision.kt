@@ -1,4 +1,4 @@
-package blackjack.model.user
+package blackjack.view.user
 
 enum class UserDecision(
     private val userDecision: String,
