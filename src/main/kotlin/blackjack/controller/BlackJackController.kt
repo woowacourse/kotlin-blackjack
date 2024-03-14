@@ -1,23 +1,22 @@
 package blackjack.controller
 
-import blackjack.model.CardDeck
-import blackjack.model.Dealer
-import blackjack.model.GameInfo
-import blackjack.model.Judge
-import blackjack.model.Participant
-import blackjack.model.Players
+import blackjack.model.action.Action
+import blackjack.model.dispatcher.Dispatcher
+import blackjack.model.domain.CardDeck
+import blackjack.model.domain.Judge
+import blackjack.model.store.Store
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
-object BlackJackController {
+class BlackJackController(
+    private val dispatcher: Dispatcher,
+    private val store: Store,
+) {
     fun startGame() {
-        val playerNames = getPlayerNames()
-        val dealer = Dealer()
-        val players = Players(playerNames, ::askPlayerHit)
-
-        initializeParticipantsCards(dealer, players)
-        playRound(players, dealer)
-        displayResult(dealer, players)
+        dispatcher.dispatch(Action.ReadNames(getPlayerNames()))
+        initializeParticipantsCards()
+        playRound()
+        displayResult()
     }
 
     private fun getPlayerNames(): List<String> {
@@ -29,52 +28,45 @@ object BlackJackController {
         }.getOrThrow()
     }
 
-    private fun initializeParticipantsCards(
-        dealer: Dealer,
-        players: Players,
-    ) {
-        dealer.drawCard { CardDeck.pick() }
-        players.initializeCards { CardDeck.pick() }
-        displayInitializedCards(dealer.gameInfo, players.getPlayersGameInfo())
+    private fun initializeParticipantsCards() {
+        dispatcher.dispatch(
+            Action.InitDealerCard { CardDeck.pick() },
+        )
+        dispatcher.dispatch(Action.InitPlayersCard { CardDeck.pick() })
+        displayInitializedCards()
     }
 
-    private fun playRound(
-        players: Players,
-        dealer: Dealer,
-    ) {
+    private fun playRound() {
         with(OutputView) {
-            players.players.forEach { player ->
-                player.drawForSingleParticipant(::printSinglePlayerCards)
-            }
+            dispatcher.dispatch(
+                Action.DrawUntilPlayersSatisfaction(
+                    CardDeck::pick,
+                    ::printSinglePlayerCards,
+                    ::askPlayerHit,
+                ),
+            )
             printNewLine()
-            dealer.drawForSingleParticipant(::printDealerHit)
+            dispatcher.dispatch(
+                action = Action.DrawUntilDealerSatisfaction(
+                    { CardDeck.pick() },
+                    ::printDealerHit,
+                ),
+            )
         }
     }
 
-    private fun displayResult(
-        dealer: Dealer,
-        players: Players,
-    ) {
-        val dealerInfo = dealer.gameInfo
-        val playersInfo = players.getPlayersGameInfo()
-        val judge = Judge(dealerInfo, playersInfo)
+    private fun displayResult() {
+        val judge = Judge(store)
         with(OutputView) {
-            printResult(judge)
-            printFinalCards(dealerInfo, playersInfo)
+            printFinalCards(store)
+            printResult(store, judge)
         }
-    }
-
-    private fun Participant.drawForSingleParticipant(printCards: (GameInfo) -> Unit) {
-        drawUntilSatisfaction(CardDeck::pick, printCards)
     }
 
     private fun askPlayerHit(playerName: String): String =
         InputView.readContinueInput(playerName) ?: askPlayerHit(playerName)
 
-    private fun displayInitializedCards(
-        dealerInfo: GameInfo,
-        playersInfo: List<GameInfo>,
-    ) {
-        OutputView.printInitialStats(dealerInfo, playersInfo)
+    private fun displayInitializedCards() {
+        OutputView.printInitialStats(store)
     }
 }
