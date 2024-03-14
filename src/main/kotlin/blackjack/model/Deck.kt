@@ -5,12 +5,7 @@ class Deck(cardList: List<Card>) {
 
     constructor() : this(oneDeck.shuffled())
 
-    private fun pop() = deck.removeFirstOrNull() ?: throw NoSuchElementException("덱을 모두 사용했습니다.")
-
-    infix fun giveCardTo(participant: Participant) {
-        val card = pop()
-        participant.addCard(card)
-    }
+    fun pop() = deck.removeFirstOrNull() ?: throw NoSuchElementException("덱을 모두 사용했습니다.")
 
     companion object {
         private val oneDeck =

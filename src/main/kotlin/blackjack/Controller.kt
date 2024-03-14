@@ -1,8 +1,8 @@
 package blackjack
 
+import blackjack.model.BlackjackGameStatistics
 import blackjack.model.Dealer
 import blackjack.model.Deck
-import blackjack.model.BlackjackGameStatistics
 import blackjack.model.Participant
 import blackjack.model.Player
 import blackjack.view.InputView
@@ -51,7 +51,7 @@ class Controller {
             return
         }
         while (player.isNotBustedAndHitable() && askPick(player.name)) {
-            deck giveCardTo player
+            player pick deck
             OutputView.printParticipantStatus(player)
         }
         if (player.isBusted()) {
@@ -65,7 +65,7 @@ class Controller {
 
     private fun proceedDealerTurn(dealer: Dealer) {
         while (dealer.isNotBustedAndHitable()) {
-            deck giveCardTo dealer
+            dealer pick deck
             OutputView.printDealerHitMessage()
         }
     }
@@ -75,12 +75,12 @@ class Controller {
         players: List<Player>,
     ) {
         OutputView.printResult(dealer, players)
-        val blackjackGameStatistics = BlackjackGameStatistics(dealer, players)
-        OutputView.printGameStatistics(blackjackGameStatistics)
+        val gameStatistics = BlackjackGameStatistics(dealer, players)
+        OutputView.printGameStatistics(gameStatistics)
     }
 
     private fun Participant.initCard() {
-        deck giveCardTo this
-        deck giveCardTo this
+        this pick deck
+        this pick deck
     }
 }
