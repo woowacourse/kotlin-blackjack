@@ -5,7 +5,7 @@ import blackjack.model.Hand
 
 class Hit(private val hand: Hand = Hand()) : Running(hand) {
     override fun draw(card: Card): BlackjackState {
-        hand.plus(card)
+        hand.add(card)
         val sumOfCard = hand.calculate()
         return when {
             sumOfCard > THRESHOLD_BUST -> Bust(hand)

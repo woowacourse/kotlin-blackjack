@@ -5,7 +5,7 @@ class Hand(cards: List<Card> = emptyList()) {
     val cards: List<Card>
         get() = _cards
 
-    operator fun plus(other: Card) {
+    fun add(other: Card) {
         _cards += other
     }
 
