@@ -21,9 +21,9 @@ class ParticipantsTest {
     fun `게임이 시작되면 플레이어와 딜러에게 카드를 1장씩 나눠준다`() {
         participants.initParticipantsDeck()
 
-        Assertions.assertThat(dealer.hand.cards.size).isEqualTo(1)
+        Assertions.assertThat(dealer.getState().hand().cards.size).isEqualTo(1)
         participants.playerGroup.players.forEach { player ->
-            Assertions.assertThat(player.hand.cards.size).isEqualTo(1)
+            Assertions.assertThat(player.getState().hand().cards.size).isEqualTo(1)
         }
     }
 }

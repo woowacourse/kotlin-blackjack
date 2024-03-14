@@ -20,6 +20,6 @@ class PlayerTest {
 
         player.addCard(cards.first())
 
-        Assertions.assertThat(player.hand.cards.last()).isEqualTo(cards.first())
+        Assertions.assertThat(player.getState().hand().cards.last()).isEqualTo(cards.first())
     }
 }

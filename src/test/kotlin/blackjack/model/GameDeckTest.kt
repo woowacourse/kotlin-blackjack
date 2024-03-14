@@ -12,13 +12,13 @@ class GameDeckTest {
     fun `카드 덱에 처음 나오는 문양과 숫자는 하트와 ACE이다`() {
         val cards = Card.of(listOf(Pair(HEART, ACE)))
         val card = cards.first()
-        GameDeck.resetCurrentDeck(cards)
+        GameDeck.resetDeck(cards)
         Assertions.assertThat(GameDeck.drawCard()).isEqualTo(card)
     }
 
     @Test
     fun `카드 덱에 카드가 없다면 IllegalStateException이 발생한다`() {
-        GameDeck.resetCurrentDeck(listOf())
+        GameDeck.resetDeck(listOf())
         assertThrows<IllegalStateException> { GameDeck.drawCard() }
     }
 }
