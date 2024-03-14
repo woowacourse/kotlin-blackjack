@@ -29,7 +29,18 @@ class BlackjackGame(private val dealer: Dealer, private val players: Players, pr
         }
     }
 
-    fun startPlayersTurn(
+    fun start(
+        readMoreCardDecision: (Player) -> Boolean,
+        printPlayerCardsMessage: (Player) -> Unit,
+        printDealerAdditionalCardMessage: () -> Unit,
+    ): GameResultStorage {
+        startPlayersTurn(readMoreCardDecision, printPlayerCardsMessage)
+        startDealerTurn(printDealerAdditionalCardMessage)
+
+        return calculateGameResult()
+    }
+
+    private fun startPlayersTurn(
         readMoreCardDecision: (Player) -> Boolean,
         printPlayerCardsMessage: (Player) -> Unit,
     ) {
@@ -52,14 +63,14 @@ class BlackjackGame(private val dealer: Dealer, private val players: Players, pr
         }
     }
 
-    fun startDealerTurn(printDealerAdditionalCardMessage: (Unit) -> Unit) {
+    private fun startDealerTurn(printDealerAdditionalCardMessage: () -> Unit) {
         while (dealer.decideMoreCard()) {
             dealer.receiveCard(Card.from(cardProvider))
-            printDealerAdditionalCardMessage
+            printDealerAdditionalCardMessage()
         }
     }
 
-    fun calculateGameResult(): GameResultStorage {
+    private fun calculateGameResult(): GameResultStorage {
         val dealerResultList = mutableListOf<GameResultType>()
         val playersResult = PlayersResult()
 

@@ -19,31 +19,14 @@ class BlackjackController(
         val blackjackGame = BlackjackGame(dealer, players, cardProvider)
         outputView.printInitCard(dealer, players)
 
-        takePlayersTurn(blackjackGame)
-        takeDealerTurn(blackjackGame)
-        showGameResult(dealer, players, blackjackGame)
-    }
+        val gameResult =
+            blackjackGame.start(
+                { inputView.readMoreCardDecision(it) },
+                { outputView.printPlayerCardsMessage(it) },
+                { outputView.printDealerAdditionalCardMessage() },
+            )
 
-    private fun takePlayersTurn(blackjackGame: BlackjackGame) {
-        blackjackGame.startPlayersTurn(
-            { player -> inputView.readMoreCardDecision(player) },
-            { player -> outputView.printPlayerCardsMessage(player) },
-        )
-    }
-
-    private fun takeDealerTurn(blackjackGame: BlackjackGame) {
-        blackjackGame.startDealerTurn {
-            outputView.printDealerAdditionalCardMessage()
-        }
-    }
-
-    private fun showGameResult(
-        dealer: Dealer,
-        players: Players,
-        blackjackGame: BlackjackGame,
-    ) {
-        val gameResultStorage = blackjackGame.calculateGameResult()
         outputView.printPlayersCardResult(dealer, players)
-        outputView.printFinalGameResult(players, gameResultStorage)
+        outputView.printFinalGameResult(players, gameResult)
     }
 }
