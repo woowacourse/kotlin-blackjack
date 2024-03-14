@@ -16,8 +16,4 @@ enum class Denomination(val score: Int) {
     JACK(10), ;
 
     fun isAce() = this == ACE
-
-    companion object {
-        const val ADDITIONAL_ACE_SCORE = 10
-    }
 }
