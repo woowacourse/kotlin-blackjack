@@ -11,6 +11,11 @@ object InputView {
         return readln().split(",").map { it.trim() }
     }
 
+    fun inputPlayerBettingAmount(nickname: Nickname): String {
+        println("\n${nickname}의 배팅 금액은?")
+        return readln()
+    }
+
     fun askHitOrStay(nickname: Nickname): Boolean {
         println("${nickname}은(는) 한 장의 카드를 더 받겠습니까? (예는 y, 아니오는 n)")
         while (true) {

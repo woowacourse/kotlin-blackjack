@@ -5,7 +5,7 @@ import blackjack.state.BlackjackState
 import blackjack.state.Bust
 import blackjack.state.Normal
 
-abstract class CardHolder {
+abstract class CardHolder(val userInfo: UserInfo) {
     private var _hand: Hand = Hand()
     val hand: Hand
         get() = _hand

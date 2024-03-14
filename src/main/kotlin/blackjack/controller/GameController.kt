@@ -11,6 +11,7 @@ import blackjack.model.PlayerGroup
 import blackjack.model.WinningState
 import blackjack.view.InputView
 import blackjack.view.InputView.askHitOrStay
+import blackjack.view.InputView.inputPlayerBettingAmount
 import blackjack.view.OutputView
 import blackjack.view.OutputView.printDealerDrawCard
 import blackjack.view.OutputView.printEveryCards
@@ -69,9 +70,16 @@ class GameController(private var gameState: GameState = Play) {
     }
 
     private fun start(participants: Participants) {
+        initBetting(playerGroup = participants.playerGroup)
         initSetting(participants = participants)
         runPlayersTurn(playerGroup = participants.playerGroup)
         runDealerTurn(dealer = participants.dealer)
+    }
+
+    private fun initBetting(playerGroup: PlayerGroup) {
+        playerGroup.startBetting { player ->
+            inputPlayerBettingAmount(nickname = player.userInfo.nickname)
+        }
     }
 
     private fun initSetting(participants: Participants) {
@@ -81,7 +89,7 @@ class GameController(private var gameState: GameState = Play) {
 
     private fun runPlayersTurn(playerGroup: PlayerGroup) {
         playerGroup.drawPlayerCard { player ->
-            val order = askHitOrStay(player.nickname)
+            val order = askHitOrStay(player.userInfo.nickname)
             showPlayerCards(player)
             order
         }

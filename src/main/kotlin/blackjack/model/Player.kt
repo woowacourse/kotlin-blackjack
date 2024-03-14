@@ -1,3 +1,3 @@
 package blackjack.model
 
-class Player(val nickname: Nickname) : CardHolder()
+class Player(userInfo: UserInfo) : CardHolder(userInfo = userInfo)

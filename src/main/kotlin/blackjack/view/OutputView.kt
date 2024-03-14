@@ -19,10 +19,10 @@ object OutputView {
 
     fun printGameSetting(participants: Participants) {
         println(
-            "\n${participants.dealer.nickname}와 ${
+            "\n${participants.dealer.userInfo.nickname}와 ${
                 participants.playerGroup.players.joinToString(
                     ", ",
-                ) { it.nickname.name }
+                ) { it.userInfo.nickname.name }
             }에게 ${INITIAL_CARD_COUNTS}장의 카드를 나누었습니다.",
         )
         showDealerInitCard(participants.dealer)
@@ -31,7 +31,7 @@ object OutputView {
 
     private fun showDealerInitCard(dealer: Dealer) {
         val showCard = dealer.hand.cards.first()
-        println("${dealer.nickname}: ${getCardNumberName(showCard.number)}${getCardPatternName(showCard.pattern)}")
+        println("${dealer.userInfo.nickname}: ${getCardNumberName(showCard.number)}${getCardPatternName(showCard.pattern)}")
     }
 
     private fun showPlayersInitCards(playerGroup: PlayerGroup) {
@@ -42,7 +42,7 @@ object OutputView {
 
     fun showPlayerCards(player: Player) {
         println(
-            "${player.nickname}: ${
+            "${player.userInfo.nickname}: ${
                 player.hand.cards.joinToString(", ") { card ->
                     getCardNumberName(card.number) + getCardPatternName(card.pattern)
                 }
@@ -51,7 +51,7 @@ object OutputView {
     }
 
     fun printDealerDrawCard(dealer: Dealer) {
-        println("\n${dealer.nickname}의 카드가 ${DEALER_CARD_DRAW_THRESHOLD}이하 이므로, 1장의 카드를 더 받습니다.")
+        println("\n${dealer.userInfo.nickname}의 카드가 ${DEALER_CARD_DRAW_THRESHOLD}이하 이므로, 1장의 카드를 더 받습니다.")
     }
 
     fun printEveryCards(participants: Participants) {
@@ -62,7 +62,7 @@ object OutputView {
 
     private fun showDealerCardsResult(dealer: Dealer) {
         println(
-            "${dealer.nickname}: ${
+            "${dealer.userInfo.nickname}: ${
                 dealer.hand.cards.joinToString(", ") { card ->
                     getCardNumberName(card.number) + getCardPatternName(card.pattern)
                 }
@@ -73,7 +73,7 @@ object OutputView {
     private fun showPlayersCardsResult(playerGroup: PlayerGroup) {
         playerGroup.players.forEach { player ->
             println(
-                "${player.nickname}: ${
+                "${player.userInfo.nickname}: ${
                     player.hand.cards.joinToString(", ") { card ->
                         getCardNumberName(card.number) + getCardPatternName(card.pattern)
                     }
@@ -122,7 +122,7 @@ object OutputView {
         playersCount: Int,
     ) {
         val drawCount = playersCount - (gameResult.win + gameResult.lose)
-        println("${dealer.nickname}: ${gameResult.win}승 ${gameResult.lose}패 ${drawCount}무")
+        println("${dealer.userInfo.nickname}: ${gameResult.win}승 ${gameResult.lose}패 ${drawCount}무")
     }
 
     private fun printPlayerResult(
@@ -135,6 +135,6 @@ object OutputView {
                 gameResult.lose == 1 -> "패"
                 else -> "무"
             }
-        println("${player.nickname}: $resultMessage")
+        println("${player.userInfo.nickname}: $resultMessage")
     }
 }

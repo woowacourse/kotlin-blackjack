@@ -7,7 +7,14 @@ class PlayerGroup {
 
     fun addPlayer(playerNames: List<String>) {
         require(_players.size + playerNames.size in PLAYERS_COUNT_RANGE) { INVALID_PLAYERS_COUNT_ERROR_MESSAGE }
-        _players += playerNames.map { Player(nickname = Nickname(it)) }
+        _players += playerNames.map { Player(userInfo = UserInfo(nickname = Nickname(it))) }
+    }
+
+    fun startBetting(amount: (player: Player) -> String) {
+        players.forEach { player ->
+            val betAmount = BetAmount.from(amount(player))
+            player.userInfo.betting(betAmount)
+        }
     }
 
     fun drawPlayerCard(shouldDrawCard: (player: Player) -> Boolean) {
