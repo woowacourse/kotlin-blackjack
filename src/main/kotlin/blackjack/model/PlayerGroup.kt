@@ -17,9 +17,15 @@ class PlayerGroup {
         }
     }
 
-    fun drawPlayerCard(shouldDrawCard: (player: Player) -> Boolean) {
+    fun drawPlayerCard(
+        shouldDrawCard: (player: Player) -> Boolean,
+        newPlayer: (player: Player) -> Unit,
+    ) {
         players.forEach { player ->
-            player.drawCard { shouldDrawCard(player) }
+            player.drawCard(
+                shouldDrawCard = { shouldDrawCard(player) },
+                newCardHolder = { newPlayer(it as Player) },
+            )
         }
     }
 

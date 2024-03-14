@@ -12,8 +12,8 @@ class Participants(
     }
 
     fun resetHand() {
-        playerGroup.players.forEach { player -> player.hand.reset() }
-        dealer.hand.reset()
+        playerGroup.players.forEach { player -> player.getState().hand().reset() }
+        dealer.getState().hand().reset()
     }
 
     fun calculateResult(): WinningState {

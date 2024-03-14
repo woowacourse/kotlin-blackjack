@@ -88,18 +88,17 @@ class GameController(private var gameState: GameState = Play) {
     }
 
     private fun runPlayersTurn(playerGroup: PlayerGroup) {
-        playerGroup.drawPlayerCard { player ->
-            val order = askHitOrStay(player.userInfo.nickname)
-            showPlayerCards(player)
-            order
-        }
+        playerGroup.drawPlayerCard(
+            shouldDrawCard = { player -> askHitOrStay(player.userInfo.nickname) },
+            newPlayer = { showPlayerCards(it) },
+        )
     }
 
     private fun runDealerTurn(dealer: Dealer) {
-        dealer.drawCard {
-            printDealerDrawCard(dealer = dealer)
-            dealer.shouldDrawCard()
-        }
+        dealer.drawCard(
+            shouldDrawCard = { dealer.shouldDrawCard() },
+            newCardHolder = { printDealerDrawCard(dealer = it as Dealer) },
+        )
     }
 
     private fun finish(participants: Participants): WinningState {

@@ -1,3 +1,3 @@
 package blackjack.model
 
-class Player(userInfo: UserInfo) : CardHolder(userInfo = userInfo)
+class Player(userInfo: UserInfo) : CardHolder(userInfo)

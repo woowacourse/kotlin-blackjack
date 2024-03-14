@@ -1,5 +1,6 @@
 package blackjack.view
 
+import blackjack.model.BetAmount
 import blackjack.model.CardNumber
 import blackjack.model.Dealer
 import blackjack.model.Dealer.Companion.DEALER_CARD_DRAW_THRESHOLD
@@ -30,7 +31,7 @@ object OutputView {
     }
 
     private fun showDealerInitCard(dealer: Dealer) {
-        val showCard = dealer.hand.cards.first()
+        val showCard = dealer.getState().hand().cards.first()
         println("${dealer.userInfo.nickname}: ${getCardNumberName(showCard.number)}${getCardPatternName(showCard.pattern)}")
     }
 
@@ -43,7 +44,7 @@ object OutputView {
     fun showPlayerCards(player: Player) {
         println(
             "${player.userInfo.nickname}: ${
-                player.hand.cards.joinToString(", ") { card ->
+                player.getState().hand().cards.joinToString(", ") { card ->
                     getCardNumberName(card.number) + getCardPatternName(card.pattern)
                 }
             }",
@@ -63,10 +64,10 @@ object OutputView {
     private fun showDealerCardsResult(dealer: Dealer) {
         println(
             "${dealer.userInfo.nickname}: ${
-                dealer.hand.cards.joinToString(", ") { card ->
+                dealer.getState().hand().cards.joinToString(", ") { card ->
                     getCardNumberName(card.number) + getCardPatternName(card.pattern)
                 }
-            } - 결과: ${dealer.hand.calculate()}",
+            } - 결과: ${dealer.getState().hand().calculate()}",
         )
     }
 
@@ -74,10 +75,10 @@ object OutputView {
         playerGroup.players.forEach { player ->
             println(
                 "${player.userInfo.nickname}: ${
-                    player.hand.cards.joinToString(", ") { card ->
+                    player.getState().hand().cards.joinToString(", ") { card ->
                         getCardNumberName(card.number) + getCardPatternName(card.pattern)
                     }
-                } - 결과: ${player.hand.calculate()}",
+                } - 결과: ${player.getState().hand().calculate()}",
             )
         }
     }
@@ -106,11 +107,10 @@ object OutputView {
     }
 
     fun printGameResult(winningState: WinningState) {
-        val playersCount = winningState.state.size - 1
-        println("\n[ 최종 승패 ]")
+        println("\n[ 최종 승익 ]")
         winningState.state.entries.forEach { (participant, winningState) ->
             when (participant) {
-                is Dealer -> printDealerResult(participant, winningState, playersCount)
+                is Dealer -> printDealerResult(participant, winningState)
                 is Player -> printPlayerResult(participant, winningState)
             }
         }
@@ -119,22 +119,14 @@ object OutputView {
     private fun printDealerResult(
         dealer: Dealer,
         gameResult: GameResult,
-        playersCount: Int,
     ) {
-        val drawCount = playersCount - (gameResult.win + gameResult.lose)
-        println("${dealer.userInfo.nickname}: ${gameResult.win}승 ${gameResult.lose}패 ${drawCount}무")
+        println("${dealer.userInfo.nickname}: ${gameResult.calculate(BetAmount(1000))}")
     }
 
     private fun printPlayerResult(
         player: Player,
         gameResult: GameResult,
     ) {
-        val resultMessage =
-            when {
-                gameResult.win == 1 -> "승"
-                gameResult.lose == 1 -> "패"
-                else -> "무"
-            }
-        println("${player.userInfo.nickname}: $resultMessage")
+        println("${player.userInfo.nickname}: ${gameResult.calculate(player.userInfo.betAmount)}")
     }
 }

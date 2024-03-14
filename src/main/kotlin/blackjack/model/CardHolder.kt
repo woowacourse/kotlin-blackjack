@@ -2,39 +2,43 @@ package blackjack.model
 
 import blackjack.state.Blackjack
 import blackjack.state.BlackjackState
-import blackjack.state.Bust
-import blackjack.state.Normal
+import blackjack.state.Finished
+import blackjack.state.Hit
 
-abstract class CardHolder(val userInfo: UserInfo) {
-    private var _hand: Hand = Hand()
-    val hand: Hand
-        get() = _hand
-
-    fun addCard(card: Card) {
-        _hand.plus(card)
-    }
-
-    fun drawCard(shouldDrawCard: () -> Boolean) {
-        while (!isGameFinished() && shouldDrawCard()) {
-            addCard(card = GameDeck.drawCard())
-        }
-    }
+sealed class CardHolder(val userInfo: UserInfo) {
+    private var blackjackState: BlackjackState = Hit()
 
     fun getState(): BlackjackState {
-        return when {
-            hand.calculate() == THRESHOLD_BLACKJACK && hand.cards.size == BLACKJACK_CARD_SIZE -> Blackjack()
-            hand.calculate() > THRESHOLD_BUST -> Bust()
-            else -> Normal()
+        val hand = blackjackState.hand()
+        return when (hand.calculate()) {
+            THRESHOLD_BLACKJACK -> Blackjack(hand)
+            else -> Hit(hand)
         }
     }
 
-    private fun isGameFinished() = getState().isFinished
+    fun addCard(card: Card) {
+        blackjackState = blackjackState.draw(card)
+    }
 
-    fun calculateWinningStateAgainst(opponent: CardHolder) = getState().calculateGameResult(this, opponent)
+    fun drawCard(
+        shouldDrawCard: () -> Boolean,
+        newCardHolder: (cardHolder: CardHolder) -> Unit,
+    ) {
+        while (!blackjackState.isFinished()) {
+            if (shouldDrawCard()) {
+                addCard(card = GameDeck.drawCard())
+            } else {
+                blackjackState = blackjackState.stay()
+            }
+            newCardHolder(this)
+        }
+    }
+
+    fun getSumOfCards(): Int = blackjackState.hand().calculate()
+
+    fun calculateWinningStateAgainst(opponent: CardHolder) = (blackjackState as Finished).calculate(opponent)
 
     companion object {
-        private const val BLACKJACK_CARD_SIZE = 2
-        private const val THRESHOLD_BLACKJACK = 21
-        const val THRESHOLD_BUST = 21
+        const val THRESHOLD_BLACKJACK = 21
     }
 }
