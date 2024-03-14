@@ -1,13 +1,17 @@
 package blackjack.view
 
+import blackjack.model.BlackJack
+import blackjack.model.Bust
 import blackjack.model.Card
 import blackjack.model.Dealer
 import blackjack.model.GameResult
 import blackjack.model.Hand
-import blackjack.model.Participants.Companion.INITIAL_CARD_COUNTS
+import blackjack.model.Hit
 import blackjack.model.Player
 import blackjack.model.PlayerGroup
-import blackjack.model.UserState
+import blackjack.model.Running
+import blackjack.model.Running.Companion.INITIAL_CARD_COUNTS
+import blackjack.model.Stay
 
 object OutputView {
     fun printGameSetting(
@@ -15,7 +19,11 @@ object OutputView {
         playerGroup: PlayerGroup,
     ) {
         println(
-            "\n딜러와 ${playerGroup.players.joinToString(", ") { it.name.name }}에게 ${INITIAL_CARD_COUNTS}장의 카드를 나누었습니다.",
+            "\n딜러와 ${
+                playerGroup.players.joinToString(", ") {
+                    it.name.name
+                }
+            }에게 ${INITIAL_CARD_COUNTS}장의 카드를 나누었습니다.",
         )
         showDealerInitCard(dealerCard)
         showPlayersInitCards(playerGroup)
@@ -38,16 +46,18 @@ object OutputView {
     }
 
     private fun showStateOfPlayer(player: Player) {
-        when (player.status.state) {
-            UserState.BUST -> println("${player.name}의 카드가 ${Hand.BLACKJACK_NUMBER}을 초과하여 Bust되었습니다.")
-            UserState.STAY -> println("${player.name}이(가) Stay에 성공하였습니다.")
-            UserState.BLACKJACK -> println("${player.name}이(가) BlackJack을 달성했습니다.")
-            UserState.RUNNING -> return
+        when (player.state) {
+            is Bust -> println("${player.name}의 카드가 ${Hand.BLACKJACK_NUMBER}을 초과하여 Bust되었습니다.")
+            is Stay -> println("${player.name}이(가) Stay에 성공하였습니다.")
+            is BlackJack -> println("${player.name}이(가) BlackJack을 달성했습니다.")
+            is Hit -> return
+            is Running -> return
         }
     }
 
     private fun convertPlayerCardsToString(player: Player) =
-        "${player.name}: ${player.status.hand.cards.joinToString(", ")}"
+        "${player.name}: ${player.state.hand.cards.joinToString(", ")}"
+
 
     private fun convertDealerCardsToString(dealerHand: Hand) =
         "딜러: ${dealerHand.cards.joinToString(", ")}"
@@ -71,7 +81,7 @@ object OutputView {
 
     private fun showPlayersCardsResult(playerGroup: PlayerGroup) {
         playerGroup.players.forEach { player ->
-            println("${convertPlayerCardsToString(player)} - 결과: ${player.status.hand.calculate()}")
+            println("${convertPlayerCardsToString(player)} - 결과: ${player.state.hand.calculate()}")
         }
     }
 
