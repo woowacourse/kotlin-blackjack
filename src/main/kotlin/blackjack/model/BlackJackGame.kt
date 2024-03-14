@@ -25,6 +25,6 @@ class BlackJackGame(
     }
 
     fun finish(printEveryCards: (dealerHand: Hand, playerGroup: PlayerGroup) -> Unit) {
-        printEveryCards((participants.dealer.state as Finished).hand, participants.playerGroup)
+        printEveryCards(participants.dealer.state.hand, participants.playerGroup)
     }
 }

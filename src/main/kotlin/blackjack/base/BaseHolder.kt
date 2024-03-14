@@ -25,8 +25,7 @@ abstract class BaseHolder(gameResult: GameResult = GameResult()) {
     }
 
     fun takeCard(card: Card) {
-        if (state is Hit)
-            changeState((state as Hit).getCard(card))
+        changeState(state.getCard(card))
     }
 
     fun changeResult(newGameResult: GameResult) {

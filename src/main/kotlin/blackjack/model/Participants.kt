@@ -13,8 +13,8 @@ class Participants(
 
     fun matchResult() {
         playerGroup.players.forEach { player ->
-            player.changeResult((player.state as Finished).decideWinner(dealer))
-            dealer.changeResult((dealer.state as Finished).decideWinner(player))
+            player.changeResult(player.state.decideWinner(dealer))
+            dealer.changeResult(dealer.state.decideWinner(player))
         }
     }
 }
