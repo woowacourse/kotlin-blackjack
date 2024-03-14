@@ -8,12 +8,9 @@ class Player(val name: Name) : BaseHolder() {
         hitOrStay: (name: Name) -> Boolean,
         returnPlayerInfo: (player: Player) -> Unit,
     ) {
-        while (status.state == UserState.RUNNING) {
-            if (hitOrStay(name)) {
-                takeCard(gameDeck.drawCard())
-            } else {
-                status.changeState(UserState.STAY)
-            }
+        while (state is Running) {
+            changeState((state as Running).hitOrStay(hitOrStay(name)))
+            getCard(gameDeck)
             returnPlayerInfo(this)
         }
     }
