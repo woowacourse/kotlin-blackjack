@@ -4,6 +4,7 @@ import Player
 import blackjack.model.card.Card
 import blackjack.model.card.Deck
 import blackjack.model.card.Hand
+import blackjack.model.game.BettingMoney
 import blackjack.model.game.GameResult
 import blackjack.model.game.Referee
 import blackjack.model.game.State
@@ -17,7 +18,12 @@ object BlackJackController {
     fun run() {
         val deck = Deck()
         val playersName = InputView.readPlayersName()
-        val (dealer, playerEntry) = getDealerAndPlayerEntry(playersName, deck)
+        val bettingAmounts = mutableMapOf<String, BettingMoney>()
+        playersName.forEach { playerName ->
+            val bettingMoney = InputView.readBettingMoney(playerName) // 배팅 금액 입력 받기
+            bettingAmounts[playerName] = bettingMoney
+        }
+        val (dealer, playerEntry) = getDealerAndPlayerEntry(playersName, deck, bettingAmounts)
         val gameResult = playGame(playerEntry, dealer, deck)
         showGameResult(gameResult)
     }
@@ -73,24 +79,26 @@ object BlackJackController {
     private fun getDealerAndPlayerEntry(
         playersName: List<String>,
         deck: Deck,
+        bettingAmounts: Map<String, BettingMoney>,
     ): Pair<Dealer, PlayerEntry> {
         ProgressView.showPlayerEntry(playersName.joinToString(", "))
-        val playerSize = playersName.size + 1
-        val hands = dealingCards(playerSize, deck)
-        val dealer = makeDealer(hands[0])
-        val playerEntry = makePlayerEntry(playersName, hands)
-        ProgressView.showHands(dealer, playerEntry)
-        return Pair(dealer, playerEntry)
+        val hands = dealingCards(playersName.size + 1, deck)
+        val dealer = makeDealer(hands.first())
+        val players =
+            makePlayers(playersName, hands, bettingAmounts)
+        return Pair(dealer, PlayerEntry(players))
     }
 
-    private fun makePlayerEntry(
+    private fun makePlayers(
         playersName: List<String>,
         hands: List<Hand>,
-    ): PlayerEntry {
+        bettingAmounts: Map<String, BettingMoney>,
+    ): List<Player> {
         val players =
-            makePlayers(playersName, hands)
-        val playerEntry = PlayerEntry(players)
-        return playerEntry
+            playersName.mapIndexed { index, playerName ->
+                Player(playerName, hands[index + 1], bettingAmounts[playerName]!!)
+            }
+        return players
     }
 
     private fun dealingCards(
@@ -105,15 +113,6 @@ object BlackJackController {
         }
         val hands = allDrawnCards.map { drawnCards -> Hand(drawnCards.toMutableList()) }
         return hands
-    }
-
-    private fun makePlayers(
-        playersName: List<String>,
-        hands: List<Hand>,
-    ): List<Player> {
-        return playersName.zip(hands.drop(1)) { playerName, hand ->
-            Player(playerName, hand)
-        }
     }
 
     private fun makeDealer(hand: Hand): Dealer {
