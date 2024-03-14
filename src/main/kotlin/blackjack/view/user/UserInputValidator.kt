@@ -3,12 +3,13 @@ package blackjack.view.user
 import blackjack.model.Dealer
 import blackjack.model.Participants
 import blackjack.model.Player
+import blackjack.model.Wallet
 
 object UserInputValidator {
     fun checkPlayers(input: List<String>): List<Player>? {
         return try {
             checkPlayerNameDuplication(input)
-            input.map { name -> Player(name) }
+            input.map { name -> Player(Wallet(name)) }
         } catch (e: IllegalArgumentException) {
             println(e.message)
             null
@@ -44,4 +45,6 @@ object UserInputValidator {
             Player.ERROR_DUPLICATION_NAME
         }
     }
+
+    const val ERROR_INACCURATE_MONEY = "잘못 된 베팅 금액입니다."
 }
