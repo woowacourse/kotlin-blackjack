@@ -73,6 +73,24 @@ class DealerTest {
             .containsEntry(PlayerName("seogi"), GameResultType.LOSE)
     }
 
+    @Test
+    fun `플레이어들의 수익을 통해 딜러의 수익을 계산한다`() {
+        // given
+        val dealer = Dealer()
+        val players = Players.of(listOf("olive", "seogi"), listOf(1000, 10000))
+
+        players.playerGroup[0].profit = 15000
+        players.playerGroup[1].profit = -10000
+        dealer.calculateProfit(players)
+
+        // when
+        val actual = dealer.profit
+        val expected = -5000
+
+        // then
+        assertThat(actual).isEqualTo(expected)
+    }
+
     companion object {
         @JvmStatic
         fun `카드 받을 수 있는지 여부 판단 테스트 데이터`() =
