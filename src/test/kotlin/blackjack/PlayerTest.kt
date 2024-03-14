@@ -1,11 +1,13 @@
 package blackjack
 
+import blackjack.model.BettingAmount
 import blackjack.model.Card
 import blackjack.model.CardDeck
 import blackjack.model.CardNumber
 import blackjack.model.CardSymbol
 import blackjack.model.Participant.Player
 import blackjack.model.ParticipantName
+import blackjack.model.UserInformation
 import blackjack.view.OutputView
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
@@ -17,7 +19,7 @@ class PlayerTest {
 
     @BeforeEach
     fun setUp() {
-        player = Player(ParticipantName("채드"))
+        player = Player(UserInformation(ParticipantName("채드"), BettingAmount(1000)))
         cardDeck = CardDeck()
     }
 
@@ -34,7 +36,7 @@ class PlayerTest {
         player.draw(Card(CardNumber.THREE, CardSymbol.SPADE))
 
         fun readDecision(): Boolean {
-            return if (player.gameInformation.cards.size == 2) true else false
+            return player.gameInformation.cards.size == 2
         }
         player.judgeDrawOrNot(cardDeck, { readDecision() }) { OutputView.outputParticipantCard(player) }
 

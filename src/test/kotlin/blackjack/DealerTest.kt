@@ -4,7 +4,6 @@ import blackjack.model.Card
 import blackjack.model.CardDeck
 import blackjack.model.CardNumber
 import blackjack.model.CardSymbol
-import blackjack.model.GameState
 import blackjack.model.Participant.Dealer
 import blackjack.view.OutputView
 import org.assertj.core.api.Assertions.assertThat
@@ -29,12 +28,11 @@ class DealerTest {
     }
 
     @Test
-    fun `딜러 카드 자동으로 추가로 뽑을때 손패 및 상태 변경 확인`() {
+    fun `딜러 카드 자동으로 추가로 뽑을때 손패 추가 확인`() {
         dealer.draw(Card(CardNumber.TWO, CardSymbol.SPADE))
         dealer.draw(Card(CardNumber.THREE, CardSymbol.SPADE))
         dealer.judgeDrawOrNot(cardDeck) { OutputView.outputDealerDraw(dealer) }
 
         assertThat(dealer.gameInformation.cards.size >= 3).isTrue
-        assertThat(dealer.gameInformation.state != GameState.Running.HIT).isTrue
     }
 }

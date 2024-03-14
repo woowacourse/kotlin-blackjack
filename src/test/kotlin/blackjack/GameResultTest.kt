@@ -1,5 +1,6 @@
 package blackjack
 
+import blackjack.model.BettingAmount
 import blackjack.model.Card
 import blackjack.model.CardNumber
 import blackjack.model.CardSymbol
@@ -8,6 +9,7 @@ import blackjack.model.Participant.Dealer
 import blackjack.model.Participant.Player
 import blackjack.model.ParticipantName
 import blackjack.model.Result
+import blackjack.model.UserInformation
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -18,7 +20,7 @@ class GameResultTest {
 
     @BeforeEach
     fun setUp() {
-        players = listOf(Player(ParticipantName("채드")))
+        players = listOf(Player(UserInformation(ParticipantName("채드"), BettingAmount(1000))))
         dealer = Dealer()
         dealer.draw(Card(CardNumber.TEN, CardSymbol.SPADE))
         dealer.draw(Card(CardNumber.TEN, CardSymbol.HEART))

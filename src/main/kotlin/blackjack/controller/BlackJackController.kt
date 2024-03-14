@@ -4,6 +4,7 @@ import blackjack.model.CardDeck
 import blackjack.model.GameResult
 import blackjack.model.Participant.Dealer
 import blackjack.model.Participant.Player
+import blackjack.model.UserInformation
 import blackjack.view.InputView
 import blackjack.view.OutputView
 import blackjack.view.ResultView
@@ -11,13 +12,28 @@ import blackjack.view.ResultView
 object BlackJackController {
     fun run() {
         val dealer = Dealer()
-        val players = InputView.inputPlayers()
+        val players = registerPlayers()
         try {
             blackJackGameStart(dealer, players)
             displayGameResult(dealer, players)
         } catch (exception: IllegalArgumentException) {
             println(exception.message)
         }
+    }
+
+    private fun registerPlayers(): List<Player> {
+        val playersName = InputView.inputPlayersName()
+        val playersBettingAmount =
+            playersName.map { playerName ->
+                InputView.inputBettingAmount(playerName)
+            }
+        val players = mutableListOf<Player>()
+        for (index in playersName.indices) {
+            val userInformation = UserInformation(playersName[index], playersBettingAmount[index])
+            val player = Player(userInformation)
+            players.add(player)
+        }
+        return players
     }
 
     private fun blackJackGameStart(
@@ -38,7 +54,7 @@ object BlackJackController {
         players.forEach { player ->
             player.judgeDrawOrNot(
                 cardDeck,
-                { InputView.inputDrawDecision(player.name).judgeDecision() },
+                { InputView.inputDrawDecision(player.userInformation.name).judgeDecision() },
                 { OutputView.outputParticipantCard(player) },
             )
         }

@@ -27,7 +27,7 @@ object ResultView {
         println(MESSAGE_GAME_RESULT)
         println(
             MESSAGE_DEALER_RESULT.format(
-                gameResult.dealer.name,
+                gameResult.dealer.userInformation.name,
                 gameResult.dealerResult[Result.DEALER_WIN],
                 gameResult.dealerResult[Result.PLAYER_WIN],
                 gameResult.dealerResult[Result.TIE],
@@ -36,7 +36,7 @@ object ResultView {
         gameResult.playerResults.withIndex().map { (index, playerResult) ->
             println(
                 MESSAGE_PLAYER_RESULT.format(
-                    gameResult.players[index].name,
+                    gameResult.players[index].userInformation.name,
                     playerResult.label,
                 ),
             )
@@ -46,7 +46,7 @@ object ResultView {
     private fun outputGameScore(participant: Participant) {
         println(
             MESSAGE_PARTICIPANT_GAME_SCORE.format(
-                participant.name,
+                participant.userInformation.name,
                 participant.gameInformation.cards.joinToString(separator = ", ") { card ->
                     card.convertCard()
                 },

@@ -1,6 +1,6 @@
 package blackjack.model
 
-sealed class Participant(val name: ParticipantName, val gameInformation: GameInformation) {
+sealed class Participant(val userInformation: UserInformation, val gameInformation: GameInformation) {
     fun draw(card: Card) {
         if (isRunning()) {
             gameInformation.drawCard(card)
@@ -11,8 +11,8 @@ sealed class Participant(val name: ParticipantName, val gameInformation: GameInf
         return gameInformation.state is GameState.Running
     }
 
-    class Player(name: ParticipantName, gameInformation: GameInformation = GameInformation()) :
-        Participant(name, gameInformation) {
+    class Player(userInformation: UserInformation, gameInformation: GameInformation = GameInformation()) :
+        Participant(userInformation, gameInformation) {
         fun judgeDrawOrNot(
             cardDeck: CardDeck,
             readDecision: () -> Boolean,
@@ -29,8 +29,14 @@ sealed class Participant(val name: ParticipantName, val gameInformation: GameInf
         }
     }
 
-    class Dealer(name: ParticipantName = DEFAULT_DEALER_NAME, gameInformation: GameInformation = GameInformation()) :
-        Participant(name, gameInformation) {
+    class Dealer(
+        userInformation: UserInformation =
+            UserInformation(
+                ParticipantName(DEFAULT_DEALER_NAME),
+                BettingAmount(DEFAULT_DEALER_BETTING_AMOUNT),
+            ),
+        gameInformation: GameInformation = GameInformation(),
+    ) : Participant(userInformation, gameInformation) {
         fun initialCardDealing(
             players: List<Player>,
             cardDeck: CardDeck,
@@ -57,7 +63,8 @@ sealed class Participant(val name: ParticipantName, val gameInformation: GameInf
         }
 
         companion object {
-            private val DEFAULT_DEALER_NAME = ParticipantName("딜러")
+            private const val DEFAULT_DEALER_NAME = "딜러"
+            private const val DEFAULT_DEALER_BETTING_AMOUNT = 1
             private const val INITIAL_DEALING_COUNT = 2
             private const val ADDITIONAL_DRAW_CRITERIA = 16
             private const val BLACKJACK_SCORE = 21
