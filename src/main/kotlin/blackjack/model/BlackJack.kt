@@ -28,13 +28,7 @@ class BlackJack {
 
     fun addCard(card: Card) {
         handCard.addCard(card)
-        if (!checkStayState()) {
-            updateGameStateWithScore()
-        }
-    }
-
-    private fun checkStayState(): Boolean {
-        return state == State.Finish.Stay
+        updateGameStateWithScore()
     }
 
     private fun updateGameStateWithScore() {
