@@ -41,7 +41,7 @@ object BlackJackController {
         dealer: Dealer,
         deck: Deck,
     ) {
-        while (dealer.state == State.Running.Hit) {
+        while (dealer.isRunning()) {
             dealer.hand.draw(deck.dealCard())
             ProgressView.showDealerDrawMessage(dealer)
         }
@@ -109,8 +109,10 @@ object BlackJackController {
     private fun makePlayers(
         playersName: List<String>,
         hands: List<Hand>,
-    ) = playersName.withIndex().map { (index, playerName) ->
-        Player(playerName, hands[index + 1])
+    ): List<Player> {
+        return playersName.zip(hands.drop(1)) { playerName, hand ->
+            Player(playerName, hand)
+        }
     }
 
     private fun setDealer(hands: List<Hand>): Dealer {
