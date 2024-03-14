@@ -2,6 +2,7 @@ package blackjack.view
 
 import blackjack.model.card.CardHand
 import blackjack.model.card.CardNumber
+import blackjack.model.card.CardShape
 import blackjack.model.result.DealerWinning
 import blackjack.model.result.PlayerWinning
 import blackjack.model.role.Dealer
@@ -40,7 +41,7 @@ class OutputView {
 
     private fun printFirstCardHand(cardHand: CardHand) {
         val (shape, number) = cardHand.hand.first()
-        println(number.number.toString() + shape.shape)
+        println(number.toOutput() + shape.toOutput())
     }
 
     fun printPlayerCardHand(role: Role) {
@@ -90,12 +91,19 @@ class OutputView {
     }
 
     private fun printAllCardHand(cardHand: CardHand) {
-        print(cardHand.hand.joinToString { it.number.toOutput() + it.shape.shape })
+        print(cardHand.hand.joinToString { it.number.toOutput() + it.shape.toOutput() })
     }
 
     private fun CardNumber.toOutput(): String {
         if (this == CardNumber.ACE) return "A"
         return this.number.toString()
+    }
+
+    private fun CardShape.toOutput(): String = when (this) {
+        CardShape.HEART -> "하트"
+        CardShape.CLOVER -> "클로버"
+        CardShape.SPADE -> "스페이드"
+        CardShape.DIAMOND -> "다이아몬드"
     }
 
     companion object {
