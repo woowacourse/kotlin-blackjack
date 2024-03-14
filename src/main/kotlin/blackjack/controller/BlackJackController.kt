@@ -12,7 +12,7 @@ class BlackJackController(
 ) {
     fun start() {
         val playersNames: List<String> = inputView.inputPlayerNames()
-        val deck: Deck = Deck.create(1)
+        val deck = Deck()
         val players = Player.createPlayers(playersNames, deck)
         val dealer = Dealer.createDealer(deck)
         outputView.showDivided(dealer.hand.first(), players)

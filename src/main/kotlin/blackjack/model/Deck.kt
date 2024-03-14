@@ -4,6 +4,8 @@ class Deck(cards: List<Card>) {
     var cards: List<Card> = cards
         private set
 
+    constructor(size: Int = DEFAULT_DECK_SIZE) : this(create(size).cards)
+
     fun pull(): Card {
         if (cards.isEmpty()) {
             cards = create().cards
