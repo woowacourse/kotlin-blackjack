@@ -76,7 +76,7 @@ object BlackJackController {
         ProgressView.showPlayerEntry(playersName.joinToString(", "))
         val playerSize = playersName.size + 1
         val hands = dealingCards(playerSize, deck)
-        val dealer = setDealer(hands)
+        val dealer = makeDealer(hands[0])
         val playerEntry = makePlayerEntry(playersName, hands)
         ProgressView.showHands(dealer, playerEntry)
         return Pair(dealer, playerEntry)
@@ -115,8 +115,8 @@ object BlackJackController {
         }
     }
 
-    private fun setDealer(hands: List<Hand>): Dealer {
-        val dealer = Dealer(hands[0])
+    private fun makeDealer(hand: Hand): Dealer {
+        val dealer = Dealer(hand)
         return dealer
     }
 }
