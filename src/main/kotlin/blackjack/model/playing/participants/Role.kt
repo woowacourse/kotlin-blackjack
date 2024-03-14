@@ -8,6 +8,8 @@ import blackjack.model.playing.participants.player.PlayerName
 abstract class Role(open val name: PlayerName, open val cardHand: CardHand) {
     abstract fun getState(): CardHandState
 
+    abstract fun canDraw(): Boolean
+
     fun addInitialCards(cardGenerator: CardGenerator) {
         repeat(INITIAL_CARDS_COUNT) {
             cardHand.addNewCard(cardGenerator)

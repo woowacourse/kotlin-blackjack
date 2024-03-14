@@ -18,7 +18,7 @@ data class Dealer(override val cardHand: CardHand) : Role(name = PlayerName(DEAL
         }
     }
 
-    fun canDraw(): Boolean = this.getState() == CardHandState.HIT
+    override fun canDraw(): Boolean = this.getState() == CardHandState.HIT
 
     fun judgePlayerWinningResult(playerResult: Map<PlayerName, Int>): PlayerWinning =
         PlayerWinning(

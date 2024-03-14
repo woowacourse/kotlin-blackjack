@@ -15,5 +15,5 @@ data class Player(override val name: PlayerName, override val cardHand: CardHand
         }
     }
 
-    fun canDraw() = this.getState() == CardHandState.DRAW_POSSIBILITY
+    override fun canDraw() = this.getState() == CardHandState.DRAW_POSSIBILITY
 }
