@@ -9,13 +9,15 @@ class HandCards(private val deck: Deck) {
         _cards.addAll(deck.draw(INIT_CARD_AMOUNT))
     }
 
+    override fun toString(): String = cards.joinToString(SPLIT_DELIMITER) { "${it.cardNumber.value}${it.pattern.shape}" }
+
     fun add() {
         _cards.addAll(deck.draw(HIT_CARD_AMOUNT))
     }
 
-    fun getFirstCard(): String = "${cards.first().cardNumber.value}${cards.first().pattern.shape}"
+    fun getFirstCard(): String = cards.first().toString()
 
-    fun getAllCards(): String = cards.joinToString(SPLIT_DELIMITER) { "${it.cardNumber.value}${it.pattern.shape}" }
+    fun getAllCards(): String = cards.joinToString(SPLIT_DELIMITER) { it.toString() }
 
     fun getCardsScore(): Int = cards.sumOf { it.cardNumber.score }
 
