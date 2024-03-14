@@ -7,10 +7,6 @@ import blackjack.model.participant.Dealer
 import blackjack.model.participant.Player
 import blackjack.model.participant.Players
 import blackjack.model.participant.Role
-import blackjack.model.result.DealerResult
-import blackjack.model.result.GameResultStorage
-import blackjack.model.result.GameResultType
-import blackjack.model.result.PlayersResult
 
 class OutputView {
     fun printInitCard(
@@ -49,17 +45,6 @@ class OutputView {
         lineBreak()
     }
 
-    fun printFinalGameResult(
-        players: Players,
-        gameResultStorage: GameResultStorage,
-    ) {
-        println(FINAL_GAME_RESULT_MESSAGE)
-        print("딜러: ")
-        printDealerFinalGameResult(gameResultStorage.dealerResult)
-        printPlayersFinalGameResult(players, gameResultStorage.playersResult)
-        lineBreak()
-    }
-
     fun printFinalProfitResult(
         dealer: Dealer,
         players: Players,
@@ -68,23 +53,6 @@ class OutputView {
         println(dealer.getDealerProfitMessage())
         players.playerGroup.forEach {
             println(it.getPlayerProfitMessage(it.name.toString()))
-        }
-    }
-
-    private fun printDealerFinalGameResult(dealerResult: DealerResult) {
-        GameResultType.entries.forEach { gameResult ->
-            val count = dealerResult.results[gameResult] ?: return@forEach
-            print("${count}${gameResult.message()} ")
-        }
-        lineBreak()
-    }
-
-    private fun printPlayersFinalGameResult(
-        players: Players,
-        playersResult: PlayersResult,
-    ) {
-        players.playerGroup.forEach {
-            println("${it.name}: ${playersResult.results[it.name]?.message()}")
         }
     }
 
@@ -129,13 +97,6 @@ class OutputView {
             Denomination.KING -> "K"
             Denomination.QUEEN -> "Q"
             Denomination.JACK -> "J"
-        }
-
-    private fun GameResultType.message(): String =
-        when (this) {
-            GameResultType.WIN -> "승"
-            GameResultType.LOSE -> "패"
-            GameResultType.DRAW -> "무"
         }
 
     companion object {

@@ -43,7 +43,6 @@ class BlackjackController(
         gameResult: GameResultStorage,
     ) {
         outputView.printPlayersCardResult(dealer, players)
-        outputView.printFinalGameResult(players, gameResult)
         outputView.printFinalProfitResult(dealer, players)
     }
 }
