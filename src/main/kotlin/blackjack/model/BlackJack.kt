@@ -36,7 +36,7 @@ class BlackJack {
             in MIN_SCORE until BLACK_JACK_SCORE -> state = State.Action.Hit
 
             BLACK_JACK_SCORE -> applyBlackJackStateWithCardCount()
-            in BUST_SCORE..MAX_SCORE -> state = State.Finish.Bust
+            in BUST_SCORE..Int.MAX_VALUE -> state = State.Finish.Bust
         }
     }
 
@@ -50,6 +50,5 @@ class BlackJack {
         const val BLACK_JACK_SCORE: Int = 21
         private const val MIN_SCORE: Int = 0
         private const val BUST_SCORE: Int = 22
-        private const val MAX_SCORE: Int = 61
     }
 }
