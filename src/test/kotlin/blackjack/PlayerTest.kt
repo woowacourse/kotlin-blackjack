@@ -33,7 +33,7 @@ class PlayerTest {
     }
 
     @Test
-    fun `플레이어는 블랙잭 여부를 반환할 수 있다`() {
+    fun `플레이어는 블랙잭 여부를 반환할 수 있다(블랙잭일 경우 true)`() {
         val deck = Deck(BlackjackCardMachine())
         val player = Player("채채", deck)
         assertThat(player.isBlackjack()).isTrue()

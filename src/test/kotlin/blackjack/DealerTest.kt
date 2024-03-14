@@ -27,12 +27,12 @@ class DealerTest {
     }
 
     @Test
-    fun `딜러 카드 합은 16이하이므로 카드 한장을 더 받을 수 있다`() {
+    fun `딜러 카드 합은 16이하이므로 카드 한 장을 더 받는다`() {
         assertThat(dealer.isAddCard()).isTrue
     }
 
     @Test
-    fun `딜러는 카드를 추가로 받을 수 있다`() {
+    fun `딜러는 카드를 추가로 한번 받을 경우 3장이다`() {
         dealer.addCard()
         assertThat(dealer.getAllCards().split(", ").size).isEqualTo(3)
     }
@@ -46,7 +46,7 @@ class DealerTest {
     }
 
     @Test
-    fun `딜러는 블랙잭 여부를 반환할 수 있다`() {
+    fun `딜러는 블랙잭 여부를 반환할 수 있다(블랙잭일 경우 true)`() {
         val deck = Deck(BlackjackCardMachine())
         val dealer = Dealer(deck)
         assertThat(dealer.isBlackjack()).isTrue()
