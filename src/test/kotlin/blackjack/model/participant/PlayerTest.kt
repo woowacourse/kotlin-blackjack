@@ -17,7 +17,7 @@ class PlayerTest {
         expected: Boolean,
     ) {
         // given
-        val player = Player(PlayerName("olive"))
+        val player = Player(PlayerName("olive"), BattingAmount(1000))
         cards.forEach { player.receiveCard(it) }
 
         // when
@@ -34,7 +34,7 @@ class PlayerTest {
         expected: Int,
     ) {
         // given
-        val player = Player(PlayerName("hi"))
+        val player = Player(PlayerName("hi"), BattingAmount(1000))
 
         // when
         cards.forEach { player.receiveCard(it) }
@@ -46,8 +46,7 @@ class PlayerTest {
 
     @Test
     fun `배팅금액과 결과에 따라 수익을 계산하다`() {
-        val player = Player(PlayerName("seogi"))
-        player.battingAmount = BattingAmount(1000)
+        val player = Player(PlayerName("seogi"), BattingAmount(1000))
         player.receiveCard(Card("A"))
         player.receiveCard(Card("K"))
         player.calculateProfit(GameResultType.WIN)
