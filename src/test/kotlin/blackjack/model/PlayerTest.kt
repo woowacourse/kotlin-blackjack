@@ -99,41 +99,41 @@ class PlayerTest {
     fun `플레이어가 블랙잭일때, 딜러가 블랙잭이 아닐 경우 배팅금액의 일점오배를 받는다`() {
         val player = createPlayerWithBetAmount(Card(10), Card(11), betAmount = 1000)
         val dealer = createDealer(Card(10), Card(10), Card(10))
-        assertThat(player.calculateProfitAginst(opponent = dealer)).isEqualTo(1000 * 1.5)
+        assertThat(player.calculateProfitAgainst(opponent = dealer)).isEqualTo(1000 * 1.5)
     }
 
     @Test
     fun `플레이어가 블랙잭일때, 딜러가 블랙잭일 경우 0원을 받는다`() {
         val player = createPlayerWithBetAmount(Card(10), Card(11), betAmount = 1000)
         val dealer = createDealer(Card(10), Card(11))
-        assertThat(player.calculateProfitAginst(opponent = dealer)).isEqualTo(0.0)
+        assertThat(player.calculateProfitAgainst(opponent = dealer)).isEqualTo(0.0)
     }
 
     @Test
     fun `플레이어가 버스트일때, 딜러와 상관 없이 배팅금액을 잃는다`() {
         val player = createPlayerWithBetAmount(Card(10), Card(10), Card(5), betAmount = 1000)
         val dealer = createDealer(Card(10), Card(10), Card(10))
-        assertThat(player.calculateProfitAginst(opponent = dealer)).isEqualTo(1000 * (-1.0))
+        assertThat(player.calculateProfitAgainst(opponent = dealer)).isEqualTo(1000 * (-1.0))
     }
 
     @Test
     fun `플레이어가 노말일때, 딜러와 패의 합이 같으면 0원을 받는다`() {
         val player = createPlayerWithBetAmount(Card(10), Card(10), betAmount = 1000)
         val dealer = createDealer(Card(10), Card(10))
-        assertThat(player.calculateProfitAginst(opponent = dealer)).isEqualTo(0.0)
+        assertThat(player.calculateProfitAgainst(opponent = dealer)).isEqualTo(0.0)
     }
 
     @Test
     fun `플레이어가 노말일때, 딜러가 패의 합이 높으면 배팅금액을 잃는다`() {
         val player = createPlayerWithBetAmount(Card(10), Card(9), betAmount = 1000)
         val dealer = createDealer(Card(10), Card(10))
-        assertThat(player.calculateProfitAginst(opponent = dealer)).isEqualTo(1000 * (-1.0))
+        assertThat(player.calculateProfitAgainst(opponent = dealer)).isEqualTo(1000 * (-1.0))
     }
 
     @Test
     fun `플레이어가 노말일때, 딜러가 패의 합이 낮으면 배팅금액을 받는다`() {
         val player = createPlayerWithBetAmount(Card(10), Card(9), betAmount = 1000)
         val dealer = createDealer(Card(10), Card(8))
-        assertThat(player.calculateProfitAginst(opponent = dealer)).isEqualTo(1000 * (1.0))
+        assertThat(player.calculateProfitAgainst(opponent = dealer)).isEqualTo(1000 * (1.0))
     }
 }

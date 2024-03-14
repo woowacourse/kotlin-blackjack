@@ -29,12 +29,12 @@ class Participants(private val dealer: Dealer, private val players: List<Player>
         profits[dealer] =
             -(
                 players.sumOf { player ->
-                    player.calculateProfitAginst(dealer)
+                    player.calculateProfitAgainst(dealer)
                 }
             )
 
         players.forEach { player ->
-            profits[player] = player.calculateProfitAginst(dealer)
+            profits[player] = player.calculateProfitAgainst(dealer)
         }
         return profits
     }

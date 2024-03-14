@@ -61,7 +61,7 @@ class Player(private val info: PlayerInfo, hand: Hand) : Participant(info, hand)
         }
     }
 
-    fun calculateProfitAginst(opponent: Participant): Double {
+    fun calculateProfitAgainst(opponent: Participant): Double {
         return info.betAmount.getAmount() * getState().calculatePayoutMultiplier(this, opponent)
     }
 }
