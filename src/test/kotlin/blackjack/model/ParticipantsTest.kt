@@ -26,17 +26,16 @@ class ParticipantsTest {
                 createFinishedPlayer("eddy", Card(8), Card(9)),
             )
         val gameParticipants = Participants(dealer, players)
-        val playerResult = gameParticipants.getPlayerProfits()
-        val dealerResult = gameParticipants.getDealerProfits(playerResult)
+        val participantsProfits = gameParticipants.getParticipantsProfits()
 
-        assertThat(playerResult).isEqualTo(
+        assertThat(participantsProfits).isEqualTo(
             mapOf(
-                players[0] to -1000.0,
+                dealer to 1000.0,
+                players [0] to -1000.0,
                 players[1] to 1000.0,
                 players[2] to -1000.0,
                 players[3] to 0.0,
             ),
         )
-        assertThat(dealerResult).isEqualTo(1000.0)
     }
 }

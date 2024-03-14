@@ -10,14 +10,20 @@ class Participants(
 
     fun getAllParticipants(): List<Participant> = listOf(dealer) + players
 
-    fun getPlayerProfits(): Map<Player, Double> {
+    fun getParticipantsProfits(): Map<Participant, Double> {
+        val playersProfits = getPlayerProfits()
+        val dealerProfit = getDealerProfits(playersProfits)
+        return mapOf(dealer to dealerProfit).plus(playersProfits)
+    }
+
+    private fun getPlayerProfits(): Map<Player, Double> {
         return players.associateWith { player ->
             val winningResult = player.getWinningResult(dealer)
             player.calculateProfit(winningResult)
         }
     }
 
-    fun getDealerProfits(playersResult: Map<Player, Double>): Double = playersResult.entries.sumOf { it.value } * (-1)
+    private fun getDealerProfits(playersProfits: Map<Player, Double>): Double = playersProfits.entries.sumOf { it.value } * (-1)
 
     companion object {
         private const val MAX_PLAYER_SIZE = 5

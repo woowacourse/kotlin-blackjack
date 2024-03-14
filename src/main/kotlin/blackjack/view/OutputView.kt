@@ -4,7 +4,6 @@ import blackjack.model.Card
 import blackjack.model.CardNumber
 import blackjack.model.CardShape
 import blackjack.model.Dealer
-import blackjack.model.Dealer.Companion.DEALER_NAME
 import blackjack.model.Participant
 import blackjack.model.Participants
 import blackjack.model.Player
@@ -39,24 +38,19 @@ object OutputView {
         println("${dealer.name}는 16이하라 ${dealer.countAdditionalDrawnCards()}장의 카드를 더 받았습니다.\n")
     }
 
-    fun printStatusAndScore(participants: Participants) {
-        participants.getAllParticipants().forEach { participant ->
+    fun printStatusAndScore(participants: List<Participant>) {
+        participants.forEach { participant ->
             println(
-                "${participant.name}카드 : ${
-                    participant.getCards().joinToString(", ") { cardToString(it) }
-                } - 결과: ${participant.getSumOfCards()}",
+                "${participant.name}카드 : ${participant.getCards().joinToString(", ") { cardToString(it) }}" +
+                    " - 결과: ${participant.getSumOfCards()}",
             )
         }
     }
 
-    fun printProfit(
-        dealerResult: Double,
-        playerResult: Map<Player, Double>,
-    ) {
+    fun printParticipantsProfits(participantsProfits: Map<Participant, Double>) {
         println("\n## 최종 수익")
-        println("${DEALER_NAME}: $dealerResult")
-        playerResult.entries.forEach { (player, profit) ->
-            println("${player.name}: $profit")
+        participantsProfits.entries.forEach { (participant, profit) ->
+            println("${participant.name}: $profit")
         }
     }
 

@@ -19,11 +19,8 @@ class BlackjackController {
         OutputView.printInitialStatus(participants)
 
         playRound(deck, participants)
-        OutputView.printStatusAndScore(participants)
-
-        val playerProfits = participants.getPlayerProfits()
-        val dealerProfits = participants.getDealerProfits(playerProfits)
-        OutputView.printProfit(dealerProfits, playerProfits)
+        OutputView.printStatusAndScore(participants.getAllParticipants())
+        OutputView.printParticipantsProfits(participants.getParticipantsProfits())
     }
 
     private fun initializeGameSetting(
