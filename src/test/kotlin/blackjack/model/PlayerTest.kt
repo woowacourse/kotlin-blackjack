@@ -7,9 +7,6 @@ class PlayerTest {
     @Test
     fun `플레이어는 이름을 갖는다`() {
         val player = Player(Name("호두"))
-        val card = Card(pattern = Pattern.HEART, number = CardNumber.ACE)
-
-        player.takeCard(card)
 
         assertThat(player.name.name).isEqualTo("호두")
     }
@@ -20,8 +17,7 @@ class PlayerTest {
         val card = Card(pattern = Pattern.HEART, number = CardNumber.ACE)
 
         player.takeCard(card)
-
-        assertThat(player.hand.cards).contains(card)
+        assertThat(player.state.hand.cards).contains(card)
     }
 
     @Test
@@ -30,7 +26,6 @@ class PlayerTest {
         val card = Card(pattern = Pattern.HEART, number = CardNumber.ACE)
 
         player.takeCard(card)
-
-        assertThat(player.hand.cards).contains(card)
+        assertThat(player.state.hand.cards).contains(card)
     }
 }

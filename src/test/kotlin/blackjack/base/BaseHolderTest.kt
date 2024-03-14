@@ -20,11 +20,11 @@ class BaseHolderTest {
         val loser = Player(Name("호두"))
         val dealer = Dealer()
 
-        winner.changeResult(GameResult(win = 1))
-        loser.changeResult(GameResult(defeat = 1))
-        dealer.changeResult(GameResult(push = 1))
+        winner.changeResult(GameResult(win = win))
+        dealer.changeResult(GameResult(push = push))
+        loser.changeResult(GameResult(defeat = defeat))
         assertThat(winner.gameResult.win).isEqualTo(win)
-        assertThat(loser.gameResult.defeat).isEqualTo(defeat)
         assertThat(dealer.gameResult.push).isEqualTo(push)
+        assertThat(loser.gameResult.defeat).isEqualTo(defeat)
     }
 }
