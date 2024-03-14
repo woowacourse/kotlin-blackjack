@@ -11,7 +11,7 @@ class Player(val name: String, val hand: Hand) : Participant() {
         }
     }
 
-    override fun hitIfConditionTrue(
+    override fun hitWhileConditionTrue(
         deck: Deck,
         condition: () -> Boolean,
         view: () -> Unit,

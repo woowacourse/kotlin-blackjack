@@ -5,7 +5,7 @@ abstract class Participant {
 
     abstract fun initialSetHand(deck: Deck)
 
-    abstract fun hitIfConditionTrue(
+    abstract fun hitWhileConditionTrue(
         deck: Deck,
         condition: () -> Boolean,
         view: () -> Unit,
