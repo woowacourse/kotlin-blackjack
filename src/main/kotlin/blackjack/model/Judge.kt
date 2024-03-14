@@ -49,6 +49,7 @@ class Judge(
             val playerDifference = CRITERIA_NUMBER - playerStat.sumOfCards
 
             when {
+                dealerDifference != 0 && playerDifference == 0 -> currentAmount -= (playerStat.moneyAmount) * 1.5
                 dealerDifference < 0 && playerDifference >= 0 -> currentAmount -= playerStat.moneyAmount
                 playerDifference < 0 && dealerDifference >= 0 -> currentAmount += playerStat.moneyAmount
                 playerDifference < dealerDifference -> currentAmount -= playerStat.moneyAmount
@@ -58,6 +59,26 @@ class Judge(
         }
 
         return currentAmount
+    }
+
+    fun getPlayersIncome(): List<Money> {
+        return players.map { playerStat ->
+            getSinglePlayerIncome(playerStat)
+        }
+    }
+
+    private fun getSinglePlayerIncome(playerGameInfo: GameInfo): Money {
+        val dealerDifference = CRITERIA_NUMBER - dealer.sumOfCards
+        val playerDifference = CRITERIA_NUMBER - playerGameInfo.sumOfCards
+
+        return when {
+            dealerDifference != 0 && playerDifference == 0 -> playerGameInfo.moneyAmount * 1.5
+            dealerDifference < 0 && playerDifference >= 0 -> playerGameInfo.moneyAmount
+            playerDifference < 0 && dealerDifference >= 0 -> -playerGameInfo.moneyAmount
+            playerDifference < dealerDifference -> playerGameInfo.moneyAmount
+            dealerDifference < playerDifference -> -playerGameInfo.moneyAmount
+            else -> Money(0)
+        }
     }
 
     companion object {
