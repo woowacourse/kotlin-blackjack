@@ -16,6 +16,20 @@ abstract class Participant(
 
     abstract fun checkShouldDrawCard(): Boolean
 
+    fun match(other: Participant): Result {
+        val myScore = getBlackJackScore()
+        val otherScore = other.getBlackJackScore()
+
+        return when {
+            getGameState() == State.Finish.BlackJack -> Result.LOSE
+            this.checkBlackJackState() && other.checkBlackJackState() -> Result.DRAW
+            this.checkBlackJackState() -> Result.WIN
+            myScore > otherScore -> Result.WIN
+            myScore == otherScore -> Result.DRAW
+            else -> Result.LOSE
+        }
+    }
+
     fun draw(card: Card) {
         blackJack.addCard(card)
     }
@@ -28,8 +42,12 @@ abstract class Participant(
         return blackJack.checkDrawState()
     }
 
-    fun getBlackJackState(): State {
-        return blackJack.getBlackJackState()
+    private fun checkBlackJackState(): Boolean {
+        return blackJack.checkBlackJackState()
+    }
+
+    fun getGameState(): State {
+        return blackJack.getState()
     }
 
     fun getName(): String {

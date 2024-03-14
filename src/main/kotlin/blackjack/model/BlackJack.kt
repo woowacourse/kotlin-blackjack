@@ -10,8 +10,12 @@ class BlackJack {
         return state.checkDrawState()
     }
 
-    fun getBlackJackState(): State {
+    fun getState(): State {
         return state
+    }
+
+    fun checkBlackJackState(): Boolean {
+        return state == State.Finish.BlackJack
     }
 
     fun getCards(): List<Card> {

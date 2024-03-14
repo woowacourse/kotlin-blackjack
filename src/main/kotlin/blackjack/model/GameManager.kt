@@ -53,11 +53,11 @@ class GameManager(
         player: Player,
         onResult: (Result) -> Unit,
     ) {
-        when (player.getBlackJackState()) {
+        when (player.getGameState()) {
             is State.Finish.Bust -> onResult(Result.LOSE)
             is State.Finish.BlackJack -> checkBlackJackState(onResult)
             is State.Finish.Stay ->
-                compareToResult(
+                matchToResult(
                     player = player,
                     onResult = onResult,
                 )
@@ -67,24 +67,18 @@ class GameManager(
     }
 
     private fun checkBlackJackState(onResult: (Result) -> Unit) {
-        if (participants.dealer.getBlackJackState() == State.Finish.BlackJack) {
+        if (participants.dealer.getGameState() == State.Finish.BlackJack) {
             onResult(Result.DRAW)
         } else {
             onResult(Result.WIN)
         }
     }
 
-    private fun compareToResult(
+    private fun matchToResult(
         player: Player,
         onResult: (Result) -> Unit,
     ) {
-        val dealerScore = participants.dealer.getBlackJackScore()
-        val playerScore = player.getBlackJackScore()
-        when {
-            dealerScore < playerScore -> onResult(Result.WIN)
-            dealerScore == playerScore -> onResult(Result.DRAW)
-            dealerScore > playerScore -> onResult(Result.LOSE)
-        }
+        onResult(player.match(participants.dealer))
     }
 
     companion object {
