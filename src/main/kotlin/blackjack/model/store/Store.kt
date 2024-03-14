@@ -25,6 +25,12 @@ class Store(dispatcher: Dispatcher) {
                 }
             }
 
+            is Action.ReadBatingAmount -> {
+                _playersInfo = playersInfo.map {
+                    it.copy(batingAmount = action.onBatingAmount(it.name))
+                }
+            }
+
             is Action.InitDealerCard -> {
                 repeat(action.count) {
                     _dealerInfo = dealerInfo.copy(cards = dealerInfo.cards + action.onDrawCard())
@@ -56,6 +62,12 @@ class Store(dispatcher: Dispatcher) {
                 while (dealerInfo.sumCardValues() <= 16) {
                     _dealerInfo = dealerInfo.copy(cards = dealerInfo.cards + action.onDrawCard())
                     action.onPrintCards(dealerInfo)
+                }
+            }
+
+            is Action.FindWinner -> {
+                _playersInfo = playersInfo.map { playersInfo ->
+                    playersInfo.copy(batingAmount = playersInfo.findWinner(dealerInfo))
                 }
             }
         }
