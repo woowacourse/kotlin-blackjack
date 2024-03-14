@@ -2,7 +2,7 @@ package blackjack.model.participant
 
 import blackjack.model.result.GameResultType
 
-class Player(val name: PlayerName, val battingAmount: BattingAmount) : Role() {
+class Player(val name: PlayerName, private val battingAmount: BattingAmount) : Role() {
     override fun decideMoreCard() = !isBlackjack() && !isMaxScore() && !isBurst()
 
     fun calculateProfit(result: GameResultType) {
