@@ -56,11 +56,13 @@ class GameManager(
         when (player.getBlackJackState()) {
             is State.Finish.Bust -> onResult(Result.LOSE)
             is State.Finish.BlackJack -> checkBlackJackState(onResult)
-            is State.Finish.Stay, State.Action.Hit ->
+            is State.Finish.Stay ->
                 compareToResult(
                     player = player,
                     onResult = onResult,
                 )
+
+            is State.Action.Hit -> {}
         }
     }
 
