@@ -14,7 +14,7 @@ class CardHand(hand: List<Card>) {
         var aceCount = hand.count { it.number == CardNumber.ACE }
         var tempSum = hand.sumOf { it.number.number }
 
-        while (aceCount >= MIN_ACE_COUNT && tempSum < MAX_BONUS_AVAILABILITY) {
+        while (aceCount >= MIN_ACE_COUNT && tempSum <= MAX_BONUS_AVAILABILITY) {
             aceCount--
             tempSum += SUBTRACTION_BETWEEN_MAX_AND_MIN
         }

@@ -10,10 +10,14 @@ data class Player(override val name: PlayerName, override val cardHand: CardHand
 
         return when {
             sum > CardHandState.BLACKJACK.precondition -> CardHandState.BUST
-            sum == CardHandState.BLACKJACK.precondition -> CardHandState.BLACKJACK
+            sum == CardHandState.BLACKJACK.precondition && cardHand.hand.size == BLACK_JACK_CARD_HAND_SIZE -> CardHandState.BLACKJACK
             else -> CardHandState.DRAW_POSSIBILITY
         }
     }
 
     override fun canDraw() = this.getState() == CardHandState.DRAW_POSSIBILITY
+
+    companion object {
+        private const val BLACK_JACK_CARD_HAND_SIZE = 2
+    }
 }
