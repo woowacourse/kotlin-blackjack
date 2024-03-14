@@ -24,7 +24,8 @@ object BlackJackController {
     private fun initializePlayers() {
         runCatching {
             val playerNames = getPlayerNames()
-            players = Players.of(playerNames, ::askPlayerHit, CardDeck::pick)
+            val playersMoneyAmount = getPlayersMoneyAmount(playerNames)
+            players = Players.of(playerNames, playersMoneyAmount, ::askPlayerHit, CardDeck::pick)
         }.onFailure {
             println(it.message)
             initializePlayers()
@@ -65,6 +66,9 @@ object BlackJackController {
             return getPlayerNames()
         }.getOrThrow()
     }
+
+    private fun getPlayersMoneyAmount(playerNames: List<String>): List<Int> =
+        InputView.readPlayersBettingAmount(names = playerNames) ?: getPlayersMoneyAmount(playerNames)
 
     private fun askPlayerHit(playerName: String): String =
         runCatching {
