@@ -2,6 +2,7 @@ package blackjack.controller
 
 import blackjack.model.result.ScoreBoard
 import blackjack.model.role.Dealer
+import blackjack.model.role.Participants
 import blackjack.model.role.Player
 import blackjack.model.role.PlayerName
 import blackjack.model.role.Players
@@ -13,13 +14,18 @@ class BlackJackController(
     private val outputView: OutputView,
 ) {
     fun gameStart() {
-        val dealer = Dealer()
-        val players = Players((inputView.readPlayersName()).map { Player(PlayerName(it)) })
-        outputView.printInitialDealing(dealer, players)
+        val (dealer, players) = initGameParticipants()
 
         runGame(players, dealer)
 
         showGameResult(dealer, players)
+    }
+
+    private fun initGameParticipants(): Participants {
+        val dealer = Dealer()
+        val players = Players((inputView.readPlayersName()).map { Player(PlayerName(it)) })
+        outputView.printInitialDealing(dealer, players)
+        return Participants(dealer, players)
     }
 
     private fun showGameResult(
