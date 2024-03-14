@@ -96,7 +96,7 @@ class DealerTest {
     fun `숫자가 1인 카드를 뽑았을 때, 딜러의 카드 총합에 따라서 올바른 총합을 계산한다`(providedCard: Map<Card, Int>) {
         val dealer =
             Dealer(
-                gameInfo = GameInfo("딜러", providedCard.keys),
+                gameInfo = GameInfo("딜러", cards = providedCard.keys),
             )
         dealer.drawSingleCard {
             Card.of(Shape.CLOVER, CardValue.ACE, dealer.gameInfo.cards.sumOf { it.value })

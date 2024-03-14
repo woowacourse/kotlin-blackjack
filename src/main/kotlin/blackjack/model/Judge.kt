@@ -42,6 +42,24 @@ class Judge(
         }
     }
 
+    fun getDealerIncome(): Money {
+        var currentAmount = Money(0)
+        players.forEach { playerStat ->
+            val dealerDifference = CRITERIA_NUMBER - dealer.sumOfCards
+            val playerDifference = CRITERIA_NUMBER - playerStat.sumOfCards
+
+            when {
+                dealerDifference < 0 && playerDifference >= 0 -> currentAmount -= playerStat.moneyAmount
+                playerDifference < 0 && dealerDifference >= 0 -> currentAmount += playerStat.moneyAmount
+                playerDifference < dealerDifference -> currentAmount -= playerStat.moneyAmount
+                dealerDifference < playerDifference -> currentAmount += playerStat.moneyAmount
+                else -> Unit
+            }
+        }
+
+        return currentAmount
+    }
+
     companion object {
         private const val CRITERIA_NUMBER = 21
         private const val RESULT_WIN = "승"
