@@ -27,11 +27,6 @@ class BlackjackController(
                 { outputView.printDealerAdditionalCardMessage() },
             )
 
-        gameResult.playersResult.results.forEach { name, result ->
-            players.playerGroup.first { it.name == name }.calculateProfit(result)
-        }
-        dealer.calculateProfit(players)
-
         showGameResult(dealer, players, gameResult)
     }
 
