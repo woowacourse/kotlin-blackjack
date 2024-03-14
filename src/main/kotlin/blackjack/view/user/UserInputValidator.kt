@@ -1,5 +1,7 @@
 package blackjack.view.user
 
+import blackjack.model.Dealer
+import blackjack.model.Participants
 import blackjack.model.Player
 
 object UserInputValidator {
@@ -16,6 +18,21 @@ object UserInputValidator {
     fun checkUserDecision(input: String): UserDecision? {
         return try {
             UserDecision.getUserDecision(input)
+        } catch (e: IllegalArgumentException) {
+            println(e.message)
+            null
+        }
+    }
+
+    fun checkParticipants(
+        dealer: Dealer,
+        players: List<Player>,
+    ): Participants? {
+        return try {
+            Participants(
+                dealer = dealer,
+                players = players,
+            )
         } catch (e: IllegalArgumentException) {
             println(e.message)
             null

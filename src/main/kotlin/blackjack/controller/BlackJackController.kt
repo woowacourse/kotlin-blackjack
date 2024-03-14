@@ -4,10 +4,10 @@ import blackjack.model.Dealer
 import blackjack.model.GameManager
 import blackjack.model.Participant
 import blackjack.model.Participants
-import blackjack.model.Player
 import blackjack.view.InputView
 import blackjack.view.OutputView
 import blackjack.view.user.UserDecision
+import blackjack.view.user.UserInputValidator
 
 class BlackJackController {
     private lateinit var gameManager: GameManager
@@ -93,22 +93,7 @@ class BlackJackController {
     private fun makeParticipants(): Participants {
         val dealer = Dealer()
         val players = InputView.inputPlayers()
-        return checkParticipants(dealer, players) ?: makeParticipants()
-    }
-
-    private fun checkParticipants(
-        dealer: Dealer,
-        players: List<Player>,
-    ): Participants? {
-        return try {
-            Participants(
-                dealer = dealer,
-                players = players,
-            )
-        } catch (e: IllegalArgumentException) {
-            println(e.message)
-            null
-        }
+        return UserInputValidator.checkParticipants(dealer, players) ?: makeParticipants()
     }
 
     companion object {
