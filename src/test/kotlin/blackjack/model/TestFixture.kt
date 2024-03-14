@@ -3,11 +3,20 @@ package blackjack.model
 import blackjack.model.card.Card
 import blackjack.model.card.Denomination
 import blackjack.model.card.Suite
+import blackjack.model.participant.HandCards
 
 fun Card(denomination: String): Card {
     val denominationValue = denomination.value()
     requireNotNull(denominationValue) { "유효하지 않은 알파벳 혹은 숫자입니다." }
     return Card.of(denominationValue, Suite.HEART)
+}
+
+fun HandCards(cards: List<Card>): HandCards {
+    val handCards = HandCards()
+    cards.forEach {
+        handCards.addCard(it)
+    }
+    return handCards
 }
 
 private fun String.value(): Denomination? =
