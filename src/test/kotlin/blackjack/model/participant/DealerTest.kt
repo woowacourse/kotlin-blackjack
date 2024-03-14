@@ -2,8 +2,11 @@ package blackjack.model.participant
 
 import blackjack.model.Card
 import blackjack.model.card.Card
+import blackjack.model.card.Denomination
+import blackjack.model.card.Suite
 import blackjack.model.result.GameResultType
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
@@ -43,24 +46,31 @@ class DealerTest {
         assertThat(actual).isEqualTo(expected)
     }
 
-    @MethodSource("게임 결과 결정 테스트 데이터")
-    @ParameterizedTest
-    fun `카드 합계를 비교하여 게임 결과를 결정한다`(
-        dealerCards: List<Card>,
-        playerCards: List<Card>,
-        expected: GameResultType,
-    ) {
+    @Test
+    fun `게임의 최종 승패 결과를 계산한다`() {
         // given
         val dealer = Dealer()
-        val player = Player(PlayerName("seogi"))
-        dealerCards.forEach { dealer.receiveCard(it) }
-        playerCards.forEach { player.receiveCard(it) }
+        val players = Players.from(listOf("olive", "seogi"))
+
+        dealer.receiveCard(Card.of(Denomination.KING, Suite.HEART))
+        dealer.receiveCard(Card.of(Denomination.ACE, Suite.HEART))
+
+        players.playerGroup[0].receiveCard(Card("K"))
+        players.playerGroup[0].receiveCard(Card("A"))
+        players.playerGroup[1].receiveCard(Card("8"))
+        players.playerGroup[1].receiveCard(Card("8"))
 
         // when
-        val actual = dealer.decideGameResultType(player)
+        val actual = dealer.calculateGameResult(players)
 
         // then
-        assertThat(actual).isEqualTo(expected)
+        assertThat(actual.dealerResult.results)
+            .containsEntry(GameResultType.WIN, 1)
+            .containsEntry(GameResultType.DRAW, 1)
+
+        assertThat(actual.playersResult.results)
+            .containsEntry(PlayerName("olive"), GameResultType.DRAW)
+            .containsEntry(PlayerName("seogi"), GameResultType.LOSE)
     }
 
     companion object {

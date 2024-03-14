@@ -6,10 +6,7 @@ import blackjack.model.participant.Dealer
 import blackjack.model.participant.Player
 import blackjack.model.participant.Players
 import blackjack.model.participant.Role
-import blackjack.model.result.DealerResult
 import blackjack.model.result.GameResultStorage
-import blackjack.model.result.GameResultType
-import blackjack.model.result.PlayersResult
 
 class BlackjackGame(private val dealer: Dealer, private val players: Players, private val cardProvider: CardProvider) {
     init {
@@ -37,7 +34,7 @@ class BlackjackGame(private val dealer: Dealer, private val players: Players, pr
         startPlayersTurn(readMoreCardDecision, printPlayerCardsMessage)
         startDealerTurn(printDealerAdditionalCardMessage)
 
-        return calculateGameResult()
+        return dealer.calculateGameResult(players)
     }
 
     private fun startPlayersTurn(
@@ -68,18 +65,6 @@ class BlackjackGame(private val dealer: Dealer, private val players: Players, pr
             dealer.receiveCard(Card.from(cardProvider))
             printDealerAdditionalCardMessage()
         }
-    }
-
-    private fun calculateGameResult(): GameResultStorage {
-        val dealerResultList = mutableListOf<GameResultType>()
-        val playersResult = PlayersResult()
-
-        players.playerGroup.forEach { player ->
-            val gameResultType = dealer.decideGameResultType(player)
-            dealerResultList.add(gameResultType)
-            playersResult.add(player.name, gameResultType.reverse())
-        }
-        return GameResultStorage(DealerResult(dealerResultList), playersResult)
     }
 
     companion object {
