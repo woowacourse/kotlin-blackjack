@@ -36,7 +36,7 @@ class JudgeTest {
     }
 
     @Test
-    fun `플레이어가 블랙잭으로 딜러에 대해 승리하였을 때 플레이어의 최종 수익을 계산한다`() {
+    fun `플레이어가 초기화된 2개의 카드로 딜러에 대해 블랙잭 승리하였을 때 플레이어의 최종 수익을 계산한다`() {
         val players =
             listOf(
                 GameInfo(
@@ -44,9 +44,8 @@ class JudgeTest {
                     moneyAmount = Money(1000),
                     cards =
                         setOf(
-                            Card.of(Shape.CLOVER, CardValue.SEVEN, 0),
-                            Card.of(Shape.HEART, CardValue.SEVEN, 7),
-                            Card.of(Shape.SPADE, CardValue.SEVEN, 14),
+                            Card.of(Shape.CLOVER, CardValue.ACE, 0),
+                            Card.of(Shape.HEART, CardValue.K, 11),
                         ),
                 ),
             )
@@ -56,7 +55,7 @@ class JudgeTest {
     }
 
     @Test
-    fun `플레이어가 딜러에 대해 승리하였지만 블랙잭은 아닐 때 플레이어의 최종 수익을 계산한다`() {
+    fun `플레이어가 딜러에 대해 승리하였지만 초기에 뽑은 카드가 블랙잭은 아닐 때 플레이어의 최종 수익을 계산한다`() {
         val players =
             listOf(
                 GameInfo(

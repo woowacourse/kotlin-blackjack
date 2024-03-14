@@ -33,7 +33,7 @@ class Player(
     }
 
     private fun checkBurst(): PickingState {
-        if (gameInfo.sumOfCards > MAXIMUM_CARD_TOTAL) {
+        if (gameInfo.sumOfCards >= MAXIMUM_CARD_TOTAL) {
             return PickingState.STAND
         }
         return PickingState.HIT
