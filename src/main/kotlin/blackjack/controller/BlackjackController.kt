@@ -32,7 +32,8 @@ class BlackjackController {
     ): Participants {
         val players =
             playerNames.map { playerName ->
-                Player(playerName, createInitialHand(deck), BetAmount(InputView.readBetAmount(playerName)))
+                val betAmount = InputView.readBetAmount(playerName)
+                Player(playerName, createInitialHand(deck), BetAmount(betAmount))
             }
         val dealer = Dealer(hand = createInitialHand(deck))
         return Participants(dealer, players)

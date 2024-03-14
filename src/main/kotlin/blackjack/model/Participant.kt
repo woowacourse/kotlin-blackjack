@@ -69,7 +69,7 @@ class Dealer(name: ParticipantName = ParticipantName(DEALER_NAME), hand: Hand) :
 
     fun countAdditionalDrawnCards(): Int = getCards().size - INITIAL_DISTRIBUTE_COUNT
 
-    private fun isUnderHitThreshold(threshold: Int = THRESHOLD_HIT): Boolean = state.hand().sumUpCardValues() <= threshold
+    private fun isUnderHitThreshold(threshold: Int = THRESHOLD_HIT): Boolean = getSumOfCards() <= threshold
 
     companion object {
         const val THRESHOLD_HIT = 16
