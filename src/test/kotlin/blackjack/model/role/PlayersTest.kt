@@ -16,7 +16,7 @@ class PlayersTest {
                     Player(PlayerName("악어")),
                     Player(PlayerName("올리브")),
                     Player(PlayerName("서기")),
-                )
+                ),
             )
         }
     }
@@ -29,7 +29,7 @@ class PlayersTest {
                     Player(PlayerName("심지")),
                     Player(PlayerName("해나")),
                     Player(PlayerName("심지")),
-                )
+                ),
             )
         }
     }
@@ -53,7 +53,7 @@ class PlayersTest {
                     Player(PlayerName("올리브")),
                     Player(PlayerName("서기")),
                     Player(PlayerName("채채")),
-                )
+                ),
             )
         }
     }
