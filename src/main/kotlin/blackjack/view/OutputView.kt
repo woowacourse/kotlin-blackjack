@@ -9,7 +9,7 @@ object OutputView {
     private const val MESSAGE_DEALER_HIT = "%s는 16이하라 한장의 카드를 더 받았습니다."
     private const val MESSAGE_PARTICIPANT_CARD_RESULT = "%s - 결과: %d"
     private const val MESSAGE_TITLE_RESULT = "\n## 최종 수익"
-    private const val MESSAGE_CARD_STATUS2 = "%s: %d"
+    private const val MESSAGE_CARD_STATUS = "%s: %d"
     private const val NEW_LINE = "\n"
 
     fun printInitialStats(
@@ -54,10 +54,10 @@ object OutputView {
 
     fun printResult(store: Store) {
         println(MESSAGE_TITLE_RESULT)
-        println(MESSAGE_CARD_STATUS2.format(store.dealerInfo.name, getDealerResult(store)))
+        println(MESSAGE_CARD_STATUS.format(store.dealerInfo.name, getDealerResult(store)))
 
         store.playersInfo.forEach {
-            println(MESSAGE_CARD_STATUS2.format(it.name, it.batingAmount))
+            println(MESSAGE_CARD_STATUS.format(it.name, it.batingAmount))
         }
     }
 
