@@ -12,6 +12,11 @@ object InputView {
         }
     }
 
+    fun readPlayerBatingAmount(name: String): Int? {
+        println("\n${name}의 배팅 금액은?")
+        return readln().toIntOrNull()
+    }
+
     fun readContinueInput(name: String): String? {
         println(MESSAGE_CONTINUE_INPUT.format(name))
         return readln().trim().ifEmpty { return null }
