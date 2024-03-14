@@ -3,6 +3,8 @@ package blackjack.model
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 
 class MoneyTest {
     @Test
@@ -33,5 +35,16 @@ class MoneyTest {
         val money = Money(2000)
         val actualResult = money * 1.5
         assertThat(actualResult.amount).isEqualTo(3000)
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = ["2000:-2000", "-2000:2000"], delimiter = ':')
+    fun `Money의 값의 부호를 바꾸었을 때, 올바른 금액을 가진 Money를 반환한다`(
+        input: Int,
+        output: Int,
+    ) {
+        val money = Money(input)
+        val actualResult = -money
+        assertThat(actualResult.amount).isEqualTo(output)
     }
 }
