@@ -19,13 +19,15 @@ object InputView {
 
     fun inputPlayerMoneys(players: List<Player>) {
         players.forEach { player ->
-            player.bettingMoney(inputPlayerMoney(player.getName()))
+            player.settleBettingMoney(inputPlayerMoney(player.getName()))
         }
     }
 
     private fun inputPlayerMoney(playerName: String): Int {
         println(INPUT_MESSAGE_MONEY.format(playerName))
-        return readlnOrNull()?.toInt() ?: inputPlayerMoney(playerName)
+        return readlnOrNull()?.toIntOrNull().also {
+            if (it == null) println(UserInputValidator.ERROR_INACCURATE_MONEY)
+        } ?: inputPlayerMoney(playerName)
     }
 
     fun inputPlayerDecision(playerName: String): UserDecision {

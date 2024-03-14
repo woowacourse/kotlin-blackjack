@@ -20,6 +20,7 @@ class BlackJackController {
 
     private fun startGameFlow() {
         val participants = makeParticipants()
+        InputView.inputPlayerMoneys(participants.players)
         gameManager =
             GameManager(
                 participants = participants,
@@ -82,7 +83,7 @@ class BlackJackController {
         OutputView.outputBlackResult()
         val gameResult = gameManager.calculateGameResult()
         OutputView.outputParticipantResult(
-            dealerName = gameManager.getDealer().getName(),
+            dealer = gameManager.getDealer(),
             gameResult = gameResult,
         )
     }

@@ -43,7 +43,7 @@ abstract class Participant(
         return blackJack.checkDrawState()
     }
 
-    private fun checkBlackJackState(): Boolean {
+    fun checkBlackJackState(): Boolean {
         return blackJack.checkBlackJackState()
     }
 
@@ -55,7 +55,11 @@ abstract class Participant(
         return wallet.name
     }
 
-    fun bettingMoney(money: Int) {
+    fun getBettingMoney(): Int {
+        return wallet.getBalance()
+    }
+
+    fun settleBettingMoney(money: Int) {
         wallet.setMoney(money)
     }
 
