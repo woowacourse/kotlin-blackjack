@@ -1,14 +1,16 @@
 package blackjack.view
 
+import blackjack.model.participant.BattingAmount
 import blackjack.model.participant.Player
+import blackjack.model.participant.PlayerName
 
 class InputView {
-    fun readPlayersName(): List<String> {
+    fun readPlayersName(): List<PlayerName> {
         println(READ_PLAYERS_NAME_MESSAGE)
-        return readln().split(PLAYERS_NAME_DELIMITER)
+        return readln().split(PLAYERS_NAME_DELIMITER).map { PlayerName(it) }
     }
 
-    tailrec fun readMoreCardDecision(player: Player): Boolean {
+    fun readMoreCardDecision(player: Player): Boolean {
         println(READ_MORE_CARD_DECISION_MESSAGE.format(player.name))
         val moreCardDecision = readln()
         return getMoreCardDecision(moreCardDecision) ?: run {
@@ -17,18 +19,18 @@ class InputView {
         }
     }
 
-    tailrec fun readPlayersBattingAmount(playersName: List<String>): List<Int> {
-        val playersBattingAmount = mutableListOf<Int>()
+    fun readPlayersBattingAmount(playersName: List<PlayerName>): List<BattingAmount> {
+        val playersBattingAmount = mutableListOf<BattingAmount>()
         playersName.forEach { playerName ->
             println(READ_PLAYER_BATTING_AMOUNT_MESSAGE.format(playerName))
-            playersBattingAmount.add(readPlayerBattingAmount(playerName))
+            playersBattingAmount.add(BattingAmount(readPlayerBattingAmount(playerName)))
         }
         return playersBattingAmount
     }
 
-    private fun readPlayerBattingAmount(playerName: String): Int {
-        val battingAmount = readln()
-        return battingAmount.toIntOrNull() ?: run {
+    private fun readPlayerBattingAmount(playerName: PlayerName): Int {
+        val battingAmountValue = readln()
+        return battingAmountValue.toIntOrNull() ?: run {
             println(INVALID_BATTING_AMOUNT_MESSAGE)
             readPlayerBattingAmount(playerName)
         }

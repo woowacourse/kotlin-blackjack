@@ -14,7 +14,7 @@ class BlackjackGameTest {
     fun `게임 시작 시 딜러와 플레이어가 2장의 카드를 받는다`() {
         // given
         val dealer = Dealer()
-        val players = Players.of(listOf("olive", "seogi"), listOf(1000, 1000))
+        val players = Players(listOf(Player("olive"), Player("seogi")))
 
         // when
         BlackjackGame(dealer, players, TestCardProvider)

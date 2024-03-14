@@ -3,7 +3,10 @@ package blackjack.model
 import blackjack.model.card.Card
 import blackjack.model.card.Denomination
 import blackjack.model.card.Suite
+import blackjack.model.participant.BattingAmount
 import blackjack.model.participant.HandCards
+import blackjack.model.participant.Player
+import blackjack.model.participant.PlayerName
 
 fun Card(denomination: String): Card {
     val denominationValue = denomination.value()
@@ -17,6 +20,10 @@ fun HandCards(cards: List<Card>): HandCards {
         handCards.addCard(it)
     }
     return handCards
+}
+
+fun Player(name: String): Player {
+    return Player(PlayerName(name), BattingAmount(1000))
 }
 
 private fun String.value(): Denomination? =

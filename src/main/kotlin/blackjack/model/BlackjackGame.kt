@@ -30,17 +30,15 @@ class BlackjackGame(private val dealer: Dealer, private val players: Players, pr
         readMoreCardDecision: (Player) -> Boolean,
         printPlayerCardsMessage: (Player) -> Unit,
         printDealerAdditionalCardMessage: () -> Unit,
-    ): GameResultStorage {
+    ) {
         startPlayersTurn(readMoreCardDecision, printPlayerCardsMessage)
         startDealerTurn(printDealerAdditionalCardMessage)
         val gameResult = dealer.calculateGameResult(players)
         calculateProfit(gameResult)
-
-        return gameResult
     }
 
     private fun calculateProfit(gameResult: GameResultStorage) {
-        gameResult.playersResult.results.forEach { name, result ->
+        gameResult.playersResult.results.forEach { (name, result) ->
             players.playerGroup.first { it.name == name }.calculateProfit(result)
         }
         dealer.calculateProfit(players)

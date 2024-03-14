@@ -1,6 +1,15 @@
 package blackjack.model.participant
 
 class Players(val playerGroup: List<Player>) {
+    init {
+        validatePlayers(playerGroup.map { it.name })
+    }
+
+    constructor(
+        playersName: List<PlayerName>,
+        readPlayersBattingAmount: (List<PlayerName>) -> List<BattingAmount>,
+    ) : this(players(playersName, readPlayersBattingAmount))
+
     companion object {
         private const val MIN_SIZE = 2
         private const val MAX_SIZE = 8
@@ -10,23 +19,26 @@ class Players(val playerGroup: List<Player>) {
 
         private fun invalidRangeMessage(playerSize: Int) = "플레이어는 $MIN_SIZE~$MAX_SIZE 사이여야 합니다. 현재 플레이어 수: $playerSize"
 
-        fun of(
-            playersName: List<String>,
-            battingAmountValues: List<Int>,
-        ): Players {
-            require(playersName.size == playersName.distinct().size) { invalidDuplicationMessage(findDuplicatedNames(playersName)) }
-            require(playersName.size in SIZE_RANGE) { invalidRangeMessage(playersName.size) }
-
-            return Players(
-                playersName.mapIndexed { index, name ->
-                    Player(PlayerName(name), BattingAmount(battingAmountValues[index]))
-                },
-            )
+        private fun players(
+            playersName: List<PlayerName>,
+            readPlayersBattingAmount: (List<PlayerName>) -> List<BattingAmount>,
+        ): List<Player> {
+            validatePlayers(playersName)
+            return readPlayersBattingAmount(playersName).mapIndexed { index, battingAmount ->
+                Player(playersName[index], battingAmount)
+            }
         }
 
-        private fun findDuplicatedNames(playersName: List<String>): String {
+        private fun validatePlayers(playersName: List<PlayerName>) {
+            require(playersName.size == playersName.distinct().size) {
+                invalidDuplicationMessage(findDuplicatedNames(playersName))
+            }
+            require(playersName.size in SIZE_RANGE) { invalidRangeMessage(playersName.size) }
+        }
+
+        private fun findDuplicatedNames(playersName: List<PlayerName>): String {
             val duplicatedNames = mutableSetOf<String>()
-            return playersName.filter { !duplicatedNames.add(it) }.joinToString()
+            return playersName.filter { !duplicatedNames.add(it.toString()) }.joinToString()
         }
     }
 }

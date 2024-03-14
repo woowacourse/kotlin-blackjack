@@ -1,6 +1,7 @@
 package blackjack.model.participant
 
 import blackjack.model.Card
+import blackjack.model.Player
 import blackjack.model.card.Card
 import blackjack.model.card.Denomination
 import blackjack.model.card.Suite
@@ -50,7 +51,7 @@ class DealerTest {
     fun `게임의 최종 승패 결과를 계산한다`() {
         // given
         val dealer = Dealer()
-        val players = Players.of(listOf("olive", "seogi"), listOf(1000, 1000))
+        val players = Players(listOf(Player("olive"), Player("seogi")))
 
         dealer.receiveCard(Card.of(Denomination.KING, Suite.HEART))
         dealer.receiveCard(Card.of(Denomination.ACE, Suite.HEART))
@@ -77,7 +78,7 @@ class DealerTest {
     fun `플레이어들의 수익을 통해 딜러의 수익을 계산한다`() {
         // given
         val dealer = Dealer()
-        val players = Players.of(listOf("olive", "seogi"), listOf(1000, 10000))
+        val players = Players(listOf(Player("olive"), Player("seogi")))
 
         players.playerGroup[0].profit = 15000
         players.playerGroup[1].profit = -10000
