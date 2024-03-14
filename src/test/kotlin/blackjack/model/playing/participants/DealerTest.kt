@@ -39,7 +39,7 @@ class DealerTest {
             )
 
         if (dealer.getState() == CardHandState.HIT) {
-            dealer.runPhase(cardDeck)
+            dealer.draw(cardDeck)
         }
 
         assertThat(dealer.cardHand.hand.size).isEqualTo(3)
@@ -56,7 +56,7 @@ class DealerTest {
             )
 
         if (dealer.getState() == CardHandState.HIT) {
-            dealer.runPhase(cardDeck)
+            dealer.draw(cardDeck)
         }
 
         assertThat(dealer.cardHand.hand.size).isEqualTo(2)

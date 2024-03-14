@@ -16,7 +16,7 @@ abstract class Role(open val name: PlayerName, open val cardHand: CardHand) {
         }
     }
 
-    fun runPhase(cardDeck: CardDeck) {
+    fun draw(cardDeck: CardDeck) {
         cardHand.addNewCard(cardDeck)
     }
 

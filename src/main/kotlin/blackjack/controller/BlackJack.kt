@@ -52,7 +52,7 @@ class BlackJack(
 
     private fun runPlayerPhase(player: Player) {
         while (player.canDraw() && askDraw(player)) {
-            player.runPhase(cardDeck)
+            player.draw(cardDeck)
             outputView.printPlayerCardHand(player)
         }
     }
@@ -62,7 +62,7 @@ class BlackJack(
     private fun runDealerPhase(dealer: Dealer) {
         if (dealer.canDraw()) {
             outputView.printDealerHit()
-            dealer.runPhase(cardDeck)
+            dealer.draw(cardDeck)
         }
     }
 

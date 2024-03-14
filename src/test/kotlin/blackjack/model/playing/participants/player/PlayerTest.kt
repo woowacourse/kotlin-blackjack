@@ -38,7 +38,7 @@ class PlayerTest {
             )
 
         if (player.getState() == CardHandState.HIT) {
-            player.runPhase(cardHand)
+            player.draw(cardHand)
         }
         assertThat(player.cardHand.hand.size).isEqualTo(2)
     }
@@ -55,7 +55,7 @@ class PlayerTest {
             )
 
         if (player.getState() == CardHandState.HIT) {
-            player.runPhase(CardDeck(ExplicitCardGenerator()))
+            player.draw(CardDeck(ExplicitCardGenerator()))
         }
 
         assertThat(player.cardHand.hand.size).isEqualTo(2)
