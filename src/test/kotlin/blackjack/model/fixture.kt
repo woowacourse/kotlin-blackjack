@@ -1,8 +1,6 @@
 package blackjack.model
 
-fun buildCard(cardNumber: CardNumber): Card {
-    return Card(cardNumber, Suit.Heart)
-}
+fun Card(cardNumber: CardNumber): Card = Card(cardNumber, Suit.Heart)
 
 fun buildCards(vararg card: Card): Cards {
     val cards = Cards()
@@ -24,6 +22,8 @@ fun buildPlayer(
     return player
 }
 
+fun buildDeck(vararg cardNumber: CardNumber) = Deck(cardNumber.map { Card(it) })
+
 fun buildDealer(vararg card: Card): Dealer {
     val dealer = Dealer()
     val cardList = listOf(*card)
@@ -33,13 +33,13 @@ fun buildDealer(vararg card: Card): Dealer {
     return dealer
 }
 
-val ace = buildCard(CardNumber.Ace)
-val two = buildCard(CardNumber.Two)
-val three = buildCard(CardNumber.Three)
-val four = buildCard(CardNumber.Four)
-val five = buildCard(CardNumber.Five)
-val six = buildCard(CardNumber.Six)
-val seven = buildCard(CardNumber.Seven)
-val eight = buildCard(CardNumber.Eight)
-val nine = buildCard(CardNumber.Nine)
-val ten = buildCard(CardNumber.Ten)
+val ace = Card(CardNumber.Ace)
+val two = Card(CardNumber.Two)
+val three = Card(CardNumber.Three)
+val four = Card(CardNumber.Four)
+val five = Card(CardNumber.Five)
+val six = Card(CardNumber.Six)
+val seven = Card(CardNumber.Seven)
+val eight = Card(CardNumber.Eight)
+val nine = Card(CardNumber.Nine)
+val ten = Card(CardNumber.Ten)

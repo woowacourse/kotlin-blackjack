@@ -96,6 +96,8 @@ object OutputView {
         }
     }
 
+    fun printError(message: String) = println(message)
+
     private fun Suit.getName(): String =
         when (this) {
             Suit.Club -> "클로버"
