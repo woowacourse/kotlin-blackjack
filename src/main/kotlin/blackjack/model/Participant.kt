@@ -22,7 +22,9 @@ abstract class Participant(
         return showCard().getOrNull(0) ?: throw NoSuchElementException("$name : 손에 보여줄 카드가 없습니다.")
     }
 
-    abstract fun isHitable(): Boolean
+    fun isNotBustedAndHitable(): Boolean = !isBusted() && isHitable()
+
+    protected abstract fun isHitable(): Boolean
 
     infix fun versus(other: Participant): GameResult =
         when {

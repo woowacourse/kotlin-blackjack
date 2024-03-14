@@ -51,7 +51,7 @@ class Controller {
             OutputView.printBlackJackMessage(player)
             return
         }
-        while (player.isHitable() && askPick(player.name)) {
+        while (player.isNotBustedAndHitable() && askPick(player.name)) {
             deck giveCardTo player
             OutputView.printParticipantStatus(player)
         }
@@ -65,7 +65,7 @@ class Controller {
     }
 
     private fun proceedDealerTurn(dealer: Dealer) {
-        while (dealer.isHitable()) {
+        while (dealer.isNotBustedAndHitable()) {
             deck giveCardTo dealer
             OutputView.printDealerHitMessage()
         }

@@ -9,7 +9,7 @@ class DealerTest {
         val dealer = Dealer()
         dealer.addCard(ten)
         dealer.addCard(six)
-        val actual = dealer.isHitable()
+        val actual = dealer.isNotBustedAndHitable()
         assertThat(actual).isEqualTo(true)
     }
 
@@ -18,7 +18,7 @@ class DealerTest {
         val dealer = Dealer()
         dealer.addCard(ten)
         dealer.addCard(seven)
-        val actual = dealer.isHitable()
+        val actual = dealer.isNotBustedAndHitable()
         assertThat(actual).isEqualTo(false)
     }
 }
