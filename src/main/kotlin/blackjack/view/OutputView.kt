@@ -67,7 +67,7 @@ class OutputView {
         println("## 최종 수익")
         println(dealer.getDealerProfitMessage())
         players.playerGroup.forEach {
-            it.getPlayerProfitMessage(it.name.toString())
+            println(it.getPlayerProfitMessage(it.name.toString()))
         }
     }
 
@@ -111,7 +111,7 @@ class OutputView {
             Suite.CLOVER -> "클로버"
             Suite.HEART -> "하트"
             Suite.SPADE -> "스페이드"
-            Suite.DIAMOND -> "다이아몬드`"
+            Suite.DIAMOND -> "다이아몬드"
         }
 
     private fun Denomination.value(): String =
