@@ -5,7 +5,7 @@ import blackjack.model.Judge
 
 object ResultView {
     private const val MESSAGE_PARTICIPANT_CARD_RESULT = "%s - 결과: %d"
-    private const val MESSAGE_TITLE_RESULT = "\n## 최종 승패"
+    private const val MESSAGE_TITLE_RESULT = "\n## 최종 금액"
     private const val MESSAGE_CARD_INFO = "%s카드: %s"
     private const val MESSAGE_INCOME_STATUS = "%s: %s"
 
