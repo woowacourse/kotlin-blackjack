@@ -12,7 +12,7 @@ class Player(val name: PlayerName) : Role() {
         cardDecision: CardDecision,
         endRoundAction: (Player) -> Unit,
     ) {
-        while (decideMoreCard() && cardDecision.isMoreCardDecision(this)) {
+        while (decideMoreCard() && cardDecision.hasMoreCardDecision(this)) {
             receiveCard(Card.provideCards(cardProvider))
             endRoundAction(this)
         }

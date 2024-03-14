@@ -3,12 +3,12 @@ package blackjack.view
 import blackjack.model.participant.Player
 
 class CardDecisionInputView : CardDecision {
-    override fun isMoreCardDecision(player: Player): Boolean {
+    override fun hasMoreCardDecision(player: Player): Boolean {
         println(READ_MESSAGE.format(player.name))
         val moreCardDecision = readln()
         return getMoreCardDecision(moreCardDecision) ?: run {
             println(INVALID_MESSAGE)
-            isMoreCardDecision(player)
+            hasMoreCardDecision(player)
         }
     }
 
