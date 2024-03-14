@@ -2,12 +2,9 @@ package blackjack.model.playing.participants
 
 import blackjack.model.card.CardDeck
 import blackjack.model.playing.cardhand.CardHand
-import blackjack.model.playing.cardhand.CardHandState
 import blackjack.model.playing.participants.player.PlayerName
 
 abstract class Role(open val name: PlayerName, open val cardHand: CardHand) {
-    abstract fun getState(): CardHandState
-
     abstract fun canDraw(): Boolean
 
     fun addInitialCards(cardDeck: CardDeck) {

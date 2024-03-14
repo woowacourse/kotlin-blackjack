@@ -1,7 +1,6 @@
 package blackjack.model.playing.participants
 
 import blackjack.model.card.Card
-import blackjack.model.card.CardDeck
 import blackjack.model.card.CardNumber
 import blackjack.model.card.CardShape
 import blackjack.model.playing.cardhand.CardHand
@@ -13,8 +12,6 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class DealerTest {
-    private val cardDeck = CardDeck()
-
     @Test
     fun `딜러의 카드 패에 카드가 2장 있고, 카드 숫자의 합이 21이면 카드 패의 상태는 BLACKJACK 이다`() {
         val cardHand =
@@ -23,9 +20,8 @@ class DealerTest {
                 Card(CardShape.SPADE, CardNumber.ACE),
             )
 
-        val dealer = Dealer(cardHand)
-
-        assertThat(dealer.getState()).isEqualTo(CardHandState.BLACKJACK)
+        cardHand.getDealerState()
+        assertThat(cardHand.state).isEqualTo(CardHandState.BLACKJACK)
     }
 
     @Test
@@ -36,9 +32,8 @@ class DealerTest {
                 Card(CardShape.SPADE, CardNumber.SIX),
             )
 
-        val dealer = Dealer(cardHand)
-
-        assertThat(dealer.getState()).isEqualTo(CardHandState.HIT)
+        cardHand.getDealerState()
+        assertThat(cardHand.state).isEqualTo(CardHandState.HIT)
     }
 
     @Test
@@ -50,9 +45,8 @@ class DealerTest {
                 Card(CardShape.DIAMOND, CardNumber.FIVE),
             )
 
-        val dealer = Dealer(cardHand)
-
-        assertThat(dealer.getState()).isEqualTo(CardHandState.STAY)
+        cardHand.getDealerState()
+        assertThat(cardHand.state).isEqualTo(CardHandState.STAY)
     }
 
     @Test
@@ -64,9 +58,8 @@ class DealerTest {
                 Card(CardShape.DIAMOND, CardNumber.TEN),
             )
 
-        val dealer = Dealer(cardHand)
-
-        assertThat(dealer.getState()).isEqualTo(CardHandState.STAY)
+        cardHand.getDealerState()
+        assertThat(cardHand.state).isEqualTo(CardHandState.STAY)
     }
 
     @Test
@@ -79,43 +72,8 @@ class DealerTest {
                 Card(CardShape.DIAMOND, CardNumber.EIGHT),
             )
 
-        val dealer = Dealer(cardHand)
-
-        assertThat(dealer.getState()).isEqualTo(CardHandState.BUST)
-    }
-
-    @Test
-    fun `상태가 HIT 이면 카드 한 장을 더 뽑는다`() {
-        val dealer =
-            Dealer(
-                CardHand(
-                    Card(CardShape.SPADE, CardNumber.ACE),
-                    Card(CardShape.SPADE, CardNumber.TWO),
-                ),
-            )
-
-        if (dealer.getState() == CardHandState.HIT) {
-            dealer.draw(cardDeck)
-        }
-
-        assertThat(dealer.cardHand.hand.size).isEqualTo(3)
-    }
-
-    @Test
-    fun `상태가 HIT 이 아니면 카드를 더 뽑지 않는다`() {
-        val dealer =
-            Dealer(
-                CardHand(
-                    Card(CardShape.SPADE, CardNumber.ACE),
-                    Card(CardShape.HEART, CardNumber.NINE),
-                ),
-            )
-
-        if (dealer.getState() == CardHandState.HIT) {
-            dealer.draw(cardDeck)
-        }
-
-        assertThat(dealer.cardHand.hand.size).isEqualTo(2)
+        cardHand.getDealerState()
+        assertThat(cardHand.state).isEqualTo(CardHandState.BUST)
     }
 
     @Test
