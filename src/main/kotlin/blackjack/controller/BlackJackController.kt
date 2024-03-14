@@ -52,8 +52,8 @@ class BlackJackController(
         dealer: Dealer,
         players: Players,
     ) {
-        val dealerScore = dealer.state.getCardHands().calculateScore()
-        val record = ScoreBoard(players.players.associate { it.name to it.state.getCardHands().calculateScore() })
+        val dealerScore = dealer.state.getCardHandScore()
+        val record = ScoreBoard(players.players.associate { it.name to it.state.getCardHandScore() })
         val playerWinning = record.calculatePlayerWinning(dealerScore)
         val dealerWinning = playerWinning.judgeDealerWinningResult()
 

@@ -59,11 +59,11 @@ class OutputView {
         println("\n")
 
         printPlayerCardHand(dealer)
-        println(CARD_HAND_SUM_FORMAT.format(dealer.state.getCardHands().calculateScore().point))
+        println(CARD_HAND_SUM_FORMAT.format(dealer.state.getCardHandScore().point))
 
         players.players.forEach {
             printPlayerCardHand(it)
-            println(CARD_HAND_SUM_FORMAT.format(it.state.getCardHands().calculateScore().point))
+            println(CARD_HAND_SUM_FORMAT.format(it.state.getCardHandScore().point))
         }
     }
 
