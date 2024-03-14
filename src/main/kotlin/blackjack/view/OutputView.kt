@@ -60,6 +60,17 @@ class OutputView {
         lineBreak()
     }
 
+    fun printFinalProfitResult(
+        dealer: Dealer,
+        players: Players,
+    ) {
+        println("## 최종 수익")
+        println(dealer.getDealerProfitMessage())
+        players.playerGroup.forEach {
+            it.getPlayerProfitMessage(it.name.toString())
+        }
+    }
+
     private fun printDealerFinalGameResult(dealerResult: DealerResult) {
         GameResultType.entries.forEach { gameResult ->
             val count = dealerResult.results[gameResult] ?: return@forEach
@@ -88,6 +99,10 @@ class OutputView {
     private fun Card.toCardMessage() = "${denomination.value()}${suite.value()}"
 
     private fun Role.getPlayerCardResult() = " - 결과: ${getCardSum()}"
+
+    private fun Role.getDealerProfitMessage() = "딜러: $profit"
+
+    private fun Role.getPlayerProfitMessage(name: String) = "$name: $profit"
 
     private fun lineBreak() = println()
 
