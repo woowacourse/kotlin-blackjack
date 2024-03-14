@@ -19,7 +19,7 @@ object GameDeck : ShuffleGenerator {
             return currentDeck[index++]
         }
         resetCurrentDeck()
-        throw IllegalStateException(NO_CARDS_ERROR_MESSAGE)
+        return currentDeck[index++]
     }
 
     private fun createGameDeck(): List<Card> = Card.createDeck()
