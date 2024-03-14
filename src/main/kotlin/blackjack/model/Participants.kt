@@ -1,5 +1,8 @@
 package blackjack.model
 
+import blackjack.view.InputView
+import blackjack.view.OutputView
+
 class Participants(private val dealer: Dealer, private val players: List<Player>) {
     init {
         require(players.size <= MAX_PLAYER_SIZE) { PLAYER_SIZE_ERROR_MESSAGE }
@@ -18,6 +21,37 @@ class Participants(private val dealer: Dealer, private val players: List<Player>
             calculatePlayerResult(result, player)
         }
         return result.toMap()
+    }
+
+    fun playRound(
+        deck: CardDeck,
+        participants: Participants,
+    ) {
+        playRoundForPlayers(deck, participants.getPlayers())
+        playRoundForDealer(deck, participants.getDealer())
+    }
+
+    private fun playRoundForPlayers(
+        deck: CardDeck,
+        players: List<Player>,
+    ) {
+        players.forEach { player ->
+            player.playRound(
+                { playerName -> InputView.askMoreCard(playerName) },
+                { playerAfterRound -> OutputView.printPlayerStatus(playerAfterRound) },
+                deck,
+            )
+        }
+    }
+
+    private fun playRoundForDealer(
+        deck: CardDeck,
+        dealer: Dealer,
+    ) {
+        dealer.playRound(
+            { dealerAfterRound -> OutputView.printDealerStatus(dealerAfterRound) },
+            deck,
+        )
     }
 
     private fun calculateDealerResult(

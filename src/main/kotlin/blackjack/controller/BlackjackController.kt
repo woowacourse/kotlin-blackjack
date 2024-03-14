@@ -15,7 +15,7 @@ class BlackjackController {
         val participants = setupParticipants(deck, InputView.readNames())
         OutputView.printParticipantsStatus(participants)
 
-        playRound(deck, participants)
+        participants.playRound(deck, participants)
 
         OutputView.printParticipantsStatusAndScore(participants)
         OutputView.printGameResult(participants.calculateResult())
@@ -30,36 +30,5 @@ class BlackjackController {
             names.map { Player(ParticipantName(it), deck.createStartHand()) }
 
         return Participants(dealer, players)
-    }
-
-    private fun playRound(
-        deck: CardDeck,
-        participants: Participants,
-    ) {
-        playRoundForPlayers(deck, participants.getPlayers())
-        playRoundForDealer(deck, participants.getDealer())
-    }
-
-    private fun playRoundForPlayers(
-        deck: CardDeck,
-        players: List<Player>,
-    ) {
-        players.forEach { player ->
-            player.playRound(
-                { playerName -> InputView.askMoreCard(playerName) },
-                { playerAfterRound -> OutputView.printPlayerStatus(playerAfterRound) },
-                deck,
-            )
-        }
-    }
-
-    private fun playRoundForDealer(
-        deck: CardDeck,
-        dealer: Dealer,
-    ) {
-        dealer.playRound(
-            { dealerAfterRound -> OutputView.printDealerStatus(dealerAfterRound) },
-            deck,
-        )
     }
 }
