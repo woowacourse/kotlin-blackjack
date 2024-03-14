@@ -19,6 +19,7 @@ class Judge(
                 else -> Unit
             }
         }
+
         return currentAmount
     }
 
