@@ -7,10 +7,6 @@ class GameManager(
 ) {
     private val cardDeck = CardDeck()
 
-    init {
-        cardDeck.cardShuffle()
-    }
-
     fun calculateGameResult(): GameResult {
         val dealerResults = mutableMapOf<Result, Int>()
         val playerResults = mutableMapOf<Player, Result>()

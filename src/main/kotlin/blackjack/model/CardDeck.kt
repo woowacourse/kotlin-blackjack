@@ -11,18 +11,18 @@ class CardDeck(
 
     init {
         if (this.cards.isEmpty()) {
-            this.cards.addAll(
-                Denomination.entries.flatMap { denomination ->
-                    Suit.entries.map { suit ->
-                        Card(denomination, suit)
-                    }
-                },
-            )
+            cardShuffle()
         }
     }
 
-    fun cardShuffle() {
-        val shuffledCards = shuffleCardDeck.shuffle(cards.toList().toMutableList())
+    private fun cardShuffle() {
+        val shuffledCards = shuffleCardDeck.shuffle(
+            Denomination.entries.flatMap { denomination ->
+                Suit.entries.map { suit ->
+                    Card(denomination, suit)
+                }
+            }.shuffled().toMutableList()
+        )
         cards.clear()
         cards.addAll(shuffledCards)
     }
