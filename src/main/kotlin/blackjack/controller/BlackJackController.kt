@@ -54,7 +54,7 @@ class BlackJackController {
     private fun processPlayerDecision(participant: Participant) {
         when (InputView.inputPlayerDecision(participant.getName())) {
             UserDecision.YES -> {
-                if (!setUserDecision(participant)) return
+                if (!processUserDecision(participant)) return
                 OutputView.outputPlayerCurrentHandCard(participant)
             }
 
@@ -66,7 +66,7 @@ class BlackJackController {
         val dealer = gameManager.getDealer()
         while (dealer.checkShouldDrawCard()) {
             OutputView.outputDealerRule()
-            if (!setUserDecision(dealer)) return
+            if (!processUserDecision(dealer)) return
         }
     }
 
@@ -83,7 +83,7 @@ class BlackJackController {
         )
     }
 
-    private fun setUserDecision(participant: Participant): Boolean {
+    private fun processUserDecision(participant: Participant): Boolean {
         return try {
             participant.draw(gameManager.returnCardForParticipant())
             true
