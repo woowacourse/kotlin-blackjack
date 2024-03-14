@@ -9,8 +9,6 @@ class HandCards(private val deck: Deck) {
         _cards.addAll(deck.draw(INIT_CARD_AMOUNT))
     }
 
-    override fun toString(): String = cards.joinToString(SPLIT_DELIMITER) { "${it.cardNumber.value}${it.pattern.shape}" }
-
     fun add() {
         _cards.addAll(deck.draw(HIT_CARD_AMOUNT))
     }
