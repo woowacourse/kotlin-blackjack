@@ -1,11 +1,33 @@
 package blackjack.model
 
-sealed class Progressing(hand: Hand) : State(hand)
+import blackjack.base.BaseHolder
+
+sealed class Progressing(override val hand: Hand) : State {
+    override fun updateState(totalPoint: Int): State {
+        return if (totalPoint > Hand.BLACKJACK_NUMBER) Bust(hand)
+        else if (totalPoint == Hand.BLACKJACK_NUMBER) Stay(hand)
+        else Running(hand)
+    }
+
+    override fun decideWinner(opponent: BaseHolder): GameResult = GameResult()
+}
 
 class Running(hand: Hand = Hand()) : Progressing(hand) {
     private var _hand: Hand = hand
     override val hand: Hand
         get() = _hand
+
+    override fun hitOrStay(isHit: Boolean): State {
+        return when (isHit) {
+            true -> Hit(hand)
+            false -> Stay(hand)
+        }
+    }
+
+    override fun getCard(card: Card): State {
+        _hand += card
+        return updateState(hand.calculate())
+    }
 
     fun drawInitCards(gameDeck: GameDeck): State {
         repeat(INITIAL_CARD_COUNTS) { _hand += gameDeck.drawCard() }
@@ -15,13 +37,6 @@ class Running(hand: Hand = Hand()) : Progressing(hand) {
     private fun initState(totalPoint: Int): State {
         return if (totalPoint == Hand.BLACKJACK_NUMBER) BlackJack(hand)
         else Running(hand)
-    }
-
-    fun hitOrStay(isHit: Boolean): State {
-        return when (isHit) {
-            true -> Hit(hand)
-            false -> Stay(hand)
-        }
     }
 
     companion object {
@@ -34,14 +49,10 @@ class Hit(hand: Hand) : Progressing(hand) {
     override val hand: Hand
         get() = _hand
 
-    fun getCard(card: Card): State {
+    override fun getCard(card: Card): State {
         _hand += card
         return updateState(hand.calculate())
     }
 
-    private fun updateState(totalPoint: Int): State {
-        return if (totalPoint > Hand.BLACKJACK_NUMBER) Bust(hand)
-        else if (totalPoint == Hand.BLACKJACK_NUMBER) Stay(hand)
-        else Running(hand)
-    }
+    override fun hitOrStay(isHit: Boolean): State = this
 }

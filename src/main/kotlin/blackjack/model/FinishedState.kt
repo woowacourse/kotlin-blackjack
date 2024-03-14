@@ -2,7 +2,13 @@ package blackjack.model
 
 import blackjack.base.BaseHolder
 
-sealed class Finished(override val hand: Hand) : State(hand), CompareImpl
+sealed class Finished(override val hand: Hand) : State, CompareImpl {
+    override fun getCard(card: Card): State = this
+
+    override fun updateState(totalPoint: Int): State = this
+
+    override fun hitOrStay(isHit: Boolean): State = this
+}
 
 class Bust(hand: Hand) : Finished(hand) {
     // 자신이 Bust일 때 상대와 비교
@@ -27,10 +33,12 @@ class BlackJack(hand: Hand) : Finished(hand) {
 class Stay(hand: Hand) : Finished(hand) {
     // 자신이 스테이일 때 상대와 비교
     override fun decideWinner(opponent: BaseHolder): GameResult {
-        return when (opponent.state as blackjack.model.Finished) {
+        return when (opponent.state) {
             is Bust -> GameResult(win = 1)
             is BlackJack -> GameResult(defeat = 1)
-            is Stay -> compareWhenBothStay((opponent.state as Stay).hand.calculate())
+            is Stay -> compareWhenBothStay(opponent.state.hand.calculate())
+            is Hit -> GameResult()
+            is Running -> GameResult()
         }
     }
 
