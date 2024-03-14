@@ -9,7 +9,12 @@ class Player(val name: PlayerName) : Role() {
 
     fun calculateProfit(result: GameResultType) {
         if (result == GameResultType.WIN) {
-            if (isBlackjack()) profit = (1.5 * battingAmount.amount).toInt()
+            if (isBlackjack()) {
+                profit += (1.5 * battingAmount.amount).toInt()
+                return
+            }
+            profit += battingAmount.amount
+            return
         }
         if (result == GameResultType.LOSE) profit -= battingAmount.amount
     }

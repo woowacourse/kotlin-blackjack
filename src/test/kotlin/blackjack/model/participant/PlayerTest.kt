@@ -2,7 +2,9 @@ package blackjack.model.participant
 
 import blackjack.model.Card
 import blackjack.model.card.Card
+import blackjack.model.result.GameResultType
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
@@ -39,6 +41,20 @@ class PlayerTest {
         val actual = player.getCardSum()
 
         // then
+        assertThat(actual).isEqualTo(expected)
+    }
+
+    @Test
+    fun `배팅금액과 결과에 따라 수익을 계산하다`() {
+        val player = Player(PlayerName("seogi"))
+        player.battingAmount = BattingAmount(1000)
+        player.receiveCard(Card("A"))
+        player.receiveCard(Card("K"))
+        player.calculateProfit(GameResultType.WIN)
+
+        val actual = player.profit
+        val expected = 1500
+
         assertThat(actual).isEqualTo(expected)
     }
 
