@@ -8,11 +8,8 @@ import org.junit.jupiter.params.provider.CsvSource
 class HandTest {
     @ParameterizedTest
     @CsvSource(
-        value = [
-            "JACK:QUEEN:TWO:true",
-            "NINE:ACE:ACE:false",
-        ],
-        delimiter = ':',
+        "JACK,QUEEN,TWO,true",
+        "NINE,ACE,ACE,false",
     )
     fun `HandCards의 합이 null이면 버스트된다`(
         rank: Rank,
@@ -35,11 +32,8 @@ class HandTest {
 
     @ParameterizedTest
     @CsvSource(
-        value = [
-            "JACK:ACE:true",
-            "NINE:ACE:false",
-        ],
-        delimiter = ':',
+        "JACK,ACE,true",
+        "NINE,ACE,false",
     )
     fun `HandCards의 합이 21이고 2장이면 블랙잭이다`(
         rank: Rank,
