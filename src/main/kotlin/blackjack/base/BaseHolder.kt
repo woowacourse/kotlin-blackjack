@@ -1,5 +1,6 @@
 package blackjack.base
 
+import blackjack.model.Card
 import blackjack.model.GameDeck
 import blackjack.model.GameResult
 import blackjack.model.Hit
@@ -23,9 +24,9 @@ abstract class BaseHolder(gameResult: GameResult = GameResult()) {
         _state = state
     }
 
-    fun getCard(gameDeck: GameDeck) {
+    fun takeCard(card: Card) {
         if (state is Hit)
-            changeState((state as Hit).getCard(gameDeck.drawCard()))
+            changeState((state as Hit).getCard(card))
     }
 
     fun changeResult(newGameResult: GameResult) {

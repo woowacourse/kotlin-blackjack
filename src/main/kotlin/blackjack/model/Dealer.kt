@@ -10,7 +10,7 @@ class Dealer(): BaseHolder() {
                 changeState((state as Running).hitOrStay(false))
             } else {
                 changeState((state as Running).hitOrStay(true))
-                getCard(gameDeck)
+                takeCard(gameDeck.drawCard())
                 drawCount++
             }
         }

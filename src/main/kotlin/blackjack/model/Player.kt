@@ -10,7 +10,7 @@ class Player(val name: Name) : BaseHolder() {
     ) {
         while (state is Running) {
             changeState((state as Running).hitOrStay(hitOrStay(name)))
-            getCard(gameDeck)
+            takeCard(gameDeck.drawCard())
             returnPlayerInfo(this)
         }
     }
