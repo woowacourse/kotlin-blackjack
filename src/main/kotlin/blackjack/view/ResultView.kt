@@ -92,9 +92,9 @@ object ResultView {
     }
 
     private fun showFinalWinOrLossResult(gameResult: GameResult) {
-        val winCount = gameResult.playerResults.count { it.result == Result.PLAYER_WIN }
-        val defeatCount = gameResult.playerResults.count { it.result == Result.DEALER_WIN }
-        val drawCount = gameResult.playerResults.count { it.result == Result.DRAW }
+        val winCount = gameResult.getPlayerWinCount()
+        val defeatCount = gameResult.getDealerWinCount()
+        val drawCount = gameResult.getDrawCount()
         showFinalWinOrLoss()
         showDealerWinsOrLoses(winCount, drawCount, defeatCount)
         gameResult.playerResults.forEach { playerResult ->
