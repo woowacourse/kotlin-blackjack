@@ -6,6 +6,8 @@ import blackjack.model.entitiy.Card
 sealed interface Action {
     data class ReadNames(val names: List<String>) : Action
 
+    data class ReadBatingAmount(val onBatingAmount: (String) -> Int) : Action
+
     data class InitDealerCard(
         val count: Int = 2,
         val onDrawCard: () -> Card,
@@ -26,4 +28,6 @@ sealed interface Action {
         val onDrawCard: () -> Card,
         val onPrintCards: (ParticipantInfo) -> Unit,
     ) : Action
+
+    data class FindWinner(val dealer: ParticipantInfo) : Action
 }
