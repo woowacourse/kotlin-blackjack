@@ -122,7 +122,7 @@ object OutputView {
     ) {
         outputDealerResult(dealer)
         outputPlayersResult(
-            resultPlayers = gameResult.getResultPlayers()
+            resultPlayers = gameResult.getResultPlayers(),
         )
     }
 

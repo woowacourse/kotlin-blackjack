@@ -16,10 +16,11 @@ class ParticipantsTest {
     @Test
     fun `참여자들 중 플레이어가 있을 때 정상적인 동작 테스트`() {
         val dealer = Dealer()
-        val participants = Participants(
-            dealer = dealer,
-            players = listOf(Player(Wallet("누누")), Player(Wallet("채드")), Player(Wallet("꼬상")))
-        )
+        val participants =
+            Participants(
+                dealer = dealer,
+                players = listOf(Player(Wallet("누누")), Player(Wallet("채드")), Player(Wallet("꼬상"))),
+            )
         assertThat(participants.players.size).isEqualTo(3)
     }
 

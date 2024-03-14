@@ -23,7 +23,6 @@ class GameResultTest {
                 players = winPlayers,
             )
         dealer.transitionToStayState()
-        player.transitionToStayState()
         val gameManager =
             GameManager(
                 participants = participants,

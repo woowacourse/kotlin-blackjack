@@ -16,13 +16,14 @@ class CardDeck(
     }
 
     private fun cardShuffle() {
-        val shuffledCards = shuffleCardDeck.shuffle(
-            Denomination.entries.flatMap { denomination ->
-                Suit.entries.map { suit ->
-                    Card(denomination, suit)
-                }
-            }.shuffled().toMutableList()
-        )
+        val shuffledCards =
+            shuffleCardDeck.shuffle(
+                Denomination.entries.flatMap { denomination ->
+                    Suit.entries.map { suit ->
+                        Card(denomination, suit)
+                    }
+                }.shuffled().toMutableList(),
+            )
         cards.clear()
         cards.addAll(shuffledCards)
     }
