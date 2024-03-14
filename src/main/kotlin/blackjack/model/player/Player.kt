@@ -7,6 +7,7 @@ class Player(val name: String, val hand: Hand) {
             when {
                 hand.isBlackjack() -> State.Finished.BlackJack
                 hand.isBust() -> State.Finished.Bust
+                hand.isStay() -> State.Finished.Stay
                 else -> State.Running.Hit
             }
 }

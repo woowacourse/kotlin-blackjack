@@ -1,6 +1,7 @@
 package blackjack.model.card
 
 class Hand(private val _cards: MutableList<Card> = mutableListOf()) {
+    private var stay: Boolean = false
     val cards: List<Card> get() = _cards
     val totalScore: Int
         get() = calculateTotalScore()
@@ -23,6 +24,12 @@ class Hand(private val _cards: MutableList<Card> = mutableListOf()) {
     fun isBust(): Boolean = totalScore > BLACKJACK_SCORE
 
     fun isBlackjack(): Boolean = totalScore == BLACKJACK_SCORE && cards.size == 2
+
+    fun decideStay() {
+        stay = true
+    }
+
+    fun isStay(): Boolean = stay
 
     companion object {
         const val BLACKJACK_SCORE = 21

@@ -64,6 +64,7 @@ object BlackJackController {
                 player.hand.draw(deck.dealCard())
                 ProgressView.showPlayerHand(player)
             } else {
+                player.hand.decideStay()
                 break
             }
         }
