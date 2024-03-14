@@ -21,8 +21,8 @@ class GameInformation(cards: Set<Card> = emptySet(), state: GameState = GameStat
     private fun judgeState() {
         _state =
             when {
-                ScoreCalculator.calculateScore(cards) > BLACKJACK_SCORE -> GameState.Finished.BUST
-                ScoreCalculator.calculateScore(cards) == BLACKJACK_SCORE && cards.size == BLACKJACK_CARD_SIZE ->
+                Calculator.calculateScore(cards) > BLACKJACK_SCORE -> GameState.Finished.BUST
+                Calculator.calculateScore(cards) == BLACKJACK_SCORE && cards.size == BLACKJACK_CARD_SIZE ->
                     GameState.Finished.BLACKJACK
                 else -> GameState.Running.HIT
             }

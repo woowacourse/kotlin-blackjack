@@ -1,21 +1,21 @@
 package blackjack.controller
 
 import blackjack.model.CardDeck
-import blackjack.model.GameResult
+import blackjack.model.GameRevenue
 import blackjack.model.Participant.Dealer
 import blackjack.model.Participant.Player
-import blackjack.model.UserInformation
+import blackjack.model.ParticipantInformation.PlayerInformation
 import blackjack.view.InputView
 import blackjack.view.OutputView
 import blackjack.view.ResultView
 
 object BlackJackController {
     fun run() {
-        val dealer = Dealer()
         val players = registerPlayers()
+        val dealer = Dealer()
         try {
             blackJackGameStart(dealer, players)
-            displayGameResult(dealer, players)
+            displayBlackJackGameResult(dealer, players)
         } catch (exception: IllegalArgumentException) {
             println(exception.message)
         }
@@ -29,8 +29,9 @@ object BlackJackController {
             }
         val players = mutableListOf<Player>()
         for (index in playersName.indices) {
-            val userInformation = UserInformation(playersName[index], playersBettingAmount[index])
-            val player = Player(userInformation)
+            val participantInformation =
+                PlayerInformation(playersName[index], playersBettingAmount[index])
+            val player = Player(participantInformation)
             players.add(player)
         }
         return players
@@ -54,18 +55,17 @@ object BlackJackController {
         players.forEach { player ->
             player.judgeDrawOrNot(
                 cardDeck,
-                { InputView.inputDrawDecision(player.userInformation.name).judgeDecision() },
+                { InputView.inputDrawDecision(player.participantInformation.name).judgeDecision() },
                 { OutputView.outputParticipantCard(player) },
             )
         }
     }
 
-    private fun displayGameResult(
+    private fun displayBlackJackGameResult(
         dealer: Dealer,
         players: List<Player>,
     ) {
         ResultView.outputGameScores(dealer, players)
-        val gameResult = GameResult(dealer, players)
-        ResultView.outputGameResult(gameResult)
+        ResultView.outputGameResult(GameRevenue(dealer, players))
     }
 }

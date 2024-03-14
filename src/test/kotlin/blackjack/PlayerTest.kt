@@ -6,8 +6,8 @@ import blackjack.model.CardDeck
 import blackjack.model.CardNumber
 import blackjack.model.CardSymbol
 import blackjack.model.Participant.Player
+import blackjack.model.ParticipantInformation.PlayerInformation
 import blackjack.model.ParticipantName
-import blackjack.model.UserInformation
 import blackjack.view.OutputView
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
@@ -19,7 +19,7 @@ class PlayerTest {
 
     @BeforeEach
     fun setUp() {
-        player = Player(UserInformation(ParticipantName("채드"), BettingAmount(1000)))
+        player = Player(PlayerInformation(ParticipantName("채드"), BettingAmount(1000.0)))
         cardDeck = CardDeck()
     }
 

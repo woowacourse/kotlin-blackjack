@@ -12,7 +12,7 @@ object InputView {
     private const val NO_PLAYER_NAME_INPUT = ""
     private const val DELIMITER_NAMES = ","
     private const val MAX_PLAYERS_SIZE = 8
-    private const val NO_BETTING_AMOUNT_INPUT = 0
+    private const val NO_BETTING_AMOUNT_INPUT = 0.0
 
     fun inputPlayersName(): List<ParticipantName> {
         println(INPUT_MESSAGE_PLAYER_NAMES)
@@ -31,7 +31,7 @@ object InputView {
     fun inputBettingAmount(playerName: ParticipantName): BettingAmount {
         println(INPUT_MESSAGE_BETTING_AMOUNT.format(playerName))
         return try {
-            val bettingAmount = readln().toIntOrNull() ?: NO_BETTING_AMOUNT_INPUT
+            val bettingAmount = readln().toDoubleOrNull() ?: NO_BETTING_AMOUNT_INPUT
             BettingAmount(bettingAmount)
         } catch (exception: IllegalArgumentException) {
             println(exception.message)

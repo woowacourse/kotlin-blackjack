@@ -1,6 +1,9 @@
 package blackjack.model
 
-sealed class Participant(val userInformation: UserInformation, val gameInformation: GameInformation) {
+import blackjack.model.ParticipantInformation.DealerInformation
+import blackjack.model.ParticipantInformation.PlayerInformation
+
+sealed class Participant(val participantInformation: ParticipantInformation, val gameInformation: GameInformation) {
     fun draw(card: Card) {
         if (isRunning()) {
             gameInformation.drawCard(card)
@@ -11,8 +14,8 @@ sealed class Participant(val userInformation: UserInformation, val gameInformati
         return gameInformation.state is GameState.Running
     }
 
-    class Player(userInformation: UserInformation, gameInformation: GameInformation = GameInformation()) :
-        Participant(userInformation, gameInformation) {
+    class Player(val playerInformation: PlayerInformation, gameInformation: GameInformation = GameInformation()) :
+        Participant(playerInformation, gameInformation) {
         fun judgeDrawOrNot(
             cardDeck: CardDeck,
             readDecision: () -> Boolean,
@@ -30,13 +33,9 @@ sealed class Participant(val userInformation: UserInformation, val gameInformati
     }
 
     class Dealer(
-        userInformation: UserInformation =
-            UserInformation(
-                ParticipantName(DEFAULT_DEALER_NAME),
-                BettingAmount(DEFAULT_DEALER_BETTING_AMOUNT),
-            ),
+        dealerInformation: ParticipantInformation = DealerInformation(),
         gameInformation: GameInformation = GameInformation(),
-    ) : Participant(userInformation, gameInformation) {
+    ) : Participant(dealerInformation, gameInformation) {
         fun initialCardDealing(
             players: List<Player>,
             cardDeck: CardDeck,
@@ -53,18 +52,16 @@ sealed class Participant(val userInformation: UserInformation, val gameInformati
             cardDeck: CardDeck,
             output: () -> Unit,
         ) {
-            while (ScoreCalculator.calculateScore(gameInformation.cards) <= ADDITIONAL_DRAW_CRITERIA) {
+            while (Calculator.calculateScore(gameInformation.cards) <= ADDITIONAL_DRAW_CRITERIA) {
                 draw(cardDeck.pickCard())
                 output()
             }
-            if (ScoreCalculator.calculateScore(gameInformation.cards) < BLACKJACK_SCORE) {
+            if (Calculator.calculateScore(gameInformation.cards) < BLACKJACK_SCORE) {
                 gameInformation.changeStateToStay()
             }
         }
 
         companion object {
-            private const val DEFAULT_DEALER_NAME = "딜러"
-            private const val DEFAULT_DEALER_BETTING_AMOUNT = 1
             private const val INITIAL_DEALING_COUNT = 2
             private const val ADDITIONAL_DRAW_CRITERIA = 16
             private const val BLACKJACK_SCORE = 21

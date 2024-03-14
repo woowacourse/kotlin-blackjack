@@ -15,8 +15,8 @@ object OutputView {
         dealer: Dealer,
         players: List<Player>,
     ) {
-        val dealerName = dealer.userInformation.name
-        val playerNames = players.map { player -> player.userInformation.name }.joinToString(COMMA)
+        val dealerName = dealer.participantInformation.name
+        val playerNames = players.map { player -> player.participantInformation.name }.joinToString(COMMA)
         println(MESSAGE_CARD_DISTRIBUTION.format(dealerName, playerNames))
         outputInitialDealerCard(dealer)
         outputPlayersCards(players)
@@ -25,7 +25,7 @@ object OutputView {
     fun outputParticipantCard(participant: Participant) {
         println(
             MESSAGE_PARTICIPANT_CARD_INFORMATION.format(
-                participant.userInformation.name,
+                participant.participantInformation.name,
                 participant.gameInformation.cards.joinToString(separator = ", ") { card ->
                     card.convertCard()
                 },
@@ -34,14 +34,14 @@ object OutputView {
     }
 
     fun outputDealerDraw(dealer: Dealer) {
-        println(MESSAGE_DEALER_DRAW.format(dealer.userInformation.name))
+        println(MESSAGE_DEALER_DRAW.format(dealer.participantInformation.name))
     }
 
     private fun outputInitialDealerCard(dealer: Dealer) {
         println(
             MESSAGE_DEALER_CARD_INFORMATION.format(
-                dealer.userInformation.name,
-                dealer.gameInformation.cards.elementAt(0),
+                dealer.participantInformation.name,
+                dealer.gameInformation.cards.elementAt(0).convertCard(),
             ),
         )
     }

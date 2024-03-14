@@ -1,17 +1,15 @@
 package blackjack.view
 
-import blackjack.model.GameResult
+import blackjack.model.Calculator
+import blackjack.model.GameRevenue
 import blackjack.model.Participant
 import blackjack.model.Participant.Dealer
 import blackjack.model.Participant.Player
-import blackjack.model.Result
-import blackjack.model.ScoreCalculator
 
 object ResultView {
     private const val MESSAGE_PARTICIPANT_GAME_SCORE = "%s 카드: %s - 결과: %d"
-    private const val MESSAGE_GAME_RESULT = "\n## 최종 승패"
-    private const val MESSAGE_DEALER_RESULT = "%s: %d승 %d패 %d무"
-    private const val MESSAGE_PLAYER_RESULT = "%s: %s"
+    private const val MESSAGE_TOTAL_REVENUE = "\n## 최종 수익"
+    private const val MESSAGE_REVENUE = "%s: %s"
 
     fun outputGameScores(
         dealer: Dealer,
@@ -23,21 +21,19 @@ object ResultView {
         }
     }
 
-    fun outputGameResult(gameResult: GameResult) {
-        println(MESSAGE_GAME_RESULT)
+    fun outputGameResult(gameRevenue: GameRevenue) {
+        println(MESSAGE_TOTAL_REVENUE)
         println(
-            MESSAGE_DEALER_RESULT.format(
-                gameResult.dealer.userInformation.name,
-                gameResult.dealerResult[Result.DEALER_WIN],
-                gameResult.dealerResult[Result.PLAYER_WIN],
-                gameResult.dealerResult[Result.TIE],
+            MESSAGE_REVENUE.format(
+                gameRevenue.dealer.participantInformation.name,
+                gameRevenue.dealerRevenue.toInt().toString(),
             ),
         )
-        gameResult.playerResults.withIndex().map { (index, playerResult) ->
+        gameRevenue.playersRevenue.withIndex().map { (index, playerRevenue) ->
             println(
-                MESSAGE_PLAYER_RESULT.format(
-                    gameResult.players[index].userInformation.name,
-                    playerResult.label,
+                MESSAGE_REVENUE.format(
+                    gameRevenue.players[index].participantInformation.name,
+                    playerRevenue.toInt().toString(),
                 ),
             )
         }
@@ -46,11 +42,11 @@ object ResultView {
     private fun outputGameScore(participant: Participant) {
         println(
             MESSAGE_PARTICIPANT_GAME_SCORE.format(
-                participant.userInformation.name,
+                participant.participantInformation.name,
                 participant.gameInformation.cards.joinToString(separator = ", ") { card ->
                     card.convertCard()
                 },
-                ScoreCalculator.calculateScore(participant.gameInformation.cards),
+                Calculator.calculateScore(participant.gameInformation.cards),
             ),
         )
     }
