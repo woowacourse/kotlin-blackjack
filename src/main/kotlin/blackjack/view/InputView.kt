@@ -12,7 +12,7 @@ object InputView {
 
     fun readBetAmount(name: ParticipantName): Int {
         println("${name}의 배팅 금액은?")
-        return readlnOrNull()?.toInt() ?: INVALID_INPUT
+        return readlnOrNull()?.toIntOrNull() ?: INVALID_INPUT
     }
 
     fun askMoreCard(name: ParticipantName): Boolean {
