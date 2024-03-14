@@ -19,7 +19,7 @@ class BlackjackController {
 
         OutputView.printParticipantsStatus(participants)
 
-        participants.playRound(deck, participants)
+        playRound(deck, participants)
 
         OutputView.printParticipantsStatusAndScore(participants)
         OutputView.printGameResult(participants.calculateResult())
@@ -54,5 +54,36 @@ class BlackjackController {
                 Player(PlayerInfo(name, betAmount), deck.createStartHand())
             }
         return players
+    }
+
+    private fun playRound(
+        deck: CardDeck,
+        participants: Participants,
+    ) {
+        playRoundForPlayers(deck, participants.getPlayers())
+        playRoundForDealer(deck, participants.getDealer())
+    }
+
+    private fun playRoundForPlayers(
+        deck: CardDeck,
+        players: List<Player>,
+    ) {
+        players.forEach { player ->
+            player.playRound(
+                { playerName -> InputView.askMoreCard(playerName) },
+                { playerAfterRound -> OutputView.printPlayerStatus(playerAfterRound) },
+                deck,
+            )
+        }
+    }
+
+    private fun playRoundForDealer(
+        deck: CardDeck,
+        dealer: Dealer,
+    ) {
+        dealer.playRound(
+            { dealerAfterRound -> OutputView.printDealerStatus(dealerAfterRound) },
+            deck,
+        )
     }
 }
