@@ -29,12 +29,19 @@ class BlackJackController {
             dealerName = participants.dealer.getName(),
             players = participants.players,
         )
-        participants.dealer.openInitCards()?.firstOrNull()?.let { firstCard ->
-            OutputView.outputDealerCurrentHandCard(
-                name = participants.dealer.getName(),
-                firstCard = firstCard,
-            )
-        } ?: println(ERROR_CARD_INDEX)
+
+        participants.dealer.openInitCards()
+            .also {
+                if (it.isEmpty()) {
+                    println(ERROR_CARD_INDEX)
+                }
+            }
+            .forEach { firstCard ->
+                OutputView.outputDealerCurrentHandCard(
+                    name = participants.dealer.getName(),
+                    firstCard = firstCard,
+                )
+            }
         OutputView.outputPlayersCurrentHandCard(participants.players)
     }
 

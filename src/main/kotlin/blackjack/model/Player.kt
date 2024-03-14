@@ -1,8 +1,8 @@
 package blackjack.model
 
 class Player(name: String) : Participant(name) {
-    override fun openInitCards(): List<Card>? {
-        return getCards().take(GameManager.INIT_HAND_CARD_COUNT).ifEmpty { null }
+    override fun openInitCards(): List<Card> {
+        return getCards().take(GameManager.INIT_HAND_CARD_COUNT)
     }
 
     override fun checkShouldDrawCard(): Boolean {

@@ -12,7 +12,7 @@ abstract class Participant(
         }
     }
 
-    abstract fun openInitCards(): List<Card>?
+    abstract fun openInitCards(): List<Card>
 
     abstract fun checkShouldDrawCard(): Boolean
 

@@ -5,8 +5,8 @@ class Dealer(name: String = DEFAULT_DEALER_NAME) : Participant(name) {
         return getCards().firstOrNull()
     }
 
-    override fun openInitCards(): List<Card>? {
-        return getCards().firstOrNull()?.let { listOf(it) }
+    override fun openInitCards(): List<Card> {
+        return getCards().firstOrNull()?.let { listOf(it) } ?: listOf()
     }
 
     override fun checkShouldDrawCard(): Boolean {
