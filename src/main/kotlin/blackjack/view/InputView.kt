@@ -17,12 +17,20 @@ class InputView {
         }
     }
 
-    tailrec fun readPlayerBattingAmount(player: Player): Int {
-        println(READ_PLAYER_BATTING_AMOUNT_MESSAGE.format(player.name))
+    tailrec fun readPlayersBattingAmount(playersName: List<String>): List<Int> {
+        val playersBattingAmount = mutableListOf<Int>()
+        playersName.forEach { playerName ->
+            println(READ_PLAYER_BATTING_AMOUNT_MESSAGE.format(playerName))
+            playersBattingAmount.add(readPlayerBattingAmount(playerName))
+        }
+        return playersBattingAmount
+    }
+
+    private fun readPlayerBattingAmount(playerName: String): Int {
         val battingAmount = readln()
         return battingAmount.toIntOrNull() ?: run {
             println(INVALID_BATTING_AMOUNT_MESSAGE)
-            readPlayerBattingAmount(player)
+            readPlayerBattingAmount(playerName)
         }
     }
 

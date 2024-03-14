@@ -50,7 +50,7 @@ class DealerTest {
     fun `게임의 최종 승패 결과를 계산한다`() {
         // given
         val dealer = Dealer()
-        val players = Players.from(listOf("olive", "seogi"))
+        val players = Players.of(listOf("olive", "seogi"))
 
         dealer.receiveCard(Card.of(Denomination.KING, Suite.HEART))
         dealer.receiveCard(Card.of(Denomination.ACE, Suite.HEART))
