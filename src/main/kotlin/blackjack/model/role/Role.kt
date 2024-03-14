@@ -6,12 +6,13 @@ import blackjack.model.card.state.CardsState
 import blackjack.model.card.state.Decide
 import blackjack.model.card.state.Done
 import blackjack.model.card.state.InitialState
+import blackjack.model.config.GameRule.INITIAL_CARD_COUNT
 
 abstract class Role(open val name: PlayerName) {
     var state: CardsState = InitialState(CardHand())
 
     init {
-        repeat(2) {
+        repeat(INITIAL_CARD_COUNT) {
             state = state.draw(CardDeck.getRandomCard())
         }
     }

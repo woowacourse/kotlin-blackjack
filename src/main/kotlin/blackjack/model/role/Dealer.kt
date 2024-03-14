@@ -1,12 +1,8 @@
 package blackjack.model.role
 
-import blackjack.model.result.Score
+import blackjack.model.config.GameRule.DEALER_MAX_SCORE_FOR_HIT
+import blackjack.model.config.GameRule.DEALER_NAME
 
-class Dealer : Role(name = PlayerName(DEALER)) {
-    val dealerDecisionCondition = { state.getCardHandScore() <= Score(DEALER_MAX_SCORE_FOR_HIT) }
-
-    companion object {
-        private const val DEALER = "딜러"
-        private const val DEALER_MAX_SCORE_FOR_HIT = 16
-    }
+class Dealer : Role(name = PlayerName(DEALER_NAME)) {
+    val dealerDecisionCondition = { state.getCardHandScore() <= DEALER_MAX_SCORE_FOR_HIT }
 }

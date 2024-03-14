@@ -3,6 +3,8 @@ package blackjack.view
 import blackjack.model.card.CardHand
 import blackjack.model.card.CardNumber
 import blackjack.model.card.CardShape
+import blackjack.model.config.GameRule.DEALER_MAX_SCORE_FOR_HIT
+import blackjack.model.config.GameRule.DEALER_NAME
 import blackjack.model.result.DealerWinning
 import blackjack.model.result.PlayerWinning
 import blackjack.model.result.WinningResultStatus
@@ -50,7 +52,7 @@ class OutputView {
         printAllCardHand(role.state.getCardHands())
     }
 
-    fun printDealerHit() = println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.")
+    fun printDealerHit() = println("\n${DEALER_NAME}는 ${DEALER_MAX_SCORE_FOR_HIT.point}이하라 한 장의 카드를 더 받았습니다.")
 
     fun printFinalCardHands(
         dealer: Dealer,
@@ -84,7 +86,7 @@ class OutputView {
     }
 
     private fun printDealerWinningResult(dealerWinning: DealerWinning) {
-        print("딜러: ")
+        print(DEALER_NAME)
         dealerWinning.result.forEach { (winningResultStatus, score) ->
             print(score.toString() + winningResultStatus.toOutput() + " ")
         }
