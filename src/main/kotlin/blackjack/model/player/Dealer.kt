@@ -10,7 +10,7 @@ class Dealer(val hand: Hand) {
                 State.Finished.Bust
             } else if (isRunning()) {
                 State.Running.Hit
-            } else if (judgeBlackJack()) {
+            } else if (hand.isBlackjack()) {
                 State.Finished.BlackJack
             } else {
                 State.Finished.Stay
@@ -18,9 +18,5 @@ class Dealer(val hand: Hand) {
 
     fun isRunning(): Boolean {
         return hand.totalScore <= 16
-    }
-
-    private fun judgeBlackJack(): Boolean {
-        return hand.totalScore == 21
     }
 }
