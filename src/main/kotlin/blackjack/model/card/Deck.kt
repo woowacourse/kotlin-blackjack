@@ -1,8 +1,6 @@
 package blackjack.model.card
 
-class Deck(cardsInput: MutableList<Card>? = null) {
-    val cards: MutableList<Card> = cardsInput ?: mutableListOf()
-
+class Deck(val cards: MutableList<Card> = mutableListOf()) {
     init {
         if (cards.isEmpty()) {
             initializeDeck()

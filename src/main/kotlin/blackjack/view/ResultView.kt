@@ -13,6 +13,7 @@ import blackjack.model.player.PlayerResult
 const val DEALER_CARD_RESULT = "\n딜러: %s - 결과: %d"
 const val PLAYER_CARD_RESULT = "%s카드: %s - 결과: %d"
 const val FINAL_WIN_OR_LOSS = "\n## 최종 승패"
+const val FINAL_REVENUE = "\n## 최종 수익"
 const val BUST_STRING = "(Bust)"
 const val BLACKJACK_STRING = "(BlackJack)"
 const val EMPTY_STRING = ""
@@ -69,7 +70,6 @@ object ResultView {
     }
 
     private fun showPlayersScore(playerResults: List<PlayerResult>) {
-        println()
         playerResults.forEach { playerResult ->
             val state = getStateString(playerResult.player.state)
 
@@ -128,8 +128,17 @@ object ResultView {
         )
     }
 
+    private fun showFinalProfits(gameResult: GameResult) {
+        println(FINAL_REVENUE)
+        println("딜러: ${gameResult.dealer.profit}")
+        gameResult.playerResults.forEach { playerResult ->
+            println(PLAYER_GAME_RESULT.format(playerResult.player.name, playerResult.player.profit))
+        }
+    }
+
     fun showResult(gameResult: GameResult) {
         showHandsScore(gameResult)
         showFinalWinOrLossResult(gameResult)
+        showFinalProfits(gameResult)
     }
 }

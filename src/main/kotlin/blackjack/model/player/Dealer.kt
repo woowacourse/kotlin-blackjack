@@ -4,6 +4,7 @@ import blackjack.model.card.Hand
 import blackjack.model.game.State
 
 class Dealer(val hand: Hand) {
+    var profit: Int = 0
     val state: State
         get() =
             if (hand.isBust()) {
