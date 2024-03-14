@@ -59,11 +59,11 @@ class OutputView {
         println("\n")
 
         printPlayerCardHand(dealer)
-        println(CARD_HAND_SUM_FORMAT.format(dealer.state.getCardHands().calculateScore()))
+        println(CARD_HAND_SUM_FORMAT.format(dealer.state.getCardHands().calculateScore().point))
 
         players.players.forEach {
             printPlayerCardHand(it)
-            println(CARD_HAND_SUM_FORMAT.format(it.state.getCardHands().calculateScore()))
+            println(CARD_HAND_SUM_FORMAT.format(it.state.getCardHands().calculateScore().point))
         }
     }
 
@@ -95,7 +95,6 @@ class OutputView {
         print(cardHand.hand.joinToString { it.number.toOutput() + it.shape.toOutput() })
     }
 
-
     companion object {
         private const val NAME_CARD_HAND_FORMAT = "%s 카드: "
         private const val CARD_HAND_SUM_FORMAT = " - 결과: %d"
@@ -107,15 +106,17 @@ private fun CardNumber.toOutput(): String {
     return this.number.toString()
 }
 
-private fun CardShape.toOutput(): String = when (this) {
-    CardShape.HEART -> "하트"
-    CardShape.CLOVER -> "클로버"
-    CardShape.SPADE -> "스페이드"
-    CardShape.DIAMOND -> "다이아몬드"
-}
+private fun CardShape.toOutput(): String =
+    when (this) {
+        CardShape.HEART -> "하트"
+        CardShape.CLOVER -> "클로버"
+        CardShape.SPADE -> "스페이드"
+        CardShape.DIAMOND -> "다이아몬드"
+    }
 
-private fun WinningResultStatus.toOutput(): String = when (this) {
-    WinningResultStatus.VICTORY -> "승"
-    WinningResultStatus.DEFEAT -> "패"
-    WinningResultStatus.DRAW -> "무"
-}
+private fun WinningResultStatus.toOutput(): String =
+    when (this) {
+        WinningResultStatus.VICTORY -> "승"
+        WinningResultStatus.DEFEAT -> "패"
+        WinningResultStatus.DRAW -> "무"
+    }

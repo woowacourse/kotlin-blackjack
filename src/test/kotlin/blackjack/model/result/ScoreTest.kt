@@ -56,5 +56,4 @@ class ScoreTest {
 
         assertThat(actualPlayerWinning).isEqualTo(WinningResultStatus.DRAW)
     }
-
 }

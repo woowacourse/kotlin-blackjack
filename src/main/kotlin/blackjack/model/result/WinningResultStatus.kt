@@ -3,7 +3,7 @@ package blackjack.model.result
 enum class WinningResultStatus {
     VICTORY,
     DEFEAT,
-    DRAW
+    DRAW,
     ;
 
     fun reverse(): WinningResultStatus =

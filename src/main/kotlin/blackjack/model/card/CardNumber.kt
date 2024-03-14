@@ -1,7 +1,7 @@
 package blackjack.model.card
 
 enum class CardNumber(
-    val number: Int
+    val number: Int,
 ) {
     ACE(1),
     TWO(2),
