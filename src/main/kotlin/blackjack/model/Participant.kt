@@ -12,7 +12,7 @@ abstract class Participant(
 
     fun isMaxScore(): Boolean = cards.isMaxScore()
 
-    fun addCard(getCard: () -> Card) = cards.addCard(getCard())
+    fun addCard(card: Card) = cards.addCard(card)
 
     fun getCardSum(): Int = cards.sum()
 

@@ -84,6 +84,6 @@ class Controller {
         this.pickCard()
     }
     private fun Participant.pickCard() {
-        this.addCard(deck::pop)
+        this.addCard(deck.pop())
     }
 }
