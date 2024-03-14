@@ -1,5 +1,6 @@
 package model.participants
 
+import model.card.Deck
 import model.result.DealerResult
 import model.result.PlayersResult
 import model.result.ResultType
@@ -11,6 +12,13 @@ class Participants private constructor(private val participants: List<Participan
 
     fun getPlayers(): Players {
         return Players(participants.filterIsInstance<Player>())
+    }
+
+    fun handOut(deck: Deck) {
+        getAll().forEach { participant ->
+            participant.hit(deck.pop())
+            participant.hit(deck.pop())
+        }
     }
 
     fun getAll(): List<Participant> {

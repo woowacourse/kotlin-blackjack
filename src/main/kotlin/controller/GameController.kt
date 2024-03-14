@@ -25,21 +25,8 @@ class GameController(private val deck: Deck) {
     }
 
     private fun handOut(participants: Participants) {
-        handOutDealer(participants.getDealer())
-        handOutPlayers(participants.getPlayers())
+        participants.handOut(deck)
         OutputView.showGameInit(participants)
-    }
-
-    private fun handOutDealer(dealer: Dealer) {
-        dealer.hit(deck.pop())
-        dealer.hit(deck.pop())
-    }
-
-    private fun handOutPlayers(players: Players) {
-        players.players.forEach {
-            it.hit(deck.pop())
-            it.hit(deck.pop())
-        }
     }
 
     private fun playGame(participants: Participants) {
