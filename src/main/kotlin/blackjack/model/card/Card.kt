@@ -1,6 +1,6 @@
 package blackjack.model.card
 
-data class Card(val denomination: Denomination, val suite: Suite) {
+data class Card private constructor(val denomination: Denomination, val suite: Suite) {
     init {
         validateCardInfo(denomination, suite)
     }
@@ -24,6 +24,13 @@ data class Card(val denomination: Denomination, val suite: Suite) {
 
         fun from(cardProvider: CardProvider): Card {
             return cardProvider.provide(bundle)
+        }
+
+        fun of(
+            denomination: Denomination,
+            suite: Suite,
+        ): Card {
+            return bundle.first { it.denomination == denomination && it.suite == suite }
         }
 
         private fun validateCardInfo(

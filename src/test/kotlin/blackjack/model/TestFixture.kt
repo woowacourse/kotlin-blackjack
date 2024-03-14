@@ -7,7 +7,7 @@ import blackjack.model.card.Suite
 fun Card(denomination: String): Card {
     val denominationValue = denomination.value()
     requireNotNull(denominationValue) { "유효하지 않은 알파벳 혹은 숫자입니다." }
-    return Card(denominationValue, Suite.HEART)
+    return Card.of(denominationValue, Suite.HEART)
 }
 
 private fun String.value(): Denomination? =
