@@ -20,6 +20,12 @@ class Dealer : Role() {
         return GameResultStorage(DealerResult(dealerResultList), playersResult)
     }
 
+    fun calculateProfit(players: Players) {
+        players.playerGroup.forEach {
+            profit -= it.profit
+        }
+    }
+
     private fun decideGameResultType(player: Player): GameResultType {
         return when {
             player.isBurst() -> GameResultType.WIN

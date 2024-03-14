@@ -4,7 +4,7 @@ import blackjack.model.card.Card
 
 abstract class Role {
     private val handCards = HandCards()
-    val profit = 0
+    var profit = 0
 
     abstract fun decideMoreCard(): Boolean
 
