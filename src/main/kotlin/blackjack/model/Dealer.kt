@@ -51,12 +51,40 @@ class Dealer(val hand: Hand) : Participant() {
     }
 
     private fun comparePointsEachPlayer(player: Player): PlayerResult {
-        val dealerCards = this.hand
-        val playerCards = player.hand
-        val compared = playerCards.sumOptimized() compareTo dealerCards.sumOptimized()
-        if (playerCards.isBust()) return PlayerResult(player.name, WinningState.LOSS)
-        if (dealerCards.isBust()) return PlayerResult(player.name, WinningState.WIN)
-        return PlayerResult(player.name, WinningState.from(compared))
+        val dealerHand = this.hand
+        val playerHand = player.hand
+        if (playerHand.isBust()) return PlayerResult(player.name, WinningState.LOSS)
+        if (dealerHand.isBust()) return PlayerResult(player.name, WinningState.WIN)
+        if (playerHand.sumOptimized() == BLACKJACK_NUMBER && dealerHand.sumOptimized() == BLACKJACK_NUMBER) {
+            val playerWinningState = compareIfBlackJackNum(dealerHand, playerHand)
+            return PlayerResult(player.name, playerWinningState)
+        } else {
+            val playerWinningState = compareIfNotBlackJackNum(dealerHand, playerHand)
+            return PlayerResult(player.name, playerWinningState)
+        }
+    }
+
+    private fun compareIfBlackJackNum(
+        dealerHand: Hand,
+        playerHand: Hand,
+    ): WinningState {
+        return when {
+            playerHand.cards.size == dealerHand.cards.size -> WinningState.DRAW
+            playerHand.cards.size == BLACKJACK_CARD_SIZE -> WinningState.WIN
+            dealerHand.cards.size == BLACKJACK_CARD_SIZE -> WinningState.LOSS
+            else -> WinningState.DRAW
+        }
+    }
+
+    private fun compareIfNotBlackJackNum(
+        dealerHand: Hand,
+        playerHand: Hand,
+    ): WinningState {
+        return when {
+            dealerHand.sumOptimized() == playerHand.sumOptimized() -> WinningState.DRAW
+            dealerHand.sumOptimized() < playerHand.sumOptimized() -> WinningState.WIN
+            else -> WinningState.LOSS
+        }
     }
 
     companion object {
@@ -68,5 +96,6 @@ class Dealer(val hand: Hand) : Participant() {
 
         const val HIT_CONDITION = 17
         const val BLACKJACK_NUMBER = 21
+        const val BLACKJACK_CARD_SIZE = 2
     }
 }

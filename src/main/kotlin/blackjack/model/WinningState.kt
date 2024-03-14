@@ -11,14 +11,4 @@ enum class WinningState(val label: String) {
         if (this == LOSS) return WIN
         return DRAW
     }
-
-    companion object {
-        fun from(compared: Int): WinningState {
-            return when {
-                compared == 0 -> DRAW
-                compared > 0 -> WIN
-                else -> LOSS
-            }
-        }
-    }
 }
