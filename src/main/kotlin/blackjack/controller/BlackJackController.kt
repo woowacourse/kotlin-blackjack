@@ -3,7 +3,6 @@ package blackjack.controller
 import blackjack.model.action.Action
 import blackjack.model.dispatcher.Dispatcher
 import blackjack.model.domain.CardDeck
-import blackjack.model.domain.Judge
 import blackjack.model.store.Store
 import blackjack.view.InputView
 import blackjack.view.OutputView
@@ -14,6 +13,7 @@ class BlackJackController(
 ) {
     fun startGame() {
         dispatcher.dispatch(Action.ReadNames(getPlayerNames()))
+        dispatcher.dispatch(Action.ReadBatingAmount(::getBatingAmount))
         initializeParticipantsCards()
         playRound()
         displayResult()
@@ -25,6 +25,15 @@ class BlackJackController(
         }.onFailure {
             println(it.message)
             return getPlayerNames()
+        }.getOrThrow()
+    }
+
+    private fun getBatingAmount(name: String): Int {
+        return runCatching {
+            InputView.readPlayerBatingAmount(name) ?: getBatingAmount(name)
+        }.onFailure {
+            println(it.message)
+            return getBatingAmount(name)
         }.getOrThrow()
     }
 
@@ -48,7 +57,7 @@ class BlackJackController(
             printNewLine()
             dispatcher.dispatch(
                 action = Action.DrawUntilDealerSatisfaction(
-                    { CardDeck.pick() },
+                    CardDeck::pick,
                     ::printDealerHit,
                 ),
             )
@@ -56,10 +65,11 @@ class BlackJackController(
     }
 
     private fun displayResult() {
-        val judge = Judge(store)
+        dispatcher.dispatch(Action.FindWinner(store.dealerInfo))
+
         with(OutputView) {
             printFinalCards(store)
-            printResult(store, judge)
+            printResult(store)
         }
     }
 
