@@ -9,9 +9,9 @@ class GameManagerTest {
         val dealer = Dealer()
         val players =
             listOf(
-                Player("누누"),
-                Player("채드"),
-                Player("꼬상"),
+                Player(Wallet("누누")),
+                Player(Wallet("채드")),
+                Player(Wallet("꼬상")),
             )
         val participants =
             Participants(
