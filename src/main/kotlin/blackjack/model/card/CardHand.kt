@@ -8,13 +8,7 @@ class CardHand(hand: List<Card>) {
 
     constructor(vararg card: Card) : this(card.toList())
 
-    fun calculateScore(): Int {
-        val numbersSum = numbersSum()
-        if (canGetBonusPoint()) return numbersSum + BONUS_POINT
-        return numbersSum
-    }
-
-    fun calculateScore2(): Score {
+    fun calculateScore(): Score {
         val numbersSum = numbersSum()
         if (canGetBonusPoint()) return Score(numbersSum + BONUS_POINT)
         return Score(numbersSum)
