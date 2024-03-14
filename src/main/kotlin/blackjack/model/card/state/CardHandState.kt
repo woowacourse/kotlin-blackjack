@@ -4,10 +4,10 @@ import blackjack.model.card.Card
 import blackjack.model.card.CardHand
 import blackjack.model.result.Score
 
-interface CardsState {
-    fun draw(card: Card): CardsState
+interface CardHandState {
+    fun draw(card: Card): CardHandState
 
-    fun stay(): CardsState
+    fun stay(): CardHandState
 
     fun getCardHands(): CardHand
 

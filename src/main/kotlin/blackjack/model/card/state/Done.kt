@@ -4,10 +4,10 @@ import blackjack.model.card.Card
 import blackjack.model.card.CardHand
 import blackjack.model.result.Score
 
-abstract class Done(private val cardHand: CardHand) : CardsState {
-    override fun draw(card: Card): CardsState = throw IllegalStateException("현재 상태에서는 카드를 뽑을 수 없습니다.")
+abstract class Done(private val cardHand: CardHand) : CardHandState {
+    override fun draw(card: Card): CardHandState = throw IllegalStateException("현재 상태에서는 카드를 뽑을 수 없습니다.")
 
-    override fun stay(): CardsState = throw IllegalStateException("현재 상태에서는 stay 선언을 할 수 없습니다.")
+    override fun stay(): CardHandState = throw IllegalStateException("현재 상태에서는 stay 선언을 할 수 없습니다.")
 
     override fun getCardHands(): CardHand = cardHand
 
