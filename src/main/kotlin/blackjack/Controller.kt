@@ -51,7 +51,7 @@ class Controller {
             return
         }
         while (player.isNotBustedAndHitable() && askPick(player.name)) {
-            player pick deck
+            player.pickCard()
             OutputView.printParticipantStatus(player)
         }
         if (player.isBusted()) {
@@ -65,7 +65,7 @@ class Controller {
 
     private fun proceedDealerTurn(dealer: Dealer) {
         while (dealer.isNotBustedAndHitable()) {
-            dealer pick deck
+            dealer.pickCard()
             OutputView.printDealerHitMessage()
         }
     }
@@ -80,7 +80,10 @@ class Controller {
     }
 
     private fun Participant.initCard() {
-        this pick deck
-        this pick deck
+        this.pickCard()
+        this.pickCard()
+    }
+    private fun Participant.pickCard() {
+        this.addCard(deck::pop)
     }
 }

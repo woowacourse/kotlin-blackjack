@@ -12,17 +12,13 @@ abstract class Participant(
 
     fun isMaxScore(): Boolean = cards.isMaxScore()
 
-    fun addCard(card: Card) = cards.addCard(card)
+    fun addCard(getCard: () -> Card) = cards.addCard(getCard())
 
     fun getCardSum(): Int = cards.sum()
 
     fun showCard() = cards.toList()
 
     abstract fun showInitialCard(): List<Card>
-
-    infix fun pick(deck: Deck) {
-        this.addCard(deck.pop())
-    }
 
     fun isNotBustedAndHitable(): Boolean = !isBusted() && isHitable()
 
