@@ -6,7 +6,7 @@ class BlackJackGame(
 ) {
     fun start(printGameSetting: (dealerCard: Card, playerGroup: PlayerGroup) -> Unit) {
         participants.initSetting(gameDeck)
-        printGameSetting(participants.dealer.status.hand.cards.first(), participants.playerGroup)
+        printGameSetting(participants.dealer.state.hand.cards.first(), participants.playerGroup)
     }
 
     fun runPlayersTurn(
@@ -21,10 +21,10 @@ class BlackJackGame(
     }
 
     fun runDealerTurn(alertCountOfDraw: (drawCount: Int) -> Unit) {
-        alertCountOfDraw(participants.dealer.drawDealerCard(gameDeck = gameDeck))
+        alertCountOfDraw(participants.dealer.drawUntilOverThreshold(gameDeck = gameDeck))
     }
 
     fun finish(printEveryCards: (dealerHand: Hand, playerGroup: PlayerGroup) -> Unit) {
-        printEveryCards(participants.dealer.status.hand, participants.playerGroup)
+        printEveryCards((participants.dealer.state as Finished).hand, participants.playerGroup)
     }
 }
