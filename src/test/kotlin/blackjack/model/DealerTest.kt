@@ -10,11 +10,8 @@ import org.junit.jupiter.params.provider.CsvSource
 class DealerTest {
     @ParameterizedTest
     @CsvSource(
-        value = [
-            "SIX:TEN:true",
-            "SEVEN:TEN:false",
-        ],
-        delimiter = ':',
+        "SIX,TEN,true",
+        "SEVEN,TEN,false",
     )
     fun `손패합이 17 미만 이면, hit 할 수 있다`(
         rank: Rank,
