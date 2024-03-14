@@ -27,4 +27,12 @@ class HandCard {
     fun checkStateWithCardCount(): Boolean {
         return cards.size == GameManager.INIT_HAND_CARD_COUNT
     }
+
+    fun checkStateWithAceCount(): Boolean {
+        return cards.count { it.denomination == Denomination.ACE } >= MIN_ACE_COUNT
+    }
+
+    companion object {
+        private const val MIN_ACE_COUNT = 1
+    }
 }

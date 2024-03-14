@@ -22,15 +22,15 @@ class GameResultTest {
                 dealer = dealer,
                 players = winPlayers,
             )
+        dealer.transitionToStayState()
+        player.transitionToStayState()
         val gameManager =
             GameManager(
                 participants = participants,
             )
         val gameResult = gameManager.calculateGameResult()
-        val dealerResults = gameResult.dealerResult
-        assertThat(dealerResults.getOrDefault(Result.LOSE, 0)).isEqualTo(1)
-        val playerResults = gameResult.playerResults
-        assertThat(playerResults.getOrDefault(player, Result.LOSE)).isEqualTo(Result.WIN)
+        assertThat(gameResult.getDealerResult(Result.LOSE)).isEqualTo(1)
+        assertThat(gameResult.getPlayerResult(player)).isEqualTo(Result.WIN)
     }
 
     @Test
@@ -71,15 +71,15 @@ class GameResultTest {
                 dealer = dealer,
                 players = drawPlayers,
             )
+        dealer.transitionToStayState()
+        player.transitionToStayState()
         val gameManager =
             GameManager(
                 participants = participants,
             )
         val gameResult = gameManager.calculateGameResult()
-        val dealerResults = gameResult.dealerResult
-        assertThat(dealerResults.getOrDefault(Result.DRAW, 0)).isEqualTo(1)
-        val playerResults = gameResult.playerResults
-        assertThat(playerResults.getOrDefault(player, Result.WIN)).isEqualTo(Result.DRAW)
+        assertThat(gameResult.getDealerResult(Result.DRAW)).isEqualTo(1)
+        assertThat(gameResult.getPlayerResult(player)).isEqualTo(Result.DRAW)
     }
 
     @Test
@@ -100,14 +100,14 @@ class GameResultTest {
                 dealer = dealer,
                 players = losePlayers,
             )
+        dealer.transitionToStayState()
+        player.transitionToStayState()
         val gameManager =
             GameManager(
                 participants = participants,
             )
         val gameResult = gameManager.calculateGameResult()
-        val dealerResults = gameResult.dealerResult
-        assertThat(dealerResults.getOrDefault(Result.WIN, 0)).isEqualTo(1)
-        val playerResults = gameResult.playerResults
-        assertThat(playerResults.getOrDefault(player, Result.WIN)).isEqualTo(Result.LOSE)
+        assertThat(gameResult.getDealerResult(Result.WIN)).isEqualTo(1)
+        assertThat(gameResult.getPlayerResult(player)).isEqualTo(Result.LOSE)
     }
 }

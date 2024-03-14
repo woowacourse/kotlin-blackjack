@@ -36,11 +36,23 @@ class BlackJack {
     }
 
     private fun updateGameStateWithScore() {
-        when (handCard.getTotalCardsSum()) {
-            in MIN_SCORE until BLACK_JACK_SCORE -> state = State.Action.Hit
+        val score = handCard.getTotalCardsSum()
+        when (getGameScoreWithAceCount(score)) {
+            in MIN_SCORE until BLACK_JACK_SCORE -> {
+                state = State.Action.Hit
+            }
 
             BLACK_JACK_SCORE -> applyBlackJackStateWithCardCount()
             in BUST_SCORE..Int.MAX_VALUE -> state = State.Finish.Bust
+        }
+    }
+
+    private fun getGameScoreWithAceCount(score: Int): Int {
+        val transferScore = score + Denomination.TRANSFER_ACE_SCORE
+        return if (handCard.checkStateWithAceCount() && transferScore <= BLACK_JACK_SCORE) {
+            transferScore
+        } else {
+            score
         }
     }
 

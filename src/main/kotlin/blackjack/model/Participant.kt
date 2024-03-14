@@ -21,7 +21,8 @@ abstract class Participant(
         val otherScore = other.getBlackJackScore()
 
         return when {
-            getGameState() == State.Finish.BlackJack -> Result.LOSE
+            this.getGameState() == State.Finish.Bust -> Result.LOSE
+            other.getGameState() == State.Finish.Bust -> Result.WIN
             this.checkBlackJackState() && other.checkBlackJackState() -> Result.DRAW
             this.checkBlackJackState() -> Result.WIN
             myScore > otherScore -> Result.WIN

@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test
 
 class ParticipantTest {
     class MockParticipant(name: String) : Participant(name) {
-        override fun openInitCards(): List<Card>? {
+        override fun openInitCards(): List<Card> {
             TODO("Not yet implemented")
         }
 
