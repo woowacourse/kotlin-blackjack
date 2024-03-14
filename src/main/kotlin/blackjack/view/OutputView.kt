@@ -3,7 +3,9 @@ package blackjack.view
 import blackjack.model.Card
 import blackjack.model.DealerResult
 import blackjack.model.Player
+import blackjack.model.Rank
 import blackjack.model.ScoreBoard
+import blackjack.model.Suit
 import blackjack.model.WinningState
 
 class OutputView {
@@ -53,7 +55,7 @@ class OutputView {
         val (playersResult, dealerResult) = scoreBoard
         println(dealerResult.format())
         playersResult.forEach {
-            println("${it.name}: ${it.winningState.label}")
+            println("${it.name}: ${makeWinningStateLabel(it.winningState)}")
         }
     }
 
@@ -62,13 +64,13 @@ class OutputView {
             append("${DEALER_NAME}: ")
             WinningState.entries.forEach {
                 append(map[it] ?: 0)
-                append(it.label)
+                append(makeWinningStateLabel(it))
                 append(" ")
             }
         }
 
     private fun Card.format(): String {
-        return "${rank.label}${suit.label} "
+        return "${makeRankLabel(rank)}${makeSuitLabel(suit)} "
     }
 
     private fun List<Card>.format(): String {
@@ -78,6 +80,38 @@ class OutputView {
             }
         }
     }
+
+    private fun makeRankLabel(rank: Rank) =
+        when (rank) {
+            Rank.ACE -> "A"
+            Rank.TWO -> "2"
+            Rank.THREE -> "3"
+            Rank.FOUR -> "4"
+            Rank.FIVE -> "5"
+            Rank.SIX -> "6"
+            Rank.SEVEN -> "7"
+            Rank.EIGHT -> "8"
+            Rank.NINE -> "9"
+            Rank.TEN -> "10"
+            Rank.JACK -> "J"
+            Rank.QUEEN -> "Q"
+            Rank.KING -> "K"
+        }
+
+    private fun makeSuitLabel(suit: Suit) =
+        when (suit) {
+            Suit.CLUB -> "클로버"
+            Suit.DIAMOND -> "다이아몬드"
+            Suit.SPADE -> "스페이드"
+            Suit.HEART -> "하트"
+        }
+
+    private fun makeWinningStateLabel(winningState: WinningState) =
+        when (winningState) {
+            WinningState.WIN -> "승"
+            WinningState.LOSS -> "패"
+            WinningState.DRAW -> "무"
+        }
 
     companion object {
         private const val DEALER_NAME = "딜러"

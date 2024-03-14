@@ -1,9 +1,9 @@
 package blackjack.model
 
-enum class WinningState(val label: String) {
-    WIN("승"),
-    LOSS("패"),
-    DRAW("무"),
+enum class WinningState {
+    WIN,
+    LOSS,
+    DRAW,
     ;
 
     fun reversed(): WinningState {
