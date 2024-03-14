@@ -22,3 +22,12 @@ class ScoreBoard(private val record: Map<PlayerName, Int>) {
             else -> WinningResultStatus.VICTORY
         }
 }
+
+class ScoreBoard2(private val record: Map<PlayerName, Score>) {
+    fun calculatePlayerWinning(dealerScore: Score): PlayerWinning =
+        PlayerWinning(
+            record.mapValues { (_, playerScore) ->
+                playerScore.determineWinning(dealerScore)
+            },
+        )
+}
