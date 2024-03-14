@@ -1,6 +1,7 @@
 package blackjack.view
 
 import blackjack.model.card.CardHand
+import blackjack.model.card.CardNumber
 import blackjack.model.result.DealerWinning
 import blackjack.model.result.PlayerWinning
 import blackjack.model.role.Dealer
@@ -89,7 +90,12 @@ class OutputView {
     }
 
     private fun printAllCardHand(cardHand: CardHand) {
-        print(cardHand.hand.joinToString { it.number.output + it.shape.shape })
+        print(cardHand.hand.joinToString { it.number.toOutput() + it.shape.shape })
+    }
+
+    private fun CardNumber.toOutput(): String {
+        if (this == CardNumber.ACE) return "A"
+        return this.number.toString()
     }
 
     companion object {
