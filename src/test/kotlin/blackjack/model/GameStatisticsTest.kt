@@ -126,15 +126,18 @@ class GameStatisticsTest {
         }
 
         @Test
-        fun `딜러가 블랙잭이고 플레이어가 21인 경우 패배한다`() {
+        fun `딜러가 블랙잭이고 플레이어가 21인 경우 플레이어가 패배하고 딜러는 1번 승리한다`() {
             val dealer = buildDealer(CardNumber.JACK, CardNumber.ACE)
-
             val player1 = buildPlayer("a", CardNumber.JACK, CardNumber.FIVE, CardNumber.SIX)
-
             val statistics = GameStatistics(dealer, listOf(player1))
-            val actual = statistics.playerStatistics
-            val expected = mapOf("a" to GameResult.LOSE)
-            assertThat(actual).isEqualTo(expected)
+
+            val actualPlayer = statistics.playerStatistics
+            val expectedPlayer = mapOf("a" to GameResult.LOSE)
+            assertThat(actualPlayer).isEqualTo(expectedPlayer)
+
+            val actualDealer = statistics.dealerStatistics
+            val expectedDealer = mapOf(GameResult.WIN to 1)
+            assertThat(actualDealer).isEqualTo(expectedDealer)
         }
 
         @Test
