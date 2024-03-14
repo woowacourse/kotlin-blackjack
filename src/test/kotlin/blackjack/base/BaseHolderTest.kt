@@ -1,6 +1,7 @@
 package blackjack.base
 
 import blackjack.model.Dealer
+import blackjack.model.GameResult
 import blackjack.model.Name
 import blackjack.model.Player
 import org.assertj.core.api.Assertions.assertThat
@@ -19,9 +20,9 @@ class BaseHolderTest {
         val loser = Player(Name("호두"))
         val dealer = Dealer()
 
-        winner.changeResult(newWin = win)
-        loser.changeResult(newDefeat = defeat)
-        dealer.changeResult(newPush = push)
+        winner.changeResult(GameResult(win = 1))
+        loser.changeResult(GameResult(defeat = 1))
+        dealer.changeResult(GameResult(push = 1))
         assertThat(winner.gameResult.win).isEqualTo(win)
         assertThat(loser.gameResult.defeat).isEqualTo(defeat)
         assertThat(dealer.gameResult.push).isEqualTo(push)
