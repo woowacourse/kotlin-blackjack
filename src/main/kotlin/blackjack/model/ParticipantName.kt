@@ -11,6 +11,5 @@ class ParticipantName(private val name: String) {
 
     companion object {
         private const val NAME_EMPTY_ERROR_MESSAGE = "이름은 공백이 될 수 없습니다."
-        const val DEALER_NAME = "딜러"
     }
 }

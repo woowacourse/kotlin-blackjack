@@ -1,7 +1,7 @@
 package blackjack.model
 
-sealed class Participant(private val name: ParticipantName, private val hand: Hand) {
-    fun getName() = name
+sealed class Participant(private val info: ParticipantInfo, private val hand: Hand) {
+    fun getName() = info.name
 
     fun getCards() = hand.getCards()
 
@@ -30,8 +30,8 @@ sealed class Participant(private val name: ParticipantName, private val hand: Ha
     }
 }
 
-class Dealer(name: ParticipantName = ParticipantName(ParticipantName.DEALER_NAME), hand: Hand) :
-    Participant(name, hand) {
+class Dealer(info: DealerInfo, hand: Hand) :
+    Participant(info, hand) {
     private fun shouldDrawCardForDealer(threshold: Int = THRESHOLD_DRAW_FOR_DEALER): Boolean = getCardsSum() <= threshold
 
     fun playRound(
@@ -49,7 +49,7 @@ class Dealer(name: ParticipantName = ParticipantName(ParticipantName.DEALER_NAME
     }
 }
 
-class Player(name: ParticipantName, hand: Hand) : Participant(name, hand) {
+class Player(info: PlayerInfo, hand: Hand) : Participant(info, hand) {
     fun playRound(
         requestMoreCards: (ParticipantName) -> Boolean,
         updatePlayerInfo: (Player) -> Unit,

@@ -4,7 +4,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 private fun createDealer(vararg numbers: Card): Dealer {
-    return Dealer(hand = Hand(numbers.toMutableList()))
+    return Dealer(DealerInfo(),hand = Hand(numbers.toMutableList()))
 }
 
 private fun Card(value: Int): Card {
@@ -12,7 +12,7 @@ private fun Card(value: Int): Card {
 }
 
 private fun createPlayer(vararg numbers: Card): Player {
-    return Player(ParticipantName("leo"), hand = Hand(numbers.toMutableList()))
+    return Player(PlayerInfo(ParticipantName("leo"),ParticipantBetAmount(5000)), hand = Hand(numbers.toMutableList()))
 }
 
 class PlayerTest {
