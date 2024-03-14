@@ -12,7 +12,13 @@ import blackjack.view.user.UserDecision
 class BlackJackController {
     private lateinit var gameManager: GameManager
 
-    fun startGameFlow() {
+    fun runBlackJackGame() {
+        startGameFlow()
+        playGame()
+        showResult()
+    }
+
+    private fun startGameFlow() {
         val participants = makeParticipants()
         gameManager =
             GameManager(
@@ -32,7 +38,7 @@ class BlackJackController {
         OutputView.outputPlayersCurrentHandCard(participants.players)
     }
 
-    fun playGame() {
+    private fun playGame() {
         gameManager.getAlivePlayers().forEach { participant ->
             playPlayer(participant)
         }
@@ -64,7 +70,7 @@ class BlackJackController {
         }
     }
 
-    fun showResult() {
+    private fun showResult() {
         OutputView.outputParticipantsHandCard(gameManager.getParticipants())
         OutputView.outputBlackResult()
         val gameResult = gameManager.calculateGameResult()
