@@ -11,11 +11,9 @@ sealed class Participant(
     val betting: Betting = Betting(0),
     initState: State,
 ) {
-    private var _state = initState
-    val state get() = _state
+    private var state = initState
 
-    private var _finishState: State.Finish? = null
-    val finishState get() = _finishState
+    private var finishState: State.Finish? = null
     val hand: Hand get() = state.hand
 
     fun sumScore(): Int = state.sumScore()
@@ -31,13 +29,13 @@ sealed class Participant(
         onDone: (Participant) -> Unit,
     ) {
         if (onHitCondition()) {
-            _state = State.Running(hand).hit(onDraw())
+            state = State.Running(hand).hit(onDraw())
             onDone(this)
             play(onDraw, onDone)
         } else {
             State.Running(hand).stay().also {
-                _state = it
-                _finishState = it
+                state = it
+                finishState = it
             }
         }
     }

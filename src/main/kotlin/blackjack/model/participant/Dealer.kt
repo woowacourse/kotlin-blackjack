@@ -10,7 +10,7 @@ class Dealer(betting: Betting, initState: State) : Participant(DEALER_NAME, bett
         onDraw: () -> Card,
         onDone: (Participant) -> Unit,
     ) = play(
-        onHitCondition = { state.sumScore() < HIT_CONDITION },
+        onHitCondition = { sumScore() < HIT_CONDITION },
         onDraw = onDraw,
         onDone = onDone,
     )
