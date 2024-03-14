@@ -74,12 +74,9 @@ class BlackJackController {
         OutputView.outputParticipantsHandCard(gameManager.getParticipants())
         OutputView.outputBlackResult()
         val gameResult = gameManager.calculateGameResult()
-        OutputView.outputDealerResult(
+        OutputView.outputParticipantResult(
             dealerName = gameManager.getDealer().getName(),
-            dealerResults = gameResult.dealerResult,
-        )
-        OutputView.outputPlayersResult(
-            playersResult = gameResult.playerResults,
+            gameResult = gameResult,
         )
     }
 

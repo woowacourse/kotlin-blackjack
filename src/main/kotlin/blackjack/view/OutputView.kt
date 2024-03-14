@@ -2,6 +2,7 @@ package blackjack.view
 
 import blackjack.model.Card
 import blackjack.model.Dealer
+import blackjack.model.GameResult
 import blackjack.model.Participant
 import blackjack.model.Player
 import blackjack.model.Result
@@ -118,7 +119,20 @@ object OutputView {
         println(OUTPUT_MESSAGE_BLACKJACK_RESULT)
     }
 
-    fun outputDealerResult(
+    fun outputParticipantResult(
+        dealerName: String,
+        gameResult: GameResult,
+    ) {
+        outputDealerResult(
+            dealerName = dealerName,
+            dealerResults = gameResult.dealerResult,
+        )
+        outputPlayersResult(
+            playersResult = gameResult.playerResults,
+        )
+    }
+
+    private fun outputDealerResult(
         dealerName: String,
         dealerResults: Map<Result, Int>,
     ) {
@@ -129,7 +143,7 @@ object OutputView {
         println("$dealerName: ${dealerResultNames.joinToString(SPACE)}")
     }
 
-    fun outputPlayersResult(playersResult: Map<Player, Result>) {
+    private fun outputPlayersResult(playersResult: Map<Player, Result>) {
         playersResult.forEach { (player, result) ->
             outputPlayerResult(
                 name = player.getName(),
