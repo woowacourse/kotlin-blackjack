@@ -1,98 +1,84 @@
 package blackjack.model.participant
 
-import blackjack.fixture.createBlackjackState
 import blackjack.fixture.createBustState
 import blackjack.fixture.createCard
+import blackjack.fixture.createDealer
 import blackjack.fixture.createPlayer
-import blackjack.fixture.createStopState
+import blackjack.fixture.createRunningState
+import blackjack.model.Betting
+import blackjack.model.Profit
+import blackjack.model.card.Card
 import blackjack.model.card.Rank
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class DealerTest {
     @Test
-    fun `player 가 bust 면, dealer 가 bust 여도 이긴다`() {
+    fun `dealer 가 bust 면, player 가 betting 금액 만큼 잃는다`() {
         // given
-        val bustDealer = Dealer(state = createBustState())
-        val bustPlayer = createPlayer(state = createBustState())
-        val expected = GameResult.WIN
+        val bustDealer: Participant = createDealer(state = createBustState())
+        val other: Participant = createPlayer(Betting(10_000), createBustState())
+        val expected = Profit(-10_000)
         // when
-        val actual = bustDealer.judge(bustPlayer)
+        val actual = bustDealer.judge(other.betting, other)
         // then
-        Assertions.assertThat(actual).isEqualTo(expected)
+        assertThat(actual).isEqualTo(expected)
     }
 
     @Test
-    fun `dealer 가 bust 이고, other 가 bust 가 아니면 진다`() {
+    fun `dealer 가 bust 면, player 들의 betting 금액 합만큼 잃는다`() {
         // given
-        val bustDealer = Dealer(state = createBustState())
-        val bustOther = createPlayer(state = createStopState())
-        val expected = GameResult.LOSE
+        val dealer = createDealer(state = createBustState())
+        val players =
+            listOf(
+                createPlayer(betting = Betting(10_000), state = createBustState()),
+                createPlayer(betting = Betting(10_000), state = createBustState()),
+                createPlayer(betting = Betting(10_000), state = createBustState()),
+            )
+        val expected = Profit(-30_000)
         // when
-        val actual = bustDealer.judge(bustOther)
+        val actual = dealer.judge(players)
         // then
-        Assertions.assertThat(actual).isEqualTo(expected)
+        assertThat(actual).isEqualTo(expected)
     }
 
     @Test
-    fun `dealer 가 blackjack 이고, other 도 blackjack 이면 비긴다`() {
+    fun `scoreSum 이 17 미만이면, 17이 될 때까지 hit 를 한다 `() {
         // given
-        val blackJackDealer = Dealer(state = createBlackjackState())
-        val blackJackOther = createPlayer(state = createBlackjackState())
-        val expected = GameResult.DRAW
-        // when
-        val actual = blackJackDealer.judge(blackJackOther)
-        // then
-        Assertions.assertThat(actual).isEqualTo(expected)
-    }
-
-    @Test
-    fun `dealer 가 blackjack 이고, other 도 blackjack 이 아니면 이긴다`() {
-        // given
-        val blackJackDealer = Dealer(state = createBlackjackState())
-        val stopDealer = createPlayer(state = createStopState())
-        val expected = GameResult.WIN
-        // when
-        val actual = blackJackDealer.judge(stopDealer)
-        // then
-        Assertions.assertThat(actual).isEqualTo(expected)
-    }
-
-    @Test
-    fun `dealer 가 blackjack 이 아니고, other 도 blackjack 이면 진다`() {
-        // given
-        val stopPlayer = Dealer(state = createStopState())
-        val blackJackDealer = createPlayer(state = createBlackjackState())
-        val expected = GameResult.LOSE
-        // when
-        val actual = stopPlayer.judge(blackJackDealer)
-        // then
-        Assertions.assertThat(actual).isEqualTo(expected)
-    }
-
-    @Test
-    fun `player , other 모두 BlackJack, Bust 상태 가 아닌 때는, 점수가 더 높은 사람이 이긴다`() {
-        // given
-        val stopPlayer =
-            Dealer(
+        val dealer =
+            createDealer(
                 state =
-                    createStopState(
+                    createRunningState(
                         createCard(rank = Rank.TEN),
-                        createCard(rank = Rank.TEN),
+                        createCard(rank = Rank.FIVE),
                     ),
             )
-        val stopDealer =
-            createPlayer(
+        val onDraw: () -> Card = { createCard(rank = Rank.ACE) }
+        val expectedScore = 17
+        // when
+        dealer.play(onDraw = onDraw, onDone = {})
+        val actualScore = dealer.sumScore()
+        // then
+        assertThat(actualScore).isEqualTo(expectedScore)
+    }
+
+    @Test
+    fun `scoreSum 이 17 보다 크면, stay 한다`() {
+        // given
+        val dealer =
+            createDealer(
                 state =
-                    createStopState(
+                    createRunningState(
                         createCard(rank = Rank.TEN),
-                        createCard(rank = Rank.NINE),
+                        createCard(rank = Rank.SEVEN),
                     ),
             )
-        val expected = GameResult.WIN
+        val onDraw: () -> Card = { createCard(rank = Rank.ACE) }
+        val expectedScore = 17
         // when
-        val actual = stopPlayer.judge(stopDealer)
+        dealer.play(onDraw, onDone = {})
+        val actualScore = dealer.sumScore()
         // then
-        Assertions.assertThat(actual).isEqualTo(expected)
+        assertThat(actualScore).isEqualTo(expectedScore)
     }
 }
