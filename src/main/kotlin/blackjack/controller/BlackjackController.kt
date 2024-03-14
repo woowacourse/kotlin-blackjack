@@ -23,6 +23,7 @@ class BlackjackController {
 
         OutputView.printParticipantsStatusAndScore(participants)
         OutputView.printGameResult(participants.calculateResult())
+        OutputView.printFinalProfits(participants.calculateFinalProfits())
     }
 
     private fun setupParticipants(

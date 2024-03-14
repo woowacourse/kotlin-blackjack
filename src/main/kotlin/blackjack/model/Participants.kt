@@ -23,6 +23,22 @@ class Participants(private val dealer: Dealer, private val players: List<Player>
         return result.toMap()
     }
 
+    fun calculateFinalProfits(): Map<Participant, Double> {
+        val profits = mutableMapOf<Participant, Double>()
+
+        profits[dealer] =
+            -(
+                players.sumOf { player ->
+                    player.calculateProfitAginst(dealer)
+                }
+            )
+
+        players.forEach { player ->
+            profits[player] = player.calculateProfitAginst(dealer)
+        }
+        return profits
+    }
+
     fun playRound(
         deck: CardDeck,
         participants: Participants,

@@ -35,12 +35,12 @@ class Dealer(info: DealerInfo, hand: Hand) :
     private fun shouldDrawCardForDealer(threshold: Int = THRESHOLD_DRAW_FOR_DEALER): Boolean = getCardsSum() <= threshold
 
     fun playRound(
-        updateDealerInfo: (Dealer) -> Unit,
+        updateDealerCards: (Dealer) -> Unit,
         deck: CardDeck,
     ) {
         while (!isGameFinished() && shouldDrawCardForDealer()) {
             drawCard(deck.pick())
-            updateDealerInfo(this)
+            updateDealerCards(this)
         }
     }
 
@@ -49,15 +49,19 @@ class Dealer(info: DealerInfo, hand: Hand) :
     }
 }
 
-class Player(info: PlayerInfo, hand: Hand) : Participant(info, hand) {
+class Player(private val info: PlayerInfo, hand: Hand) : Participant(info, hand) {
     fun playRound(
         requestMoreCards: (ParticipantName) -> Boolean,
-        updatePlayerInfo: (Player) -> Unit,
+        updatePlayerCards: (Player) -> Unit,
         deck: CardDeck,
     ) {
         while (!isGameFinished() && requestMoreCards(this.getName())) {
             drawCard(deck.pick())
-            updatePlayerInfo(this)
+            updatePlayerCards(this)
         }
+    }
+
+    fun calculateProfitAginst(opponent: Participant): Double {
+        return info.betAmount.getAmount() * getState().calculatePayoutMultiplier(this, opponent)
     }
 }

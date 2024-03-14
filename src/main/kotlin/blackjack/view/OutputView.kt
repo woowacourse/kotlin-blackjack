@@ -58,6 +58,14 @@ object OutputView {
         }
     }
 
+    fun printFinalProfits(profits: Map<Participant, Double>) {
+        println("\n## 최종 수익")
+
+        profits.entries.forEach { (participant, profit) ->
+            println("${participant.getName()}: ${profit.toInt()} ")
+        }
+    }
+
     private fun printDealerResult(
         dealer: Dealer,
         winningState: WinningState,
