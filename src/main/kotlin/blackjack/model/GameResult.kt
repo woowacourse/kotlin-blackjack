@@ -1,6 +1,18 @@
 package blackjack.model
 
 data class GameResult(
-    val dealerResult: Map<Result, Int>,
-    val playerResults: Map<Player, Result>,
-)
+    private val dealerResult: Map<Result, Int>,
+    private val playerResults: Map<Player, Result>,
+) {
+    fun getDealerResult(result: Result): Int {
+        return dealerResult[result] ?: 0
+    }
+
+    fun getPlayerResult(player: Player): Result? {
+        return playerResults[player]
+    }
+
+    fun getResultPlayers(): Set<Player> {
+        return playerResults.keys
+    }
+}

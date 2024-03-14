@@ -127,30 +127,36 @@ object OutputView {
     ) {
         outputDealerResult(
             dealerName = dealerName,
-            dealerResults = gameResult.dealerResult,
+            gameResult = gameResult,
         )
         outputPlayersResult(
-            playersResult = gameResult.playerResults,
+            resultPlayers = gameResult.getResultPlayers(),
+            gameResult = gameResult,
         )
     }
 
     private fun outputDealerResult(
         dealerName: String,
-        dealerResults: Map<Result, Int>,
+        gameResult: GameResult,
     ) {
         val dealerResultNames =
-            dealerResults.map { (result, count) ->
-                getDealerResult(result, count)
+            Result.entries.map { result ->
+                getDealerResult(result, gameResult.getDealerResult(result))
             }
         println("$dealerName: ${dealerResultNames.joinToString(SPACE)}")
     }
 
-    private fun outputPlayersResult(playersResult: Map<Player, Result>) {
-        playersResult.forEach { (player, result) ->
-            outputPlayerResult(
-                name = player.getName(),
-                playerResult = result,
-            )
+    private fun outputPlayersResult(
+        resultPlayers: Set<Player>,
+        gameResult: GameResult,
+    ) {
+        resultPlayers.forEach { player ->
+            gameResult.getPlayerResult(player)?.let { result ->
+                outputPlayerResult(
+                    name = player.getName(),
+                    playerResult = result,
+                )
+            }
         }
     }
 
