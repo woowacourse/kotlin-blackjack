@@ -1,7 +1,13 @@
 package blackjack.model.card
 
-object CardDeck {
-    val cardDeck =
+class CardDeck {
+    var cardDeck = listOf<Card>()
+
+    init {
+        cardDeck = create()
+    }
+
+    private fun create(): List<Card> =
         CardShape.entries.flatMap { shape ->
             CardNumber.entries.map { number ->
                 Card(shape, number)

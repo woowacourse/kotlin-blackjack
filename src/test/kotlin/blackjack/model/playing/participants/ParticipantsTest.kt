@@ -68,7 +68,7 @@ class ParticipantsTest {
                 ),
             )
 
-        participants.addInitialCards(RandomCardGenerator(CardDeck.cardDeck))
+        participants.addInitialCards(RandomCardGenerator(CardDeck().cardDeck))
 
         val cardHandSize1 = participants.dealer.cardHand.hand.size
         val cardHandSize2 = participants.players.players[0].cardHand.hand.size

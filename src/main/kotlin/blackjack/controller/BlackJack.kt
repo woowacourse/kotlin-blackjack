@@ -15,9 +15,9 @@ import blackjack.view.OutputView
 class BlackJack(
     private val inputView: InputView,
     private val outputView: OutputView,
+    cardDeck: CardDeck,
 ) {
-    private val cardDeck = CardDeck.cardDeck
-    private val randomCardGenerator = RandomCardGenerator(cardDeck)
+    private val randomCardGenerator = RandomCardGenerator(cardDeck.cardDeck)
 
     fun gameStart() {
         val dealer = Dealer(CardHand())

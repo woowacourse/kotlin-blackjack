@@ -14,7 +14,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class DealerTest {
-    private val cardDeck = CardDeck.cardDeck
+    private val cardDeck = CardDeck().cardDeck
 
     @Test
     fun `딜러의 카드 패 상태를 구한다`() {
