@@ -5,6 +5,7 @@ import blackjack.model.CardNumber
 import blackjack.model.Dealer
 import blackjack.model.DealerStatistics
 import blackjack.model.GameResult
+import blackjack.model.BlackjackGameStatistics
 import blackjack.model.Participant
 import blackjack.model.Player
 import blackjack.model.PlayerStatistics
@@ -73,7 +74,12 @@ object OutputView {
         println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
     }
 
-    fun printDealerStatistics(dealerStatistics: DealerStatistics) {
+    fun printGameStatistics(blackjackGameStatistics: BlackjackGameStatistics) {
+        printDealerStatistics(blackjackGameStatistics.dealerStatistics)
+        printPlayerStatistics(blackjackGameStatistics.playerStatistics)
+    }
+
+    private fun printDealerStatistics(dealerStatistics: DealerStatistics) {
         val dealerStatisticsString = buildDealerStatisticsString(dealerStatistics)
         println("딜러: $dealerStatisticsString")
     }
@@ -90,7 +96,7 @@ object OutputView {
             appendString(dealerStatistics.getDrawCount(), GameResult.Draw.getName())
         }
 
-    fun printPlayerStatistics(playerStatistics: PlayerStatistics) {
+    private fun printPlayerStatistics(playerStatistics: PlayerStatistics) {
         playerStatistics.forEach { playerStatistic ->
             println("${playerStatistic.player.name}: ${playerStatistic.gameResult.getName()}")
         }

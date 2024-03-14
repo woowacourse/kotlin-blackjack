@@ -1,11 +1,10 @@
 package blackjack
 
 import blackjack.model.Dealer
-import blackjack.model.DealerStatistics
 import blackjack.model.Deck
+import blackjack.model.BlackjackGameStatistics
 import blackjack.model.Participant
 import blackjack.model.Player
-import blackjack.model.PlayerStatistics
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -76,10 +75,8 @@ class Controller {
         players: List<Player>,
     ) {
         OutputView.printResult(dealer, players)
-        val dealerStatistics = DealerStatistics(dealer, players)
-        val playerStatistics = PlayerStatistics(dealer, players)
-        OutputView.printDealerStatistics(dealerStatistics)
-        OutputView.printPlayerStatistics(playerStatistics)
+        val blackjackGameStatistics = BlackjackGameStatistics(dealer, players)
+        OutputView.printGameStatistics(blackjackGameStatistics)
     }
 
     private fun Participant.initCard() {
