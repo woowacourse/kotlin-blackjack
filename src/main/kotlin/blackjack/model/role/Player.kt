@@ -1,3 +1,19 @@
 package blackjack.model.role
 
-class Player(override val name: PlayerName) : Role(name)
+import blackjack.model.config.GameRule.BLACK_JACK_SCORE
+import blackjack.model.result.WinningResultStatus
+
+class Player(override val name: PlayerName) : Role(name) {
+    fun judgeWinning(dealer: Dealer): WinningResultStatus {
+        val score = state.getCardHandScore()
+        val dealerScore = dealer.state.getCardHandScore()
+        return when {
+            score > BLACK_JACK_SCORE -> WinningResultStatus.DEFEAT
+            dealerScore > BLACK_JACK_SCORE -> WinningResultStatus.VICTORY
+            dealerScore > score -> WinningResultStatus.DEFEAT
+            score > dealerScore -> WinningResultStatus.VICTORY
+            dealerScore == score -> WinningResultStatus.DRAW
+            else -> WinningResultStatus.VICTORY
+        }
+    }
+}
