@@ -5,5 +5,5 @@ import blackjack.model.playing.cardhand.CardHandState
 import blackjack.model.playing.participants.Role
 
 data class Player(override val name: PlayerName, override val cardHand: CardHand) : Role(name, cardHand) {
-    override fun canDraw() = cardHand.state == CardHandState.DRAW_POSSIBILITY
+    override fun canDraw(): Boolean = cardHand.getPlayerState() == CardHandState.DRAW_POSSIBILITY
 }

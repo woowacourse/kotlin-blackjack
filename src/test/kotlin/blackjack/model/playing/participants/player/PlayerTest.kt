@@ -17,8 +17,8 @@ class PlayerTest {
                 Card(CardShape.SPADE, CardNumber.ACE),
             )
 
-        cardHand.getPlayerState()
-        assertThat(cardHand.state).isEqualTo(CardHandState.BLACKJACK)
+        val actualState = cardHand.getPlayerState()
+        assertThat(actualState).isEqualTo(CardHandState.BLACKJACK)
     }
 
     @Test
@@ -29,8 +29,8 @@ class PlayerTest {
                 Card(CardShape.SPADE, CardNumber.SIX),
             )
 
-        cardHand.getPlayerState()
-        assertThat(cardHand.state).isEqualTo(CardHandState.DRAW_POSSIBILITY)
+        val actualState = cardHand.getPlayerState()
+        assertThat(actualState).isEqualTo(CardHandState.DRAW_POSSIBILITY)
     }
 
     @Test
@@ -42,8 +42,8 @@ class PlayerTest {
                 Card(CardShape.DIAMOND, CardNumber.TEN),
             )
 
-        cardHand.getPlayerState()
-        assertThat(cardHand.state).isEqualTo(CardHandState.DRAW_POSSIBILITY)
+        val actualState = cardHand.getPlayerState()
+        assertThat(actualState).isEqualTo(CardHandState.DRAW_POSSIBILITY)
     }
 
     @Test
@@ -56,7 +56,7 @@ class PlayerTest {
                 Card(CardShape.DIAMOND, CardNumber.EIGHT),
             )
 
-        cardHand.getPlayerState()
-        assertThat(cardHand.state).isEqualTo(CardHandState.BUST)
+        val actualState = cardHand.getPlayerState()
+        assertThat(actualState).isEqualTo(CardHandState.BUST)
     }
 }

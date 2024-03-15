@@ -7,7 +7,7 @@ import blackjack.model.winning.PlayerWinning
 import blackjack.model.winning.WinningResultStatus
 
 data class Dealer(override val cardHand: CardHand) : Role(name = PlayerName(DEALER), cardHand) {
-    override fun canDraw(): Boolean = cardHand.state == CardHandState.HIT
+    override fun canDraw(): Boolean = cardHand.getDealerState() == CardHandState.HIT
 
     fun judgePlayerWinningResult(playerResult: Map<PlayerName, Int>): PlayerWinning =
         PlayerWinning(

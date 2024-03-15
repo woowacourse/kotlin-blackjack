@@ -20,8 +20,8 @@ class DealerTest {
                 Card(CardShape.SPADE, CardNumber.ACE),
             )
 
-        cardHand.getDealerState()
-        assertThat(cardHand.state).isEqualTo(CardHandState.BLACKJACK)
+        val actualState = cardHand.getDealerState()
+        assertThat(actualState).isEqualTo(CardHandState.BLACKJACK)
     }
 
     @Test
@@ -32,8 +32,8 @@ class DealerTest {
                 Card(CardShape.SPADE, CardNumber.SIX),
             )
 
-        cardHand.getDealerState()
-        assertThat(cardHand.state).isEqualTo(CardHandState.HIT)
+        val actualState = cardHand.getDealerState()
+        assertThat(actualState).isEqualTo(CardHandState.HIT)
     }
 
     @Test
@@ -45,8 +45,8 @@ class DealerTest {
                 Card(CardShape.DIAMOND, CardNumber.FIVE),
             )
 
-        cardHand.getDealerState()
-        assertThat(cardHand.state).isEqualTo(CardHandState.STAY)
+        val actualState = cardHand.getDealerState()
+        assertThat(actualState).isEqualTo(CardHandState.STAY)
     }
 
     @Test
@@ -58,8 +58,8 @@ class DealerTest {
                 Card(CardShape.DIAMOND, CardNumber.TEN),
             )
 
-        cardHand.getDealerState()
-        assertThat(cardHand.state).isEqualTo(CardHandState.STAY)
+        val actualState = cardHand.getDealerState()
+        assertThat(actualState).isEqualTo(CardHandState.STAY)
     }
 
     @Test
@@ -72,8 +72,8 @@ class DealerTest {
                 Card(CardShape.DIAMOND, CardNumber.EIGHT),
             )
 
-        cardHand.getDealerState()
-        assertThat(cardHand.state).isEqualTo(CardHandState.BUST)
+        val actualState = cardHand.getDealerState()
+        assertThat(actualState).isEqualTo(CardHandState.BUST)
     }
 
     @Test
