@@ -1,6 +1,6 @@
 package blackjack.model
 
-abstract class Participant(val name: String) {
+abstract class Participant(val name: String, var betAmount: Long = 0) {
     private val cardList: MutableList<Card> = mutableListOf()
 
     fun pickCard(

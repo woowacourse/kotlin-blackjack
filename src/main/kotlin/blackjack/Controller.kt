@@ -23,7 +23,10 @@ class Controller(cards: List<Card>) {
 
     private fun makePlayers(): List<Player> {
         val names: List<String> = InputView.getNames()
-        return names.map { Player(it) }
+        return names.map { name ->
+            val amount = InputView.getBetAmount(name)
+            Player(name, amount)
+        }
     }
 
     private fun play(
