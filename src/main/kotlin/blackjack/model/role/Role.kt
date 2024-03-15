@@ -19,11 +19,11 @@ abstract class Role(open val name: PlayerName) {
 
     fun runPhase(
         canDraw: () -> Boolean,
-        showCards: () -> Unit,
+        cardDrawResult: () -> Unit,
     ): CardHandState {
         while (state is Decide && canDraw.invoke()) {
             state = state.draw(CardDeck.getRandomCard())
-            showCards.invoke()
+            cardDrawResult.invoke()
             if (state is Done) return state
         }
         state = state.stay()
