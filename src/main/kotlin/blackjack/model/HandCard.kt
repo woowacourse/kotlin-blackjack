@@ -1,15 +1,10 @@
 package blackjack.model
 
 class HandCard {
-    private var _cards: List<Card> = listOf()
-    var cards: List<Card>
-        get() = _cards
-        private set(value) {
-            _cards = value
-        }
+    private var cards: MutableList<Card> = mutableListOf()
 
     fun addCard(card: Card) {
-        _cards += card
+        cards.add(card)
     }
 
     fun getGameScoreWithAceCount(): Int {
@@ -38,7 +33,7 @@ class HandCard {
         return cards.size == GameManager.INIT_HAND_CARD_COUNT
     }
 
-    fun checkStateWithAceCount(): Boolean {
+    private fun checkStateWithAceCount(): Boolean {
         return cards.count { it.denomination == Denomination.ACE } >= MIN_ACE_COUNT
     }
 
