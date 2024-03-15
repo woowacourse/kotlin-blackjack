@@ -5,8 +5,7 @@ class Player(
     val hand: Hand,
     private var budget: Int = INITIAL_BUDGET,
     profit: Int = INITIAL_PROFIT,
-) :
-    Participant() {
+) : Participant() {
     var profit = profit
         private set
 
