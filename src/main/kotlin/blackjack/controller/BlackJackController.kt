@@ -1,6 +1,5 @@
 package blackjack.controller
 
-import blackjack.model.result.ScoreBoard
 import blackjack.model.role.Dealer
 import blackjack.model.role.Participants
 import blackjack.model.role.Player
@@ -58,8 +57,7 @@ class BlackJackController(
         dealer: Dealer,
         players: Players,
     ) {
-        val record = ScoreBoard(players.players.associate { it.name to it.state.getCardHandScore() })
-        val playerWinning = record.calculatePlayerWinning(dealer.state.getCardHandScore())
+        val playerWinning = players.calculatePlayersWinning(dealer)
         val dealerWinning = playerWinning.judgeDealerWinningResult()
 
         outputView.printWinningResult(dealerWinning, playerWinning)
