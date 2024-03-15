@@ -13,25 +13,18 @@ class BlackJackController(private val cardDeck: CardDeck) {
     private lateinit var participants: Participants
 
     fun startGameFlow() {
-        cardDeck.cardShuffle()
         val dealer = Dealer()
         val players = InputView.inputPlayers()
-        betMoney(players)
+        val participants = setupGame(dealer, players)
+        displayGameInfo(dealer, participants)
+    }
 
-        participants =
-            Participants(
-                participants = listOf(dealer) + players,
-            )
+    private fun setupGame(dealer: Dealer, players: List<Player>): Participants {
+        cardDeck.cardShuffle()
+        betMoney(players)
+        val participants = Participants(participants = listOf(dealer) + players)
         setParticipants(participants)
-        OutputView.outputParticipantsName(
-            dealerName = dealer.getName(),
-            players = participants.getPlayers(),
-        )
-        OutputView.outputDealerCurrentHandCard(
-            name = dealer.getName(),
-            firstCard = dealer.openFirstCard(),
-        )
-        OutputView.outputPlayersCurrentHandCard(participants.getPlayers())
+        return participants
     }
 
     private fun betMoney(players: List<Player>) {
@@ -45,6 +38,18 @@ class BlackJackController(private val cardDeck: CardDeck) {
         participants.getParticipants().forEach { participant ->
             participant.initDraw(cardDeck)
         }
+    }
+
+    private fun displayGameInfo(dealer: Dealer, participants: Participants) {
+        OutputView.outputParticipantsName(
+            dealerName = dealer.getName(),
+            players = participants.getPlayers(),
+        )
+        OutputView.outputDealerCurrentHandCard(
+            name = dealer.getName(),
+            firstCard = dealer.openFirstCard(),
+        )
+        OutputView.outputPlayersCurrentHandCard(participants.getPlayers())
     }
 
     fun playGame() {
@@ -82,10 +87,10 @@ class BlackJackController(private val cardDeck: CardDeck) {
             participants.getDealer(),
             participants.getPlayers(),
         )
-        showResult(gameResult.calculateProfitResult())
+        displayResult(gameResult.calculateProfitResult())
     }
 
-    private fun showResult(profitResult: MutableMap<Participant, Double>) {
+    private fun displayResult(profitResult: MutableMap<Participant, Double>) {
         OutputView.outputParticipantsHandCard(participants.getParticipants())
         OutputView.outputBlackResult()
         OutputView.outputProfitResult(profitResult)
