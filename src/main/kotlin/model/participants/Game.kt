@@ -5,7 +5,7 @@ import model.result.DealerResult
 import model.result.PlayersResult
 import model.result.ResultType
 
-class Game private constructor(private val participants: List<Participant>, private val deck: Deck) {
+class Game private constructor(private val participants: List<Participant>, val deck: Deck) {
     fun getDealer(): Dealer {
         return participants.first() as Dealer
     }
@@ -21,7 +21,7 @@ class Game private constructor(private val participants: List<Participant>, priv
         }
     }
 
-    fun playPlayers(
+    inline fun playPlayers(
         readDecision: (Player) -> Boolean,
         showHand: (Player) -> Unit,
     ) {
@@ -30,7 +30,7 @@ class Game private constructor(private val participants: List<Participant>, priv
         }
     }
 
-    private fun playPlayer(
+    inline fun playPlayer(
         readDecision: (Player) -> Boolean,
         showHand: (Player) -> Unit,
         player: Player,
@@ -38,7 +38,7 @@ class Game private constructor(private val participants: List<Participant>, priv
         while (player.participantState is ParticipantState.Playing && playByDecision(player, readDecision, showHand)) ;
     }
 
-    fun playDealer(showDealerHandOut: (Dealer) -> (Unit)) {
+    inline fun playDealer(showDealerHandOut: (Dealer) -> (Unit)) {
         val dealer = getDealer()
 
         while (dealer.canHit()) {
@@ -47,7 +47,7 @@ class Game private constructor(private val participants: List<Participant>, priv
         }
     }
 
-    private fun playByDecision(
+    inline fun playByDecision(
         player: Player,
         readDecision: (Player) -> Boolean,
         showHand: (Player) -> Unit,
