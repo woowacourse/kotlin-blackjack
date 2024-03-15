@@ -18,7 +18,7 @@ class BettingTest {
     fun `Betting 의 최소 금액은 0이다`() {
         assertAll(
             { assertThrows<IllegalArgumentException> { Betting(-1) } },
-            { assertDoesNotThrow { Betting(0) } }
+            { assertDoesNotThrow { Betting(0) } },
         )
     }
 }

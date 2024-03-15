@@ -36,10 +36,10 @@ class DealerTest {
         val dealer =
             createDealer(
                 state =
-                createRunningState(
-                    createCard(rank = Rank.TEN),
-                    createCard(rank = Rank.FIVE),
-                ),
+                    createRunningState(
+                        createCard(rank = Rank.TEN),
+                        createCard(rank = Rank.FIVE),
+                    ),
             )
         val onDraw: () -> Card = { createCard(rank = Rank.ACE) }
         val expectedScore = 17
@@ -56,10 +56,10 @@ class DealerTest {
         val dealer =
             createDealer(
                 state =
-                createRunningState(
-                    createCard(rank = Rank.TEN),
-                    createCard(rank = Rank.SEVEN),
-                ),
+                    createRunningState(
+                        createCard(rank = Rank.TEN),
+                        createCard(rank = Rank.SEVEN),
+                    ),
             )
         val onDraw: () -> Card = { createCard(rank = Rank.ACE) }
         val expectedScore = 17
