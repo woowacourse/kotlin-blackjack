@@ -1,9 +1,7 @@
 package blackjack.controller
 
-import blackjack.model.Dealer
 import blackjack.model.GameManager
 import blackjack.model.Participant
-import blackjack.model.Participants
 import blackjack.view.InputView
 import blackjack.view.OutputView
 import blackjack.view.user.UserDecision
@@ -19,7 +17,7 @@ class BlackJackController {
     }
 
     private fun startGameFlow() {
-        val participants = makeParticipants()
+        val participants = UserInputValidator.makeParticipants()
         participants.players.forEach { player ->
             player.settleBettingMoney(InputView.inputPlayerMoney(player))
         }
@@ -96,12 +94,6 @@ class BlackJackController {
         } catch (e: IllegalArgumentException) {
             println(e.message)
         }
-    }
-
-    private fun makeParticipants(): Participants {
-        val dealer = Dealer()
-        val players = InputView.inputPlayers()
-        return UserInputValidator.checkParticipants(dealer, players) ?: makeParticipants()
     }
 
     companion object {

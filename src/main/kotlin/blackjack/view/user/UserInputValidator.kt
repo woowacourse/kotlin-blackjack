@@ -4,6 +4,7 @@ import blackjack.model.Dealer
 import blackjack.model.Participants
 import blackjack.model.Player
 import blackjack.model.Wallet
+import blackjack.view.InputView
 
 object UserInputValidator {
     fun checkPlayers(input: List<String>): List<Player>? {
@@ -25,7 +26,13 @@ object UserInputValidator {
         }
     }
 
-    fun checkParticipants(
+    fun makeParticipants(): Participants {
+        val dealer = Dealer()
+        val players = InputView.inputPlayers()
+        return checkParticipants(dealer, players) ?: makeParticipants()
+    }
+
+    private fun checkParticipants(
         dealer: Dealer,
         players: List<Player>,
     ): Participants? {
