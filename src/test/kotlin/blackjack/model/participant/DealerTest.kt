@@ -44,7 +44,11 @@ class DealerTest {
     fun `게임의 최종 승패 결과를 계산한다`() {
         // given
         val dealer = Dealer()
-        val players = Players.from(listOf("olive", "seogi", "chae"))
+        val players =
+            Players.from(
+                listOf("olive", "seogi", "chae"),
+                listOf(1000, 1400, 3000),
+            )
 
         dealer.receiveCard(listOf(Card.of("8", "하트")))
         players.playerGroup.forEachIndexed { idx, player ->

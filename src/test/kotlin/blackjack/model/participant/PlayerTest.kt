@@ -16,7 +16,7 @@ class PlayerTest {
         expected: Boolean,
     ) {
         // given
-        val player = Player(PlayerName("olive"))
+        val player = Player("olive", 1000)
         player.receiveCard(cards)
 
         // when
@@ -29,7 +29,7 @@ class PlayerTest {
     @Test
     fun `게임 시작 시 플레이어가 2장의 카드를 받는다`() {
         // given
-        val player = Player(PlayerName("olive"))
+        val player = Player("olive", 1000)
 
         // when
         player.initCard(TestCardProvider)
