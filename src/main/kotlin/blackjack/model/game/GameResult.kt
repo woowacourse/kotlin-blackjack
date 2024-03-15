@@ -1,5 +1,6 @@
 package blackjack.model.game
 
+import Player
 import blackjack.model.player.Dealer
 import blackjack.model.player.PlayerResult
 
@@ -7,42 +8,55 @@ class GameResult(
     val dealer: Dealer,
     val playerResults: List<PlayerResult>,
 ) {
+    val dealerProfit: Int
+    val playerProfits: Map<Player, Int>
+
+    init {
+        playerProfits = calculatePlayerProfits()
+        dealerProfit = calculateDealerProfit()
+    }
+
     fun getPlayerWinCount(): Int = playerResults.count { it.result == Result.PLAYER_WIN }
 
     fun getDealerWinCount(): Int = playerResults.count { it.result == Result.DEALER_WIN }
 
     fun getDrawCount(): Int = playerResults.count { it.result == Result.DRAW }
 
-    fun calculateFinalProfits() {
-        playerResults.forEach { calculatePlayerProfit(it) }
-        calculateDealerProfit()
+    private fun calculatePlayerProfits(): Map<Player, Int> {
+        return playerResults.associate { playerResult ->
+            val profit = calculatePlayerProfit(playerResult)
+            playerResult.player to profit
+        }
     }
 
-    private fun calculatePlayerProfit(playerResult: PlayerResult) {
+    private fun calculatePlayerProfit(playerResult: PlayerResult): Int {
         val player = playerResult.player
         val playerBlackjack = player.hand.isBlackjack()
         val dealerBlackjack = dealer.hand.isBlackjack()
-        when {
+
+        return when {
             playerBlackjack && !dealerBlackjack -> {
-                val winnings = (player.bettingMoney.bettingMoney * 1.5).toInt()
-                player.profit += winnings
+                (player.bettingMoney.bettingMoney * 1.5).toInt()
             }
-
-            playerBlackjack && dealerBlackjack -> {}
-            else -> adjustProfitBasedOnResult(playerResult)
+            playerBlackjack && dealerBlackjack -> {
+                0
+            }
+            else -> {
+                adjustProfitBasedOnResult(playerResult)
+            }
         }
     }
 
-    private fun adjustProfitBasedOnResult(playerResult: PlayerResult) {
+    private fun adjustProfitBasedOnResult(playerResult: PlayerResult): Int {
         val player = playerResult.player
-        when (playerResult.result) {
-            Result.PLAYER_WIN -> player.profit += player.bettingMoney.bettingMoney
-            Result.DEALER_WIN -> player.profit -= player.bettingMoney.bettingMoney
-            Result.DRAW -> {} // 무승부 (profit 변화 없음)
+        return when (playerResult.result) {
+            Result.PLAYER_WIN -> player.bettingMoney.bettingMoney
+            Result.DEALER_WIN -> -player.bettingMoney.bettingMoney
+            Result.DRAW -> 0
         }
     }
 
-    private fun calculateDealerProfit() {
-        dealer.profit = playerResults.sumOf { -it.player.profit }
+    private fun calculateDealerProfit(): Int {
+        return -playerProfits.values.sum()
     }
 }

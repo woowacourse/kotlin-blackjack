@@ -130,9 +130,10 @@ object ResultView {
 
     private fun showFinalProfits(gameResult: GameResult) {
         println(FINAL_REVENUE)
-        println("딜러: ${gameResult.dealer.profit}")
+        println("딜러: ${gameResult.dealerProfit}")
         gameResult.playerResults.forEach { playerResult ->
-            println(PLAYER_GAME_RESULT.format(playerResult.player.name, playerResult.player.profit))
+            val playerProfit = gameResult.playerProfits[playerResult.player] ?: "Profit information not available"
+            println(PLAYER_GAME_RESULT.format(playerResult.player.name, playerProfit))
         }
     }
 

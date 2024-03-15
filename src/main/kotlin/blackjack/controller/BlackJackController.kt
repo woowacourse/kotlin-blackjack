@@ -21,7 +21,6 @@ object BlackJackController {
         ProgressView.showPlayerEntry(playersName.joinToString(", "))
         ProgressView.showHands(dealer, playerEntry)
         val gameResult = playGame(playerEntry, dealer, deck)
-        gameResult.calculateFinalProfits()
         showGameResult(gameResult)
     }
 
