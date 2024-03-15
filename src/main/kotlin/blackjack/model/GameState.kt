@@ -1,26 +1,8 @@
 package blackjack.model
 
-sealed class GameState {
-    abstract val winningState: WinningState
-    abstract val payoutMultiplier: Double
-}
-
-data object WinWhenBlackjack : GameState() {
-    override val winningState = WinningState(1, 0)
-    override val payoutMultiplier = 1.5
-}
-
-data object Win : GameState() {
-    override val winningState = WinningState(1, 0)
-    override val payoutMultiplier = 1.0
-}
-
-data object Tie : GameState() {
-    override val winningState = WinningState(0, 0)
-    override val payoutMultiplier = 0.0
-}
-
-data object Lose : GameState() {
-    override val winningState = WinningState(0, 1)
-    override val payoutMultiplier = -1.0
+enum class GameState(val winningState: WinningState, val payoutMultiplier: Double) {
+    WinWhenBlackjack(WinningState(1, 0), 1.5),
+    Win(WinningState(1, 0), 1.0),
+    Tie(WinningState(0, 0), 0.0),
+    Lose(WinningState(0, 1), -1.0),
 }

@@ -16,8 +16,8 @@ data object Blackjack : ParticipantState() {
         self: Participant,
         opponent: Participant,
     ): GameState {
-        if (opponent.getState() is Blackjack) return Tie
-        return WinWhenBlackjack
+        if (opponent.getParticipantState() is Blackjack) return GameState.Tie
+        return GameState.WinWhenBlackjack
     }
 }
 
@@ -28,8 +28,8 @@ data object Bust : ParticipantState() {
         self: Participant,
         opponent: Participant,
     ): GameState {
-        if (self is Dealer && opponent.getState() is Bust) return Win
-        return Lose
+        if (self is Dealer && opponent.getParticipantState() is Bust) return GameState.Win
+        return GameState.Lose
     }
 }
 
@@ -41,9 +41,9 @@ data object Normal : ParticipantState() {
         opponent: Participant,
     ): GameState {
         return when {
-            opponent.getState() is Bust || self.getCardsSum() > opponent.getCardsSum() -> Win
-            opponent.getState() is Blackjack || self.getCardsSum() < opponent.getCardsSum() -> Lose
-            else -> Tie
+            opponent.getParticipantState() is Bust || self.getCardsSum() > opponent.getCardsSum() -> GameState.Win
+            opponent.getParticipantState() is Blackjack || self.getCardsSum() < opponent.getCardsSum() -> GameState.Lose
+            else -> GameState.Tie
         }
     }
 }

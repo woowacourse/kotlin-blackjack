@@ -11,7 +11,7 @@ sealed class Participant(private val info: ParticipantInfo, private val hand: Ha
         hand.addCard(card)
     }
 
-    fun getState(): ParticipantState {
+    fun getParticipantState(): ParticipantState {
         return when {
             hand.calculateCardsSum() == THRESHOLD_BLACKJACK && hand.getCards().size == BLACKJACK_CARD_SIZE -> Blackjack
             hand.calculateCardsSum() > THRESHOLD_BUST -> Bust
@@ -19,9 +19,9 @@ sealed class Participant(private val info: ParticipantInfo, private val hand: Ha
         }
     }
 
-    protected fun isGameFinished() = getState().isFinished
+    protected fun isGameFinished() = getParticipantState().isFinished
 
-    fun calculateGameStateAgainst(opponent: Participant): GameState = getState().calculateGameState(this, opponent)
+    fun calculateGameStateAgainst(opponent: Participant): GameState = getParticipantState().calculateGameState(this, opponent)
 
     companion object {
         private const val BLACKJACK_CARD_SIZE = 2
@@ -62,6 +62,6 @@ class Player(private val info: PlayerInfo, hand: Hand) : Participant(info, hand)
     }
 
     fun calculateProfitAgainst(opponent: Participant): Double {
-        return info.betAmount.getAmount() * getState().calculateGameState(this, opponent).payoutMultiplier
+        return info.betAmount.getAmount() * getParticipantState().calculateGameState(this, opponent).payoutMultiplier
     }
 }
