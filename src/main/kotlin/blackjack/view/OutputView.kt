@@ -54,7 +54,7 @@ class OutputView {
 
         println("딜러: ${losses}승 ${wins}패 ${draws}무")
         result.forEach { (playerName, competitionResult) ->
-            println("$playerName: ${competitionResult.result}")
+            println("$playerName: ${competitionResult.toPrint()}")
         }
     }
 
@@ -83,6 +83,13 @@ class OutputView {
             Shape.HEART -> "하트"
             Shape.DIAMOND -> "다이아몬드"
             Shape.CLOVER -> "클로버"
+        }
+
+    private fun CompetitionResult.toPrint() =
+        when (this) {
+            CompetitionResult.WIN -> "승"
+            CompetitionResult.LOSE -> "패"
+            CompetitionResult.SAME -> "무"
         }
 
     companion object {
