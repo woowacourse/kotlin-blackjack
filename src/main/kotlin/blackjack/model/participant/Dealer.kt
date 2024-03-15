@@ -20,7 +20,7 @@ class Dealer(betting: Betting, initState: State) : Participant(DEALER_NAME, bett
         other: Participant,
     ): Profit {
         val otherBet = other.betting
-        if (isBust()) return -Profit(otherBet.amount)
+        if (other.isBust()) return Profit(otherBet.amount)
         return super.judge(otherBet, other)
     }
 

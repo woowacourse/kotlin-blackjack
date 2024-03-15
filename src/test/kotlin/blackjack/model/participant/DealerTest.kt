@@ -14,19 +14,7 @@ import org.junit.jupiter.api.Test
 
 class DealerTest {
     @Test
-    fun `dealer 가 bust 면, player 가 betting 금액 만큼 잃는다`() {
-        // given
-        val bustDealer: Participant = createDealer(state = createBustState())
-        val other: Participant = createPlayer(Betting(10_000), createBustState())
-        val expected = Profit(-10_000)
-        // when
-        val actual = bustDealer.judge(other.betting, other)
-        // then
-        assertThat(actual).isEqualTo(expected)
-    }
-
-    @Test
-    fun `dealer 가 bust 면, player 들의 betting 금액 합만큼 잃는다`() {
+    fun `dealer 가 플레이어들을 모두 이기면, player 들의 betting 금액 합만큼 아익을 얻는다`() {
         // given
         val dealer = createDealer(state = createBustState())
         val players =
@@ -35,7 +23,7 @@ class DealerTest {
                 createPlayer(betting = Betting(10_000), state = createBustState()),
                 createPlayer(betting = Betting(10_000), state = createBustState()),
             )
-        val expected = Profit(-30_000)
+        val expected = Profit(30_000)
         // when
         val actual = dealer.judge(players)
         // then
@@ -48,10 +36,10 @@ class DealerTest {
         val dealer =
             createDealer(
                 state =
-                    createRunningState(
-                        createCard(rank = Rank.TEN),
-                        createCard(rank = Rank.FIVE),
-                    ),
+                createRunningState(
+                    createCard(rank = Rank.TEN),
+                    createCard(rank = Rank.FIVE),
+                ),
             )
         val onDraw: () -> Card = { createCard(rank = Rank.ACE) }
         val expectedScore = 17
@@ -68,10 +56,10 @@ class DealerTest {
         val dealer =
             createDealer(
                 state =
-                    createRunningState(
-                        createCard(rank = Rank.TEN),
-                        createCard(rank = Rank.SEVEN),
-                    ),
+                createRunningState(
+                    createCard(rank = Rank.TEN),
+                    createCard(rank = Rank.SEVEN),
+                ),
             )
         val onDraw: () -> Card = { createCard(rank = Rank.ACE) }
         val expectedScore = 17

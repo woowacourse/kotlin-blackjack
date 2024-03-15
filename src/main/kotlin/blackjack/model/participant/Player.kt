@@ -24,7 +24,7 @@ class Player(
         betting: Betting,
         other: Participant,
     ): Profit {
-        if (other.isBust()) return Profit(this.betting.amount)
-        return super.judge(betting, other)
+        if (isBust()) return -Profit(this.betting.amount)
+        return super.judge(this.betting, other)
     }
 }
