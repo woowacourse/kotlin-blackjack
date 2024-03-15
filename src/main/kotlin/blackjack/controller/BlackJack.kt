@@ -70,9 +70,9 @@ class BlackJack(
         outputView.printGameResult(participants)
 
         val playerWinning = participants.dealer.judgePlayerWinningResult(participants.getPlayerResult())
-        val dealerWinning = DealerWinning(playerWinning).getFinalResult()
+        val dealerWinning = DealerWinning(playerWinning)
 
-        outputView.printFinalDealerResult(dealerWinning)
+        outputView.printFinalDealerResult(dealerWinning.getVictoryCount(), dealerWinning.getDefeatCount(), dealerWinning.getPushCount())
         outputView.printFinalPlayersResult(playerWinning)
     }
 }

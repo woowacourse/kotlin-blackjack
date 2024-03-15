@@ -76,14 +76,13 @@ class OutputView {
         printAllCardHand(role.cardHand)
     }
 
-    fun printFinalDealerResult(dealerWinning: Map<WinningResultStatus, Int>) {
+    fun printFinalDealerResult(
+        victory: Int,
+        defeat: Int,
+        push: Int,
+    ) {
         println("\n## 최종 승패")
-
-        print("딜러: ")
-        dealerWinning.forEach {
-            print(it.value.toString() + convertWinningResultFormat(it.key) + " ")
-        }
-        println()
+        println(DEALER_WINNING_OUTPUT_FORMAT.format(victory, defeat, push))
     }
 
     fun printFinalPlayersResult(playerWinning: PlayerWinning) {
@@ -109,6 +108,7 @@ class OutputView {
         private const val SPADE_OUTPUT_FORMAT = "스페이드"
         private const val DIAMOND_OUTPUT_FORMAT = "다이아몬드"
         private const val ACE_OUTPUT_FORMAT = "A"
+        private const val DEALER_WINNING_OUTPUT_FORMAT = "딜러: %d승 %d패 %d무"
         private const val VICTORY_OUTPUT_FORMAT = "승"
         private const val DEFEAT_OUTPUT_FORMAT = "패"
         private const val PUSH_OUTPUT_FORMAT = "무"
