@@ -12,7 +12,17 @@ class HandCard {
         _cards += card
     }
 
-    fun getTotalCardsSum(): Int {
+    fun getGameScoreWithAceCount(): Int {
+        val score = getTotalCardsSum()
+        val transferScore = score + Denomination.TRANSFER_ACE_SCORE
+        return if (checkStateWithAceCount() && transferScore <= BlackJack.BLACK_JACK_SCORE) {
+            transferScore
+        } else {
+            score
+        }
+    }
+
+    private fun getTotalCardsSum(): Int {
         return cards.sumOf { card ->
             card.denomination.score
         }
