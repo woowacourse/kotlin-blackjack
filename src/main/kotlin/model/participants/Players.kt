@@ -6,7 +6,7 @@ class Players(val players: List<Player>) {
 
         fun ofList(names: List<String>): Players {
             return names.validateLength().map {
-                Player(ParticipantState.Playing(Hand()), ParticipantName.fromInput(it))
+                Player(ParticipantState.None(), ParticipantName.fromInput(it))
             }.run {
                 Players(this)
             }

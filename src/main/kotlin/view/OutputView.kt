@@ -62,7 +62,7 @@ object OutputView {
         println(
             "${participant.participantName.name}: ${getCardsFromHand(
                 participant.participantState.hand,
-            )} - 결과: ${participant.getPointWithAce().amount}",
+            )} - 결과: ${participant.participantState.hand.calculateOptimalPoint().amount}",
         )
     }
 

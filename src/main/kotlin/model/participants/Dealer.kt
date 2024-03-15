@@ -22,14 +22,14 @@ class Dealer(
         return hitCount
     }
 
-    fun canHit(): Boolean = getPointWithAce() <= HIT_THRESHOLD
+    fun canHit(): Boolean = participantState.hand.calculateOptimalPoint() <= HIT_THRESHOLD
 
     override fun judge(other: Participant): ResultType {
         return when {
             other.participantState is ParticipantState.Bust -> ResultType.WIN
             participantState is ParticipantState.Bust -> ResultType.LOSE
-            this.getPointWithAce() > other.getPointWithAce() -> ResultType.WIN
-            this.getPointWithAce() == other.getPointWithAce() -> ResultType.DRAW
+            participantState.hand.calculateOptimalPoint() > other.participantState.hand.calculateOptimalPoint() -> ResultType.WIN
+            participantState.hand.calculateOptimalPoint() == other.participantState.hand.calculateOptimalPoint() -> ResultType.DRAW
             else -> ResultType.LOSE
         }
     }

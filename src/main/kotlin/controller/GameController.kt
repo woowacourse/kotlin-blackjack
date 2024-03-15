@@ -11,7 +11,7 @@ import view.OutputView
 
 class GameController(private val deck: Deck) {
     fun start() {
-        val dealer = Dealer(ParticipantState.Playing(Hand()))
+        val dealer = Dealer(ParticipantState.None())
         val players = handleException { readPlayers() }
         val game = Game.of(dealer, players, deck)
 
