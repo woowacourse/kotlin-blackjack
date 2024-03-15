@@ -4,8 +4,9 @@ import model.card.Deck
 import model.result.DealerResult
 import model.result.PlayersResult
 import model.result.ResultType
+import view.OutputView
 
-class Participants private constructor(private val participants: List<Participant>) {
+class Participants private constructor(private val participants: List<Participant>, private val deck: Deck) {
     fun getDealer(): Dealer {
         return participants.first() as Dealer
     }
@@ -14,11 +15,40 @@ class Participants private constructor(private val participants: List<Participan
         return Players(participants.filterIsInstance<Player>())
     }
 
-    fun handOut(deck: Deck) {
+    fun handOut() {
         getAll().forEach { participant ->
             participant.hit(deck.pop())
             participant.hit(deck.pop())
         }
+    }
+    fun playPlayers(readDecision: (Player) -> Boolean, showHand: (Player) -> Unit) {
+        getPlayers().players.forEach { player ->
+            playPlayer(readDecision, showHand, player)
+        }
+    }
+
+    private fun playPlayer(readDecision: (Player) -> Boolean, showHand: (Player) -> Unit, player: Player) {
+        while(player.participantState is ParticipantState.Playing && playByDecision(player, readDecision, showHand)) ;
+    }
+
+    fun playDealer(showDealerHandOut: (Dealer) -> (Unit)) {
+        val dealer = getDealer()
+
+        while(dealer.canHit()) {
+            dealer.hit(deck.pop())
+            showDealerHandOut(dealer)
+        }
+    }
+
+    private fun playByDecision(
+        player: Player,
+        readDecision: (Player) -> Boolean,
+        showHand: (Player) -> Unit
+    ): Boolean {
+        val isYes = readDecision(player)
+        if (isYes) player.hit(deck.pop())
+        showHand(player)
+        return isYes
     }
 
     fun getAll(): List<Participant> {
@@ -49,8 +79,9 @@ class Participants private constructor(private val participants: List<Participan
         fun of(
             dealer: Dealer,
             players: Players,
+            deck: Deck
         ): Participants {
-            return Participants(listOf(dealer) + players.players)
+            return Participants(listOf(dealer) + players.players, deck)
         }
     }
 }

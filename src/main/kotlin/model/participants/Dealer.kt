@@ -22,7 +22,7 @@ class Dealer(
         return hitCount
     }
 
-    private fun canHit(): Boolean = getPointWithAce() <= HIT_THRESHOLD
+    fun canHit(): Boolean = getPointWithAce() <= HIT_THRESHOLD
 
     override fun judge(other: Participant): ResultType {
         return when {

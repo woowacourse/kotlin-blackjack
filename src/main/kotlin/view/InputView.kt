@@ -1,5 +1,6 @@
 package view
 
+import model.participants.Participant
 import model.participants.ParticipantName
 
 object InputView {
@@ -14,8 +15,8 @@ object InputView {
         return readln().split(",").map(String::trim)
     }
 
-    fun readHitDecision(participantName: ParticipantName): Boolean {
-        println(HEADER_READ_ANSWER.format(participantName.name))
+    fun readHitDecision(participant: Participant): Boolean {
+        println(HEADER_READ_ANSWER.format(participant.participantName.name))
         return when (val decision = readln().lowercase()) {
             YES -> true
             NO -> false

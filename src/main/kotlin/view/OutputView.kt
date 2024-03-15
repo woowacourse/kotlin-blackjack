@@ -9,7 +9,7 @@ import model.result.ResultType
 
 object OutputView {
     private const val HEADER_GAME_INITIAL_STATE = "\n딜러와 %s에게 2장의 카드를 나누었습니다."
-    private const val HEADER_DRAW_CARDS_FOR_DEALER = "\n딜러는 16이하라 한장의 카드를 더 받았습니다."
+    private const val HEADER_DRAW_CARDS_FOR_DEALER = "\n%s는 16이하라 한장의 카드를 더 받았습니다."
     private const val HEADER_RESULT = "\n## 최종승패"
 
     fun showGameInit(participants: Participants) {
@@ -69,7 +69,7 @@ object OutputView {
     private fun getFirstCardFromHand(hand: Hand): String =
         getValueFromType(hand.cards.first().valueType) + getMarkFromType(hand.cards.first().markType)
 
-    fun showDealerHit() = println(HEADER_DRAW_CARDS_FOR_DEALER)
+    fun showDealerHit(dealer: Dealer) = println(HEADER_DRAW_CARDS_FOR_DEALER.format(dealer.participantName.name))
 
     fun showResultHeader() = println(HEADER_RESULT)
 

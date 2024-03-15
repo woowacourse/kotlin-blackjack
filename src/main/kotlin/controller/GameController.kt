@@ -1,13 +1,7 @@
 package controller
 
 import model.card.Deck
-import model.participants.Dealer
-import model.participants.Hand
-import model.participants.ParticipantName
-import model.participants.ParticipantState
-import model.participants.Participants
-import model.participants.Player
-import model.participants.Players
+import model.participants.*
 import view.InputView
 import view.OutputView
 
@@ -16,7 +10,7 @@ class GameController(private val deck: Deck) {
         val dealer = Dealer(ParticipantState.Playing(Hand()))
         val players = handleException { readPlayers() }
 
-        val participants = Participants.of(dealer, players)
+        val participants = Participants.of(dealer, players, deck)
 
         handOut(participants)
         handleException { playGame(participants) }
@@ -25,17 +19,18 @@ class GameController(private val deck: Deck) {
     }
 
     private fun handOut(participants: Participants) {
-        participants.handOut(deck)
+        participants.handOut()
         OutputView.showGameInit(participants)
     }
 
     private fun playGame(participants: Participants) {
-        participants.getPlayers().players.forEach {
-            playOfOnePlayer(it)
+        participants.playPlayers(
+            { player -> InputView.readHitDecision(player) },
+            { player -> OutputView.showParticipantHand(player) }
+        )
+        participants.playDealer {
+            dealer -> OutputView.showDealerHit(dealer)
         }
-
-        val hitCount = participants.getDealer().play(deck)
-        repeat(hitCount) { OutputView.showDealerHit() }
     }
 
     private fun readPlayers(): Players {
@@ -44,31 +39,12 @@ class GameController(private val deck: Deck) {
         }
     }
 
-    private fun readHitDecision(participantName: ParticipantName): Boolean {
-        return InputView.readHitDecision(participantName)
-    }
-
-    private fun playByDecision(
-        hitDecision: Boolean,
-        player: Player,
-    ): Boolean {
-        if (hitDecision) player.hit(deck.pop())
-        OutputView.showParticipantHand(player)
-        return hitDecision
-    }
-
-    private fun playOfOnePlayer(player: Player) {
-        while (player.participantState is ParticipantState.Playing &&
-            playByDecision(readHitDecision(player.participantName), player)
-            ) ;
-    }
-
     private fun showGameResult(participants: Participants) {
         OutputView.showParticipantsHandWithResult(participants)
-        judge(participants)
+        judgeResult(participants)
     }
 
-    private fun judge(participants: Participants) {
+    private fun judgeResult(participants: Participants) {
         val playersResult = participants.getPlayersResult()
         val dealerResult = participants.getDealerResult()
 
