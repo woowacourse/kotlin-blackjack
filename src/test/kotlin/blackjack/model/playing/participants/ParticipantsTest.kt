@@ -8,6 +8,9 @@ import blackjack.model.playing.cardhand.CardHand
 import blackjack.model.playing.participants.player.Player
 import blackjack.model.playing.participants.player.PlayerName
 import blackjack.model.playing.participants.player.Players
+import blackjack.model.winning.DealerWinning
+import blackjack.model.winning.PlayerWinning
+import blackjack.model.winning.WinningResultStatus
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -79,16 +82,25 @@ class ParticipantsTest {
     }
 
     @Test
-    fun `플레이어들의 카드 패의 합을 이름과 짝 지어서 가져온다`() {
-        val actual = defaultParticipants.getPlayerResult()
+    fun `딜러 카드 패의 합과 플레이어들의 카드 패의 합을 각각 비교해서 플레이어들의 승패 여부를 판단한다`() {
+        val result =
+            PlayerWinning(
+                mapOf(
+                    PlayerName("심지") to WinningResultStatus.DEFEAT,
+                    PlayerName("해나") to WinningResultStatus.DEFEAT,
+                    PlayerName("악어") to WinningResultStatus.DEFEAT,
+                    PlayerName("팡태") to WinningResultStatus.PUSH,
+                ),
+            )
+        val winningResult = defaultParticipants.getFinalResult()
+        assertThat(winningResult.playerWinning).isEqualTo(result)
+    }
 
-        assertThat(actual).isEqualTo(
-            mapOf(
-                PlayerName("심지") to 15,
-                PlayerName("해나") to 16,
-                PlayerName("악어") to 10,
-                PlayerName("팡태") to 17,
-            ),
-        )
+    @Test
+    fun `딜러의 최종 결과를 가져온다`() {
+        val winningResult = defaultParticipants.getFinalResult()
+        val expectedDealerWinning = DealerWinning(3, 0, 1)
+
+        assertThat(winningResult.dealerWinning).isEqualTo(expectedDealerWinning)
     }
 }

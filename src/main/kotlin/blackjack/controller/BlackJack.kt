@@ -7,7 +7,6 @@ import blackjack.model.playing.participants.Participants
 import blackjack.model.playing.participants.player.Player
 import blackjack.model.playing.participants.player.PlayerName
 import blackjack.model.playing.participants.player.Players
-import blackjack.model.winning.DealerWinning
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -69,10 +68,11 @@ class BlackJack(
     private fun showFinalWinning(participants: Participants) {
         outputView.printGameResult(participants)
 
-        val playerWinning = participants.dealer.judgePlayerWinningResult(participants.getPlayerResult())
-        val dealerWinning = DealerWinning(playerWinning)
+        val finalWinning = participants.getFinalResult()
+        val dealerWinning = finalWinning.dealerWinning
+        val playersWinning = finalWinning.playerWinning
 
-        outputView.printFinalDealerResult(dealerWinning.getVictoryCount(), dealerWinning.getDefeatCount(), dealerWinning.getPushCount())
-        outputView.printFinalPlayersResult(playerWinning)
+        outputView.printFinalDealerResult(dealerWinning.victory, dealerWinning.defeat, dealerWinning.push)
+        outputView.printFinalPlayersResult(playersWinning)
     }
 }
