@@ -12,11 +12,11 @@ import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-class ParticipantsTest {
+class GameTest {
     private lateinit var testDeck: Deck
     private lateinit var players: Players
     private lateinit var dealer: Dealer
-    private lateinit var participants: Participants
+    private lateinit var game: Game
 
     @BeforeEach
     fun setUp() {
@@ -32,19 +32,19 @@ class ParticipantsTest {
             )
         players = makePlayers()
         dealer = makeDealer()
-        participants = Participants.of(dealer, players)
+        game = Game.of(dealer, players, testDeck)
     }
 
     @Test
     fun `게임을 플레이 했을 때 결과를 판단할 수 있다`() {
-        participants.getPlayers().players.forEach {
+        game.getPlayers().players.forEach {
             it.hit(testDeck.pop())
             it.hit(testDeck.pop())
         }
-        participants.getDealer().play(testDeck)
+        game.getDealer().play(testDeck)
 
         val expected = mapOf(ParticipantName.fromInput("pang") to ResultType.DRAW, ParticipantName.fromInput("ack") to ResultType.LOSE)
-        val result = participants.getPlayersResult()
+        val result = game.getPlayersResult()
 
         Assertions.assertThat(result.result.values == expected.values)
     }
@@ -59,7 +59,7 @@ class ParticipantsTest {
 
         val expected = mapOf(ResultType.DRAW to 1, ResultType.WIN to 1)
 
-        val result = participants.getDealerResult()
+        val result = game.getDealerResult()
         Assertions.assertThat(result.result.values == expected.values)
     }
 }

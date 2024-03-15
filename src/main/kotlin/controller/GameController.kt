@@ -1,7 +1,11 @@
 package controller
 
 import model.card.Deck
-import model.participants.*
+import model.participants.Dealer
+import model.participants.Game
+import model.participants.Hand
+import model.participants.ParticipantState
+import model.participants.Players
 import view.InputView
 import view.OutputView
 
@@ -9,27 +13,27 @@ class GameController(private val deck: Deck) {
     fun start() {
         val dealer = Dealer(ParticipantState.Playing(Hand()))
         val players = handleException { readPlayers() }
+        val game = Game.of(dealer, players, deck)
 
-        val participants = Participants.of(dealer, players, deck)
+        handOut(game)
+        handleException { play(game) }
 
-        handOut(participants)
-        handleException { playGame(participants) }
-
-        showGameResult(participants)
+        showResult(game)
     }
 
-    private fun handOut(participants: Participants) {
-        participants.handOut()
-        OutputView.showGameInit(participants)
+    private fun handOut(game: Game) {
+        game.handOut()
+        OutputView.showGameInit(game)
     }
 
-    private fun playGame(participants: Participants) {
-        participants.playPlayers(
+    private fun play(game: Game) {
+        game.playPlayers(
             { player -> InputView.readHitDecision(player) },
-            { player -> OutputView.showParticipantHand(player) }
+            { player -> OutputView.showParticipantHand(player) },
         )
-        participants.playDealer {
-            dealer -> OutputView.showDealerHit(dealer)
+        game.playDealer {
+                dealer ->
+            OutputView.showDealerHit(dealer)
         }
     }
 
@@ -39,18 +43,18 @@ class GameController(private val deck: Deck) {
         }
     }
 
-    private fun showGameResult(participants: Participants) {
-        OutputView.showParticipantsHandWithResult(participants)
-        judgeResult(participants)
+    private fun showResult(game: Game) {
+        OutputView.showParticipantsHandWithResult(game)
+        judgeResult(game)
     }
 
-    private fun judgeResult(participants: Participants) {
-        val playersResult = participants.getPlayersResult()
-        val dealerResult = participants.getDealerResult()
+    private fun judgeResult(game: Game) {
+        val playersResult = game.getPlayersResult()
+        val dealerResult = game.getDealerResult()
 
         OutputView.showResultHeader()
         OutputView.showDealerResult(dealerResult)
-        OutputView.showPlayersResult(participants.getPlayers(), playersResult)
+        OutputView.showPlayersResult(game.getPlayers(), playersResult)
     }
 
     private fun <T> handleException(block: () -> T): T =

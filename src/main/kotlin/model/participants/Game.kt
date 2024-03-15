@@ -4,9 +4,8 @@ import model.card.Deck
 import model.result.DealerResult
 import model.result.PlayersResult
 import model.result.ResultType
-import view.OutputView
 
-class Participants private constructor(private val participants: List<Participant>, private val deck: Deck) {
+class Game private constructor(private val participants: List<Participant>, private val deck: Deck) {
     fun getDealer(): Dealer {
         return participants.first() as Dealer
     }
@@ -21,20 +20,28 @@ class Participants private constructor(private val participants: List<Participan
             participant.hit(deck.pop())
         }
     }
-    fun playPlayers(readDecision: (Player) -> Boolean, showHand: (Player) -> Unit) {
+
+    fun playPlayers(
+        readDecision: (Player) -> Boolean,
+        showHand: (Player) -> Unit,
+    ) {
         getPlayers().players.forEach { player ->
             playPlayer(readDecision, showHand, player)
         }
     }
 
-    private fun playPlayer(readDecision: (Player) -> Boolean, showHand: (Player) -> Unit, player: Player) {
-        while(player.participantState is ParticipantState.Playing && playByDecision(player, readDecision, showHand)) ;
+    private fun playPlayer(
+        readDecision: (Player) -> Boolean,
+        showHand: (Player) -> Unit,
+        player: Player,
+    ) {
+        while (player.participantState is ParticipantState.Playing && playByDecision(player, readDecision, showHand)) ;
     }
 
     fun playDealer(showDealerHandOut: (Dealer) -> (Unit)) {
         val dealer = getDealer()
 
-        while(dealer.canHit()) {
+        while (dealer.canHit()) {
             dealer.hit(deck.pop())
             showDealerHandOut(dealer)
         }
@@ -43,7 +50,7 @@ class Participants private constructor(private val participants: List<Participan
     private fun playByDecision(
         player: Player,
         readDecision: (Player) -> Boolean,
-        showHand: (Player) -> Unit
+        showHand: (Player) -> Unit,
     ): Boolean {
         val isYes = readDecision(player)
         if (isYes) player.hit(deck.pop())
@@ -79,9 +86,9 @@ class Participants private constructor(private val participants: List<Participan
         fun of(
             dealer: Dealer,
             players: Players,
-            deck: Deck
-        ): Participants {
-            return Participants(listOf(dealer) + players.players, deck)
+            deck: Deck,
+        ): Game {
+            return Game(listOf(dealer) + players.players, deck)
         }
     }
 }

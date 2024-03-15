@@ -2,7 +2,12 @@ package view
 
 import model.card.MarkType
 import model.card.ValueType
-import model.participants.*
+import model.participants.Dealer
+import model.participants.Game
+import model.participants.Hand
+import model.participants.Participant
+import model.participants.Player
+import model.participants.Players
 import model.result.DealerResult
 import model.result.PlayersResult
 import model.result.ResultType
@@ -12,24 +17,24 @@ object OutputView {
     private const val HEADER_DRAW_CARDS_FOR_DEALER = "\n%s는 16이하라 한장의 카드를 더 받았습니다."
     private const val HEADER_RESULT = "\n## 최종승패"
 
-    fun showGameInit(participants: Participants) {
-        showInitHeader(participants)
-        showParticipantsHandOut(participants)
+    fun showGameInit(game: Game) {
+        showInitHeader(game)
+        showParticipantsHandOut(game)
     }
 
-    private fun showInitHeader(participants: Participants) {
-        println(HEADER_GAME_INITIAL_STATE.format(participants.getPlayers().players.joinToString(", ") { it.participantName.name }))
+    private fun showInitHeader(game: Game) {
+        println(HEADER_GAME_INITIAL_STATE.format(game.getPlayers().players.joinToString(", ") { it.participantName.name }))
     }
 
-    private fun showParticipantsHandOut(participants: Participants) {
-        participants.getAll().forEach { participant ->
+    private fun showParticipantsHandOut(game: Game) {
+        game.getAll().forEach { participant ->
             switchParticipantHandOut(participant)
         }
         println()
     }
 
     private fun switchParticipantHandOut(participant: Participant) {
-        when(participant) {
+        when (participant) {
             is Player -> {
                 showParticipantHand(participant)
             }
@@ -47,8 +52,8 @@ object OutputView {
         println("${participant.participantName.name}: ${getCardsFromHand(participant.participantState.hand)}")
     }
 
-    fun showParticipantsHandWithResult(participants: Participants) {
-        participants.getAll().forEach { participant ->
+    fun showParticipantsHandWithResult(game: Game) {
+        game.getAll().forEach { participant ->
             showParticipantHandWithResult(participant)
         }
     }
