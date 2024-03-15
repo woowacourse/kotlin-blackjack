@@ -3,7 +3,6 @@ package controller
 import model.card.Deck
 import model.participants.Dealer
 import model.participants.Game
-import model.participants.Hand
 import model.participants.ParticipantState
 import model.participants.Players
 import view.InputView
