@@ -17,17 +17,11 @@ object InputView {
         return validatorPlayers ?: inputPlayers()
     }
 
-    fun inputPlayerMoneys(players: List<Player>) {
-        players.forEach { player ->
-            player.settleBettingMoney(inputPlayerMoney(player.getName()))
-        }
-    }
-
-    private fun inputPlayerMoney(playerName: String): Int {
-        println(INPUT_MESSAGE_MONEY.format(playerName))
+    fun inputPlayerMoney(player: Player): Int {
+        println(INPUT_MESSAGE_MONEY.format(player.getName()))
         return readlnOrNull()?.toIntOrNull().also {
             if (it == null) println(UserInputValidator.ERROR_INACCURATE_MONEY)
-        } ?: inputPlayerMoney(playerName)
+        } ?: inputPlayerMoney(player)
     }
 
     fun inputPlayerDecision(playerName: String): UserDecision {
