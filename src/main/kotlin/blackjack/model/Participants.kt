@@ -41,7 +41,7 @@ class Participants(private val dealer: Dealer, private val players: List<Player>
         player: Player,
     ) {
         val originalDealerWinningState = result.getOrDefault(dealer, WinningState(0, 0))
-        val addDealerWinningState = dealer.calculateWinningStateAgainst(player)
+        val addDealerWinningState = dealer.calculateGameStateAgainst(player).winningState
         result[dealer] =
             WinningState(
                 originalDealerWinningState.wins + addDealerWinningState.wins,
@@ -53,7 +53,7 @@ class Participants(private val dealer: Dealer, private val players: List<Player>
         result: MutableMap<Participant, WinningState>,
         player: Player,
     ) {
-        result[player] = player.calculateWinningStateAgainst(dealer)
+        result[player] = player.calculateGameStateAgainst(dealer).winningState
     }
 
     companion object {

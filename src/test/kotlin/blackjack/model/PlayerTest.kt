@@ -19,7 +19,10 @@ private fun createPlayerWithBetAmount(
     vararg numbers: Card,
     betAmount: Int,
 ): Player {
-    return Player(PlayerInfo(ParticipantName("leo"), ParticipantBetAmount(betAmount)), hand = Hand(numbers.toMutableList()))
+    return Player(
+        PlayerInfo(ParticipantName("leo"), ParticipantBetAmount(betAmount)),
+        hand = Hand(numbers.toMutableList()),
+    )
 }
 
 class PlayerTest {
@@ -59,40 +62,40 @@ class PlayerTest {
     fun `플레이어의 카드 합이 딜러보다 높을 때, 플레이어가 승리한다`() {
         val dealer = createDealer(Card(5), Card(9))
         val player = createPlayer(Card(8), Card(9))
-        val winningState = player.calculateWinningStateAgainst(dealer)
-        assertThat(winningState).isEqualTo(WinningState(1, 0))
+        val gameState = player.calculateGameStateAgainst(dealer)
+        assertThat(gameState).isEqualTo(Win)
     }
 
     @Test
     fun `플레이어의 카드 합이 딜러보다 낮을 때, 플레이어가 패배한다`() {
         val player = createDealer(Card(5), Card(9))
         val dealer = createPlayer(Card(8), Card(9))
-        val winningState = player.calculateWinningStateAgainst(dealer)
-        assertThat(winningState).isEqualTo(WinningState(0, 1))
+        val gameState = player.calculateGameStateAgainst(dealer)
+        assertThat(gameState).isEqualTo(Lose)
     }
 
     @Test
     fun `플레이어가 블랙잭일때, 딜러가 블랙잭이 아닐 경우 승리한다`() {
         val player = createPlayer(Card(11), Card(10))
         val dealer = createDealer(Card(11), Card(9))
-        val winningState = player.calculateWinningStateAgainst(dealer)
-        assertThat(winningState).isEqualTo(WinningState(1, 0))
+        val gameState = player.calculateGameStateAgainst(dealer)
+        assertThat(gameState).isEqualTo(WinWhenBlackjack)
     }
 
     @Test
     fun `플레이어가 블랙잭일때, 딜러가 블랙잭일 경우에는 비긴다`() {
         val player = createPlayer(Card(11), Card(10))
         val dealer = createDealer(Card(11), Card(10))
-        val winningState = player.calculateWinningStateAgainst(dealer)
-        assertThat(winningState).isEqualTo(WinningState(0, 0))
+        val gameState = player.calculateGameStateAgainst(dealer)
+        assertThat(gameState).isEqualTo(Tie)
     }
 
     @Test
     fun `플레이어가 버스트일때, 딜러의 카드와 상관없이 패배한다`() {
         val player = createPlayer(Card(10), Card(10), Card(2))
         val dealer = createDealer(Card(10), Card(10), Card(10))
-        val winningState = player.calculateWinningStateAgainst(dealer)
-        assertThat(winningState).isEqualTo(WinningState(0, 1))
+        val gameState = player.calculateGameStateAgainst(dealer)
+        assertThat(gameState).isEqualTo(Lose)
     }
 
     @Test

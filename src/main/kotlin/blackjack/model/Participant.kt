@@ -11,17 +11,17 @@ sealed class Participant(private val info: ParticipantInfo, private val hand: Ha
         hand.addCard(card)
     }
 
-    fun getState(): State {
+    fun getState(): ParticipantState {
         return when {
-            hand.calculateCardsSum() == THRESHOLD_BLACKJACK && hand.getCards().size == BLACKJACK_CARD_SIZE -> Blackjack()
-            hand.calculateCardsSum() > THRESHOLD_BUST -> Bust()
-            else -> Normal()
+            hand.calculateCardsSum() == THRESHOLD_BLACKJACK && hand.getCards().size == BLACKJACK_CARD_SIZE -> Blackjack
+            hand.calculateCardsSum() > THRESHOLD_BUST -> Bust
+            else -> Normal
         }
     }
 
     protected fun isGameFinished() = getState().isFinished
 
-    fun calculateWinningStateAgainst(opponent: Participant) = getState().calculateWinningState(this, opponent)
+    fun calculateGameStateAgainst(opponent: Participant): GameState = getState().calculateGameState(this, opponent)
 
     companion object {
         private const val BLACKJACK_CARD_SIZE = 2
@@ -62,6 +62,6 @@ class Player(private val info: PlayerInfo, hand: Hand) : Participant(info, hand)
     }
 
     fun calculateProfitAgainst(opponent: Participant): Double {
-        return info.betAmount.getAmount() * getState().calculatePayoutMultiplier(this, opponent)
+        return info.betAmount.getAmount() * getState().calculateGameState(this, opponent).payoutMultiplier
     }
 }
