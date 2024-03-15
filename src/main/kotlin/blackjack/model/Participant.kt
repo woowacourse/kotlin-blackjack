@@ -3,11 +3,11 @@ package blackjack.model
 import blackjack.state.State
 
 abstract class Participant(
-    private val wallet: Wallet,
+    private val userInformation: UserInformation,
     private val blackJack: BlackJack = BlackJack(),
 ) {
     init {
-        require(wallet.name.length <= MAX_NAME_LENGTH) {
+        require(userInformation.name.length <= MAX_NAME_LENGTH) {
             ERROR_NAME_LENGTH
         }
     }
@@ -52,15 +52,15 @@ abstract class Participant(
     }
 
     fun getName(): String {
-        return wallet.name
+        return userInformation.name
     }
 
     fun getBettingMoney(): Int {
-        return wallet.getBalance()
+        return userInformation.getBalance()
     }
 
     fun settleBettingMoney(money: Int) {
-        wallet.setMoney(money)
+        userInformation.setMoney(money)
     }
 
     fun getCards(): List<Card> {

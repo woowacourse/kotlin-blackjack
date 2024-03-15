@@ -12,7 +12,7 @@ class GameResultTest {
                 draw(Card(Denomination.JACK, Suit.HEART))
             }
         val player =
-            Player(Wallet("꼬상")).apply {
+            Player(UserInformation("꼬상")).apply {
                 draw(Card(Denomination.ACE, Suit.SPADE))
                 draw(Card(Denomination.KING, Suit.HEART))
             }
@@ -50,7 +50,7 @@ class GameResultTest {
                 )
             }
         val player =
-            Player(Wallet("누누")).apply {
+            Player(UserInformation("누누")).apply {
                 draw(
                     Card(
                         Denomination.SEVEN,
@@ -89,7 +89,7 @@ class GameResultTest {
                 draw(Card(Denomination.SEVEN, Suit.HEART))
             }
         val player =
-            Player(Wallet("누누")).apply {
+            Player(UserInformation("누누")).apply {
                 draw(Card(Denomination.SIX, Suit.SPADE))
                 draw(Card(Denomination.SIX, Suit.HEART))
             }

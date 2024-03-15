@@ -1,6 +1,6 @@
 package blackjack.model
 
-class Dealer(wallet: Wallet = Wallet(DEFAULT_DEALER_NAME)) : Participant(wallet) {
+class Dealer(userInformation: UserInformation = UserInformation(DEFAULT_DEALER_NAME)) : Participant(userInformation) {
     fun openFirstCard(): Card? {
         return getCards().firstOrNull()
     }

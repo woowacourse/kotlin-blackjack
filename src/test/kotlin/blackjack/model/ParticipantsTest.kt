@@ -8,7 +8,8 @@ class ParticipantsTest {
     @Test
     fun `정상적인 참가자들 Hit 상태 리스트 반환 테스트 `() {
         val dealer = Dealer()
-        val participants = Participants(dealer = dealer, listOf(Player(Wallet("누누")), Player(Wallet("꼬상"))))
+        val participants =
+            Participants(dealer = dealer, listOf(Player(UserInformation("누누")), Player(UserInformation("꼬상"))))
 
         assertThat(participants.getAlivePlayers().size).isEqualTo(2)
     }
@@ -19,7 +20,11 @@ class ParticipantsTest {
         val participants =
             Participants(
                 dealer = dealer,
-                players = listOf(Player(Wallet("누누")), Player(Wallet("채드")), Player(Wallet("꼬상"))),
+                players = listOf(
+                    Player(UserInformation("누누")),
+                    Player(UserInformation("채드")),
+                    Player(UserInformation("꼬상"))
+                ),
             )
         assertThat(participants.players.size).isEqualTo(3)
     }
