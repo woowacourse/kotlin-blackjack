@@ -5,25 +5,25 @@ import java.util.Queue
 
 class CardDeck(
     private val shuffleCardDeck: ShuffleCardDeck = RandomShuffleCardDeck(),
-    cards: Queue<Card> = LinkedList(),
+    private val cards: Queue<Card> = LinkedList(),
 ) {
-    private val cards: Queue<Card> = LinkedList(cards)
-
     init {
-        if (this.cards.isEmpty()) {
-            cardShuffle()
+        generateCardDeck()
+        shuffleCardDeck()
+    }
+
+    private fun generateCardDeck() {
+        Denomination.entries.flatMap { denomination ->
+            Suit.entries.map { suit ->
+                Card(denomination, suit)
+            }
+        }.shuffled().forEach { card ->
+            cards.offer(card)
         }
     }
 
-    private fun cardShuffle() {
-        val shuffledCards =
-            shuffleCardDeck.shuffle(
-                Denomination.entries.flatMap { denomination ->
-                    Suit.entries.map { suit ->
-                        Card(denomination, suit)
-                    }
-                }.shuffled().toMutableList(),
-            )
+    private fun shuffleCardDeck() {
+        val shuffledCards = shuffleCardDeck.shuffle(cards.toList().toMutableList())
         cards.clear()
         cards.addAll(shuffledCards)
     }
