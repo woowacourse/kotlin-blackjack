@@ -133,7 +133,7 @@ class OutputView {
         private const val MESSAGE_DEALER_HIT = "\n딜러는 16이하라 한장의 카드를 더 받았습니다."
         private const val MESSAGE_FINAL_RESULT = "\n## 최종 승패"
         private const val MESSAGE_FINAL_PROFIT = "\n## 최종수익"
-        private const val MESSAGE_DEALER_PROFIT = "딜러 : %.0f"
-        private const val MESSAGE_PLAYER_PROFIT = "%s : %.0f"
+        private const val MESSAGE_DEALER_PROFIT = "딜러 : %d"
+        private const val MESSAGE_PLAYER_PROFIT = "%s : %d"
     }
 }
