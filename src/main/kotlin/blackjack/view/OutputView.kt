@@ -54,8 +54,8 @@ class OutputView {
         println(MESSAGE_FINAL_RESULT)
         val (playersResult, dealerResult) = scoreBoard
         println(dealerResult.format())
-        playersResult.forEach {
-            println("${it.name}: ${makeWinningStateLabel(it.winningState)}")
+        playersResult.forEach { playerResult ->
+            println("${playerResult.name}: ${makeWinningStateLabel(playerResult.winningState)}")
         }
     }
 
