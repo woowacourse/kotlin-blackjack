@@ -23,7 +23,7 @@ object OutputView {
     }
 
     private fun showInitHeader(game: Game) {
-        println(HEADER_GAME_INITIAL_STATE.format(game.getPlayers().players.joinToString(", ") { it.participantName.name }))
+        println(HEADER_GAME_INITIAL_STATE.format(game.getPlayers().players.joinToString(", ") { it.wallet.participantName.name }))
     }
 
     private fun showParticipantsHandOut(game: Game) {
@@ -45,11 +45,11 @@ object OutputView {
     }
 
     private fun showParticipantHandOnlyOne(participant: Participant) {
-        println("${participant.participantName.name}: ${getFirstCardFromHand(participant.participantState.hand)}")
+        println("${participant.wallet.participantName.name}: ${getFirstCardFromHand(participant.participantState.hand)}")
     }
 
     fun showParticipantHand(participant: Participant) {
-        println("${participant.participantName.name}: ${getCardsFromHand(participant.participantState.hand)}")
+        println("${participant.wallet.participantName.name}: ${getCardsFromHand(participant.participantState.hand)}")
     }
 
     fun showParticipantsHandWithResult(game: Game) {
@@ -60,7 +60,7 @@ object OutputView {
 
     private fun showParticipantHandWithResult(participant: Participant) {
         println(
-            "${participant.participantName.name}: ${getCardsFromHand(
+            "${participant.wallet.participantName.name}: ${getCardsFromHand(
                 participant.participantState.hand,
             )} - 결과: ${participant.participantState.hand.calculateOptimalPoint().amount}",
         )
@@ -74,7 +74,7 @@ object OutputView {
     private fun getFirstCardFromHand(hand: Hand): String =
         getValueFromType(hand.cards.first().valueType) + getMarkFromType(hand.cards.first().markType)
 
-    fun showDealerHit(dealer: Dealer) = println(HEADER_DRAW_CARDS_FOR_DEALER.format(dealer.participantName.name))
+    fun showDealerHit(dealer: Dealer) = println(HEADER_DRAW_CARDS_FOR_DEALER.format(dealer.wallet.participantName.name))
 
     fun showResultHeader() = println(HEADER_RESULT)
 
@@ -92,8 +92,8 @@ object OutputView {
     ) {
         players.players.forEach { player ->
             println(
-                "${player.participantName.name}: ${getResultFromType(
-                    playersResult.result.getOrDefault(player.participantName, ResultType.DRAW),
+                "${player.wallet.participantName.name}: ${getResultFromType(
+                    playersResult.result.getOrDefault(player.wallet.participantName, ResultType.DRAW),
                 )}",
             )
         }

@@ -5,11 +5,14 @@ import model.result.ResultType
 
 class Player(
     participantState: ParticipantState,
-    participantName: ParticipantName =
-        ParticipantName.fromInput(
-            DEFAULT_NAME,
+    wallet: Wallet =
+        Wallet(
+            ParticipantName.fromInput(
+                DEFAULT_NAME,
+            ),
+            Money(),
         ),
-) : Participant(participantState, participantName) {
+) : Participant(participantState, wallet) {
     override fun judge(other: Participant): ResultType {
         return when {
             participantState is ParticipantState.Bust -> ResultType.LOSE

@@ -12,12 +12,22 @@ class GameController(private val deck: Deck) {
     fun start() {
         val dealer = Dealer(ParticipantState.None())
         val players = handleException { readPlayers() }
+
+        handleException { readBetMoney(players) }
+
         val game = Game.of(dealer, players, deck)
 
         handOut(game)
         handleException { play(game) }
 
         showResult(game)
+    }
+
+    private fun readBetMoney(players: Players) {
+        players.betMoney {
+                player ->
+            InputView.readBetMoney(player)
+        }
     }
 
     private fun handOut(game: Game) {

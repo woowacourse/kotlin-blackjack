@@ -6,11 +6,14 @@ import model.result.ResultType
 
 class Dealer(
     participantState: ParticipantState,
-    participantName: ParticipantName =
-        ParticipantName.fromInput(
-            DEFAULT_NAME,
+    wallet: Wallet =
+        Wallet(
+            ParticipantName.fromInput(
+                DEFAULT_NAME,
+            ),
+            Money(),
         ),
-) : Participant(participantState, participantName) {
+) : Participant(participantState, wallet) {
     fun play(deck: Deck): Int {
         var hitCount = 0
 

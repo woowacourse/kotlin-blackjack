@@ -67,7 +67,7 @@ class Game private constructor(private val participants: List<Participant>, val 
 
         getPlayers().players.forEach { player ->
             val resultType = player.judge(getDealer())
-            result[player.participantName] = resultType
+            result[player.wallet.participantName] = resultType
         }
         return PlayersResult(result)
     }
