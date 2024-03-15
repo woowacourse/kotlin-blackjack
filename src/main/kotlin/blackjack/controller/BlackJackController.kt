@@ -34,8 +34,8 @@ class BlackJackController {
         )
 
         participants.dealer.openInitCards()
-            .also {
-                if (it.isEmpty()) {
+            .also { cards ->
+                if (cards.isEmpty()) {
                     println(ERROR_CARD_INDEX)
                 }
             }
@@ -64,7 +64,7 @@ class BlackJackController {
     private fun processPlayerDecision(participant: Participant) {
         when (InputView.inputPlayerDecision(participant.getName())) {
             UserDecision.YES -> {
-                if (!processUserDecision(participant)) return
+                processUserDecision(participant)
                 OutputView.outputPlayerCurrentHandCard(participant)
             }
 
@@ -76,7 +76,7 @@ class BlackJackController {
         val dealer = gameManager.getDealer()
         while (dealer.checkShouldDrawCard()) {
             OutputView.outputDealerRule()
-            if (!processUserDecision(dealer)) return
+            processUserDecision(dealer)
         }
     }
 
@@ -90,13 +90,11 @@ class BlackJackController {
         )
     }
 
-    private fun processUserDecision(participant: Participant): Boolean {
-        return try {
+    private fun processUserDecision(participant: Participant) {
+        try {
             participant.draw(gameManager.returnCardForParticipant())
-            true
         } catch (e: IllegalArgumentException) {
             println(e.message)
-            false
         }
     }
 
