@@ -16,6 +16,8 @@ class BlackJackController(private val cardDeck: CardDeck) {
         cardDeck.cardShuffle()
         val dealer = Dealer()
         val players = InputView.inputPlayers()
+        betMoney(players)
+
         participants =
             Participants(
                 participants = listOf(dealer) + players,
@@ -30,6 +32,13 @@ class BlackJackController(private val cardDeck: CardDeck) {
             firstCard = dealer.openFirstCard(),
         )
         OutputView.outputPlayersCurrentHandCard(participants.getPlayers())
+    }
+
+    private fun betMoney(players: List<Player>) {
+        players.forEach { player ->
+            val bettingMoney = InputView.inputPlayerBettingMoney(player.getName())
+            player.setMoney(bettingMoney)
+        }
     }
 
     private fun setParticipants(participants: Participants) {
