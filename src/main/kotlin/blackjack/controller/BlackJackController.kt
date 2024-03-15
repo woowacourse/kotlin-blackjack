@@ -16,15 +16,8 @@ object BlackJackController {
     fun run() {
         val deck = Deck()
         val playersName = InputView.readPlayersName()
-        val players =
-            playersName.map { playerName ->
-                val bettingMoney = InputView.readBettingMoney(playerName)
-                val hand = makingInitialHand(deck)
-                Player(playerName, hand, bettingMoney)
-            }
+        val playerEntry = makePlayerEntry(playersName, deck)
         val dealer = makeDealer(makingInitialHand(deck))
-        val playerEntry = PlayerEntry(players)
-
         ProgressView.showPlayerEntry(playersName.joinToString(", "))
         ProgressView.showHands(dealer, playerEntry)
         val gameResult = playGame(playerEntry, dealer, deck)
@@ -32,7 +25,21 @@ object BlackJackController {
         showGameResult(gameResult)
     }
 
-    private fun makingInitialHand(deck: Deck) = Hand(deck.doubleDealCard())
+    private fun makePlayerEntry(
+        playersName: List<String>,
+        deck: Deck,
+    ): PlayerEntry {
+        val players =
+            playersName.map { playerName ->
+                val bettingMoney = InputView.readBettingMoney(playerName)
+                val hand = makingInitialHand(deck)
+                Player(playerName, hand, bettingMoney)
+            }
+        val playerEntry = PlayerEntry(players)
+        return playerEntry
+    }
+
+    private fun makingInitialHand(deck: Deck) = Hand(deck.doubleDealCard().toMutableList())
 
     private fun showGameResult(gameResult: GameResult) {
         ResultView.showResult(gameResult)
