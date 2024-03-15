@@ -29,8 +29,8 @@ class CardHand(hand: List<Card>) {
         val sum = sum()
 
         return when {
-            sum > CardHandState.BLACKJACK.precondition -> CardHandState.BUST
-            sum == CardHandState.BLACKJACK.precondition && hand.size == BLACK_JACK_CARD_HAND_SIZE -> CardHandState.BLACKJACK
+            sum > BLACK_JACK_SCORE -> CardHandState.BUST
+            sum == BLACK_JACK_SCORE && hand.size == BLACK_JACK_CARD_HAND_SIZE -> CardHandState.BLACKJACK
             else -> CardHandState.DRAW_POSSIBILITY
         }
     }
@@ -39,8 +39,8 @@ class CardHand(hand: List<Card>) {
         val sum = sum()
 
         return when {
-            sum > CardHandState.BLACKJACK.precondition -> CardHandState.BUST
-            hand.size == BLACK_JACK_CARD_HAND_SIZE && sum == CardHandState.BLACKJACK.precondition -> CardHandState.BLACKJACK
+            sum > BLACK_JACK_SCORE -> CardHandState.BUST
+            hand.size == BLACK_JACK_CARD_HAND_SIZE && sum == BLACK_JACK_SCORE -> CardHandState.BLACKJACK
             sum <= DEALER_MAX_HIT_SUM -> CardHandState.HIT
             else -> CardHandState.STAY
         }
@@ -56,5 +56,6 @@ class CardHand(hand: List<Card>) {
         private const val DEALER_MAX_HIT_SUM = 16
         private const val MAX_BONUS_AVAILABILITY = 11
         private const val BLACK_JACK_CARD_HAND_SIZE = 2
+        private const val BLACK_JACK_SCORE = 21
     }
 }

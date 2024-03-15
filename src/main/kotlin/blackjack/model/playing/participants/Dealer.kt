@@ -20,8 +20,8 @@ data class Dealer(override val cardHand: CardHand) : Role(name = PlayerName(DEAL
         val dealerSum = cardHand.sum()
 
         return when {
-            playerSum > CardHandState.BLACKJACK.precondition -> WinningResultStatus.DEFEAT
-            dealerSum > CardHandState.BLACKJACK.precondition -> WinningResultStatus.VICTORY
+            playerSum > BLACK_JACK_SCORE -> WinningResultStatus.DEFEAT
+            dealerSum > BLACK_JACK_SCORE -> WinningResultStatus.VICTORY
             dealerSum > playerSum -> WinningResultStatus.DEFEAT
             dealerSum == playerSum -> WinningResultStatus.PUSH
             else -> WinningResultStatus.VICTORY
@@ -30,5 +30,6 @@ data class Dealer(override val cardHand: CardHand) : Role(name = PlayerName(DEAL
 
     companion object {
         private const val DEALER = "딜러"
+        private const val BLACK_JACK_SCORE = 21
     }
 }
