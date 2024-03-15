@@ -2,6 +2,7 @@ package model.human
 
 import model.Hand
 
-class Player(override val hand: Hand, override val humanName: HumanName = HumanName.fromInput("Player")) : Human(hand, humanName) {
-    override fun isPossible(): Boolean = getPointIncludingAce().amount < 21
+class Player(hand: Hand, override val humanInfo: HumanInfo = HumanInfo("Player")) :
+    Human(hand, humanInfo) {
+    override fun isPossible(): Boolean = hand.getPoint().isLessThan(21)
 }
