@@ -34,7 +34,10 @@ abstract class Human(open val hand: Hand, open val humanName: HumanName) {
         }
         return false
     }
+    fun isBlackJack(): Boolean  =
+        (this.hand.cards.size == 2 && this.hand.isBlackjackPoint())
 
+    fun isBusted(): Boolean = !this.hand.isNotBusted()
     abstract fun isPossible(): Boolean
 
     companion object {
