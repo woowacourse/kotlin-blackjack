@@ -15,8 +15,8 @@ class BetMoneyTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = ["0", "-1", "-1500"])
-    fun `배팅 금액은 0보다 큰 정수여야 합니다`(input: String) {
+    @ValueSource(strings = ["-1", "-1500"])
+    fun `배팅 금액은 0 이상의 정수여야 합니다`(input: String) {
         assertThatThrownBy {
             BetMoney.fromInput(input)
         }.isExactlyInstanceOf(IllegalArgumentException::class.java)
