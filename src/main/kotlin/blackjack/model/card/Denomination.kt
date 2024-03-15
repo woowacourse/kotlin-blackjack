@@ -18,7 +18,7 @@ enum class Denomination(val value: String, val score: Int) {
     fun isAce() = this == ACE
 
     companion object {
-        const val ADDITIONAL_ACE_SCORE = 10
+        const val ACE_BONUS_SCORE = 10
 
         fun from(value: String): Denomination? {
             return entries.find { it.value == value }

@@ -15,12 +15,17 @@ class HandCards {
     }
 
     fun getCardSum(burstCondition: Int): Int {
-        return _cards.fold(
-            _cards.sumOf { it.getScore() },
-        ) { total, card ->
-            if (!card.isAce()) return@fold total
-            if (total + Denomination.ADDITIONAL_ACE_SCORE > burstCondition) return total
-            total + Denomination.ADDITIONAL_ACE_SCORE
+        val total = _cards.sumOf { it.getScore() }
+        if (canAddAceBonusScore(total, burstCondition)) {
+            return total + Denomination.ACE_BONUS_SCORE
         }
+        return total
+    }
+
+    private fun canAddAceBonusScore(
+        total: Int,
+        burstCondition: Int,
+    ): Boolean {
+        return _cards.any { it.isAce() } && total + Denomination.ACE_BONUS_SCORE <= burstCondition
     }
 }
