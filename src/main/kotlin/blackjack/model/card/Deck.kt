@@ -19,5 +19,7 @@ class Deck(val cards: MutableList<Card> = mutableListOf()) {
         cards.shuffle()
     }
 
+    fun doubleDealCard() = mutableListOf(dealCard(), dealCard())
+
     fun dealCard(): Card = if (cards.isNotEmpty()) cards.removeAt(0) else throw NoSuchElementException("Deck is empty")
 }
