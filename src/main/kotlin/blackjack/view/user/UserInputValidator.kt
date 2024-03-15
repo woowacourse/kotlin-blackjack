@@ -17,7 +17,7 @@ object UserInputValidator {
         }
     }
 
-    fun checkBettingMoney(input: Int?): Result<BettingMoney> {
+    fun checkBettingMoney(input: Double): Result<BettingMoney> {
         return runCatching {
             BettingMoney(input)
         }

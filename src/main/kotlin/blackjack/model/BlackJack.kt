@@ -35,9 +35,19 @@ class BlackJack {
         val totalScore = handCard.getTotalCardsSum()
         when (totalScore) {
             in MIN_SCORE until BLACK_JACK_SCORE -> _state = State.Action.Hit
-            BLACK_JACK_SCORE -> _state = State.Finish.BlackJack
+            BLACK_JACK_SCORE -> checkCardCount()
             in BUST_SCORE..MAX_SCORE -> _state = State.Finish.Bust
         }
+    }
+
+    fun checkCardCount() {
+        if (handCard.cards.size == 2) {
+            switchToBlackJackState()
+        }
+    }
+
+    fun switchToBlackJackState() {
+        _state = State.Finish.BlackJack
     }
 
     companion object {

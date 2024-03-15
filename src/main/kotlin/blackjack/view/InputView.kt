@@ -35,7 +35,7 @@ object InputView {
 
     fun inputPlayerBettingMoney(playerName: String): BettingMoney {
         println(INPUT_MESSAGE_BETTING_MONEY.format(playerName))
-        val input = readlnOrNull().orEmpty().toIntOrNull()
+        val input = readlnOrNull().orEmpty().toDoubleOrNull() ?: 0.0
         val result = UserInputValidator.checkBettingMoney(input)
 
         return result.getOrElse { throwable ->

@@ -1,5 +1,6 @@
 package blackjack.model
 
+import blackjack.state.State
 import blackjack.view.user.UserDecision
 
 class Player(name: String) : Participant(name) {
@@ -30,6 +31,25 @@ class Player(name: String) : Participant(name) {
         }
     }
 
+    // 수익률 계산
+    fun calculateProfit(
+        result: Result,
+        state: State,
+    ): Double {
+        return when (result) {
+            Result.WIN -> {
+                if (state == State.Finish.BlackJack) {
+                    balance * BLACK_JACK_EARNING_RATE
+                } else {
+                    balance * WIN_EARNING_RATE
+                }
+            }
+
+            Result.DRAW -> DRAW_EARNING_RATE
+            Result.LOSE -> -balance
+        }
+    }
+
     companion object {
         fun checkDuplication(playerNames: List<String>) {
             require(playerNames.size == playerNames.toSet().size) {
@@ -37,7 +57,10 @@ class Player(name: String) : Participant(name) {
             }
         }
 
-        private const val DEFAULT_BETTING_MONEY: Int = 0
+        private const val DEFAULT_BETTING_MONEY: Double = 0.0
+        const val BLACK_JACK_EARNING_RATE: Double = 1.5
+        const val WIN_EARNING_RATE: Double = 1.0
+        const val DRAW_EARNING_RATE: Double = 0.0
         private const val MAX_NAME_LENGTH = 8
         private const val ERROR_NAME_LENGTH = "사용자 이름은 최대 ${MAX_NAME_LENGTH}자 입니다."
         private const val ERROR_DUPLICATION_NAME = "사용자 이름은 중복이 불가능 합니다."
