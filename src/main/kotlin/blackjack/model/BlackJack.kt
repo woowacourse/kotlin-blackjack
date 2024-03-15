@@ -19,7 +19,7 @@ class BlackJack {
     }
 
     fun getCards(): List<Card> {
-        return handCard.cards
+        return handCard.getCards()
     }
 
     fun getHandCardScore(): Int {

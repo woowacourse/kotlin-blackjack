@@ -7,6 +7,10 @@ class HandCard {
         cards.add(card)
     }
 
+    fun getCards(): List<Card> {
+        return cards
+    }
+
     fun getGameScoreWithAceCount(): Int {
         val score = getTotalCardsSum()
         val transferScore = score + Denomination.TRANSFER_ACE_SCORE

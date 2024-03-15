@@ -47,6 +47,10 @@ class GameManager(
         return participants.dealer
     }
 
+    fun getPlayers(): List<Player> {
+        return participants.players
+    }
+
     fun getAlivePlayers(): List<Participant> {
         return participants.getAlivePlayers()
     }

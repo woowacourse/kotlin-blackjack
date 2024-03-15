@@ -8,30 +8,35 @@ import blackjack.view.user.UserDecision
 import blackjack.view.user.UserInputValidator
 
 class BlackJackController {
-    private lateinit var gameManager: GameManager
 
     fun runBlackJackGame() {
-        startGameFlow()
-        playGame()
-        showResult()
+        val gameManager = makeGameManager()
+        startGameFlow(gameManager)
+        playGame(gameManager)
+        showResult(gameManager)
     }
 
-    private fun startGameFlow() {
+    private fun makeGameManager(): GameManager {
         val participants = UserInputValidator.makeParticipants()
         participants.players.forEach { player ->
             player.settleBettingMoney(InputView.inputPlayerMoney(player))
         }
-        gameManager =
-            GameManager(
-                participants = participants,
-            )
+        return GameManager(
+            participants = participants,
+        )
+    }
+
+    private fun startGameFlow(gameManager: GameManager) {
+        val dealer = gameManager.getDealer()
+        val players = gameManager.getPlayers()
+
         gameManager.setGame()
         OutputView.outputParticipantsName(
-            dealerName = participants.dealer.getName(),
-            players = participants.players,
+            dealerName = dealer.getName(),
+            players = players,
         )
 
-        participants.dealer.openInitCards()
+        dealer.openInitCards()
             .also { cards ->
                 if (cards.isEmpty()) {
                     println(ERROR_CARD_INDEX)
@@ -39,30 +44,45 @@ class BlackJackController {
             }
             .forEach { firstCard ->
                 OutputView.outputDealerCurrentHandCard(
-                    name = participants.dealer.getName(),
+                    name = dealer.getName(),
                     firstCard = firstCard,
                 )
             }
-        OutputView.outputPlayersCurrentHandCard(participants.players)
+        OutputView.outputPlayersCurrentHandCard(players)
     }
 
-    private fun playGame() {
+    private fun playGame(gameManager: GameManager) {
         gameManager.getAlivePlayers().forEach { participant ->
-            playPlayer(participant)
+            playPlayer(
+                participant,
+                gameManager,
+            )
         }
-        playDealer()
+        playDealer(gameManager)
     }
 
-    private fun playPlayer(participant: Participant) {
+    private fun playPlayer(
+        participant: Participant,
+        gameManager: GameManager,
+    ) {
         while (participant.checkShouldDrawCard()) {
-            processPlayerDecision(participant)
+            processPlayerDecision(
+                participant = participant,
+                gameManager = gameManager,
+            )
         }
     }
 
-    private fun processPlayerDecision(participant: Participant) {
+    private fun processPlayerDecision(
+        participant: Participant,
+        gameManager: GameManager,
+    ) {
         when (InputView.inputPlayerDecision(participant.getName())) {
             UserDecision.YES -> {
-                processUserDecision(participant)
+                processUserDecision(
+                    participant = participant,
+                    gameManager = gameManager
+                )
                 OutputView.outputPlayerCurrentHandCard(participant)
             }
 
@@ -70,15 +90,20 @@ class BlackJackController {
         }
     }
 
-    private fun playDealer() {
+    private fun playDealer(
+        gameManager: GameManager,
+    ) {
         val dealer = gameManager.getDealer()
         while (dealer.checkShouldDrawCard()) {
             OutputView.outputDealerRule()
-            processUserDecision(dealer)
+            processUserDecision(
+                participant = dealer,
+                gameManager = gameManager,
+            )
         }
     }
 
-    private fun showResult() {
+    private fun showResult(gameManager: GameManager) {
         OutputView.outputParticipantsHandCard(gameManager.getParticipants())
         OutputView.outputBlackResult()
         val gameResult = gameManager.calculateGameResult()
@@ -88,7 +113,10 @@ class BlackJackController {
         )
     }
 
-    private fun processUserDecision(participant: Participant) {
+    private fun processUserDecision(
+        participant: Participant,
+        gameManager: GameManager,
+    ) {
         try {
             participant.draw(gameManager.returnCardForParticipant())
         } catch (e: IllegalArgumentException) {
