@@ -9,12 +9,12 @@ class InputView {
     }
 
     fun inputPlayerBetAmount(playerNames: List<String>): MutableList<Int> {
-        val playersBudgets: MutableList<Int> = mutableListOf()
+        val playersBetAmounts: MutableList<Int> = mutableListOf()
         playerNames.forEach { playerName ->
             println(MESSAGE_INPUT_PLAYERS_BUDGET.format(playerName))
-            playersBudgets.add(readln().toInt())
+            playersBetAmounts.add(readln().toInt())
         }
-        return playersBudgets
+        return playersBetAmounts
     }
 
     tailrec fun inputWhetherHit(player: Player): Boolean {

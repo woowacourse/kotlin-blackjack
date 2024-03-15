@@ -1,6 +1,7 @@
 package blackjack.view
 
 import blackjack.model.Card
+import blackjack.model.Dealer
 import blackjack.model.DealerResult
 import blackjack.model.Player
 import blackjack.model.Rank
@@ -55,7 +56,18 @@ class OutputView {
         val (playersResult, dealerResult) = scoreBoard
         println(dealerResult.format())
         playersResult.forEach { playerResult ->
-            println("${playerResult.name}: ${makeWinningStateLabel(playerResult.winningState)}")
+            println("${playerResult.player.name}: ${makeWinningStateLabel(playerResult.winningState)}")
+        }
+    }
+
+    fun showProfits(
+        dealer: Dealer,
+        players: List<Player>,
+    ) {
+        println(MESSAGE_FINAL_PROFIT)
+        println(MESSAGE_DEALER_PROFIT.format(dealer.profit))
+        players.forEach { player ->
+            println(MESSAGE_PLAYER_PROFIT.format(player.name, player.profit))
         }
     }
 
@@ -120,5 +132,8 @@ class OutputView {
         private const val MESSAGE_DIVIDED_CARDS = "딜러와 %s에게 2장의 카드를 나누었습니다."
         private const val MESSAGE_DEALER_HIT = "\n딜러는 16이하라 한장의 카드를 더 받았습니다."
         private const val MESSAGE_FINAL_RESULT = "\n## 최종 승패"
+        private const val MESSAGE_FINAL_PROFIT = "\n## 최종수익"
+        private const val MESSAGE_DEALER_PROFIT = "딜러 : %.0f"
+        private const val MESSAGE_PLAYER_PROFIT = "%s : %.0f"
     }
 }

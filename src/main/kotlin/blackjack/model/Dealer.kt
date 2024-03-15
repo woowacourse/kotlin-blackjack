@@ -1,6 +1,9 @@
 package blackjack.model
 
-class Dealer(val hand: Hand) : Participant() {
+class Dealer(val hand: Hand, profit: Int = INITIAL_PROFIT) : Participant() {
+    var profit = profit
+        private set
+
     override fun hit(card: Card) {
         hand.add(card)
     }
@@ -38,8 +41,23 @@ class Dealer(val hand: Hand) : Participant() {
     }
 
     fun createScoreBoard(players: List<Player>): ScoreBoard {
-        val results = comparePoints(players)
-        return ScoreBoard.from(results)
+        val playerWinningResults = comparePoints(players)
+        return ScoreBoard.from(playerWinningResults)
+    }
+
+    fun giveAmountsToPlayer(
+        scoreBoard: ScoreBoard,
+        playersBetAmounts: List<Int>,
+    ) {
+        scoreBoard.playersResult.forEachIndexed { ind, playerResult ->
+            giveAmountsAccordingToWinning(playerResult, playersBetAmounts, ind)
+        }
+    }
+
+    fun calculateDealerProfit(players: List<Player>) {
+        players.forEach { player ->
+            profit -= player.profit
+        }
     }
 
     private fun comparePoints(players: List<Player>): List<PlayerResult> {
@@ -53,26 +71,14 @@ class Dealer(val hand: Hand) : Participant() {
     private fun comparePointsEachPlayer(player: Player): PlayerResult {
         val dealerHand = this.hand
         val playerHand = player.hand
-        if (playerHand.isBust()) return PlayerResult(player.name, WinningState.LOSS)
-        if (dealerHand.isBust()) return PlayerResult(player.name, WinningState.WIN)
+        if (playerHand.isBust()) return PlayerResult(player, WinningState.LOSS)
+        if (dealerHand.isBust()) return PlayerResult(player, WinningState.WIN)
         if (playerHand.sumOptimized() == BLACKJACK_NUMBER && dealerHand.sumOptimized() == BLACKJACK_NUMBER) {
             val playerWinningState = compareIfBlackJackNum(dealerHand, playerHand)
-            return PlayerResult(player.name, playerWinningState)
+            return PlayerResult(player, playerWinningState)
         } else {
             val playerWinningState = compareIfNotBlackJackNum(dealerHand, playerHand)
-            return PlayerResult(player.name, playerWinningState)
-        }
-    }
-
-    private fun compareIfBlackJackNum(
-        dealerHand: Hand,
-        playerHand: Hand,
-    ): WinningState {
-        return when {
-            playerHand.cards.size == dealerHand.cards.size -> WinningState.DRAW
-            playerHand.cards.size == BLACKJACK_CARD_SIZE -> WinningState.WIN
-            dealerHand.cards.size == BLACKJACK_CARD_SIZE -> WinningState.LOSS
-            else -> WinningState.DRAW
+            return PlayerResult(player, playerWinningState)
         }
     }
 
@@ -88,6 +94,42 @@ class Dealer(val hand: Hand) : Participant() {
         }
     }
 
+    private fun giveAmountsAccordingToWinning(
+        playerResult: PlayerResult,
+        playersBetAmounts: List<Int>,
+        ind: Int,
+    ) {
+        when (playerResult.winningState) {
+            WinningState.WIN -> giveAmountsWhenPlayerWin(playerResult, playersBetAmounts, ind)
+            WinningState.DRAW -> playerResult.player.getWinningPrize(playersBetAmounts[ind])
+            WinningState.LOSS -> playerResult.player.getWinningPrize(-playersBetAmounts[ind])
+        }
+    }
+
+    private fun giveAmountsWhenPlayerWin(
+        playerResult: PlayerResult,
+        playersBetAmounts: List<Int>,
+        ind: Int,
+    ) {
+        if (playerResult.player.hand.isBlackjack()) {
+            playerResult.player.getWinningPrize((BLACKJACK_BONUS_RATE * playersBetAmounts[ind]).toInt())
+        } else {
+            playerResult.player.getWinningPrize(playersBetAmounts[ind])
+        }
+    }
+
+    private fun compareIfBlackJackNum(
+        dealerHand: Hand,
+        playerHand: Hand,
+    ): WinningState {
+        return when {
+            playerHand.cards.size == dealerHand.cards.size -> WinningState.DRAW
+            playerHand.cards.size == BLACKJACK_CARD_SIZE -> WinningState.WIN
+            dealerHand.cards.size == BLACKJACK_CARD_SIZE -> WinningState.LOSS
+            else -> WinningState.DRAW
+        }
+    }
+
     companion object {
         fun createDealer(deck: Deck): Dealer {
             val dealer = Dealer(Hand(listOf()))
@@ -98,5 +140,6 @@ class Dealer(val hand: Hand) : Participant() {
         const val HIT_CONDITION = 17
         const val BLACKJACK_NUMBER = 21
         const val BLACKJACK_CARD_SIZE = 2
+        const val BLACKJACK_BONUS_RATE = 1.5
     }
 }

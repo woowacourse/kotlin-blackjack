@@ -3,6 +3,7 @@ package blackjack.controller
 import blackjack.model.Dealer
 import blackjack.model.Deck
 import blackjack.model.Player
+import blackjack.model.ScoreBoard
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -14,10 +15,14 @@ class BlackJackController(
         val playersNames: List<String> = inputView.inputPlayerNames()
         val deck = Deck()
         val players = Player.createPlayers(playersNames, deck)
+        val playersBetAmounts: List<Int> = inputView.inputPlayerBetAmount(playersNames)
         val dealer = Dealer.createDealer(deck)
         outputView.showDivided(dealer.hand.first(), players)
         hitParticipant(players, deck, dealer)
-        showScoreBoard(players, dealer)
+        val scoreBoard = makeAndShowScoreBoard(players, dealer)
+        dealer.giveAmountsToPlayer(scoreBoard, playersBetAmounts)
+        dealer.calculateDealerProfit(players)
+        outputView.showProfits(dealer, players)
     }
 
     private fun hitParticipant(
@@ -44,10 +49,10 @@ class BlackJackController(
         }
     }
 
-    private fun showScoreBoard(
+    private fun makeAndShowScoreBoard(
         players: List<Player>,
         dealer: Dealer,
-    ) {
+    ): ScoreBoard {
         players.forEach {
             val name = it.name
             val handCards = it.hand
@@ -55,5 +60,6 @@ class BlackJackController(
         }
         val scoreBoard = dealer.createScoreBoard(players)
         outputView.showScoreBoard(scoreBoard)
+        return scoreBoard
     }
 }

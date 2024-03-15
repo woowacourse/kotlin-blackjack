@@ -13,5 +13,6 @@ abstract class Participant {
 
     companion object {
         const val INITIAL_HAND_COUNT = 2
+        const val INITIAL_PROFIT = 0
     }
 }
