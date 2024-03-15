@@ -31,7 +31,6 @@ class Player(name: String) : Participant(name) {
         }
     }
 
-    // 수익률 계산
     fun calculateProfit(
         result: Result,
         state: State,

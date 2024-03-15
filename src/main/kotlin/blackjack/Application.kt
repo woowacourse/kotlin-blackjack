@@ -9,6 +9,5 @@ fun main() {
         startGameFlow()
         playGame()
         calculateResult()
-        showResult()
     }
 }
