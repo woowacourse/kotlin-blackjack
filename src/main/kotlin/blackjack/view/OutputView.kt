@@ -2,9 +2,9 @@ package blackjack.view
 
 import blackjack.model.Card
 import blackjack.model.Dealer
-import blackjack.model.GameResult
 import blackjack.model.Participant
 import blackjack.model.Player
+import blackjack.model.Proceeds
 import blackjack.model.Suit
 
 object OutputView {
@@ -118,25 +118,30 @@ object OutputView {
 
     fun outputParticipantResult(
         dealer: Dealer,
-        gameResult: GameResult,
+        bettingResults: List<Proceeds>,
     ) {
-        outputDealerResult(dealer)
-        outputPlayersResult(
-            resultPlayers = gameResult.getResultPlayers(),
+        val dealerBettingResult = -bettingResults.sumOf { it.proceeds }
+        outputDealerResult(
+            dealer = dealer,
+            dealerBettingResult = dealerBettingResult,
         )
+        outputPlayersResult(bettingResults)
     }
 
-    private fun outputDealerResult(dealer: Dealer) {
-        println("${dealer.getName()}: ${dealer.getBettingMoney()}")
+    private fun outputDealerResult(
+        dealer: Dealer,
+        dealerBettingResult: Int,
+    ) {
+        println("${dealer.getName()}: $dealerBettingResult")
     }
 
-    private fun outputPlayersResult(resultPlayers: Set<Player>) {
-        resultPlayers.forEach { player ->
-            outputPlayerResult(player)
+    private fun outputPlayersResult(bettingResults: List<Proceeds>) {
+        bettingResults.forEach { bettingResult ->
+            outputPlayerResult(bettingResult)
         }
     }
 
-    private fun outputPlayerResult(player: Player) {
-        println("${player.getName()}: ${player.getBettingMoney()}")
+    private fun outputPlayerResult(bettingResult: Proceeds) {
+        println("${bettingResult.name}: ${bettingResult.proceeds}")
     }
 }

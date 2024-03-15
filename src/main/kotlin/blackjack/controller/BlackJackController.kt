@@ -8,7 +8,6 @@ import blackjack.view.user.UserDecision
 import blackjack.view.user.UserInputValidator
 
 class BlackJackController {
-
     fun runBlackJackGame() {
         val gameManager = makeGameManager()
         startGameFlow(gameManager)
@@ -18,9 +17,6 @@ class BlackJackController {
 
     private fun makeGameManager(): GameManager {
         val participants = UserInputValidator.makeParticipants()
-        participants.players.forEach { player ->
-            player.settleBettingMoney(InputView.inputPlayerMoney(player))
-        }
         return GameManager(
             participants = participants,
         )
@@ -81,7 +77,7 @@ class BlackJackController {
             UserDecision.YES -> {
                 processUserDecision(
                     participant = participant,
-                    gameManager = gameManager
+                    gameManager = gameManager,
                 )
                 OutputView.outputPlayerCurrentHandCard(participant)
             }
@@ -90,9 +86,7 @@ class BlackJackController {
         }
     }
 
-    private fun playDealer(
-        gameManager: GameManager,
-    ) {
+    private fun playDealer(gameManager: GameManager) {
         val dealer = gameManager.getDealer()
         while (dealer.checkShouldDrawCard()) {
             OutputView.outputDealerRule()
@@ -107,9 +101,10 @@ class BlackJackController {
         OutputView.outputParticipantsHandCard(gameManager.getParticipants())
         OutputView.outputBlackResult()
         val gameResult = gameManager.calculateGameResult()
+        val bettingResults = gameManager.getDealer().settleBettingMoneys(gameResult)
         OutputView.outputParticipantResult(
             dealer = gameManager.getDealer(),
-            gameResult = gameResult,
+            bettingResults = bettingResults,
         )
     }
 

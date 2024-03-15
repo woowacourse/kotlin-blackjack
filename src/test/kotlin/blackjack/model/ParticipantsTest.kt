@@ -20,10 +20,11 @@ class ParticipantsTest {
         val participants =
             Participants(
                 dealer = dealer,
-                players = listOf(
+                players =
+                listOf(
                     Player(UserInformation("누누")),
                     Player(UserInformation("채드")),
-                    Player(UserInformation("꼬상"))
+                    Player(UserInformation("꼬상")),
                 ),
             )
         assertThat(participants.players.size).isEqualTo(3)

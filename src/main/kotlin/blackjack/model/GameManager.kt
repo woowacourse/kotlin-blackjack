@@ -20,10 +20,6 @@ class GameManager(
                 },
             )
         }
-        participants.dealer.settleBettingMoneys(
-            playerResults.keys.toList(),
-            playerResults.values.toList(),
-        )
         return GameResult(dealerResults, playerResults)
     }
 

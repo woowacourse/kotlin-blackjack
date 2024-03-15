@@ -1,6 +1,7 @@
 package blackjack.view
 
 import blackjack.model.Player
+import blackjack.model.UserInformation
 import blackjack.view.user.UserDecision
 import blackjack.view.user.UserInputValidator
 
@@ -11,17 +12,33 @@ object InputView {
     private const val COMMA = ","
 
     fun inputPlayers(): List<Player> {
+        val playerNames = inputPlayerNames()
+        val bettingMoneys =
+            playerNames.map { playerName ->
+                inputPlayerMoney(playerName)
+            }
+        return playerNames.zip(bettingMoneys).map { (name, money) ->
+            Player(
+                UserInformation(
+                    userName = name,
+                    money = money,
+                ),
+            )
+        }
+    }
+
+    private fun inputPlayerNames(): List<String> {
         println(INPUT_MESSAGE_PLAYER_NAMES)
         val input = readlnOrNull().orEmpty()
         val validatorPlayers = UserInputValidator.checkPlayers(input.split(COMMA))
-        return validatorPlayers ?: inputPlayers()
+        return validatorPlayers ?: inputPlayerNames()
     }
 
-    fun inputPlayerMoney(player: Player): Int {
-        println(INPUT_MESSAGE_MONEY.format(player.getName()))
+    fun inputPlayerMoney(playerName: String): Int {
+        println(INPUT_MESSAGE_MONEY.format(playerName))
         return readlnOrNull()?.toIntOrNull().also {
             if (it == null) println(UserInputValidator.ERROR_INACCURATE_MONEY)
-        } ?: inputPlayerMoney(player)
+        } ?: inputPlayerMoney(playerName)
     }
 
     fun inputPlayerDecision(playerName: String): UserDecision {

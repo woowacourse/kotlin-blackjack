@@ -3,14 +3,13 @@ package blackjack.view.user
 import blackjack.model.Dealer
 import blackjack.model.Participants
 import blackjack.model.Player
-import blackjack.model.UserInformation
 import blackjack.view.InputView
 
 object UserInputValidator {
-    fun checkPlayers(input: List<String>): List<Player>? {
+    fun checkPlayers(input: List<String>): List<String>? {
         return try {
             checkPlayerNameDuplication(input)
-            input.map { name -> Player(UserInformation(name)) }
+            return input
         } catch (e: IllegalArgumentException) {
             println(e.message)
             null

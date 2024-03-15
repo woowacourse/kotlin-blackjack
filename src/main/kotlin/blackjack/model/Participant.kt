@@ -7,7 +7,7 @@ abstract class Participant(
     private val blackJack: BlackJack = BlackJack(),
 ) {
     init {
-        require(userInformation.name.length <= MAX_NAME_LENGTH) {
+        require(userInformation.userName.length <= MAX_NAME_LENGTH) {
             ERROR_NAME_LENGTH
         }
     }
@@ -52,15 +52,11 @@ abstract class Participant(
     }
 
     fun getName(): String {
-        return userInformation.name
+        return userInformation.userName
     }
 
     fun getBettingMoney(): Int {
-        return userInformation.getBalance()
-    }
-
-    fun settleBettingMoney(money: Int) {
-        userInformation.setMoney(money)
+        return userInformation.money
     }
 
     fun getCards(): List<Card> {

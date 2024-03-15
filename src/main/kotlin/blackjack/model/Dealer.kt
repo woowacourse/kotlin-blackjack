@@ -5,20 +5,20 @@ class Dealer(userInformation: UserInformation = UserInformation(DEFAULT_DEALER_N
         return getCards().firstOrNull()
     }
 
-    fun settleBettingMoneys(
-        players: List<Player>,
-        results: List<Result>,
-    ) {
-        players.zip(results).forEach { (player, result) ->
+    fun settleBettingMoneys(gameResult: GameResult): List<Proceeds> {
+        return gameResult.getResultPlayers().map { player ->
             val payout =
-                settleBettingPayout(
-                    result = result,
-                    isBlackJackState = player.checkBlackJackState(),
-                )
+                gameResult.getPlayerResult(player)?.let { result ->
+                    settleBettingPayout(
+                        result = result,
+                        isBlackJackState = player.checkBlackJackState(),
+                    )
+                } ?: 0
             val playerBettingResultMoney = player.getBettingMoney() * payout.toInt()
-            val dealerBettingMoney = getBettingMoney()
-            settleBettingMoney(dealerBettingMoney - playerBettingResultMoney)
-            player.settleBettingMoney(playerBettingResultMoney)
+            Proceeds(
+                player.getName(),
+                playerBettingResultMoney,
+            )
         }
     }
 
