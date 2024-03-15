@@ -1,5 +1,7 @@
 package blackjack.model.role
 
+import blackjack.model.result.PlayerWinning
+
 class Players(val players: List<Player>) {
     init {
         require(players.map { it.name }.toSet().size == players.size) { "플레이어 이름에 중복이 있습니다." }
@@ -7,6 +9,8 @@ class Players(val players: List<Player>) {
             "플레이어의 수는 ${MIN_PLAYERS_COUNT}명 이상, ${MAX_PLAYERS_COUNT}명 이하여야 합니다."
         }
     }
+
+    fun calculatePlayersWinning(dealer: Dealer): PlayerWinning = PlayerWinning(players.associate { it.name to it.judgeWinning(dealer) })
 
     companion object {
         private const val MIN_PLAYERS_COUNT = 1
