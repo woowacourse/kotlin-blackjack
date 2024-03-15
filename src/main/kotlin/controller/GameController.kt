@@ -3,9 +3,10 @@ package controller
 import ExceptionHandler
 import model.Answer
 import model.Hand
-import model.Judge
+import model.ResultType
 import model.card.Deck
 import model.human.Dealer
+import model.human.Human
 import model.human.HumanName
 import model.human.Player
 import model.human.Players
@@ -14,8 +15,9 @@ import view.OutputView
 
 class GameController(private val deck: Deck) {
     fun start() {
-        val dealer = Dealer(Hand(deck))
+        val dealer = Dealer(Hand())
         val players = readPlayers()
+        setBet(players)
 
         initGame(dealer = dealer, players = players)
         playGame(dealer = dealer, players = players)
@@ -26,9 +28,23 @@ class GameController(private val deck: Deck) {
     private fun readPlayers(): Players {
         return ExceptionHandler.handleInputValue {
             InputView.readPlayerNames().run {
-                Players.ofList(this, deck)
+                Players.ofList(this)
             }
         }
+    }
+
+    private fun setBet(players: Players) {
+        return ExceptionHandler.handleInputValue {
+            players.players.forEach {
+                it.humanInfo.changeMoney(readBettingAmount(it))
+            }
+        }
+    }
+
+    private fun readBettingAmount(player: Player): Int {
+        return ExceptionHandler.handleInputValue {
+            InputView.readBettingAmount(player)
+        } ?: readBettingAmount(player)
     }
 
     private fun initGame(
@@ -41,12 +57,18 @@ class GameController(private val deck: Deck) {
     }
 
     private fun initDealer(dealer: Dealer) {
-        dealer.hits(1)
+        initPlayer(dealer)
     }
 
     private fun initPlayers(players: Players) {
-        players.players.forEach {
-            it.hits(2)
+        players.players.forEach { player ->
+            initPlayer(player)
+        }
+    }
+
+    private fun initPlayer(human: Human) {
+        repeat(2) {
+            human.hand.draw(deck.pop())
         }
     }
 
@@ -55,16 +77,15 @@ class GameController(private val deck: Deck) {
         players: Players,
     ) {
         players.players.forEach(::playOfOnePlayer)
-        dealer.hit()
 
-        while (dealer.getPointIncludingAce().amount < 17) {
+        while (dealer.hand.getPoint().amount < 17) {
             OutputView.drawCardForDealer()
-            dealer.hit()
+            dealer.hand.draw(deck.pop())
         }
     }
 
     private fun playOfOnePlayer(player: Player) {
-        while (playByAnswer(readAnswer(player.humanName), player));
+        while (playByAnswer(readAnswer(player.humanInfo.humanName), player));
     }
 
     private fun playByAnswer(
@@ -97,18 +118,40 @@ class GameController(private val deck: Deck) {
         OutputView.showDealerHandWithResult(dealer)
         OutputView.showPlayersHandWithResult(players)
 
-        judge(players = players, dealer = dealer)
+        totalJudge(dealer = dealer, players = players)
+        OutputView.showResultHeader()
+        OutputView.showTotalResult(dealer = dealer, players = players)
+    }
+
+    private fun totalJudge(
+        dealer: Dealer,
+        players: Players,
+    ) {
+        players.players.forEach { player ->
+            judge(dealer, player)
+        }
     }
 
     private fun judge(
-        players: Players,
         dealer: Dealer,
+        player: Player,
     ) {
-        val playersResult = Judge.getPlayersResult(players, dealer)
-        val dealerResult = Judge.getDealerResult(playersResult)
+        when (dealer.getCompareResult(player)) {
+            ResultType.WIN -> {
+                dealer.humanInfo.exchangeMoney(player.humanInfo, -1.0)
+            }
 
-        OutputView.showResultHeader()
-        OutputView.showDealerResult(dealerResult)
-        OutputView.showPlayersResult(players, playersResult)
+            ResultType.LOSE -> {
+                if (player.isBlackJack()) {
+                    dealer.humanInfo.exchangeMoney(player.humanInfo, 1.5)
+                } else {
+                    dealer.humanInfo.exchangeMoney(player.humanInfo, 1.0)
+                }
+            }
+
+            ResultType.DRAW -> {
+                dealer.humanInfo.exchangeMoney(player.humanInfo, 0.0)
+            }
+        }
     }
 }
