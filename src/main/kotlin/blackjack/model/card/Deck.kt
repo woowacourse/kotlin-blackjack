@@ -1,25 +1,31 @@
 package blackjack.model.card
 
-class Deck(val cards: MutableList<Card> = mutableListOf()) {
+class Deck {
+    // 내부적으로 수정 가능한 카드 리스트
+    private val _cards: MutableList<Card> = mutableListOf()
+
+    // 외부에 제공될 불변 리스트 뷰
+    val cards: List<Card> get() = _cards.toList()
+
     init {
-        if (cards.isEmpty()) {
+        if (_cards.isEmpty()) {
             initializeDeck()
         }
     }
 
     private fun initializeDeck() {
-        cards.clear()
-        cards.addAll(
+        _cards.clear()
+        _cards.addAll(
             Suit.entries.flatMap { suit ->
                 Denomination.entries.map { denomination ->
                     Card(denomination, suit)
                 }
             },
         )
-        cards.shuffle()
+        _cards.shuffle()
     }
 
-    fun doubleDealCard() = mutableListOf(dealCard(), dealCard())
+    fun doubleDealCard() = listOf(dealCard(), dealCard())
 
-    fun dealCard(): Card = if (cards.isNotEmpty()) cards.removeAt(0) else throw NoSuchElementException("Deck is empty")
+    fun dealCard(): Card = if (_cards.isNotEmpty()) _cards.removeAt(0) else throw NoSuchElementException("Deck is empty")
 }
