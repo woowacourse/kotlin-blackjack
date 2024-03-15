@@ -21,7 +21,7 @@ class CardHandTest {
         )
 
     @Test
-    fun `카드 핸드의 총 합을 구한다`() {
+    fun `숫자 카드는 각 숫자에 해당하는 점수로 계산한다`() {
         val cardHand =
             CardHand(
                 Card(CardShape.CLOVER, CardNumber.ACE),
@@ -46,7 +46,7 @@ class CardHandTest {
     }
 
     @Test
-    fun `카드 패의 ACE 가 두 장 있을 때 한 장의 값은 11이 된다`() {
+    fun `A 카드가 포함되어 있으면 10점을 추가로 획득한다`() {
         val cardHand =
             CardHand(
                 Card(CardShape.SPADE, CardNumber.ACE),
@@ -69,17 +69,25 @@ class CardHandTest {
     }
 
     @Test
-    fun `카드 패의 ACE 가 두 장 있는 상태에서(이 때는 한 장이 1) TEN 이 추가되면, 남은 ACE 한 장을 1로 변경한다`() {
+    fun `A 카드가 포함되어 있을 때, 10점을 추가해서 21점을 초과한다면, 10점을 추가하지 않는다`() {
         val cardHand =
             mutableListOf(
                 Card(CardShape.SPADE, CardNumber.ACE),
-                Card(CardShape.HEART, CardNumber.ACE),
+                Card(CardShape.HEART, CardNumber.NINE),
             )
-
-        cardHand.add(Card(CardShape.HEART, CardNumber.TEN))
-        val currentCardHand = CardHand(cardHand)
+        val currentCardHand = CardHand(cardHand + Card(CardShape.HEART, CardNumber.TEN))
 
         val actual = currentCardHand.sum()
-        assertThat(actual).isEqualTo(12)
+        assertThat(actual).isEqualTo(20)
+    }
+
+    @Test
+    fun `J, Q, K 카드는 10점으로 계산한다`() {
+        val hand =
+            mutableListOf(
+                Card(CardShape.SPADE, CardNumber.JACK),
+                Card(CardShape.HEART, CardNumber.QUEEN),
+            )
+        assertThat(CardHand(hand).sum()).isEqualTo(20)
     }
 }
