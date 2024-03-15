@@ -4,8 +4,8 @@ import model.result.Point.Companion.compareTo
 import model.result.ResultType
 
 class Player(
-    override var participantState: ParticipantState,
-    override val participantName: ParticipantName =
+    participantState: ParticipantState,
+    participantName: ParticipantName =
         ParticipantName.fromInput(
             DEFAULT_NAME,
         ),
