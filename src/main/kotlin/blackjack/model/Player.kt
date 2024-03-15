@@ -1,6 +1,6 @@
 package blackjack.model
 
-class Player(val name: String, val hand: Hand) : Participant() {
+class Player(val name: String, val hand: Hand, val budget: Int) : Participant() {
     override fun hit(card: Card) {
         hand.add(card)
     }
@@ -26,8 +26,13 @@ class Player(val name: String, val hand: Hand) : Participant() {
         fun createPlayers(
             names: List<String>,
             deck: Deck,
+            budget: List<Int>,
         ): List<Player> {
-            val players = names.map { Player(it, Hand(listOf())) }
+            val namesAndBudgets = names.zip(budget)
+            val players =
+                namesAndBudgets.map { (name, budget) ->
+                    Player(name, Hand(listOf()), budget)
+                }
             players.map { it.initialSetHand(deck) }
             return players
         }
