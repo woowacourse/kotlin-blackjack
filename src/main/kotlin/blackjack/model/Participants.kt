@@ -40,7 +40,7 @@ class Participants(private val dealer: Dealer, private val players: List<Player>
         result: MutableMap<Participant, WinningState>,
         player: Player,
     ) {
-        val originalDealerWinningState = result.getOrDefault(dealer, WinningState(0, 0))
+        val originalDealerWinningState = result.getOrDefault(dealer, DEFAULT_WINNING_STATE)
         val addDealerWinningState = dealer.calculateGameStateAgainst(player).winningState
         result[dealer] =
             WinningState(
@@ -57,6 +57,7 @@ class Participants(private val dealer: Dealer, private val players: List<Player>
     }
 
     companion object {
+        private val DEFAULT_WINNING_STATE = WinningState(0, 0)
         private const val MAX_PLAYER_SIZE = 5
         private const val PLAYER_SIZE_ERROR_MESSAGE = "플레이어의 수는 5명을 넘을 수 없습니다."
     }

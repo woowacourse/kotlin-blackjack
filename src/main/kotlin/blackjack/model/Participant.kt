@@ -21,7 +21,7 @@ sealed class Participant(private val info: ParticipantInfo, private val hand: Ha
 
     protected fun isGameFinished() = getParticipantState().isFinished
 
-    fun calculateGameStateAgainst(opponent: Participant): GameState = getParticipantState().calculateGameState(this, opponent)
+    fun calculateGameStateAgainst(opponent: Participant): GameState = getParticipantState().calculateGameState(self = this, opponent)
 
     companion object {
         private const val BLACKJACK_CARD_SIZE = 2
@@ -62,6 +62,6 @@ class Player(private val info: PlayerInfo, hand: Hand) : Participant(info, hand)
     }
 
     fun calculateProfitAgainst(opponent: Participant): Double {
-        return info.betAmount.getAmount() * calculateGameStateAgainst(opponent).payoutMultiplier
+        return info.betAmount.getAmount() * (calculateGameStateAgainst(opponent).payoutMultiplier)
     }
 }
