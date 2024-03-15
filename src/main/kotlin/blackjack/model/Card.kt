@@ -5,6 +5,10 @@ data class Card(
     val title: String,
     val value: Int,
 ) {
+    override fun toString(): String {
+        return "${value}${shape.title}"
+    }
+
     companion object {
         private const val LOW_ACE_VALUE = 1
         private const val HIGH_ACE_VALUE = 11

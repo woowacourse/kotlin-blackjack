@@ -26,7 +26,7 @@ object GameRoundView {
         println(
             MESSAGE_CARD_INFO.format(
                 gameInfo.name,
-                gameInfo.cards.joinToString { "${it.title}${it.shape.title}" },
+                gameInfo.cards.joinToString { it.toString() },
             ),
         )
     }
@@ -42,7 +42,7 @@ object GameRoundView {
     private fun getDealerCardResult(gameInfo: GameInfo): String {
         return MESSAGE_CARD_INFO.format(
             gameInfo.name,
-            "${gameInfo.cards.first().value}${gameInfo.cards.first().shape.title}",
+            gameInfo.cards.first().toString(),
         )
     }
 
