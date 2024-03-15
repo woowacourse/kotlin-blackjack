@@ -18,7 +18,14 @@ abstract class Role {
 
     fun isBurst() = handCards.getCardSum(BLACKJACK_VALUE) > BLACKJACK_VALUE
 
-    fun isBlackjack() = handCards.getCardSum(BLACKJACK_VALUE) == BLACKJACK_VALUE
+    fun isBlackjack(): Boolean {
+        return handCards.getCardSum(BLACKJACK_VALUE) == BLACKJACK_VALUE &&
+            handCards.size == BLACKJACK_COUNT
+    }
+
+    fun isMaxCardSum(): Boolean {
+        return handCards.getCardSum(BLACKJACK_VALUE) == BLACKJACK_VALUE
+    }
 
     fun getCardSum() = handCards.getCardSum(BLACKJACK_VALUE)
 
@@ -26,6 +33,7 @@ abstract class Role {
 
     companion object {
         private const val BLACKJACK_VALUE = 21
+        private const val BLACKJACK_COUNT = 2
         private const val INIT_RECEIVE_CARD_COUNT = 2
     }
 }

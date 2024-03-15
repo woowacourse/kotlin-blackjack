@@ -5,7 +5,7 @@ import blackjack.model.card.CardProvider
 import blackjack.view.CardDecision
 
 class Player(val name: PlayerName) : Role() {
-    override fun decideMoreCard() = !isBlackjack() && !isBurst()
+    override fun decideMoreCard() = !isMaxCardSum() && !isBurst()
 
     fun takeTurn(
         cardProvider: CardProvider,
