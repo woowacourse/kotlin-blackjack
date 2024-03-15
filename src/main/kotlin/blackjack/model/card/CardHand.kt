@@ -1,10 +1,21 @@
 package blackjack.model.card
 
+import blackjack.model.config.GameRule.BLACK_JACK_SCORE
+import blackjack.model.config.GameRule.INITIAL_CARD_COUNT
 import blackjack.model.result.Score
 
 class CardHand(hand: List<Card>) {
     private val _hand = hand.toMutableList()
     val hand: List<Card> get() = _hand.toList()
+
+    val isReady: Boolean
+        get() = hand.size < INITIAL_CARD_COUNT
+
+    val isBlackJack: Boolean
+        get() = (calculateScore() == BLACK_JACK_SCORE) && (hand.size == INITIAL_CARD_COUNT)
+
+    val isBust: Boolean
+        get() = (calculateScore() > BLACK_JACK_SCORE)
 
     constructor(vararg card: Card) : this(card.toList())
 
