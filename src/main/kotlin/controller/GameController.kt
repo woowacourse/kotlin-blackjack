@@ -73,7 +73,11 @@ class GameController(private val deck: Deck) {
     ): Boolean {
         val isBusted =
             when (answer) {
-                Answer.YES -> player.hit()
+                Answer.YES -> {
+                    player.hand.draw(deck.pop())
+                    player.isPossible()
+                }
+
                 Answer.NO -> false
             }
         OutputView.showPlayerHand(player)
@@ -82,9 +86,7 @@ class GameController(private val deck: Deck) {
 
     private fun readAnswer(humanName: HumanName): Answer {
         return ExceptionHandler.handleInputValue {
-            InputView.readAnswer(humanName).run {
-                Answer.fromInput(this)
-            }
+            InputView.readAnswer(humanName) ?: readAnswer(humanName)
         }
     }
 
