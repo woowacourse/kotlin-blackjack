@@ -93,19 +93,34 @@ object OutputView {
         println()
     }
 
-    fun outputParticipantsHandCard(participants: List<Participant>) {
-        participants.forEach { participant ->
-            outputParticipantHandCard(participant)
+    fun outputParticipantsHandCard(
+        dealer: Dealer,
+        players: List<Player>,
+    ) {
+        outputDealerHandWithResult(dealer)
+        players.forEach { player ->
+            outputPlayerHandWithResult(player)
         }
     }
 
-    private fun outputParticipantHandCard(participant: Participant) {
+    private fun outputDealerHandWithResult(dealer: Dealer) {
         println(
             OUTPUT_MESSAGE_PARTICIPANTS_FINISH_HAND_CARD
                 .format(
-                    participant.getName(),
-                    joinCardsInfo(participant.getCards()),
-                    participant.getBlackJackScore(),
+                    "${dealer.getName()} ",
+                    joinCardsInfo(dealer.getCards()),
+                    dealer.getBlackJackScore(),
+                ),
+        )
+    }
+
+    private fun outputPlayerHandWithResult(player: Player) {
+        println(
+            OUTPUT_MESSAGE_PARTICIPANTS_FINISH_HAND_CARD
+                .format(
+                    player.getName(),
+                    joinCardsInfo(player.getCards()),
+                    player.getBlackJackScore(),
                 ),
         )
     }
