@@ -1,5 +1,10 @@
 package blackjack.model.participant
 
+import blackjack.model.HEART_KING
+import blackjack.model.HEART_SEVEN
+import blackjack.model.SPADE_ACE
+import blackjack.model.SPADE_FIVE
+import blackjack.model.SPADE_TEN
 import blackjack.model.card.Card
 import blackjack.model.card.TestCardProvider
 import org.assertj.core.api.Assertions.assertThat
@@ -16,8 +21,7 @@ class DealerTest {
         expected: Boolean,
     ) {
         // given
-        val dealer = Dealer()
-        dealer.receiveCard(cards)
+        val dealer = Dealer(cards)
 
         // when
         val actual = dealer.decideMoreCard()
@@ -35,7 +39,7 @@ class DealerTest {
         dealer.initCard(TestCardProvider)
 
         // then
-        val expected = listOf(Card.of("K", "하트"), Card.of("K", "하트"))
+        val expected = listOf(HEART_KING, HEART_KING)
         assertThat(dealer.getCards()).isEqualTo(expected)
     }
 
@@ -43,10 +47,10 @@ class DealerTest {
         @JvmStatic
         fun `카드 받을 수 있는지 여부 판단 테스트 데이터`() =
             listOf(
-                Arguments.of(listOf(Card.of("10", "하트"), Card.of("5", "다이아몬드")), true),
-                Arguments.of(listOf(Card.of("10", "하트"), Card.of("5", "다이아몬드"), Card.of("A", "다이아몬드")), true),
-                Arguments.of(listOf(Card.of("10", "하트"), Card.of("K", "다이아몬드")), false),
-                Arguments.of(listOf(Card.of("10", "하트"), Card.of("7", "다이아몬드")), false),
+                Arguments.of(listOf(SPADE_TEN, SPADE_FIVE), true),
+                Arguments.of(listOf(SPADE_TEN, SPADE_FIVE, SPADE_ACE), true),
+                Arguments.of(listOf(SPADE_TEN, HEART_KING), false),
+                Arguments.of(listOf(SPADE_TEN, HEART_SEVEN), false),
             )
     }
 }

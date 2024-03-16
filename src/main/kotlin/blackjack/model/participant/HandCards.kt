@@ -3,10 +3,10 @@ package blackjack.model.participant
 import blackjack.model.card.Card
 import blackjack.model.card.Denomination
 
-class HandCards {
-    private val _cards = mutableListOf<Card>()
+class HandCards(private val _cards: MutableList<Card> = mutableListOf()) {
     val cards: List<Card>
         get() = _cards.toList()
+
     val size: Int
         get() = _cards.size
 

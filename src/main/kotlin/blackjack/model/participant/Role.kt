@@ -3,9 +3,7 @@ package blackjack.model.participant
 import blackjack.model.card.Card
 import blackjack.model.card.CardProvider
 
-abstract class Role {
-    private val handCards = HandCards()
-
+abstract class Role(private val handCards: HandCards) {
     abstract fun decideMoreCard(): Boolean
 
     fun receiveCard(cards: List<Card>) {

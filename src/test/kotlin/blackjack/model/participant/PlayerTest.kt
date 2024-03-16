@@ -1,5 +1,11 @@
 package blackjack.model.participant
 
+import blackjack.model.DIAMOND_NINE
+import blackjack.model.DIAMOND_TWO
+import blackjack.model.HEART_KING
+import blackjack.model.HEART_THREE
+import blackjack.model.SPADE_FIVE
+import blackjack.model.SPADE_TEN
 import blackjack.model.card.Card
 import blackjack.model.card.TestCardProvider
 import org.assertj.core.api.Assertions.assertThat
@@ -35,7 +41,7 @@ class PlayerTest {
         player.initCard(TestCardProvider)
 
         // then
-        val expected = listOf(Card.of("K", "하트"), Card.of("K", "하트"))
+        val expected = listOf(HEART_KING, HEART_KING)
         assertThat(player.getCards()).isEqualTo(expected)
     }
 
@@ -43,10 +49,10 @@ class PlayerTest {
         @JvmStatic
         fun `카드 받을 수 있는지 여부 판단 테스트 데이터`() =
             listOf(
-                Arguments.of(listOf(Card.of("3", "하트"), Card.of("5", "다이아몬드")), true),
-                Arguments.of(listOf(Card.of("10", "하트"), Card.of("K", "다이아몬드")), true),
-                Arguments.of(listOf(Card.of("9", "하트"), Card.of("K", "다이아몬드"), Card.of("2", "다이아몬드")), false),
-                Arguments.of(listOf(Card.of("10", "하트"), Card.of("K", "다이아몬드"), Card.of("3", "다이아몬드")), false),
+                Arguments.of(listOf(HEART_THREE, SPADE_FIVE), true),
+                Arguments.of(listOf(SPADE_TEN, SPADE_TEN), true),
+                Arguments.of(listOf(DIAMOND_NINE, HEART_KING, DIAMOND_TWO), false),
+                Arguments.of(listOf(SPADE_TEN, HEART_KING, HEART_THREE), false),
             )
     }
 }

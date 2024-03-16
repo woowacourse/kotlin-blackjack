@@ -3,7 +3,9 @@ package blackjack.model.participant
 import blackjack.model.card.Card
 import blackjack.model.card.CardProvider
 
-class Dealer : Role() {
+class Dealer(handCards: HandCards = HandCards()) : Role(handCards) {
+    constructor(handCards: List<Card>) : this(HandCards(handCards.toMutableList()))
+
     override fun decideMoreCard() = getCardSum() < MIN_CARD_SUM
 
     fun takeTurn(
