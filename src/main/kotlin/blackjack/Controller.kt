@@ -9,13 +9,13 @@ import blackjack.view.InputView
 import blackjack.view.OutputView
 
 class Controller {
-    private val deck = Deck()
 
     fun run() {
+        val deck = Deck()
         val players = makePlayers()
         val dealer = Dealer()
-        initParticipantsCard(dealer, players)
-        proceedParticipantsTurn(dealer, players)
+        initParticipantsCard(dealer, players, deck)
+        proceedParticipantsTurn(dealer, players, deck)
         printStatistics(dealer, players)
     }
 
@@ -27,31 +27,33 @@ class Controller {
     private fun initParticipantsCard(
         dealer: Dealer,
         players: List<Player>,
+        deck: Deck,
     ) {
         players.forEach { player ->
-            player.initCard()
+            player.initCard(deck)
         }
-        dealer.initCard()
+        dealer.initCard(deck)
         OutputView.printInitialResult(dealer, players)
     }
 
     private fun proceedParticipantsTurn(
         dealer: Dealer,
         players: List<Player>,
+        deck: Deck,
     ) {
         players.forEach { player ->
-            proceedPlayerTurn(player)
+            proceedPlayerTurn(player, deck)
         }
-        proceedDealerTurn(dealer)
+        proceedDealerTurn(dealer, deck)
     }
 
-    private fun proceedPlayerTurn(player: Player) {
+    private fun proceedPlayerTurn(player: Player, deck: Deck) {
         if (player.isMaxScore()) {
             OutputView.printBlackJackMessage(player)
             return
         }
         while (player.isNotBustedAndHitable() && askPick(player.name)) {
-            player.pickCard()
+            player.pickCard(deck)
             OutputView.printParticipantStatus(player)
         }
         if (player.isBusted()) {
@@ -63,9 +65,9 @@ class Controller {
         return InputView.askPickAgain(name)
     }
 
-    private fun proceedDealerTurn(dealer: Dealer) {
+    private fun proceedDealerTurn(dealer: Dealer, deck: Deck) {
         while (dealer.isNotBustedAndHitable()) {
-            dealer.pickCard()
+            dealer.pickCard(deck)
             OutputView.printDealerHitMessage()
         }
     }
@@ -79,11 +81,12 @@ class Controller {
         OutputView.printGameStatistics(gameStatistics)
     }
 
-    private fun Participant.initCard() {
-        this.pickCard()
-        this.pickCard()
+    private fun Participant.initCard(deck: Deck) {
+        this.pickCard(deck)
+        this.pickCard(deck)
     }
-    private fun Participant.pickCard() {
+
+    private fun Participant.pickCard(deck: Deck) {
         this.addCard(deck.pop())
     }
 }
