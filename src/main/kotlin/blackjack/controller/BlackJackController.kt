@@ -5,7 +5,6 @@ import blackjack.model.Participant
 import blackjack.view.InputView
 import blackjack.view.OutputView
 import blackjack.view.user.UserDecision
-import blackjack.view.user.UserInputValidator
 
 class BlackJackController {
     fun runBlackJackGame() {
@@ -16,7 +15,7 @@ class BlackJackController {
     }
 
     private fun makeGameManager(): GameManager {
-        val participants = UserInputValidator.makeParticipants()
+        val participants = InputView.makeParticipants()
         return GameManager(
             participants = participants,
         )
