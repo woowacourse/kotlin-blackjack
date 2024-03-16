@@ -29,7 +29,7 @@ sealed class CardHolder(val userInfo: UserInfo) {
         }
     }
 
-    fun getSumOfCards(): Int = blackjackState.hand().calculate()
+    fun getSumOfCards(): Int = blackjackState.calculateHand()
 
     fun calculateProfit(opponent: Dealer): Double {
         val gameResult = blackjackState.calculate(this, opponent)

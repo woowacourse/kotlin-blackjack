@@ -13,6 +13,8 @@ interface BlackjackState {
 
     fun hand(): Hand
 
+    fun calculateHand(): Int
+
     fun isFinished(): Boolean
 
     fun calculate(
