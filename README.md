@@ -2,13 +2,24 @@
 
 ## 기능명세서(Specification)
 
-
----
-
 - [x] Participant
     - [x] 게임에 참여하는 사람의 추상화된 행동 명세를 가지고 있다.
-    - [x] 상황에 따라 에이스를 포함한 핸드의 값을 계산할 수 있다.
+    - [x] 승/패/무 를 판단하는 추상 행동 명세
+    - [x] 히트를 진행하여 상태 업데이트
 
+- [x] ParticipantName
+  - [x] 이름의 길이는 10글자 이내로 한다.
+
+- [x] ParticipantState
+    - [x] Run/Ready/Playing/BlackJack/Bust 상태를 갖는다
+    - [x] 핸드를 갖고, 이익률을 계산한다
+
+- [x] Hand
+    - [x] 카드 리스트를 갖는다
+    - [x] 카드를 추가할 수 있다
+    - [x] 블랙잭을 판단한다
+    - [x] 점수를 계산한다
+    - [x] 에이스를 포함한 최적의 점수를 계산한다
 
 - [x] Dealer
     - [x] 핸드가 16 이하일 경우 카드를 계속 드로우 한다.
@@ -21,93 +32,60 @@
     - [x] 상대와의 승패 결과를 판정할 수 있다
     - [x] 결과에 따른 이익을 구할 수 있다
 
+- [x] Players
+    - [x] Player의 List를 가진다.
+    - [x] 1~10명의 Player가 존재하는지 검증한다.
 
 - [x] Money
     - [x] 배팅 금액을 담는다
     - [x] 문자를 입력하거나 0 이하의 수를 입력하면 예외가 발생한다
 
-
 - [x] Wallet
-  - [x] 사용자의 이름과 배팅 금액을 갖고 있다
+    - [x] 사용자의 이름과 배팅 금액을 갖고 있다
 
-
-
-- [ ] Hand
-
-
-- [x] Players
-    - [x] Player의 List를 가진다.
-    - [x] 1~10명의 Player가 존재하는지 검증한다.
-
-
-- [ ] Game
-
-
-- [x] ParticipantName
-  - [x] 이름의 길이는 10글자 이내로 한다.
-
-
-- [ ] ParticipantState
-
+- [x] Game
+    - [x] Players와 Dealer를 받아 게임을 진행시킨다
 
 - [x] Card
-    - [x] 0~51 사이의 숫자의 값을 인자로 받는다.
     - [x] 인자의 값을 통해 본인의 표식(Mark)를 결정한다.
     - [x] 인자의 값을 통해 본인의 value (1~10, J, Q, K)를 결정한다.
 
-
-- [x] Mark (enum class)
+- [x] MarkType (enum class)
     - 하트, 다이아, 클로버, 스페이드의 값을 가진다.
 
-
-- [x] Value (enum class)
+- [x] ValueType (enum class)
     - A(Ace), 2 부터 10 사이의 숫자, J, Q, K 의 값을 가진다.
 
-
 - [x] Deck
-  - 카드 덱의 인터페이스
-  - pop 시 맨 윗장의 카드를 반환한다.
+    - [x] 카드 덱으로, create 함수를 통해 특정 전략의 덱을 생성할 수 있다
+    - [x] pop 시 맨 윗장의 카드를 반환한다.
 
+- [x] DeckGenerationStrategy
 
-- [x] TrumpDeck
-    - [x] 블랙잭 게임에 필요한 Deck을 가진다.
-    - [x] 덱 내에 중복된 카드을 갖지 않는다.
-    - [x] 52장의 카드를 갖는다.
-
-
-- [x] TestDeck
-    - [x] 테스트에 필요한 Deck을 사용자가 구성한다.
-
-
-- [x] Answer
-    - [x] 긍정 혹은 부정의 값을 보관한다.
-    - [x] 대소문자 구분 없이, 입력이 y 또는 n이 아니면 예외가 발생한다.
-
+- [x] DeckRandomGenerationStrategy
+    - [x] 52 장의 트럼프 카드 덱을 섞어서 만드는 전략
+- [x] DeckExplicitGenerationStrategy
+    - [x] 원하는 카드 덱을 생성하여 테스트에 쓰이는 전략
 
 - [x] Hand
     - [x] 카드의 리스트를 갖는다.
     - [x] 카드를 추가할 수 있다.
     - [x] 핸드의 값을 계산할 수 있다.
 
-
 - [x] Point
   - 카드의 총 합 점수를 담는 Int 래퍼 클래스
 
+- [x] Profit
+  - 이익률을 계산하는 Double 래퍼 클래스
 
-- [x] Result (enum class)
+- [x] ResultType (enum class)
     - 승/패/무 의 값을 가진다.
-
-
-- [x] Judge
-  - [x] 플레이어들의 결과를 반환한다.
-  - [x] 딜러의 최종 결과를 반환한다.
-
 
 ---
 - 📝 InputView
     - [x] 게임에 참여하는 사람의 이름 리스트를 입력 받을 수 있다.
     - [x] Player 들의 응답을 받을 수 있다.
-
+    - [x] Player 들의 배팅 금액을 받을 수 있다.
 
 - [x] OutputView
     - [x] Player의 이름을 출력한다.
@@ -115,3 +93,4 @@
     - [x] Dealer 와 Player의 핸드를 출력한다.
     - [x] Dealer 와 Player의 최종 핸드를 출력한다. (결과(최종합) 포함)
     - [x] 최종 승패 결과를 출력한다.
+    - [x] 최종 이익률 결과를 출력한다
