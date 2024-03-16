@@ -36,7 +36,7 @@ data class Participants(val dealer: Dealer, val players: Players) {
             .eachCount()
     }
 
-    private fun getPlayersScore(): Map<PlayerName, Int> = players.players.associate { it.name to it.cardHand.sum() }
+    private fun getPlayersScore(): Map<PlayerName, Int> = players.players.associate { it.name to it.cardHand.calculateScore() }
 
     private fun judgePlayersResult(): PlayerWinning =
         PlayerWinning(
@@ -46,7 +46,7 @@ data class Participants(val dealer: Dealer, val players: Players) {
         )
 
     private fun judgeGameResult(playerSum: Int): WinningResultStatus {
-        val dealerSum = dealer.cardHand.sum()
+        val dealerSum = dealer.cardHand.calculateScore()
 
         return when {
             playerSum > BLACK_JACK_SCORE -> WinningResultStatus.DEFEAT

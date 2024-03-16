@@ -10,7 +10,7 @@ class CardHand(hand: List<Card>) {
 
     constructor(vararg card: Card) : this(card.toList())
 
-    fun sum(): Int {
+    fun calculateScore(): Int {
         var aceCount = hand.count { it.number == CardNumber.ACE }
         var tempSum = hand.sumOf { it.number.number }
 
@@ -26,22 +26,22 @@ class CardHand(hand: List<Card>) {
     }
 
     fun getPlayerState(): CardHandState {
-        val sum = sum()
+        val score = calculateScore()
 
         return when {
-            sum > BLACK_JACK_SCORE -> CardHandState.BUST
-            sum == BLACK_JACK_SCORE && hand.size == BLACK_JACK_CARD_HAND_SIZE -> CardHandState.BLACKJACK
+            score > BLACK_JACK_SCORE -> CardHandState.BUST
+            score == BLACK_JACK_SCORE && hand.size == BLACK_JACK_CARD_HAND_SIZE -> CardHandState.BLACKJACK
             else -> CardHandState.DRAW_POSSIBILITY
         }
     }
 
     fun getDealerState(): CardHandState {
-        val sum = sum()
+        val score = calculateScore()
 
         return when {
-            sum > BLACK_JACK_SCORE -> CardHandState.BUST
-            hand.size == BLACK_JACK_CARD_HAND_SIZE && sum == BLACK_JACK_SCORE -> CardHandState.BLACKJACK
-            sum <= DEALER_MAX_HIT_SUM -> CardHandState.HIT
+            score > BLACK_JACK_SCORE -> CardHandState.BUST
+            hand.size == BLACK_JACK_CARD_HAND_SIZE && score == BLACK_JACK_SCORE -> CardHandState.BLACKJACK
+            score <= DEALER_MAX_HIT_SUM -> CardHandState.HIT
             else -> CardHandState.STAY
         }
     }
