@@ -7,23 +7,61 @@ import model.card.MarkType
 import model.card.ValueType
 import model.participants.Dealer
 import model.participants.Hand
+import model.participants.Money
+import model.participants.ParticipantName
 import model.participants.ParticipantState
 import model.participants.Player
 import model.participants.Players
+import model.participants.Wallet
 
-fun makeTestDeck(vararg cards: Card): Deck {
+fun createTestDeck(vararg cards: Card): Deck {
     return Deck.create(DeckExplicitGenerationStrategy(cards.toMutableList()))
 }
 
-fun makeDealer(): Dealer {
-    return Dealer(ParticipantState.Playing(Hand()))
+fun createDealer(): Dealer {
+    return Dealer(ParticipantState.None())
 }
 
-fun makePlayer(): Player {
-    return Player(ParticipantState.Playing(Hand()))
+fun createBustedDealer(): Dealer {
+    return Dealer(ParticipantState.Bust())
 }
 
-fun makePlayers(vararg name: String): Players {
+fun createPlayingDealer(hand: Hand = Hand()): Dealer {
+    return Dealer(ParticipantState.Playing(hand))
+}
+
+fun createBlackJackDealer(): Dealer {
+    return Dealer(ParticipantState.BlackJack())
+}
+
+fun createPlayer(): Player {
+    return Player(ParticipantState.None())
+}
+
+fun createBustedPlayer(): Player {
+    return Player(ParticipantState.Bust())
+}
+
+fun createPlayingPlayerWithMoney(
+    hand: Hand = Hand(),
+    money: Int,
+): Player {
+    return Player(ParticipantState.Playing(hand), Wallet(ParticipantName.fromInput("Player"), money = Money(money)))
+}
+
+fun createBustedPlayerWithMoney(money: Int): Player {
+    return Player(ParticipantState.Bust(), Wallet(ParticipantName.fromInput("Player"), money = Money(money)))
+}
+
+fun createBlackJackPlayerWithMoney(money: Int): Player {
+    return Player(ParticipantState.BlackJack(), Wallet(ParticipantName.fromInput("Player"), money = Money(money)))
+}
+
+fun createBlackJackPlayer(): Player {
+    return Player(ParticipantState.BlackJack())
+}
+
+fun createPlayers(vararg name: String): Players {
     val playerNames =
         if (name.isEmpty()) {
             mutableListOf("pang") // 기본값을 사용하도록 설정

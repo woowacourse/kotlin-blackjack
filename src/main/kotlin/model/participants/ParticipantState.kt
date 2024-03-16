@@ -2,11 +2,12 @@ package model.participants
 
 import model.card.Card
 import model.participants.Hand.Companion.BLACKJACK_CARD_COUNT
-import model.participants.Profit.Companion.MINUS_ONE_TIMES
-import model.participants.Profit.Companion.ONE_AND_HALF_TIMES
-import model.participants.Profit.Companion.ONE_TIMES
-import model.participants.Profit.Companion.ZERO
 import model.result.Point.Companion.compareTo
+import model.result.Profit
+import model.result.Profit.Companion.MINUS_ONE_TIMES
+import model.result.Profit.Companion.ONE_AND_HALF_TIMES
+import model.result.Profit.Companion.ONE_TIMES
+import model.result.Profit.Companion.ZERO
 
 sealed class ParticipantState(val hand: Hand) {
     abstract fun hit(card: Card): ParticipantState
@@ -29,14 +30,14 @@ sealed class ParticipantState(val hand: Hand) {
         }
     }
 
-    class Ready(hand: Hand) : ParticipantState(hand) {
+    class Ready(hand: Hand = Hand()) : ParticipantState(hand) {
         override fun hit(card: Card): ParticipantState {
             hand.draw(card)
             return if (hand.isBlackjack()) BlackJack(hand) else Playing(hand)
         }
     }
 
-    class Playing(hand: Hand) : ParticipantState(hand) {
+    class Playing(hand: Hand = Hand()) : ParticipantState(hand) {
         override fun hit(card: Card): ParticipantState {
             hand.draw(card)
 
@@ -58,7 +59,7 @@ sealed class ParticipantState(val hand: Hand) {
         }
     }
 
-    class Bust(hand: Hand) : ParticipantState(hand) {
+    class Bust(hand: Hand = Hand()) : ParticipantState(hand) {
         override fun hit(card: Card): ParticipantState {
             return Bust(hand)
         }
@@ -68,7 +69,7 @@ sealed class ParticipantState(val hand: Hand) {
         }
     }
 
-    class BlackJack(hand: Hand) : ParticipantState(hand) {
+    class BlackJack(hand: Hand = Hand()) : ParticipantState(hand) {
         override fun hit(card: Card): ParticipantState {
             return BlackJack(hand)
         }

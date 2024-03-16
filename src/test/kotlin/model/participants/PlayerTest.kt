@@ -1,16 +1,23 @@
 package model.participants
 
+import model.HEART_ACE
 import model.HEART_JACK
 import model.HEART_QUEEN
 import model.HEART_SEVEN
 import model.HEART_TEN
-import model.card.Card
+import model.HEART_TWO
 import model.card.Deck
-import model.card.MarkType
-import model.card.ValueType
-import model.makeDealer
-import model.makePlayer
-import model.makeTestDeck
+import model.createBlackJackDealer
+import model.createBlackJackPlayerWithMoney
+import model.createBustedDealer
+import model.createBustedPlayer
+import model.createBustedPlayerWithMoney
+import model.createDealer
+import model.createPlayer
+import model.createPlayingDealer
+import model.createPlayingPlayerWithMoney
+import model.createTestDeck
+import model.result.Profit
 import model.result.ResultType
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
@@ -18,68 +25,68 @@ import org.junit.jupiter.api.Test
 
 class PlayerTest {
     private lateinit var testDeck: Deck
-    private lateinit var dealer: Dealer
-    private lateinit var player: Player
 
     @BeforeEach
     fun setUp() {
         testDeck =
-            makeTestDeck(
-                Card(ValueType.TWO, MarkType.SPADE),
-                Card(ValueType.JACK, MarkType.SPADE),
-                Card(ValueType.QUEEN, MarkType.SPADE),
-                Card(ValueType.ACE, MarkType.SPADE),
+            createTestDeck(
+                HEART_TWO,
+                HEART_JACK,
+                HEART_QUEEN,
+                HEART_ACE,
             )
-        player = makePlayer()
-        dealer = makeDealer()
     }
 
     @Test
     fun `Player에서 게임 결과를 판단할 수 있다`() {
+        val player = createPlayer()
+        val dealer = createDealer()
+
         dealer.hit(testDeck.pop())
         player.hit(testDeck.pop())
 
         val result = dealer.judge(player)
+
         assertThat(result).isEqualTo(ResultType.LOSE)
     }
 
     @Test
     fun `Player와 Dealer 모두 bust라면 Player의 패배`() {
-        dealer.participantState = ParticipantState.Bust(Hand())
-        player.participantState = ParticipantState.Bust(Hand())
+        val bustedPlayer = createBustedPlayer()
+        val bustedDealer = createBustedDealer()
+        val result = bustedPlayer.judge(bustedDealer)
 
-        val result = player.judge(dealer)
         assertThat(result).isEqualTo(ResultType.LOSE)
     }
 
     @Test
     fun `Player와 Dealer 모두 BlakJack이면 Profit은 0`() {
-        val player = Player(ParticipantState.BlackJack(Hand()), Wallet(ParticipantName.fromInput("Player"), money = Money(1000)))
-        val dealer = Dealer(ParticipantState.BlackJack(Hand()))
+        val player = createBlackJackPlayerWithMoney(1000)
+        val dealer = createBlackJackDealer()
 
         assertThat(player.judgeProfit(dealer)).isEqualTo(Profit(0.0))
     }
 
     @Test
     fun `Player만 BlackJack이면 Profit은 150%`() {
-        val player = Player(ParticipantState.BlackJack(Hand()), Wallet(ParticipantName.fromInput("Player"), money = Money(1000)))
-        val dealer = Dealer(ParticipantState.Playing(Hand()))
+        val player = createBlackJackPlayerWithMoney(1000)
+        val dealer = createPlayingDealer()
 
         assertThat(player.judgeProfit(dealer)).isEqualTo(Profit(1500.0))
     }
 
     @Test
     fun `Player가 Bust면 Profit은 -100%`() {
-        val player = Player(ParticipantState.Bust(Hand()), Wallet(ParticipantName.fromInput("Player"), money = Money(1000)))
-        val dealer = Dealer(ParticipantState.Playing(Hand()))
+        val player = createBustedPlayerWithMoney(1000)
+        val dealer = createPlayingDealer()
 
-        assertThat(player.judgeProfit(dealer)).isEqualTo(Profit(-1000.0))
+        assertThat(player.judgeProfit(dealer)).isEqualTo(-Profit(1000.0))
     }
 
     @Test
     fun `Dealer만 Bust면 Profit은 100%`() {
-        val player = Player(ParticipantState.Playing(Hand()), Wallet(ParticipantName.fromInput("Player"), money = Money(1000)))
-        val dealer = Dealer(ParticipantState.Bust(Hand()))
+        val player = createPlayingPlayerWithMoney(money = 1000)
+        val dealer = createBustedDealer()
 
         assertThat(player.judgeProfit(dealer)).isEqualTo(Profit(1000.0))
     }
@@ -94,8 +101,8 @@ class PlayerTest {
         dealerHand.draw(HEART_SEVEN)
         dealerHand.draw(HEART_QUEEN)
 
-        val player = Player(ParticipantState.Playing(playerHand), Wallet(ParticipantName.fromInput("Player"), money = Money(1000)))
-        val dealer = Dealer(ParticipantState.Playing(dealerHand))
+        val player = createPlayingPlayerWithMoney(playerHand, 1000)
+        val dealer = createPlayingDealer(dealerHand)
 
         assertThat(player.judgeProfit(dealer)).isEqualTo(Profit(1000.0))
     }
@@ -110,8 +117,8 @@ class PlayerTest {
         dealerHand.draw(HEART_TEN)
         dealerHand.draw(HEART_JACK)
 
-        val player = Player(ParticipantState.Playing(playerHand), Wallet(ParticipantName.fromInput("Player"), money = Money(1000)))
-        val dealer = Dealer(ParticipantState.Playing(dealerHand))
+        val player = createPlayingPlayerWithMoney(playerHand, 1000)
+        val dealer = createPlayingDealer(dealerHand)
 
         assertThat(player.judgeProfit(dealer)).isEqualTo(Profit(-1000.0))
     }

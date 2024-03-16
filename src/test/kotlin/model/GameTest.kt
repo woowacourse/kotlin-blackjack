@@ -1,12 +1,13 @@
 package model
 
-import model.card.Card
 import model.card.Deck
-import model.card.MarkType
-import model.card.ValueType
 import model.participants.Dealer
+import model.participants.ParticipantName
 import model.participants.Players
+import model.result.ResultType
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 
 class GameTest {
     private lateinit var testDeck: Deck
@@ -17,45 +18,39 @@ class GameTest {
     @BeforeEach
     fun setUp() {
         testDeck =
-            makeTestDeck(
-                Card(ValueType.JACK, MarkType.SPADE),
-                Card(ValueType.JACK, MarkType.SPADE),
-                Card(ValueType.SIX, MarkType.SPADE),
-                Card(ValueType.FOUR, MarkType.SPADE),
-                Card(ValueType.JACK, MarkType.SPADE),
-                Card(ValueType.JACK, MarkType.SPADE),
-                Card(ValueType.JACK, MarkType.SPADE),
+            createTestDeck(
+                HEART_JACK,
+                HEART_JACK,
+                HEART_SIX,
+                HEART_FOUR,
+                HEART_JACK,
+                HEART_JACK,
+                HEART_JACK,
             )
-        players = makePlayers()
-        dealer = makeDealer()
+        players = createPlayers()
+        dealer = createDealer()
         game = Game.create(dealer, players, testDeck)
     }
 
-//    @Test
-//    fun `게임을 플레이 했을 때 결과를 판단할 수 있다`() {
-//        game.getPlayers().players.forEach {
-//            it.hit(testDeck.pop())
-//            it.hit(testDeck.pop())
-//        }
-//        game.getDealer().play(testDeck)
-//
-//        val expected = mapOf(ParticipantName.fromInput("pang") to ResultType.DRAW, ParticipantName.fromInput("ack") to ResultType.LOSE)
-//        val result = game.getPlayersResult()
-//
-//        Assertions.assertThat(result.result.values == expected.values)
-//    }
+    @Test
+    fun `게임을 플레이 했을 때 플레이어의 결과를 판단할 수 있다`() {
+        game.handOut()
+        game.playDealer { _ -> }
 
-//    @Test
-//    fun testGetDealerResult() {
-//        players.players.forEach {
-//            it.hit(testDeck.pop())
-//            it.hit(testDeck.pop())
-//        }
-//        dealer.play(testDeck)
-//
-//        val expected = mapOf(ResultType.DRAW to 1, ResultType.WIN to 1)
-//
-//        val result = game.getDealerResult()
-//        Assertions.assertThat(result.result.values == expected.values)
-//    }
+        val expected = mapOf(ParticipantName.fromInput("pang") to ResultType.DRAW, ParticipantName.fromInput("ack") to ResultType.LOSE)
+        val actual = game.getPlayersResult()
+
+        assertThat(actual.result.values == expected.values)
+    }
+
+    @Test
+    fun `게임을 플레이 했을 때 딜러의 결과를 판단할 수 있다`() {
+        game.handOut()
+        game.playDealer { _ -> }
+
+        val expected = mapOf(ResultType.DRAW to 1, ResultType.WIN to 1)
+        val actual = game.getDealerResult()
+
+        assertThat(actual.result.values == expected.values)
+    }
 }
