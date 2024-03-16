@@ -7,7 +7,6 @@ import blackjack.model.Dealer.Companion.DEALER_CARD_DRAW_THRESHOLD
 import blackjack.model.Participants
 import blackjack.model.Participants.Companion.INITIAL_CARD_COUNTS
 import blackjack.model.Pattern
-import blackjack.model.Player
 import blackjack.model.PlayerGroup
 import blackjack.model.Profit
 import blackjack.model.ProfitResults
@@ -41,10 +40,10 @@ object OutputView {
         }
     }
 
-    fun showPlayerCards(player: Player) {
+    fun showPlayerCards(cardHolder: CardHolder) {
         println(
-            "${player.userInfo.nickname}: ${
-                player.getState().hand().cards.joinToString(", ") { card ->
+            "${cardHolder.userInfo.nickname}: ${
+                cardHolder.getState().hand().cards.joinToString(", ") { card ->
                     getCardNumberName(card.number) + getCardPatternName(card.pattern)
                 }
             }",

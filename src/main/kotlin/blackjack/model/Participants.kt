@@ -1,5 +1,7 @@
 package blackjack.model
 
+import blackjack.view.OutputView.showPlayerCards
+
 class Participants(
     val dealer: Dealer,
     val playerGroup: PlayerGroup,
@@ -8,7 +10,7 @@ class Participants(
         inputPlayerBettingAmount: (nickname: Nickname) -> Int,
         printGameSetting: (participants: Participants) -> Unit,
         askHitOrStay: (nickname: Nickname) -> Boolean,
-        showPlayerCards: (player: Player) -> Unit,
+        showPlayerCards: (cardHolder: CardHolder) -> Unit,
         printDealerDrawCard: (dealer: Dealer) -> Unit,
         printEveryCards: (participants: Participants) -> Unit,
     ): Result<ProfitResults> {
@@ -39,12 +41,12 @@ class Participants(
     private fun runPlayersTurn(
         gameDeck: GameDeck,
         askHitOrStay: (nickname: Nickname) -> Boolean,
-        showPlayerCards: (player: Player) -> Unit,
+        showPlayerCards: (cardHolder: CardHolder) -> Unit,
     ) {
         playerGroup.drawPlayerCard(
             gameDeck = gameDeck,
             shouldDrawCard = { player -> askHitOrStay(player.userInfo.nickname) },
-            newPlayer = { player -> showPlayerCards(player) },
+            showPlayerCards = showPlayerCards,
         )
     }
 
@@ -55,7 +57,7 @@ class Participants(
         dealer.drawCard(
             gameDeck = gameDeck,
             shouldDrawCard = { dealer.shouldDrawCard() },
-            newCardHolder = { printDealerDrawCard(it as Dealer) },
+            showPlayerCards = { printDealerDrawCard(it as Dealer) },
         )
     }
 
