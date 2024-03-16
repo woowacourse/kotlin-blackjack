@@ -17,7 +17,7 @@ class ParticipantTest {
     @Test
     fun `정상적인 Hit 상태 체크 테스트 `() {
         val name = "딜러"
-        val participant = MockParticipant(wallet = Wallet(name))
+        val participant = MockParticipant(wallet = Wallet(Identification(name)))
         assertThat(participant.checkHitState()).isTrue()
     }
 }
