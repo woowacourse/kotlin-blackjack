@@ -4,15 +4,13 @@ class GameStatistics(
     dealer: Dealer,
     players: List<Player>,
 ) {
-    val playerStatistics: Map<String, Return> by lazy {
+    val playerStatistics: Map<String, Long> by lazy {
         players.associate { player ->
-            player.name to player.judge(dealer)
+            player.name to player.calculateBetAmount(dealer)
         }
     }
 
-    val dealerStatistics: Map<Return, Int> by lazy {
-        players.map { player ->
-            dealer.judge(player)
-        }.groupingBy { it }.eachCount()
+    val dealerStatistics: Long by lazy {
+        -playerStatistics.values.sum()
     }
 }

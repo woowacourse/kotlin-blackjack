@@ -37,7 +37,6 @@ class Hand {
 
     private fun hasAce() = cardList.any { it.cardNumber == CardNumber.ACE }
 
-
     companion object {
         const val INITIAL_CARD_SIZE = 2
         const val MAX_SCORE = 21

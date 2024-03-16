@@ -10,11 +10,11 @@ class Dealer(name: String = "딜러") : Participant(name) {
         }
     }
 
-    override fun isHitable(): Boolean {
-        return getCardSum() < DEALER_HITABLE_THRESHOLD
+    override fun isHittable(): Boolean {
+        return hand.getCardSum() < DEALER_HITTABLE_THRESHOLD
     }
 
     companion object {
-        private const val DEALER_HITABLE_THRESHOLD = 17
+        private const val DEALER_HITTABLE_THRESHOLD = 17
     }
 }

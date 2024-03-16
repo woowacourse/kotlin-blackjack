@@ -64,7 +64,7 @@ class Controller(cards: List<Card>) {
             OutputView.printBlackJackMessage(player)
             return
         }
-        while (player.isHitable() && askPick(player.name)) {
+        while (player.isHittable() && askPick(player.name)) {
             player.pickCard(dealingShoe)
             OutputView.printParticipantStatus(player)
         }
@@ -78,7 +78,7 @@ class Controller(cards: List<Card>) {
     }
 
     private fun proceedDealerTurn(dealer: Dealer) {
-        while (dealer.isHitable()) {
+        while (dealer.isHittable()) {
             dealer.pickCard(dealingShoe)
             OutputView.printDealerHitMessage()
         }
@@ -90,7 +90,7 @@ class Controller(cards: List<Card>) {
     ) {
         OutputView.printResult(dealer, players)
         val gameStatistics = GameStatistics(dealer, players)
-//        OutputView.printDealerStatistics(gameStatistics.dealerStatistics)
-//        OutputView.printPlayerStatistics(gameStatistics.playerStatistics)
+        OutputView.printDealerStatistics(gameStatistics.dealerStatistics)
+        OutputView.printPlayerStatistics(gameStatistics.playerStatistics)
     }
 }

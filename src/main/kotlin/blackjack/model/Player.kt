@@ -1,5 +1,7 @@
 package blackjack.model
 
+import blackjack.model.Hand.Companion.MAX_SCORE
+
 class Player(name: String, betAmount: Long) : Participant(name, betAmount) {
     override fun judge(participant: Participant): Return {
         return when {
@@ -10,7 +12,7 @@ class Player(name: String, betAmount: Long) : Participant(name, betAmount) {
         }
     }
 
-    override fun isHitable(): Boolean {
-        return getCardSum() < MAX_SCORE
+    override fun isHittable(): Boolean {
+        return hand.getCardSum() < MAX_SCORE
     }
 }
