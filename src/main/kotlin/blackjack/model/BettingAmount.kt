@@ -1,6 +1,6 @@
 package blackjack.model
 
-class BettingAmount(val amount: Double) {
+data class BettingAmount(val amount: Double) {
     init {
         require(amount > MIN_BETTING_AMOUNT) { ERROR_MESSAGE_INVALID_TING_AMOUNT }
     }
