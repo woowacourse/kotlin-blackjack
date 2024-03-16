@@ -61,7 +61,7 @@ class PlayerTest {
         val actual = player.profit(dealer)
 
         // then
-        assertThat(actual.amount).isEqualTo(expected)
+        assertThat(actual.price).isEqualTo(expected)
     }
 
     companion object {

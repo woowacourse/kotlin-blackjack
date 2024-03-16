@@ -6,17 +6,17 @@ import blackjack.view.CardDecision
 
 class Player(
     val name: PlayerName,
-    val battingAmount: BattingAmount,
+    val battingAmount: Amount,
     handCards: HandCards = HandCards(),
 ) : Role(handCards) {
-    lateinit var profitAmount: BattingAmount
+    lateinit var profitAmount: Amount
         private set
 
-    constructor(name: String, amount: Int) : this(PlayerName(name), BattingAmount(amount))
+    constructor(name: String, amount: Int) : this(PlayerName(name), Amount(amount))
 
     constructor(name: String, amount: Int, handCards: List<Card>) : this(
         PlayerName(name),
-        BattingAmount(amount),
+        Amount(amount),
         HandCards(handCards.toMutableList()),
     )
 
@@ -33,7 +33,7 @@ class Player(
         }
     }
 
-    fun profit(dealer: Dealer): BattingAmount {
+    fun profit(dealer: Dealer): Amount {
         val cardSum = getCardSum()
         val dealerCardSum = dealer.getCardSum()
 
