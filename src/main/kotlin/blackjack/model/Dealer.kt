@@ -1,6 +1,6 @@
 package blackjack.model
 
-class Dealer(val hand: Hand, profit: Int = INITIAL_PROFIT) : Participant() {
+class Dealer(val hand: Hand, profit: Amount = Amount(INITIAL_PROFIT)) : Participant() {
     var profit = profit
         private set
 
@@ -101,8 +101,8 @@ class Dealer(val hand: Hand, profit: Int = INITIAL_PROFIT) : Participant() {
     ) {
         when (playerResult.winningState) {
             WinningState.WIN -> giveAmountsWhenPlayerWin(playerResult, playersBetAmounts, ind)
-            WinningState.DRAW -> playerResult.player.getWinningPrize(playersBetAmounts[ind])
-            WinningState.LOSS -> playerResult.player.getWinningPrize(-playersBetAmounts[ind])
+            WinningState.DRAW -> playerResult.player.getWinningPrize(Amount(playersBetAmounts[ind]))
+            WinningState.LOSS -> playerResult.player.getWinningPrize(Amount(-playersBetAmounts[ind]))
         }
     }
 
@@ -112,9 +112,9 @@ class Dealer(val hand: Hand, profit: Int = INITIAL_PROFIT) : Participant() {
         ind: Int,
     ) {
         if (playerResult.player.hand.isBlackjack()) {
-            playerResult.player.getWinningPrize((BLACKJACK_BONUS_RATE * playersBetAmounts[ind]).toInt())
+            playerResult.player.getWinningPrize(Amount((BLACKJACK_BONUS_RATE * playersBetAmounts[ind]).toInt()))
         } else {
-            playerResult.player.getWinningPrize(playersBetAmounts[ind])
+            playerResult.player.getWinningPrize(Amount(playersBetAmounts[ind]))
         }
     }
 

@@ -3,8 +3,8 @@ package blackjack.model
 class Player(
     val name: String,
     val hand: Hand,
-    private var budget: Int = INITIAL_BUDGET,
-    profit: Int = INITIAL_PROFIT,
+    private var budget: Amount = Amount(INITIAL_BUDGET),
+    profit: Amount = Amount(INITIAL_PROFIT),
 ) : Participant() {
     var profit = profit
         private set
@@ -30,12 +30,12 @@ class Player(
         }
     }
 
-    fun getWinningPrize(amount: Int) {
+    fun getWinningPrize(amount: Amount) {
         budget += amount
         updateProfit(amount)
     }
 
-    private fun updateProfit(amount: Int) {
+    private fun updateProfit(amount: Amount) {
         profit += amount
     }
 

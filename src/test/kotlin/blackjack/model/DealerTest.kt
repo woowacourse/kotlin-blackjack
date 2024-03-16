@@ -52,4 +52,9 @@ class DealerTest {
         // then
         assertThat(actual).isEqualTo(expect)
     }
+
+    @Test
+    fun `딜러는 플레이어의 수익을 계산할 수 있다`() {
+        TODO("Not yet implemented")
+    }
 }

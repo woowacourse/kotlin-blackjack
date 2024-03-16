@@ -65,9 +65,9 @@ class OutputView {
         players: List<Player>,
     ) {
         println(MESSAGE_FINAL_PROFIT)
-        println(MESSAGE_DEALER_PROFIT.format(dealer.profit))
+        println(MESSAGE_DEALER_PROFIT.format(dealer.profit.amount))
         players.forEach { player ->
-            println(MESSAGE_PLAYER_PROFIT.format(player.name, player.profit))
+            println(MESSAGE_PLAYER_PROFIT.format(player.name, player.profit.amount))
         }
     }
 
