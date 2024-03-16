@@ -1,8 +1,15 @@
-package model.participants
+package model
 
 import model.card.Deck
+import model.participants.Dealer
+import model.participants.Participant
+import model.participants.ParticipantName
+import model.participants.ParticipantState
+import model.participants.Player
+import model.participants.Players
 import model.result.DealerResult
 import model.result.PlayersResult
+import model.result.Profit
 import model.result.ResultType
 
 class Game private constructor(private val participants: List<Participant>, val deck: Deck) {

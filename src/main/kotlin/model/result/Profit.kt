@@ -1,4 +1,4 @@
-package model.participants
+package model.result
 
 @JvmInline
 value class Profit(val amount: Double = ZERO) {
