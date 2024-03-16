@@ -30,7 +30,6 @@ class BlackjackController(
 
     private fun setUpGame() {
         players = playersInputView.readPlayerNames(deck)
-        dealer.initializeCards()
         outputView.printInitCard(dealer, players)
     }
 
