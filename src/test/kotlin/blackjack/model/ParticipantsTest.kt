@@ -11,9 +11,11 @@ class ParticipantsTest {
         val participants =
             Participants(
                 dealer = dealer,
-                listOf(Player(Wallet(Identification("누누"))), Player(Wallet(Identification("꼬상"))))
+                listOf(
+                    Player(Wallet(Identification("누누"))),
+                    Player(Wallet(Identification("꼬상"))),
+                ),
             )
-
         assertThat(participants.getAlivePlayers().size).isEqualTo(2)
     }
 
@@ -23,7 +25,6 @@ class ParticipantsTest {
         val participants =
             Participants(
                 dealer = dealer,
-                players =
                 listOf(
                     Player(Wallet(Identification("누누"))),
                     Player(Wallet(Identification("채드"))),

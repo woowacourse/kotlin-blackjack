@@ -47,11 +47,12 @@ class BlackJack {
     }
 
     private fun applyBlackJackStateWithCardCount() {
-        state = if (handCard.checkStateWithCardCount()) {
-            State.Finish.BlackJack
-        } else {
-            State.Finish.Stay
-        }
+        state =
+            if (handCard.checkStateWithCardCount()) {
+                State.Finish.BlackJack
+            } else {
+                State.Finish.Stay
+            }
     }
 
     companion object {

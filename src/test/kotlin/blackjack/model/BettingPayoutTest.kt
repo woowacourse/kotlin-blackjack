@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 class BettingPayoutTest {
-
     @Test
     fun `게임 결과 역 전환 테스트`() {
         assertEquals(Result.WIN, Result.LOSE.reverse())
@@ -14,19 +13,22 @@ class BettingPayoutTest {
 
     @Test
     fun `(딜러 lose , 플레이어 블랙잭) 정상적인 Payout과 수익금 테스트`() {
-        val dealer = Dealer().apply {
-            draw(Card(Denomination.SEVEN, Suit.SPADE))
-            draw(Card(Denomination.SEVEN, Suit.HEART))
-        }
-        val player = Player(Wallet(Identification("누누"), 100)).apply {
-            draw(Card(Denomination.ACE, Suit.SPADE))
-            draw(Card(Denomination.JACK, Suit.CLOVER))
-        }
+        val dealer =
+            Dealer().apply {
+                draw(Card(Denomination.SEVEN, Suit.SPADE))
+                draw(Card(Denomination.SEVEN, Suit.HEART))
+            }
+        val player =
+            Player(Wallet(Identification("누누"), 100)).apply {
+                draw(Card(Denomination.ACE, Suit.SPADE))
+                draw(Card(Denomination.JACK, Suit.CLOVER))
+            }
 
-        val participants = Participants(
-            dealer = dealer,
-            players = listOf(player),
-        )
+        val participants =
+            Participants(
+                dealer = dealer,
+                players = listOf(player),
+            )
         dealer.transitionToStayState()
         val gameManager = GameManager(participants = participants)
         val gameResult = gameManager.calculateGameResult()
@@ -41,19 +43,22 @@ class BettingPayoutTest {
 
     @Test
     fun `(딜러 lose , 플레이어 win) 정상적인 Payout과 수익금 테스트`() {
-        val dealer = Dealer().apply {
-            draw(Card(Denomination.SEVEN, Suit.SPADE))
-            draw(Card(Denomination.SEVEN, Suit.HEART))
-        }
-        val player = Player(Wallet(Identification("누누"), 50)).apply {
-            draw(Card(Denomination.QUEEN, Suit.SPADE))
-            draw(Card(Denomination.QUEEN, Suit.HEART))
-        }
+        val dealer =
+            Dealer().apply {
+                draw(Card(Denomination.SEVEN, Suit.SPADE))
+                draw(Card(Denomination.SEVEN, Suit.HEART))
+            }
+        val player =
+            Player(Wallet(Identification("누누"), 50)).apply {
+                draw(Card(Denomination.QUEEN, Suit.SPADE))
+                draw(Card(Denomination.QUEEN, Suit.HEART))
+            }
 
-        val participants = Participants(
-            dealer = dealer,
-            players = listOf(player),
-        )
+        val participants =
+            Participants(
+                dealer = dealer,
+                players = listOf(player),
+            )
         dealer.transitionToStayState()
         player.transitionToStayState()
         val gameManager = GameManager(participants = participants)
@@ -69,19 +74,22 @@ class BettingPayoutTest {
 
     @Test
     fun `(딜러 블랙잭 , 플레이어 블랙잭 ) 정상적인 Payout과 수익금 테스트`() {
-        val dealer = Dealer().apply {
-            draw(Card(Denomination.ACE, Suit.SPADE))
-            draw(Card(Denomination.KING, Suit.HEART))
-        }
-        val player = Player(Wallet(Identification("누누"), 50)).apply {
-            draw(Card(Denomination.ACE, Suit.CLOVER))
-            draw(Card(Denomination.KING, Suit.DIAMOND))
-        }
+        val dealer =
+            Dealer().apply {
+                draw(Card(Denomination.ACE, Suit.SPADE))
+                draw(Card(Denomination.KING, Suit.HEART))
+            }
+        val player =
+            Player(Wallet(Identification("누누"), 50)).apply {
+                draw(Card(Denomination.ACE, Suit.CLOVER))
+                draw(Card(Denomination.KING, Suit.DIAMOND))
+            }
 
-        val participants = Participants(
-            dealer = dealer,
-            players = listOf(player),
-        )
+        val participants =
+            Participants(
+                dealer = dealer,
+                players = listOf(player),
+            )
         dealer.transitionToStayState()
         player.transitionToStayState()
         val gameManager = GameManager(participants = participants)
@@ -97,19 +105,22 @@ class BettingPayoutTest {
 
     @Test
     fun `(딜러 draw , 플레이어 draw) 정상적인 Payout과 수익금 테스트`() {
-        val dealer = Dealer().apply {
-            draw(Card(Denomination.SEVEN, Suit.SPADE))
-            draw(Card(Denomination.SEVEN, Suit.HEART))
-        }
-        val player = Player(Wallet(Identification("누누"), 50)).apply {
-            draw(Card(Denomination.SEVEN, Suit.DIAMOND))
-            draw(Card(Denomination.SEVEN, Suit.CLOVER))
-        }
+        val dealer =
+            Dealer().apply {
+                draw(Card(Denomination.SEVEN, Suit.SPADE))
+                draw(Card(Denomination.SEVEN, Suit.HEART))
+            }
+        val player =
+            Player(Wallet(Identification("누누"), 50)).apply {
+                draw(Card(Denomination.SEVEN, Suit.DIAMOND))
+                draw(Card(Denomination.SEVEN, Suit.CLOVER))
+            }
 
-        val participants = Participants(
-            dealer = dealer,
-            players = listOf(player),
-        )
+        val participants =
+            Participants(
+                dealer = dealer,
+                players = listOf(player),
+            )
         dealer.transitionToStayState()
         player.transitionToStayState()
         val gameManager = GameManager(participants = participants)
@@ -125,19 +136,22 @@ class BettingPayoutTest {
 
     @Test
     fun `(딜러 win , 플레이어 lose) 정상적인 Payout과 수익금 테스트`() {
-        val dealer = Dealer().apply {
-            draw(Card(Denomination.SEVEN, Suit.SPADE))
-            draw(Card(Denomination.SEVEN, Suit.HEART))
-        }
-        val player = Player(Wallet(Identification("누누"), 50)).apply {
-            draw(Card(Denomination.SIX, Suit.SPADE))
-            draw(Card(Denomination.SIX, Suit.HEART))
-        }
+        val dealer =
+            Dealer().apply {
+                draw(Card(Denomination.SEVEN, Suit.SPADE))
+                draw(Card(Denomination.SEVEN, Suit.HEART))
+            }
+        val player =
+            Player(Wallet(Identification("누누"), 50)).apply {
+                draw(Card(Denomination.SIX, Suit.SPADE))
+                draw(Card(Denomination.SIX, Suit.HEART))
+            }
 
-        val participants = Participants(
-            dealer = dealer,
-            players = listOf(player),
-        )
+        val participants =
+            Participants(
+                dealer = dealer,
+                players = listOf(player),
+            )
         dealer.transitionToStayState()
         player.transitionToStayState()
         val gameManager = GameManager(participants = participants)
@@ -150,18 +164,4 @@ class BettingPayoutTest {
         assertEquals("누누", actualRevenues.first().name)
         assertEquals(expectedRevenue, actualRevenues.first().revenue)
     }
-
-//    @Test
-//    fun `정상적인 베팅머니 계산 테스트`() {
-//        // WIN case
-//        assertEquals(1.5f, gameResult.settleBettingPayout(Result.WIN, true), 0.01f) // BlackJack WIN
-//        assertEquals(1f, settleBettingPayout(Result.WIN, false), 0.01f) // Regular WIN
-//
-//        // DRAW case
-//        assertEquals(1.5f, settleBettingPayout(Result.DRAW, true), 0.01f) // BlackJack DRAW
-//        assertEquals(1f, settleBettingPayout(Result.DRAW, false), 0.01f) // Regular DRAW
-//
-//        // LOSE case
-//        assertEquals(-1f, settleBettingPayout(Result.LOSE, false), 0.01f) // Regular LOSE
-//    }
 }
