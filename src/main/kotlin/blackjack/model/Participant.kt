@@ -7,7 +7,7 @@ abstract class Participant {
 
     abstract fun hitWhileConditionTrue(
         deck: Deck,
-        condition: () -> Boolean,
+        condition: () -> Boolean = { false },
         view: () -> Unit,
     )
 

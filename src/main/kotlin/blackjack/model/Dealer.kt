@@ -19,16 +19,6 @@ class Dealer(val hand: Hand, profit: Amount = Amount(INITIAL_PROFIT)) : Particip
         condition: () -> Boolean,
         view: () -> Unit,
     ) {
-        while (condition()) {
-            hit(deck.pull())
-            view()
-        }
-    }
-
-    fun hitWhileConditionTrue(
-        deck: Deck,
-        view: () -> Unit,
-    ) {
         while (canHit()) {
             hit(deck.pull())
             view()
