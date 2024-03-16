@@ -1,6 +1,10 @@
 package blackjack.model.participant
 
 class Players private constructor(val playerGroup: List<Player>) {
+    fun profit(dealer: Dealer): Map<Player, Amount> {
+        return playerGroup.associateWith { it.profit(dealer) }
+    }
+
     companion object {
         private const val MIN_SIZE = 2
         private const val MAX_SIZE = 8

@@ -1,5 +1,6 @@
 package blackjack.model.participant
 
+import blackjack.constants.GameResult
 import blackjack.model.card.Card
 import blackjack.model.card.CardProvider
 
@@ -28,6 +29,17 @@ abstract class Role(private val handCards: HandCards) {
     fun score() = handCards.score(BLACKJACK_VALUE)
 
     fun cards() = handCards.cards
+
+    fun gameResult(other: Role): GameResult {
+        val score = score()
+        val otherScore = other.score()
+
+        return when {
+            score > otherScore -> GameResult.WIN
+            score == otherScore -> GameResult.DRAW
+            else -> GameResult.LOSE
+        }
+    }
 
     companion object {
         private const val BLACKJACK_VALUE = 21

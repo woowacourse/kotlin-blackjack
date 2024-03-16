@@ -61,6 +61,7 @@ class BlackjackController(
     ) {
         outputView.printPlayersCardResult(dealer, players)
         val dealerProfit = dealer.profit(players)
-        outputView.printProfit(dealerProfit, players)
+        val playersProfit = players.profit(dealer)
+        outputView.printProfit(dealerProfit, playersProfit)
     }
 }

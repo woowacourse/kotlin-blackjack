@@ -55,8 +55,8 @@ class DealerTest {
             )
 
         // when
-        players.playerGroup[0].receiveCard(listOf(SPADE_TEN)) // 1000
-        players.playerGroup[1].receiveCard(listOf(SPADE_ACE, HEART_KING)) // 4500
+        players.playerGroup[0].receiveCard(listOf(SPADE_TEN))
+        players.playerGroup[1].receiveCard(listOf(SPADE_ACE, HEART_KING))
         val actual = dealer.profit(players)
 
         // then

@@ -5,5 +5,5 @@ class Amount(val price: Int) {
 
     operator fun times(other: Double) = Amount(price * other)
 
-    operator fun minus(other: Amount) = Amount(price - other.price)
+    operator fun plus(other: Amount) = Amount(price + other.price)
 }

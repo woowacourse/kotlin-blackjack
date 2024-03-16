@@ -1,5 +1,6 @@
 package blackjack.model.participant
 
+import blackjack.constants.GameResult
 import blackjack.model.card.Card
 import blackjack.model.card.CardProvider
 
@@ -20,7 +21,20 @@ class Dealer(handCards: HandCards = HandCards()) : Role(handCards) {
 
     fun profit(players: Players): Amount {
         return players.playerGroup.fold(Amount(0)) { acc, player ->
-            acc - player.profit(this)
+            acc + profitByPlayer(player)
+        }
+    }
+
+    private fun profitByPlayer(player: Player): Amount {
+        return player.battingAmount * gameResult(player).profitRate
+    }
+
+    private fun gameResult(player: Player): GameResult {
+        return when {
+            player.isBlackjack() -> GameResult.BLACKJACK_LOSE
+            player.isBurst() -> GameResult.WIN
+            isBurst() -> GameResult.LOSE
+            else -> super.gameResult(player)
         }
     }
 

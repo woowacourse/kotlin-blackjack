@@ -46,12 +46,12 @@ class OutputView {
 
     fun printProfit(
         dealerProfit: Amount,
-        players: Players,
+        playersProfit: Map<Player, Amount>,
     ) {
         println(FINAL_PROFIT_MESSAGE)
         println(profitMessage(DEALER_NAME, dealerProfit))
-        players.playerGroup.forEach {
-            println(profitMessage(it.name.toString(), it.profitAmount))
+        playersProfit.forEach { (player, amount) ->
+            println(profitMessage(player.name.toString(), amount))
         }
     }
 
