@@ -101,8 +101,8 @@ class Dealer(val hand: Hand, profit: Amount = Amount(INITIAL_PROFIT)) : Particip
     ) {
         when (playerResult.winningState) {
             WinningState.WIN -> giveAmountsWhenPlayerWin(playerResult, playersBetAmounts, ind)
-            WinningState.DRAW -> playerResult.player.getMoney(Amount(playersBetAmounts[ind]))
-            WinningState.LOSS -> playerResult.player.getMoney(Amount(-playersBetAmounts[ind]))
+            WinningState.DRAW -> playerResult.player.changeBudget(Amount(playersBetAmounts[ind]))
+            WinningState.LOSS -> playerResult.player.changeBudget(Amount(-playersBetAmounts[ind]))
         }
     }
 
@@ -112,9 +112,9 @@ class Dealer(val hand: Hand, profit: Amount = Amount(INITIAL_PROFIT)) : Particip
         ind: Int,
     ) {
         if (playerResult.player.hand.isBlackjack()) {
-            playerResult.player.getMoney(Amount((BLACKJACK_BONUS_RATE * playersBetAmounts[ind]).toInt()))
+            playerResult.player.changeBudget(Amount((BLACKJACK_BONUS_RATE * playersBetAmounts[ind]).toInt()))
         } else {
-            playerResult.player.getMoney(Amount(playersBetAmounts[ind]))
+            playerResult.player.changeBudget(Amount(playersBetAmounts[ind]))
         }
     }
 

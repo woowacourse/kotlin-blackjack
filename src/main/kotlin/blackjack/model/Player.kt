@@ -30,7 +30,7 @@ class Player(
         }
     }
 
-    fun getMoney(amount: Amount) {
+    fun changeBudget(amount: Amount) {
         budget += amount
         updateProfit(amount)
     }
