@@ -16,9 +16,9 @@ abstract class Participant(
 
     fun getCardSum(): Int = cards.scoreSum()
 
-    fun showCard() = cards.toList()
+    fun cardsList() = cards.toList()
 
-    abstract fun showInitialCard(): List<Card>
+    abstract fun initialCardsList(): List<Card>
 
     fun isNotBustedAndHitable(): Boolean = !isBusted() && isHitable()
 

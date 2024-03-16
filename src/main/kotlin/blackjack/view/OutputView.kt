@@ -16,9 +16,9 @@ object OutputView {
         dealer: Dealer,
         players: List<Player>,
     ) {
-        println(buildParticipantCardsString(dealer.name, dealer.showInitialCard()))
+        println(buildParticipantCardsString(dealer.name, dealer.initialCardsList()))
         players.forEach {
-            println(buildParticipantCardsString(it.name, it.showInitialCard()))
+            println(buildParticipantCardsString(it.name, it.initialCardsList()))
         }
     }
 
@@ -43,7 +43,7 @@ object OutputView {
 
     private fun buildParticipantCards(participant: Participant): String {
         val name = participant.name
-        val cards = participant.showCard()
+        val cards = participant.cardsList()
         return buildParticipantCardsString(name, cards)
     }
 

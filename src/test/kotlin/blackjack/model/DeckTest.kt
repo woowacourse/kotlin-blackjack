@@ -10,7 +10,7 @@ class DeckTest {
         val deck = Deck(listOf(Card(CardNumber.Ace, Suit.Spade)))
         val player = Player("cheolsoo")
         player.pickCard(deck)
-        val actual = player.showCard()[0]
+        val actual = player.cardsList()[0]
         val expected = Card(CardNumber.Ace, Suit.Spade)
         assertThat(actual).isEqualTo(expected)
     }
