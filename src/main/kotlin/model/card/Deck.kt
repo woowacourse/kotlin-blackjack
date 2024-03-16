@@ -2,6 +2,7 @@ package model.card
 
 class Deck private constructor(private val cards: MutableList<Card>) {
     fun pop(): Card {
+        if(cards.isEmpty()) cards.addAll(DeckRandomGenerationStrategy().generate())
         return cards.removeAt(0)
     }
 
