@@ -1,6 +1,6 @@
 package blackjack.model
 
-class Player(userInformation: UserInformation) : Participant(userInformation) {
+class Player(wallet: Wallet) : Participant(wallet) {
     override fun openInitCards(): List<Card> {
         return getCards().take(GameManager.INIT_HAND_CARD_COUNT)
     }

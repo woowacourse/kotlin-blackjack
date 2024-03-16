@@ -1,7 +1,8 @@
 package blackjack.view
 
+import blackjack.model.Identification
 import blackjack.model.Player
-import blackjack.model.UserInformation
+import blackjack.model.Wallet
 import blackjack.view.user.UserDecision
 import blackjack.view.user.UserInputValidator
 
@@ -19,8 +20,8 @@ object InputView {
             }
         return playerNames.zip(bettingMoneys).map { (name, money) ->
             Player(
-                UserInformation(
-                    userName = name,
+                Wallet(
+                    identification = Identification(name),
                     money = money,
                 ),
             )
@@ -34,7 +35,7 @@ object InputView {
         return validatorPlayers ?: inputPlayerNames()
     }
 
-    fun inputPlayerMoney(playerName: String): Int {
+    private fun inputPlayerMoney(playerName: String): Int {
         println(INPUT_MESSAGE_MONEY.format(playerName))
         return readlnOrNull()?.toIntOrNull().also {
             if (it == null) println(UserInputValidator.ERROR_INACCURATE_MONEY)

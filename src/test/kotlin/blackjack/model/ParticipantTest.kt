@@ -4,7 +4,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class ParticipantTest {
-    class MockParticipant(userInformation: UserInformation) : Participant(userInformation) {
+    class MockParticipant(wallet: Wallet) : Participant(wallet) {
         override fun openInitCards(): List<Card> {
             TODO("Not yet implemented")
         }
@@ -17,7 +17,7 @@ class ParticipantTest {
     @Test
     fun `정상적인 Hit 상태 체크 테스트 `() {
         val name = "딜러"
-        val participant = MockParticipant(userInformation = UserInformation(name))
+        val participant = MockParticipant(wallet = Wallet(name))
         assertThat(participant.checkHitState()).isTrue()
     }
 }
