@@ -10,9 +10,9 @@ class PlayerGroup {
         _players += playerNames.map { Player(userInfo = UserInfo(nickname = Nickname(it))) }
     }
 
-    fun startBetting(amount: (player: Player) -> String) {
+    fun startBetting(amount: (player: Player) -> Int) {
         players.forEach { player ->
-            val betAmount = BetAmount.from(amount(player))
+            val betAmount = BetAmount(amount(player))
             player.userInfo.plusBet(betAmount)
         }
     }

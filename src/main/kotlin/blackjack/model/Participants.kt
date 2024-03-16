@@ -5,7 +5,7 @@ class Participants(
     val playerGroup: PlayerGroup,
 ) {
     fun startGame(
-        inputPlayerBettingAmount: (nickname: Nickname) -> String,
+        inputPlayerBettingAmount: (nickname: Nickname) -> Int,
         printGameSetting: (participants: Participants) -> Unit,
         askHitOrStay: (nickname: Nickname) -> Boolean,
         showPlayerCards: (player: Player) -> Unit,
@@ -22,7 +22,7 @@ class Participants(
         }
     }
 
-    private fun initBetting(inputPlayerBettingAmount: (nickname: Nickname) -> String) {
+    private fun initBetting(inputPlayerBettingAmount: (nickname: Nickname) -> Int) {
         playerGroup.startBetting { player ->
             inputPlayerBettingAmount(player.userInfo.nickname)
         }
