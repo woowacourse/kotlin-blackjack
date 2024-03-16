@@ -17,8 +17,8 @@ class Dealer(
 
     override fun judge(other: Participant): ResultType {
         return when {
-            other.participantState is ParticipantState.Bust -> ResultType.WIN
-            participantState is ParticipantState.Bust -> ResultType.LOSE
+            other.isBust() -> ResultType.WIN
+            this.isBust() -> ResultType.LOSE
             else -> super.judge(other)
         }
     }

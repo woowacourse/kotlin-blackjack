@@ -15,8 +15,8 @@ class Player(
 ) : Participant(participantState, wallet) {
     override fun judge(other: Participant): ResultType {
         return when {
-            participantState is ParticipantState.Bust -> ResultType.LOSE
-            other.participantState is ParticipantState.Bust -> ResultType.WIN
+            this.isBust() -> ResultType.LOSE
+            other.isBust() -> ResultType.WIN
             else -> super.judge(other)
         }
     }
