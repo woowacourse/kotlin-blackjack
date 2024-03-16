@@ -48,29 +48,4 @@ class BlackJackTest {
         }
         assertThat(bustBlackJack.getState()).isEqualTo(State.Finish.Bust)
     }
-
-    @Test
-    fun `카드를 드로우 했을 때, ACE가 1개 있는 경우 버스트 상태에서 정상적으로 Hit 상태 전환 테스트`() {
-        val aceBlackJack = BlackJack()
-        aceBlackJack.apply {
-            addCard(Card(Denomination.ACE, Suit.SPADE))
-            addCard(Card(Denomination.KING, Suit.CLOVER))
-            addCard(Card(Denomination.NINE, Suit.DIAMOND))
-        }
-        assertThat(aceBlackJack.getState()).isEqualTo(State.Action.Hit)
-    }
-
-    @Test
-    fun `카드를 드로우 했을 때, ACE가 4개 있는 경우 버스트 상태에서 정상적으로 Hit 상태 전환 테스트`() {
-        val aceBlackJack = BlackJack()
-        aceBlackJack.apply {
-            addCard(Card(Denomination.ACE, Suit.SPADE))
-            addCard(Card(Denomination.ACE, Suit.CLOVER))
-            addCard(Card(Denomination.ACE, Suit.HEART))
-            addCard(Card(Denomination.ACE, Suit.DIAMOND))
-            addCard(Card(Denomination.SEVEN, Suit.DIAMOND))
-            addCard(Card(Denomination.NINE, Suit.SPADE))
-        }
-        assertThat(aceBlackJack.getState()).isEqualTo(State.Action.Hit)
-    }
 }

@@ -31,8 +31,10 @@ class BlackJack {
     }
 
     fun addCard(card: Card) {
-        handCard.addCard(card)
-        updateGameStateWithScore()
+        if (checkDrawState()) {
+            handCard.addCard(card)
+            updateGameStateWithScore()
+        }
     }
 
     private fun updateGameStateWithScore() {
@@ -47,12 +49,11 @@ class BlackJack {
     }
 
     private fun applyBlackJackStateWithCardCount() {
-        state =
-            if (handCard.checkStateWithCardCount()) {
-                State.Finish.BlackJack
-            } else {
-                State.Finish.Stay
-            }
+        state = if (handCard.checkStateWithCardCount()) {
+            State.Finish.BlackJack
+        } else {
+            State.Finish.Stay
+        }
     }
 
     companion object {
