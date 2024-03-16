@@ -9,10 +9,8 @@ import blackjack.state.State
 sealed class Participant(
     val name: String,
     val betting: Betting = Betting(0),
-    initState: State,
+    private var state: State,
 ) {
-    private var state = initState
-
     private var finishState: State.Finish? = null
     val hand: Hand get() = state.hand
 
