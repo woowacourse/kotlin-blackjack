@@ -11,17 +11,17 @@
 
 ## 기능 목록
 
-### CardGenerator
-- [X] **RandomCardGenerator** : Card를 랜덤으로 뽑는다.
-- [X] **ExplicitCardGenerator** : 랜덤으로 뽑힌 카드를 테스트 하기 위해 명시적 Card를 발행한다.
-
 ### 카드
 
 - [X] 카드는 숫자와 모양을 알고 있다.
 
-### 카드 덱
+### CardDeck
 
-- [X] CardGenerator와 협력해 카드를 랜덤으로 1장 뽑는다.
+- **RandomDeck**
+  - [ ] Card를 랜덤으로 뽑는다.
+- **ExplicitDeck** 
+  - [ ] 명시적으로 Card를 발행한다.
+
 
 ### Denomination
 - 카드 점수 13 가지를 저장하는 enum

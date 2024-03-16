@@ -1,7 +1,6 @@
 package blackjack.model.playing.cardhand
 
 import blackjack.model.card.Card
-import blackjack.model.card.CardDeck
 import blackjack.model.card.Denomination
 
 class CardHand(hand: List<Card>) {
@@ -21,8 +20,8 @@ class CardHand(hand: List<Card>) {
         return tempSum
     }
 
-    fun addNewCard(cardDeck: CardDeck) {
-        _hand.add(cardDeck.draw())
+    fun addNewCard(card: Card) {
+        _hand.add(card)
     }
 
     fun getPlayerState(): CardHandState {

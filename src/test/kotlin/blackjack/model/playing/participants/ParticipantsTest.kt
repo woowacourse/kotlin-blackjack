@@ -1,8 +1,8 @@
 package blackjack.model.playing.participants
 
 import blackjack.model.card.Card
-import blackjack.model.card.CardDeck
 import blackjack.model.card.Denomination
+import blackjack.model.card.RandomDeck
 import blackjack.model.card.Suit
 import blackjack.model.playing.cardhand.CardHand
 import blackjack.model.playing.participants.player.Player
@@ -70,7 +70,7 @@ class ParticipantsTest {
                 ),
             )
 
-        participants.addInitialCards(CardDeck())
+        participants.addInitialCards(RandomDeck().draw())
 
         val cardHandSize1 = participants.dealer.cardHand.hand.size
         val cardHandSize2 = participants.players.players[0].cardHand.hand.size

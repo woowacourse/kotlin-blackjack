@@ -1,6 +1,6 @@
 package blackjack.model.playing.participants
 
-import blackjack.model.card.CardDeck
+import blackjack.model.card.Card
 import blackjack.model.playing.participants.player.PlayerName
 import blackjack.model.playing.participants.player.Players
 import blackjack.model.winning.DealerWinning
@@ -9,10 +9,10 @@ import blackjack.model.winning.PlayersWinning
 import blackjack.model.winning.WinningResultStatus
 
 data class Participants(val dealer: Dealer, val players: Players) {
-    fun addInitialCards(cardDeck: CardDeck) {
-        dealer.addInitialCards(cardDeck)
+    fun addInitialCards(card: Card) {
+        dealer.addInitialCards(card)
         players.players.forEach {
-            it.addInitialCards(cardDeck)
+            it.addInitialCards(card)
         }
     }
 
