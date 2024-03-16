@@ -30,11 +30,15 @@ class BlackJackController(
         showGameResult(dealer, players)
     }
 
-    private tailrec fun createBettings(playersNames: List<String>): List<Betting> {
-        return runCatching { playersNames.map { inputView.fetchBetting(it) } }
+    private fun createBettings(playersNames: List<String>): List<Betting> {
+        return playersNames.map { createBetting(it) }
+    }
+
+    private tailrec fun createBetting(name: String): Betting {
+        return runCatching { inputView.fetchBetting(name) }
             .onFailure {
                 outputView.showErrorMessage(it)
-                return createBettings(playersNames)
+                return createBetting(name)
             }
             .getOrThrow()
     }
