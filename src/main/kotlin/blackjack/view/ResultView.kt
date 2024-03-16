@@ -43,9 +43,7 @@ object ResultView {
         println(
             MESSAGE_PARTICIPANT_GAME_SCORE.format(
                 participant.participantInformation.name,
-                participant.gameInformation.cards.joinToString(separator = ", ") { card ->
-                    card.convertCard()
-                },
+                participant.gameInformation.cards.joinToString(separator = ", "),
                 Calculator.calculateScore(participant.gameInformation.cards),
             ),
         )
