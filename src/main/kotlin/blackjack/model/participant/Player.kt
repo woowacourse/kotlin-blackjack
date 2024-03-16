@@ -2,7 +2,7 @@ package blackjack.model.participant
 
 import blackjack.constants.GameResult
 import blackjack.model.Amount
-import blackjack.model.HandCards
+import blackjack.model.Hand
 import blackjack.model.card.Card
 import blackjack.model.card.CardProvider
 import blackjack.view.CardDecision
@@ -10,14 +10,14 @@ import blackjack.view.CardDecision
 class Player(
     val name: PlayerName,
     val battingAmount: Amount,
-    handCards: HandCards = HandCards(),
-) : Role(handCards) {
+    hand: Hand = Hand(),
+) : Role(hand) {
     constructor(name: String, amount: Int) : this(PlayerName(name), Amount(amount))
 
-    constructor(name: String, amount: Int, handCards: List<Card>) : this(
+    constructor(name: String, amount: Int, cards: List<Card>) : this(
         PlayerName(name),
         Amount(amount),
-        HandCards(handCards.toMutableList()),
+        Hand(cards.toMutableList()),
     )
 
     override fun receivableMoreCard() = !isMaxCardSum() && !isBurst()

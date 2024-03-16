@@ -1,35 +1,35 @@
 package blackjack.model.participant
 
 import blackjack.constants.GameResult
-import blackjack.model.HandCards
+import blackjack.model.Hand
 import blackjack.model.card.Card
 import blackjack.model.card.CardProvider
 
-abstract class Role(private val handCards: HandCards) {
+abstract class Role(private val hand: Hand) {
     abstract fun receivableMoreCard(): Boolean
 
     fun receiveCard(cards: List<Card>) {
-        handCards.add(cards)
+        hand.add(cards)
     }
 
     fun initCard(cardProvider: CardProvider) {
         receiveCard(Card.provideCards(cardProvider, INIT_RECEIVE_CARD_COUNT))
     }
 
-    fun isBurst() = handCards.score(BLACKJACK_VALUE) > BLACKJACK_VALUE
+    fun isBurst() = hand.score(BLACKJACK_VALUE) > BLACKJACK_VALUE
 
     fun isBlackjack(): Boolean {
-        return handCards.score(BLACKJACK_VALUE) == BLACKJACK_VALUE &&
-            handCards.size == BLACKJACK_COUNT
+        return hand.score(BLACKJACK_VALUE) == BLACKJACK_VALUE &&
+            hand.size == BLACKJACK_COUNT
     }
 
     fun isMaxCardSum(): Boolean {
-        return handCards.score(BLACKJACK_VALUE) == BLACKJACK_VALUE
+        return hand.score(BLACKJACK_VALUE) == BLACKJACK_VALUE
     }
 
-    fun score() = handCards.score(BLACKJACK_VALUE)
+    fun score() = hand.score(BLACKJACK_VALUE)
 
-    fun cards() = handCards.cards
+    fun cards() = hand.cards
 
     fun gameResult(other: Role): GameResult {
         val score = score()

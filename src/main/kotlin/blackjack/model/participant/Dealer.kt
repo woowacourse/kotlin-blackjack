@@ -2,12 +2,12 @@ package blackjack.model.participant
 
 import blackjack.constants.GameResult
 import blackjack.model.Amount
-import blackjack.model.HandCards
+import blackjack.model.Hand
 import blackjack.model.card.Card
 import blackjack.model.card.CardProvider
 
-class Dealer(handCards: HandCards = HandCards()) : Role(handCards) {
-    constructor(handCards: List<Card>) : this(HandCards(handCards.toMutableList()))
+class Dealer(hand: Hand = Hand()) : Role(hand) {
+    constructor(cards: List<Card>) : this(Hand(cards.toMutableList()))
 
     override fun receivableMoreCard() = score() < MIN_CARD_SUM
 

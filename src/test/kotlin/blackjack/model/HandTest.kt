@@ -6,7 +6,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 
-class HandCardsTest {
+class HandTest {
     @MethodSource("카드 점수 계산 테스트 데이터")
     @ParameterizedTest
     fun `카드 점수를 구한다`(
@@ -14,10 +14,10 @@ class HandCardsTest {
         expected: Int,
     ) {
         // given
-        val handCards = HandCards(cards.toMutableList())
+        val hand = Hand(cards.toMutableList())
 
         // when
-        val actual = handCards.score(BURST_CONDITION)
+        val actual = hand.score(BURST_CONDITION)
 
         // then
         assertThat(actual).isEqualTo(expected)
