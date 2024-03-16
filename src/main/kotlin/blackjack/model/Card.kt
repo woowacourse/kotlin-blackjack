@@ -17,20 +17,12 @@ class Card private constructor(val pattern: Pattern, val number: CardNumber) {
 
         fun createDeck(): List<Card> = cards
 
-        fun from(
-            pattern: Pattern,
-            number: CardNumber,
-        ): Card {
-            return cards.first { it.pattern == pattern && it.number == number }
+        fun Pair<Pattern, CardNumber>.toCard(): Card {
+            return cards.first { it.pattern == this.first && it.number == this.second }
         }
 
         fun of(value: List<Pair<Pattern, CardNumber>>): List<Card> {
-            val newCards = mutableListOf<Card>()
-            value.forEach {
-                newCards.add(Card(pattern = it.first, number = it.second))
-            }
-
-            return newCards
+            return value.map { it.toCard() }
         }
     }
 }
