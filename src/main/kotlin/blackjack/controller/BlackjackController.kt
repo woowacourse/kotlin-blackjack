@@ -8,12 +8,14 @@ import blackjack.state.Finished
 import blackjack.state.Hit
 import blackjack.state.Running
 import blackjack.state.Stay
+import blackjack.view.BettingAmountInputView
 import blackjack.view.IsAddCardInputView
 import blackjack.view.OutputView
 import blackjack.view.PlayersInputView
 
 class BlackjackController(
     private val playersInputView: PlayersInputView = PlayersInputView(),
+    private val bettingAmountInputView: BettingAmountInputView = BettingAmountInputView(),
     private val isAddCardInputView: IsAddCardInputView = IsAddCardInputView(),
     private val outputView: OutputView = OutputView(),
 ) {
@@ -23,6 +25,7 @@ class BlackjackController(
 
     fun play() {
         setUpGame()
+        setBettingAmount()
         gamePlayersTurn()
         dealerTurn()
         showResult()
@@ -31,6 +34,12 @@ class BlackjackController(
     private fun setUpGame() {
         players = playersInputView.readPlayerNames(deck)
         outputView.printInitCard(dealer, players)
+    }
+
+    private fun setBettingAmount() {
+        players.gamePlayers.forEach { player: Player ->
+            player.bettingAmount = bettingAmountInputView.readBettingAmount(player.name)
+        }
     }
 
     private fun gamePlayersTurn() {
