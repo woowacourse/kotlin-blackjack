@@ -1,6 +1,6 @@
 package blackjack.model
 
-class Proceeds(
+class Revenue(
     val name: String,
     val proceeds: Int,
 )

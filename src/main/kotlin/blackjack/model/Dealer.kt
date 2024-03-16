@@ -5,7 +5,7 @@ class Dealer(userInformation: UserInformation = UserInformation(DEFAULT_DEALER_N
         return getCards().firstOrNull()
     }
 
-    fun settleBettingMoneys(gameResult: GameResult): List<Proceeds> {
+    fun settleBettingMoneys(gameResult: GameResult): List<Revenue> {
         return gameResult.getResultPlayers().map { player ->
             val payout =
                 gameResult.getPlayerResult(player)?.let { result ->
@@ -15,7 +15,7 @@ class Dealer(userInformation: UserInformation = UserInformation(DEFAULT_DEALER_N
                     )
                 } ?: 0
             val playerBettingResultMoney = player.getBettingMoney() * payout.toInt()
-            Proceeds(
+            Revenue(
                 player.getName(),
                 playerBettingResultMoney,
             )

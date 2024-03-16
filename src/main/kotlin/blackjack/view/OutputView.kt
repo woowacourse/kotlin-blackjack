@@ -4,7 +4,7 @@ import blackjack.model.Card
 import blackjack.model.Dealer
 import blackjack.model.Participant
 import blackjack.model.Player
-import blackjack.model.Proceeds
+import blackjack.model.Revenue
 import blackjack.model.Suit
 
 object OutputView {
@@ -117,7 +117,7 @@ object OutputView {
 
     fun outputParticipantResult(
         dealer: Dealer,
-        bettingResults: List<Proceeds>,
+        bettingResults: List<Revenue>,
     ) {
         val dealerBettingResult = -bettingResults.sumOf { it.proceeds }
         outputDealerResult(
@@ -134,13 +134,13 @@ object OutputView {
         println("${dealer.getName()}: $dealerBettingResult")
     }
 
-    private fun outputPlayersResult(bettingResults: List<Proceeds>) {
+    private fun outputPlayersResult(bettingResults: List<Revenue>) {
         bettingResults.forEach { bettingResult ->
             outputPlayerResult(bettingResult)
         }
     }
 
-    private fun outputPlayerResult(bettingResult: Proceeds) {
+    private fun outputPlayerResult(bettingResult: Revenue) {
         println("${bettingResult.name}: ${bettingResult.proceeds}")
     }
 }
