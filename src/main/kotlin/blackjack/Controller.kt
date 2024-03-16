@@ -9,7 +9,6 @@ import blackjack.view.InputView
 import blackjack.view.OutputView
 
 class Controller {
-
     fun run() {
         val deck = Deck()
         val players = makePlayers()

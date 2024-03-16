@@ -1,13 +1,7 @@
 package blackjack.model
 
-class PlayerStrengthPolicy : StrengthPolicy {
-    override fun strength(cards: Cards): Int =
-        when {
-            cards.isBlackJack() -> StrengthPolicy.BLACKJACK_STRENGTH
-            cards.isBusted() -> BUSTED_STRENGTH
-            else -> cards.sum()
-        }
-
+class PlayerStrengthPolicy : StrengthPolicy() {
+    override val bustedStrength: Int = BUSTED_STRENGTH
     companion object {
         private const val BUSTED_STRENGTH = -1
     }
