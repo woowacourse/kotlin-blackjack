@@ -5,14 +5,13 @@ import blackjack.model.participant.Player
 class CardDecisionInputView : CardDecision {
     override fun hasMoreCardDecision(player: Player): Boolean {
         println(READ_MESSAGE.format(player.name))
-        val moreCardDecision = readln()
-        return moreCardDecision.convert() ?: run {
+        return readln().toDecisionOrNull() ?: run {
             println(INVALID_MESSAGE)
             hasMoreCardDecision(player)
         }
     }
 
-    private fun String.convert(): Boolean? {
+    private fun String.toDecisionOrNull(): Boolean? {
         if (this == MORE_CARD_MESSAGE) return true
         if (this == NO_MORE_CARD_MESSAGE) return false
         return null

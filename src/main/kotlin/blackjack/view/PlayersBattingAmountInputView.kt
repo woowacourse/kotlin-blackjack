@@ -7,8 +7,7 @@ class PlayersBattingAmountInputView {
 
     private fun readPlayerBattingAmount(name: String): Int {
         println(READ_MESSAGE.format(name))
-        val battingAmount = readln()
-        return battingAmount.toIntOrNull() ?: run {
+        return readln().toIntOrNull() ?: run {
             println(INVALID_MESSAGE)
             readPlayerBattingAmount(name)
         }
