@@ -63,7 +63,7 @@ class Dealer(val hand: Hand, profit: Amount = Amount(INITIAL_PROFIT)) : Particip
         val playerHand = player.hand
         if (playerHand.isBust()) return PlayerResult(player, WinningState.LOSS)
         if (dealerHand.isBust()) return PlayerResult(player, WinningState.WIN)
-        if (playerHand.sumOptimized() == BLACKJACK_NUMBER && dealerHand.sumOptimized() == BLACKJACK_NUMBER) {
+        if (playerHand.isBlackjack() && dealerHand.isBlackjack()) {
             val playerWinningState = compareIfBlackJackNum(dealerHand, playerHand)
             return PlayerResult(player, playerWinningState)
         } else {
