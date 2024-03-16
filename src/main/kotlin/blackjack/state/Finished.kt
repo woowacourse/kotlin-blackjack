@@ -2,7 +2,6 @@ package blackjack.state
 
 import blackjack.model.BetAmount
 import blackjack.model.Card
-import blackjack.model.CardHolder
 import blackjack.model.GameResult
 import blackjack.model.Hand
 
@@ -12,11 +11,6 @@ abstract class Finished(private val hand: Hand) : Started(hand) {
     override fun isFinished(): Boolean = true
 
     override fun stay(): BlackjackState = Stay(hand)
-
-    abstract fun calculate(
-        self: CardHolder,
-        opponent: CardHolder,
-    ): GameResult
 
     abstract fun earningRate(): Double
 
