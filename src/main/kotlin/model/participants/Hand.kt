@@ -11,13 +11,16 @@ class Hand {
         get() = _cards
 
     val point: Point
-        get() = calculatePoint()
+        get() = getPoint()
+
+    val optimalPoint: Point
+        get() = getOptimalPoint()
 
     fun draw(card: Card) {
         _cards.add(card)
     }
 
-    private fun calculatePoint(): Point {
+    private fun getPoint(): Point {
         return _cards.sumOf { card ->
             card.valueType.amount
         }.run { Point(this) }
@@ -28,10 +31,10 @@ class Hand {
     }
 
     fun isBlackjack(): Boolean {
-        return calculateOptimalPoint() == Point(BLACK_JACK_POINT)
+        return getOptimalPoint() == Point(BLACK_JACK_POINT)
     }
 
-    fun calculateOptimalPoint(): Point {
+    fun getOptimalPoint(): Point {
         return if (hasAce()) {
             getPointWithAce()
         } else {
@@ -40,10 +43,8 @@ class Hand {
     }
 
     private fun getPointWithAce(): Point {
-        return when {
-            point + Card.ACE_ADDITIONAL_POINT <= BLACK_JACK_POINT -> point + Card.ACE_ADDITIONAL_POINT
-            else -> point
-        }
+        val totalPoint = point + Card.ACE_ADDITIONAL_POINT
+        return if (totalPoint <= BLACK_JACK_POINT) totalPoint else point
     }
 
     companion object {

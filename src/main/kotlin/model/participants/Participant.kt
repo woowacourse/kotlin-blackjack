@@ -9,9 +9,12 @@ abstract class Participant(open var participantState: ParticipantState, open var
     fun isBust() = participantState is ParticipantState.Bust
 
     open fun judge(other: Participant): ResultType {
+        val optimalPoint = participantState.hand.optimalPoint
+        val otherOptimalPoint = other.participantState.hand.optimalPoint
+
         return when {
-            participantState.hand.calculateOptimalPoint() > other.participantState.hand.calculateOptimalPoint() -> ResultType.WIN
-            participantState.hand.calculateOptimalPoint() == other.participantState.hand.calculateOptimalPoint() -> ResultType.DRAW
+            optimalPoint > otherOptimalPoint -> ResultType.WIN
+            optimalPoint == otherOptimalPoint -> ResultType.DRAW
             else -> ResultType.LOSE
         }
     }
