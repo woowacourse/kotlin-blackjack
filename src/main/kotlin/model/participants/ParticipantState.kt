@@ -31,7 +31,7 @@ sealed class ParticipantState(val hand: Hand) {
     }
 
     class Playing(hand: Hand) : ParticipantState(hand) {
-        override val rate: Double = 0.0
+        override val rate: Double = 1.0
 
         override fun hit(card: Card): ParticipantState {
             hand.draw(card)
@@ -39,13 +39,14 @@ sealed class ParticipantState(val hand: Hand) {
             return when {
                 hand.point > Hand.BLACK_JACK_POINT -> Bust(hand)
                 hand.point < Hand.BLACK_JACK_POINT -> Playing(hand)
-                else -> BlackJack(hand)
+                hand.cards.size == 2 -> BlackJack(hand)
+                else -> Playing(hand)
             }
         }
     }
 
     class Bust(hand: Hand) : ParticipantState(hand) {
-        override val rate: Double = 0.0
+        override val rate: Double = -1.0
 
         override fun hit(card: Card): ParticipantState {
             return Bust(hand)

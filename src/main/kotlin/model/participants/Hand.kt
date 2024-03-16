@@ -28,7 +28,7 @@ class Hand {
     }
 
     fun isBlackjack(): Boolean {
-        return calculateOptimalPoint().equals(BLACK_JACK_POINT)
+        return calculateOptimalPoint() == Point(BLACK_JACK_POINT)
     }
 
     fun calculateOptimalPoint(): Point {
@@ -41,7 +41,7 @@ class Hand {
 
     private fun getPointWithAce(): Point {
         return when {
-            point <= Card.ACE_ADDITIONAL_POINT -> point + Card.ACE_ADDITIONAL_POINT
+            point + Card.ACE_ADDITIONAL_POINT <= BLACK_JACK_POINT -> point + Card.ACE_ADDITIONAL_POINT
             else -> point
         }
     }
