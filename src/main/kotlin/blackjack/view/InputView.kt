@@ -15,7 +15,7 @@ object InputView {
         println("\n${nickname}의 배팅 금액은?")
         val amount = readln()
         require(amount.toIntOrNull() != null) { "${amount}은 양수가 아닙니다. 배팅 금액은 양수여야 합니다" }
-        return readln().toInt()
+        return amount.toInt()
     }
 
     fun askHitOrStay(nickname: Nickname): Boolean {
