@@ -1,7 +1,7 @@
 package blackjack.view
 
 import blackjack.model.Calculator
-import blackjack.model.GameRevenue
+import blackjack.model.GameResult
 import blackjack.model.Participant
 import blackjack.model.Participant.Dealer
 import blackjack.model.Participant.Player
@@ -21,19 +21,19 @@ object ResultView {
         }
     }
 
-    fun outputGameResult(gameRevenue: GameRevenue) {
+    fun outputGameResult(gameResult: GameResult) {
         println(MESSAGE_TOTAL_REVENUE)
         println(
             MESSAGE_REVENUE.format(
-                gameRevenue.dealer.participantInformation.name,
-                gameRevenue.dealerRevenue.toInt().toString(),
+                gameResult.dealer.participantInformation.name,
+                gameResult.calculateDealerRevenue(),
             ),
         )
-        gameRevenue.playersRevenue.withIndex().map { (index, playerRevenue) ->
+        gameResult.playersRevenue.withIndex().map { (index, playerRevenue) ->
             println(
                 MESSAGE_REVENUE.format(
-                    gameRevenue.players[index].participantInformation.name,
-                    playerRevenue.toInt().toString(),
+                    gameResult.players[index].participantInformation.name,
+                    playerRevenue,
                 ),
             )
         }

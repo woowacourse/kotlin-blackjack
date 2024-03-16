@@ -1,7 +1,7 @@
 package blackjack.controller
 
 import blackjack.model.CardDeck
-import blackjack.model.GameRevenue
+import blackjack.model.GameResult
 import blackjack.model.Participant.Dealer
 import blackjack.model.Participant.Player
 import blackjack.model.ParticipantInformation.PlayerInformation
@@ -66,6 +66,6 @@ object BlackJackController {
         players: List<Player>,
     ) {
         ResultView.outputGameScores(dealer, players)
-        ResultView.outputGameResult(GameRevenue(dealer, players))
+        ResultView.outputGameResult(GameResult(dealer, players))
     }
 }

@@ -4,7 +4,7 @@ import blackjack.model.BettingAmount
 import blackjack.model.Card
 import blackjack.model.CardNumber
 import blackjack.model.CardSymbol
-import blackjack.model.GameRevenue
+import blackjack.model.GameResult
 import blackjack.model.Participant.Dealer
 import blackjack.model.Participant.Player
 import blackjack.model.ParticipantInformation.PlayerInformation
@@ -13,7 +13,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-class GameRevenueTest {
+class GameResultTest {
     private lateinit var players: List<Player>
     private lateinit var dealer: Dealer
 
@@ -32,11 +32,11 @@ class GameRevenueTest {
             player.draw(Card(CardNumber.EIGHT, CardSymbol.SPADE))
         }
 
-        val dealerAvenue = GameRevenue(dealer, players).dealerRevenue
-        val playersAvenue = GameRevenue(dealer, players).playersRevenue
+        val dealerRevenue = GameResult(dealer, players).calculateDealerRevenue().amount
+        val playersRevenue = GameResult(dealer, players).playersRevenue
 
-        assertThat(dealerAvenue).isEqualTo(1000.0)
-        assertThat(playersAvenue.all { playerAvenue -> playerAvenue == -1000.0 }).isTrue
+        assertThat(dealerRevenue).isEqualTo(1000.0)
+        assertThat(playersRevenue.all { playerRevenue -> playerRevenue.amount == -1000.0 }).isTrue
     }
 
     @Test
@@ -46,11 +46,11 @@ class GameRevenueTest {
             player.draw(Card(CardNumber.KING, CardSymbol.SPADE))
         }
 
-        val dealerAvenue = GameRevenue(dealer, players).dealerRevenue
-        val playersAvenue = GameRevenue(dealer, players).playersRevenue
+        val dealerRevenue = GameResult(dealer, players).calculateDealerRevenue().amount
+        val playersRevenue = GameResult(dealer, players).playersRevenue
 
-        assertThat(dealerAvenue).isEqualTo(-1000.0)
-        assertThat(playersAvenue.all { playerAvenue -> playerAvenue == 1000.0 }).isTrue
+        assertThat(dealerRevenue).isEqualTo(-1000.0)
+        assertThat(playersRevenue.all { playerRevenue -> playerRevenue.amount == 1000.0 }).isTrue
     }
 
     @Test
@@ -60,11 +60,11 @@ class GameRevenueTest {
             player.draw(Card(CardNumber.ACE, CardSymbol.SPADE))
         }
 
-        val dealerAvenue = GameRevenue(dealer, players).dealerRevenue
-        val playersAvenue = GameRevenue(dealer, players).playersRevenue
+        val dealerRevenue = GameResult(dealer, players).calculateDealerRevenue().amount
+        val playersRevenue = GameResult(dealer, players).playersRevenue
 
-        assertThat(dealerAvenue).isEqualTo(-1500.0)
-        assertThat(playersAvenue.all { playerAvenue -> playerAvenue == 1500.0 }).isTrue
+        assertThat(dealerRevenue).isEqualTo(-1500.0)
+        assertThat(playersRevenue.all { playerRevenue -> playerRevenue.amount == 1500.0 }).isTrue
     }
 
     @Test
@@ -74,10 +74,10 @@ class GameRevenueTest {
             player.draw(Card(CardNumber.NINE, CardSymbol.SPADE))
         }
 
-        val dealerAvenue = GameRevenue(dealer, players).dealerRevenue
-        val playersAvenue = GameRevenue(dealer, players).playersRevenue
+        val dealerRevenue = GameResult(dealer, players).calculateDealerRevenue().amount
+        val playersRevenue = GameResult(dealer, players).playersRevenue
 
-        assertThat(dealerAvenue).isEqualTo(0.0)
-        assertThat(playersAvenue.all { playerAvenue -> playerAvenue == 0.0 }).isTrue
+        assertThat(dealerRevenue).isEqualTo(0.0)
+        assertThat(playersRevenue.all { playerRevenue -> playerRevenue.amount == 0.0 }).isTrue
     }
 }
