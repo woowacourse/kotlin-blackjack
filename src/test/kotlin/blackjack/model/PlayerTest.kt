@@ -32,9 +32,9 @@ class PlayerTest {
     fun `플레이어는 이기면 돈을 받는다`() {
         // given
         val player = createPlayer()
-        val expect = 10000
+        val expect = Amount(10000)
         // when
-        player.getWinningPrize(10000)
+        player.getMoney(Amount(10000))
         // then
         assertThat(player.profit).isEqualTo(expect)
     }
