@@ -12,14 +12,14 @@ data class GameResult(
         return playerResults[player]
     }
 
-    fun settleBettingMoneys(): List<Revenue> {
+    fun calculateRevenuePercentages(): List<Revenue> {
         return playerResults.map { (player, result) ->
             val payout =
-                settleBettingPayout(
+                calculateRevenuePercentage(
                     result = result,
                     isBlackJackState = player.checkBlackJackState(),
                 )
-            val playerBettingResultMoney = player.getBettingMoney() * payout.toInt()
+            val playerBettingResultMoney = (player.getBettingMoney() * payout).toInt()
             Revenue(
                 player.getName(),
                 playerBettingResultMoney,
@@ -27,7 +27,7 @@ data class GameResult(
         }
     }
 
-    private fun settleBettingPayout(
+    private fun calculateRevenuePercentage(
         result: Result,
         isBlackJackState: Boolean,
     ): Float {
@@ -40,13 +40,7 @@ data class GameResult(
                 }
             }
 
-            Result.DRAW -> {
-                if (isBlackJackState) {
-                    1.5f
-                } else {
-                    1f
-                }
-            }
+            Result.DRAW -> 0f
 
             Result.LOSE -> -1f
         }

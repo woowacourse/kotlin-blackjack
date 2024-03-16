@@ -119,7 +119,7 @@ object OutputView {
         dealer: Dealer,
         bettingResults: List<Revenue>,
     ) {
-        val dealerBettingResult = -bettingResults.sumOf { it.proceeds }
+        val dealerBettingResult = -bettingResults.sumOf { it.revenue }
         outputDealerResult(
             dealer = dealer,
             dealerBettingResult = dealerBettingResult,
@@ -141,6 +141,6 @@ object OutputView {
     }
 
     private fun outputPlayerResult(bettingResult: Revenue) {
-        println("${bettingResult.name}: ${bettingResult.proceeds}")
+        println("${bettingResult.name}: ${bettingResult.revenue}")
     }
 }
