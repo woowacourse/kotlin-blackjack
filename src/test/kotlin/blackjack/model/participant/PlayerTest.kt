@@ -4,6 +4,7 @@ import blackjack.model.DIAMOND_NINE
 import blackjack.model.DIAMOND_TWO
 import blackjack.model.HEART_KING
 import blackjack.model.HEART_THREE
+import blackjack.model.SPADE_ACE
 import blackjack.model.SPADE_FIVE
 import blackjack.model.SPADE_TEN
 import blackjack.model.card.Card
@@ -45,6 +46,24 @@ class PlayerTest {
         assertThat(player.getCards()).isEqualTo(expected)
     }
 
+    @MethodSource("수익 계산 테스트 데이터")
+    @ParameterizedTest
+    fun `수익을 계산한다`(
+        dealerCards: List<Card>,
+        playerCards: List<Card>,
+        expected: Int,
+    ) {
+        // given
+        val dealer = Dealer(dealerCards)
+        val player = Player("olive", 1000, playerCards)
+
+        // when
+        val actual = player.profit(dealer)
+
+        // then
+        assertThat(actual.amount).isEqualTo(expected)
+    }
+
     companion object {
         @JvmStatic
         fun `카드 받을 수 있는지 여부 판단 테스트 데이터`() =
@@ -53,6 +72,17 @@ class PlayerTest {
                 Arguments.of(listOf(SPADE_TEN, SPADE_TEN), true),
                 Arguments.of(listOf(DIAMOND_NINE, HEART_KING, DIAMOND_TWO), false),
                 Arguments.of(listOf(SPADE_TEN, HEART_KING, HEART_THREE), false),
+            )
+
+        @JvmStatic
+        fun `수익 계산 테스트 데이터`() =
+            listOf(
+                Arguments.of(listOf(HEART_THREE), listOf(SPADE_TEN, SPADE_ACE), 1500),
+                Arguments.of(listOf(HEART_THREE), listOf(SPADE_TEN, SPADE_TEN, SPADE_TEN), -1000),
+                Arguments.of(listOf(SPADE_TEN, SPADE_TEN, SPADE_TEN), listOf(HEART_THREE), 1000),
+                Arguments.of(listOf(HEART_THREE), listOf(SPADE_TEN), 1000),
+                Arguments.of(listOf(HEART_THREE), listOf(HEART_THREE), 0),
+                Arguments.of(listOf(SPADE_TEN), listOf(HEART_THREE), -1000),
             )
     }
 }
