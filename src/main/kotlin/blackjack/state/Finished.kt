@@ -8,8 +8,4 @@ abstract class Finished : State {
     }
 
     fun profit(money: Int): Double = money * rate
-
-    companion object {
-        private const val ERROR_DRAW_MESSAGE = "게임이 종료되어 더이상 카드를 받을 수 없습니다."
-    }
 }
