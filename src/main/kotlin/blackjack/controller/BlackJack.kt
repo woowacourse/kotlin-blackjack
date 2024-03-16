@@ -66,13 +66,9 @@ class BlackJack(
     }
 
     private fun showFinalWinning(participants: Participants) {
-        outputView.printGameResult(participants)
-
         val finalWinning = participants.getFinalResult()
-        val dealerWinning = finalWinning.dealerWinning
-        val playersWinning = finalWinning.playerWinning
 
-        outputView.printFinalDealerResult(dealerWinning.victory, dealerWinning.defeat, dealerWinning.push)
-        outputView.printFinalPlayersResult(playersWinning)
+        outputView.printGameResult(participants)
+        outputView.printFinalWinning(finalWinning)
     }
 }
