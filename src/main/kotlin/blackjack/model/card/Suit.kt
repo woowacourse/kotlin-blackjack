@@ -1,6 +1,6 @@
 package blackjack.model.card
 
-enum class CardShape {
+enum class Suit {
     HEART,
     CLOVER,
     SPADE,

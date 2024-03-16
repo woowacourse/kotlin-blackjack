@@ -9,9 +9,9 @@ class CardDeck(private val cardGenerator: CardGenerator = RandomCardGenerator) {
         get() = _cardDeck
 
     private fun create(): List<Card> =
-        CardShape.entries.flatMap { shape ->
+        Suit.entries.flatMap { suit ->
             CardNumber.entries.map { number ->
-                Card(shape, number)
+                Card(suit, number)
             }
         }.shuffled()
 
