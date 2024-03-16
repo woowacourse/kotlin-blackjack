@@ -27,7 +27,7 @@ class PlayerTest {
         player.receiveCard(cards)
 
         // when
-        val actual = player.decideMoreCard()
+        val actual = player.receivableMoreCard()
 
         // then
         assertThat(actual).isEqualTo(expected)

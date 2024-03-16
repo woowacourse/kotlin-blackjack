@@ -14,10 +14,10 @@ class OutputView {
         val playersNameMessage = players.playerGroup.map { it.name }.joinToString(PLAYERS_NAME_SEPARATOR)
         lineBreak()
         println(DIVIDE_CARD_FINISH_MESSAGE.format(playersNameMessage))
-        println("딜러: ${dealer.getDealerInitCardsMessage()}")
+        println("딜러: ${dealer.initialCardsMessage()}")
 
         players.playerGroup.forEach {
-            println(it.getCardsMessage(it.name.toString()))
+            println(it.cardsMessage(it.name.toString()))
         }
         lineBreak()
     }
@@ -28,7 +28,7 @@ class OutputView {
     }
 
     fun printPlayerCardsMessage(player: Player) {
-        println(player.getCardsMessage(player.name.toString()))
+        println(player.cardsMessage(player.name.toString()))
     }
 
     fun printPlayersCardResult(
@@ -36,24 +36,24 @@ class OutputView {
         players: Players,
     ) {
         lineBreak()
-        println(dealer.getCardsMessage(DEALER_NAME_MESSAGE) + dealer.getPlayerCardResult())
+        println(dealer.cardsMessage(DEALER_NAME_MESSAGE) + dealer.cardScoreMessage())
         players.playerGroup.forEach {
-            println(it.getCardsMessage(it.name.toString()) + it.getPlayerCardResult())
+            println(it.cardsMessage(it.name.toString()) + it.cardScoreMessage())
         }
         lineBreak()
     }
 
-    private fun Role.getDealerInitCardsMessage(): String {
-        return cards()[0].toCardMessage()
+    private fun Dealer.initialCardsMessage(): String {
+        return cards()[0].message()
     }
 
-    private fun Role.getCardsMessage(name: String): String {
-        return "${name}카드: ${cards().joinToString(separator = CARDS_SEPARATOR, transform = { it.toCardMessage() })}"
+    private fun Role.cardsMessage(name: String): String {
+        return "${name}카드: ${cards().joinToString(separator = CARDS_SEPARATOR, transform = { it.message() })}"
     }
 
-    private fun Card.toCardMessage() = "${denomination.value}${suite.value}"
+    private fun Role.cardScoreMessage() = " - 결과: ${score()}"
 
-    private fun Role.getPlayerCardResult() = " - 결과: ${score()}"
+    private fun Card.message() = "${denomination.value}${suite.value}"
 
     private fun lineBreak() = println()
 

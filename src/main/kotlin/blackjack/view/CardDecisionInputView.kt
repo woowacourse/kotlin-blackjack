@@ -6,15 +6,15 @@ class CardDecisionInputView : CardDecision {
     override fun hasMoreCardDecision(player: Player): Boolean {
         println(READ_MESSAGE.format(player.name))
         val moreCardDecision = readln()
-        return getMoreCardDecision(moreCardDecision) ?: run {
+        return moreCardDecision.convert() ?: run {
             println(INVALID_MESSAGE)
             hasMoreCardDecision(player)
         }
     }
 
-    private fun getMoreCardDecision(moreCardDecision: String): Boolean? {
-        if (moreCardDecision == MORE_CARD_MESSAGE) return true
-        if (moreCardDecision == NO_MORE_CARD_MESSAGE) return false
+    private fun String.convert(): Boolean? {
+        if (this == MORE_CARD_MESSAGE) return true
+        if (this == NO_MORE_CARD_MESSAGE) return false
         return null
     }
 

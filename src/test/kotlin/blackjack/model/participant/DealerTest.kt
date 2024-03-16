@@ -24,7 +24,7 @@ class DealerTest {
         val dealer = Dealer(cards)
 
         // when
-        val actual = dealer.decideMoreCard()
+        val actual = dealer.receivableMoreCard()
 
         // then
         assertThat(actual).isEqualTo(expected)

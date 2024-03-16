@@ -6,13 +6,13 @@ import blackjack.model.card.CardProvider
 class Dealer(handCards: HandCards = HandCards()) : Role(handCards) {
     constructor(handCards: List<Card>) : this(HandCards(handCards.toMutableList()))
 
-    override fun decideMoreCard() = score() < MIN_CARD_SUM
+    override fun receivableMoreCard() = score() < MIN_CARD_SUM
 
     fun takeTurn(
         cardProvider: CardProvider,
         endRoundAction: () -> Unit,
     ) {
-        while (decideMoreCard()) {
+        while (receivableMoreCard()) {
             receiveCard(Card.provideCards(cardProvider))
             endRoundAction()
         }

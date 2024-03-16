@@ -20,14 +20,14 @@ class Player(
         HandCards(handCards.toMutableList()),
     )
 
-    override fun decideMoreCard() = !isMaxCardSum() && !isBurst()
+    override fun receivableMoreCard() = !isMaxCardSum() && !isBurst()
 
     fun takeTurn(
         cardProvider: CardProvider,
         cardDecision: CardDecision,
         endRoundAction: (Player) -> Unit,
     ) {
-        while (decideMoreCard() && cardDecision.hasMoreCardDecision(this)) {
+        while (receivableMoreCard() && cardDecision.hasMoreCardDecision(this)) {
             receiveCard(Card.provideCards(cardProvider))
             endRoundAction(this)
         }
