@@ -4,13 +4,13 @@ class Cards {
     private val cards: MutableList<Card> = mutableListOf()
 
     fun isBusted(): Boolean {
-        val score = sum()
+        val score = scoreSum()
         val threshold = BLACKJACK_THRESHOLD
         return threshold < score
     }
 
     fun isMaxScore(): Boolean {
-        val score = sum()
+        val score = scoreSum()
         val threshold = BLACKJACK_THRESHOLD
         return threshold == score
     }
@@ -23,7 +23,7 @@ class Cards {
 
     fun toList(): List<Card> = cards.toList()
 
-    fun sum(): Int {
+    fun scoreSum(): Int {
         val sum = cards.sumOf { it.cardNumber.score }
         val additionalScore = if (hasAce() && sum <= 11) 10 else 0
         return sum + additionalScore

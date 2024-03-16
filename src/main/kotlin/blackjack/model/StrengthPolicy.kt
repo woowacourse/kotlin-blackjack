@@ -6,7 +6,7 @@ abstract class StrengthPolicy {
         when {
             cards.isBlackJack() -> BLACKJACK_STRENGTH
             cards.isBusted() -> bustedStrength
-            else -> cards.sum()
+            else -> cards.scoreSum()
         }
 
     companion object {

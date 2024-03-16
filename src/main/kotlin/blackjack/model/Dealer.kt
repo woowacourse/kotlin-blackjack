@@ -5,7 +5,7 @@ class Dealer(name: String = "딜러") : Participant(name, DealerStrengthPolicy()
         return cards.toList().take(1)
     }
     override fun isHitable(): Boolean {
-        val score = cards.sum()
+        val score = cards.scoreSum()
         return score < DEALER_HITABLE_THRESHOLD
     }
 

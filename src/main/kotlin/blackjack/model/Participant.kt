@@ -14,7 +14,7 @@ abstract class Participant(
 
     fun addCard(card: Card) = cards.addCard(card)
 
-    fun getCardSum(): Int = cards.sum()
+    fun getCardSum(): Int = cards.scoreSum()
 
     fun showCard() = cards.toList()
 
