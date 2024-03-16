@@ -11,25 +11,29 @@ import view.OutputView
 class GameController(private val deck: Deck) {
     fun start() {
         val dealer = Dealer(ParticipantState.None())
-        val players = handleException { readPlayers() }
+        val players = retryWhileException {
+            readPlayers()
+        }
 
-        handleException { readBettingMoney(players) }
+        retryWhileException {
+            initBettingMoney(players)
+        }
 
-        val game = Game.of(dealer, players, deck)
-
-        handOut(game)
-        handleException { play(game) }
-
-        showResult(game)
-        showProfitResult(game)
+        with(Game.create(dealer, players, deck)) {
+            handOut(this)
+            play(this)
+            showResult(this)
+            showProfitResult(this)
+        }
     }
 
     private fun showProfitResult(game: Game) {
-        val result = game.getProfitResult()
-        OutputView.showProfitResult(result)
+        game.getProfitResult().apply {
+            OutputView.showProfitResult(this)
+        }
     }
 
-    private fun readBettingMoney(players: Players) {
+    private fun initBettingMoney(players: Players) {
         players.betMoney {
                 player ->
             InputView.readBettingMoney(player)
@@ -42,10 +46,20 @@ class GameController(private val deck: Deck) {
     }
 
     private fun play(game: Game) {
+        retryWhileException {
+            playPlayers(game)
+            playDealer(game)
+        }
+    }
+
+    private fun playPlayers(game: Game) {
         game.playPlayers(
             { player -> InputView.readHitDecision(player) },
             { player -> OutputView.showParticipantHand(player) },
         )
+    }
+
+    private fun playDealer(game: Game) {
         game.playDealer {
                 dealer ->
             OutputView.showDealerHit(dealer)
@@ -60,10 +74,10 @@ class GameController(private val deck: Deck) {
 
     private fun showResult(game: Game) {
         OutputView.showParticipantsHandWithResult(game)
-        judgeResult(game)
+        showWinLossTieInfo(game)
     }
 
-    private fun judgeResult(game: Game) {
+    private fun showWinLossTieInfo(game: Game) {
         val playersResult = game.getPlayersResult()
         val dealerResult = game.getDealerResult()
 
@@ -72,9 +86,9 @@ class GameController(private val deck: Deck) {
         OutputView.showPlayersResult(game.getPlayers(), playersResult)
     }
 
-    private fun <T> handleException(block: () -> T): T =
+    private fun <T> retryWhileException(block: () -> T): T =
         runCatching { block() }.getOrElse {
             OutputView.showThrowable(it)
-            handleException(block)
+            retryWhileException(block)
         }
 }

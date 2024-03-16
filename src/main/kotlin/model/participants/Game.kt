@@ -99,7 +99,7 @@ class Game private constructor(private val participants: List<Participant>, val 
     }
 
     companion object {
-        fun of(
+        fun create(
             dealer: Dealer,
             players: Players,
             deck: Deck,

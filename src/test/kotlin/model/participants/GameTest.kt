@@ -32,7 +32,7 @@ class GameTest {
             )
         players = makePlayers()
         dealer = makeDealer()
-        game = Game.of(dealer, players, testDeck)
+        game = Game.create(dealer, players, testDeck)
     }
 
     @Test
