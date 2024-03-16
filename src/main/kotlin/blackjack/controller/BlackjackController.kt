@@ -4,6 +4,10 @@ import blackjack.model.deck.Deck
 import blackjack.model.participant.Dealer
 import blackjack.model.participant.Player
 import blackjack.model.participant.Players
+import blackjack.state.Finished
+import blackjack.state.Hit
+import blackjack.state.Running
+import blackjack.state.Stay
 import blackjack.view.IsAddCardInputView
 import blackjack.view.OutputView
 import blackjack.view.PlayersInputView
@@ -26,6 +30,7 @@ class BlackjackController(
 
     private fun setUpGame() {
         players = playersInputView.readPlayerNames(deck)
+        dealer.initializeCards()
         outputView.printInitCard(dealer, players)
     }
 
@@ -35,14 +40,23 @@ class BlackjackController(
         }
     }
 
-    private tailrec fun playerTurn(player: Player) {
+    private fun playerTurn(player: Player) {
+        while (player.state !is Finished) {
+            processPlayerStateDecision(player)
+        }
+
         if (player.isBust()) {
             outputView.printBustMessage()
-            return
-        } else if (isAddCardInputView.readIsAddCard(player.name)) {
-            player.addCard()
-            outputView.printPlayerCard(player)
-            playerTurn(player)
+        }
+        outputView.printPlayerCard(player)
+    }
+
+    private fun processPlayerStateDecision(player: Player) {
+        val userWantsHit = isAddCardInputView.readIsAddCard(player.name)
+        if (userWantsHit && player.state is Running) {
+            player.state = Hit(player).drawCard()
+        } else if (!userWantsHit) {
+            player.state = Stay(player).drawCard()
         }
     }
 

@@ -4,7 +4,7 @@ abstract class Finished : State {
     abstract val rate: Double
 
     override fun drawCard(): State {
-        throw IllegalStateException(ERROR_DRAW_MESSAGE)
+        return this
     }
 
     fun profit(money: Int): Double = money * rate
