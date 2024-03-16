@@ -14,8 +14,8 @@ class RoleTest {
         val player = Player(PlayerName("해나"), CardHand(emptyList()))
         val deck = RandomDeck()
 
-        dealer.addInitialCards(deck.draw())
-        player.addInitialCards(deck.draw())
+        dealer.addInitialCards(deck)
+        player.addInitialCards(deck)
 
         assertThat(dealer.cardHand.hand.size).isEqualTo(2)
         assertThat(player.cardHand.hand.size).isEqualTo(2)

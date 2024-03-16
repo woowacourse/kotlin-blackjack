@@ -1,15 +1,16 @@
 package blackjack.model.playing.participants
 
 import blackjack.model.card.Card
+import blackjack.model.card.CardDeck
 import blackjack.model.playing.cardhand.CardHand
 import blackjack.model.playing.participants.player.PlayerName
 
 abstract class Role(open val name: PlayerName, open val cardHand: CardHand) {
     abstract fun canDraw(): Boolean
 
-    fun addInitialCards(card: Card) {
+    fun addInitialCards(cardDeck: CardDeck) {
         repeat(INITIAL_CARDS_COUNT) {
-            cardHand.addNewCard(card)
+            cardHand.addNewCard(cardDeck.draw())
         }
     }
 

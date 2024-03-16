@@ -40,7 +40,7 @@ class BlackJack(
     private fun dealInitialCards(participants: Participants) {
         outputView.printInitialSetting(participants)
 
-        participants.addInitialCards(cardDeck.draw())
+        participants.addInitialCards(cardDeck)
         outputView.printInitialCardHands(participants)
     }
 

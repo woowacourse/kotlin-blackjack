@@ -75,7 +75,7 @@ class ParticipantsTest {
                 ),
             )
 
-        participants.addInitialCards(RandomDeck().draw())
+        participants.addInitialCards(RandomDeck())
 
         val cardHandSize1 = participants.dealer.cardHand.hand.size
         val cardHandSize2 = participants.players.players[0].cardHand.hand.size
