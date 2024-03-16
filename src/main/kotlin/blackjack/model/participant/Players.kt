@@ -1,5 +1,7 @@
 package blackjack.model.participant
 
+import blackjack.model.Amount
+
 class Players private constructor(val playerGroup: List<Player>) {
     fun profit(dealer: Dealer): Map<Player, Amount> {
         return playerGroup.associateWith { it.profit(dealer) }

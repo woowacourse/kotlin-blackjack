@@ -1,6 +1,8 @@
 package blackjack.model.participant
 
 import blackjack.constants.GameResult
+import blackjack.model.Amount
+import blackjack.model.HandCards
 import blackjack.model.card.Card
 import blackjack.model.card.CardProvider
 

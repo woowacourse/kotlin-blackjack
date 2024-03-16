@@ -1,9 +1,5 @@
-package blackjack.model.participant
+package blackjack.model
 
-import blackjack.model.HEART_KING
-import blackjack.model.HEART_THREE
-import blackjack.model.SPADE_ACE
-import blackjack.model.SPADE_FIVE
 import blackjack.model.card.Card
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.params.ParameterizedTest

@@ -1,7 +1,7 @@
 package blackjack.view
 
+import blackjack.model.Amount
 import blackjack.model.card.Card
-import blackjack.model.participant.Amount
 import blackjack.model.participant.Dealer
 import blackjack.model.participant.Player
 import blackjack.model.participant.Players
