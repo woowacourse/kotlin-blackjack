@@ -56,16 +56,15 @@ object OutputView {
     }
 
     fun outputPlayerCurrentHandCard(player: Participant) {
-        player.openInitCards().let { playerInitCards ->
-            if (playerInitCards.isNotEmpty()) {
-                println(
-                    OUTPUT_MESSAGE_PARTICIPANTS_CURRENT_HAND_CARD
-                        .format(
-                            player.getName(),
-                            joinCardsInfo(playerInitCards),
-                        ),
-                )
-            }
+        val playerOpenCards = player.openInitCards()
+        if (playerOpenCards.isNotEmpty()) {
+            println(
+                OUTPUT_MESSAGE_PARTICIPANTS_CURRENT_HAND_CARD
+                    .format(
+                        player.getName(),
+                        joinCardsInfo(playerOpenCards),
+                    ),
+            )
         }
     }
 
