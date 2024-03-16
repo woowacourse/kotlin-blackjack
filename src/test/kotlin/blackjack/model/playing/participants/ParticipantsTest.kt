@@ -1,9 +1,14 @@
 package blackjack.model.playing.participants
 
-import blackjack.model.card.Card
-import blackjack.model.card.Denomination
+import blackjack.model.CLOVER_ACE
+import blackjack.model.CLOVER_THREE
+import blackjack.model.DIAMOND_ACE
+import blackjack.model.DIAMOND_KING
+import blackjack.model.HEART_FIVE
+import blackjack.model.HEART_QUEEN
+import blackjack.model.HEART_SEVEN
+import blackjack.model.SPADE_SIX
 import blackjack.model.card.RandomDeck
-import blackjack.model.card.Suit
 import blackjack.model.playing.cardhand.CardHand
 import blackjack.model.playing.participants.player.Player
 import blackjack.model.playing.participants.player.PlayerName
@@ -19,8 +24,8 @@ class ParticipantsTest {
         Participants(
             Dealer(
                 CardHand(
-                    Card(Suit.CLOVER, Denomination.ACE),
-                    Card(Suit.SPADE, Denomination.SIX),
+                    CLOVER_ACE,
+                    SPADE_SIX,
                 ),
             ),
             Players(
@@ -28,29 +33,29 @@ class ParticipantsTest {
                     Player(
                         PlayerName("심지"),
                         CardHand(
-                            Card(Suit.CLOVER, Denomination.FIVE),
-                            Card(Suit.SPADE, Denomination.KING),
+                            HEART_FIVE,
+                            DIAMOND_KING,
                         ),
                     ),
                     Player(
                         PlayerName("해나"),
                         CardHand(
-                            Card(Suit.HEART, Denomination.SIX),
-                            Card(Suit.DIAMOND, Denomination.QUEEN),
+                            SPADE_SIX,
+                            HEART_QUEEN,
                         ),
                     ),
                     Player(
                         PlayerName("악어"),
                         CardHand(
-                            Card(Suit.HEART, Denomination.SEVEN),
-                            Card(Suit.CLOVER, Denomination.THREE),
+                            HEART_SEVEN,
+                            CLOVER_THREE,
                         ),
                     ),
                     Player(
                         PlayerName("팡태"),
                         CardHand(
-                            Card(Suit.DIAMOND, Denomination.ACE),
-                            Card(Suit.SPADE, Denomination.SIX),
+                            DIAMOND_ACE,
+                            SPADE_SIX,
                         ),
                     ),
                 ),
