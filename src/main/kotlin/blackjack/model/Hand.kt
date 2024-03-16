@@ -12,7 +12,7 @@ class Hand {
         }
     }
 
-    fun addCard(card: Card) {
+    private fun addCard(card: Card) {
         cardList.add(card)
     }
 

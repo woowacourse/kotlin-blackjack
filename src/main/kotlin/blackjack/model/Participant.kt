@@ -1,6 +1,6 @@
 package blackjack.model
 
-abstract class Participant(val name: String, private val betAmount: Long = 0) {
+abstract class Participant(val name: String) {
     val hand = Hand()
 
     fun pickCard(
@@ -8,10 +8,6 @@ abstract class Participant(val name: String, private val betAmount: Long = 0) {
         repeatSize: Int = 1,
     ) {
         hand.pickCard(dealingShoe, repeatSize)
-    }
-
-    fun addCard(card: Card) {
-        hand.addCard(card)
     }
 
     open fun judge(participant: Participant): Return {

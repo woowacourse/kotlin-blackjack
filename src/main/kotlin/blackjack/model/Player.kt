@@ -2,7 +2,7 @@ package blackjack.model
 
 import blackjack.model.Hand.Companion.MAX_SCORE
 
-class Player(name: String, private val betAmount: Long) : Participant(name, betAmount) {
+class Player(name: String, private val betAmount: Long) : Participant(name) {
     override fun isHittable(): Boolean {
         return hand.getCardSum() < MAX_SCORE
     }

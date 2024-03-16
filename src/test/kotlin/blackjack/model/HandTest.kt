@@ -120,11 +120,10 @@ class HandTest {
         }
     }
 
-    private fun creatHand(vararg card: Card): Hand {
+    private fun creatHand(vararg cards: Card): Hand {
         val hand = Hand()
-        card.forEach {
-            hand.addCard(it)
-        }
+        val dealingShoe = DealingShoe(cards.toList())
+        hand.pickCard(dealingShoe, cards.size)
         return hand
     }
 }

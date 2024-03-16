@@ -139,17 +139,15 @@ class PlayerTest {
 
     private fun creatPlayer(vararg cards: Card): Player {
         val player = Player("빙티", 10000)
-        cards.forEach {
-            player.addCard(it)
-        }
+        val dealingShoe = DealingShoe(cards.toList())
+        player.pickCard(dealingShoe, cards.size)
         return player
     }
 
     private fun creatDealer(vararg cards: Card): Dealer {
         val dealer = Dealer()
-        cards.forEach {
-            dealer.addCard(it)
-        }
+        val dealingShoe = DealingShoe(cards.toList())
+        dealer.pickCard(dealingShoe, cards.size)
         return dealer
     }
 }
