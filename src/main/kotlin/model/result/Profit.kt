@@ -9,6 +9,7 @@ value class Profit(val amount: Double = ZERO) {
     operator fun unaryMinus(): Profit {
         return Profit(-amount)
     }
+
     companion object {
         const val ZERO = 0.0
         const val ONE_TIMES = 1.0

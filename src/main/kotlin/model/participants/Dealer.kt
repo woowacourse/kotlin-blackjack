@@ -12,7 +12,6 @@ class Dealer(
             ),
         ),
 ) : Participant(participantState, wallet) {
-
     fun canHit(): Boolean = participantState.hand.point <= HIT_THRESHOLD
 
     override fun judge(other: Participant): ResultType {

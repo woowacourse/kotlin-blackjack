@@ -1,5 +1,6 @@
 package model.participants
 
+import model.result.Profit
 import model.result.ResultType
 
 class Player(

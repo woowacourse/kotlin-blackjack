@@ -1,8 +1,8 @@
 package controller
 
+import model.Game
 import model.card.Deck
 import model.participants.Dealer
-import model.participants.Game
 import model.participants.ParticipantState
 import model.participants.Players
 import view.InputView
@@ -11,9 +11,10 @@ import view.OutputView
 class GameController(private val deck: Deck) {
     fun start() {
         val dealer = Dealer(ParticipantState.None())
-        val players = retryWhileException {
-            readPlayers()
-        }
+        val players =
+            retryWhileException {
+                readPlayers()
+            }
 
         retryWhileException {
             initBettingMoney(players)

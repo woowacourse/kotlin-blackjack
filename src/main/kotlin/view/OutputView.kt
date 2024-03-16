@@ -1,15 +1,17 @@
 package view
 
+import model.Game
 import model.card.MarkType
 import model.card.ValueType
 import model.participants.Dealer
-import model.participants.Game
 import model.participants.Hand
 import model.participants.Participant
+import model.participants.ParticipantName
 import model.participants.Player
 import model.participants.Players
 import model.result.DealerResult
 import model.result.PlayersResult
+import model.result.Profit
 import model.result.ResultType
 
 object OutputView {
@@ -84,6 +86,12 @@ object OutputView {
                 it.value.toString() + getResultFromType(it.key)
             }.joinToString(" ")}",
         )
+    }
+
+    fun showProfitResult(result: MutableMap<ParticipantName, Profit>) {
+        result.map {
+            println("${it.key.name} : ${it.value.amount.toInt()}")
+        }
     }
 
     fun showPlayersResult(
