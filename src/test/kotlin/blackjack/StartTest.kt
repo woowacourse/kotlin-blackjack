@@ -17,7 +17,7 @@ class StartTest {
         val start = Start(player)
 
         // When
-        start.drawCard()
+        start.decisionState()
 
         // Then
         assertThat(player.getAllCards().split(SPLIT_DELIMITER).size).isEqualTo(START_CARD_SIZE)
@@ -30,7 +30,7 @@ class StartTest {
         val start = Start(player)
 
         // When
-        val nextState = start.drawCard()
+        val nextState = start.decisionState()
 
         // Then
         assertThat(nextState).isInstanceOf(Blackjack::class.java)
@@ -43,7 +43,7 @@ class StartTest {
         val start = Start(player)
 
         // When
-        val nextState = start.drawCard()
+        val nextState = start.decisionState()
 
         // Then
         assertThat(nextState).isInstanceOf(Start::class.java)

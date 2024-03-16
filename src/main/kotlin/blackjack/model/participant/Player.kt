@@ -9,6 +9,6 @@ class Player(val name: String, deck: Deck) : GameParticipant(HandCards(deck)) {
     var state: State = Start(this)
 
     init {
-        state = Start(this).drawCard()
+        state = Start(this).decisionState()
     }
 }

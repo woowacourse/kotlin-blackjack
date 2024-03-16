@@ -54,9 +54,9 @@ class BlackjackController(
     private fun processPlayerStateDecision(player: Player) {
         val userWantsHit = isAddCardInputView.readIsAddCard(player.name)
         if (userWantsHit && player.state is Running) {
-            player.state = Hit(player).drawCard()
+            player.state = Hit(player).decisionState()
         } else if (!userWantsHit) {
-            player.state = Stay(player).drawCard()
+            player.state = Stay(player).decisionState()
         }
     }
 
