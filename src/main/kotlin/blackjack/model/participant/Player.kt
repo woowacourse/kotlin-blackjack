@@ -6,7 +6,7 @@ import blackjack.view.CardDecision
 
 class Player(
     val name: PlayerName,
-    val battingAmount: Amount,
+    private val battingAmount: Amount,
     handCards: HandCards = HandCards(),
 ) : Role(handCards) {
     lateinit var profitAmount: Amount
