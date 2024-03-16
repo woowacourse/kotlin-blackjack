@@ -5,9 +5,11 @@ class GameDeck : DeckManager {
     private var index: Int = CARD_DRAW_DEFAULT_INDEX
 
     override fun resetDeck(cards: List<Card>?) {
-        deck = emptyList()
-        index = CARD_DRAW_DEFAULT_INDEX
-        cards?.let { deck = it } ?: run { deck = createGameDeck().shuffled() }
+        deck = cards ?: createGameDeck().shuffled()
+    }
+
+    override fun resetDeckIndex(newIndex: Int?) {
+        index = newIndex ?: CARD_DRAW_DEFAULT_INDEX
     }
 
     fun drawCard(): Card {
@@ -15,6 +17,7 @@ class GameDeck : DeckManager {
             return deck[index++]
         }
         resetDeck()
+        resetDeckIndex()
         return deck[index++]
     }
 
