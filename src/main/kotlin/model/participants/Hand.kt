@@ -49,5 +49,6 @@ class Hand {
 
     companion object {
         const val BLACK_JACK_POINT = 21
+        const val BLACKJACK_CARD_COUNT = 2
     }
 }

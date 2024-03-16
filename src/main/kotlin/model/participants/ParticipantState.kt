@@ -1,6 +1,11 @@
 package model.participants
 
 import model.card.Card
+import model.participants.Hand.Companion.BLACKJACK_CARD_COUNT
+import model.participants.Profit.Companion.MINUS_ONE_TIMES
+import model.participants.Profit.Companion.ONE_AND_HALF_TIMES
+import model.participants.Profit.Companion.ONE_TIMES
+import model.participants.Profit.Companion.ZERO
 import model.result.Point.Companion.compareTo
 
 sealed class ParticipantState(val hand: Hand) {
@@ -74,13 +79,5 @@ sealed class ParticipantState(val hand: Hand) {
                 else -> ONE_AND_HALF_TIMES
             }
         }
-    }
-
-    companion object {
-        private const val ZERO = 0.0
-        private const val ONE_TIMES = 1.0
-        private const val MINUS_ONE_TIMES = -1.0
-        private const val ONE_AND_HALF_TIMES = 1.5
-        private const val BLACKJACK_CARD_COUNT = 2
     }
 }
