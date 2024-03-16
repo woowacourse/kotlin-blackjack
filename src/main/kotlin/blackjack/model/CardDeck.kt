@@ -17,7 +17,7 @@ class CardDeck(
             Suit.entries.map { suit ->
                 Card(denomination, suit)
             }
-        }.shuffled().forEach { card ->
+        }.forEach { card ->
             cards.offer(card)
         }
     }
