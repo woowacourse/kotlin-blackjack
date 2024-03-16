@@ -13,14 +13,11 @@ class Player(
             Money(),
         ),
 ) : Participant(participantState, wallet) {
-
     override fun judge(other: Participant): ResultType {
         return when {
             participantState is ParticipantState.Bust -> ResultType.LOSE
             other.participantState is ParticipantState.Bust -> ResultType.WIN
-            participantState.hand.calculateOptimalPoint() > other.participantState.hand.calculateOptimalPoint() -> ResultType.WIN
-            participantState.hand.calculateOptimalPoint() == other.participantState.hand.calculateOptimalPoint() -> ResultType.DRAW
-            else -> ResultType.LOSE
+            else -> super.judge(other)
         }
     }
 
