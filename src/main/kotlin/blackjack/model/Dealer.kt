@@ -1,10 +1,11 @@
 package blackjack.model
 
 class Dealer(name: String = "딜러") : Participant(name) {
-    override fun judge(participant: Participant): GameResult {
+    override fun judge(participant: Participant): Return {
         return when {
-            participant.isBusted() -> GameResult.WIN
-            this.isBusted() -> GameResult.LOSE
+            participant.isBusted() -> Return.WIN
+            this.isBusted() -> Return.LOSE
+            participant.isBlackJack() && !this.isBlackJack() -> Return.LOSE_BLACKJACK
             else -> super.judge(participant)
         }
     }

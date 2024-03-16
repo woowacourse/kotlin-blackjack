@@ -10,18 +10,18 @@ class PlayerTest {
 
     @Test
     fun `플레이어가 초기 카드를 2장 가져온다`() {
-        val dealingShoe = DealingShoe(listOf(DealerTest.FOUR_CARD, DealerTest.TWO_CARD))
+        val dealingShoe = DealingShoe(listOf(FOUR_CARD, TWO_CARD))
         player = creatPlayer()
         player.pickCard(dealingShoe, 2)
         val actual = player.showCard()
 
         assertThat(actual.size).isEqualTo(2)
-        assertThat(actual).isEqualTo(listOf(DealerTest.FOUR_CARD, DealerTest.TWO_CARD))
+        assertThat(actual).isEqualTo(listOf(FOUR_CARD, TWO_CARD))
     }
 
     @Test
     fun `플레이어가 딜링슈에서 맨 앞의 2하트 카드를 한 개 뽑아 가져온다`() {
-        val dealingShoe = DealingShoe(listOf(DealerTest.FOUR_CARD, DealerTest.TWO_CARD))
+        val dealingShoe = DealingShoe(listOf(FOUR_CARD, TWO_CARD))
         player = creatPlayer()
         player.pickCard(dealingShoe)
         val actual = player.showCard()
@@ -78,16 +78,16 @@ class PlayerTest {
             player = creatPlayer(TEN_CARD, TEN_CARD, TEN_CARD)
             dealer = creatDealer(THREE_CARD)
             val actual = player.judge(dealer)
-            assertThat(actual).isEqualTo(GameResult.LOSE)
+            assertThat(actual).isEqualTo(Return.LOSE)
         }
 
         @Test
-        fun `모두 버스트되면 LOSE를 반환한다`() {
+        fun `플레이어와 딜러 모두 버스트되면 LOSE를 반환한다`() {
             player = creatPlayer(TEN_CARD, TEN_CARD, TEN_CARD)
             dealer = creatDealer(TEN_CARD, TEN_CARD, TEN_CARD)
 
             val actual = player.judge(dealer)
-            assertThat(actual).isEqualTo(GameResult.LOSE)
+            assertThat(actual).isEqualTo(Return.LOSE)
         }
 
         @Test
@@ -96,7 +96,32 @@ class PlayerTest {
             dealer = creatDealer(TEN_CARD, TEN_CARD, TEN_CARD)
 
             val actual = player.judge(dealer)
-            assertThat(actual).isEqualTo(GameResult.WIN)
+            assertThat(actual).isEqualTo(Return.WIN)
+        }
+
+        @Test
+        fun `플레이어만 블랙잭이면 BLACKJACK을 반환한다`() {
+            player = creatPlayer(TEN_CARD, ACE_CARD)
+            dealer = creatDealer(TEN_CARD, TEN_CARD)
+
+            val actual = player.judge(dealer)
+            assertThat(actual).isEqualTo(Return.BLACKJACK)
+        }
+
+        @Test
+        fun `플레이어와 딜러 모두 블랙잭이면 DRAW를 반환한다`() {
+            player = creatPlayer(TEN_CARD, ACE_CARD)
+            dealer = creatDealer(TEN_CARD, ACE_CARD)
+            val actual = player.judge(dealer)
+            assertThat(actual).isEqualTo(Return.DRAW)
+        }
+
+        @Test
+        fun `딜러만 블랙잭이면 LOSE를 반환한다`() {
+            player = creatPlayer(TEN_CARD, FOUR_CARD)
+            dealer = creatDealer(TEN_CARD, ACE_CARD)
+            val actual = player.judge(dealer)
+            assertThat(actual).isEqualTo(Return.LOSE)
         }
 
         @Test
@@ -104,7 +129,7 @@ class PlayerTest {
             player = creatPlayer(TWO_CARD)
             dealer = creatDealer(FOUR_CARD)
             val actual = player.judge(dealer)
-            assertThat(actual).isEqualTo(GameResult.LOSE)
+            assertThat(actual).isEqualTo(Return.LOSE)
         }
 
         @Test
@@ -112,7 +137,7 @@ class PlayerTest {
             player = creatPlayer(THREE_CARD)
             dealer = creatDealer(THREE_CARD)
             val actual = player.judge(dealer)
-            assertThat(actual).isEqualTo(GameResult.DRAW)
+            assertThat(actual).isEqualTo(Return.DRAW)
         }
 
         @Test
@@ -120,12 +145,12 @@ class PlayerTest {
             player = creatPlayer(FOUR_CARD)
             dealer = creatDealer(TWO_CARD)
             val actual = player.judge(dealer)
-            assertThat(actual).isEqualTo(GameResult.WIN)
+            assertThat(actual).isEqualTo(Return.WIN)
         }
     }
 
     private fun creatPlayer(vararg cards: Card): Player {
-        val player = Player("빙티")
+        val player = Player("빙티", 0)
         cards.forEach {
             player.addCard(it)
         }

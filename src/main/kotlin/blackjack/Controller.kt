@@ -90,7 +90,7 @@ class Controller(cards: List<Card>) {
     ) {
         OutputView.printResult(dealer, players)
         val gameStatistics = GameStatistics(dealer, players)
-        OutputView.printDealerStatistics(gameStatistics.dealerStatistics)
-        OutputView.printPlayerStatistics(gameStatistics.playerStatistics)
+//        OutputView.printDealerStatistics(gameStatistics.dealerStatistics)
+//        OutputView.printPlayerStatistics(gameStatistics.playerStatistics)
     }
 }

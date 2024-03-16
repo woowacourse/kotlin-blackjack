@@ -4,13 +4,13 @@ class GameStatistics(
     dealer: Dealer,
     players: List<Player>,
 ) {
-    val playerStatistics: Map<String, GameResult> by lazy {
+    val playerStatistics: Map<String, Return> by lazy {
         players.associate { player ->
             player.name to player.judge(dealer)
         }
     }
 
-    val dealerStatistics: Map<GameResult, Int> by lazy {
+    val dealerStatistics: Map<Return, Int> by lazy {
         players.map { player ->
             dealer.judge(player)
         }.groupingBy { it }.eachCount()

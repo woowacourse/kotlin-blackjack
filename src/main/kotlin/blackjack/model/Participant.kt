@@ -16,21 +16,19 @@ abstract class Participant(val name: String, var betAmount: Long = 0) {
         cardList.add(card)
     }
 
-    open fun judge(participant: Participant): GameResult {
+    open fun judge(participant: Participant): Return {
         return when {
-            participant.isBlackJack() && this.isBlackJack() -> GameResult.DRAW
-            this.isBlackJack() -> GameResult.WIN
-            participant.isBlackJack() -> GameResult.LOSE
+            participant.isBlackJack() && this.isBlackJack() -> Return.DRAW
             else -> compareScore(participant.getCardSum())
         }
     }
 
-    private fun compareScore(compareScore: Int): GameResult {
+    private fun compareScore(compareScore: Int): Return {
         val myCardSum = getCardSum()
         return when {
-            (compareScore < myCardSum) -> GameResult.WIN
-            (compareScore > myCardSum) -> GameResult.LOSE
-            else -> GameResult.DRAW
+            (compareScore < myCardSum) -> Return.WIN
+            (compareScore > myCardSum) -> Return.LOSE
+            else -> Return.DRAW
         }
     }
 
@@ -53,7 +51,7 @@ abstract class Participant(val name: String, var betAmount: Long = 0) {
         return MAX_SCORE == getCardSum()
     }
 
-    private fun isBlackJack(): Boolean = cardList.size == INITIAL_CARD_SIZE && isMaxScore()
+    fun isBlackJack(): Boolean = cardList.size == INITIAL_CARD_SIZE && isMaxScore()
 
     abstract fun isHitable(): Boolean
 
