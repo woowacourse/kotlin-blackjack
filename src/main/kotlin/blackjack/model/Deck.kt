@@ -1,7 +1,7 @@
 package blackjack.model
 
 class Deck(cards: List<Card>) {
-    var cards: List<Card> = cards
+    var cards: List<Card> = cards.toList()
         private set
 
     constructor(size: Int = DEFAULT_DECK_SIZE) : this(create(size).cards)
