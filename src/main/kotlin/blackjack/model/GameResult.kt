@@ -4,7 +4,7 @@ data class GameResult(
     private val dealerResult: Map<Result, Int>,
     private val playerResults: Map<Player, Result>,
 ) {
-    fun getDealerResult(result: Result): Int {
+    fun getDealerResultCount(result: Result): Int {
         return dealerResult[result] ?: 0
     }
 

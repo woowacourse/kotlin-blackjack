@@ -28,7 +28,7 @@ class GameResultTest {
                 participants = participants,
             )
         val gameResult = gameManager.calculateGameResult()
-        assertThat(gameResult.getDealerResult(Result.LOSE)).isEqualTo(1)
+        assertThat(gameResult.getDealerResultCount(Result.LOSE)).isEqualTo(1)
         assertThat(gameResult.getPlayerResult(player)).isEqualTo(Result.WIN)
     }
 
@@ -77,7 +77,7 @@ class GameResultTest {
                 participants = participants,
             )
         val gameResult = gameManager.calculateGameResult()
-        assertThat(gameResult.getDealerResult(Result.DRAW)).isEqualTo(1)
+        assertThat(gameResult.getDealerResultCount(Result.DRAW)).isEqualTo(1)
         assertThat(gameResult.getPlayerResult(player)).isEqualTo(Result.DRAW)
     }
 
@@ -106,7 +106,7 @@ class GameResultTest {
                 participants = participants,
             )
         val gameResult = gameManager.calculateGameResult()
-        assertThat(gameResult.getDealerResult(Result.WIN)).isEqualTo(1)
+        assertThat(gameResult.getDealerResultCount(Result.WIN)).isEqualTo(1)
         assertThat(gameResult.getPlayerResult(player)).isEqualTo(Result.LOSE)
     }
 }
