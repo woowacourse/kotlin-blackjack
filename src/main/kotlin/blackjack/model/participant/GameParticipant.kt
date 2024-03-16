@@ -3,6 +3,8 @@ package blackjack.model.participant
 import blackjack.model.deck.HandCards
 
 abstract class GameParticipant(protected val handCards: HandCards) {
+    fun initializeCards() = handCards.initialize()
+
     fun getAllCards(): String = handCards.getAllCards()
 
     fun addCard() = handCards.add()
