@@ -35,7 +35,7 @@ sealed class ParticipantState(val hand: Hand) {
             return when {
                 hand.point > Hand.BLACK_JACK_POINT -> Bust(hand)
                 hand.point < Hand.BLACK_JACK_POINT -> Playing(hand)
-                hand.cards.size == 2 -> BlackJack(hand)
+                hand.cards.size == BLACKJACK_CARD_COUNT -> BlackJack(hand)
                 else -> Playing(hand)
             }
         }
@@ -62,5 +62,6 @@ sealed class ParticipantState(val hand: Hand) {
         private const val ONE_TIMES = 1.0
         private const val MINUS_ONE_TIMES = -1.0
         private const val ONE_AND_HALF_TIMES = 1.5
+        private const val BLACKJACK_CARD_COUNT = 2
     }
 }
