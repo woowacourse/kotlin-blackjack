@@ -96,15 +96,11 @@ object OutputView {
         println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
     }
 
-    fun printDealerStatistics(dealerStatistics: Long) {
-        println("\n## 최종 수익")
-        println("딜러: $dealerStatistics")
-    }
-
-    fun printPlayerStatistics(playerStatistics: Map<String, Long>) {
-        playerStatistics.forEach { playerStatistic ->
-            println("${playerStatistic.key}: ${playerStatistic.value}")
-        }
+    fun printBetAmount(
+        name: String,
+        betAmount: Long,
+    ) {
+        println("$name: $betAmount")
     }
 
     fun printExceptionMessage(e: IllegalStateException) {

@@ -14,8 +14,6 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
 class DealerTest {
-    private lateinit var dealer: Dealer
-
     @DisplayName("isHitable 테스트")
     @Test
     fun `딜러의 카드 총 합이 16 이하면 true를 반환한다`() {
@@ -110,8 +108,120 @@ class DealerTest {
         }
     }
 
+    @Nested
+    @DisplayName("calculateBetAmount 테스트")
+    inner class CalculateBetAmountTest {
+        @Test
+        fun `10000원을 배팅한 플레이어 1명이 이기면 딜러는 10000원을 잃는다`() {
+            val dealer = creatDealer(THREE_CARD)
+            val player1 = creatPlayer(FOUR_CARD)
+
+            val actual = dealer.calculateBetAmount(player1)
+            val expected = -10000L
+            assertThat(actual).isEqualTo(expected)
+        }
+
+        @Test
+        fun `10000원을 배팅한 플레이어 1명이 지면 딜러는 10000원을 얻는다`() {
+            val dealer = creatDealer(FOUR_CARD)
+            val player1 = creatPlayer(THREE_CARD)
+
+            val actual = dealer.calculateBetAmount(player1)
+            val expected = 10000L
+            assertThat(actual).isEqualTo(expected)
+        }
+
+        @Test
+        fun `10000원을 배팅한 플레이어 1명이 비기면 딜러는 0원을 얻는다`() {
+            val dealer = creatDealer(FOUR_CARD)
+            val player1 = creatPlayer(FOUR_CARD)
+
+            val actual = dealer.calculateBetAmount(player1)
+            val expected = 0L
+            assertThat(actual).isEqualTo(expected)
+        }
+
+        @Test
+        fun `10000원을 배팅한 플레이어 1명이 블랙잭이면 딜러는 15000원을 잃는다`() {
+            val dealer = creatDealer(FOUR_CARD)
+            val player1 = creatPlayer(TEN_CARD, ACE_CARD)
+
+            val actual = dealer.calculateBetAmount(player1)
+            val expected = -15000L
+            assertThat(actual).isEqualTo(expected)
+        }
+
+        @Test
+        fun `10000원을 배팅한 플레이어 2명이 지면 딜러는 20000원을 얻는다`() {
+            val dealer = creatDealer(FOUR_CARD)
+
+            val player1 = creatPlayer(THREE_CARD)
+            val player2 = creatSecondPlayer(THREE_CARD)
+
+            val actual = dealer.calculateBetAmount(player1, player2)
+            val expected = 20000L
+            assertThat(actual).isEqualTo(expected)
+        }
+
+        @Test
+        fun `10000원을 배팅한 플레이어 2명이 이기면 딜러는 20000원을 잃는다`() {
+            val dealer = creatDealer(TWO_CARD)
+
+            val player1 = creatPlayer(THREE_CARD)
+            val player2 = creatSecondPlayer(THREE_CARD)
+
+            val actual = dealer.calculateBetAmount(player1, player2)
+            val expected = -20000L
+            assertThat(actual).isEqualTo(expected)
+        }
+
+        @Test
+        fun `플레이어 2명이 비겼을 때 딜러는 0원을 얻는다`() {
+            val dealer = creatDealer(THREE_CARD)
+
+            val player1 = creatPlayer(THREE_CARD)
+            val player2 = creatSecondPlayer(THREE_CARD)
+
+            val actual = dealer.calculateBetAmount(player1, player2)
+            val expected = 0L
+            assertThat(actual).isEqualTo(expected)
+        }
+
+        @Test
+        fun `플레이어 1명이 이기고 1명이 졌을 때 딜러는 0원을 얻는다`() {
+            val dealer = creatDealer(THREE_CARD)
+
+            val player1 = creatPlayer(TWO_CARD)
+            val player2 = creatSecondPlayer(FOUR_CARD)
+
+            val actual = dealer.calculateBetAmount(player1, player2)
+            val expected = 0L
+            assertThat(actual).isEqualTo(expected)
+        }
+
+        @Test
+        fun `10000원을 배팅한 플레이어 2명이 블랙잭이면 딜러는 30000원을 잃는다`() {
+            val dealer = creatDealer(TWO_CARD)
+
+            val player1 = creatPlayer(TEN_CARD, ACE_CARD)
+            val player2 = creatSecondPlayer(TEN_CARD, ACE_CARD)
+
+            val actual = dealer.calculateBetAmount(player1, player2)
+            val expected = -30000L
+            assertThat(actual).isEqualTo(expected)
+        }
+    }
+
     private fun creatPlayer(vararg cards: Card): Player {
-        val player = Player("빙티", 0)
+        val player = Player("빙티", 10000)
+        cards.forEach {
+            player.addCard(it)
+        }
+        return player
+    }
+
+    private fun creatSecondPlayer(vararg cards: Card): Player {
+        val player = Player("소민", 10000)
         cards.forEach {
             player.addCard(it)
         }

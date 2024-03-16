@@ -3,7 +3,6 @@ package blackjack
 import blackjack.model.Card
 import blackjack.model.Dealer
 import blackjack.model.DealingShoe
-import blackjack.model.GameStatistics
 import blackjack.model.Player
 import blackjack.view.InputView
 import blackjack.view.OutputView
@@ -35,7 +34,7 @@ class Controller(cards: List<Card>) {
     ) {
         initParticipantsCard(dealer, players)
         proceedParticipantsTure(dealer, players)
-        printStatistics(dealer, players)
+        printStatistics(dealer, *players.toTypedArray())
     }
 
     private fun initParticipantsCard(
@@ -86,11 +85,14 @@ class Controller(cards: List<Card>) {
 
     private fun printStatistics(
         dealer: Dealer,
-        players: List<Player>,
+        vararg players: Player,
     ) {
-        OutputView.printResult(dealer, players)
-        val gameStatistics = GameStatistics(dealer, players)
-        OutputView.printDealerStatistics(gameStatistics.dealerStatistics)
-        OutputView.printPlayerStatistics(gameStatistics.playerStatistics)
+        var dealerBetAmount: Long = 0
+        players.forEach { player ->
+            val playerBetAmount = player.calculateBetAmount(dealer)
+            OutputView.printBetAmount(player.name, playerBetAmount)
+            dealerBetAmount -= playerBetAmount
+        }
+        OutputView.printBetAmount(dealer.name, dealerBetAmount)
     }
 }

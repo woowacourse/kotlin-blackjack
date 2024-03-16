@@ -11,8 +11,6 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
 class PlayerTest {
-    private lateinit var player: Player
-
     @Nested
     @DisplayName("플레이어를 기준으로 승패를 판정하는 기능을 테스트한다")
     inner class PlayerJudgeTest {
@@ -95,8 +93,52 @@ class PlayerTest {
         }
     }
 
+    @Nested
+    @DisplayName("calculateBetAmount 테스트")
+    inner class CalculateBetAmountTest {
+        @Test
+        fun `플레이어가 10000원을 배팅하고 이기면 10000원을 반환한다`() {
+            val dealer = creatDealer(THREE_CARD)
+            val player1 = creatPlayer(FOUR_CARD)
+
+            val actual = player1.calculateBetAmount(dealer)
+            val expected = 10000L
+            assertThat(actual).isEqualTo(expected)
+        }
+
+        @Test
+        fun `플레이어가 10000원을 배팅하고 지면 10000원을 반환한다`() {
+            val dealer = creatDealer(FOUR_CARD)
+            val player1 = creatPlayer(THREE_CARD)
+
+            val actual = player1.calculateBetAmount(dealer)
+            val expected = -10000L
+            assertThat(actual).isEqualTo(expected)
+        }
+
+        @Test
+        fun `플레이어가 10000원을 배팅하고 비기면 0원을 반환한다`() {
+            val dealer = creatDealer(FOUR_CARD)
+            val player1 = creatPlayer(FOUR_CARD)
+
+            val actual = player1.calculateBetAmount(dealer)
+            val expected = 0L
+            assertThat(actual).isEqualTo(expected)
+        }
+
+        @Test
+        fun `플레이어가 10000원을 배팅하고 블랙잭이면 15000원을 반환한다`() {
+            val dealer = creatDealer(FOUR_CARD)
+            val player1 = creatPlayer(TEN_CARD, ACE_CARD)
+
+            val actual = player1.calculateBetAmount(dealer)
+            val expected = 15000L
+            assertThat(actual).isEqualTo(expected)
+        }
+    }
+
     private fun creatPlayer(vararg cards: Card): Player {
-        val player = Player("빙티", 0)
+        val player = Player("빙티", 10000)
         cards.forEach {
             player.addCard(it)
         }

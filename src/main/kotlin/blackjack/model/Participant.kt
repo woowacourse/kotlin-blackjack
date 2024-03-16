@@ -14,8 +14,6 @@ abstract class Participant(val name: String, private val betAmount: Long = 0) {
         hand.addCard(card)
     }
 
-    fun calculateBetAmount(participant: Participant): Long = (betAmount * judge(participant).rate).toLong()
-
     open fun judge(participant: Participant): Return {
         return when {
             participant.isBlackJack() && this.isBlackJack() -> Return.DRAW
@@ -43,4 +41,6 @@ abstract class Participant(val name: String, private val betAmount: Long = 0) {
     fun getCardSum(): Int = hand.getCardSum()
 
     abstract fun isHittable(): Boolean
+
+    abstract fun calculateBetAmount(vararg participant: Participant): Long
 }
