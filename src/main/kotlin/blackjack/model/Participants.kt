@@ -83,7 +83,7 @@ class Participants(
         var totalProfit = 0.0
 
         playerGroup.players.forEach { player ->
-            val profit = player.calculateProfit(dealer)
+            val profit = player.calculateProfit(dealer.getState())
             result.add(ProfitResult(player, Profit((profit))))
             totalProfit += profit
         }

@@ -2,7 +2,6 @@ package blackjack.state
 
 import blackjack.model.BetAmount
 import blackjack.model.Card
-import blackjack.model.CardHolder
 import blackjack.model.GameResult
 import blackjack.model.Hand
 
@@ -17,10 +16,7 @@ interface BlackjackState {
 
     fun isFinished(): Boolean
 
-    fun calculate(
-        self: CardHolder,
-        opponent: CardHolder,
-    ): GameResult
+    fun calculate(opponent: BlackjackState): GameResult
 
     fun profit(
         betAmount: BetAmount,

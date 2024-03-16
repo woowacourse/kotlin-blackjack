@@ -31,12 +31,8 @@ sealed class CardHolder(val userInfo: UserInfo) {
 
     fun getSumOfCards(): Int = blackjackState.calculateHand()
 
-    fun calculateProfit(opponent: Dealer): Double {
-        val gameResult = blackjackState.calculate(this, opponent)
+    fun calculateProfit(opponent: BlackjackState): Double {
+        val gameResult = blackjackState.calculate(opponent)
         return blackjackState.profit(betAmount = userInfo.betAmount, gameResult = gameResult)
-    }
-
-    companion object {
-        const val THRESHOLD_BLACKJACK = 21
     }
 }
