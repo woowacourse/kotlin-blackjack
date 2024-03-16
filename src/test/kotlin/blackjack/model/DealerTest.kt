@@ -54,7 +54,14 @@ class DealerTest {
     }
 
     @Test
-    fun `딜러는 플레이어의 수익을 계산할 수 있다`() {
-        TODO("Not yet implemented")
+    fun `딜러는 게임 시작 시 카드 2장을 받는다`() {
+        // given
+        val dealer = createDealer()
+        val expect = 2
+        // when
+        dealer.initialSetHand(Deck.create())
+        val actual = dealer.hand.cards.size
+        // then
+        assertThat(actual).isEqualTo(expect)
     }
 }
