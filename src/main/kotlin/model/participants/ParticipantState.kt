@@ -4,7 +4,7 @@ import model.card.Card
 import model.result.Point.Companion.compareTo
 
 sealed class ParticipantState(val hand: Hand) {
-    open val rate: Double = 0.0
+    open val rate: Double = DEFAULT_RATE
 
     abstract fun hit(card: Card): ParticipantState
 
@@ -13,8 +13,6 @@ sealed class ParticipantState(val hand: Hand) {
     }
 
     class None(hand: Hand = Hand()) : ParticipantState(hand) {
-        override val rate: Double = 0.0
-
         override fun hit(card: Card): ParticipantState {
             hand.draw(card)
             return Ready(hand)
@@ -22,8 +20,6 @@ sealed class ParticipantState(val hand: Hand) {
     }
 
     class Ready(hand: Hand) : ParticipantState(hand) {
-        override val rate: Double = 0.0
-
         override fun hit(card: Card): ParticipantState {
             hand.draw(card)
             return if (hand.isBlackjack()) BlackJack(hand) else Playing(hand)
@@ -31,7 +27,7 @@ sealed class ParticipantState(val hand: Hand) {
     }
 
     class Playing(hand: Hand) : ParticipantState(hand) {
-        override val rate: Double = 1.0
+        override val rate: Double = ONE_TIMES
 
         override fun hit(card: Card): ParticipantState {
             hand.draw(card)
@@ -46,7 +42,7 @@ sealed class ParticipantState(val hand: Hand) {
     }
 
     class Bust(hand: Hand) : ParticipantState(hand) {
-        override val rate: Double = -1.0
+        override val rate: Double = MINUS_ONE_TIMES
 
         override fun hit(card: Card): ParticipantState {
             return Bust(hand)
@@ -54,10 +50,17 @@ sealed class ParticipantState(val hand: Hand) {
     }
 
     class BlackJack(hand: Hand) : ParticipantState(hand) {
-        override val rate: Double = 1.5
+        override val rate: Double = ONE_AND_HALF_TIMES
 
         override fun hit(card: Card): ParticipantState {
             return BlackJack(hand)
         }
+    }
+
+    companion object {
+        private const val DEFAULT_RATE = 0.0
+        private const val ONE_TIMES = 1.0
+        private const val MINUS_ONE_TIMES = -1.0
+        private const val ONE_AND_HALF_TIMES = 1.5
     }
 }
