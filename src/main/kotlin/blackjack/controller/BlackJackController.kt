@@ -31,18 +31,7 @@ class BlackJackController {
             players = players,
         )
 
-        dealer.openInitCards()
-            .also { cards ->
-                if (cards.isEmpty()) {
-                    println(ERROR_CARD_INDEX)
-                }
-            }
-            .forEach { firstCard ->
-                OutputView.outputDealerCurrentHandCard(
-                    name = dealer.getName(),
-                    firstCard = firstCard,
-                )
-            }
+        OutputView.outputDealerCurrentHandCard(dealer)
         OutputView.outputPlayersCurrentHandCard(players)
     }
 
@@ -119,9 +108,5 @@ class BlackJackController {
         } catch (e: IllegalArgumentException) {
             println(e.message)
         }
-    }
-
-    companion object {
-        const val ERROR_CARD_INDEX = "딜러가 가지고 있는 카드가 없습니다."
     }
 }

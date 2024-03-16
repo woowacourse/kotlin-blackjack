@@ -35,17 +35,17 @@ object OutputView {
         )
     }
 
-    fun outputDealerCurrentHandCard(
-        name: String,
-        firstCard: Card,
-    ) {
-        println(
-            OUTPUT_MESSAGE_SHOW_DEALER_HAND_CARD
-                .format(
-                    name,
-                    joinCardInfo(firstCard),
-                ),
-        )
+    fun outputDealerCurrentHandCard(dealer: Dealer) {
+        dealer.openInitCards()
+            .firstOrNull()?.let { firstCard ->
+                println(
+                    OUTPUT_MESSAGE_SHOW_DEALER_HAND_CARD
+                        .format(
+                            dealer.getName(),
+                            joinCardInfo(firstCard),
+                        ),
+                )
+            } ?: println(ERROR_CARD_INDEX_DEALER)
     }
 
     fun outputPlayersCurrentHandCard(players: List<Participant>) {
@@ -65,6 +65,8 @@ object OutputView {
                         joinCardsInfo(playerOpenCards),
                     ),
             )
+        } else {
+            println(ERROR_CARD_INDEX_PLAYER.format(player.getName()))
         }
     }
 
@@ -158,4 +160,7 @@ object OutputView {
     private fun outputPlayerResult(bettingResult: Revenue) {
         println("${bettingResult.name}: ${bettingResult.revenue}")
     }
+
+    private const val ERROR_CARD_INDEX_DEALER = "딜러가 가지고 있는 카드가 없습니다."
+    private const val ERROR_CARD_INDEX_PLAYER = "%s 플레이어가 가지고 있는 카드가 없습니다."
 }
