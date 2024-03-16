@@ -1,5 +1,6 @@
 package blackjack.model.participant
 
+import blackjack.model.DEFAULT_BATTING_AMOUNT
 import blackjack.model.DIAMOND_NINE
 import blackjack.model.DIAMOND_TWO
 import blackjack.model.HEART_KING
@@ -23,7 +24,7 @@ class PlayerTest {
         expected: Boolean,
     ) {
         // given
-        val player = Player("olive", 1000)
+        val player = Player("olive", DEFAULT_BATTING_AMOUNT)
         player.receiveCard(cards)
 
         // when
@@ -36,7 +37,7 @@ class PlayerTest {
     @Test
     fun `게임 시작 시 플레이어가 2장의 카드를 받는다`() {
         // given
-        val player = Player("olive", 1000)
+        val player = Player("olive", DEFAULT_BATTING_AMOUNT)
 
         // when
         player.initCard(TestCardProvider)
