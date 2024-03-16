@@ -13,6 +13,7 @@ class HandCardsTest {
     @BeforeEach
     fun setUp() {
         handCards = HandCards(Deck(NormalCardMachine()))
+        handCards.initialize()
     }
 
     @Test

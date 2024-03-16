@@ -1,6 +1,5 @@
 package blackjack.view
 
-import blackjack.model.CompetitionResult
 import blackjack.model.participant.Dealer
 import blackjack.model.participant.Player
 import blackjack.model.participant.Players
@@ -39,23 +38,19 @@ class OutputView {
         }
     }
 
-    fun printGameResult(result: Map<String, CompetitionResult>) {
+    fun printGameResult(result: Map<String, Int>) {
         println(FINAL_RESULT_MESSAGE)
+        result.values.sum().let { playerTotalprofit ->
+            println(DEALER_PROFIT_MESSAGE.format(-playerTotalprofit))
+        }
 
-        val counts = result.values.groupingBy { it }.eachCount()
-        val wins = counts.getOrDefault(CompetitionResult.WIN, DEFAULT_COMPETITION_RESULT)
-        val losses = counts.getOrDefault(CompetitionResult.LOSE, DEFAULT_COMPETITION_RESULT)
-        val draws = counts.getOrDefault(CompetitionResult.SAME, DEFAULT_COMPETITION_RESULT)
-
-        println(DEALER_RESULT_MESSAGE.format(losses, wins, draws))
-        result.forEach { (playerName, competitionResult) ->
-            println("$playerName: ${competitionResult.result}")
+        result.forEach { (playerName, profit) ->
+            println("$playerName: $profit")
         }
     }
 
     companion object {
         private const val SPLIT_DELIMITER = ", "
-        private const val DEFAULT_COMPETITION_RESULT = 0
         private const val INIT_CARD_MESSAGE = "\n딜러와 %s명의 플레이어에게 2장의 카드를 나누었습니다."
         private const val DEALER_FIRST_CARD_MESSAGE = "딜러: %s"
         private const val PLAYER_CARDS_MESSAGE = "%s 카드: %s"
@@ -64,6 +59,6 @@ class OutputView {
         private const val DEALER_FINAL_CARDS_MESSAGE = "\n딜러 카드: %s - 결과: %d"
         private const val PLAYER_FINAL_CARDS_MESSAGE = "%s 카드: %s - 결과: %d"
         private const val FINAL_RESULT_MESSAGE = "\n## 최종 승패"
-        private const val DEALER_RESULT_MESSAGE = "딜러: %d승 %d패 %d무"
+        private const val DEALER_PROFIT_MESSAGE = "딜러: %d"
     }
 }

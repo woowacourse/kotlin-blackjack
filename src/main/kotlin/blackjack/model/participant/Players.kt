@@ -2,7 +2,7 @@ package blackjack.model.participant
 
 import blackjack.model.deck.Deck
 
-class Players(private val names: Set<String>, deck: Deck) {
+class Players(names: Set<String>, deck: Deck) {
     val gamePlayers: List<Player> = names.map { Player(it, deck) }
 
     init {

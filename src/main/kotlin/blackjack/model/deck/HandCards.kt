@@ -6,6 +6,7 @@ class HandCards(private val deck: Deck) {
         get() = _cards.toList()
 
     fun initialize() {
+        _cards.clear()
         _cards.addAll(deck.draw(INIT_CARD_AMOUNT))
     }
 

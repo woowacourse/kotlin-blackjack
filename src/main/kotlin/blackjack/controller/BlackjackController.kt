@@ -2,6 +2,7 @@ package blackjack.controller
 
 import blackjack.model.deck.Deck
 import blackjack.model.participant.Dealer
+import blackjack.model.participant.Judge
 import blackjack.model.participant.Player
 import blackjack.model.participant.Players
 import blackjack.state.Finished
@@ -21,6 +22,7 @@ class BlackjackController(
 ) {
     private val deck: Deck = Deck()
     private val dealer: Dealer = Dealer(deck)
+    private val judge = Judge()
     private lateinit var players: Players
 
     fun play() {
@@ -78,6 +80,6 @@ class BlackjackController(
 
     private fun showResult() {
         outputView.printCardResult(dealer, players)
-        outputView.printGameResult(dealer.gameResult(players.gamePlayers))
+        outputView.printGameResult(judge.gameResult(dealer, players.gamePlayers))
     }
 }
