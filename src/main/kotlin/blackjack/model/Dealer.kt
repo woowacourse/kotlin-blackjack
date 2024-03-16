@@ -5,48 +5,6 @@ class Dealer(wallet: Wallet = Wallet(Identification(DEFAULT_DEALER_NAME))) : Par
         return getCards().firstOrNull()
     }
 
-    fun settleBettingMoneys(gameResult: GameResult): List<Revenue> {
-        return gameResult.getResultPlayers().map { player ->
-            val payout =
-                gameResult.getPlayerResult(player)?.let { result ->
-                    settleBettingPayout(
-                        result = result,
-                        isBlackJackState = player.checkBlackJackState(),
-                    )
-                } ?: 0
-            val playerBettingResultMoney = player.getBettingMoney() * payout.toInt()
-            Revenue(
-                player.getName(),
-                playerBettingResultMoney,
-            )
-        }
-    }
-
-    private fun settleBettingPayout(
-        result: Result,
-        isBlackJackState: Boolean,
-    ): Float {
-        return when (result) {
-            Result.WIN -> {
-                if (isBlackJackState) {
-                    1.5f
-                } else {
-                    1f
-                }
-            }
-
-            Result.DRAW -> {
-                if (isBlackJackState) {
-                    1.5f
-                } else {
-                    1f
-                }
-            }
-
-            Result.LOSE -> -1f
-        }
-    }
-
     override fun openInitCards(): List<Card> {
         return getCards().firstOrNull()?.let { listOf(it) } ?: listOf()
     }
