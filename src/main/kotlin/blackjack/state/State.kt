@@ -84,11 +84,11 @@ sealed class State(val hand: Hand) {
         }
     }
 
-    companion object {
+    protected companion object {
         val BLACKJACK_PROFIT_RATE = ProfitRate(1.5)
         const val BUST_RATE_POINT = 0
         val BUST_PROFIT_RATE = ProfitRate(-1)
         val DRAW_PROFIT_RATE = ProfitRate(0.0)
-        const val BLACKJACK_POINT = 21
+        const val BLACKJACK_POINT = 100
     }
 }

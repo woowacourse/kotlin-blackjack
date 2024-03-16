@@ -5,6 +5,8 @@ import blackjack.model.card.Hand
 import blackjack.model.card.Rank
 import blackjack.state.State
 
+internal const val BLACKJACK_POINT = 100
+
 fun createRunningState(vararg cards: Card = arrayOf(createCard(rank = Rank.TWO), createCard(rank = Rank.TEN))) = State.Running(Hand(*cards))
 
 fun createRunningState(hand: Hand = Hand(createCard(rank = Rank.TWO), createCard(rank = Rank.TEN))) = State.Running(hand)
