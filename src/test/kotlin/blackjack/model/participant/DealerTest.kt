@@ -40,7 +40,7 @@ class DealerTest {
 
         // then
         val expected = listOf(HEART_KING, HEART_KING)
-        assertThat(dealer.getCards()).isEqualTo(expected)
+        assertThat(dealer.cards()).isEqualTo(expected)
     }
 
     companion object {

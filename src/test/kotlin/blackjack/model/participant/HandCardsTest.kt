@@ -21,7 +21,7 @@ class HandCardsTest {
         val handCards = HandCards(cards.toMutableList())
 
         // when
-        val actual = handCards.getCardSum(BURST_CONDITION)
+        val actual = handCards.score(BURST_CONDITION)
 
         // then
         assertThat(actual).isEqualTo(expected)

@@ -34,15 +34,15 @@ class Player(
     }
 
     fun profit(dealer: Dealer): Amount {
-        val cardSum = getCardSum()
-        val dealerCardSum = dealer.getCardSum()
+        val score = score()
+        val dealerScore = dealer.score()
 
         when {
             isBlackjack() -> setProfitAmount(1.5)
             isBurst() -> setProfitAmount(-1.0)
             dealer.isBurst() -> setProfitAmount(1.0)
-            cardSum > dealerCardSum -> setProfitAmount(1.0)
-            cardSum == dealerCardSum -> setProfitAmount(0.0)
+            score > dealerScore -> setProfitAmount(1.0)
+            score == dealerScore -> setProfitAmount(0.0)
             else -> setProfitAmount(-1.0)
         }
         return profitAmount

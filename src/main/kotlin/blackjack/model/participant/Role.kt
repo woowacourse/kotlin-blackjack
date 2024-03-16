@@ -14,20 +14,20 @@ abstract class Role(private val handCards: HandCards) {
         receiveCard(Card.provideCards(cardProvider, INIT_RECEIVE_CARD_COUNT))
     }
 
-    fun isBurst() = handCards.getCardSum(BLACKJACK_VALUE) > BLACKJACK_VALUE
+    fun isBurst() = handCards.score(BLACKJACK_VALUE) > BLACKJACK_VALUE
 
     fun isBlackjack(): Boolean {
-        return handCards.getCardSum(BLACKJACK_VALUE) == BLACKJACK_VALUE &&
+        return handCards.score(BLACKJACK_VALUE) == BLACKJACK_VALUE &&
             handCards.size == BLACKJACK_COUNT
     }
 
     fun isMaxCardSum(): Boolean {
-        return handCards.getCardSum(BLACKJACK_VALUE) == BLACKJACK_VALUE
+        return handCards.score(BLACKJACK_VALUE) == BLACKJACK_VALUE
     }
 
-    fun getCardSum() = handCards.getCardSum(BLACKJACK_VALUE)
+    fun score() = handCards.score(BLACKJACK_VALUE)
 
-    fun getCards() = handCards.cards
+    fun cards() = handCards.cards
 
     companion object {
         private const val BLACKJACK_VALUE = 21

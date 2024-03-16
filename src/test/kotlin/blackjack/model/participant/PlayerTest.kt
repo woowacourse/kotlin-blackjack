@@ -43,7 +43,7 @@ class PlayerTest {
 
         // then
         val expected = listOf(HEART_KING, HEART_KING)
-        assertThat(player.getCards()).isEqualTo(expected)
+        assertThat(player.cards()).isEqualTo(expected)
     }
 
     @MethodSource("수익 계산 테스트 데이터")

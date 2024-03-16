@@ -14,12 +14,12 @@ class HandCards(private val _cards: MutableList<Card> = mutableListOf()) {
         _cards.addAll(cards)
     }
 
-    fun getCardSum(burstCondition: Int): Int {
-        val total = _cards.sumOf { it.getScore() }
-        if (canAddAceBonusScore(total, burstCondition)) {
-            return total + Denomination.ACE_BONUS_SCORE
+    fun score(burstCondition: Int): Int {
+        val score = _cards.sumOf { it.score() }
+        if (canAddAceBonusScore(score, burstCondition)) {
+            return score + Denomination.ACE_BONUS_SCORE
         }
-        return total
+        return score
     }
 
     private fun canAddAceBonusScore(

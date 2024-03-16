@@ -44,16 +44,16 @@ class OutputView {
     }
 
     private fun Role.getDealerInitCardsMessage(): String {
-        return getCards()[0].toCardMessage()
+        return cards()[0].toCardMessage()
     }
 
     private fun Role.getCardsMessage(name: String): String {
-        return "${name}카드: ${getCards().joinToString(separator = CARDS_SEPARATOR, transform = { it.toCardMessage() })}"
+        return "${name}카드: ${cards().joinToString(separator = CARDS_SEPARATOR, transform = { it.toCardMessage() })}"
     }
 
     private fun Card.toCardMessage() = "${denomination.value}${suite.value}"
 
-    private fun Role.getPlayerCardResult() = " - 결과: ${getCardSum()}"
+    private fun Role.getPlayerCardResult() = " - 결과: ${score()}"
 
     private fun lineBreak() = println()
 
