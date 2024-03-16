@@ -9,7 +9,7 @@ import blackjack.model.playing.participants.player.Player
 import blackjack.model.playing.participants.player.PlayerName
 import blackjack.model.playing.participants.player.Players
 import blackjack.model.winning.DealerWinning
-import blackjack.model.winning.PlayerWinning
+import blackjack.model.winning.PlayersWinning
 import blackjack.model.winning.WinningResultStatus
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -84,7 +84,7 @@ class ParticipantsTest {
     @Test
     fun `딜러 카드 패의 합과 플레이어들의 카드 패의 합을 각각 비교해서 플레이어들의 승패 여부를 판단한다`() {
         val result =
-            PlayerWinning(
+            PlayersWinning(
                 mapOf(
                     PlayerName("심지") to WinningResultStatus.DEFEAT,
                     PlayerName("해나") to WinningResultStatus.DEFEAT,

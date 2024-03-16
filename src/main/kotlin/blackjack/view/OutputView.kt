@@ -7,7 +7,7 @@ import blackjack.model.playing.participants.Participants
 import blackjack.model.playing.participants.Role
 import blackjack.model.winning.DealerWinning
 import blackjack.model.winning.FinalWinning
-import blackjack.model.winning.PlayerWinning
+import blackjack.model.winning.PlayersWinning
 import blackjack.model.winning.WinningResultStatus
 
 class OutputView {
@@ -88,8 +88,8 @@ class OutputView {
         println(DEALER_WINNING_OUTPUT_FORMAT.format(dealerWinning.victory, dealerWinning.defeat, dealerWinning.push))
     }
 
-    private fun printFinalPlayersResult(playerWinning: PlayerWinning) {
-        playerWinning.result.forEach { (name, status) ->
+    private fun printFinalPlayersResult(playersWinning: PlayersWinning) {
+        playersWinning.result.forEach { (name, status) ->
             println("${name.name}: ${convertWinningResultFormat(status)}")
         }
         println()

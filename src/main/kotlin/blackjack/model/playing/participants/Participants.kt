@@ -5,7 +5,7 @@ import blackjack.model.playing.participants.player.PlayerName
 import blackjack.model.playing.participants.player.Players
 import blackjack.model.winning.DealerWinning
 import blackjack.model.winning.FinalWinning
-import blackjack.model.winning.PlayerWinning
+import blackjack.model.winning.PlayersWinning
 import blackjack.model.winning.WinningResultStatus
 
 data class Participants(val dealer: Dealer, val players: Players) {
@@ -30,7 +30,7 @@ data class Participants(val dealer: Dealer, val players: Players) {
     private fun getPushCount(): Int = getPlayersFinalResult().getOrDefault(WinningResultStatus.PUSH, 0)
 
     private fun getPlayersFinalResult(): Map<WinningResultStatus, Int> {
-        val playersWinning: PlayerWinning = judgePlayersResult()
+        val playersWinning: PlayersWinning = judgePlayersResult()
 
         return playersWinning.result.values.groupingBy { it.reverse() }
             .eachCount()
@@ -38,8 +38,8 @@ data class Participants(val dealer: Dealer, val players: Players) {
 
     private fun getPlayersScore(): Map<PlayerName, Int> = players.players.associate { it.name to it.cardHand.calculateScore() }
 
-    private fun judgePlayersResult(): PlayerWinning =
-        PlayerWinning(
+    private fun judgePlayersResult(): PlayersWinning =
+        PlayersWinning(
             getPlayersScore().mapValues { (_, playerSum) ->
                 judgeGameResult(playerSum)
             },
