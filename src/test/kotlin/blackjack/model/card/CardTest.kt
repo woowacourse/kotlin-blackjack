@@ -13,9 +13,9 @@ class CardTest {
     )
     fun `카드는 모양과 숫자를 알고 있다`(
         suit: String,
-        number: String,
+        score: String,
     ) {
-        val card = Card(Suit.valueOf(suit), number = CardNumber.valueOf(number))
-        assertThat(card).isEqualTo(Card(Suit.valueOf(suit), CardNumber.valueOf(number)))
+        val card = Card(Suit.valueOf(suit), denomination = Denomination.valueOf(score))
+        assertThat(card).isEqualTo(Card(Suit.valueOf(suit), Denomination.valueOf(score)))
     }
 }

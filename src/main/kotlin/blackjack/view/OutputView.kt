@@ -1,6 +1,6 @@
 package blackjack.view
 
-import blackjack.model.card.CardNumber
+import blackjack.model.card.Denomination
 import blackjack.model.card.Suit
 import blackjack.model.playing.cardhand.CardHand
 import blackjack.model.playing.participants.Participants
@@ -30,8 +30,8 @@ class OutputView {
     }
 
     private fun printFirstCardHand(cardHand: CardHand) {
-        val (suit, number) = cardHand.hand.first()
-        println(number.number.toString() + convertCardShapeFormat(suit))
+        val (suit, score) = cardHand.hand.first()
+        println(score.score.toString() + convertCardShapeFormat(suit))
     }
 
     fun printDealerHit() = println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.")
@@ -51,7 +51,7 @@ class OutputView {
     private fun printAllCardHand(cardHand: CardHand) {
         print(
             cardHand.hand.joinToString {
-                convertCardNumberFormat(it.number) + convertCardShapeFormat(it.suit)
+                convertCardNumberFormat(it.denomination) + convertCardShapeFormat(it.suit)
             },
         )
     }
@@ -65,11 +65,11 @@ class OutputView {
         }
     }
 
-    private fun convertCardNumberFormat(number: CardNumber): String {
-        return if (number == CardNumber.ACE) {
+    private fun convertCardNumberFormat(denomination: Denomination): String {
+        return if (denomination == Denomination.ACE) {
             ACE_OUTPUT_FORMAT
         } else {
-            number.number.toString()
+            denomination.score.toString()
         }
     }
 

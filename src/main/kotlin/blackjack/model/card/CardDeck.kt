@@ -10,8 +10,8 @@ class CardDeck(private val cardGenerator: CardGenerator = RandomCardGenerator) {
 
     private fun create(): List<Card> =
         Suit.entries.flatMap { suit ->
-            CardNumber.entries.map { number ->
-                Card(suit, number)
+            Denomination.entries.map { denomination ->
+                Card(suit, denomination)
             }
         }.shuffled()
 

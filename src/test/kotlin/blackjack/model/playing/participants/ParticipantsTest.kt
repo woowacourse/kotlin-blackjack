@@ -2,7 +2,7 @@ package blackjack.model.playing.participants
 
 import blackjack.model.card.Card
 import blackjack.model.card.CardDeck
-import blackjack.model.card.CardNumber
+import blackjack.model.card.Denomination
 import blackjack.model.card.Suit
 import blackjack.model.playing.cardhand.CardHand
 import blackjack.model.playing.participants.player.Player
@@ -19,8 +19,8 @@ class ParticipantsTest {
         Participants(
             Dealer(
                 CardHand(
-                    Card(Suit.CLOVER, CardNumber.ACE),
-                    Card(Suit.SPADE, CardNumber.SIX),
+                    Card(Suit.CLOVER, Denomination.ACE),
+                    Card(Suit.SPADE, Denomination.SIX),
                 ),
             ),
             Players(
@@ -28,29 +28,29 @@ class ParticipantsTest {
                     Player(
                         PlayerName("심지"),
                         CardHand(
-                            Card(Suit.CLOVER, CardNumber.FIVE),
-                            Card(Suit.SPADE, CardNumber.KING),
+                            Card(Suit.CLOVER, Denomination.FIVE),
+                            Card(Suit.SPADE, Denomination.KING),
                         ),
                     ),
                     Player(
                         PlayerName("해나"),
                         CardHand(
-                            Card(Suit.HEART, CardNumber.SIX),
-                            Card(Suit.DIAMOND, CardNumber.QUEEN),
+                            Card(Suit.HEART, Denomination.SIX),
+                            Card(Suit.DIAMOND, Denomination.QUEEN),
                         ),
                     ),
                     Player(
                         PlayerName("악어"),
                         CardHand(
-                            Card(Suit.HEART, CardNumber.SEVEN),
-                            Card(Suit.CLOVER, CardNumber.THREE),
+                            Card(Suit.HEART, Denomination.SEVEN),
+                            Card(Suit.CLOVER, Denomination.THREE),
                         ),
                     ),
                     Player(
                         PlayerName("팡태"),
                         CardHand(
-                            Card(Suit.DIAMOND, CardNumber.ACE),
-                            Card(Suit.SPADE, CardNumber.SIX),
+                            Card(Suit.DIAMOND, Denomination.ACE),
+                            Card(Suit.SPADE, Denomination.SIX),
                         ),
                     ),
                 ),

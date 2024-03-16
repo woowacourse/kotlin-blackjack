@@ -2,7 +2,7 @@ package blackjack.model.playing.cardhand
 
 import blackjack.model.card.Card
 import blackjack.model.card.CardDeck
-import blackjack.model.card.CardNumber
+import blackjack.model.card.Denomination
 
 class CardHand(hand: List<Card>) {
     private val _hand = hand.toMutableList()
@@ -11,8 +11,8 @@ class CardHand(hand: List<Card>) {
     constructor(vararg card: Card) : this(card.toList())
 
     fun calculateScore(): Int {
-        var aceCount = hand.count { it.number == CardNumber.ACE }
-        var tempSum = hand.sumOf { it.number.number }
+        var aceCount = hand.count { it.denomination == Denomination.ACE }
+        var tempSum = hand.sumOf { it.denomination.score }
 
         while (aceCount >= MIN_ACE_COUNT && tempSum <= MAX_BONUS_AVAILABILITY) {
             aceCount--
