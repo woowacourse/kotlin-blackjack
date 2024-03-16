@@ -13,7 +13,7 @@ class GameController(private val deck: Deck) {
         val dealer = Dealer(ParticipantState.None())
         val players = handleException { readPlayers() }
 
-        handleException { readBetMoney(players) }
+        handleException { readBettingMoney(players) }
 
         val game = Game.of(dealer, players, deck)
 
@@ -23,10 +23,10 @@ class GameController(private val deck: Deck) {
         showResult(game)
     }
 
-    private fun readBetMoney(players: Players) {
+    private fun readBettingMoney(players: Players) {
         players.betMoney {
                 player ->
-            InputView.readBetMoney(player)
+            InputView.readBettingMoney(player)
         }
     }
 
