@@ -4,8 +4,8 @@ import blackjack.model.card.CardDeck
 import blackjack.model.playing.participants.player.PlayerName
 import blackjack.model.playing.participants.player.Players
 import blackjack.model.winning.DealerWinning
+import blackjack.model.winning.FinalWinning
 import blackjack.model.winning.PlayerWinning
-import blackjack.model.winning.Winning
 import blackjack.model.winning.WinningResultStatus
 
 data class Participants(val dealer: Dealer, val players: Players) {
@@ -16,11 +16,11 @@ data class Participants(val dealer: Dealer, val players: Players) {
         }
     }
 
-    fun getFinalResult(): Winning {
+    fun getFinalWinning(): FinalWinning {
         val dealerWinning = DealerWinning(getVictoryCount(), getDefeatCount(), getPushCount())
         val playersWinning = judgePlayersResult()
 
-        return Winning(dealerWinning, playersWinning)
+        return FinalWinning(dealerWinning, playersWinning)
     }
 
     private fun getVictoryCount(): Int = getPlayersFinalResult().getOrDefault(WinningResultStatus.VICTORY, 0)

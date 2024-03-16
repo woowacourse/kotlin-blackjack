@@ -66,7 +66,7 @@ class BlackJack(
     }
 
     private fun showFinalWinning(participants: Participants) {
-        val finalWinning = participants.getFinalResult()
+        val finalWinning = participants.getFinalWinning()
 
         outputView.printGameResult(participants)
         outputView.printFinalWinning(finalWinning)

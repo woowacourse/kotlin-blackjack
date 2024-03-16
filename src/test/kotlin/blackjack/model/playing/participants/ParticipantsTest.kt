@@ -92,13 +92,13 @@ class ParticipantsTest {
                     PlayerName("팡태") to WinningResultStatus.PUSH,
                 ),
             )
-        val winningResult = defaultParticipants.getFinalResult()
+        val winningResult = defaultParticipants.getFinalWinning()
         assertThat(winningResult.playerWinning).isEqualTo(result)
     }
 
     @Test
     fun `딜러의 최종 결과를 가져온다`() {
-        val winningResult = defaultParticipants.getFinalResult()
+        val winningResult = defaultParticipants.getFinalWinning()
         val expectedDealerWinning = DealerWinning(3, 0, 1)
 
         assertThat(winningResult.dealerWinning).isEqualTo(expectedDealerWinning)

@@ -6,8 +6,8 @@ import blackjack.model.playing.cardhand.CardHand
 import blackjack.model.playing.participants.Participants
 import blackjack.model.playing.participants.Role
 import blackjack.model.winning.DealerWinning
+import blackjack.model.winning.FinalWinning
 import blackjack.model.winning.PlayerWinning
-import blackjack.model.winning.Winning
 import blackjack.model.winning.WinningResultStatus
 
 class OutputView {
@@ -78,7 +78,7 @@ class OutputView {
         printAllCardHand(role.cardHand)
     }
 
-    fun printFinalWinning(finalWinning: Winning) {
+    fun printFinalWinning(finalWinning: FinalWinning) {
         printFinalDealerResult(finalWinning.dealerWinning)
         printFinalPlayersResult(finalWinning.playerWinning)
     }
