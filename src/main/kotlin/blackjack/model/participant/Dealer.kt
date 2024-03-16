@@ -18,6 +18,12 @@ class Dealer(handCards: HandCards = HandCards()) : Role(handCards) {
         }
     }
 
+    fun profit(players: Players): Amount {
+        return players.playerGroup.fold(Amount(0)) { acc, player ->
+            acc - player.profit(this)
+        }
+    }
+
     companion object {
         private const val MIN_CARD_SUM = 17
     }

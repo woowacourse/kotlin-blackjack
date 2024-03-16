@@ -1,5 +1,6 @@
 package blackjack.model.participant
 
+import blackjack.model.DIAMOND_TWO
 import blackjack.model.HEART_KING
 import blackjack.model.HEART_SEVEN
 import blackjack.model.SPADE_ACE
@@ -41,6 +42,25 @@ class DealerTest {
         // then
         val expected = listOf(HEART_KING, HEART_KING)
         assertThat(dealer.cards()).isEqualTo(expected)
+    }
+
+    @Test
+    fun `수익을 계산한다`() {
+        // given
+        val dealer = Dealer(listOf(DIAMOND_TWO))
+        val players =
+            Players.from(
+                listOf("abc", "def"),
+                listOf(1000, 3000),
+            )
+
+        // when
+        players.playerGroup[0].receiveCard(listOf(SPADE_TEN)) // 1000
+        players.playerGroup[1].receiveCard(listOf(SPADE_ACE, HEART_KING)) // 4500
+        val actual = dealer.profit(players)
+
+        // then
+        assertThat(actual.price).isEqualTo(-5500)
     }
 
     companion object {
