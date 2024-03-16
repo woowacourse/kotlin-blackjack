@@ -21,6 +21,12 @@ class GameController(private val deck: Deck) {
         handleException { play(game) }
 
         showResult(game)
+        showProfitResult(game)
+    }
+
+    private fun showProfitResult(game: Game) {
+        val result = game.getProfitResult()
+        OutputView.showProfitResult(result)
     }
 
     private fun readBettingMoney(players: Players) {

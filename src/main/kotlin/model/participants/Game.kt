@@ -82,6 +82,22 @@ class Game private constructor(private val participants: List<Participant>, val 
         return DealerResult(result)
     }
 
+    fun getProfitResult(): MutableMap<ParticipantName, Profit> {
+        val result: MutableMap<ParticipantName, Profit> = mutableMapOf()
+        var dealerProfit = Profit()
+        result[getDealer().wallet.participantName] = dealerProfit
+
+        getPlayers().players.forEach { player ->
+            val playerProfit = player.judgeProfit(getDealer())
+            result[player.wallet.participantName] = playerProfit
+            dealerProfit += playerProfit
+        }
+
+        result[getDealer().wallet.participantName] = -dealerProfit
+
+        return result
+    }
+
     companion object {
         fun of(
             dealer: Dealer,
