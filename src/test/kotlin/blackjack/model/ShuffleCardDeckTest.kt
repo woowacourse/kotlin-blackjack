@@ -4,7 +4,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
-class CardDeckTest {
+class ShuffleCardDeckTest {
     @Test
     fun `올바른 카드 덱 생성 테스트`() {
         var actualCards: Set<Card> =
@@ -17,10 +17,10 @@ class CardDeckTest {
                 }
             }.toSet()
 
-        val cardDeck = CardDeck()
-        repeat(CardDeck.MAX_DRAW_COUNT) {
+        val shuffleCardDeck = ShuffleCardDeck()
+        repeat(ShuffleCardDeck.MAX_DRAW_COUNT) {
             val card =
-                cardDeck.draw().also { card ->
+                shuffleCardDeck.draw().also { card ->
                     assertThat(
                         actualCards.find { actualCard ->
                             val compareDenomination = actualCard.denomination == card.denomination
@@ -35,10 +35,10 @@ class CardDeckTest {
 
     @Test
     fun `카드 덱에서 뽑을 수 있는 카드가 없을 때, 예외를 던져야한다`() {
-        val cardDeck = CardDeck()
-        repeat(CardDeck.MAX_DRAW_COUNT) {
-            cardDeck.draw()
+        val shuffleCardDeck = ShuffleCardDeck()
+        repeat(ShuffleCardDeck.MAX_DRAW_COUNT) {
+            shuffleCardDeck.draw()
         }
-        assertThrows<IllegalArgumentException> { cardDeck.draw() }
+        assertThrows<IllegalArgumentException> { shuffleCardDeck.draw() }
     }
 }

@@ -5,7 +5,7 @@ import blackjack.state.State
 class GameManager(
     private val participants: Participants,
 ) {
-    private val cardDeck = CardDeck()
+    private val shuffleCardDeck = ShuffleCardDeck()
 
     fun calculateGameResult(): GameResult {
         val dealerResults = mutableMapOf<Result, Int>()
@@ -26,13 +26,13 @@ class GameManager(
     fun setGame() {
         repeat(INIT_HAND_CARD_COUNT) {
             getParticipants().forEach { participant ->
-                participant.draw(cardDeck.draw())
+                participant.draw(shuffleCardDeck.draw())
             }
         }
     }
 
     fun returnCardForParticipant(): Card {
-        return cardDeck.draw()
+        return shuffleCardDeck.draw()
     }
 
     fun getParticipants(): List<Participant> {
