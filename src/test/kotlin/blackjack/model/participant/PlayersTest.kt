@@ -25,7 +25,14 @@ class PlayersTest {
     }
 
     @Test
-    fun `플레이어명, 플레이어 수가 올바른 경우 예외가 발생하지 않는다`() {
+    fun `플레이어명 크기와 배팅 금액 크기가 다른 경우 예외가 발생한다`() {
+        assertThrows<IllegalArgumentException> {
+            Players.from(listOf("olive", "abc", "defgh"), battingAmounts(2))
+        }
+    }
+
+    @Test
+    fun `플레이어명, 플레이어 수, 배팅 금액이 모두 올바른 경우 예외가 발생하지 않는다`() {
         assertDoesNotThrow {
             Players.from(listOf("olive", "abc", "defgh"), battingAmounts(3))
         }
