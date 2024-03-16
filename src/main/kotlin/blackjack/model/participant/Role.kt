@@ -19,11 +19,10 @@ abstract class Role(private val hand: Hand) {
     fun isBurst() = hand.score(BLACKJACK_VALUE) > BLACKJACK_VALUE
 
     fun isBlackjack(): Boolean {
-        return hand.score(BLACKJACK_VALUE) == BLACKJACK_VALUE &&
-            hand.size == BLACKJACK_COUNT
+        return isMaxScore() && hand.size == BLACKJACK_COUNT
     }
 
-    fun isMaxCardSum(): Boolean {
+    fun isMaxScore(): Boolean {
         return hand.score(BLACKJACK_VALUE) == BLACKJACK_VALUE
     }
 

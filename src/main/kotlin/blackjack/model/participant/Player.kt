@@ -20,7 +20,7 @@ class Player(
         Hand(cards.toMutableList()),
     )
 
-    override fun receivableMoreCard() = !isMaxCardSum() && !isBurst()
+    override fun receivableMoreCard() = !isMaxScore() && !isBurst()
 
     fun takeTurn(
         cardProvider: CardProvider,
