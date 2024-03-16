@@ -29,7 +29,6 @@ class BlackjackController(
         initHandCards(dealer, players)
         players.takePlayersTurn()
         dealer.takeDealerTurn()
-        showGameResult(dealer, players)
     }
 
     private fun initHandCards(
@@ -53,14 +52,5 @@ class BlackjackController(
 
     private fun Dealer.takeDealerTurn() {
         takeTurn(cardProvider) { outputView.printDealerAdditionalCardMessage() }
-    }
-
-    private fun showGameResult(
-        dealer: Dealer,
-        players: Players,
-    ) {
-        val gameResultStorage = dealer.calculateGameResult(players)
-        outputView.printPlayersCardResult(dealer, players)
-        outputView.printFinalGameResult(players, gameResultStorage)
     }
 }

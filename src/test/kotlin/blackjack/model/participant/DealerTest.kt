@@ -2,7 +2,6 @@ package blackjack.model.participant
 
 import blackjack.model.card.Card
 import blackjack.model.card.TestCardProvider
-import blackjack.model.result.GameResultType
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -40,38 +39,7 @@ class DealerTest {
         assertThat(dealer.getCards()).isEqualTo(expected)
     }
 
-    @Test
-    fun `게임의 최종 승패 결과를 계산한다`() {
-        // given
-        val dealer = Dealer()
-        val players =
-            Players.from(
-                listOf("olive", "seogi", "chae"),
-                listOf(1000, 1400, 3000),
-            )
-
-        dealer.receiveCard(listOf(Card.of("8", "하트")))
-        players.playerGroup.forEachIndexed { idx, player ->
-            player.receiveCard(listOf(Card.of(denominationValues[idx], "하트")))
-        }
-
-        // when
-        val gameResultStorage = dealer.calculateGameResult(players)
-
-        // then
-        assertThat(gameResultStorage.dealerResult)
-            .containsEntry(GameResultType.LOSE, 1)
-            .containsEntry(GameResultType.WIN, 1)
-            .containsEntry(GameResultType.DRAW, 1)
-        assertThat(gameResultStorage.playersResult)
-            .containsEntry(PlayerName("olive"), GameResultType.LOSE)
-            .containsEntry(PlayerName("seogi"), GameResultType.WIN)
-            .containsEntry(PlayerName("chae"), GameResultType.DRAW)
-    }
-
     companion object {
-        private val denominationValues = listOf("2", "K", "8")
-
         @JvmStatic
         fun `카드 받을 수 있는지 여부 판단 테스트 데이터`() =
             listOf(
