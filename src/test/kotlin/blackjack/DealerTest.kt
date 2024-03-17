@@ -5,7 +5,7 @@ import blackjack.model.CardDeck
 import blackjack.model.CardNumber
 import blackjack.model.CardSymbol
 import blackjack.model.Participant.Dealer
-import blackjack.view.OutputView
+import blackjack.view.ProgressOutputView
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -31,7 +31,7 @@ class DealerTest {
     fun `딜러 카드 자동으로 추가로 뽑을때 손패 추가 확인`() {
         dealer.draw(Card(CardNumber.TWO, CardSymbol.SPADE))
         dealer.draw(Card(CardNumber.THREE, CardSymbol.SPADE))
-        dealer.judgeDrawOrNot(cardDeck) { OutputView.outputDealerDraw(dealer) }
+        dealer.judgeDrawOrNot(cardDeck) { ProgressOutputView.outputDealerDraw(dealer) }
 
         assertThat(dealer.gameInformation.hand.cards.size >= 3).isTrue
     }

@@ -5,9 +5,10 @@ import blackjack.model.GameResult
 import blackjack.model.Participant.Dealer
 import blackjack.model.Participant.Player
 import blackjack.model.ParticipantInformation.PlayerInformation
-import blackjack.view.InputView
-import blackjack.view.OutputView
-import blackjack.view.ResultView
+import blackjack.view.ProgressInputView
+import blackjack.view.ProgressOutputView
+import blackjack.view.ResultOutputView
+import blackjack.view.SettingInputView
 
 object BlackJackController {
     fun run() {
@@ -22,10 +23,10 @@ object BlackJackController {
     }
 
     private fun registerPlayers(): List<Player> {
-        val playersName = InputView.inputPlayersName()
+        val playersName = SettingInputView.inputPlayersName()
         val playersBettingAmount =
             playersName.map { playerName ->
-                InputView.inputBettingAmount(playerName)
+                SettingInputView.inputBettingAmount(playerName)
             }
         val players = mutableListOf<Player>()
         for (index in playersName.indices) {
@@ -43,9 +44,9 @@ object BlackJackController {
     ) {
         val cardDeck = CardDeck()
         dealer.initialCardDealing(players, cardDeck)
-        OutputView.outputCardDistribution(dealer, players)
+        ProgressOutputView.outputCardDistribution(dealer, players)
         judgePlayersDraw(players, cardDeck)
-        dealer.judgeDrawOrNot(cardDeck) { OutputView.outputDealerDraw(dealer) }
+        dealer.judgeDrawOrNot(cardDeck) { ProgressOutputView.outputDealerDraw(dealer) }
     }
 
     private fun judgePlayersDraw(
@@ -55,8 +56,8 @@ object BlackJackController {
         players.forEach { player ->
             player.judgeDrawOrNot(
                 cardDeck,
-                { InputView.inputDrawDecision(player.participantInformation.name).judgeDecision() },
-                { OutputView.outputParticipantCard(player) },
+                { ProgressInputView.inputDrawDecision(player.participantInformation.name).judgeDecision() },
+                { ProgressOutputView.outputParticipantCard(player) },
             )
         }
     }
@@ -65,7 +66,7 @@ object BlackJackController {
         dealer: Dealer,
         players: List<Player>,
     ) {
-        ResultView.outputGameScores(dealer, players)
-        ResultView.outputGameResult(GameResult(dealer, players))
+        ResultOutputView.outputGameScores(dealer, players)
+        ResultOutputView.outputGameResult(GameResult(dealer, players))
     }
 }

@@ -9,7 +9,7 @@ import blackjack.model.GameState
 import blackjack.model.Participant.Player
 import blackjack.model.ParticipantInformation.PlayerInformation
 import blackjack.model.ParticipantName
-import blackjack.view.OutputView
+import blackjack.view.ProgressOutputView
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -36,7 +36,7 @@ class PlayerTest {
         player.draw(Card(CardNumber.TWO, CardSymbol.SPADE))
         player.draw(Card(CardNumber.THREE, CardSymbol.SPADE))
 
-        player.judgeDrawOrNot(cardDeck, { true }) { OutputView.outputParticipantCard(player) }
+        player.judgeDrawOrNot(cardDeck, { true }) { ProgressOutputView.outputParticipantCard(player) }
 
         assertThat(player.gameInformation.hand.cards.size >= 3).isTrue
         assertThat(player.gameInformation.state != GameState.Running.HIT).isTrue
@@ -47,7 +47,7 @@ class PlayerTest {
         player.draw(Card(CardNumber.TWO, CardSymbol.SPADE))
         player.draw(Card(CardNumber.THREE, CardSymbol.SPADE))
 
-        player.judgeDrawOrNot(cardDeck, { false }) { OutputView.outputParticipantCard(player) }
+        player.judgeDrawOrNot(cardDeck, { false }) { ProgressOutputView.outputParticipantCard(player) }
 
         assertThat(player.gameInformation.hand.cards.size == 2).isTrue
         assertThat(player.gameInformation.state == GameState.Finished.STAY).isTrue

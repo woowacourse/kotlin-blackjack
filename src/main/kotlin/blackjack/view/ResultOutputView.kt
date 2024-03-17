@@ -6,7 +6,7 @@ import blackjack.model.Participant.Dealer
 import blackjack.model.Participant.Player
 import blackjack.model.Score
 
-object ResultView {
+object ResultOutputView {
     private const val MESSAGE_PARTICIPANT_GAME_SCORE = "%s 카드: %s - 결과: %d"
     private const val MESSAGE_TOTAL_REVENUE = "\n## 최종 수익"
     private const val MESSAGE_REVENUE = "%s: %s"
