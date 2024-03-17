@@ -5,6 +5,7 @@ import blackjack.model.Card
 import blackjack.model.CardDeck
 import blackjack.model.CardNumber
 import blackjack.model.CardSymbol
+import blackjack.model.GameState
 import blackjack.model.Participant.Player
 import blackjack.model.ParticipantInformation.PlayerInformation
 import blackjack.model.ParticipantName
@@ -35,12 +36,10 @@ class PlayerTest {
         player.draw(Card(CardNumber.TWO, CardSymbol.SPADE))
         player.draw(Card(CardNumber.THREE, CardSymbol.SPADE))
 
-        fun readDecision(): Boolean {
-            return player.gameInformation.cards.size == 2
-        }
-        player.judgeDrawOrNot(cardDeck, { readDecision() }) { OutputView.outputParticipantCard(player) }
+        player.judgeDrawOrNot(cardDeck, { true }) { OutputView.outputParticipantCard(player) }
 
-        assertThat(player.gameInformation.cards.size == 3).isTrue
+        assertThat(player.gameInformation.cards.size >= 3).isTrue
+        assertThat(player.gameInformation.state != GameState.Running.HIT).isTrue
     }
 
     @Test
@@ -48,11 +47,9 @@ class PlayerTest {
         player.draw(Card(CardNumber.TWO, CardSymbol.SPADE))
         player.draw(Card(CardNumber.THREE, CardSymbol.SPADE))
 
-        fun readDecision(): Boolean {
-            return false
-        }
-        player.judgeDrawOrNot(cardDeck, { readDecision() }) { OutputView.outputParticipantCard(player) }
+        player.judgeDrawOrNot(cardDeck, { false }) { OutputView.outputParticipantCard(player) }
 
         assertThat(player.gameInformation.cards.size == 2).isTrue
+        assertThat(player.gameInformation.state == GameState.Finished.STAY).isTrue
     }
 }

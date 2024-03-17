@@ -88,7 +88,7 @@ class GameResultTest {
         private const val DEFAULT_REVENUE_AMOUNT = 1000.0
         private const val MINUS_REVENUE_AMOUNT = -1000.0
         private const val BLACKJACK_REVENUE_AMOUNT = 1500.0
-        private const val MINUS_BLACKJACK_REVENUE_AMOUNT = 1500.0
+        private const val MINUS_BLACKJACK_REVENUE_AMOUNT = -1500.0
         private const val DRAW_REVENUE_AMOUNT = 0.0
     }
 }
