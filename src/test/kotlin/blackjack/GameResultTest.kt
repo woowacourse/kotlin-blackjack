@@ -35,8 +35,8 @@ class GameResultTest {
         }
 
         val gameResult = GameResult(dealer, players)
-        val dealerRevenue = gameResult.calculateDealerRevenue().amount
-        val playersRevenue = gameResult.playersRevenue
+        val dealerRevenue = gameResult.gameRevenue.calculateDealerRevenue().amount
+        val playersRevenue = gameResult.gameRevenue.playersRevenue
 
         assertThat(dealerRevenue).isEqualTo(DEFAULT_REVENUE_AMOUNT)
         assertThat(playersRevenue.all { playerRevenue -> playerRevenue.amount == MINUS_REVENUE_AMOUNT }).isTrue
@@ -49,8 +49,8 @@ class GameResultTest {
         }
 
         val gameResult = GameResult(dealer, players)
-        val dealerRevenue = gameResult.calculateDealerRevenue().amount
-        val playersRevenue = gameResult.playersRevenue
+        val dealerRevenue = gameResult.gameRevenue.calculateDealerRevenue().amount
+        val playersRevenue = gameResult.gameRevenue.playersRevenue
 
         assertThat(dealerRevenue).isEqualTo(MINUS_REVENUE_AMOUNT)
         assertThat(playersRevenue.all { playerRevenue -> playerRevenue.amount == DEFAULT_REVENUE_AMOUNT }).isTrue
@@ -63,8 +63,8 @@ class GameResultTest {
         }
 
         val gameResult = GameResult(dealer, players)
-        val dealerRevenue = gameResult.calculateDealerRevenue().amount
-        val playersRevenue = gameResult.playersRevenue
+        val dealerRevenue = gameResult.gameRevenue.calculateDealerRevenue().amount
+        val playersRevenue = gameResult.gameRevenue.playersRevenue
 
         assertThat(dealerRevenue).isEqualTo(MINUS_BLACKJACK_REVENUE_AMOUNT)
         assertThat(playersRevenue.all { playerRevenue -> playerRevenue.amount == BLACKJACK_REVENUE_AMOUNT }).isTrue
@@ -77,8 +77,8 @@ class GameResultTest {
         }
 
         val gameResult = GameResult(dealer, players)
-        val dealerRevenue = gameResult.calculateDealerRevenue().amount
-        val playersRevenue = gameResult.playersRevenue
+        val dealerRevenue = gameResult.gameRevenue.calculateDealerRevenue().amount
+        val playersRevenue = gameResult.gameRevenue.playersRevenue
 
         assertThat(dealerRevenue).isEqualTo(DRAW_REVENUE_AMOUNT)
         assertThat(playersRevenue.all { playerRevenue -> playerRevenue.amount == DRAW_REVENUE_AMOUNT }).isTrue

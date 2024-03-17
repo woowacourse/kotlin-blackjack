@@ -26,10 +26,10 @@ object ResultOutputView {
         println(
             MESSAGE_REVENUE.format(
                 gameResult.dealer.participantInformation.name,
-                gameResult.calculateDealerRevenue(),
+                gameResult.gameRevenue.calculateDealerRevenue(),
             ),
         )
-        gameResult.playersRevenue.withIndex().map { (index, playerRevenue) ->
+        gameResult.gameRevenue.playersRevenue.withIndex().map { (index, playerRevenue) ->
             println(
                 MESSAGE_REVENUE.format(
                     gameResult.players[index].participantInformation.name,
