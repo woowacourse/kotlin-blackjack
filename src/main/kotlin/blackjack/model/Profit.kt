@@ -1,7 +1,7 @@
 package blackjack.model
 
 class Profit(bettingMoney: String) {
-    private var _amount = 0
+    private var _amount = INITIAL_AMOUNT
     val amount: Int
         get() = _amount
 
@@ -12,6 +12,10 @@ class Profit(bettingMoney: String) {
     }
 
     fun giveBackBettingMoney() {
-        _amount = 0
+        _amount = INITIAL_AMOUNT
+    }
+
+    companion object {
+        const val INITIAL_AMOUNT = 0
     }
 }
