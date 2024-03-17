@@ -41,4 +41,27 @@ class PlayerTest {
 
         assertThat(actualWinningStatus).isEqualTo(WinningResultStatus.VICTORY)
     }
+
+    @Test
+    fun `플레이어와 딜러의 결과를 비교하여 수익금을 계산한다`() {
+        val player = Player(PlayerName("심지"), 1_000)
+        val dealer = Dealer()
+        player.state =
+            Stay(
+                CardHand(
+                    Card(CardShape.HEART, CardNumber.EIGHT),
+                    Card(CardShape.HEART, CardNumber.KING),
+                ),
+            )
+        dealer.state =
+            Stay(
+                CardHand(
+                    Card(CardShape.SPADE, CardNumber.SEVEN),
+                    Card(CardShape.SPADE, CardNumber.JACK),
+                ),
+            )
+        val actualWinningPay = player.calculateProfit(dealer)
+
+        assertThat(actualWinningPay).isEqualTo(1_000.0)
+    }
 }

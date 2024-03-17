@@ -3,7 +3,7 @@ package blackjack.model.role
 import blackjack.model.config.GameRule.BLACK_JACK_SCORE
 import blackjack.model.result.WinningResultStatus
 
-class Player(override val name: PlayerName) : Role(name) {
+class Player(override val name: PlayerName, private val money: Int = 0) : Role(name) {
     fun judgeWinning(dealer: Dealer): WinningResultStatus {
         val score = state.getCardHandScore()
         val dealerScore = dealer.state.getCardHandScore()
@@ -16,4 +16,6 @@ class Player(override val name: PlayerName) : Role(name) {
             else -> WinningResultStatus.VICTORY
         }
     }
+
+    fun calculateProfit(dealer: Dealer): Double = state.calculateProfit(money, dealer.state)
 }
