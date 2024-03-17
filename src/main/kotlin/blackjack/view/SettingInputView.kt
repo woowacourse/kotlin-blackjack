@@ -1,6 +1,8 @@
 package blackjack.view
 
 import blackjack.model.user.BettingAmount
+import blackjack.model.user.Participant.Player
+import blackjack.model.user.ParticipantInformation
 import blackjack.model.user.ParticipantName
 
 object SettingInputView {
@@ -12,7 +14,15 @@ object SettingInputView {
     private const val MAX_PLAYERS_SIZE = 8
     private const val NO_BETTING_AMOUNT_INPUT = 0.0
 
-    fun inputPlayersName(): List<ParticipantName> {
+    fun inputPlayers(): List<Player> {
+        val playersName = inputPlayersName()
+        return playersName.map { playerName ->
+            val bettingAmount = inputBettingAmount(playerName)
+            Player(ParticipantInformation.PlayerInformation(playerName, bettingAmount))
+        }
+    }
+
+    private fun inputPlayersName(): List<ParticipantName> {
         println(INPUT_MESSAGE_PLAYER_NAMES)
         return try {
             val playersName =
@@ -26,7 +36,7 @@ object SettingInputView {
         }
     }
 
-    fun inputBettingAmount(playerName: ParticipantName): BettingAmount {
+    private fun inputBettingAmount(playerName: ParticipantName): BettingAmount {
         println(INPUT_MESSAGE_BETTING_AMOUNT.format(playerName))
         return try {
             val bettingAmount = readln().toDoubleOrNull() ?: NO_BETTING_AMOUNT_INPUT
