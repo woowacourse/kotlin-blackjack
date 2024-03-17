@@ -14,16 +14,18 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 
+private fun Player(
+    amount: Int = DEFAULT_BATTING_AMOUNT,
+    cards: List<Card> = listOf(),
+): Player {
+    return Player("olive", amount, cards)
+}
+
 class PlayerTest {
     @Test
     fun `카드의 점수가 21 미만이면 카드를 더 받을 수 있다`() {
         // given
-        val player =
-            Player(
-                "olive",
-                DEFAULT_BATTING_AMOUNT,
-                listOf(HEART_THREE, SPADE_FIVE),
-            )
+        val player = Player(cards = listOf(HEART_THREE, SPADE_FIVE))
 
         // when
         val actual = player.receivableMoreCard()
@@ -35,12 +37,7 @@ class PlayerTest {
     @Test
     fun `카드의 점수가 21 이상이면 카드를 더 받을 수 없다`() {
         // given
-        val player =
-            Player(
-                "olive",
-                DEFAULT_BATTING_AMOUNT,
-                listOf(SPADE_TEN, HEART_KING, HEART_THREE),
-            )
+        val player = Player(cards = listOf(SPADE_TEN, HEART_KING, HEART_THREE))
 
         // when
         val actual = player.receivableMoreCard()
@@ -52,7 +49,7 @@ class PlayerTest {
     @Test
     fun `게임 시작 시 플레이어가 2장의 카드를 받는다`() {
         // given
-        val player = Player("olive", DEFAULT_BATTING_AMOUNT)
+        val player = Player()
 
         // when
         player.initCard(TestCardProvider)
@@ -71,7 +68,7 @@ class PlayerTest {
     ) {
         // given
         val dealer = Dealer(dealerCards)
-        val player = Player("olive", 1000, playerCards)
+        val player = Player(cards = playerCards)
 
         // when
         val actual = player.profit(dealer)
