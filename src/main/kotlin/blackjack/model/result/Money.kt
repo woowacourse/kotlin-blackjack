@@ -8,6 +8,8 @@ value class Money(val amount: Long) : Comparable<Money> {
 
     operator fun times(count: Double): Money = Money((this.amount * count).toLong())
 
+    operator fun unaryMinus(): Money = Money(-amount)
+
     override fun compareTo(other: Money): Int = (amount - other.amount).toInt()
 
     companion object {
