@@ -8,7 +8,7 @@ import blackjack.model.playing.cardhand.CardHandState
 import blackjack.model.playing.participants.player.PlayerName
 import blackjack.model.winning.WinningResultStatus
 
-abstract class Role(open val name: PlayerName, open val cardHand: CardHand) {
+abstract class Role(open val name: PlayerName, open val cardHand: CardHand, open val betting: Betting) {
     abstract fun canDraw(): Boolean
 
     fun addInitialCards(cardDeck: CardDeck) {
@@ -34,10 +34,7 @@ abstract class Role(open val name: PlayerName, open val cardHand: CardHand) {
         }
     }
 
-    fun calculateProfit(
-        winningResultStatus: WinningResultStatus,
-        betting: Betting,
-    ): Double {
+    fun calculateProfit(winningResultStatus: WinningResultStatus): Double {
         return when (winningResultStatus) {
             WinningResultStatus.VICTORY -> if (isBlackjack()) betting.amount * 1.5 else betting.amount.toDouble()
             WinningResultStatus.DEFEAT -> -betting.amount.toDouble()

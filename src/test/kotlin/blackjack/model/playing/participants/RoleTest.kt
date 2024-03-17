@@ -21,7 +21,7 @@ class RoleTest {
     @Test
     fun `처음 카드를 2장 받는다`() {
         val dealer = Dealer(CardHand(emptyList()))
-        val player = Player(PlayerName("해나"), CardHand(emptyList()))
+        val player = Player(PlayerName("해나"), CardHand(emptyList()), Betting(0))
         val deck = RandomDeck()
 
         dealer.addInitialCards(deck)
@@ -48,6 +48,7 @@ class RoleTest {
                     HEART_TEN,
                     HEART_NINE,
                 ),
+                Betting(0),
             )
         assertThat(dealer.match(player)).isEqualTo(WinningResultStatus.DEFEAT)
     }
@@ -70,6 +71,7 @@ class RoleTest {
                     HEART_NINE,
                     HEART_FIVE,
                 ),
+                Betting(0),
             )
         assertThat(dealer.match(player)).isEqualTo(WinningResultStatus.VICTORY)
     }
@@ -90,6 +92,7 @@ class RoleTest {
                     HEART_TEN,
                     SPADE_SIX,
                 ),
+                Betting(0),
             )
         assertThat(dealer.match(player)).isEqualTo(WinningResultStatus.PUSH)
     }
@@ -110,6 +113,7 @@ class RoleTest {
                     DIAMOND_KING,
                     HEART_ACE,
                 ),
+                Betting(0),
             )
         assertThat(dealer.match(player)).isEqualTo(WinningResultStatus.PUSH)
     }
@@ -130,6 +134,7 @@ class RoleTest {
                     HEART_TEN,
                     DIAMOND_KING,
                 ),
+                Betting(0),
             )
         assertThat(dealer.match(player)).isEqualTo(WinningResultStatus.DEFEAT)
     }
@@ -150,6 +155,7 @@ class RoleTest {
                     HEART_TEN,
                     HEART_FIVE,
                 ),
+                Betting(0),
             )
         assertThat(dealer.match(player)).isEqualTo(WinningResultStatus.VICTORY)
     }
@@ -163,9 +169,9 @@ class RoleTest {
                     DIAMOND_KING,
                     HEART_ACE,
                 ),
+                Betting(10000),
             )
-        val betting = Betting(PlayerName("해나"), 10000)
-        val actual = player.calculateProfit(WinningResultStatus.VICTORY, betting)
+        val actual = player.calculateProfit(WinningResultStatus.VICTORY)
         assertThat(actual).isEqualTo(15000.0)
     }
 
@@ -178,9 +184,9 @@ class RoleTest {
                     DIAMOND_KING,
                     SPADE_SIX,
                 ),
+                Betting(10000),
             )
-        val betting = Betting(PlayerName("해나"), 10000)
-        val actual = player.calculateProfit(WinningResultStatus.VICTORY, betting)
+        val actual = player.calculateProfit(WinningResultStatus.VICTORY)
         assertThat(actual).isEqualTo(10000.0)
     }
 
@@ -190,9 +196,9 @@ class RoleTest {
             Player(
                 PlayerName("해나"),
                 CardHand(emptyList()),
+                Betting(10000),
             )
-        val betting = Betting(PlayerName("해나"), 10000)
-        val actual = player.calculateProfit(WinningResultStatus.PUSH, betting)
+        val actual = player.calculateProfit(WinningResultStatus.PUSH)
         assertThat(actual).isEqualTo(0.0)
     }
 
@@ -202,9 +208,9 @@ class RoleTest {
             Player(
                 PlayerName("해나"),
                 CardHand(emptyList()),
+                Betting(10000),
             )
-        val betting = Betting(PlayerName("해나"), 10000)
-        val actual = player.calculateProfit(WinningResultStatus.DEFEAT, betting)
+        val actual = player.calculateProfit(WinningResultStatus.DEFEAT)
         assertThat(actual).isEqualTo(-10000.0)
     }
 }
