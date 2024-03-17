@@ -1,5 +1,6 @@
 package blackjack.model.playing.participants
 
+import blackjack.model.Betting
 import blackjack.model.CLOVER_ACE
 import blackjack.model.DIAMOND_KING
 import blackjack.model.HEART_ACE
@@ -151,5 +152,59 @@ class RoleTest {
                 ),
             )
         assertThat(dealer.match(player)).isEqualTo(WinningResultStatus.VICTORY)
+    }
+
+    @Test
+    fun `플레이어가 블랙잭이면 베팅 금액의 1,5 배를 딜러에게 받는다`() {
+        val player =
+            Player(
+                PlayerName("해나"),
+                CardHand(
+                    DIAMOND_KING,
+                    HEART_ACE,
+                ),
+            )
+        val betting = Betting(PlayerName("해나"), 10000)
+        val actual = player.calculateProfit(WinningResultStatus.VICTORY, betting)
+        assertThat(actual).isEqualTo(15000.0)
+    }
+
+    @Test
+    fun `플레이어가 이기면(블랙잭 아닐 때) 베팅 금액을 딜러에게 받는다`() {
+        val player =
+            Player(
+                PlayerName("해나"),
+                CardHand(
+                    DIAMOND_KING,
+                    SPADE_SIX,
+                ),
+            )
+        val betting = Betting(PlayerName("해나"), 10000)
+        val actual = player.calculateProfit(WinningResultStatus.VICTORY, betting)
+        assertThat(actual).isEqualTo(10000.0)
+    }
+
+    @Test
+    fun `플레이어와 딜러가 무승부이면 플레이어는 베팅 금액을 돌려 받는다`() {
+        val player =
+            Player(
+                PlayerName("해나"),
+                CardHand(emptyList()),
+            )
+        val betting = Betting(PlayerName("해나"), 10000)
+        val actual = player.calculateProfit(WinningResultStatus.PUSH, betting)
+        assertThat(actual).isEqualTo(0.0)
+    }
+
+    @Test
+    fun `플레이어가 지면 베팅 금액을 잃는다`() {
+        val player =
+            Player(
+                PlayerName("해나"),
+                CardHand(emptyList()),
+            )
+        val betting = Betting(PlayerName("해나"), 10000)
+        val actual = player.calculateProfit(WinningResultStatus.DEFEAT, betting)
+        assertThat(actual).isEqualTo(-10000.0)
     }
 }

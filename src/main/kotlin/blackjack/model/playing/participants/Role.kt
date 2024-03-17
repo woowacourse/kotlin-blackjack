@@ -1,8 +1,10 @@
 package blackjack.model.playing.participants
 
+import blackjack.model.Betting
 import blackjack.model.card.Card
 import blackjack.model.card.CardDeck
 import blackjack.model.playing.cardhand.CardHand
+import blackjack.model.playing.cardhand.CardHandState
 import blackjack.model.playing.participants.player.PlayerName
 import blackjack.model.winning.WinningResultStatus
 
@@ -31,6 +33,19 @@ abstract class Role(open val name: PlayerName, open val cardHand: CardHand) {
             else -> WinningResultStatus.DEFEAT
         }
     }
+
+    fun calculateProfit(
+        winningResultStatus: WinningResultStatus,
+        betting: Betting,
+    ): Double {
+        return when (winningResultStatus) {
+            WinningResultStatus.VICTORY -> if (isBlackjack()) betting.amount * 1.5 else betting.amount.toDouble()
+            WinningResultStatus.DEFEAT -> -betting.amount.toDouble()
+            WinningResultStatus.PUSH -> 0.0
+        }
+    }
+
+    private fun isBlackjack() = cardHand.getPlayerState() == CardHandState.BLACKJACK
 
     companion object {
         private const val INITIAL_CARDS_COUNT = 2
