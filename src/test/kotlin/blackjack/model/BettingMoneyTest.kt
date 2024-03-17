@@ -17,8 +17,8 @@ class BettingMoneyTest {
 
     @ParameterizedTest
     @ValueSource(strings = ["한글", "abcd", "10000-5000"])
-    fun `베팅금은 숫자로만 입력해야 한다`(input: String) {
-        assertThrows<IllegalArgumentException> { BettingMoney(input) }
+    fun `베팅금은 숫자로만 입력해야 한다`(notNumber: String) {
+        assertThrows<IllegalArgumentException> { BettingMoney(notNumber) }
     }
 
     @ParameterizedTest
