@@ -1,10 +1,10 @@
 package blackjack.view
 
-import blackjack.model.Calculator
 import blackjack.model.GameResult
 import blackjack.model.Participant
 import blackjack.model.Participant.Dealer
 import blackjack.model.Participant.Player
+import blackjack.model.Score
 
 object ResultView {
     private const val MESSAGE_PARTICIPANT_GAME_SCORE = "%s 카드: %s - 결과: %d"
@@ -43,8 +43,8 @@ object ResultView {
         println(
             MESSAGE_PARTICIPANT_GAME_SCORE.format(
                 participant.participantInformation.name,
-                participant.gameInformation.cards.joinToString(separator = ", "),
-                Calculator.calculateScore(participant.gameInformation.cards),
+                participant.gameInformation.hand.cards.joinToString(separator = ", "),
+                Score(participant.gameInformation.hand.cards).point,
             ),
         )
     }

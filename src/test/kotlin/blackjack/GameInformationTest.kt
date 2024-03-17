@@ -22,7 +22,7 @@ class GameInformationTest {
         val card = Card(CardNumber.ACE, CardSymbol.SPADE)
         gameInformation.drawCard(card)
 
-        val actual = gameInformation.cards
+        val actual = gameInformation.hand.cards
 
         assertThat(actual.size).isEqualTo(1)
         assertThat(actual.contains(card)).isTrue

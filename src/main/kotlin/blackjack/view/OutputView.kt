@@ -26,7 +26,7 @@ object OutputView {
         println(
             MESSAGE_PARTICIPANT_CARD_INFORMATION.format(
                 participant.participantInformation.name,
-                participant.gameInformation.cards.joinToString(separator = ", "),
+                participant.gameInformation.hand.cards.joinToString(separator = ", "),
             ),
         )
     }
@@ -39,7 +39,7 @@ object OutputView {
         println(
             MESSAGE_DEALER_CARD_INFORMATION.format(
                 dealer.participantInformation.name,
-                dealer.gameInformation.cards.elementAt(0),
+                dealer.gameInformation.hand.cards.elementAt(0),
             ),
         )
     }
