@@ -1,16 +1,16 @@
 package blackjack.view
 
-import blackjack.model.BlackjackGameStatistics
+import blackjack.model.statistics.BlackjackGameStatistics
 import blackjack.model.Card
 import blackjack.model.CardNumber
 import blackjack.model.Dealer
-import blackjack.model.DealerStatistics
+import blackjack.model.statistics.DealerStatistics
 import blackjack.model.GameResult
 import blackjack.model.Participant
 import blackjack.model.Player
-import blackjack.model.PlayerStatistics
-import blackjack.model.RewardStatistic
-import blackjack.model.RewardStatistics
+import blackjack.model.statistics.PlayerStatistics
+import blackjack.model.statistics.RewardStatistic
+import blackjack.model.statistics.RewardStatistics
 import blackjack.model.Suit
 
 object OutputView {

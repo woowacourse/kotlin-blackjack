@@ -1,5 +1,7 @@
 package blackjack.model
 
+import blackjack.model.statistics.PlayerStatistic
+
 fun interface RewardRateRule {
     fun rate(playerStatistic: PlayerStatistic): Double
 }

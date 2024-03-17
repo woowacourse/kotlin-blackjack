@@ -1,14 +1,12 @@
 package blackjack
 
-import blackjack.model.BlackjackGameStatistics
 import blackjack.model.Dealer
 import blackjack.model.Deck
 import blackjack.model.Money
 import blackjack.model.Participant
 import blackjack.model.Player
-import blackjack.model.PlayerStatistics
-import blackjack.model.RewardPayout
-import blackjack.model.RewardStatistics
+import blackjack.model.statistics.PlayerStatistics
+import blackjack.model.statistics.RewardStatistics
 import blackjack.view.InputView
 import blackjack.view.OutputView
 

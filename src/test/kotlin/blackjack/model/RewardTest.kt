@@ -1,5 +1,8 @@
 package blackjack.model
 
+import blackjack.model.statistics.PlayerStatistic
+import blackjack.model.statistics.PlayerStatistics
+import blackjack.model.statistics.RewardStatistics
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
