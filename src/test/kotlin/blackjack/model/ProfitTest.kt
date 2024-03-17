@@ -27,17 +27,19 @@ class ProfitTest {
         assertThrows<IllegalArgumentException> { Profit(lessThanZero) }
     }
 
-    @Test
-    fun `무승부인 경우 수익을 0원으로 만든다`() {
-        val profit = Profit("50000")
+    @ParameterizedTest
+    @ValueSource(strings = ["5000", "10000", "150000"])
+    fun `무승부인 경우 수익을 0원으로 만든다`(bettingMoney: String) {
+        val profit = Profit(bettingMoney)
         profit.giveBackBettingMoney()
-        assertThat(profit.amount).isEqualTo(0)
+        assertThat(profit.amount).isEqualTo(Profit.INITIAL_AMOUNT)
     }
 
-    @Test
-    fun `패배한 경우 베팅한 만큼의 금액을 모두 잃는다`() {
-        val profit = Profit("50000")
+    @ParameterizedTest
+    @ValueSource(strings = ["5000", "10000", "150000"])
+    fun `패배한 경우 베팅한 만큼의 금액을 모두 잃는다`(bettingMoney: String) {
+        val profit = Profit(bettingMoney)
         profit.lostAllBettingMoney()
-        assertThat(profit.amount).isEqualTo(-50000)
+        assertThat(profit.amount).isEqualTo(-bettingMoney.toInt())
     }
 }
