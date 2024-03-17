@@ -10,12 +10,7 @@ class Stay : HandCardState {
         opponentScore: Int,
         battingMoney: BattingMoney,
     ): BattingMoney {
-        return when (getResult(handCards, opponentScore)) {
-            CompetitionResult.WIN -> battingMoney.times(1.0)
-            CompetitionResult.LOSE -> battingMoney.unaryMinus()
-            CompetitionResult.SAME -> battingMoney.times(0.0)
-            CompetitionResult.BLACKJACK -> battingMoney.times(1.5)
-        }
+        return battingMoney.times(getResult(handCards, opponentScore).profit)
     }
 
     private fun getResult(

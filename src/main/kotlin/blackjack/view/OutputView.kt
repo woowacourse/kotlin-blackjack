@@ -90,6 +90,7 @@ class OutputView {
             CompetitionResult.WIN -> "승"
             CompetitionResult.LOSE -> "패"
             CompetitionResult.SAME -> "무"
+            CompetitionResult.BLACKJACK -> "블랙잭"
         }
 
     companion object {
