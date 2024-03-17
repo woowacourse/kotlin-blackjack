@@ -2,37 +2,48 @@ package blackjack.model
 
 import blackjack.model.card.Card
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.Arguments
-import org.junit.jupiter.params.provider.MethodSource
+import org.junit.jupiter.api.Test
+
+private fun Hand(cards: List<Card>): Hand {
+    return Hand(cards.toMutableList())
+}
+
+private const val BURST_CONDITION = 21
 
 class HandTest {
-    @MethodSource("카드 점수 계산 테스트 데이터")
-    @ParameterizedTest
-    fun `카드 점수를 구한다`(
-        cards: List<Card>,
-        expected: Int,
-    ) {
+    @Test
+    fun `카드에 ACE가 없는 경우 점수를 구한다`() {
         // given
-        val hand = Hand(cards.toMutableList())
+        val hand = Hand(listOf(SPADE_FIVE, HEART_THREE))
 
         // when
         val actual = hand.score(BURST_CONDITION)
 
         // then
-        assertThat(actual).isEqualTo(expected)
+        assertThat(actual).isEqualTo(8)
     }
 
-    companion object {
-        private const val BURST_CONDITION = 21
+    @Test
+    fun `ACE를 11로 계산할 경우 21이 넘지 않는다면, 11로 계산한다`() {
+        // given
+        val hand = Hand(listOf(SPADE_ACE, HEART_KING))
 
-        @JvmStatic
-        fun `카드 점수 계산 테스트 데이터`() =
-            listOf(
-                Arguments.of(listOf(SPADE_FIVE, HEART_THREE), 8),
-                Arguments.of(listOf(SPADE_ACE), 11),
-                Arguments.of(listOf(SPADE_ACE, SPADE_ACE), 12),
-                Arguments.of(listOf(SPADE_ACE, HEART_KING), 21),
-            )
+        // when
+        val actual = hand.score(BURST_CONDITION)
+
+        // then
+        assertThat(actual).isEqualTo(21)
+    }
+
+    @Test
+    fun `ACE를 11로 계산할 경우 21이 넘는다면, 1로 계산한다`() {
+        // given
+        val hand = Hand(listOf(SPADE_TEN, HEART_SEVEN, SPADE_ACE))
+
+        // when
+        val actual = hand.score(BURST_CONDITION)
+
+        // then
+        assertThat(actual).isEqualTo(18)
     }
 }
