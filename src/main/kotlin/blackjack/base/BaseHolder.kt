@@ -16,7 +16,7 @@ abstract class BaseHolder(gameResult: GameResult = GameResult()) {
         get() = _gameResult
 
     fun initHands(gameDeck: GameDeck) {
-        _state = Running().drawInitCards(gameDeck)
+        _state = Running(profit = state.profit).drawInitCards(gameDeck)
     }
 
     protected fun changeState(state: State) {
