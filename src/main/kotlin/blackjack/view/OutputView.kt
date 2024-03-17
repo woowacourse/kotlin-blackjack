@@ -7,6 +7,8 @@ import blackjack.model.participant.Dealer
 import blackjack.model.participant.Player
 import blackjack.model.participant.Players
 import blackjack.model.participant.Role
+import blackjack.model.result.DealerResult
+import blackjack.model.result.GameResultStorage
 
 class OutputView {
     fun printInitCard(
@@ -45,14 +47,11 @@ class OutputView {
         lineBreak()
     }
 
-    fun printFinalProfitResult(
-        dealer: Dealer,
-        players: Players,
-    ) {
+    fun printFinalProfitResult(gameResult: GameResultStorage) {
         println("## 최종 수익")
-        println(dealer.getDealerProfitMessage())
-        players.playerGroup.forEach {
-            println(it.getPlayerProfitMessage(it.name.toString()))
+        println(gameResult.dealerResult.getDealerProfitMessage())
+        gameResult.playersResult.results.forEach { (playerName, profit) ->
+            println("$playerName: ${profit.profit.toInt()}")
         }
     }
 
@@ -68,9 +67,7 @@ class OutputView {
 
     private fun Role.getPlayerCardResult() = " - 결과: ${getCardSum()}"
 
-    private fun Role.getDealerProfitMessage() = "딜러: $profit"
-
-    private fun Role.getPlayerProfitMessage(name: String) = "$name: $profit"
+    private fun DealerResult.getDealerProfitMessage() = "딜러: ${profit.profit.toInt()}"
 
     private fun lineBreak() = println()
 
@@ -104,7 +101,6 @@ class OutputView {
         private const val CARDS_SEPARATOR = ", "
         private const val DIVIDE_CARD_FINISH_MESSAGE = "딜러와 %s에게 2장의 나누었습니다."
         private const val DEALER_ADDITIONAL_CARD_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다."
-        private const val FINAL_GAME_RESULT_MESSAGE = "## 최종 승패"
         private const val DEALER_NAME_MESSAGE = "딜러 "
     }
 }
