@@ -9,7 +9,7 @@ class ShuffleCardDeck(private val cards: Queue<Card> = LinkedList()) : CardDeck 
         shuffleCardDeck()
     }
 
-    override fun generateCardDeck() {
+    private fun generateCardDeck() {
         Denomination.entries.flatMap { denomination ->
             Suit.entries.map { suit ->
                 Card(denomination, suit)
