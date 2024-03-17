@@ -27,10 +27,13 @@ data class Participants(val dealer: Dealer, val players: Players) {
 
     fun getProfit(playersWinning: PlayersWinning): Map<PlayerName, Double> {
         val profit = mutableMapOf<PlayerName, Double>()
+        var dealerProfit = 0.0
 
         players.players.forEach { player ->
-            calculatePlayerProfit(playersWinning, player, profit)
+            val playerProfit = calculatePlayerProfit(playersWinning, player, profit)
+            dealerProfit -= playerProfit
         }
+        profit[dealer.name] = dealerProfit
         return profit
     }
 
@@ -38,18 +41,15 @@ data class Participants(val dealer: Dealer, val players: Players) {
         playersWinning: PlayersWinning,
         player: Player,
         profit: MutableMap<PlayerName, Double>,
-    ) {
-        var dealerProfit = 0.0
+    ): Double {
         var playerProfit = 0.0
         playersWinning.result.forEach { (playerName, winningResult) ->
             if (player.name == playerName) {
                 playerProfit = player.calculateProfit(winningResult)
             }
         }
-        dealerProfit -= playerProfit
-
-        profit[dealer.name] = dealerProfit
         profit[player.name] = playerProfit
+        return playerProfit
     }
 
     private fun getVictoryCount(dealerResult: Map<WinningResultStatus, Int>): Int =
