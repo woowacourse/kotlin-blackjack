@@ -3,6 +3,7 @@ package blackjack
 import blackjack.model.BlackjackGameStatistics
 import blackjack.model.Dealer
 import blackjack.model.Deck
+import blackjack.model.Money
 import blackjack.model.Participant
 import blackjack.model.Player
 import blackjack.view.InputView
@@ -20,7 +21,10 @@ class Controller {
 
     private fun makePlayers(): List<Player> {
         val names: List<String> = InputView.getNames()
-        return names.map { Player(it) }
+        return names.map {
+            val stake = InputView.getStake(it)
+            Player(it, Money(stake))
+        }
     }
 
     private fun initParticipantsCard(
