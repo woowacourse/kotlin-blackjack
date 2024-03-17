@@ -13,7 +13,9 @@ object InputView {
     tailrec fun getStake(name: String): Double {
         println("${name}의 배팅금액은?")
         val input = readln().trim()
-        return input.toDoubleOrNull() ?: getStake(name)
+        val stake = input.toDoubleOrNull()
+        if (stake != null && stake > 0) return stake
+        return getStake(name)
     }
 
     tailrec fun askPickAgain(name: String): Boolean {
