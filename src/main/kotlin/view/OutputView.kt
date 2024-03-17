@@ -2,6 +2,8 @@ package view
 
 import model.Hand
 import model.card.Card
+import model.card.Denomination
+import model.card.Suit
 import model.human.Dealer
 import model.human.Human
 import model.human.Players
@@ -48,7 +50,7 @@ object OutputView {
 
     private fun getHandString(hand: Hand): String = hand.cards.joinToString(", ") { getCardString(it) }
 
-    private fun getCardString(card: Card): String = card.denomination.rank + card.suit.mark
+    private fun getCardString(card: Card): String = denominationToString(card.denomination) + suitToString(card.suit)
 
     private fun showHandWithResult(human: Human) {
         println("${human.getName()}: ${getHandString(human.hand)} - 결과: ${human.hand.getPoint().amount}")
@@ -83,36 +85,30 @@ object OutputView {
         println(String.format("%s: %d", human.getName(), human.getMoneyAmount()))
     }
 
-    /*
-    private fun showHands(
-        dealer: Dealer,
-        players: Players,
-    ) {
-        showDealerHand(dealer)
-        showPlayersHand(players)
-        println()
-    }
-
-    private fun showDealerHand(dealer: Dealer) {
-        println("${dealer.getName()}: ${getHand(dealer.hand)}")
-    }
-    fun showDealerResult(dealerResultType: Map<ResultType, Int>) {
-        println(
-            DEALER_HAND.format(
-                dealerResultType.map {
-                    it.value.toString() + it.key.word
-                }.joinToString(SPACE),
-            ),
-        )
-    }
-
-    fun showPlayersResult(
-        players: Players,
-        playersResultType: Map<HumanName, ResultType>,
-    ) {
-        players.players.forEach { player ->
-            println("${player.getName()}: ${playersResultType.getOrDefault(player.humanInfo.humanName, ResultType.DRAW).word}")
+    private fun denominationToString(denomination: Denomination): String {
+        return when (denomination) {
+            Denomination.ACE -> "A"
+            Denomination.TWO -> "2"
+            Denomination.THREE -> "3"
+            Denomination.FOUR -> "4"
+            Denomination.FIVE -> "5"
+            Denomination.SIX -> "6"
+            Denomination.SEVEN -> "7"
+            Denomination.EIGHT -> "8"
+            Denomination.NINE -> "9"
+            Denomination.TEN -> "10"
+            Denomination.JACK -> "J"
+            Denomination.QUEEN -> "Q"
+            Denomination.KING -> "K"
         }
     }
-     */
+
+    private fun suitToString(suit: Suit): String {
+        return when (suit) {
+            Suit.SPADE -> "스페이드"
+            Suit.CLOVER -> "클로버"
+            Suit.HEART -> "하트"
+            Suit.DIAMOND -> "다이아몬드"
+        }
+    }
 }
