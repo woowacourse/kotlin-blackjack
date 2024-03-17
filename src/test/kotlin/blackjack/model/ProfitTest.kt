@@ -12,7 +12,7 @@ class ProfitTest {
     fun `입력한 베팅금을 갖는다`(input: String) {
         val profit = Profit(input)
 
-        assertThat(profit.amount).isEqualTo(input.toInt())
+        assertThat(profit.amount).isEqualTo(input.toDouble())
     }
 
     @ParameterizedTest
@@ -40,7 +40,7 @@ class ProfitTest {
     fun `패배한 경우 베팅한 만큼의 금액을 모두 잃는다`(bettingMoney: String) {
         val profit = Profit(bettingMoney)
         profit.lostAllBettingMoney()
-        assertThat(profit.amount).isEqualTo(-bettingMoney.toInt())
+        assertThat(profit.amount).isEqualTo(-bettingMoney.toDouble())
     }
 
     @ParameterizedTest
@@ -48,6 +48,6 @@ class ProfitTest {
     fun `블랙잭으로 승리한 경우 베팅금의 150%를 얻는다`(bettingMoney: String) {
         val profit = Profit(bettingMoney)
         profit.earnProfitForBlackJack()
-        assertThat(profit.amount).isEqualTo(bettingMoney.toInt() * 1.5)
+        assertThat(profit.amount).isEqualTo(bettingMoney.toDouble() * Profit.BLACKJACK_ODDS)
     }
 }
