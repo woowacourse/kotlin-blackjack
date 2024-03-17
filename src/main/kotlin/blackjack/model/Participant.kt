@@ -8,6 +8,8 @@ abstract class Participant(
     private val strength: Int
         get() = strengthPolicy.strength(cards)
 
+    fun isBlackjack(): Boolean = cards.isBlackJack()
+
     fun isBusted(): Boolean = cards.isBusted()
 
     fun isMaxScore(): Boolean = cards.isMaxScore()
