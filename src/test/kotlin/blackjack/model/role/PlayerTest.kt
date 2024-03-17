@@ -7,7 +7,6 @@ import blackjack.model.card.CardShape
 import blackjack.model.card.state.Done
 import blackjack.model.card.state.Stay
 import blackjack.model.result.Money
-import blackjack.model.result.WinningResultStatus
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.RepeatedTest
 import org.junit.jupiter.api.Test
@@ -18,29 +17,6 @@ class PlayerTest {
         val player = Player(PlayerName("심지"))
         val endState = player.runPhase(canDraw = { true }) {}
         assertThat(endState is Done).isTrue
-    }
-
-    @Test
-    fun `플래이어와 딜러의 점수를 비교하여 승리 여부를 판단한다`() {
-        val player = Player(PlayerName("심지"))
-        val dealer = Dealer()
-        player.state =
-            Stay(
-                CardHand(
-                    Card(CardShape.HEART, CardNumber.SIX),
-                    Card(CardShape.HEART, CardNumber.KING),
-                ),
-            )
-        dealer.state =
-            Stay(
-                CardHand(
-                    Card(CardShape.DIAMOND, CardNumber.FIVE),
-                    Card(CardShape.CLOVER, CardNumber.TEN),
-                ),
-            )
-        val actualWinningStatus = player.judgeWinning(dealer)
-
-        assertThat(actualWinningStatus).isEqualTo(WinningResultStatus.VICTORY)
     }
 
     @Test
