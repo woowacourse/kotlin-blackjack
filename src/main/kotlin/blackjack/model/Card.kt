@@ -5,11 +5,9 @@ class Card private constructor(val pattern: Pattern, val number: CardNumber) {
         private val cards = initDeck()
 
         private fun initDeck(): List<Card> {
-            val newCards = mutableListOf<Card>()
-
-            Pattern.entries.forEach { pattern ->
-                CardNumber.entries.forEach { number ->
-                    newCards.add(Card(pattern = pattern, number = number))
+            return Pattern.entries.flatMap { pattern ->
+                CardNumber.entries.map { number ->
+                    Card(pattern = pattern, number = number)
                 }
             }
             return newCards.toList()
