@@ -33,6 +33,7 @@ class Dealer(hand: Hand = Hand()) : Role(hand) {
 
     private fun gameResult(player: Player): GameResult {
         return when {
+            player.isBlackjack() && isBlackjack() -> GameResult.DRAW
             player.isBlackjack() -> GameResult.BLACKJACK_LOSE
             player.isBurst() -> GameResult.WIN
             isBurst() -> GameResult.LOSE

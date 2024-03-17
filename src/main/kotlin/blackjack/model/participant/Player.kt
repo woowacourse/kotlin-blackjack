@@ -39,6 +39,7 @@ class Player(
 
     private fun gameResult(dealer: Dealer): GameResult {
         return when {
+            isBlackjack() && dealer.isBlackjack() -> GameResult.DRAW
             isBlackjack() -> GameResult.BLACKJACK_WIN
             isBurst() -> GameResult.LOSE
             dealer.isBurst() -> GameResult.WIN
