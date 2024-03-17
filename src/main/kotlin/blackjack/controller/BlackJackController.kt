@@ -3,7 +3,6 @@ package blackjack.controller
 import blackjack.model.CardDeck
 import blackjack.model.Dealer
 import blackjack.model.GameResult
-import blackjack.model.Participant
 import blackjack.model.Participants
 import blackjack.model.Player
 import blackjack.view.InputView
@@ -93,12 +92,18 @@ class BlackJackController(private val cardDeck: CardDeck) {
             participants.getDealer(),
             participants.getPlayers(),
         )
-        displayResult(gameResult.calculateProfitResult())
+        val playersProfit = mutableListOf<Double>()
+        gameResult.getPlayerResults().forEach { player, result ->
+            val profit = player.calculateProfit(player, result)
+            playersProfit.add(profit)
+        }
+        val participantProfitResult = participants.makeProfitResult(playersProfit)
+        displayResult(participantProfitResult)
     }
 
-    private fun displayResult(profitResult: MutableMap<Participant, Double>) {
+    private fun displayResult(participantProfitResult: List<Double>) {
         OutputView.outputParticipantsHandCard(participants.getParticipants())
         OutputView.outputBlackResult()
-        OutputView.outputProfitResult(profitResult)
+        OutputView.outputProfitResult(participants.getParticipants(), participantProfitResult)
     }
 }

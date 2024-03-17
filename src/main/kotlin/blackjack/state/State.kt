@@ -1,28 +1,22 @@
 package blackjack.state
 
-import blackjack.model.BettingMoney
 import blackjack.model.Result
 
 const val WIN_EARNING_RATE: Double = 1.0
 const val BLACK_JACK_EARNING_RATE: Double = 1.5
 const val DRAW_EARNING_RATE: Double = 0.0
+const val LOSE_EARNING_RATE: Double = -1.0
 
 sealed interface State {
-    fun calculateProfit(
-        balance: BettingMoney,
-        result: Result,
-    ): Double
+    fun calculateEarningRate(result: Result): Double
 
     sealed interface Action : State {
         object Hit : Action {
-            override fun calculateProfit(
-                balance: BettingMoney,
-                result: Result,
-            ): Double {
+            override fun calculateEarningRate(result: Result): Double {
                 return when (result) {
-                    Result.WIN -> balance * WIN_EARNING_RATE
+                    Result.WIN -> WIN_EARNING_RATE
                     Result.DRAW -> DRAW_EARNING_RATE
-                    Result.LOSE -> -balance
+                    Result.LOSE -> LOSE_EARNING_RATE
                 }
             }
         }
@@ -30,34 +24,25 @@ sealed interface State {
 
     sealed interface Finish : State {
         object Bust : Finish {
-            override fun calculateProfit(
-                balance: BettingMoney,
-                result: Result,
-            ): Double {
-                return -balance
+            override fun calculateEarningRate(result: Result): Double {
+                return LOSE_EARNING_RATE
             }
         }
 
         object Stay : Finish {
-            override fun calculateProfit(
-                balance: BettingMoney,
-                result: Result,
-            ): Double {
+            override fun calculateEarningRate(result: Result): Double {
                 return when (result) {
-                    Result.WIN -> balance * WIN_EARNING_RATE
+                    Result.WIN -> WIN_EARNING_RATE
                     Result.DRAW -> DRAW_EARNING_RATE
-                    Result.LOSE -> -balance
+                    Result.LOSE -> LOSE_EARNING_RATE
                 }
             }
         }
 
         object BlackJack : Finish {
-            override fun calculateProfit(
-                balance: BettingMoney,
-                result: Result,
-            ): Double {
+            override fun calculateEarningRate(result: Result): Double {
                 return when (result) {
-                    Result.WIN -> balance * BLACK_JACK_EARNING_RATE
+                    Result.WIN -> BLACK_JACK_EARNING_RATE
                     else -> DRAW_EARNING_RATE
                 }
             }

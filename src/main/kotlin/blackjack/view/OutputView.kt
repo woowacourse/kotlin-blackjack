@@ -123,15 +123,12 @@ object OutputView {
         println(OUTPUT_MESSAGE_BLACKJACK_RESULT)
     }
 
-    fun outputProfitResult(profitResult: MutableMap<Participant, Double>) {
-        val dealer = profitResult.keys.find { it is Dealer }
-        dealer?.let {
-            println(OUTPUT_MESSAGE_PROFIT_RESULT.format(it.getName(), profitResult[it]))
-            profitResult.remove(it)
-        }
-
-        profitResult.forEach { player, profit ->
-            println(OUTPUT_MESSAGE_PROFIT_RESULT.format(player.getName(), profit))
+    fun outputProfitResult(
+        participants: List<Participant>,
+        profitResult: List<Double>,
+    ) {
+        participants.forEachIndexed { index, participant ->
+            println(OUTPUT_MESSAGE_PROFIT_RESULT.format(participant.getName(), profitResult[index]))
         }
     }
 }

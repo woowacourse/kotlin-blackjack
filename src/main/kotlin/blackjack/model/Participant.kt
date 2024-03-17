@@ -65,6 +65,22 @@ abstract class Participant(
         }
     }
 
+    fun calculateProfit(
+        player: Player,
+        result: Result,
+    ): Double {
+        val rate = calculateEarningRate(result, blackJack.state)
+        val profit = player.getMoney() * rate
+        return profit
+    }
+
+    private fun calculateEarningRate(
+        result: Result,
+        state: State,
+    ): Double {
+        return state.calculateEarningRate(result)
+    }
+
     companion object {
         const val INIT_HAND_CARD_COUNT: Int = 2
     }

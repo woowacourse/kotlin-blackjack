@@ -1,7 +1,5 @@
 package blackjack.model
 
-import blackjack.state.State
-
 class Player(name: String) : Participant(name) {
     private var balance: BettingMoney = BettingMoney(DEFAULT_BETTING_MONEY)
 
@@ -28,13 +26,6 @@ class Player(name: String) : Participant(name) {
             draw(drawFunction())
             outputAction(this)
         }
-    }
-
-    fun calculateProfit(
-        result: Result,
-        state: State,
-    ): Double {
-        return state.calculateProfit(balance, result)
     }
 
     companion object {
