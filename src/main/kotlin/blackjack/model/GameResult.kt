@@ -17,7 +17,7 @@ data class GameResult(
             val payout =
                 calculateRevenuePercentage(
                     result = result,
-                    isBlackJackState = player.checkBlackJackState(),
+                    isBlackJackState = player.isBlackJackState(),
                 )
             val playerBettingResultMoney = (player.getBettingMoney() * payout).toInt()
             Revenue(

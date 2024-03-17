@@ -9,7 +9,7 @@ class Dealer(wallet: Wallet = Wallet(Identification(DEFAULT_DEALER_NAME))) : Par
         return getCards().firstOrNull()?.let { listOf(it) } ?: listOf()
     }
 
-    override fun checkShouldDrawCard(): Boolean {
+    override fun shouldDrawCard(): Boolean {
         return getBlackJackScore() <= MIN_HAND_CARD_SCORE
     }
 

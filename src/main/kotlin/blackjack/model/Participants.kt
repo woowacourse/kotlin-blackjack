@@ -18,7 +18,7 @@ data class Participants(
 
     fun getAlivePlayers(): List<Participant> {
         return players.filter { player ->
-            player.checkHitState()
+            player.isHitState()
         }
     }
 

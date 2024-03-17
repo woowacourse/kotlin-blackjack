@@ -15,7 +15,7 @@ class BlackJackTest {
     @Test
     fun `BlackJack 생성시 상태 확인 테스트`() {
         val blackjack = BlackJack()
-        assertThat(blackjack.checkDrawState()).isEqualTo(true)
+        assertThat(blackjack.isDrawState()).isEqualTo(true)
     }
 
     @Test

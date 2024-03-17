@@ -5,8 +5,8 @@ class Player(wallet: Wallet) : Participant(wallet) {
         return getCards().take(GameManager.INIT_HAND_CARD_COUNT)
     }
 
-    override fun checkShouldDrawCard(): Boolean {
-        return checkHitState()
+    override fun shouldDrawCard(): Boolean {
+        return isHitState()
     }
 
     companion object {

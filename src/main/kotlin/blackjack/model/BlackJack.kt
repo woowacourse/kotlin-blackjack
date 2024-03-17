@@ -6,15 +6,15 @@ class BlackJack {
     private val handCard = HandCard()
     private var state: State = State.Action.Hit
 
-    fun checkDrawState(): Boolean {
-        return state.checkDrawState()
+    fun isDrawState(): Boolean {
+        return state.isDrawState()
     }
 
     fun getState(): State {
         return state
     }
 
-    fun checkBlackJackState(): Boolean {
+    fun isBlackJackState(): Boolean {
         return state == State.Finish.BlackJack
     }
 
@@ -31,7 +31,7 @@ class BlackJack {
     }
 
     fun addCard(card: Card) {
-        if (checkDrawState()) {
+        if (isDrawState()) {
             handCard.addCard(card)
             updateGameStateWithScore()
         }
@@ -49,7 +49,7 @@ class BlackJack {
     }
 
     private fun applyBlackJackStateWithCardCount() {
-        state = if (handCard.checkStateWithCardCount()) {
+        state = if (handCard.isInitialHandSize()) {
             State.Finish.BlackJack
         } else {
             State.Finish.Stay

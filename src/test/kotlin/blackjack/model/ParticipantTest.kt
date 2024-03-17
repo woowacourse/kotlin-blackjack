@@ -9,7 +9,7 @@ class ParticipantTest {
             TODO("Not yet implemented")
         }
 
-        override fun checkShouldDrawCard(): Boolean {
+        override fun shouldDrawCard(): Boolean {
             TODO("Not yet implemented")
         }
     }
@@ -18,6 +18,6 @@ class ParticipantTest {
     fun `정상적인 Hit 상태 체크 테스트 `() {
         val name = "딜러"
         val participant = MockParticipant(wallet = Wallet(Identification(name)))
-        assertThat(participant.checkHitState()).isTrue()
+        assertThat(participant.isHitState()).isTrue()
     }
 }

@@ -8,7 +8,7 @@ abstract class Participant(
 ) {
     abstract fun openInitCards(): List<Card>
 
-    abstract fun checkShouldDrawCard(): Boolean
+    abstract fun shouldDrawCard(): Boolean
 
     fun match(other: Participant): Result {
         val myScore = getBlackJackScore()
@@ -17,8 +17,8 @@ abstract class Participant(
         return when {
             this.getGameState() == State.Finish.Bust -> Result.LOSE
             other.getGameState() == State.Finish.Bust -> Result.WIN
-            this.checkBlackJackState() && other.checkBlackJackState() -> Result.DRAW
-            this.checkBlackJackState() -> Result.WIN
+            this.isBlackJackState() && other.isBlackJackState() -> Result.DRAW
+            this.isBlackJackState() -> Result.WIN
             myScore > otherScore -> Result.WIN
             myScore == otherScore -> Result.DRAW
             else -> Result.LOSE
@@ -33,12 +33,12 @@ abstract class Participant(
         blackJack.switchToStayState()
     }
 
-    fun checkHitState(): Boolean {
-        return blackJack.checkDrawState()
+    fun isHitState(): Boolean {
+        return blackJack.isDrawState()
     }
 
-    fun checkBlackJackState(): Boolean {
-        return blackJack.checkBlackJackState()
+    fun isBlackJackState(): Boolean {
+        return blackJack.isBlackJackState()
     }
 
     fun getGameState(): State {

@@ -57,7 +57,7 @@ class GameManager(
     ) {
         when (player.getGameState()) {
             is State.Finish.Bust -> onResult(Result.LOSE)
-            is State.Finish.BlackJack -> checkBlackJackState(onResult)
+            is State.Finish.BlackJack -> evaluateBlackJackResult(onResult)
             is State.Finish.Stay ->
                 matchToResult(
                     player = player,
@@ -68,7 +68,7 @@ class GameManager(
         }
     }
 
-    private fun checkBlackJackState(onResult: (Result) -> Unit) {
+    private fun evaluateBlackJackResult(onResult: (Result) -> Unit) {
         if (participants.dealer.getGameState() == State.Finish.BlackJack) {
             onResult(Result.DRAW)
         } else {
