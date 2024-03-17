@@ -24,6 +24,7 @@ class GameController {
 
         participants.matchResult()
         OutputView.printMatchResult(participants.dealer.gameResult, participants.playerGroup)
+        OutputView.printFinalProfit(participants.dealer.state.profit, participants.playerGroup)
     }
 
     private fun playGame(participants: Participants) {

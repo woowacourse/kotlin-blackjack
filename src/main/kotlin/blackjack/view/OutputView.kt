@@ -9,6 +9,7 @@ import blackjack.model.Hand
 import blackjack.model.state.Hit
 import blackjack.model.Player
 import blackjack.model.PlayerGroup
+import blackjack.model.Profit
 import blackjack.model.state.Running
 import blackjack.model.state.Running.Companion.INITIAL_CARD_COUNTS
 import blackjack.model.state.Stay
@@ -93,6 +94,17 @@ object OutputView {
         println("딜러: ${dealerResult.display()}")
         playerGroup.players.forEach { player ->
             println("${player.name}: ${player.gameResult.display()}")
+        }
+    }
+
+    fun printFinalProfit(
+        dealerProfit: Profit,
+        playerGroup: PlayerGroup,
+    ) {
+        println("\n[ 최종 수익 현황 ]")
+        println("딜러: ${dealerProfit.amount.toInt()}")
+        playerGroup.players.forEach { player ->
+            println("${player.name}: ${player.state.profit.amount.toInt()}")
         }
     }
 
