@@ -1,37 +1,27 @@
 package blackjack.model
 
-sealed class Participant(private val info: ParticipantInfo, private val hand: Hand) {
-    fun getName() = info.name
+sealed class Participant(private var state: ParticipantState) {
+    fun getState() = state
 
-    fun getCards() = hand.getCards()
+    fun getName() = state.getInfo().name
 
-    fun getCardsSum() = hand.calculateCardsSum()
+    fun getCards() = state.getHand().getCards()
+
+    fun getCardsSum() = state.getHand().calculateCardsSum()
+
+    fun calculateGameOutcomeAgainst(opponent: Participant): GameOutcome = state.calculateGameOutcome(opponent.getState())
 
     protected fun drawCard(card: Card) {
-        hand.addCard(card)
+        state = state.drawCard(card)
     }
 
-    fun getParticipantState(): ParticipantState {
-        return when {
-            hand.calculateCardsSum() == THRESHOLD_BLACKJACK && hand.getCards().size == BLACKJACK_CARD_SIZE -> Blackjack
-            hand.calculateCardsSum() > THRESHOLD_BUST -> Bust
-            else -> Normal
-        }
-    }
+    protected fun isGameFinished() = state.isFinished
 
-    protected fun isGameFinished() = getParticipantState().isFinished
-
-    fun calculateGameStateAgainst(opponent: Participant): GameState = getParticipantState().calculateGameState(self = this, opponent)
-
-    companion object {
-        private const val BLACKJACK_CARD_SIZE = 2
-        private const val THRESHOLD_BLACKJACK = 21
-        const val THRESHOLD_BUST = 21
-    }
+    abstract fun calculateProfitAgainst(opponent: Participant): Double
 }
 
-class Dealer(info: DealerInfo, hand: Hand) :
-    Participant(info, hand) {
+class Dealer(state: ParticipantState) :
+    Participant(state) {
     private fun shouldDrawCardForDealer(threshold: Int = THRESHOLD_DRAW_FOR_DEALER): Boolean = getCardsSum() <= threshold
 
     fun playRound(
@@ -44,12 +34,15 @@ class Dealer(info: DealerInfo, hand: Hand) :
         }
     }
 
+    override fun calculateProfitAgainst(opponent: Participant) =
+        opponent.getState().getInfo().getBetAmount() * (calculateGameOutcomeAgainst(opponent).payoutMultiplier)
+
     companion object {
         private const val THRESHOLD_DRAW_FOR_DEALER = 16
     }
 }
 
-class Player(private val info: PlayerInfo, hand: Hand) : Participant(info, hand) {
+class Player(state: ParticipantState) : Participant(state) {
     fun playRound(
         requestMoreCards: (ParticipantName) -> Boolean,
         updatePlayerCards: (Player) -> Unit,
@@ -61,7 +54,6 @@ class Player(private val info: PlayerInfo, hand: Hand) : Participant(info, hand)
         }
     }
 
-    fun calculateProfitAgainst(opponent: Participant): Double {
-        return info.betAmount.getAmount() * (calculateGameStateAgainst(opponent).payoutMultiplier)
-    }
+    override fun calculateProfitAgainst(opponent: Participant) =
+        getState().getInfo().getBetAmount() * (calculateGameOutcomeAgainst(opponent).payoutMultiplier)
 }

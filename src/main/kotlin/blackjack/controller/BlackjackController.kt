@@ -6,6 +6,7 @@ import blackjack.model.Dealer
 import blackjack.model.DealerInfo
 import blackjack.model.ParticipantBetAmount
 import blackjack.model.ParticipantName
+import blackjack.model.ParticipantState
 import blackjack.model.Participants
 import blackjack.model.Player
 import blackjack.model.PlayerInfo
@@ -36,7 +37,8 @@ class BlackjackController {
     }
 
     private fun setupDealer(deck: CardDeck): Dealer {
-        return Dealer(DealerInfo(), deck.createStartHand())
+        val initialState = ParticipantState.calculateInitialParticipantState(deck.createStartHand(), DealerInfo())
+        return Dealer(initialState)
     }
 
     private fun setupPlayers(
@@ -51,7 +53,12 @@ class BlackjackController {
 
         val players: List<Player> =
             participantNames.zip(participantBetAmounts).map { (name, betAmount) ->
-                Player(PlayerInfo(name, betAmount), deck.createStartHand())
+                val initialState =
+                    ParticipantState.calculateInitialParticipantState(
+                        deck.createStartHand(),
+                        PlayerInfo(name, betAmount),
+                    )
+                Player(initialState)
             }
         return players
     }

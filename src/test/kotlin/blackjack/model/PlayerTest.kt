@@ -4,7 +4,8 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 private fun createDealer(vararg numbers: Card): Dealer {
-    return Dealer(DealerInfo(), hand = Hand(numbers.toMutableList()))
+    val state = ParticipantState.calculateInitialParticipantState(Hand(numbers.toMutableList()), DealerInfo())
+    return Dealer(state)
 }
 
 private fun Card(value: Int): Card {
@@ -12,36 +13,43 @@ private fun Card(value: Int): Card {
 }
 
 private fun createPlayer(vararg numbers: Card): Player {
-    return Player(PlayerInfo(ParticipantName("leo"), ParticipantBetAmount(1000)), hand = Hand(numbers.toMutableList()))
+    val state =
+        ParticipantState.calculateInitialParticipantState(
+            Hand(numbers.toMutableList()),
+            PlayerInfo(ParticipantName("leo"), ParticipantBetAmount(1000)),
+        )
+    return Player(state)
 }
 
 private fun createPlayerWithBetAmount(
     vararg numbers: Card,
     betAmount: Int,
 ): Player {
-    return Player(
-        PlayerInfo(ParticipantName("leo"), ParticipantBetAmount(betAmount)),
-        hand = Hand(numbers.toMutableList()),
-    )
+    val state =
+        ParticipantState.calculateInitialParticipantState(
+            Hand(numbers.toMutableList()),
+            PlayerInfo(ParticipantName("leo"), ParticipantBetAmount(betAmount)),
+        )
+    return Player(state)
 }
 
 class PlayerTest {
     @Test
     fun `카드의 합이 버스트 기준점을 초과하지 않으면 Normal을 반환한다`() {
         val dealer = createPlayer(Card(8), Card(9))
-        assertThat(dealer.getParticipantState()).isInstanceOf(Normal::class.java)
+        assertThat(dealer.getState()).isInstanceOf(Normal::class.java)
     }
 
     @Test
     fun `카드의 합이 버스트 기준점을 초과하면 Bust를 반환한다`() {
         val dealer = createPlayer(Card(8), Card(9), Card(10))
-        assertThat(dealer.getParticipantState()).isInstanceOf(Bust::class.java)
+        assertThat(dealer.getState()).isInstanceOf(Bust::class.java)
     }
 
     @Test
     fun `카드의 합이 블랙잭 기준점이고 카드의 갯수가 2개라면 Blackjack을 반환한다`() {
         val dealer = createPlayer(Card(11), Card(10))
-        assertThat(dealer.getParticipantState()).isInstanceOf(Blackjack::class.java)
+        assertThat(dealer.getState()).isInstanceOf(Blackjack::class.java)
     }
 
     @Test
@@ -55,47 +63,47 @@ class PlayerTest {
             deck,
         )
 
-        assertThat(player.getParticipantState()).isInstanceOf(Bust::class.java)
+        assertThat(player.getState()).isInstanceOf(Bust::class.java)
     }
 
     @Test
     fun `플레이어의 카드 합이 딜러보다 높을 때, 플레이어가 승리한다`() {
         val dealer = createDealer(Card(5), Card(9))
         val player = createPlayer(Card(8), Card(9))
-        val gameState = player.calculateGameStateAgainst(dealer)
-        assertThat(gameState).isEqualTo(GameState.Win)
+        val gameOutcome = player.calculateGameOutcomeAgainst(dealer)
+        assertThat(gameOutcome).isEqualTo(GameOutcome.Win)
     }
 
     @Test
     fun `플레이어의 카드 합이 딜러보다 낮을 때, 플레이어가 패배한다`() {
         val player = createDealer(Card(5), Card(9))
         val dealer = createPlayer(Card(8), Card(9))
-        val gameState = player.calculateGameStateAgainst(dealer)
-        assertThat(gameState).isEqualTo(GameState.Lose)
+        val gameOutcome = player.calculateGameOutcomeAgainst(dealer)
+        assertThat(gameOutcome).isEqualTo(GameOutcome.Lose)
     }
 
     @Test
     fun `플레이어가 블랙잭일때, 딜러가 블랙잭이 아닐 경우 승리한다`() {
         val player = createPlayer(Card(11), Card(10))
         val dealer = createDealer(Card(11), Card(9))
-        val gameState = player.calculateGameStateAgainst(dealer)
-        assertThat(gameState).isEqualTo(GameState.WinWhenBlackjack)
+        val gameOutcome = player.calculateGameOutcomeAgainst(dealer)
+        assertThat(gameOutcome).isEqualTo(GameOutcome.WinWhenBlackjack)
     }
 
     @Test
     fun `플레이어가 블랙잭일때, 딜러가 블랙잭일 경우에는 비긴다`() {
         val player = createPlayer(Card(11), Card(10))
         val dealer = createDealer(Card(11), Card(10))
-        val gameState = player.calculateGameStateAgainst(dealer)
-        assertThat(gameState).isEqualTo(GameState.Tie)
+        val gameOutcome = player.calculateGameOutcomeAgainst(dealer)
+        assertThat(gameOutcome).isEqualTo(GameOutcome.Tie)
     }
 
     @Test
     fun `플레이어가 버스트일때, 딜러의 카드와 상관없이 패배한다`() {
         val player = createPlayer(Card(10), Card(10), Card(2))
         val dealer = createDealer(Card(10), Card(10), Card(10))
-        val gameState = player.calculateGameStateAgainst(dealer)
-        assertThat(gameState).isEqualTo(GameState.Lose)
+        val gameOutcome = player.calculateGameOutcomeAgainst(dealer)
+        assertThat(gameOutcome).isEqualTo(GameOutcome.Lose)
     }
 
     @Test

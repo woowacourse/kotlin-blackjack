@@ -13,7 +13,7 @@ class Hand(private val cards: MutableList<Card>) {
         var totalSum = sumWithoutAces + acesCount
         repeat(acesCount) {
             val tempSum = totalSum + ACE_VALUE_INCREMENT
-            if (tempSum <= Participant.THRESHOLD_BUST) totalSum = tempSum else return totalSum
+            if (tempSum <= ParticipantState.THRESHOLD_BUST) totalSum = tempSum else return totalSum
         }
         return totalSum
     }
