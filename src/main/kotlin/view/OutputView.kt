@@ -48,7 +48,7 @@ object OutputView {
 
     private fun getHandString(hand: Hand): String = hand.cards.joinToString(", ") { getCardString(it) }
 
-    private fun getCardString(card: Card): String = card.valueType.rank + card.markType.mark
+    private fun getCardString(card: Card): String = card.denomination.rank + card.suit.mark
 
     private fun showHandWithResult(human: Human) {
         println("${human.getName()}: ${getHandString(human.hand)} - 결과: ${human.hand.getPoint().amount}")
