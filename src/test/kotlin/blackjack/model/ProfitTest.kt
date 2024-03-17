@@ -42,4 +42,12 @@ class ProfitTest {
         profit.lostAllBettingMoney()
         assertThat(profit.amount).isEqualTo(-bettingMoney.toInt())
     }
+
+    @ParameterizedTest
+    @ValueSource(strings = ["5000", "10000", "150000"])
+    fun `블랙잭으로 승리한 경우 베팅금의 150%를 얻는다`(bettingMoney: String) {
+        val profit = Profit(bettingMoney)
+        profit.earnProfitForBlackJack()
+        assertThat(profit.amount).isEqualTo(bettingMoney.toInt() * 1.5)
+    }
 }
