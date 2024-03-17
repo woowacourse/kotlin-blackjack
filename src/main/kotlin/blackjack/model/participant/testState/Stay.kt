@@ -4,19 +4,15 @@ import blackjack.model.BattingMoney
 import blackjack.model.deck.HandCards
 import blackjack.model.participant.CompetitionResult
 
-class Stay : HandCardState {
-    fun getProfit(
-        handCards: HandCards,
+class Stay(private val handCards: HandCards) : Finish() {
+    override fun getProfit(
         opponentScore: Int,
         battingMoney: BattingMoney,
     ): BattingMoney {
-        return battingMoney.times(getResult(handCards, opponentScore).profit)
+        return battingMoney.times(getResult(opponentScore).profit)
     }
 
-    private fun getResult(
-        handCards: HandCards,
-        opponentScore: Int,
-    ): CompetitionResult {
+    override fun getResult(opponentScore: Int): CompetitionResult {
         return when {
             handCards.calculateCardScore() > opponentScore -> CompetitionResult.WIN
             handCards.calculateCardScore() < opponentScore -> CompetitionResult.LOSE
