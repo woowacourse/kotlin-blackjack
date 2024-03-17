@@ -69,8 +69,7 @@ class BlackJackController(private val cardDeck: CardDeck) {
         player.drawAdditionalCard(
             drawFunction = { cardDeck.draw() },
             inputDecision = {
-                val decision = InputView.inputPlayerDecision(player.getName())
-                decision.decision == "y"
+                InputView.inputPlayerDecision(player.getName())
             },
             outputAction = { player ->
                 OutputView.outputPlayerCurrentHandCard(player)
