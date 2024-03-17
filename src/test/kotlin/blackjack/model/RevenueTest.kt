@@ -8,11 +8,11 @@ class RevenueTest {
     @Test
     fun `딜러 lose , 플레이어 블랙잭인 상황에서 수익금은 150원이어야 한다`() {
         val dealerResult = mapOf(Result.LOSE to 1)
-        val player =
-            Player(Wallet(Identification("누누"), 100)).apply {
-                draw(Card(Denomination.ACE, Suit.CLOVER))
-                draw(Card(Denomination.KING, Suit.DIAMOND))
-            }
+        val player = createPlayerWithCards(
+            100,
+            Card(Denomination.ACE, Suit.CLOVER),
+            Card(Denomination.KING, Suit.DIAMOND),
+        )
         val playerResults = mapOf(player to Result.WIN)
         val gameResult = GameResult(dealerResult, playerResults)
         val actualRevenues = gameResult.calculateRevenuePercentages()
@@ -37,11 +37,11 @@ class RevenueTest {
     @Test
     fun `딜러 블랙잭, 플레이어 블랙잭인 상황에서 수익금은 0원이어야 한다`() {
         val dealerResult = mapOf(Result.DRAW to 1)
-        val player =
-            Player(Wallet(Identification("누누"), 100)).apply {
-                draw(Card(Denomination.ACE, Suit.CLOVER))
-                draw(Card(Denomination.KING, Suit.DIAMOND))
-            }
+        val player = createPlayerWithCards(
+            100,
+            Card(Denomination.ACE, Suit.CLOVER),
+            Card(Denomination.KING, Suit.DIAMOND),
+        )
         val playerResults = mapOf(player to Result.DRAW)
         val gameResult = GameResult(dealerResult, playerResults)
         val actualRevenues = gameResult.calculateRevenuePercentages()
