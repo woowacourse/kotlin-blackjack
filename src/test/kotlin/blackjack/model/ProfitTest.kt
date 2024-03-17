@@ -33,4 +33,11 @@ class ProfitTest {
         profit.giveBackBettingMoney()
         assertThat(profit.amount).isEqualTo(0)
     }
+
+    @Test
+    fun `패배한 경우 베팅한 만큼의 금액을 모두 잃는다`() {
+        val profit = Profit("50000")
+        profit.lostAllBettingMoney()
+        assertThat(profit.amount).isEqualTo(-50000)
+    }
 }
