@@ -1,6 +1,7 @@
 package blackjack.model
 
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
@@ -24,5 +25,12 @@ class ProfitTest {
     @ValueSource(strings = ["-2900", "0"])
     fun `베팅금은 0보다 큰 정수여야한다`(lessThanZero: String) {
         assertThrows<IllegalArgumentException> { Profit(lessThanZero) }
+    }
+
+    @Test
+    fun `무승부인 경우 수익을 0원으로 만든다`() {
+        val profit = Profit("50000")
+        profit.giveBackBettingMondy()
+        assertThat(profit.amount).isEqualTo(0)
     }
 }
