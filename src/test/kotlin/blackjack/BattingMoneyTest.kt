@@ -30,4 +30,9 @@ class BattingMoneyTest {
         val money = BattingMoney.ofAmount(100) - BattingMoney.ofAmount(200)
         assertThat(money.amount).isEqualTo(-100)
     }
+
+    @Test
+    fun `배팅 금액을 곱할 수 있다`() {
+        val money = BattingMoney.ofAmount(100).times(2.0)
+    }
 }

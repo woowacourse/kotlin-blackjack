@@ -1,10 +1,24 @@
 package blackjack.model.participant.testState
 
+import blackjack.model.BattingMoney
 import blackjack.model.deck.HandCards
 import blackjack.model.participant.CompetitionResult
 
 class Stay : HandCardState {
-    fun getResult(
+    fun getProfit(
+        handCards: HandCards,
+        opponentScore: Int,
+        battingMoney: BattingMoney,
+    ): BattingMoney {
+        return when (getResult(handCards, opponentScore)) {
+            CompetitionResult.WIN -> battingMoney.times(1.0)
+            CompetitionResult.LOSE -> battingMoney.unaryMinus()
+            CompetitionResult.SAME -> battingMoney.times(0.0)
+            CompetitionResult.BLACKJACK -> battingMoney.times(1.5)
+        }
+    }
+
+    private fun getResult(
         handCards: HandCards,
         opponentScore: Int,
     ): CompetitionResult {
