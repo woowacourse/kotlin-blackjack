@@ -4,8 +4,8 @@ import blackjack.model.card.CardHand
 
 class Stay(cardHand: CardHand) : Done(cardHand) {
     override fun earningRate(other: CardHandState): Double {
-        if (other is BlackJack) return -1.0
-        if (other is Bust) return 1.0
+        if (other is BlackJack) return -STAY_EARNING_RATE
+        if (other is Bust) return STAY_EARNING_RATE
         return rateForStay(other)
     }
 
@@ -14,9 +14,13 @@ class Stay(cardHand: CardHand) : Done(cardHand) {
             val score = getCardHandScore()
             val otherScore = other.getCardHandScore()
             if (score == otherScore) return 0.0
-            if (score > otherScore) return 1.0
-            if (score < otherScore) return -1.0
+            if (score > otherScore) return STAY_EARNING_RATE
+            if (score < otherScore) return -STAY_EARNING_RATE
         }
         throw IllegalStateException("예기치 못한 오류")
+    }
+
+    companion object {
+        private const val STAY_EARNING_RATE = 1.0
     }
 }

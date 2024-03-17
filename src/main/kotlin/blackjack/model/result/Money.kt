@@ -16,7 +16,7 @@ value class Money(val amount: Long) : Comparable<Money> {
         val ZERO: Money = Money(0)
 
         fun bet(amount: Long): Money {
-            require(amount >= MIN_BETTING_AMOUNT) { "돈은 1_000 원 이상 배팅할 수 있습니다." }
+            require(amount >= MIN_BETTING_AMOUNT) { "돈은 $MIN_BETTING_AMOUNT 원 이상 배팅할 수 있습니다." }
             return Money(amount)
         }
 
