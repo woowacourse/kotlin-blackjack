@@ -1,6 +1,6 @@
 package blackjack.model
 
-class BettingMoney(betting: String) {
+class Profit(betting: String) {
     val amount: Int
 
     init {
