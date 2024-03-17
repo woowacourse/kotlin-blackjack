@@ -48,13 +48,13 @@ class DealerTest {
     }
 
     @Test
-    fun `수익을 계산한다`() {
+    fun `딜러는 모든 플레이어들과의 점수를 비교해서 수익을 얻는다`() {
         // given
         val dealer = Dealer(listOf(DIAMOND_TWO))
         val players =
             Players.from(
                 listOf("abc", "def"),
-                listOf(1000, 3000),
+                listOf(1000, 1000),
             )
 
         // when
@@ -63,6 +63,6 @@ class DealerTest {
         val actual = dealer.profit(players)
 
         // then
-        assertThat(actual.price).isEqualTo(-5500)
+        assertThat(actual.price).isEqualTo(-2500)
     }
 }
