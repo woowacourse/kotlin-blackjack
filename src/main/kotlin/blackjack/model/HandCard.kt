@@ -11,7 +11,7 @@ class HandCard {
         return cards
     }
 
-    fun getGameScoreWithAceCount(): Int {
+    fun getGameScore(): Int {
         val score = getTotalCardsSum()
         val transferScore = score + Denomination.TRANSFER_ACE_SCORE
         return if (hasMinimumAces() && transferScore <= BlackJack.BLACK_JACK_SCORE) {

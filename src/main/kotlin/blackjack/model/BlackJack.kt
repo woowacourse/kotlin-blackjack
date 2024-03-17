@@ -23,7 +23,7 @@ class BlackJack {
     }
 
     fun getHandCardScore(): Int {
-        return handCard.getGameScoreWithAceCount()
+        return handCard.getGameScore()
     }
 
     fun switchToStayState() {
@@ -38,7 +38,7 @@ class BlackJack {
     }
 
     private fun updateGameStateWithScore() {
-        when (handCard.getGameScoreWithAceCount()) {
+        when (handCard.getGameScore()) {
             in MIN_SCORE until BLACK_JACK_SCORE -> {
                 state = State.Action.Hit
             }
