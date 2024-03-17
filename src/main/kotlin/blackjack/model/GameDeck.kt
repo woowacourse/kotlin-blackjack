@@ -1,27 +1,26 @@
 package blackjack.model
 
 class GameDeck : DeckManager {
-    private var deck: List<Card> = Card.cards.shuffled()
-    private var index: Int = CARD_DRAW_DEFAULT_INDEX
+    private val deck: MutableList<Card> = Card.cards.shuffled().toMutableList()
 
     override fun resetDeck(cards: List<Card>?) {
-        deck = cards ?: Card.cards.shuffled()
+        deck.clear()
+        if (cards == null) {
+            deck.addAll(Card.cards.shuffled())
+        } else {
+            deck.addAll(cards)
+        }
     }
 
-    override fun resetDeckIndex(newIndex: Int?) {
-        index = newIndex ?: CARD_DRAW_DEFAULT_INDEX
-    }
-
-    fun drawCard(): Card {
-        if (index < deck.size) {
-            return deck[index++]
+    override fun drawCard(position: Int): Card {
+        if (position < deck.size) {
+            return deck.removeAt(position)
         }
         resetDeck()
-        resetDeckIndex()
-        return deck[index++]
+        return deck.removeAt(position)
     }
 
     companion object {
-        private const val CARD_DRAW_DEFAULT_INDEX = 0
+        const val CARD_DRAW_DEFAULT_INDEX = 0
     }
 }

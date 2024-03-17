@@ -1,5 +1,7 @@
 package blackjack.model
 
+import blackjack.model.GameDeck.Companion.CARD_DRAW_DEFAULT_INDEX
+
 class PlayerGroup {
     private var _players: List<Player> = emptyList()
     val players: List<Player>
@@ -24,7 +26,7 @@ class PlayerGroup {
     ) {
         players.forEach { player ->
             player.drawCard(
-                card = { gameDeck.drawCard() },
+                card = { gameDeck.drawCard(CARD_DRAW_DEFAULT_INDEX) },
                 shouldDrawCard = { shouldDrawCard(player) },
                 showPlayerCards = showPlayerCards,
             )

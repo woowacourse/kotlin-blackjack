@@ -1,5 +1,7 @@
 package blackjack.model
 
+import blackjack.model.GameDeck.Companion.CARD_DRAW_DEFAULT_INDEX
+
 class Participants(
     val dealer: Dealer,
     val playerGroup: PlayerGroup,
@@ -53,7 +55,7 @@ class Participants(
         gameDeck: GameDeck,
     ) {
         dealer.drawCard(
-            card = { gameDeck.drawCard() },
+            card = { gameDeck.drawCard(CARD_DRAW_DEFAULT_INDEX) },
             shouldDrawCard = { dealer.shouldDrawCard() },
             showPlayerCards = { printDealerDrawCard(it as Dealer) },
         )
@@ -65,9 +67,9 @@ class Participants(
     }
 
     fun initParticipantsDeck(gameDeck: GameDeck) {
-        dealer.addCard(card = gameDeck.drawCard())
+        dealer.addCard(card = gameDeck.drawCard(CARD_DRAW_DEFAULT_INDEX))
         playerGroup.players.forEach { player ->
-            player.addCard(card = gameDeck.drawCard())
+            player.addCard(card = gameDeck.drawCard(CARD_DRAW_DEFAULT_INDEX))
         }
     }
 
