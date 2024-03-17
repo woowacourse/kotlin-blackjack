@@ -1,6 +1,6 @@
-package blackjack.model
+package blackjack.model.game
 
-import blackjack.model.Participant.Player
+import blackjack.model.user.Participant.Player
 
 sealed class Revenue {
     abstract val amount: Double

@@ -1,4 +1,4 @@
-package blackjack.model
+package blackjack.model.game
 
 sealed interface GameState {
     enum class Running : GameState {

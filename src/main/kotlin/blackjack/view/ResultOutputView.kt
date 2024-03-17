@@ -1,10 +1,10 @@
 package blackjack.view
 
-import blackjack.model.GameResult
-import blackjack.model.Participant
-import blackjack.model.Participant.Dealer
-import blackjack.model.Participant.Player
-import blackjack.model.Score
+import blackjack.model.game.GameResult
+import blackjack.model.game.Score
+import blackjack.model.user.Participant
+import blackjack.model.user.Participant.Dealer
+import blackjack.model.user.Participant.Player
 
 object ResultOutputView {
     private const val MESSAGE_PARTICIPANT_GAME_SCORE = "%s 카드: %s - 결과: %d"

@@ -1,14 +1,14 @@
 package blackjack
 
-import blackjack.model.BettingAmount
-import blackjack.model.Card
-import blackjack.model.CardDeck
-import blackjack.model.CardNumber
-import blackjack.model.CardSymbol
-import blackjack.model.GameState
-import blackjack.model.Participant.Player
-import blackjack.model.ParticipantInformation.PlayerInformation
-import blackjack.model.ParticipantName
+import blackjack.model.card.Card
+import blackjack.model.card.CardDeck
+import blackjack.model.card.CardNumber
+import blackjack.model.card.CardSymbol
+import blackjack.model.game.GameState
+import blackjack.model.user.BettingAmount
+import blackjack.model.user.Participant.Player
+import blackjack.model.user.ParticipantInformation.PlayerInformation
+import blackjack.model.user.ParticipantName
 import blackjack.view.ProgressOutputView
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach

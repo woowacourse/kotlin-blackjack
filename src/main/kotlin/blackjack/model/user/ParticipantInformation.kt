@@ -1,4 +1,4 @@
-package blackjack.model
+package blackjack.model.user
 
 sealed class ParticipantInformation(open val name: ParticipantName) {
     data class PlayerInformation(override val name: ParticipantName, val bettingAmount: BettingAmount) : ParticipantInformation(name)

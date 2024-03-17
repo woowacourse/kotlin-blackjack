@@ -1,7 +1,11 @@
-package blackjack.model
+package blackjack.model.user
 
-import blackjack.model.ParticipantInformation.DealerInformation
-import blackjack.model.ParticipantInformation.PlayerInformation
+import blackjack.model.card.Card
+import blackjack.model.card.CardDeck
+import blackjack.model.game.GameInformation
+import blackjack.model.game.GameState
+import blackjack.model.user.ParticipantInformation.DealerInformation
+import blackjack.model.user.ParticipantInformation.PlayerInformation
 
 sealed class Participant(val participantInformation: ParticipantInformation, val gameInformation: GameInformation) {
     fun draw(card: Card) {

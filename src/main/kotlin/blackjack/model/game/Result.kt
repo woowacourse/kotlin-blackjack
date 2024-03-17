@@ -1,7 +1,7 @@
-package blackjack.model
+package blackjack.model.game
 
-import blackjack.model.Participant.Dealer
-import blackjack.model.Participant.Player
+import blackjack.model.user.Participant.Dealer
+import blackjack.model.user.Participant.Player
 
 enum class Result {
     WIN,

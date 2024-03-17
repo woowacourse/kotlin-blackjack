@@ -1,8 +1,8 @@
 package blackjack.view
 
-import blackjack.model.Participant
-import blackjack.model.Participant.Dealer
-import blackjack.model.Participant.Player
+import blackjack.model.user.Participant
+import blackjack.model.user.Participant.Dealer
+import blackjack.model.user.Participant.Player
 
 object ProgressOutputView {
     private const val MESSAGE_CARD_DISTRIBUTION = "\n%s와 %s에게 2장의 카드를 나누었습니다."

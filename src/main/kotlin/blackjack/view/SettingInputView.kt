@@ -1,7 +1,7 @@
 package blackjack.view
 
-import blackjack.model.BettingAmount
-import blackjack.model.ParticipantName
+import blackjack.model.user.BettingAmount
+import blackjack.model.user.ParticipantName
 
 object SettingInputView {
     private const val INPUT_MESSAGE_PLAYER_NAMES = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)"

@@ -1,4 +1,4 @@
-package blackjack.model
+package blackjack.model.user
 
 data class BettingAmount(val amount: Double) {
     init {

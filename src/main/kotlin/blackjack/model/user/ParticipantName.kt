@@ -1,4 +1,4 @@
-package blackjack.model
+package blackjack.model.user
 
 data class ParticipantName(private val name: String) {
     init {

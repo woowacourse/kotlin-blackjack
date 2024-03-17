@@ -1,10 +1,10 @@
 package blackjack
 
-import blackjack.model.Card
-import blackjack.model.CardNumber
-import blackjack.model.CardSymbol
-import blackjack.model.GameInformation
-import blackjack.model.GameState
+import blackjack.model.card.Card
+import blackjack.model.card.CardNumber
+import blackjack.model.card.CardSymbol
+import blackjack.model.game.GameInformation
+import blackjack.model.game.GameState
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test

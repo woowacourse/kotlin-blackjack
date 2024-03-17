@@ -1,4 +1,7 @@
-package blackjack.model
+package blackjack.model.game
+
+import blackjack.model.card.Card
+import blackjack.model.user.Hand
 
 class GameInformation(val hand: Hand = Hand(), state: GameState = GameState.Running.HIT) {
     private var _state: GameState = state

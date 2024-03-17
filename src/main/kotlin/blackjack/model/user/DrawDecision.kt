@@ -1,4 +1,4 @@
-package blackjack.model
+package blackjack.model.user
 
 class DrawDecision(private val decision: String) {
     init {

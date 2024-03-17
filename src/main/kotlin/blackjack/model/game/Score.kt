@@ -1,4 +1,7 @@
-package blackjack.model
+package blackjack.model.game
+
+import blackjack.model.card.Card
+import blackjack.model.card.CardNumber
 
 class Score(private val cards: Set<Card>) {
     var point: Int = calculateScore()

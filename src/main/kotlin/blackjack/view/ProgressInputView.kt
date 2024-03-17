@@ -1,7 +1,7 @@
 package blackjack.view
 
-import blackjack.model.DrawDecision
-import blackjack.model.ParticipantName
+import blackjack.model.user.DrawDecision
+import blackjack.model.user.ParticipantName
 
 object ProgressInputView {
     private const val INPUT_MESSAGE_DRAW_DECISION = "\n%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)"

@@ -1,9 +1,9 @@
-package blackjack.model
+package blackjack.model.game
 
-import blackjack.model.Participant.Dealer
-import blackjack.model.Participant.Player
-import blackjack.model.Revenue.DealerRevenue
-import blackjack.model.Revenue.PlayerRevenue
+import blackjack.model.game.Revenue.DealerRevenue
+import blackjack.model.game.Revenue.PlayerRevenue
+import blackjack.model.user.Participant.Dealer
+import blackjack.model.user.Participant.Player
 
 class GameResult(val dealer: Dealer, val players: List<Player>) {
     private val playersResult: List<Result> = judgePlayersResult()

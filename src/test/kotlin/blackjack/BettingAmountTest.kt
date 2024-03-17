@@ -1,6 +1,6 @@
 package blackjack
 
-import blackjack.model.BettingAmount
+import blackjack.model.user.BettingAmount
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
