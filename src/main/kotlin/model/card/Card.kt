@@ -1,6 +1,6 @@
 package model.card
 
-class Card(val denomination: Denomination, val suit: Suit) {
+class Card private constructor(val denomination: Denomination, val suit: Suit) {
     fun isAce(): Boolean = (denomination == Denomination.ACE)
 
     companion object {
@@ -15,15 +15,15 @@ class Card(val denomination: Denomination, val suit: Suit) {
 
         fun from(number: Int): Card {
             return number.validateRange().run {
-                Card(intToValueType(number), intToMarkType(number))
+                Card(intToValueType(number), intToSuitType(number))
             }
         }
 
-        fun ofStringType(
-            valueType: String,
-            markType: String,
+        fun of(
+            denomination: Denomination,
+            suit: Suit,
         ): Card {
-            return Card(stringToValueType(valueType), stringToMarkType(markType))
+            return Card(denomination, suit)
         }
     }
 }
