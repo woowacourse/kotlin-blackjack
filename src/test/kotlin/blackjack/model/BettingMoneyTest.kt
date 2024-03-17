@@ -20,4 +20,10 @@ class BettingMoneyTest {
     fun `베팅금은 숫자로만 입력해야 한다`(input: String) {
         assertThrows<IllegalArgumentException> { BettingMoney(input) }
     }
+
+    @ParameterizedTest
+    @ValueSource(strings = ["-2900", "0"])
+    fun `베팅금은 0보다 큰 정수여야한다`(lessThanZero: String) {
+        assertThrows<IllegalArgumentException> { BettingMoney(lessThanZero) }
+    }
 }
