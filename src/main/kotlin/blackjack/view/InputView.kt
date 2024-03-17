@@ -11,12 +11,13 @@ object InputView {
 
     tailrec fun getBetAmount(name: String): Long {
         println("\n${name}의 배팅 금액은?")
-        val input = readln().toLong()
-        return if (input > 0) {
-            input
-        } else {
-            println("배팅 금액은 0 이상이어야 합니다")
+        val input = readln().toLongOrNull()
+
+        return if (input == null || input <= 0) {
+            println("배팅 금액은 0 이상의 숫자여야 합니다")
             getBetAmount(name)
+        } else {
+            input
         }
     }
 

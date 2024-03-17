@@ -13,10 +13,12 @@ class Controller(cards: List<Card>) {
     fun run() {
         val players = makePlayers()
         val dealer = Dealer()
-        try {
+        runCatching {
             play(dealer, players)
-        } catch (e: IllegalStateException) {
-            OutputView.printExceptionMessage(e)
+        }.onSuccess {
+            printGameResult(dealer, players)
+        }.onFailure {
+            OutputView.printExceptionMessage(it.message)
         }
     }
 
@@ -34,8 +36,6 @@ class Controller(cards: List<Card>) {
     ) {
         initParticipantsCard(dealer, players)
         proceedParticipantsTure(dealer, players)
-        OutputView.printResult(dealer, players)
-        printBetAmount(dealer, *players.toTypedArray())
     }
 
     private fun initParticipantsCard(
@@ -84,11 +84,19 @@ class Controller(cards: List<Card>) {
         }
     }
 
+    private fun printGameResult(
+        dealer: Dealer,
+        players: List<Player>,
+    ) {
+        OutputView.printResult(dealer, players)
+        OutputView.printFinalBetAmountMessage()
+        printBetAmount(dealer, *players.toTypedArray())
+    }
+
     private fun printBetAmount(
         dealer: Dealer,
         vararg players: Player,
     ) {
-        OutputView.printFinalBetAmountMessage()
         val dealerBetAmount: Long = dealer.calculateBetAmount(*players)
         OutputView.printBetAmount(dealer.name, dealerBetAmount)
         players.forEach { player ->
