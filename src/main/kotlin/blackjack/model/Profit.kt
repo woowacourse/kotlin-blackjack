@@ -2,13 +2,13 @@ package blackjack.model
 
 class Profit(bettingMoney: String) {
     private var _amount = INITIAL_AMOUNT
-    val amount: Int
+    val amount: Double
         get() = _amount
 
     init {
-        requireNotNull(bettingMoney.toIntOrNull()) { "베팅금을 숫자로만 입력해주세요" }
-        require(bettingMoney.toInt() > 0) { "베팅금은 0보다 큰 정수로 입력해주세요" }
-        _amount = bettingMoney.toInt()
+        requireNotNull(bettingMoney.toDoubleOrNull()) { "베팅금을 숫자로만 입력해주세요" }
+        require(bettingMoney.toDouble() > 0) { "베팅금은 0보다 큰 정수로 입력해주세요" }
+        _amount = bettingMoney.toDouble()
     }
 
     fun giveBackBettingMoney() {
@@ -24,7 +24,7 @@ class Profit(bettingMoney: String) {
     }
 
     companion object {
-        const val INITIAL_AMOUNT = 0
+        const val INITIAL_AMOUNT = 0.0
         const val BLACKJACK_ODDS = 1.5
     }
 }
