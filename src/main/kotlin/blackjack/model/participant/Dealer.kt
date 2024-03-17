@@ -17,10 +17,11 @@ class Dealer private constructor() : GameParticipant() {
         }
     }
 
-    fun gameResult(playersState: Map<Player, Finish>): Map<String, CompetitionResult> {
-        val result = mutableMapOf<String, CompetitionResult>()
+    fun gameResult(playersState: Map<Player, Finish>): Map<String, Double> {
+        val result = mutableMapOf<String, Double>()
         playersState.entries.forEach { (player, finish) ->
-            result[player.name] = finish.getResult(player.getScore(), handCards.calculateScore())
+            result[player.name] =
+                finish.getProfit(player.getScore(), handCards.calculateScore(), player.battingMoney).amount
         }
         return result
     }

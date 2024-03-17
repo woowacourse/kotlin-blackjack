@@ -44,17 +44,13 @@ class OutputView {
         }
     }
 
-    fun printGameResult(result: Map<String, CompetitionResult>) {
-        println("\n## 최종 승패")
+    fun printGameResult(result: Map<String, Double>) {
+        println("\n## 최종 수익")
 
-        val counts = result.values.groupingBy { it }.eachCount()
-        val wins = counts.getOrDefault(CompetitionResult.WIN, DEFAULT_COMPETITION_RESULT)
-        val losses = counts.getOrDefault(CompetitionResult.LOSE, DEFAULT_COMPETITION_RESULT)
-        val draws = counts.getOrDefault(CompetitionResult.SAME, DEFAULT_COMPETITION_RESULT)
+        println("딜러: ${result.values.sum().unaryMinus()}")
 
-        println("딜러: ${losses}승 ${wins}패 ${draws}무")
-        result.forEach { (playerName, competitionResult) ->
-            println("$playerName: ${competitionResult.toPrint()}")
+        result.forEach { (playerName, profit) ->
+            println("$playerName: $profit")
         }
     }
 

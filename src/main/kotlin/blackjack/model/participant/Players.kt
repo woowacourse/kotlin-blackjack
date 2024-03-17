@@ -1,13 +1,18 @@
 package blackjack.model.participant
 
+import blackjack.model.BattingMoney
 import blackjack.model.deck.Deck
 import blackjack.model.participant.state.Finish
 
-class Players private constructor(names: Set<String>) {
-    val gamePlayers: List<Player> = names.map { Player(it) }
+class Players private constructor(names: Set<String>, battingMoney: List<BattingMoney>) {
+    val gamePlayers: List<Player>
 
     init {
         require(names.size in MIN_PLAYER_COUNT..MAX_PLAYER_COUNT) { "${MIN_PLAYER_COUNT}명 이상 ${MAX_PLAYER_COUNT}명 이하의 플레이어만 가능합니다." }
+        gamePlayers =
+            names.mapIndexed { index, name ->
+                Player(name, battingMoney[index])
+            }
     }
 
     private fun initPlayersCard(deck: Deck) {
@@ -37,9 +42,10 @@ class Players private constructor(names: Set<String>) {
         fun withInitCards(
             names: List<String>,
             deck: Deck,
+            battingMoney: List<BattingMoney>,
         ): Players {
             validateDuplicateNames(names)
-            return Players(names.toSet()).also { it.initPlayersCard(deck) }
+            return Players(names.toSet(), battingMoney).also { it.initPlayersCard(deck) }
         }
 
         private fun validateDuplicateNames(numbers: List<String>) {
