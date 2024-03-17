@@ -2,7 +2,7 @@ package blackjack.model
 
 class GameInfo(
     val name: String,
-    val moneyAmount: Money = Money(0),
+    val moneyAmount: Money = Money(),
     cards: Set<Card> = emptySet(),
 ) {
     private val _cards: MutableSet<Card> = cards.toMutableSet()

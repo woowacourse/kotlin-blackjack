@@ -10,7 +10,7 @@ class MoneyTest {
     @Test
     fun `베팅 가능 최소 금액보다 작은 금액을 입력하면, 예외를 발생시킨다`() {
         assertThrows<IllegalArgumentException> {
-            Money.of(0)
+            Money.from(0)
         }
     }
 
