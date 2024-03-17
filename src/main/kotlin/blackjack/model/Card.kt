@@ -2,7 +2,7 @@ package blackjack.model
 
 class Card private constructor(val pattern: Pattern, val number: CardNumber) {
     companion object {
-        private val cards = initDeck()
+        val cards = initDeck()
 
         private fun initDeck(): List<Card> {
             return Pattern.entries.flatMap { pattern ->
@@ -10,10 +10,7 @@ class Card private constructor(val pattern: Pattern, val number: CardNumber) {
                     Card(pattern = pattern, number = number)
                 }
             }
-            return newCards.toList()
         }
-
-        fun createDeck(): List<Card> = cards
 
         fun Pair<Pattern, CardNumber>.toCard(): Card {
             return cards.first { it.pattern == this.first && it.number == this.second }
