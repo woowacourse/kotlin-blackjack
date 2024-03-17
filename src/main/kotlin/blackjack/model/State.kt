@@ -9,6 +9,8 @@ sealed interface State {
 
     fun calculateWinningResult(opponent: Participant): WinningResult
 
+    fun getEarningRate(): Double
+
     companion object {
         const val THRESHOLD_BUST = 21
         const val THRESHOLD_BLACKJACK = 21
@@ -33,7 +35,6 @@ class Hit(private val hand: Hand) : Running(hand) {
         val sumOfCard = hand.sumUpCardValues()
         return when {
             sumOfCard > State.THRESHOLD_BUST -> Bust(hand)
-            sumOfCard == State.THRESHOLD_BUST -> Stay(hand)
             else -> Hit(hand)
         }
     }
@@ -41,6 +42,8 @@ class Hit(private val hand: Hand) : Running(hand) {
     override fun stay(): State = Stay(hand)
 
     override fun calculateWinningResult(opponent: Participant): WinningResult = WinningResult.DRAW
+
+    override fun getEarningRate(): Double = 0.0
 }
 
 class Stay(hand: Hand) : Finished(hand) {
@@ -53,6 +56,8 @@ class Stay(hand: Hand) : Finished(hand) {
             else -> WinningResult.DRAW
         }
     }
+
+    override fun getEarningRate(): Double = 1.0
 }
 
 class Blackjack(hand: Hand) : Finished(hand) {
@@ -62,6 +67,8 @@ class Blackjack(hand: Hand) : Finished(hand) {
             else -> WinningResult.WIN
         }
     }
+
+    override fun getEarningRate(): Double = 1.5
 }
 
 class Bust(hand: Hand) : Finished(hand) {
@@ -71,4 +78,6 @@ class Bust(hand: Hand) : Finished(hand) {
             else -> WinningResult.LOSE
         }
     }
+
+    override fun getEarningRate(): Double = 0.0
 }

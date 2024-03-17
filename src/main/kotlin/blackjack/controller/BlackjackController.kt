@@ -1,5 +1,6 @@
 package blackjack.controller
 
+import blackjack.model.BetAmount
 import blackjack.model.CardDeck
 import blackjack.model.CardDeckGenerator
 import blackjack.model.Dealer
@@ -13,21 +14,25 @@ import blackjack.view.OutputView
 class BlackjackController {
     fun start() {
         val deck = CardDeckGenerator.generate()
-        val participants = initializeGameSetting(deck, InputView.readNames())
+        val playerNames = InputView.readNames().map { ParticipantName(it) }
+        val participants = initializeGameSetting(deck, playerNames)
         OutputView.printInitialStatus(participants)
 
         playRound(deck, participants)
-        OutputView.printStatusAndScore(participants)
-        OutputView.printResult(participants.getDealerWinningState(), participants.getPlayerWinningState())
+        OutputView.printStatusAndScore(participants.getAllParticipants())
+        OutputView.printParticipantsProfits(participants.getParticipantsProfits())
     }
 
     private fun initializeGameSetting(
         deck: CardDeck,
-        names: List<String>,
+        playerNames: List<ParticipantName>,
     ): Participants {
+        val players =
+            playerNames.map { playerName ->
+                val betAmount = InputView.readBetAmount(playerName)
+                Player(playerName, createInitialHand(deck), BetAmount(betAmount))
+            }
         val dealer = Dealer(hand = createInitialHand(deck))
-        val players = names.map { Player(ParticipantName(it), createInitialHand(deck)) }
-
         return Participants(dealer, players)
     }
 

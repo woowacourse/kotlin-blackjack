@@ -21,11 +21,9 @@ sealed class Participant(val name: ParticipantName, hand: Hand) {
     fun getCards(): List<Card> = state.hand().cards
 
     fun getSumOfCards(): Int = state.hand().sumUpCardValues()
-
-    fun getWinningResult(opponent: Participant): WinningResult = state.calculateWinningResult(opponent)
 }
 
-class Player(name: ParticipantName, hand: Hand) : Participant(name, hand) {
+class Player(name: ParticipantName, hand: Hand, private val betAmount: BetAmount) : Participant(name, hand) {
     fun playRound(
         cardDeck: CardDeck,
         isPlayerActionContinued: (name: ParticipantName) -> Boolean,
@@ -38,6 +36,17 @@ class Player(name: ParticipantName, hand: Hand) : Participant(name, hand) {
                 finishRound()
             }
             updatePlayerStatus(this)
+        }
+    }
+
+    private fun getWinningResult(opponent: Participant): WinningResult = state.calculateWinningResult(opponent)
+
+    fun calculateProfit(opponent: Participant): Double {
+        val winningResult = getWinningResult(opponent)
+        return when (winningResult) {
+            WinningResult.WIN -> betAmount * state.getEarningRate()
+            WinningResult.DRAW -> 0.0
+            WinningResult.LOSE -> -betAmount
         }
     }
 }
@@ -61,7 +70,7 @@ class Dealer(name: ParticipantName = ParticipantName(DEALER_NAME), hand: Hand) :
 
     fun countAdditionalDrawnCards(): Int = getCards().size - INITIAL_DISTRIBUTE_COUNT
 
-    fun isUnderHitThreshold(threshold: Int = THRESHOLD_HIT): Boolean = state.hand().sumUpCardValues() <= threshold
+    private fun isUnderHitThreshold(threshold: Int = THRESHOLD_HIT): Boolean = getSumOfCards() <= threshold
 
     companion object {
         const val THRESHOLD_HIT = 16

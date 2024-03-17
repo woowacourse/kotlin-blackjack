@@ -4,11 +4,9 @@ import blackjack.model.Card
 import blackjack.model.CardNumber
 import blackjack.model.CardShape
 import blackjack.model.Dealer
-import blackjack.model.Dealer.Companion.DEALER_NAME
 import blackjack.model.Participant
 import blackjack.model.Participants
 import blackjack.model.Player
-import blackjack.model.WinningResult
 
 object OutputView {
     fun printInitialStatus(participants: Participants) {
@@ -40,46 +38,21 @@ object OutputView {
         println("${dealer.name}는 16이하라 ${dealer.countAdditionalDrawnCards()}장의 카드를 더 받았습니다.\n")
     }
 
-    fun printStatusAndScore(participants: Participants) {
-        participants.getAllParticipants().forEach { participant ->
+    fun printStatusAndScore(participants: List<Participant>) {
+        participants.forEach { participant ->
             println(
-                "${participant.name}카드 : ${
-                    participant.getCards().joinToString(", ") { cardToString(it) }
-                } - 결과: ${participant.getSumOfCards()}",
+                "${participant.name}카드 : ${participant.getCards().joinToString(", ") { cardToString(it) }}" +
+                    " - 결과: ${participant.getSumOfCards()}",
             )
         }
     }
 
-    fun printResult(
-        dealerResult: Map<WinningResult, Int>,
-        playerResult: Map<Player, WinningResult>,
-    ) {
-        println("\n## 최종 승패")
-        printDealerResult(dealerResult)
-        printPlayerResult(playerResult)
-    }
-
-    private fun printDealerResult(dealerResult: Map<WinningResult, Int>) {
-        println(
-            "${DEALER_NAME}: " +
-                "${dealerResult.getOrDefault(WinningResult.WIN, 0)}승 " +
-                "${dealerResult.getOrDefault(WinningResult.LOSE, 0)}패 " +
-                "${dealerResult.getOrDefault(WinningResult.DRAW, 0)}무",
-        )
-    }
-
-    private fun printPlayerResult(playerResult: Map<Player, WinningResult>) {
-        playerResult.entries.forEach { (player, result) ->
-            println("${player.name} : ${getWinningResultString(result)}")
+    fun printParticipantsProfits(participantsProfits: Map<Participant, Double>) {
+        println("\n## 최종 수익")
+        participantsProfits.entries.forEach { (participant, profit) ->
+            println("${participant.name}: $profit")
         }
     }
-
-    private fun getWinningResultString(result: WinningResult): String =
-        when (result) {
-            WinningResult.WIN -> "승"
-            WinningResult.LOSE -> "패"
-            WinningResult.DRAW -> "무"
-        }
 
     private fun cardToString(card: Card): String {
         val cardNumber =

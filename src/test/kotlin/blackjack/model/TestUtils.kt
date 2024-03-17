@@ -10,4 +10,8 @@ object TestUtils {
     }
 
     fun createCardDeckFrom(vararg numbers: Int): CardDeck = CardDeck(numbers.map { Card(it) })
+
+    fun createDealer(vararg numbers: Card): Dealer {
+        return Dealer(hand = Hand(numbers.toList()))
+    }
 }
