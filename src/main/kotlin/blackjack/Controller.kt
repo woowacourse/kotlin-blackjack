@@ -34,7 +34,8 @@ class Controller(cards: List<Card>) {
     ) {
         initParticipantsCard(dealer, players)
         proceedParticipantsTure(dealer, players)
-        printStatistics(dealer, *players.toTypedArray())
+        OutputView.printResult(dealer, players)
+        printBetAmount(dealer, *players.toTypedArray())
     }
 
     private fun initParticipantsCard(
@@ -83,16 +84,16 @@ class Controller(cards: List<Card>) {
         }
     }
 
-    private fun printStatistics(
+    private fun printBetAmount(
         dealer: Dealer,
         vararg players: Player,
     ) {
-        var dealerBetAmount: Long = 0
+        OutputView.printFinalBetAmountMessage()
+        val dealerBetAmount: Long = dealer.calculateBetAmount(*players)
+        OutputView.printBetAmount(dealer.name, dealerBetAmount)
         players.forEach { player ->
             val playerBetAmount = player.calculateBetAmount(dealer)
             OutputView.printBetAmount(player.name, playerBetAmount)
-            dealerBetAmount -= playerBetAmount
         }
-        OutputView.printBetAmount(dealer.name, dealerBetAmount)
     }
 }

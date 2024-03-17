@@ -96,6 +96,10 @@ object OutputView {
         println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
     }
 
+    fun printFinalBetAmountMessage(){
+        println("\n## 최종 수익")
+    }
+
     fun printBetAmount(
         name: String,
         betAmount: Long,
