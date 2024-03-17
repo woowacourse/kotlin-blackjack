@@ -6,11 +6,11 @@ import blackjack.model.CardNumber
 import blackjack.model.Dealer
 import blackjack.model.DealerStatistics
 import blackjack.model.GameResult
-import blackjack.model.Money
 import blackjack.model.Participant
 import blackjack.model.Player
 import blackjack.model.PlayerStatistics
-import blackjack.model.Reward
+import blackjack.model.RewardStatistic
+import blackjack.model.RewardStatistics
 import blackjack.model.Suit
 
 object OutputView {
@@ -97,17 +97,16 @@ object OutputView {
         }
     }
 
-    fun printRewardStatistics(dealer: Dealer, playerStatistics: PlayerStatistics) {
-        val reward = Reward()
-        val dealerMoney = -playerStatistics.map { reward.moneyFrom(it) }.reduce { a, b -> a + b }
-        printParticipantReward(dealer, dealerMoney)
-        playerStatistics.forEach {
-            printParticipantReward(it.player, reward.moneyFrom(it))
+    fun printRewardStatistics(rewardStatistics: RewardStatistics) {
+        println("## 최종 수익")
+        printParticipantRewardStatistic(rewardStatistics.dealerRewardStatistic)
+        rewardStatistics.playerRewardStatistics.forEach {
+            printParticipantRewardStatistic(it)
         }
     }
 
-    private fun printParticipantReward(participant: Participant, money: Money) {
-        println("${participant.name}: ${money.money}")
+    private fun printParticipantRewardStatistic(rewardStatistic: RewardStatistic) {
+        println("${rewardStatistic.participant.name}: ${rewardStatistic.reward.money}")
     }
 
     fun printError(message: String) = println(message)
