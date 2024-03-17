@@ -4,9 +4,8 @@ import blackjack.model.DEFAULT_BATTING_AMOUNT
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.Arguments
-import org.junit.jupiter.params.provider.MethodSource
+
+private fun battingAmounts(size: Int) = List(size) { DEFAULT_BATTING_AMOUNT }
 
 class PlayersTest {
     @Test
@@ -16,11 +15,17 @@ class PlayersTest {
         }
     }
 
-    @MethodSource("플레이어 수 제한 범위 테스트 데이터")
-    @ParameterizedTest
-    fun `플레이어 수가 제한 범위를 넘기는 경우 예외가 발생한다`(playersName: List<String>) {
+    @Test
+    fun `플레이어 수가 2명 미만인 경우 예외가 발생한다`() {
         assertThrows<IllegalArgumentException> {
-            Players.from(playersName, battingAmounts(playersName.size))
+            Players.from(listOf("a"), battingAmounts(1))
+        }
+    }
+
+    @Test
+    fun `플레이어 수가 8명 초과인 경우 예외가 발생한다`() {
+        assertThrows<IllegalArgumentException> {
+            Players.from(listOf("a", "b", "c", "d", "e", "f", "g", "h", "i"), battingAmounts(9))
         }
     }
 
@@ -36,16 +41,5 @@ class PlayersTest {
         assertDoesNotThrow {
             Players.from(listOf("olive", "abc", "defgh"), battingAmounts(3))
         }
-    }
-
-    companion object {
-        fun battingAmounts(size: Int) = List(size) { DEFAULT_BATTING_AMOUNT }
-
-        @JvmStatic
-        fun `플레이어 수 제한 범위 테스트 데이터`() =
-            listOf(
-                Arguments.of(listOf("a")),
-                Arguments.of(listOf("a", "b", "c", "d", "e", "f", "g", "h", "i")),
-            )
     }
 }
