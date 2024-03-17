@@ -23,25 +23,19 @@ class BlackJackController(
 
     private fun initGameParticipants(): Participants {
         val dealer = Dealer()
-        val players =
-            Players(
-                (inputView.readPlayersName())
-                    .map {
-                        val name = PlayerName(it)
-                        Player(name, Money.bet(inputView.readMoney(name)))
-                    },
-            )
+        val players = readPlayers()
         outputView.printInitialDealing(dealer, players)
         return Participants(dealer, players)
     }
 
-    private fun showGameResult(
-        dealer: Dealer,
-        players: Players,
-    ) {
-        outputView.printFinalCardHands(dealer, players)
-        showParticipantsProfit(dealer, players)
-    }
+    private fun readPlayers() =
+        Players(
+            (inputView.readPlayersName())
+                .map {
+                    val name = PlayerName(it)
+                    Player(name, Money.bet(inputView.readMoney(name)))
+                },
+        )
 
     private fun runGame(
         players: Players,
@@ -59,6 +53,14 @@ class BlackJackController(
 
     private fun runDealerPhase(dealer: Dealer) {
         dealer.runPhase({ dealer.dealerDecisionCondition.invoke() }) { outputView.printDealerHit() }
+    }
+
+    private fun showGameResult(
+        dealer: Dealer,
+        players: Players,
+    ) {
+        outputView.printFinalCardHands(dealer, players)
+        showParticipantsProfit(dealer, players)
     }
 
     private fun showParticipantsProfit(
