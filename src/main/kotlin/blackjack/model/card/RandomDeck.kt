@@ -2,7 +2,7 @@ package blackjack.model.card
 
 class RandomDeck : CardDeck {
     private val _cardDeck: List<Card> = create()
-    val cardDeck: List<Card>
+    private val cardDeck: List<Card>
         get() = _cardDeck
 
     private var cardIndex = 0

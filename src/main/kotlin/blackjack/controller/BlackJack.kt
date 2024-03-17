@@ -15,12 +15,12 @@ import blackjack.view.OutputView
 class BlackJack(
     private val inputView: InputView,
     private val outputView: OutputView,
-    private val cardDeck: CardDeck = RandomDeck(),
 ) {
     fun gameStart() {
         val participants = prepareForGame()
-        dealInitialCards(participants)
-        playing(participants)
+        val cardDeck = RandomDeck()
+        dealInitialCards(participants, cardDeck)
+        playing(participants, cardDeck)
         showFinalWinning(participants)
     }
 
@@ -37,16 +37,22 @@ class BlackJack(
         return Participants(dealer, players)
     }
 
-    private fun dealInitialCards(participants: Participants) {
+    private fun dealInitialCards(
+        participants: Participants,
+        cardDeck: CardDeck,
+    ) {
         outputView.printInitialSetting(participants)
 
         participants.addInitialCards(cardDeck)
         outputView.printInitialCardHands(participants)
     }
 
-    private fun playing(participants: Participants) {
-        runPlayersPhase(participants.players)
-        runDealerPhase(participants.dealer)
+    private fun playing(
+        participants: Participants,
+        cardDeck: CardDeck,
+    ) {
+        runPlayersPhase(participants.players, cardDeck)
+        runDealerPhase(participants.dealer, cardDeck)
     }
 
     private fun showFinalWinning(participants: Participants) {
@@ -65,13 +71,19 @@ class BlackJack(
                 },
         )
 
-    private fun runPlayersPhase(players: Players) {
+    private fun runPlayersPhase(
+        players: Players,
+        cardDeck: CardDeck,
+    ) {
         players.players.forEach { player ->
-            runPlayerPhase(player)
+            runPlayerPhase(player, cardDeck)
         }
     }
 
-    private fun runPlayerPhase(player: Player) {
+    private fun runPlayerPhase(
+        player: Player,
+        cardDeck: CardDeck,
+    ) {
         while (player.canDraw() && askDraw(player)) {
             val newCard = cardDeck.draw()
             player.draw(newCard)
@@ -81,7 +93,10 @@ class BlackJack(
 
     private fun askDraw(player: Player) = inputView.readIsHit(player)
 
-    private fun runDealerPhase(dealer: Dealer) {
+    private fun runDealerPhase(
+        dealer: Dealer,
+        cardDeck: CardDeck,
+    ) {
         if (dealer.canDraw()) {
             outputView.printDealerHit()
             val newCard = cardDeck.draw()
