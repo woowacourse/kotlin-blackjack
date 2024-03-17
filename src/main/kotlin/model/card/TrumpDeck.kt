@@ -12,6 +12,20 @@ object TrumpDeck : Deck {
     }
 
     private fun shuffle() {
+        val suits = Suit.entries
+        val denominations = Denomination.entries
+
+        cards.addAll(
+            suits.flatMap { suit ->
+                denominations.map { denom,
+                    ->
+                    Card.of(denom, suit)
+                }.shuffled()
+            },
+        )
+    }
+
+    private fun shuffleWithIntRange() {
         cards.addAll(
             (MIN_VALUE..MAX_VALUE)
                 .shuffled()
