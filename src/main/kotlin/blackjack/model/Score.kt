@@ -1,14 +1,10 @@
 package blackjack.model
 
 class Score(private val cards: Set<Card>) {
-    var point: Int = DEFAULT_POINT
+    var point: Int = calculateScore()
         private set
 
-    init {
-        calculateScore()
-    }
-
-    private fun calculateScore() {
+    private fun calculateScore(): Int {
         var score = cards.sumOf { card -> card.number.value }
         var bonusScore = calculateBonusScore(cards, score)
 
@@ -19,7 +15,7 @@ class Score(private val cards: Set<Card>) {
                 bonusScore += BONUS_SCORE
             }
         }
-        point = score + bonusScore
+        return score + bonusScore
     }
 
     private fun calculateBonusScore(
@@ -39,7 +35,6 @@ class Score(private val cards: Set<Card>) {
     }
 
     companion object {
-        private const val DEFAULT_POINT = 0
         private const val BONUS_SCORE_CRITERIA = 11
         private const val BONUS_SCORE = 10
     }

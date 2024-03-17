@@ -6,33 +6,23 @@ import blackjack.model.Revenue.DealerRevenue
 import blackjack.model.Revenue.PlayerRevenue
 
 class GameResult(val dealer: Dealer, val players: List<Player>) {
-    private val _playersResult: MutableList<Result> = mutableListOf()
-    val playersResult: List<Result>
-        get() = _playersResult.toList()
-
-    private val _playersRevenue: MutableList<PlayerRevenue> = mutableListOf()
-    val playersRevenue: List<PlayerRevenue>
-        get() = _playersRevenue.toList()
-
-    init {
-        judgePlayersResult()
-        calculateParticipantsRevenue()
-    }
+    private val playersResult: List<Result> = judgePlayersResult()
+    val playersRevenue: List<PlayerRevenue> = calculateParticipantsRevenue()
 
     fun calculateDealerRevenue(): DealerRevenue {
         return DealerRevenue(playersRevenue)
     }
 
-    private fun judgePlayersResult() {
-        players.forEach { player ->
-            _playersResult.add(Result.judgeResult(dealer, player))
+    private fun judgePlayersResult(): List<Result> {
+        return players.map { player ->
+            Result.judgeResult(dealer, player)
         }
     }
 
-    private fun calculateParticipantsRevenue() {
-        playersResult.withIndex().forEach { (index, playerResult) ->
+    private fun calculateParticipantsRevenue(): List<PlayerRevenue> {
+        return playersResult.withIndex().map { (index, playerResult) ->
             val playerRevenue = PlayerRevenue(players[index], playerResult)
-            _playersRevenue.add(playerRevenue)
+            playerRevenue
         }
     }
 }

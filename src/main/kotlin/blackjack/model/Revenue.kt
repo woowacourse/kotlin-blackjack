@@ -5,26 +5,16 @@ import blackjack.model.Participant.Player
 sealed class Revenue {
     abstract val amount: Double
 
-    abstract fun calculateRevenue()
+    abstract fun calculateRevenue(): Double
 
     override fun toString(): String {
         return amount.toInt().toString()
     }
 
-    companion object {
-        private const val DEFAULT_REVENUE_AMOUNT = 0.0
-    }
-
     class PlayerRevenue(private val player: Player, private val result: Result) : Revenue() {
-        private var _amount: Double = DEFAULT_REVENUE_AMOUNT
-        override val amount: Double
-            get() = _amount
+        override val amount: Double = calculateRevenue()
 
-        init {
-            calculateRevenue()
-        }
-
-        override fun calculateRevenue() {
+        override fun calculateRevenue(): Double {
             val bettingAmount = player.playerInformation.bettingAmount.amount
             val revenueAmount =
                 when (result) {
@@ -39,7 +29,7 @@ sealed class Revenue {
                     Result.DEFEAT -> bettingAmount * DEFEAT_REVENUE_MULTIPLY
                     Result.TIE -> bettingAmount * TIE_REVENUE_MULTIPLY
                 }
-            _amount = revenueAmount
+            return revenueAmount
         }
 
         companion object {
@@ -51,19 +41,12 @@ sealed class Revenue {
     }
 
     class DealerRevenue(private val playersRevenue: List<PlayerRevenue>) : Revenue() {
-        private var _amount: Double = DEFAULT_REVENUE_AMOUNT
-        override val amount: Double
-            get() = _amount
+        override val amount: Double = calculateRevenue()
 
-        init {
-            calculateRevenue()
-        }
-
-        override fun calculateRevenue() {
-            _amount =
-                playersRevenue.sumOf { playerRevenue ->
-                    -playerRevenue.amount
-                }
+        override fun calculateRevenue(): Double {
+            return playersRevenue.sumOf { playerRevenue ->
+                -playerRevenue.amount
+            }
         }
     }
 }

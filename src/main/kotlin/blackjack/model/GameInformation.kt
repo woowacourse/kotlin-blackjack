@@ -1,16 +1,12 @@
 package blackjack.model
 
-class GameInformation(hand: Hand = Hand(), state: GameState = GameState.Running.HIT) {
-    private var _hand: Hand = hand
-    val hand: Hand
-        get() = _hand
-
+class GameInformation(val hand: Hand = Hand(), state: GameState = GameState.Running.HIT) {
     private var _state: GameState = state
     val state: GameState
         get() = _state
 
     fun drawCard(card: Card) {
-        _hand.drawCard(card)
+        hand.drawCard(card)
         judgeState()
     }
 
