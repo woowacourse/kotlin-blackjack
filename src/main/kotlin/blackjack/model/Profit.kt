@@ -12,7 +12,7 @@ class Profit {
 
     private fun validate(bettingMoney: String) {
         requireNotNull(bettingMoney.toDoubleOrNull()) { "베팅금을 숫자로만 입력해주세요" }
-        require(bettingMoney.toDouble() > 0) { "베팅금은 0보다 큰 정수로 입력해주세요" }
+        require(bettingMoney.toDouble() > INITIAL_AMOUNT) { "베팅금은 0보다 큰 정수로 입력해주세요" }
     }
 
     fun giveBackBettingMoney() {
