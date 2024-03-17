@@ -1,8 +1,6 @@
 package blackjack.model.participant
 
 import blackjack.model.DEFAULT_BATTING_AMOUNT
-import blackjack.model.DIAMOND_NINE
-import blackjack.model.DIAMOND_TWO
 import blackjack.model.HEART_KING
 import blackjack.model.HEART_THREE
 import blackjack.model.SPADE_ACE
@@ -17,21 +15,38 @@ import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 
 class PlayerTest {
-    @MethodSource("카드 받을 수 있는지 여부 판단 테스트 데이터")
-    @ParameterizedTest
-    fun `카드를 더 받을 수 있는지 판단한다`(
-        cards: List<Card>,
-        expected: Boolean,
-    ) {
+    @Test
+    fun `카드의 점수가 21 미만이면 카드를 더 받을 수 있다`() {
         // given
-        val player = Player("olive", DEFAULT_BATTING_AMOUNT)
-        player.receiveCard(cards)
+        val player =
+            Player(
+                "olive",
+                DEFAULT_BATTING_AMOUNT,
+                listOf(HEART_THREE, SPADE_FIVE),
+            )
 
         // when
         val actual = player.receivableMoreCard()
 
         // then
-        assertThat(actual).isEqualTo(expected)
+        assertThat(actual).isTrue()
+    }
+
+    @Test
+    fun `카드의 점수가 21 이상이면 카드를 더 받을 수 없다`() {
+        // given
+        val player =
+            Player(
+                "olive",
+                DEFAULT_BATTING_AMOUNT,
+                listOf(SPADE_TEN, HEART_KING, HEART_THREE),
+            )
+
+        // when
+        val actual = player.receivableMoreCard()
+
+        // then
+        assertThat(actual).isFalse()
     }
 
     @Test
@@ -66,15 +81,6 @@ class PlayerTest {
     }
 
     companion object {
-        @JvmStatic
-        fun `카드 받을 수 있는지 여부 판단 테스트 데이터`() =
-            listOf(
-                Arguments.of(listOf(HEART_THREE, SPADE_FIVE), true),
-                Arguments.of(listOf(SPADE_TEN, SPADE_TEN), true),
-                Arguments.of(listOf(DIAMOND_NINE, HEART_KING, DIAMOND_TWO), false),
-                Arguments.of(listOf(SPADE_TEN, HEART_KING, HEART_THREE), false),
-            )
-
         @JvmStatic
         fun `수익 계산 테스트 데이터`() =
             listOf(
