@@ -2,12 +2,9 @@ package blackjack.model
 
 import blackjack.model.TestUtils.Card
 import blackjack.model.TestUtils.createCardDeckFrom
+import blackjack.model.TestUtils.createDealer
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-
-private fun createDealer(vararg numbers: Card): Dealer {
-    return Dealer(hand = Hand(numbers.toList()))
-}
 
 class DealerTest {
     @Test

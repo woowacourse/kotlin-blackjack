@@ -18,8 +18,7 @@ class Participants(
 
     private fun getPlayerProfits(): Map<Player, Double> {
         return players.associateWith { player ->
-            val winningResult = player.getWinningResult(dealer)
-            player.calculateProfit(winningResult)
+            player.calculateProfit(dealer)
         }
     }
 
