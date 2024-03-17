@@ -4,11 +4,8 @@ import blackjack.state.BlackjackState
 import blackjack.state.Hit
 
 sealed class CardHolder(val userInfo: UserInfo) {
-    private var blackjackState: BlackjackState = Hit()
-
-    fun getState(): BlackjackState {
-        return blackjackState
-    }
+    var blackjackState: BlackjackState = Hit()
+        private set
 
     fun addCard(card: Card) {
         blackjackState = blackjackState.draw(card)
