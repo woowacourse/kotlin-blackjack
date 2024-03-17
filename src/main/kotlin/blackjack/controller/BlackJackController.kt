@@ -40,7 +40,7 @@ class BlackJackController(
         players: Players,
     ) {
         outputView.printFinalCardHands(dealer, players)
-        showWinningResult(dealer, players)
+        showParticipantsProfit(dealer, players)
     }
 
     private fun runGame(
@@ -61,15 +61,10 @@ class BlackJackController(
         dealer.runPhase({ dealer.dealerDecisionCondition.invoke() }) { outputView.printDealerHit() }
     }
 
-    private fun showWinningResult(
+    private fun showParticipantsProfit(
         dealer: Dealer,
         players: Players,
     ) {
-        val playerWinning = players.calculatePlayersWinning(dealer)
-        val dealerWinning = playerWinning.judgeDealerWinningResult()
-
-        outputView.printWinningResult(dealerWinning, playerWinning)
-
         val playersProfit = players.calculatePlayersProfit(dealer)
         val dealerProfit = playersProfit.calculateDealerProfit()
         outputView.printParticipantsProfit(dealerProfit, playersProfit)
