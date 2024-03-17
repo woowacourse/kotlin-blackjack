@@ -1,14 +1,18 @@
 package blackjack.model
 
-class Profit(bettingMoney: String) {
+class Profit {
     private var _amount = INITIAL_AMOUNT
     val amount: Double
         get() = _amount
 
-    init {
+    fun initBettingMoney(bettingMoney: String) {
+        validate(bettingMoney)
+        _amount = bettingMoney.toDouble()
+    }
+
+    private fun validate(bettingMoney: String) {
         requireNotNull(bettingMoney.toDoubleOrNull()) { "베팅금을 숫자로만 입력해주세요" }
         require(bettingMoney.toDouble() > 0) { "베팅금은 0보다 큰 정수로 입력해주세요" }
-        _amount = bettingMoney.toDouble()
     }
 
     fun giveBackBettingMoney() {
