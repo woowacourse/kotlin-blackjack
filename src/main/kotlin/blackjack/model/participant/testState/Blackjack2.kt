@@ -2,6 +2,7 @@ package blackjack.model.participant.testState
 
 import blackjack.model.BattingMoney
 import blackjack.model.participant.CompetitionResult
+import java.lang.IllegalStateException
 
 class Blackjack2() : Finish() {
     override fun getProfit(
@@ -21,5 +22,12 @@ class Blackjack2() : Finish() {
         } else {
             CompetitionResult.BLACKJACK
         }
+    }
+
+    override fun nextTurn(
+        myScore: Int,
+        isHit: Boolean,
+    ): HandCardState {
+        throw IllegalStateException("더 이상 턴을 진행할 수 없습니다.")
     }
 }
