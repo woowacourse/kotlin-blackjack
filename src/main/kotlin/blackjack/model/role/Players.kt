@@ -1,6 +1,5 @@
 package blackjack.model.role
 
-import blackjack.model.result.PlayerWinning
 import blackjack.model.result.PlayersProfit
 
 class Players(val players: List<Player>) {
@@ -10,8 +9,6 @@ class Players(val players: List<Player>) {
             "플레이어의 수는 ${MIN_PLAYERS_COUNT}명 이상, ${MAX_PLAYERS_COUNT}명 이하여야 합니다."
         }
     }
-
-    fun calculatePlayersWinning(dealer: Dealer): PlayerWinning = PlayerWinning(players.associate { it.name to it.judgeWinning(dealer) })
 
     fun calculatePlayersProfit(dealer: Dealer): PlayersProfit = PlayersProfit(players.associate { it.name to it.calculateProfit(dealer) })
 
