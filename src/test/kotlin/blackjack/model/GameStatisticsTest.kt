@@ -88,5 +88,4 @@ class GameStatisticsTest {
         val expected = PlayerStatistic(player1, GameResult.Lose)
         assertThat(actual).isEqualTo(expected)
     }
-
 }

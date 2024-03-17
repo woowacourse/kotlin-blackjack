@@ -51,7 +51,10 @@ class Controller {
         proceedDealerTurn(dealer, deck)
     }
 
-    private fun proceedPlayerTurn(player: Player, deck: Deck) {
+    private fun proceedPlayerTurn(
+        player: Player,
+        deck: Deck,
+    ) {
         if (player.isMaxScore()) {
             OutputView.printBlackJackMessage(player)
             return
@@ -69,7 +72,10 @@ class Controller {
         return InputView.askPickAgain(name)
     }
 
-    private fun proceedDealerTurn(dealer: Dealer, deck: Deck) {
+    private fun proceedDealerTurn(
+        dealer: Dealer,
+        deck: Deck,
+    ) {
         while (dealer.isNotBustedAndHitable()) {
             dealer.pickCard(deck)
             OutputView.printDealerHitMessage()

@@ -24,6 +24,7 @@ class DeckTest {
             player.pickCard(deck)
         }
     }
+
     private fun Participant.pickCard(deck: Deck) {
         this.addCard(deck.pop())
     }

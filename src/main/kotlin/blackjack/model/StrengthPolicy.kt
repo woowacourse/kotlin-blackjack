@@ -2,6 +2,7 @@ package blackjack.model
 
 abstract class StrengthPolicy {
     abstract val bustedStrength: Int
+
     fun strength(cards: Cards): Int =
         when {
             cards.isBlackJack() -> BLACKJACK_STRENGTH

@@ -103,4 +103,3 @@ class ParticipantTest {
         Assertions.assertThat(actual).isEqualTo(expected)
     }
 }
-
