@@ -4,12 +4,6 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 class BettingPayoutTest {
-    @Test
-    fun `게임 결과 역 전환 테스트`() {
-        assertEquals(Result.WIN, Result.LOSE.reverse())
-        assertEquals(Result.LOSE, Result.WIN.reverse())
-        assertEquals(Result.DRAW, Result.DRAW.reverse())
-    }
 
     @Test
     fun `(딜러 lose , 플레이어 블랙잭) 정상적인 Payout과 수익금 테스트`() {

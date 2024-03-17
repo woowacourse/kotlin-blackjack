@@ -1,9 +1,17 @@
 package blackjack.model
 
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
 class GameResultTest {
+    @Test
+    fun `게임 결과 역 전환 테스트`() {
+        Assertions.assertEquals(Result.WIN, Result.LOSE.reverse())
+        Assertions.assertEquals(Result.LOSE, Result.WIN.reverse())
+        Assertions.assertEquals(Result.DRAW, Result.DRAW.reverse())
+    }
+
     @Test
     fun `게임 결과에 따라 패 판단 테스트`() {
         val dealer =
