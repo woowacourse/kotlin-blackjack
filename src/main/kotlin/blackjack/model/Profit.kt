@@ -15,6 +15,10 @@ class Profit(bettingMoney: String) {
         _amount = INITIAL_AMOUNT
     }
 
+    fun lostAllBettingMoney() {
+        _amount = -amount
+    }
+
     companion object {
         const val INITIAL_AMOUNT = 0
     }
