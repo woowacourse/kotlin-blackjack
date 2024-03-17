@@ -1,7 +1,7 @@
 package blackjack.model.card
 
 object CardDeck {
-    private val cardDeck =
+    val cardDeck =
         CardShape.entries.flatMap { shape ->
             CardNumber.entries.map { number ->
                 Card(shape, number)
