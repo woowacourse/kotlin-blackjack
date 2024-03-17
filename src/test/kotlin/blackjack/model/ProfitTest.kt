@@ -30,7 +30,7 @@ class ProfitTest {
     @Test
     fun `무승부인 경우 수익을 0원으로 만든다`() {
         val profit = Profit("50000")
-        profit.giveBackBettingMondy()
+        profit.giveBackBettingMoney()
         assertThat(profit.amount).isEqualTo(0)
     }
 }
