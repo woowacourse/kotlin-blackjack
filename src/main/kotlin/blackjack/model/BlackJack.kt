@@ -43,12 +43,12 @@ class BlackJack {
                 state = State.Action.Hit
             }
 
-            BLACK_JACK_SCORE -> applyBlackJackStateWithCardCount()
+            BLACK_JACK_SCORE -> applyBlackJackState()
             in BUST_SCORE..Int.MAX_VALUE -> state = State.Finish.Bust
         }
     }
 
-    private fun applyBlackJackStateWithCardCount() {
+    private fun applyBlackJackState() {
         state = if (handCard.isInitialHandSize()) {
             State.Finish.BlackJack
         } else {
