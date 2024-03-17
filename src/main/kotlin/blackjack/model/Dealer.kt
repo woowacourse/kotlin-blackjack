@@ -1,19 +1,9 @@
 package blackjack.model
 
-class Dealer(val hand: Hand, profit: Amount = Amount(INITIAL_PROFIT)) : Participant() {
-    var profit = profit
-        private set
-
-    override fun hit(card: Card) {
-        hand.add(card)
-    }
-
-    override fun initialSetHand(deck: Deck) {
-        repeat(INITIAL_HAND_COUNT) {
-            hit(deck.pull())
-        }
-    }
-
+class Dealer(
+    hand: Hand,
+    profit: Amount = Amount(INITIAL_PROFIT),
+) : Participant(hand, profit) {
     override fun hitWhileConditionTrue(
         deck: Deck,
         condition: () -> Boolean,
@@ -45,7 +35,7 @@ class Dealer(val hand: Hand, profit: Amount = Amount(INITIAL_PROFIT)) : Particip
         }
     }
 
-    fun calculateDealerProfit(players: List<Player>) {
+    fun updateProfit(players: List<Player>) {
         players.forEach { player ->
             profit -= player.profit
         }
@@ -126,7 +116,7 @@ class Dealer(val hand: Hand, profit: Amount = Amount(INITIAL_PROFIT)) : Particip
     companion object {
         fun createDealer(deck: Deck): Dealer {
             val dealer = Dealer(Hand(listOf()))
-            dealer.initialSetHand(deck)
+            dealer.setInitialHand(deck)
             return dealer
         }
 

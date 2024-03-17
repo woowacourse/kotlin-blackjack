@@ -59,7 +59,7 @@ class DealerTest {
         val dealer = createDealer()
         val expect = 2
         // when
-        dealer.initialSetHand(Deck.create())
+        dealer.setInitialHand(Deck.create())
         val actual = dealer.hand.cards.size
         // then
         assertThat(actual).isEqualTo(expect)

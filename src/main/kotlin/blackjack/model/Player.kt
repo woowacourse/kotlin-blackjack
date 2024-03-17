@@ -2,23 +2,10 @@ package blackjack.model
 
 class Player(
     val name: String,
-    val hand: Hand,
+    hand: Hand,
     private var budget: Amount = Amount(INITIAL_BUDGET),
     profit: Amount = Amount(INITIAL_PROFIT),
-) : Participant() {
-    var profit = profit
-        private set
-
-    override fun hit(card: Card) {
-        hand.add(card)
-    }
-
-    override fun initialSetHand(deck: Deck) {
-        repeat(INITIAL_HAND_COUNT) {
-            hit(deck.pull())
-        }
-    }
-
+) : Participant(hand, profit) {
     override fun hitWhileConditionTrue(
         deck: Deck,
         condition: () -> Boolean,
@@ -49,7 +36,7 @@ class Player(
                 names.map { name ->
                     Player(name, Hand(listOf()))
                 }
-            players.map { it.initialSetHand(deck) }
+            players.map { it.setInitialHand(deck) }
             return players
         }
 

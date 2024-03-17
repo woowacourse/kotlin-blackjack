@@ -1,9 +1,21 @@
 package blackjack.model
 
-abstract class Participant {
-    abstract fun hit(card: Card)
+abstract class Participant(
+    val hand: Hand,
+    profit: Amount,
+) {
+    var profit = profit
+        protected set
 
-    abstract fun initialSetHand(deck: Deck)
+    fun hit(card: Card) {
+        hand.add(card)
+    }
+
+    fun setInitialHand(deck: Deck) {
+        repeat(INITIAL_HAND_COUNT) {
+            hit(deck.pull())
+        }
+    }
 
     abstract fun hitWhileConditionTrue(
         deck: Deck,

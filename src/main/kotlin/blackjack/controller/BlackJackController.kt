@@ -21,7 +21,7 @@ class BlackJackController(
         hitParticipant(players, deck, dealer)
         val scoreBoard = makeAndShowScoreBoard(players, dealer)
         dealer.giveAmountsToPlayer(scoreBoard, playersBetAmounts)
-        dealer.calculateDealerProfit(players)
+        dealer.updateProfit(players)
         outputView.showProfits(dealer, players)
     }
 
