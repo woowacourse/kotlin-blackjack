@@ -9,30 +9,26 @@ class Dealer : Role() {
     override fun decideMoreCard() = getCardSum() < MIN_CARD_SUM
 
     fun calculateGameResult(players: Players): GameResultStorage {
-        val dealerResultList = mutableListOf<GameResultType>()
         val playersResult = PlayersResult()
-
+        var dealerProfit = 0.0
+        val profit = Profit()
         players.playerGroup.forEach { player ->
-            val gameResultType = this.decideGameResultType(player)
-            dealerResultList.add(gameResultType)
-            playersResult.add(player.name, gameResultType.reverse())
+            val gameResultType = decideGameResultType(player)
+            val playerProfit = profit.calculateProfit(player.battingAmount, gameResultType)
+            playersResult.add(player.name, playerProfit)
+            dealerProfit -= playerProfit.profit
         }
-        return GameResultStorage(DealerResult(dealerResultList), playersResult)
-    }
-
-    fun calculateProfit(players: Players) {
-        players.playerGroup.forEach {
-            profit -= it.profit
-        }
+        return GameResultStorage(DealerResult(Profit(dealerProfit)), playersResult)
     }
 
     private fun decideGameResultType(player: Player): GameResultType {
         return when {
-            player.isBurst() -> GameResultType.WIN
-            isBurst() -> GameResultType.LOSE
-            getCardSum() > player.getCardSum() -> GameResultType.WIN
+            player.isBurst() -> GameResultType.LOSE
+            isBurst() -> GameResultType.WIN
+            getCardSum() > player.getCardSum() -> GameResultType.LOSE
             getCardSum() == player.getCardSum() -> GameResultType.DRAW
-            else -> GameResultType.LOSE
+            player.isBlackjack() -> GameResultType.BLACKJACK
+            else -> GameResultType.WIN
         }
     }
 
