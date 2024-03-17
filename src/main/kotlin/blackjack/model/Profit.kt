@@ -27,6 +27,10 @@ class Profit {
         _amount = amount * BLACKJACK_ODDS
     }
 
+    fun getProfitFromPlayer(opponentProfit: Double) {
+        _amount -= opponentProfit
+    }
+
     companion object {
         const val INITIAL_AMOUNT = 0.0
         const val BLACKJACK_ODDS = 1.5

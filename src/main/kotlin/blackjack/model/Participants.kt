@@ -14,7 +14,13 @@ class Participants(
     fun matchResult() {
         playerGroup.players.forEach { player ->
             player.addResult(player.state.decideWinner(dealer))
-            dealer.addResult(dealer.state.decideWinner(player))
+        }
+        calculateDealerProfit()
+    }
+
+    private fun calculateDealerProfit() {
+        playerGroup.players.forEach { player ->
+            dealer.state.profit.getProfitFromPlayer(player.state.profit.amount)
         }
     }
 }
