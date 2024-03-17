@@ -19,13 +19,21 @@ class BlackJackController(
         val dealer = Dealer.createDealer(deck)
         outputView.showDivided(dealer.hand.first(), players)
         hitParticipant(players, deck, dealer)
+        showResultAndChageBudget(players, dealer, playersBetAmounts)
+        dealer.updateProfit(players)
+        outputView.showProfits(dealer, players)
+    }
+
+    private fun showResultAndChageBudget(
+        players: List<Player>,
+        dealer: Dealer,
+        playersBetAmounts: List<Int>,
+    ) {
         val scoreBoard = makeAndShowScoreBoard(players, dealer)
         val playerAmounts = dealer.makeAmountsToPlayer(scoreBoard.playersResult, playersBetAmounts)
         players.forEachIndexed { ind, player ->
             player.changeBudget(playerAmounts.amounts[ind])
         }
-        dealer.updateProfit(players)
-        outputView.showProfits(dealer, players)
     }
 
     private fun hitParticipant(
