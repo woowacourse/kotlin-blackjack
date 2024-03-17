@@ -35,7 +35,7 @@ class GameManager(
         return shuffleCardDeck.draw()
     }
 
-    fun getParticipants(): List<Participant> {
+    private fun getParticipants(): List<Participant> {
         return participants.players + participants.dealer
     }
 

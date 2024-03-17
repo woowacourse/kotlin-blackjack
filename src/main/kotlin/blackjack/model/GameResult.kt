@@ -40,7 +40,13 @@ data class GameResult(
                 }
             }
 
-            Result.DRAW -> 0f
+            Result.DRAW -> {
+                if (isBlackJackState) {
+                    1f
+                } else {
+                    0f
+                }
+            }
 
             Result.LOSE -> -1f
         }
