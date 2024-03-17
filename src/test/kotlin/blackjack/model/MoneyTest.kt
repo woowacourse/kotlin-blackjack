@@ -16,23 +16,20 @@ class MoneyTest {
 
     @Test
     fun `Money 클래스끼리 더하였을 때, 올바른 금액을 가진 Money를 반환한다`() {
-        val money1 = Money(1000)
-        val money2 = Money(2000)
-        val actualResult = money1 + money2
+        val additionMoney = Money(1000)
+        val actualResult = money + additionMoney
         assertThat(actualResult.amount).isEqualTo(3000)
     }
 
     @Test
     fun `Money에서 다른 Money를 차감했을 때, 올바른 금액을 가진 Money를 반환한다`() {
-        val money1 = Money(2000)
-        val money2 = Money(2000)
-        val actualResult = money1 - money2
+        val subtractionMoney = Money(2000)
+        val actualResult = money - subtractionMoney
         assertThat(actualResult.amount).isEqualTo(0)
     }
 
     @Test
     fun `Money에 특정 소수를 곱하였을 때, 올바른 금액을 가진 Money를 반환한다`() {
-        val money = Money(2000)
         val actualResult = money * 1.5
         assertThat(actualResult.amount).isEqualTo(3000)
     }
@@ -46,5 +43,9 @@ class MoneyTest {
         val money = Money(input)
         val actualResult = -money
         assertThat(actualResult.amount).isEqualTo(output)
+    }
+
+    companion object {
+        private val money: Money = Money(2000)
     }
 }
