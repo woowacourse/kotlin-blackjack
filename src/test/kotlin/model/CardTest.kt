@@ -2,8 +2,8 @@ package model
 
 import io.kotest.matchers.shouldBe
 import model.card.Card
-import model.card.MarkType
-import model.card.ValueType
+import model.card.Denomination
+import model.card.Suit
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
@@ -26,39 +26,39 @@ class CardTest {
     @MethodSource("markProvider")
     fun `입력받은 숫자에 대해 생성되는 카드의 문양 검증`(
         number: Int,
-        markType: MarkType,
+        suit: Suit,
     ) {
-        Card.from(number).markType shouldBe markType
+        Card.from(number).suit shouldBe suit
     }
 
     @ParameterizedTest
     @MethodSource("valueProvider")
     fun `입력받은 숫자에 대해 생성되는 카드의 값 검증`(
         number: Int,
-        valueType: ValueType,
+        denomination: Denomination,
     ) {
-        Card.from(number).valueType shouldBe valueType
+        Card.from(number).denomination shouldBe denomination
     }
 
     companion object {
         @JvmStatic
         fun markProvider(): Stream<Arguments> {
             return Stream.of(
-                Arguments.of(0, MarkType.SPADE),
-                Arguments.of(13, MarkType.CLOVER),
-                Arguments.of(26, MarkType.HEART),
-                Arguments.of(39, MarkType.DIAMOND),
+                Arguments.of(0, Suit.SPADE),
+                Arguments.of(13, Suit.CLOVER),
+                Arguments.of(26, Suit.HEART),
+                Arguments.of(39, Suit.DIAMOND),
             )
         }
 
         @JvmStatic
         fun valueProvider(): Stream<Arguments> {
             return Stream.of(
-                Arguments.of(0, ValueType.ACE),
-                Arguments.of(1, ValueType.TWO),
-                Arguments.of(10, ValueType.JACK),
-                Arguments.of(11, ValueType.QUEEN),
-                Arguments.of(12, ValueType.KING),
+                Arguments.of(0, Denomination.ACE),
+                Arguments.of(1, Denomination.TWO),
+                Arguments.of(10, Denomination.JACK),
+                Arguments.of(11, Denomination.QUEEN),
+                Arguments.of(12, Denomination.KING),
             )
         }
     }

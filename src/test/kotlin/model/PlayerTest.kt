@@ -1,6 +1,9 @@
 package model
 
 import TestDeck
+import fixture.SPADE_KING
+import fixture.SPADE_TEN
+import fixture.SPADE_TWO
 import model.card.Card
 import model.human.Player
 import org.assertj.core.api.Assertions
@@ -25,24 +28,24 @@ class PlayerTest {
 
     @Test
     fun `핸드의 합이 21 미만인 경우, 카드를 더 받을 수 있다`() {
-        val hand = Hand(testDeck)
+        val hand = Hand()
         val player = Player(hand)
 
-        player.hit()
-        player.hit()
+        player.hand.draw(SPADE_TEN)
+        player.hand.draw(SPADE_KING)
 
-        Assertions.assertThat(player.hit()).isTrue
+        Assertions.assertThat(player.isPossible()).isTrue
     }
 
     @Test
     fun `핸드의 합이 21 이상인 경우, 카드를 더 받을 수 없다`() {
-        val hand = Hand(testDeck)
+        val hand = Hand()
         val player = Player(hand)
 
-        player.hit()
-        player.hit()
-        player.hit()
+        player.hand.draw(SPADE_TEN)
+        player.hand.draw(SPADE_KING)
+        player.hand.draw(SPADE_TWO)
 
-        Assertions.assertThat(player.hit()).isFalse
+        Assertions.assertThat(player.isPossible()).isFalse
     }
 }
