@@ -1,5 +1,6 @@
 package blackjack.controller
 
+import blackjack.model.result.Money
 import blackjack.model.role.Dealer
 import blackjack.model.role.Participants
 import blackjack.model.role.Player
@@ -27,7 +28,7 @@ class BlackJackController(
                 (inputView.readPlayersName())
                     .map {
                         val name = PlayerName(it)
-                        Player(name, inputView.readMoney(name))
+                        Player(name, Money.bet(inputView.readMoney(name)))
                     },
             )
         outputView.printInitialDealing(dealer, players)
@@ -68,5 +69,9 @@ class BlackJackController(
         val dealerWinning = playerWinning.judgeDealerWinningResult()
 
         outputView.printWinningResult(dealerWinning, playerWinning)
+
+        val playersProfit = players.calculatePlayersProfit(dealer)
+        val dealerProfit = playersProfit.calculateDealerProfit()
+        outputView.printParticipantsProfit(dealerProfit, playersProfit)
     }
 }
