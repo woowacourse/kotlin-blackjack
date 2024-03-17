@@ -24,7 +24,7 @@ class CalculatorTest {
     }
 
     @Test
-    fun `Ace가 1장 있을때 카드들의 점수 합 계산`() {
+    fun `기존 스코어 10에서 Ace가 1장 드로우 했을때 카드들의 점수 합 계산`() {
         cards.add(Card(CardNumber.ACE, CardSymbol.CLOVER))
         val actual = Calculator.calculateScore(cards)
 
@@ -32,7 +32,7 @@ class CalculatorTest {
     }
 
     @Test
-    fun `Ace가 2장 있을때 카드들의 점수 합 계산`() {
+    fun `기존 스코어 10에서 Ace 2장 드로우 했을때 카드들의 점수 합 계산`() {
         cards.add(Card(CardNumber.ACE, CardSymbol.CLOVER))
         cards.add(Card(CardNumber.ACE, CardSymbol.SPADE))
         val actual = Calculator.calculateScore(cards)
