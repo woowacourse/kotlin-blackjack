@@ -5,7 +5,7 @@ import blackjack.model.card.CardHand
 import blackjack.model.result.Score
 
 abstract class Done(private val cardHand: CardHand) : CardHandState {
-    abstract fun earningRate(other: CardHandState): Double
+    protected abstract fun earningRate(other: CardHandState): Double
 
     override fun draw(card: Card): CardHandState = throw IllegalStateException("현재 상태에서는 카드를 뽑을 수 없습니다.")
 
