@@ -6,10 +6,14 @@ class InitState : Gaming() {
         isHit: Boolean,
     ): HandCardState {
         return when {
-            myScore > 21 -> Bust2()
+            myScore > BLACKJACK_NUMBER -> Bust2()
             isHit -> Hit()
-            myScore == 21 -> Blackjack2()
+            myScore == BLACKJACK_NUMBER -> Blackjack2()
             else -> Stay()
         }
+    }
+
+    companion object {
+        private const val BLACKJACK_NUMBER = 21
     }
 }
