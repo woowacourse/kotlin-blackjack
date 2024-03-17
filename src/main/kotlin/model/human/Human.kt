@@ -11,7 +11,7 @@ abstract class Human(val hand: Hand, open val humanInfo: HumanInfo) {
         return this.humanInfo.money.amount
     }
 
-    fun isBlackJack(): Boolean = (this.hand.cards.size == 2 && this.hand.isBlackjackPoint())
+    fun isBlackJack(): Boolean = (this.hand.cards.size == 2 && this.hand.getPoint().isEqualTo(21))
 
     fun isBusted(): Boolean = !this.hand.isNotBusted()
 

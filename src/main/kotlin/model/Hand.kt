@@ -13,8 +13,6 @@ class Hand() {
 
     fun isNotBusted(): Boolean = getPoint().isLessOrEqualTo(BLACKJACK_CONDITION)
 
-    fun isBlackjackPoint(): Boolean = getPoint().isBlackjackPoint()
-
     fun getPoint(): Point {
         return if (hasAce() && getPointSum().isLessOrEqualTo(ACE_CONDITION)) {
             getPointSum().plus(BONUS_POINT)

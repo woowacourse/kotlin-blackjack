@@ -11,5 +11,5 @@ data class Point(val amount: Int) : Comparable<Point> {
 
     fun isLessThan(number: Int) = amount < number
 
-    fun isBlackjackPoint(): Boolean = this.amount == 21
+    fun isEqualTo(number: Int): Boolean = amount == number
 }
