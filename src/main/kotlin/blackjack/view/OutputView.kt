@@ -117,6 +117,10 @@ class OutputView {
         }
     }
 
+    fun printErrorMessage(t: Throwable) {
+        println(t.message)
+    }
+
     companion object {
         private const val NAME_CARD_HAND_FORMAT = "%s 카드: "
         private const val CARD_HAND_SUM_FORMAT = " - 결과: %d"

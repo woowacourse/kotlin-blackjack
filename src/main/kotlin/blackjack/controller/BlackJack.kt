@@ -26,7 +26,7 @@ class BlackJack(
 
     private fun prepareForGame(): Participants {
         val dealer = Dealer(CardHand())
-        val players = initPlayers()
+        val players = retryUntilSuccess { initPlayers() }
 
         players.players.forEach {
             it.betting =
@@ -91,7 +91,7 @@ class BlackJack(
         }
     }
 
-    private fun askDraw(player: Player) = inputView.readIsHit(player)
+    private fun askDraw(player: Player) = retryUntilSuccess { inputView.readIsHit(player) }
 
     private fun runDealerPhase(
         dealer: Dealer,
@@ -103,4 +103,12 @@ class BlackJack(
             dealer.draw(newCard)
         }
     }
+
+    private fun <T> retryUntilSuccess(action: () -> T): T =
+        runCatching {
+            action()
+        }.getOrElse {
+            outputView.printErrorMessage(it)
+            retryUntilSuccess(action)
+        }
 }
