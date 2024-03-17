@@ -1,8 +1,5 @@
 package model
 
-import TestDeck
-import model.card.Card
-import model.card.Deck
 import model.human.Players
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.BeforeEach
@@ -12,11 +9,9 @@ import java.lang.IllegalArgumentException
 
 class PlayersTest {
     private lateinit var hand: Hand
-    private lateinit var deck: Deck
 
     @BeforeEach
     fun setUp() {
-        deck = TestDeck(mutableListOf(Card.from(1), Card.from(2)))
         hand = Hand()
     }
 

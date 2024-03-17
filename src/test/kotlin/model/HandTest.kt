@@ -1,5 +1,7 @@
 package model
 
+import fixture.SPADE_ACE
+import fixture.SPADE_KING
 import fixture.SPADE_THREE
 import fixture.SPADE_TWO
 import org.assertj.core.api.Assertions.assertThat
@@ -34,5 +36,22 @@ class HandTest {
         hand.draw(SPADE_TWO)
         hand.draw(SPADE_THREE)
         assertThat(hand.getPoint()).isEqualTo(Point(5))
+    }
+
+    @Test
+    fun `핸드 내의 카드 합이 11 이하이면서 에이스가 있다면 10점이 추가된다`() {
+        hand.draw(SPADE_KING)
+        hand.draw(SPADE_ACE)
+
+        assertThat(hand.getPoint()).isEqualTo(Point(21))
+    }
+
+    @Test
+    fun `핸드 내의 카드 합이 12 이상이면 에이스는 1점으로 계산된다`() {
+        hand.draw(SPADE_KING)
+        hand.draw(SPADE_ACE)
+        hand.draw(SPADE_TWO)
+
+        assertThat(hand.getPoint()).isEqualTo(Point(13))
     }
 }
