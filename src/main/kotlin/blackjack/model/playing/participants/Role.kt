@@ -36,9 +36,9 @@ abstract class Role(open val name: PlayerName, open val cardHand: CardHand, open
 
     fun calculateProfit(winningResultStatus: WinningResultStatus): Double {
         return when (winningResultStatus) {
-            WinningResultStatus.PUSH -> 0.0
-            WinningResultStatus.DEFEAT -> -betting.amount.toDouble()
-            WinningResultStatus.VICTORY -> if (isBlackjack()) betting.amount * 1.5 else betting.amount.toDouble()
+            WinningResultStatus.PUSH -> PUSH_MULTIPLIER
+            WinningResultStatus.DEFEAT -> betting.amount * DEFEAT_MULTIPLIER
+            WinningResultStatus.VICTORY -> if (isBlackjack()) betting.amount * BLACK_JACK_MULTIPLIER else betting.amount * VICTORY_MULTIPLIER
         }
     }
 
@@ -47,5 +47,9 @@ abstract class Role(open val name: PlayerName, open val cardHand: CardHand, open
     companion object {
         private const val INITIAL_CARDS_COUNT = 2
         private const val BLACK_JACK_SCORE = 21
+        private const val BLACK_JACK_MULTIPLIER = 1.5
+        private const val VICTORY_MULTIPLIER = 1.0
+        private const val DEFEAT_MULTIPLIER = -1.0
+        private const val PUSH_MULTIPLIER = 0.0
     }
 }
