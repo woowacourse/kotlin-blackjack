@@ -25,6 +25,7 @@ class Player(
         view: () -> Unit,
     ) {
         while (condition()) {
+            deck.refillIfDeckEmpty()
             hit(deck.pull())
             view()
         }

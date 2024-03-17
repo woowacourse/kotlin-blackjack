@@ -20,6 +20,7 @@ class Dealer(val hand: Hand, profit: Amount = Amount(INITIAL_PROFIT)) : Particip
         view: () -> Unit,
     ) {
         while (canHit()) {
+            deck.refillIfDeckEmpty()
             hit(deck.pull())
             view()
         }

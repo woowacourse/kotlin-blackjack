@@ -7,12 +7,15 @@ class Deck(cards: List<Card>) {
     constructor(size: Int = DEFAULT_DECK_SIZE) : this(create(size).cards)
 
     fun pull(): Card {
-        if (cards.isEmpty()) {
-            cards = create().cards
-        }
         val pulledCard = cards[0]
         cards = cards.subList(1, cards.size)
         return pulledCard
+    }
+
+    fun refillIfDeckEmpty(deck: Deck = create()) {
+        if (cards.isEmpty()) {
+            cards = deck.cards
+        }
     }
 
     companion object {
