@@ -9,7 +9,7 @@ class HumanInfo(val humanName: HumanName, var money: Money = Money(0)) {
         money.changeAmount(amount)
     }
 
-    fun exchangeMoney(
+    fun applyResultToMoney(
         other: HumanInfo,
         rate: Double,
     ) {
