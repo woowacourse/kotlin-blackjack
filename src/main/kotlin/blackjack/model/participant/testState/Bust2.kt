@@ -17,11 +17,7 @@ class Bust2 : Finish() {
         myScore: Int,
         opponentScore: Int,
     ): CompetitionResult {
-        return if (myScore == opponentScore) {
-            CompetitionResult.SAME
-        } else {
-            CompetitionResult.LOSE
-        }
+        return CompetitionResult.LOSE
     }
 
     override fun nextTurn(
