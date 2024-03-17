@@ -24,7 +24,7 @@ class PlayerGroup {
     ) {
         players.forEach { player ->
             player.drawCard(
-                gameDeck = gameDeck,
+                card = { gameDeck.drawCard() },
                 shouldDrawCard = { shouldDrawCard(player) },
                 showPlayerCards = showPlayerCards,
             )

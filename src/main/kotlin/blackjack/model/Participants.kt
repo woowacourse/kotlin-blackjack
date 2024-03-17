@@ -1,7 +1,5 @@
 package blackjack.model
 
-import blackjack.view.OutputView.showPlayerCards
-
 class Participants(
     val dealer: Dealer,
     val playerGroup: PlayerGroup,
@@ -55,7 +53,7 @@ class Participants(
         gameDeck: GameDeck,
     ) {
         dealer.drawCard(
-            gameDeck = gameDeck,
+            card = { gameDeck.drawCard() },
             shouldDrawCard = { dealer.shouldDrawCard() },
             showPlayerCards = { printDealerDrawCard(it as Dealer) },
         )

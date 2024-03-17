@@ -12,13 +12,13 @@ sealed class CardHolder(val userInfo: UserInfo) {
     }
 
     fun drawCard(
-        gameDeck: GameDeck,
+        card: () -> Card,
         shouldDrawCard: () -> Boolean,
         showPlayerCards: (cardHolder: CardHolder) -> Unit,
     ) {
         while (!blackjackState.isFinished()) {
             if (shouldDrawCard()) {
-                addCard(card = gameDeck.drawCard())
+                addCard(card = card())
             } else {
                 blackjackState = blackjackState.stay()
             }
