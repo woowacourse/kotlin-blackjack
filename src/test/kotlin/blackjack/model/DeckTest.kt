@@ -25,7 +25,7 @@ class DeckTest {
         // then
         assertDoesNotThrow {
             repeat(2) {
-                println(deck.pull())
+                deck.pull()
             }
         }
     }

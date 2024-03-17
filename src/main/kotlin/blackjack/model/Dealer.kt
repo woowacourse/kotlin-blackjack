@@ -10,7 +10,6 @@ class Dealer(
         view: () -> Unit,
     ) {
         while (canHit()) {
-            deck.refillIfDeckEmpty()
             hit(deck.pull())
             view()
         }
