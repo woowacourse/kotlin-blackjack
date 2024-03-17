@@ -15,7 +15,7 @@ class BlackJackController(private val cardDeck: CardDeck) {
     fun startGameFlow() {
         val dealer = Dealer()
         val players = InputView.inputPlayers()
-        val participants = setupGame(dealer, players)
+        participants = setupGame(dealer, players)
         displayGameInfo(dealer, participants)
     }
 
