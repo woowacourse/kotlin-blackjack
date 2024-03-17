@@ -26,7 +26,7 @@ sealed class CardHolder(val userInfo: UserInfo) {
         }
     }
 
-    fun getSumOfCards(): Int = state.calculateHand()
+    fun calculateHand(): Int = state.calculateHand()
 
     fun calculateProfit(opponent: State): Double {
         val gameResult = state.calculate(opponent)

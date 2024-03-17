@@ -1,7 +1,7 @@
 package blackjack.model
 
 class Dealer(userInfo: UserInfo = DEFAULT_USER_INFO) : CardHolder(userInfo = userInfo) {
-    fun shouldDrawCard(): Boolean = getSumOfCards() <= DEALER_CARD_DRAW_THRESHOLD
+    fun shouldDrawCard(): Boolean = calculateHand() <= DEALER_CARD_DRAW_THRESHOLD
 
     companion object {
         private const val DEFAULT_DEALER_NAME = "딜러"
