@@ -8,7 +8,7 @@ import blackjack.model.playing.participants.Role
 data class Player(
     override val name: PlayerName,
     override val cardHand: CardHand,
-    override val betting: Betting =
+    override var betting: Betting =
         Betting(
             0,
         ),

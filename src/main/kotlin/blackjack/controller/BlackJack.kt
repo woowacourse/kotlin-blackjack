@@ -1,5 +1,6 @@
 package blackjack.controller
 
+import blackjack.model.Betting
 import blackjack.model.card.CardDeck
 import blackjack.model.card.RandomDeck
 import blackjack.model.playing.cardhand.CardHand
@@ -20,11 +21,14 @@ class BlackJack(
         val dealer = Dealer(CardHand())
         val players = initPlayers()
 
-        val participants = Participants(dealer, players)
-
         players.players.forEach {
-            inputView.readBettingAmount(it)
+            it.betting =
+                Betting(
+                    inputView.readBettingAmount(it),
+                )
         }
+
+        val participants = Participants(dealer, players)
 
         dealInitialCards(participants)
         runPlayersPhase(players)
