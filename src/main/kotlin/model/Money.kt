@@ -5,7 +5,7 @@ data class Money(var amount: Int) {
         require(amount >= 0) { "1 이상의 값을 입력해주세요." }
     }
 
-    fun exchange(
+    fun applyProfitRate(
         other: Money,
         rate: Double,
     ) {

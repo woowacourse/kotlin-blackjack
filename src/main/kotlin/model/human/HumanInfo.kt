@@ -13,7 +13,7 @@ class HumanInfo(val humanName: HumanName, var money: Money = Money(0)) {
         other: HumanInfo,
         rate: Double,
     ) {
-        this.money.exchange(other.money, rate)
+        this.money.applyProfitRate(other.money, rate)
     }
 
     companion object {

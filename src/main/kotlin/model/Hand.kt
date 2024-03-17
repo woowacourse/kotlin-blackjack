@@ -23,7 +23,7 @@ class Hand() {
 
     private fun getPointSum(): Point {
         return _cards.sumOf { card ->
-            card.denomination.amount
+            card.denomination.point
         }.run { Point(this) }
     }
 
