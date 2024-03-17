@@ -3,16 +3,20 @@ package blackjack.model.state
 import blackjack.model.Card
 import blackjack.model.GameDeck
 import blackjack.model.Hand
+import blackjack.model.Profit
 
-class Running(hand: Hand = Hand()) : Progressing(hand) {
+class Running(
+    hand: Hand = Hand(),
+    profit: Profit = Profit(),
+) : Progressing(hand, profit) {
     private var _hand: Hand = hand
     override val hand: Hand
         get() = _hand
 
     override fun hitOrStay(isHit: Boolean): State {
         return when (isHit) {
-            true -> Hit(hand)
-            false -> Stay(hand)
+            true -> Hit(hand, profit)
+            false -> Stay(hand, profit)
         }
     }
 
@@ -27,8 +31,8 @@ class Running(hand: Hand = Hand()) : Progressing(hand) {
     }
 
     private fun initState(totalPoint: Int): State {
-        return if (totalPoint == Hand.BLACKJACK_NUMBER) BlackJack(hand)
-        else Running(hand)
+        return if (totalPoint == Hand.BLACKJACK_NUMBER) BlackJack(hand, profit)
+        else Running(hand, profit)
     }
 
     companion object {
