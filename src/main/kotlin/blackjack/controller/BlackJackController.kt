@@ -20,7 +20,10 @@ class BlackJackController(
         outputView.showDivided(dealer.hand.first(), players)
         hitParticipant(players, deck, dealer)
         val scoreBoard = makeAndShowScoreBoard(players, dealer)
-        dealer.giveAmountsToPlayer(scoreBoard, playersBetAmounts)
+        val playerAmounts = dealer.makeAmountsToPlayer(scoreBoard.playersResult, playersBetAmounts)
+        players.forEachIndexed { ind, player ->
+            player.changeBudget(playerAmounts.amounts[ind])
+        }
         dealer.updateProfit(players)
         outputView.showProfits(dealer, players)
     }

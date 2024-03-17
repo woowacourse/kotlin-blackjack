@@ -26,12 +26,38 @@ class Dealer(
         return ScoreBoard.from(playerWinningResults)
     }
 
-    fun giveAmountsToPlayer(
-        scoreBoard: ScoreBoard,
+    fun makeAmountsToPlayer(
+        playersResult: List<PlayerResult>,
         playersBetAmounts: List<Int>,
-    ) {
-        scoreBoard.playersResult.forEachIndexed { ind, playerResult ->
-            giveAmountsAccordingToWinning(playerResult, playersBetAmounts, ind)
+    ): PlayerAmounts {
+        return PlayerAmounts(
+            playersResult.mapIndexed { ind, playerResult ->
+                makeAmountsAccordingToWinning(playerResult, playersBetAmounts, ind)
+            },
+        )
+    }
+
+    private fun makeAmountsAccordingToWinning(
+        playerResult: PlayerResult,
+        playersBetAmounts: List<Int>,
+        ind: Int,
+    ): Amount {
+        return when (playerResult.winningState) {
+            WinningState.WIN -> giveAmountsWhenPlayerWin(playerResult, playersBetAmounts, ind)
+            WinningState.DRAW -> Amount(0)
+            WinningState.LOSS -> Amount(-playersBetAmounts[ind])
+        }
+    }
+
+    private fun giveAmountsWhenPlayerWin(
+        playerResult: PlayerResult,
+        playersBetAmounts: List<Int>,
+        ind: Int,
+    ): Amount {
+        if (playerResult.player.hand.isBlackjack()) {
+            return Amount((BLACKJACK_BONUS_RATE * playersBetAmounts[ind]).toInt())
+        } else {
+            return Amount(playersBetAmounts[ind])
         }
     }
 
@@ -74,30 +100,6 @@ class Dealer(
             dealerSum < playerSum -> WinningState.WIN
             dealerSum > playerSum -> WinningState.LOSS
             else -> throw IllegalArgumentException()
-        }
-    }
-
-    private fun giveAmountsAccordingToWinning(
-        playerResult: PlayerResult,
-        playersBetAmounts: List<Int>,
-        ind: Int,
-    ) {
-        when (playerResult.winningState) {
-            WinningState.WIN -> giveAmountsWhenPlayerWin(playerResult, playersBetAmounts, ind)
-            WinningState.DRAW -> playerResult.player.changeBudget(Amount(playersBetAmounts[ind]))
-            WinningState.LOSS -> playerResult.player.changeBudget(Amount(-playersBetAmounts[ind]))
-        }
-    }
-
-    private fun giveAmountsWhenPlayerWin(
-        playerResult: PlayerResult,
-        playersBetAmounts: List<Int>,
-        ind: Int,
-    ) {
-        if (playerResult.player.hand.isBlackjack()) {
-            playerResult.player.changeBudget(Amount((BLACKJACK_BONUS_RATE * playersBetAmounts[ind]).toInt()))
-        } else {
-            playerResult.player.changeBudget(Amount(playersBetAmounts[ind]))
         }
     }
 
