@@ -27,7 +27,7 @@ fun buildPlayer(
     stake: Double,
     vararg card: Card,
 ): Player {
-    val player = Player(name, stake)
+    val player = Player(name, Money(stake))
     val cardList = listOf(*card)
     cardList.forEach {
         player.addCard(it)
