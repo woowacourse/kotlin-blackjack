@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.model.participant
 
 import blackjack.model.deck.Card
 import blackjack.model.deck.CardNumber

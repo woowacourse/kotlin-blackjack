@@ -1,8 +1,8 @@
-package blackjack.model
+package blackjack.model.participant.testState
 
+import blackjack.model.BattingMoney
 import blackjack.model.deck.Deck
 import blackjack.model.deck.HandCards
-import blackjack.model.participant.testState.Stay
 import blackjack.testmachine.NormalCardMachine
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test

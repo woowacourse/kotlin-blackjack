@@ -1,7 +1,6 @@
-package blackjack
+package blackjack.model.participant
 
 import blackjack.model.deck.Deck
-import blackjack.model.participant.Players
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 

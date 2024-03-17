@@ -1,9 +1,6 @@
-package blackjack
+package blackjack.model.participant
 
 import blackjack.model.deck.Deck
-import blackjack.model.participant.CompetitionResult
-import blackjack.model.participant.Dealer
-import blackjack.model.participant.Players
 import blackjack.testmachine.BlackjackCardMachine
 import blackjack.testmachine.BustCardMachine
 import blackjack.testmachine.NormalCardMachine
