@@ -10,9 +10,6 @@ import blackjack.model.card.Card
 import blackjack.model.card.TestCardProvider
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.Arguments
-import org.junit.jupiter.params.provider.MethodSource
 
 private fun Player(
     amount: Int = DEFAULT_BATTING_AMOUNT,
@@ -59,34 +56,94 @@ class PlayerTest {
         assertThat(player.cards()).isEqualTo(expected)
     }
 
-    @MethodSource("수익 계산 테스트 데이터")
-    @ParameterizedTest
-    fun `수익을 계산한다`(
-        dealerCards: List<Card>,
-        playerCards: List<Card>,
-        expected: Int,
-    ) {
+    @Test
+    fun `배팅 금액이 1000원이고, 플레이어가 블랙잭인 경우 1500원의 수익을 얻는다`() {
         // given
-        val dealer = Dealer(dealerCards)
-        val player = Player(cards = playerCards)
+        val dealer = Dealer(listOf(HEART_THREE))
+        val player = Player(1000, listOf(SPADE_TEN, SPADE_ACE))
 
         // when
         val actual = player.profit(dealer)
 
         // then
-        assertThat(actual.price).isEqualTo(expected)
+        assertThat(actual.price).isEqualTo(1500)
     }
 
-    companion object {
-        @JvmStatic
-        fun `수익 계산 테스트 데이터`() =
-            listOf(
-                Arguments.of(listOf(HEART_THREE), listOf(SPADE_TEN, SPADE_ACE), 1500),
-                Arguments.of(listOf(HEART_THREE), listOf(SPADE_TEN, SPADE_TEN, SPADE_TEN), -1000),
-                Arguments.of(listOf(SPADE_TEN, SPADE_TEN, SPADE_TEN), listOf(HEART_THREE), 1000),
-                Arguments.of(listOf(HEART_THREE), listOf(SPADE_TEN), 1000),
-                Arguments.of(listOf(HEART_THREE), listOf(HEART_THREE), 0),
-                Arguments.of(listOf(SPADE_TEN), listOf(HEART_THREE), -1000),
-            )
+    @Test
+    fun `플레이어와 딜러가 블랙잭인 경우 아무런 수익도 얻지 않는다`() {
+        // given
+        val dealer = Dealer(listOf(SPADE_TEN, SPADE_ACE))
+        val player = Player(1000, listOf(SPADE_TEN, SPADE_ACE))
+
+        // when
+        val actual = player.profit(dealer)
+
+        // then
+        assertThat(actual.price).isEqualTo(0)
+    }
+
+    @Test
+    fun `플레이어가 버스트인 경우 배팅 금액을 잃는다`() {
+        // given
+        val dealer = Dealer(listOf(SPADE_TEN))
+        val player = Player(1000, listOf(SPADE_TEN, SPADE_TEN, SPADE_TEN))
+
+        // when
+        val actual = player.profit(dealer)
+
+        // then
+        assertThat(actual.price).isEqualTo(-1000)
+    }
+
+    @Test
+    fun `플레이어는 버스트가 아니고 딜러가 버스트인 경우 배팅 금액만큼의 수익을 얻는다`() {
+        // given
+        val dealer = Dealer(listOf(SPADE_TEN, SPADE_TEN, SPADE_TEN))
+        val player = Player(1000, listOf(SPADE_TEN))
+
+        // when
+        val actual = player.profit(dealer)
+
+        // then
+        assertThat(actual.price).isEqualTo(1000)
+    }
+
+    @Test
+    fun `플레이어의 점수가 딜러의 점수와 같은 경우 아무런 수익도 얻지 않는다`() {
+        // given
+        val dealer = Dealer(listOf(SPADE_TEN))
+        val player = Player(1000, listOf(SPADE_TEN))
+
+        // when
+        val actual = player.profit(dealer)
+
+        // then
+        assertThat(actual.price).isEqualTo(0)
+    }
+
+    @Test
+    fun `플레이어의 점수가 딜러의 점수보다 작은 경우 배팅 금액을 잃는다`() {
+        // given
+        val dealer = Dealer(listOf(SPADE_TEN, SPADE_TEN))
+        val player = Player(1000, listOf(SPADE_TEN))
+
+        // when
+        val actual = player.profit(dealer)
+
+        // then
+        assertThat(actual.price).isEqualTo(-1000)
+    }
+
+    @Test
+    fun `플레이어의 점수가 딜러의 점수보다 큰 경우 배팅 금액만큼의 수익을 얻는다`() {
+        // given
+        val dealer = Dealer(listOf(SPADE_TEN))
+        val player = Player(1000, listOf(SPADE_TEN, HEART_THREE))
+
+        // when
+        val actual = player.profit(dealer)
+
+        // then
+        assertThat(actual.price).isEqualTo(1000)
     }
 }
