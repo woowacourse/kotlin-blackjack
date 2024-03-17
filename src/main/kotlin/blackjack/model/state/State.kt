@@ -1,6 +1,9 @@
-package blackjack.model
+package blackjack.model.state
 
 import blackjack.base.BaseHolder
+import blackjack.model.Card
+import blackjack.model.GameResult
+import blackjack.model.Hand
 
 sealed interface State {
     val hand: Hand

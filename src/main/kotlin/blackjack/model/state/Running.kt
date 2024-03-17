@@ -1,16 +1,8 @@
-package blackjack.model
+package blackjack.model.state
 
-import blackjack.base.BaseHolder
-
-sealed class Progressing(override val hand: Hand) : State {
-    override fun updateState(totalPoint: Int): State {
-        return if (totalPoint > Hand.BLACKJACK_NUMBER) Bust(hand)
-        else if (totalPoint == Hand.BLACKJACK_NUMBER) Stay(hand)
-        else Running(hand)
-    }
-
-    override fun decideWinner(opponent: BaseHolder): GameResult = GameResult()
-}
+import blackjack.model.Card
+import blackjack.model.GameDeck
+import blackjack.model.Hand
 
 class Running(hand: Hand = Hand()) : Progressing(hand) {
     private var _hand: Hand = hand
@@ -42,17 +34,4 @@ class Running(hand: Hand = Hand()) : Progressing(hand) {
     companion object {
         const val INITIAL_CARD_COUNTS = 2
     }
-}
-
-class Hit(hand: Hand) : Progressing(hand) {
-    private var _hand: Hand = hand
-    override val hand: Hand
-        get() = _hand
-
-    override fun getCard(card: Card): State {
-        _hand += card
-        return updateState(hand.calculate())
-    }
-
-    override fun hitOrStay(isHit: Boolean): State = this
 }
