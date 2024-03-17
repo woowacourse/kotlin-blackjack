@@ -2,11 +2,20 @@ package model.human
 
 import model.Hand
 import model.ResultType
+import model.card.Deck
 
 class Dealer(hand: Hand, override val humanInfo: HumanInfo = HumanInfo("딜러")) : Human(hand, humanInfo) {
     override fun isPossible(): Boolean = hand.getPoint().isLessOrEqualTo(16)
 
-    fun getCompareResult(other: Human): ResultType {
+    fun play(deck: Deck) {
+        while (hand.getPoint().amount < 17) {
+            hand.draw(deck.pop())
+        }
+    }
+
+    fun getCountOfAdditionalDraw(): Int = hand.cards.size - 2
+
+    private fun getCompareResult(other: Human): ResultType {
         return when {
             isBusted() -> getResultWhenBusted(other)
             isBlackJack() -> getResultWhenBlackjack(other)

@@ -77,10 +77,10 @@ class GameController(private val deck: Deck) {
         players: Players,
     ) {
         players.players.forEach(::playOfOnePlayer)
+        dealer.play(deck)
 
-        while (dealer.hand.getPoint().amount < 17) {
+        repeat(dealer.getCountOfAdditionalDraw()) {
             OutputView.drawCardForDealer()
-            dealer.hand.draw(deck.pop())
         }
     }
 
