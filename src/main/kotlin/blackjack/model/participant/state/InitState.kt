@@ -1,4 +1,4 @@
-package blackjack.model.participant.testState
+package blackjack.model.participant.state
 
 class InitState : Gaming() {
     override fun nextTurn(

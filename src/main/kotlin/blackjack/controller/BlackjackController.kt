@@ -4,6 +4,7 @@ import blackjack.model.deck.Deck
 import blackjack.model.participant.Dealer
 import blackjack.model.participant.Player
 import blackjack.model.participant.Players
+import blackjack.model.participant.state.Finish
 import blackjack.view.IsAddCardInputView
 import blackjack.view.OutputView
 import blackjack.view.PlayersInputView
@@ -20,8 +21,6 @@ class BlackjackController(
     fun play() {
         setUpGame()
         gamePlayersTurn()
-        dealerTurn(dealer)
-        showResult()
     }
 
     private fun setUpGame() {
@@ -30,32 +29,25 @@ class BlackjackController(
     }
 
     private fun gamePlayersTurn() {
-        players.gamePlayers.forEach { player ->
-            playerTurn(player)
-        }
+        val result =
+            players.playTurn(deck, {
+                isAddCardInputView.read(it)
+            }, {
+                outputView.printPlayerCard(it)
+            })
+        dealerTurn(dealer)
+        showResult(result)
     }
 
-    private tailrec fun playerTurn(player: Player) {
-        if (player.isBust()) {
-            outputView.printBustMessage()
-            return
-        }
-        if (isAddCardInputView.read(player.name)) {
-            player.add(deck.draw(1))
-            outputView.printPlayerCard(player)
-            playerTurn(player)
-        }
+    private fun dealerTurn(dealer: Dealer) {
+        dealer.playTurn(
+            deck::draw,
+            outputView::printDealerAddCard,
+        )
     }
 
-    private tailrec fun dealerTurn(dealer: Dealer) {
-        if (dealer.add(deck.draw(1))) {
-            outputView.printDealerAddCard()
-            dealerTurn(dealer)
-        }
-    }
-
-    private fun showResult() {
+    private fun showResult(gameResult: Map<Player, Finish>) {
         outputView.printCardResult(dealer, players)
-        outputView.printGameResult(dealer.gameResult(players.gamePlayers))
+        outputView.printGameResult(dealer.gameResult(gameResult))
     }
 }

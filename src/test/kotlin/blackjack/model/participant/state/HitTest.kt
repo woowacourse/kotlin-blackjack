@@ -1,6 +1,5 @@
-package blackjack.model.participant.testState
+package blackjack.model.participant.state
 
-import blackjack.model.deck.HandCards
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -19,7 +18,6 @@ class HitTest {
 
     @Test
     fun `사용자가 그 다음 턴에서 카드를 받지 않을 때, Stay를 반환한다`() {
-        val handCards = HandCards()
         val actual = Hit().nextTurn(10, false)
         assertThat(actual is Stay).isTrue
     }

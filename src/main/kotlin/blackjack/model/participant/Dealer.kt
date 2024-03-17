@@ -2,38 +2,31 @@ package blackjack.model.participant
 
 import blackjack.model.deck.Card
 import blackjack.model.deck.Deck
-import blackjack.model.deck.HandCards
-import blackjack.model.participant.state.Bust
-import blackjack.model.participant.state.ParticipantState
+import blackjack.model.participant.state.Finish
 
-class Dealer private constructor() : GameParticipant(HandCards()) {
+class Dealer private constructor() : GameParticipant() {
     fun getFirstCard() = handCards.cards.first()
 
-    override fun add(cards: List<Card>): Boolean =
-        if (handCards.calculateCardScore() < DEALER_HIT_THRESHOLD) {
-            handCards.add(cards)
-            true
-        } else {
-            false
+    fun playTurn(
+        cards: (Int) -> List<Card>,
+        showResult: () -> Unit,
+    ) {
+        while (getScore() < DEALER_HIT_THRESHOLD) {
+            handCards.playTurn(true, cards)
+            showResult.invoke()
         }
+    }
 
-    fun gameResult(players: List<Player>): Map<String, CompetitionResult> =
-        players.associate { player ->
-            val result = competitionResult(player.getState())
-            player.name to result
+    fun gameResult(playersState: Map<Player, Finish>): Map<String, CompetitionResult> {
+        val result = mutableMapOf<String, CompetitionResult>()
+        playersState.entries.forEach { (player, finish) ->
+            result[player.name] = finish.getResult(player.getScore(), handCards.calculateScore())
         }
-
-    private fun competitionResult(playerState: ParticipantState): CompetitionResult {
-        return when {
-            playerState is Bust -> CompetitionResult.LOSE
-            isBust() -> CompetitionResult.WIN
-            else -> playerState.getResult(getScore())
-        }
+        return result
     }
 
     companion object {
         private const val DEALER_HIT_THRESHOLD = 17
-        private const val INIT_CARD_AMOUNT = 2
 
         fun withInitCards(deck: Deck): Dealer {
             return Dealer().also { it.initCards(deck.draw(INIT_CARD_AMOUNT)) }

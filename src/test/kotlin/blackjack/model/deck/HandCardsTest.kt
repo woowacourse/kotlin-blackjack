@@ -1,38 +1,59 @@
 package blackjack.model.deck
 
+import blackjack.model.participant.state.Blackjack2
+import blackjack.model.participant.state.Hit
+import blackjack.model.participant.state.InitState
+import blackjack.model.participant.state.Stay
+import blackjack.testmachine.BlackjackCardMachine
+import blackjack.testmachine.NormalCardMachine
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class HandCardsTest {
     private lateinit var handCards: HandCards
+    private lateinit var deck: Deck
 
     @BeforeEach
     fun setUp() {
         handCards = HandCards()
-        handCards.add(ADD_CARD_EXAMPLE)
+        deck = Deck(NormalCardMachine())
     }
 
     @Test
-    fun `Cards는 새로운 카드를 가질 수 있다`() {
-        assertThat(handCards.cards.size).isEqualTo(ADD_CARD_SIZE)
+    fun `유저가 Hit를 원하면 새로운 카드를 뽑는다`() {
+        assertThat(handCards.cards.size).isEqualTo(INITIAL_SIZE)
+
+        handCards.playTurn(true, deck::draw)
+        assertThat(handCards.cards.size).isEqualTo(INITIAL_SIZE + 1)
     }
 
     @Test
-    fun `Cards 점수를 계산할 수 있다`() {
-        assertThat(handCards.calculateCardScore()).isEqualTo(ADD_CARD_SCORE)
+    fun `초기 카드가 블랙잭이면, state가 blackjack으로 변한다`() {
+        val deck = Deck(BlackjackCardMachine())
+        assertThat(handCards.state is InitState).isTrue
+
+        handCards.initCard(deck.draw(2))
+        assertThat(handCards.state is Blackjack2)
     }
 
     @Test
-    fun `ACE가 있을 경우, 총합이 21보다 작으면 11로 계산해서 반환한다`() {
-        handCards.add(listOf(Card(CardNumber.ACE, Shape.HEART))) // Ace 추가
-        assertThat(handCards.calculateCardScore()).isEqualTo(ADD_CARD_SCORE + 11)
+    fun `유저가 Stay를 원하면, 카드의 상태는 Hit로 변한다`() {
+        assertThat(handCards.state is InitState).isTrue
+
+        handCards.playTurn(true, deck::draw)
+        assertThat(handCards.state is Hit).isTrue
+    }
+
+    @Test
+    fun `유저가 Stay를 원하면, 카드의 상태는 Stay로 변한다`() {
+        assertThat(handCards.state is InitState).isTrue
+
+        handCards.playTurn(false, deck::draw)
+        assertThat(handCards.state is Stay).isTrue
     }
 
     companion object {
-        private const val ADD_CARD_SIZE = 2
-        private const val ADD_CARD_SCORE = 10
-        private val ADD_CARD_EXAMPLE =
-            listOf(Card(CardNumber.THIRD, Shape.HEART), Card(CardNumber.SEVENTH, Shape.DIAMOND))
+        private const val INITIAL_SIZE = 0
     }
 }

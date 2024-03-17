@@ -1,10 +1,10 @@
-package blackjack.model.participant.testState
+package blackjack.model.participant.state
 
 import blackjack.model.BattingMoney
 import blackjack.model.participant.CompetitionResult
 import java.lang.IllegalStateException
 
-class Stay : Finish() {
+class Blackjack2() : Finish() {
     override fun getProfit(
         myScore: Int,
         opponentScore: Int,
@@ -17,11 +17,10 @@ class Stay : Finish() {
         myScore: Int,
         opponentScore: Int,
     ): CompetitionResult {
-        return when {
-            myScore > opponentScore -> CompetitionResult.WIN
-            myScore < opponentScore -> CompetitionResult.LOSE
-            myScore == opponentScore -> CompetitionResult.SAME
-            else -> throw IllegalArgumentException("잘못된 값이 들어왔습니다.")
+        return if (opponentScore == myScore) {
+            CompetitionResult.SAME
+        } else {
+            CompetitionResult.BLACKJACK
         }
     }
 

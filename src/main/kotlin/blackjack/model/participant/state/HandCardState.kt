@@ -1,4 +1,4 @@
-package blackjack.model.participant.testState
+package blackjack.model.participant.state
 
 interface HandCardState {
     fun nextTurn(

@@ -1,4 +1,4 @@
-package blackjack.model.participant.testState
+package blackjack.model.participant.state
 
 abstract class Gaming : HandCardState {
     abstract override fun nextTurn(

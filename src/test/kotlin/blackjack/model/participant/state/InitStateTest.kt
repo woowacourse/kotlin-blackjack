@@ -1,4 +1,4 @@
-package blackjack.model.participant.testState
+package blackjack.model.participant.state
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test

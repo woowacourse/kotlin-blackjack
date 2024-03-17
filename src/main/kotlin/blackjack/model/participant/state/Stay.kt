@@ -1,23 +1,28 @@
-package blackjack.model.participant.testState
+package blackjack.model.participant.state
 
 import blackjack.model.BattingMoney
 import blackjack.model.participant.CompetitionResult
 import java.lang.IllegalStateException
 
-class Bust2 : Finish() {
+class Stay : Finish() {
     override fun getProfit(
         myScore: Int,
         opponentScore: Int,
         battingMoney: BattingMoney,
     ): BattingMoney {
-        return battingMoney.times(getResult(opponentScore, myScore).profit)
+        return battingMoney.times(getResult(myScore, opponentScore).profit)
     }
 
     override fun getResult(
         myScore: Int,
         opponentScore: Int,
     ): CompetitionResult {
-        return CompetitionResult.LOSE
+        return when {
+            myScore > opponentScore -> CompetitionResult.WIN
+            myScore < opponentScore -> CompetitionResult.LOSE
+            myScore == opponentScore -> CompetitionResult.SAME
+            else -> throw IllegalArgumentException("잘못된 값이 들어왔습니다.")
+        }
     }
 
     override fun nextTurn(

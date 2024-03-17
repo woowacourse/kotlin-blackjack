@@ -1,6 +1,7 @@
 package blackjack.model.participant
 
 import blackjack.model.deck.Deck
+import blackjack.model.participant.state.Finish
 
 class Players private constructor(names: Set<String>) {
     val gamePlayers: List<Player> = names.map { Player(it) }
@@ -13,6 +14,19 @@ class Players private constructor(names: Set<String>) {
         gamePlayers.forEach { player ->
             player.initCards(deck.draw(INIT_CARD_AMOUNT))
         }
+    }
+
+    fun playTurn(
+        deck: Deck,
+        isHit: (String) -> Boolean,
+        showResult: (Player) -> Unit,
+    ): Map<Player, Finish> {
+        val gameResults = mutableMapOf<Player, Finish>()
+        gamePlayers.forEach { player ->
+            val result = player.playTurn(deck::draw, isHit, showResult)
+            gameResults[player] = result
+        }
+        return gameResults
     }
 
     companion object {

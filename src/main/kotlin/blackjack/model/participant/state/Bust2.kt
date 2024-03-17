@@ -1,27 +1,23 @@
-package blackjack.model.participant.testState
+package blackjack.model.participant.state
 
 import blackjack.model.BattingMoney
 import blackjack.model.participant.CompetitionResult
 import java.lang.IllegalStateException
 
-class Blackjack2() : Finish() {
+class Bust2 : Finish() {
     override fun getProfit(
         myScore: Int,
         opponentScore: Int,
         battingMoney: BattingMoney,
     ): BattingMoney {
-        return battingMoney.times(getResult(myScore, opponentScore).profit)
+        return battingMoney.times(getResult(opponentScore, myScore).profit)
     }
 
     override fun getResult(
         myScore: Int,
         opponentScore: Int,
     ): CompetitionResult {
-        return if (opponentScore == myScore) {
-            CompetitionResult.SAME
-        } else {
-            CompetitionResult.BLACKJACK
-        }
+        return CompetitionResult.LOSE
     }
 
     override fun nextTurn(
