@@ -6,6 +6,7 @@ import blackjack.model.card.CardNumber
 import blackjack.model.card.CardShape
 import blackjack.model.card.state.Done
 import blackjack.model.card.state.Stay
+import blackjack.model.result.Money
 import blackjack.model.result.WinningResultStatus
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.RepeatedTest
@@ -44,7 +45,7 @@ class PlayerTest {
 
     @Test
     fun `플레이어와 딜러의 결과를 비교하여 수익금을 계산한다`() {
-        val player = Player(PlayerName("심지"), 1_000)
+        val player = Player(PlayerName("심지"), Money(1_000))
         val dealer = Dealer()
         player.state =
             Stay(
@@ -62,6 +63,6 @@ class PlayerTest {
             )
         val actualWinningPay = player.calculateProfit(dealer)
 
-        assertThat(actualWinningPay).isEqualTo(1_000.0)
+        assertThat(actualWinningPay).isEqualTo(Money(1_000))
     }
 }

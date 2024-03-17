@@ -1,6 +1,7 @@
 package blackjack.model.card.state
 
 import blackjack.model.card.CardHand
+import blackjack.model.result.Money
 import blackjack.model.result.Score
 
 abstract class Decide(val cardHand: CardHand) : CardHandState {
@@ -11,7 +12,7 @@ abstract class Decide(val cardHand: CardHand) : CardHandState {
     override fun getCardHandScore(): Score = cardHand.calculateScore()
 
     override fun calculateProfit(
-        money: Int,
+        money: Money,
         other: CardHandState,
-    ): Double = throw IllegalStateException("현재 상태에서는 수익을 계산할 수 없습니다.")
+    ): Money = throw IllegalStateException("현재 상태에서는 수익을 계산할 수 없습니다.")
 }

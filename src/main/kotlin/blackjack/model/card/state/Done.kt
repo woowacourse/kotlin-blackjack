@@ -2,6 +2,7 @@ package blackjack.model.card.state
 
 import blackjack.model.card.Card
 import blackjack.model.card.CardHand
+import blackjack.model.result.Money
 import blackjack.model.result.Score
 
 abstract class Done(private val cardHand: CardHand) : CardHandState {
@@ -18,7 +19,7 @@ abstract class Done(private val cardHand: CardHand) : CardHandState {
     override fun getCardHandScore(): Score = cardHand.calculateScore()
 
     override fun calculateProfit(
-        money: Int,
+        money: Money,
         other: CardHandState,
-    ): Double = earningRate(other) * money
+    ): Money = money * earningRate(other)
 }

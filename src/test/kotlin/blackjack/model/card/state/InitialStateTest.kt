@@ -16,11 +16,11 @@ class InitialStateTest {
     }
 
     @Test
-    fun `첫 턴에서 카드를 한장 뽑은 상태에서 카드를 드로우하면 랜덤으로 카드 한 장을 더 뽑아서 Hit 가 된다`() {
+    fun `첫 턴에서 카드를 한장 뽑은 상태에서 카드를 드로우하면 랜덤으로 카드 한 장을 더 뽑아서 Hit 혹은 BlackJack 가 된다`() {
         val initialState = InitialState(CardHand()).draw(CardDeck.getRandomCard())
         val actualCardsState = initialState.draw(CardDeck.getRandomCard())
 
-        assertThat(actualCardsState is Hit).isTrue
+        assertThat(actualCardsState is Hit || actualCardsState is BlackJack).isTrue
         assertThat(actualCardsState.countCards()).isEqualTo(2)
     }
 }

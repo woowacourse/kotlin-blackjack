@@ -4,6 +4,7 @@ import blackjack.model.card.Card
 import blackjack.model.card.CardHand
 import blackjack.model.card.CardNumber
 import blackjack.model.card.CardShape
+import blackjack.model.result.Money
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -27,8 +28,8 @@ class StayTest {
                     Card(CardShape.CLOVER, CardNumber.JACK),
                 ),
             )
-        val actualProfit = bust.calculateProfit(1_000, other)
-        Assertions.assertThat(actualProfit).isEqualTo(-1_000.0)
+        val actualProfit = bust.calculateProfit(Money(1_000), other)
+        Assertions.assertThat(actualProfit).isEqualTo(Money(-1_000))
     }
 
     @DisplayName("플레이어: 스테이,  딜러: 버스트 이면 플레이어는 1.0 배의 수익을 얻는다")
@@ -42,8 +43,8 @@ class StayTest {
                     Card(CardShape.SPADE, CardNumber.JACK),
                 ),
             )
-        val actualProfit = bust.calculateProfit(1_000, other)
-        Assertions.assertThat(actualProfit).isEqualTo(1_000.0)
+        val actualProfit = bust.calculateProfit(Money(1_000), other)
+        Assertions.assertThat(actualProfit).isEqualTo(Money(1_000))
     }
 
     @DisplayName("플레이어: 스테이,  딜러: 스테이, 플레이어의 점수가 더 높으면 플레이어는 1.0 배의 수익을 얻는다")
@@ -56,8 +57,8 @@ class StayTest {
                     Card(CardShape.HEART, CardNumber.QUEEN),
                 ),
             )
-        val actualProfit = bust.calculateProfit(1_000, other)
-        Assertions.assertThat(actualProfit).isEqualTo(1_000.0)
+        val actualProfit = bust.calculateProfit(Money(1_000), other)
+        Assertions.assertThat(actualProfit).isEqualTo(Money(1_000))
     }
 
     @DisplayName("플레이어: 스테이,  딜러: 스테이, 플레이어의 점수가 더 낮으면 플레이어는 -1.0 배의 손해을 입는다")
@@ -70,8 +71,8 @@ class StayTest {
                     Card(CardShape.HEART, CardNumber.QUEEN),
                 ),
             )
-        val actualProfit = bust.calculateProfit(1_000, other)
-        Assertions.assertThat(actualProfit).isEqualTo(-1_000.0)
+        val actualProfit = bust.calculateProfit(Money(1_000), other)
+        Assertions.assertThat(actualProfit).isEqualTo(Money(-1_000))
     }
 
     @DisplayName("플레이어: 스테이,  딜러: 스테이, 점수가 서로 같으면 플레이어는 0 배의 수익을 얻는다")
@@ -84,7 +85,7 @@ class StayTest {
                     Card(CardShape.HEART, CardNumber.QUEEN),
                 ),
             )
-        val actualProfit = bust.calculateProfit(1_000, other)
-        Assertions.assertThat(actualProfit).isEqualTo(0.0)
+        val actualProfit = bust.calculateProfit(Money(1_000), other)
+        Assertions.assertThat(actualProfit).isEqualTo(Money.ZERO)
     }
 }
