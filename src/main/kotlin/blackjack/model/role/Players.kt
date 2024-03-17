@@ -1,6 +1,7 @@
 package blackjack.model.role
 
 import blackjack.model.result.PlayerWinning
+import blackjack.model.result.PlayersProfit
 
 class Players(val players: List<Player>) {
     init {
@@ -11,6 +12,8 @@ class Players(val players: List<Player>) {
     }
 
     fun calculatePlayersWinning(dealer: Dealer): PlayerWinning = PlayerWinning(players.associate { it.name to it.judgeWinning(dealer) })
+
+    fun calculatePlayersProfit(dealer: Dealer): PlayersProfit = PlayersProfit(players.associate { it.name to it.calculateProfit(dealer) })
 
     companion object {
         private const val MIN_PLAYERS_COUNT = 1
