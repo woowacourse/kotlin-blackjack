@@ -22,6 +22,10 @@ class BlackJack(
 
         val participants = Participants(dealer, players)
 
+        players.players.forEach {
+            inputView.readBettingAmount(it)
+        }
+
         dealInitialCards(participants)
         runPlayersPhase(players)
 

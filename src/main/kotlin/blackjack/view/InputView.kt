@@ -25,4 +25,12 @@ class InputView {
             else -> throw IllegalArgumentException("잘못된 형식을 입력했습니다.")
         }
     }
+
+    fun readBettingAmount(player: Player): Int {
+        println("\n" + player.name.name + "의 베팅 금액은?")
+        val amount = readln().toIntOrNull()
+        if (amount != null) return amount
+        println("숫자만 입력하세요.")
+        return readBettingAmount(player)
+    }
 }
