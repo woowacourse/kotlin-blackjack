@@ -5,10 +5,10 @@ import blackjack.model.Card
 import blackjack.model.GameResult
 import blackjack.model.Hand
 
-interface BlackjackState {
-    fun draw(card: Card): BlackjackState
+interface State {
+    fun draw(card: Card): State
 
-    fun stay(): BlackjackState
+    fun stay(): State
 
     fun hand(): Hand
 
@@ -16,7 +16,7 @@ interface BlackjackState {
 
     fun isFinished(): Boolean
 
-    fun calculate(opponent: BlackjackState): GameResult
+    fun calculate(opponent: State): GameResult
 
     fun profit(
         betAmount: BetAmount,

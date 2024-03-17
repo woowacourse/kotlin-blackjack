@@ -30,7 +30,7 @@ object OutputView {
     }
 
     private fun showDealerInitCard(dealer: Dealer) {
-        val showCard = dealer.blackjackState.hand().cards.first()
+        val showCard = dealer.state.hand().cards.first()
         println("${dealer.userInfo.nickname}: ${getCardNumberName(showCard.number)}${getCardPatternName(showCard.pattern)}")
     }
 
@@ -43,7 +43,7 @@ object OutputView {
     fun showPlayerCards(cardHolder: CardHolder) {
         println(
             "${cardHolder.userInfo.nickname}: ${
-                cardHolder.blackjackState.hand().cards.joinToString(", ") { card ->
+                cardHolder.state.hand().cards.joinToString(", ") { card ->
                     getCardNumberName(card.number) + getCardPatternName(card.pattern)
                 }
             }",
@@ -63,10 +63,10 @@ object OutputView {
     private fun showDealerCardsResult(dealer: Dealer) {
         println(
             "${dealer.userInfo.nickname}: ${
-                dealer.blackjackState.hand().cards.joinToString(", ") { card ->
+                dealer.state.hand().cards.joinToString(", ") { card ->
                     getCardNumberName(card.number) + getCardPatternName(card.pattern)
                 }
-            } - 결과: ${dealer.blackjackState.hand().calculate()}",
+            } - 결과: ${dealer.state.hand().calculate()}",
         )
     }
 
@@ -74,10 +74,10 @@ object OutputView {
         playerGroup.players.forEach { player ->
             println(
                 "${player.userInfo.nickname}: ${
-                    player.blackjackState.hand().cards.joinToString(", ") { card ->
+                    player.state.hand().cards.joinToString(", ") { card ->
                         getCardNumberName(card.number) + getCardPatternName(card.pattern)
                     }
-                } - 결과: ${player.blackjackState.hand().calculate()}",
+                } - 결과: ${player.state.hand().calculate()}",
             )
         }
     }

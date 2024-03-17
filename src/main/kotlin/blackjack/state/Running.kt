@@ -7,7 +7,7 @@ import blackjack.model.Hand
 abstract class Running(hand: Hand) : Started(hand) {
     override fun isFinished(): Boolean = false
 
-    override fun calculate(opponent: BlackjackState): GameResult {
+    override fun calculate(opponent: State): GameResult {
         return GameResult.Lose
     }
 

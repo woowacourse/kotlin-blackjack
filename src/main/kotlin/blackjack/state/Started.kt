@@ -3,7 +3,7 @@ package blackjack.state
 import blackjack.model.CardNumber
 import blackjack.model.Hand
 
-abstract class Started(private val hand: Hand) : BlackjackState {
+abstract class Started(private val hand: Hand) : State {
     override fun hand(): Hand = hand
 
     override fun calculateHand(): Int {

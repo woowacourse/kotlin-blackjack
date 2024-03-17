@@ -6,11 +6,11 @@ import blackjack.model.GameResult
 import blackjack.model.Hand
 
 abstract class Finished(private val hand: Hand) : Started(hand) {
-    override fun draw(card: Card): BlackjackState = this
+    override fun draw(card: Card): State = this
 
     override fun isFinished(): Boolean = true
 
-    override fun stay(): BlackjackState = Stay(hand)
+    override fun stay(): State = Stay(hand)
 
     abstract fun earningRate(): Double
 

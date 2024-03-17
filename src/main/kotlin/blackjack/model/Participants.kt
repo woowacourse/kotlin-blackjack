@@ -72,8 +72,8 @@ class Participants(
     }
 
     fun resetHand() {
-        playerGroup.players.forEach { player -> player.blackjackState.hand().reset() }
-        dealer.blackjackState.hand().reset()
+        playerGroup.players.forEach { player -> player.state.hand().reset() }
+        dealer.state.hand().reset()
     }
 
     private fun calculateResult(): ProfitResults {
@@ -81,7 +81,7 @@ class Participants(
         var totalProfit = 0.0
 
         playerGroup.players.forEach { player ->
-            val profit = player.calculateProfit(dealer.blackjackState)
+            val profit = player.calculateProfit(dealer.state)
             result.add(ProfitResult(player, Profit((profit))))
             totalProfit += profit
         }

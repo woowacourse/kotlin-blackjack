@@ -1,14 +1,14 @@
 package blackjack.model
 
-import blackjack.state.BlackjackState
 import blackjack.state.Hit
+import blackjack.state.State
 
 sealed class CardHolder(val userInfo: UserInfo) {
-    var blackjackState: BlackjackState = Hit()
+    var state: State = Hit()
         private set
 
     fun addCard(card: Card) {
-        blackjackState = blackjackState.draw(card)
+        state = state.draw(card)
     }
 
     fun drawCard(
@@ -16,20 +16,20 @@ sealed class CardHolder(val userInfo: UserInfo) {
         shouldDrawCard: () -> Boolean,
         showPlayerCards: (cardHolder: CardHolder) -> Unit,
     ) {
-        while (!blackjackState.isFinished()) {
+        while (!state.isFinished()) {
             if (shouldDrawCard()) {
                 addCard(card = card())
             } else {
-                blackjackState = blackjackState.stay()
+                state = state.stay()
             }
             showPlayerCards(this)
         }
     }
 
-    fun getSumOfCards(): Int = blackjackState.calculateHand()
+    fun getSumOfCards(): Int = state.calculateHand()
 
-    fun calculateProfit(opponent: BlackjackState): Double {
-        val gameResult = blackjackState.calculate(opponent)
-        return blackjackState.profit(betAmount = userInfo.betAmount, gameResult = gameResult)
+    fun calculateProfit(opponent: State): Double {
+        val gameResult = state.calculate(opponent)
+        return state.profit(betAmount = userInfo.betAmount, gameResult = gameResult)
     }
 }

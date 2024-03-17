@@ -4,7 +4,7 @@ import blackjack.model.Card
 import blackjack.model.Hand
 
 class Hit(private val hand: Hand = Hand()) : Running(hand) {
-    override fun draw(card: Card): BlackjackState {
+    override fun draw(card: Card): State {
         hand.add(card)
         val sumOfCard = hand.calculate()
         return when {
@@ -15,7 +15,7 @@ class Hit(private val hand: Hand = Hand()) : Running(hand) {
         }
     }
 
-    override fun stay(): BlackjackState = Stay(hand)
+    override fun stay(): State = Stay(hand)
 
     companion object {
         const val THRESHOLD_BUST = 21
