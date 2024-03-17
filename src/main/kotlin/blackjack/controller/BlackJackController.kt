@@ -22,7 +22,14 @@ class BlackJackController(
 
     private fun initGameParticipants(): Participants {
         val dealer = Dealer()
-        val players = Players((inputView.readPlayersName()).map { Player(PlayerName(it)) })
+        val players =
+            Players(
+                (inputView.readPlayersName())
+                    .map {
+                        val name = PlayerName(it)
+                        Player(name, inputView.readMoney(name))
+                    },
+            )
         outputView.printInitialDealing(dealer, players)
         return Participants(dealer, players)
     }
