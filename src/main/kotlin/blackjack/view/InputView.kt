@@ -12,9 +12,9 @@ class InputView {
         return input.split(",").map { it.trim() }
     }
 
-    fun readMoney(playerName: PlayerName): Int {
+    fun readMoney(playerName: PlayerName): Long {
         println("$playerName 의 배팅 금액은?")
-        val amount = readln().toIntOrNull()
+        val amount = readln().toLongOrNull()
         requireNotNull(amount) { "제대로 된 금액 형식을 입력하세요" }
         return amount
     }
