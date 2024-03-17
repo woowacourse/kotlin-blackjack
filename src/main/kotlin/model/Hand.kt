@@ -5,7 +5,7 @@ import model.card.Card
 class Hand() {
     private var _cards: MutableList<Card> = mutableListOf()
     val cards: List<Card>
-        get() = _cards
+        get() = _cards.toList()
 
     fun draw(newCard: Card) {
         _cards.add(newCard)
