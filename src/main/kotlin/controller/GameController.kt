@@ -3,7 +3,6 @@ package controller
 import ExceptionHandler
 import model.Answer
 import model.Hand
-import model.ResultType
 import model.card.Deck
 import model.human.Dealer
 import model.human.Human
@@ -128,30 +127,7 @@ class GameController(private val deck: Deck) {
         players: Players,
     ) {
         players.players.forEach { player ->
-            judge(dealer, player)
-        }
-    }
-
-    private fun judge(
-        dealer: Dealer,
-        player: Player,
-    ) {
-        when (dealer.getCompareResult(player)) {
-            ResultType.WIN -> {
-                dealer.humanInfo.exchangeMoney(player.humanInfo, -1.0)
-            }
-
-            ResultType.LOSE -> {
-                if (player.isBlackJack()) {
-                    dealer.humanInfo.exchangeMoney(player.humanInfo, 1.5)
-                } else {
-                    dealer.humanInfo.exchangeMoney(player.humanInfo, 1.0)
-                }
-            }
-
-            ResultType.DRAW -> {
-                dealer.humanInfo.exchangeMoney(player.humanInfo, 0.0)
-            }
+            dealer.judge(player)
         }
     }
 }

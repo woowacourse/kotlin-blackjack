@@ -46,4 +46,24 @@ class Dealer(hand: Hand, override val humanInfo: HumanInfo = HumanInfo("딜러")
             else -> ResultType.LOSE
         }
     }
+
+    fun judge(other: Human) {
+        when (getCompareResult(other)) {
+            ResultType.WIN -> {
+                humanInfo.exchangeMoney(other.humanInfo, -1.0)
+            }
+
+            ResultType.LOSE -> {
+                if (other.isBlackJack()) {
+                    humanInfo.exchangeMoney(other.humanInfo, 1.5)
+                } else {
+                    humanInfo.exchangeMoney(other.humanInfo, 1.0)
+                }
+            }
+
+            ResultType.DRAW -> {
+                humanInfo.exchangeMoney(other.humanInfo, 0.0)
+            }
+        }
+    }
 }
