@@ -1,7 +1,6 @@
 package blackjack.model
 
 import blackjack.state.State
-import blackjack.view.user.PLAYER_HIT_MESSAGE
 
 class Player(name: String) : Participant(name) {
     private var balance: BettingMoney = BettingMoney(DEFAULT_BETTING_MONEY)
@@ -22,10 +21,10 @@ class Player(name: String) : Participant(name) {
 
     fun drawAdditionalCard(
         drawFunction: () -> Card,
-        inputDecision: (String) -> String,
+        inputDecision: () -> Boolean,
         outputAction: ((Player) -> Unit),
     ) {
-        while (checkHitState() && inputDecision(getName()) == PLAYER_HIT_MESSAGE) {
+        while (checkHitState() && inputDecision()) {
             draw(drawFunction())
             outputAction(this)
         }

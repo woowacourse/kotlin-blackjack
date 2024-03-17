@@ -2,6 +2,7 @@ package blackjack.view
 
 import blackjack.model.BettingMoney
 import blackjack.model.Player
+import blackjack.model.UserDecision
 import blackjack.view.user.UserInputValidator
 
 object InputView {
@@ -21,16 +22,15 @@ object InputView {
         }
     }
 
-    fun inputPlayerDecision(playerName: String): String {
+    fun inputPlayerDecision(playerName: String): UserDecision {
         println(INPUT_MESSAGE_PLAYER_DRAW.format(playerName))
         val input = readlnOrNull().orEmpty()
         val result = UserInputValidator.checkUserDecision(input)
 
-        result.getOrElse { throwable ->
+        return result.getOrElse { throwable ->
             println("${throwable.message}")
             inputPlayerDecision(playerName)
         }
-        return input
     }
 
     fun inputPlayerBettingMoney(playerName: String): BettingMoney {
