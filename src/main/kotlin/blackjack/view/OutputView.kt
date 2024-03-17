@@ -6,7 +6,9 @@ import blackjack.model.card.CardShape
 import blackjack.model.config.GameRule.DEALER_MAX_SCORE_FOR_HIT
 import blackjack.model.config.GameRule.DEALER_NAME
 import blackjack.model.result.DealerWinning
+import blackjack.model.result.Money
 import blackjack.model.result.PlayerWinning
+import blackjack.model.result.PlayersProfit
 import blackjack.model.result.WinningResultStatus
 import blackjack.model.role.Dealer
 import blackjack.model.role.Players
@@ -76,6 +78,17 @@ class OutputView {
         println("\n## 최종 승패")
         printDealerWinningResult(dealerWinning)
         printPlayerWinningResult(playerWinning)
+    }
+
+    fun printParticipantsProfit(
+        dealerProfit: Money,
+        playersProfit: PlayersProfit,
+    ) {
+        println("## 최종 수익")
+        println("$DEALER_NAME: ${dealerProfit.amount}")
+        playersProfit.result.forEach { (playerName, profit) ->
+            println("${playerName.name}: ${profit.amount} ")
+        }
     }
 
     private fun printPlayerWinningResult(playerWinning: PlayerWinning) {
