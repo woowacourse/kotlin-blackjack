@@ -1,6 +1,7 @@
 package blackjack.model
 
 import blackjack.base.BaseHolder
+import blackjack.model.state.Progressing
 
 class Dealer(): BaseHolder() {
     fun drawUntilOverThreshold(gameDeck: GameDeck): Int {

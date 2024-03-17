@@ -1,6 +1,7 @@
 package blackjack.model
 
 import blackjack.base.BaseHolder
+import blackjack.model.state.Running
 
 class Player(val name: Name) : BaseHolder() {
     fun chooseHitOrStay(

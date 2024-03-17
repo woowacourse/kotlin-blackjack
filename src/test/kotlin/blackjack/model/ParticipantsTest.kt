@@ -1,5 +1,6 @@
 package blackjack.model
 
+import blackjack.model.state.Running
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test

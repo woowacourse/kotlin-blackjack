@@ -3,8 +3,8 @@ package blackjack.base
 import blackjack.model.Card
 import blackjack.model.GameDeck
 import blackjack.model.GameResult
-import blackjack.model.Running
-import blackjack.model.State
+import blackjack.model.state.Running
+import blackjack.model.state.State
 
 abstract class BaseHolder(gameResult: GameResult = GameResult()) {
     private var _state: State = Running()
