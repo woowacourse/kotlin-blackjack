@@ -95,6 +95,20 @@ class OutputView {
         println()
     }
 
+    fun printProfit(
+        participants: Participants,
+        playersWinning: PlayersWinning,
+    ) {
+        val profit = participants.getProfit(playersWinning)
+        val dealerName = participants.dealer.name
+
+        println("## 최종 수익")
+        println("${dealerName.name}: ${profit[dealerName]}")
+        profit.filterKeys { it.name != dealerName.name }.forEach { (name, profit) ->
+            println("${name.name}: $profit")
+        }
+    }
+
     private fun convertWinningResultFormat(status: WinningResultStatus): String {
         return when (status) {
             WinningResultStatus.VICTORY -> VICTORY_OUTPUT_FORMAT
