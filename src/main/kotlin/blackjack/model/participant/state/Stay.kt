@@ -2,7 +2,6 @@ package blackjack.model.participant.state
 
 import blackjack.model.BattingMoney
 import blackjack.model.participant.CompetitionResult
-import java.lang.IllegalStateException
 
 class Stay : Finish() {
     override fun getProfit(
@@ -18,6 +17,7 @@ class Stay : Finish() {
         opponentScore: Int,
     ): CompetitionResult {
         return when {
+            opponentScore > 21 -> CompetitionResult.WIN
             myScore > opponentScore -> CompetitionResult.WIN
             myScore < opponentScore -> CompetitionResult.LOSE
             myScore == opponentScore -> CompetitionResult.SAME
