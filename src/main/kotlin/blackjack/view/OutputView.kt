@@ -6,9 +6,11 @@ import blackjack.model.CardNumber
 import blackjack.model.Dealer
 import blackjack.model.DealerStatistics
 import blackjack.model.GameResult
+import blackjack.model.Money
 import blackjack.model.Participant
 import blackjack.model.Player
 import blackjack.model.PlayerStatistics
+import blackjack.model.Reward
 import blackjack.model.Suit
 
 object OutputView {
@@ -93,6 +95,19 @@ object OutputView {
         playerStatistics.forEach { playerStatistic ->
             println("${playerStatistic.player.name}: ${playerStatistic.gameResult.getName()}")
         }
+    }
+
+    fun printRewardStatistics(dealer: Dealer, playerStatistics: PlayerStatistics) {
+        val reward = Reward()
+        val dealerMoney = -playerStatistics.map { reward.moneyFrom(it) }.reduce { a, b -> a + b }
+        printParticipantReward(dealer, dealerMoney)
+        playerStatistics.forEach {
+            printParticipantReward(it.player, reward.moneyFrom(it))
+        }
+    }
+
+    private fun printParticipantReward(participant: Participant, money: Money) {
+        println("${participant.name}: ${money.money}")
     }
 
     fun printError(message: String) = println(message)

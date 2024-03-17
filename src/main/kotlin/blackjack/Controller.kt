@@ -6,6 +6,7 @@ import blackjack.model.Deck
 import blackjack.model.Money
 import blackjack.model.Participant
 import blackjack.model.Player
+import blackjack.model.PlayerStatistics
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -80,8 +81,8 @@ class Controller {
         players: List<Player>,
     ) {
         OutputView.printResult(dealer, players)
-        val gameStatistics = BlackjackGameStatistics(dealer, players)
-        OutputView.printGameStatistics(gameStatistics)
+        val playerStatistics = PlayerStatistics(dealer, players)
+        OutputView.printRewardStatistics(dealer, playerStatistics)
     }
 
     private fun Participant.initCard(deck: Deck) {
