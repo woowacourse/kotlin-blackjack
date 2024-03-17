@@ -1,28 +1,28 @@
 package model.card
 
-enum class MarkType(val mark: String, val order: Int) {
+enum class Suit(val mark: String, val order: Int) {
     SPADE("스페이드", 0),
     CLOVER("클로버", 1),
     HEART("하트", 2),
     DIAMOND("다이아몬드", 3),
 }
 
-fun intToMarkType(number: Int): MarkType {
+fun intToMarkType(number: Int): Suit {
     return when (number / DIVIDER) {
-        MarkType.SPADE.order -> MarkType.SPADE
-        MarkType.CLOVER.order -> MarkType.CLOVER
-        MarkType.HEART.order -> MarkType.HEART
-        MarkType.DIAMOND.order -> MarkType.DIAMOND
+        Suit.SPADE.order -> Suit.SPADE
+        Suit.CLOVER.order -> Suit.CLOVER
+        Suit.HEART.order -> Suit.HEART
+        Suit.DIAMOND.order -> Suit.DIAMOND
         else -> throw IllegalArgumentException("잘못된 숫자를 입력하셨습니다. (0~51 사이의 숫자만 가능합니다)")
     }
 }
 
-fun stringToMarkType(input: String): MarkType {
+fun stringToMarkType(input: String): Suit {
     return when (input.lowercase()) {
-        "d" -> MarkType.DIAMOND
-        "s" -> MarkType.SPADE
-        "c" -> MarkType.CLOVER
-        "h" -> MarkType.HEART
+        "d" -> Suit.DIAMOND
+        "s" -> Suit.SPADE
+        "c" -> Suit.CLOVER
+        "h" -> Suit.HEART
         else -> throw IllegalArgumentException("잘못된 MarkType 을 입력하셨습니다.")
     }
 }

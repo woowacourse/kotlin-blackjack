@@ -1,7 +1,7 @@
 package model.card
 
-class Card(val valueType: ValueType, val markType: MarkType) {
-    fun isAce(): Boolean = (valueType == ValueType.ACE)
+class Card(val denomination: Denomination, val suit: Suit) {
+    fun isAce(): Boolean = (denomination == Denomination.ACE)
 
     companion object {
         const val INVALID_RANGE = "0 ~ 51 사이의 숫자 범위여야 합니다"
