@@ -14,5 +14,12 @@ value class Money(val amount: Long) : Comparable<Money> {
 
     companion object {
         val ZERO: Money = Money(0)
+
+        fun bet(amount: Long): Money {
+            require(amount >= MIN_BETTING_AMOUNT) { "돈은 1_000 원 이상 배팅할 수 있습니다." }
+            return Money(amount)
+        }
+
+        private const val MIN_BETTING_AMOUNT = 1_000
     }
 }
