@@ -9,4 +9,9 @@ abstract class Decide(val cardHand: CardHand) : CardHandState {
     override fun countCards(): Int = cardHand.hand.size
 
     override fun getCardHandScore(): Score = cardHand.calculateScore()
+
+    override fun calculateProfit(
+        money: Int,
+        other: CardHandState,
+    ): Double = throw IllegalStateException("현재 상태에서는 수익을 계산할 수 없습니다.")
 }

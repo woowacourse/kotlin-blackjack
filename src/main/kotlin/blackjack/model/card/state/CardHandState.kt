@@ -14,4 +14,9 @@ interface CardHandState {
     fun countCards(): Int
 
     fun getCardHandScore(): Score
+
+    fun calculateProfit(
+        money: Int,
+        other: CardHandState,
+    ): Double
 }
