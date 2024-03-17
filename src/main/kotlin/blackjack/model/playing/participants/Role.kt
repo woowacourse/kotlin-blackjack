@@ -1,11 +1,11 @@
 package blackjack.model.playing.participants
 
-import blackjack.model.Betting
 import blackjack.model.card.Card
 import blackjack.model.card.CardDeck
 import blackjack.model.playing.cardhand.CardHand
 import blackjack.model.playing.cardhand.CardHandState
 import blackjack.model.playing.participants.player.PlayerName
+import blackjack.model.winning.Betting
 import blackjack.model.winning.WinningResultStatus
 
 abstract class Role(open val name: PlayerName, open val cardHand: CardHand, open val betting: Betting) {
@@ -38,7 +38,12 @@ abstract class Role(open val name: PlayerName, open val cardHand: CardHand, open
         return when (winningResultStatus) {
             WinningResultStatus.PUSH -> PUSH_MULTIPLIER
             WinningResultStatus.DEFEAT -> betting.amount * DEFEAT_MULTIPLIER
-            WinningResultStatus.VICTORY -> if (isBlackjack()) betting.amount * BLACK_JACK_MULTIPLIER else betting.amount * VICTORY_MULTIPLIER
+            WinningResultStatus.VICTORY ->
+                if (isBlackjack()) {
+                    betting.amount * BLACK_JACK_MULTIPLIER
+                } else {
+                    betting.amount * VICTORY_MULTIPLIER
+                }
         }
     }
 

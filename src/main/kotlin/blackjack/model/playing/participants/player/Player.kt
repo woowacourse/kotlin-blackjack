@@ -1,9 +1,9 @@
 package blackjack.model.playing.participants.player
 
-import blackjack.model.Betting
 import blackjack.model.playing.cardhand.CardHand
 import blackjack.model.playing.cardhand.CardHandState
 import blackjack.model.playing.participants.Role
+import blackjack.model.winning.Betting
 
 data class Player(
     override val name: PlayerName,

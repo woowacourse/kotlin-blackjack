@@ -1,6 +1,5 @@
 package blackjack.controller
 
-import blackjack.model.Betting
 import blackjack.model.card.CardDeck
 import blackjack.model.card.RandomDeck
 import blackjack.model.playing.cardhand.CardHand
@@ -9,6 +8,7 @@ import blackjack.model.playing.participants.Participants
 import blackjack.model.playing.participants.player.Player
 import blackjack.model.playing.participants.player.PlayerName
 import blackjack.model.playing.participants.player.Players
+import blackjack.model.winning.Betting
 import blackjack.view.InputView
 import blackjack.view.OutputView
 

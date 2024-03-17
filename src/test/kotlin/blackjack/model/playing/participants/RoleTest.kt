@@ -1,6 +1,5 @@
 package blackjack.model.playing.participants
 
-import blackjack.model.Betting
 import blackjack.model.CLOVER_ACE
 import blackjack.model.DIAMOND_KING
 import blackjack.model.HEART_ACE
@@ -13,6 +12,7 @@ import blackjack.model.card.RandomDeck
 import blackjack.model.playing.cardhand.CardHand
 import blackjack.model.playing.participants.player.Player
 import blackjack.model.playing.participants.player.PlayerName
+import blackjack.model.winning.Betting
 import blackjack.model.winning.WinningResultStatus
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
