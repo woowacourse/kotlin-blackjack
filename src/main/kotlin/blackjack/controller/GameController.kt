@@ -7,6 +7,7 @@ import blackjack.model.Participants
 import blackjack.model.PlayerGroup
 import blackjack.view.InputView
 import blackjack.view.InputView.askHitOrStay
+import blackjack.view.InputView.inputBettingMoney
 import blackjack.view.OutputView
 import blackjack.view.OutputView.printDealerDrawCard
 import blackjack.view.OutputView.printEveryCards
@@ -29,6 +30,7 @@ class GameController {
         val gameDeck = GameDeck()
         val blackJackGame = BlackJackGame(participants, gameDeck)
 
+        blackJackGame.betMoney(::inputBettingMoney)
         blackJackGame.start(::printGameSetting)
         blackJackGame.runPlayersTurn(
             hitOrStay = ::askHitOrStay,
