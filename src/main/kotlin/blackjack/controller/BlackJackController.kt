@@ -19,7 +19,10 @@ class BlackJackController(private val cardDeck: CardDeck) {
         displayGameInfo(dealer, participants)
     }
 
-    private fun setupGame(dealer: Dealer, players: List<Player>): Participants {
+    private fun setupGame(
+        dealer: Dealer,
+        players: List<Player>,
+    ): Participants {
         cardDeck.cardShuffle()
         betMoney(players)
         val participants = Participants(participants = listOf(dealer) + players)
@@ -40,7 +43,10 @@ class BlackJackController(private val cardDeck: CardDeck) {
         }
     }
 
-    private fun displayGameInfo(dealer: Dealer, participants: Participants) {
+    private fun displayGameInfo(
+        dealer: Dealer,
+        participants: Participants,
+    ) {
         OutputView.outputParticipantsName(
             dealerName = dealer.getName(),
             players = participants.getPlayers(),
