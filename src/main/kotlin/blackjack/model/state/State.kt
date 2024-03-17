@@ -4,9 +4,11 @@ import blackjack.base.BaseHolder
 import blackjack.model.Card
 import blackjack.model.GameResult
 import blackjack.model.Hand
+import blackjack.model.Profit
 
 sealed interface State {
     val hand: Hand
+    val profit: Profit
 
     fun decideWinner(opponent: BaseHolder): GameResult
 
