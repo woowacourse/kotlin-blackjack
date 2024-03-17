@@ -18,6 +18,13 @@ class BlackJack(
     private val cardDeck: CardDeck = RandomDeck(),
 ) {
     fun gameStart() {
+        val participants = prepareForGame()
+        dealInitialCards(participants)
+        playing(participants)
+        showFinalWinning(participants)
+    }
+
+    private fun prepareForGame(): Participants {
         val dealer = Dealer(CardHand())
         val players = initPlayers()
 
@@ -27,14 +34,27 @@ class BlackJack(
                     inputView.readBettingAmount(it),
                 )
         }
+        return Participants(dealer, players)
+    }
 
-        val participants = Participants(dealer, players)
+    private fun dealInitialCards(participants: Participants) {
+        outputView.printInitialSetting(participants)
 
-        dealInitialCards(participants)
-        runPlayersPhase(players)
+        participants.addInitialCards(cardDeck)
+        outputView.printInitialCardHands(participants)
+    }
 
-        runDealerPhase(dealer)
-        showFinalWinning(participants)
+    private fun playing(participants: Participants) {
+        runPlayersPhase(participants.players)
+        runDealerPhase(participants.dealer)
+    }
+
+    private fun showFinalWinning(participants: Participants) {
+        val finalWinning = participants.getFinalWinning()
+
+        outputView.printGameResult(participants)
+        outputView.printFinalWinning(finalWinning)
+        outputView.printProfit(participants, finalWinning.playerWinning)
     }
 
     private fun initPlayers(): Players =
@@ -44,13 +64,6 @@ class BlackJack(
                     Player(PlayerName(name), CardHand())
                 },
         )
-
-    private fun dealInitialCards(participants: Participants) {
-        outputView.printInitialSetting(participants)
-
-        participants.addInitialCards(cardDeck)
-        outputView.printInitialCardHands(participants)
-    }
 
     private fun runPlayersPhase(players: Players) {
         players.players.forEach { player ->
@@ -74,13 +87,5 @@ class BlackJack(
             val newCard = cardDeck.draw()
             dealer.draw(newCard)
         }
-    }
-
-    private fun showFinalWinning(participants: Participants) {
-        val finalWinning = participants.getFinalWinning()
-
-        outputView.printGameResult(participants)
-        outputView.printFinalWinning(finalWinning)
-        outputView.printProfit(participants, finalWinning.playerWinning)
     }
 }
