@@ -34,18 +34,7 @@ class Player(name: String) : Participant(name) {
         result: Result,
         state: State,
     ): Double {
-        return when (result) {
-            Result.WIN -> {
-                if (state == State.Finish.BlackJack) {
-                    balance * BLACK_JACK_EARNING_RATE
-                } else {
-                    balance * WIN_EARNING_RATE
-                }
-            }
-
-            Result.DRAW -> DRAW_EARNING_RATE
-            Result.LOSE -> -balance
-        }
+        return state.calculateProfit(balance, result)
     }
 
     companion object {
@@ -56,9 +45,6 @@ class Player(name: String) : Participant(name) {
         }
 
         private const val DEFAULT_BETTING_MONEY: Double = 0.0
-        const val BLACK_JACK_EARNING_RATE: Double = 1.5
-        const val WIN_EARNING_RATE: Double = 1.0
-        const val DRAW_EARNING_RATE: Double = 0.0
         private const val MAX_NAME_LENGTH = 8
         private const val ERROR_NAME_LENGTH = "사용자 이름은 최대 ${MAX_NAME_LENGTH}자 입니다."
         private const val ERROR_DUPLICATION_NAME = "사용자 이름은 중복이 불가능 합니다."
