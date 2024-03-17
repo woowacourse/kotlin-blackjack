@@ -9,13 +9,13 @@ import org.junit.jupiter.params.provider.CsvSource
 class BettingAmountTest {
     @ParameterizedTest
     @CsvSource("1000", "5000")
-    fun `0원 초과의 배팅금액을 입력했을때 예외 발생하지 않음을 확인`(input: Double) {
+    fun `올바른 배팅 금액 입력 (0원 초과)`(input: Double) {
         assertDoesNotThrow { BettingAmount(input) }
     }
 
     @ParameterizedTest
     @CsvSource("-1", "0")
-    fun `0원 이하의 배팅금액을 입력했을때 예외가 발생함을 확인`(input: Double) {
+    fun `올바르지 않은 배팅 금액 입력 (0원 이하)`(input: Double) {
         assertThrows<IllegalArgumentException> { BettingAmount(input) }
     }
 }
