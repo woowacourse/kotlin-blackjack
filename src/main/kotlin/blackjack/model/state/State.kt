@@ -18,7 +18,7 @@ sealed interface State {
 
     fun decideWinner(opponent: BaseHolder): GameResult
 
-    fun calculateProfitByOpponent(opponentProfit: Double)
+    fun changeProfitByOpponent(opponentProfit: Double)
 
     sealed class Progressing : State
     sealed class Finished : State

@@ -27,6 +27,10 @@ abstract class BaseHolder(gameResult: GameResult = GameResult()) {
         changeState(state.getCard(card))
     }
 
+    fun setProfitFromOpponent(opponentProfit: Double) {
+        state.changeProfitByOpponent(opponentProfit)
+    }
+
     fun addResult(newGameResult: GameResult) {
         _gameResult += newGameResult
     }
