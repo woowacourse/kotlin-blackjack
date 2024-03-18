@@ -1,6 +1,9 @@
 package blackjack.view
 
-import blackjack.model.domain.ParticipantInfo
+import blackjack.Dealer
+import blackjack.Participant
+import blackjack.Players
+import blackjack.model.domain.Hand
 
 object OutputView {
     private const val MESSAGE_DISTRIBUTION = "%s와 %s에게 2장의 카드를 나누었습니다."
@@ -12,82 +15,85 @@ object OutputView {
     private const val NEW_LINE = "\n"
 
     fun printInitialStats(
-        playersInfo: List<ParticipantInfo>,
-        dealerInfo: ParticipantInfo,
+        players: Players,
+        dealer: Dealer,
     ) {
-        printDistributionMessage(playersInfo, dealerInfo)
-        println(getDealerCardResult(dealerInfo))
-        printPlayerCards(playersInfo)
+        printDistributionMessage(players, dealer)
+        println(getDealerCardResult(dealer))
+        printPlayerCards(players)
         println()
     }
 
-    fun printDealerHit(participantInfo: ParticipantInfo) {
-        println(MESSAGE_DEALER_HIT.format(participantInfo.name))
+    fun printDealerHit(participant: Participant) {
+        println(MESSAGE_DEALER_HIT.format(participant.name))
     }
 
     fun printFinalCards(
-        playersInfo: List<ParticipantInfo>,
-        dealerInfo: ParticipantInfo,
+        players: Players,
+        dealer: Dealer,
     ) {
         println()
         println(
             MESSAGE_PARTICIPANT_CARD_RESULT.format(
                 MESSAGE_CARD_INFO.format(
-                    dealerInfo.name,
-                    dealerInfo.cards.joinToString { "${it.cardRank.symbol}${it.shape.label}" },
+                    dealer.name,
+                    dealer.state.hand.cards.joinToString { "${it.cardRank.symbol}${it.shape.label}" },
                 ),
-                dealerInfo.sumCardValues(),
+                dealer.state.hand.calculateTotal(),
             ),
         )
 
-        playersInfo.forEach { playerInfo ->
+        players.value.forEach { player ->
             println(
                 MESSAGE_PARTICIPANT_CARD_RESULT.format(
                     MESSAGE_CARD_INFO.format(
-                        playerInfo.name,
-                        playerInfo.cards.joinToString { "${it.cardRank.symbol}${it.shape.label}" },
+                        player.name,
+                        player.state.hand.cards.joinToString { "${it.cardRank.symbol}${it.shape.label}" },
                     ),
-                    playerInfo.sumCardValues(),
+                    player.state.hand.calculateTotal(),
                 ),
             )
         }
     }
 
-    fun printResult(playersInfo: List<ParticipantInfo>, dealerInfo: ParticipantInfo) {
-        println(MESSAGE_TITLE_RESULT)
-        println(MESSAGE_CARD_STATUS.format(dealerInfo.name, getDealerResult(playersInfo)))
+    fun printResult(players: Players, dealer: Dealer) {
+        val result = players.value.sumOf { it.state.profit(dealer.state.hand.calculateTotal()) }
 
-        playersInfo.forEach {
-            println(MESSAGE_CARD_STATUS.format(it.name, it.batingAmount))
+        println(MESSAGE_TITLE_RESULT)
+        println(MESSAGE_CARD_STATUS.format(dealer.name, result * -1))
+
+        players.value.forEach {
+            println(MESSAGE_CARD_STATUS.format(it.name, it.state.profit(dealer.state.hand.calculateTotal())))
         }
     }
 
-    fun printSinglePlayerCards(participantInfo: ParticipantInfo) {
+    fun printSinglePlayerCards(name: String, hand: Hand) {
         println(
             MESSAGE_CARD_INFO.format(
-                participantInfo.name,
-                participantInfo.cards.joinToString { "${it.cardRank.symbol}${it.shape.label}" },
+                name,
+                hand.cards.joinToString { "${it.cardRank.symbol}${it.shape.label}" },
             ),
         )
     }
 
     fun printNewLine() = print(NEW_LINE)
 
-    private fun printDistributionMessage(playersInfo: List<ParticipantInfo>, dealerInfo: ParticipantInfo) {
-        val names = playersInfo.joinToString { it.name }
-        println("\n${MESSAGE_DISTRIBUTION.format(dealerInfo.name, names)})")
+    private fun printDistributionMessage(players: Players, dealer: Dealer) {
+        val names = players.value.joinToString { it.name }
+        println("\n${MESSAGE_DISTRIBUTION.format(dealer.name, names)})")
     }
 
-    private fun getDealerResult(playersInfo: List<ParticipantInfo>): Int = playersInfo.sumOf { it.batingAmount.unaryMinus() }
+    private fun getDealerResult(players: Players, dealer: Dealer): Int =
+        players.value.sumOf { it.state.profit(dealer.state.hand.calculateTotal()).unaryMinus() }
 
-    private fun printPlayerCards(playersInfo: List<ParticipantInfo>) {
-        playersInfo.forEach { playerInfo ->
-            printSinglePlayerCards(playerInfo)
+    private fun printPlayerCards(players: Players) {
+        players.value.forEach {
+            printSinglePlayerCards(it.name, it.state.hand)
         }
     }
 
-    private fun getDealerCardResult(dealerInfo: ParticipantInfo): String {
-        val (shape, cardRank) = dealerInfo.cards.first()
-        return MESSAGE_CARD_INFO.format(dealerInfo.name, "${cardRank.value}${shape.label}")
+    private fun getDealerCardResult(dealer: Dealer): String {
+        val (shape, cardRank) = dealer.state.hand.cards.first()
+        return MESSAGE_CARD_INFO.format(dealer.name, "${cardRank.value}${shape.label}")
     }
 }
