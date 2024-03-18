@@ -64,13 +64,13 @@ class GameController(private val deck: Deck) {
     }
 
     private fun playOfOnePlayer(player: Player) {
-        if(player.isHittable()) {
+        if (player.isHittable()) {
             while (blackjackGame.playByAnswer(
                     readAnswer(player.humanInfo.humanName),
                     player,
-                    OutputView::showPlayerHand
+                    OutputView::showPlayerHand,
                 )
-            );
+                );
         }
     }
 

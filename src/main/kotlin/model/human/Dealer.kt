@@ -75,7 +75,7 @@ class Dealer(hand: Hand, override val humanInfo: HumanInfo = HumanInfo(DEFAULT_N
         val result = HumanInfo(player.getName())
         val rateAppliedAmount = (player.getMoneyAmount() * rate).toInt()
         result.setMoney(rateAppliedAmount)
-        humanInfo.applyResultToDealerMoney(rateAppliedAmount, rate*DEALER_ASPECT)
+        humanInfo.applyResultToDealerMoney(rateAppliedAmount, rate * DEALER_ASPECT)
 
         return result
     }

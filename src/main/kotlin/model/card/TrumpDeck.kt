@@ -16,9 +16,10 @@ object TrumpDeck : Deck {
         cards.addAll(
             suits.flatMap { suit ->
                 denominations.map { denom,
-                    -> Card.of(denom, suit)
+                    ->
+                    Card.of(denom, suit)
                 }
-            }.shuffled()
+            }.shuffled(),
         )
     }
 }

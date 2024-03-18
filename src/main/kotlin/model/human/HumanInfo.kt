@@ -17,8 +17,11 @@ class HumanInfo(val humanName: HumanName, val money: Money = Money(DEFAULT_MONEY
         money.add(other)
     }
 
-    fun applyResultToDealerMoney(other: Int, rate: Double) {
-        money.add(other*rate.toInt())
+    fun applyResultToDealerMoney(
+        other: Int,
+        rate: Double,
+    ) {
+        money.add(other * rate.toInt())
     }
 
     companion object {

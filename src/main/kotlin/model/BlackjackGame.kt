@@ -64,7 +64,7 @@ class BlackjackGame(private val deck: Deck) {
     fun judgeWinningResult(
         dealer: Dealer,
         players: Players,
-    ): PlayersResult  {
+    ): PlayersResult {
         val playersResult = PlayersResult()
         players.players.forEach { player ->
             playersResult.add(dealer.judge(player))
