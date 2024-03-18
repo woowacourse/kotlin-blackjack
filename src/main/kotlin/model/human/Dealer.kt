@@ -1,7 +1,7 @@
 package model.human
 
-import model.GameResult
 import model.Hand
+import model.WinningResult
 import model.card.Deck
 
 class Dealer(hand: Hand, override val humanInfo: HumanInfo = HumanInfo(DEFAULT_NAME)) : Human(hand, humanInfo) {
@@ -15,7 +15,7 @@ class Dealer(hand: Hand, override val humanInfo: HumanInfo = HumanInfo(DEFAULT_N
 
     fun getCountOfAdditionalDraw(): Int = hand.cards.size - DEFAULT_CARD_COUNT
 
-    private fun getCompareResult(other: Human): GameResult {
+    private fun getCompareResult(other: Human): WinningResult {
         return when {
             isBusted() -> getResultWhenBusted(other)
             isBlackJack() -> getResultWhenBlackjack(other)
@@ -24,36 +24,36 @@ class Dealer(hand: Hand, override val humanInfo: HumanInfo = HumanInfo(DEFAULT_N
         }
     }
 
-    private fun getResultWhenBusted(other: Human): GameResult {
+    private fun getResultWhenBusted(other: Human): WinningResult {
         return when {
-            other.hand.isNotBusted() -> GameResult.LOSE
-            else -> GameResult.WIN
+            other.hand.isNotBusted() -> WinningResult.LOSE
+            else -> WinningResult.WIN
         }
     }
 
-    private fun getResultWhenBlackjack(other: Human): GameResult {
+    private fun getResultWhenBlackjack(other: Human): WinningResult {
         return when {
-            other.isBlackJack() -> GameResult.DRAW
-            else -> GameResult.WIN
+            other.isBlackJack() -> WinningResult.DRAW
+            else -> WinningResult.WIN
         }
     }
 
-    private fun getResultWhenNotBusted(other: Human): GameResult {
+    private fun getResultWhenNotBusted(other: Human): WinningResult {
         return when {
-            other.isBusted() -> GameResult.WIN
-            !other.isBusted() && (this.hand.getPoint() > other.hand.getPoint()) -> GameResult.WIN
-            !other.isBusted() && (this.hand.getPoint() == other.hand.getPoint()) -> GameResult.DRAW
-            else -> GameResult.LOSE
+            other.isBusted() -> WinningResult.WIN
+            !other.isBusted() && (this.hand.getPoint() > other.hand.getPoint()) -> WinningResult.WIN
+            !other.isBusted() && (this.hand.getPoint() == other.hand.getPoint()) -> WinningResult.DRAW
+            else -> WinningResult.LOSE
         }
     }
-
+/*
     fun judge(player: Player) {
         when (getCompareResult(player)) {
-            GameResult.WIN -> {
+            WinningResult.WIN -> {
                 humanInfo.applyResultToMoney(player.humanInfo, PROFIT_RATE_LOSE)
             }
 
-            GameResult.LOSE -> {
+            WinningResult.LOSE -> {
                 if (player.isBlackJack()) {
                     humanInfo.applyResultToMoney(player.humanInfo, PROFIT_RATE_BLACKJACK)
                 } else {
@@ -61,11 +61,13 @@ class Dealer(hand: Hand, override val humanInfo: HumanInfo = HumanInfo(DEFAULT_N
                 }
             }
 
-            GameResult.DRAW -> {
+            WinningResult.DRAW -> {
                 humanInfo.applyResultToMoney(player.humanInfo, PROFIT_RATE_DRAW)
             }
         }
     }
+
+ */
 
     companion object {
         private const val HIT_CONDITION = 17

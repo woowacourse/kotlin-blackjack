@@ -1,6 +1,6 @@
 package model
 
-enum class GameResult {
+enum class WinningResult {
     WIN,
     DRAW,
     LOSE,
