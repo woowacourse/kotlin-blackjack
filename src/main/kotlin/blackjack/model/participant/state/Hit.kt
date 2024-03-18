@@ -7,7 +7,7 @@ class Hit : Gaming() {
     ): HandCardState {
         if (isHit) {
             if (myScore > BLACKJACK_NUMBER) {
-                return Bust2()
+                return Bust()
             }
             return Hit()
         } else {

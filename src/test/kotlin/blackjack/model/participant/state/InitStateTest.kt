@@ -7,7 +7,7 @@ class InitStateTest {
     @Test
     fun `처음 시작이 블랙잭이면 블랙잭을 반환한다`() {
         val actual = InitState().nextTurn(21, false)
-        assertThat(actual is Blackjack2).isTrue
+        assertThat(actual is Blackjack).isTrue
     }
 
     @Test

@@ -6,9 +6,9 @@ class InitState : Gaming() {
         isHit: Boolean,
     ): HandCardState {
         return when {
-            myScore > BLACKJACK_NUMBER -> Bust2()
+            myScore > BLACKJACK_NUMBER -> Bust()
             isHit -> Hit()
-            myScore == BLACKJACK_NUMBER -> Blackjack2()
+            myScore == BLACKJACK_NUMBER -> Blackjack()
             else -> Stay()
         }
     }

@@ -13,7 +13,7 @@ class HitTest {
     @Test
     fun `사용자가 그 다음 턴에서 Hit를 원할 때, 카드 점수가 21 이상이면 Bust를 반환한다`() {
         val actual = Hit().nextTurn(21, true)
-        assertThat(actual is Bust2).isTrue
+        assertThat(actual is Bust).isTrue
     }
 
     @Test

@@ -1,6 +1,6 @@
 package blackjack.model.deck
 
-import blackjack.model.participant.state.Blackjack2
+import blackjack.model.participant.state.Blackjack
 import blackjack.model.participant.state.Hit
 import blackjack.model.participant.state.InitState
 import blackjack.model.participant.state.Stay
@@ -34,7 +34,7 @@ class HandCardsTest {
         assertThat(handCards.state is InitState).isTrue
 
         handCards.initCard(deck.draw(2))
-        assertThat(handCards.state is Blackjack2)
+        assertThat(handCards.state is Blackjack)
     }
 
     @Test
