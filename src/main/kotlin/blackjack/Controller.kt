@@ -55,16 +55,13 @@ class Controller {
         player: Player,
         deck: Deck,
     ) {
-        if (player.isMaxScore()) {
-            OutputView.printBlackJackMessage(player)
-            return
-        }
         while (player.isNotBustedAndHitable() && askPick(player.name)) {
             player.pickCard(deck)
             OutputView.printParticipantStatus(player)
         }
-        if (player.isBusted()) {
-            OutputView.printBustedMessage(player)
+        when {
+            player.isBlackjack() -> OutputView.printBlackJackMessage(player)
+            player.isBusted() -> OutputView.printBustedMessage(player)
         }
     }
 
