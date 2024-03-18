@@ -1,6 +1,7 @@
 package blackjack.model
 
 import blackjack.model.TrumpCards.ACE_CARD
+import blackjack.model.TrumpCards.EIGHT_CARD
 import blackjack.model.TrumpCards.FOUR_CARD
 import blackjack.model.TrumpCards.JACK_CARD
 import blackjack.model.TrumpCards.SEVEN_CARD
@@ -14,6 +15,44 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
 class DealerTest {
+    @Nested
+    @DisplayName("hitOrStay 메서드 테스트")
+    inner class HitOrStayTest {
+        private fun printDealerHitMessage() {
+            println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+        }
+
+        @Test
+        fun `카드의 합이 16 이하일 때만 hit할 수 있다`() {
+            val dealer = Dealer()
+            val dealingShoe =
+                DealingShoe(listOf(EIGHT_CARD, EIGHT_CARD, TWO_CARD))
+
+            dealer.hitOrStay(
+                dealingShoe,
+                ::printDealerHitMessage,
+            )
+
+            val result = dealer.showCard()
+            assertThat(result).isEqualTo(listOf(EIGHT_CARD, EIGHT_CARD, TWO_CARD))
+        }
+
+        @Test
+        fun `카드의 합이 17이면 hit을 멈춘다`() {
+            val dealer = Dealer()
+            val dealingShoe =
+                DealingShoe(listOf(TEN_CARD, SEVEN_CARD, TWO_CARD, TWO_CARD))
+
+            dealer.hitOrStay(
+                dealingShoe,
+                ::printDealerHitMessage,
+            )
+
+            val result = dealer.showCard()
+            assertThat(result).isEqualTo(listOf(TEN_CARD, SEVEN_CARD))
+        }
+    }
+
     @DisplayName("isHitable 테스트")
     @Test
     fun `딜러의 카드 총 합이 16 이하면 true를 반환한다`() {

@@ -34,11 +34,11 @@ class Controller(cards: List<Card>) {
         dealer: Dealer,
         players: List<Player>,
     ) {
-        initParticipantsCard(dealer, players)
-        proceedParticipantsTure(dealer, players)
+        initCard(dealer, players)
+        takeTurn(dealer, players)
     }
 
-    private fun initParticipantsCard(
+    private fun initCard(
         dealer: Dealer,
         players: List<Player>,
     ) {
@@ -49,39 +49,14 @@ class Controller(cards: List<Card>) {
         OutputView.printInitialResult(dealer, players)
     }
 
-    private fun proceedParticipantsTure(
+    private fun takeTurn(
         dealer: Dealer,
         players: List<Player>,
     ) {
         players.forEach { player ->
-            proceedPlayerTurn(player)
+            player.hitOrStay(dealingShoe, InputView::askPickAgain, OutputView::printCards)
         }
-        proceedDealerTurn(dealer)
-    }
-
-    private fun proceedPlayerTurn(player: Player) {
-        if (player.isMaxScore()) {
-            OutputView.printBlackJackMessage(player)
-            return
-        }
-        while (player.isHittable() && askPick(player.name)) {
-            player.pickCard(dealingShoe)
-            OutputView.printParticipantStatus(player)
-        }
-        if (player.isBusted()) {
-            OutputView.printBustedMessage(player)
-        }
-    }
-
-    private fun askPick(name: String): Boolean {
-        return InputView.askPickAgain(name)
-    }
-
-    private fun proceedDealerTurn(dealer: Dealer) {
-        while (dealer.isHittable()) {
-            dealer.pickCard(dealingShoe)
-            OutputView.printDealerHitMessage()
-        }
+        dealer.hitOrStay(dealingShoe, OutputView::printDealerHitMessage)
     }
 
     private fun printGameResult(

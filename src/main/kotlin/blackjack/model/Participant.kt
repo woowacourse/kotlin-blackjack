@@ -10,6 +10,16 @@ abstract class Participant(val name: String) {
         hand.pickCard(dealingShoe, repeatSize)
     }
 
+    fun showCard(): List<Card> = hand.showCard()
+
+    fun isBusted(): Boolean = hand.isBusted()
+
+    fun isBlackJack(): Boolean = hand.isBlackJack()
+
+    fun getCardSum(): Int = hand.getCardSum()
+
+    abstract fun isHittable(): Boolean
+
     open fun judge(participant: Participant): Return {
         return when {
             participant.isBlackJack() && this.isBlackJack() -> Return.DRAW
@@ -25,18 +35,6 @@ abstract class Participant(val name: String) {
             else -> Return.DRAW
         }
     }
-
-    fun showCard(): List<Card> = hand.showCard()
-
-    fun isBusted(): Boolean = hand.isBusted()
-
-    fun isMaxScore(): Boolean = hand.isMaxScore()
-
-    fun isBlackJack(): Boolean = hand.isBlackJack()
-
-    fun getCardSum(): Int = hand.getCardSum()
-
-    abstract fun isHittable(): Boolean
 
     abstract fun calculateBetAmount(vararg participant: Participant): Long
 }

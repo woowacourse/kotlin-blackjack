@@ -14,7 +14,7 @@ object OutputView {
     ) {
         println(buildDealerInitialCard(dealer))
         players.forEach {
-            printParticipantStatus(it)
+            printCards(it)
         }
     }
 
@@ -33,7 +33,7 @@ object OutputView {
         println(buildParticipantCards(participant) + " - 결과: " + participant.getCardSum())
     }
 
-    fun printParticipantStatus(participant: Participant) {
+    fun printCards(participant: Participant) {
         println(buildParticipantCards(participant))
     }
 
@@ -86,10 +86,6 @@ object OutputView {
 
     fun printBlackJackMessage(participant: Participant) {
         println("${participant.name}는 블랙잭 입니다.")
-    }
-
-    fun printBustedMessage(participant: Participant) {
-        println("${participant.name}는 버스트 됐습니다.")
     }
 
     fun printDealerHitMessage() {
