@@ -27,10 +27,9 @@ class BlackJackTest {
     @ParameterizedTest
     @ValueSource(ints = [20, 21])
     @DisplayName("BlackJack 상태 - 상대방보다 ratePoint 가 높으면 betting 금액의 1.5배만큼 이득이다")
-    fun `BlackJackTest`() {
+    fun `BlackJackTest`(otherPoint: Int) {
         // given
         val state = createBlackjackState()
-        val otherPoint = 20
         val betting = Betting(10_000)
         val expect = Profit(15_000)
         // when
