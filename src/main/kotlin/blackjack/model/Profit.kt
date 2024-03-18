@@ -27,7 +27,7 @@ class Profit {
         _amount = amount * BLACKJACK_ODDS
     }
 
-    fun getProfitFromPlayer(opponentProfit: Double) {
+    fun getProfitFromOpponent(opponentProfit: Double) {
         _amount -= opponentProfit
     }
 

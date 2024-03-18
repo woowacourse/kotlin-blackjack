@@ -37,6 +37,6 @@ sealed class Finished(
     }
 
     override fun calculateProfitByOpponent(opponentProfit: Double) {
-        profit.getProfitFromPlayer(opponentProfit)
+        profit.getProfitFromOpponent(opponentProfit)
     }
 }
