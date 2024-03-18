@@ -16,4 +16,8 @@ sealed class Progressing(
     }
 
     override fun decideWinner(opponent: BaseHolder): GameResult = GameResult()
+
+    override fun calculateProfitByOpponent(opponentProfit: Double) {
+        return
+    }
 }
