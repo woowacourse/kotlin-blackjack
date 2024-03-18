@@ -1,26 +1,30 @@
 package blackjack.model.participant
 
+import blackjack.model.Betting
+import blackjack.model.Profit
 import blackjack.model.card.Card
 import blackjack.state.State
 
-class Player(name: String, state: State, private val onDetermineHit: (String) -> Boolean) : Participant(name, state) {
+class Player(
+    name: String,
+    betting: Betting,
+    initState: State,
+    private val onHitCondition: (String) -> Boolean,
+) : Participant(name, betting, initState) {
     override fun play(
         onDraw: () -> Card,
         onDone: (Participant) -> Unit,
-    ) {
-        if (onDetermineHit(name)) {
-            state = State.Running(hand).hit(onDraw())
-            onDone(this)
-            play(onDraw, onDone)
-        } else {
-            state = State.Running(hand).stay()
-            onDone(this)
-        }
-    }
+    ) = play(
+        onHitCondition = { onHitCondition(name) },
+        onDraw = onDraw,
+        onDone = onDone,
+    )
 
-    override fun judge(other: Participant): GameResult {
-        if (ratePoint == State.BUST_RATE_POINT) return GameResult.LOSE
-        val compared = ratePoint compareTo other.ratePoint
-        return GameResult.from(compared)
+    override fun judge(
+        betting: Betting,
+        other: Participant,
+    ): Profit {
+        if (isBust()) return -Profit(this.betting.amount)
+        return super.judge(this.betting, other)
     }
 }

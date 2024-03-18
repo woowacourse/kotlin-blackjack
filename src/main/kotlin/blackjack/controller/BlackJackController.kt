@@ -1,5 +1,6 @@
 package blackjack.controller
 
+import blackjack.model.Betting
 import blackjack.model.card.Deck
 import blackjack.model.card.Hand
 import blackjack.model.participant.Dealer
@@ -19,7 +20,8 @@ class BlackJackController(
     fun start() {
         val playersNames: List<String> = inputView.fetchPlayerNames()
         val deck: Deck = Deck.create()
-        val players = createPlayers(playersNames, deck)
+        val bettings = createBettings(playersNames)
+        val players = createPlayers(playersNames, deck, bettings)
         val dealer = createDealer(deck)
         outputView.showFirstDraw(dealer = dealer.toUiModel(), players = players.map(Participant::toUiModel))
         playGame(players, deck)
@@ -28,13 +30,26 @@ class BlackJackController(
         showGameResult(dealer, players)
     }
 
+    private fun createBettings(playersNames: List<String>): List<Betting> {
+        return playersNames.map { createBetting(it) }
+    }
+
+    private tailrec fun createBetting(name: String): Betting {
+        return inputView.fetchBetting(name)
+            .onFailure {
+                outputView.showErrorMessage(it)
+                return createBetting(name)
+            }
+            .getOrThrow()
+    }
+
     private fun showGameResult(
         dealer: Dealer,
         players: List<Player>,
     ) {
         val dealerResult = dealer.judge(players).toUiModelWith(dealer.name)
-        val playersResult = players.map { it.judge(dealer).toUiModelWith(it.name) }
-        outputView.showGameResult(dealerResult, playersResult)
+        val playerResults = players.map { it.judge(it.betting, dealer).toUiModelWith(it.name) }
+        outputView.showGameResult(listOf(dealerResult) + playerResults)
     }
 
     private fun showGameScore(
@@ -50,8 +65,11 @@ class BlackJackController(
         deck: Deck,
     ) {
         dealer.play(
-            onDraw = deck::draw,
-            onDone = { outputView.showDealerHitCard(dealer.toUiModel()) },
+            onDraw = {
+                outputView.showDealerHitCard(dealer.toUiModel())
+                deck.draw()
+            },
+            onDone = { outputView.showPlayerHandCards(it.toUiModel()) },
         )
     }
 
@@ -70,15 +88,24 @@ class BlackJackController(
     private fun createPlayers(
         playersNames: List<String>,
         deck: Deck,
-    ) = playersNames.map {
-        Player(
-            name = it,
-            state = State.Running(Hand(deck.drawMultiple(FIRST_DRAW_CAR_COUNT))),
-            onDetermineHit = inputView::determineHit,
-        )
-    }
+        betting: List<Betting>,
+    ): List<Player> =
+        playersNames.zip(betting).map { (name, betting) ->
+            Player(
+                name = name,
+                betting = betting,
+                initState = State.Running(Hand(deck.drawMultiple(FIRST_DRAW_CAR_COUNT))),
+                onHitCondition = inputView::determineHit,
+            )
+        }
 
-    private fun createDealer(deck: Deck) = Dealer(State.Running(Hand(deck.drawMultiple(FIRST_DRAW_CAR_COUNT))))
+    private fun createDealer(deck: Deck) =
+        Dealer(
+            initState =
+                State.Running(
+                    Hand(deck.drawMultiple(FIRST_DRAW_CAR_COUNT)),
+                ),
+        )
 
     companion object {
         private const val FIRST_DRAW_CAR_COUNT = 2
