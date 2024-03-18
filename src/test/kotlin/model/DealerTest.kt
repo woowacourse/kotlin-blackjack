@@ -1,20 +1,18 @@
 package model
 
+import TestDeck
 import fixture.SPADE_ACE
 import fixture.SPADE_FIVE
 import fixture.SPADE_FOUR
 import fixture.SPADE_KING
 import fixture.SPADE_TEN
 import fixture.SPADE_THREE
-import model.card.TestDeck
 import model.human.Dealer
-import model.human.Player
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class DealerTest {
-
     private lateinit var hand: Hand
 
     private var testDeck =

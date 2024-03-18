@@ -1,8 +1,8 @@
 package model
 
+import TestDeck
 import fixture.SPADE_ACE
 import fixture.SPADE_TWO
-import model.card.TestDeck
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

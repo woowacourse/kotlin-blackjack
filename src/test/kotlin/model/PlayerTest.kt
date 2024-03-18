@@ -5,9 +5,7 @@ import fixture.SPADE_KING
 import fixture.SPADE_TEN
 import fixture.SPADE_THREE
 import fixture.SPADE_TWO
-import io.kotest.engine.launcher.parseLauncherArgs
 import model.human.Player
-import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -19,6 +17,7 @@ class PlayerTest {
     fun handInit() {
         hand = Hand()
     }
+
     @Test
     fun `핸드의 합이 21 미만인 경우, 카드를 더 받을 수 있다`() {
         val player = Player(hand)
