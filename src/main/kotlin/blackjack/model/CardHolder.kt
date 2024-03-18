@@ -1,40 +1,35 @@
 package blackjack.model
 
-import blackjack.state.Blackjack
-import blackjack.state.BlackjackState
-import blackjack.state.Bust
-import blackjack.state.Normal
+import blackjack.state.Hit
+import blackjack.state.State
 
-abstract class CardHolder {
-    private var _hand: Hand = Hand()
-    val hand: Hand
-        get() = _hand
+sealed class CardHolder(val userInfo: UserInfo) {
+    var state: State = Hit()
+        private set
 
     fun addCard(card: Card) {
-        _hand.plus(card)
+        state = state.draw(card)
     }
 
-    fun drawCard(shouldDrawCard: () -> Boolean) {
-        while (!isGameFinished() && shouldDrawCard()) {
-            addCard(card = GameDeck.drawCard())
+    fun drawCard(
+        card: () -> Card,
+        shouldDrawCard: () -> Boolean,
+        showPlayerCards: (cardHolder: CardHolder) -> Unit,
+    ) {
+        while (!state.isFinished()) {
+            if (shouldDrawCard()) {
+                addCard(card = card())
+            } else {
+                state = state.stay()
+            }
+            showPlayerCards(this)
         }
     }
 
-    fun getState(): BlackjackState {
-        return when {
-            hand.calculate() == THRESHOLD_BLACKJACK && hand.cards.size == BLACKJACK_CARD_SIZE -> Blackjack()
-            hand.calculate() > THRESHOLD_BUST -> Bust()
-            else -> Normal()
-        }
-    }
+    fun calculateHand(): Int = state.calculateHand()
 
-    private fun isGameFinished() = getState().isFinished
-
-    fun calculateWinningStateAgainst(opponent: CardHolder) = getState().calculateGameResult(this, opponent)
-
-    companion object {
-        private const val BLACKJACK_CARD_SIZE = 2
-        private const val THRESHOLD_BLACKJACK = 21
-        const val THRESHOLD_BUST = 21
+    fun calculateProfit(opponent: State): Double {
+        val gameResult = state.calculate(opponent)
+        return state.profit(betAmount = userInfo.betAmount, gameResult = gameResult)
     }
 }

@@ -11,6 +11,13 @@ object InputView {
         return readln().split(",").map { it.trim() }
     }
 
+    fun inputPlayerBettingAmount(nickname: Nickname): Int {
+        println("\n${nickname}의 배팅 금액은?")
+        val amount = readln()
+        require(amount.toIntOrNull() != null) { "${amount}은 양수가 아닙니다. 배팅 금액은 양수여야 합니다" }
+        return amount.toInt()
+    }
+
     fun askHitOrStay(nickname: Nickname): Boolean {
         println("${nickname}은(는) 한 장의 카드를 더 받겠습니까? (예는 y, 아니오는 n)")
         while (true) {

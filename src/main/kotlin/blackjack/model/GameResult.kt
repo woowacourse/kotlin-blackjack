@@ -1,10 +1,11 @@
 package blackjack.model
 
-data class GameResult(
-    val win: Int = DEFAULT_RESULT_VALUE,
-    val lose: Int = DEFAULT_RESULT_VALUE,
-) {
-    companion object {
-        const val DEFAULT_RESULT_VALUE = 0
-    }
+sealed interface GameResult {
+    data object BlackjackWin : GameResult
+
+    data object Win : GameResult
+
+    data object Lose : GameResult
+
+    data object Draw : GameResult
 }

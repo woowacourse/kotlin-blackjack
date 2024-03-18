@@ -2,23 +2,22 @@ package blackjack.model
 
 class Card private constructor(val pattern: Pattern, val number: CardNumber) {
     companion object {
-        fun createDeck(): List<Card> {
-            val newCards = mutableListOf<Card>()
-            Pattern.entries.forEach { pattern ->
-                CardNumber.entries.forEach { number ->
-                    newCards.add(Card(pattern = pattern, number = number))
+        val cards = initDeck()
+
+        private fun initDeck(): List<Card> {
+            return Pattern.entries.flatMap { pattern ->
+                CardNumber.entries.map { number ->
+                    Card(pattern = pattern, number = number)
                 }
             }
-            return newCards
+        }
+
+        fun Pair<Pattern, CardNumber>.toCard(): Card {
+            return cards.first { it.pattern == this.first && it.number == this.second }
         }
 
         fun of(value: List<Pair<Pattern, CardNumber>>): List<Card> {
-            val newCards = mutableListOf<Card>()
-            value.forEach {
-                newCards.add(Card(pattern = it.first, number = it.second))
-            }
-
-            return newCards
+            return value.map { it.toCard() }
         }
     }
 }

@@ -1,26 +1,26 @@
 package blackjack.model
 
-object GameDeck : ShuffleGenerator {
-    private const val NO_CARDS_ERROR_MESSAGE = "카드 덱에 카드가 없습니다. 카드를 다시 섞겠습니다."
-    private const val CARD_DRAW_DEFAULT_INDEX = 0
+class GameDeck : DeckManager {
+    private val deck: MutableList<Card> = Card.cards.shuffled().toMutableList()
 
-    private val deck: List<Card> = createGameDeck()
-    private val currentDeck: MutableList<Card> = deck.shuffled().toMutableList()
-    private var index: Int = CARD_DRAW_DEFAULT_INDEX
-
-    override fun resetCurrentDeck(cards: List<Card>?) {
-        currentDeck.clear()
-        index = CARD_DRAW_DEFAULT_INDEX
-        cards?.let { currentDeck.addAll(it) } ?: run { currentDeck.addAll(deck.shuffled()) }
-    }
-
-    fun drawCard(): Card {
-        if (index < currentDeck.size) {
-            return currentDeck[index++]
+    override fun resetDeck(cards: List<Card>?) {
+        deck.clear()
+        if (cards == null) {
+            deck.addAll(Card.cards.shuffled())
+        } else {
+            deck.addAll(cards)
         }
-        resetCurrentDeck()
-        throw IllegalStateException(NO_CARDS_ERROR_MESSAGE)
     }
 
-    private fun createGameDeck(): List<Card> = Card.createDeck()
+    override fun drawCard(position: Int): Card {
+        if (position < deck.size) {
+            return deck.removeAt(position)
+        }
+        resetDeck()
+        return deck.removeAt(position)
+    }
+
+    companion object {
+        const val CARD_DRAW_DEFAULT_INDEX = 0
+    }
 }
