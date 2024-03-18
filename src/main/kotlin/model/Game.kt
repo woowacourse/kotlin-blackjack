@@ -59,10 +59,10 @@ class Game private constructor(private val participants: List<Participant>, val 
         readDecision: (Player) -> Boolean,
         showHand: (Player) -> Unit,
     ): Boolean {
-        val isYes = readDecision(player)
-        if (isYes) player.hit(deck.pop())
+        val continueToPlay = readDecision(player)
+        if (continueToPlay) player.hit(deck.pop())
         showHand(player)
-        return isYes
+        return continueToPlay
     }
 
     fun getAll(): List<Participant> {
