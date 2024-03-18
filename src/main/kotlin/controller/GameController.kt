@@ -27,6 +27,7 @@ class GameController(private val deck: Deck) {
             OutputView.showProfitResult(this)
         }
     }
+
     private fun handOut(game: Game) {
         game.handOut()
         OutputView.showGameInit(game)

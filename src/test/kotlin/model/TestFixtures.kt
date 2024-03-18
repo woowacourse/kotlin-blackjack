@@ -7,8 +7,8 @@ import model.card.MarkType
 import model.card.ValueType
 import model.participants.Dealer
 import model.participants.Hand
-import model.participants.Money
 import model.participants.IdCard
+import model.participants.Money
 import model.participants.ParticipantState
 import model.participants.Player
 import model.participants.Players

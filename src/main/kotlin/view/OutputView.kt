@@ -5,8 +5,8 @@ import model.card.MarkType
 import model.card.ValueType
 import model.participants.Dealer
 import model.participants.Hand
-import model.participants.Participant
 import model.participants.IdCard
+import model.participants.Participant
 import model.participants.Player
 import model.participants.Players
 import model.result.DealerResult

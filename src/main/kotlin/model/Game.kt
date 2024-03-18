@@ -2,15 +2,14 @@ package model
 
 import model.card.Deck
 import model.participants.Dealer
-import model.participants.Participant
 import model.participants.IdCard
+import model.participants.Participant
 import model.participants.ParticipantState
 import model.participants.Player
 import model.participants.Players
 import model.result.DealerResult
 import model.result.PlayersResult
 import model.result.Profit
-import model.result.ResultType
 
 class Game private constructor(private val participants: List<Participant>, val deck: Deck) {
     fun getDealer(): Dealer {
@@ -76,14 +75,14 @@ class Game private constructor(private val participants: List<Participant>, val 
     }
 
     fun getDealerResult(): DealerResult {
-        val result = getPlayers().players
-            .map { getDealer().judge(it) }
-            .groupingBy { it }
-            .eachCount()
+        val result =
+            getPlayers().players
+                .map { getDealer().judge(it) }
+                .groupingBy { it }
+                .eachCount()
 
         return DealerResult(result)
     }
-
 
     fun getProfitResult(): MutableMap<IdCard, Profit> {
         val result: MutableMap<IdCard, Profit> = mutableMapOf()
