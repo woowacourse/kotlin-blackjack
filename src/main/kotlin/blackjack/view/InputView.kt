@@ -8,14 +8,14 @@ class InputView {
         return readln().split(DELIMITER).map { it.trim() }
     }
 
-    fun fetchBetting(name: String): Betting {
+    fun fetchBetting(name: String): Result<Betting> {
         println(MESSAGE_INPUT_BETTING.format(name))
         val betting =
             readln().toIntOrNull() ?: run {
                 println(ERROR_BETTING_INPUT)
                 return fetchBetting(name)
             }
-        return Betting(betting)
+        return runCatching { Betting(betting) }
     }
 
     tailrec fun determineHit(name: String): Boolean {

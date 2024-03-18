@@ -35,7 +35,7 @@ class BlackJackController(
     }
 
     private tailrec fun createBetting(name: String): Betting {
-        return runCatching { inputView.fetchBetting(name) }
+        return inputView.fetchBetting(name)
             .onFailure {
                 outputView.showErrorMessage(it)
                 return createBetting(name)
@@ -103,9 +103,9 @@ class BlackJackController(
         Dealer(
             betting = INITIAL_DEALER_BETTING,
             initState =
-                State.Running(
-                    Hand(deck.drawMultiple(FIRST_DRAW_CAR_COUNT)),
-                ),
+            State.Running(
+                Hand(deck.drawMultiple(FIRST_DRAW_CAR_COUNT)),
+            ),
         )
 
     companion object {
