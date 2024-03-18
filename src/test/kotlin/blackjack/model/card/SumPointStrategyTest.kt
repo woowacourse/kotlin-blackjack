@@ -1,5 +1,7 @@
 package blackjack.model.card
 
+import blackjack.fixture.FIVE_CARD
+import blackjack.fixture.SEVEN_CARD
 import blackjack.fixture.createCard
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
@@ -16,10 +18,10 @@ class SumPointStrategyTest {
     }
 
     @Test
-    fun `에이스가 없을 때 - 카드의 합이 21 에 가장 가까운 수 반환`() {
+    fun `에이스가 없을 때 - 카드의 합 반환`() {
         // given
-        val cards = listOf(createCard(rank = Rank.SIX), createCard(rank = Rank.FIVE))
-        val expected = 11
+        val cards = listOf(SEVEN_CARD, FIVE_CARD)
+        val expected = 12
         // when
         val actual = sumPointStrategy.sumOf(cards)
         // then

@@ -1,9 +1,10 @@
 package blackjack.state
 
+import blackjack.fixture.BETTING_10000
 import blackjack.fixture.BLACKJACK_POINT
+import blackjack.fixture.PROFIT_15000
+import blackjack.fixture.PROFIT_ZERO
 import blackjack.fixture.createBlackjackState
-import blackjack.model.Betting
-import blackjack.model.Profit
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -16,8 +17,8 @@ class BlackJackTest {
         // given
         val state = createBlackjackState()
         val otherPoint = BLACKJACK_POINT
-        val betting = Betting(10_000)
-        val expect = Profit(0)
+        val betting = BETTING_10000
+        val expect = PROFIT_ZERO
         // when
         val actual = state.calculateProfit(betting, otherPoint)
         // then
@@ -30,8 +31,8 @@ class BlackJackTest {
     fun `BlackJackTest`(otherPoint: Int) {
         // given
         val state = createBlackjackState()
-        val betting = Betting(10_000)
-        val expect = Profit(15_000)
+        val betting = BETTING_10000
+        val expect = PROFIT_15000
         // when
         val actual = state.calculateProfit(betting, otherPoint)
         // then
