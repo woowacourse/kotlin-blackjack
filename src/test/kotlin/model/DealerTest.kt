@@ -39,9 +39,9 @@ class DealerTest {
 
     @Test
     fun `핸드의 합이 21 초과인 경우 버스트가 된다`() {
-        hand.draw(SPADE_TEN)
-        hand.draw(SPADE_KING)
-        hand.draw(SPADE_THREE)
+        hand.add(SPADE_TEN)
+        hand.add(SPADE_KING)
+        hand.add(SPADE_THREE)
 
         val dealer = Dealer(hand)
 
@@ -50,8 +50,8 @@ class DealerTest {
 
     @Test
     fun `블랙잭 판단을 할 수 있다`() {
-        hand.draw(SPADE_TEN)
-        hand.draw(SPADE_ACE)
+        hand.add(SPADE_TEN)
+        hand.add(SPADE_ACE)
 
         val dealer = Dealer(hand)
         assertThat(dealer.isBlackJack()).isTrue

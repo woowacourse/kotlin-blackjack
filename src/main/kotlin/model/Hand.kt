@@ -7,9 +7,11 @@ class Hand() {
     val cards: List<Card>
         get() = _cards.toList()
 
-    fun draw(newCard: Card) {
+    fun add(newCard: Card) {
         _cards.add(newCard)
     }
+
+    fun getSize(): Int = _cards.size
 
     fun isNotBusted(): Boolean = getPoint().isLessOrEqualTo(BLACKJACK_CONDITION)
 
