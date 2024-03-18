@@ -23,20 +23,8 @@ object ResultOutputView {
 
     fun outputGameResult(gameResult: GameResult) {
         println(MESSAGE_TOTAL_REVENUE)
-        println(
-            MESSAGE_REVENUE.format(
-                gameResult.dealer.participantInformation.name,
-                gameResult.gameRevenue.calculateDealerRevenue(),
-            ),
-        )
-        gameResult.gameRevenue.playersRevenue.withIndex().map { (index, playerRevenue) ->
-            println(
-                MESSAGE_REVENUE.format(
-                    gameResult.players[index].participantInformation.name,
-                    playerRevenue,
-                ),
-            )
-        }
+        outputDealerRevenue(gameResult)
+        outputPlayersRevenue(gameResult)
     }
 
     private fun outputGameScore(participant: Participant) {
@@ -47,5 +35,25 @@ object ResultOutputView {
                 Score(participant.gameInformation.hand.cards).point,
             ),
         )
+    }
+
+    private fun outputDealerRevenue(gameResult: GameResult) {
+        println(
+            MESSAGE_REVENUE.format(
+                gameResult.dealer.participantInformation.name,
+                gameResult.gameRevenue.calculateDealerRevenue(),
+            ),
+        )
+    }
+
+    private fun outputPlayersRevenue(gameResult: GameResult) {
+        gameResult.gameRevenue.playersRevenue.withIndex().map { (index, playerRevenue) ->
+            println(
+                MESSAGE_REVENUE.format(
+                    gameResult.players[index].participantInformation.name,
+                    playerRevenue,
+                ),
+            )
+        }
     }
 }
