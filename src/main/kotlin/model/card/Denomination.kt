@@ -15,9 +15,3 @@ enum class Denomination(val point: Int) {
     QUEEN(10),
     KING(10),
 }
-
-fun intToValueType(number: Int): Denomination {
-    return Denomination.entries[number % DIVIDER]
-}
-
-private const val DIVIDER = 13

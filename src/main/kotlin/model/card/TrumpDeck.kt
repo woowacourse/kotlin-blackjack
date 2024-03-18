@@ -24,15 +24,4 @@ object TrumpDeck : Deck {
             },
         )
     }
-
-    private fun shuffleWithIntRange() {
-        cards.addAll(
-            (MIN_VALUE..MAX_VALUE)
-                .shuffled()
-                .map {
-                    Card.from(it)
-                }
-                .toMutableList(),
-        )
-    }
 }
