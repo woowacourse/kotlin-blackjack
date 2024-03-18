@@ -14,7 +14,7 @@ enum class CardRank(
     EIGHT("8", 8),
     NINE("9", 9),
     TEN("10", 10),
-    J("J", 10),
-    Q("Q", 10),
-    K("K", 10),
+    JACK("J", 10),
+    QUEEN("Q", 10),
+    KING("K", 10),
 }
