@@ -13,15 +13,8 @@ class BlackJack(
         this.profit.earnProfitForBlackJack()
     }
 
-    // 자신이 블랙잭일 때 상대와 비교
     override fun decideWinner(opponent: BaseHolder): GameResult {
-        // 상대가 블랙잭일 때 무승부
-        if (opponent.state is BlackJack) {
-            profit.giveBackBettingMoney()
-            opponent.addResult(GameResult(push = 1))
-            return GameResult(push = 1)
-        }
-        opponent.addResult(GameResult(defeat = 1))
-        return GameResult(win = 1)
+        if (opponent.state is BlackJack) return push(opponent)
+        return makeOpponentLoser(opponent)
     }
 }
