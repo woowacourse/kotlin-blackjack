@@ -12,7 +12,10 @@ class Stay(
     override fun decideWinner(opponent: BaseHolder): GameResult {
         return when (opponent.state) {
             is Bust -> makeOpponentLoser(opponent)
-            is BlackJack -> makeOpponentWinner(opponent)
+            is BlackJack -> {
+                profit.lostAllBettingMoney()
+                makeOpponentWinner(opponent)
+            }
             is Stay -> compareWhenBothStay(opponent)
             is Hit -> GameResult()
             is Running -> GameResult()
@@ -23,7 +26,10 @@ class Stay(
         val myPoint = hand.calculate()
         val opponentPoint = opponent.state.hand.calculate()
         return if (myPoint > opponentPoint) makeOpponentLoser(opponent)
-        else if (myPoint < opponentPoint) makeOpponentWinner(opponent)
+        else if (myPoint < opponentPoint) {
+            profit.lostAllBettingMoney()
+            makeOpponentWinner(opponent)
+        }
         else push(opponent)
     }
 }

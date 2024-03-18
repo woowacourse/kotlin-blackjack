@@ -30,7 +30,6 @@ sealed class Finished(
     }
 
     fun makeOpponentWinner(opponent: BaseHolder): GameResult {
-        profit.lostAllBettingMoney()
         opponent.setProfitFromOpponent(profit.amount)
         opponent.win()
         return GameResult().defeat()
