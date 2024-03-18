@@ -76,14 +76,14 @@ class Game private constructor(private val participants: List<Participant>, val 
     }
 
     fun getDealerResult(): DealerResult {
-        val result: MutableMap<ResultType, Int> = mutableMapOf()
+        val result = getPlayers().players
+            .map { getDealer().judge(it) }
+            .groupingBy { it }
+            .eachCount()
 
-        getPlayers().players.forEach { player ->
-            val resultType = getDealer().judge(player)
-            result[resultType] = (result[resultType] ?: 0) + 1
-        }
         return DealerResult(result)
     }
+
 
     fun getProfitResult(): MutableMap<IdCard, Profit> {
         val result: MutableMap<IdCard, Profit> = mutableMapOf()
