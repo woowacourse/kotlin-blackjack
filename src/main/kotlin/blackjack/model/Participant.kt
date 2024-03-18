@@ -1,7 +1,7 @@
 package blackjack.model
 
 abstract class Participant(val name: String) {
-    val hand = Hand()
+    protected val hand = Hand()
 
     fun pickCard(
         dealingShoe: DealingShoe,
