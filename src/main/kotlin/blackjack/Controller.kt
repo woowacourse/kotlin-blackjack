@@ -3,7 +3,7 @@ package blackjack
 import blackjack.model.Card
 import blackjack.model.Dealer
 import blackjack.model.DealingShoe
-import blackjack.model.Player
+import blackjack.model.Players
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -17,22 +17,22 @@ class Controller(cards: List<Card>) {
             play(dealer, players)
         }.onSuccess {
             printGameResult(dealer, players)
+            printAmountResult(dealer, players)
         }.onFailure {
             OutputView.printExceptionMessage(it.message)
         }
     }
 
-    private fun makePlayers(): List<Player> {
+    private fun makePlayers(): Players {
         val names: List<String> = InputView.getNames()
-        return names.map { name ->
-            val amount = InputView.getBetAmount(name)
-            Player(name, amount)
-        }
+        val betAmounts =
+            names.map { InputView.getBetAmount(it) }
+        return Players.of(names, betAmounts)
     }
 
     private fun play(
         dealer: Dealer,
-        players: List<Player>,
+        players: Players,
     ) {
         initCard(dealer, players)
         takeTurn(dealer, players)
@@ -40,43 +40,34 @@ class Controller(cards: List<Card>) {
 
     private fun initCard(
         dealer: Dealer,
-        players: List<Player>,
+        players: Players,
     ) {
         dealer.pickCard(dealingShoe, 2)
-        players.forEach { player ->
-            player.pickCard(dealingShoe, 2)
-        }
-        OutputView.printInitialResult(dealer, players)
+        players.initCard(dealingShoe)
+        OutputView.printInitialResult(dealer, players.players)
     }
 
     private fun takeTurn(
         dealer: Dealer,
-        players: List<Player>,
+        players: Players,
     ) {
-        players.forEach { player ->
-            player.hitOrStay(dealingShoe, InputView::askPickAgain, OutputView::printCards)
-        }
+        players.hitOrStay(dealingShoe, InputView::askPickAgain, OutputView::printCards)
         dealer.hitOrStay(dealingShoe, OutputView::printDealerHitMessage)
     }
 
     private fun printGameResult(
         dealer: Dealer,
-        players: List<Player>,
+        players: Players,
     ) {
-        OutputView.printResult(dealer, players)
+        OutputView.printResult(dealer, players.players)
         OutputView.printFinalBetAmountMessage()
-        printBetAmount(dealer, *players.toTypedArray())
     }
 
-    private fun printBetAmount(
+    private fun printAmountResult(
         dealer: Dealer,
-        vararg players: Player,
+        players: Players,
     ) {
-        val dealerBetAmount: Long = dealer.calculateBetAmount(*players)
-        OutputView.printBetAmount(dealer.name, dealerBetAmount)
-        players.forEach { player ->
-            val playerBetAmount = player.calculateBetAmount(dealer)
-            OutputView.printBetAmount(player.name, playerBetAmount)
-        }
+        val amountStatistics = players.getAmountStatistics(dealer)
+        OutputView.printAmountResult(amountStatistics)
     }
 }

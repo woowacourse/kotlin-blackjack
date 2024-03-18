@@ -35,6 +35,4 @@ abstract class Participant(val name: String) {
             else -> GameResult.DRAW
         }
     }
-
-    abstract fun calculateBetAmount(vararg participant: Participant): Long
 }

@@ -96,11 +96,10 @@ object OutputView {
         println("\n## 최종 수익")
     }
 
-    fun printBetAmount(
-        name: String,
-        betAmount: Long,
-    ) {
-        println("$name: $betAmount")
+    fun printAmountResult(amountStatistics: Map<String, Long>) {
+        amountStatistics.forEach { participant ->
+            println("${participant.key}: ${participant.value}")
+        }
     }
 
     fun printExceptionMessage(message: String?) {

@@ -27,7 +27,7 @@ class Player(name: String, private val betAmount: Long) : Participant(name) {
         }
     }
 
-    override fun calculateBetAmount(vararg participant: Participant): Long {
+    fun calculateBetAmount(vararg participant: Participant): Long {
         return (betAmount * judge(participant[0]).rate).toLong()
     }
 }

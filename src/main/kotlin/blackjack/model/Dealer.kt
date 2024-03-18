@@ -24,14 +24,6 @@ class Dealer(name: String = "딜러") : Participant(name) {
         }
     }
 
-    override fun calculateBetAmount(vararg participant: Participant): Long {
-        val betAmountSum: Long =
-            participant.sumOf { player ->
-                player.calculateBetAmount(this@Dealer)
-            }
-        return -betAmountSum
-    }
-
     companion object {
         private const val DEALER_HITTABLE_THRESHOLD = 17
     }
