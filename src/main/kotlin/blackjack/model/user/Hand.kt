@@ -3,8 +3,8 @@ package blackjack.model.user
 import blackjack.model.card.Card
 import blackjack.model.game.Score
 
-class Hand(cards: Set<Card> = emptySet()) {
-    private val _cards: MutableSet<Card> = cards.toMutableSet()
+class Hand {
+    private val _cards: MutableSet<Card> = mutableSetOf()
     val cards: Set<Card>
         get() = _cards.toSet()
 
