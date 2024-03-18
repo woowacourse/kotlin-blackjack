@@ -10,15 +10,14 @@ class Dealer : Role() {
 
     fun calculateGameResult(players: Players): GameResultStorage {
         val playersResult = PlayersResult()
-        var dealerProfit = 0.0
-        val profit = Profit()
+        var dealerProfit = Profit()
         players.playerGroup.forEach { player ->
             val gameResultType = decideGameResultType(player)
-            val playerProfit = profit.calculateProfit(player.battingAmount, gameResultType)
+            val playerProfit = Profit().calculateProfit(player.battingAmount, gameResultType)
             playersResult.add(player.name, playerProfit)
-            dealerProfit -= playerProfit.profit
+            dealerProfit -= playerProfit
         }
-        return GameResultStorage(DealerResult(Profit(dealerProfit)), playersResult)
+        return GameResultStorage(DealerResult(dealerProfit), playersResult)
     }
 
     private fun decideGameResultType(player: Player): GameResultType {

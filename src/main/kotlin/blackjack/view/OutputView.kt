@@ -51,7 +51,7 @@ class OutputView {
         println("## 최종 수익")
         println(gameResult.dealerResult.getDealerProfitMessage())
         gameResult.playersResult.results.forEach { (playerName, profit) ->
-            println("$playerName: ${profit.profit.toInt()}")
+            println("$playerName: $profit")
         }
     }
 
@@ -67,7 +67,7 @@ class OutputView {
 
     private fun Role.getPlayerCardResult() = " - 결과: ${getCardSum()}"
 
-    private fun DealerResult.getDealerProfitMessage() = "딜러: ${profit.profit.toInt()}"
+    private fun DealerResult.getDealerProfitMessage() = "딜러: $profit"
 
     private fun lineBreak() = println()
 
