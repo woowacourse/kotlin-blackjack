@@ -1,72 +1,16 @@
 package blackjack.model
 
+import blackjack.model.TrumpCards.ACE_CARD
+import blackjack.model.TrumpCards.FOUR_CARD
+import blackjack.model.TrumpCards.TEN_CARD
+import blackjack.model.TrumpCards.THREE_CARD
+import blackjack.model.TrumpCards.TWO_CARD
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
 class PlayerTest {
-    private lateinit var player: Player
-
-    @Test
-    fun `플레이어가 초기 카드를 2장 가져온다`() {
-        val dealingShoe = DealingShoe(listOf(DealerTest.FOUR_CARD, DealerTest.TWO_CARD))
-        player = creatPlayer()
-        player.pickCard(dealingShoe, 2)
-        val actual = player.showCard()
-
-        assertThat(actual.size).isEqualTo(2)
-        assertThat(actual).isEqualTo(listOf(DealerTest.FOUR_CARD, DealerTest.TWO_CARD))
-    }
-
-    @Test
-    fun `플레이어가 딜링슈에서 맨 앞의 2하트 카드를 한 개 뽑아 가져온다`() {
-        val dealingShoe = DealingShoe(listOf(DealerTest.FOUR_CARD, DealerTest.TWO_CARD))
-        player = creatPlayer()
-        player.pickCard(dealingShoe)
-        val actual = player.showCard()
-
-        assertThat(actual).isEqualTo(listOf(FOUR_CARD))
-    }
-
-    @Test
-    fun `JACK과 TWO 카드의 총 합으로 12를 반환한다`() {
-        val player = creatPlayer(JACK_CARD, TWO_CARD)
-        val actual = player.getCardSum()
-        val expected = 12
-        assertThat(actual).isEqualTo(expected)
-    }
-
-    @Test
-    fun `에이스가 11일 때 총 합에 10을 더해 21을 반환한다`() {
-        val player = creatPlayer(ACE_CARD, JACK_CARD)
-        val actual = player.getCardSum()
-        val expected = 21
-        assertThat(actual).isEqualTo(expected)
-    }
-
-    @Test
-    fun `에이스가 1일 때 총 합 16을 반환한다`() {
-        val player = creatPlayer(ACE_CARD, JACK_CARD, TWO_CARD)
-        val actual = player.getCardSum()
-        val expected = 13
-        assertThat(actual).isEqualTo(expected)
-    }
-
-    @Test
-    fun `카드 총 합이 21 이상이면 true를 반환한다`() {
-        val player = creatPlayer(TEN_CARD, TEN_CARD, TWO_CARD)
-        val actual = player.isBusted()
-        assertThat(actual).isEqualTo(true)
-    }
-
-    @Test
-    fun `카드 총 합이 21과 같으면 true를 반환한다`() {
-        val player = creatPlayer(TEN_CARD, ACE_CARD)
-        val actual = player.isMaxScore()
-        assertThat(actual).isEqualTo(true)
-    }
-
     @Nested
     @DisplayName("플레이어를 기준으로 승패를 판정하는 기능을 테스트한다")
     inner class PlayerJudgeTest {
@@ -82,7 +26,7 @@ class PlayerTest {
         }
 
         @Test
-        fun `모두 버스트되면 LOSE를 반환한다`() {
+        fun `플레이어와 딜러 모두 버스트되면 LOSE를 반환한다`() {
             player = creatPlayer(TEN_CARD, TEN_CARD, TEN_CARD)
             dealer = creatDealer(TEN_CARD, TEN_CARD, TEN_CARD)
 
@@ -97,6 +41,31 @@ class PlayerTest {
 
             val actual = player.judge(dealer)
             assertThat(actual).isEqualTo(GameResult.WIN)
+        }
+
+        @Test
+        fun `플레이어만 블랙잭이면 BLACKJACK을 반환한다`() {
+            player = creatPlayer(TEN_CARD, ACE_CARD)
+            dealer = creatDealer(TEN_CARD, TEN_CARD)
+
+            val actual = player.judge(dealer)
+            assertThat(actual).isEqualTo(GameResult.BLACKJACK)
+        }
+
+        @Test
+        fun `플레이어와 딜러 모두 블랙잭이면 DRAW를 반환한다`() {
+            player = creatPlayer(TEN_CARD, ACE_CARD)
+            dealer = creatDealer(TEN_CARD, ACE_CARD)
+            val actual = player.judge(dealer)
+            assertThat(actual).isEqualTo(GameResult.DRAW)
+        }
+
+        @Test
+        fun `딜러만 블랙잭이면 LOSE를 반환한다`() {
+            player = creatPlayer(TEN_CARD, FOUR_CARD)
+            dealer = creatDealer(TEN_CARD, ACE_CARD)
+            val actual = player.judge(dealer)
+            assertThat(actual).isEqualTo(GameResult.LOSE)
         }
 
         @Test
@@ -124,28 +93,61 @@ class PlayerTest {
         }
     }
 
-    private fun creatPlayer(vararg cards: Card): Player {
-        val player = Player("빙티")
-        cards.forEach {
-            player.addCard(it)
+    @Nested
+    @DisplayName("calculateBetAmount 테스트")
+    inner class CalculateBetAmountTest {
+        @Test
+        fun `플레이어가 10000원을 배팅하고 이기면 10000원을 반환한다`() {
+            val dealer = creatDealer(THREE_CARD)
+            val player1 = creatPlayer(FOUR_CARD)
+
+            val actual = player1.calculateBetAmount(dealer)
+            val expected = 10000L
+            assertThat(actual).isEqualTo(expected)
         }
+
+        @Test
+        fun `플레이어가 10000원을 배팅하고 지면 10000원을 반환한다`() {
+            val dealer = creatDealer(FOUR_CARD)
+            val player1 = creatPlayer(THREE_CARD)
+
+            val actual = player1.calculateBetAmount(dealer)
+            val expected = -10000L
+            assertThat(actual).isEqualTo(expected)
+        }
+
+        @Test
+        fun `플레이어가 10000원을 배팅하고 비기면 0원을 반환한다`() {
+            val dealer = creatDealer(FOUR_CARD)
+            val player1 = creatPlayer(FOUR_CARD)
+
+            val actual = player1.calculateBetAmount(dealer)
+            val expected = 0L
+            assertThat(actual).isEqualTo(expected)
+        }
+
+        @Test
+        fun `플레이어가 10000원을 배팅하고 블랙잭이면 15000원을 반환한다`() {
+            val dealer = creatDealer(FOUR_CARD)
+            val player1 = creatPlayer(TEN_CARD, ACE_CARD)
+
+            val actual = player1.calculateBetAmount(dealer)
+            val expected = 15000L
+            assertThat(actual).isEqualTo(expected)
+        }
+    }
+
+    private fun creatPlayer(vararg cards: Card): Player {
+        val player = Player("빙티", 10000)
+        val dealingShoe = DealingShoe(cards.toList())
+        player.pickCard(dealingShoe, cards.size)
         return player
     }
 
     private fun creatDealer(vararg cards: Card): Dealer {
         val dealer = Dealer()
-        cards.forEach {
-            dealer.addCard(it)
-        }
+        val dealingShoe = DealingShoe(cards.toList())
+        dealer.pickCard(dealingShoe, cards.size)
         return dealer
-    }
-
-    companion object {
-        val TWO_CARD = Card(CardNumber.TWO, Suit.HEART)
-        val THREE_CARD = Card(CardNumber.THREE, Suit.HEART)
-        val FOUR_CARD = Card(CardNumber.FOUR, Suit.HEART)
-        val TEN_CARD = Card(CardNumber.TEN, Suit.HEART)
-        val ACE_CARD = Card(CardNumber.ACE, Suit.HEART)
-        val JACK_CARD = Card(CardNumber.JACK, Suit.HEART)
     }
 }

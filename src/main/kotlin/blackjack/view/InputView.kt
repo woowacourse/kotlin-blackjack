@@ -6,8 +6,19 @@ object InputView {
         val input = readln().split(",").map { it.trim() }
         val isNotDuplicated = input.toSet().size == input.size
         val isNotEmpty = input.all { it.isNotEmpty() }
-        if (isNotDuplicated && isNotEmpty) return input
-        return getNames()
+        return if (isNotDuplicated && isNotEmpty) input else getNames()
+    }
+
+    tailrec fun getBetAmount(name: String): Long {
+        println("\n${name}의 배팅 금액은?")
+        val input = readln().toLongOrNull()
+
+        return if (input == null || input <= 0) {
+            println("배팅 금액은 0 이상의 숫자여야 합니다")
+            getBetAmount(name)
+        } else {
+            input
+        }
     }
 
     tailrec fun askPickAgain(name: String): Boolean {

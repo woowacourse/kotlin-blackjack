@@ -3,7 +3,6 @@ package blackjack.view
 import blackjack.model.Card
 import blackjack.model.CardNumber
 import blackjack.model.Dealer
-import blackjack.model.GameResult
 import blackjack.model.Participant
 import blackjack.model.Player
 import blackjack.model.Suit
@@ -15,7 +14,7 @@ object OutputView {
     ) {
         println(buildDealerInitialCard(dealer))
         players.forEach {
-            printParticipantStatus(it)
+            printCards(it)
         }
     }
 
@@ -34,7 +33,7 @@ object OutputView {
         println(buildParticipantCards(participant) + " - 결과: " + participant.getCardSum())
     }
 
-    fun printParticipantStatus(participant: Participant) {
+    fun printCards(participant: Participant) {
         println(buildParticipantCards(participant))
     }
 
@@ -89,36 +88,21 @@ object OutputView {
         println("${participant.name}는 블랙잭 입니다.")
     }
 
-    fun printBustedMessage(participant: Participant) {
-        println("${participant.name}는 버스트 됐습니다.")
-    }
-
     fun printDealerHitMessage() {
         println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
     }
 
-    fun printDealerStatistics(dealerStatistics: Map<GameResult, Int>) {
-        println("\n## 최종 승패")
-        val dealerStatisticsString =
-            dealerStatistics.map { "${it.value}${getGameResultText(it.key)}" }.joinToString(" ")
-        println("딜러: $dealerStatisticsString")
+    fun printFinalBetAmountMessage() {
+        println("\n## 최종 수익")
     }
 
-    fun printPlayerStatistics(playerStatistics: Map<String, GameResult>) {
-        playerStatistics.forEach { playerStatistic ->
-            println("${playerStatistic.key}: ${getGameResultText(playerStatistic.value)}")
+    fun printAmountResult(amountStatistics: Map<String, Long>) {
+        amountStatistics.forEach { participant ->
+            println("${participant.key}: ${participant.value}")
         }
     }
 
-    private fun getGameResultText(gameResult: GameResult): String {
-        return when (gameResult) {
-            GameResult.WIN -> "승"
-            GameResult.DRAW -> "무"
-            GameResult.LOSE -> "패"
-        }
-    }
-
-    fun printExceptionMessage(e: IllegalStateException) {
-        println(e.message)
+    fun printExceptionMessage(message: String?) {
+        println(message ?: "알 수 없는 오류가 발생했습니다.")
     }
 }

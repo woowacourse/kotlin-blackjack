@@ -3,8 +3,7 @@ package blackjack
 import blackjack.model.Card
 import blackjack.model.Dealer
 import blackjack.model.DealingShoe
-import blackjack.model.GameStatistics
-import blackjack.model.Player
+import blackjack.model.Players
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -14,80 +13,61 @@ class Controller(cards: List<Card>) {
     fun run() {
         val players = makePlayers()
         val dealer = Dealer()
-        try {
+        runCatching {
             play(dealer, players)
-        } catch (e: IllegalStateException) {
-            OutputView.printExceptionMessage(e)
+        }.onSuccess {
+            printGameResult(dealer, players)
+            printAmountResult(dealer, players)
+        }.onFailure {
+            OutputView.printExceptionMessage(it.message)
         }
     }
 
-    private fun makePlayers(): List<Player> {
+    private fun makePlayers(): Players {
         val names: List<String> = InputView.getNames()
-        return names.map { Player(it) }
+        val betAmounts =
+            names.map { InputView.getBetAmount(it) }
+        return Players.of(names, betAmounts)
     }
 
     private fun play(
         dealer: Dealer,
-        players: List<Player>,
+        players: Players,
     ) {
-        initParticipantsCard(dealer, players)
-        proceedParticipantsTure(dealer, players)
-        printStatistics(dealer, players)
+        initCard(dealer, players)
+        takeTurn(dealer, players)
     }
 
-    private fun initParticipantsCard(
+    private fun initCard(
         dealer: Dealer,
-        players: List<Player>,
+        players: Players,
     ) {
         dealer.pickCard(dealingShoe, 2)
-        players.forEach { player ->
-            player.pickCard(dealingShoe, 2)
-        }
-        OutputView.printInitialResult(dealer, players)
+        players.initCard(dealingShoe)
+        OutputView.printInitialResult(dealer, players.players)
     }
 
-    private fun proceedParticipantsTure(
+    private fun takeTurn(
         dealer: Dealer,
-        players: List<Player>,
+        players: Players,
     ) {
-        players.forEach { player ->
-            proceedPlayerTurn(player)
-        }
-        proceedDealerTurn(dealer)
+        players.hitOrStay(dealingShoe, InputView::askPickAgain, OutputView::printCards)
+        dealer.hitOrStay(dealingShoe, OutputView::printDealerHitMessage)
     }
 
-    private fun proceedPlayerTurn(player: Player) {
-        if (player.isMaxScore()) {
-            OutputView.printBlackJackMessage(player)
-            return
-        }
-        while (player.isHitable() && askPick(player.name)) {
-            player.pickCard(dealingShoe)
-            OutputView.printParticipantStatus(player)
-        }
-        if (player.isBusted()) {
-            OutputView.printBustedMessage(player)
-        }
-    }
-
-    private fun askPick(name: String): Boolean {
-        return InputView.askPickAgain(name)
-    }
-
-    private fun proceedDealerTurn(dealer: Dealer) {
-        while (dealer.isHitable()) {
-            dealer.pickCard(dealingShoe)
-            OutputView.printDealerHitMessage()
-        }
-    }
-
-    private fun printStatistics(
+    private fun printGameResult(
         dealer: Dealer,
-        players: List<Player>,
+        players: Players,
     ) {
-        OutputView.printResult(dealer, players)
-        val gameStatistics = GameStatistics(dealer, players)
-        OutputView.printDealerStatistics(gameStatistics.dealerStatistics)
-        OutputView.printPlayerStatistics(gameStatistics.playerStatistics)
+        OutputView.printResult(dealer, players.players)
+        OutputView.printFinalBetAmountMessage()
+    }
+
+    private fun printAmountResult(
+        dealer: Dealer,
+        players: Players,
+    ) {
+        val amountStatistics = players.getAmountStatistics(dealer)
+        OutputView.printAmountResult(amountStatistics)
     }
 }
