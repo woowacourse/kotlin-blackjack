@@ -3,7 +3,7 @@ package blackjack.model.participant
 import blackjack.model.deck.Deck
 import blackjack.model.deck.HandCards
 
-class Dealer(deck: Deck) : GameParticipant(HandCards(deck)) {
+class Dealer(deck: Deck) : GameParticipant(HandCards(), deck) {
     init {
         initializeCards()
     }
