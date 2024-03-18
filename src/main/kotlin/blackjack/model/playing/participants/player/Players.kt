@@ -1,5 +1,6 @@
 package blackjack.model.playing.participants.player
 
+import blackjack.model.card.CardDeck
 import blackjack.model.playing.participants.Dealer
 import blackjack.model.winning.PlayersWinning
 
@@ -8,6 +9,12 @@ class Players(val players: List<Player>) {
         require(players.map { it.name }.toSet().size == players.size) { "플레이어 이름에 중복이 있습니다." }
         require(players.size in PLAYERS_COUNT_RANGE) {
             "플레이어의 수는 ${MIN_PLAYERS_COUNT}명 이상, ${MAX_PLAYERS_COUNT}명 이하여야 합니다."
+        }
+    }
+
+    fun addInitialCards(cardDeck: CardDeck) {
+        players.forEach {
+            it.addInitialCards(cardDeck)
         }
     }
 

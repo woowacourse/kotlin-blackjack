@@ -12,9 +12,7 @@ import blackjack.model.winning.WinningResultStatus
 data class Participants(val dealer: Dealer, val players: Players) {
     fun addInitialCards(cardDeck: CardDeck) {
         dealer.addInitialCards(cardDeck)
-        players.players.forEach {
-            it.addInitialCards(cardDeck)
-        }
+        players.addInitialCards(cardDeck)
     }
 
     fun getFinalWinning(): FinalWinning {
