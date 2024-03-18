@@ -25,7 +25,7 @@ class Players(
         ): Players {
             return playerNames.zip(playerMoneyAmount) { name, amount ->
                 Player.of(
-                    gameInfo = GameInfo(name, Money.of(amount)),
+                    gameInfo = GameInfo(name, Money.from(amount)),
                     onInputDecision = { onInputDecision(name) },
                     generateCard = generateCard,
                 )

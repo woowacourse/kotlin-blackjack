@@ -5,24 +5,8 @@ class Judge(
     val players: List<GameInfo>,
 ) {
     fun getDealerIncome(): Money {
-        var currentAmount = Money(0)
-        players.forEach { playerStat ->
-            val dealerDifference = CRITERIA_NUMBER - dealer.sumOfCards
-            val playerDifference = CRITERIA_NUMBER - playerStat.sumOfCards
-
-            when {
-                isPlayerBlackjack(playerStat) && dealerDifference != 0 ->
-                    currentAmount - (playerStat.moneyAmount * BLACKJACK_BONUS_MULTIPLIER)
-                dealerDifference != 0 && playerDifference == 0 -> currentAmount -= (playerStat.moneyAmount)
-                dealerDifference < 0 && playerDifference >= 0 -> currentAmount -= playerStat.moneyAmount
-                playerDifference < 0 && dealerDifference >= 0 -> currentAmount += playerStat.moneyAmount
-                playerDifference < dealerDifference -> currentAmount -= playerStat.moneyAmount
-                dealerDifference < playerDifference -> currentAmount += playerStat.moneyAmount
-                else -> Unit
-            }
-        }
-
-        return currentAmount
+        val playersIncome = getPlayersIncome().sumOf { it.amount }
+        return -Money(playersIncome)
     }
 
     fun getPlayersIncome(): List<Money> {
