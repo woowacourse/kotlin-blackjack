@@ -4,7 +4,7 @@ import model.card.Card
 import model.result.Point.Companion.compareTo
 import model.result.ResultType
 
-abstract class Participant(open var participantState: ParticipantState, open var wallet: Wallet) {
+abstract class Participant(open var participantState: ParticipantState, open val wallet: Wallet) {
     fun isBust() = participantState is ParticipantState.Bust
 
     open fun judge(other: Participant): ResultType {

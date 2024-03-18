@@ -16,8 +16,8 @@ object InputView {
         return readln().split(",").map(String::trim)
     }
 
-    fun readBettingMoney(participant: Participant): Money {
-        println(HEADER_READ_BET_MONEY.format(participant.wallet.idCard.name))
+    fun readPlayerMoneyByName(name: String): Money {
+        println(HEADER_READ_BET_MONEY.format(name))
         return Money.fromInput(readln())
     }
 

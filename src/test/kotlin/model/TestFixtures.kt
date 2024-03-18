@@ -68,7 +68,10 @@ fun createPlayers(vararg name: String): Players {
         } else {
             name.toMutableList()
         }
-    return Players.ofList(playerNames)
+
+    val money = playerNames.map { Money(1000) }
+
+    return Players.ofList(playerNames, money)
 }
 
 val HEART_ACE = Card(ValueType.ACE, MarkType.HEART)

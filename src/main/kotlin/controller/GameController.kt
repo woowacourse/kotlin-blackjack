@@ -3,6 +3,7 @@ package controller
 import model.Game
 import model.card.Deck
 import model.participants.Dealer
+import model.participants.Money
 import model.participants.ParticipantState
 import model.participants.Players
 import view.InputView
@@ -11,14 +12,7 @@ import view.OutputView
 class GameController(private val deck: Deck) {
     fun start() {
         val dealer = Dealer(ParticipantState.None())
-        val players =
-            retryWhileException {
-                readPlayers()
-            }
-
-        retryWhileException {
-            initBettingMoney(players)
-        }
+        val players = readPlayers()
 
         with(Game.create(dealer, players, deck)) {
             handOut(this)
@@ -33,14 +27,6 @@ class GameController(private val deck: Deck) {
             OutputView.showProfitResult(this)
         }
     }
-
-    private fun initBettingMoney(players: Players) {
-        players.betMoney {
-                player ->
-            InputView.readBettingMoney(player)
-        }
-    }
-
     private fun handOut(game: Game) {
         game.handOut()
         OutputView.showGameInit(game)
@@ -68,9 +54,23 @@ class GameController(private val deck: Deck) {
     }
 
     private fun readPlayers(): Players {
-        return InputView.readPlayerNames().run {
-            Players.ofList(this)
-        }
+        val playersName = retryWhileException { readPlayersName() }
+        val playersMoney = retryWhileException { readPlayersMoneyByNames(playersName) }
+        return Players.ofList(playersName, playersMoney)
+    }
+
+    private fun readPlayersName(): List<String> {
+        return InputView.readPlayerNames()
+    }
+
+    private fun readPlayersMoneyByNames(playerNames: List<String>): List<Money> {
+        return playerNames.map { playerName ->
+            readPlayerMoneyByName(playerName)
+        }.toList()
+    }
+
+    private fun readPlayerMoneyByName(playerName: String): Money {
+        return InputView.readPlayerMoneyByName(playerName)
     }
 
     private fun showResult(game: Game) {
