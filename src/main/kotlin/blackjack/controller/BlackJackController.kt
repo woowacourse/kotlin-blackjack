@@ -101,15 +101,13 @@ class BlackJackController(
 
     private fun createDealer(deck: Deck) =
         Dealer(
-            betting = INITIAL_DEALER_BETTING,
             initState =
-            State.Running(
-                Hand(deck.drawMultiple(FIRST_DRAW_CAR_COUNT)),
-            ),
+                State.Running(
+                    Hand(deck.drawMultiple(FIRST_DRAW_CAR_COUNT)),
+                ),
         )
 
     companion object {
         private const val FIRST_DRAW_CAR_COUNT = 2
-        private val INITIAL_DEALER_BETTING = Betting(0)
     }
 }

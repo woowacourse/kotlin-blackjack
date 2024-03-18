@@ -5,7 +5,7 @@ import blackjack.model.Profit
 import blackjack.model.card.Card
 import blackjack.state.State
 
-class Dealer(betting: Betting, initState: State) : Participant(DEALER_NAME, betting, initState) {
+class Dealer(initState: State) : Participant(DEALER_NAME, INITIAL_DEALER_BETTING, initState) {
     override fun play(
         onDraw: () -> Card,
         onDone: (Participant) -> Unit,
@@ -33,5 +33,6 @@ class Dealer(betting: Betting, initState: State) : Participant(DEALER_NAME, bett
     companion object {
         private const val DEALER_NAME = "딜러"
         private const val HIT_CONDITION = 17
+        private val INITIAL_DEALER_BETTING = Betting(0)
     }
 }
