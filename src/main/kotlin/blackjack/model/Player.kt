@@ -11,5 +11,11 @@ class Player(name: String, val stake: Money) : Participant(name, PlayerStrengthP
         return cards.toList().take(2)
     }
 
-    override fun isHitable(): Boolean = !isBusted()
+    override fun isHitable(): Boolean {
+        val score = cards.scoreSum()
+        return score < HITABLE_THRESHOLD
+    }
+    companion object {
+        private const val HITABLE_THRESHOLD = 21
+    }
 }
