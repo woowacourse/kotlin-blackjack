@@ -2,7 +2,7 @@ package blackjack.model.participant
 
 import blackjack.model.result.GameResultType
 
-class Profit(private val profit: Double = 0.0) {
+data class Profit(private val profit: Double = 0.0) {
     fun calculateProfit(
         battingAmount: BattingAmount,
         result: GameResultType,
