@@ -1,11 +1,14 @@
 package blackjack.model.participant
 
+import blackjack.model.deck.Deck
 import blackjack.model.deck.HandCards
 
-abstract class GameParticipant(protected val handCards: HandCards) {
+abstract class GameParticipant(protected val handCards: HandCards, protected val deck: Deck) {
+    fun initializeCards() = handCards.add(deck, INIT_CARD_AMOUNT)
+
     fun getAllCards(): String = handCards.getAllCards()
 
-    fun addCard() = handCards.add()
+    fun addCard() = handCards.add(deck, HIT_CARD_AMOUNT)
 
     fun calculateScore(): Int {
         val baseScore: Int = handCards.getCardsScore()
@@ -21,5 +24,7 @@ abstract class GameParticipant(protected val handCards: HandCards) {
     companion object {
         private const val BLACKJACK_NUMBER = 21
         private const val ACE_EXTRA_SCORE = 10
+        private const val INIT_CARD_AMOUNT = 2
+        private const val HIT_CARD_AMOUNT = 1
     }
 }

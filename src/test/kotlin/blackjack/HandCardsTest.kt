@@ -9,15 +9,18 @@ import org.junit.jupiter.api.Test
 
 class HandCardsTest {
     private lateinit var handCards: HandCards
+    private lateinit var deck: Deck
 
     @BeforeEach
     fun setUp() {
-        handCards = HandCards(Deck(NormalCardMachine()))
+        handCards = HandCards()
+        deck = Deck(NormalCardMachine())
+        handCards.add(deck, INIT_CARD_SIZE)
     }
 
     @Test
     fun `Cards는 새로운 카드를 하나 받으면 총 3장이다`() {
-        handCards.add()
+        handCards.add(deck, 1)
         assertThat(handCards.getCardsSize()).isEqualTo(INIT_CARD_SIZE + 1)
     }
 
@@ -43,7 +46,7 @@ class HandCardsTest {
 
     @Test
     fun `Cards는 ACE가 있는지 판단 할 수 있다(ACE가 있는 경우 true)`() {
-        handCards.add()
+        handCards.add(deck, 1)
         assertThat(handCards.hasAce()).isTrue()
     }
 
