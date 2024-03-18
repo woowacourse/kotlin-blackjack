@@ -1,54 +1,72 @@
 package blackjack.controller
 
-import blackjack.model.Dealer
 import blackjack.model.GameManager
 import blackjack.model.Participant
-import blackjack.model.Participants
-import blackjack.model.Player
 import blackjack.view.InputView
 import blackjack.view.OutputView
 import blackjack.view.user.UserDecision
 
 class BlackJackController {
-    private lateinit var gameManager: GameManager
+    fun runBlackJackGame() {
+        val gameManager = makeGameManager()
+        startGameFlow(gameManager)
+        playGame(gameManager)
+        showResult(gameManager)
+    }
 
-    fun startGameFlow() {
-        val participants = makeParticipants()
-        gameManager =
-            GameManager(
-                participants = participants,
-            )
+    private fun makeGameManager(): GameManager {
+        val participants = InputView.makeParticipants()
+        return GameManager(
+            participants = participants,
+        )
+    }
+
+    private fun startGameFlow(gameManager: GameManager) {
+        val dealer = gameManager.getDealer()
+        val players = gameManager.getPlayers()
+
         gameManager.setGame()
         OutputView.outputParticipantsName(
-            dealerName = participants.dealer.getName(),
-            players = participants.players,
+            dealerName = dealer.getName(),
+            players = players,
         )
-        participants.dealer.openInitCards()?.firstOrNull()?.let { firstCard ->
-            OutputView.outputDealerCurrentHandCard(
-                name = participants.dealer.getName(),
-                firstCard = firstCard,
-            )
-        } ?: println(ERROR_CARD_INDEX)
-        OutputView.outputPlayersCurrentHandCard(participants.players)
+
+        OutputView.outputDealerCurrentHandCard(dealer)
+        OutputView.outputPlayersCurrentHandCard(players)
     }
 
-    fun playGame() {
+    private fun playGame(gameManager: GameManager) {
         gameManager.getAlivePlayers().forEach { participant ->
-            playPlayer(participant)
+            playPlayer(
+                participant,
+                gameManager,
+            )
         }
-        playDealer()
+        playDealer(gameManager)
     }
 
-    private fun playPlayer(participant: Participant) {
-        while (participant.checkShouldDrawCard()) {
-            processPlayerDecision(participant)
+    private fun playPlayer(
+        participant: Participant,
+        gameManager: GameManager,
+    ) {
+        while (participant.shouldDrawCard()) {
+            processPlayerDecision(
+                participant = participant,
+                gameManager = gameManager,
+            )
         }
     }
 
-    private fun processPlayerDecision(participant: Participant) {
+    private fun processPlayerDecision(
+        participant: Participant,
+        gameManager: GameManager,
+    ) {
         when (InputView.inputPlayerDecision(participant.getName())) {
             UserDecision.YES -> {
-                if (!setUserDecision(participant)) return
+                processUserDecision(
+                    participant = participant,
+                    gameManager = gameManager,
+                )
                 OutputView.outputPlayerCurrentHandCard(participant)
             }
 
@@ -56,59 +74,39 @@ class BlackJackController {
         }
     }
 
-    private fun playDealer() {
+    private fun playDealer(gameManager: GameManager) {
         val dealer = gameManager.getDealer()
-        while (dealer.checkShouldDrawCard()) {
+        while (dealer.shouldDrawCard()) {
             OutputView.outputDealerRule()
-            if (!setUserDecision(dealer)) return
+            processUserDecision(
+                participant = dealer,
+                gameManager = gameManager,
+            )
         }
     }
 
-    fun showResult() {
-        OutputView.outputParticipantsHandCard(gameManager.getParticipants())
+    private fun showResult(gameManager: GameManager) {
+        OutputView.outputParticipantsHandCard(
+            dealer = gameManager.getDealer(),
+            players = gameManager.getPlayers(),
+        )
         OutputView.outputBlackResult()
         val gameResult = gameManager.calculateGameResult()
-        OutputView.outputDealerResult(
-            dealerName = gameManager.getDealer().getName(),
-            dealerResults = gameResult.dealerResult,
-        )
-        OutputView.outputPlayersResult(
-            playersResult = gameResult.playerResults,
+        val bettingResults = gameResult.calculateRevenuePercentages()
+        OutputView.outputParticipantResult(
+            dealer = gameManager.getDealer(),
+            bettingResults = bettingResults,
         )
     }
 
-    private fun setUserDecision(participant: Participant): Boolean {
-        return try {
+    private fun processUserDecision(
+        participant: Participant,
+        gameManager: GameManager,
+    ) {
+        try {
             participant.draw(gameManager.returnCardForParticipant())
-            true
         } catch (e: IllegalArgumentException) {
             println(e.message)
-            false
         }
-    }
-
-    private fun makeParticipants(): Participants {
-        val dealer = Dealer()
-        val players = InputView.inputPlayers()
-        return checkParticipants(dealer, players) ?: makeParticipants()
-    }
-
-    private fun checkParticipants(
-        dealer: Dealer,
-        players: List<Player>,
-    ): Participants? {
-        return try {
-            Participants(
-                dealer = dealer,
-                players = players,
-            )
-        } catch (e: IllegalArgumentException) {
-            println(e.message)
-            null
-        }
-    }
-
-    companion object {
-        const val ERROR_CARD_INDEX = "딜러가 가지고 있는 카드가 없습니다."
     }
 }

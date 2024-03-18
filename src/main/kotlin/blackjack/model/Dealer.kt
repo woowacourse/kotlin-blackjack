@@ -1,15 +1,15 @@
 package blackjack.model
 
-class Dealer(name: String = DEFAULT_DEALER_NAME) : Participant(name) {
+class Dealer(wallet: Wallet = Wallet(Identification(DEFAULT_DEALER_NAME))) : Participant(wallet) {
     fun openFirstCard(): Card? {
         return getCards().firstOrNull()
     }
 
-    override fun openInitCards(): List<Card>? {
-        return getCards().firstOrNull()?.let { listOf(it) }
+    override fun openInitCards(): List<Card> {
+        return getCards().firstOrNull()?.let { listOf(it) } ?: listOf()
     }
 
-    override fun checkShouldDrawCard(): Boolean {
+    override fun shouldDrawCard(): Boolean {
         return getBlackJackScore() <= MIN_HAND_CARD_SCORE
     }
 

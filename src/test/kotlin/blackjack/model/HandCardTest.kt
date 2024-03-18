@@ -12,7 +12,7 @@ class HandCardTest {
             addCard(Card(Denomination.FOUR, Suit.SPADE))
             addCard(Card(Denomination.FIVE, Suit.SPADE))
         }
-        assertThat(actualCard.getTotalCardsSum()).isEqualTo(19)
+        assertThat(actualCard.getGameScore()).isEqualTo(19)
     }
 
     @Test

@@ -28,7 +28,7 @@ class DealerTest {
         drawableDealer.draw(Card(Denomination.FOUR, Suit.DIAMOND))
         drawableDealer.draw(Card(Denomination.FOUR, Suit.CLOVER))
         drawableDealer.draw(Card(Denomination.FOUR, Suit.HEART))
-        assertThat(drawableDealer.checkShouldDrawCard()).isTrue()
+        assertThat(drawableDealer.shouldDrawCard()).isTrue()
     }
 
     @Test
@@ -36,6 +36,6 @@ class DealerTest {
         val unDrawableDealer = Dealer()
         unDrawableDealer.draw(Card(Denomination.QUEEN, Suit.SPADE))
         unDrawableDealer.draw(Card(Denomination.SEVEN, Suit.SPADE))
-        assertThat(unDrawableDealer.checkShouldDrawCard()).isFalse()
+        assertThat(unDrawableDealer.shouldDrawCard()).isFalse()
     }
 }

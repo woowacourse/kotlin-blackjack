@@ -4,7 +4,7 @@ import blackjack.model.Card
 import blackjack.model.Dealer
 import blackjack.model.Participant
 import blackjack.model.Player
-import blackjack.model.Result
+import blackjack.model.Revenue
 import blackjack.model.Suit
 
 object OutputView {
@@ -13,16 +13,12 @@ object OutputView {
     private const val OUTPUT_MESSAGE_PARTICIPANTS_CURRENT_HAND_CARD = "%s카드: %s"
     private const val OUTPUT_MESSAGE_DEALER_RULE = "딜러는 %d이하라 한장의 카드를 더 받았습니다."
     private const val OUTPUT_MESSAGE_PARTICIPANTS_FINISH_HAND_CARD = "%s카드: %s - 결과:%d"
-    private const val OUTPUT_MESSAGE_BLACKJACK_RESULT = "## 최종 승패"
+    private const val OUTPUT_MESSAGE_BETTING_RESULT = "## 최종 수익"
     private const val COMMA = ", "
-    private const val SPACE = " "
     private const val SPACE_NAME = "스페이스"
     private const val CLOVER_NAME = "클로버"
     private const val HEART_NAME = "하트"
     private const val DIAMOND_NAME = "다이아몬드"
-    private const val WIN_NAME = "승"
-    private const val DRAW_NAME = "무"
-    private const val LOSE_NAME = "패"
 
     fun outputParticipantsName(
         dealerName: String,
@@ -39,17 +35,17 @@ object OutputView {
         )
     }
 
-    fun outputDealerCurrentHandCard(
-        name: String,
-        firstCard: Card,
-    ) {
-        println(
-            OUTPUT_MESSAGE_SHOW_DEALER_HAND_CARD
-                .format(
-                    name,
-                    joinCardInfo(firstCard),
-                ),
-        )
+    fun outputDealerCurrentHandCard(dealer: Dealer) {
+        dealer.openInitCards()
+            .firstOrNull()?.let { firstCard ->
+                println(
+                    OUTPUT_MESSAGE_SHOW_DEALER_HAND_CARD
+                        .format(
+                            dealer.getName(),
+                            joinCardInfo(firstCard),
+                        ),
+                )
+            } ?: println(ERROR_CARD_INDEX_DEALER)
     }
 
     fun outputPlayersCurrentHandCard(players: List<Participant>) {
@@ -60,14 +56,17 @@ object OutputView {
     }
 
     fun outputPlayerCurrentHandCard(player: Participant) {
-        player.openInitCards()?.let { playerInitCards ->
+        val playerOpenCards = player.openInitCards()
+        if (playerOpenCards.isNotEmpty()) {
             println(
                 OUTPUT_MESSAGE_PARTICIPANTS_CURRENT_HAND_CARD
                     .format(
                         player.getName(),
-                        joinCardsInfo(playerInitCards),
+                        joinCardsInfo(playerOpenCards),
                     ),
             )
+        } else {
+            println(ERROR_CARD_INDEX_PLAYER.format(player.getName()))
         }
     }
 
@@ -96,79 +95,72 @@ object OutputView {
         println()
     }
 
-    fun outputParticipantsHandCard(participants: List<Participant>) {
-        participants.forEach { participant ->
-            outputParticipantHandCard(participant)
+    fun outputParticipantsHandCard(
+        dealer: Dealer,
+        players: List<Player>,
+    ) {
+        outputDealerHandWithResult(dealer)
+        players.forEach { player ->
+            outputPlayerHandWithResult(player)
         }
     }
 
-    private fun outputParticipantHandCard(participant: Participant) {
+    private fun outputDealerHandWithResult(dealer: Dealer) {
         println(
             OUTPUT_MESSAGE_PARTICIPANTS_FINISH_HAND_CARD
                 .format(
-                    participant.getName(),
-                    joinCardsInfo(participant.getCards()),
-                    participant.getBlackJackScore(),
+                    "${dealer.getName()} ",
+                    joinCardsInfo(dealer.getCards()),
+                    dealer.getBlackJackScore(),
+                ),
+        )
+    }
+
+    private fun outputPlayerHandWithResult(player: Player) {
+        println(
+            OUTPUT_MESSAGE_PARTICIPANTS_FINISH_HAND_CARD
+                .format(
+                    player.getName(),
+                    joinCardsInfo(player.getCards()),
+                    player.getBlackJackScore(),
                 ),
         )
     }
 
     fun outputBlackResult() {
         println()
-        println(OUTPUT_MESSAGE_BLACKJACK_RESULT)
+        println(OUTPUT_MESSAGE_BETTING_RESULT)
     }
 
-    fun outputDealerResult(
-        dealerName: String,
-        dealerResults: Map<Result, Int>,
+    fun outputParticipantResult(
+        dealer: Dealer,
+        bettingResults: List<Revenue>,
     ) {
-        val dealerResultNames =
-            dealerResults.map { (result, count) ->
-                getDealerResult(result, count)
-            }
-        println("$dealerName: ${dealerResultNames.joinToString(SPACE)}")
-    }
-
-    fun outputPlayersResult(playersResult: Map<Player, Result>) {
-        playersResult.forEach { (player, result) ->
-            outputPlayerResult(
-                name = player.getName(),
-                playerResult = result,
-            )
-        }
-    }
-
-    private fun outputPlayerResult(
-        name: String,
-        playerResult: Result,
-    ) {
-        println(
-            getGameResultWithName(
-                name = name,
-                result = playerResult,
-            ),
+        val dealerBettingResult = -bettingResults.sumOf { it.revenue }
+        outputDealerResult(
+            dealer = dealer,
+            dealerBettingResult = dealerBettingResult,
         )
+        outputPlayersResult(bettingResults)
     }
 
-    private fun getGameResultWithName(
-        name: String,
-        result: Result,
-    ): String {
-        return "$name: ${getResultName(result)}"
+    private fun outputDealerResult(
+        dealer: Dealer,
+        dealerBettingResult: Int,
+    ) {
+        println("${dealer.getName()}: $dealerBettingResult")
     }
 
-    private fun getDealerResult(
-        result: Result,
-        count: Int,
-    ): String {
-        return "${count}${getResultName(result)}"
-    }
-
-    private fun getResultName(result: Result): String {
-        return when (result) {
-            Result.WIN -> WIN_NAME
-            Result.DRAW -> DRAW_NAME
-            Result.LOSE -> LOSE_NAME
+    private fun outputPlayersResult(bettingResults: List<Revenue>) {
+        bettingResults.forEach { bettingResult ->
+            outputPlayerResult(bettingResult)
         }
     }
+
+    private fun outputPlayerResult(bettingResult: Revenue) {
+        println("${bettingResult.name}: ${bettingResult.revenue}")
+    }
+
+    private const val ERROR_CARD_INDEX_DEALER = "딜러가 가지고 있는 카드가 없습니다."
+    private const val ERROR_CARD_INDEX_PLAYER = "%s 플레이어가 가지고 있는 카드가 없습니다."
 }
