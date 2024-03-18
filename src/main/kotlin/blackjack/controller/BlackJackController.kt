@@ -1,15 +1,14 @@
 package blackjack.controller
 
-import blackjack.model.action.Action
-import blackjack.model.dispatcher.Dispatcher
+import blackjack.Dealer
+import blackjack.Players
 import blackjack.model.domain.CardDeck
-import blackjack.model.store.Store
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
 class BlackJackController(
-    private val dispatcher: Dispatcher,
-    private val store: Store,
+    private val dealer: Dealer,
+    private val players: Players,
 ) {
     fun startGame() {
         initPlayers()
@@ -19,8 +18,8 @@ class BlackJackController(
     }
 
     private fun initPlayers() {
-        dispatcher.dispatch(Action.ReadNames(getPlayerNames()))
-        dispatcher.dispatch(Action.ReadBatingAmount(::getBatingAmount))
+        players.readNames(getPlayerNames(), ::askPlayerHit)
+        players.readBatingAmounts(::getBatingAmount)
     }
 
     private fun getPlayerNames(): List<String> {
@@ -42,36 +41,31 @@ class BlackJackController(
     }
 
     private fun initializeParticipantsCards() {
-        dispatcher.dispatch(Action.InitDealerCard { CardDeck.pick() })
-        dispatcher.dispatch(Action.InitPlayersCard { CardDeck.pick() })
+        dealer.drawCard { CardDeck.pick() }
+        players.initPlayersCard { CardDeck.pick() }
         displayInitializedCards()
     }
 
     private fun playRound() {
         with(OutputView) {
-            dispatcher.dispatch(
-                Action.DrawUntilPlayersSatisfaction(
-                    CardDeck::pick,
-                    ::printSinglePlayerCards,
-                    ::askPlayerHit,
-                ),
+            players.drawUntilPlayersSatisfaction(
+                CardDeck::pick,
+                ::printSinglePlayerCards,
             )
+
             printNewLine()
-            dispatcher.dispatch(
-                action = Action.DrawUntilDealerSatisfaction(
-                    CardDeck::pick,
-                    ::printDealerHit,
-                ),
+
+            dealer.drawUntilSatisfaction(
+                generateCard = CardDeck::pick,
+                printCards = ::printDealerHit,
             )
         }
     }
 
     private fun displayResult() {
-        dispatcher.dispatch(Action.FindWinner(store.dealerInfo))
-
         with(OutputView) {
-            printFinalCards(store.playersInfo, store.dealerInfo)
-            printResult(store.playersInfo, store.dealerInfo)
+            printFinalCards(players, dealer)
+            printResult(players, dealer)
         }
     }
 
@@ -79,6 +73,6 @@ class BlackJackController(
         InputView.readContinueInput(playerName) ?: askPlayerHit(playerName)
 
     private fun displayInitializedCards() {
-        OutputView.printInitialStats(store.playersInfo, store.dealerInfo)
+        OutputView.printInitialStats(players, dealer)
     }
 }
