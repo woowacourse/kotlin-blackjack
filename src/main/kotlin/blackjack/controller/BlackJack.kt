@@ -28,13 +28,6 @@ class BlackJack(
     private fun prepareForGame(): Participants {
         val dealer = Dealer(CardHand())
         val players = retryUntilSuccess { initPlayers() }
-
-        players.players.forEach {
-            it.betting =
-                Betting(
-                    inputView.readBettingAmount(it),
-                )
-        }
         return Participants(dealer, players)
     }
 
@@ -64,13 +57,18 @@ class BlackJack(
         outputView.printProfit(participants, finalWinning)
     }
 
-    private fun initPlayers(): Players =
-        Players(
-            inputView.readPlayersName()
-                .map { name ->
-                    Player(PlayerName(name), CardHand())
-                },
-        )
+    private fun initPlayers(): Players {
+        val playersName = inputView.readPlayersName()
+        val players =
+            playersName.map { name ->
+                val player = Player(PlayerName(name), CardHand())
+                player.betting = getBettingAmount(player)
+                player
+            }
+        return Players(players)
+    }
+
+    private fun getBettingAmount(player: Player) = Betting(inputView.readBettingAmount(player))
 
     private fun runPlayersPhase(
         players: Players,
