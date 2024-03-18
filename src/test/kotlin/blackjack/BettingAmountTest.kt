@@ -25,7 +25,7 @@ class BettingAmountTest {
 
     @ParameterizedTest
     @ValueSource(strings = ["1000", "10000", "9000"])
-    fun `베팅 금액이 숫자이고 0 이상인 경우 예외가 발생하지 않는다`(validAmount: String) {
+    fun `베팅 금액이 숫자이고 1000원 이상인 경우 예외가 발생하지 않는다`(validAmount: String) {
         assertDoesNotThrow {
             BettingAmount.bettingAmountOf(validAmount)
         }

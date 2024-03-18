@@ -1,8 +1,6 @@
 package blackjack.model.participant
 
-import blackjack.state.Blackjack
-import blackjack.state.Bust
-import blackjack.state.Stay
+import blackjack.state.State
 
 class Judge {
     fun gameResult(
@@ -31,21 +29,21 @@ class Judge {
     private fun isBlackjackWin(
         player: Player,
         dealer: Dealer,
-    ): Boolean = player.state is Blackjack && !dealer.isBlackjack()
+    ): Boolean = player.state is State.Finished.Blackjack && !dealer.isBlackjack()
 
-    private fun isBust(player: Player): Boolean = player.state is Bust
+    private fun isBust(player: Player): Boolean = player.state is State.Finished.Bust
 
     private fun isWin(
         player: Player,
         dealer: Dealer,
     ): Boolean =
-        (player.state is Stay && dealer.isBust()) ||
-            (player.state is Stay && player.calculateScore() > dealer.calculateScore())
+        (player.state is State.Finished.Stay && dealer.isBust()) ||
+            (player.state is State.Finished.Stay && player.calculateScore() > dealer.calculateScore())
 
     private fun isLose(
         player: Player,
         dealer: Dealer,
-    ): Boolean = player.state is Stay && player.calculateScore() < dealer.calculateScore()
+    ): Boolean = player.state is State.Finished.Stay && player.calculateScore() < dealer.calculateScore()
 
     companion object {
         private const val WIN_RATE = 1.0

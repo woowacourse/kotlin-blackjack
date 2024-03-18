@@ -5,8 +5,7 @@ import blackjack.model.deck.Deck
 import blackjack.model.participant.Dealer
 import blackjack.model.participant.Judge
 import blackjack.model.participant.Player
-import blackjack.state.Bust
-import blackjack.state.Stay
+import blackjack.state.State
 import blackjack.testmachine.BlackjackCardMachine
 import blackjack.testmachine.BustCardMachine
 import blackjack.testmachine.NormalCardMachine
@@ -47,7 +46,7 @@ class JudgeTest {
         val player = Player("채채", Deck(BustCardMachine()))
         player.bettingAmount = BettingAmount(1000)
         // when
-        player.state = Bust(player).decisionState()
+        player.state = State.Finished.Bust
         val result = judge.calculateProfit(dealer, player)
         // then
         assertThat(result).isEqualTo(-1000)
@@ -61,7 +60,7 @@ class JudgeTest {
         val player = Player("채채", Deck(BustCardMachine()))
         player.bettingAmount = BettingAmount(1000)
         // when
-        player.state = Stay(player).decisionState()
+        player.state = State.Finished.Stay
         val result = judge.calculateProfit(dealer, player)
         // then
         assertThat(result).isEqualTo(1000)
@@ -75,7 +74,7 @@ class JudgeTest {
         player.addCard()
         player.bettingAmount = BettingAmount(1000)
         // when
-        player.state = Stay(player).decisionState()
+        player.state = State.Finished.Stay
         val result = judge.calculateProfit(dealer, player)
         // then
         assertThat(result).isEqualTo(1000)
@@ -89,7 +88,7 @@ class JudgeTest {
         dealer.addCard()
         player.bettingAmount = BettingAmount(1000)
         // when
-        player.state = Stay(player).decisionState()
+        player.state = State.Finished.Stay
         val result = judge.calculateProfit(dealer, player)
         // then
         assertThat(result).isEqualTo(-1000)
@@ -102,7 +101,7 @@ class JudgeTest {
         val player = Player("채채", Deck(NormalCardMachine()))
         player.bettingAmount = BettingAmount(1000)
         // when
-        player.state = Stay(player).decisionState()
+        player.state = State.Finished.Stay
         val result = judge.calculateProfit(dealer, player)
         // then
         assertThat(result).isEqualTo(0)
