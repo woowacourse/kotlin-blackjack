@@ -2,7 +2,7 @@ package model
 
 import model.card.Deck
 import model.participants.Dealer
-import model.participants.ParticipantName
+import model.participants.IdCard
 import model.participants.Players
 import model.result.ResultType
 import org.assertj.core.api.Assertions.assertThat
@@ -37,7 +37,7 @@ class GameTest {
         game.handOut()
         game.playDealer { _ -> }
 
-        val expected = mapOf(ParticipantName.fromInput("pang") to ResultType.DRAW, ParticipantName.fromInput("ack") to ResultType.LOSE)
+        val expected = mapOf(IdCard.fromInput("pang") to ResultType.DRAW, IdCard.fromInput("ack") to ResultType.LOSE)
         val actual = game.getPlayersResult()
 
         assertThat(actual.result.values == expected.values)

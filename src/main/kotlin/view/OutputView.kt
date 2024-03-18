@@ -6,7 +6,7 @@ import model.card.ValueType
 import model.participants.Dealer
 import model.participants.Hand
 import model.participants.Participant
-import model.participants.ParticipantName
+import model.participants.IdCard
 import model.participants.Player
 import model.participants.Players
 import model.result.DealerResult
@@ -25,7 +25,7 @@ object OutputView {
     }
 
     private fun showInitHeader(game: Game) {
-        println(HEADER_GAME_INITIAL_STATE.format(game.getPlayers().players.joinToString(", ") { it.wallet.participantName.name }))
+        println(HEADER_GAME_INITIAL_STATE.format(game.getPlayers().players.joinToString(", ") { it.wallet.idCard.name }))
     }
 
     private fun showParticipantsHandOut(game: Game) {
@@ -47,11 +47,11 @@ object OutputView {
     }
 
     private fun showParticipantHandOnlyOne(participant: Participant) {
-        println("${participant.wallet.participantName.name}: ${getFirstCardFromHand(participant.participantState.hand)}")
+        println("${participant.wallet.idCard.name}: ${getFirstCardFromHand(participant.participantState.hand)}")
     }
 
     fun showParticipantHand(participant: Participant) {
-        println("${participant.wallet.participantName.name}: ${getCardsFromHand(participant.participantState.hand)}")
+        println("${participant.wallet.idCard.name}: ${getCardsFromHand(participant.participantState.hand)}")
     }
 
     fun showParticipantsHandWithResult(game: Game) {
@@ -62,7 +62,7 @@ object OutputView {
 
     private fun showParticipantHandWithResult(participant: Participant) {
         println(
-            "${participant.wallet.participantName.name}: ${getCardsFromHand(
+            "${participant.wallet.idCard.name}: ${getCardsFromHand(
                 participant.participantState.hand,
             )} - 결과: ${participant.participantState.hand.calculateOptimalPoint().amount}",
         )
@@ -76,7 +76,7 @@ object OutputView {
     private fun getFirstCardFromHand(hand: Hand): String =
         getValueFromType(hand.cards.first().valueType) + getMarkFromType(hand.cards.first().markType)
 
-    fun showDealerHit(dealer: Dealer) = println(HEADER_DRAW_CARDS_FOR_DEALER.format(dealer.wallet.participantName.name))
+    fun showDealerHit(dealer: Dealer) = println(HEADER_DRAW_CARDS_FOR_DEALER.format(dealer.wallet.idCard.name))
 
     fun showResultHeader() = println(HEADER_RESULT)
 
@@ -88,7 +88,7 @@ object OutputView {
         )
     }
 
-    fun showProfitResult(result: MutableMap<ParticipantName, Profit>) {
+    fun showProfitResult(result: MutableMap<IdCard, Profit>) {
         result.map {
             println("${it.key.name} : ${it.value.amount.toInt()}")
         }
@@ -100,8 +100,8 @@ object OutputView {
     ) {
         players.players.forEach { player ->
             println(
-                "${player.wallet.participantName.name}: ${getResultFromType(
-                    playersResult.result.getOrDefault(player.wallet.participantName, ResultType.DRAW),
+                "${player.wallet.idCard.name}: ${getResultFromType(
+                    playersResult.result.getOrDefault(player.wallet.idCard, ResultType.DRAW),
                 )}",
             )
         }

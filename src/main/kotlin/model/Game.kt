@@ -3,7 +3,7 @@ package model
 import model.card.Deck
 import model.participants.Dealer
 import model.participants.Participant
-import model.participants.ParticipantName
+import model.participants.IdCard
 import model.participants.ParticipantState
 import model.participants.Player
 import model.participants.Players
@@ -70,11 +70,11 @@ class Game private constructor(private val participants: List<Participant>, val 
     }
 
     fun getPlayersResult(): PlayersResult {
-        val result: MutableMap<ParticipantName, ResultType> = mutableMapOf()
+        val result: MutableMap<IdCard, ResultType> = mutableMapOf()
 
         getPlayers().players.forEach { player ->
             val resultType = player.judge(getDealer())
-            result[player.wallet.participantName] = resultType
+            result[player.wallet.idCard] = resultType
         }
         return PlayersResult(result)
     }
@@ -89,18 +89,18 @@ class Game private constructor(private val participants: List<Participant>, val 
         return DealerResult(result)
     }
 
-    fun getProfitResult(): MutableMap<ParticipantName, Profit> {
-        val result: MutableMap<ParticipantName, Profit> = mutableMapOf()
+    fun getProfitResult(): MutableMap<IdCard, Profit> {
+        val result: MutableMap<IdCard, Profit> = mutableMapOf()
         var dealerProfit = Profit()
-        result[getDealer().wallet.participantName] = dealerProfit
+        result[getDealer().wallet.idCard] = dealerProfit
 
         getPlayers().players.forEach { player ->
             val playerProfit = player.judgeProfit(getDealer())
-            result[player.wallet.participantName] = playerProfit
+            result[player.wallet.idCard] = playerProfit
             dealerProfit += playerProfit
         }
 
-        result[getDealer().wallet.participantName] = -dealerProfit
+        result[getDealer().wallet.idCard] = -dealerProfit
 
         return result
     }

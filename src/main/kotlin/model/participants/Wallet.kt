@@ -1,3 +1,3 @@
 package model.participants
 
-data class Wallet(val participantName: ParticipantName = ParticipantName.fromInput("None"), val money: Money = Money())
+data class Wallet(val idCard: IdCard = IdCard.fromInput("None"), val money: Money = Money())

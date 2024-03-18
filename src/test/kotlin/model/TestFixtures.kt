@@ -8,7 +8,7 @@ import model.card.ValueType
 import model.participants.Dealer
 import model.participants.Hand
 import model.participants.Money
-import model.participants.ParticipantName
+import model.participants.IdCard
 import model.participants.ParticipantState
 import model.participants.Player
 import model.participants.Players
@@ -46,15 +46,15 @@ fun createPlayingPlayerWithMoney(
     hand: Hand = Hand(),
     money: Int,
 ): Player {
-    return Player(ParticipantState.Playing(hand), Wallet(ParticipantName.fromInput("Player"), money = Money(money)))
+    return Player(ParticipantState.Playing(hand), Wallet(IdCard.fromInput("Player"), money = Money(money)))
 }
 
 fun createBustedPlayerWithMoney(money: Int): Player {
-    return Player(ParticipantState.Bust(), Wallet(ParticipantName.fromInput("Player"), money = Money(money)))
+    return Player(ParticipantState.Bust(), Wallet(IdCard.fromInput("Player"), money = Money(money)))
 }
 
 fun createBlackJackPlayerWithMoney(money: Int): Player {
-    return Player(ParticipantState.BlackJack(), Wallet(ParticipantName.fromInput("Player"), money = Money(money)))
+    return Player(ParticipantState.BlackJack(), Wallet(IdCard.fromInput("Player"), money = Money(money)))
 }
 
 fun createBlackJackPlayer(): Player {

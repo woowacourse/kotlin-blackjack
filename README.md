@@ -7,7 +7,8 @@
     - [x] 승/패/무 를 판단하는 추상 행동 명세
     - [x] 히트를 진행하여 상태 업데이트
 
-- [x] ParticipantName
+- [x] IdCard
+  - [x] 사용자의 이름을 담은 신분증이다.
   - [x] 이름의 길이는 10글자 이내로 한다.
 
 - [x] ParticipantState

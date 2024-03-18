@@ -17,12 +17,12 @@ object InputView {
     }
 
     fun readBettingMoney(participant: Participant): Money {
-        println(HEADER_READ_BET_MONEY.format(participant.wallet.participantName.name))
+        println(HEADER_READ_BET_MONEY.format(participant.wallet.idCard.name))
         return Money.fromInput(readln())
     }
 
     fun readHitDecision(participant: Participant): Boolean {
-        println(HEADER_READ_ANSWER.format(participant.wallet.participantName.name))
+        println(HEADER_READ_ANSWER.format(participant.wallet.idCard.name))
         return when (val decision = readln().lowercase()) {
             YES -> true
             NO -> false

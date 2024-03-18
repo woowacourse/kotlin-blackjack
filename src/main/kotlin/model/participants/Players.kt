@@ -13,7 +13,7 @@ class Players(val players: List<Player>) {
 
         fun ofList(names: List<String>): Players {
             return names.validateLength().map {
-                Player(ParticipantState.None(), Wallet(ParticipantName.fromInput(it), Money()))
+                Player(ParticipantState.None(), Wallet(IdCard.fromInput(it), Money()))
             }.run {
                 Players(this)
             }

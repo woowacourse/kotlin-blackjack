@@ -7,7 +7,7 @@ class Dealer(
     participantState: ParticipantState,
     wallet: Wallet =
         Wallet(
-            ParticipantName.fromInput(
+            IdCard.fromInput(
                 DEFAULT_NAME,
             ),
         ),
