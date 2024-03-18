@@ -17,7 +17,7 @@ class Stay : Finish() {
         opponentScore: Int,
     ): CompetitionResult {
         return when {
-            opponentScore > 21 -> CompetitionResult.WIN
+            opponentScore > BUST_CONDITION -> CompetitionResult.WIN
             myScore > opponentScore -> CompetitionResult.WIN
             myScore < opponentScore -> CompetitionResult.LOSE
             myScore == opponentScore -> CompetitionResult.SAME
@@ -30,5 +30,9 @@ class Stay : Finish() {
         isHit: Boolean,
     ): HandCardState {
         throw IllegalStateException("더 이상 턴을 진행할 수 없습니다.")
+    }
+
+    companion object {
+        private const val BUST_CONDITION = 21
     }
 }
