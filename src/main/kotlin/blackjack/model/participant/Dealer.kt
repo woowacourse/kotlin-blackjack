@@ -9,15 +9,15 @@ class Dealer : Role() {
     override fun decideMoreCard() = getCardSum() < MIN_CARD_SUM
 
     fun calculateGameResult(players: Players): GameResultStorage {
-        val playersResult = PlayersResult()
+        val playersResult = mutableMapOf<PlayerName, Profit>()
         var dealerProfit = Profit()
         players.playerGroup.forEach { player ->
             val gameResultType = decideGameResultType(player)
             val playerProfit = Profit().calculateProfit(player.battingAmount, gameResultType)
-            playersResult.add(player.name, playerProfit)
+            playersResult[player.name] = playerProfit
             dealerProfit -= playerProfit
         }
-        return GameResultStorage(DealerResult(dealerProfit), playersResult)
+        return GameResultStorage(DealerResult(dealerProfit), PlayersResult(playersResult))
     }
 
     private fun decideGameResultType(player: Player): GameResultType {
