@@ -20,7 +20,7 @@ data class Participants(val dealer: Dealer, val players: Players) {
     fun getFinalWinning(): FinalWinning {
         val dealerResult = judgeDealerWinning()
         val dealerWinning = DealerWinning(getVictoryCount(dealerResult), getDefeatCount(dealerResult), getPushCount(dealerResult))
-        val playersWinning = judgePlayersWinning()
+        val playersWinning = players.judgePlayersWinning(dealer)
 
         return FinalWinning(dealerWinning, playersWinning)
     }
@@ -71,6 +71,4 @@ data class Participants(val dealer: Dealer, val players: Players) {
         }
         return dealerWinning
     }
-
-    private fun judgePlayersWinning(): PlayersWinning = PlayersWinning(players.players.associate { it.name to it.match(dealer) })
 }
