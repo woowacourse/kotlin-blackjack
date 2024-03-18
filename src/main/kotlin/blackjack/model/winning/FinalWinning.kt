@@ -14,24 +14,21 @@ class FinalWinning(val dealerWinning: DealerWinning, val playerWinning: PlayersW
         var dealerProfit = 0.0
 
         players.players.forEach { player ->
-            val playerProfit = calculatePlayerProfit(player, profit)
+            val playerProfit = calculatePlayerProfit(player)
+            profit[player.name] = playerProfit
             dealerProfit -= playerProfit
         }
         profit[dealer.name] = dealerProfit
         return profit
     }
 
-    private fun calculatePlayerProfit(
-        player: Player,
-        profit: MutableMap<PlayerName, Double>,
-    ): Double {
+    private fun calculatePlayerProfit(player: Player): Double {
         var playerProfit = 0.0
         playerWinning.result.forEach { (playerName, winningResult) ->
             if (player.name == playerName) {
                 playerProfit = player.calculateProfit(winningResult)
             }
         }
-        profit[player.name] = playerProfit
         return playerProfit
     }
 }
