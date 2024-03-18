@@ -19,15 +19,33 @@ class Judge {
     ): Int {
         val rate =
             when {
-                player.state is Blackjack && !dealer.isBlackjack() -> BLACKJACK_RATE
-                player.state is Bust -> BUST_RATE
-                player.state is Stay && dealer.isBust() -> WIN_RATE
-                player.state is Stay && player.calculateScore() > dealer.calculateScore() -> WIN_RATE
-                player.state is Stay && player.calculateScore() < dealer.calculateScore() -> BUST_RATE
+                isBlackjackWin(player, dealer) -> BLACKJACK_RATE
+                isBust(player) -> BUST_RATE
+                isWin(player, dealer) -> WIN_RATE
+                isLose(player, dealer) -> BUST_RATE
                 else -> DRAW_RATE
             }
         return (player.bettingAmount.getAmount() * rate).toInt()
     }
+
+    private fun isBlackjackWin(
+        player: Player,
+        dealer: Dealer,
+    ): Boolean = player.state is Blackjack && !dealer.isBlackjack()
+
+    private fun isBust(player: Player): Boolean = player.state is Bust
+
+    private fun isWin(
+        player: Player,
+        dealer: Dealer,
+    ): Boolean =
+        (player.state is Stay && dealer.isBust()) ||
+            (player.state is Stay && player.calculateScore() > dealer.calculateScore())
+
+    private fun isLose(
+        player: Player,
+        dealer: Dealer,
+    ): Boolean = player.state is Stay && player.calculateScore() < dealer.calculateScore()
 
     companion object {
         private const val WIN_RATE = 1.0
