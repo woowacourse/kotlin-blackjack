@@ -3,9 +3,13 @@ package blackjack.controller
 import blackjack.model.CardDeck
 import blackjack.model.CardDeckGenerator
 import blackjack.model.Dealer
+import blackjack.model.DealerInfo
+import blackjack.model.ParticipantBetAmount
 import blackjack.model.ParticipantName
+import blackjack.model.ParticipantState
 import blackjack.model.Participants
 import blackjack.model.Player
+import blackjack.model.PlayerInfo
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -13,23 +17,50 @@ class BlackjackController {
     fun play() {
         val deck = CardDeckGenerator.generate()
         val participants = setupParticipants(deck, InputView.readNames())
+
         OutputView.printParticipantsStatus(participants)
 
         playRound(deck, participants)
 
         OutputView.printParticipantsStatusAndScore(participants)
         OutputView.printGameResult(participants.calculateResult())
+        OutputView.printFinalProfits(participants.calculateFinalProfits())
     }
 
     private fun setupParticipants(
         deck: CardDeck,
         names: List<String>,
     ): Participants {
-        val dealer = Dealer(hand = deck.createStartHand())
-        val players: List<Player> =
-            names.map { Player(ParticipantName(it), deck.createStartHand()) }
-
+        val dealer = setupDealer(deck)
+        val players = setupPlayers(deck, names)
         return Participants(dealer, players)
+    }
+
+    private fun setupDealer(deck: CardDeck): Dealer {
+        val initialState = ParticipantState.calculateInitialParticipantState(deck.createStartHand(), DealerInfo())
+        return Dealer(initialState)
+    }
+
+    private fun setupPlayers(
+        deck: CardDeck,
+        names: List<String>,
+    ): List<Player> {
+        val participantNames = names.map { name -> ParticipantName(name) }
+        val participantBetAmounts =
+            participantNames.map {
+                ParticipantBetAmount(InputView.readBetAmount(it))
+            }
+
+        val players: List<Player> =
+            participantNames.zip(participantBetAmounts).map { (name, betAmount) ->
+                val initialState =
+                    ParticipantState.calculateInitialParticipantState(
+                        deck.createStartHand(),
+                        PlayerInfo(name, betAmount),
+                    )
+                Player(initialState)
+            }
+        return players
     }
 
     private fun playRound(

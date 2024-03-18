@@ -1,6 +1,6 @@
 package blackjack.model
 
-data class WinningState(
+data class ScoreRecord(
     val wins: Int,
     val losses: Int,
 )
