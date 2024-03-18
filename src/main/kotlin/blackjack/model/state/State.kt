@@ -16,6 +16,10 @@ sealed interface State {
 
     fun updateState(totalPoint: Int): State
 
+    fun decideWinner(opponent: BaseHolder): GameResult
+
+    fun calculateProfitByOpponent(opponentProfit: Double)
+
     sealed class Progressing : State
     sealed class Finished : State
 }
