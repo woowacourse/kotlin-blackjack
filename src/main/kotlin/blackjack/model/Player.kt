@@ -15,6 +15,7 @@ class Player(name: String, val stake: Money) : Participant(name, PlayerStrengthP
         val score = cards.scoreSum()
         return score < HITABLE_THRESHOLD
     }
+
     companion object {
         private const val HITABLE_THRESHOLD = 21
     }
