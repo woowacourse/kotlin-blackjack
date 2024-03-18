@@ -73,10 +73,10 @@ class OutputView {
 
     private fun Suite.value(): String =
         when (this) {
-            Suite.CLOVER -> "클로버"
-            Suite.HEART -> "하트"
-            Suite.SPADE -> "스페이드"
-            Suite.DIAMOND -> "다이아몬드"
+            Suite.CLOVER -> "♣️"
+            Suite.HEART -> "♥️"
+            Suite.SPADE -> "♠️"
+            Suite.DIAMOND -> "♦️"
         }
 
     private fun Denomination.value(): String =
