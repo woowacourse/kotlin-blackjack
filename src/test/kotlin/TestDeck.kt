@@ -1,4 +1,5 @@
-package model.card
+import model.card.Card
+import model.card.Deck
 
 class TestDeck(private val _cards: MutableList<Card>) : Deck {
     val cards: List<Card>
