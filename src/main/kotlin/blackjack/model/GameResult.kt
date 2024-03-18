@@ -9,13 +9,14 @@ class GameResult(
         return GameResult(win + newResult.win,defeat + newResult.defeat,push + newResult.push)
     }
 
-    fun win() = GameResult(win = 1)
+    fun win() = GameResult(win = INCREASING_VALUE)
 
-    fun push() = GameResult(push = 1)
+    fun push() = GameResult(push = INCREASING_VALUE)
 
-    fun defeat() = GameResult(defeat = 1)
+    fun defeat() = GameResult(defeat = INCREASING_VALUE)
 
     companion object {
         const val DEFAULT_RESULT_VALUE = 0
+        const val INCREASING_VALUE = 1
     }
 }
