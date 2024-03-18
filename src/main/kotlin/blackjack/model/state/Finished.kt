@@ -9,7 +9,7 @@ import blackjack.model.Profit
 sealed class Finished(
     override val hand: Hand,
     override val profit: Profit,
-) : State, CompareImpl {
+) : State {
     override fun getCard(card: Card): State = this
 
     override fun updateState(totalPoint: Int): State = this
