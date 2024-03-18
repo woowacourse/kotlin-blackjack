@@ -15,7 +15,7 @@ import model.participants.Players
 import model.participants.Wallet
 
 fun createTestDeck(vararg cards: Card): Deck {
-    return Deck.create(DeckExplicitGenerationStrategy(cards.toMutableList()))
+    return Deck.create(DeckExplicitGenerationStrategy(cards.toList()))
 }
 
 fun createDealer(): Dealer {
