@@ -4,6 +4,10 @@ class Participants(
     val dealer: Dealer,
     val playerGroup: PlayerGroup,
 ) {
+    fun betBeforeSetting(getBettingMoney: (playerName: String) -> String) {
+        playerGroup.placeBettingMoney(getBettingMoney = getBettingMoney)
+    }
+
     fun initSetting(gameDeck: GameDeck) {
         dealer.initHands(gameDeck)
         playerGroup.players.forEach { player ->

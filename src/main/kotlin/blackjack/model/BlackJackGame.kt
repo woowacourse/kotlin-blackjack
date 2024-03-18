@@ -5,7 +5,7 @@ class BlackJackGame(
     private val gameDeck: GameDeck,
 ) {
     fun betMoney(getBettingMoney: (playerName: String) -> String) {
-        participants.playerGroup.placeBettingMoney(getBettingMoney = getBettingMoney)
+        participants.betBeforeSetting(getBettingMoney = getBettingMoney)
     }
 
     fun start(printGameSetting: (dealerCard: Card, playerGroup: PlayerGroup) -> Unit) {
