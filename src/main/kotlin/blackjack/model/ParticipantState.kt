@@ -11,6 +11,12 @@ sealed class ParticipantState(private val hand: Hand, private val info: Particip
 
     fun getCardsSum() = hand.calculateCardsSum()
 
+    fun getCards() = hand.getCards()
+
+    fun getName() = info.getName()
+
+    fun getBetAmount() = info.getBetAmount()
+
     abstract fun calculateGameOutcome(opponent: ParticipantState): GameOutcome
 
     abstract fun drawCard(card: Card): ParticipantState

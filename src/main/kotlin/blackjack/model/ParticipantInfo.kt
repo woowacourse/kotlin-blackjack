@@ -1,19 +1,21 @@
 package blackjack.model
 
-sealed class ParticipantInfo(open val name: ParticipantName) {
+sealed class ParticipantInfo(private val name: ParticipantName) {
+    fun getName() = name
+
     abstract fun isDealer(): Boolean
 
     abstract fun getBetAmount(): Int
 }
 
-class PlayerInfo(override val name: ParticipantName, private val betAmount: ParticipantBetAmount) :
+class PlayerInfo(name: ParticipantName, private val betAmount: ParticipantBetAmount) :
     ParticipantInfo(name) {
     override fun isDealer() = false
 
     override fun getBetAmount() = betAmount.getAmount()
 }
 
-class DealerInfo(override val name: ParticipantName = ParticipantName(DEALER_NAME)) : ParticipantInfo(name) {
+class DealerInfo(name: ParticipantName = ParticipantName(DEALER_NAME)) : ParticipantInfo(name) {
     override fun isDealer() = true
 
     override fun getBetAmount() = 0

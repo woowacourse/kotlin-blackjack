@@ -3,13 +3,15 @@ package blackjack.model
 sealed class Participant(private var state: ParticipantState) {
     fun getState() = state
 
-    fun getName() = state.getInfo().name
+    fun getName() = state.getName()
 
-    fun getCards() = state.getHand().getCards()
+    fun getCards() = state.getCards()
 
-    fun getCardsSum() = state.getHand().calculateCardsSum()
+    fun getCardsSum() = state.getCardsSum()
 
     fun calculateGameOutcomeAgainst(opponent: Participant): GameOutcome = state.calculateGameOutcome(opponent.getState())
+
+    fun getBetAmount() = state.getBetAmount()
 
     protected fun drawCard(card: Card) {
         state = state.drawCard(card)
@@ -35,7 +37,7 @@ class Dealer(state: ParticipantState) :
     }
 
     override fun calculateProfitAgainst(opponent: Participant) =
-        opponent.getState().getInfo().getBetAmount() * (calculateGameOutcomeAgainst(opponent).payoutMultiplier)
+        -(opponent.getBetAmount() * (opponent.calculateGameOutcomeAgainst(this).payoutMultiplier))
 
     companion object {
         private const val THRESHOLD_DRAW_FOR_DEALER = 16
@@ -54,6 +56,5 @@ class Player(state: ParticipantState) : Participant(state) {
         }
     }
 
-    override fun calculateProfitAgainst(opponent: Participant) =
-        getState().getInfo().getBetAmount() * (calculateGameOutcomeAgainst(opponent).payoutMultiplier)
+    override fun calculateProfitAgainst(opponent: Participant) = getBetAmount() * (calculateGameOutcomeAgainst(opponent).payoutMultiplier)
 }
