@@ -1,11 +1,13 @@
 package view
 
 import model.Hand
+import model.PlayersResult
 import model.card.Card
 import model.card.Denomination
 import model.card.Suit
 import model.human.Dealer
 import model.human.Human
+import model.human.HumanInfo
 import model.human.Players
 
 object OutputView {
@@ -73,16 +75,16 @@ object OutputView {
 
     fun showTotalResult(
         dealer: Dealer,
-        players: Players,
+        playersResult: PlayersResult,
     ) {
-        showMoneyResult(dealer)
-        players.players.forEach { player ->
-            showMoneyResult(player)
+        showMoneyResult(dealer.humanInfo)
+        playersResult.humanInfoList.forEach { humanInfo ->
+            showMoneyResult(humanInfo)
         }
     }
 
-    private fun showMoneyResult(human: Human) {
-        println(String.format("%s: %d", human.getName(), human.getMoneyAmount()))
+    private fun showMoneyResult(humanInfo: HumanInfo) {
+        println(String.format("%s: %d", humanInfo.getName(), humanInfo.getMoneyAmount()))
     }
 
     private fun denominationToString(denomination: Denomination): String {
