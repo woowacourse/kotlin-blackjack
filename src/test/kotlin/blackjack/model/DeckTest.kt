@@ -19,10 +19,11 @@ class DeckTest {
     fun `카드 뭉치에 충분한 카드가 없을 경우 Deck이 모자라다는 예외를 내보낸다`() {
         val deck = Deck(listOf(Card(CardNumber.Ace, Suit.Spade)))
         val player = Player("cheolsoo")
-        assertThrows<NoSuchElementException> {
+        val actual = assertThrows<NoSuchElementException> {
             player.pickCard(deck)
             player.pickCard(deck)
-        }
+        }.message
+        assertThat(actual).isEqualTo("덱을 모두 사용했습니다.")
     }
 
     private fun Participant.pickCard(deck: Deck) {
