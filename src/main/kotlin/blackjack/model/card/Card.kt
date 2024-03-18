@@ -1,6 +1,6 @@
 package blackjack.model.card
 
-data class Card private constructor(val denomination: Denomination, val suite: Suite) {
+class Card private constructor(val denomination: Denomination, val suite: Suite) {
     fun getScore(): Int {
         return denomination.score
     }
