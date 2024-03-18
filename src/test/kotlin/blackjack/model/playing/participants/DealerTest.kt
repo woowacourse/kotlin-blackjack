@@ -20,8 +20,8 @@ class DealerTest {
                 HEART_JACK,
                 SPADE_ACE,
             )
-
-        val actualState = cardHand.getDealerState()
+        val dealer = Dealer(cardHand)
+        val actualState = cardHand.getState(dealer)
         assertThat(actualState).isEqualTo(CardHandState.BLACKJACK)
     }
 
@@ -32,8 +32,8 @@ class DealerTest {
                 HEART_SEVEN,
                 SPADE_SIX,
             )
-
-        val actualState = cardHand.getDealerState()
+        val dealer = Dealer(cardHand)
+        val actualState = cardHand.getState(dealer)
         assertThat(actualState).isEqualTo(CardHandState.HIT)
     }
 
@@ -45,8 +45,8 @@ class DealerTest {
                 SPADE_SIX,
                 HEART_FIVE,
             )
-
-        val actualState = cardHand.getDealerState()
+        val dealer = Dealer(cardHand)
+        val actualState = cardHand.getState(dealer)
         assertThat(actualState).isEqualTo(CardHandState.STAY)
     }
 
@@ -58,8 +58,8 @@ class DealerTest {
                 SPADE_SIX,
                 HEART_TEN,
             )
-
-        val actualState = cardHand.getDealerState()
+        val dealer = Dealer(cardHand)
+        val actualState = cardHand.getState(dealer)
         assertThat(actualState).isEqualTo(CardHandState.STAY)
     }
 
@@ -72,8 +72,8 @@ class DealerTest {
                 HEART_SEVEN,
                 DIAMOND_EIGHT,
             )
-
-        val actualState = cardHand.getDealerState()
+        val dealer = Dealer(cardHand)
+        val actualState = cardHand.getState(dealer)
         assertThat(actualState).isEqualTo(CardHandState.BUST)
     }
 }

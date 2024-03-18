@@ -3,7 +3,6 @@ package blackjack.model.playing.participants
 import blackjack.model.card.Card
 import blackjack.model.card.CardDeck
 import blackjack.model.playing.cardhand.CardHand
-import blackjack.model.playing.cardhand.CardHandState
 import blackjack.model.playing.participants.player.PlayerName
 import blackjack.model.winning.Betting
 import blackjack.model.winning.WinningResultStatus
@@ -39,15 +38,13 @@ abstract class Role(open val name: PlayerName, open val cardHand: CardHand, open
             WinningResultStatus.PUSH -> PUSH_MULTIPLIER
             WinningResultStatus.DEFEAT -> betting.amount * DEFEAT_MULTIPLIER
             WinningResultStatus.VICTORY ->
-                if (isBlackjack()) {
+                if (cardHand.isBlackjack(this)) {
                     betting.amount * BLACK_JACK_MULTIPLIER
                 } else {
                     betting.amount * VICTORY_MULTIPLIER
                 }
         }
     }
-
-    private fun isBlackjack() = cardHand.getPlayerState() == CardHandState.BLACKJACK
 
     companion object {
         private const val INITIAL_CARDS_COUNT = 2

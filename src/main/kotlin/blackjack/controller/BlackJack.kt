@@ -5,6 +5,7 @@ import blackjack.model.card.RandomDeck
 import blackjack.model.playing.cardhand.CardHand
 import blackjack.model.playing.participants.Dealer
 import blackjack.model.playing.participants.Participants
+import blackjack.model.playing.participants.Role
 import blackjack.model.playing.participants.player.Player
 import blackjack.model.playing.participants.player.PlayerName
 import blackjack.model.playing.participants.player.Players
@@ -84,25 +85,41 @@ class BlackJack(
         player: Player,
         cardDeck: CardDeck,
     ) {
-        while (player.canDraw() && askDraw(player)) {
+        do {
+            processPlayerDraw(player, cardDeck)
+        } while (canDraw(player))
+    }
+
+    private fun processPlayerDraw(
+        player: Player,
+        cardDeck: CardDeck,
+    ) {
+        if (askDraw(player)) {
             val newCard = cardDeck.draw()
             player.draw(newCard)
             outputView.printPlayerCardHand(player)
         }
     }
 
-    private fun askDraw(player: Player) = retryUntilSuccess { inputView.readIsHit(player) }
+    private fun askDraw(player: Player): Boolean {
+        retryUntilSuccess {
+            player.cardHand.hitState = inputView.readIsHit(player)
+        }
+        return player.cardHand.hitState
+    }
 
     private fun runDealerPhase(
         dealer: Dealer,
         cardDeck: CardDeck,
     ) {
-        if (dealer.canDraw()) {
+        if (canDraw(dealer)) {
             outputView.printDealerHit()
             val newCard = cardDeck.draw()
             dealer.draw(newCard)
         }
     }
+
+    private fun canDraw(role: Role) = role.cardHand.isHit(role)
 
     private fun <T> retryUntilSuccess(action: () -> T): T =
         runCatching {
