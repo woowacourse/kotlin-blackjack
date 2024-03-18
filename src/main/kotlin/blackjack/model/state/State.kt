@@ -10,11 +10,9 @@ sealed interface State {
     val hand: Hand
     val profit: Profit
 
-    fun decideWinner(opponent: BaseHolder): GameResult
+    fun getCard(card: Card): State
 
     fun hitOrStay(isHit: Boolean): State
-
-    fun getCard(card: Card): State
 
     fun updateState(totalPoint: Int): State
 
