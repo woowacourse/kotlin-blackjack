@@ -13,7 +13,7 @@ import view.InputView
 import view.OutputView
 
 class GameController(private val deck: Deck) {
-    val blackjackGame = BlackjackGame(deck)
+    private val blackjackGame = BlackjackGame(deck)
 
     fun start() {
         val dealer = Dealer(Hand())
@@ -37,7 +37,7 @@ class GameController(private val deck: Deck) {
     private fun setBet(players: Players) {
         return ExceptionHandler.handleInputValue {
             players.players.forEach {
-                it.humanInfo.changeMoney(readBettingAmount(it))
+                it.humanInfo.setMoney(readBettingAmount(it))
             }
         }
     }
@@ -64,7 +64,14 @@ class GameController(private val deck: Deck) {
     }
 
     private fun playOfOnePlayer(player: Player) {
-        while (blackjackGame.playByAnswer(readAnswer(player.humanInfo.humanName), player, OutputView::showPlayerHand));
+        if(player.isHittable()) {
+            while (blackjackGame.playByAnswer(
+                    readAnswer(player.humanInfo.humanName),
+                    player,
+                    OutputView::showPlayerHand
+                )
+            );
+        }
     }
 
     private fun printDealerCardDraw(dealer: Dealer) {
@@ -86,8 +93,8 @@ class GameController(private val deck: Deck) {
         OutputView.showDealerHandWithResult(dealer)
         OutputView.showPlayersHandWithResult(players)
 
-        blackjackGame.judgeWinningResult(dealer = dealer, players = players)
         OutputView.showResultHeader()
-        OutputView.showTotalResult(dealer = dealer, players = players)
+        val gameResult = blackjackGame.judgeWinningResult(dealer = dealer, players = players)
+        OutputView.showTotalResult(dealer = dealer, gameResult)
     }
 }

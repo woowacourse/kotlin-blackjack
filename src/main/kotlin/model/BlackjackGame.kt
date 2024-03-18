@@ -55,7 +55,6 @@ class BlackjackGame(private val deck: Deck) {
                     player.hand.add(deck.pop())
                     player.isHittable()
                 }
-
                 Answer.NO -> false
             }
         onDone(player)
@@ -65,9 +64,11 @@ class BlackjackGame(private val deck: Deck) {
     fun judgeWinningResult(
         dealer: Dealer,
         players: Players,
-    ) {
+    ): PlayersResult  {
+        val playersResult = PlayersResult()
         players.players.forEach { player ->
-            //dealer.judge(player)
+            playersResult.add(dealer.judge(player))
         }
+        return playersResult
     }
 }
