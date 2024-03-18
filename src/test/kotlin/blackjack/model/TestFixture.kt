@@ -8,11 +8,19 @@ import blackjack.model.participant.HandCards
 import blackjack.model.participant.Player
 import blackjack.model.participant.PlayerName
 
-fun Card(denomination: String): Card {
-    val denominationValue = denomination.value()
-    requireNotNull(denominationValue) { "유효하지 않은 알파벳 혹은 숫자입니다." }
-    return Card.of(denominationValue, Suite.HEART)
-}
+val HEART_ACE = Card.of(Denomination.ACE, Suite.HEART)
+val HEART_TWO = Card.of(Denomination.TWO, Suite.HEART)
+val HEART_THREE = Card.of(Denomination.THREE, Suite.HEART)
+val HEART_FOUR = Card.of(Denomination.FOUR, Suite.HEART)
+val HEART_FIVE = Card.of(Denomination.FIVE, Suite.HEART)
+val HEART_SIX = Card.of(Denomination.SIX, Suite.HEART)
+val HEART_SEVEN = Card.of(Denomination.SEVEN, Suite.HEART)
+val HEART_EIGHT = Card.of(Denomination.EIGHT, Suite.HEART)
+val HEART_NINE = Card.of(Denomination.NINE, Suite.HEART)
+val HEART_TEN = Card.of(Denomination.TEN, Suite.HEART)
+val HEART_KING = Card.of(Denomination.KING, Suite.HEART)
+val HEART_QUEEN = Card.of(Denomination.QUEEN, Suite.HEART)
+val HEART_JACK = Card.of(Denomination.JACK, Suite.HEART)
 
 fun HandCards(cards: List<Card>): HandCards {
     val handCards = HandCards()

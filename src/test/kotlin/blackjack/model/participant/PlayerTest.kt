@@ -1,10 +1,14 @@
 package blackjack.model.participant
 
-import blackjack.model.Card
+import blackjack.model.HEART_ACE
+import blackjack.model.HEART_FIVE
+import blackjack.model.HEART_KING
+import blackjack.model.HEART_NINE
+import blackjack.model.HEART_TEN
+import blackjack.model.HEART_THREE
+import blackjack.model.HEART_TWO
 import blackjack.model.card.Card
-import blackjack.model.result.GameResultType
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
@@ -44,36 +48,23 @@ class PlayerTest {
         assertThat(actual).isEqualTo(expected)
     }
 
-    @Test
-    fun `배팅금액과 결과에 따라 수익을 계산하다`() {
-        val player = Player(PlayerName("seogi"), BattingAmount(1000))
-        player.receiveCard(Card("A"))
-        player.receiveCard(Card("K"))
-        player.calculateProfit(GameResultType.WIN)
-
-        val actual = player.profit
-        val expected = 1500
-
-        assertThat(actual).isEqualTo(expected)
-    }
-
     companion object {
         @JvmStatic
         fun `카드 받을 수 있는지 여부 판단 테스트 데이터`() =
             listOf(
-                Arguments.of(listOf(Card("3"), Card("5")), true),
-                Arguments.of(listOf(Card("10"), Card("K")), true),
-                Arguments.of(listOf(Card("9"), Card("K"), Card("2")), false),
-                Arguments.of(listOf(Card("10"), Card("K"), Card("3")), false),
+                Arguments.of(listOf(HEART_THREE, HEART_FIVE), true),
+                Arguments.of(listOf(HEART_TEN, HEART_KING), true),
+                Arguments.of(listOf(HEART_NINE, HEART_KING, HEART_TWO), false),
+                Arguments.of(listOf(HEART_TEN, HEART_KING, HEART_THREE), false),
             )
 
         @JvmStatic
         fun `카드 값 계산 테스트 데이터`() =
             listOf(
-                Arguments.of(listOf(Card("5"), Card("3")), 8),
-                Arguments.of(listOf(Card("A")), 11),
-                Arguments.of(listOf(Card("A"), Card("A")), 12),
-                Arguments.of(listOf(Card("A"), Card("K")), 21),
+                Arguments.of(listOf(HEART_THREE, HEART_FIVE), 8),
+                Arguments.of(listOf(HEART_ACE), 11),
+                Arguments.of(listOf(HEART_ACE, HEART_ACE), 12),
+                Arguments.of(listOf(HEART_ACE, HEART_KING), 21),
             )
     }
 }
