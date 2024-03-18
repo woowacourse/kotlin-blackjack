@@ -1,12 +1,9 @@
 package blackjack.model.playing.participants
 
 import blackjack.model.card.CardDeck
-import blackjack.model.playing.participants.player.Player
-import blackjack.model.playing.participants.player.PlayerName
 import blackjack.model.playing.participants.player.Players
 import blackjack.model.winning.DealerWinning
 import blackjack.model.winning.FinalWinning
-import blackjack.model.winning.PlayersWinning
 import blackjack.model.winning.WinningResultStatus
 
 data class Participants(val dealer: Dealer, val players: Players) {
@@ -21,33 +18,6 @@ data class Participants(val dealer: Dealer, val players: Players) {
         val playersWinning = players.judgePlayersWinning(dealer)
 
         return FinalWinning(dealerWinning, playersWinning)
-    }
-
-    fun getProfit(playersWinning: PlayersWinning): Map<PlayerName, Double> {
-        val profit = mutableMapOf<PlayerName, Double>()
-        var dealerProfit = 0.0
-
-        players.players.forEach { player ->
-            val playerProfit = calculatePlayerProfit(playersWinning, player, profit)
-            dealerProfit -= playerProfit
-        }
-        profit[dealer.name] = dealerProfit
-        return profit
-    }
-
-    private fun calculatePlayerProfit(
-        playersWinning: PlayersWinning,
-        player: Player,
-        profit: MutableMap<PlayerName, Double>,
-    ): Double {
-        var playerProfit = 0.0
-        playersWinning.result.forEach { (playerName, winningResult) ->
-            if (player.name == playerName) {
-                playerProfit = player.calculateProfit(winningResult)
-            }
-        }
-        profit[player.name] = playerProfit
-        return playerProfit
     }
 
     private fun getVictoryCount(dealerResult: Map<WinningResultStatus, Int>): Int =

@@ -97,10 +97,11 @@ class OutputView {
 
     fun printProfit(
         participants: Participants,
-        playersWinning: PlayersWinning,
+        finalWinning: FinalWinning,
     ) {
-        val profit = participants.getProfit(playersWinning)
-        val dealerName = participants.dealer.name
+        val dealer = participants.dealer
+        val dealerName = dealer.name
+        val profit = finalWinning.getProfit(dealer, participants.players)
 
         println("## 최종 수익")
         println("${dealerName.name}: ${profit[dealerName]}")

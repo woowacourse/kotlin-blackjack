@@ -61,7 +61,7 @@ class BlackJack(
 
         outputView.printGameResult(participants)
         outputView.printFinalWinning(finalWinning)
-        outputView.printProfit(participants, finalWinning.playerWinning)
+        outputView.printProfit(participants, finalWinning)
     }
 
     private fun initPlayers(): Players =
