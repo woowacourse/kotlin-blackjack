@@ -1,69 +1,83 @@
 package model.human
 
+import model.GameResult
 import model.Hand
-import model.ResultType
 import model.card.Deck
 
-class Dealer(hand: Hand, override val humanInfo: HumanInfo = HumanInfo("딜러")) : Human(hand, humanInfo) {
-    override fun isPossible(): Boolean = hand.getPoint().isLessOrEqualTo(16)
+class Dealer(hand: Hand, override val humanInfo: HumanInfo = HumanInfo(DEFAULT_NAME)) : Human(hand, humanInfo) {
+    override fun isHittable(): Boolean = hand.getPoint().isLessThan(HIT_CONDITION)
 
     fun play(deck: Deck) {
-        while (hand.getPoint().amount < 17) {
-            hand.draw(deck.pop())
+        while (hand.getPoint().isLessThan(HIT_CONDITION)) {
+            hand.add(deck.pop())
         }
     }
 
-    fun getCountOfAdditionalDraw(): Int = hand.cards.size - 2
+    fun getCountOfAdditionalDraw(): Int = hand.cards.size - DEFAULT_CARD_COUNT
 
-    private fun getCompareResult(other: Human): ResultType {
+    private fun getCompareResult(other: Human): GameResult {
         return when {
             isBusted() -> getResultWhenBusted(other)
             isBlackJack() -> getResultWhenBlackjack(other)
             !isBusted() -> getResultWhenNotBusted(other)
-            else -> throw IllegalStateException("정의되지 않은 상태입니다.")
+            else -> throw IllegalStateException(ERROR_UNDEFINED_STATE)
         }
     }
 
-    private fun getResultWhenBusted(other: Human): ResultType {
+    private fun getResultWhenBusted(other: Human): GameResult {
         return when {
-            other.hand.isNotBusted() -> ResultType.LOSE
-            else -> ResultType.WIN
+            other.hand.isNotBusted() -> GameResult.LOSE
+            else -> GameResult.WIN
         }
     }
 
-    private fun getResultWhenBlackjack(other: Human): ResultType {
+    private fun getResultWhenBlackjack(other: Human): GameResult {
         return when {
-            other.isBlackJack() -> ResultType.DRAW
-            else -> ResultType.WIN
+            other.isBlackJack() -> GameResult.DRAW
+            else -> GameResult.WIN
         }
     }
 
-    private fun getResultWhenNotBusted(other: Human): ResultType {
+    private fun getResultWhenNotBusted(other: Human): GameResult {
         return when {
-            other.isBusted() -> ResultType.WIN
-            !other.isBusted() && (this.hand.getPoint() > other.hand.getPoint()) -> ResultType.WIN
-            !other.isBusted() && (this.hand.getPoint() == other.hand.getPoint()) -> ResultType.DRAW
-            else -> ResultType.LOSE
+            other.isBusted() -> GameResult.WIN
+            !other.isBusted() && (this.hand.getPoint() > other.hand.getPoint()) -> GameResult.WIN
+            !other.isBusted() && (this.hand.getPoint() == other.hand.getPoint()) -> GameResult.DRAW
+            else -> GameResult.LOSE
         }
     }
 
-    fun judge(other: Human) {
-        when (getCompareResult(other)) {
-            ResultType.WIN -> {
-                humanInfo.applyResultToMoney(other.humanInfo, -1.0)
+    fun judge(player: Player) {
+        when (getCompareResult(player)) {
+            GameResult.WIN -> {
+                humanInfo.applyResultToMoney(player.humanInfo, PROFIT_RATE_LOSE)
             }
 
-            ResultType.LOSE -> {
-                if (other.isBlackJack()) {
-                    humanInfo.applyResultToMoney(other.humanInfo, 1.5)
+            GameResult.LOSE -> {
+                if (player.isBlackJack()) {
+                    humanInfo.applyResultToMoney(player.humanInfo, PROFIT_RATE_BLACKJACK)
                 } else {
-                    humanInfo.applyResultToMoney(other.humanInfo, 1.0)
+                    humanInfo.applyResultToMoney(player.humanInfo, PROFIT_RATE_WIN)
                 }
             }
 
-            ResultType.DRAW -> {
-                humanInfo.applyResultToMoney(other.humanInfo, 0.0)
+            GameResult.DRAW -> {
+                humanInfo.applyResultToMoney(player.humanInfo, PROFIT_RATE_DRAW)
             }
         }
+    }
+
+    companion object {
+        private const val HIT_CONDITION = 17
+        private const val DEFAULT_CARD_COUNT = 2
+
+        private const val PROFIT_RATE_LOSE = -1.0
+        private const val PROFIT_RATE_DRAW = 0.0
+        private const val PROFIT_RATE_WIN = 1.0
+        private const val PROFIT_RATE_BLACKJACK = 1.5
+
+        private const val DEFAULT_NAME = "딜러"
+
+        private const val ERROR_UNDEFINED_STATE = "정의되지 않은 상태입니다."
     }
 }

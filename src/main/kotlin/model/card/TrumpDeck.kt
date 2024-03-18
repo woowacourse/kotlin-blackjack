@@ -1,14 +1,12 @@
 package model.card
 
 object TrumpDeck : Deck {
-    private const val MIN_VALUE = 0
-    private const val MAX_VALUE = 51
-
     private val cards = mutableListOf<Card>()
+    private const val FIRST_CARD_POSITION = 0
 
     override fun pop(): Card {
         if (cards.isEmpty()) shuffle()
-        return cards.removeAt(0)
+        return cards.removeAt(FIRST_CARD_POSITION)
     }
 
     private fun shuffle() {

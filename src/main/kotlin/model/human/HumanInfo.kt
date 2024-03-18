@@ -2,8 +2,8 @@ package model.human
 
 import model.Money
 
-class HumanInfo(val humanName: HumanName, var money: Money = Money(0)) {
-    constructor(humanName: String) : this(HumanName(humanName), Money(0))
+class HumanInfo(val humanName: HumanName, val money: Money = Money(DEFAULT_MONEY_AMOUNT)) {
+    constructor(humanName: String) : this(HumanName(humanName), Money(DEFAULT_MONEY_AMOUNT))
 
     fun changeMoney(amount: Int) {
         money.changeAmount(amount)
@@ -17,9 +17,6 @@ class HumanInfo(val humanName: HumanName, var money: Money = Money(0)) {
     }
 
     companion object {
-        fun ofPrimitive(
-            name: String,
-            amount: Int,
-        ): HumanInfo = HumanInfo(HumanName(name), Money(amount))
+        private const val DEFAULT_MONEY_AMOUNT = 0
     }
 }

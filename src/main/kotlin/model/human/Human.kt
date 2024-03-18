@@ -15,5 +15,10 @@ abstract class Human(val hand: Hand, open val humanInfo: HumanInfo) {
 
     fun isBusted(): Boolean = !this.hand.isNotBusted()
 
-    abstract fun isPossible(): Boolean
+    abstract fun isHittable(): Boolean
+
+    companion object {
+        private const val DEFAULT_CARD_COUNT = 2
+        private const val MAX_POINT = 21
+    }
 }
