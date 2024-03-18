@@ -5,16 +5,16 @@ data class Money(var amount: Int) {
         require(amount >= 0) { ERROR_INVALID_AMOUNT }
     }
 
-    fun applyProfitRate(
-        other: Money,
-        rate: Double,
-    ) {
-        this.amount -= (other.amount * rate).toInt()
-        other.amount = (other.amount * rate).toInt()
-    }
-
     fun changeAmount(newAmount: Int) {
         this.amount = newAmount
+    }
+
+    fun add(other: Money) {
+        amount += other.amount
+    }
+
+    fun add(other: Int) {
+        amount += other
     }
 
     companion object {
