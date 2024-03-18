@@ -18,6 +18,10 @@ sealed class Participant(val participantInformation: ParticipantInformation, val
         return gameInformation.state is GameState.Running
     }
 
+    fun isBust(): Boolean {
+        return gameInformation.state == GameState.Finished.BUST
+    }
+
     class Player(val playerInformation: PlayerInformation, gameInformation: GameInformation = GameInformation()) :
         Participant(playerInformation, gameInformation) {
         fun judgeDrawOrNot(
