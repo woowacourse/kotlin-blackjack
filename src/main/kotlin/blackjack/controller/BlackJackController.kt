@@ -39,8 +39,8 @@ object BlackJackController {
         players.forEach { player ->
             player.judgeDrawOrNot(
                 cardDeck,
-                { ProgressInputView.inputDrawDecision(player.participantInformation.name).judgeDecision() },
-                { ProgressOutputView.outputParticipantCard(player) },
+                readDecision = { ProgressInputView.inputDrawDecision(player.participantInformation.name).judgeDecision() },
+                output = { ProgressOutputView.outputParticipantCard(player) },
             )
         }
     }
