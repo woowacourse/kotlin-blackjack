@@ -80,7 +80,7 @@ class OutputView {
 
     fun printFinalWinning(finalWinning: FinalWinning) {
         printFinalDealerResult(finalWinning.dealerWinning)
-        printFinalPlayersResult(finalWinning.playerWinning)
+        printFinalPlayersResult(finalWinning.playersWinning)
     }
 
     private fun printFinalDealerResult(dealerWinning: DealerWinning) {

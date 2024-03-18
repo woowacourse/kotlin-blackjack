@@ -98,7 +98,7 @@ class ParticipantsTest {
                 ),
             )
         val winningResult = defaultParticipants.getFinalWinning()
-        assertThat(winningResult.playerWinning).isEqualTo(result)
+        assertThat(winningResult.playersWinning).isEqualTo(result)
     }
 
     @Test

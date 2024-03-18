@@ -5,7 +5,7 @@ import blackjack.model.playing.participants.player.Player
 import blackjack.model.playing.participants.player.PlayerName
 import blackjack.model.playing.participants.player.Players
 
-class FinalWinning(val dealerWinning: DealerWinning, val playerWinning: PlayersWinning) {
+class FinalWinning(val dealerWinning: DealerWinning, val playersWinning: PlayersWinning) {
     fun getProfit(
         dealer: Dealer,
         players: Players,
@@ -24,7 +24,7 @@ class FinalWinning(val dealerWinning: DealerWinning, val playerWinning: PlayersW
 
     private fun calculatePlayerProfit(player: Player): Double {
         var playerProfit = 0.0
-        playerWinning.result.forEach { (playerName, winningResult) ->
+        playersWinning.result.forEach { (playerName, winningResult) ->
             if (player.name == playerName) {
                 playerProfit = player.calculateProfit(winningResult)
             }
