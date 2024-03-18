@@ -26,7 +26,7 @@ object ProgressOutputView {
         println(
             MESSAGE_PARTICIPANT_CARD_INFORMATION.format(
                 participant.participantInformation.name,
-                participant.gameInformation.hand.cards.joinToString(separator = ", "),
+                participant.hand.cards.joinToString(separator = ", "),
             ),
         )
     }
@@ -39,7 +39,7 @@ object ProgressOutputView {
         println(
             MESSAGE_DEALER_CARD_INFORMATION.format(
                 dealer.participantInformation.name,
-                dealer.gameInformation.hand.cards.elementAt(0),
+                dealer.hand.cards.elementAt(0),
             ),
         )
     }

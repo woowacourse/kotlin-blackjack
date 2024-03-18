@@ -24,7 +24,7 @@ class DealerTest {
     fun `카드 한장 뽑아서 딜러의 손패에 추가하기`() {
         dealer.draw(cardDeck.pickCard())
 
-        assertThat(dealer.gameInformation.hand.cards.size).isEqualTo(1)
+        assertThat(dealer.hand.cards.size).isEqualTo(1)
     }
 
     @Test
@@ -33,6 +33,6 @@ class DealerTest {
         dealer.draw(Card(CardNumber.THREE, CardSymbol.SPADE))
         dealer.judgeDrawOrNot(cardDeck) { ProgressOutputView.outputDealerDraw(dealer) }
 
-        assertThat(dealer.gameInformation.hand.cards.size >= 3).isTrue
+        assertThat(dealer.hand.cards.size >= 3).isTrue
     }
 }

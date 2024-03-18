@@ -15,7 +15,7 @@ class Revenue(amount: Double = DEFAULT_REVENUE_AMOUNT) {
         val revenueAmount =
             when (result) {
                 Result.WIN -> {
-                    if (player.gameInformation.state == GameState.Finished.BLACKJACK) {
+                    if (player.state == GameState.Finished.BLACKJACK) {
                         bettingAmount * BLACKJACK_REVENUE_MULTIPLY
                     } else {
                         bettingAmount * WIN_REVENUE_MULTIPLY

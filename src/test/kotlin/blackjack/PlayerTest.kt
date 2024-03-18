@@ -28,7 +28,7 @@ class PlayerTest {
     fun `카드 한장 뽑기`() {
         player.draw(cardDeck.pickCard())
 
-        assertThat(player.gameInformation.hand.cards.size).isEqualTo(1)
+        assertThat(player.hand.cards.size).isEqualTo(1)
     }
 
     @Test
@@ -38,8 +38,8 @@ class PlayerTest {
 
         player.judgeDrawOrNot(cardDeck, { true }) { ProgressOutputView.outputParticipantCard(player) }
 
-        assertThat(player.gameInformation.hand.cards.size >= 3).isTrue
-        assertThat(player.gameInformation.state != GameState.Running.HIT).isTrue
+        assertThat(player.hand.cards.size >= 3).isTrue
+        assertThat(player.state != GameState.Running.HIT).isTrue
     }
 
     @Test
@@ -49,7 +49,7 @@ class PlayerTest {
 
         player.judgeDrawOrNot(cardDeck, { false }) { ProgressOutputView.outputParticipantCard(player) }
 
-        assertThat(player.gameInformation.hand.cards.size == 2).isTrue
-        assertThat(player.gameInformation.state == GameState.Finished.STAY).isTrue
+        assertThat(player.hand.cards.size == 2).isTrue
+        assertThat(player.state == GameState.Finished.STAY).isTrue
     }
 }

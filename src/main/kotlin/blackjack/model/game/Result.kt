@@ -15,8 +15,8 @@ enum class Result {
         ): Result {
             if (player.isBust()) return DEFEAT
             if (dealer.isBust()) return WIN
-            val playerScore = Score(player.gameInformation.hand.cards).point
-            val dealerScore = Score(dealer.gameInformation.hand.cards).point
+            val playerScore = Score(player.hand.cards).point
+            val dealerScore = Score(dealer.hand.cards).point
             return when {
                 playerScore > dealerScore -> WIN
                 playerScore < dealerScore -> DEFEAT

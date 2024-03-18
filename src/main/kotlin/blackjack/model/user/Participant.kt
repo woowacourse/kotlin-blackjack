@@ -2,28 +2,39 @@ package blackjack.model.user
 
 import blackjack.model.card.Card
 import blackjack.model.card.CardDeck
-import blackjack.model.game.GameInformation
 import blackjack.model.game.GameState
 import blackjack.model.user.ParticipantInformation.DealerInformation
 import blackjack.model.user.ParticipantInformation.PlayerInformation
 
-sealed class Participant(val participantInformation: ParticipantInformation, val gameInformation: GameInformation) {
+sealed class Participant(val participantInformation: ParticipantInformation, val hand: Hand) {
+    private var _state: GameState = GameState.Running.HIT
+    val state: GameState
+        get() = _state
+
     fun draw(card: Card) {
         if (isRunning()) {
-            gameInformation.drawCard(card)
+            hand.drawCard(card)
+            _state = state.judgeState(hand)
         }
     }
 
+    fun changeStateToStay() {
+        _state = GameState.Finished.STAY
+    }
+
     fun isRunning(): Boolean {
-        return gameInformation.state is GameState.Running
+        return state is GameState.Running
     }
 
     fun isBust(): Boolean {
-        return gameInformation.state == GameState.Finished.BUST
+        return state == GameState.Finished.BUST
     }
 
-    class Player(val playerInformation: PlayerInformation, gameInformation: GameInformation = GameInformation()) :
-        Participant(playerInformation, gameInformation) {
+    class Player(
+        val playerInformation: PlayerInformation,
+        hand: Hand = Hand(),
+    ) :
+        Participant(playerInformation, hand) {
         fun judgeDrawOrNot(
             cardDeck: CardDeck,
             readDecision: () -> Boolean,
@@ -34,7 +45,7 @@ sealed class Participant(val participantInformation: ParticipantInformation, val
                     draw(cardDeck.pickCard())
                     output()
                 } else {
-                    gameInformation.changeStateToStay()
+                    changeStateToStay()
                 }
             }
         }
@@ -42,8 +53,8 @@ sealed class Participant(val participantInformation: ParticipantInformation, val
 
     class Dealer(
         dealerInformation: ParticipantInformation = DealerInformation(),
-        gameInformation: GameInformation = GameInformation(),
-    ) : Participant(dealerInformation, gameInformation) {
+        hand: Hand = Hand(),
+    ) : Participant(dealerInformation, hand) {
         fun initialCardDealing(
             players: List<Player>,
             cardDeck: CardDeck,
@@ -60,12 +71,12 @@ sealed class Participant(val participantInformation: ParticipantInformation, val
             cardDeck: CardDeck,
             output: () -> Unit,
         ) {
-            while (gameInformation.hand.score.point <= ADDITIONAL_DRAW_CRITERIA) {
+            while (hand.score.point <= ADDITIONAL_DRAW_CRITERIA) {
                 draw(cardDeck.pickCard())
                 output()
             }
-            if (gameInformation.hand.score.point < BLACKJACK_SCORE) {
-                gameInformation.changeStateToStay()
+            if (hand.score.point < BLACKJACK_SCORE) {
+                changeStateToStay()
             }
         }
 
