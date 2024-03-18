@@ -34,6 +34,7 @@ class CardHand(hand: List<Card>) {
             score > BLACK_JACK_SCORE -> CardHandState.BUST
             score == BLACK_JACK_SCORE && hand.size == BLACK_JACK_CARD_HAND_SIZE -> CardHandState.BLACKJACK
             role.canDraw() && score < BLACK_JACK_SCORE -> CardHandState.HIT
+            !role.canDraw() -> CardHandState.STAY
             else -> CardHandState.STAY
         }
     }
