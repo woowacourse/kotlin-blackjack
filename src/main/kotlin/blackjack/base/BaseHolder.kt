@@ -34,4 +34,16 @@ abstract class BaseHolder(gameResult: GameResult = GameResult()) {
     fun addResult(newGameResult: GameResult) {
         _gameResult += newGameResult
     }
+
+    fun win() {
+        _gameResult += GameResult().win()
+    }
+
+    fun push() {
+        _gameResult += GameResult().push()
+    }
+
+    fun defeat() {
+        _gameResult += GameResult().defeat()
+    }
 }

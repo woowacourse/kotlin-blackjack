@@ -18,22 +18,22 @@ sealed class Finished(
 
     fun makeOpponentLoser(opponent: BaseHolder): GameResult {
         opponent.setProfitFromOpponent(profit.amount)
-        opponent.addResult(GameResult(defeat = 1))
-        return GameResult(win = 1)
+        opponent.defeat()
+        return GameResult().win()
     }
 
     fun push(opponent: BaseHolder): GameResult {
         profit.giveBackBettingMoney()
         opponent.setProfitFromOpponent(profit.amount)
-        opponent.addResult(GameResult(push = 1))
-        return GameResult(push = 1)
+        opponent.push()
+        return GameResult().push()
     }
 
     fun makeOpponentWinner(opponent: BaseHolder): GameResult {
         profit.lostAllBettingMoney()
         opponent.setProfitFromOpponent(profit.amount)
-        opponent.addResult(GameResult(win = 1))
-        return GameResult(defeat = 1)
+        opponent.win()
+        return GameResult().defeat()
     }
 
     override fun changeProfitByOpponent(opponentProfit: Double) {
