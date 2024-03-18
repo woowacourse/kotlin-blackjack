@@ -28,8 +28,8 @@ class PointCalculatorTest {
 
     @ParameterizedTest
     @CsvSource(
-        value = ["ACE:TEN:21", "ACE:ACE:12"],
-        delimiter = ':',
+        "ACE,TEN,21",
+        "ACE,ACE,12",
     )
     fun `에이스가 있을 때 - 21에 가장 가까운 수 반환`(
         rank: Rank,

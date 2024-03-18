@@ -1,11 +1,18 @@
 package blackjack.model
 
 class Deck(cards: List<Card>) {
-    private val _cards: MutableList<Card> = cards.toMutableList()
-    val cards get() = _cards
+    var cards: List<Card> = cards.toList()
+        private set
 
-    fun pull(): Card {
-        return _cards.removeFirst()
+    constructor(size: Int = DEFAULT_DECK_SIZE) : this(create(size).cards)
+
+    fun pull(refilled: () -> Deck = { create() }): Card {
+        if (cards.isEmpty()) {
+            cards = refilled().cards
+        }
+        val pulledCard = cards[0]
+        cards = cards.subList(1, cards.size)
+        return pulledCard
     }
 
     companion object {

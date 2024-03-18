@@ -27,4 +27,15 @@ class PlayerTest {
         // then
         assertThat(actual).isEqualTo(expect)
     }
+
+    @Test
+    fun `플레이어는 이기면 돈을 받는다`() {
+        // given
+        val player = createPlayer()
+        val expect = Amount(10000)
+        // when
+        player.changeBudget(Amount(10000))
+        // then
+        assertThat(player.profit).isEqualTo(expect)
+    }
 }

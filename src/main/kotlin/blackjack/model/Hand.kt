@@ -6,14 +6,14 @@ class Hand(
     cards: List<Card>,
     private val pointCalculator: PointCalculator = DefaultPointCalculator(),
 ) {
-    var cards: List<Card> = cards
+    var cards: List<Card> = cards.toList()
         private set
 
     init {
         require(cards.size >= MIN_HAND_CARDS_SIZE) { "손패는 $MIN_HAND_CARDS_SIZE 장 이상임" }
     }
 
-    constructor(vararg cards: Card) : this(cards.toMutableList())
+    constructor(vararg cards: Card) : this(cards.toList())
 
     fun add(card: Card) {
         cards = cards.plus(card)

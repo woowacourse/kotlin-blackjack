@@ -10,11 +10,8 @@ import org.junit.jupiter.params.provider.CsvSource
 class DealerTest {
     @ParameterizedTest
     @CsvSource(
-        value = [
-            "SIX:TEN:true",
-            "SEVEN:TEN:false",
-        ],
-        delimiter = ':',
+        "SIX,TEN,true",
+        "SEVEN,TEN,false",
     )
     fun `손패합이 17 미만 이면, hit 할 수 있다`(
         rank: Rank,
@@ -52,6 +49,18 @@ class DealerTest {
         // when
         dealer.hit(addedCard)
         val actual = dealer.hand
+        // then
+        assertThat(actual).isEqualTo(expect)
+    }
+
+    @Test
+    fun `딜러는 게임 시작 시 카드 2장을 받는다`() {
+        // given
+        val dealer = createDealer()
+        val expect = 2
+        // when
+        dealer.setInitialHand(Deck.create())
+        val actual = dealer.hand.cards.size
         // then
         assertThat(actual).isEqualTo(expect)
     }
