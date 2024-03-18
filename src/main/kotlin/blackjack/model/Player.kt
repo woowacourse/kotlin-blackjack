@@ -18,11 +18,11 @@ class Player(name: String, private val betAmount: Long) : Participant(name) {
         return hand.getCardSum() < MAX_SCORE
     }
 
-    override fun judge(participant: Participant): Return {
+    override fun judge(participant: Participant): GameResult {
         return when {
-            this.isBusted() -> Return.LOSE
-            participant.isBusted() -> Return.WIN
-            this.isBlackJack() && !participant.isBlackJack() -> Return.BLACKJACK
+            this.isBusted() -> GameResult.LOSE
+            participant.isBusted() -> GameResult.WIN
+            this.isBlackJack() && !participant.isBlackJack() -> GameResult.BLACKJACK
             else -> super.judge(participant)
         }
     }

@@ -15,11 +15,11 @@ class Dealer(name: String = "딜러") : Participant(name) {
         return hand.getCardSum() < DEALER_HITTABLE_THRESHOLD
     }
 
-    override fun judge(participant: Participant): Return {
+    override fun judge(participant: Participant): GameResult {
         return when {
-            participant.isBusted() -> Return.WIN
-            this.isBusted() -> Return.LOSE
-            participant.isBlackJack() && !this.isBlackJack() -> Return.LOSE_BLACKJACK
+            participant.isBusted() -> GameResult.WIN
+            this.isBusted() -> GameResult.LOSE
+            participant.isBlackJack() && !this.isBlackJack() -> GameResult.LOSE_BLACKJACK
             else -> super.judge(participant)
         }
     }

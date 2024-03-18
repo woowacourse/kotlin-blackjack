@@ -1,6 +1,6 @@
 package blackjack.model
 
-enum class Return(val rate: Double) {
+enum class GameResult(val rate: Double) {
     BLACKJACK(1.5),
     WIN(1.0),
     DRAW(0.0),

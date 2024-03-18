@@ -20,19 +20,19 @@ abstract class Participant(val name: String) {
 
     abstract fun isHittable(): Boolean
 
-    open fun judge(participant: Participant): Return {
+    open fun judge(participant: Participant): GameResult {
         return when {
-            participant.isBlackJack() && this.isBlackJack() -> Return.DRAW
+            participant.isBlackJack() && this.isBlackJack() -> GameResult.DRAW
             else -> compareScore(participant.hand.getCardSum())
         }
     }
 
-    private fun compareScore(compareScore: Int): Return {
+    private fun compareScore(compareScore: Int): GameResult {
         val myCardSum = hand.getCardSum()
         return when {
-            (compareScore < myCardSum) -> Return.WIN
-            (compareScore > myCardSum) -> Return.LOSE
-            else -> Return.DRAW
+            (compareScore < myCardSum) -> GameResult.WIN
+            (compareScore > myCardSum) -> GameResult.LOSE
+            else -> GameResult.DRAW
         }
     }
 
