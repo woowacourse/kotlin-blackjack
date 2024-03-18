@@ -18,25 +18,53 @@ class Judge(
     private fun getSinglePlayerIncome(playerGameInfo: GameInfo): Money {
         val dealerDifference = CRITERIA_NUMBER - dealer.sumOfCards
         val playerDifference = CRITERIA_NUMBER - playerGameInfo.sumOfCards
+        val earningRate = getEarningRate(dealerDifference, playerDifference, playerGameInfo).rate
+        return playerGameInfo.moneyAmount * earningRate
+    }
 
+    private fun getEarningRate(
+        dealerDifference: Int,
+        playerDifference: Int,
+        playerGameInfo: GameInfo,
+    ): EarningRate {
         return when {
-            isPlayerBlackjack(playerGameInfo) && dealerDifference != 0 ->
-                playerGameInfo.moneyAmount * BLACKJACK_BONUS_MULTIPLIER
-            dealerDifference != 0 && playerDifference == 0 -> playerGameInfo.moneyAmount
-            dealerDifference < 0 && playerDifference >= 0 -> playerGameInfo.moneyAmount
-            playerDifference < 0 && dealerDifference >= 0 -> -playerGameInfo.moneyAmount
-            playerDifference < dealerDifference -> playerGameInfo.moneyAmount
-            dealerDifference < playerDifference -> -playerGameInfo.moneyAmount
-            else -> Money(0)
+            isPlayerBurst(playerDifference, dealerDifference) -> EarningRate.BURST
+            isPlayerBlackjack(playerGameInfo, dealerDifference) -> EarningRate.BLACKJACK
+            isPlayerWin(playerDifference, dealerDifference) -> EarningRate.WIN
+            isPlayerLose(playerDifference, dealerDifference) -> EarningRate.LOSE
+            else -> EarningRate.DRAW
         }
     }
 
-    private fun isPlayerBlackjack(playerGameInfo: GameInfo): Boolean =
-        playerGameInfo.cards.take(INITIAL_CARD_SIZE).sumOf { it.value } == CRITERIA_NUMBER
+    private fun isPlayerBurst(
+        playerDifference: Int,
+        dealerDifference: Int,
+    ): Boolean = playerDifference < 0 && dealerDifference >= 0
+
+    private fun isPlayerBlackjack(
+        playerGameInfo: GameInfo,
+        dealerDifference: Int,
+    ): Boolean =
+        playerGameInfo.cards.take(INITIAL_CARD_SIZE).sumOf { it.value } == CRITERIA_NUMBER &&
+            dealerDifference != 0
+
+    private fun isPlayerWin(
+        playerDifference: Int,
+        dealerDifference: Int,
+    ): Boolean =
+        dealerDifference != 0 && playerDifference == 0 ||
+            dealerDifference < 0 && playerDifference >= 0 ||
+            playerDifference < dealerDifference
+
+    private fun isPlayerLose(
+        playerDifference: Int,
+        dealerDifference: Int,
+    ): Boolean =
+        playerDifference < 0 && dealerDifference >= 0 ||
+            dealerDifference < playerDifference
 
     companion object {
         private const val INITIAL_CARD_SIZE = 2
         private const val CRITERIA_NUMBER = 21
-        private const val BLACKJACK_BONUS_MULTIPLIER = 1.5
     }
 }
