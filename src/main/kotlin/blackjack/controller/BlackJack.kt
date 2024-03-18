@@ -112,7 +112,7 @@ class BlackJack(
         dealer: Dealer,
         cardDeck: CardDeck,
     ) {
-        if (canDraw(dealer)) {
+        while (canDraw(dealer)) {
             outputView.printDealerHit()
             val newCard = cardDeck.draw()
             dealer.draw(newCard)
