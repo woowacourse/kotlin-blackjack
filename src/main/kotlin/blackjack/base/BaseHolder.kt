@@ -32,17 +32,17 @@ abstract class BaseHolder(gameResult: GameResult = GameResult()) {
     }
 
     fun win(opponentProfit: Double) {
-        _gameResult += GameResult().win()
+        _gameResult += GameResult.win()
         setProfitFromOpponent(opponentProfit)
     }
 
     fun push(opponentProfit: Double) {
-        _gameResult += GameResult().push()
+        _gameResult += GameResult.push()
         setProfitFromOpponent(opponentProfit)
     }
 
     fun defeat(opponentProfit: Double) {
-        _gameResult += GameResult().defeat()
+        _gameResult += GameResult.defeat()
         setProfitFromOpponent(opponentProfit)
     }
 
