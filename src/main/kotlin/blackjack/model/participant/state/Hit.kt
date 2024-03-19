@@ -6,7 +6,7 @@ class Hit : Gaming {
         isHit: Boolean,
     ): HandCardState {
         if (isHit) {
-            if (myScore > BLACKJACK_NUMBER) {
+            if (myScore > BUST_CONDITION) {
                 return Bust()
             }
             return Hit()
@@ -16,6 +16,6 @@ class Hit : Gaming {
     }
 
     companion object {
-        private const val BLACKJACK_NUMBER = 21
+        private const val BUST_CONDITION = 21
     }
 }
