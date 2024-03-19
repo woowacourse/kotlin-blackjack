@@ -23,7 +23,7 @@ class HandCards {
     ) {
         state =
             if (isHit) {
-                _cards.addAll(newCards(1))
+                _cards.addAll(newCards(DRAW_CARD_AMOUNT))
                 state.nextTurn(calculateScore(), true)
             } else {
                 state.nextTurn(calculateScore(), false)
@@ -40,5 +40,6 @@ class HandCards {
         private const val ANOTHER_CARD_SCORE = 10
         private const val BLACKJACK_NUMBER = 21
         private const val INIT_CARD_SIZE = 2
+        private const val DRAW_CARD_AMOUNT = 1
     }
 }
