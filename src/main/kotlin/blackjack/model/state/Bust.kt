@@ -15,7 +15,7 @@ class Bust(
     }
 
     override fun decideWinner(opponent: BaseHolder): GameResult {
-        if (opponent is Player && opponent.state is Bust) return makeOpponentLoser(opponent)
-        return makeOpponentWinner(opponent)
+        if (opponent is Player && opponent.state is Bust) return winOverOpponent(opponent)
+        return defeatByOpponent(opponent)
     }
 }

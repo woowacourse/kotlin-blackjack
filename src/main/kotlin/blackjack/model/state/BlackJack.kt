@@ -14,7 +14,7 @@ class BlackJack(
     }
 
     override fun decideWinner(opponent: BaseHolder): GameResult {
-        if (opponent.state is BlackJack) return push(opponent)
-        return makeOpponentLoser(opponent)
+        if (opponent.state is BlackJack) return pushWithOpponent(opponent)
+        return winOverOpponent(opponent)
     }
 }
