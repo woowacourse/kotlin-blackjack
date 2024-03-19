@@ -1,78 +1,129 @@
 package blackjack.controller
 
 import blackjack.model.card.CardDeck
+import blackjack.model.card.RandomDeck
 import blackjack.model.playing.cardhand.CardHand
 import blackjack.model.playing.participants.Dealer
 import blackjack.model.playing.participants.Participants
+import blackjack.model.playing.participants.Role
 import blackjack.model.playing.participants.player.Player
 import blackjack.model.playing.participants.player.PlayerName
 import blackjack.model.playing.participants.player.Players
+import blackjack.model.winning.Betting
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
 class BlackJack(
     private val inputView: InputView,
     private val outputView: OutputView,
-    private val cardDeck: CardDeck,
 ) {
     fun gameStart() {
-        val dealer = Dealer(CardHand())
-        val players = initPlayers()
-
-        val participants = Participants(dealer, players)
-
-        dealInitialCards(participants)
-        runPlayersPhase(players)
-
-        runDealerPhase(dealer)
+        val participants = prepareForGame()
+        val cardDeck = RandomDeck()
+        dealInitialCards(participants, cardDeck)
+        playing(participants, cardDeck)
         showFinalWinning(participants)
     }
 
-    private fun initPlayers(): Players =
-        Players(
-            inputView.readPlayersName()
-                .map { name ->
-                    Player(PlayerName(name), CardHand())
-                },
-        )
+    private fun prepareForGame(): Participants {
+        val dealer = Dealer(CardHand())
+        val players = retryUntilSuccess { initPlayers() }
+        return Participants(dealer, players)
+    }
 
-    private fun dealInitialCards(participants: Participants) {
+    private fun dealInitialCards(
+        participants: Participants,
+        cardDeck: CardDeck,
+    ) {
         outputView.printInitialSetting(participants)
 
         participants.addInitialCards(cardDeck)
         outputView.printInitialCardHands(participants)
     }
 
-    private fun runPlayersPhase(players: Players) {
+    private fun playing(
+        participants: Participants,
+        cardDeck: CardDeck,
+    ) {
+        runPlayersPhase(participants.players, cardDeck)
+        runDealerPhase(participants.dealer, cardDeck)
+    }
+
+    private fun showFinalWinning(participants: Participants) {
+        val finalWinning = participants.getFinalWinning()
+
+        outputView.printGameResult(participants)
+        outputView.printFinalWinning(finalWinning)
+        outputView.printProfit(participants, finalWinning)
+    }
+
+    private fun initPlayers(): Players {
+        val playersName = inputView.readPlayersName()
+        val players =
+            playersName.map { name ->
+                val player = Player(PlayerName(name), CardHand())
+                player.betting = getBettingAmount(player)
+                player
+            }
+        return Players(players)
+    }
+
+    private fun getBettingAmount(player: Player) = Betting(inputView.readBettingAmount(player))
+
+    private fun runPlayersPhase(
+        players: Players,
+        cardDeck: CardDeck,
+    ) {
         players.players.forEach { player ->
-            runPlayerPhase(player)
+            runPlayerPhase(player, cardDeck)
         }
     }
 
-    private fun runPlayerPhase(player: Player) {
-        while (player.canDraw() && askDraw(player)) {
-            player.draw(cardDeck)
+    private fun runPlayerPhase(
+        player: Player,
+        cardDeck: CardDeck,
+    ) {
+        do {
+            processPlayerDraw(player, cardDeck)
+        } while (canDraw(player))
+    }
+
+    private fun processPlayerDraw(
+        player: Player,
+        cardDeck: CardDeck,
+    ) {
+        if (askDraw(player)) {
+            val newCard = cardDeck.draw()
+            player.draw(newCard)
             outputView.printPlayerCardHand(player)
         }
     }
 
-    private fun askDraw(player: Player) = inputView.readIsHit(player)
+    private fun askDraw(player: Player): Boolean {
+        retryUntilSuccess {
+            player.cardHand.hitState = inputView.readIsHit(player)
+        }
+        return player.cardHand.hitState
+    }
 
-    private fun runDealerPhase(dealer: Dealer) {
-        if (dealer.canDraw()) {
+    private fun runDealerPhase(
+        dealer: Dealer,
+        cardDeck: CardDeck,
+    ) {
+        while (canDraw(dealer)) {
             outputView.printDealerHit()
-            dealer.draw(cardDeck)
+            val newCard = cardDeck.draw()
+            dealer.draw(newCard)
         }
     }
 
-    private fun showFinalWinning(participants: Participants) {
-        outputView.printGameResult(participants)
+    private fun canDraw(role: Role) = role.cardHand.isHit(role)
 
-        val finalWinning = participants.getFinalResult()
-        val dealerWinning = finalWinning.dealerWinning
-        val playersWinning = finalWinning.playerWinning
-
-        outputView.printFinalDealerResult(dealerWinning.victory, dealerWinning.defeat, dealerWinning.push)
-        outputView.printFinalPlayersResult(playersWinning)
-    }
+    private fun <T> retryUntilSuccess(action: () -> T): T =
+        runCatching {
+            action()
+        }.getOrElse {
+            outputView.printErrorMessage(it)
+            retryUntilSuccess(action)
+        }
 }

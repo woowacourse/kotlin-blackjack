@@ -1,63 +1,42 @@
 package blackjack.model.playing.participants
 
 import blackjack.model.card.CardDeck
-import blackjack.model.playing.participants.player.PlayerName
 import blackjack.model.playing.participants.player.Players
 import blackjack.model.winning.DealerWinning
-import blackjack.model.winning.PlayerWinning
-import blackjack.model.winning.Winning
+import blackjack.model.winning.FinalWinning
 import blackjack.model.winning.WinningResultStatus
 
 data class Participants(val dealer: Dealer, val players: Players) {
     fun addInitialCards(cardDeck: CardDeck) {
         dealer.addInitialCards(cardDeck)
-        players.players.forEach {
-            it.addInitialCards(cardDeck)
-        }
+        players.addInitialCards(cardDeck)
     }
 
-    fun getFinalResult(): Winning {
-        val dealerWinning = DealerWinning(getVictoryCount(), getDefeatCount(), getPushCount())
-        val playersWinning = judgePlayersResult()
+    fun getFinalWinning(): FinalWinning {
+        val dealerResult = judgeDealerWinning()
+        val dealerWinning = DealerWinning(getVictoryCount(dealerResult), getDefeatCount(dealerResult), getPushCount(dealerResult))
+        val playersWinning = players.judgePlayersWinning(dealer)
 
-        return Winning(dealerWinning, playersWinning)
+        return FinalWinning(dealerWinning, playersWinning)
     }
 
-    private fun getVictoryCount(): Int = getPlayersFinalResult().getOrDefault(WinningResultStatus.VICTORY, 0)
-
-    private fun getDefeatCount(): Int = getPlayersFinalResult().getOrDefault(WinningResultStatus.DEFEAT, 0)
-
-    private fun getPushCount(): Int = getPlayersFinalResult().getOrDefault(WinningResultStatus.PUSH, 0)
-
-    private fun getPlayersFinalResult(): Map<WinningResultStatus, Int> {
-        val playersWinning: PlayerWinning = judgePlayersResult()
-
-        return playersWinning.result.values.groupingBy { it.reverse() }
-            .eachCount()
-    }
-
-    private fun getPlayersScore(): Map<PlayerName, Int> = players.players.associate { it.name to it.cardHand.sum() }
-
-    private fun judgePlayersResult(): PlayerWinning =
-        PlayerWinning(
-            getPlayersScore().mapValues { (_, playerSum) ->
-                judgeGameResult(playerSum)
-            },
+    private fun getVictoryCount(dealerResult: Map<WinningResultStatus, Int>): Int =
+        dealerResult.getOrDefault(
+            WinningResultStatus.VICTORY,
+            0,
         )
 
-    private fun judgeGameResult(playerSum: Int): WinningResultStatus {
-        val dealerSum = dealer.cardHand.sum()
+    private fun getDefeatCount(dealerResult: Map<WinningResultStatus, Int>): Int = dealerResult.getOrDefault(WinningResultStatus.DEFEAT, 0)
 
-        return when {
-            playerSum > BLACK_JACK_SCORE -> WinningResultStatus.DEFEAT
-            dealerSum > BLACK_JACK_SCORE -> WinningResultStatus.VICTORY
-            dealerSum > playerSum -> WinningResultStatus.DEFEAT
-            dealerSum == playerSum -> WinningResultStatus.PUSH
-            else -> WinningResultStatus.VICTORY
+    private fun getPushCount(dealerResult: Map<WinningResultStatus, Int>): Int = dealerResult.getOrDefault(WinningResultStatus.PUSH, 0)
+
+    private fun judgeDealerWinning(): Map<WinningResultStatus, Int> {
+        val dealerWinning = mutableMapOf<WinningResultStatus, Int>().withDefault { 0 }
+
+        players.players.forEach {
+            val winningStatus = dealer.match(it)
+            dealerWinning[winningStatus] = dealerWinning.getValue(winningStatus) + 1
         }
-    }
-
-    companion object {
-        private const val BLACK_JACK_SCORE = 21
+        return dealerWinning
     }
 }

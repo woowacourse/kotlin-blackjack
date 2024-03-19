@@ -1,8 +1,12 @@
 package blackjack.model.playing.participants
 
-import blackjack.model.card.Card
-import blackjack.model.card.CardNumber
-import blackjack.model.card.CardShape
+import blackjack.model.DIAMOND_EIGHT
+import blackjack.model.HEART_FIVE
+import blackjack.model.HEART_JACK
+import blackjack.model.HEART_SEVEN
+import blackjack.model.HEART_TEN
+import blackjack.model.SPADE_ACE
+import blackjack.model.SPADE_SIX
 import blackjack.model.playing.cardhand.CardHand
 import blackjack.model.playing.cardhand.CardHandState
 import org.assertj.core.api.Assertions.assertThat
@@ -13,11 +17,11 @@ class DealerTest {
     fun `딜러의 카드 패에 카드가 2장 있고, 카드 숫자의 합이 21이면 카드 패의 상태는 BLACKJACK 이다`() {
         val cardHand =
             CardHand(
-                Card(CardShape.HEART, CardNumber.JACK),
-                Card(CardShape.SPADE, CardNumber.ACE),
+                HEART_JACK,
+                SPADE_ACE,
             )
-
-        val actualState = cardHand.getDealerState()
+        val dealer = Dealer(cardHand)
+        val actualState = cardHand.getState(dealer)
         assertThat(actualState).isEqualTo(CardHandState.BLACKJACK)
     }
 
@@ -25,11 +29,11 @@ class DealerTest {
     fun `딜러의 카드 패 합이 16 이하라면 카드 패의 상태는 HIT 이다`() {
         val cardHand =
             CardHand(
-                Card(CardShape.HEART, CardNumber.SEVEN),
-                Card(CardShape.SPADE, CardNumber.SIX),
+                HEART_SEVEN,
+                SPADE_SIX,
             )
-
-        val actualState = cardHand.getDealerState()
+        val dealer = Dealer(cardHand)
+        val actualState = cardHand.getState(dealer)
         assertThat(actualState).isEqualTo(CardHandState.HIT)
     }
 
@@ -37,12 +41,12 @@ class DealerTest {
     fun `딜러의 카드 패 합이 17 이상 20 이하 라면 카드 패의 상태는 STAY 이다`() {
         val cardHand =
             CardHand(
-                Card(CardShape.HEART, CardNumber.SEVEN),
-                Card(CardShape.SPADE, CardNumber.SIX),
-                Card(CardShape.DIAMOND, CardNumber.FIVE),
+                HEART_SEVEN,
+                SPADE_SIX,
+                HEART_FIVE,
             )
-
-        val actualState = cardHand.getDealerState()
+        val dealer = Dealer(cardHand)
+        val actualState = cardHand.getState(dealer)
         assertThat(actualState).isEqualTo(CardHandState.STAY)
     }
 
@@ -50,12 +54,12 @@ class DealerTest {
     fun `딜러의 카드 패에 카드가 3장 이상 있고, 카드 숫자의 합이 21이면 카드 패의 상태는 STAY 이다`() {
         val cardHand =
             CardHand(
-                Card(CardShape.HEART, CardNumber.FIVE),
-                Card(CardShape.SPADE, CardNumber.SIX),
-                Card(CardShape.DIAMOND, CardNumber.TEN),
+                HEART_FIVE,
+                SPADE_SIX,
+                HEART_TEN,
             )
-
-        val actualState = cardHand.getDealerState()
+        val dealer = Dealer(cardHand)
+        val actualState = cardHand.getState(dealer)
         assertThat(actualState).isEqualTo(CardHandState.STAY)
     }
 
@@ -63,13 +67,13 @@ class DealerTest {
     fun `카드 패 숫자의 합이 21 초과이면 카드 패의 상태는 BUST 이다`() {
         val cardHand =
             CardHand(
-                Card(CardShape.HEART, CardNumber.FIVE),
-                Card(CardShape.SPADE, CardNumber.SIX),
-                Card(CardShape.DIAMOND, CardNumber.SEVEN),
-                Card(CardShape.DIAMOND, CardNumber.EIGHT),
+                HEART_FIVE,
+                SPADE_SIX,
+                HEART_SEVEN,
+                DIAMOND_EIGHT,
             )
-
-        val actualState = cardHand.getDealerState()
+        val dealer = Dealer(cardHand)
+        val actualState = cardHand.getState(dealer)
         assertThat(actualState).isEqualTo(CardHandState.BUST)
     }
 }

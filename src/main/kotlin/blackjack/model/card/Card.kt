@@ -1,3 +1,3 @@
 package blackjack.model.card
 
-data class Card(val shape: CardShape, val number: CardNumber)
+data class Card(val suit: Suit, val denomination: Denomination)
