@@ -1,37 +1,32 @@
 package blackjack.model.participant
 
-import blackjack.model.deck.Deck
+import blackjack.model.BattingMoney
+import blackjack.model.Result
+import blackjack.model.deck.Card
 
-class Players private constructor(names: Set<String>) {
-    val gamePlayers: List<Player> = names.map { Player(it) }
+class Players(playersInfo: Map<String, BattingMoney>, cards: (Int) -> List<Card>) {
+    val gamePlayers: List<Player>
 
     init {
-        require(names.size in MIN_PLAYER_COUNT..MAX_PLAYER_COUNT) { "${MIN_PLAYER_COUNT}명 이상 ${MAX_PLAYER_COUNT}명 이하의 플레이어만 가능합니다." }
+        require(playersInfo.size in MIN_PLAYER_COUNT..MAX_PLAYER_COUNT) { "${MIN_PLAYER_COUNT}명 이상 ${MAX_PLAYER_COUNT}명 이하의 플레이어만 가능합니다." }
+        gamePlayers =
+            playersInfo.map { (playerName, battingMoney) ->
+                Player.withInitCards(playerName, battingMoney, cards)
+            }
     }
 
-    private fun initPlayersCard(deck: Deck) {
-        gamePlayers.forEach { player ->
-            player.initCards(deck.draw(INIT_CARD_AMOUNT))
+    fun playTurn(
+        cards: (Int) -> List<Card>,
+        isHit: (String) -> Boolean,
+        playResult: (Player) -> Unit,
+    ): List<Result> {
+        return gamePlayers.map { player ->
+            Result(player, player.playTurn(cards, isHit, playResult))
         }
     }
 
     companion object {
         private const val MIN_PLAYER_COUNT = 1
         private const val MAX_PLAYER_COUNT = 6
-        private const val INIT_CARD_AMOUNT = 2
-
-        fun withInitCards(
-            names: List<String>,
-            deck: Deck,
-        ): Players {
-            validateDuplicateNames(names)
-            return Players(names.toSet()).also { it.initPlayersCard(deck) }
-        }
-
-        private fun validateDuplicateNames(numbers: List<String>) {
-            require(numbers.distinct().size == numbers.size) {
-                "중복된 이름은 플레이어로 등록할 수 없습니다."
-            }
-        }
     }
 }

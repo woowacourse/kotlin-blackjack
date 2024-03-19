@@ -2,9 +2,8 @@ package blackjack.model.participant.state
 
 import blackjack.model.BattingMoney
 import blackjack.model.participant.CompetitionResult
-import java.lang.IllegalStateException
 
-class Blackjack() : Finish {
+class Stay : Finish {
     override fun getProfit(
         myScore: Int,
         opponentScore: Int,
@@ -17,10 +16,12 @@ class Blackjack() : Finish {
         myScore: Int,
         opponentScore: Int,
     ): CompetitionResult {
-        return if (opponentScore == myScore) {
-            CompetitionResult.SAME
-        } else {
-            CompetitionResult.BLACKJACK
+        return when {
+            opponentScore > BUST_CONDITION -> CompetitionResult.WIN
+            myScore > opponentScore -> CompetitionResult.WIN
+            myScore < opponentScore -> CompetitionResult.LOSE
+            myScore == opponentScore -> CompetitionResult.SAME
+            else -> throw IllegalArgumentException("잘못된 값이 들어왔습니다.")
         }
     }
 
@@ -29,5 +30,9 @@ class Blackjack() : Finish {
         isHit: Boolean,
     ): HandCardState {
         throw IllegalStateException("더 이상 턴을 진행할 수 없습니다.")
+    }
+
+    companion object {
+        private const val BUST_CONDITION = 21
     }
 }

@@ -1,42 +1,31 @@
 package blackjack.model.participant
 
+import blackjack.model.Result
 import blackjack.model.deck.Card
-import blackjack.model.deck.Deck
-import blackjack.model.deck.HandCards
-import blackjack.model.participant.state.Bust
-import blackjack.model.participant.state.ParticipantState
 
-class Dealer private constructor() : GameParticipant(HandCards()) {
+class Dealer : GameParticipant() {
     fun getFirstCard() = handCards.cards.first()
 
-    override fun add(cards: List<Card>): Boolean =
-        if (handCards.calculateCardScore() < DEALER_HIT_THRESHOLD) {
-            handCards.add(cards)
-            true
-        } else {
-            false
+    fun playTurn(
+        cards: (Int) -> List<Card>,
+        playResult: () -> Unit,
+    ) {
+        while (getScore() < DEALER_HIT_THRESHOLD) {
+            handCards.playTurn(true, cards)
+            playResult.invoke()
         }
+    }
 
-    fun gameResult(players: List<Player>): Map<String, CompetitionResult> =
-        players.associate { player ->
-            val result = competitionResult(player.getState())
-            player.name to result
-        }
-
-    private fun competitionResult(playerState: ParticipantState): CompetitionResult {
-        return when {
-            playerState is Bust -> CompetitionResult.LOSE
-            isBust() -> CompetitionResult.WIN
-            else -> playerState.getResult(getScore())
+    fun getGameResult(playersState: List<Result>): Map<String, Double> {
+        return playersState.associate { (player, finish) ->
+            player.name to finish.getProfit(player.getScore(), handCards.calculateScore(), player.battingMoney).amount
         }
     }
 
     companion object {
-        private const val DEALER_HIT_THRESHOLD = 17
         private const val INIT_CARD_AMOUNT = 2
+        private const val DEALER_HIT_THRESHOLD = 17
 
-        fun withInitCards(deck: Deck): Dealer {
-            return Dealer().also { it.initCards(deck.draw(INIT_CARD_AMOUNT)) }
-        }
+        fun withInitCards(cards: (Int) -> List<Card>): Dealer = Dealer().also { it.initCards(cards(INIT_CARD_AMOUNT)) }
     }
 }
