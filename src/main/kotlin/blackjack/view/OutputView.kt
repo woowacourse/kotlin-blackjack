@@ -1,13 +1,11 @@
 package blackjack.view
 
+import blackjack.model.Amount
 import blackjack.model.card.Card
 import blackjack.model.participant.Dealer
 import blackjack.model.participant.Player
-import blackjack.model.participant.PlayerName
 import blackjack.model.participant.Players
 import blackjack.model.participant.Role
-import blackjack.model.result.GameResultStorage
-import blackjack.model.result.GameResultType
 
 class OutputView {
     fun printInitCard(
@@ -17,10 +15,10 @@ class OutputView {
         val playersNameMessage = players.playerGroup.map { it.name }.joinToString(PLAYERS_NAME_SEPARATOR)
         lineBreak()
         println(DIVIDE_CARD_FINISH_MESSAGE.format(playersNameMessage))
-        println("딜러: ${dealer.getDealerInitCardsMessage()}")
+        println("$DEALER_NAME: ${dealer.initialCardsMessage()}")
 
         players.playerGroup.forEach {
-            println(it.getCardsMessage(it.name.toString()))
+            println(it.cardsMessage(it.name.toString()))
         }
         lineBreak()
     }
@@ -31,7 +29,7 @@ class OutputView {
     }
 
     fun printPlayerCardsMessage(player: Player) {
-        println(player.getCardsMessage(player.name.toString()))
+        println(player.cardsMessage(player.name.toString()))
     }
 
     fun printPlayersCardResult(
@@ -39,61 +37,49 @@ class OutputView {
         players: Players,
     ) {
         lineBreak()
-        println(dealer.getCardsMessage(DEALER_NAME_MESSAGE) + dealer.getPlayerCardResult())
+        println(dealer.cardsMessage("$DEALER_NAME ") + dealer.cardScoreMessage())
         players.playerGroup.forEach {
-            println(it.getCardsMessage(it.name.toString()) + it.getPlayerCardResult())
+            println(it.cardsMessage(it.name.toString()) + it.cardScoreMessage())
         }
         lineBreak()
     }
 
-    fun printFinalGameResult(
-        players: Players,
-        gameResultStorage: GameResultStorage,
+    fun printProfit(
+        dealerProfit: Amount,
+        playersProfit: Map<Player, Amount>,
     ) {
-        println(FINAL_GAME_RESULT_MESSAGE)
-        print("딜러: ")
-        printDealerFinalGameResult(gameResultStorage.dealerResult)
-        printPlayersFinalGameResult(players, gameResultStorage.playersResult)
-        lineBreak()
-    }
-
-    private fun printDealerFinalGameResult(dealerResult: Map<GameResultType, Int>) {
-        GameResultType.entries.forEach { gameResult ->
-            val count = dealerResult[gameResult] ?: return@forEach
-            print("${count}${gameResult.message} ")
-        }
-        lineBreak()
-    }
-
-    private fun printPlayersFinalGameResult(
-        players: Players,
-        playersResult: Map<PlayerName, GameResultType>,
-    ) {
-        players.playerGroup.forEach {
-            println("${it.name}: ${playersResult[it.name]?.message}")
+        println(FINAL_PROFIT_MESSAGE)
+        println(profitMessage(DEALER_NAME, dealerProfit))
+        playersProfit.forEach { (player, amount) ->
+            println(profitMessage(player.name.toString(), amount))
         }
     }
 
-    private fun Role.getDealerInitCardsMessage(): String {
-        return getCards()[0].toCardMessage()
+    private fun Dealer.initialCardsMessage(): String {
+        return cards()[0].message()
     }
 
-    private fun Role.getCardsMessage(name: String): String {
-        return "${name}카드: ${getCards().joinToString(separator = CARDS_SEPARATOR, transform = { it.toCardMessage() })}"
+    private fun Role.cardsMessage(name: String): String {
+        return "${name}카드: ${cards().joinToString(separator = CARDS_SEPARATOR, transform = { it.message() })}"
     }
 
-    private fun Card.toCardMessage() = "${denomination.value}${suite.value}"
+    private fun Role.cardScoreMessage() = " - 결과: ${score()}"
 
-    private fun Role.getPlayerCardResult() = " - 결과: ${getCardSum()}"
+    private fun Card.message() = "${denomination.value}${suite.value}"
+
+    private fun profitMessage(
+        name: String,
+        profitAmount: Amount,
+    ) = "$name: ${profitAmount.price}"
 
     private fun lineBreak() = println()
 
     companion object {
+        private const val DEALER_NAME = "딜러"
         private const val PLAYERS_NAME_SEPARATOR = ", "
         private const val CARDS_SEPARATOR = ", "
-        private const val DIVIDE_CARD_FINISH_MESSAGE = "딜러와 %s에게 2장의 나누었습니다."
-        private const val DEALER_ADDITIONAL_CARD_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다."
-        private const val FINAL_GAME_RESULT_MESSAGE = "## 최종 승패"
-        private const val DEALER_NAME_MESSAGE = "딜러 "
+        private const val DIVIDE_CARD_FINISH_MESSAGE = "${DEALER_NAME}와 %s에게 2장의 나누었습니다."
+        private const val DEALER_ADDITIONAL_CARD_MESSAGE = "${DEALER_NAME}는 16이하라 한장의 카드를 더 받았습니다."
+        private const val FINAL_PROFIT_MESSAGE = "## 최종 수익"
     }
 }

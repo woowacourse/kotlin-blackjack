@@ -1,30 +1,37 @@
 package blackjack.model.participant
 
-import blackjack.model.card.Card
+import blackjack.model.DIAMOND_TWO
+import blackjack.model.HEART_KING
+import blackjack.model.SPADE_ACE
+import blackjack.model.SPADE_FIVE
+import blackjack.model.SPADE_TEN
 import blackjack.model.card.TestCardProvider
-import blackjack.model.result.GameResultType
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.Arguments
-import org.junit.jupiter.params.provider.MethodSource
 
 class DealerTest {
-    @MethodSource("카드 받을 수 있는지 여부 판단 테스트 데이터")
-    @ParameterizedTest
-    fun `카드를 더 받을 수 있는지 판단한다`(
-        cards: List<Card>,
-        expected: Boolean,
-    ) {
+    @Test
+    fun `카드의 점수가 17 미만이면 카드를 더 받을 수 있다`() {
         // given
-        val dealer = Dealer()
-        dealer.receiveCard(cards)
+        val dealer = Dealer(listOf(SPADE_TEN, SPADE_FIVE, SPADE_ACE))
 
         // when
-        val actual = dealer.decideMoreCard()
+        val actual = dealer.receivableMoreCard()
 
         // then
-        assertThat(actual).isEqualTo(expected)
+        assertThat(actual).isTrue()
+    }
+
+    @Test
+    fun `카드의 점수가 17 이상이면 카드를 더 받을 수 없다`() {
+        // given
+        val dealer = Dealer(listOf(SPADE_TEN, SPADE_ACE))
+
+        // when
+        val actual = dealer.receivableMoreCard()
+
+        // then
+        assertThat(actual).isFalse()
     }
 
     @Test
@@ -36,45 +43,26 @@ class DealerTest {
         dealer.initCard(TestCardProvider)
 
         // then
-        val expected = listOf(Card.of("K", "하트"), Card.of("K", "하트"))
-        assertThat(dealer.getCards()).isEqualTo(expected)
+        val expected = listOf(HEART_KING, HEART_KING)
+        assertThat(dealer.cards()).isEqualTo(expected)
     }
 
     @Test
-    fun `게임의 최종 승패 결과를 계산한다`() {
+    fun `딜러는 모든 플레이어들과의 점수를 비교해서 수익을 얻는다`() {
         // given
-        val dealer = Dealer()
-        val players = Players.from(listOf("olive", "seogi", "chae"))
-
-        dealer.receiveCard(listOf(Card.of("8", "하트")))
-        players.playerGroup.forEachIndexed { idx, player ->
-            player.receiveCard(listOf(Card.of(denominationValues[idx], "하트")))
-        }
+        val dealer = Dealer(listOf(DIAMOND_TWO))
+        val players =
+            Players.from(
+                listOf("abc", "def"),
+                listOf(1000, 1000),
+            )
 
         // when
-        val gameResultStorage = dealer.calculateGameResult(players)
+        players.playerGroup[0].receiveCard(listOf(SPADE_TEN))
+        players.playerGroup[1].receiveCard(listOf(SPADE_ACE, HEART_KING))
+        val actual = dealer.profit(players)
 
         // then
-        assertThat(gameResultStorage.dealerResult)
-            .containsEntry(GameResultType.LOSE, 1)
-            .containsEntry(GameResultType.WIN, 1)
-            .containsEntry(GameResultType.DRAW, 1)
-        assertThat(gameResultStorage.playersResult)
-            .containsEntry(PlayerName("olive"), GameResultType.LOSE)
-            .containsEntry(PlayerName("seogi"), GameResultType.WIN)
-            .containsEntry(PlayerName("chae"), GameResultType.DRAW)
-    }
-
-    companion object {
-        private val denominationValues = listOf("2", "K", "8")
-
-        @JvmStatic
-        fun `카드 받을 수 있는지 여부 판단 테스트 데이터`() =
-            listOf(
-                Arguments.of(listOf(Card.of("10", "하트"), Card.of("5", "다이아몬드")), true),
-                Arguments.of(listOf(Card.of("10", "하트"), Card.of("5", "다이아몬드"), Card.of("A", "다이아몬드")), true),
-                Arguments.of(listOf(Card.of("10", "하트"), Card.of("K", "다이아몬드")), false),
-                Arguments.of(listOf(Card.of("10", "하트"), Card.of("7", "다이아몬드")), false),
-            )
+        assertThat(actual.price).isEqualTo(-2500)
     }
 }

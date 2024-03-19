@@ -7,17 +7,24 @@ import blackjack.model.participant.Players
 import blackjack.util.retryWhileNotException
 import blackjack.view.CardDecision
 import blackjack.view.OutputView
+import blackjack.view.PlayersBattingAmountInputView
 import blackjack.view.PlayersNameInputView
 
 class BlackjackController(
     private val playersNameInputView: PlayersNameInputView,
+    private val playersBattingAmountInputView: PlayersBattingAmountInputView,
     private val cardDecision: CardDecision,
     private val outputView: OutputView,
     private val cardProvider: CardProvider,
 ) {
     fun run() {
         val dealer = Dealer()
-        val players = retryWhileNotException { Players.from(playersNameInputView.read()) }
+        val players =
+            retryWhileNotException {
+                val playersName = playersNameInputView.read()
+                val playersBattingAmount = playersBattingAmountInputView.read(playersName)
+                Players.from(playersName, playersBattingAmount)
+            }
 
         initHandCards(dealer, players)
         players.takePlayersTurn()
@@ -52,8 +59,9 @@ class BlackjackController(
         dealer: Dealer,
         players: Players,
     ) {
-        val gameResultStorage = dealer.calculateGameResult(players)
         outputView.printPlayersCardResult(dealer, players)
-        outputView.printFinalGameResult(players, gameResultStorage)
+        val dealerProfit = dealer.profit(players)
+        val playersProfit = players.profit(dealer)
+        outputView.printProfit(dealerProfit, playersProfit)
     }
 }

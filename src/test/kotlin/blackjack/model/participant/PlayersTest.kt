@@ -1,41 +1,50 @@
 package blackjack.model.participant
 
+import blackjack.model.DEFAULT_BATTING_AMOUNT
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.Arguments
-import org.junit.jupiter.params.provider.MethodSource
+
+private fun Players(
+    names: List<String>,
+    amounts: List<Int> = List(names.size) { DEFAULT_BATTING_AMOUNT },
+): Players {
+    return Players.from(names, amounts)
+}
 
 class PlayersTest {
     @Test
     fun `플레이어명이 중복된 경우 예외가 발생한다`() {
         assertThrows<IllegalArgumentException> {
-            Players.from(listOf("olive", "olive"))
-        }
-    }
-
-    @MethodSource("플레이어 수 제한 범위 테스트 데이터")
-    @ParameterizedTest
-    fun `플레이어 수가 제한 범위를 넘기는 경우 예외가 발생한다`(playersName: List<String>) {
-        assertThrows<IllegalArgumentException> {
-            Players.from(playersName)
+            Players(listOf("olive", "olive"))
         }
     }
 
     @Test
-    fun `플레이어명, 플레이어 수가 올바른 경우 예외가 발생하지 않는다`() {
-        assertDoesNotThrow {
-            Players.from(listOf("olive", "abc", "defgh"))
+    fun `플레이어 수가 2명 미만인 경우 예외가 발생한다`() {
+        assertThrows<IllegalArgumentException> {
+            Players(listOf("a"))
         }
     }
 
-    companion object {
-        @JvmStatic
-        fun `플레이어 수 제한 범위 테스트 데이터`() =
-            listOf(
-                Arguments.of(listOf("a")),
-                Arguments.of(listOf("a", "b", "c", "d", "e", "f", "g", "h", "i")),
-            )
+    @Test
+    fun `플레이어 수가 8명 초과인 경우 예외가 발생한다`() {
+        assertThrows<IllegalArgumentException> {
+            Players(listOf("a", "b", "c", "d", "e", "f", "g", "h", "i"))
+        }
+    }
+
+    @Test
+    fun `플레이어명 크기와 배팅 금액 크기가 다른 경우 예외가 발생한다`() {
+        assertThrows<IllegalArgumentException> {
+            Players(listOf("olive", "abc", "defgh"), List(2) { DEFAULT_BATTING_AMOUNT })
+        }
+    }
+
+    @Test
+    fun `플레이어명, 플레이어 수, 배팅 금액이 모두 올바른 경우 예외가 발생하지 않는다`() {
+        assertDoesNotThrow {
+            Players(listOf("olive", "abc", "defgh"))
+        }
     }
 }

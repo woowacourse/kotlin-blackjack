@@ -1,7 +1,7 @@
 package blackjack.model.card
 
 class Card private constructor(val denomination: Denomination, val suite: Suite) {
-    fun getScore() = denomination.score
+    fun score() = denomination.score
 
     fun isAce() = denomination.isAce()
 
