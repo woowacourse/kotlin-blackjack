@@ -20,5 +20,11 @@ class Deck(cards: List<Card> = generateStandardDeck()) {
 
     fun doubleDealCard() = listOf(dealCard(), dealCard())
 
-    fun dealCard(): Card = if (_cards.isNotEmpty()) _cards.removeAt(0) else throw NoSuchElementException("Deck is empty")
+    fun dealCard(): Card {
+        if (_cards.isEmpty()) {
+            _cards.addAll(generateStandardDeck())
+            _cards.shuffle()
+        }
+        return _cards.removeAt(0)
+    }
 }
