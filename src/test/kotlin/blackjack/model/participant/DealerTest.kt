@@ -9,7 +9,7 @@ class DealerTest {
     @Test
     fun `초기 카드의 개수는 2이다`() {
         val deck = Deck(NormalCardMachine())
-        val dealer = Dealer.withInitCards(deck)
+        val dealer = Dealer.withInitCards(deck::draw)
         assertThat(dealer.getAllCards().size).isEqualTo(INIT_CARD_SIZE)
     }
 

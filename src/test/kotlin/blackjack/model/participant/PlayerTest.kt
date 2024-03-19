@@ -10,7 +10,7 @@ class PlayerTest {
     @Test
     fun `초기 카드의 개수는 2이다`() {
         val deck = Deck(NormalCardMachine())
-        val player = Player("벼리", BattingMoney.Companion.ofAmount(100)).also { it.initCards(deck.draw(2)) }
+        val player = Player.withInitCards("벼리", BattingMoney.Companion.ofAmount(100), deck::draw)
         assertThat(player.getAllCards().size).isEqualTo(START_CARD_SIZE)
     }
 
