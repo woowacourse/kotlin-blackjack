@@ -16,7 +16,7 @@ class Dealer : GameParticipant() {
         }
     }
 
-    fun gameResult(playersState: Map<Player, Finish>): Map<String, Double> {
+    fun getGameResult(playersState: Map<Player, Finish>): Map<String, Double> {
         val result = mutableMapOf<String, Double>()
         playersState.entries.forEach { (player, finish) ->
             result[player.name] =

@@ -52,6 +52,6 @@ class BlackjackController(
 
     private fun showResult(gameResult: Map<Player, Finish>) {
         outputView.printCardResult(dealer, players)
-        outputView.printGameResult(dealer.gameResult(gameResult))
+        outputView.printGameResult(dealer.getGameResult(gameResult))
     }
 }
