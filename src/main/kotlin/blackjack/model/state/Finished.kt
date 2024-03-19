@@ -17,21 +17,18 @@ sealed class Finished(
     override fun hitOrStay(isHit: Boolean): State = this
 
     fun makeOpponentLoser(opponent: BaseHolder): GameResult {
-        opponent.setProfitFromOpponent(profit.amount)
-        opponent.defeat()
+        opponent.defeat(profit.amount)
         return GameResult().win()
     }
 
     fun push(opponent: BaseHolder): GameResult {
         profit.giveBackBettingMoney()
-        opponent.setProfitFromOpponent(profit.amount)
-        opponent.push()
+        opponent.push(profit.amount)
         return GameResult().push()
     }
 
     fun makeOpponentWinner(opponent: BaseHolder): GameResult {
-        opponent.setProfitFromOpponent(profit.amount)
-        opponent.win()
+        opponent.win(profit.amount)
         return GameResult().defeat()
     }
 
