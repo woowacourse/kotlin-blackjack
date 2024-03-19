@@ -13,6 +13,7 @@ import blackjack.model.player.PlayerResult
 const val DEALER_CARD_RESULT = "\n딜러: %s - 결과: %d"
 const val PLAYER_CARD_RESULT = "%s카드: %s - 결과: %d"
 const val FINAL_WIN_OR_LOSS = "\n## 최종 승패"
+const val FINAL_REVENUE = "\n## 최종 수익"
 const val BUST_STRING = "(Bust)"
 const val BLACKJACK_STRING = "(BlackJack)"
 const val EMPTY_STRING = ""
@@ -69,7 +70,6 @@ object ResultView {
     }
 
     private fun showPlayersScore(playerResults: List<PlayerResult>) {
-        println()
         playerResults.forEach { playerResult ->
             val state = getStateString(playerResult.player.state)
 
@@ -92,9 +92,9 @@ object ResultView {
     }
 
     private fun showFinalWinOrLossResult(gameResult: GameResult) {
-        val winCount = gameResult.playerResults.count { it.result == Result.PLAYER_WIN }
-        val defeatCount = gameResult.playerResults.count { it.result == Result.DEALER_WIN }
-        val drawCount = gameResult.playerResults.count { it.result == Result.DRAW }
+        val winCount = gameResult.getPlayerWinCount()
+        val defeatCount = gameResult.getDealerWinCount()
+        val drawCount = gameResult.getDrawCount()
         showFinalWinOrLoss()
         showDealerWinsOrLoses(winCount, drawCount, defeatCount)
         gameResult.playerResults.forEach { playerResult ->
@@ -121,15 +121,24 @@ object ResultView {
     ) {
         println(
             DEALER_GAME_RESULT.format(
-                winCount,
-                (" ${drawCount}무").takeIf { drawCount != 0 } ?: "",
                 defeatCount,
+                (" ${drawCount}무").takeIf { drawCount != 0 } ?: "",
+                winCount,
             ),
         )
+    }
+
+    private fun showFinalProfits(gameResult: GameResult) {
+        println(FINAL_REVENUE)
+        println("딜러: ${gameResult.dealerProfit}")
+        gameResult.playerResults.forEach { playerResult ->
+            println("${playerResult.player.name}: ${playerResult.profit}")
+        }
     }
 
     fun showResult(gameResult: GameResult) {
         showHandsScore(gameResult)
         showFinalWinOrLossResult(gameResult)
+        showFinalProfits(gameResult)
     }
 }

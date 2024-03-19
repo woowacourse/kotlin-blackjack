@@ -23,6 +23,6 @@ class DealerTest {
         val hand = Hand(cards)
         val dealer = Dealer(hand)
 
-        assertThat(dealer.judgeDraw()).isTrue
+        assertThat(dealer.isRunning()).isTrue
     }
 }

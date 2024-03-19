@@ -26,8 +26,20 @@ class PlayerEntryTest {
     }
 
     @Test
-    fun `PlayerEntry가 비어있을때 예외 처리 확인`() {
+    fun `PlayerEntry의 수는 1명 이상이어야 한다`() {
         val players = listOf<Player>()
         assertThrows<IllegalArgumentException> { PlayerEntry(players) }
+    }
+
+    @Test
+    fun `PlayerEntry의 수는 8명이하 이어야 한다`() {
+        val players = mutableListOf<Player>()
+        val hand = Hand(mutableListOf())
+        repeat(9) {
+            players.add(Player("Player $it", hand))
+        }
+        assertThrows<IllegalArgumentException> {
+            PlayerEntry(players)
+        }
     }
 }

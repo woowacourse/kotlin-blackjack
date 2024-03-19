@@ -4,23 +4,20 @@ import blackjack.model.card.Hand
 import blackjack.model.game.State
 
 class Dealer(val hand: Hand) {
+    var profit: Int = 0
     val state: State
         get() =
             if (hand.isBust()) {
                 State.Finished.Bust
-            } else if (judgeDraw()) {
+            } else if (isRunning()) {
                 State.Running.Hit
-            } else if (judgeBlackJack()) {
+            } else if (hand.isBlackjack()) {
                 State.Finished.BlackJack
             } else {
                 State.Finished.Stay
             }
 
-    private fun judgeDraw(): Boolean {
+    fun isRunning(): Boolean {
         return hand.totalScore <= 16
-    }
-
-    private fun judgeBlackJack(): Boolean {
-        return hand.totalScore == 21
     }
 }

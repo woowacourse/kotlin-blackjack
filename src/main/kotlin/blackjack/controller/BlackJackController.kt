@@ -1,7 +1,6 @@
 package blackjack.controller
 
 import Player
-import blackjack.model.card.Card
 import blackjack.model.card.Deck
 import blackjack.model.card.Hand
 import blackjack.model.game.GameResult
@@ -17,10 +16,29 @@ object BlackJackController {
     fun run() {
         val deck = Deck()
         val playersName = InputView.readPlayersName()
-        val (dealer, playerEntry) = getDealerAndPlayerEntry(playersName, deck)
+        val playerEntry = makePlayerEntry(playersName, deck)
+        val dealer = makeDealer(makingInitialHand(deck))
+        ProgressView.showPlayerEntry(playersName.joinToString(", "))
+        ProgressView.showHands(dealer, playerEntry)
         val gameResult = playGame(playerEntry, dealer, deck)
         showGameResult(gameResult)
     }
+
+    private fun makePlayerEntry(
+        playersName: List<String>,
+        deck: Deck,
+    ): PlayerEntry {
+        val players =
+            playersName.map { playerName ->
+                val bettingMoney = InputView.readBettingMoney(playerName)
+                val hand = makingInitialHand(deck)
+                Player(playerName, hand, bettingMoney)
+            }
+        val playerEntry = PlayerEntry(players)
+        return playerEntry
+    }
+
+    private fun makingInitialHand(deck: Deck) = Hand(deck.doubleDealCard().toMutableList())
 
     private fun showGameResult(gameResult: GameResult) {
         ResultView.showResult(gameResult)
@@ -41,7 +59,7 @@ object BlackJackController {
         dealer: Dealer,
         deck: Deck,
     ) {
-        while (dealer.state == State.Running.Hit) {
+        while (dealer.isRunning()) {
             dealer.hand.draw(deck.dealCard())
             ProgressView.showDealerDrawMessage(dealer)
         }
@@ -64,56 +82,13 @@ object BlackJackController {
                 player.hand.draw(deck.dealCard())
                 ProgressView.showPlayerHand(player)
             } else {
+                player.hand.decideStay()
                 break
             }
         }
     }
 
-    private fun getDealerAndPlayerEntry(
-        playersName: List<String>,
-        deck: Deck,
-    ): Pair<Dealer, PlayerEntry> {
-        ProgressView.showPlayerEntry(playersName.joinToString(", "))
-        val hands = dealingCards(playersName, deck)
-        val dealer = setDealer(hands)
-        val playerEntry = makePlayerEntry(playersName, hands)
-        ProgressView.showHands(dealer, playerEntry)
-        return Pair(dealer, playerEntry)
-    }
-
-    private fun makePlayerEntry(
-        playersName: List<String>,
-        hands: List<Hand>,
-    ): PlayerEntry {
-        val players =
-            makePlayers(playersName, hands)
-        val playerEntry = PlayerEntry(players)
-        return playerEntry
-    }
-
-    private fun dealingCards(
-        playersName: List<String>,
-        deck: Deck,
-    ): List<Hand> {
-        val allDrawnCards = mutableListOf<List<Card>>()
-        repeat(playersName.size + 1) {
-            val drawnCards = mutableListOf<Card>()
-            repeat(2) { drawnCards.add(deck.dealCard()) }
-            allDrawnCards.add(drawnCards)
-        }
-        val hands = allDrawnCards.map { drawnCards -> Hand(drawnCards.toMutableList()) }
-        return hands
-    }
-
-    private fun makePlayers(
-        playersName: List<String>,
-        hands: List<Hand>,
-    ) = playersName.withIndex().map { (index, playerName) ->
-        Player(playerName, hands[index + 1])
-    }
-
-    private fun setDealer(hands: List<Hand>): Dealer {
-        val dealer = Dealer(hands[0])
-        return dealer
+    private fun makeDealer(hand: Hand): Dealer {
+        return Dealer(hand)
     }
 }
