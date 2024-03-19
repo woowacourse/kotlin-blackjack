@@ -1,6 +1,6 @@
 package blackjack.model.participant.state
 
-class Hit : Gaming() {
+class Hit : Gaming {
     override fun nextTurn(
         myScore: Int,
         isHit: Boolean,

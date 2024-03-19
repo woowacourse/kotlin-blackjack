@@ -3,7 +3,7 @@ package blackjack.model.participant.state
 import blackjack.model.BattingMoney
 import blackjack.model.participant.CompetitionResult
 
-class Stay : Finish() {
+class Stay : Finish {
     override fun getProfit(
         myScore: Int,
         opponentScore: Int,

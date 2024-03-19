@@ -4,7 +4,7 @@ import blackjack.model.BattingMoney
 import blackjack.model.participant.CompetitionResult
 import java.lang.IllegalStateException
 
-class Blackjack() : Finish() {
+class Blackjack() : Finish {
     override fun getProfit(
         myScore: Int,
         opponentScore: Int,
