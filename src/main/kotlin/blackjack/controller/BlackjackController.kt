@@ -35,11 +35,11 @@ class BlackjackController(
             }, {
                 outputView.printPlayerCard(it)
             })
-        dealerTurn(dealer)
+        dealerTurn()
         showResult(result)
     }
 
-    private fun dealerTurn(dealer: Dealer) {
+    private fun dealerTurn() {
         dealer.playTurn(
             deck::draw,
             outputView::printDealerAddCard,
