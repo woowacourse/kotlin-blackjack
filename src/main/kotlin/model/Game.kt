@@ -41,7 +41,7 @@ class Game private constructor(private val participants: List<Participant>, val 
         showHand: (Player) -> Unit,
         player: Player,
     ) {
-        while (player.participantState is ParticipantState.Playing && playByDecision(player, readDecision, showHand)) ;
+        player.play(readDecision, showHand, deck::pop)
     }
 
     inline fun playDealer(showDealerHandOut: (Dealer) -> (Unit)) {
@@ -51,17 +51,6 @@ class Game private constructor(private val participants: List<Participant>, val 
             dealer.hit(deck.pop())
             showDealerHandOut(dealer)
         }
-    }
-
-    inline fun playByDecision(
-        player: Player,
-        readDecision: (Player) -> Boolean,
-        showHand: (Player) -> Unit,
-    ): Boolean {
-        val continueToPlay = readDecision(player)
-        if (continueToPlay) player.hit(deck.pop())
-        showHand(player)
-        return continueToPlay
     }
 
     fun getAll(): List<Participant> {
