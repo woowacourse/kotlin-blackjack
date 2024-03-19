@@ -24,13 +24,13 @@ class BlackjackController(
     }
 
     private fun setUpGame() {
-        players = playersInputView.read(deck)
+        players = playersInputView.read(deck::draw)
         outputView.printInitCard(dealer, players)
     }
 
     private fun gamePlayersTurn() {
         val result =
-            players.playTurn(deck, {
+            players.playTurn(deck::draw, {
                 isAddCardInputView.read(it)
             }, {
                 outputView.printPlayerCard(it)

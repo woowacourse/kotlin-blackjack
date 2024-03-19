@@ -1,34 +1,35 @@
 package blackjack.model.participant
 
 import blackjack.model.BattingMoney
-import blackjack.model.deck.Deck
+import blackjack.model.deck.Card
 import blackjack.model.participant.state.Finish
 
-class Players private constructor(names: Set<String>, battingMoney: List<BattingMoney>) {
+class Players(playersInfo: Map<String, BattingMoney>, cards: (Int) -> List<Card>) {
     val gamePlayers: List<Player>
 
     init {
-        require(names.size in MIN_PLAYER_COUNT..MAX_PLAYER_COUNT) { "${MIN_PLAYER_COUNT}명 이상 ${MAX_PLAYER_COUNT}명 이하의 플레이어만 가능합니다." }
+        require(playersInfo.size in MIN_PLAYER_COUNT..MAX_PLAYER_COUNT) { "${MIN_PLAYER_COUNT}명 이상 ${MAX_PLAYER_COUNT}명 이하의 플레이어만 가능합니다." }
         gamePlayers =
-            names.mapIndexed { index, name ->
-                Player(name, battingMoney[index])
+            playersInfo.map { (playerName, battingMoney) ->
+                Player(playerName, battingMoney)
             }
+        initPlayersCard(cards)
     }
 
-    private fun initPlayersCard(deck: Deck) {
+    private fun initPlayersCard(cards: (Int) -> List<Card>) {
         gamePlayers.forEach { player ->
-            player.initCards(deck.draw(INIT_CARD_AMOUNT))
+            player.initCards(cards(INIT_CARD_AMOUNT))
         }
     }
 
     fun playTurn(
-        deck: Deck,
+        cards: (Int) -> List<Card>,
         isHit: (String) -> Boolean,
         showResult: (Player) -> Unit,
     ): Map<Player, Finish> {
         val gameResults = mutableMapOf<Player, Finish>()
         gamePlayers.forEach { player ->
-            val result = player.playTurn(deck::draw, isHit, showResult)
+            val result = player.playTurn(cards, isHit, showResult)
             gameResults[player] = result
         }
         return gameResults
@@ -38,20 +39,5 @@ class Players private constructor(names: Set<String>, battingMoney: List<Batting
         private const val MIN_PLAYER_COUNT = 1
         private const val MAX_PLAYER_COUNT = 6
         private const val INIT_CARD_AMOUNT = 2
-
-        fun withInitCards(
-            names: List<String>,
-            deck: Deck,
-            battingMoney: List<BattingMoney>,
-        ): Players {
-            validateDuplicateNames(names)
-            return Players(names.toSet(), battingMoney).also { it.initPlayersCard(deck) }
-        }
-
-        private fun validateDuplicateNames(numbers: List<String>) {
-            require(numbers.distinct().size == numbers.size) {
-                "중복된 이름은 플레이어로 등록할 수 없습니다."
-            }
-        }
     }
 }
