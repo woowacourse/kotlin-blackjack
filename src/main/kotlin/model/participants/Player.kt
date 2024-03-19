@@ -26,7 +26,7 @@ class Player(
         showHand: (Player) -> Unit,
         onDraw: () -> Card,
     ) {
-        while(isPlaying() && playByDecision(readDecision, showHand, onDraw)) ;
+        while (isPlaying() && playByDecision(readDecision, showHand, onDraw)) ;
     }
 
     inline fun playByDecision(
@@ -39,7 +39,6 @@ class Player(
         showHand(this)
         return continueToPlay
     }
-
 
     fun judgeProfit(other: Participant): Profit {
         return participantState.getProfit(wallet.money.amount, other.participantState)

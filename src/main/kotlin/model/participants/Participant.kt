@@ -4,8 +4,12 @@ import model.card.Card
 import model.result.Point.Companion.compareTo
 import model.result.ResultType
 
-abstract class Participant(open var participantState: ParticipantState, open val wallet: Wallet) {
+abstract class Participant(participantState: ParticipantState, val wallet: Wallet) {
+    var participantState: ParticipantState = participantState
+        private set
+
     fun isBust() = participantState is ParticipantState.Bust
+
     fun isPlaying() = participantState is ParticipantState.Playing
 
     open fun judge(other: Participant): ResultType {

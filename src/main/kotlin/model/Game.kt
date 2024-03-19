@@ -4,7 +4,6 @@ import model.card.Deck
 import model.participants.Dealer
 import model.participants.IdCard
 import model.participants.Participant
-import model.participants.ParticipantState
 import model.participants.Player
 import model.participants.Players
 import model.result.DealerResult
