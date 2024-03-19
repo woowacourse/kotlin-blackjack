@@ -1,8 +1,13 @@
 package blackjack.model
 
 import blackjack.base.BaseHolder
+import blackjack.model.state.Running
 
 class Player(val name: Name) : BaseHolder() {
+    fun placeABet(bettingAmount: String) {
+        state.profit.initBettingMoney(bettingAmount)
+    }
+
     fun chooseHitOrStay(
         gameDeck: GameDeck,
         hitOrStay: (name: Name) -> Boolean,

@@ -4,6 +4,10 @@ class BlackJackGame(
     private val participants: Participants,
     private val gameDeck: GameDeck,
 ) {
+    fun betMoney(getBettingMoney: (playerName: String) -> String) {
+        participants.betBeforeSetting(getBettingMoney = getBettingMoney)
+    }
+
     fun start(printGameSetting: (dealerCard: Card, playerGroup: PlayerGroup) -> Unit) {
         participants.initSetting(gameDeck)
         printGameSetting(participants.dealer.state.hand.cards.first(), participants.playerGroup)

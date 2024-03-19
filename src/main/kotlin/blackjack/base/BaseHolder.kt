@@ -3,9 +3,8 @@ package blackjack.base
 import blackjack.model.Card
 import blackjack.model.GameDeck
 import blackjack.model.GameResult
-import blackjack.model.Hit
-import blackjack.model.Running
-import blackjack.model.State
+import blackjack.model.state.Running
+import blackjack.model.state.State
 
 abstract class BaseHolder(gameResult: GameResult = GameResult()) {
     private var _state: State = Running()
@@ -17,7 +16,7 @@ abstract class BaseHolder(gameResult: GameResult = GameResult()) {
         get() = _gameResult
 
     fun initHands(gameDeck: GameDeck) {
-        _state = Running().drawInitCards(gameDeck)
+        _state = Running(profit = state.profit).drawInitCards(gameDeck)
     }
 
     protected fun changeState(state: State) {
@@ -28,7 +27,26 @@ abstract class BaseHolder(gameResult: GameResult = GameResult()) {
         changeState(state.getCard(card))
     }
 
-    fun changeResult(newGameResult: GameResult) {
+    fun addResult(newGameResult: GameResult) {
         _gameResult += newGameResult
+    }
+
+    fun win(opponentProfit: Double) {
+        _gameResult += GameResult.win()
+        setProfitFromOpponent(opponentProfit)
+    }
+
+    fun push(opponentProfit: Double) {
+        _gameResult += GameResult.push()
+        setProfitFromOpponent(opponentProfit)
+    }
+
+    fun defeat(opponentProfit: Double) {
+        _gameResult += GameResult.defeat()
+        setProfitFromOpponent(opponentProfit)
+    }
+
+    private fun setProfitFromOpponent(opponentProfit: Double) {
+        state.changeProfitByOpponent(opponentProfit)
     }
 }

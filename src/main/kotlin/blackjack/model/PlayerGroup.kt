@@ -10,6 +10,15 @@ class PlayerGroup {
         _players = playerNames.map { Player(Name(it)) }
     }
 
+    fun placeBettingMoney(
+        getBettingMoney: (playerName: String) -> String
+    ) {
+        players.forEach { player ->
+            val bettingAmount = getBettingMoney(player.name.name)
+            player.placeABet(bettingAmount)
+        }
+    }
+
     fun drawPlayerCard(
         gameDeck: GameDeck,
         hitOrStay: (name: Name) -> Boolean,
