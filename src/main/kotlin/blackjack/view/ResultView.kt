@@ -4,9 +4,7 @@ import blackjack.model.gameInfo.GameInfo
 import blackjack.model.participants.Judge
 
 object ResultView {
-    private const val MESSAGE_PARTICIPANT_CARD_RESULT = "%s - 결과: %d"
     private const val MESSAGE_TITLE_RESULT = "\n## 최종 금액"
-    private const val MESSAGE_CARD_INFO = "%s카드: %s"
     private const val MESSAGE_INCOME_STATUS = "%s: %s"
 
     fun printFinalCards(
@@ -14,26 +12,10 @@ object ResultView {
         playersGameInfo: List<GameInfo>,
     ) {
         println()
-        println(
-            MESSAGE_PARTICIPANT_CARD_RESULT.format(
-                MESSAGE_CARD_INFO.format(
-                    dealerGameInfo.name,
-                    dealerGameInfo.cards.joinToString { "${it.title}${it.shape.title}" },
-                ),
-                dealerGameInfo.sumOfCards,
-            ),
-        )
+        println(dealerGameInfo.toString())
 
         playersGameInfo.forEach { playerStat ->
-            println(
-                MESSAGE_PARTICIPANT_CARD_RESULT.format(
-                    MESSAGE_CARD_INFO.format(
-                        playerStat.name,
-                        playerStat.cards.joinToString { "${it.title}${it.shape.title}" },
-                    ),
-                    playerStat.sumOfCards,
-                ),
-            )
+            println(playerStat.toString())
         }
     }
 
