@@ -39,31 +39,32 @@ class Judge(
     private fun isPlayerBurst(
         playerDifference: Int,
         dealerDifference: Int,
-    ): Boolean = playerDifference < 0 && dealerDifference >= 0
+    ): Boolean = playerDifference < BLACKJACK_DIFFERENCE && dealerDifference >= BLACKJACK_DIFFERENCE
 
     private fun isPlayerBlackjack(
         playerGameInfo: GameInfo,
         dealerDifference: Int,
     ): Boolean =
         playerGameInfo.cards.take(INITIAL_CARD_SIZE).sumOf { it.value } == CRITERIA_NUMBER &&
-            dealerDifference != 0
+            dealerDifference != BLACKJACK_DIFFERENCE
 
     private fun isPlayerWin(
         playerDifference: Int,
         dealerDifference: Int,
     ): Boolean =
-        dealerDifference != 0 && playerDifference == 0 ||
-            dealerDifference < 0 && playerDifference >= 0 ||
+        dealerDifference != BLACKJACK_DIFFERENCE && playerDifference == BLACKJACK_DIFFERENCE ||
+            dealerDifference < BLACKJACK_DIFFERENCE && playerDifference >= BLACKJACK_DIFFERENCE ||
             playerDifference < dealerDifference
 
     private fun isPlayerLose(
         playerDifference: Int,
         dealerDifference: Int,
     ): Boolean =
-        playerDifference < 0 && dealerDifference >= 0 ||
+        playerDifference < BLACKJACK_DIFFERENCE && dealerDifference >= BLACKJACK_DIFFERENCE ||
             dealerDifference < playerDifference
 
     companion object {
+        private const val BLACKJACK_DIFFERENCE = 0
         private const val INITIAL_CARD_SIZE = 2
         private const val CRITERIA_NUMBER = 21
     }
