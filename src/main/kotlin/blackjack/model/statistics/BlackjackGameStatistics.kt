@@ -1,4 +1,7 @@
-package blackjack.model
+package blackjack.model.statistics
+
+import blackjack.model.Dealer
+import blackjack.model.Player
 
 class BlackjackGameStatistics(
     dealer: Dealer,

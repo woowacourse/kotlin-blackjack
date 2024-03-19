@@ -7,7 +7,7 @@ class CardsTest {
     @Test
     fun `에이스가 없을 때 카드의 총 합을 구하는 기능`() {
         val cards = buildCards(two, ten)
-        val actual = cards.sum()
+        val actual = cards.scoreSum()
         val expected = 12
         assertThat(actual).isEqualTo(expected)
     }
@@ -15,7 +15,7 @@ class CardsTest {
     @Test
     fun `에이스가 11인 것이 유리할 때 카드의 총 합을 구하는 기능`() {
         val cards = buildCards(ace, ten)
-        val actual = cards.sum()
+        val actual = cards.scoreSum()
         val expected = 21
         assertThat(actual).isEqualTo(expected)
     }
@@ -23,7 +23,7 @@ class CardsTest {
     @Test
     fun `에이스가 1인 것이 유리할 때 카드의 총 합을 구하는 기능`() {
         val cards = buildCards(ace, two, three, ten)
-        val actual = cards.sum()
+        val actual = cards.scoreSum()
         val expected = 16
         assertThat(actual).isEqualTo(expected)
     }

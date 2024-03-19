@@ -22,6 +22,19 @@ fun buildPlayer(
     return player
 }
 
+fun buildPlayer(
+    name: String,
+    stake: Double,
+    vararg card: Card,
+): Player {
+    val player = Player(name, Money(stake))
+    val cardList = listOf(*card)
+    cardList.forEach {
+        player.addCard(it)
+    }
+    return player
+}
+
 fun buildDeck(vararg cardNumber: CardNumber) = Deck(cardNumber.map { Card(it) })
 
 fun buildDealer(vararg card: Card): Dealer {

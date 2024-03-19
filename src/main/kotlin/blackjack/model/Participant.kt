@@ -8,17 +8,19 @@ abstract class Participant(
     private val strength: Int
         get() = strengthPolicy.strength(cards)
 
+    fun isBlackjack(): Boolean = cards.isBlackJack()
+
     fun isBusted(): Boolean = cards.isBusted()
 
     fun isMaxScore(): Boolean = cards.isMaxScore()
 
     fun addCard(card: Card) = cards.addCard(card)
 
-    fun getCardSum(): Int = cards.sum()
+    fun getCardSum(): Int = cards.scoreSum()
 
-    fun showCard() = cards.toList()
+    fun cardsList() = cards.toList()
 
-    abstract fun showInitialCard(): List<Card>
+    abstract fun initialCardsList(): List<Card>
 
     fun isNotBustedAndHitable(): Boolean = !isBusted() && isHitable()
 

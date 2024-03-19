@@ -1,24 +1,26 @@
 package blackjack.view
 
-import blackjack.model.BlackjackGameStatistics
 import blackjack.model.Card
 import blackjack.model.CardNumber
 import blackjack.model.Dealer
-import blackjack.model.DealerStatistics
 import blackjack.model.GameResult
 import blackjack.model.Participant
 import blackjack.model.Player
-import blackjack.model.PlayerStatistics
 import blackjack.model.Suit
+import blackjack.model.statistics.BlackjackGameStatistics
+import blackjack.model.statistics.DealerStatistics
+import blackjack.model.statistics.PlayerStatistics
+import blackjack.model.statistics.RewardStatistic
+import blackjack.model.statistics.RewardStatistics
 
 object OutputView {
     fun printInitialResult(
         dealer: Dealer,
         players: List<Player>,
     ) {
-        println(buildParticipantCardsString(dealer.name, dealer.showInitialCard()))
+        println(buildParticipantCardsString(dealer.name, dealer.initialCardsList()))
         players.forEach {
-            println(buildParticipantCardsString(it.name, it.showInitialCard()))
+            println(buildParticipantCardsString(it.name, it.initialCardsList()))
         }
     }
 
@@ -43,7 +45,7 @@ object OutputView {
 
     private fun buildParticipantCards(participant: Participant): String {
         val name = participant.name
-        val cards = participant.showCard()
+        val cards = participant.cardsList()
         return buildParticipantCardsString(name, cards)
     }
 
@@ -93,6 +95,18 @@ object OutputView {
         playerStatistics.forEach { playerStatistic ->
             println("${playerStatistic.player.name}: ${playerStatistic.gameResult.getName()}")
         }
+    }
+
+    fun printRewardStatistics(rewardStatistics: RewardStatistics) {
+        println("## 최종 수익")
+        printParticipantRewardStatistic(rewardStatistics.dealerRewardStatistic)
+        rewardStatistics.playerRewardStatistics.forEach {
+            printParticipantRewardStatistic(it)
+        }
+    }
+
+    private fun printParticipantRewardStatistic(rewardStatistic: RewardStatistic) {
+        println("${rewardStatistic.participant.name}: ${rewardStatistic.reward.money}")
     }
 
     fun printError(message: String) = println(message)
