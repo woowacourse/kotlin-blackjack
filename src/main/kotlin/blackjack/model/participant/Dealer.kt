@@ -1,10 +1,9 @@
 package blackjack.model.participant
 
 import blackjack.model.deck.Card
-import blackjack.model.deck.Deck
 import blackjack.model.participant.state.Finish
 
-class Dealer private constructor() : GameParticipant() {
+class Dealer : GameParticipant() {
     fun getFirstCard() = handCards.cards.first()
 
     fun playTurn(
@@ -27,10 +26,9 @@ class Dealer private constructor() : GameParticipant() {
     }
 
     companion object {
+        private const val INIT_CARD_AMOUNT = 2
         private const val DEALER_HIT_THRESHOLD = 17
 
-        fun withInitCards(deck: Deck): Dealer {
-            return Dealer().also { it.initCards(deck.draw(INIT_CARD_AMOUNT)) }
-        }
+        fun withInitCards(cards: (Int) -> List<Card>): Dealer = Dealer().also { it.initCards(cards(INIT_CARD_AMOUNT)) }
     }
 }

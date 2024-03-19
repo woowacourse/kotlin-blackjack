@@ -15,7 +15,7 @@ class BlackjackController(
     private val outputView: OutputView = OutputView(),
 ) {
     private val deck = Deck()
-    private val dealer = Dealer.withInitCards(deck)
+    private val dealer = Dealer.withInitCards(deck::draw)
     private lateinit var players: Players
 
     fun play() {

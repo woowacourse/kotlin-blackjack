@@ -5,7 +5,7 @@ import blackjack.model.deck.Card
 import blackjack.model.participant.state.Finish
 import blackjack.model.participant.state.Gaming
 
-class Player(val name: String, val battingMoney: BattingMoney) : GameParticipant() {
+class Player private constructor(val name: String, val battingMoney: BattingMoney) : GameParticipant() {
     fun playTurn(
         cards: (Int) -> List<Card>,
         isHit: (String) -> Boolean,
@@ -16,5 +16,15 @@ class Player(val name: String, val battingMoney: BattingMoney) : GameParticipant
             showResult(this)
         }
         return handCards.state as Finish
+    }
+
+    companion object {
+        private const val INIT_CARD_AMOUNT = 2
+
+        fun withInitCards(
+            name: String,
+            battingMoney: BattingMoney,
+            cards: (Int) -> List<Card>,
+        ): Player = Player(name, battingMoney).also { it.initCards(cards(INIT_CARD_AMOUNT)) }
     }
 }

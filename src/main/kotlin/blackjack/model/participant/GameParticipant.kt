@@ -18,6 +18,6 @@ abstract class GameParticipant() {
     fun getScore() = handCards.calculateScore()
 
     companion object {
-        const val INIT_CARD_AMOUNT = 2
+        private const val INIT_CARD_AMOUNT = 2
     }
 }
