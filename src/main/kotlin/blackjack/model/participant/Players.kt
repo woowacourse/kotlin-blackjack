@@ -1,8 +1,8 @@
 package blackjack.model.participant
 
 import blackjack.model.BattingMoney
+import blackjack.model.Result
 import blackjack.model.deck.Card
-import blackjack.model.participant.state.Finish
 
 class Players(playersInfo: Map<String, BattingMoney>, cards: (Int) -> List<Card>) {
     val gamePlayers: List<Player>
@@ -19,13 +19,10 @@ class Players(playersInfo: Map<String, BattingMoney>, cards: (Int) -> List<Card>
         cards: (Int) -> List<Card>,
         isHit: (String) -> Boolean,
         playResult: (Player) -> Unit,
-    ): Map<Player, Finish> {
-        val gameResults = mutableMapOf<Player, Finish>()
-        gamePlayers.forEach { player ->
-            val result = player.playTurn(cards, isHit, playResult)
-            gameResults[player] = result
+    ): List<Result> {
+        return gamePlayers.map { player ->
+            Result(player, player.playTurn(cards, isHit, playResult))
         }
-        return gameResults
     }
 
     companion object {

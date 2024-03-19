@@ -1,7 +1,7 @@
 package blackjack.model.participant
 
+import blackjack.model.Result
 import blackjack.model.deck.Card
-import blackjack.model.participant.state.Finish
 
 class Dealer : GameParticipant() {
     fun getFirstCard() = handCards.cards.first()
@@ -16,10 +16,10 @@ class Dealer : GameParticipant() {
         }
     }
 
-    fun getGameResult(playersState: Map<Player, Finish>): Map<String, Double> {
-        return playersState.map { (player, finish) ->
+    fun getGameResult(playersState: List<Result>): Map<String, Double> {
+        return playersState.associate { (player, finish) ->
             player.name to finish.getProfit(player.getScore(), handCards.calculateScore(), player.battingMoney).amount
-        }.toMap()
+        }
     }
 
     companion object {

@@ -1,10 +1,9 @@
 package blackjack.controller
 
+import blackjack.model.Result
 import blackjack.model.deck.Deck
 import blackjack.model.participant.Dealer
-import blackjack.model.participant.Player
 import blackjack.model.participant.Players
-import blackjack.model.participant.state.Finish
 import blackjack.view.IsAddCardInputView
 import blackjack.view.OutputView
 import blackjack.view.PlayersInputView
@@ -50,7 +49,7 @@ class BlackjackController(
         )
     }
 
-    private fun showResult(gameResult: Map<Player, Finish>) {
+    private fun showResult(gameResult: List<Result>) {
         outputView.printCardResult(dealer, players)
         outputView.printGameResult(dealer.getGameResult(gameResult))
     }
