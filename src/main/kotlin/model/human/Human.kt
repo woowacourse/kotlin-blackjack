@@ -1,43 +1,24 @@
 package model.human
 
 import model.Hand
-import model.Point
 
-abstract class Human(open val hand: Hand, open val humanName: HumanName) {
-    fun getPointIncludingAce(): Point {
-        return if (hand.hasAce()) {
-            decideAceValue()
-        } else {
-            hand.getPoint()
-        }
+abstract class Human(val hand: Hand, open val humanInfo: HumanInfo) {
+    fun getName(): String {
+        return humanInfo.humanName.name
     }
 
-    private fun decideAceValue(): Point {
-        val point = hand.getPoint().amount
-        return if (point <= ACE_POINT) {
-            Point(point + ACE_POINT)
-        } else {
-            Point(point)
-        }
+    fun getMoneyAmount(): Int {
+        return this.humanInfo.money.amount
     }
 
-    fun hits(count: Int) {
-        repeat(count) {
-            hit()
-        }
-    }
+    fun isBlackJack(): Boolean = (hand.getSize() == DEFAULT_CARD_COUNT && hand.getPoint().isEqualTo(MAX_POINT))
 
-    fun hit(): Boolean {
-        if (isPossible()) {
-            hand.draw()
-            return isPossible()
-        }
-        return false
-    }
+    fun isBusted(): Boolean = !this.hand.isNotBusted()
 
-    abstract fun isPossible(): Boolean
+    abstract fun isHittable(): Boolean
 
     companion object {
-        private const val ACE_POINT = 10
+        private const val DEFAULT_CARD_COUNT = 2
+        private const val MAX_POINT = 21
     }
 }

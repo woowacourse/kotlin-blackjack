@@ -2,6 +2,12 @@ package model.human
 
 import model.Hand
 
-class Player(override val hand: Hand, override val humanName: HumanName = HumanName.fromInput("Player")) : Human(hand, humanName) {
-    override fun isPossible(): Boolean = getPointIncludingAce().amount < 21
+class Player(hand: Hand, override val humanInfo: HumanInfo = HumanInfo(DEFAULT_NAME)) :
+    Human(hand, humanInfo) {
+    override fun isHittable(): Boolean = hand.getPoint().isLessThan(HIT_CONDITION)
+
+    companion object {
+        private const val HIT_CONDITION = 21
+        private const val DEFAULT_NAME = "Player"
+    }
 }

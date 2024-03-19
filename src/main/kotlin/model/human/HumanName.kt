@@ -1,14 +1,14 @@
 package model.human
 
-class HumanName private constructor(val name: String) {
+data class HumanName(val name: String) {
+    init {
+        require(name.length in NAME_LENGTH_RANGE) { ERROR_INVALID_LENGTH }
+    }
+
     companion object {
-        const val ERROR_INVALID_LENGTH = "이름의 길이는 1~10 이어야 합니다."
-
-        fun fromInput(input: String): HumanName = input.validateLength().run(::HumanName)
-
-        private fun String.validateLength(): String {
-            require(this.length in 1..10) { ERROR_INVALID_LENGTH }
-            return this
-        }
+        const val ERROR_INVALID_LENGTH = "이름의 길이는 1 이상 10 이하 이어야 합니다."
+        private const val MIN_NAME_LENGTH: Int = 1
+        private const val MAX_NAME_LENGTH: Int = 10
+        private val NAME_LENGTH_RANGE: IntRange = MIN_NAME_LENGTH..MAX_NAME_LENGTH
     }
 }

@@ -11,7 +11,7 @@ class NameTest {
     @ValueSource(strings = ["OverflowNaming", "", "YoonSongHyun", "HwangTaeJune"])
     fun `이름의 길이가 10을 초과시 예외 발생`(name: String) {
         assertThatThrownBy {
-            HumanName.fromInput(name)
+            HumanName(name)
         }.isExactlyInstanceOf(IllegalArgumentException::class.java)
             .hasMessage(HumanName.ERROR_INVALID_LENGTH)
     }

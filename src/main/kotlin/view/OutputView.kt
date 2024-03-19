@@ -1,42 +1,43 @@
 package view
 
 import model.Hand
-import model.ResultType
+import model.PlayersResult
+import model.card.Card
+import model.card.Denomination
+import model.card.Suit
 import model.human.Dealer
 import model.human.Human
-import model.human.HumanName
+import model.human.HumanInfo
 import model.human.Players
 
 object OutputView {
     private const val HEADER_GAME_INITIAL_STATE = "\n딜러와 %s에게 2장의 카드를 나누었습니다."
     private const val HEADER_DRAW_CARDS_FOR_DEALER = "\n딜러는 16이하라 한장의 카드를 더 받았습니다."
-    private const val HEADER_RESULT = "\n## 최종승패"
-    private const val DEALER_HAND = "딜러: %s"
-    private const val SPACE = " "
+    private const val HEADER_RESULT = "\n## 최종 수익"
 
     fun showGameInit(
         dealer: Dealer,
         players: Players,
     ) {
         showInitHeader(players)
-        showHands(dealer, players)
+        showInitHands(dealer, players)
     }
 
     private fun showInitHeader(players: Players) {
-        println(HEADER_GAME_INITIAL_STATE.format(players.players.joinToString(", ") { it.humanName.name }))
+        println(HEADER_GAME_INITIAL_STATE.format(players.players.joinToString(", ") { it.getName() }))
     }
 
-    private fun showHands(
+    private fun showInitHands(
         dealer: Dealer,
         players: Players,
     ) {
-        showDealerHand(dealer)
+        showDealerInitHand(dealer)
         showPlayersHand(players)
         println()
     }
 
-    private fun showDealerHand(dealer: Dealer) {
-        showPlayerHand(dealer)
+    private fun showDealerInitHand(dealer: Dealer) {
+        println("${dealer.getName()}: ${getCardString(dealer.hand.cards[0])}")
     }
 
     private fun showPlayersHand(players: Players) {
@@ -46,13 +47,15 @@ object OutputView {
     }
 
     fun showPlayerHand(human: Human) {
-        println("${human.humanName.name}: ${getHand(human.hand)}")
+        println("${human.getName()}: ${getHandString(human.hand)}")
     }
 
-    private fun getHand(hand: Hand): String = hand.cards.joinToString(", ") { it.valueType.rank + it.markType.mark }
+    private fun getHandString(hand: Hand): String = hand.cards.joinToString(", ") { getCardString(it) }
+
+    private fun getCardString(card: Card): String = denominationToString(card.denomination) + suitToString(card.suit)
 
     private fun showHandWithResult(human: Human) {
-        println("${human.humanName.name}: ${getHand(human.hand)} - 결과: ${human.getPointIncludingAce().amount}")
+        println("${human.getName()}: ${getHandString(human.hand)} - 결과: ${human.hand.getPoint().amount}")
     }
 
     fun showDealerHandWithResult(dealer: Dealer) {
@@ -70,22 +73,44 @@ object OutputView {
 
     fun showResultHeader() = println(HEADER_RESULT)
 
-    fun showDealerResult(dealerResultType: Map<ResultType, Int>) {
-        println(
-            DEALER_HAND.format(
-                dealerResultType.map {
-                    it.value.toString() + it.key.word
-                }.joinToString(SPACE),
-            ),
-        )
+    fun showTotalResult(
+        dealer: Dealer,
+        playersResult: PlayersResult,
+    ) {
+        showMoneyResult(dealer.humanInfo)
+        playersResult.humanInfoList.forEach { humanInfo ->
+            showMoneyResult(humanInfo)
+        }
     }
 
-    fun showPlayersResult(
-        players: Players,
-        playersResultType: Map<HumanName, ResultType>,
-    ) {
-        players.players.forEach { player ->
-            println("${player.humanName.name}: ${playersResultType.getOrDefault(player.humanName, ResultType.DRAW).word}")
+    private fun showMoneyResult(humanInfo: HumanInfo) {
+        println(String.format("%s: %d", humanInfo.getName(), humanInfo.getMoneyAmount()))
+    }
+
+    private fun denominationToString(denomination: Denomination): String {
+        return when (denomination) {
+            Denomination.ACE -> "A"
+            Denomination.TWO -> "2"
+            Denomination.THREE -> "3"
+            Denomination.FOUR -> "4"
+            Denomination.FIVE -> "5"
+            Denomination.SIX -> "6"
+            Denomination.SEVEN -> "7"
+            Denomination.EIGHT -> "8"
+            Denomination.NINE -> "9"
+            Denomination.TEN -> "10"
+            Denomination.JACK -> "J"
+            Denomination.QUEEN -> "Q"
+            Denomination.KING -> "K"
+        }
+    }
+
+    private fun suitToString(suit: Suit): String {
+        return when (suit) {
+            Suit.SPADE -> "스페이드"
+            Suit.CLOVER -> "클로버"
+            Suit.HEART -> "하트"
+            Suit.DIAMOND -> "다이아몬드"
         }
     }
 }
