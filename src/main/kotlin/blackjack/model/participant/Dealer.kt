@@ -17,12 +17,9 @@ class Dealer : GameParticipant() {
     }
 
     fun getGameResult(playersState: Map<Player, Finish>): Map<String, Double> {
-        val result = mutableMapOf<String, Double>()
-        playersState.entries.forEach { (player, finish) ->
-            result[player.name] =
-                finish.getProfit(player.getScore(), handCards.calculateScore(), player.battingMoney).amount
-        }
-        return result
+        return playersState.map { (player, finish) ->
+            player.name to finish.getProfit(player.getScore(), handCards.calculateScore(), player.battingMoney).amount
+        }.toMap()
     }
 
     companion object {
