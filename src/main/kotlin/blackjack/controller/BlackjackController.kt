@@ -35,7 +35,7 @@ class BlackjackController(
                 isHit = {
                     isAddCardInputView.read(it)
                 },
-                showResult = {
+                playResult = {
                     outputView.printPlayerCard(it)
                 },
             )
@@ -46,7 +46,7 @@ class BlackjackController(
     private fun dealerTurn() {
         dealer.playTurn(
             cards = deck::draw,
-            showResult = outputView::printDealerAddCard,
+            playResult = outputView::printDealerAddCard,
         )
     }
 

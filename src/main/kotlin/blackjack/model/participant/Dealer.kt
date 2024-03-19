@@ -8,11 +8,11 @@ class Dealer : GameParticipant() {
 
     fun playTurn(
         cards: (Int) -> List<Card>,
-        showResult: () -> Unit,
+        playResult: () -> Unit,
     ) {
         while (getScore() < DEALER_HIT_THRESHOLD) {
             handCards.playTurn(true, cards)
-            showResult.invoke()
+            playResult.invoke()
         }
     }
 

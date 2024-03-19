@@ -9,11 +9,11 @@ class Player private constructor(val name: String, val battingMoney: BattingMone
     fun playTurn(
         cards: (Int) -> List<Card>,
         isHit: (String) -> Boolean,
-        showResult: (Player) -> Unit,
+        playResult: (Player) -> Unit,
     ): Finish {
         while (handCards.state is Gaming) {
             handCards.playTurn(isHit(name), cards)
-            showResult(this)
+            playResult(this)
         }
         return handCards.state as Finish
     }

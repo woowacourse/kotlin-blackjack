@@ -18,11 +18,11 @@ class Players(playersInfo: Map<String, BattingMoney>, cards: (Int) -> List<Card>
     fun playTurn(
         cards: (Int) -> List<Card>,
         isHit: (String) -> Boolean,
-        showResult: (Player) -> Unit,
+        playResult: (Player) -> Unit,
     ): Map<Player, Finish> {
         val gameResults = mutableMapOf<Player, Finish>()
         gamePlayers.forEach { player ->
-            val result = player.playTurn(cards, isHit, showResult)
+            val result = player.playTurn(cards, isHit, playResult)
             gameResults[player] = result
         }
         return gameResults
