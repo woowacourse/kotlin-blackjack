@@ -30,19 +30,23 @@ class BlackjackController(
 
     private fun gamePlay() {
         val result =
-            players.playTurn(deck::draw, {
-                isAddCardInputView.read(it)
-            }, {
-                outputView.printPlayerCard(it)
-            })
+            players.playTurn(
+                cards = deck::draw,
+                isHit = {
+                    isAddCardInputView.read(it)
+                },
+                showResult = {
+                    outputView.printPlayerCard(it)
+                },
+            )
         dealerTurn()
         showResult(result)
     }
 
     private fun dealerTurn() {
         dealer.playTurn(
-            deck::draw,
-            outputView::printDealerAddCard,
+            cards = deck::draw,
+            showResult = outputView::printDealerAddCard,
         )
     }
 
