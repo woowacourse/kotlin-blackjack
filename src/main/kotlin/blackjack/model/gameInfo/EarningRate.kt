@@ -1,4 +1,4 @@
-package blackjack.model
+package blackjack.model.gameInfo
 
 enum class EarningRate(val rate: Double) {
     BLACKJACK(1.5),

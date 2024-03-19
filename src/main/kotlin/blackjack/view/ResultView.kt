@@ -1,7 +1,7 @@
 package blackjack.view
 
-import blackjack.model.GameInfo
-import blackjack.model.Judge
+import blackjack.model.gameInfo.GameInfo
+import blackjack.model.participants.Judge
 
 object ResultView {
     private const val MESSAGE_PARTICIPANT_CARD_RESULT = "%s - 결과: %d"

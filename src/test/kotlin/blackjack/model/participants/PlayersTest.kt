@@ -1,5 +1,6 @@
-package blackjack.model
+package blackjack.model.participants
 
+import blackjack.model.gameInfo.GameInfo
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest

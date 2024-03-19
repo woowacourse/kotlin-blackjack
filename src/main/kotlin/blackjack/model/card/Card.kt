@@ -1,4 +1,4 @@
-package blackjack.model
+package blackjack.model.card
 
 data class Card(
     val shape: Shape,

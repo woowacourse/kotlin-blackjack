@@ -1,4 +1,6 @@
-package blackjack.model
+package blackjack.model.gameInfo
+
+import blackjack.model.card.Card
 
 class GameInfo(
     val name: String,

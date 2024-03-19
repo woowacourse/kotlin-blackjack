@@ -1,4 +1,4 @@
-package blackjack.model
+package blackjack.model.gameInfo
 
 data class Scoreboard(
     val win: Int,

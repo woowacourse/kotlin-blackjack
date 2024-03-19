@@ -1,6 +1,6 @@
 package blackjack.view
 
-import blackjack.model.GameInfo
+import blackjack.model.gameInfo.GameInfo
 
 object GameRoundView {
     private const val MESSAGE_DISTRIBUTION = "%s와 %s에게 2장의 카드를 나누었습니다."

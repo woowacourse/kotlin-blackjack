@@ -1,4 +1,8 @@
-package blackjack.model
+package blackjack.model.participants
+
+import blackjack.model.gameInfo.EarningRate
+import blackjack.model.gameInfo.GameInfo
+import blackjack.model.gameInfo.Money
 
 class Judge(
     val dealer: GameInfo,

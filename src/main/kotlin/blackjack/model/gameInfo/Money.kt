@@ -1,4 +1,4 @@
-package blackjack.model
+package blackjack.model.gameInfo
 
 @JvmInline
 value class Money(val amount: Int = 0) {

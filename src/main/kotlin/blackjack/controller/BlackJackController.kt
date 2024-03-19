@@ -1,9 +1,9 @@
 package blackjack.controller
 
-import blackjack.model.CardDeck
-import blackjack.model.Dealer
-import blackjack.model.Judge
-import blackjack.model.Players
+import blackjack.model.card.CardDeck
+import blackjack.model.participants.Dealer
+import blackjack.model.participants.Judge
+import blackjack.model.participants.Players
 import blackjack.view.GameRoundView
 import blackjack.view.InitializeView
 import blackjack.view.ResultView

@@ -1,5 +1,9 @@
-package blackjack.model
+package blackjack.model.gameInfo
 
+import blackjack.model.card.Card
+import blackjack.model.card.CardValue
+import blackjack.model.card.Shape
+import blackjack.model.createSinglePlayerGameInfo
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
