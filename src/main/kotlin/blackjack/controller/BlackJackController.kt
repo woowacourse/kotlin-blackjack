@@ -5,7 +5,7 @@ import blackjack.model.Dealer
 import blackjack.model.Judge
 import blackjack.model.Players
 import blackjack.view.GameRoundView
-import blackjack.view.InputView
+import blackjack.view.InitializeView
 import blackjack.view.ResultView
 
 object BlackJackController {
@@ -60,7 +60,7 @@ object BlackJackController {
 
     private fun getPlayerNames(): List<String> {
         return runCatching {
-            InputView.readPlayerNames()
+            InitializeView.readPlayerNames()
         }.onFailure {
             println(it.message)
             return getPlayerNames()
@@ -68,11 +68,11 @@ object BlackJackController {
     }
 
     private fun getPlayersMoneyAmount(playerNames: List<String>): List<Int> =
-        InputView.readPlayersBettingAmount(names = playerNames) ?: getPlayersMoneyAmount(playerNames)
+        InitializeView.readPlayersBettingAmount(names = playerNames) ?: getPlayersMoneyAmount(playerNames)
 
     private fun askPlayerHit(playerName: String): String =
         runCatching {
-            InputView.readContinueInput(playerName)
+            InitializeView.readContinueInput(playerName)
         }.onFailure {
             return askPlayerHit(playerName)
         }.getOrThrow()

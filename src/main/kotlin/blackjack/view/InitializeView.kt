@@ -1,6 +1,6 @@
 package blackjack.view
 
-object InputView {
+object InitializeView {
     private const val MESSAGE_INPUT_PARTICIPANT_NAMES = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)"
     private const val MESSAGE_INPUT_BETTING_AMOUNT = "\n%s의 배팅 금액은?"
     private const val MESSAGE_CONTINUE_INPUT = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)"
