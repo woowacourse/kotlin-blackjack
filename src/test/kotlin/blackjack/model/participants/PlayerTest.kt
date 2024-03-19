@@ -1,5 +1,10 @@
-package blackjack.model
+package blackjack.model.participants
 
+import blackjack.model.card.Card
+import blackjack.model.card.CardValue
+import blackjack.model.card.Shape
+import blackjack.model.gameInfo.GameInfo
+import blackjack.model.gameInfo.PickingState
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
@@ -12,10 +17,11 @@ class PlayerTest {
                 gameInfo =
                     GameInfo(
                         "해음",
-                        setOf(
-                            Card.of(Shape.CLOVER, CardValue.SIX, 0),
-                            Card.of(Shape.HEART, CardValue.K, 6),
-                        ),
+                        cards =
+                            setOf(
+                                Card.of(Shape.CLOVER, CardValue.SIX, 0),
+                                Card.of(Shape.HEART, CardValue.K, 6),
+                            ),
                     ),
             ) { "y" }
 
@@ -29,10 +35,11 @@ class PlayerTest {
                 gameInfo =
                     GameInfo(
                         "해음",
-                        setOf(
-                            Card.of(Shape.CLOVER, CardValue.SIX, 0),
-                            Card.of(Shape.HEART, CardValue.K, 6),
-                        ),
+                        cards =
+                            setOf(
+                                Card.of(Shape.CLOVER, CardValue.SIX, 0),
+                                Card.of(Shape.HEART, CardValue.K, 6),
+                            ),
                     ),
             ) { "y" }
 
@@ -45,7 +52,7 @@ class PlayerTest {
     @Test
     fun `플레이어가 카드를 더 받지 않겠다고 응답하면, 현재 보유 카드에 변경이 없도록 한다`() {
         val cards = setOf(Card.of(Shape.HEART, CardValue.SIX, 0))
-        val player = Player(GameInfo("haeum", cards)) { "n" }
+        val player = Player(GameInfo("haeum", cards = cards)) { "n" }
         val actualState =
             player.drawSingleCard {
                 Card(Shape.DIAMOND, CardValue.SEVEN.title, CardValue.SEVEN.value)
@@ -63,7 +70,7 @@ class PlayerTest {
                 Card.of(Shape.HEART, CardValue.TEN, 0),
                 Card.of(Shape.DIAMOND, CardValue.TEN, 10),
             )
-        val player = Player(GameInfo("haeum", cards)) { "y" }
+        val player = Player(GameInfo("haeum", cards = cards)) { "y" }
         val actualState =
             player.drawSingleCard {
                 Card(Shape.DIAMOND, CardValue.TWO.title, CardValue.TWO.value)

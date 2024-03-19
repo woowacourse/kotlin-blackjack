@@ -1,4 +1,8 @@
-package blackjack.model
+package blackjack.model.participants
+
+import blackjack.model.card.Card
+import blackjack.model.gameInfo.GameInfo
+import blackjack.model.gameInfo.PickingState
 
 abstract class Participant {
     abstract fun drawCardsUntilStand(

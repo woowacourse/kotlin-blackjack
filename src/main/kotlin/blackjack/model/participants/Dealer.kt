@@ -1,4 +1,8 @@
-package blackjack.model
+package blackjack.model.participants
+
+import blackjack.model.card.Card
+import blackjack.model.gameInfo.GameInfo
+import blackjack.model.gameInfo.PickingState
 
 class Dealer(
     val gameInfo: GameInfo = GameInfo(NAME_DEALER),
@@ -26,11 +30,13 @@ class Dealer(
         private const val NAME_DEALER = "딜러"
         private const val MAXIMUM_DRAW_THRESHOLD = 16
         private const val EXCEPTION_NO_CARDS_LEFT = "카드가 모두 소진되었습니다."
+        private const val INITIAL_CARD_COUNT = 2
 
         fun of(generateCard: () -> Card?): Dealer {
             val gameInfo = GameInfo(NAME_DEALER)
-            gameInfo.addCard(generateCard() ?: throw IllegalStateException(EXCEPTION_NO_CARDS_LEFT))
-
+            repeat(INITIAL_CARD_COUNT) {
+                gameInfo.addCard(generateCard() ?: throw IllegalStateException(EXCEPTION_NO_CARDS_LEFT))
+            }
             return Dealer(gameInfo)
         }
     }

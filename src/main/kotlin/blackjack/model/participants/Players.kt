@@ -1,4 +1,8 @@
-package blackjack.model
+package blackjack.model.participants
+
+import blackjack.model.card.Card
+import blackjack.model.gameInfo.GameInfo
+import blackjack.model.gameInfo.Money
 
 class Players(
     val value: List<Player>,
@@ -19,18 +23,17 @@ class Players(
 
         fun of(
             playerNames: List<String>,
+            playerMoneyAmount: List<Int>,
             onInputDecision: (String) -> String,
             generateCard: () -> Card?,
         ): Players {
-            return playerNames
-                .map { name ->
-                    Player.of(
-                        gameInfo = GameInfo(name),
-                        onInputDecision = { onInputDecision(name) },
-                        generateCard = generateCard,
-                    )
-                }
-                .run { Players(this) }
+            return playerNames.zip(playerMoneyAmount) { name, amount ->
+                Player.of(
+                    gameInfo = GameInfo(name, Money.from(amount)),
+                    onInputDecision = { onInputDecision(name) },
+                    generateCard = generateCard,
+                )
+            }.run { Players(this) }
         }
     }
 }

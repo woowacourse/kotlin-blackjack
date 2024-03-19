@@ -35,3 +35,4 @@ out/
 .DS_Store
 
 src/test/kotlin/functional
+README2.md

@@ -1,6 +1,6 @@
 package blackjack.view
 
-import blackjack.model.GameInfo
+import blackjack.model.gameInfo.GameInfo
 
 object GameRoundView {
     private const val MESSAGE_DISTRIBUTION = "%s와 %s에게 2장의 카드를 나누었습니다."
@@ -26,7 +26,7 @@ object GameRoundView {
         println(
             MESSAGE_CARD_INFO.format(
                 gameInfo.name,
-                gameInfo.cards.joinToString { "${it.title}${it.shape.title}" },
+                gameInfo.cards.joinToString { it.toString() },
             ),
         )
     }
@@ -42,7 +42,7 @@ object GameRoundView {
     private fun getDealerCardResult(gameInfo: GameInfo): String {
         return MESSAGE_CARD_INFO.format(
             gameInfo.name,
-            gameInfo.cards.joinToString { "${it.value}${it.shape.title}" },
+            gameInfo.cards.first().toString(),
         )
     }
 

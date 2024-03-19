@@ -1,4 +1,8 @@
-package blackjack.model
+package blackjack.model.participants
+
+import blackjack.model.card.Card
+import blackjack.model.gameInfo.GameInfo
+import blackjack.model.gameInfo.PickingState
 
 class Player(
     val gameInfo: GameInfo,
@@ -33,7 +37,7 @@ class Player(
     }
 
     private fun checkBurst(): PickingState {
-        if (gameInfo.sumOfCards > MAXIMUM_CARD_TOTAL) {
+        if (gameInfo.sumOfCards >= MAXIMUM_CARD_TOTAL) {
             return PickingState.STAND
         }
         return PickingState.HIT

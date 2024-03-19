@@ -1,11 +1,11 @@
 package blackjack.controller
 
-import blackjack.model.CardDeck
-import blackjack.model.Dealer
-import blackjack.model.Judge
-import blackjack.model.Players
+import blackjack.model.card.CardDeck
+import blackjack.model.participants.Dealer
+import blackjack.model.participants.Judge
+import blackjack.model.participants.Players
 import blackjack.view.GameRoundView
-import blackjack.view.InputView
+import blackjack.view.InitializeView
 import blackjack.view.ResultView
 
 object BlackJackController {
@@ -24,7 +24,8 @@ object BlackJackController {
     private fun initializePlayers() {
         runCatching {
             val playerNames = getPlayerNames()
-            players = Players.of(playerNames, ::askPlayerHit, CardDeck::pick)
+            val playersMoneyAmount = getPlayersMoneyAmount(playerNames)
+            players = Players.of(playerNames, playersMoneyAmount, ::askPlayerHit, CardDeck::pick)
         }.onFailure {
             println(it.message)
             initializePlayers()
@@ -59,16 +60,19 @@ object BlackJackController {
 
     private fun getPlayerNames(): List<String> {
         return runCatching {
-            InputView.readPlayerNames()
+            InitializeView.readPlayerNames()
         }.onFailure {
             println(it.message)
             return getPlayerNames()
         }.getOrThrow()
     }
 
+    private fun getPlayersMoneyAmount(playerNames: List<String>): List<Int> =
+        InitializeView.readPlayersBettingAmount(names = playerNames) ?: getPlayersMoneyAmount(playerNames)
+
     private fun askPlayerHit(playerName: String): String =
         runCatching {
-            InputView.readContinueInput(playerName)
+            InitializeView.readContinueInput(playerName)
         }.onFailure {
             return askPlayerHit(playerName)
         }.getOrThrow()
