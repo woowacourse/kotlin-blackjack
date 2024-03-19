@@ -1,9 +1,18 @@
 package blackjack.model.participant
 
-import blackjack.model.Card
+import blackjack.model.HEART_ACE
+import blackjack.model.HEART_EIGHT
+import blackjack.model.HEART_FIVE
+import blackjack.model.HEART_KING
+import blackjack.model.HEART_QUEEN
+import blackjack.model.HEART_SEVEN
+import blackjack.model.HEART_SIX
+import blackjack.model.HEART_TEN
+import blackjack.model.HEART_THREE
+import blackjack.model.Player
 import blackjack.model.card.Card
-import blackjack.model.result.GameResultType
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
@@ -43,64 +52,54 @@ class DealerTest {
         assertThat(actual).isEqualTo(expected)
     }
 
-    @MethodSource("게임 결과 결정 테스트 데이터")
-    @ParameterizedTest
-    fun `카드 합계를 비교하여 게임 결과를 결정한다`(
-        dealerCards: List<Card>,
-        playerCards: List<Card>,
-        expected: GameResultType,
-    ) {
+    @Test
+    fun `게임의 최종 수익 결과를 계산한다`() {
         // given
-        val dealer = Dealer()
-        val player = Player(PlayerName("seogi"))
-        dealerCards.forEach { dealer.receiveCard(it) }
-        playerCards.forEach { player.receiveCard(it) }
+        val dealer =
+            Dealer().apply {
+                this.receiveCard(HEART_KING)
+                this.receiveCard(HEART_QUEEN)
+            }
+        val player1 =
+            Player("olive").apply {
+                this.receiveCard(HEART_KING)
+                this.receiveCard(HEART_ACE)
+            }
+        val player2 =
+            Player("seogi").apply {
+                this.receiveCard(HEART_EIGHT)
+                this.receiveCard(HEART_EIGHT)
+            }
+        val players = Players(listOf(player1, player2))
 
         // when
-        val actual = dealer.decideGameResultType(player)
+        val actual = dealer.calculateGameResult(players)
 
         // then
-        assertThat(actual).isEqualTo(expected)
+        assertThat(actual.dealerResult.profit).isEqualTo(Profit(-500.0))
+
+        assertThat(actual.playersResult.results)
+            .containsEntry(PlayerName("olive"), Profit(1500.0))
+            .containsEntry(PlayerName("seogi"), Profit(-1000.0))
     }
 
     companion object {
         @JvmStatic
         fun `카드 받을 수 있는지 여부 판단 테스트 데이터`() =
             listOf(
-                Arguments.of(listOf(Card("10"), Card("5")), true),
-                Arguments.of(listOf(Card("10"), Card("5"), Card("A")), true),
-                Arguments.of(listOf(Card("10"), Card("K")), false),
-                Arguments.of(listOf(Card("10"), Card("7")), false),
+                Arguments.of(listOf(HEART_TEN, HEART_FIVE), true),
+                Arguments.of(listOf(HEART_TEN, HEART_FIVE, HEART_ACE), true),
+                Arguments.of(listOf(HEART_TEN, HEART_KING), false),
+                Arguments.of(listOf(HEART_TEN, HEART_SEVEN), false),
             )
 
         @JvmStatic
         fun `카드 값 계산 테스트 데이터`() =
             listOf(
-                Arguments.of(listOf(Card("5"), Card("3")), 8),
-                Arguments.of(listOf(Card("A")), 11),
-                Arguments.of(listOf(Card("A"), Card("A")), 12),
-                Arguments.of(listOf(Card("A"), Card("6")), 17),
-            )
-
-        @JvmStatic
-        fun `게임 결과 결정 테스트 데이터`() =
-            listOf(
-                Arguments.of(
-                    listOf(Card("K"), Card("J"), Card("6")),
-                    listOf(Card("K"), Card("Q"), Card("2")),
-                    GameResultType.WIN,
-                ),
-                Arguments.of(
-                    listOf(Card("K")),
-                    listOf(Card("K"), Card("Q"), Card("2")),
-                    GameResultType.WIN,
-                ),
-                Arguments.of(
-                    listOf(Card("K"), Card("J"), Card("6")),
-                    listOf(Card("K")),
-                    GameResultType.LOSE,
-                ),
-                Arguments.of(listOf(Card("K")), listOf(Card("Q")), GameResultType.DRAW),
+                Arguments.of(listOf(HEART_FIVE, HEART_THREE), 8),
+                Arguments.of(listOf(HEART_ACE), 11),
+                Arguments.of(listOf(HEART_ACE, HEART_ACE), 12),
+                Arguments.of(listOf(HEART_ACE, HEART_SIX), 17),
             )
     }
 }

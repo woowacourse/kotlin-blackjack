@@ -6,10 +6,7 @@ import blackjack.model.participant.Dealer
 import blackjack.model.participant.Player
 import blackjack.model.participant.Players
 import blackjack.model.participant.Role
-import blackjack.model.result.DealerResult
 import blackjack.model.result.GameResultStorage
-import blackjack.model.result.GameResultType
-import blackjack.model.result.PlayersResult
 
 class BlackjackGame(private val dealer: Dealer, private val players: Players, private val cardProvider: CardProvider) {
     init {
@@ -29,7 +26,17 @@ class BlackjackGame(private val dealer: Dealer, private val players: Players, pr
         }
     }
 
-    fun startPlayersTurn(
+    fun start(
+        readMoreCardDecision: (Player) -> Boolean,
+        printPlayerCardsMessage: (Player) -> Unit,
+        printDealerAdditionalCardMessage: () -> Unit,
+    ): GameResultStorage {
+        startPlayersTurn(readMoreCardDecision, printPlayerCardsMessage)
+        startDealerTurn(printDealerAdditionalCardMessage)
+        return dealer.calculateGameResult(players)
+    }
+
+    private fun startPlayersTurn(
         readMoreCardDecision: (Player) -> Boolean,
         printPlayerCardsMessage: (Player) -> Unit,
     ) {
@@ -52,23 +59,11 @@ class BlackjackGame(private val dealer: Dealer, private val players: Players, pr
         }
     }
 
-    fun startDealerTurn(printDealerAdditionalCardMessage: (Unit) -> Unit) {
+    private fun startDealerTurn(printDealerAdditionalCardMessage: () -> Unit) {
         while (dealer.decideMoreCard()) {
             dealer.receiveCard(Card.from(cardProvider))
-            printDealerAdditionalCardMessage
+            printDealerAdditionalCardMessage()
         }
-    }
-
-    fun calculateGameResult(): GameResultStorage {
-        val dealerResultList = mutableListOf<GameResultType>()
-        val playersResult = PlayersResult()
-
-        players.playerGroup.forEach { player ->
-            val gameResultType = dealer.decideGameResultType(player)
-            dealerResultList.add(gameResultType)
-            playersResult.add(player.name, gameResultType.reverse())
-        }
-        return GameResultStorage(DealerResult(dealerResultList), playersResult)
     }
 
     companion object {

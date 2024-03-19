@@ -1,7 +1,6 @@
 package blackjack.model.participant
 
 import blackjack.model.card.Card
-import blackjack.model.card.Denomination
 
 class HandCards {
     private val _cards = mutableListOf<Card>()
@@ -18,8 +17,8 @@ class HandCards {
             cardSum += it.getScore()
         }
         repeat(getAceCount()) {
-            if (cardSum + Denomination.ADDITIONAL_ACE_SCORE > BURST_CONDITION) return cardSum
-            cardSum += Denomination.ADDITIONAL_ACE_SCORE
+            if (cardSum + ADDITIONAL_ACE_SCORE > BURST_CONDITION) return cardSum
+            cardSum += ADDITIONAL_ACE_SCORE
         }
         return cardSum
     }
@@ -30,5 +29,6 @@ class HandCards {
 
     companion object {
         private const val BURST_CONDITION = 21
+        private const val ADDITIONAL_ACE_SCORE = 10
     }
 }

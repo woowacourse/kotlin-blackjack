@@ -4,6 +4,7 @@ import blackjack.model.BlackjackGame
 import blackjack.model.card.CardProvider
 import blackjack.model.participant.Dealer
 import blackjack.model.participant.Players
+import blackjack.model.result.GameResultStorage
 import blackjack.util.retryWhileNotException
 import blackjack.view.InputView
 import blackjack.view.OutputView
@@ -15,35 +16,33 @@ class BlackjackController(
 ) {
     fun run() {
         val dealer = Dealer()
-        val players = retryWhileNotException { Players.from(inputView.readPlayersName()) }
+        val players =
+            Players(
+                retryWhileNotException { inputView.readPlayersName() },
+            ) { retryWhileNotException { inputView.readPlayersBattingAmount(it) } }
         val blackjackGame = BlackjackGame(dealer, players, cardProvider)
         outputView.printInitCard(dealer, players)
 
-        takePlayersTurn(blackjackGame)
-        takeDealerTurn(blackjackGame)
-        showGameResult(dealer, players, blackjackGame)
+        val gameResult = startBlackjackGame(blackjackGame)
+        showResult(dealer, players, gameResult)
     }
 
-    private fun takePlayersTurn(blackjackGame: BlackjackGame) {
-        blackjackGame.startPlayersTurn(
-            { player -> inputView.readMoreCardDecision(player) },
-            { player -> outputView.printPlayerCardsMessage(player) },
-        )
+    private fun startBlackjackGame(blackjackGame: BlackjackGame): GameResultStorage {
+        val gameResult =
+            blackjackGame.start(
+                { inputView.readMoreCardDecision(it) },
+                { outputView.printPlayerCardsMessage(it) },
+                { outputView.printDealerAdditionalCardMessage() },
+            )
+        return gameResult
     }
 
-    private fun takeDealerTurn(blackjackGame: BlackjackGame) {
-        blackjackGame.startDealerTurn {
-            outputView.printDealerAdditionalCardMessage()
-        }
-    }
-
-    private fun showGameResult(
+    private fun showResult(
         dealer: Dealer,
         players: Players,
-        blackjackGame: BlackjackGame,
+        gameResult: GameResultStorage,
     ) {
-        val gameResultStorage = blackjackGame.calculateGameResult()
         outputView.printPlayersCardResult(dealer, players)
-        outputView.printFinalGameResult(players, gameResultStorage)
+        outputView.printFinalProfitResult(gameResult)
     }
 }

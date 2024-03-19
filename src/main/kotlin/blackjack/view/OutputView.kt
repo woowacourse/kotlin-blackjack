@@ -9,8 +9,6 @@ import blackjack.model.participant.Players
 import blackjack.model.participant.Role
 import blackjack.model.result.DealerResult
 import blackjack.model.result.GameResultStorage
-import blackjack.model.result.GameResultType
-import blackjack.model.result.PlayersResult
 
 class OutputView {
     fun printInitCard(
@@ -49,31 +47,11 @@ class OutputView {
         lineBreak()
     }
 
-    fun printFinalGameResult(
-        players: Players,
-        gameResultStorage: GameResultStorage,
-    ) {
-        println(FINAL_GAME_RESULT_MESSAGE)
-        print("딜러: ")
-        printDealerFinalGameResult(gameResultStorage.dealerResult)
-        printPlayersFinalGameResult(players, gameResultStorage.playersResult)
-        lineBreak()
-    }
-
-    private fun printDealerFinalGameResult(dealerResult: DealerResult) {
-        GameResultType.entries.forEach { gameResult ->
-            val count = dealerResult.results[gameResult] ?: return@forEach
-            print("${count}${gameResult.message()} ")
-        }
-        lineBreak()
-    }
-
-    private fun printPlayersFinalGameResult(
-        players: Players,
-        playersResult: PlayersResult,
-    ) {
-        players.playerGroup.forEach {
-            println("${it.name}: ${playersResult.results[it.name]?.message()}")
+    fun printFinalProfitResult(gameResult: GameResultStorage) {
+        println("## 최종 수익")
+        println(gameResult.dealerResult.getDealerProfitMessage())
+        gameResult.playersResult.results.forEach { (playerName, profit) ->
+            println("$playerName: $profit")
         }
     }
 
@@ -89,14 +67,16 @@ class OutputView {
 
     private fun Role.getPlayerCardResult() = " - 결과: ${getCardSum()}"
 
+    private fun DealerResult.getDealerProfitMessage() = "딜러: $profit"
+
     private fun lineBreak() = println()
 
     private fun Suite.value(): String =
         when (this) {
-            Suite.CLOVER -> "클로버"
-            Suite.HEART -> "하트"
-            Suite.SPADE -> "스페이드"
-            Suite.DIAMOND -> "다이아몬드`"
+            Suite.CLOVER -> "♣️"
+            Suite.HEART -> "♥️"
+            Suite.SPADE -> "♠️"
+            Suite.DIAMOND -> "♦️"
         }
 
     private fun Denomination.value(): String =
@@ -116,19 +96,11 @@ class OutputView {
             Denomination.JACK -> "J"
         }
 
-    private fun GameResultType.message(): String =
-        when (this) {
-            GameResultType.WIN -> "승"
-            GameResultType.LOSE -> "패"
-            GameResultType.DRAW -> "무"
-        }
-
     companion object {
         private const val PLAYERS_NAME_SEPARATOR = ", "
         private const val CARDS_SEPARATOR = ", "
         private const val DIVIDE_CARD_FINISH_MESSAGE = "딜러와 %s에게 2장의 나누었습니다."
         private const val DEALER_ADDITIONAL_CARD_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다."
-        private const val FINAL_GAME_RESULT_MESSAGE = "## 최종 승패"
         private const val DEALER_NAME_MESSAGE = "딜러 "
     }
 }

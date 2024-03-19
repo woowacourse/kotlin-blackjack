@@ -1,17 +1,33 @@
 package blackjack.model.participant
 
+import blackjack.model.result.DealerResult
+import blackjack.model.result.GameResultStorage
 import blackjack.model.result.GameResultType
+import blackjack.model.result.PlayersResult
 
 class Dealer : Role() {
     override fun decideMoreCard() = getCardSum() < MIN_CARD_SUM
 
-    fun decideGameResultType(player: Player): GameResultType {
+    fun calculateGameResult(players: Players): GameResultStorage {
+        var dealerProfit = Profit()
+        val playersResult = mutableMapOf<PlayerName, Profit>()
+        players.playerGroup.forEach { player ->
+            val gameResultType = decideGameResultType(player)
+            val playerProfit = Profit().calculateProfit(player.battingAmount, gameResultType)
+            playersResult[player.name] = playerProfit
+            dealerProfit -= playerProfit
+        }
+        return GameResultStorage(DealerResult(dealerProfit), PlayersResult(playersResult))
+    }
+
+    private fun decideGameResultType(player: Player): GameResultType {
         return when {
-            player.isBurst() -> GameResultType.WIN
-            isBurst() -> GameResultType.LOSE
-            getCardSum() > player.getCardSum() -> GameResultType.WIN
+            player.isBurst() -> GameResultType.LOSE
+            isBurst() -> GameResultType.WIN
+            getCardSum() > player.getCardSum() -> GameResultType.LOSE
             getCardSum() == player.getCardSum() -> GameResultType.DRAW
-            else -> GameResultType.LOSE
+            player.isBlackjack() -> GameResultType.BLACKJACK
+            else -> GameResultType.WIN
         }
     }
 
