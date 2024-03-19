@@ -52,7 +52,7 @@ class CardHandTest {
     @Test
     fun `카드 손 패에 두 장 미만의 카드가 있으면 초기 상태이다`() {
         val cardHand = CardHand(Card(CardShape.SPADE, CardNumber.SEVEN))
-        assertTrue(cardHand.isReady)
+        assertTrue(cardHand.isReady())
     }
 
     @Test
@@ -62,6 +62,6 @@ class CardHandTest {
                 Card(CardShape.CLOVER, CardNumber.ACE),
                 Card(CardShape.SPADE, CardNumber.KING),
             )
-        assertTrue(cardHand.isBlackJack)
+        assertTrue(cardHand.isBlackJack())
     }
 }

@@ -7,8 +7,8 @@ class InitialState(cardHand: CardHand) : Decide(cardHand) {
     override fun draw(card: Card): CardHandState {
         cardHand.addNewCard(card)
         return when {
-            cardHand.isReady -> InitialState(cardHand)
-            cardHand.isBlackJack -> BlackJack(cardHand)
+            cardHand.isReady() -> InitialState(cardHand)
+            cardHand.isBlackJack() -> BlackJack(cardHand)
             else -> Hit(cardHand)
         }
     }

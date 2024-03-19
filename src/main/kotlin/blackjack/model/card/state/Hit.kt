@@ -6,7 +6,7 @@ import blackjack.model.card.CardHand
 class Hit(cardHand: CardHand) : Decide(cardHand) {
     override fun draw(card: Card): CardHandState {
         cardHand.addNewCard(card)
-        if (cardHand.isBust) return Bust(cardHand)
+        if (cardHand.isBust()) return Bust(cardHand)
         return Hit(cardHand)
     }
 
