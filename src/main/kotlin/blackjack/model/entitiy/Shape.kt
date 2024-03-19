@@ -1,4 +1,4 @@
-package blackjack.model
+package blackjack.model.entitiy
 
 enum class Shape(val label: String) {
     HEART("하트"),

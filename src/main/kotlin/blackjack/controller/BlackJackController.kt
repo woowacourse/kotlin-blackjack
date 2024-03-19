@@ -1,23 +1,25 @@
 package blackjack.controller
 
-import blackjack.model.CardDeck
-import blackjack.model.Dealer
-import blackjack.model.GameInfo
-import blackjack.model.Judge
-import blackjack.model.Participant
-import blackjack.model.Players
+import blackjack.Dealer
+import blackjack.Players
+import blackjack.model.domain.CardDeck
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
-object BlackJackController {
+class BlackJackController(
+    private val dealer: Dealer,
+    private val players: Players,
+) {
     fun startGame() {
-        val playerNames = getPlayerNames()
-        val dealer = Dealer()
-        val players = Players(playerNames, ::askPlayerHit)
+        initPlayers()
+        initializeParticipantsCards()
+        playRound()
+        displayResult()
+    }
 
-        initializeParticipantsCards(dealer, players)
-        playRound(players, dealer)
-        displayResult(dealer, players)
+    private fun initPlayers() {
+        players.readNames(getPlayerNames(), ::askPlayerHit)
+        players.readBatingAmounts(::getBatingAmount)
     }
 
     private fun getPlayerNames(): List<String> {
@@ -29,52 +31,48 @@ object BlackJackController {
         }.getOrThrow()
     }
 
-    private fun initializeParticipantsCards(
-        dealer: Dealer,
-        players: Players,
-    ) {
+    private fun getBatingAmount(name: String): Int {
+        return runCatching {
+            InputView.readPlayerBatingAmount(name) ?: getBatingAmount(name)
+        }.onFailure {
+            println(it.message)
+            return getBatingAmount(name)
+        }.getOrThrow()
+    }
+
+    private fun initializeParticipantsCards() {
         dealer.drawCard { CardDeck.pick() }
-        players.initializeCards { CardDeck.pick() }
-        displayInitializedCards(dealer.gameInfo, players.getPlayersGameInfo())
+        players.initPlayersCard { CardDeck.pick() }
+        displayInitializedCards()
     }
 
-    private fun playRound(
-        players: Players,
-        dealer: Dealer,
-    ) {
+    private fun playRound() {
         with(OutputView) {
-            players.players.forEach { player ->
-                player.drawForSingleParticipant(::printSinglePlayerCards)
-            }
+            players.drawUntilPlayersSatisfaction(
+                CardDeck::pick,
+                ::printSinglePlayerCards,
+            )
+
             printNewLine()
-            dealer.drawForSingleParticipant(::printDealerHit)
+
+            dealer.drawUntilSatisfaction(
+                generateCard = CardDeck::pick,
+                printCards = ::printDealerHit,
+            )
         }
     }
 
-    private fun displayResult(
-        dealer: Dealer,
-        players: Players,
-    ) {
-        val dealerInfo = dealer.gameInfo
-        val playersInfo = players.getPlayersGameInfo()
-        val judge = Judge(dealerInfo, playersInfo)
+    private fun displayResult() {
         with(OutputView) {
-            printResult(judge)
-            printFinalCards(dealerInfo, playersInfo)
+            printFinalCards(players, dealer)
+            printResult(players, dealer)
         }
-    }
-
-    private fun Participant.drawForSingleParticipant(printCards: (GameInfo) -> Unit) {
-        drawUntilSatisfaction(CardDeck::pick, printCards)
     }
 
     private fun askPlayerHit(playerName: String): String =
         InputView.readContinueInput(playerName) ?: askPlayerHit(playerName)
 
-    private fun displayInitializedCards(
-        dealerInfo: GameInfo,
-        playersInfo: List<GameInfo>,
-    ) {
-        OutputView.printInitialStats(dealerInfo, playersInfo)
+    private fun displayInitializedCards() {
+        OutputView.printInitialStats(players, dealer)
     }
 }

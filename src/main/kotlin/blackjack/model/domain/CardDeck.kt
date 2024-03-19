@@ -1,5 +1,8 @@
-package blackjack.model
+package blackjack.model.domain
 
+import blackjack.model.entitiy.Card
+import blackjack.model.entitiy.CardRank
+import blackjack.model.entitiy.Shape
 import java.util.LinkedList
 import java.util.Queue
 
