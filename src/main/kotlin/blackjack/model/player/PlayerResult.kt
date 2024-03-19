@@ -4,8 +4,7 @@ import Player
 import blackjack.model.game.Result
 
 class PlayerResult(val player: Player, val result: Result) {
-    val profit: Int
-        get() = calculateProfits()
+    val profit: Int by lazy { calculateProfits() }
 
     private fun calculateProfits(): Int {
         val playerBlackjack = player.hand.isBlackjack()
