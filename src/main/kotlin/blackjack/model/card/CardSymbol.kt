@@ -1,4 +1,4 @@
-package blackjack.model
+package blackjack.model.card
 
 enum class CardSymbol(val label: String) {
     DIAMOND("다이아몬드"),

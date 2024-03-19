@@ -1,20 +1,21 @@
 package blackjack.controller
 
-import blackjack.model.CardDeck
-import blackjack.model.GameResult
-import blackjack.model.Participant.Dealer
-import blackjack.model.Participant.Player
-import blackjack.view.InputView
-import blackjack.view.OutputView
-import blackjack.view.ResultView
+import blackjack.model.card.CardDeck
+import blackjack.model.game.GameResult
+import blackjack.model.user.Participant.Dealer
+import blackjack.model.user.Participant.Player
+import blackjack.view.ProgressInputView
+import blackjack.view.ProgressOutputView
+import blackjack.view.ResultOutputView
+import blackjack.view.SettingInputView
 
 object BlackJackController {
     fun run() {
+        val players = SettingInputView.inputPlayers()
         val dealer = Dealer()
-        val players = InputView.inputPlayers()
         try {
             blackJackGameStart(dealer, players)
-            displayGameResult(dealer, players)
+            displayBlackJackGameResult(dealer, players)
         } catch (exception: IllegalArgumentException) {
             println(exception.message)
         }
@@ -26,9 +27,9 @@ object BlackJackController {
     ) {
         val cardDeck = CardDeck()
         dealer.initialCardDealing(players, cardDeck)
-        OutputView.outputCardDistribution(dealer, players)
+        ProgressOutputView.outputCardDistribution(dealer, players)
         judgePlayersDraw(players, cardDeck)
-        dealer.judgeDrawOrNot(cardDeck) { OutputView.outputDealerDraw(dealer) }
+        dealer.judgeDrawOrNot(cardDeck) { ProgressOutputView.outputDealerDraw(dealer) }
     }
 
     private fun judgePlayersDraw(
@@ -38,18 +39,17 @@ object BlackJackController {
         players.forEach { player ->
             player.judgeDrawOrNot(
                 cardDeck,
-                { InputView.inputDrawDecision(player.name).judgeDecision() },
-                { OutputView.outputParticipantCard(player) },
+                readDecision = { ProgressInputView.inputDrawDecision(player.participantInformation.name).judgeDecision() },
+                output = { ProgressOutputView.outputParticipantCard(player) },
             )
         }
     }
 
-    private fun displayGameResult(
+    private fun displayBlackJackGameResult(
         dealer: Dealer,
         players: List<Player>,
     ) {
-        ResultView.outputGameScores(dealer, players)
-        val gameResult = GameResult(dealer, players)
-        ResultView.outputGameResult(gameResult)
+        ResultOutputView.outputGameScores(dealer, players)
+        ResultOutputView.outputGameResult(GameResult(dealer, players))
     }
 }

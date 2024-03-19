@@ -1,10 +1,10 @@
 package blackjack.view
 
-import blackjack.model.Participant
-import blackjack.model.Participant.Dealer
-import blackjack.model.Participant.Player
+import blackjack.model.user.Participant
+import blackjack.model.user.Participant.Dealer
+import blackjack.model.user.Participant.Player
 
-object OutputView {
+object ProgressOutputView {
     private const val MESSAGE_CARD_DISTRIBUTION = "\n%s와 %s에게 2장의 카드를 나누었습니다."
     private const val MESSAGE_DEALER_CARD_INFORMATION = "%s: %s"
     private const val MESSAGE_PARTICIPANT_CARD_INFORMATION = "%s 카드: %s"
@@ -15,8 +15,8 @@ object OutputView {
         dealer: Dealer,
         players: List<Player>,
     ) {
-        val dealerName = dealer.name
-        val playerNames = players.map { player -> player.name }.joinToString(COMMA)
+        val dealerName = dealer.participantInformation.name
+        val playerNames = players.map { player -> player.participantInformation.name }.joinToString(COMMA)
         println(MESSAGE_CARD_DISTRIBUTION.format(dealerName, playerNames))
         outputInitialDealerCard(dealer)
         outputPlayersCards(players)
@@ -25,23 +25,21 @@ object OutputView {
     fun outputParticipantCard(participant: Participant) {
         println(
             MESSAGE_PARTICIPANT_CARD_INFORMATION.format(
-                participant.name,
-                participant.gameInformation.cards.joinToString(separator = ", ") { card ->
-                    card.convertCard()
-                },
+                participant.participantInformation.name,
+                participant.hand.cards.joinToString(separator = ", "),
             ),
         )
     }
 
     fun outputDealerDraw(dealer: Dealer) {
-        println(MESSAGE_DEALER_DRAW.format(dealer.name))
+        println(MESSAGE_DEALER_DRAW.format(dealer.participantInformation.name))
     }
 
     private fun outputInitialDealerCard(dealer: Dealer) {
         println(
             MESSAGE_DEALER_CARD_INFORMATION.format(
-                dealer.name,
-                dealer.gameInformation.cards.elementAt(0),
+                dealer.participantInformation.name,
+                dealer.hand.cards.elementAt(0),
             ),
         )
     }

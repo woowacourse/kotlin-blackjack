@@ -1,6 +1,6 @@
-package blackjack.model
+package blackjack.model.user
 
-class ParticipantName(private val name: String) {
+data class ParticipantName(private val name: String) {
     init {
         require(name.isNotEmpty()) { ERROR_MESSAGE_EMPTY_NAME }
     }
