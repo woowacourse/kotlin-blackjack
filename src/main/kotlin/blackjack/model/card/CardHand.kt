@@ -1,6 +1,5 @@
 package blackjack.model.card
 
-import blackjack.model.config.GameRule.INITIAL_CARD_COUNT
 import blackjack.model.result.Score
 
 class CardHand(hand: List<Card>) {
@@ -8,8 +7,6 @@ class CardHand(hand: List<Card>) {
     val hand: List<Card> get() = _hand.toList()
 
     constructor(vararg card: Card) : this(card.toList())
-
-    fun isReady(): Boolean = hand.size < INITIAL_CARD_COUNT
 
     fun calculateScore(): Score {
         val numbersSum = numbersSum()

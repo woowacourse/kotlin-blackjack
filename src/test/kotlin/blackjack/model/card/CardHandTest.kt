@@ -2,7 +2,6 @@ package blackjack.model.card
 
 import blackjack.model.result.Score
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 
 class CardHandTest {
@@ -47,11 +46,5 @@ class CardHandTest {
         val cardHand = CardHand()
         cardHand.addNewCard(Card(CardShape.SPADE, CardNumber.ACE))
         assertThat(cardHand).isEqualTo(CardHand(Card(CardShape.SPADE, CardNumber.ACE)))
-    }
-
-    @Test
-    fun `카드 손 패에 두 장 미만의 카드가 있으면 초기 상태이다`() {
-        val cardHand = CardHand(Card(CardShape.SPADE, CardNumber.SEVEN))
-        assertTrue(cardHand.isReady())
     }
 }
