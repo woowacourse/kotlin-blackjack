@@ -1,5 +1,6 @@
 package blackjack.model
 
+import blackjack.state.State
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -34,5 +35,71 @@ class ParticipantTest {
 
         val result = winPlayer.judgeBlackState(losePlayer)
         assertThat(result).isEqualTo(Result.WIN)
+    }
+
+    @Test
+    fun `게임에서 질 경우, 수익률은 특정 배수만큼 잃는다`() {
+        val participant = MockParticipant(name = "꼬상")
+        val state = State.Finish.Bust
+
+        val rate = participant.calculateEarningRate(Result.LOSE, state)
+        assertThat(rate).isEqualTo(-1.0)
+    }
+
+    @Test
+    fun `블랙잭으로 승리할 경우, 수익률은 특정 배수만큼 얻는다`() {
+        val participant = MockParticipant(name = "꼬상")
+        val state = State.Finish.BlackJack
+
+        val rate = participant.calculateEarningRate(Result.WIN, state)
+        assertThat(rate).isEqualTo(1.5)
+    }
+
+    @Test
+    fun `블랙잭은 아니지만 점수로 이긴 경우, 수익률은 특정 배수만큼 얻는다`() {
+        val participant = MockParticipant(name = "꼬상")
+        val state = State.Finish.Stay
+
+        val rate = participant.calculateEarningRate(Result.WIN, state)
+        assertThat(rate).isEqualTo(1.0)
+    }
+
+    @Test
+    fun `게임 결과가 무승부인 경우, 수익률은 없어야 한다`() {
+        val participant = MockParticipant(name = "꼬상")
+        val state = State.Finish.Stay
+
+        val rate = participant.calculateEarningRate(Result.DRAW, state)
+        assertThat(rate).isEqualTo(0.0)
+    }
+
+    @Test
+    fun `블랙잭으로 이긴 경우, 베팅금액의 특정 베수만큼 금액을 얻는다`() {
+        val player = Player("꼬상")
+
+        player.setMoney(BettingMoney(1000.0))
+        val profit = player.calculateProfit(player, 1.5)
+
+        assertThat(profit).isEqualTo(1500.0)
+    }
+
+    @Test
+    fun `블랙잭은 아니지만 점수로 이긴 경우, 베팅금액의 특정 베수만큼 금액을 얻는다`() {
+        val player = Player("꼬상")
+
+        player.setMoney(BettingMoney(1000.0))
+        val profit = player.calculateProfit(player, 1.0)
+
+        assertThat(profit).isEqualTo(1000.0)
+    }
+
+    @Test
+    fun `게임 결과가 패배인 경우, 베팅금액의 특정 베수만큼 금액을 잃는다`() {
+        val player = Player("꼬상")
+
+        player.setMoney(BettingMoney(1000.0))
+        val profit = player.calculateProfit(player, -1.0)
+
+        assertThat(profit).isEqualTo(-1000.0)
     }
 }

@@ -67,14 +67,12 @@ abstract class Participant(
 
     fun calculateProfit(
         player: Player,
-        result: Result,
+        rate: Double,
     ): Double {
-        val rate = calculateEarningRate(result, blackJack.state)
-        val profit = player.getMoney() * rate
-        return profit
+        return player.getMoney() * rate
     }
 
-    private fun calculateEarningRate(
+    fun calculateEarningRate(
         result: Result,
         state: State,
     ): Double {

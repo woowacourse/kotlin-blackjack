@@ -42,12 +42,13 @@ class CardDeckTest {
 
     @Test
     fun `2스페이드, 3다이아, 4하트, 5클로버 구성의 카드덱을 설정했을 때 카드를 뽑으면 같은 순서로 나와야 한다`() {
-        val cards = createCards(
-            Denomination.TWO to Suit.SPADE,
-            Denomination.THREE to Suit.DIAMOND,
-            Denomination.FOUR to Suit.HEART,
-            Denomination.FIVE to Suit.CLOVER
-        )
+        val cards =
+            createCards(
+                Denomination.TWO to Suit.SPADE,
+                Denomination.THREE to Suit.DIAMOND,
+                Denomination.FOUR to Suit.HEART,
+                Denomination.FIVE to Suit.CLOVER,
+            )
         val cardDeck = CardDeck(cards = LinkedList(cards))
 
         val handCard = mutableListOf<Card>()

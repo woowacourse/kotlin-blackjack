@@ -8,6 +8,6 @@ fun main() {
     blackJackController.apply {
         startGameFlow()
         playGame()
-        calculateResult()
+        displayGameResult()
     }
 }

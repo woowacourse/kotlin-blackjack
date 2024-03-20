@@ -46,6 +46,16 @@ class GameResult {
         dealerResults[dealerResult] = dealerResults.getOrDefault(dealerResult, DEFAULT_COUNT) + ADD_RESULT_COUNT
     }
 
+    fun getParticipantProfitResult(): List<Double> {
+        val playersProfit = mutableListOf<Double>()
+        getPlayerResults().forEach { player, result ->
+            val earningRate = player.calculateEarningRate(result, player.getBlackJackState())
+            val profit = player.calculateProfit(player, earningRate)
+            playersProfit.add(profit)
+        }
+        return playersProfit
+    }
+
     companion object {
         private const val DEFAULT_COUNT: Int = 1
         private const val ADD_RESULT_COUNT: Int = 1

@@ -86,18 +86,15 @@ class BlackJackController(private val cardDeck: CardDeck) {
         )
     }
 
-    fun calculateResult() {
+    fun displayGameResult() {
         val gameResult = GameResult()
         gameResult.calculateResult(
             participants.getDealer(),
             participants.getPlayers(),
         )
-        val playersProfit = mutableListOf<Double>()
-        gameResult.getPlayerResults().forEach { player, result ->
-            val profit = player.calculateProfit(player, result)
-            playersProfit.add(profit)
-        }
+        val playersProfit = gameResult.getParticipantProfitResult()
         val participantProfitResult = participants.makeProfitResult(playersProfit)
+
         displayResult(participantProfitResult)
     }
 
