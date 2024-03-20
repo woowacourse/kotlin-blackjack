@@ -1,5 +1,6 @@
 package model.participants
 
+import model.result.DealerResult
 import model.result.Point.Companion.compareTo
 import model.result.ResultType
 
@@ -20,6 +21,14 @@ class Dealer(
             this.isBust() -> ResultType.LOSE
             else -> super.judge(other)
         }
+    }
+
+    fun getDealerResult(players: Players): DealerResult {
+        return players.players
+            .map { this.judge(it) }
+            .groupingBy { it }
+            .eachCount()
+            .run { DealerResult(this) }
     }
 
     companion object {

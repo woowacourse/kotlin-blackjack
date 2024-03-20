@@ -57,19 +57,11 @@ class Game private constructor(private val participants: List<Participant>, val 
     }
 
     fun getPlayersResult(): PlayersResult {
-        return getPlayers().players.associate {
-            it.wallet.idCard to it.judge(getDealer())
-        }.run { PlayersResult(this) }
+        return getPlayers().getPlayersResult(getDealer())
     }
 
     fun getDealerResult(): DealerResult {
-        val result =
-            getPlayers().players
-                .map { getDealer().judge(it) }
-                .groupingBy { it }
-                .eachCount()
-
-        return DealerResult(result)
+        return getDealer().getDealerResult(getPlayers())
     }
 
     fun getProfitResult(): MutableMap<IdCard, Profit> {
