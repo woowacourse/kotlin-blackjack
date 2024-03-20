@@ -54,14 +54,4 @@ class CardHandTest {
         val cardHand = CardHand(Card(CardShape.SPADE, CardNumber.SEVEN))
         assertTrue(cardHand.isReady())
     }
-
-    @Test
-    fun `카드 손 패에 두 장의 카드가 있고 합이 21 이면 블랙잭이다`() {
-        val cardHand =
-            CardHand(
-                Card(CardShape.CLOVER, CardNumber.ACE),
-                Card(CardShape.SPADE, CardNumber.KING),
-            )
-        assertTrue(cardHand.isBlackJack())
-    }
 }
