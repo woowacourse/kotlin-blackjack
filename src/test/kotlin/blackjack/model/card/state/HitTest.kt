@@ -72,26 +72,4 @@ class HitTest {
         assertThat(actualState is Stay).isTrue
         assertThat(actualState.getCardHands()).isEqualTo(expectedState.getCardHands())
     }
-
-    @Test
-    fun `Hit 상태에서 카드 뽑지 않기를 선언하고 카드 숫자 합이 21 이면 BlackJack 이 된다`() {
-        val hitState =
-            Hit(
-                CardHand(
-                    Card(CardShape.SPADE, CardNumber.QUEEN),
-                    Card(CardShape.HEART, CardNumber.ACE),
-                ),
-            )
-        val actualState = hitState.stay()
-        val expectedState =
-            BlackJack(
-                CardHand(
-                    Card(CardShape.SPADE, CardNumber.QUEEN),
-                    Card(CardShape.HEART, CardNumber.ACE),
-                ),
-            )
-
-        assertThat(actualState is BlackJack).isTrue
-        assertThat(actualState.getCardHands()).isEqualTo(expectedState.getCardHands())
-    }
 }

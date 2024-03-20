@@ -1,6 +1,7 @@
 package blackjack.view
 
 import blackjack.model.role.Player
+import blackjack.model.role.PlayerName
 
 class InputView {
     fun readPlayersName(): List<String> {
@@ -9,6 +10,13 @@ class InputView {
         require(input.isNotBlank()) { "이름은 공백일 수 없습니다." }
 
         return input.split(",").map { it.trim() }
+    }
+
+    fun readMoney(playerName: PlayerName): Long {
+        println("$playerName 의 배팅 금액은?")
+        val amount = readln().toLongOrNull()
+        requireNotNull(amount) { "제대로 된 금액 형식을 입력하세요" }
+        return amount
     }
 
     fun readIsHit(player: Player): Boolean {

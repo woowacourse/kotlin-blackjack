@@ -2,6 +2,7 @@ package blackjack.model.card.state
 
 import blackjack.model.card.Card
 import blackjack.model.card.CardHand
+import blackjack.model.result.Money
 import blackjack.model.result.Score
 
 interface CardHandState {
@@ -14,4 +15,9 @@ interface CardHandState {
     fun countCards(): Int
 
     fun getCardHandScore(): Score
+
+    fun calculateProfit(
+        money: Money,
+        other: CardHandState,
+    ): Money
 }

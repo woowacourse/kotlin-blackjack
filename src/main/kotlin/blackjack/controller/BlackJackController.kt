@@ -1,6 +1,6 @@
 package blackjack.controller
 
-import blackjack.model.result.ScoreBoard
+import blackjack.model.result.Money
 import blackjack.model.role.Dealer
 import blackjack.model.role.Participants
 import blackjack.model.role.Player
@@ -23,18 +23,19 @@ class BlackJackController(
 
     private fun initGameParticipants(): Participants {
         val dealer = Dealer()
-        val players = Players((inputView.readPlayersName()).map { Player(PlayerName(it)) })
+        val players = readPlayers()
         outputView.printInitialDealing(dealer, players)
         return Participants(dealer, players)
     }
 
-    private fun showGameResult(
-        dealer: Dealer,
-        players: Players,
-    ) {
-        outputView.printFinalCardHands(dealer, players)
-        showWinningResult(dealer, players)
-    }
+    private fun readPlayers() =
+        Players(
+            (inputView.readPlayersName())
+                .map {
+                    val name = PlayerName(it)
+                    Player(name, Money.bet(inputView.readMoney(name)))
+                },
+        )
 
     private fun runGame(
         players: Players,
@@ -54,14 +55,20 @@ class BlackJackController(
         dealer.runPhase({ dealer.dealerDecisionCondition.invoke() }) { outputView.printDealerHit() }
     }
 
-    private fun showWinningResult(
+    private fun showGameResult(
         dealer: Dealer,
         players: Players,
     ) {
-        val record = ScoreBoard(players.players.associate { it.name to it.state.getCardHandScore() })
-        val playerWinning = record.calculatePlayerWinning(dealer.state.getCardHandScore())
-        val dealerWinning = playerWinning.judgeDealerWinningResult()
+        outputView.printFinalCardHands(dealer, players)
+        showParticipantsProfit(dealer, players)
+    }
 
-        outputView.printWinningResult(dealerWinning, playerWinning)
+    private fun showParticipantsProfit(
+        dealer: Dealer,
+        players: Players,
+    ) {
+        val playersProfit = players.calculatePlayersProfit(dealer)
+        val dealerProfit = playersProfit.calculateDealerProfit()
+        outputView.printParticipantsProfit(dealerProfit, playersProfit)
     }
 }

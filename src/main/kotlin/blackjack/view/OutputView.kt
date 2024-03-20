@@ -5,9 +5,8 @@ import blackjack.model.card.CardNumber
 import blackjack.model.card.CardShape
 import blackjack.model.config.GameRule.DEALER_MAX_SCORE_FOR_HIT
 import blackjack.model.config.GameRule.DEALER_NAME
-import blackjack.model.result.DealerWinning
-import blackjack.model.result.PlayerWinning
-import blackjack.model.result.WinningResultStatus
+import blackjack.model.result.Money
+import blackjack.model.result.PlayersProfit
 import blackjack.model.role.Dealer
 import blackjack.model.role.Players
 import blackjack.model.role.Role
@@ -67,30 +66,18 @@ class OutputView {
             printPlayerCardHand(it)
             println(CARD_HAND_SUM_FORMAT.format(it.state.getCardHandScore().point))
         }
+        println()
     }
 
-    fun printWinningResult(
-        dealerWinning: DealerWinning,
-        playerWinning: PlayerWinning,
+    fun printParticipantsProfit(
+        dealerProfit: Money,
+        playersProfit: PlayersProfit,
     ) {
-        println("\n## 최종 승패")
-        printDealerWinningResult(dealerWinning)
-        printPlayerWinningResult(playerWinning)
-    }
-
-    private fun printPlayerWinningResult(playerWinning: PlayerWinning) {
-        playerWinning.result.forEach { (name, status) ->
-            println("${name.name}: ${status.toOutput()}")
+        println("## 최종 수익")
+        println("$DEALER_NAME: ${dealerProfit.amount}")
+        playersProfit.result.forEach { (playerName, profit) ->
+            println("${playerName.name}: ${profit.amount} ")
         }
-        println()
-    }
-
-    private fun printDealerWinningResult(dealerWinning: DealerWinning) {
-        print(DEALER_NAME)
-        dealerWinning.result.forEach { (winningResultStatus, score) ->
-            print(score.toString() + winningResultStatus.toOutput() + " ")
-        }
-        println()
     }
 
     private fun printAllCardHand(cardHand: CardHand) {
@@ -114,11 +101,4 @@ private fun CardShape.toOutput(): String =
         CardShape.CLOVER -> "클로버"
         CardShape.SPADE -> "스페이드"
         CardShape.DIAMOND -> "다이아몬드"
-    }
-
-private fun WinningResultStatus.toOutput(): String =
-    when (this) {
-        WinningResultStatus.VICTORY -> "승"
-        WinningResultStatus.DEFEAT -> "패"
-        WinningResultStatus.DRAW -> "무"
     }
