@@ -14,8 +14,6 @@ class CardHand(hand: List<Card>) {
 
     fun isBlackJack(): Boolean = (calculateScore() == BLACK_JACK_SCORE) && (hand.size == INITIAL_CARD_COUNT)
 
-    fun isBust(): Boolean = (calculateScore() > BLACK_JACK_SCORE)
-
     fun calculateScore(): Score {
         val numbersSum = numbersSum()
         if (canGetBonusPoint()) return Score(numbersSum + BONUS_POINT)
