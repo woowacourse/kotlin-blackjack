@@ -1,6 +1,6 @@
 package blackjack.model
 
-class Card(
+data class Card(
     private val denomination: Denomination,
     private val suit: Suit,
 ) {

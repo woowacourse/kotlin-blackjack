@@ -11,30 +11,36 @@ class BlackJackTest {
     private lateinit var aceCountOneBlackJack: BlackJack
     private lateinit var aceCountFourBlackJack: BlackJack
 
+    private fun createCards(vararg cards: Card): BlackJack {
+        return BlackJack().apply {
+            cards.forEach { addCard(it) }
+        }
+    }
+
     @BeforeEach
     fun setUp() {
         defaultBlackJack = BlackJack()
         bustBlackJack =
-            BlackJack().apply {
-                addCard(Card(Denomination.KING, Suit.SPADE))
-                addCard(Card(Denomination.KING, Suit.CLOVER))
-                addCard(Card(Denomination.KING, Suit.DIAMOND))
-            }
+            createCards(
+                SPADE_KING,
+                CLOVER_KING,
+                DIAMOND_KING,
+            )
         aceCountOneBlackJack =
-            BlackJack().apply {
-                addCard(Card(Denomination.ACE, Suit.SPADE))
-                addCard(Card(Denomination.KING, Suit.CLOVER))
-                addCard(Card(Denomination.NINE, Suit.DIAMOND))
-            }
+            createCards(
+                SPADE_ACE,
+                CLOVER_KING,
+                DIAMOND_NINE,
+            )
         aceCountFourBlackJack =
-            BlackJack().apply {
-                addCard(Card(Denomination.ACE, Suit.SPADE))
-                addCard(Card(Denomination.ACE, Suit.CLOVER))
-                addCard(Card(Denomination.ACE, Suit.HEART))
-                addCard(Card(Denomination.ACE, Suit.DIAMOND))
-                addCard(Card(Denomination.SEVEN, Suit.DIAMOND))
-                addCard(Card(Denomination.NINE, Suit.SPADE))
-            }
+            createCards(
+                SPADE_ACE,
+                CLOVER_ACE,
+                HEART_ACE,
+                DIAMOND_ACE,
+                DIAMOND_SEVEN,
+                SPADE_NINE,
+            )
     }
 
     @Test
@@ -50,22 +56,16 @@ class BlackJackTest {
 
     @Test
     fun `카드를 드로우 했을 때, 정상적인 Hit 상태 유지 테스트`() {
-        val blackJack = BlackJack()
-        blackJack.apply {
-            addCard(Card(Denomination.NINE, Suit.SPADE))
-            addCard(Card(Denomination.SEVEN, Suit.CLOVER))
-        }
+        val blackJack = createCards(SPADE_NINE, DIAMOND_SEVEN)
+
         blackJack.changeState()
         assertThat(blackJack.state).isEqualTo(State.Action.Hit)
     }
 
     @Test
     fun `카드를 드로우 했을 때, 정상적인 BLACK_JACK 상태로 전환`() {
-        val blackJack = BlackJack()
-        blackJack.apply {
-            addCard(Card(Denomination.ACE, Suit.SPADE))
-            addCard(Card(Denomination.JACK, Suit.CLOVER))
-        }
+        val blackJack = createCards(SPADE_ACE, CLOVER_JACK)
+
         blackJack.changeState()
         assertThat(blackJack.state).isEqualTo(State.Finish.BlackJack)
     }

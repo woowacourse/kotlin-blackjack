@@ -7,11 +7,12 @@ import org.junit.jupiter.api.assertThrows
 class ParticipantsTest {
     class MockParticipant(name: String) : Participant(name)
 
+    private val dealer = Dealer()
+    private val mockNunuParticipant = MockParticipant("누누")
+    private val mockKkosangParticipant = MockParticipant("꼬상")
+
     @Test
     fun `정상적인 참가자들 Hit 상태 리스트 반환 테스트 `() {
-        val dealer = Dealer()
-        val mockNunuParticipant = MockParticipant("누누")
-        val mockKkosangParticipant = MockParticipant("꼬상")
         val participants = Participants(listOf(dealer, mockNunuParticipant, mockKkosangParticipant))
 
         assertThat(participants.getAlivePlayers().size).isEqualTo(2)
@@ -61,5 +62,16 @@ class ParticipantsTest {
         assertThrows<IllegalArgumentException> {
             Participants(participants = listOf(firstDealer, secondDealer))
         }
+    }
+
+    @Test
+    fun `플레이어 수익률을 모두 합산하여 뺘면 참가자의 수익률 리스트가 만들어진다`() {
+        val participants = Participants(listOf(dealer, mockNunuParticipant, mockKkosangParticipant))
+        val playerProfitList = listOf(-100.0, 300.0)
+
+        val expected = listOf(-playerProfitList.sum(), -100.0, 300.0)
+        val actual = participants.makeProfitResult(playerProfitList)
+
+        assertThat(actual).isEqualTo(expected)
     }
 }

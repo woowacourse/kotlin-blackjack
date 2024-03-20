@@ -37,6 +37,13 @@ class Participants(private val participants: List<Participant>) {
         return participants.subList(FIRST_PLAYER_INDEX, participants.size).map { it as Player }
     }
 
+    fun makeProfitResult(playersProfit: List<Double>): List<Double> {
+        val dealerProfit = -playersProfit.sum()
+        val participantProfitResult = mutableListOf(dealerProfit)
+        participantProfitResult.addAll(playersProfit)
+        return participantProfitResult
+    }
+
     companion object {
         private const val MAX_PARTICIPANTS_SIZE: Int = 8
         private const val MIN_PARTICIPANTS_SIZE: Int = 2

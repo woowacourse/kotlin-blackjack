@@ -1,6 +1,8 @@
-package blackjack.model.user
+package blackjack.view.user
 
+import blackjack.model.BettingMoney
 import blackjack.model.Player
+import blackjack.model.UserDecision
 
 object UserInputValidator {
     fun checkPlayers(input: List<String>): Result<List<Player>> {
@@ -12,7 +14,13 @@ object UserInputValidator {
 
     fun checkUserDecision(input: String): Result<UserDecision> {
         return runCatching {
-            UserDecision.getUserDecision(input)
+            UserDecision(input)
+        }
+    }
+
+    fun checkBettingMoney(input: Double): Result<BettingMoney> {
+        return runCatching {
+            BettingMoney(input)
         }
     }
 }

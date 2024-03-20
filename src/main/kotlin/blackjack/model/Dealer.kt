@@ -6,11 +6,11 @@ class Dealer(name: String = DEFAULT_DEALER_NAME) : Participant(name) {
     }
 
     fun drawAdditionalDraw(
-        deck: CardDeck,
+        drawFunction: () -> Card,
         outputAction: (() -> Unit),
     ) {
         while (checkDealerScoreCondition()) {
-            draw(deck.draw())
+            draw(drawFunction())
             outputAction()
         }
     }
