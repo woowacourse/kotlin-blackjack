@@ -1,5 +1,5 @@
 package model.result
 
-import model.participants.ParticipantName
+import model.participants.IdCard
 
-data class PlayersResult(val result: Map<ParticipantName, ResultType>)
+data class PlayersResult(val result: Map<IdCard, ResultType>)

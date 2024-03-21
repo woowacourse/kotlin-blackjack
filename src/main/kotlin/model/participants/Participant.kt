@@ -1,39 +1,29 @@
 package model.participants
 
 import model.card.Card
-import model.result.Point
 import model.result.Point.Companion.compareTo
 import model.result.ResultType
 
-abstract class Participant(open var participantState: ParticipantState, open val participantName: ParticipantName) {
-    abstract fun judge(other: Participant): ResultType
+abstract class Participant(participantState: ParticipantState, val wallet: Wallet) {
+    var participantState: ParticipantState = participantState
+        private set
 
-    fun hit(card: Card) {
-        when (val currentState = participantState) {
-            is ParticipantState.Playing -> {
-                participantState = currentState.hit(card)
-            }
-            is ParticipantState.Bust -> {
-            }
-            is ParticipantState.BlackJack -> {
-            }
-        }
-    }
+    fun isBust() = participantState is ParticipantState.Bust
 
-    fun getPointWithAce(): Point {
-        return if (participantState.hand.hasAce()) {
-            decideAceValue()
-        } else {
-            participantState.hand.point
-        }
-    }
+    fun isPlaying() = participantState is ParticipantState.Playing
 
-    private fun decideAceValue(): Point {
-        val point = participantState.hand.point
+    open fun judge(other: Participant): ResultType {
+        val optimalPoint = participantState.hand.optimalPoint
+        val otherOptimalPoint = other.participantState.hand.optimalPoint
 
         return when {
-            point <= Card.ACE_ADDITIONAL_POINT -> point + Card.ACE_ADDITIONAL_POINT
-            else -> point
+            optimalPoint > otherOptimalPoint -> ResultType.WIN
+            optimalPoint == otherOptimalPoint -> ResultType.DRAW
+            else -> ResultType.LOSE
         }
+    }
+
+    fun hit(card: Card) {
+        participantState = participantState.hit(card)
     }
 }

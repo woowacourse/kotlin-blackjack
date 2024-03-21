@@ -1,35 +1,42 @@
 package view
 
+import model.Game
 import model.card.MarkType
 import model.card.ValueType
-import model.participants.*
+import model.participants.Dealer
+import model.participants.Hand
+import model.participants.IdCard
+import model.participants.Participant
+import model.participants.Player
+import model.participants.Players
 import model.result.DealerResult
 import model.result.PlayersResult
+import model.result.Profit
 import model.result.ResultType
 
 object OutputView {
     private const val HEADER_GAME_INITIAL_STATE = "\n딜러와 %s에게 2장의 카드를 나누었습니다."
-    private const val HEADER_DRAW_CARDS_FOR_DEALER = "\n딜러는 16이하라 한장의 카드를 더 받았습니다."
+    private const val HEADER_DRAW_CARDS_FOR_DEALER = "\n%s는 16이하라 한장의 카드를 더 받았습니다."
     private const val HEADER_RESULT = "\n## 최종승패"
 
-    fun showGameInit(participants: Participants) {
-        showInitHeader(participants)
-        showParticipantsHandOut(participants)
+    fun showGameInit(game: Game) {
+        showInitHeader(game)
+        showParticipantsHandOut(game)
     }
 
-    private fun showInitHeader(participants: Participants) {
-        println(HEADER_GAME_INITIAL_STATE.format(participants.getPlayers().players.joinToString(", ") { it.participantName.name }))
+    private fun showInitHeader(game: Game) {
+        println(HEADER_GAME_INITIAL_STATE.format(game.getPlayers().players.joinToString(", ") { it.wallet.idCard.name }))
     }
 
-    private fun showParticipantsHandOut(participants: Participants) {
-        participants.getAll().forEach { participant ->
+    private fun showParticipantsHandOut(game: Game) {
+        game.getAll().forEach { participant ->
             switchParticipantHandOut(participant)
         }
         println()
     }
 
     private fun switchParticipantHandOut(participant: Participant) {
-        when(participant) {
+        when (participant) {
             is Player -> {
                 showParticipantHand(participant)
             }
@@ -40,24 +47,24 @@ object OutputView {
     }
 
     private fun showParticipantHandOnlyOne(participant: Participant) {
-        println("${participant.participantName.name}: ${getFirstCardFromHand(participant.participantState.hand)}")
+        println("${participant.wallet.idCard.name}: ${getFirstCardFromHand(participant.participantState.hand)}")
     }
 
     fun showParticipantHand(participant: Participant) {
-        println("${participant.participantName.name}: ${getCardsFromHand(participant.participantState.hand)}")
+        println("${participant.wallet.idCard.name}: ${getCardsFromHand(participant.participantState.hand)}")
     }
 
-    fun showParticipantsHandWithResult(participants: Participants) {
-        participants.getAll().forEach { participant ->
+    fun showParticipantsHandWithResult(game: Game) {
+        game.getAll().forEach { participant ->
             showParticipantHandWithResult(participant)
         }
     }
 
     private fun showParticipantHandWithResult(participant: Participant) {
         println(
-            "${participant.participantName.name}: ${getCardsFromHand(
+            "${participant.wallet.idCard.name}: ${getCardsFromHand(
                 participant.participantState.hand,
-            )} - 결과: ${participant.getPointWithAce().amount}",
+            )} - 결과: ${participant.participantState.hand.calculateOptimalPoint().amount}",
         )
     }
 
@@ -69,7 +76,7 @@ object OutputView {
     private fun getFirstCardFromHand(hand: Hand): String =
         getValueFromType(hand.cards.first().valueType) + getMarkFromType(hand.cards.first().markType)
 
-    fun showDealerHit() = println(HEADER_DRAW_CARDS_FOR_DEALER)
+    fun showDealerHit(dealer: Dealer) = println(HEADER_DRAW_CARDS_FOR_DEALER.format(dealer.wallet.idCard.name))
 
     fun showResultHeader() = println(HEADER_RESULT)
 
@@ -81,14 +88,20 @@ object OutputView {
         )
     }
 
+    fun showProfitResult(result: MutableMap<IdCard, Profit>) {
+        result.map {
+            println("${it.key.name} : ${it.value.amount.toInt()}")
+        }
+    }
+
     fun showPlayersResult(
         players: Players,
         playersResult: PlayersResult,
     ) {
         players.players.forEach { player ->
             println(
-                "${player.participantName.name}: ${getResultFromType(
-                    playersResult.result.getOrDefault(player.participantName, ResultType.DRAW),
+                "${player.wallet.idCard.name}: ${getResultFromType(
+                    playersResult.result.getOrDefault(player.wallet.idCard, ResultType.DRAW),
                 )}",
             )
         }

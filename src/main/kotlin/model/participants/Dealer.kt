@@ -1,37 +1,34 @@
 package model.participants
 
-import model.card.Deck
+import model.result.DealerResult
 import model.result.Point.Companion.compareTo
 import model.result.ResultType
 
 class Dealer(
-    override var participantState: ParticipantState,
-    override val participantName: ParticipantName =
-        ParticipantName.fromInput(
-            DEFAULT_NAME,
+    participantState: ParticipantState,
+    wallet: Wallet =
+        Wallet(
+            IdCard.fromInput(
+                DEFAULT_NAME,
+            ),
         ),
-) : Participant(participantState, participantName) {
-    fun play(deck: Deck): Int {
-        var hitCount = 0
-
-        while (canHit()) {
-            hit(deck.pop())
-            hitCount++
-        }
-
-        return hitCount
-    }
-
-    private fun canHit(): Boolean = getPointWithAce() <= HIT_THRESHOLD
+) : Participant(participantState, wallet) {
+    fun canHit(): Boolean = participantState.hand.point <= HIT_THRESHOLD
 
     override fun judge(other: Participant): ResultType {
         return when {
-            other.participantState is ParticipantState.Bust -> ResultType.WIN
-            participantState is ParticipantState.Bust -> ResultType.LOSE
-            this.getPointWithAce() > other.getPointWithAce() -> ResultType.WIN
-            this.getPointWithAce() == other.getPointWithAce() -> ResultType.DRAW
-            else -> ResultType.LOSE
+            other.isBust() -> ResultType.WIN
+            this.isBust() -> ResultType.LOSE
+            else -> super.judge(other)
         }
+    }
+
+    fun getDealerResult(players: Players): DealerResult {
+        return players.players
+            .map { this.judge(it) }
+            .groupingBy { it }
+            .eachCount()
+            .run { DealerResult(this) }
     }
 
     companion object {

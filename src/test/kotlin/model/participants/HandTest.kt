@@ -1,10 +1,9 @@
 package model.participants
 
-import model.card.Card
+import model.HEART_THREE
+import model.HEART_TWO
 import model.card.Deck
-import model.card.MarkType
-import model.card.ValueType
-import model.makeTestDeck
+import model.createTestDeck
 import model.result.Point
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
@@ -18,9 +17,9 @@ class HandTest {
     @BeforeEach
     fun setUp() {
         testDeck =
-            makeTestDeck(
-                Card(ValueType.TWO, MarkType.SPADE),
-                Card(ValueType.THREE, MarkType.SPADE),
+            createTestDeck(
+                HEART_TWO,
+                HEART_THREE,
             )
         hand = Hand()
     }
