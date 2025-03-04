@@ -8,6 +8,6 @@ class ResultTest {
     fun `딜러와 플레이어 중 카드의 총합이 큰 사람이 이긴다`() {
         val dealer = Dealer(21)
         val player = Player(10)
-        assertThat(dealer.isWinner(player)).isEqualTo(Result.WIN)
+        assertThat(dealer.getPlayerResult(player)).isEqualTo(Result.WIN)
     }
 }

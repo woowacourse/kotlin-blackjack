@@ -58,8 +58,10 @@ enum class Card(val cardId: Int) {
     CLUB_K(51);
 
     companion object {
-        fun matchCard(num:Int): Card {
-            return entries.filter {it.cardId == num}[0]
+        private val cardMap = entries.associateBy { it.cardId }
+
+        fun matchCard(num: Int): Card {
+            return requireNotNull(cardMap[num]) { "잘못된 카드 id 입니다" }
         }
     }
 }

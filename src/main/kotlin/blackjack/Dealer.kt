@@ -1,7 +1,7 @@
 package blackjack
 
 class Dealer(val totalSum: Int) : Participant {
-    fun isWinner(
+    fun getPlayerResult(
         player: Player,
     ): Result {
         return when {
