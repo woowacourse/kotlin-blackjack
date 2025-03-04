@@ -1,4 +1,7 @@
-package blackjack.domain
+package blackjack.domain.person
+
+import blackjack.domain.ResultState
+import blackjack.domain.card.Deck
 
 class Player(
     name: String,
