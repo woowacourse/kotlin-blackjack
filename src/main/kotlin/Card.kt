@@ -6,6 +6,9 @@ data class Card(
         private val symbols = Shape.entries
         private val cardNumbers = CardNumber.entries
 
-        val deck = symbols.flatMap { symbol -> cardNumbers.map { cardNumber -> Card(symbol, cardNumber) } }
+        fun initCard(cardShuffler: CardShuffler): Deck {
+            val card = symbols.flatMap { symbol -> cardNumbers.map { cardNumber -> Card(symbol, cardNumber) } }.toMutableList()
+            return Deck(cardShuffler.spread(card).toMutableList())
+        }
     }
 }
