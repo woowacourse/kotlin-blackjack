@@ -13,7 +13,7 @@ class PlayerTest {
     }
 
     @Test
-    fun `플레이어는 이름과 가진다`() {
+    fun `플레이어는 이름을 가진다`() {
         assertThat(player.name).isEqualTo("동전")
     }
 
