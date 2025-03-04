@@ -10,7 +10,7 @@ class PlayerTest {
 
     @BeforeEach
     fun `setUp`() {
-        player = Player("동전", cards = listOf(Card("하트", "A")))
+        player = Player("동전", cards = listOf(Card(Suit.HEART, Rank.ACE)))
     }
 
     @Test
@@ -20,6 +20,6 @@ class PlayerTest {
 
     @Test
     fun `플레이어는 카드를 가진다`() {
-        assertThat(player.cards).isEqualTo(listOf(Card("하트", "A")))
+        assertThat(player.cards).isEqualTo(listOf(Card(Suit.HEART, Rank.ACE)))
     }
 }

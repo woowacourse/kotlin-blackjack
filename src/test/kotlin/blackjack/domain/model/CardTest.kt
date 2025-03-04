@@ -9,7 +9,7 @@ class CardTest {
 
     @BeforeEach
     fun setUp() {
-        card = Card("하트", "K")
+        card = Card(Suit.HEART, Rank.KING)
     }
 
     @Test
