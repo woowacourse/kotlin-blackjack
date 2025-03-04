@@ -39,8 +39,18 @@ class PlayerTest {
     }
 
     @Test
-    fun `카드의 총합을 반환한다`() {
+    fun `카드의 보너스 점수를 추가한 총합을 반환한다`() {
         player = Player("동전", cards = listOf(Card(Suit.HEART, Rank.ACE), Card(Suit.HEART, Rank.KING)))
-        assertThat(player.getScore()).isEqualTo(11)
+        assertThat(player.getScore()).isEqualTo(21)
+    }
+
+    @Test
+    fun `카드의 보너스 점수가 없는 총합을 반환한다`() {
+        player =
+            Player(
+                "동전",
+                cards = listOf(Card(Suit.HEART, Rank.ACE), Card(Suit.HEART, Rank.KING), Card(Suit.SPADE, Rank.KING)),
+            )
+        assertThat(player.getScore()).isEqualTo(21)
     }
 }
