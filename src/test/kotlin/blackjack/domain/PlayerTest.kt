@@ -7,9 +7,10 @@ import org.junit.jupiter.api.Test
 
 class PlayerTest {
     @Test
-    fun `이름과 패를 가지고 있다`() {
+    fun `player는 이름, 상태를 가지고 있다`() {
         val player = Player("pobi")
         player.name shouldBe "pobi"
+        player.gameState shouldBe GameState.HIT
     }
 
     @Test
