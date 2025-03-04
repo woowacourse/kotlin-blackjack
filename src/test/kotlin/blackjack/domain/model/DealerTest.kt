@@ -37,4 +37,10 @@ class DealerTest {
             ),
         )
     }
+
+    @Test
+    fun `카드의 총합을 반환한다`() {
+        dealer = Dealer("동전", cards = listOf(Card(Suit.HEART, Rank.ACE), Card(Suit.HEART, Rank.KING)))
+        assertThat(dealer.getScore()).isEqualTo(11)
+    }
 }
