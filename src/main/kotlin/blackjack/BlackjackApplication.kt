@@ -1,5 +1,4 @@
 package blackjack
 
 fun main() {
-
 }

@@ -1,6 +1,8 @@
 package blackjack.model
 
-enum class CardRank(name: String) {
+enum class CardRank(
+    name: String,
+) {
     ACE("A"),
     TWO("2"),
     THREE("3"),
@@ -17,8 +19,8 @@ enum class CardRank(name: String) {
     ;
 
     companion object {
-        fun CardRank.score(isAceFlipped: Boolean = false):Int {
-            return when (this) {
+        fun CardRank.score(isAceFlipped: Boolean = false): Int =
+            when (this) {
                 ACE -> if (isAceFlipped) 1 else 11
                 TWO -> 2
                 THREE -> 3
@@ -30,6 +32,5 @@ enum class CardRank(name: String) {
                 NINE -> 9
                 else -> 10
             }
-        }
     }
 }
