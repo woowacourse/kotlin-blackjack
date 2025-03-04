@@ -8,12 +8,12 @@ enum class Verdict(value: String) {
 
     companion object {
         fun determine(
-            dealerScore: Int,
-            playerScore: Int,
+            standardScore: Int,
+            compareScore: Int,
         ): Verdict {
             return when {
-                dealerScore < playerScore -> WIN
-                dealerScore > playerScore -> LOSE
+                standardScore > compareScore -> WIN
+                standardScore < compareScore -> LOSE
                 else -> DRAW
             }
         }

@@ -68,4 +68,19 @@ class DealerTest {
             ),
         )
     }
+
+    @Test
+    fun `딜러의 승패들을 반환한다`() {
+        val player1 = Player("디렉", listOf(Card(Suit.SPADE, Rank.KING)))
+        val player2 = Player("뭉치", listOf(Card(Suit.SPADE, Rank.ACE)))
+        val player3 = Player("모찌", listOf(Card(Suit.SPADE, Rank.KING), Card(Suit.HEART, Rank.KING)))
+        val players = listOf(player1, player2, player3)
+        assertThat(dealer.getDealerVerdicts(players)).isEqualTo(
+            listOf(
+                Verdict.WIN,
+                Verdict.DRAW,
+                Verdict.LOSE,
+            ),
+        )
+    }
 }

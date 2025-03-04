@@ -19,7 +19,12 @@ data class Dealer(val name: String = DEALER_NAME, val cards: List<Card> = emptyL
 
     fun getPlayerVerdict(players: List<Player>): Map<Player, Verdict> {
         val dealerScore = getScore()
-        return players.associateWith { player -> Verdict.determine(dealerScore, player.getScore()) }
+        return players.associateWith { player -> Verdict.determine(player.getScore(), dealerScore) }
+    }
+
+    fun getDealerVerdicts(players: List<Player>): List<Verdict> {
+        val dealerScore = getScore()
+        return players.map { player -> Verdict.determine(dealerScore, player.getScore()) }
     }
 
     private companion object {
