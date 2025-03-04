@@ -1,6 +1,6 @@
 package blackjack.model
 
 class Card(
-    rank: CardRank,
-    suit: CardSuit,
+    val rank: CardRank,
+    val suit: CardSuit,
 )
