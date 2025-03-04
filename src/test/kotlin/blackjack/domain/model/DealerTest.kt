@@ -39,8 +39,18 @@ class DealerTest {
     }
 
     @Test
-    fun `카드의 총합을 반환한다`() {
+    fun `카드의 보너스 점수를 추가한 총합을 반환한다`() {
         dealer = Dealer("동전", cards = listOf(Card(Suit.HEART, Rank.ACE), Card(Suit.HEART, Rank.KING)))
-        assertThat(dealer.getScore()).isEqualTo(11)
+        assertThat(dealer.getScore()).isEqualTo(21)
+    }
+
+    @Test
+    fun `카드의 보너스 점수가 없는 총합을 반환한다`() {
+        dealer =
+            Dealer(
+                "동전",
+                cards = listOf(Card(Suit.HEART, Rank.ACE), Card(Suit.HEART, Rank.KING), Card(Suit.SPADE, Rank.KING)),
+            )
+        assertThat(dealer.getScore()).isEqualTo(21)
     }
 }

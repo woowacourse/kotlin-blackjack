@@ -6,10 +6,20 @@ data class Dealer(val name: String = DEALER_NAME, val cards: List<Card> = emptyL
     }
 
     fun getScore(): Int {
-        return cards.sumOf { it.rank.score }
+        val score = cards.sumOf { it.rank.score }
+        return score + getBonusScore(totalScore = score)
     }
 
-    companion object {
-        private const val DEALER_NAME = "딜러"
+    private fun getBonusScore(totalScore: Int): Int {
+        if (totalScore <= MAX_BONUS_SCORE && hasAce()) return BONUS_SCORE
+        return 0
+    }
+
+    private fun hasAce() = cards.any { it.rank == Rank.ACE }
+
+    private companion object {
+        const val DEALER_NAME = "딜러"
+        const val MAX_BONUS_SCORE = 11
+        const val BONUS_SCORE = 10
     }
 }
