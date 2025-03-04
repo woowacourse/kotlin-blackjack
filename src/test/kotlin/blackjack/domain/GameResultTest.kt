@@ -36,8 +36,8 @@ class GameResultTest {
             ),
         )
 
-        gameResult.calculateWin(listOf(player))
-        player.resultState shouldBe ResultState.WIN
+        val result = gameResult.calculateWin(listOf(player))
+        result[player] shouldBe ResultState.WIN
     }
 
     @Test
@@ -49,8 +49,8 @@ class GameResultTest {
             ),
         )
 
-        gameResult.calculateWin(listOf(player))
-        player.resultState shouldBe ResultState.LOSE
+        val result = gameResult.calculateWin(listOf(player))
+        result[player] shouldBe ResultState.LOSE
     }
 
     @Test
@@ -62,8 +62,8 @@ class GameResultTest {
             ),
         )
 
-        gameResult.calculateWin(listOf(player))
-        player.resultState shouldBe ResultState.DRAW
+        val result = gameResult.calculateWin(listOf(player))
+        result[player] shouldBe ResultState.DRAW
     }
 
     @Test
@@ -76,7 +76,7 @@ class GameResultTest {
             ),
         )
 
-        gameResult.calculateWin(listOf(player))
-        player.resultState shouldBe ResultState.LOSE
+        val result = gameResult.calculateWin(listOf(player))
+        result[player] shouldBe ResultState.LOSE
     }
 }
