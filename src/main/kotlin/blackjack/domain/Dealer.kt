@@ -1,6 +1,6 @@
 package blackjack.domain
 
-class Player(
+class Dealer(
     name: String,
 ) : Person(name) {
     override fun draw(
