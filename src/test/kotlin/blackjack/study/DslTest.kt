@@ -9,30 +9,33 @@ class DslTest {
     @ValueSource(strings = ["박재성", "제이슨"])
     @ParameterizedTest
     fun introduce(value: String) {
-        val person = introduce {
-            name(value)
-        }
+        val person =
+            introduce {
+                name(value)
+            }
         assertThat(person.name).isEqualTo(value)
     }
 
     @Test
     fun company() {
-        val person = introduce {
-            name("박재성")
-            company("우아한형제들")
-        }
+        val person =
+            introduce {
+                name("박재성")
+                company("우아한형제들")
+            }
         assertThat(person.name).isEqualTo("박재성")
         assertThat(person.company).isEqualTo("우아한형제들")
     }
 
     @Test
     fun skill() {
-        val person = introduce {
-            name("박재성")
-            soft("A passion for problem solving")
-            soft("Good communication skills")
-            hard("Kotlin")
-        }
+        val person =
+            introduce {
+                name("박재성")
+                soft("A passion for problem solving")
+                soft("Good communication skills")
+                hard("Kotlin")
+            }
         assertThat(person.name).isEqualTo("박재성")
         assertThat(person.skills?.get(0)).isEqualTo(Skill("A passion for problem solving", "soft"))
         assertThat(person.skills?.get(1)).isEqualTo(Skill("Good communication skills", "soft"))
@@ -41,11 +44,12 @@ class DslTest {
 
     @Test
     fun language() {
-        val person = introduce {
-            name("박재성")
-            language("Korean" level 5)
-            language("English" level 3)
-        }
+        val person =
+            introduce {
+                name("박재성")
+                language("Korean" level 5)
+                language("English" level 3)
+            }
         assertThat(person.name).isEqualTo("박재성")
     }
 }
@@ -89,17 +93,17 @@ data class Person(
     val name: String,
     val company: String?,
     val skills: List<Skill>?,
-    val languages: List<Language>?
+    val languages: List<Language>?,
 )
 
 data class Skill(
     val name: String,
-    val level: String
+    val level: String,
 )
 
 data class Language(
     val name: String,
-    val level: Int
+    val level: Int,
 )
 
 infix fun String.level(level: Int) = Language(this, level)
