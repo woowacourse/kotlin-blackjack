@@ -9,4 +9,12 @@ class Hand {
     fun addCard(cards: List<Card>) {
         _cards.addAll(cards)
     }
+
+    fun score(): Int {
+        val total = cards.sumOf { it.number.value }
+
+        if (total + 10 > 21) return total
+
+        return total + 10
+    }
 }
