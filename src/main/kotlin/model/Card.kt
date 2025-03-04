@@ -1,6 +1,6 @@
 package model
 
-class Card(val cardRank: CardRank, val shape: Shape ) {
+class Card(val cardRank: CardRank, val shape: Shape) {
     override fun toString(): String {
         return "${cardRank.title}${shape.title}"
     }

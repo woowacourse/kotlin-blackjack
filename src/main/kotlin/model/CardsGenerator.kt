@@ -10,7 +10,10 @@ class CardsGenerator {
         return Cards(cards)
     }
 
-    private fun createCardRank(cards: MutableList<Card>, cardShape: Shape) {
+    private fun createCardRank(
+        cards: MutableList<Card>,
+        cardShape: Shape,
+    ) {
         CardRank.entries.forEach { cardRank ->
             cards.add(Card(cardRank, cardShape))
         }
