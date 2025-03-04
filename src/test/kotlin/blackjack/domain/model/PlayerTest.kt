@@ -37,4 +37,10 @@ class PlayerTest {
             ),
         )
     }
+
+    @Test
+    fun `카드의 총합을 반환한다`() {
+        player = Player("동전", cards = listOf(Card(Suit.HEART, Rank.ACE), Card(Suit.HEART, Rank.KING)))
+        assertThat(player.getScore()).isEqualTo(11)
+    }
 }
