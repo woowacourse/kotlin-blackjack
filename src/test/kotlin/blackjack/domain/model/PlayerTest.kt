@@ -5,7 +5,6 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class PlayerTest {
-
     private lateinit var player: Player
 
     @BeforeEach
@@ -27,13 +26,15 @@ class PlayerTest {
     fun `플레이어는 카드를 받는다`() {
         assertThat(player.accept(Card(Suit.HEART, Rank.KING))).isEqualTo(
             player.copy(
-                cards = listOf(
-                    Card(
-                        Suit.HEART,
-                        Rank.ACE
-                    ), Card(Suit.HEART, Rank.KING)
-                )
-            )
+                cards =
+                    listOf(
+                        Card(
+                            Suit.HEART,
+                            Rank.ACE,
+                        ),
+                        Card(Suit.HEART, Rank.KING),
+                    ),
+            ),
         )
     }
 }

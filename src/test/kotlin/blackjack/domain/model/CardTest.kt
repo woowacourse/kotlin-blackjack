@@ -14,11 +14,11 @@ class CardTest {
 
     @Test
     fun `카드는 문양을 가진다`() {
-        assertThat(card.suit).isEqualTo("하트")
+        assertThat(card.suit.value).isEqualTo("하트")
     }
 
     @Test
     fun `카드는 등급을 가진다`() {
-        assertThat(card.rank).isEqualTo("K")
+        assertThat(card.rank.value).isEqualTo("K")
     }
 }
