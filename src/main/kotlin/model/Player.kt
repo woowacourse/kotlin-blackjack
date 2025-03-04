@@ -1,7 +1,6 @@
 package model
 
-data class Player(val name: String, val cards: MutableList<Card>) {
-
+data class Player(val name: String, val cards: Cards) {
     init {
         require(name.isNotEmpty()) { PLAYER_BLANK_ERROR_MESSAGE }
     }
