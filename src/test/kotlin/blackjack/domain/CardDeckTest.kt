@@ -15,7 +15,7 @@ class CardDeckTest {
 
         // when & then
         assertThrows<IllegalArgumentException> {
-            repeat(exceedCount) { cardDeck.draw() }
+            cardDeck.draw(exceedCount)
         }
     }
 
@@ -26,7 +26,7 @@ class CardDeckTest {
         val cardCount = 52
 
         // when
-        val cards: List<Card> = List(cardCount) { cardDeck.draw() }
+        val cards: List<Card> = cardDeck.draw(cardCount)
 
         // then
         assertThat(cards.size).isEqualTo(cardCount)
