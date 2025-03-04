@@ -1,3 +1,7 @@
+package blackjack.model.domain
+
+import blackjack.model.strategy.CardShuffler
+
 data class Card(
     val symbol: Shape,
     val number: CardNumber,

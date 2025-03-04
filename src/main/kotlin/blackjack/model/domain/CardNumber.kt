@@ -1,3 +1,5 @@
+package blackjack.model.domain
+
 enum class CardNumber(
     private val number: Int,
     val display: String = "$number",
