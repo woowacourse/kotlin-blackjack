@@ -1,12 +1,12 @@
 package blackjack.domain.model
 
-class Cards(initCards: List<Card> = deckCards.shuffled()) {
-
-    private val cards = initCards.toMutableList()
+data class Cards(private val cards: List<Card> = deckCards.shuffled()) {
 
     fun draw(): Card {
-        return cards.removeLast().copy()
+        return cards.first()
     }
+
+    fun remove(card: Card) = this.copy(cards = cards - card)
 
     companion object {
         private val deckCards = Suit.entries.flatMap { suit -> makeSuitCards(suit) }
