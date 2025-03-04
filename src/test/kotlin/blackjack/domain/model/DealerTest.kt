@@ -53,4 +53,19 @@ class DealerTest {
             )
         assertThat(dealer.getScore()).isEqualTo(21)
     }
+
+    @Test
+    fun `각 플레이어의 승패를 반환한다`() {
+        val player1 = Player("디렉", listOf(Card(Suit.SPADE, Rank.KING)))
+        val player2 = Player("뭉치", listOf(Card(Suit.SPADE, Rank.ACE)))
+        val player3 = Player("모찌", listOf(Card(Suit.SPADE, Rank.KING), Card(Suit.HEART, Rank.KING)))
+        val players = listOf(player1, player2, player3)
+        assertThat(dealer.getPlayerVerdict(players)).isEqualTo(
+            mapOf(
+                player1 to Verdict.LOSE,
+                player2 to Verdict.DRAW,
+                player3 to Verdict.WIN,
+            ),
+        )
+    }
 }

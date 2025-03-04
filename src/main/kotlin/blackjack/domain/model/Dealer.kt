@@ -17,6 +17,11 @@ data class Dealer(val name: String = DEALER_NAME, val cards: List<Card> = emptyL
 
     private fun hasAce() = cards.any { it.rank == Rank.ACE }
 
+    fun getPlayerVerdict(players: List<Player>): Map<Player, Verdict> {
+        val dealerScore = getScore()
+        return players.associateWith { player -> Verdict.determine(dealerScore, player.getScore()) }
+    }
+
     private companion object {
         const val DEALER_NAME = "딜러"
         const val MAX_BONUS_SCORE = 11
