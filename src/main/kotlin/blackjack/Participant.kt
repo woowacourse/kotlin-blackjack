@@ -1,4 +1,3 @@
 package blackjack
 
-interface Participant {
-}
+interface Participant

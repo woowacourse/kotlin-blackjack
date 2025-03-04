@@ -1,5 +1,3 @@
 package blackjack
 
-class Player(val totalSum: Int) : Participant {
-
-}
+class Player(val totalSum: Int) : Participant

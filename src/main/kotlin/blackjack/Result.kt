@@ -1,7 +1,10 @@
 package blackjack
 
 class Result() {
-    fun getWinner(dealer: Dealer, player: Player): Participant? {
+    fun getWinner(
+        dealer: Dealer,
+        player: Player,
+    ): Participant? {
         return if (dealer.totalSum > player.totalSum) {
             dealer
         } else if (player.totalSum > dealer.totalSum) {
@@ -10,5 +13,4 @@ class Result() {
             null
         }
     }
-
 }
