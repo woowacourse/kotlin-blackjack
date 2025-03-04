@@ -21,4 +21,20 @@ class DealerTest {
     fun `딜러는 카드를 가진다`() {
         assertThat(dealer.cards).isEqualTo(listOf(Card(Suit.HEART, Rank.ACE)))
     }
+
+    @Test
+    fun `딜러는 카드를 받는다`() {
+        assertThat(dealer.accept(Card(Suit.HEART, Rank.KING))).isEqualTo(
+            dealer.copy(
+                cards =
+                    listOf(
+                        Card(
+                            Suit.HEART,
+                            Rank.ACE,
+                        ),
+                        Card(Suit.HEART, Rank.KING),
+                    ),
+            ),
+        )
+    }
 }
