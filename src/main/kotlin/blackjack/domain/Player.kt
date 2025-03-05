@@ -9,4 +9,6 @@ class Player(
     }
 
     fun calculateScore(): Int = hand.calculateScore()
+
+    fun isBust(): Boolean = hand.isBust()
 }

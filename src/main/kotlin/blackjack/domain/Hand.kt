@@ -20,6 +20,8 @@ class Hand(
         return sum
     }
 
+    fun isBust(): Boolean = calculateScore() > BLACKJACK_SCORE
+
     private fun hasAce(): Boolean = _cards.any { it.isAce() }
 
     companion object {
