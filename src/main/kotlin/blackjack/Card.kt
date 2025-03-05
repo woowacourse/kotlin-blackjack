@@ -14,5 +14,7 @@ class Card private constructor(val rank: Rank, val suit: Suit) {
         fun of(rank: Rank, suit: Suit): Card {
             return POOL.find { it.rank == rank && it.suit == suit } ?: throw IllegalArgumentException()
         }
+
+        fun getAllCard() = POOL
     }
 }
