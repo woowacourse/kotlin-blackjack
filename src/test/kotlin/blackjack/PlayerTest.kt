@@ -22,4 +22,14 @@ class PlayerTest {
         player.addCard(Card(Shape.SPADE, Number.NINE))
         assertThat(player.cards.size).isEqualTo(1)
     }
+
+    @Test
+    fun `카드의 총 합을 계산한다`() {
+        player.addCard(Card(Shape.SPADE, Number.NINE))
+        player.addCard(Card(Shape.SPADE, Number.SEVEN))
+        val expect = 16
+        val actual = player.sumScore()
+
+        assertThat(actual).isEqualTo(expect)
+    }
 }

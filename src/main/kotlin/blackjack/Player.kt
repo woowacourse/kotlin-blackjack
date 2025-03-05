@@ -7,4 +7,6 @@ class Player(
     val cards get() = _cards.toList()
 
     fun addCard(card: Card) = _cards.add(card)
+
+    fun sumScore() = cards.sumOf { card -> card.number.score }
 }
