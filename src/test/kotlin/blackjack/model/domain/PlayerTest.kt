@@ -28,7 +28,13 @@ class PlayerTest {
         player1.receiveCard(Card(Shape.Heart, CardNumber.Queen))
         player1.receiveCard(Card(Shape.Spade, CardNumber.Queen))
 
-        player1.judgeBust()
+        player1.isAlive()
+        assertThat(player1.alive).isFalse()
+    }
+
+    @Test
+    fun `플레이어의 숫자의 합과 받은 숫자의 합을 비교하여 승패를 결정한다`() {
+        player1.isAlive(8)
         assertThat(player1.alive).isFalse()
     }
 }
