@@ -1,7 +1,7 @@
 package model
 
 enum class CardRank(val score: Int, val title: String) {
-    ACE(1, "A"),
+    ACE(11, "A"),
     KING(10, "K"),
     QUEEN(10, "Q"),
     JACK(10, "J"),
