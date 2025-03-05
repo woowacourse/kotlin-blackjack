@@ -8,4 +8,6 @@ data class Card(
     private val suit: Suit,
 ) {
     fun getNumber(): Int = rank.number
+
+    fun isAce(): Boolean = rank == Rank.ACE
 }
