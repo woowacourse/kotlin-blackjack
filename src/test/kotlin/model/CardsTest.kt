@@ -2,6 +2,7 @@ package model
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 class CardsTest {
     @Test
@@ -17,5 +18,19 @@ class CardsTest {
         val cards = CardsGenerator().generateCards()
         cards.drawCards(2)
         assertThat(cards.allCards.size).isEqualTo(50)
+    }
+
+    @Test
+    fun `카드는 중복될 수 없다`() {
+        val card1 = Card(CardRank.ACE, Shape.CLUB)
+        val card2 = Card(CardRank.ACE, Shape.CLUB)
+
+        val cards = mutableListOf(card1, card2)
+        assertThrows<IllegalArgumentException> { Cards(cards) }
+    }
+
+    @Test
+    fun `카드는 1장 이상 가져야한다`() {
+        assertThrows<IllegalArgumentException> {  Cards(mutableListOf()) }
     }
 }
