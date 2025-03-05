@@ -6,6 +6,7 @@ import blackjack.domain.card.Deck
 import blackjack.domain.person.Dealer
 import blackjack.domain.person.Person
 import blackjack.domain.person.Player
+import blackjack.domain.score.ScoreCalculator
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -60,7 +61,7 @@ class BlackJackController(
 
     private fun processDealerTurns(dealer: Dealer) {
         while (true) {
-            if (dealer.checkState() || dealer.hand.score() > 16) break
+            if (dealer.checkState() || ScoreCalculator.calculate(dealer.hand) > 16) break
 
             outputView.printDealerDrawMessage()
             dealer.draw(deck, 1)
@@ -69,7 +70,7 @@ class BlackJackController(
     }
 
     private fun Person.checkScore(): GameState {
-        val currentScore = this.hand.score()
+        val currentScore = ScoreCalculator.calculate(hand)
         return when {
             currentScore == 21 -> GameState.BLACKJACK
             currentScore > 21 -> GameState.BUST

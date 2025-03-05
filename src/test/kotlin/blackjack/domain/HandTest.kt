@@ -17,12 +17,4 @@ class HandTest {
 
         hand.cards.size shouldBe 3
     }
-
-    @Test
-    fun `패에 들고 있는 카드의 합을 구할 수 있다`() {
-        val hand = Hand()
-        hand.addCard(List(3) { Card.create(CardNumber.ACE, CardPattern.HEART) })
-
-        hand.score() shouldBe 13
-    }
 }

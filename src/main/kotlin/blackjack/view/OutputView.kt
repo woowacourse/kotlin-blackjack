@@ -4,6 +4,7 @@ import blackjack.domain.ResultState
 import blackjack.domain.card.Card
 import blackjack.domain.person.Dealer
 import blackjack.domain.person.Player
+import blackjack.domain.score.ScoreCalculator
 
 class OutputView {
     fun printNameMessage() {
@@ -41,9 +42,9 @@ class OutputView {
         dealer: Dealer,
         players: List<Player>,
     ) {
-        println("딜러: ${printCards(dealer.hand.cards)} - 결과: ${dealer.hand.score()}")
+        println("딜러: ${printCards(dealer.hand.cards)} - 결과: ${ScoreCalculator.calculate(dealer.hand)}")
         players.forEach { player ->
-            println(printPlayerCards(player) + " - 결과: ${player.hand.score()}")
+            println(printPlayerCards(player) + " - 결과: ${ScoreCalculator.calculate(player.hand)}")
         }
     }
 
