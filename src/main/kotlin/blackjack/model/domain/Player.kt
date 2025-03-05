@@ -1,13 +1,19 @@
 package blackjack.model.domain
 
-import blackjack.model.domain.Blackjack.Companion.BUSTSTANDARD
+import blackjack.model.domain.Blackjack.Companion.BUST_STANDARD
 
 class Player(val name: String) : Participants {
     override val cards: MutableList<Card> = mutableListOf()
     var alive: Boolean = true
 
-    fun judgeBust() {
-        if (sumCardNumber > BUSTSTANDARD) {
+    fun isAlive() {
+        if (sumCardNumber > BUST_STANDARD) {
+            alive = false
+        }
+    }
+
+    fun isAlive(number: Int) {
+        if (sumCardNumber < number) {
             alive = false
         }
     }
