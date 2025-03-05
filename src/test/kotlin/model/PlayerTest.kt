@@ -15,6 +15,6 @@ class PlayerTest {
         val king = Card(CardRank.KING, Shape.CLUB)
         val queen = Card(CardRank.QUEEN, Shape.CLUB)
 
-        assertThat(Cards(mutableListOf(king,queen)).allCards.size).isEqualTo(2)
+        assertThat(Cards(mutableListOf(king, queen)).allCards.size).isEqualTo(2)
     }
 }
