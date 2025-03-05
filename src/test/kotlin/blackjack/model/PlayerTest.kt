@@ -29,4 +29,10 @@ class PlayerTest {
             ),
         )
     }
+
+    @Test
+    fun `플레이어가 이름만 가질 경우, 가진 카드 리스트는 비어있다`() {
+        val player = Player("모찌")
+        assertThat(player.cards.size).isEqualTo(0)
+    }
 }
