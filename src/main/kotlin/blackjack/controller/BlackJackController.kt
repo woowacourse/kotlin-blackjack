@@ -20,13 +20,11 @@ class BlackJackController(
         val dealer = Dealer()
         deck = Deck()
 
-        startGame(dealer, players)
+        settingInitialCards(dealer, players)
         processPlayerTurns(players)
         processDealerTurns(dealer)
 
-        outputView.printGameResult(dealer, players)
-        val gameResult = GameResult(dealer).calculateWin(players)
-        outputView.printResult(gameResult)
+        showGameResult(dealer, players)
     }
 
     private fun generatePlayers(): List<Player> {
@@ -34,7 +32,7 @@ class BlackJackController(
         return inputView.getNames().map { Player(it) }
     }
 
-    private fun startGame(
+    private fun settingInitialCards(
         dealer: Dealer,
         players: List<Player>,
     ) {
@@ -44,25 +42,44 @@ class BlackJackController(
     }
 
     private fun processPlayerTurns(players: List<Player>) {
-        players.forEach { player ->
-            while (true) {
-                if (GameState.checkState(player.gameState)) break
+        players.forEach { player -> handlePlayerTurn(player) }
+    }
 
-                outputView.printFlagMessage(player.name)
-                if (inputView.getFlag()) {
-                    player.draw(deck, 1)
-                    outputView.printDrawStatus(player)
-                }
-            }
+    private fun handlePlayerTurn(player: Player) {
+        while (isPlayerTurnActive(player)) {
+            outputView.printFlagMessage(player.name)
+            letPlayerDrawCard(player)
         }
     }
 
-    private fun processDealerTurns(dealer: Dealer) {
-        while (true) {
-            if (GameState.checkState(dealer.gameState) || ScoreCalculator.calculate(dealer.hand) > 16) break
+    private fun letPlayerDrawCard(player: Player) {
+        if (inputView.getFlag()) {
+            player.draw(deck, 1)
+            outputView.printDrawStatus(player)
+        }
+    }
 
+    private fun isPlayerTurnActive(player: Player): Boolean {
+        return !GameState.checkState(player.gameState)
+    }
+
+    private fun processDealerTurns(dealer: Dealer) {
+        while (isDealerTurnActive(dealer)) {
             outputView.printDealerDrawMessage()
             dealer.draw(deck, 1)
         }
+    }
+
+    private fun isDealerTurnActive(dealer: Dealer): Boolean {
+        return !GameState.checkState(dealer.gameState) && ScoreCalculator.calculate(dealer.hand) <= 16
+    }
+
+    private fun showGameResult(
+        dealer: Dealer,
+        players: List<Player>,
+    ) {
+        outputView.printGameResult(dealer, players)
+        val gameResult = GameResult(dealer).calculateWin(players)
+        outputView.printResult(gameResult)
     }
 }
