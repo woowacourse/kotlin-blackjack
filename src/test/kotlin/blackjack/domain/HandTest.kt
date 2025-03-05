@@ -7,6 +7,13 @@ import org.junit.jupiter.api.Test
 
 class HandTest {
     @Test
+    fun `빈 핸드에 카드를 한 장 추가하면 카드는 총 한 장이다`() {
+        val hand = Hand(emptyList())
+        hand.addCard(Card(Rank.ACE, Suit.SPADE))
+        assertThat(hand.cards.size).isEqualTo(1)
+    }
+
+    @Test
     fun `Ace 한 장과 Queen 한 장이 있으면 점수는 21이다`() {
         // given
         val aceCard = Card(Rank.ACE, Suit.SPADE)

@@ -1,17 +1,26 @@
 package blackjack.domain
 
 class Hand(
-    private val cards: List<Card>,
+    cards: List<Card>,
 ) {
+    private val _cards: MutableList<Card> = cards.toMutableList()
+
+    val cards: List<Card>
+        get() = _cards.toList()
+
+    fun addCard(card: Card) {
+        _cards.add(card)
+    }
+
     fun calculateScore(): Int {
-        val sum = cards.sumOf { it.getNumber() }
+        val sum = _cards.sumOf { it.getNumber() }
         if (hasAce() && (sum + ACE_VALUE_DIFFERENCE <= BLACKJACK_SCORE)) {
             return sum + ACE_VALUE_DIFFERENCE
         }
         return sum
     }
 
-    private fun hasAce(): Boolean = cards.find { it.isAce() } != null
+    private fun hasAce(): Boolean = _cards.any { it.isAce() }
 
     companion object {
         private const val BLACKJACK_SCORE = 21
