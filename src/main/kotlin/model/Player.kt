@@ -1,9 +1,9 @@
 package model
 
-data class Player(val name: String, val cards: Cards) {
+class Player(val name: String, val cards: Cards) {
     init {
         require(name.isNotEmpty()) { PLAYER_BLANK_ERROR_MESSAGE }
-        require(cards.allCards.size == 2)
+        require(cards.getCardsCount() == 2) { "[ERROR]" }
     }
 
     companion object {
