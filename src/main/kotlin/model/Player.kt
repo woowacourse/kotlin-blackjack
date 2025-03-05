@@ -3,6 +3,7 @@ package model
 data class Player(val name: String, val cards: Cards) {
     init {
         require(name.isNotEmpty()) { PLAYER_BLANK_ERROR_MESSAGE }
+        require(cards.allCards.size == 2)
     }
 
     companion object {
