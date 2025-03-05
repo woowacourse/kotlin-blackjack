@@ -5,7 +5,7 @@ class Deck {
         private val CARDS = generateCards()
 
         fun poll(): Card {
-            return CARDS.removeFirst()
+            return CARDS.removeFirstOrNull() ?: throw IllegalStateException("카드가 더 없습니다.")
         }
 
         private fun generateCards(): MutableList<Card> {
