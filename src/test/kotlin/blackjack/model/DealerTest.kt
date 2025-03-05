@@ -24,4 +24,13 @@ class DealerTest {
 
         assertThat(dealer.name).isEqualTo(expected)
     }
+
+    @Test
+    fun `딜러의 카드 리스트의 초기값은 비어있다`() {
+        val dealer = Dealer()
+
+        val expected = emptyList<Card>()
+
+        assertThat(dealer.cards).isEqualTo(expected)
+    }
 }
