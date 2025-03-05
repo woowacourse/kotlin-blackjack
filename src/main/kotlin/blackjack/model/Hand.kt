@@ -28,6 +28,6 @@ class Hand {
         private const val BUST_CRITERIA = 21
         private const val SOFT_OFFSET_SCORE = 10
 
-        fun isBusted(score: Int) = score == BUST_SCORE
+        fun isBusted(score: Int): Boolean = score == BUST_SCORE
     }
 }
