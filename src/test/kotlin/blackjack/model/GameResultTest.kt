@@ -15,4 +15,16 @@ class GameResultTest {
 
         assertThat(actual).isEqualTo(expected)
     }
+
+    @ParameterizedTest
+    @CsvSource(value = ["20, 20, PUSH", "20, 19, WIN", "19, 20, LOSE"])
+    fun `기준 점수와 비교 점수를 받아서 기준 점수에 대한 게임 결과를 반환한다`(
+        standardScore: Int,
+        comparedScore: Int,
+        expected: GameResult,
+    ) {
+        val actual = GameResult.of(standardScore, comparedScore)
+
+        assertThat(actual).isEqualTo(expected)
+    }
 }

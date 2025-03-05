@@ -6,4 +6,18 @@ enum class GameResult(
     PUSH("무"),
     WIN("승"),
     LOSE("패"),
+    ;
+
+    companion object {
+        fun of(
+            standardScore: Int,
+            comparedScore: Int,
+        ): GameResult {
+            when {
+                standardScore == comparedScore -> return PUSH
+                standardScore > comparedScore -> return WIN
+            }
+            return LOSE
+        }
+    }
 }
