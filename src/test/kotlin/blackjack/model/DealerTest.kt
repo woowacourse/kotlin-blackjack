@@ -8,7 +8,7 @@ class DealerTest {
     @Test
     fun `딜러는 이름과 카드들을 가진다`() {
         val cards = listOf((Card(CardShape.HEART, "5")), Card(CardShape.CLOVER, "2"))
-        val dealer = Dealer("모찌", cards)
+        val dealer = Dealer(cards)
 
         assertAll({
             assertThat(dealer.name).isEqualTo("모찌")
@@ -32,5 +32,19 @@ class DealerTest {
         val expected = emptyList<Card>()
 
         assertThat(dealer.cards).isEqualTo(expected)
+    }
+
+    @Test
+    fun `딜러는 카드를 추가로 받을 수 있다`() {
+        val dealer = Dealer()
+        val card = Card(CardShape.CLOVER, "6")
+
+        dealer.appendCard(card)
+
+        assertThat(dealer.cards).isEqualTo(
+            listOf(
+                Card(CardShape.CLOVER, "6"),
+            ),
+        )
     }
 }
