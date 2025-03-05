@@ -13,5 +13,5 @@ enum class Rank {
     TEN,
     JACK,
     QUEEN,
-    KING;
+    KING,
 }
