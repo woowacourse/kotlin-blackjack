@@ -10,24 +10,22 @@ class Hand {
 
     fun score(): Int {
         val hardScore = hardScore()
-        return maxOf(hardScore.validate(), softScore(hardScore).validate())
+        return maxOf(hardScore.formatIfBust(), softScore(hardScore).formatIfBust())
     }
 
     private fun hardScore(): Int = cards.sumOf { it.rank.score }
 
-    private fun softScore(score: Int): Int {
+    private fun softScore(hardScore: Int): Int {
         val containsAce = cards.any { it.rank == CardRank.ACE }
 
-        return when (containsAce) {
-            true -> score + SOFT_OFFSET_SCORE
-            false -> BUST_SCORE
-        }
+        return if (containsAce) hardScore + SOFT_OFFSET_SCORE else hardScore
     }
 
-    private fun Int.validate(): Int = if (this > 21) BUST_SCORE else this
+    private fun Int.formatIfBust(): Int = if (this > BUST_CRITERIA) BUST_SCORE else this
 
     companion object {
         private const val BUST_SCORE = -1
+        private const val BUST_CRITERIA = 21
         private const val SOFT_OFFSET_SCORE = 10
 
         fun isBusted(score: Int) = score == BUST_SCORE
