@@ -1,6 +1,7 @@
 package model
 
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
@@ -30,7 +31,15 @@ class CardsTest {
     }
 
     @Test
-    fun `카드는 1장 이상 가져야한다`() {
-        assertThrows<IllegalArgumentException> {  Cards(mutableListOf()) }
+    fun `카드들 중에 ACE 카드의 개수를 반환한다`() {
+        val card1 = Card(CardRank.ACE, Shape.CLUB)
+        val card2 = Card(CardRank.ACE, Shape.SPADE)
+        val card3 = Card(CardRank.SIX, Shape.SPADE)
+
+        val cards = mutableListOf(card1, card2, card3)
+        val expected = 2
+        val result = Cards(cards).aceCount()
+
+        Assertions.assertEquals(expected, result)
     }
 }
