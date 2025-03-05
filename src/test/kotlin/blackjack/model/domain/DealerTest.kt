@@ -17,4 +17,9 @@ class DealerTest {
     fun `카드 숫자의 합을 계산한다`() {
         assertThat(dealer.sumCardNumber).isEqualTo(7)
     }
+
+    @Test
+    fun `받은 카드의 목록을 반환한다`() {
+        assertThat(dealer.cardDeck).isEqualTo(listOf(Card(Shape.Heart, CardNumber.Ace), Card(Shape.Spade, CardNumber.Six)))
+    }
 }
