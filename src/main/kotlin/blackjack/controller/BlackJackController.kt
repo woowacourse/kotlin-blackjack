@@ -52,8 +52,6 @@ class BlackJackController(
                 if (inputView.getFlag()) {
                     player.draw(deck, 1)
                     outputView.printDrawStatus(player)
-                    val score = ScoreCalculator.calculate(player.hand)
-                    player.gameState = GameState.from(score)
                 }
             }
         }
@@ -65,8 +63,6 @@ class BlackJackController(
 
             outputView.printDealerDrawMessage()
             dealer.draw(deck, 1)
-            val score = ScoreCalculator.calculate(dealer.hand)
-            dealer.gameState = GameState.from(score)
         }
     }
 }

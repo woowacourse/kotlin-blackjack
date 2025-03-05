@@ -16,25 +16,18 @@ class GameResultTest {
 
     @BeforeEach
     fun setUp() {
-        dealer = Dealer("dealer")
-        dealer.hand.addCard(
-            listOf(
-                Card.create(CardNumber.JACK, CardPattern.HEART),
-                Card.create(CardNumber.EIGHT, CardPattern.HEART),
-            ),
-        )
+        dealer = Dealer()
+        dealer.hand.addCard(Card.create(CardNumber.JACK, CardPattern.HEART))
+        dealer.hand.addCard(Card.create(CardNumber.EIGHT, CardPattern.HEART))
+
         gameResult = GameResult(dealer)
         player = Player("player")
     }
 
     @Test
     fun `플레이어가 이기는 경우`() {
-        player.hand.addCard(
-            listOf(
-                Card.create(CardNumber.JACK, CardPattern.HEART),
-                Card.create(CardNumber.JACK, CardPattern.HEART),
-            ),
-        )
+        player.hand.addCard(Card.create(CardNumber.JACK, CardPattern.HEART))
+        player.hand.addCard(Card.create(CardNumber.JACK, CardPattern.HEART))
 
         val result = gameResult.calculateWin(listOf(player))
         result[player] shouldBe ResultState.WIN
@@ -42,12 +35,8 @@ class GameResultTest {
 
     @Test
     fun `플레이어가 지는 경우`() {
-        player.hand.addCard(
-            listOf(
-                Card.create(CardNumber.FOUR, CardPattern.HEART),
-                Card.create(CardNumber.EIGHT, CardPattern.HEART),
-            ),
-        )
+        player.hand.addCard(Card.create(CardNumber.FOUR, CardPattern.HEART))
+        player.hand.addCard(Card.create(CardNumber.EIGHT, CardPattern.HEART))
 
         val result = gameResult.calculateWin(listOf(player))
         result[player] shouldBe ResultState.LOSE
@@ -55,12 +44,8 @@ class GameResultTest {
 
     @Test
     fun `플레이어가 비기는 경우`() {
-        player.hand.addCard(
-            listOf(
-                Card.create(CardNumber.JACK, CardPattern.HEART),
-                Card.create(CardNumber.EIGHT, CardPattern.HEART),
-            ),
-        )
+        player.hand.addCard(Card.create(CardNumber.JACK, CardPattern.HEART))
+        player.hand.addCard(Card.create(CardNumber.EIGHT, CardPattern.HEART))
 
         val result = gameResult.calculateWin(listOf(player))
         result[player] shouldBe ResultState.DRAW
@@ -68,13 +53,9 @@ class GameResultTest {
 
     @Test
     fun `플레이어가 버스트되는 경우`() {
-        player.hand.addCard(
-            listOf(
-                Card.create(CardNumber.JACK, CardPattern.HEART),
-                Card.create(CardNumber.JACK, CardPattern.HEART),
-                Card.create(CardNumber.JACK, CardPattern.HEART),
-            ),
-        )
+        player.hand.addCard(Card.create(CardNumber.JACK, CardPattern.HEART))
+        player.hand.addCard(Card.create(CardNumber.JACK, CardPattern.HEART))
+        player.hand.addCard(Card.create(CardNumber.JACK, CardPattern.HEART))
 
         val result = gameResult.calculateWin(listOf(player))
         result[player] shouldBe ResultState.LOSE

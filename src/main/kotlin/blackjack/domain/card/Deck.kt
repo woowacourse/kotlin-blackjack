@@ -9,10 +9,8 @@ class Deck {
         require(cards.size == DECK_SIZE) { INVALID_DECK_SIZE_ERROR_MESSAGE }
     }
 
-    fun draw(amount: Int): List<Card> {
-        val drawCards = cards.take(amount)
-        _cards.removeAll(drawCards)
-        return drawCards
+    fun draw(): Card {
+        return _cards.removeFirst()
     }
 
     private fun generateDeck(): List<Card> = CardPattern.entries.flatMap(::createCard).shuffled()

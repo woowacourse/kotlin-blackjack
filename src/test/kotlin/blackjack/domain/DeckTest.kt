@@ -13,10 +13,10 @@ class DeckTest {
     }
 
     @Test
-    fun `요청한 수량에 맞게 카드를 뽑을 수 있다`() {
+    fun `덱에서 카드를 뽑을 수 있다`() {
         val deck = Deck()
 
-        deck.draw(2)
-        deck.cards.size shouldBe 50
+        deck.draw()
+        deck.cards.size shouldBe 51
     }
 }

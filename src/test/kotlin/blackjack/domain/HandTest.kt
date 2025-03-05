@@ -11,9 +11,8 @@ class HandTest {
     @Test
     fun `패에 카드를 추가할 수 있다`() {
         val hand = Hand()
-        hand.addCard(
-            List(3) { Card.create(CardNumber.ACE, CardPattern.HEART) },
-        )
+        val card = Card.create(CardNumber.ACE, CardPattern.HEART)
+        repeat(3) { hand.addCard(card) }
 
         hand.cards.size shouldBe 3
     }

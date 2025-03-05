@@ -8,7 +8,7 @@ class Hand {
     val cards: List<Card>
         get() = _cards.toList()
 
-    fun addCard(cards: List<Card>) {
-        _cards.addAll(cards)
+    fun addCard(card: Card) {
+        _cards.add(card)
     }
 }
