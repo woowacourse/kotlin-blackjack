@@ -5,7 +5,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class PlayerTest {
-    val player1 = Player("제리")
+    private val player1 = Player("제리")
 
     @BeforeEach
     fun setup() {
