@@ -15,4 +15,13 @@ class DealerTest {
             assertThat(dealer.cards).isEqualTo(cards)
         })
     }
+
+    @Test
+    fun `딜러는 이름이 없을 경우, 딜러라는 이름을 가진다`() {
+        val dealer = Dealer(cards = emptyList())
+
+        val expected = "딜러"
+
+        assertThat(dealer.name).isEqualTo(expected)
+    }
 }
