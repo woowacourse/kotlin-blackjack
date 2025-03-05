@@ -1,6 +1,7 @@
 package blackjack.domain
 
 import blackjack.domain.enums.Rank
+import blackjack.domain.enums.Result
 import blackjack.domain.enums.Suit
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -80,5 +81,35 @@ class PlayerTest {
 
         // then
         assertThat(isBust).isFalse()
+    }
+
+    @Test
+    fun `플레이어의 점수가 20이고 딜러의 점수가 18이면 플레이어가 이긴다`() {
+        // given
+        val queenSpade = Card(Rank.QUEEN, Suit.SPADE)
+        val queenHeart = Card(Rank.QUEEN, Suit.HEART)
+        val hand = Hand(listOf(queenSpade, queenHeart))
+        val player = Player("Jason", hand)
+
+        // when
+        val result = player.getResult(18)
+
+        // then
+        assertThat(result).isEqualTo(Result.WIN)
+    }
+
+    @Test
+    fun `플레이어의 점수가 20이고 딜러의 점수가 21이면 플레이어가 진다`() {
+        // given
+        val queenSpade = Card(Rank.QUEEN, Suit.SPADE)
+        val queenHeart = Card(Rank.QUEEN, Suit.HEART)
+        val hand = Hand(listOf(queenSpade, queenHeart))
+        val player = Player("Jason", hand)
+
+        // when
+        val result = player.getResult(21)
+
+        // then
+        assertThat(result).isEqualTo(Result.LOSE)
     }
 }
