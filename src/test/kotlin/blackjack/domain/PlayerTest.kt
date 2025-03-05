@@ -19,4 +19,35 @@ class PlayerTest {
         // then
         assertThat(player.hand.cards.size).isEqualTo(1)
     }
+
+    @Test
+    fun `플레이어가 Ace 한 장과 Queen 한 장을 가지면 점수는 21이다`() {
+        // given
+        val aceCard = Card(Rank.ACE, Suit.SPADE)
+        val queenCard = Card(Rank.QUEEN, Suit.SPADE)
+        val hand = Hand(listOf(aceCard, queenCard))
+        val player = Player("Jason", hand)
+
+        // when
+        val score = player.calculateScore()
+
+        // then
+        assertThat(score).isEqualTo(21)
+    }
+
+    @Test
+    fun `플레이어가 Ace 두 장과 9 한 장을 가지면 점수는 21이다`() {
+        // given
+        val aceSpade = Card(Rank.ACE, Suit.SPADE)
+        val aceDiamond = Card(Rank.ACE, Suit.DIAMOND)
+        val nineSpade = Card(Rank.NINE, Suit.SPADE)
+        val hand = Hand(listOf(aceSpade, aceDiamond, nineSpade))
+        val player = Player("Jason", hand)
+
+        // when
+        val score = player.calculateScore()
+
+        // then
+        assertThat(score).isEqualTo(21)
+    }
 }

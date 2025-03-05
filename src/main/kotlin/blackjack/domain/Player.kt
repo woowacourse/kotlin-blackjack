@@ -7,4 +7,6 @@ class Player(
     fun addCard(card: Card) {
         hand.addCard(card)
     }
+
+    fun calculateScore(): Int = hand.calculateScore()
 }
