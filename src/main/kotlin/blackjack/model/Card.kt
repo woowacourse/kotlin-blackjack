@@ -1,6 +1,6 @@
 package blackjack.model
 
-class Card(
+data class Card(
     val shape: CardShape,
     val denomination: String,
 ) {
