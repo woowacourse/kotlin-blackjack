@@ -3,6 +3,8 @@ package blackjack
 import java.lang.IllegalArgumentException
 
 class Card private constructor(val rank: Rank, val suit: Suit) {
+    fun getScore() = this.rank.score
+
     companion object {
         private val POOL: List<Card> =
             Rank.entries.flatMap { rank ->
