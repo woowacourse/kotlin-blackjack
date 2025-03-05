@@ -13,7 +13,7 @@ class OutputView {
         println("딜러는 16이하라 한 장의 카드를 더 받았습니다.")
     }
 
-    fun displayPersonInfo(
+    fun displayParticipantInfo(
         name: String,
         cards: List<String>,
         score: Int,
