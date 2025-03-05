@@ -1,7 +1,7 @@
 # kotlin-blackjack
 
-- 플레이어 상태
-    - [ ] 게임 진행 중 플레이어의 상태는 Blackjack, Bust, None이 있다.
+- 카드들 상태
+    - [ ] 게임 진행 중 카드들의 상태는 Blackjack, Bust, None이 있다.
     - [ ] Blackjack는 처음 받은 카드의 합이 21이다
     - [ ] Bust는 카드의 합이 21초과이다.
     - [ ] None은 카드의 합이 21미만이다.
