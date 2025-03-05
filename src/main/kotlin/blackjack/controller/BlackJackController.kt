@@ -4,7 +4,6 @@ import blackjack.domain.GameResult
 import blackjack.domain.GameState
 import blackjack.domain.card.Deck
 import blackjack.domain.person.Dealer
-import blackjack.domain.person.Person
 import blackjack.domain.person.Player
 import blackjack.domain.score.ScoreCalculator
 import blackjack.view.InputView
@@ -47,13 +46,14 @@ class BlackJackController(
     private fun processPlayerTurns(players: List<Player>) {
         players.forEach { player ->
             while (true) {
-                if (player.checkState()) break
+                if (GameState.checkState(player.gameState)) break
 
                 outputView.printFlagMessage(player.name)
                 if (inputView.getFlag()) {
                     player.draw(deck, 1)
                     outputView.printDrawStatus(player)
-                    player.gameState = player.checkScore()
+                    val score = ScoreCalculator.calculate(player.hand)
+                    player.gameState = GameState.from(score)
                 }
             }
         }
@@ -61,24 +61,12 @@ class BlackJackController(
 
     private fun processDealerTurns(dealer: Dealer) {
         while (true) {
-            if (dealer.checkState() || ScoreCalculator.calculate(dealer.hand) > 16) break
+            if (GameState.checkState(dealer.gameState) || ScoreCalculator.calculate(dealer.hand) > 16) break
 
             outputView.printDealerDrawMessage()
             dealer.draw(deck, 1)
-            dealer.gameState = dealer.checkScore()
+            val score = ScoreCalculator.calculate(dealer.hand)
+            dealer.gameState = GameState.from(score)
         }
-    }
-
-    private fun Person.checkScore(): GameState {
-        val currentScore = ScoreCalculator.calculate(hand)
-        return when {
-            currentScore == 21 -> GameState.BLACKJACK
-            currentScore > 21 -> GameState.BUST
-            else -> GameState.HIT
-        }
-    }
-
-    private fun Person.checkState(): Boolean {
-        return this.gameState == GameState.STAY || this.gameState == GameState.BUST
     }
 }
