@@ -1,6 +1,6 @@
 package blackjack.model.domain
 
-import blackjack.model.domain.Blackjack.Companion.BUST_STANDARD
+import blackjack.model.service.Blackjack.Companion.BUST_STANDARD
 
 class Player(val name: String) : Participants {
     override val cards: MutableList<Card> = mutableListOf()

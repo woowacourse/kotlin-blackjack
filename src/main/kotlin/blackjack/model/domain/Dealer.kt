@@ -1,6 +1,6 @@
 package blackjack.model.domain
 
-import blackjack.model.domain.Blackjack.Companion.THRESHOLD
+import blackjack.model.service.Blackjack.Companion.THRESHOLD
 
 class Dealer(val name: String = "딜러") : Participants {
     override val cards: MutableList<Card> = mutableListOf()
