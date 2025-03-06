@@ -1,8 +1,9 @@
 package blackjack.domain
 
 import blackjack.domain.enums.Rank
+import blackjack.domain.enums.Result
 import blackjack.domain.enums.Suit
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class DealerTest {
@@ -16,7 +17,7 @@ class DealerTest {
         dealer.addCard(card)
 
         // then
-        Assertions.assertThat(dealer.hand.cards.size).isEqualTo(1)
+        assertThat(dealer.hand.cards.size).isEqualTo(1)
     }
 
     @Test
@@ -32,7 +33,7 @@ class DealerTest {
         val score = dealer.calculateScore()
 
         // then
-        Assertions.assertThat(score).isEqualTo(21)
+        assertThat(score).isEqualTo(21)
     }
 
     @Test
@@ -50,7 +51,7 @@ class DealerTest {
         val score = dealer.calculateScore()
 
         // then
-        Assertions.assertThat(score).isEqualTo(21)
+        assertThat(score).isEqualTo(21)
     }
 
     @Test
@@ -68,7 +69,7 @@ class DealerTest {
         val isBust = dealer.isBust()
 
         // then
-        Assertions.assertThat(isBust).isTrue()
+        assertThat(isBust).isTrue()
     }
 
     @Test
@@ -84,6 +85,19 @@ class DealerTest {
         val isBust = dealer.isBust()
 
         // then
-        Assertions.assertThat(isBust).isFalse()
+        assertThat(isBust).isFalse()
+    }
+
+    @Test
+    fun `플레이어가 승리하면 딜러는 1패를 가진다`() {
+        // given
+        val dealer = Dealer()
+
+        // when
+        dealer.updateResult(Result.WIN)
+        val dealerLoseCount = dealer.getResultCount(Result.LOSE)
+
+        // then
+        assertThat(dealerLoseCount).isEqualTo(1)
     }
 }
