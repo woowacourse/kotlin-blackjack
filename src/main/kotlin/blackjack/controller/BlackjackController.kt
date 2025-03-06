@@ -14,7 +14,7 @@ class BlackjackController(
 ) {
     fun run() {
         val cardDeck = CardDeck()
-        val dealer = Dealer()
+        val dealer = Dealer().apply { this.draw(cardDeck) }
 
         val players = Players.from(inputView.getPlayers())
         players.value.forEach { player ->
