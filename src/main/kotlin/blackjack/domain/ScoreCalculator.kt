@@ -16,7 +16,10 @@ class ScoreCalculator {
         return card.number.value
     }
 
-    private fun adjustAceValues(sum: Int, values: List<Int>): Int {
+    private fun adjustAceValues(
+        sum: Int,
+        values: List<Int>,
+    ): Int {
         var total = sum
         val aceCount = values.count { it == GameRule.ACE_OTHER_SCORE }
 
@@ -28,4 +31,3 @@ class ScoreCalculator {
         return total
     }
 }
-
