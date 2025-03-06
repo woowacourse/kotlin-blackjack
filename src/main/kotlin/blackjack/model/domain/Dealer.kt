@@ -2,7 +2,7 @@ package blackjack.model.domain
 
 import blackjack.model.service.Blackjack.Companion.THRESHOLD
 
-class Dealer(val name: String = "딜러") : Participants {
+class Dealer(val name: String = DEALER_NAME) : Participants {
     override val cards: MutableList<Card> = mutableListOf()
     override var alive: Boolean = true
 
@@ -10,5 +10,9 @@ class Dealer(val name: String = "딜러") : Participants {
         while (sumCardNumber <= THRESHOLD) {
             receiveCard(cards.spreadCard())
         }
+    }
+
+    companion object {
+        private const val DEALER_NAME: String = "딜러"
     }
 }
