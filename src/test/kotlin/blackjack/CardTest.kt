@@ -1,5 +1,6 @@
 package blackjack
 
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
@@ -28,5 +29,19 @@ class CardTest {
         suit: Int,
     ) {
         assertThrows<IllegalArgumentException> { Card(cardNumber, suit) }
+    }
+
+    @ParameterizedTest
+    @CsvSource("0,0,1", "13,1,1", "51,3,13")
+    fun `0부터 51까지의 카드 인덱스로 카드를 만들 수 있다`(
+        index: Int,
+        suit: Int,
+        cardNumber: Int,
+    ) {
+        val actualCard = Card(index)
+
+        val expectedCard = Card(cardNumber, suit)
+
+        assertThat(actualCard).isEqualTo(expectedCard)
     }
 }
