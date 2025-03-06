@@ -13,7 +13,7 @@ abstract class Person {
 
     fun cards(): List<Card> = hand.cards
 
-    fun isCanDraw(): Boolean {
+    fun canDraw(): Boolean {
         return !gameState.isFinal
     }
 

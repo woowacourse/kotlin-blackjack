@@ -44,7 +44,7 @@ class BlackJackController(
     }
 
     private fun handlePlayerTurn(player: Player) {
-        while (player.isCanDraw()) {
+        while (player.canDraw()) {
             outputView.printFlagMessage(player.name)
             letPlayerDrawCard(player)
         }
@@ -59,7 +59,7 @@ class BlackJackController(
     }
 
     private fun processDealerTurns(dealer: Dealer) {
-        while (dealer.isCanDraw()) {
+        while (dealer.canDraw()) {
             outputView.printDealerDrawMessage()
             dealer.draw(deck)
         }
