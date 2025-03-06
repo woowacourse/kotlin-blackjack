@@ -23,4 +23,15 @@ class PlayerBehaviorTest {
     fun `플레이어 행동의 응답이 y 또는 n이 아닐 경우 예외를 발생시킨다`(answer: String) {
         assertThrows<IllegalArgumentException> { PlayerBehavior.from(answer) }
     }
+
+    @ParameterizedTest
+    @CsvSource(value = ["16, HIT", "17, STAY"])
+    fun `딜러 점수가 16이하일 경우 HIT을, 아닐 경우 STAY를 반환한다`(
+        dealerScore: Int,
+        expected: PlayerBehavior,
+    ) {
+        val actual = PlayerBehavior.from(dealerScore)
+
+        assertThat(actual).isEqualTo(expected)
+    }
 }

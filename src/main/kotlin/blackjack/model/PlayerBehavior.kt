@@ -14,5 +14,10 @@ enum class PlayerBehavior(
                 "N" -> STAY
                 else -> throw IllegalArgumentException("ddd")
             }
+
+        fun from(dealerScore: Int): PlayerBehavior {
+            if (dealerScore <= 16) return HIT
+            return STAY
+        }
     }
 }
