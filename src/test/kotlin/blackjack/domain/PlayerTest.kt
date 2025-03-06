@@ -4,13 +4,22 @@ import blackjack.enums.Rank
 import blackjack.enums.Result
 import blackjack.enums.Suit
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class PlayerTest {
+    private lateinit var player: Player
+    private lateinit var dealer: Dealer
+
+    @BeforeEach
+    fun setUp() {
+        player = Player("Jason")
+        dealer = Dealer()
+    }
+
     @Test
     fun `플레이어가 카드를 한 장 지급 받으면 플레이어의 패는 한 장이다`() {
         // given
-        val player = Player("Jason")
         val card = Card(Rank.ACE, Suit.SPADE)
 
         // when
@@ -25,7 +34,6 @@ class PlayerTest {
         // given
         val aceCard = Card(Rank.ACE, Suit.SPADE)
         val queenCard = Card(Rank.QUEEN, Suit.SPADE)
-        val player = Player("Jason")
 
         // when
         player.addCard(aceCard)
@@ -42,7 +50,6 @@ class PlayerTest {
         val aceSpade = Card(Rank.ACE, Suit.SPADE)
         val aceDiamond = Card(Rank.ACE, Suit.DIAMOND)
         val nineSpade = Card(Rank.NINE, Suit.SPADE)
-        val player = Player("Jason")
 
         // when
         player.addCard(aceSpade)
@@ -60,7 +67,6 @@ class PlayerTest {
         val queenSpade = Card(Rank.QUEEN, Suit.SPADE)
         val queenHeart = Card(Rank.QUEEN, Suit.HEART)
         val queenDiamond = Card(Rank.QUEEN, Suit.DIAMOND)
-        val player = Player("Jason")
 
         // when
         player.addCard(queenSpade)
@@ -77,7 +83,6 @@ class PlayerTest {
         // given
         val queenSpade = Card(Rank.QUEEN, Suit.SPADE)
         val queenHeart = Card(Rank.QUEEN, Suit.HEART)
-        val player = Player("Jason")
 
         // when
         player.addCard(queenSpade)
@@ -93,12 +98,14 @@ class PlayerTest {
         // given
         val queenSpade = Card(Rank.QUEEN, Suit.SPADE)
         val queenHeart = Card(Rank.QUEEN, Suit.HEART)
-        val player = Player("Jason")
+        val eightSpade = Card(Rank.EIGHT, Suit.SPADE)
 
         // when
         player.addCard(queenSpade)
         player.addCard(queenHeart)
-        val result = player.getResult(18)
+        dealer.addCard(queenSpade)
+        dealer.addCard(eightSpade)
+        val result = player.getResult(dealer)
 
         // then
         assertThat(result).isEqualTo(Result.WIN)
@@ -109,14 +116,35 @@ class PlayerTest {
         // given
         val queenSpade = Card(Rank.QUEEN, Suit.SPADE)
         val queenHeart = Card(Rank.QUEEN, Suit.HEART)
-        val player = Player("Jason")
+        val aceSpade = Card(Rank.ACE, Suit.SPADE)
 
         // when
         player.addCard(queenSpade)
         player.addCard(queenHeart)
-        val result = player.getResult(21)
+        dealer.addCard(queenSpade)
+        dealer.addCard(aceSpade)
+        val result = player.getResult(dealer)
 
         // then
         assertThat(result).isEqualTo(Result.LOSE)
+    }
+
+    @Test
+    fun `플레이어의 점수가 20이고 딜러의 점수가 22이면 플레이어가 이긴다`() {
+        // given
+        val queenSpade = Card(Rank.QUEEN, Suit.SPADE)
+        val queenHeart = Card(Rank.QUEEN, Suit.HEART)
+        val twoSpade = Card(Rank.TWO, Suit.SPADE)
+
+        // when
+        player.addCard(queenSpade)
+        player.addCard(queenHeart)
+        dealer.addCard(queenSpade)
+        dealer.addCard(queenHeart)
+        dealer.addCard(twoSpade)
+        val result = player.getResult(dealer)
+
+        // then
+        assertThat(result).isEqualTo(Result.WIN)
     }
 }

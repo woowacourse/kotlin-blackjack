@@ -52,10 +52,7 @@ class BlackjackController(
     private fun getPlayerResult(
         dealer: Dealer,
         players: List<Player>,
-    ): Map<String, Result> {
-        val dealerScore = dealer.calculateScore()
-        return players.associateBy({ it.name }, { it.getResult(dealerScore) })
-    }
+    ): Map<String, Result> = players.associateBy({ it.name }, { it.getResult(dealer) })
 
     private fun getDealerResult(playerResult: Map<String, Result>): Map<Result, Int> =
         playerResult.values

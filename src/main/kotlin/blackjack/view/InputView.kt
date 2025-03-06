@@ -28,7 +28,7 @@ class InputView {
 
     companion object {
         private const val MESSAGE_INPUT_PLAYER_NAME = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)"
-        private const val MESSAGE_INPUT_HIT_OR_STAY = "\n%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)"
+        private const val MESSAGE_INPUT_HIT_OR_STAY = "\n%s는 한 장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)"
         private const val ERROR_INVALID_INPUT = "올바르지 않은 입력입니다. 다시 입력해주세요."
         private const val YES = "y"
         private const val NO = "n"
