@@ -9,6 +9,12 @@ class InputView {
         return input.split(PLAYER_NAMES_DELIMITER).map { name: String -> name.trim() }
     }
 
+    fun readPlayerAction(): String {
+        outputView.requestPlayerAction()
+        val input: String = readln()
+        return input
+    }
+
     companion object {
         private const val PLAYER_NAMES_DELIMITER = ","
     }
