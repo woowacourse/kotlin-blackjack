@@ -1,6 +1,7 @@
 package blackjack.controller
 
 import blackjack.Dealer
+import blackjack.Deck
 import blackjack.Deck.Companion.INITIAL_HAND_OUT_CARD_COUNT
 import blackjack.GameManager
 import blackjack.Player
@@ -17,5 +18,13 @@ class BlackjackController(
         val gameManager = GameManager(dealer, players)
         gameManager.dealInitialCardWithCount(INITIAL_HAND_OUT_CARD_COUNT)
         outputView.printAllPlayerHands(dealer, players)
+
+        players.forEach { player ->
+            val condition = inputView.readMoreCardCondition(player)
+            if (condition == "y") {
+                player.addCard(Deck.draw())
+                outputView.printPlayerHands(player)
+            }
+        }
     }
 }
