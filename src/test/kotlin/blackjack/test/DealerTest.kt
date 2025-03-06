@@ -5,12 +5,19 @@ import org.junit.jupiter.api.Test
 
 class Dealer {
     private val deck: Deck = Deck()
+    private val hand: Hand = Hand(emptyList())
+
+    fun getCard() {
+        hand.add(deck.getCard())
+    }
 
     fun giveCard(players: List<Player> = listOf()) {
         players.forEach { player ->
             player.getMoreCard(deck.getCard())
         }
     }
+
+    fun getCountOfCards(): Int = hand.getSize()
 }
 
 class Deck {
@@ -97,11 +104,12 @@ class DealerTest {
     @Test
     fun `딜러는 플레이어에게 카드를 나눠준다`() {
         val dealer = Dealer()
-        val eden = Player("Eden", Cards(emptyList()))
-        val gio = Player("Gio", Cards(listOf(Card(Ace(), Suit.CLOVER), Card(Number(5), Suit.HEART))))
+        val eden = Player("Eden")
+        val gio = Player("Gio")
         val players: List<Player> = listOf(eden, gio)
+        gio.getMoreCard(Card(Number(7), Suit.DIAMOND))
         dealer.giveCard(players)
         assertThat(eden.getCountOfCards()).isEqualTo(1)
-        assertThat(gio.getCountOfCards()).isEqualTo(3)
+        assertThat(gio.getCountOfCards()).isEqualTo(2)
     }
 }

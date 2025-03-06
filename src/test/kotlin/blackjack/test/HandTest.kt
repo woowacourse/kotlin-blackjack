@@ -3,7 +3,7 @@ package blackjack.test
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class Cards(
+class Hand(
     val value: MutableList<Card>,
 ) {
     fun getSize(): Int = value.size
@@ -36,20 +36,20 @@ class Cards(
     }
 }
 
-fun Cards(value: List<Card>): Cards = Cards(value.toMutableList())
+fun Hand(value: List<Card>): Hand = Hand(value.toMutableList())
 
-class CardsTest {
+class HandTest {
     @Test
     fun `갖고 있는 카드를 확인할 수 있다`() {
         val card = Card(Ace(), Suit.SPADE)
-        val cards = Cards(listOf(card))
+        val cards = Hand(listOf(card))
         assertThat(cards.value).isEqualTo(listOf(card))
     }
 
     @Test
     fun `카드 총합을 알 수 있다`() {
         val cards =
-            Cards(
+            Hand(
                 listOf(
                     Card(Ace(), Suit.SPADE),
                     Card(Ace(), Suit.HEART),
