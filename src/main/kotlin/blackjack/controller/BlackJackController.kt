@@ -4,6 +4,8 @@ import blackjack.domain.GameResult
 import blackjack.domain.card.Deck
 import blackjack.domain.person.Dealer
 import blackjack.domain.person.Player
+import blackjack.uiModel.PersonUiModel
+import blackjack.uiModel.ResultUiModel
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -36,7 +38,7 @@ class BlackJackController(
     ) {
         dealer.draw(deck)
         players.forEach { person -> person.draw(deck) }
-        outputView.printDrawMessage(dealer, players)
+        outputView.printDrawMessage(combinePerson(dealer, players))
     }
 
     private fun processPlayerTurns(players: List<Player>) {
@@ -54,7 +56,7 @@ class BlackJackController(
         val hitFlag = inputView.getFlag()
         player.draw(deck, hitFlag)
         if (hitFlag) {
-            outputView.printDrawStatus(player)
+            outputView.printDrawStatus(PersonUiModel.create(player))
         }
     }
 
@@ -69,8 +71,15 @@ class BlackJackController(
         dealer: Dealer,
         players: List<Player>,
     ) {
-        outputView.printGameResult(dealer, players)
+        outputView.printGameResult(combinePerson(dealer, players))
         val gameResult = GameResult(dealer).calculateWin(players)
-        outputView.printResult(gameResult)
+        outputView.printResult(ResultUiModel.create(gameResult))
+    }
+
+    private fun combinePerson(
+        dealer: Dealer,
+        players: List<Player>,
+    ): List<PersonUiModel> {
+        return listOf(PersonUiModel.create(dealer)) + players.map(PersonUiModel::create)
     }
 }

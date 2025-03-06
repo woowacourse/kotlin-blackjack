@@ -1,62 +1,66 @@
 package blackjack.view
 
-import blackjack.domain.card.Card
-import blackjack.domain.person.Dealer
-import blackjack.domain.person.Player
-import blackjack.domain.state.ResultState
+import blackjack.uiModel.PersonUiModel
+import blackjack.uiModel.ResultUiModel
 
 class OutputView {
     fun printNameMessage() {
-        println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
+        println(ENTER_PLAYER_NAMES_MESSAGE)
     }
 
-    fun printDrawMessage(
-        dealer: Dealer,
-        players: List<Player>,
-    ) {
-        println("딜러와 ${players.joinToString(",") { it.name }}에게 2장을 나누었습니다.")
-        println("딜러: ${printCards(dealer.cards())}")
-        players.forEach { player ->
-            println(printPlayerCards(player))
+    fun printDrawMessage(personUiModels: List<PersonUiModel>) {
+        println()
+        val nameList = personUiModels.map { it.name }.joinToString(DELIMITER)
+        println(FIRST_DRAW_MESSAGE.format(nameList))
+        personUiModels.forEach { person ->
+            println(DRAW_STATUS_MESSAGE.format(person.name, person.cards.joinToString(DELIMITER)))
         }
+        println()
     }
 
     fun printFlagMessage(name: String) {
-        println("${name}는 한장의 카드를 더 받겠습니까? (예는 y, 아니오는 n)")
+        println(ASK_DRAW_CARD_MESSAGE.format(name))
     }
 
-    fun printPlayerCards(player: Player): String {
-        return "${player.name}카드: ${printCards(player.cards())}"
-    }
-
-    fun printDrawStatus(player: Player) {
-        println(printPlayerCards(player))
+    fun printDrawStatus(personUiModel: PersonUiModel) {
+        println(DRAW_STATUS_MESSAGE.format(personUiModel.name, personUiModel.cards.joinToString(DELIMITER)))
     }
 
     fun printDealerDrawMessage() {
-        println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+        println(DEALER_DRAW_MESSAGE)
+        println()
     }
 
-    fun printGameResult(
-        dealer: Dealer,
-        players: List<Player>,
-    ) {
-        println("딜러: ${printCards(dealer.cards())} - 결과: ${dealer.score()}")
-        players.forEach { player ->
-            println(printPlayerCards(player) + " - 결과: ${player.score()}")
+    fun printGameResult(personUiModels: List<PersonUiModel>) {
+        personUiModels.forEach { person ->
+            print(DRAW_STATUS_MESSAGE.format(person.name, person.cards.joinToString(DELIMITER)))
+            println(SCORE_RESULT_MESSAGE.format(person.score))
         }
+        println()
     }
 
-    fun printResult(result: Map<Player, ResultState>) {
-        println("## 최종 승패")
-        println(
-            "딜러: ${result.keys.count { result[it] == ResultState.LOSE }}승 " +
-                "${result.keys.count { result[it] == ResultState.DRAW }}무 " +
-                "${result.keys.count { result[it] == ResultState.WIN }}패",
-        )
+    fun printResult(resultUiModels: List<ResultUiModel>) {
+        println(RESULT_HEADLINE_MESSAGE)
+        val dealerWins = resultUiModels.count { it.result == LOSE }
+        val dealerLoses = resultUiModels.count { it.result == WIN }
+        val dealerDraws = resultUiModels.count { it.result == DRAW }
+        println(DEALER_RESULT_MESSAGE.format(dealerWins, dealerDraws, dealerLoses))
+        resultUiModels.forEach { println(PLAYER_RESULT_MESSAGE.format(it.name, it.result)) }
     }
 
-    private fun printCards(cards: List<Card>): String {
-        return cards.joinToString(",") { "${it.number.value}${it.pattern.value}" }
+    companion object {
+        private const val ENTER_PLAYER_NAMES_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)"
+        private const val FIRST_DRAW_MESSAGE = "%s에게 2장을 나누었습니다."
+        private const val ASK_DRAW_CARD_MESSAGE = "%s는 한장의 카드를 더 받겠습니까? (예는 y, 아니오는 n)"
+        private const val DEALER_DRAW_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다."
+        private const val DRAW_STATUS_MESSAGE = "%s 카드: %s"
+        private const val SCORE_RESULT_MESSAGE = " - 결과: %s"
+        private const val RESULT_HEADLINE_MESSAGE = "## 최종 승패"
+        private const val WIN = "승"
+        private const val LOSE = "패"
+        private const val DRAW = "무"
+        private const val DEALER_RESULT_MESSAGE = "딜러: %s$WIN %s$DRAW %s$LOSE"
+        private const val PLAYER_RESULT_MESSAGE = "%s: %s"
+        private const val DELIMITER = ", "
     }
 }
