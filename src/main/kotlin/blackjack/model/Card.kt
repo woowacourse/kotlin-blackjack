@@ -4,5 +4,5 @@ data class Card(
     val shape: CardShape,
     val denomination: Denomination,
 ) {
-    fun containsAce(card: Card): Boolean = card.denomination.title == Denomination.ACE.title
+    fun isDenominationAce(card: Card): Boolean = card.denomination == Denomination.ACE
 }
