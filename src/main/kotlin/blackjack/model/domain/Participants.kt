@@ -22,8 +22,6 @@ interface Participants {
         return sum
     }
 
-    fun initGet(): List<Card>
-
     fun receiveCard(card: Card) {
         cards.add(card)
     }
