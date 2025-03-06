@@ -15,30 +15,32 @@ class BlackjackController(
     fun run() {
         val cardDeck = CardDeck()
         val dealer = Dealer().apply { this.draw(cardDeck) }
-        val players = preparePlayers(cardDeck)
+        val players = preparePlayers(cardDeck, dealer)
 
-        progressPlayersDraw(dealer, players, cardDeck)
+        progressPlayersDraw(players, cardDeck)
         progressDealerDraw(dealer, cardDeck)
 
         displayParticipantsInfo(players)
         displayResults(dealer, players)
     }
 
-    private fun preparePlayers(cardDeck: CardDeck): Players {
+    private fun preparePlayers(
+        cardDeck: CardDeck,
+        dealer: Dealer,
+    ): Players {
         val players = Players.from(inputView.getPlayers())
         players.value.forEach { player ->
             player.draw(cardDeck)
         }
         outputView.displayFirstDrawEnd(players.value)
+        outputView.displayParticipantCards(cards = dealer.cards().take(DEALER_FIRST_SHOWN_COUNT))
         return players
     }
 
     private fun progressPlayersDraw(
-        dealer: Dealer,
         players: Players,
         cardDeck: CardDeck,
     ) {
-        outputView.displayParticipantCards(cards = dealer.cards().take(DEALER_FIRST_SHOWN_COUNT))
         players.value.forEach { player ->
             outputView.displayParticipantCards(player.name, player.cards())
         }

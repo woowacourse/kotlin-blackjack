@@ -22,7 +22,6 @@ class PlayersTest {
         val dealerScore =
             players.value
                 .first()
-                .hand
                 .score()
 
         // then
