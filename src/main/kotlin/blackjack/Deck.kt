@@ -5,7 +5,7 @@ class Deck {
         const val INITIAL_HAND_OUT_CARD_COUNT = 2
         private val CARDS = generateCards()
 
-        fun poll(): Card {
+        fun draw(): Card {
             return CARDS.removeFirstOrNull() ?: throw IllegalStateException("카드가 더 없습니다.")
         }
 
