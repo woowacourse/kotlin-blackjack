@@ -1,6 +1,6 @@
 package blackjack
 
-class Player : Participant {
+class Player : Participant() {
     var totalSum: Int = 0
         private set
     val cards: MutableList<Card> = mutableListOf()
@@ -9,6 +9,10 @@ class Player : Participant {
         check(canHit()) { "숫자의 합이 21점을 넘으면 카드를 받을 수 없습니다" }
         cards.add(card)
         totalSum = calculateTotalSum()
+    }
+
+    fun canHit(): Boolean {
+        return totalSum < 21
     }
 
     private fun calculateTotalSum(): Int {
@@ -26,7 +30,7 @@ class Player : Participant {
         return editedScore
     }
 
-    fun canHit(): Boolean {
-        return totalSum < 21
+    fun isBust(): Boolean {
+        return totalSum > 21
     }
 }

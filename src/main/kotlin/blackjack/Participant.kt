@@ -1,3 +1,3 @@
 package blackjack
 
-interface Participant
+abstract class Participant()
