@@ -15,35 +15,35 @@ class BlackjackController(
     fun run() {
         val cardDeck = CardDeck()
         val dealer = Dealer().apply { this.draw(cardDeck) }
+        val players = preparePlayers(cardDeck)
 
+        progressPlayersDraw(dealer, players, cardDeck)
+        progressDealerDraw(dealer, cardDeck)
+
+        displayParticipantsInfo(players)
+        displayResults(dealer, players)
+    }
+
+    private fun preparePlayers(cardDeck: CardDeck): Players {
         val players = Players.from(inputView.getPlayers())
         players.value.forEach { player ->
             player.draw(cardDeck)
         }
         outputView.displayFirstDrawEnd(players.value)
+        return players
+    }
 
-        outputView.displayParticipantCards(cards = dealer.hand.cards.take(1))
+    private fun progressPlayersDraw(
+        dealer: Dealer,
+        players: Players,
+        cardDeck: CardDeck,
+    ) {
+        outputView.displayParticipantCards(cards = dealer.hand.cards.take(DEALER_FIRST_SHOWN_COUNT))
         players.value.forEach { player ->
             outputView.displayParticipantCards(player.name, player.hand.cards)
         }
         players.value.forEach { player ->
             getIsPlayerDrawMore(player, cardDeck)
-        }
-
-        val dealerDrawCount = dealer.drawUntilFinished(cardDeck)
-        outputView.displayDealerDrawInfo(dealerDrawCount)
-        val playerResults: Map<String, WinningResult> = players.results(dealer.hand.score())
-        val dealerResult = dealer.result(players.scores())
-
-        outputView.displayParticipantInfo(cards = dealer.hand.cards, score = dealer.hand.score(), isBust = dealer.hand.isBust())
-
-        players.value.forEach { player ->
-            outputView.displayParticipantInfo(player.name, player.hand.cards, player.hand.score(), player.hand.isBust())
-        }
-        outputView.displayResultTitle()
-        outputView.displayDealerResult(dealerResult)
-        playerResults.forEach { (name, winningResult) ->
-            outputView.displayPlayerResult(name, winningResult)
         }
     }
 
@@ -59,5 +59,43 @@ class BlackjackController(
 
             if (player.hand.isBust()) return
         }
+    }
+
+    private fun progressDealerDraw(
+        dealer: Dealer,
+        cardDeck: CardDeck,
+    ) {
+        val dealerDrawCount = dealer.drawUntilFinished(cardDeck)
+        outputView.displayDealerDrawInfo(dealerDrawCount)
+
+        outputView.displayParticipantInfo(
+            cards = dealer.hand.cards,
+            score = dealer.hand.score(),
+            isBust = dealer.hand.isBust(),
+        )
+    }
+
+    private fun displayParticipantsInfo(players: Players) {
+        players.value.forEach { player ->
+            outputView.displayParticipantInfo(player.name, player.hand.cards, player.hand.score(), player.hand.isBust())
+        }
+    }
+
+    private fun displayResults(
+        dealer: Dealer,
+        players: Players,
+    ) {
+        val dealerResult = dealer.result(players.scores())
+        outputView.displayDealerResult(dealerResult)
+
+        outputView.displayResultTitle()
+        val playerResults: Map<String, WinningResult> = players.results(dealer.hand.score())
+        playerResults.forEach { (name, winningResult) ->
+            outputView.displayPlayerResult(name, winningResult)
+        }
+    }
+
+    companion object {
+        private const val DEALER_FIRST_SHOWN_COUNT = 1
     }
 }
