@@ -5,4 +5,6 @@ data class Card(
     val denomination: Denomination,
 ) {
     fun isDenominationAce(card: Card): Boolean = card.denomination == Denomination.ACE
+
+    fun combine(): String = denomination.title + shape.koreanName
 }

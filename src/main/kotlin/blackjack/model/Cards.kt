@@ -24,4 +24,6 @@ class Cards(
             else -> score
         }
     }
+
+    fun getCardsInfomation(): List<String> = cards.map { it.combine() }
 }
