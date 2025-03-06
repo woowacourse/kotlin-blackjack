@@ -2,6 +2,7 @@ package blackjack
 
 class Deck {
     companion object {
+        const val INITIAL_HAND_OUT_CARD_COUNT = 2
         private val CARDS = generateCards()
 
         fun poll(): Card {
