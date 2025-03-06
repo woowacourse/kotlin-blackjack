@@ -19,6 +19,8 @@ class BlackjackController(
             getIsPlayerDrawMore(player)
         }
         val dealerDrawCount = dealer.drawUntilFinished()
+        val playerResults: Map<String, WinningResult> = players.results(dealer.hand.score())
+        val dealerResult = dealer.result(players.scores())
     }
 
     private fun getIsPlayerDrawMore(player: Player) {
