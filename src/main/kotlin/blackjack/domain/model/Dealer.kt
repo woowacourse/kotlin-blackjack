@@ -1,15 +1,15 @@
 package blackjack.domain.model
 
-class Player(
+class Dealer(
     name: String = DEFAULT_NAME,
 ) : GameParticipant(name = name) {
     override fun play() {
         // todo
     }
 
-    override fun isDrawFinish(): Boolean = Rule.isBurst(showCards())
+    override fun isDrawFinish(): Boolean = !Rule.calculateShouldDrawByCards(showCards())
 
     companion object {
-        private const val DEFAULT_NAME = "이름 없음"
+        private const val DEFAULT_NAME = "딜러"
     }
 }

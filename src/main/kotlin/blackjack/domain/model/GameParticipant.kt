@@ -1,6 +1,8 @@
 package blackjack.domain.model
 
-abstract class GameParticipant(val name: String) {
+abstract class GameParticipant(
+    val name: String,
+) {
     private val cards = mutableListOf<Card>()
 
     init {
@@ -14,4 +16,6 @@ abstract class GameParticipant(val name: String) {
     }
 
     abstract fun play()
+
+    abstract fun isDrawFinish(): Boolean
 }
