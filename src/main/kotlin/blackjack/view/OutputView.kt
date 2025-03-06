@@ -31,13 +31,21 @@ class OutputView {
         println("\n" + output + "\n")
     }
 
+    fun displayParticipantCards(
+        name: String = "딜러",
+        cards: List<Card>,
+    ) {
+        println("$name 카드: ${cards.toText()}")
+    }
+
     fun displayParticipantInfo(
         name: String = "딜러",
         cards: List<Card>,
-        score: Int? = null,
+        score: Int,
+        isBust: Boolean,
     ) {
-        val result = score?.let { " - 결과: $it" } ?: ""
-        println("$name 카드: ${cards.toText()}$result")
+        val result = if (isBust) "버스트" else score
+        println("$name 카드: ${cards.toText()} - 결과: $result")
     }
 
     private fun List<Card>.toText(): String =

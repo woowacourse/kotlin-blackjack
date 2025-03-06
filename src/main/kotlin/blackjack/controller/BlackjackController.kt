@@ -22,9 +22,9 @@ class BlackjackController(
         }
         outputView.displayFirstDrawEnd(players.value)
 
-        outputView.displayParticipantInfo(cards = dealer.hand.cards.take(1))
+        outputView.displayParticipantCards(cards = dealer.hand.cards.take(1))
         players.value.forEach { player ->
-            outputView.displayParticipantInfo(player.name, player.hand.cards)
+            outputView.displayParticipantCards(player.name, player.hand.cards)
         }
         players.value.forEach { player ->
             getIsPlayerDrawMore(player, cardDeck)
@@ -35,10 +35,10 @@ class BlackjackController(
         val playerResults: Map<String, WinningResult> = players.results(dealer.hand.score())
         val dealerResult = dealer.result(players.scores())
 
-        outputView.displayParticipantInfo(cards = dealer.hand.cards, score = dealer.hand.score())
+        outputView.displayParticipantInfo(cards = dealer.hand.cards, score = dealer.hand.score(), isBust = dealer.hand.isBust())
 
         players.value.forEach { player ->
-            outputView.displayParticipantInfo(player.name, player.hand.cards, player.hand.score())
+            outputView.displayParticipantInfo(player.name, player.hand.cards, player.hand.score(), player.hand.isBust())
         }
         outputView.displayResultTitle()
         outputView.displayDealerResult(dealerResult)
@@ -55,7 +55,7 @@ class BlackjackController(
             if (!inputView.getIsDrawMore(player.name)) break
 
             player.draw(cardDeck)
-            outputView.displayParticipantInfo(player.name, player.hand.cards)
+            outputView.displayParticipantCards(player.name, player.hand.cards)
 
             if (player.hand.isBust()) return
         }
