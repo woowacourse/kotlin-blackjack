@@ -13,8 +13,6 @@ class BlackjackController(
     private val outputView: OutputView,
 ) {
     fun run() {
-        outputView.displayPlayerEnrollGuide()
-
         val cardDeck = CardDeck()
         val dealer = Dealer(cardDeck)
 
@@ -48,10 +46,10 @@ class BlackjackController(
 
     private fun getIsPlayerDrawMore(player: Player) {
         while (!player.hand.isBust()) {
-            outputView.askDrawMoreCard(player.name)
-            if (inputView.getIsDrawMore()) player.draw() else break
+            val isDrawMore = inputView.getIsDrawMore(player.name)
+            if (isDrawMore) player.draw()
             outputView.displayParticipantInfo(player.name, player.hand.cards)
+            if (!isDrawMore) break
         }
-        outputView.displayParticipantInfo(player.name, player.hand.cards)
     }
 }

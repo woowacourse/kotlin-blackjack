@@ -18,16 +18,8 @@ import blackjack.model.WinningResult.PUSH
 import blackjack.model.WinningResult.WIN
 
 class OutputView {
-    fun displayPlayerEnrollGuide() {
-        println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
-    }
-
     fun displayFirstDrawEnd(players: List<Player>) {
-        println("딜러와 ${players.joinToString(", ") { it.name }}에게 2장을 나누었습니다.")
-    }
-
-    fun askDrawMoreCard(name: String) {
-        println("${name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
+        println("\n딜러와 ${players.joinToString(", ") { it.name }}에게 2장을 나누었습니다.")
     }
 
     fun displayDealerDrawInfo(count: Int) {
@@ -36,7 +28,7 @@ class OutputView {
                 count == 0 -> "딜러는 16초과라 카드를 더 이상 뽑지 않았습니다."
                 else -> "딜러는 16이하라 $count 장의 카드를 더 받았습니다."
             }
-        println(output)
+        println("\n" + output + "\n")
     }
 
     fun displayParticipantInfo(
@@ -71,7 +63,7 @@ class OutputView {
         }
 
     fun displayResultTitle() {
-        println("## 최종 승패")
+        println("\n## 최종 승패")
     }
 
     fun displayDealerResult(winningResult: Map<WinningResult, Int>) {
