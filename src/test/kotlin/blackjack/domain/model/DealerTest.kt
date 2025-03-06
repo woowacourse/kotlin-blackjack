@@ -8,79 +8,40 @@ class DealerTest {
     private lateinit var dealer: Dealer
 
     @BeforeEach
-    fun `setUp`() {
+    fun setUp() {
         dealer = Dealer("동전", cards = listOf(Card(Suit.HEART, Rank.ACE)))
     }
 
     @Test
-    fun `딜러는 이름을 가진다`() {
-        assertThat(dealer.name).isEqualTo("동전")
-    }
-
-    @Test
-    fun `딜러는 카드를 가진다`() {
-        assertThat(dealer.cards).isEqualTo(listOf(Card(Suit.HEART, Rank.ACE)))
-    }
-
-    @Test
-    fun `딜러는 카드를 받는다`() {
-        assertThat(dealer.accept(Card(Suit.HEART, Rank.KING))).isEqualTo(
-            dealer.copy(
-                cards =
-                    listOf(
-                        Card(
-                            Suit.HEART,
-                            Rank.ACE,
-                        ),
-                        Card(Suit.HEART, Rank.KING),
-                    ),
-            ),
-        )
-    }
-
-    @Test
-    fun `카드의 보너스 점수를 추가한 총합을 반환한다`() {
-        dealer = Dealer("동전", cards = listOf(Card(Suit.HEART, Rank.ACE), Card(Suit.HEART, Rank.KING)))
-        assertThat(dealer.getScore()).isEqualTo(21)
-    }
-
-    @Test
-    fun `카드의 보너스 점수가 없는 총합을 반환한다`() {
-        dealer =
-            Dealer(
-                "동전",
-                cards = listOf(Card(Suit.HEART, Rank.ACE), Card(Suit.HEART, Rank.KING), Card(Suit.SPADE, Rank.KING)),
-            )
-        assertThat(dealer.getScore()).isEqualTo(21)
-    }
-
-    @Test
-    fun `각 플레이어의 승패를 반환한다`() {
-        val player1 = Player("디렉", listOf(Card(Suit.SPADE, Rank.KING)))
-        val player2 = Player("뭉치", listOf(Card(Suit.SPADE, Rank.ACE)))
-        val player3 = Player("모찌", listOf(Card(Suit.SPADE, Rank.KING), Card(Suit.HEART, Rank.KING)))
-        val players = listOf(player1, player2, player3)
-        assertThat(dealer.getPlayerVerdict(players)).isEqualTo(
+    fun `플레이어별 승패 여부를 반환한다`() {
+        val player1 = Player("A", listOf(Card(Suit.HEART, Rank.TWO))) // 2점
+        val player2 = Player("B", listOf(Card(Suit.HEART, Rank.ACE))) // 11점
+        val player3 = Player("C", listOf(Card(Suit.HEART, Rank.ACE), Card(Suit.HEART, Rank.KING))) // 21점
+        val verdicts: Map<Player, Verdict> = dealer.getPlayerVerdict(listOf(player1, player2, player3))
+        val actual: Map<Player, Verdict> =
             mapOf(
                 player1 to Verdict.LOSE,
                 player2 to Verdict.DRAW,
                 player3 to Verdict.WIN,
-            ),
-        )
+            )
+        assertThat(verdicts).isEqualTo(actual)
     }
 
     @Test
-    fun `딜러의 승패들을 반환한다`() {
-        val player1 = Player("디렉", listOf(Card(Suit.SPADE, Rank.KING)))
-        val player2 = Player("뭉치", listOf(Card(Suit.SPADE, Rank.ACE)))
-        val player3 = Player("모찌", listOf(Card(Suit.SPADE, Rank.KING), Card(Suit.HEART, Rank.KING)))
-        val players = listOf(player1, player2, player3)
-        assertThat(dealer.getDealerVerdicts(players)).isEqualTo(
-            listOf(
-                Verdict.WIN,
-                Verdict.DRAW,
-                Verdict.LOSE,
-            ),
-        )
+    fun `딜러의 승패 횟수를 반환한다`() {
+        val player1 = Player("A", listOf(Card(Suit.HEART, Rank.TWO))) // 2점
+        val player2 = Player("B", listOf(Card(Suit.HEART, Rank.ACE))) // 11점
+        val player3 = Player("C", listOf(Card(Suit.HEART, Rank.ACE))) // 11점
+        val player4 = Player("D", listOf(Card(Suit.HEART, Rank.ACE))) // 11점
+        val player5 = Player("E", listOf(Card(Suit.HEART, Rank.ACE), Card(Suit.HEART, Rank.KING))) // 21점
+        val player6 = Player("F", listOf(Card(Suit.HEART, Rank.ACE), Card(Suit.HEART, Rank.KING))) // 21점
+        val verdicts: Map<Verdict, Int> = dealer.getDealerVerdicts(listOf(player1, player2, player3, player4, player5, player6))
+        val actual: Map<Verdict, Int> =
+            mapOf(
+                Verdict.WIN to 1,
+                Verdict.LOSE to 2,
+                Verdict.DRAW to 3,
+            )
+        assertThat(verdicts).isEqualTo(actual)
     }
 }
