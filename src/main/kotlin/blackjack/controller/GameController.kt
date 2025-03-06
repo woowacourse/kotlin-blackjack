@@ -4,6 +4,7 @@ import blackjack.domain.model.Cards
 import blackjack.domain.model.Choice
 import blackjack.domain.model.Dealer
 import blackjack.domain.model.Player
+import blackjack.domain.model.Verdict
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -38,8 +39,9 @@ class GameController(private val inputView: InputView = InputView(), private val
         deck: Cards,
     ) {
         while (true) {
+            if (player.isBust()) return
             val choice = Choice(inputView.readPlayerAction(player))
-            if (!choice.isHit() || player.isBust()) return
+            if (!choice.isHit()) return
             player.accept(deck.draw(1))
             outputView.printPlayerStatus(player)
         }
@@ -59,11 +61,15 @@ class GameController(private val inputView: InputView = InputView(), private val
         dealer: Dealer,
         players: List<Player>,
     ) {
+        (listOf(dealer) + players).forEach { player ->
+            outputView.printPlayerResult(player)
+        }
+
         outputView.printResultsHeader()
         val verdicts = dealer.getDealerVerdicts(players)
         outputView.printDealerVerdicts(dealer, verdicts)
         players.forEach { player ->
-            outputView.printPlayerResult(player)
+            outputView.printPlayerVerdict(player, Verdict.determine(dealer, player))
         }
     }
 }

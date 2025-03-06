@@ -51,6 +51,14 @@ class OutputView {
         verdicts.forEach { (verdict, count) ->
             if (count > 0) print("${count}${verdict.value} ")
         }
+        println()
+    }
+
+    fun printPlayerVerdict(
+        player: Player,
+        verdict: Verdict,
+    ) {
+        println(player.name + NAME_RESULT_DELIMITER + verdict.value)
     }
 
     private fun buildPlayerStatus(player: Player): String {

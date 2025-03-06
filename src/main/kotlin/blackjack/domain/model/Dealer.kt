@@ -2,15 +2,13 @@ package blackjack.domain.model
 
 class Dealer() : Player(DEALER_NAME, mutableListOf()) {
     fun getPlayerVerdict(players: List<Player>): Map<Player, Verdict> {
-        val dealerScore = getScore()
-        return players.associateWith { player -> Verdict.determine(player.getScore(), dealerScore) }
+        return players.associateWith { player -> Verdict.determine(this, player) }
     }
 
     fun getDealerVerdicts(players: List<Player>): Map<Verdict, Int> {
-        val dealerScore = getScore()
-        val playersVerdict = players.map { player -> Verdict.determine(dealerScore, player.getScore()) }
+        val playersVerdict = players.map { player -> Verdict.determine(this, player) }
         return Verdict.entries.associateWith { verdict ->
-            playersVerdict.count { it == verdict }
+            playersVerdict.count { verdict == it.reverse() }
         }
     }
 
