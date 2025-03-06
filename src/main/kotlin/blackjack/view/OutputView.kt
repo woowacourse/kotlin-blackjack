@@ -6,9 +6,9 @@ import blackjack.Deck.Companion.INITIAL_HAND_OUT_CARD_COUNT
 import blackjack.Player
 
 class OutputView {
-    fun printSetCardMessageWithPlayers(players: List<Player>) {
+    fun printInitialHandOutCardMessage(players: List<Player>) {
         val playerNames = players.joinToString(OUTPUT_SEPARATOR_FOR_PRINT) { player -> player.name }
-        println(SET_CARD_MESSAGE_WITH_PLAYER_NAME_FORMAT.format(playerNames, INITIAL_HAND_OUT_CARD_COUNT))
+        println(INITIAL_HANDOUT_CARD_MESSAGE_FORMAT.format(playerNames, INITIAL_HAND_OUT_CARD_COUNT))
     }
 
     fun printPlayerHands(player: Player) {
@@ -54,9 +54,9 @@ class OutputView {
         players.forEach { player -> printFinalPlayerHandStatus(player) }
         println()
     }
-
+    
     companion object {
-        private const val SET_CARD_MESSAGE_WITH_PLAYER_NAME_FORMAT = "\n딜러와 %s에게 %d장의 카드를 나누어 주었습니다."
+        private const val INITIAL_HANDOUT_CARD_MESSAGE_FORMAT = "\n딜러와 %s에게 %d장의 카드를 나누어 주었습니다."
         private const val DEALER_HIT_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다."
         private const val DEALER_STAY_MESSAGE = "딜러는 17이상이라 카드를 받지 않았습니다."
         private const val OUTPUT_SEPARATOR_FOR_PRINT = ", "
