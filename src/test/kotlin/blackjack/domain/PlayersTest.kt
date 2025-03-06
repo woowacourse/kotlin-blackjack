@@ -13,12 +13,14 @@ class PlayersTest {
     fun `딜러의 점수보다 플레이어의 점수가 같으면 무승부를 반환한다`() {
         // given
         val playerName = "시아"
-        val cardDeck = CardDeck()
-        val players = Players(listOf(playerName), cardDeck)
+        val players = Players.from(listOf(playerName))
+        players.value.forEach { player ->
+            player.draw(CardDeck())
+        }
 
         // when
         val dealerScore =
-            players.players
+            players.value
                 .first()
                 .hand
                 .score()
@@ -31,8 +33,10 @@ class PlayersTest {
     fun `딜러의 점수보다 플레이어의 점수가 높으면 우승을 반환한다`() {
         // given
         val playerName = "시아"
-        val cardDeck = CardDeck()
-        val players = Players(listOf(playerName), cardDeck)
+        val players = Players.from(listOf(playerName))
+        players.value.forEach { player ->
+            player.draw(CardDeck())
+        }
 
         // when
         val dealerScore = -100
@@ -45,8 +49,10 @@ class PlayersTest {
     fun `딜러의 점수보다 플레이어의 점수가 낮으면 패배를 반환한다`() {
         // given
         val playerName = "시아"
-        val cardDeck = CardDeck()
-        val players = Players(listOf(playerName), cardDeck)
+        val players = Players.from(listOf(playerName))
+        players.value.forEach { player ->
+            player.draw(CardDeck())
+        }
 
         // when
         val dealerScore = 100

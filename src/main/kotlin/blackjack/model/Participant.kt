@@ -1,15 +1,10 @@
 package blackjack.model
 
-abstract class Participant(
-    private val cardDeck: CardDeck,
-) {
+abstract class Participant {
     val hand = Hand()
 
-    init {
-        draw(INITIAL_DRAW_COUNT)
-    }
-
-    fun draw(count: Int = DEFAULT_DRAW_COUNT) {
+    fun draw(cardDeck: CardDeck) {
+        val count = if (hand.cards.isEmpty()) INITIAL_DRAW_COUNT else DEFAULT_DRAW_COUNT
         hand.addAll(cardDeck.draw(count))
     }
 

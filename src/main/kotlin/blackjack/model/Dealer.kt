@@ -1,13 +1,11 @@
 package blackjack.model
 
-class Dealer(
-    cardDeck: CardDeck,
-) : Participant(cardDeck) {
-    fun drawUntilFinished(): Int {
+class Dealer : Participant() {
+    fun drawUntilFinished(cardDeck: CardDeck): Int {
         var count = 0
 
         while (hand.score() <= 16 && !hand.isBust()) {
-            draw()
+            draw(cardDeck)
             count++
         }
 
