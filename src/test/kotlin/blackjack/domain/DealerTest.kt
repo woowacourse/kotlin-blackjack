@@ -1,63 +1,46 @@
 package blackjack.domain
 
+import blackjack.domain.card.Card
+import blackjack.domain.card.CardNumber
+import blackjack.domain.card.CardPattern
 import blackjack.domain.card.Deck
 import blackjack.domain.person.Dealer
-import blackjack.domain.state.DealerState
+import blackjack.domain.person.Hand
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class DealerTest {
-    private lateinit var deck: Deck
     private lateinit var dealer: Dealer
+    private lateinit var deck: Deck
 
     @BeforeEach
     fun setup() {
-        deck = Deck()
         dealer = Dealer()
+        deck = Deck()
     }
 
     @Test
-    fun `딜러의 초기 상태는 FIRST_TURN이어야 한다`() {
-        dealer.gameState shouldBe DealerState.FIRST_TURN
-    }
-
-    @Test
-    fun `상태가 FIRST_TURN이면 2장을 드로우한다`() {
-        dealer.gameState shouldBe DealerState.FIRST_TURN
+    fun `처음 턴에서 카드를 2장 뽑는다`() {
         dealer.draw(deck)
-
         dealer.cards().size shouldBe 2
     }
 
     @Test
-    fun `상태가 HIT이면 1장을 드로우한다`() {
-        setupPlayerWithState(DealerState.HIT)
+    fun `추가로 카드를 뽑을 때 1장 뽑는다`() {
         dealer.draw(deck)
-
+        dealer.draw(deck)
         dealer.cards().size shouldBe 3
     }
 
     @Test
-    fun `상태가 FIRST_TURN이라면 true를 반환한다`() {
-        dealer.canDraw() shouldBe true
-    }
+    fun `카드 숫자의 총 합이 16을 초과한 경우 카드를 뽑을 수 없다`() {
+        val hand = Hand()
+        hand.addCard(Card.create(CardNumber.JACK, CardPattern.HEART))
+        hand.addCard(Card.create(CardNumber.SIX, CardPattern.HEART))
+        dealer = Dealer(hand)
+        dealer.draw(deck)
 
-    @Test
-    fun `상태가 FINISH라면 false를 반환한다`() {
-        setupPlayerWithState(DealerState.FINISH)
         dealer.canDraw() shouldBe false
-    }
-
-    @Test
-    fun `상태가 HIT이라면 true를 반환한다`() {
-        setupPlayerWithState(DealerState.HIT)
-        dealer.canDraw() shouldBe true
-    }
-
-    private fun setupPlayerWithState(state: DealerState) {
-        while (dealer.gameState != state) {
-            dealer.draw(deck)
-        }
     }
 }

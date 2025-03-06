@@ -6,27 +6,28 @@ import blackjack.domain.state.PlayerState
 
 class Player(
     val name: String,
-) : Person() {
+    hand: Hand,
+) : Person(hand.copy()) {
     init {
-        setGameState(PlayerState.FIRST_TURN)
+        gameState = PlayerState.FIRST_TURN
     }
+
+    constructor(name: String) : this(name = name, hand = Hand())
 
     fun draw(
         deck: Deck,
-        isHit: Boolean,
+        isHit: Boolean = true,
     ) {
         val amount = if (gameState == PlayerState.FIRST_TURN) GameRule.FIRST_TURN_DRAW_AMOUNT else GameRule.HIT_DRAW_AMOUNT
 
         if (isHit) {
-            repeat(amount) { hand.addCard(deck.draw()) }
-            updateGameState()
+            repeat(amount) {
+                hand.addCard(deck.draw())
+            }
+            gameState = PlayerState.from(this)
 
             return
         }
-        setGameState(PlayerState.STAY)
-    }
-
-    override fun updateGameState() {
-        setGameState(PlayerState.from(this))
+        gameState = PlayerState.STAY
     }
 }

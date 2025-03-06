@@ -4,21 +4,19 @@ import blackjack.const.GameRule
 import blackjack.domain.card.Deck
 import blackjack.domain.state.DealerState
 
-class Dealer : Person() {
+class Dealer(hand: Hand) : Person(hand.copy()) {
     init {
-        setGameState(DealerState.FIRST_TURN)
+        gameState = DealerState.FIRST_TURN
     }
+
+    constructor() : this(hand = Hand())
 
     fun draw(deck: Deck) {
         val amount = if (gameState == DealerState.FIRST_TURN) GameRule.FIRST_TURN_DRAW_AMOUNT else GameRule.HIT_DRAW_AMOUNT
 
         repeat(amount) {
-            if (score() <= GameRule.DEALER_ADDITIONAL_DRAW_BASE_SCORE) hand.addCard(deck.draw())
+            hand.addCard(deck.draw())
         }
-        updateGameState()
-    }
-
-    override fun updateGameState() {
-        setGameState(DealerState.from(this))
+        gameState = DealerState.from(this)
     }
 }
