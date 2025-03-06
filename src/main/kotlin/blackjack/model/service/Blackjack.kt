@@ -4,6 +4,7 @@ import blackjack.model.domain.Dealer
 import blackjack.model.domain.Deck
 import blackjack.model.domain.Participants
 import blackjack.model.domain.Player
+import blackjack.model.domain.Status
 
 class Blackjack {
     fun initGame(
@@ -28,7 +29,7 @@ class Blackjack {
         players: List<Player>,
         dealer: Dealer,
     ) {
-        if (!dealer.alive) return
+        if (dealer.status == Status.Bust) return
 
         val dealerResult = dealer.sumCardNumber
 

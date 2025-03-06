@@ -4,6 +4,7 @@ import blackjack.model.domain.Card
 import blackjack.model.domain.Dealer
 import blackjack.model.domain.Participants
 import blackjack.model.domain.Player
+import blackjack.model.domain.Status
 
 class OutputView {
     fun printInitCardStatus(
@@ -62,33 +63,43 @@ class OutputView {
 
     private fun playerResult(players: List<Player>) {
         players.forEach { player ->
-            println(PLAYER_STATUS.format(player.name, determineStatus(player.alive)))
+            println(PLAYER_STATUS.format(player.name, determineStatus(player.status)))
         }
     }
 
-    private fun determineStatus(status: Boolean): String {
-        if (status) {
-            return "승"
+    private fun determineStatus(status: Status): String {
+        return when (status) {
+            Status.Win -> "승"
+            Status.Draw -> "무"
+            else -> "패"
         }
-        return "패"
     }
 
     private fun dealerResult(
         dealer: Dealer,
         players: List<Player>,
     ) {
-        val winningCount = players.filter { it.alive == true }.count()
-        val losingCount = players.size - winningCount
+        val winningCount = players.count { it.status == Status.Win }
+        val losingCount = players.count { it.status == Status.Lose }
+        val drawCount = players.count { it.status == Status.Draw }
 
-        println(OUTPUT_DEALER_RESULT.format(dealer.name, winningCount, losingCount))
+        val resultFormat = determineDealerResultFormat(drawCount)
+
+        println(resultFormat.format(dealer.name, winningCount, losingCount))
+    }
+
+    private fun determineDealerResultFormat(drawCount: Int): String {
+        if (drawCount != 0) return OUTPUT_DEALER_RESULT_WITH_DRAW
+        return OUTPUT_DEALER_RESULT
     }
 
     companion object {
         private const val OUTPUT_DISTRIBUTE_CARD: String = "%s와 %s에게 2장의 나누었습니다."
         private const val OUTPUT_DEALER_RECEIVE_CARD: String = "딜러는 16이하라 한장의 카드를 더 받았습니다."
         private const val OUTPUT_PARTICIPANTS_CARD_RESULT = " - 결과: %d"
-        private const val FINAL_RESULT = "## 최종 승패"
-        private const val OUTPUT_DEALER_RESULT = "%s: %d승 %d패"
+        private const val FINAL_RESULT: String = "## 최종 승패"
+        private const val OUTPUT_DEALER_RESULT: String = "%s: %d승 %d패"
+        private const val OUTPUT_DEALER_RESULT_WITH_DRAW: String = "%s: %d승 %d패 %d무"
         private const val PLAYER_STATUS: String = "%s: %s"
         private const val CARD: String = "카드"
         private const val CARD_FORMAT: String = "%s%s"

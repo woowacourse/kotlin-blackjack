@@ -1,11 +1,12 @@
 package blackjack.model.domain
 
+import blackjack.model.domain.Status.Companion.isBust
 import blackjack.model.service.Blackjack.Companion.BUST_STANDARD
 
 interface Participants {
     val name: String
     val cards: MutableList<Card>
-    var alive: Boolean
+    var status: Status
 
     val sumCardNumber: Int get() = getSumNumber()
     val cardDeck get() = cards.toList()
@@ -26,9 +27,7 @@ interface Participants {
         cards.add(card)
     }
 
-    fun isAlive() {
-        if (sumCardNumber > BUST_STANDARD) {
-            alive = false
-        }
+    fun isBust() {
+        status = isBust(sumCardNumber)
     }
 }

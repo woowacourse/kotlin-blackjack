@@ -4,7 +4,7 @@ import blackjack.model.service.Blackjack.Companion.THRESHOLD
 
 class Dealer(override val name: String = DEALER_NAME) : Participants {
     override val cards: MutableList<Card> = mutableListOf()
-    override var alive: Boolean = true
+    override var status: Status = Status.None
 
     fun drawUntilThreshold(cards: Deck): Int {
         var count: Int = 0
