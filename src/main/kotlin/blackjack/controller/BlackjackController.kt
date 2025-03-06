@@ -3,6 +3,7 @@ package blackjack.controller
 import blackjack.Dealer
 import blackjack.Deck
 import blackjack.Deck.INITIAL_HAND_OUT_CARD_COUNT
+import blackjack.DrawChoice
 import blackjack.GameManager
 import blackjack.Player
 import blackjack.view.InputView
@@ -21,8 +22,8 @@ class BlackjackController(
 
         players.forEach { player ->
             while (true) {
-                val condition = inputView.readMoreCardCondition(player)
-                if (condition == "n") {
+                val condition: DrawChoice = inputView.readMoreCardCondition(player)
+                if (condition == DrawChoice.NO) {
                     outputView.printPlayerHands(player)
                     break
                 }
@@ -38,6 +39,6 @@ class BlackjackController(
         }
         outputView.printDealerHandStatus(moreCard)
 
-        outputView.printFinalHandStatus(dealer,players)
+        outputView.printFinalHandStatus(dealer, players)
     }
 }

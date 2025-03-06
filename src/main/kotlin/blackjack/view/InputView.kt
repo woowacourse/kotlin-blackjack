@@ -1,5 +1,6 @@
 package blackjack.view
 
+import blackjack.DrawChoice
 import blackjack.Player
 
 class InputView {
@@ -11,11 +12,11 @@ class InputView {
         return players
     }
 
-    fun readMoreCardCondition(player: Player): String {
+    fun readMoreCardCondition(player: Player): DrawChoice {
         println(PLAYER_MORE_CARD_MESSAGE_GUIDE.format(player.name))
         val condition: String = readln().trim()
-        if (condition != "y" && condition != "n") return readMoreCardCondition(player)
-        return condition
+        if (DrawChoice.contains(condition)) return readMoreCardCondition(player)
+        return DrawChoice.from(condition)
     }
 
     companion object {
