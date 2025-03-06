@@ -4,7 +4,6 @@ import blackjack.domain.model.Cards
 import blackjack.domain.model.Choice
 import blackjack.domain.model.Dealer
 import blackjack.domain.model.Player
-import blackjack.domain.model.Verdict
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -68,8 +67,8 @@ class GameController(private val inputView: InputView = InputView(), private val
         outputView.printResultsHeader()
         val verdicts = dealer.getDealerVerdicts(players)
         outputView.printDealerVerdicts(dealer, verdicts)
-        players.forEach { player ->
-            outputView.printPlayerVerdict(player, Verdict.determine(dealer, player))
+        dealer.getPlayerVerdict(players).forEach { (player, verdict) ->
+            outputView.printPlayerVerdict(player, verdict)
         }
     }
 }
