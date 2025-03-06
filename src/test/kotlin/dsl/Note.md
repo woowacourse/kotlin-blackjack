@@ -132,7 +132,7 @@ data class Languages(
 6. 하지만, introduce 함수는 결국 Person 객체를 반환하기에, 각각의 빌더를 따로 만들게 되면 테스트가 실패한다.
 
 ```kotlin
-    fun skills(block: SkillsBuilder.() -> Unit): Skills = SkillsBuilder().apply(block).build()
+fun skills(block: SkillsBuilder.() -> Unit): Skills = SkillsBuilder().apply(block).build()
 
 fun languages(block: LanguagesBuilder.() -> Unit): Languages = LanguagesBuilder().apply(block).build()
 ```
@@ -155,6 +155,9 @@ fun introduceTest() {
                 "English" level 3
             }
         }
+    assertThat(person.skills?.soft).isEqualTo(listOf("A passion for problem solving", "Good communication skills"))
+    assertThat(person.skills?.hard).isEqualTo(listOf("Kotlin"))
+    
     assertThat(person.languages.languages).isEqualTo(
         listOf(
             LanguageModel("Korean", 5),
