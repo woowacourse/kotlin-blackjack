@@ -8,4 +8,16 @@ class GameManager(
         dealer.addCards(Deck.drawWithCount(count))
         players.forEach { player -> player.addCards(Deck.drawWithCount(count)) }
     }
+
+    fun calculateResultMap(): Map<Player, String> {
+        val dealerScore = dealer.sumScore()
+        val resultMap = mutableMapOf<Player, String>()
+
+        players.forEach { player ->
+            if (player.adjustScore() > dealerScore) resultMap[player] = "승"
+            else resultMap[player] = "패"
+        }
+
+        return resultMap.toMap()
+    }
 }
