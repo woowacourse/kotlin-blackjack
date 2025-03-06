@@ -1,7 +1,9 @@
 package blackjack.model.service
 
+import blackjack.model.domain.Dealer
 import blackjack.model.domain.Deck
 import blackjack.model.domain.Participants
+import blackjack.model.domain.Player
 
 class Blackjack {
     fun initGame(
@@ -19,6 +21,19 @@ class Blackjack {
     ) {
         repeat(2) {
             player.receiveCard(deck.spreadCard())
+        }
+    }
+
+    fun endGame(
+        players: List<Player>,
+        dealer: Dealer,
+    ) {
+        if (!dealer.alive) return
+
+        val dealerResult = dealer.sumCardNumber
+
+        players.forEach { player ->
+            player.isAlive(dealerResult)
         }
     }
 
