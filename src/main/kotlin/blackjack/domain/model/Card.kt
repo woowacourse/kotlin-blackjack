@@ -14,6 +14,8 @@ data class Card(
         require(cardIndex in CARD_INDEX_RANGE) { ERROR_OUT_OF_CARD_INDEX }
     }
 
+    fun getCardText(): String = cardNumber.getCardNumberName() + suit.getSuitName()
+
     companion object {
         private const val MIN_CARD_INDEX = 0
         private const val MAX_CARD_INDEX = (MAX_CARD_NUMBER * (MAX_SUIT_NUMBER + 1)) - 1
