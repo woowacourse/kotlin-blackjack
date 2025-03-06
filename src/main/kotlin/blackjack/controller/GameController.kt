@@ -3,16 +3,25 @@ package blackjack.controller
 import blackjack.domain.model.Cards
 import blackjack.domain.model.Choice
 import blackjack.domain.model.Dealer
-import blackjack.domain.model.Dealer.Companion.DEALER_DRAW_THRESHOLD
 import blackjack.domain.model.Player
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
 class GameController(private val inputView: InputView = InputView(), private val outputView: OutputView = OutputView()) {
-    fun initialize() {
-        val dealer = Dealer()
-        val participants: List<Player> = listOf(dealer) + inputView.readPlayerNames().map(::Player)
+    fun run() {
         val deck = Cards()
+        val dealer = Dealer()
+        val players: List<Player> = inputView.readPlayerNames().map(::Player)
+        val participants: List<Player> = listOf(dealer) + players
+        initialDeal(deck, participants)
+        processDealerHits(deck, dealer)
+        announceResult(dealer, players)
+    }
+
+    private fun initialDeal(
+        deck: Cards,
+        participants: List<Player>,
+    ) {
         participants.forEach { player ->
             player.accept(deck.draw(2))
         }
@@ -22,7 +31,6 @@ class GameController(private val inputView: InputView = InputView(), private val
         participants.filterNot { it is Dealer }.forEach { player ->
             playHand(player, deck)
         }
-        processDealerHits(deck, dealer)
     }
 
     private fun playHand(
@@ -30,8 +38,7 @@ class GameController(private val inputView: InputView = InputView(), private val
         deck: Cards,
     ) {
         while (true) {
-            outputView.requestPlayerAction(player)
-            val choice = Choice(inputView.readPlayerAction())
+            val choice = Choice(inputView.readPlayerAction(player))
             if (!choice.isHit() || player.isBust()) return
             player.accept(deck.draw(1))
             outputView.printPlayerStatus(player)
@@ -42,9 +49,21 @@ class GameController(private val inputView: InputView = InputView(), private val
         deck: Cards,
         dealer: Dealer,
     ) {
-        while (dealer.getScore() <= DEALER_DRAW_THRESHOLD) {
+        while (dealer.getScore() <= Dealer.DEALER_DRAW_THRESHOLD) {
             outputView.printDealerHitsState()
             dealer.accept(deck.draw(1))
+        }
+    }
+
+    private fun announceResult(
+        dealer: Dealer,
+        players: List<Player>,
+    ) {
+        outputView.printResultsHeader()
+        val verdicts = dealer.getDealerVerdicts(players)
+        outputView.printDealerVerdicts(dealer, verdicts)
+        players.forEach { player ->
+            outputView.printPlayerResult(player)
         }
     }
 }

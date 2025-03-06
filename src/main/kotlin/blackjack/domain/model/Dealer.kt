@@ -6,9 +6,12 @@ class Dealer() : Player(DEALER_NAME, mutableListOf()) {
         return players.associateWith { player -> Verdict.determine(player.getScore(), dealerScore) }
     }
 
-    fun getDealerVerdicts(players: List<Player>): List<Verdict> {
+    fun getDealerVerdicts(players: List<Player>): Map<Verdict, Int> {
         val dealerScore = getScore()
-        return players.map { player -> Verdict.determine(dealerScore, player.getScore()) }
+        val playersVerdict = players.map { player -> Verdict.determine(dealerScore, player.getScore()) }
+        return Verdict.entries.associateWith { verdict ->
+            playersVerdict.count { it == verdict }
+        }
     }
 
     companion object {
