@@ -27,6 +27,10 @@ class OutputView {
         println(buildPlayerStatus(player))
     }
 
+    fun printPlayerResult(player: Player) {
+        println(buildPlayerStatus(player) + PLAYER_RESULT_SEPARATOR + player.getScore())
+    }
+
     private fun buildPlayerStatus(player: Player): String {
         var status = ""
         status += player.name + PLAYER_NAME_STATUS_SEPARATOR
@@ -43,5 +47,6 @@ class OutputView {
 
         private const val PLAYER_CARDS_DELIMITER = ", "
         private const val PLAYER_NAME_STATUS_SEPARATOR = " 카드: "
+        private const val PLAYER_RESULT_SEPARATOR = " - 결과: "
     }
 }
