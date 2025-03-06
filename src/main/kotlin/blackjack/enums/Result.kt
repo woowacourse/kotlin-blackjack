@@ -1,6 +1,8 @@
 package blackjack.enums
 
-enum class Result {
-    WIN,
-    LOSE,
+enum class Result(
+    val message: String,
+) {
+    WIN("승"),
+    LOSE("패"),
 }

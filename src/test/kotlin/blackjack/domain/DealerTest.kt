@@ -1,7 +1,6 @@
 package blackjack.domain
 
 import blackjack.enums.Rank
-import blackjack.enums.Result
 import blackjack.enums.Suit
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -86,18 +85,5 @@ class DealerTest {
 
         // then
         assertThat(isBust).isFalse()
-    }
-
-    @Test
-    fun `플레이어가 승리하면 딜러는 1패를 가진다`() {
-        // given
-        val dealer = Dealer()
-
-        // when
-        dealer.updateResult(Result.WIN)
-        val dealerLoseCount = dealer.getResultCount(Result.LOSE)
-
-        // then
-        assertThat(dealerLoseCount).isEqualTo(1)
     }
 }

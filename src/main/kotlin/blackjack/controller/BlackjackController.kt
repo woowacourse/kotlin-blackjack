@@ -4,6 +4,7 @@ import blackjack.domain.Dealer
 import blackjack.domain.Deck
 import blackjack.domain.Player
 import blackjack.enums.Action
+import blackjack.enums.Result
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -18,8 +19,15 @@ class BlackjackController(
         dealCards(dealer, players)
         outputView.printDealingResult(dealer, players)
         players.forEach { dealMoreCard(it) }
-        dealMoreCard(dealer)
+
+        dealer.dealCards()
+        val hitCount = dealer.hand.cards.size - INITIAL_CARD_COUNT
+        outputView.printDealerHit(hitCount)
+
         outputView.printBlackjackResult(dealer, players)
+        val playerResult = getPlayerResult(dealer, players)
+        val dealerResult = getDealerResult(playerResult)
+        outputView.printMatchResult(dealerResult, playerResult)
     }
 
     private fun dealCards(
@@ -41,16 +49,21 @@ class BlackjackController(
         }
     }
 
-    private fun dealMoreCard(dealer: Dealer) {
+    private fun getPlayerResult(
+        dealer: Dealer,
+        players: List<Player>,
+    ): Map<String, Result> {
         val dealerScore = dealer.calculateScore()
-        if (dealerScore <= DEALER_HIT_CONDITION) {
-            dealer.addCard(Deck.pick())
-            outputView.printDealerHit()
-        }
+        return players.associateBy({ it.name }, { it.getResult(dealerScore) })
     }
+
+    private fun getDealerResult(playerResult: Map<String, Result>): Map<Result, Int> =
+        playerResult.values
+            .groupingBy { if (it == Result.LOSE) Result.WIN else Result.LOSE }
+            .eachCount()
+            .withDefault { 0 }
 
     companion object {
         private const val INITIAL_CARD_COUNT = 2
-        private const val DEALER_HIT_CONDITION = 16
     }
 }

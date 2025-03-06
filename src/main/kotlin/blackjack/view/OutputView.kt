@@ -3,6 +3,7 @@ package blackjack.view
 import blackjack.domain.Card
 import blackjack.domain.Dealer
 import blackjack.domain.Player
+import blackjack.enums.Result
 
 class OutputView {
     fun printDealingResult(
@@ -22,8 +23,8 @@ class OutputView {
         println(MESSAGE_PLAYER_CARD.format(player.name, playerCards))
     }
 
-    fun printDealerHit() {
-        println(MESSAGE_DEALER_HIT)
+    fun printDealerHit(hitCount: Int) {
+        println(MESSAGE_DEALER_HIT.format(hitCount))
     }
 
     fun printBlackjackResult(
@@ -37,7 +38,27 @@ class OutputView {
         players.forEach { player ->
             val playerCards = player.hand.cards.joinToString(SEPARATOR) { cardInfo(it) }
             val playerScore = player.calculateScore()
-            println("${MESSAGE_PLAYER_CARD.format(player.name, playerCards)} ${MESSAGE_SCORE.format(playerScore)}")
+            println(
+                "${MESSAGE_PLAYER_CARD.format(player.name, playerCards)} ${
+                    MESSAGE_SCORE.format(
+                        playerScore,
+                    )
+                }",
+            )
+        }
+    }
+
+    fun printMatchResult(
+        dealerResult: Map<Result, Int>,
+        playerResult: Map<String, Result>,
+    ) {
+        println(MESSAGE_GAME_RESULT)
+        val dealerWinCount = dealerResult.getValue(Result.WIN)
+        val dealerLoseCount = dealerResult.getValue(Result.LOSE)
+        println(MESSAGE_DEALER_RESULT.format(dealerWinCount, dealerLoseCount))
+
+        playerResult.forEach {
+            println(MESSAGE_PLAYER_RESULT.format(it.key, it.value.message))
         }
     }
 
@@ -52,7 +73,10 @@ class OutputView {
         private const val MESSAGE_DEALER_CARD = "딜러 카드: %s"
         private const val MESSAGE_PLAYER_CARD = "%s 카드: %s"
         private const val MESSAGE_SCORE = "- 결과: %d"
-        private const val MESSAGE_DEALER_HIT = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n"
+        private const val MESSAGE_DEALER_HIT = "\n딜러는 16이하라 %d장의 카드를 더 받았습니다.\n"
+        private const val MESSAGE_GAME_RESULT = "\n## 최종 승패"
+        private const val MESSAGE_DEALER_RESULT = "\n딜러: %d승 %d패"
+        private const val MESSAGE_PLAYER_RESULT = "%s: %s"
         private const val SEPARATOR = ", "
     }
 }
