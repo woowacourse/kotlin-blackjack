@@ -4,7 +4,7 @@ import blackjack.domain.model.CardNumber.Companion.MAX_CARD_NUMBER
 import blackjack.domain.model.Suit.Companion.MAX_SUIT_NUMBER
 
 data class Card(
-    private val cardNumber: CardNumber,
+    val cardNumber: CardNumber,
     private val suit: Suit,
 ) {
     constructor(cardIndex: Int) : this(

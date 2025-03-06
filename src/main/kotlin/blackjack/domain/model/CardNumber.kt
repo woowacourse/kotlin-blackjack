@@ -2,7 +2,7 @@ package blackjack.domain.model
 
 @JvmInline
 value class CardNumber(
-    private val cardNumber: Int,
+    val cardNumber: Int,
 ) {
     init {
         require(cardNumber in CARD_NUMBER_RANGE) { ERROR_OUT_OF_CARD_NUMBER_RANGE }
