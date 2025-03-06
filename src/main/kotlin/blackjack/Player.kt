@@ -11,4 +11,6 @@ class Player(
     fun addCards(cards: List<Card>) = _cards.addAll(cards)
 
     fun sumScore() = cards.sumOf { card -> card.number.score }
+
+    fun isBurst() = sumScore() > 21
 }

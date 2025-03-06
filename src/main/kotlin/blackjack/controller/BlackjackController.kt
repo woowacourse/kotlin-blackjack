@@ -20,10 +20,15 @@ class BlackjackController(
         outputView.printAllPlayerHands(dealer, players)
 
         players.forEach { player ->
-            val condition = inputView.readMoreCardCondition(player)
-            if (condition == "y") {
+            while (true) {
+                val condition = inputView.readMoreCardCondition(player)
+                if (condition == "n") {
+                    outputView.printPlayerHands(player)
+                    break
+                }
                 player.addCard(Deck.draw())
                 outputView.printPlayerHands(player)
+                if (player.isBurst()) break
             }
         }
     }
