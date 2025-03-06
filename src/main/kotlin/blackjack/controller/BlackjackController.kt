@@ -51,11 +51,13 @@ class BlackjackController(
         player: Player,
         cardDeck: CardDeck,
     ) {
-        while (!player.hand.isBust()) {
-            val isDrawMore = inputView.getIsDrawMore(player.name)
-            if (isDrawMore) player.draw(cardDeck)
+        while (true) {
+            if (!inputView.getIsDrawMore(player.name)) break
+
+            player.draw(cardDeck)
             outputView.displayParticipantInfo(player.name, player.hand.cards)
-            if (!isDrawMore) break
+
+            if (player.hand.isBust()) return
         }
     }
 }
