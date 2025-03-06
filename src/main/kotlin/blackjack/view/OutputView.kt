@@ -2,6 +2,7 @@ package blackjack.view
 
 import blackjack.domain.model.Card
 import blackjack.domain.model.Dealer
+import blackjack.domain.model.Participants
 import blackjack.domain.model.Player
 import blackjack.domain.model.Verdict
 
@@ -14,14 +15,11 @@ class OutputView {
         println(MESSAGE_ENTER_PLAYER_YES_OR_NO.format(player.name))
     }
 
-    fun printInitialDeals(
-        dealer: Dealer,
-        players: List<Player>,
-    ) {
+    fun printInitialDeals(participants: Participants) {
         println(
             MESSAGE_INITIAL_HAND_DISTRIBUTED.format(
-                dealer.name,
-                players.map(Player::name).joinToString(PLAYER_CARDS_DELIMITER),
+                participants.findDealer(),
+                participants.filterPlayers().map(Player::name).joinToString(PLAYER_CARDS_DELIMITER),
                 2,
             ),
         )

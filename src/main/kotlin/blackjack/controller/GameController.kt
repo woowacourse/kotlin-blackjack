@@ -3,6 +3,7 @@ package blackjack.controller
 import blackjack.domain.model.Cards
 import blackjack.domain.model.Choice
 import blackjack.domain.model.Dealer
+import blackjack.domain.model.Participants
 import blackjack.domain.model.Player
 import blackjack.view.InputView
 import blackjack.view.OutputView
@@ -10,26 +11,29 @@ import blackjack.view.OutputView
 class GameController(private val inputView: InputView = InputView(), private val outputView: OutputView = OutputView()) {
     fun run() {
         val deck = Cards()
-        val dealer = Dealer()
-        val players: List<Player> = inputView.readPlayerNames().map(::Player)
-        val participants: List<Player> = listOf(dealer) + players
+        val participants = Participants(listOf(Dealer()) + inputView.readPlayerNames().map(::Player))
         initialDeal(deck, participants)
-        processDealerHits(deck, dealer)
-        announceResult(dealer, players)
+        printInitialDeal(participants)
+        participants.filterPlayers().forEach { player ->
+            playHand(player, deck)
+        }
+        processDealerHits(deck, participants.findDealer())
+        announceResult(participants.findDealer(), participants.filterPlayers())
     }
 
     private fun initialDeal(
         deck: Cards,
-        participants: List<Player>,
+        participants: Participants,
     ) {
-        participants.forEach { player ->
+        participants.players.forEach { player ->
             player.accept(deck.draw(2))
         }
-        participants.forEach { player ->
+    }
+
+    private fun printInitialDeal(participants: Participants) {
+        outputView.printInitialDeals(participants)
+        participants.players.forEach { player ->
             outputView.printPlayerStatus(player)
-        }
-        participants.filterNot { it is Dealer }.forEach { player ->
-            playHand(player, deck)
         }
     }
 
