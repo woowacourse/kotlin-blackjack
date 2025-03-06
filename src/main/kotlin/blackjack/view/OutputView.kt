@@ -4,6 +4,7 @@ import blackjack.model.Card
 import blackjack.model.Dealer
 import blackjack.model.Deck.INITIAL_HAND_OUT_CARD_COUNT
 import blackjack.model.Player
+import blackjack.model.ResultType
 
 class OutputView {
     fun printInitialHandOutCardMessage(players: List<Player>) {
@@ -65,12 +66,15 @@ class OutputView {
         println()
     }
 
-    fun printFinalResult(resultMap: Map<Player, String>, dealerResult: List<Int>) {
+    fun printFinalResult(
+        resultMap: Map<Player, ResultType>,
+        dealerResult: Map<ResultType, Int>,
+    ) {
         println(FINAL_RESULT_MESSAGE)
-        val (winCount, loseCount) = dealerResult
-        println(DEALER_RESULT_FORMAT.format(winCount, loseCount))
+        val dealerSummary = dealerResult.map { "${it.value}${it.key.value}" }
+        println(DEALER_RESULT_FORMAT.format(dealerSummary.joinToString(" ")))
         resultMap.forEach { (player, result) ->
-            println(PLAYER_RESULT_FORMAT.format(player.name, result))
+            println(PLAYER_RESULT_FORMAT.format(player.name, result.value))
         }
     }
 
@@ -82,7 +86,7 @@ class OutputView {
         private const val OUTPUT_SEPARATOR_FOR_PRINT = ", "
         private const val HANDS_STATUS_MESSAGE_FORMAT = "%s 카드: %s"
         private const val FINAL_HANDS_STATUS_MESSAGE_FORMAT = "%s 카드: %s - 결과: %d"
-        private const val DEALER_RESULT_FORMAT = "딜러: %d승 %d패"
+        private const val DEALER_RESULT_FORMAT = "딜러: %s"
         private const val PLAYER_RESULT_FORMAT = "%s: %s"
     }
 }
