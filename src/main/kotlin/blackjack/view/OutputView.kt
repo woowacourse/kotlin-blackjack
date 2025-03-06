@@ -58,8 +58,9 @@ class OutputView {
     ) {
         println(MESSAGE_GAME_RESULT)
         val dealerWinCount = dealerResult.getValue(Result.WIN)
+        val dealerDrawCount = dealerResult.getValue(Result.DRAW)
         val dealerLoseCount = dealerResult.getValue(Result.LOSE)
-        println(MESSAGE_DEALER_RESULT.format(dealerWinCount, dealerLoseCount))
+        println(MESSAGE_DEALER_RESULT.format(dealerWinCount, dealerDrawCount, dealerLoseCount))
 
         playerResult.forEach {
             println(MESSAGE_PLAYER_RESULT.format(it.key, it.value.message))
@@ -80,7 +81,7 @@ class OutputView {
         private const val MESSAGE_SCORE = "- 결과: %d"
         private const val MESSAGE_DEALER_HIT = "\n딜러는 16이하라 %d장의 카드를 더 받았습니다.\n"
         private const val MESSAGE_GAME_RESULT = "\n## 최종 승패"
-        private const val MESSAGE_DEALER_RESULT = "\n딜러: %d승 %d패"
+        private const val MESSAGE_DEALER_RESULT = "\n딜러: %d승 %d무 %d패"
         private const val MESSAGE_PLAYER_RESULT = "%s: %s"
         private const val SEPARATOR = ", "
     }

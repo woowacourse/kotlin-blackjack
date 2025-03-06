@@ -60,8 +60,13 @@ class BlackjackController(
 
     private fun getDealerResult(playerResult: Map<String, Result>): Map<Result, Int> =
         playerResult.values
-            .groupingBy { if (it == Result.LOSE) Result.WIN else Result.LOSE }
-            .eachCount()
+            .groupingBy {
+                when (it) {
+                    Result.WIN -> Result.LOSE
+                    Result.LOSE -> Result.WIN
+                    Result.DRAW -> Result.DRAW
+                }
+            }.eachCount()
             .withDefault { 0 }
 
     companion object {

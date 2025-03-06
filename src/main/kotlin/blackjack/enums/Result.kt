@@ -5,4 +5,5 @@ enum class Result(
 ) {
     WIN("승"),
     LOSE("패"),
+    DRAW("무"),
 }

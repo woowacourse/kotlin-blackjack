@@ -10,6 +10,8 @@ class Player(
         val playerScore = calculateScore()
         if (isBust() || playerScore < dealerScore) {
             return Result.LOSE
+        } else if (playerScore == dealerScore) {
+            return Result.DRAW
         }
         return Result.WIN
     }

@@ -147,4 +147,21 @@ class PlayerTest {
         // then
         assertThat(result).isEqualTo(Result.WIN)
     }
+
+    @Test
+    fun `플레이어의 점수가 20이고 딜러의 점수가 20이면 긴다`() {
+        // given
+        val queenSpade = Card(Rank.QUEEN, Suit.SPADE)
+        val queenHeart = Card(Rank.QUEEN, Suit.HEART)
+
+        // when
+        player.addCard(queenSpade)
+        player.addCard(queenHeart)
+        dealer.addCard(queenSpade)
+        dealer.addCard(queenHeart)
+        val result = player.getResult(dealer)
+
+        // then
+        assertThat(result).isEqualTo(Result.DRAW)
+    }
 }
