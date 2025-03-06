@@ -41,6 +41,10 @@ class BlackjackController(
     }
 
     private fun dealMoreCard(player: Player) {
+        if (player.isBust()) {
+            outputView.printBust()
+            return
+        }
         val action = inputView.readHitOrStay(player)
         if (action == Action.HIT) {
             player.addCard(Deck.pick())

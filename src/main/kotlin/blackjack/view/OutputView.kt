@@ -18,6 +18,10 @@ class OutputView {
         players.forEach { printPlayerCards(it) }
     }
 
+    fun printBust() {
+        println(MESSAGE_BUST)
+    }
+
     fun printPlayerCards(player: Player) {
         val playerCards = player.hand.cards.joinToString(SEPARATOR) { cardInfo(it) }
         println(MESSAGE_PLAYER_CARD.format(player.name, playerCards))
@@ -70,6 +74,7 @@ class OutputView {
 
     companion object {
         private const val MESSAGE_DEALING = "\n딜러와 %s에게 2장의 나누었습니다."
+        private const val MESSAGE_BUST = "더 이상 카드를 받을 수 없습니다."
         private const val MESSAGE_DEALER_CARD = "딜러 카드: %s"
         private const val MESSAGE_PLAYER_CARD = "%s 카드: %s"
         private const val MESSAGE_SCORE = "- 결과: %d"
