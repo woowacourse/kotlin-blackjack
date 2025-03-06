@@ -28,4 +28,27 @@ class RuleTest {
 
         assertThat(actualResult).isEqualTo(expectedResult)
     }
+
+    @ParameterizedTest
+    @CsvSource(
+        "true:1,1",
+        "true:1,8",
+        "true:1,1,1",
+        "true:10,1,1",
+        "true:1,1,1,1,7",
+        "false:10,1,1,10",
+        "false:10,7,5",
+        "false:1,1,1,1,7,2,9",
+        delimiter = ':',
+    )
+    fun `룰에게 플레이어의 드로우 여부를 받아올 수 있다`(
+        expectedIsDrawable: Boolean,
+        rawCardNumbers: String,
+    ) {
+        val cards = rawCardNumbers.split(',').map { preparedCards[it.toInt() - 1] }
+
+        val actualIsDrawable = Rule.calculateIsDrawableByCards(cards)
+
+        assertThat(actualIsDrawable).isEqualTo(expectedIsDrawable)
+    }
 }
