@@ -15,10 +15,12 @@ enum class ResultState {
             player: Player,
             dealer: Dealer,
         ): ResultState {
-            if (player.score() > GameRule.BLACKJACK_SCORE) return LOSE
-
             val playerScore = player.score()
             val dealerScore = dealer.score()
+
+            if (playerScore > GameRule.BLACKJACK_SCORE) return LOSE
+            if (dealerScore > GameRule.BLACKJACK_SCORE) return WIN
+
             return when {
                 playerScore > dealerScore -> WIN
                 playerScore < dealerScore -> LOSE
