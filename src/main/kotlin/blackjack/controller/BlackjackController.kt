@@ -41,5 +41,9 @@ class BlackjackController(
         outputView.printDealerHandStatus(moreCard)
 
         outputView.printFinalHandStatus(dealer, players)
+
+        val result = gameManager.calculateResultMap()
+        val dealerResult = gameManager.calculateDealerResult(result)
+        outputView.printFinalResult(result, dealerResult)
     }
 }

@@ -65,12 +65,24 @@ class OutputView {
         println()
     }
 
+    fun printFinalResult(resultMap: Map<Player, String>, dealerResult: List<Int>) {
+        println(FINAL_RESULT_MESSAGE)
+        val (winCount, loseCount) = dealerResult
+        println(DEALER_RESULT_FORMAT.format(winCount, loseCount))
+        resultMap.forEach { (player, result) ->
+            println(PLAYER_RESULT_FORMAT.format(player.name, result))
+        }
+    }
+
     companion object {
         private const val INITIAL_HAND_OUT_CARD_MESSAGE_FORMAT = "\n딜러와 %s에게 %d장의 카드를 나누어 주었습니다."
         private const val DEALER_HIT_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다."
         private const val DEALER_STAY_MESSAGE = "딜러는 17이상이라 카드를 받지 않았습니다."
+        private const val FINAL_RESULT_MESSAGE = "## 최종 승패"
         private const val OUTPUT_SEPARATOR_FOR_PRINT = ", "
         private const val HANDS_STATUS_MESSAGE_FORMAT = "%s 카드: %s"
         private const val FINAL_HANDS_STATUS_MESSAGE_FORMAT = "%s 카드: %s - 결과: %d"
+        private const val DEALER_RESULT_FORMAT = "딜러: %d승 %d패"
+        private const val PLAYER_RESULT_FORMAT = "%s: %s"
     }
 }
