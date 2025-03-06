@@ -18,7 +18,7 @@ class OutputView {
     fun printInitialDeals(participants: Participants) {
         println(
             MESSAGE_INITIAL_HAND_DISTRIBUTED.format(
-                participants.findDealer(),
+                participants.findDealer().name,
                 participants.filterPlayers().map(Player::name).joinToString(PLAYER_CARDS_DELIMITER),
                 2,
             ),
