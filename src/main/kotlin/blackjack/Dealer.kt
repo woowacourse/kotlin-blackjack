@@ -25,6 +25,8 @@ class Dealer : Participant() {
     }
 
     fun getPlayerResult(player: Player): GameResultStatus {
+        if (player.isBust()) return GameResultStatus.PLAYER_LOSE
+        if (isBust()) return GameResultStatus.PLAYER_WIN
         return when {
             totalSum > player.totalSum -> GameResultStatus.PLAYER_LOSE
             player.totalSum > totalSum -> GameResultStatus.PLAYER_WIN

@@ -3,6 +3,7 @@ package blackjack.view
 import blackjack.Dealer
 import blackjack.GameResult
 import blackjack.Player
+import blackjack.toDisplayName
 
 object OutputView {
     fun showInitialCards(
@@ -40,7 +41,7 @@ object OutputView {
         println("딜러: ${result.dealerResult.win}승 ${result.dealerResult.lose}패")
 
         result.playerResultStatus.entries.forEach { it ->
-            println("${it.key}: ${it.value} ")
+            println("${it.key.name}: ${it.value.toDisplayName()} ")
         }
     }
 }
