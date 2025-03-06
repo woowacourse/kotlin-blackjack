@@ -1,7 +1,9 @@
 package blackjack.view
 
 import blackjack.model.domain.Card
+import blackjack.model.domain.Dealer
 import blackjack.model.domain.Participants
+import blackjack.model.domain.Player
 
 class OutputView {
     fun printInitCardStatus(
@@ -49,10 +51,44 @@ class OutputView {
         }
     }
 
+    fun gameResult(
+        dealer: Dealer,
+        players: List<Player>,
+    ) {
+        println(FINAL_RESULT)
+        dealerResult(dealer, players)
+        playerResult(players)
+    }
+
+    private fun playerResult(players: List<Player>) {
+        players.forEach { player ->
+            println(PLAYER_STATUS.format(player.name, determineStatus(player.alive)))
+        }
+    }
+
+    private fun determineStatus(status: Boolean): String {
+        if (status) {
+            return "승"
+        }
+        return "패"
+    }
+
+    private fun dealerResult(
+        dealer: Dealer,
+        players: List<Player>,
+    ) {
+        val winningCount = players.filter { it.alive == true }.count()
+        val losingCount = players.size - winningCount
+
+        println(OUTPUT_DEALER_RESULT.format(dealer.name, winningCount, losingCount))
+    }
+
     companion object {
         private const val OUTPUT_DISTRIBUTE_CARD: String = "%s와 %s에게 2장의 나누었습니다."
         private const val OUTPUT_DEALER_RECEIVE_CARD: String = "딜러는 16이하라 한장의 카드를 더 받았습니다."
         private const val OUTPUT_PARTICIPANTS_CARD_RESULT = " - 결과: %d"
+        private const val FINAL_RESULT = "## 최종 승패"
+        private const val OUTPUT_DEALER_RESULT = "%s: %d승 %d패"
         private const val PLAYER_STATUS: String = "%s: %s"
         private const val CARD: String = "카드"
         private const val CARD_FORMAT: String = "%s%s"
