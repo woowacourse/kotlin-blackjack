@@ -1,8 +1,8 @@
 package blackjack.domain.enums
 
 enum class Shape {
-    Heart,
-    Dia,
-    Clover,
-    Spade,
+    HEART,
+    DIA,
+    CLOVER,
+    SPADE,
 }

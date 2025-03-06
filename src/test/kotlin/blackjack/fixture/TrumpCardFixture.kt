@@ -6,6 +6,6 @@ import blackjack.domain.enums.Shape
 
 fun trumpCardFixture(): List<TrumpCard> =
     listOf(
-        TrumpCard(CardTier.K, Shape.Dia),
-        TrumpCard(CardTier.K, Shape.Heart),
+        TrumpCard(CardTier.KING, Shape.DIA),
+        TrumpCard(CardTier.KING, Shape.HEART),
     )
