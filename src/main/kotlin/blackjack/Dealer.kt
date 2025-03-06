@@ -16,7 +16,8 @@ class Dealer : Participant() {
         return when {
             totalSum > player.totalSum -> GameResultStatus.PLAYER_LOSE
             player.totalSum > totalSum -> GameResultStatus.PLAYER_WIN
-            else -> GameResultStatus.DRAW
+            player.totalSum == totalSum -> GameResultStatus.DRAW
+            else -> throw IllegalArgumentException()
         }
     }
 

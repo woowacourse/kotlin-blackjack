@@ -8,7 +8,6 @@ abstract class Participant {
     abstract val hitThreshold: Int
 
     fun addCard(card: Card) {
-        check(canHit()) { "숫자의 합이 21점을 넘으면 카드를 받을 수 없습니다" }
         cards.add(card)
         totalSum = calculateTotalSum()
     }
