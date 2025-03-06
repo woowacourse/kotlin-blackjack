@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test
 class Cards(
     val value: MutableList<Card>,
 ) {
+    fun getSize(): Int = value.size
+
     fun getScore(): Int {
         val aces: List<Card> = value.filter { card: Card -> card.rank is Ace }
         val acesSums: List<Int> =

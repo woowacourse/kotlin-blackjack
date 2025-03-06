@@ -11,6 +11,8 @@ class Player(
     fun getMoreCard(card: Card) {
         cards.add(card)
     }
+
+    fun getCountOfCards(): Int = cards.getSize()
 }
 
 class PlayerTest {
