@@ -7,6 +7,8 @@ class Dealer(
         // todo
     }
 
+    fun showFirstCard(): Card = showCards().first()
+
     override fun isDrawFinish(): Boolean = !Rule.calculateShouldDrawByCards(showCards())
 
     companion object {

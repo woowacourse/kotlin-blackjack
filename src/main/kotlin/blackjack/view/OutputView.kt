@@ -1,6 +1,8 @@
 package blackjack.view
 
+import blackjack.domain.model.Dealer
 import blackjack.domain.model.GameParticipant
+import blackjack.domain.model.Player
 
 class OutputView {
     fun showDistributeCardMessage(participants: List<GameParticipant>) {
@@ -8,9 +10,15 @@ class OutputView {
         println(DISTRIBUTE_CARD_MESSAGE.format(joinedNames))
     }
 
-    fun showCardsInfo(gameParticipant: GameParticipant) {
-        val name = gameParticipant.name
-        val cardsInfoText = gameParticipant.showCards().joinToString { it.getCardText() }
+    fun showDealerCardsInfo(dealer: Dealer) {
+        val name = dealer.name
+        val cardsInfoText = dealer.showFirstCard().getCardText()
+        println(CARD_INFO_MESSAGE.format(name, cardsInfoText))
+    }
+
+    fun showPlayerCardsInfo(player: Player) {
+        val name = player.name
+        val cardsInfoText = player.showCards().joinToString { it.getCardText() }
         println(CARD_INFO_MESSAGE.format(name, cardsInfoText))
     }
 
