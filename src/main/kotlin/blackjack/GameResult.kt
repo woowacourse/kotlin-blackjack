@@ -22,8 +22,8 @@ class DealerResult() {
 }
 
 class GameResult(private val dealer: Dealer, val players: List<Player>) {
-    private val dealerResult = DealerResult()
-    private val playerResultStatus = mutableMapOf<Player, GameResultStatus>()
+    val dealerResult = DealerResult()
+    val playerResultStatus = mutableMapOf<Player, GameResultStatus>()
 
     private fun updateResult(
         player: Player,
