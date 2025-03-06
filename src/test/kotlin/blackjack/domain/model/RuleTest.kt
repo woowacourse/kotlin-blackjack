@@ -1,10 +1,11 @@
 package blackjack.domain.model
 
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
 class RuleTest {
-    private val cards = List(13) { i -> Card(CardNumber(i + 1), Suit(0)) }
+    private val preparedCards = List(12) { Card(it) }
 
     @ParameterizedTest
     @CsvSource(
@@ -21,10 +22,9 @@ class RuleTest {
         expectedResult: Int,
         rawCardNumbers: String,
     ) {
-        val cards = rawCardNumbers.split(',').map { cards[it.toInt()] }
-        val rule = Rule()
+        val cards = rawCardNumbers.split(',').map { preparedCards[it.toInt() - 1] }
 
-        val actualResult = rule.calculateResultByCards(cards)
+        val actualResult = Rule.calculateResultByCards(cards)
 
         assertThat(actualResult).isEqualTo(expectedResult)
     }
