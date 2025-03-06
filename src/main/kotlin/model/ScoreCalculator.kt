@@ -1,24 +1,21 @@
 package model
 
 class ScoreCalculator(private val cards: Cards) {
-    fun calculateTotalScore(): Int {
-        return cards.allCards.sumOf { card ->
-            card.cardRank.score
-        }
+    private fun calculateCardScore(): Int {
+        return cards.getCardScores().sum()
     }
 
     private fun calculateAceScore(): Int = cards.aceCount()
 
-    private fun calculateWithoutAce(): Int = calculateTotalScore() - calculateAceScore()
+    private fun calculateWithoutAce(): Int = calculateCardScore() - calculateAceScore()
 
-    // Ace가 한개만 있을 때
-    fun totalScore(): Int {
+    fun totalCardScore(): Int {
         val withoutAceScore = calculateWithoutAce()
         var aceCount = cards.aceCount()
         val defaultAce = 1
         var containAceScore = withoutAceScore + defaultAce * aceCount
 
-        while (containAceScore > 21 && aceCount > 0) {
+        while (containAceScore >= 21 && aceCount > 0) {
             containAceScore -= 10
             aceCount--
         }
