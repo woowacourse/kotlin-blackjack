@@ -1,7 +1,7 @@
-package blackjack
+package blackjack.domain.model
 
-import blackjack.CardNumber.Companion.MAX_CARD_NUMBER
-import blackjack.Suit.Companion.MAX_SUIT_NUMBER
+import blackjack.domain.model.CardNumber.Companion.MAX_CARD_NUMBER
+import blackjack.domain.model.Suit.Companion.MAX_SUIT_NUMBER
 
 data class Card(
     private val cardNumber: CardNumber,
