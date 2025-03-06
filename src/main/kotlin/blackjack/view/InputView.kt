@@ -10,8 +10,8 @@ class InputView {
     fun getFlag(): Boolean {
         val input = readlnOrNull() ?: ""
         validateInput(input)
-        require(input == "y" || input == "n") { INVALID_FLAG_MESSAGE }
-        return input == "y"
+        require(input == YES || input == NO) { INVALID_FLAG_MESSAGE }
+        return input == YES
     }
 
     private fun validateInput(input: String) {
@@ -22,7 +22,9 @@ class InputView {
 
     companion object {
         private const val DELIMITER = ","
-        private const val INVALID_FLAG_MESSAGE = "y 혹은 n을 입력해주세요."
+        private const val YES = "y"
+        private const val NO = "n"
+        private const val INVALID_FLAG_MESSAGE = "$YES 혹은 ${NO}을 입력해주세요."
         private const val INVALID_INPUT_MESSAGE = "입력이 비어있습니다."
     }
 }
