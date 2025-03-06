@@ -1,9 +1,18 @@
 package model
 
-class Player(val name: String, val cards: Cards) {
+class Player(val name: String, val playerCards: Cards) : Participant(playerCards) {
     init {
         require(name.isNotEmpty()) { PLAYER_BLANK_ERROR_MESSAGE }
-        require(cards.getCardsCount() == 2) { "[ERROR]" }
+    }
+
+    override fun turn(allCards: Cards): Boolean {
+        val score = getScore()
+        if (score <= 21) {
+            val drawnCard = allCards.drawCards(1)
+            playerCards.addCards(drawnCard)
+            return false
+        }
+        return true
     }
 
     companion object {
