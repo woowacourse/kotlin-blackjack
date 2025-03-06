@@ -1,16 +1,27 @@
 package blackjack.domain
 
-class BlackJackGame(
-    private val player: List<Player>,
-    private val dealer: Dealer,
-) {
-    private val deck = Deck()
+import blackjack.domain.enums.UserChoice
+import blackjack.domain.participant.Participant
+import blackjack.domain.participant.Player
 
-    fun initializedHandOutCards(initializedCardCount: Int) {
-        repeat(initializedCardCount) {
-            player.map { it.drawCard(deck.pop()) }
-            dealer.drawCard(deck.pop())
+class BlackJackGame(
+    private val players: List<Participant>,
+    private val deck: Deck,
+) {
+    fun handOutInitializedCards(initializedCardCount: Int = INITIAL_CARD_COUNT) {
+        players.forEach { player ->
+            repeat(initializedCardCount) {
+                player.addCard(deck.pop())
+            }
         }
+    }
+
+    fun playGame(action: (String) -> UserChoice) {
+        players
+            .filterIsInstance<Player>()
+            .forEach { player ->
+                processPlayerTurn(player, action)
+            }
     }
 
     private fun processPlayerTurn(
