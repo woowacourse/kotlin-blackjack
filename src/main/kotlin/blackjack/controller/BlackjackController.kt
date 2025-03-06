@@ -47,7 +47,7 @@ class BlackjackController(
     }
 
     private fun getIsPlayerDrawMore(player: Player) {
-        while (!player.hand.isBusted()) {
+        while (!player.hand.isBust()) {
             outputView.askDrawMoreCard(player.name)
             if (inputView.getIsDrawMore()) player.draw() else break
             outputView.displayParticipantInfo(player.name, player.hand.cards)

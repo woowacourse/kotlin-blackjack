@@ -8,7 +8,7 @@ class Hand {
         _cards.addAll(cards)
     }
 
-    fun isBusted(): Boolean = score() == BUST_SCORE
+    fun isBust(): Boolean = score() == BUST_SCORE
 
     fun score(): Int {
         val hardScore = hardScore()

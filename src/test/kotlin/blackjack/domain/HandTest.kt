@@ -69,7 +69,7 @@ class HandTest {
         hand.addAll(listOf(card1, card2, card3))
 
         // then
-        assertThat(hand.isBusted()).isTrue()
+        assertThat(hand.isBust()).isTrue()
     }
 
     @Test

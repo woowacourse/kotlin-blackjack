@@ -6,7 +6,7 @@ class Dealer(
     fun drawUntilFinished(): Int {
         var count = 0
 
-        while (hand.score() <= 16 && !hand.isBusted()) {
+        while (hand.score() <= 16 && !hand.isBust()) {
             draw()
             count++
         }

@@ -17,7 +17,7 @@ class DealerTest {
         dealer.drawUntilFinished()
 
         // then
-        assertThat(dealer.hand.score() > 16 || dealer.hand.isBusted()).isTrue()
+        assertThat(dealer.hand.score() > 16 || dealer.hand.isBust()).isTrue()
     }
 
     @Test
