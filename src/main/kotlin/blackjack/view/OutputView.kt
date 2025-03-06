@@ -11,14 +11,17 @@ class OutputView {
         println(SET_CARD_MESSAGE_WITH_PLAYER_NAME_FORMAT.format(playerNames, INITIAL_HAND_OUT_CARD_COUNT))
     }
 
+    fun printPlayerHands(player: Player) {
+        println(HANDS_OF_PLAYER_FORMAT.format(player.name, getCardsStatus(player.cards)))
+    }
+
     fun printAllPlayerHands(
         dealer: Dealer,
         players: List<Player>,
     ) {
         println(HANDS_OF_DEALER_FORMAT.format(dealer.name, getCardsStatus(listOf(dealer.cards.first()))))
-        players.forEach { player ->
-            println(HANDS_OF_PLAYER_FORMAT.format(player.name, getCardsStatus(player.cards)))
-        }
+        players.forEach { player -> printPlayerHands(player) }
+        println()
     }
 
     private fun getCardsStatus(cards: List<Card>): String {
