@@ -10,6 +10,7 @@ class Deck {
     }
 
     fun draw(): Card {
+        require(cards.isNotEmpty()) { NO_SUCH_ELEMENT_ERROR_MESSAGE }
         return _cards.removeFirst()
     }
 
@@ -22,5 +23,6 @@ class Deck {
     companion object {
         private const val DECK_SIZE = 52
         private const val INVALID_DECK_SIZE_ERROR_MESSAGE = "덱은 52장의 카드로 구성되어야 합니다."
+        private const val NO_SUCH_ELEMENT_ERROR_MESSAGE = "남은 카드가 없습니다."
     }
 }

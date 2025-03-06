@@ -1,6 +1,7 @@
 package blackjack.domain
 
 import blackjack.domain.card.Deck
+import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
@@ -18,5 +19,13 @@ class DeckTest {
 
         deck.draw()
         deck.cards.size shouldBe 51
+    }
+
+    @Test
+    fun `덱에 남은 카드가 없을 때 드로우를 할 수 없다`() {
+        shouldThrowExactly<IllegalArgumentException> {
+            val deck = Deck()
+            repeat(53) { deck.draw() }
+        }
     }
 }
