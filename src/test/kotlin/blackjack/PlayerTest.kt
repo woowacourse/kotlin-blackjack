@@ -8,6 +8,6 @@ class PlayerTest {
     fun `플레이어는 처음에 카드를 2장 받는다`() {
         val player = Player()
 
-        assertThat(player.cards).hasSize(2)
+        assertThat(player.showCards()).hasSize(2)
     }
 }
