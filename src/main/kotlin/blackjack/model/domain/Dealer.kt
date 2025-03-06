@@ -6,10 +6,13 @@ class Dealer(override val name: String = DEALER_NAME) : Participants {
     override val cards: MutableList<Card> = mutableListOf()
     override var alive: Boolean = true
 
-    fun drawUntilThreshold(cards: Deck) {
+    fun drawUntilThreshold(cards: Deck): Int {
+        var count: Int = 0
         while (sumCardNumber <= THRESHOLD) {
             receiveCard(cards.spreadCard())
+            count++
         }
+        return count
     }
 
     companion object {

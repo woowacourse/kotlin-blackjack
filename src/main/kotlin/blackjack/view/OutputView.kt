@@ -33,8 +33,15 @@ class OutputView {
         return cards.joinToString(SEPARATOR) { CARD_FORMAT.format(it.cardNumber.display, it.symbol.symbol) }
     }
 
+    fun printDealerReceiveCard(count: Int) {
+        repeat(count) {
+            println(OUTPUT_DEALER_RECEIVE_CARD)
+        }
+    }
+
     companion object {
         private const val OUTPUT_DISTRIBUTE_CARD: String = "%s와 %s에게 2장의 나누었습니다."
+        private const val OUTPUT_DEALER_RECEIVE_CARD: String = "딜러는 16이하라 한장의 카드를 더 받았습니다."
         private const val PLAYER_STATUS: String = "%s: %s"
         private const val CARD: String = "카드"
         private const val CARD_FORMAT: String = "%s%s"
