@@ -1,6 +1,6 @@
 package blackjack
 
-class Player : Participant() {
+class Player(val name: String) : Participant() {
     var totalSum: Int = 0
         private set
     val cards: MutableList<Card> = mutableListOf()
