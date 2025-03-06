@@ -26,10 +26,14 @@ class Dealer : Participant() {
 
     fun getPlayerResult(player: Player): GameResultStatus {
         return when {
-            totalSum > player.totalSum -> GameResultStatus.PLAYER_WIN
-            player.totalSum > totalSum -> GameResultStatus.PLAYER_LOSE
+            totalSum > player.totalSum -> GameResultStatus.PLAYER_LOSE
+            player.totalSum > totalSum -> GameResultStatus.PLAYER_WIN
             else -> GameResultStatus.DRAW
         }
+    }
+
+    fun haveAdditionalCard(): Boolean {
+        return cards.size > 2
     }
 
     private fun calculateTotalSum(): Int {
