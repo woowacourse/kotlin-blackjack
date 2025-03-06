@@ -15,6 +15,7 @@ class BlackjackController(
 ) {
     fun play(dealer: Dealer) {
         val players: List<Player> = inputView.readPlayerNames()
+
         outputView.printInitialHandOutCardMessage(players)
         val gameManager = GameManager(dealer, players)
         gameManager.dealInitialCardWithCount(INITIAL_HAND_OUT_CARD_COUNT)
@@ -29,7 +30,7 @@ class BlackjackController(
                 }
                 player.addCard(Deck.draw())
                 outputView.printPlayerHands(player)
-                if (player.isBurst()) break
+                if (player.isBust()) break
             }
         }
 

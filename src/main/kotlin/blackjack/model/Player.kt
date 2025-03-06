@@ -23,7 +23,7 @@ class Player(
 
     fun sumScore() = cards.sumOf { card -> card.number.score }
 
-    fun isBurst() = adjustScore() > 21
+    fun isBust() = adjustScore() > 21
 
     fun countAce() = _cards.count { it.number == Number.ACE }
 }
