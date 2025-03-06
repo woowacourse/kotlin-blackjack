@@ -64,4 +64,11 @@ class PlayerTest {
         player.setResult()
         assertThat(player.result).isEqualTo(Result.LOSE)
     }
+
+    @Test
+    fun `플레이어의 최종 결과를 알 수 있다`() {
+        val player = Player("Gio")
+        player.result = Result.LOSE
+        assertThat(player.result).isEqualTo(Result.LOSE)
+    }
 }
