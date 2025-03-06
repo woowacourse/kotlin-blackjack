@@ -1,8 +1,18 @@
 package blackjack.model
 
 class Cards(
-    val cards: List<Card>,
+    cards: List<Card>,
 ) {
+    private val _cards: MutableList<Card> = cards.toMutableList()
+    val cards: List<Card> get() = _cards.map { card -> card.copy() }
+
+    var size: Int = this.cards.size
+        private set
+
+    fun add(card: Card) {
+        _cards.add(card)
+    }
+
     fun calculateScore(): Int {
         val aceCount: Int = cards.count { card -> card.isDenominationAce(card) }
         val score: Int = cards.sumOf { card -> card.denomination.number }

@@ -119,4 +119,25 @@ class CardsTest {
 
         assertThat(actual).isEqualTo(13)
     }
+
+    @Test
+    fun `카드들에 카드를 추가한다`() {
+        val cards =
+            Cards(
+                listOf(
+                    Card(CardShape.HEART, Denomination.ACE),
+                    Card(CardShape.CLOVER, Denomination.NINE),
+                ),
+            )
+        val addCard = Card(CardShape.CLOVER, Denomination.TWO)
+        cards.add(addCard)
+
+        assertThat(cards.cards).isEqualTo(
+            listOf(
+                Card(CardShape.HEART, Denomination.ACE),
+                Card(CardShape.CLOVER, Denomination.NINE),
+                Card(CardShape.CLOVER, Denomination.TWO),
+            ),
+        )
+    }
 }
