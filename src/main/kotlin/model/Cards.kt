@@ -1,6 +1,6 @@
 package model
 
-class Cards(val allCards: MutableList<Card>) {
+class Cards(val allCards: MutableList<Card>) : List<Card> by allCards {
     init {
         require(allCards.distinct().size == getCardsCount()) { "[ERROR] 카드는 중복될 수 없습니다" }
     }
@@ -13,7 +13,15 @@ class Cards(val allCards: MutableList<Card>) {
 
     fun getCardsCount() = allCards.size
 
-    fun showInitialCards(count: Int): Card = allCards[count - 1]
+    fun getCardNames() = allCards.map { it.cardName }
 
-    fun aceCount() = allCards.count { card -> card.cardRank == CardRank.ACE }
+    fun getCardScores() = allCards.map { card -> card.cardScore }
+
+    fun aceCount() = allCards.count { card -> card.isAceCard() }
+
+    fun addCards(cards: Cards) {
+        cards.forEach { card ->
+            allCards.add(card)
+        }
+    }
 }
