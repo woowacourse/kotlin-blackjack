@@ -1,13 +1,17 @@
 package blackjack.domain.model
 
 abstract class GameParticipant(val name: String) {
-    val cards = mutableListOf<Card>()
+    private val cards = mutableListOf<Card>()
 
     init {
-        repeat(2) { cards += Deck.giveCard() }
+        repeat(2) { drawCard() }
     }
 
     fun showCards(): List<Card> = cards.toList()
 
-    abstract fun drawCard()
+    fun drawCard() {
+        cards += Deck.giveCard()
+    }
+
+    abstract fun play()
 }
