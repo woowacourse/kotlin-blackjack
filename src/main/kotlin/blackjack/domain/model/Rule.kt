@@ -17,11 +17,17 @@ class Rule {
             return minimumSum <= BLACK_JACK_NUMBER
         }
 
+        fun calculateShouldDrawByCards(cards: Collection<Card>): Boolean {
+            val resultValue = calculateResultByCards(cards)
+            return resultValue <= DEALER_DRAW_LIMIT
+        }
+
         private fun calculateMinimumSumByCards(cards: Collection<Card>): Int {
             val cardValues = cards.map { it.cardNumber.cardNumber }
             return cardValues.sum()
         }
 
         private const val BLACK_JACK_NUMBER = 21
+        private const val DEALER_DRAW_LIMIT = 16
     }
 }
