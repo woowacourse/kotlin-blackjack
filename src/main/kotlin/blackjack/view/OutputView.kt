@@ -2,7 +2,7 @@ package blackjack.view
 
 import blackjack.Card
 import blackjack.Dealer
-import blackjack.Deck.Companion.INITIAL_HAND_OUT_CARD_COUNT
+import blackjack.Deck.INITIAL_HAND_OUT_CARD_COUNT
 import blackjack.Player
 
 class OutputView {
