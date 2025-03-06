@@ -17,7 +17,12 @@ open class Player(val name: String, val cards: MutableList<Card> = mutableListOf
 
     private fun hasAce() = cards.any { it.rank == Rank.ACE }
 
+    fun isBust(): Boolean {
+        return getScore() > BUST_THRESHOLD
+    }
+
     companion object {
+        private const val BUST_THRESHOLD = 21
         private const val MAX_BONUS_SCORE = 11
         private const val BONUS_SCORE = 10
     }

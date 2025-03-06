@@ -9,8 +9,8 @@ class OutputView {
         println(MESSAGE_ENTER_PLAYER_NAMES)
     }
 
-    fun requestPlayerAction() {
-        println(MESSAGE_ENTER_PLAYER_YES_OR_NO)
+    fun requestPlayerAction(player: Player) {
+        println(MESSAGE_ENTER_PLAYER_YES_OR_NO.format(player.name))
     }
 
     fun printInitialDeals(
