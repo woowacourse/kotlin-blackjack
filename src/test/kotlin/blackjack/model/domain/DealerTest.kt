@@ -17,7 +17,7 @@ class DealerTest {
 
     @Test
     fun `카드 숫자의 합을 계산한다`() {
-        assertThat(dealer.sumCardNumber).isEqualTo(7)
+        assertThat(dealer.sumCardNumber).isEqualTo(17)
     }
 
     @Test

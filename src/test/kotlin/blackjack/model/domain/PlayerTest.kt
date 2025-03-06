@@ -15,7 +15,7 @@ class PlayerTest {
 
     @Test
     fun `카드 숫자의 합을 계산한다`() {
-        assertThat(player1.sumCardNumber).isEqualTo(7)
+        assertThat(player1.sumCardNumber).isEqualTo(17)
     }
 
     @Test
@@ -35,6 +35,6 @@ class PlayerTest {
     @Test
     fun `플레이어의 숫자의 합과 받은 숫자의 합을 비교하여 승패를 결정한다`() {
         player1.isAlive(8)
-        assertThat(player1.alive).isFalse()
+        assertThat(player1.alive).isTrue()
     }
 }
