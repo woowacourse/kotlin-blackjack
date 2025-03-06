@@ -11,7 +11,8 @@ class Dealer() : Player(DEALER_NAME, mutableListOf()) {
         return players.map { player -> Verdict.determine(dealerScore, player.getScore()) }
     }
 
-    private companion object {
+    companion object {
         const val DEALER_NAME = "딜러"
+        const val DEALER_DRAW_THRESHOLD = 16
     }
 }
