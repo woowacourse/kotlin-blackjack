@@ -13,13 +13,16 @@ class OutputView {
         println(MESSAGE_ENTER_PLAYER_YES_OR_NO)
     }
 
-    fun printInitialDeals(dealer: Dealer, players: List<Player>) {
+    fun printInitialDeals(
+        dealer: Dealer,
+        players: List<Player>,
+    ) {
         println(
             MESSAGE_INITIAL_HAND_DISTRIBUTED.format(
                 dealer.name,
                 players.map(Player::name).joinToString(PLAYER_CARDS_DELIMITER),
-                2
-            )
+                2,
+            ),
         )
     }
 
@@ -34,9 +37,10 @@ class OutputView {
     private fun buildPlayerStatus(player: Player): String {
         var status = ""
         status += player.name + PLAYER_NAME_STATUS_SEPARATOR
-        status += player.cards.joinToString(PLAYER_CARDS_DELIMITER) { card: Card ->
-            card.rank.value + card.suit.value
-        }
+        status +=
+            player.cards.joinToString(PLAYER_CARDS_DELIMITER) { card: Card ->
+                card.rank.value + card.suit.value
+            }
         return status
     }
 
