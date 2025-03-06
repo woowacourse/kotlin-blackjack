@@ -51,4 +51,24 @@ class RuleTest {
 
         assertThat(actualIsDrawable).isEqualTo(expectedIsDrawable)
     }
+
+    @ParameterizedTest
+    @CsvSource(
+        "true:1,1",
+        "true:1,1,1",
+        "false:10,1",
+        "false:1,1,1,1,7",
+        "false:1,8",
+        delimiter = ':',
+    )
+    fun `룰에게 딜러의 드로우 여부를 받아올 수 있다`(
+        expectedShouldDraw: Boolean,
+        rawCardNumbers: String,
+    ) {
+        val cards = rawCardNumbers.split(',').map { preparedCards[it.toInt() - 1] }
+
+        val actualShouldDraw = Rule.calculateShouldDrawByCards(cards)
+
+        assertThat(actualShouldDraw).isEqualTo(expectedShouldDraw)
+    }
 }
