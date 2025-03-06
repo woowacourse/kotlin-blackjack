@@ -8,12 +8,12 @@ class Hand {
         _cards.addAll(cards)
     }
 
+    fun isBusted(): Boolean = score() == BUST_SCORE
+
     fun score(): Int {
         val hardScore = hardScore()
         return maxOf(hardScore.formatIfBust(), softScore(hardScore).formatIfBust())
     }
-
-    fun isBusted(): Boolean = score() == BUST_SCORE
 
     private fun hardScore(): Int = cards.sumOf { it.rank.score }
 
