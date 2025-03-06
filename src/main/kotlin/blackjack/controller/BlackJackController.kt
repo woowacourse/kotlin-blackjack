@@ -35,7 +35,7 @@ class BlackJackController(
         players: List<Player>,
     ) {
         dealer.draw(deck)
-        players.forEach { person -> person.draw(deck, true) }
+        players.forEach { person -> person.draw(deck) }
         outputView.printDrawMessage(dealer, players)
     }
 
@@ -51,9 +51,9 @@ class BlackJackController(
     }
 
     private fun letPlayerDrawCard(player: Player) {
-        val isHit = inputView.getFlag()
-        player.draw(deck, isHit)
-        if (isHit) {
+        val hitFlag = inputView.getFlag()
+        player.draw(deck, hitFlag)
+        if (hitFlag) {
             outputView.printDrawStatus(player)
         }
     }

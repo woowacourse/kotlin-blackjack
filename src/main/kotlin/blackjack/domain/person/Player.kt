@@ -16,11 +16,11 @@ class Player(
 
     fun draw(
         deck: Deck,
-        isHit: Boolean = true,
+        hitFlag: Boolean = true,
     ) {
         val amount = if (gameState == PlayerState.FIRST_TURN) GameRule.FIRST_TURN_DRAW_AMOUNT else GameRule.HIT_DRAW_AMOUNT
 
-        if (isHit) {
+        if (hitFlag) {
             repeat(amount) {
                 hand.addCard(deck.draw())
             }
