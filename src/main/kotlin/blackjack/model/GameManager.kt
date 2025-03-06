@@ -20,4 +20,18 @@ class GameManager(
 
         return resultMap.toMap()
     }
+
+    fun calculateDealerResult(resultMap: Map<Player, String>): List<Int> {
+        val dealerResult = mutableListOf(0, 0)
+
+        resultMap.forEach {
+            when (it.value) {
+                "패" -> dealerResult[0]++
+                "승" -> dealerResult[1]++
+            }
+        }
+
+        return dealerResult.toList()
+    }
+
 }
