@@ -19,7 +19,7 @@ import blackjack.model.WinningResult.WIN
 
 class OutputView {
     fun displayFirstDrawEnd(players: List<Player>) {
-        println("\n딜러와 ${players.joinToString { it.name }}에게 2장을 나누었습니다.")
+        println("\n딜러와 ${players.joinToString { player -> player.name }}에게 2장을 나누었습니다.")
     }
 
     fun displayDealerDrawInfo(count: Int) {
