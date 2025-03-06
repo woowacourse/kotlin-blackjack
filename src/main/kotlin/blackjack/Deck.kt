@@ -5,5 +5,6 @@ class Deck {
 
     fun drawCard(): Card {
         return cards.removeLast()
+        // todo(카드 52장 소진시의 예외처리 추가)
     }
 }
