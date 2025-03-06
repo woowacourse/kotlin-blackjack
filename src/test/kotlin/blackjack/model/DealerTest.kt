@@ -8,7 +8,7 @@ class DealerTest {
     @Test
     fun `딜러는 이름과 카드들을 가진다`() {
         val cards = listOf((Card(CardShape.HEART, Denomination.FIVE)), Card(CardShape.CLOVER, Denomination.TWO))
-        val dealer = Dealer(cards)
+        val dealer = Dealer(cards = cards)
 
         assertAll({
             assertThat(dealer.name).isEqualTo("딜러")

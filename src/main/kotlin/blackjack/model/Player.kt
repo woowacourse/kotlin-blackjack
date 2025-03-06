@@ -1,7 +1,7 @@
 package blackjack.model
 
 open class Player(
-    val name: String,
+    open val name: String,
     cards: List<Card> = emptyList(),
 ) {
     private val _cards: MutableList<Card> = cards.toMutableList()
