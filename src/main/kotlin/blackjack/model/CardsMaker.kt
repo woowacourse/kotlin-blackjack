@@ -8,7 +8,7 @@ object CardsMaker {
         DENOMINATIONS
             .flatMap { denomination ->
                 SHAPES.map { shape ->
-                    Card(shape, denomination.title)
+                    Card(shape, denomination)
                 }
             }.shuffled()
 }

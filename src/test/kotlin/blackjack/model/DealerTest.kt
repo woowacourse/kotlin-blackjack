@@ -7,11 +7,11 @@ import org.junit.jupiter.api.assertAll
 class DealerTest {
     @Test
     fun `딜러는 이름과 카드들을 가진다`() {
-        val cards = listOf((Card(CardShape.HEART, "5")), Card(CardShape.CLOVER, "2"))
+        val cards = listOf((Card(CardShape.HEART, Denomination.FIVE)), Card(CardShape.CLOVER, Denomination.TWO))
         val dealer = Dealer(cards)
 
         assertAll({
-            assertThat(dealer.name).isEqualTo("모찌")
+            assertThat(dealer.name).isEqualTo("딜러")
             assertThat(dealer.cards).isEqualTo(cards)
         })
     }
@@ -37,13 +37,13 @@ class DealerTest {
     @Test
     fun `딜러는 카드를 추가로 받을 수 있다`() {
         val dealer = Dealer()
-        val card = Card(CardShape.CLOVER, "6")
+        val card = Card(CardShape.CLOVER, Denomination.SIX)
 
         dealer.appendCard(card)
 
         assertThat(dealer.cards).isEqualTo(
             listOf(
-                Card(CardShape.CLOVER, "6"),
+                Card(CardShape.CLOVER, Denomination.SIX),
             ),
         )
     }
