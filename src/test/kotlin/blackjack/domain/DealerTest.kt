@@ -17,7 +17,7 @@ class DealerTest {
         dealer.drawUntilFinished(cardDeck)
 
         // then
-        assertThat(dealer.hand.score() > 16 || dealer.hand.isBust()).isTrue()
+        assertThat(dealer.score() > 16 || dealer.isBust()).isTrue()
     }
 
     @Test
@@ -32,7 +32,7 @@ class DealerTest {
         val dealerDrawCount = dealer.drawUntilFinished(cardDeck)
 
         // then
-        assertThat(dealerDrawCount).isEqualTo(dealer.hand.cards.size - initialDrawCount)
+        assertThat(dealerDrawCount).isEqualTo(dealer.cards().size - initialDrawCount)
     }
 
     @Test
@@ -43,7 +43,7 @@ class DealerTest {
         dealer.draw(cardDeck)
 
         // when
-        val playerScores = listOf(0, 22, 0, 22, 0, dealer.hand.score())
+        val playerScores = listOf(0, 22, 0, 22, 0, dealer.score())
 
         // then
         assertThat(dealer.result(playerScores)[WinningResult.WIN]).isEqualTo(3)
