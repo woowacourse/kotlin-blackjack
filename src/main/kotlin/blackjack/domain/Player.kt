@@ -3,7 +3,7 @@ package blackjack.domain
 import blackjack.domain.enums.Result
 
 class Player(
-    private val name: String,
+    val name: String,
 ) : Participant() {
     fun getResult(dealerScore: Int): Result {
         val playerScore = calculateScore()
