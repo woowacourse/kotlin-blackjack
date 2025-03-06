@@ -1,25 +1,33 @@
 package blackjack.domain.person
 
-import blackjack.domain.GameState
-import blackjack.domain.card.Deck
-import blackjack.domain.score.ScoreCalculator
+import blackjack.const.GameRule
+import blackjack.domain.card.Card
+import blackjack.domain.card.CardNumber
+import blackjack.domain.state.PersonState
 
-abstract class Person(val name: String) {
-    val hand: Hand = Hand()
+abstract class Person {
+    protected val hand: Hand = Hand()
 
-    var gameState: GameState = GameState.HIT
+    private lateinit var _gameState: PersonState
+    val gameState: PersonState get() = _gameState
 
-    fun draw(
-        deck: Deck,
-        amount: Int,
-    ) {
-        repeat(amount) { hand.addCard(deck.draw()) }
-        updateGameState()
+    fun cards(): List<Card> = hand.cards
+
+    fun isCanDraw(): Boolean {
+        return !gameState.isFinal
     }
 
-    private fun updateGameState() {
-        val score = ScoreCalculator.calculate(hand)
-        gameState = GameState.from(score)
-        println("\n $name / $score / $gameState \n")
+    fun score(): Int {
+        val values = hand.cards.map { if (it.number == CardNumber.ACE) GameRule.ACE_OTHER_SCORE else it.number.value }
+        val sum = values.sum()
+        return values.fold(sum) { acc, number ->
+            if (acc > GameRule.BLACKJACK_SCORE && number == GameRule.ACE_OTHER_SCORE) acc - GameRule.ACE_BASE_SCORE else acc
+        }
+    }
+
+    abstract fun updateGameState()
+
+    protected fun setGameState(state: PersonState) {
+        _gameState = state
     }
 }

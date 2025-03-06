@@ -1,11 +1,9 @@
 package blackjack.controller
 
 import blackjack.domain.GameResult
-import blackjack.domain.GameState
 import blackjack.domain.card.Deck
 import blackjack.domain.person.Dealer
 import blackjack.domain.person.Player
-import blackjack.domain.score.ScoreCalculator
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -36,8 +34,8 @@ class BlackJackController(
         dealer: Dealer,
         players: List<Player>,
     ) {
-        dealer.draw(deck, 2)
-        players.forEach { person -> person.draw(deck, 2) }
+        dealer.draw(deck)
+        players.forEach { person -> person.draw(deck, true) }
         outputView.printDrawMessage(dealer, players)
     }
 
@@ -46,32 +44,25 @@ class BlackJackController(
     }
 
     private fun handlePlayerTurn(player: Player) {
-        while (isPlayerTurnActive(player)) {
+        while (player.isCanDraw()) {
             outputView.printFlagMessage(player.name)
             letPlayerDrawCard(player)
         }
     }
 
     private fun letPlayerDrawCard(player: Player) {
-        if (inputView.getFlag()) {
-            player.draw(deck, 1)
+        val isHit = inputView.getFlag()
+        player.draw(deck, isHit)
+        if (isHit) {
             outputView.printDrawStatus(player)
         }
     }
 
-    private fun isPlayerTurnActive(player: Player): Boolean {
-        return !GameState.checkState(player.gameState)
-    }
-
     private fun processDealerTurns(dealer: Dealer) {
-        while (isDealerTurnActive(dealer)) {
+        while (dealer.isCanDraw()) {
             outputView.printDealerDrawMessage()
-            dealer.draw(deck, 1)
+            dealer.draw(deck)
         }
-    }
-
-    private fun isDealerTurnActive(dealer: Dealer): Boolean {
-        return !GameState.checkState(dealer.gameState) && ScoreCalculator.calculate(dealer.hand) <= 16
     }
 
     private fun showGameResult(

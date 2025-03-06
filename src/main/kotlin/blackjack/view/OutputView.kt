@@ -1,10 +1,9 @@
 package blackjack.view
 
-import blackjack.domain.ResultState
 import blackjack.domain.card.Card
 import blackjack.domain.person.Dealer
 import blackjack.domain.person.Player
-import blackjack.domain.score.ScoreCalculator
+import blackjack.domain.state.ResultState
 
 class OutputView {
     fun printNameMessage() {
@@ -16,7 +15,7 @@ class OutputView {
         players: List<Player>,
     ) {
         println("딜러와 ${players.joinToString(",") { it.name }}에게 2장을 나누었습니다.")
-        println("딜러: ${printCards(dealer.hand.cards)}")
+        println("딜러: ${printCards(dealer.cards())}")
         players.forEach { player ->
             println(printPlayerCards(player))
         }
@@ -27,7 +26,7 @@ class OutputView {
     }
 
     fun printPlayerCards(player: Player): String {
-        return "${player.name}카드: ${printCards(player.hand.cards)}"
+        return "${player.name}카드: ${printCards(player.cards())}"
     }
 
     fun printDrawStatus(player: Player) {
@@ -42,9 +41,9 @@ class OutputView {
         dealer: Dealer,
         players: List<Player>,
     ) {
-        println("딜러: ${printCards(dealer.hand.cards)} - 결과: ${ScoreCalculator.calculate(dealer.hand)}")
+        println("딜러: ${printCards(dealer.cards())} - 결과: ${dealer.score()}")
         players.forEach { player ->
-            println(printPlayerCards(player) + " - 결과: ${ScoreCalculator.calculate(player.hand)}")
+            println(printPlayerCards(player) + " - 결과: ${player.score()}")
         }
     }
 
