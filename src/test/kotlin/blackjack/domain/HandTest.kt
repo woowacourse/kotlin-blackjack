@@ -9,7 +9,6 @@ import blackjack.model.CardRank.QUEEN
 import blackjack.model.CardRank.TWO
 import blackjack.model.CardSuit.CLUB
 import blackjack.model.Hand
-import blackjack.model.Hand.Companion.isBusted
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
@@ -70,7 +69,7 @@ class HandTest {
         hand.addAll(listOf(card1, card2, card3))
 
         // then
-        assertThat(isBusted(hand.score())).isTrue()
+        assertThat(hand.isBusted()).isTrue()
     }
 
     @Test

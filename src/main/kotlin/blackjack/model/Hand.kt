@@ -13,6 +13,8 @@ class Hand {
         return maxOf(hardScore.formatIfBust(), softScore(hardScore).formatIfBust())
     }
 
+    fun isBusted(): Boolean = score() == BUST_SCORE
+
     private fun hardScore(): Int = cards.sumOf { it.rank.score }
 
     private fun softScore(hardScore: Int): Int {
@@ -27,7 +29,5 @@ class Hand {
         private const val BUST_SCORE = -1
         private const val BUST_CRITERIA = 21
         private const val SOFT_OFFSET_SCORE = 10
-
-        fun isBusted(score: Int): Boolean = score == BUST_SCORE
     }
 }

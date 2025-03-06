@@ -1,6 +1,6 @@
 package blackjack.model
 
 class Player(
-    name: String,
-    cardDeck: CardDeck,
+    private val name: String,
+    private val cardDeck: CardDeck,
 ) : Participant(cardDeck)
