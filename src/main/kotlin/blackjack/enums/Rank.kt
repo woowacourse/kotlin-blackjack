@@ -1,4 +1,4 @@
-package blackjack.domain.enums
+package blackjack.enums
 
 enum class Rank(
     val number: Int,

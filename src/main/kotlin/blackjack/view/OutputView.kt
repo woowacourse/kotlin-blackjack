@@ -17,15 +17,15 @@ class OutputView {
         players.forEach { printPlayerCards(it) }
     }
 
+    fun printPlayerCards(player: Player) {
+        val playerCards = player.hand.cards.joinToString(SEPARATOR) { cardInfo(it) }
+        println(MESSAGE_PLAYER_CARD.format(player.name, playerCards))
+    }
+
     private fun cardInfo(card: Card): String {
         val number = card.rank.symbol
         val shape = card.suit.korean
         return "$number$shape"
-    }
-
-    private fun printPlayerCards(player: Player) {
-        val playerCards = player.hand.cards.joinToString(SEPARATOR) { cardInfo(it) }
-        println(MESSAGE_PLAYER_CARD.format(player.name, playerCards))
     }
 
     companion object {

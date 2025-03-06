@@ -1,7 +1,7 @@
 package blackjack.domain
 
-import blackjack.domain.enums.Rank
-import blackjack.domain.enums.Suit
+import blackjack.enums.Rank
+import blackjack.enums.Suit
 
 class Deck private constructor() {
     companion object {

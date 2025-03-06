@@ -1,6 +1,6 @@
 package blackjack.domain
 
-import blackjack.domain.enums.Result
+import blackjack.enums.Result
 
 class Player(
     val name: String,
