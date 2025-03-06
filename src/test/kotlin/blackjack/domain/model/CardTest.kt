@@ -41,4 +41,23 @@ class CardTest {
         // then
         assertThat(actualCard).isEqualTo(expectedCard)
     }
+
+    @ParameterizedTest
+    @CsvSource(
+        "0, A스페이드",
+        "13, A하트",
+        "32, 7다이아몬드",
+        "51, K클로버",
+    )
+    fun `카드의 정보를 문자열로 만들 수 있다`(
+        rawCardNumber: Int,
+        expectedCardText: String,
+    ) {
+        // given
+        val card = Card(rawCardNumber)
+        val actualCardText = card.getCardText()
+
+        // when then
+        assertThat(actualCardText).isEqualTo(expectedCardText)
+    }
 }
