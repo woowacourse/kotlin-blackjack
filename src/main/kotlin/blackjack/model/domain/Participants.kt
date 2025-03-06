@@ -3,10 +3,12 @@ package blackjack.model.domain
 import blackjack.model.service.Blackjack.Companion.BUST_STANDARD
 
 interface Participants {
+    val name: String
     val cards: MutableList<Card>
     var alive: Boolean
 
     val sumCardNumber: Int get() = getSumNumber()
+    val cardDeck get() = cards.toList()
 
     private fun getSumNumber(): Int {
         var sum = cards.sumOf { it.cardNumber.number }
@@ -20,7 +22,7 @@ interface Participants {
         return sum
     }
 
-    val cardDeck get() = cards.toList()
+    fun initGet(): List<Card>
 
     fun receiveCard(card: Card) {
         cards.add(card)
