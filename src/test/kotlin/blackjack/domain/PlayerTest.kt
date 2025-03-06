@@ -10,8 +10,7 @@ class PlayerTest {
     @Test
     fun `플레이어가 카드를 한 장 지급 받으면 플레이어의 패는 한 장이다`() {
         // given
-        val hand = Hand(emptyList())
-        val player = Player("Jason", hand)
+        val player = Player("Jason")
         val card = Card(Rank.ACE, Suit.SPADE)
 
         // when
@@ -26,10 +25,11 @@ class PlayerTest {
         // given
         val aceCard = Card(Rank.ACE, Suit.SPADE)
         val queenCard = Card(Rank.QUEEN, Suit.SPADE)
-        val hand = Hand(listOf(aceCard, queenCard))
-        val player = Player("Jason", hand)
+        val player = Player("Jason")
 
         // when
+        player.addCard(aceCard)
+        player.addCard(queenCard)
         val score = player.calculateScore()
 
         // then
@@ -42,10 +42,12 @@ class PlayerTest {
         val aceSpade = Card(Rank.ACE, Suit.SPADE)
         val aceDiamond = Card(Rank.ACE, Suit.DIAMOND)
         val nineSpade = Card(Rank.NINE, Suit.SPADE)
-        val hand = Hand(listOf(aceSpade, aceDiamond, nineSpade))
-        val player = Player("Jason", hand)
+        val player = Player("Jason")
 
         // when
+        player.addCard(aceSpade)
+        player.addCard(aceDiamond)
+        player.addCard(nineSpade)
         val score = player.calculateScore()
 
         // then
@@ -58,10 +60,12 @@ class PlayerTest {
         val queenSpade = Card(Rank.QUEEN, Suit.SPADE)
         val queenHeart = Card(Rank.QUEEN, Suit.HEART)
         val queenDiamond = Card(Rank.QUEEN, Suit.DIAMOND)
-        val hand = Hand(listOf(queenSpade, queenHeart, queenDiamond))
-        val player = Player("Jason", hand)
+        val player = Player("Jason")
 
         // when
+        player.addCard(queenSpade)
+        player.addCard(queenHeart)
+        player.addCard(queenDiamond)
         val isBust = player.isBust()
 
         // then
@@ -73,10 +77,11 @@ class PlayerTest {
         // given
         val queenSpade = Card(Rank.QUEEN, Suit.SPADE)
         val queenHeart = Card(Rank.QUEEN, Suit.HEART)
-        val hand = Hand(listOf(queenSpade, queenHeart))
-        val player = Player("Jason", hand)
+        val player = Player("Jason")
 
         // when
+        player.addCard(queenSpade)
+        player.addCard(queenHeart)
         val isBust = player.isBust()
 
         // then
@@ -88,10 +93,11 @@ class PlayerTest {
         // given
         val queenSpade = Card(Rank.QUEEN, Suit.SPADE)
         val queenHeart = Card(Rank.QUEEN, Suit.HEART)
-        val hand = Hand(listOf(queenSpade, queenHeart))
-        val player = Player("Jason", hand)
+        val player = Player("Jason")
 
         // when
+        player.addCard(queenSpade)
+        player.addCard(queenHeart)
         val result = player.getResult(18)
 
         // then
@@ -103,10 +109,11 @@ class PlayerTest {
         // given
         val queenSpade = Card(Rank.QUEEN, Suit.SPADE)
         val queenHeart = Card(Rank.QUEEN, Suit.HEART)
-        val hand = Hand(listOf(queenSpade, queenHeart))
-        val player = Player("Jason", hand)
+        val player = Player("Jason")
 
         // when
+        player.addCard(queenSpade)
+        player.addCard(queenHeart)
         val result = player.getResult(21)
 
         // then
