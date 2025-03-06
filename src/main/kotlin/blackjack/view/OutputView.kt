@@ -15,7 +15,7 @@ class OutputView {
         dealer: Dealer,
         players: List<Player>,
     ) {
-        println(HANDS_OF_DEALER_FORMAT.format(dealer.name, getCardsStatus(dealer.cards)))
+        println(HANDS_OF_DEALER_FORMAT.format(dealer.name, getCardsStatus(listOf(dealer.cards.first()))))
         players.forEach { player ->
             println(HANDS_OF_PLAYER_FORMAT.format(player.name, getCardsStatus(player.cards)))
         }
