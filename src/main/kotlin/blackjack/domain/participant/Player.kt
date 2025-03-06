@@ -1,6 +1,8 @@
 package blackjack.domain.participant
 
+import blackjack.domain.BlackJackGame.Companion.BUST_STANDARD
 import blackjack.domain.TrumpCard
+import blackjack.domain.enums.CardTier
 
 class Player(
     val name: String,
@@ -20,4 +22,8 @@ class Player(
     override fun addCard(card: TrumpCard) {
         _cards.add(card)
     }
+
+    override fun isBust(): Boolean = _cards.sumOf { card -> card.first() } > BUST_STANDARD
+
+    override fun hasAce(): Boolean = cards.map { it.tier }.contains(CardTier.ACE)
 }

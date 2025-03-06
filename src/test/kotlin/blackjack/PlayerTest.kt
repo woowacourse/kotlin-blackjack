@@ -1,5 +1,8 @@
 package blackjack
 
+import blackjack.domain.TrumpCard
+import blackjack.domain.enums.CardTier
+import blackjack.domain.enums.Shape
 import blackjack.domain.participant.Player
 import blackjack.fixture.trumpCardFixture
 import org.assertj.core.api.Assertions.assertThat
@@ -14,5 +17,14 @@ class PlayerTest {
             player.addCard(it)
         }
         assertThat(player.cards).containsExactly(*fixture.toTypedArray())
+    }
+
+    @Test
+    fun `플레이어 카드의 총합이 21을 초과하면 버스트된다`() {
+        val player = Player("peto")
+        repeat(3) {
+            player.addCard(TrumpCard(CardTier.KING, Shape.DIA))
+        }
+        assertThat(player.isBust()).isEqualTo(true)
     }
 }

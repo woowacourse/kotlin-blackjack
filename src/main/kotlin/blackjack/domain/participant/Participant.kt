@@ -11,4 +11,8 @@ sealed interface Participant {
     )
 
     fun addCard(card: TrumpCard)
+
+    fun hasAce(): Boolean
+
+    fun isBust(): Boolean
 }
