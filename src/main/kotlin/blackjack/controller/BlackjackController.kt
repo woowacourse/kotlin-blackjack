@@ -33,5 +33,7 @@ class BlackjackController(
         }
 
         outputView.printDealerHandStatus(dealer.isMoreCard())
+
+        outputView.printFinalHandStatus(dealer,players)
     }
 }

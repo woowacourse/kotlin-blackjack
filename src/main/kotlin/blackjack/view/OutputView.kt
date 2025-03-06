@@ -42,6 +42,19 @@ class OutputView {
         println()
     }
 
+    private fun printFinalPlayerHandStatus(player: Player) {
+        println(FINAL_HANDS_OF_PLAYER_FORMAT.format(player.name, getCardsStatus(player.cards), player.adjustScore()))
+    }
+
+    fun printFinalHandStatus(
+        dealer: Dealer,
+        players: List<Player>,
+    ) {
+        println(FINAL_HANDS_OF_DEALER_FORMAT.format(dealer.name, getCardsStatus(dealer.cards), dealer.sumScore()))
+        players.forEach { player -> printFinalPlayerHandStatus(player) }
+        println()
+    }
+
     companion object {
         private const val SET_CARD_MESSAGE_WITH_PLAYER_NAME_FORMAT = "\n딜러와 %s에게 %d장의 카드를 나누어 주었습니다."
         private const val DEALER_HIT_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다."
@@ -49,5 +62,7 @@ class OutputView {
         private const val OUTPUT_SEPARATOR_FOR_PRINT = ", "
         private const val HANDS_OF_DEALER_FORMAT = "%s 카드: %s"
         private const val HANDS_OF_PLAYER_FORMAT = "%s카드: %s"
+        private const val FINAL_HANDS_OF_DEALER_FORMAT = "%s: %s - 결과: %d"
+        private const val FINAL_HANDS_OF_PLAYER_FORMAT = "%s카드: %s - 결과: %d"
     }
 }
