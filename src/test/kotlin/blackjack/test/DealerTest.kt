@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test
 class Dealer {
     private val deck: Deck = Deck()
     private val hand: Hand = Hand(emptyList())
+    var result: Result = Result.NOT_YET
 
     fun getCard() {
         hand.add(deck.getCard())
@@ -119,5 +120,12 @@ class DealerTest {
         dealer.giveCard(players)
         assertThat(eden.getCountOfCards()).isEqualTo(1)
         assertThat(gio.getCountOfCards()).isEqualTo(2)
+    }
+
+    @Test
+    fun `딜러의 최종 승패 결과를 알 수 있다`() {
+        val dealer = Dealer()
+        dealer.result = Result.WIN
+        assertThat(dealer.result).isEqualTo(Result.WIN)
     }
 }
