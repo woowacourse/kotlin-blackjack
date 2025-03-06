@@ -27,4 +27,71 @@ class DealerTest {
         }
         assertThat(dealer.isBust()).isEqualTo(true)
     }
+
+    @Test
+    fun `에이스가 없을 때 총합을 구해서 16을 초과하면 true를 반환한다`() {
+        val dealer = Dealer()
+
+        dealer.addCard(TrumpCard(CardTier.KING, Shape.DIA))
+        dealer.addCard(TrumpCard(CardTier.KING, Shape.HEART))
+
+        val expected = true
+        assertThat(dealer.isOverMaxScore()).isEqualTo(expected)
+    }
+
+    @Test
+    fun `에이스가 있을 때 에이스가 11로 계산 되어도 버스트 되지 않고 총합이 16을 초과하면 true를 반환한다`() {
+        val dealer = Dealer()
+
+        dealer.addCard(TrumpCard(CardTier.ACE, Shape.DIA))
+        dealer.addCard(TrumpCard(CardTier.KING, Shape.DIA))
+
+        val expected = true
+        assertThat(dealer.isOverMaxScore()).isEqualTo(expected)
+    }
+
+    @Test
+    fun `에이스가 있을 때 에이스가 11로 계산 되어도 버스트 되지 않고 총합이 16을 초과하지 않으면 false를 반환한다`() {
+        val dealer = Dealer()
+
+        dealer.addCard(TrumpCard(CardTier.ACE, Shape.DIA))
+        dealer.addCard(TrumpCard(CardTier.TWO, Shape.DIA))
+
+        val expected = false
+        assertThat(dealer.isOverMaxScore()).isEqualTo(expected)
+    }
+
+    @Test
+    fun `에이스가 있을 때 에이스가 11로 계산 되면 버스트 되고 에이스를 1로 계산했을 때 총합이 16을 초과하면 true를 반환한다`() {
+        val dealer = Dealer()
+
+        dealer.addCard(TrumpCard(CardTier.ACE, Shape.DIA))
+        dealer.addCard(TrumpCard(CardTier.KING, Shape.DIA))
+
+        val expected = true
+        assertThat(dealer.isOverMaxScore()).isEqualTo(expected)
+    }
+
+    @Test
+    fun `에이스가 두 개일 때 버스트 되지 않고 16을 초과하지 않으면 false를 반환한다`() {
+        val dealer = Dealer()
+
+        dealer.addCard(TrumpCard(CardTier.ACE, Shape.DIA))
+        dealer.addCard(TrumpCard(CardTier.ACE, Shape.HEART))
+
+        val expected = false
+        assertThat(dealer.isOverMaxScore()).isEqualTo(expected)
+    }
+
+    @Test
+    fun `에이스가 여러 개일 때 버스트 되지 않고 16을 초과하면 true를 반환한다`() {
+        val dealer = Dealer()
+
+        dealer.addCard(TrumpCard(CardTier.ACE, Shape.DIA))
+        dealer.addCard(TrumpCard(CardTier.ACE, Shape.HEART))
+        dealer.addCard(TrumpCard(CardTier.NINE, Shape.HEART))
+
+        val expected = true
+        assertThat(dealer.isOverMaxScore()).isEqualTo(expected)
+    }
 }
