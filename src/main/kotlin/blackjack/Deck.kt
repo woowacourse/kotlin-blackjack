@@ -8,6 +8,10 @@ object Deck {
         return CARDS.removeFirstOrNull() ?: throw IllegalStateException("카드가 더 없습니다.")
     }
 
+    fun drawWithCount(count: Int): List<Card> {
+        return List(count) { draw() }
+    }
+
     private fun generateCards(): MutableList<Card> {
         val cards = mutableListOf<Card>()
 
