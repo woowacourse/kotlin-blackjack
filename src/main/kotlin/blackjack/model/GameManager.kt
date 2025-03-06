@@ -9,29 +9,26 @@ class GameManager(
         players.forEach { player -> player.addCards(Deck.drawWithCount(count)) }
     }
 
-    fun calculateResultMap(): Map<Player, String> {
+    fun calculateResultMap(): Map<Player, ResultType> {
         val dealerScore = dealer.sumScore()
-        val resultMap = mutableMapOf<Player, String>()
+        val playersStatus = players.associateBy(
+            { it }, { ResultType.judgeScore(dealerScore, it.adjustScore()) }
+        )
 
-        players.forEach { player ->
-            if (player.adjustScore() > dealerScore) resultMap[player] = "승"
-            else resultMap[player] = "패"
-        }
-
-        return resultMap.toMap()
+        return playersStatus
     }
 
-    fun calculateDealerResult(resultMap: Map<Player, String>): List<Int> {
-        val dealerResult = mutableListOf(0, 0)
+    fun calculateDealerResult(resultMap: Map<Player, ResultType>): Map<ResultType, Int> {
+        val result = mutableMapOf<ResultType, Int>()
 
         resultMap.forEach {
             when (it.value) {
-                "패" -> dealerResult[0]++
-                "승" -> dealerResult[1]++
+                ResultType.WIN -> result[ResultType.LOSS] = result.getOrDefault(ResultType.LOSS, 0) + 1
+                ResultType.TIE -> result[ResultType.TIE] = result.getOrDefault(ResultType.TIE, 0) + 1
+                ResultType.LOSS -> result[ResultType.WIN] = result.getOrDefault(ResultType.WIN, 0) + 1
             }
         }
 
-        return dealerResult.toList()
+        return result
     }
-
 }
