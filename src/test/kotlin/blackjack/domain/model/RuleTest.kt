@@ -47,7 +47,7 @@ class RuleTest {
     ) {
         val cards = rawCardNumbers.split(',').map { preparedCards[it.toInt() - 1] }
 
-        val actualIsDrawable = Rule.calculateIsDrawableByCards(cards)
+        val actualIsDrawable = Rule.isBurst(cards)
 
         assertThat(actualIsDrawable).isEqualTo(expectedIsDrawable)
     }
