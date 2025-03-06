@@ -1,11 +1,10 @@
 package blackjack.view
 
 import blackjack.domain.model.GameParticipant
-import blackjack.domain.model.Player
 
 class OutputView {
-    fun showDistributeCardMessage(players: Collection<Player>) {
-        val joinedNames = players.joinToString { it.name }
+    fun showDistributeCardMessage(participants: List<GameParticipant>) {
+        val joinedNames = participants.joinToString { it.name }
         println(DISTRIBUTE_CARD_MESSAGE.format(joinedNames))
     }
 
