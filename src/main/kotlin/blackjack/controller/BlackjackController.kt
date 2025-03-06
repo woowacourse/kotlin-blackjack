@@ -19,6 +19,7 @@ class BlackjackController(
         outputView.printDealingResult(dealer, players)
         players.forEach { dealMoreCard(it) }
         dealMoreCard(dealer)
+        outputView.printBlackjackResult(dealer, players)
     }
 
     private fun dealCards(

@@ -26,6 +26,21 @@ class OutputView {
         println(MESSAGE_DEALER_HIT)
     }
 
+    fun printBlackjackResult(
+        dealer: Dealer,
+        players: List<Player>,
+    ) {
+        val dealerCards = dealer.hand.cards.joinToString(SEPARATOR) { cardInfo(it) }
+        val dealerScore = dealer.calculateScore()
+        println("${MESSAGE_DEALER_CARD.format(dealerCards)} ${MESSAGE_SCORE.format(dealerScore)}")
+
+        players.forEach { player ->
+            val playerCards = player.hand.cards.joinToString(SEPARATOR) { cardInfo(it) }
+            val playerScore = player.calculateScore()
+            println("${MESSAGE_PLAYER_CARD.format(player.name, playerCards)} ${MESSAGE_SCORE.format(playerScore)}")
+        }
+    }
+
     private fun cardInfo(card: Card): String {
         val number = card.rank.symbol
         val shape = card.suit.korean
@@ -36,7 +51,8 @@ class OutputView {
         private const val MESSAGE_DEALING = "\n딜러와 %s에게 2장의 나누었습니다."
         private const val MESSAGE_DEALER_CARD = "딜러 카드: %s"
         private const val MESSAGE_PLAYER_CARD = "%s 카드: %s"
-        private const val MESSAGE_DEALER_HIT = "\n딜러는 16이하라 한장의 카드를 더 받았습니다."
+        private const val MESSAGE_SCORE = "- 결과: %d"
+        private const val MESSAGE_DEALER_HIT = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n"
         private const val SEPARATOR = ", "
     }
 }
