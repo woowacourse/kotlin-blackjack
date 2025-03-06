@@ -14,7 +14,7 @@ class Player(
         _cards.add(card)
     }
 
-    override fun isBust(): Boolean = _cards.sumOf { card -> card.first() } > BUST_STANDARD
+    override fun isBust(): Boolean = _cards.sumOf { card -> card.tier.values } > BUST_STANDARD
 
     override fun hasAce(): Boolean = cards.map { it.tier }.contains(CardTier.ACE)
 }
