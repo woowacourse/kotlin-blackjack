@@ -8,12 +8,19 @@ class Player(
     val name: String,
 ) {
     val hand: Hand = Hand(emptyList())
+    var wantToHit: Boolean? = null
 
     fun getMoreCard(card: Card) {
         hand.add(card)
     }
 
     fun getCountOfCards(): Int = hand.getSize()
+
+    fun hitOrStay(hit: () -> Unit) {
+        if (wantToHit == true) {
+            hit()
+        }
+    }
 }
 
 class PlayerTest {

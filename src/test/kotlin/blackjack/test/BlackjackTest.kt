@@ -12,6 +12,16 @@ class Blackjack(
         dealer.giveCard(players)
         dealer.giveCard(players)
     }
+
+    fun waitForPlayers() {
+        players.forEach { player ->
+            player.hitOrStay {
+                dealer.giveCard(listOf(player))
+            }
+        }
+
+        dealer.hitOrStay()
+    }
 }
 
 class BlackjackTest {
@@ -33,5 +43,17 @@ class BlackjackTest {
         game.start()
         assertThat(gio.getCountOfCards()).isEqualTo(2)
         assertThat(eden.getCountOfCards()).isEqualTo(2)
+    }
+
+    @Test
+    fun `모든 플레이어들의 결정이 끝나면 딜러는 숫자 합이 17 이상이 될 수 있을 때까지 카드를 받는다`() {
+        val dealer = Dealer()
+        val gio = Player("Gio")
+        val eden = Player("Eden")
+        val players = listOf(gio, eden)
+        val game = Blackjack(dealer, players)
+        game.start()
+        game.waitForPlayers()
+        assertThat(dealer.getScore()).isGreaterThanOrEqualTo(17)
     }
 }
