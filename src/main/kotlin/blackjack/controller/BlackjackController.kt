@@ -32,7 +32,11 @@ class BlackjackController(
             }
         }
 
-        outputView.printDealerHandStatus(dealer.isMoreCard())
+        val moreCard = dealer.isMoreCard()
+        if (moreCard) {
+            dealer.addCard(Deck.draw())
+        }
+        outputView.printDealerHandStatus(moreCard)
 
         outputView.printFinalHandStatus(dealer,players)
     }
