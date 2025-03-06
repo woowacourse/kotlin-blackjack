@@ -24,7 +24,7 @@ class BlackjackController(
         players.forEach { player ->
             while (true) {
                 val condition: DrawChoice = inputView.readMoreCardCondition(player)
-                if (condition == DrawChoice.NO) {
+                if (condition.isStay()) {
                     outputView.printPlayerHands(player)
                     break
                 }

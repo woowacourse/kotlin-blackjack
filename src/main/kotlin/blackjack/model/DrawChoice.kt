@@ -5,6 +5,10 @@ enum class DrawChoice(val answer: String) {
     NO("n"),
     ;
 
+    fun isStay(): Boolean {
+        return this == NO
+    }
+
     companion object {
         fun from(answer: String): DrawChoice {
             return entries.first { choice -> choice.answer == answer }
