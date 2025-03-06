@@ -1,6 +1,7 @@
 package blackjack
 
 import blackjack.controller.BlackjackController
+import blackjack.model.Dealer
 import blackjack.view.InputView
 import blackjack.view.OutputView
 

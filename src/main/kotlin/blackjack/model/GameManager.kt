@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.model
 
 class GameManager(
     private val dealer: Dealer,

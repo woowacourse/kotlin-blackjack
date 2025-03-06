@@ -1,9 +1,9 @@
 package blackjack.view
 
-import blackjack.Card
-import blackjack.Dealer
-import blackjack.Deck.INITIAL_HAND_OUT_CARD_COUNT
-import blackjack.Player
+import blackjack.model.Card
+import blackjack.model.Dealer
+import blackjack.model.Deck.INITIAL_HAND_OUT_CARD_COUNT
+import blackjack.model.Player
 
 class OutputView {
     fun printInitialHandOutCardMessage(players: List<Player>) {
@@ -24,7 +24,7 @@ class OutputView {
         return getHandsStatus(listOf(cards.first()))
     }
 
-    private fun printPlayerHands(player: Player) {
+    fun printPlayerHands(player: Player) {
         println(HANDS_STATUS_MESSAGE_FORMAT.format(player.name, getHandsStatus(player.cards)))
     }
 

@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.model
 
 enum class DrawChoice(val answer: String) {
     YES("y"),

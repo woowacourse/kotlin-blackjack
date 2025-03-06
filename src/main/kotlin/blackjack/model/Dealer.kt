@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.model
 
 class Dealer {
     private val _cards: MutableList<Card> = mutableListOf()

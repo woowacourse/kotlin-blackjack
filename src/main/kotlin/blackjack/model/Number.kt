@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.model
 
 enum class Number(val value: String, val score: Int) {
     ACE("A", 11),

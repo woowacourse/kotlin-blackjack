@@ -1,7 +1,7 @@
 package blackjack.view
 
-import blackjack.DrawChoice
-import blackjack.Player
+import blackjack.model.DrawChoice
+import blackjack.model.Player
 
 class InputView {
     fun readPlayerNames(): List<Player> {

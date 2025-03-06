@@ -1,11 +1,11 @@
 package blackjack.controller
 
-import blackjack.Dealer
-import blackjack.Deck
-import blackjack.Deck.INITIAL_HAND_OUT_CARD_COUNT
-import blackjack.DrawChoice
-import blackjack.GameManager
-import blackjack.Player
+import blackjack.model.Dealer
+import blackjack.model.Deck
+import blackjack.model.Deck.INITIAL_HAND_OUT_CARD_COUNT
+import blackjack.model.DrawChoice
+import blackjack.model.GameManager
+import blackjack.model.Player
 import blackjack.view.InputView
 import blackjack.view.OutputView
 

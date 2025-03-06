@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.model
 
 object Deck {
     const val INITIAL_HAND_OUT_CARD_COUNT = 2
