@@ -8,23 +8,27 @@ import blackjack.Player
 class OutputView {
     fun printInitialHandOutCardMessage(players: List<Player>) {
         val playerNames = players.joinToString(OUTPUT_SEPARATOR_FOR_PRINT) { player -> player.name }
-        println(INITIAL_HANDOUT_CARD_MESSAGE_FORMAT.format(playerNames, INITIAL_HAND_OUT_CARD_COUNT))
-    }
-
-    fun printPlayerHands(player: Player) {
-        println(HANDS_OF_PLAYER_FORMAT.format(player.name, getCardsStatus(player.cards)))
+        println(INITIAL_HAND_OUT_CARD_MESSAGE_FORMAT.format(playerNames, INITIAL_HAND_OUT_CARD_COUNT))
     }
 
     fun printAllPlayerHands(
         dealer: Dealer,
         players: List<Player>,
     ) {
-        println(HANDS_OF_DEALER_FORMAT.format(dealer.name, getCardsStatus(listOf(dealer.cards.first()))))
+        println(HANDS_STATUS_MESSAGE_FORMAT.format(dealer.name, initialDealerHands(dealer.cards)))
         players.forEach { player -> printPlayerHands(player) }
         println()
     }
 
-    private fun getCardsStatus(cards: List<Card>): String {
+    private fun initialDealerHands(cards: List<Card>): String {
+        return getHandsStatus(listOf(cards.first()))
+    }
+
+    private fun printPlayerHands(player: Player) {
+        println(HANDS_STATUS_MESSAGE_FORMAT.format(player.name, getHandsStatus(player.cards)))
+    }
+
+    private fun getHandsStatus(cards: List<Card>): String {
         return cards.joinToString(OUTPUT_SEPARATOR_FOR_PRINT) { card ->
             val cardShape = card.shape
             val cardNumber = card.number
@@ -43,26 +47,30 @@ class OutputView {
     }
 
     private fun printFinalPlayerHandStatus(player: Player) {
-        println(FINAL_HANDS_OF_PLAYER_FORMAT.format(player.name, getCardsStatus(player.cards), player.adjustScore()))
+        println(
+            FINAL_HANDS_STATUS_MESSAGE_FORMAT.format(
+                player.name,
+                getHandsStatus(player.cards),
+                player.adjustScore(),
+            ),
+        )
     }
 
     fun printFinalHandStatus(
         dealer: Dealer,
         players: List<Player>,
     ) {
-        println(FINAL_HANDS_OF_DEALER_FORMAT.format(dealer.name, getCardsStatus(dealer.cards), dealer.sumScore()))
+        println(FINAL_HANDS_STATUS_MESSAGE_FORMAT.format(dealer.name, getHandsStatus(dealer.cards), dealer.sumScore()))
         players.forEach { player -> printFinalPlayerHandStatus(player) }
         println()
     }
-    
+
     companion object {
-        private const val INITIAL_HANDOUT_CARD_MESSAGE_FORMAT = "\n딜러와 %s에게 %d장의 카드를 나누어 주었습니다."
+        private const val INITIAL_HAND_OUT_CARD_MESSAGE_FORMAT = "\n딜러와 %s에게 %d장의 카드를 나누어 주었습니다."
         private const val DEALER_HIT_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다."
         private const val DEALER_STAY_MESSAGE = "딜러는 17이상이라 카드를 받지 않았습니다."
         private const val OUTPUT_SEPARATOR_FOR_PRINT = ", "
-        private const val HANDS_OF_DEALER_FORMAT = "%s 카드: %s"
-        private const val HANDS_OF_PLAYER_FORMAT = "%s카드: %s"
-        private const val FINAL_HANDS_OF_DEALER_FORMAT = "%s: %s - 결과: %d"
-        private const val FINAL_HANDS_OF_PLAYER_FORMAT = "%s카드: %s - 결과: %d"
+        private const val HANDS_STATUS_MESSAGE_FORMAT = "%s 카드: %s"
+        private const val FINAL_HANDS_STATUS_MESSAGE_FORMAT = "%s 카드: %s - 결과: %d"
     }
 }
