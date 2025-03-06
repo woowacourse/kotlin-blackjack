@@ -18,13 +18,14 @@ class BlackjackController(
         dealCards(dealer, players)
         outputView.printDealingResult(dealer, players)
         players.forEach { dealMoreCard(it) }
+        dealMoreCard(dealer)
     }
 
     private fun dealCards(
         dealer: Dealer,
         players: List<Player>,
     ) {
-        repeat(2) {
+        repeat(INITIAL_CARD_COUNT) {
             dealer.addCard(Deck.pick())
             players.forEach { it.addCard(Deck.pick()) }
         }
@@ -37,5 +38,18 @@ class BlackjackController(
             outputView.printPlayerCards(player)
             dealMoreCard(player)
         }
+    }
+
+    private fun dealMoreCard(dealer: Dealer) {
+        val dealerScore = dealer.calculateScore()
+        if (dealerScore <= DEALER_HIT_CONDITION) {
+            dealer.addCard(Deck.pick())
+            outputView.printDealerHit()
+        }
+    }
+
+    companion object {
+        private const val INITIAL_CARD_COUNT = 2
+        private const val DEALER_HIT_CONDITION = 16
     }
 }
