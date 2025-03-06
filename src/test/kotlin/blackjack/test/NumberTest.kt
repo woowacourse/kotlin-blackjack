@@ -5,10 +5,12 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 class Number(
-    val value: Int,
-) {
+    value: Int,
+) : Rank {
+    override val possibleValues: List<Int> = listOf(value)
+
     init {
-        require(value in RANGE)
+        require(possibleValues.all { possibleValue: Int -> possibleValue in RANGE })
     }
 
     companion object {
@@ -28,6 +30,6 @@ class NumberTest {
     @Test
     fun `숫자는 해당 숫자로 계산한다`() {
         val number = Number(2)
-        assertThat(number.value).isEqualTo(2)
+        assertThat(number.possibleValues).contains(2)
     }
 }

@@ -3,8 +3,8 @@ package blackjack.test
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class Ace {
-    val possibleValues: List<Int> = ACE_VALUES
+class Ace : Rank {
+    override val possibleValues: List<Int> = ACE_VALUES
 
     companion object {
         val ACE_VALUES = listOf(1, 11)
