@@ -9,6 +9,7 @@ class Player(
 ) {
     val hand: Hand = Hand(emptyList())
     var wantToHit: Boolean? = null
+    var result: Result = Result.NOT_YET
 
     fun getMoreCard(card: Card) {
         hand.add(card)
@@ -21,6 +22,19 @@ class Player(
             hit()
         }
     }
+
+    fun setResult() {
+        if (hand.getScore() == null || hand.getScore()!! > 21) {
+            result = Result.LOSE
+        }
+    }
+}
+
+enum class Result {
+    WIN,
+    DRAW,
+    LOSE,
+    NOT_YET,
 }
 
 class PlayerTest {
@@ -38,5 +52,16 @@ class PlayerTest {
         player.getMoreCard(card)
         player.getMoreCard(card2)
         assertThrows<IllegalArgumentException> { player.getMoreCard(Card(Number(2), Suit.SPADE)) }
+    }
+
+    @Test
+    fun `플레이어 카드의 합이 21 이하가 될 수 없는 플레이어는 반드시 패배한다`() {
+        val player = Player(name = "Eden")
+        player.getMoreCard(Card(Character.JACK, Suit.DIAMOND))
+        player.getMoreCard(Card(Character.JACK, Suit.HEART))
+        player.getMoreCard(Card(Character.JACK, Suit.SPADE))
+        assertThat(player.getCountOfCards()).isEqualTo(3)
+        player.setResult()
+        assertThat(player.result).isEqualTo(Result.LOSE)
     }
 }
