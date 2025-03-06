@@ -31,5 +31,7 @@ class BlackjackController(
                 if (player.isBurst()) break
             }
         }
+
+        outputView.printDealerHandStatus(dealer.isMoreCard())
     }
 }

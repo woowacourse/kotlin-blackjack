@@ -32,8 +32,20 @@ class OutputView {
         }
     }
 
+    fun printDealerHandStatus(dealerCondition: Boolean) {
+        println()
+        if (dealerCondition) {
+            println(DEALER_HIT_MESSAGE)
+        } else {
+            println(DEALER_STAY_MESSAGE)
+        }
+        println()
+    }
+
     companion object {
         private const val SET_CARD_MESSAGE_WITH_PLAYER_NAME_FORMAT = "\n딜러와 %s에게 %d장의 카드를 나누어 주었습니다."
+        private const val DEALER_HIT_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다."
+        private const val DEALER_STAY_MESSAGE = "딜러는 17이상이라 카드를 받지 않았습니다."
         private const val OUTPUT_SEPARATOR_FOR_PRINT = ", "
         private const val HANDS_OF_DEALER_FORMAT = "%s 카드: %s"
         private const val HANDS_OF_PLAYER_FORMAT = "%s카드: %s"
