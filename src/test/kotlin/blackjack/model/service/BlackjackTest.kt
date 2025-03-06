@@ -12,7 +12,7 @@ class BlackjackTest {
     private val player2 = Player("환노")
     private val dealer = Dealer()
     private val game = Blackjack()
-    private val deck = Deck.initCard(FalseShuffle())
+    private val deck = Deck(FalseShuffle())
 
     @Test
     fun `게임 시작시 카드를 2장을 나눈다`() {

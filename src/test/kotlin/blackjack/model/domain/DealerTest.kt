@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test
 
 class DealerTest {
     private val dealer = Dealer()
-    private val deck = Deck.initCard(FalseShuffle())
+    private val deck = Deck(FalseShuffle())
 
     @BeforeEach
     fun setup() {

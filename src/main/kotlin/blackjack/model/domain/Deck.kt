@@ -1,19 +1,22 @@
 package blackjack.model.domain
 
 import blackjack.model.strategy.CardShuffler
+import java.util.ArrayDeque
 
-data class Deck(private var deck: List<Card>) {
+class Deck(cardShuffler: CardShuffler) {
+    private val deck: ArrayDeque<Card> = initCard(cardShuffler)
+
     fun spreadCard(): Card {
-        return deck.toMutableList().removeFirst()
+        return deck.pop()
     }
 
     companion object {
         private val symbols = Shape.entries
         private val cardNumbers = CardNumber.entries
 
-        fun initCard(cardShuffler: CardShuffler): Deck {
+        private fun initCard(cardShuffler: CardShuffler): ArrayDeque<Card> {
             val card = symbols.flatMap { symbol -> cardNumbers.map { cardNumber -> Card(symbol, cardNumber) } }.toMutableList()
-            return Deck(cardShuffler.spread(card).toMutableList())
+            return ArrayDeque(cardShuffler.spread(card))
         }
     }
 }
