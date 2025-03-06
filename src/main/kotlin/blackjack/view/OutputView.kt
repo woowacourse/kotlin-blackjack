@@ -9,8 +9,8 @@ class OutputView {
         println("딜러와 ${players.joinToString(", ") }}에게 2장을 나누었습니다.")
     }
 
-    fun displayDealerDrawInfo() {
-        println("딜러는 16이하라 한 장의 카드를 더 받았습니다.")
+    fun displayDealerDrawInfo(count: Int) {
+        println("딜러는 16이하라 $count 장의 카드를 더 받았습니다.")
     }
 
     fun displayParticipantInfo(
