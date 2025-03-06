@@ -14,7 +14,7 @@ class CardDeckTest {
 
         assertAll(
             {
-                assertThat(actual1).isEqualTo((Card(CardShape.HEART,  Denomination.FIVE)))
+                assertThat(actual1).isEqualTo((Card(CardShape.HEART, Denomination.FIVE)))
             },
             {
                 assertThat(actual2).isEqualTo(Card(CardShape.CLOVER, Denomination.TWO))
