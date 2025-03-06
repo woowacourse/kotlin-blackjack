@@ -1,8 +1,11 @@
 package blackjack.domain.model
 
-open class Player(val name: String, val cards: MutableList<Card> = mutableListOf()) {
+open class Player(val name: String, initCards: List<Card> = listOf()) {
+    private val _cards: MutableList<Card> = initCards.toMutableList()
+    val cards: List<Card> get() = _cards.map { it.copy() }
+
     fun accept(cards: List<Card>) {
-        this.cards.addAll(cards)
+        this._cards.addAll(cards)
     }
 
     fun getScore(): Int {
