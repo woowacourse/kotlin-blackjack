@@ -1,6 +1,7 @@
 package blackjack.controller
 
 import blackjack.model.CardDeck
+import blackjack.model.Dealer
 import blackjack.model.Player
 import blackjack.view.InputView
 import blackjack.view.OutputView
@@ -13,9 +14,11 @@ class BlackjackController(
         val cardDeck = CardDeck()
         val players = inputView.getPlayers().map { name -> Player(name, cardDeck) }
 
+        val dealer = Dealer(cardDeck)
         players.forEach { player ->
             getIsPlayerDrawMore(player)
         }
+        val dealerDrawCount = dealer.drawUntilFinished()
     }
 
     private fun getIsPlayerDrawMore(player: Player) {
