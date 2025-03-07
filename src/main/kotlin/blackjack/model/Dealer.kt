@@ -11,9 +11,10 @@ class Dealer {
 
     fun calculateTotalScore() = cards.sumOf { card -> card.number.score }
 
-    fun isMoreCard() = calculateTotalScore() < 17
+    fun isMoreCard() = calculateTotalScore() < DEALER_MORE_CARD_MINIMUM
 
     companion object {
         private const val DEALER_NAME = "딜러"
+        private const val DEALER_MORE_CARD_MINIMUM = 17
     }
 }

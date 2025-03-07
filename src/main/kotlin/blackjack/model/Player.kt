@@ -1,5 +1,7 @@
 package blackjack.model
 
+import blackjack.model.ResultType.Companion.BUST_NUMBER
+
 class Player(
     val name: String,
 ) {
@@ -14,8 +16,8 @@ class Player(
         var sumScore = calculateTotalScore()
         var countAce = countAce()
         while (countAce-- > 0) {
-            if (sumScore > 21) {
-                sumScore -= 10
+            if (sumScore > BUST_NUMBER) {
+                sumScore -= ADJUST_ACE_NUMBER
             }
         }
         return sumScore
@@ -23,7 +25,11 @@ class Player(
 
     fun calculateTotalScore() = cards.sumOf { card -> card.number.score }
 
-    fun isBust() = adjustScore() > 21
+    fun isBust() = adjustScore() > BUST_NUMBER
 
     fun countAce() = _cards.count { it.number == Number.ACE }
+
+    companion object{
+        private const val ADJUST_ACE_NUMBER = 10
+    }
 }

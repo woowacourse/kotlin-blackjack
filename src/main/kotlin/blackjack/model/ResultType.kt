@@ -8,11 +8,13 @@ enum class ResultType(val value: Char) {
             dealerScore: Int,
             playerScore: Int,
         ): ResultType {
-            val dealerFinalScore = if (dealerScore > 21) 0 else dealerScore
-            val playerFinalScore = if (playerScore > 21) 0 else playerScore
+            val dealerFinalScore = if (dealerScore > BUST_NUMBER) 0 else dealerScore
+            val playerFinalScore = if (playerScore > BUST_NUMBER) 0 else playerScore
             if (dealerFinalScore < playerFinalScore) return WIN
             if (dealerFinalScore == playerFinalScore) return TIE
             return LOSS
         }
+
+        const val BUST_NUMBER = 21
     }
 }
