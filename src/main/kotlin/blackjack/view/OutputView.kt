@@ -38,7 +38,7 @@ class OutputView {
 
     fun printPlayerResult(player: Player) {
         print(renderPlayerStatus(player))
-        println(PLAYER_RESULT_DELEIMITER + player.getScore())
+        println(PLAYER_RESULT_DELIMITER + player.getScore())
     }
 
     private fun renderDealerVisibleStatus(dealer: Dealer): String {
@@ -88,7 +88,7 @@ class OutputView {
         private const val DEALER_VISIBLE_CARD_COUNT = 1
         private const val PLAYER_CARDS_DELIMITER = ", "
         private const val PLAYER_NAME_STATUS_DELIMITER = " 카드: "
-        private const val PLAYER_RESULT_DELEIMITER = " - 결과: "
+        private const val PLAYER_RESULT_DELIMITER = " - 결과: "
         private const val NAME_RESULT_DELIMITER = ": "
     }
 }
