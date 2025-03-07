@@ -9,7 +9,7 @@ class CardsTest {
         val cards = listOf((Card(CardShape.HEART, Denomination.FIVE)), Card(CardShape.CLOVER, Denomination.TWO))
         val actual = Cards(cards)
 
-        assertThat(actual.cards).isEqualTo(cards)
+        assertThat(actual.value).isEqualTo(cards)
     }
 
     @Test
@@ -132,7 +132,7 @@ class CardsTest {
         val addCard = Card(CardShape.CLOVER, Denomination.TWO)
         cards.add(addCard)
 
-        assertThat(cards.cards).isEqualTo(
+        assertThat(cards.value).isEqualTo(
             listOf(
                 Card(CardShape.HEART, Denomination.ACE),
                 Card(CardShape.CLOVER, Denomination.NINE),

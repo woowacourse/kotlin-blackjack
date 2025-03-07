@@ -1,16 +1,16 @@
 package blackjack.model
 
 class Cards(
-    cards: List<Card>,
+    value: List<Card>,
 ) {
-    private val _cards: MutableList<Card> = cards.toMutableList()
-    val cards: List<Card> get() = _cards.map { card -> card.copy() }
+    private val _value: MutableList<Card> = value.toMutableList()
+    val value: List<Card> get() = _value.map { card -> card.copy() }
 
-    var size: Int = this.cards.size
+    var size: Int = this.value.size
         private set
 
     fun add(card: Card) {
-        _cards.add(card)
+        _value.add(card)
     }
 
     fun isBlackjack(firstTurn: Boolean): Boolean = CardsStatus.from(calculateScore(), firstTurn) == CardsStatus.BLACKJACK
@@ -18,8 +18,8 @@ class Cards(
     fun isBust(firstTurn: Boolean): Boolean = CardsStatus.from(calculateScore(), firstTurn) == CardsStatus.BUST
 
     fun calculateScore(): Int {
-        val aceCount: Int = cards.count { card -> card.isDenominationAce(card) }
-        val score: Int = cards.sumOf { card -> card.denomination.number }
+        val aceCount: Int = value.count { card -> card.isDenominationAce(card) }
+        val score: Int = value.sumOf { card -> card.denomination.number }
         return when (aceCount) {
             1 -> if (score < 11) score + 11 else score + 1
             2 -> if (score < 10) score + 11 + 1 else score + aceCount * 1
@@ -29,5 +29,5 @@ class Cards(
         }
     }
 
-    fun getCardsInfomation(): List<String> = cards.map { it.combine() }
+    fun getCardsInfomation(): List<String> = value.map { it.combine() }
 }

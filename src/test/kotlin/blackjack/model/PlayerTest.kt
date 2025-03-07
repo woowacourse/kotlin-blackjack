@@ -11,7 +11,7 @@ class PlayerTest {
         val player = Player("모찌", Cards(cards))
         assertAll({
             assertThat(player.name).isEqualTo("모찌")
-            assertThat(player.cards.cards).isEqualTo(cards)
+            assertThat(player.cards.value).isEqualTo(cards)
         })
     }
 
@@ -25,7 +25,7 @@ class PlayerTest {
         val card = Card(CardShape.CLOVER, Denomination.SIX)
         player.appendCard(card)
 
-        assertThat(player.cards.cards).isEqualTo(
+        assertThat(player.cards.value).isEqualTo(
             listOf(
                 Card(CardShape.HEART, Denomination.FIVE),
                 Card(CardShape.CLOVER, Denomination.TWO),
@@ -37,6 +37,6 @@ class PlayerTest {
     @Test
     fun `플레이어가 이름만 가질 경우, 가진 카드 리스트는 비어있다`() {
         val player = Player("모찌")
-        assertThat(player.cards.cards.size).isEqualTo(0)
+        assertThat(player.cards.value.size).isEqualTo(0)
     }
 }
