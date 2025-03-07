@@ -72,7 +72,7 @@ class OutputView {
         println(FINAL_RESULT)
 
         val winningCount = (statusCount[ParticipantStatus.Lose] ?: 0) + (statusCount[ParticipantStatus.Bust] ?: 0)
-        val losingCount = statusCount[ParticipantStatus.Win] ?: 0
+        val losingCount = (statusCount[ParticipantStatus.Win] ?: 0) + (statusCount[ParticipantStatus.None] ?: 0)
         val drawCount = statusCount[ParticipantStatus.Draw] ?: 0
 
         val resultFormat: String = OUTPUT_DEALER_RESULT.format(dealer.name, winningCount, losingCount)
@@ -86,7 +86,7 @@ class OutputView {
 
     private fun ParticipantStatus.determineStatus(): String {
         return when (this) {
-            ParticipantStatus.Win -> "승"
+            ParticipantStatus.Win, ParticipantStatus.None -> "승"
             ParticipantStatus.Draw -> "무"
             else -> "패"
         }
