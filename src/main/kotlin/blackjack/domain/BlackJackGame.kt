@@ -6,11 +6,14 @@ import blackjack.domain.participant.Participant
 import blackjack.domain.participant.Player
 
 class BlackJackGame(
-    private val players: List<Participant>,
+    private val participants: List<Participant>,
     private val deck: Deck,
 ) {
+    private val dealer: Dealer = participants.filterIsInstance<Dealer>().first()
+    private val players: List<Player> = participants.filterIsInstance<Player>()
+
     fun handOutInitializedCards(initializedCardCount: Int = INITIAL_CARD_COUNT) {
-        players.forEach { player ->
+        participants.forEach { player ->
             repeat(initializedCardCount) {
                 player.addCard(deck.pop())
             }
@@ -21,7 +24,7 @@ class BlackJackGame(
         getPlayerChoice: (String) -> UserChoice,
         onPlayerStateUpdated: (Player) -> Unit,
     ) {
-        players.filterIsInstance<Player>().forEach { player ->
+        players.forEach { player ->
             while (!player.isBust()) {
                 val choice = getPlayerChoice(player.name)
                 when (choice) {
