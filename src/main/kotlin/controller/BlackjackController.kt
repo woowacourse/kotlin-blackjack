@@ -1,9 +1,11 @@
 package controller
 
+import model.Cards
 import model.CardsGenerator
 import model.Dealer
 import model.GameResultDecider
 import model.Player
+import model.Players
 import view.InputView
 import view.OutputView
 
@@ -15,45 +17,72 @@ class BlackjackController(
     fun run() {
         val playersNames = inputView.inputPlayers()
         val allCards = cardsGenerator.generateCards()
+        val dealerCards = allCards.getInitialCards()
 
-        val players =
-            playersNames.map { name ->
-                Player(name, allCards.getInitialCards())
-            }
+        val players = Players(getPlayers(playersNames, allCards))
+        val dealer = Dealer(dealerCards)
 
-        val playerCardsNames = players.map { it.playerCards.getCardNames() }
-        val dealerInitialCards = allCards.getInitialCards()
-        val dealerCardNames = dealerInitialCards.getCardNames()
+        val dealerCardNames = dealerCards.getCardNames()
+        showInitialGameState(playersNames, dealerCardNames, players.getPlayerCardNames())
+        handlePlayerTurns(players, allCards)
+        handleDealerTurn(dealer, allCards)
 
-        val dealer = Dealer(dealerInitialCards)
+        outputView.printDealerResult(dealerCards.getCardNames(), dealer.getScore())
+        showPlayerResult(players, playersNames)
+        showGameResult(dealer, players)
+    }
+
+    private fun showPlayerResult(
+        players: Players,
+        playersNames: List<String>,
+    ) {
+        val updatedPlayerCardsNames = players.getPlayerCardNames()
+        val playersTotalScore = players.getPlayersScores()
+        outputView.printPlayerResult(playersNames, updatedPlayerCardsNames, playersTotalScore)
+    }
+
+    private fun showInitialGameState(
+        playersNames: List<String>,
+        dealerCardNames: List<String>,
+        playerCardsNames: List<List<String>>,
+    ) {
         outputView.printDealerAndPlayers(playersNames)
         outputView.printInitialCards(dealerCardNames, playersNames, playerCardsNames)
+    }
 
-        players.forEach { player ->
-            while (player.isHit() && inputView.readHitOrStand(player.name)) {
-                player.turn(allCards)
-                outputView.printPlayerCards(player.name, player.playerCards.getCardNames())
-            }
-        }
-
+    private fun handleDealerTurn(
+        dealer: Dealer,
+        allCards: Cards,
+    ) {
         if (dealer.isHit()) {
             val dealerAddCount = dealer.getDrawCount(allCards)
             outputView.printDealerHit(dealerAddCount)
         }
-        val updatedDealerTotalScore = dealer.getScore()
-
-        val playersTotalScore = players.map { it.getScore() }
-        outputView.printDealerResult(dealerInitialCards.getCardNames(), updatedDealerTotalScore)
-
-        val updatedPlayerCardsNames = players.map { it.playerCards.getCardNames() }
-        outputView.printPlayerResult(playersNames, updatedPlayerCardsNames, playersTotalScore)
-
-        showGameResult(dealer, players)
     }
+
+    private fun handlePlayerTurns(
+        players: Players,
+        allCards: Cards,
+    ) {
+        players.forEach { player ->
+            while (player.isHit() && inputView.readHitOrStand(player.name)) {
+                player.turn(allCards)
+                outputView.printPlayerCards(player.name, player.getPlayerCardNames())
+            }
+        }
+    }
+
+    private fun getPlayers(
+        playersNames: List<String>,
+        allCards: Cards,
+    ): List<Player> =
+        playersNames.map { name ->
+            Player(name, allCards.getInitialCards())
+        }
 
     private fun showGameResult(
         dealer: Dealer,
-        players: List<Player>,
+        players: Players,
     ) {
         val gameResultOutput = GameResultDecider(dealer, players).compareWinOrLose()
         outputView.printResult(
