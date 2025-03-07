@@ -3,6 +3,7 @@ package blackjack.view
 import blackjack.domain.model.Dealer
 import blackjack.domain.model.GameParticipant
 import blackjack.domain.model.Player
+import blackjack.domain.model.Rule
 
 class OutputView {
     fun showDistributeCardMessage(participants: List<GameParticipant>) {
@@ -17,18 +18,29 @@ class OutputView {
     }
 
     fun showPlayerCardsInfo(player: Player) {
-        val name = player.name
-        val cardsInfoText = player.showCards().joinToString { it.getCardText() }
-        println(CARD_INFO_MESSAGE.format(name, cardsInfoText))
+        println(makeParticipantInfo(player))
     }
 
     fun showDealerDrawMessage() {
         println(DEALER_DRAW_MESSAGE)
     }
 
+    fun showCardsResult(participants: List<GameParticipant>) {
+        participants.forEach {
+            println(makeParticipantInfo(it) + CARD_RESULT_MESSAGE + Rule.calculateResultByCards(it.showCards()))
+        }
+    }
+
+    private fun makeParticipantInfo(participant: GameParticipant): String {
+        val name = participant.name
+        val cardsInfoText = participant.showCards().joinToString { it.getCardText() }
+        return CARD_INFO_MESSAGE.format(name, cardsInfoText)
+    }
+
     companion object {
         private const val DISTRIBUTE_CARD_MESSAGE = "딜러와 %s에게 각각 2장의 카드를 나누었습니다."
         private const val CARD_INFO_MESSAGE = "%s카드: %s"
         private const val DEALER_DRAW_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다."
+        private const val CARD_RESULT_MESSAGE = " - 결과: "
     }
 }
