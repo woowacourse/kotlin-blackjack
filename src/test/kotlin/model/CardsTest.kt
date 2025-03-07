@@ -46,23 +46,23 @@ class CardsTest {
 
     @Test
     fun `중복된 카드는 존재할 수 없다`() {
-        val cards = cardOf(
-            Card(CardRank.ACE, Shape.CLUB),
-            Card(CardRank.ACE, Shape.CLUB)
-        )
-
-        assertThrows<IllegalArgumentException> { cards }
+        assertThrows<IllegalArgumentException> {
+            cardOf(
+                Card(CardRank.ACE, Shape.CLUB),
+                Card(CardRank.ACE, Shape.CLUB)
+            )
+        }
     }
 
     @Test
     fun `카드들 중에 ACE 카드의 개수를 반환한다`() {
-        val card1 = Card(CardRank.ACE, Shape.CLUB)
-        val card2 = Card(CardRank.ACE, Shape.SPADE)
-        val card3 = Card(CardRank.SIX, Shape.SPADE)
-
-        val cards = mutableListOf(card1, card2, card3)
+        val cards = cardOf(
+            Card(CardRank.ACE, Shape.CLUB),
+            Card(CardRank.ACE, Shape.SPADE),
+            Card(CardRank.SIX, Shape.SPADE)
+        )
         val expected = 2
-        val result = Cards(cards).aceCount()
+        val result = cards.aceCount()
 
         Assertions.assertEquals(expected, result)
     }
