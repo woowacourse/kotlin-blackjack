@@ -1,15 +1,18 @@
 package blackjack.domain.model
 
 open class Player(val name: String, initCards: List<Card> = listOf()) {
-    private val _cards: MutableList<Card> = initCards.toMutableList()
-    val cards: List<Card> get() = _cards.map { it.copy() }
+    private val cards: MutableList<Card> = initCards.toMutableList()
+
+    fun showCards(count: Int = cards.size): List<Card> {
+        return this.cards.take(count).map { it.copy() }
+    }
 
     fun accept(cards: List<Card>) {
-        this._cards.addAll(cards)
+        this.cards.addAll(cards)
     }
 
     fun getScore(): Int {
-        val score = cards.sumOf { it.rank.score }
+        val score = this.cards.sumOf { it.rank.score }
         return score + getBonusScore(totalScore = score)
     }
 
@@ -18,7 +21,7 @@ open class Player(val name: String, initCards: List<Card> = listOf()) {
         return 0
     }
 
-    private fun hasAce() = cards.any { it.rank == Rank.ACE }
+    private fun hasAce(): Boolean = this.cards.any { it.rank == Rank.ACE }
 
     fun isBust(): Boolean {
         return getScore() > BUST_THRESHOLD

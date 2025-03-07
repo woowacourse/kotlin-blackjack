@@ -6,7 +6,7 @@ class Choice(private val value: String) {
     }
 
     fun isHit(): Boolean {
-        return value == "y"
+        return value == CHOICE_YES
     }
 
     companion object {
