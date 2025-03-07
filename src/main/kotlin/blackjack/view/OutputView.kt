@@ -98,7 +98,7 @@ class OutputView {
         private const val OUTPUT_PARTICIPANTS_CARD_RESULT: String = " - 결과: %d"
         private const val FINAL_RESULT: String = "\n## 최종 승패"
         private const val OUTPUT_DEALER_RESULT: String = "%s: %d승 %d패"
-        private const val OUTPUT_DEALER_RESULT_DRAW: String = "%d무"
+        private const val OUTPUT_DEALER_RESULT_DRAW: String = " %d무"
         private const val PLAYER_STATUS: String = "%s: %s"
         private const val CARD: String = "카드"
         private const val CARD_FORMAT: String = "%s%s"
