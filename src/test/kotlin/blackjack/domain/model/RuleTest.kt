@@ -39,6 +39,7 @@ class RuleTest {
         "true:10,1,1,10",
         "true:10,7,5",
         "true:1,1,1,1,7,2,9",
+        "false:11,12",
         delimiter = ':',
     )
     fun `룰에게 플레이어의 드로우 여부를 받아올 수 있다`(
