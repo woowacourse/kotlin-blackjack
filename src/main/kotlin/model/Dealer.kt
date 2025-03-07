@@ -2,7 +2,7 @@ package model
 
 class Dealer(dealerCards: Cards) : Participant(dealerCards) {
     init {
-        require(dealerCards.getCardsCount() == 2) { "[ERROR] 딜러는 2장의 카드를 가져야합니다." }
+        require(dealerCards.getCardsCount() == 2) { DEALER_INITIAL_CARD_ERROR_MESSAGE }
     }
 
     override fun turn(cards: Cards): Boolean {
@@ -23,4 +23,8 @@ class Dealer(dealerCards: Cards) : Participant(dealerCards) {
     }
 
     override fun isHit(): Boolean = getScore() <= 16
+
+    companion object {
+        private const val DEALER_INITIAL_CARD_ERROR_MESSAGE = "[ERROR] 딜러는 2장의 카드를 가져야합니다."
+    }
 }

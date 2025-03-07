@@ -4,7 +4,7 @@ class Cards(allCards: List<Card>) {
     val allCards: MutableList<Card> = allCards.toMutableList()
 
     init {
-        require(allCards.distinct().size == getCardsCount()) { "[ERROR] 카드는 중복될 수 없습니다" }
+        require(allCards.distinct().size == getCardsCount()) { DUPLICATE_CARD_ERROR_MESSAGE }
     }
 
     fun getInitialCards(): Cards {
@@ -20,4 +20,8 @@ class Cards(allCards: List<Card>) {
     fun getCardScores() = allCards.map { card -> card.cardScore }
 
     fun aceCount() = allCards.count { card -> card.isAceCard() }
+
+    companion object {
+        private const val DUPLICATE_CARD_ERROR_MESSAGE = "[ERROR] 카드는 중복될 수 없습니다"
+    }
 }

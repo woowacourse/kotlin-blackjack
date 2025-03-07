@@ -7,5 +7,9 @@ data class Card(private val cardRank: CardRank, private val shape: Shape) {
     val cardName: String
         get() = cardRank.title + shape.title
 
-    fun isAceCard(): Boolean = cardName.contains("A")
+    fun isAceCard(): Boolean = cardName.contains(ACE)
+
+    companion object {
+        private const val ACE = "A"
+    }
 }

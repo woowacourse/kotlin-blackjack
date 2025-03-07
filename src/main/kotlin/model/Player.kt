@@ -16,7 +16,7 @@ class Player(val name: String, private val playerCards: Cards) : Participant(pla
         return true
     }
 
-    override fun isHit(): Boolean = getScore() <= 21
+    override fun isHit(): Boolean = getScore() <= GameResultDecider.BLACKJACK_SCORE
 
     companion object {
         private const val PLAYER_BLANK_ERROR_MESSAGE = "[ERROR] 이름은 빈 값일 수 없습니다."

@@ -18,14 +18,14 @@ class GameResultDecider(private val dealer: Dealer, private val players: Players
 
     private fun comparePlayerResult(playerScore: Int): String =
         when {
-            dealer.getScore() > STANDARD_SCORE -> WIN
-            playerScore > STANDARD_SCORE -> LOSE
+            dealer.getScore() > BLACKJACK_SCORE -> WIN
+            playerScore > BLACKJACK_SCORE -> LOSE
             else -> compareScores(playerScore)
         }
 
     private fun compareScores(playerScore: Int): String {
-        val dealerDiff = abs(STANDARD_SCORE - dealer.getScore())
-        val playerDiff = abs(STANDARD_SCORE - playerScore)
+        val dealerDiff = abs(BLACKJACK_SCORE - dealer.getScore())
+        val playerDiff = abs(BLACKJACK_SCORE - playerScore)
         return when {
             playerDiff < dealerDiff -> WIN
             playerDiff > dealerDiff -> LOSE
@@ -34,7 +34,7 @@ class GameResultDecider(private val dealer: Dealer, private val players: Players
     }
 
     companion object {
-        private const val STANDARD_SCORE = 21
+        const val BLACKJACK_SCORE = 21
         private const val WIN = "승"
         private const val LOSE = "패"
         private const val DRAW = "무"

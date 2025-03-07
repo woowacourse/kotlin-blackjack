@@ -12,9 +12,14 @@ class ScoreCalculator(private val cards: Cards) {
     fun calculateTotalCardScore(): Int {
         var score = calculateWithoutAce() + cards.aceCount()
         var aceCount = cards.aceCount()
-        while (score > 21 && aceCount-- > 0) {
-            score -= 10
+        while (score > GameResultDecider.BLACKJACK_SCORE && aceCount-- > DEFAULT_ZERO) {
+            score -= ACE_MINUS_VALUE
         }
         return score
+    }
+
+    companion object {
+        private const val DEFAULT_ZERO = 0
+        private const val ACE_MINUS_VALUE = 10
     }
 }
