@@ -11,7 +11,7 @@ class Player(
     private val _cards = mutableListOf<TrumpCard>()
     override val cards: List<TrumpCard> get() = _cards.toList()
 
-    private val sumOfCards get() = _cards.sumOf { card -> card.tier.values }
+    override val sumOfCards get() = _cards.sumOf { card -> card.tier.values }
 
     override fun addCard(card: TrumpCard) {
         _cards.add(card)

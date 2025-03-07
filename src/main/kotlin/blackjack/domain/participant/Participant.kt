@@ -2,8 +2,10 @@ package blackjack.domain.participant
 
 import blackjack.domain.TrumpCard
 
-sealed interface Participant {
+interface Participant {
     val cards: List<TrumpCard>
+
+    val sumOfCards: Int
 
     fun addCard(card: TrumpCard)
 
