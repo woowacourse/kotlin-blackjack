@@ -1,6 +1,6 @@
 package blackjack.model
 
-open class Person {
+abstract class Person {
     private val _cards: MutableList<Card> = mutableListOf()
     open val cards get() = _cards.toList()
 
@@ -9,4 +9,6 @@ open class Person {
     fun addCards(cards: List<Card>) = _cards.addAll(cards)
 
     fun calculateTotalScore() = cards.sumOf { card -> card.number.score }
+
+    abstract fun isBust(): Boolean
 }
