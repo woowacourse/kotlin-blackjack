@@ -1,15 +1,7 @@
 package blackjack.model
 
-class Dealer {
-    private val _cards: MutableList<Card> = mutableListOf()
-    val cards get() = _cards.toList()
+class Dealer : Person() {
     val name = DEALER_NAME
-
-    fun addCard(card: Card) = _cards.add(card)
-
-    fun addCards(cards: List<Card>) = _cards.addAll(cards)
-
-    fun calculateTotalScore() = cards.sumOf { card -> card.number.score }
 
     fun isMoreCard() = calculateTotalScore() < DEALER_MORE_CARD_MINIMUM
 
