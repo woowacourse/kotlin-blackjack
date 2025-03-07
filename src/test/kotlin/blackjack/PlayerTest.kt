@@ -22,9 +22,19 @@ class PlayerTest {
     }
 
     @Test
-    fun `플레이어는 카드 한 장을 받을 수 있다`() {
-        player.addCard(Card(Shape.SPADE, Number.NINE))
-        assertThat(player.cards.size).isEqualTo(1)
+    fun `플레이어는 카드 총 합이 21을 넘으면 true를 반환한다`() {
+        player.addCards(
+            listOf(
+                Card(Shape.SPADE, Number.NINE),
+                Card(Shape.CLOVER, Number.QUEEN),
+                Card(Shape.CLOVER, Number.SEVEN)
+            )
+        )
+        val expect = true
+
+        val actual = player.isBust()
+
+        assertThat(actual).isEqualTo(expect)
     }
 
     @Test
