@@ -4,22 +4,24 @@ import kotlin.math.abs
 
 data class PlayerResult(val name: String, val result: String)
 
-class GameResultDecider(private val dealer: Dealer, private val players: List<Player>) {
+class GameResultDecider(private val dealer: Dealer, private val players: Players) {
     fun compareWinOrLose(): GameOutput {
-        val playerResults: List<PlayerResult> = players.map { player ->
-            PlayerResult(player.name, comparePlayerResult(player.getScore()))
-        }
+        val playerResults: List<PlayerResult> =
+            players.map { player ->
+                PlayerResult(player.name, comparePlayerResult(player.getScore()))
+            }
 
         val dealerWins = playerResults.count { it.result == LOSE }
         val dealerLosses = playerResults.count { it.result == WIN }
         return GameOutput(dealerWins, dealerLosses, playerResults)
     }
 
-    private fun comparePlayerResult(playerScore: Int): String = when {
-        dealer.getScore() > STANDARD_SCORE -> WIN
-        playerScore > STANDARD_SCORE -> LOSE
-        else -> compareScores(playerScore)
-    }
+    private fun comparePlayerResult(playerScore: Int): String =
+        when {
+            dealer.getScore() > STANDARD_SCORE -> WIN
+            playerScore > STANDARD_SCORE -> LOSE
+            else -> compareScores(playerScore)
+        }
 
     private fun compareScores(playerScore: Int): String {
         val dealerDiff = abs(STANDARD_SCORE - dealer.getScore())

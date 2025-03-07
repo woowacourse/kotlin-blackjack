@@ -55,13 +55,11 @@ class LanguagesBuilder {
     }
 }
 
-
 data class Language(val name: String, val level: Int)
 
 data class Person(
     val name: String,
     val company: String?,
     val skills: List<String>,
-    val languages: List<Language>
+    val languages: List<Language>,
 )
-
