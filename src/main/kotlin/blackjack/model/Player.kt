@@ -11,7 +11,7 @@ class Player(
     fun addCards(cards: List<Card>) = _cards.addAll(cards)
 
     fun adjustScore(): Int {
-        var sumScore = sumScore()
+        var sumScore = calculateTotalScore()
         var countAce = countAce()
         while (countAce-- > 0) {
             if (sumScore > 21) {
@@ -21,7 +21,7 @@ class Player(
         return sumScore
     }
 
-    fun sumScore() = cards.sumOf { card -> card.number.score }
+    fun calculateTotalScore() = cards.sumOf { card -> card.number.score }
 
     fun isBust() = adjustScore() > 21
 

@@ -10,11 +10,8 @@ class GameManager(
     }
 
     fun calculateResultMap(): Map<Player, ResultType> {
-        val dealerScore = dealer.sumScore()
-        val playersStatus = players.associateBy(
-            { it }, { ResultType.judgeScore(dealerScore, it.adjustScore()) }
-        )
-
+        val dealerScore = dealer.calculateTotalScore()
+        val playersStatus = players.associateBy({ it }, { ResultType.judgeScore(dealerScore, it.adjustScore()) })
         return playersStatus
     }
 

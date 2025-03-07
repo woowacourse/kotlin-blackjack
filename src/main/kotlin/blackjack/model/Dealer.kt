@@ -9,9 +9,9 @@ class Dealer {
 
     fun addCards(cards: List<Card>) = _cards.addAll(cards)
 
-    fun sumScore() = cards.sumOf { card -> card.number.score }
+    fun calculateTotalScore() = cards.sumOf { card -> card.number.score }
 
-    fun isMoreCard() = sumScore() < 17
+    fun isMoreCard() = calculateTotalScore() < 17
 
     companion object {
         private const val DEALER_NAME = "딜러"
