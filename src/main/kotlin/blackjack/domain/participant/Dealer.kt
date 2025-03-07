@@ -18,6 +18,13 @@ class Dealer : Participant {
 
     override fun isBust(): Boolean = sumOfCardTier() + ACE_EXTRACT_SCORE > BUST_STANDARD
 
+    override fun sum(): Int =
+        if (hasAce() && !isBust()) {
+            _cards.sumOf { card -> card.tier.values } + ACE_EXTRACT_SCORE
+        } else {
+            _cards.sumOf { card -> card.tier.values }
+        }
+
     fun isOverMaxScore(): Boolean {
         if (hasAce() && !isBust()) {
             return sumOfCardTier() + ACE_EXTRACT_SCORE > DEALER_MAX_SCORE

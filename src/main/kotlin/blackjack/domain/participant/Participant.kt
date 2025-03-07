@@ -10,4 +10,6 @@ sealed interface Participant {
     fun hasAce(): Boolean
 
     fun isBust(): Boolean
+
+    fun sum(): Int
 }
