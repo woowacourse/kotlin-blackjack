@@ -8,7 +8,7 @@ import blackjack.model.ResultType
 
 class OutputView {
     fun printInitialHandOutCardMessage(players: List<Player>) {
-        val playerNames = players.joinToString(OUTPUT_SEPARATOR_FOR_PRINT) { player -> player.name }
+        val playerNames = players.joinToString { player -> player.name }
         println(INITIAL_HAND_OUT_CARD_MESSAGE_FORMAT.format(playerNames, INITIAL_HAND_OUT_CARD_COUNT))
     }
 
@@ -30,7 +30,7 @@ class OutputView {
     }
 
     private fun getHandsStatus(cards: List<Card>): String {
-        return cards.joinToString(OUTPUT_SEPARATOR_FOR_PRINT) { card ->
+        return cards.joinToString { card ->
             val cardShape = card.shape
             val cardNumber = card.number
             "${cardNumber.value}${cardShape.type}"
@@ -61,7 +61,13 @@ class OutputView {
         dealer: Dealer,
         players: List<Player>,
     ) {
-        println(FINAL_HANDS_STATUS_MESSAGE_FORMAT.format(dealer.name, getHandsStatus(dealer.cards), dealer.sumScore()))
+        println(
+            FINAL_HANDS_STATUS_MESSAGE_FORMAT.format(
+                dealer.name,
+                getHandsStatus(dealer.cards),
+                dealer.calculateTotalScore(),
+            ),
+        )
         players.forEach { player -> printFinalPlayerHandStatus(player) }
         println()
     }
@@ -83,7 +89,6 @@ class OutputView {
         private const val DEALER_HIT_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다."
         private const val DEALER_STAY_MESSAGE = "딜러는 17이상이라 카드를 받지 않았습니다."
         private const val FINAL_RESULT_MESSAGE = "## 최종 승패"
-        private const val OUTPUT_SEPARATOR_FOR_PRINT = ", "
         private const val HANDS_STATUS_MESSAGE_FORMAT = "%s 카드: %s"
         private const val FINAL_HANDS_STATUS_MESSAGE_FORMAT = "%s 카드: %s - 결과: %d"
         private const val DEALER_RESULT_FORMAT = "딜러: %s"
