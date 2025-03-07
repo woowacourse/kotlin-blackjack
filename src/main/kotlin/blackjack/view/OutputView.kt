@@ -49,7 +49,7 @@ class OutputView {
     }
 
     private fun List<Card>.toText(): String =
-        this.joinToString(", ") { card ->
+        this.joinToString { card ->
             "${card.rank.toText()}${card.suit.toText()}"
         }
 

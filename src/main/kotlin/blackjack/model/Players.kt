@@ -8,7 +8,7 @@ class Players(
             "[ERROR] 플레이어 수는 1명 이상부터 7명 이하만 가능합니다. 입력값: ${value.size}"
         }
         require(value.distinct().size == value.size) {
-            "[ERROR] 플레이어 이름은 중복될 수 없습니다. 입력값: ${value.joinToString { ", " }}"
+            "[ERROR] 플레이어 이름은 중복될 수 없습니다. 입력값: ${value.joinToString()}"
         }
     }
 
