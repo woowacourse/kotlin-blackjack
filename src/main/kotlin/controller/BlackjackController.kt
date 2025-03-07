@@ -1,6 +1,5 @@
 package controller
 
-import model.Cards
 import model.CardsGenerator
 import model.Dealer
 import model.GameResultDecider
@@ -19,11 +18,11 @@ class BlackjackController(
 
         val players =
             playersNames.map { name ->
-                Player(name, allCards.drawCards(2))
+                Player(name, allCards.getInitialCards())
             }
 
         val playerCardsNames = players.map { it.playerCards.getCardNames() }
-        val dealerInitialCards = allCards.drawCards(2)
+        val dealerInitialCards = allCards.getInitialCards()
         val dealerCardNames = dealerInitialCards.getCardNames()
 
         val dealer = Dealer(dealerInitialCards)
@@ -31,21 +30,15 @@ class BlackjackController(
         outputView.printInitialCards(dealerCardNames, playersNames, playerCardsNames)
 
         players.forEach { player ->
-            while (true) {
-                val score = player.getScore()
-                if (score > 21) break
-                val decision = inputView.readHitOrStand(player.name)
-                if (!decision) break
-                showHitOrStandQuestion(score, player, allCards)
+            while (player.isHit() && inputView.readHitOrStand(player.name)) {
+                player.turn(allCards)
+                outputView.printPlayerCards(player.name, player.playerCards.getCardNames())
             }
         }
 
-        val dealerTotalScore = dealer.getScore()
-        if (dealerTotalScore <= 16) {
-            outputView.printDealerHit()
-            while (true) {
-                if (dealer.turn(allCards)) break
-            }
+        if (dealer.isHit()) {
+            val dealerAddCount = dealer.getDrawCount(allCards)
+            outputView.printDealerHit(dealerAddCount)
         }
         val updatedDealerTotalScore = dealer.getScore()
 
@@ -55,25 +48,14 @@ class BlackjackController(
         val updatedPlayerCardsNames = players.map { it.playerCards.getCardNames() }
         outputView.printPlayerResult(playersNames, updatedPlayerCardsNames, playersTotalScore)
 
-        decideGameResult(dealerTotalScore, players)
+        showGameResult(dealer, players)
     }
 
-    private fun showHitOrStandQuestion(
-        score: Int,
-        player: Player,
-        allCards: Cards,
-    ) {
-        if (score <= 21) {
-            player.turn(allCards)
-        }
-        outputView.printPlayerCards(player.name, player.playerCards.getCardNames())
-    }
-
-    private fun decideGameResult(
-        dealerTotalScore: Int,
+    private fun showGameResult(
+        dealer: Dealer,
         players: List<Player>,
     ) {
-        val gameResultOutput = GameResultDecider(dealerTotalScore, players).compareWinOrLose()
+        val gameResultOutput = GameResultDecider(dealer, players).compareWinOrLose()
         outputView.printResult(
             gameResultOutput.dealerWins,
             gameResultOutput.dealerLosses,
