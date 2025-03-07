@@ -1,6 +1,6 @@
 package model
 
-class Player(val name: String, val playerCards: Cards) : Participant(playerCards) {
+class Player(val name: String, private val playerCards: Cards) : Participant(playerCards) {
     init {
         require(name.isNotEmpty()) { PLAYER_BLANK_ERROR_MESSAGE }
     }
