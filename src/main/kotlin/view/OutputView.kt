@@ -1,5 +1,7 @@
 package view
 
+import model.PlayerResult
+
 class OutputView {
     fun printDealerAndPlayers(players: List<String>) {
         val playerNames = players.joinToString(", ") { it }
@@ -24,8 +26,8 @@ class OutputView {
         println("${playerName}카드: ${playerCards.joinToString(", ")}")
     }
 
-    fun printDealerHit() {
-        println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.")
+    fun printDealerHit(dealerAddCount: Int) {
+        println("\n딜러는 16이하라 ${dealerAddCount}장의 카드를 더 받았습니다.")
     }
 
     fun printDealerResult(
@@ -48,12 +50,13 @@ class OutputView {
     fun printResult(
         dealerWins: Int,
         dealerLosses: Int,
-        playerResults: List<Pair<String, String>>,
+        playerResults: List<PlayerResult>,
     ) {
         println("\n## 최종 승패")
         println("딜러: ${dealerWins}승 ${dealerLosses}패")
-        playerResults.forEach { (name, result) ->
-            println("$name: $result")
+
+        playerResults.forEach { playResult ->
+            println("${playResult.name}: ${playResult.result}")
         }
     }
 }
