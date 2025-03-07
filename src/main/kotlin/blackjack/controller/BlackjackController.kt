@@ -3,6 +3,7 @@ package blackjack.controller
 import blackjack.domain.Dealer
 import blackjack.domain.Deck
 import blackjack.domain.Player
+import blackjack.domain.Players
 import blackjack.enums.Action
 import blackjack.enums.Result
 import blackjack.view.InputView
@@ -23,27 +24,28 @@ class BlackjackController(
         calculateResult(dealer, players)
     }
 
-    private fun getPlayers(): List<Player> {
+    private fun getPlayers(): Players {
         val playerNames = inputView.readPlayerNames()
-        return playerNames.map { Player(it) }
+        val players = playerNames.map { Player(it) }
+        return Players(players)
     }
 
     private fun dealInitialCards(
         dealer: Dealer,
-        players: List<Player>,
+        players: Players,
     ) {
         repeat(INITIAL_CARD_COUNT) {
             dealer.addCard(Deck.pick())
-            players.forEach { it.addCard(Deck.pick()) }
+            players.dealCards()
         }
         outputView.printDealingResult(dealer, players)
     }
 
     private fun playTurns(
         dealer: Dealer,
-        players: List<Player>,
+        players: Players,
     ) {
-        players.forEach { drawCard(it) }
+        players.players.forEach { drawCard(it) }
         dealer.drawCard()
         val hitCount = dealer.hand.cards.size - INITIAL_CARD_COUNT
         outputView.printDealerHit(hitCount)
@@ -61,19 +63,14 @@ class BlackjackController(
 
     private fun calculateResult(
         dealer: Dealer,
-        players: List<Player>,
+        players: Players,
     ) {
-        val playerResult = getPlayerResult(dealer, players)
+        val playerResult = players.calculateResult(dealer)
         val dealerResult = getDealerResult(playerResult)
         outputView.printMatchResult(dealerResult, playerResult)
     }
 
-    private fun getPlayerResult(
-        dealer: Dealer,
-        players: List<Player>,
-    ): Map<String, Result> = players.associate { it.name to it.getResult(dealer) }
-
-    private fun getDealerResult(playerResult: Map<String, Result>): Map<Result, Int> =
+    private fun getDealerResult(playerResult: Map<Player, Result>): Map<Result, Int> =
         playerResult.values
             .groupingBy {
                 when (it) {

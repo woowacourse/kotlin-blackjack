@@ -3,19 +3,20 @@ package blackjack.view
 import blackjack.domain.Card
 import blackjack.domain.Dealer
 import blackjack.domain.Player
+import blackjack.domain.Players
 import blackjack.enums.Result
 
 class OutputView {
     fun printDealingResult(
         dealer: Dealer,
-        players: List<Player>,
+        players: Players,
     ) {
-        val playerNames = players.joinToString { it.name }
+        val playerNames = players.players.joinToString { it.name }
         println(MESSAGE_DEALING.format(playerNames))
 
         val dealerCard = dealer.hand.cards.first()
         println(MESSAGE_DEALER_CARD.format(cardInfo(dealerCard)))
-        players.forEach { printPlayerCards(it) }
+        players.players.forEach { printPlayerCards(it) }
     }
 
     fun printPlayerCards(player: Player) {
@@ -33,13 +34,13 @@ class OutputView {
 
     fun printBlackjackScore(
         dealer: Dealer,
-        players: List<Player>,
+        players: Players,
     ) {
         val dealerCards = cardsInfo(dealer.hand.cards)
         val dealerScore = dealer.calculateScore()
         println("${MESSAGE_DEALER_CARD.format(dealerCards)} ${MESSAGE_SCORE.format(dealerScore)}")
 
-        players.forEach { player ->
+        players.players.forEach { player ->
             val playerCards = cardsInfo(player.hand.cards)
             val playerScore = player.calculateScore()
             println(
@@ -54,7 +55,7 @@ class OutputView {
 
     fun printMatchResult(
         dealerResult: Map<Result, Int>,
-        playerResult: Map<String, Result>,
+        playerResult: Map<Player, Result>,
     ) {
         println(MESSAGE_GAME_RESULT)
         val dealerWinCount = dealerResult.getValue(Result.WIN)
@@ -63,7 +64,7 @@ class OutputView {
         println(MESSAGE_DEALER_RESULT.format(dealerWinCount, dealerDrawCount, dealerLoseCount))
 
         playerResult.forEach {
-            println(MESSAGE_PLAYER_RESULT.format(it.key, it.value.message))
+            println(MESSAGE_PLAYER_RESULT.format(it.key.name, it.value.message))
         }
     }
 
