@@ -16,9 +16,9 @@ class Player(
         return sumScore
     }
 
-    fun isBust() = adjustScore() > BUST_NUMBER
-
     private fun countAce() = super.cards.count { it.number == Number.ACE }
+
+    override fun isBust() = adjustScore() > BUST_NUMBER
 
     companion object {
         private const val ADJUST_ACE_NUMBER = 10
