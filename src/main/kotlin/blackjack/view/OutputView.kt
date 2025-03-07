@@ -1,16 +1,19 @@
 package blackjack.view
 
-import blackjack.domain.Player
 import blackjack.domain.TrumpCard
+import blackjack.domain.enums.CardTier
+import blackjack.domain.enums.GameResult
 import blackjack.domain.enums.Shape
+import blackjack.domain.participant.Dealer
+import blackjack.domain.participant.Player
 import java.lang.String.format
 
 class OutputView {
-    fun printDealerCards(
-        players: List<Player>,
-        dealerCard: TrumpCard,
-    ) {
-        println(MESSAGE_OUTPUT_PLAYER_NAME_AND_CARDS.format(players.joinToString(", ") { it.name }))
+    fun printNames(players: List<Player>) {
+        println(MESSAGE_OUTPUT_PLAYER_NAME_AND_CARDS.format(players.joinToString { it.name }))
+    }
+
+    fun printDealerCards(dealerCard: TrumpCard) {
         println(format(MESSAGE_OUTPUT_DEALER_CARD, cardMessageFormat(dealerCard)))
     }
 
@@ -24,25 +27,80 @@ class OutputView {
         }
     }
 
+    fun printDealerSum(players: List<Dealer>) {
+        players.forEach { player ->
+            print(format(MESSAGE_OUTPUT_DEALER_CARD, makeCardListMessage(player.cards)))
+            println(format(MESSAGE_OUTPUT_SUM, player.sum()))
+        }
+    }
+
+    fun printPlayerSum(players: List<Player>) {
+        players.forEach { player ->
+            print(format(MESSAGE_OUTPUT_PLAYER_CARD, player.name, makeCardListMessage(player.cards)))
+            println(format(MESSAGE_OUTPUT_SUM, player.sum()))
+        }
+    }
+
+    fun printDealerResult(result: Map<GameResult, Int>) {
+        println(MESSAGE_OUTPUT_RESULT_GUIDE)
+        val (playerWin, playerLose) = result.map { it.value }
+        println(format(MESSAGE_OUTPUT_DEALER_RESULT, playerLose, playerWin))
+    }
+
+    fun printPlayerResult(
+        name: String,
+        result: GameResult,
+    ) {
+        println(format(MESSAGE_OUTPUT_PLAYER_RESULT, name, result.toKorean()))
+    }
+
     private fun makeCardListMessage(cards: List<TrumpCard>): String =
-        cards.joinToString(", ") { card ->
+        cards.joinToString { card ->
             cardMessageFormat(card)
         }
 
-    private fun cardMessageFormat(card: TrumpCard): String = MESSAGE_CARD.format(card.tier.value, card.shape.toKorean())
+    private fun cardMessageFormat(card: TrumpCard): String = MESSAGE_CARD.format(card.tier.toEnglish(), card.shape.toKorean())
+
+    fun printDealerExtraCard(count: Int) {
+        println(format(MESSAGE_OUTPUT_DEALER_EXTRA_CARD, count))
+    }
+
+    fun printErrorMessage(message: String?) {
+        println(message)
+    }
 
     private fun Shape.toKorean(): String =
         when (this) {
-            Shape.Heart -> "하트"
-            Shape.Dia -> "다이아몬드"
-            Shape.Clover -> "클로버"
-            Shape.Spade -> "스페이드"
+            Shape.HEART -> "하트"
+            Shape.DIA -> "다이아몬드"
+            Shape.CLOVER -> "클로버"
+            Shape.SPADE -> "스페이드"
+        }
+
+    private fun CardTier.toEnglish(): String =
+        when (this) {
+            CardTier.ACE -> "A"
+            CardTier.JACK -> "J"
+            CardTier.QUEEN -> "Q"
+            CardTier.KING -> "K"
+            else -> this.values.toString()
+        }
+
+    private fun GameResult.toKorean(): String =
+        when (this) {
+            GameResult.WIN -> "승"
+            GameResult.LOSE -> "패"
         }
 
     companion object {
-        const val MESSAGE_OUTPUT_PLAYER_NAME_AND_CARDS = "딜러와 %s에게 2장의 카드를 나누었습니다."
-        const val MESSAGE_OUTPUT_PLAYER_CARD = "%s카드: %s"
-        const val MESSAGE_OUTPUT_DEALER_CARD = "딜러: %s"
-        const val MESSAGE_CARD = "%d%s"
+        private const val MESSAGE_OUTPUT_PLAYER_NAME_AND_CARDS = "딜러와 %s에게 2장의 카드를 나누었습니다.\n"
+        private const val MESSAGE_OUTPUT_DEALER_EXTRA_CARD = "\n딜러는 16이하라 %d장의 카드를 더 받았습니다.\n"
+        private const val MESSAGE_OUTPUT_SUM = " - 결과: %d"
+        private const val MESSAGE_OUTPUT_PLAYER_CARD = "%s카드: %s"
+        private const val MESSAGE_OUTPUT_DEALER_CARD = "딜러: %s"
+        private const val MESSAGE_OUTPUT_RESULT_GUIDE = "\n## 최종 승패"
+        private const val MESSAGE_OUTPUT_DEALER_RESULT = "딜러: %d승 %d패"
+        private const val MESSAGE_OUTPUT_PLAYER_RESULT = "%s: %s"
+        private const val MESSAGE_CARD = "%s%s"
     }
 }
