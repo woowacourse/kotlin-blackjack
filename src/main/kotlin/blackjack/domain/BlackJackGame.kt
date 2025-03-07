@@ -1,6 +1,7 @@
 package blackjack.domain
 
 import blackjack.domain.enums.UserChoice
+import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Participant
 import blackjack.domain.participant.Player
 
@@ -24,17 +25,14 @@ class BlackJackGame(
             }
     }
 
-    private fun processPlayerTurn(
-        player: Player,
-        action: (String) -> UserChoice,
-    ) {
-        while (!player.isBust()) {
-            val choice = action(player.name)
-            when (choice) {
-                UserChoice.HIT -> player.addCard(deck.pop())
-                UserChoice.STAY -> break
-            }
+    fun processDealerTurn(): Int {
+        var count = 0
+        val dealer: Dealer = players.filterIsInstance<Dealer>().first()
+        while (dealer.isOverMaxScore().not()) {
+            dealer.addCard(deck.pop())
+            count++
         }
+        return count
     }
 
     companion object {
