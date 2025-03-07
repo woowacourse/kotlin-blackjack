@@ -46,7 +46,9 @@ class BlackjackController(
         players: Players,
     ) {
         players.players.forEach { drawCard(it) }
-        dealer.drawCard()
+        while (dealer.canHit()) {
+            dealer.addCard(Deck.pick())
+        }
         val hitCount = dealer.hand.cards.size - INITIAL_CARD_COUNT
         outputView.printDealerHit(hitCount)
     }
