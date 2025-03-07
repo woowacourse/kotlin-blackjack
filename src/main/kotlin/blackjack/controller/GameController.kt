@@ -42,7 +42,7 @@ class GameController(
         deck: Cards,
     ) {
         if (player.isBust()) return
-        val choice = Choice(inputView.readPlayerAction(player))
+        val choice = retryEvent { Choice(inputView.readPlayerAction(player)) }
         if (!choice.isHit()) {
             printStatusOnNoHit(player)
             return
@@ -74,5 +74,13 @@ class GameController(
         val verdicts = dealer.getDealerVerdicts(players)
         outputView.printDealerVerdicts(dealer, verdicts)
         dealer.getPlayerVerdict(players).forEach { (player, verdict) -> outputView.printPlayerVerdict(player, verdict) }
+    }
+
+    private fun <T> retryEvent(event: () -> T): T {
+        while (true) {
+            kotlin.runCatching { event() }
+                .onSuccess { return it }
+                .onFailure { outputView.printErrorMessage(it.message ?: it.stackTraceToString()) }
+        }
     }
 }
