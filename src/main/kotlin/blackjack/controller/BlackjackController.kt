@@ -38,11 +38,6 @@ class BlackjackController(
         dealerReceiveCard()
     }
 
-    private fun printResult(players: List<Player>) {
-        outputView.participantsCardResult(listOf(dealer) + players)
-        outputView.gameResult(dealer, players)
-    }
-
     private fun hitOrStay(player: Player) {
         while (player.status == Status.None) {
             val playerAction = getYesOrNo(player)
@@ -61,7 +56,17 @@ class BlackjackController(
     private fun dealerReceiveCard() {
         val count: Int = blackjack.drawUntilThreshold(dealer)
         dealer.isBust()
-        outputView.printDealerReceiveCard(count)
+        outputView.printDealerReceiveCard(count, dealer)
+    }
+
+    private fun printResult(players: List<Player>) {
+        outputView.participantsCardResult(listOf(dealer) + players)
+        outputView.dealerResult(dealer, getDealerResult(players))
+        outputView.playerResult(players)
+    }
+
+    private fun getDealerResult(players: List<Player>): Map<Status, Int> {
+        return players.groupingBy { it.status }.eachCount()
     }
 
     private fun <T> retryInput(inputFunction: () -> T): T {

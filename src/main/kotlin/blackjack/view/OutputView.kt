@@ -8,7 +8,7 @@ import blackjack.model.domain.Status
 
 class OutputView {
     fun printInitCardStatus(
-        dealer: Participants,
+        dealer: Dealer,
         players: List<Participants>,
     ) {
         val playerName = players.joinToString(SEPARATOR) { it.name }
@@ -17,33 +17,39 @@ class OutputView {
         printPlayerInitCard(players)
     }
 
-    private fun printDealerInitCard(player: Participants) {
-        val firstCard = listOf(player.cardDeck.first())
-        println(PLAYER_STATUS.format(player.name, displayCard(firstCard)))
+    private fun printDealerInitCard(dealer: Dealer) {
+        val firstCard = listOf(dealer.cardDeck.first())
+        println(PLAYER_STATUS.format(dealer.name, displayCard(firstCard)))
     }
 
     private fun printPlayerInitCard(players: List<Participants>) {
         players.forEach { player ->
             printCardStatus(player)
         }
+        println()
     }
 
     fun printCardStatus(player: Participants) {
         println(makeFormat(player))
     }
 
-    private fun displayCard(cards: List<Card>): String {
-        return cards.joinToString(SEPARATOR) { CARD_FORMAT.format(it.cardNumber.display, it.symbol.symbol) }
-    }
-
     private fun makeFormat(player: Participants): String {
         return PLAYER_STATUS.format(player.name + CARD, displayCard(player.cardDeck))
     }
 
-    fun printDealerReceiveCard(count: Int) {
+    private fun displayCard(cards: List<Card>): String {
+        return cards.joinToString(SEPARATOR) { CARD_FORMAT.format(it.cardNumber.display, it.symbol.symbol) }
+    }
+
+    fun printDealerReceiveCard(
+        count: Int,
+        dealer: Dealer,
+    ) {
+        println()
         repeat(count) {
-            println(OUTPUT_DEALER_RECEIVE_CARD)
+            println(OUTPUT_DEALER_RECEIVE_CARD.format(dealer.name))
         }
+        println()
     }
 
     fun participantsCardResult(participants: List<Participants>) {
@@ -52,19 +58,11 @@ class OutputView {
         }
     }
 
-    fun gameResult(
-        dealer: Dealer,
-        players: List<Player>,
-    ) {
-        println(FINAL_RESULT)
-        dealerResult(dealer, players)
-        playerResult(players)
-    }
-
-    private fun playerResult(players: List<Player>) {
+    fun playerResult(players: List<Player>) {
         players.forEach { player ->
             println(PLAYER_STATUS.format(player.name, determineStatus(player.status)))
         }
+        println()
     }
 
     private fun determineStatus(status: Status): String {
@@ -75,29 +73,28 @@ class OutputView {
         }
     }
 
-    private fun dealerResult(
+    fun dealerResult(
         dealer: Dealer,
-        players: List<Player>,
+        statusCount: Map<Status, Int>,
     ) {
-        val winningCount = players.count { it.status == Status.Win }
-        val losingCount = players.count { it.status == Status.Lose }
-        val drawCount = players.count { it.status == Status.Draw }
+        println(FINAL_RESULT)
 
-        val resultFormat = determineDealerResultFormat(drawCount)
+        val winningCount = (statusCount[Status.Lose] ?: 0) + (statusCount[Status.Bust] ?: 0)
+        val losingCount = statusCount[Status.Win] ?: 0
+        val drawCount = statusCount[Status.Draw] ?: 0
 
-        println(resultFormat.format(dealer.name, winningCount, losingCount))
-    }
-
-    private fun determineDealerResultFormat(drawCount: Int): String {
-        if (drawCount != 0) return OUTPUT_DEALER_RESULT_WITH_DRAW
-        return OUTPUT_DEALER_RESULT
+        if (drawCount != 0) {
+            println(OUTPUT_DEALER_RESULT_WITH_DRAW.format(dealer.name, winningCount, losingCount, drawCount))
+        } else {
+            println(OUTPUT_DEALER_RESULT.format(dealer.name, winningCount, losingCount))
+        }
     }
 
     companion object {
-        private const val OUTPUT_DISTRIBUTE_CARD: String = "%s와 %s에게 2장의 나누었습니다."
-        private const val OUTPUT_DEALER_RECEIVE_CARD: String = "딜러는 16이하라 한장의 카드를 더 받았습니다."
+        private const val OUTPUT_DISTRIBUTE_CARD: String = "\n%s와 %s에게 2장의 나누었습니다."
+        private const val OUTPUT_DEALER_RECEIVE_CARD: String = "%s는 16이하라 한장의 카드를 더 받았습니다."
         private const val OUTPUT_PARTICIPANTS_CARD_RESULT = " - 결과: %d"
-        private const val FINAL_RESULT: String = "## 최종 승패"
+        private const val FINAL_RESULT: String = "\n## 최종 승패"
         private const val OUTPUT_DEALER_RESULT: String = "%s: %d승 %d패"
         private const val OUTPUT_DEALER_RESULT_WITH_DRAW: String = "%s: %d승 %d패 %d무"
         private const val PLAYER_STATUS: String = "%s: %s"
