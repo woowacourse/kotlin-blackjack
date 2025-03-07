@@ -9,13 +9,13 @@ class ScoreCalculator(private val cards: Cards) {
 
     private fun calculateWithoutAce(): Int = calculateCardScore() - calculateAceScore()
 
-    fun totalCardScore(): Int {
+    fun calculateTotalCardScore(): Int {
         val withoutAceScore = calculateWithoutAce()
         var aceCount = cards.aceCount()
         val defaultAce = 1
         var containAceScore = withoutAceScore + defaultAce * aceCount
 
-        while (containAceScore >= 21 && aceCount > 0) {
+        while (containAceScore > 21 && aceCount > 0) {
             containAceScore -= 10
             aceCount--
         }
