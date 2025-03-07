@@ -21,6 +21,5 @@ class ResultTypeTest {
         val actual = ResultType.judgeScore(dealer, player)
 
         assertThat(actual).isEqualTo(expect)
-
     }
 }

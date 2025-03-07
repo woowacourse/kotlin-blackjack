@@ -27,8 +27,8 @@ class PlayerTest {
             listOf(
                 Card(Shape.SPADE, Number.NINE),
                 Card(Shape.CLOVER, Number.QUEEN),
-                Card(Shape.CLOVER, Number.SEVEN)
-            )
+                Card(Shape.CLOVER, Number.SEVEN),
+            ),
         )
         val expect = true
 
@@ -43,8 +43,8 @@ class PlayerTest {
             listOf(
                 Card(Shape.SPADE, Number.ACE),
                 Card(Shape.CLOVER, Number.ACE),
-                Card(Shape.DIAMOND, Number.ACE)
-            )
+                Card(Shape.DIAMOND, Number.ACE),
+            ),
         )
         val expect = 13
 

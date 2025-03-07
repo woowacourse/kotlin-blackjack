@@ -13,11 +13,12 @@ class PersonTest {
 
     @BeforeEach
     fun setUp() {
-        person = object : Person() {
-            override fun isBust(): Boolean {
-                return true
+        person =
+            object : Person() {
+                override fun isBust(): Boolean {
+                    return true
+                }
             }
-        }
     }
 
     @Test
