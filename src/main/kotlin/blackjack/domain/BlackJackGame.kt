@@ -17,12 +17,25 @@ class BlackJackGame(
         }
     }
 
-    fun playGame(action: (String) -> UserChoice) {
-        players
-            .filterIsInstance<Player>()
-            .forEach { player ->
-                processPlayerTurn(player, action)
+    fun playGame(
+        getPlayerChoice: (String) -> UserChoice,
+        onPlayerStateUpdated: (Player) -> Unit,
+    ) {
+        players.filterIsInstance<Player>().forEach { player ->
+            while (!player.isBust()) {
+                val choice = getPlayerChoice(player.name)
+                when (choice) {
+                    UserChoice.HIT -> player.addCard(deck.pop())
+                    UserChoice.STAY -> {
+                        if (player.cards.size == 2) {
+                            onPlayerStateUpdated(player)
+                        }
+                        break
+                    }
+                }
+                onPlayerStateUpdated(player)
             }
+        }
     }
 
     fun processDealerTurn(): Int {
