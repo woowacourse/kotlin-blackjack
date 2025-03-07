@@ -4,6 +4,7 @@ import blackjack.domain.model.Dealer
 import blackjack.domain.model.GameParticipant
 import blackjack.domain.model.Player
 import blackjack.domain.model.Rule
+import blackjack.domain.model.WinLoss
 
 class OutputView {
     fun showDistributeCardMessage(participants: List<GameParticipant>) {
@@ -35,6 +36,17 @@ class OutputView {
         val name = participant.name
         val cardsInfoText = participant.showCards().joinToString { it.getCardText() }
         return CARD_INFO_MESSAGE.format(name, cardsInfoText)
+    }
+
+    fun showFinalResult(
+        dealerWinLossText: String,
+        playersWinLoss: List<Pair<Player, WinLoss>>,
+    ) {
+        println("## 최종 승패")
+        println("딜러: " + dealerWinLossText)
+        playersWinLoss.forEach({ (player, winLoss) ->
+            println(player.name + ": " + winLoss.koreanText)
+        })
     }
 
     companion object {

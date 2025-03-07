@@ -3,6 +3,7 @@ package blackjack.controller
 import blackjack.domain.model.Dealer
 import blackjack.domain.model.Player
 import blackjack.domain.model.Rule
+import blackjack.domain.model.WinLossStatistics
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -20,6 +21,7 @@ class Casino(
         runPlayersDrawPhase(players)
         runDealerDrawPhase(dealer)
         outputView.showCardsResult(listOf(dealer) + players)
+        outputFinalResult(dealer, players)
     }
 
     private fun outputParticipantCardsInfo(
@@ -53,5 +55,17 @@ class Casino(
             dealer.drawCard()
             outputView.showDealerDrawMessage()
         }
+    }
+
+    private fun outputFinalResult(
+        dealer: Dealer,
+        players: List<Player>,
+    ) {
+        val winLossStatistics = WinLossStatistics()
+        val playersWinLoss =
+            players.map { player ->
+                player to winLossStatistics.calculatePlayerWinLoss(dealer.showCards(), player.showCards())
+            }
+        outputView.showFinalResult(winLossStatistics.getDealerWinLossText(), playersWinLoss)
     }
 }
