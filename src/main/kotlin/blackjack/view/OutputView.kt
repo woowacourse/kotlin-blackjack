@@ -1,7 +1,8 @@
 package blackjack.view
 
+import blackjack.domain.GameResult
+import blackjack.domain.state.ResultState
 import blackjack.uiModel.PersonUiModel
-import blackjack.uiModel.ResultUiModel
 
 class OutputView {
     fun printNameMessage() {
@@ -44,14 +45,27 @@ class OutputView {
         println()
     }
 
-    fun printResult(resultUiModels: List<ResultUiModel>) {
+    fun printResult(result: GameResult) {
         println(RESULT_HEADLINE_MESSAGE)
-        val dealerWins = resultUiModels.count { it.result == LOSE }
-        val dealerLoses = resultUiModels.count { it.result == WIN }
-        val dealerDraws = resultUiModels.count { it.result == DRAW }
-        println(DEALER_RESULT_MESSAGE.format(dealerWins, dealerDraws, dealerLoses))
-        resultUiModels.forEach { println(PLAYER_RESULT_MESSAGE.format(it.name, it.result)) }
+        val countByResultState = result.countByResultState()
+        println(
+            DEALER_RESULT_MESSAGE.format(
+                countByResultState[ResultState.LOSE] ?: 0,
+                countByResultState[ResultState.DRAW] ?: 0,
+                countByResultState[ResultState.WIN] ?: 0,
+            ),
+        )
+        result.winStatus.forEach {
+            println(PLAYER_RESULT_MESSAGE.format(it.key.name, it.value.toUiString()))
+        }
     }
+
+    private fun ResultState.toUiString() =
+        when (this) {
+            ResultState.WIN -> WIN
+            ResultState.DRAW -> DRAW
+            else -> LOSE
+        }
 
     companion object {
         private const val DEALER = "딜러"

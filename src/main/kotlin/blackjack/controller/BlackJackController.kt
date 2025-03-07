@@ -5,7 +5,6 @@ import blackjack.domain.card.Deck
 import blackjack.domain.person.Dealer
 import blackjack.domain.person.Player
 import blackjack.uiModel.PersonUiModel
-import blackjack.uiModel.ResultUiModel
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -73,8 +72,8 @@ class BlackJackController(
         players: List<Player>,
     ) {
         outputView.printGameResult(combinePerson(dealer, players))
-        val gameResult = GameResult.create(dealer, players)
-        outputView.printResult(ResultUiModel.create(gameResult))
+        val gameResult = GameResult(dealer, players)
+        outputView.printResult(gameResult)
     }
 
     private fun combinePerson(
