@@ -2,6 +2,7 @@ package blackjack.domain
 
 import blackjack.domain.enums.CardTier
 import blackjack.domain.enums.Shape
+import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Player
 import blackjack.fixture.trumpCardFixture
 import org.assertj.core.api.Assertions.assertThat
@@ -25,5 +26,26 @@ class PlayerTest {
             player.addCard(TrumpCard(CardTier.KING, Shape.DIA))
         }
         assertThat(player.isBust()).isEqualTo(true)
+    }
+
+    @Test
+    fun `에이스 카드를 가지고 버스트 되지 않았으면 카드 총합에 10을 더한다`(){
+        val player = Player("peto")
+
+        player.addCard(TrumpCard(CardTier.ACE, Shape.DIA))
+        player.addCard(TrumpCard(CardTier.NINE, Shape.HEART))
+
+        assertThat(player.sum()).isEqualTo(20)
+    }
+
+    @Test
+    fun `에이스 카드를 가지고 버스트 되었으면 카드 총합을 유지한다`(){
+        val player = Player("peto")
+
+        player.addCard(TrumpCard(CardTier.ACE, Shape.DIA))
+        player.addCard(TrumpCard(CardTier.SEVEN, Shape.HEART))
+        player.addCard(TrumpCard(CardTier.NINE, Shape.HEART))
+
+        assertThat(player.sum()).isEqualTo(17)
     }
 }
