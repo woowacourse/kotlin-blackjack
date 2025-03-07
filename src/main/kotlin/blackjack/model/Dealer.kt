@@ -11,6 +11,11 @@ class Dealer(
         cards.add(card)
     }
 
+    fun isUnder16(): Boolean {
+        val dealerScore = cards.calculateScore()
+        return PlayerBehavior.from(dealerScore) == PlayerBehavior.HIT
+    }
+
     fun updateResult(playerScore: Int): GameResult {
         val dealerScore: Int = cards.calculateScore()
         val result: GameResult = GameResult.of(dealerScore, playerScore)

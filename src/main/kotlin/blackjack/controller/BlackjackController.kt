@@ -1,13 +1,6 @@
 package blackjack.controller
 
-import blackjack.model.CardDeck
-import blackjack.model.CardsMaker
-import blackjack.model.CardsStatus
-import blackjack.model.Dealer
-import blackjack.model.GameResult
-import blackjack.model.Player
-import blackjack.model.PlayerBehavior
-import blackjack.model.Players
+import blackjack.model.*
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -100,7 +93,15 @@ class BlackjackController(
                 PlayerBehavior.STAY -> break
             }
         }
-        val dealerResult: GameResult = dealer.updateResult(0)
+        while (dealer.isUnder16()) {
+            dealer.appendCard(cardDeck.pickCard())
+            outputView.printDealerGettingCard()
+            if (dealer.cards.isBust(false)) {
+                outputView.printBust(dealer)
+                break
+            }
+        }
+        val dealerResult: GameResult = dealer.updateResult(dealer.cards.calculateScore())
         player.updateResult(dealerResult)
     }
 
