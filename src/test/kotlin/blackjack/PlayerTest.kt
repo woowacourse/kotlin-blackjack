@@ -32,7 +32,7 @@ class PlayerTest {
         player.addCard(Card(Shape.SPADE, Number.NINE))
         player.addCard(Card(Shape.SPADE, Number.SEVEN))
         val expect = 16
-        val actual = player.sumScore()
+        val actual = player.calculateTotalScore()
 
         assertThat(actual).isEqualTo(expect)
     }
