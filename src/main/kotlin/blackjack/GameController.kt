@@ -25,7 +25,7 @@ class GameController(
 
         askPlayerHit(players)
 
-        if (dealer.haveAdditionalCard()) {
+        if (dealer.hasAdditionalCard()) {
             outputView.printDealerHaveAdditionalCard()
         }
 

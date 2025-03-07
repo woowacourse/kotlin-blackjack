@@ -10,11 +10,12 @@ class Dealer : Participant() {
         }
     }
 
-    fun haveAdditionalCard(): Boolean {
-        return cards.size > 2
+    fun hasAdditionalCard(): Boolean {
+        return cards.size > INITIAL_CARD_COUNT
     }
 
     companion object {
         const val DEALER_HIT_THRESHOLD = 17
+        const val INITIAL_CARD_COUNT = 2
     }
 }
