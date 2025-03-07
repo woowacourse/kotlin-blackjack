@@ -8,6 +8,13 @@ value class CardNumber(
         require(cardNumber in CARD_NUMBER_RANGE) { ERROR_OUT_OF_CARD_NUMBER_RANGE }
     }
 
+    fun getValue(): Int {
+        if (cardNumber > 10) {
+            return 10
+        }
+        return cardNumber
+    }
+
     fun getCardNumberName(): String =
         when (cardNumber) {
             1 -> "A"
