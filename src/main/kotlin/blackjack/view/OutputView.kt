@@ -2,6 +2,7 @@ package blackjack.view
 
 import blackjack.model.Dealer
 import blackjack.model.Player
+import blackjack.model.Players
 
 class OutputView {
     fun printStartMessage() {
@@ -13,10 +14,45 @@ class OutputView {
         players: List<Player>,
     ) {
         val playersNames: String = players.joinToString(", ") { it.name }
-        println("${dealer.name}와 ${playersNames}에게 2장의 나누었습니다.")
-        println("${dealer.name}: ${dealer.cards.getCardsInfomation().joinToString(", ")}")
+        println("${dealer.name}와 ${playersNames}에게 2장의 카드를 나누었습니다.")
+        println("${dealer.name}: ${dealer.cards.getCardsInfomation()[0]}")
         players.forEach { player ->
-            println("${player.name}: ${player.cards.getCardsInfomation().joinToString(", ")}")
+            printPlayerCard(player)
+        }
+    }
+
+    fun printDealerBlackjackMessage(
+        dealer: Dealer,
+        blackjackPlayers: List<Player>,
+    ) {
+        println("딜러가 블랙잭이므로 게임이 종료됩니다.")
+        println("블랙잭: ${dealer.name}, ${blackjackPlayers.joinToString(", ")}")
+    }
+
+    fun printPlayerBehaviorGuide(player: Player) {
+        println("${player.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
+    }
+
+    fun printPlayerCard(player: Player) {
+        println("${player.name}: ${player.cards.getCardsInfomation().joinToString(", ")}")
+    }
+
+    fun printBust(player: Player) {
+        println("${player.name}의 점수는 ${player.cards.calculateScore()}점으로 21점을 초과하여 죽었습니다.")
+    }
+
+    fun printResult(
+        dealer: Dealer,
+        players: Players,
+    ) {
+        val results: MutableList<String> = mutableListOf()
+        dealer.results.map { result ->
+            results.add("${result.value}${result.key.koreanTitle}")
+        }
+        println("## 최종 승패")
+        println("${dealer.name}: ${results.joinToString(" ")}")
+        players.value.forEach { player ->
+            println("${player.name}: ${player.result.koreanTitle}")
         }
     }
 }
