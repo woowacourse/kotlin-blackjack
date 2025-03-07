@@ -14,15 +14,13 @@ class OutputView {
         println(format(MESSAGE_OUTPUT_DEALER_CARD, cardMessageFormat(dealerCard)))
     }
 
+    fun printOneCardMessage(player: Player) {
+        println(format(MESSAGE_OUTPUT_PLAYER_CARD, player.name, makeCardListMessage(player.cards)))
+    }
+
     fun printPlayerCards(players: List<Player>) {
         players.forEach { player ->
-            println(
-                format(
-                    MESSAGE_OUTPUT_PLAYER_CARD,
-                    player.name,
-                    makeCardListMessage(player.cards),
-                ),
-            )
+            println(format(MESSAGE_OUTPUT_PLAYER_CARD, player.name, makeCardListMessage(player.cards)))
         }
     }
 
