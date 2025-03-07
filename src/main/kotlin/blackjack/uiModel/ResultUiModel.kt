@@ -1,6 +1,6 @@
 package blackjack.uiModel
 
-import blackjack.domain.person.Player
+import blackjack.domain.GameResult
 import blackjack.domain.state.ResultState
 
 data class ResultUiModel(
@@ -8,10 +8,8 @@ data class ResultUiModel(
     val result: String,
 ) {
     companion object {
-        fun create(results: Map<Player, ResultState>): List<ResultUiModel> {
-            return results.map { result ->
-                ResultUiModel(result.key.name, result.value.toUiModel())
-            }
+        fun create(gameResult: GameResult): List<ResultUiModel> {
+            return gameResult.winStatus.map { ResultUiModel(it.key.name, it.value.toUiModel()) }
         }
 
         private fun ResultState.toUiModel(): String {

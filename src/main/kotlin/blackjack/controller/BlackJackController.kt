@@ -73,7 +73,7 @@ class BlackJackController(
         players: List<Player>,
     ) {
         outputView.printGameResult(combinePerson(dealer, players))
-        val gameResult = GameResult(dealer).calculateWin(players)
+        val gameResult = GameResult.create(dealer, players)
         outputView.printResult(ResultUiModel.create(gameResult))
     }
 

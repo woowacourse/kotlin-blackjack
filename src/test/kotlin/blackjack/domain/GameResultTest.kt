@@ -12,7 +12,6 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class GameResultTest {
-    private lateinit var gameResult: GameResult
     private lateinit var dealer: Dealer
 
     @BeforeEach
@@ -21,8 +20,6 @@ class GameResultTest {
         dealerHand.addCard(Card.create(CardNumber.JACK, CardPattern.HEART))
         dealerHand.addCard(Card.create(CardNumber.EIGHT, CardPattern.HEART))
         dealer = Dealer(dealerHand)
-
-        gameResult = GameResult(dealer)
     }
 
     @Test
@@ -32,8 +29,8 @@ class GameResultTest {
         playerHand.addCard(Card.create(CardNumber.JACK, CardPattern.HEART))
         val player = Player("test", playerHand)
 
-        val result = gameResult.calculateWin(listOf(player))
-        result[player] shouldBe ResultState.WIN
+        val result = GameResult.create(dealer, listOf(player))
+        result.winStatus[player] shouldBe ResultState.WIN
     }
 
     @Test
@@ -43,8 +40,8 @@ class GameResultTest {
         playerHand.addCard(Card.create(CardNumber.EIGHT, CardPattern.HEART))
         val player = Player("test", playerHand)
 
-        val result = gameResult.calculateWin(listOf(player))
-        result[player] shouldBe ResultState.LOSE
+        val result = GameResult.create(dealer, listOf(player))
+        result.winStatus[player] shouldBe ResultState.LOSE
     }
 
     @Test
@@ -54,8 +51,8 @@ class GameResultTest {
         playerHand.addCard(Card.create(CardNumber.EIGHT, CardPattern.HEART))
         val player = Player("test", playerHand)
 
-        val result = gameResult.calculateWin(listOf(player))
-        result[player] shouldBe ResultState.DRAW
+        val result = GameResult.create(dealer, listOf(player))
+        result.winStatus[player] shouldBe ResultState.DRAW
     }
 
     @Test
@@ -66,7 +63,7 @@ class GameResultTest {
         playerHand.addCard(Card.create(CardNumber.JACK, CardPattern.HEART))
         val player = Player("test", playerHand)
 
-        val result = gameResult.calculateWin(listOf(player))
-        result[player] shouldBe ResultState.LOSE
+        val result = GameResult.create(dealer, listOf(player))
+        result.winStatus[player] shouldBe ResultState.LOSE
     }
 }
