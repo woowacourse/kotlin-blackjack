@@ -32,7 +32,7 @@ class BlackjackController(
         players.value.forEach { player ->
             player.draw(cardDeck)
         }
-        outputView.displayFirstDrawEnd(players.value)
+        outputView.displayFirstDrawEnd(players)
         outputView.displayParticipantCards(cards = dealer.hand.cards.take(DEALER_FIRST_SHOWN_COUNT))
         return players
     }
