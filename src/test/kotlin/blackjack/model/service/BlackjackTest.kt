@@ -16,12 +16,12 @@ class BlackjackTest {
     private val player2 = Player("환노")
     private val player3 = Player("포르")
     private val dealer = Dealer()
-    private val game = Blackjack()
     private val deck = Deck(FalseShuffle())
+    private val game = Blackjack(deck)
 
     @Test
     fun `게임 시작시 카드를 2장을 나눈다`() {
-        game.initGame(listOf(player1, player2, dealer), deck)
+        game.initGame(listOf(player1, player2, dealer))
 
         assertThat(dealer.cardDeck.size).isEqualTo(2)
         assertThat(player1.cardDeck.size).isEqualTo(2)

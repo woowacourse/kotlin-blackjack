@@ -6,20 +6,14 @@ import blackjack.model.domain.Participants
 import blackjack.model.domain.Player
 import blackjack.model.domain.Status
 
-class Blackjack {
-    fun initGame(
-        players: List<Participants>,
-        deck: Deck,
-    ) {
+class Blackjack(private val deck: Deck) {
+    fun initGame(players: List<Participants>) {
         players.forEach { player ->
-            distributeStartingHands(player, deck)
+            distributeStartingHands(player)
         }
     }
 
-    private fun distributeStartingHands(
-        player: Participants,
-        deck: Deck,
-    ) {
+    private fun distributeStartingHands(player: Participants) {
         repeat(2) {
             player.receiveCard(deck.spreadCard())
         }
