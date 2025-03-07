@@ -1,14 +1,9 @@
 package blackjack.model
 
 open class Player(
-    val name: String,
+    open val name: String,
     open val cards: Cards = Cards(emptyList()),
 ) {
-    init {
-        require(name != "딜러") { "플레이어는 딜러라는 이름을 가질 수 없습니다." }
-        require(name.length in 1..5) { "플레이어는 1에서 5사이 길이의 이름만 가질 수 있습니다." }
-    }
-
     lateinit var result: GameResult
 
     open fun appendCard(card: Card) {
@@ -31,4 +26,12 @@ open class Player(
     }
 
     override fun hashCode(): Int = name.hashCode()
+
+    companion object {
+        fun from(name: String): Player {
+            require(name != "딜러") { "플레이어는 딜러라는 이름을 가질 수 없습니다." }
+            require(name.length in 1..5) { "플레이어는 1에서 5사이 길이의 이름만 가질 수 있습니다." }
+            return Player(name)
+        }
+    }
 }
