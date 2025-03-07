@@ -10,7 +10,7 @@ class Dealer(hand: Hand) : Person(hand.copy()) {
 
     constructor() : this(hand = Hand())
 
-    fun draw(deck: Deck) {
+    override fun draw(deck: Deck) {
         val amount = getDrawAmount(DealerState.FIRST_TURN)
         repeat(amount) {
             hand.addCard(deck.draw())

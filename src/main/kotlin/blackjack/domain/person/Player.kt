@@ -13,18 +13,15 @@ class Player(
 
     constructor(name: String) : this(name = name, hand = Hand())
 
-    fun draw(
-        deck: Deck,
-        hitFlag: Boolean = true,
-    ) {
+    override fun draw(deck: Deck) {
         val amount = getDrawAmount(PlayerState.FIRST_TURN)
-        if (hitFlag) {
-            repeat(amount) {
-                hand.addCard(deck.draw())
-            }
-            gameState = PlayerState.from(this)
-            return
+        repeat(amount) {
+            hand.addCard(deck.draw())
         }
+        gameState = PlayerState.from(this)
+    }
+
+    fun changeToStay() {
         gameState = PlayerState.STAY
     }
 }

@@ -38,8 +38,8 @@ class PlayerTest {
     }
 
     @Test
-    fun `카드를 뽑지 않을 경우 상태가 변한다`() {
-        player.draw(deck, false)
+    fun `STAY로 상태가 변하면 카드를 뽑을 수 없다`() {
+        player.changeToStay()
         player.canDraw() shouldBe false
     }
 

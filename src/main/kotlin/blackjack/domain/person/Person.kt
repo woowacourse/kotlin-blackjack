@@ -3,6 +3,7 @@ package blackjack.domain.person
 import blackjack.const.GameRule
 import blackjack.domain.ScoreCalculator
 import blackjack.domain.card.Card
+import blackjack.domain.card.Deck
 import blackjack.domain.state.PersonState
 
 abstract class Person(
@@ -10,6 +11,8 @@ abstract class Person(
     private val calculator: ScoreCalculator = ScoreCalculator(),
 ) {
     protected lateinit var gameState: PersonState
+
+    abstract fun draw(deck: Deck)
 
     fun cards(): List<Card> = hand.cards
 

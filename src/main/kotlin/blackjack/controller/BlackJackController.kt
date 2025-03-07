@@ -53,11 +53,12 @@ class BlackJackController(
     }
 
     private fun letPlayerDrawCard(player: Player) {
-        val hitFlag = inputView.getFlag()
-        player.draw(deck, hitFlag)
-        if (hitFlag) {
+        if (inputView.getFlag()) {
+            player.draw(deck)
             outputView.printDrawStatus(PersonUiModel.create(player))
+            return
         }
+        player.changeToStay()
     }
 
     private fun processDealerTurns(dealer: Dealer) {
