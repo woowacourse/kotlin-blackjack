@@ -1,6 +1,13 @@
 package blackjack.controller
 
-import blackjack.model.*
+import blackjack.model.CardDeck
+import blackjack.model.CardsMaker
+import blackjack.model.CardsStatus
+import blackjack.model.Dealer
+import blackjack.model.GameResult
+import blackjack.model.Player
+import blackjack.model.PlayerBehavior
+import blackjack.model.Players
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -30,16 +37,16 @@ class BlackjackController(
         outputView.printPlayersCards(dealer, players.value)
     }
 
-    private fun getCardsToDealer(dealer: Dealer) {
-        val card = cardDeck.pickCard()
-        dealer.appendCard(card)
-    }
-
     private fun getCardsToPlayer(players: List<Player>) {
         players.forEach { player ->
             val card = cardDeck.pickCard()
             player.appendCard(card)
         }
+    }
+
+    private fun getCardsToDealer(dealer: Dealer) {
+        val card = cardDeck.pickCard()
+        dealer.appendCard(card)
     }
 
     private fun playGames(
@@ -48,15 +55,7 @@ class BlackjackController(
     ) {
         if (dealer.isBlackjack(true)) {
             val blackjackPlayers: List<Player> = players.findBlackjackPlayer()
-            players.value.forEach { player ->
-                if (player.cards.isBlackjack(true)) {
-                    player.updateResult(GameResult.PUSH)
-                    dealer.updateResult(player.cards.calculateScore())
-                    return@forEach
-                }
-                player.updateResult(GameResult.WIN)
-                dealer.updateResult(player.cards.calculateScore())
-            }
+            updateGameResult(players, dealer)
             outputView.printDealerBlackjackMessage(dealer, blackjackPlayers)
             displayResult(players, dealer)
             return
@@ -67,42 +66,99 @@ class BlackjackController(
         displayResult(players, dealer)
     }
 
+    private fun updateGameResult(
+        players: Players,
+        dealer: Dealer,
+    ) {
+        players.value.forEach { player ->
+            if (isAllPlayerBlackjack(player, dealer)) return@forEach
+            player.updateResult(GameResult.WIN)
+            dealer.updateResult(player.cards.calculateScore())
+        }
+    }
+
+    private fun isAllPlayerBlackjack(
+        player: Player,
+        dealer: Dealer,
+    ): Boolean {
+        if (player.cards.isBlackjack(true)) {
+            player.updateResult(GameResult.PUSH)
+            dealer.updateResult(player.cards.calculateScore())
+            return true
+        }
+        return false
+    }
+
     private fun playGame(
         player: Player,
         dealer: Dealer,
     ) {
+        if (isPlayerBlackjack(player, dealer)) return
+        executePlayerGameLogic(player)
+        executeDealerGameLogic(dealer)
+        val dealerResult: GameResult = dealer.updateResult(dealer.cards.calculateScore())
+        player.updateResult(dealerResult)
+    }
+
+    private fun isPlayerBlackjack(
+        player: Player,
+        dealer: Dealer,
+    ): Boolean {
         if (player.isBlackjack(true)) {
             val dealerResult: GameResult = dealer.updateResult(CardsStatus.BLACKJACK_SCORE)
             player.updateResult(dealerResult)
-            return
+            return true
         }
+        return false
+    }
+
+    private fun executePlayerGameLogic(player: Player) {
         while (!player.cards.isBust(false)) {
             outputView.printPlayerBehaviorGuide(player)
             val playerBehavior: PlayerBehavior = inputView.readPlayerBehavior()
 
-            when (playerBehavior) {
-                PlayerBehavior.HIT -> {
-                    player.appendCard(cardDeck.pickCard())
-                    outputView.printPlayerCard(player)
-                    if (player.cards.isBust(false)) {
-                        outputView.printBust(player)
-                        break
-                    }
-                }
-
-                PlayerBehavior.STAY -> break
-            }
+            if (executePlayerBehavior(playerBehavior, player)) break
         }
+    }
+
+    private fun executePlayerBehavior(
+        playerBehavior: PlayerBehavior,
+        player: Player,
+    ): Boolean {
+        when (playerBehavior) {
+            PlayerBehavior.HIT -> {
+                player.appendCard(cardDeck.pickCard())
+                outputView.printPlayerCard(player)
+                if (isPlayerBust(player)) return true
+            }
+
+            PlayerBehavior.STAY -> return true
+        }
+        return false
+    }
+
+    private fun isPlayerBust(player: Player): Boolean {
+        if (player.cards.isBust(false)) {
+            outputView.printBust(player)
+            return true
+        }
+        return false
+    }
+
+    private fun executeDealerGameLogic(dealer: Dealer) {
         while (dealer.isUnder16()) {
             dealer.appendCard(cardDeck.pickCard())
             outputView.printDealerGettingCard()
-            if (dealer.cards.isBust(false)) {
-                outputView.printBust(dealer)
-                break
-            }
+            if (isDealerBust(dealer)) break
         }
-        val dealerResult: GameResult = dealer.updateResult(dealer.cards.calculateScore())
-        player.updateResult(dealerResult)
+    }
+
+    private fun isDealerBust(dealer: Dealer): Boolean {
+        if (dealer.cards.isBust(false)) {
+            outputView.printBust(dealer)
+            return true
+        }
+        return false
     }
 
     private fun displayResult(
