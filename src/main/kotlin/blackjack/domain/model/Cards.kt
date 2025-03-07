@@ -4,6 +4,7 @@ class Cards(initCards: List<Card> = deckCards.shuffled()) {
     private val cards: MutableList<Card> = initCards.toMutableList()
 
     fun draw(count: Int = DRAW_DEFAULT_COUNT): List<Card> {
+        if (cards.count() < count) cards.addAll(deckCards.shuffled())
         return List(count.coerceAtMost(count)) { cards.removeFirst() }
     }
 
