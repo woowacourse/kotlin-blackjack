@@ -5,5 +5,18 @@ enum class Result(
 ) {
     WIN("승"),
     LOSE("패"),
-    DRAW("무"),
+    PUSH("무"),
+    ;
+
+    companion object {
+        fun from(
+            targetScore: Int,
+            otherScore: Int,
+        ): Result =
+            when {
+                targetScore > otherScore -> WIN
+                targetScore < otherScore -> LOSE
+                else -> PUSH
+            }
+    }
 }
