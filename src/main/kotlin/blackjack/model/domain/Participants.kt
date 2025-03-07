@@ -3,10 +3,10 @@ package blackjack.model.domain
 import blackjack.model.domain.Status.Companion.isBust
 import blackjack.model.service.Blackjack.Companion.BUST_STANDARD
 
-interface Participants {
-    val name: String
-    val cards: MutableList<Card>
-    var status: Status
+abstract class Participants() {
+    abstract val name: String
+    abstract val cards: MutableList<Card>
+    abstract var status: Status
 
     val sumCardNumber: Int get() = getSumNumber()
     val cardDeck get() = cards.toList()
