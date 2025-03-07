@@ -41,4 +41,58 @@ class DealerTest {
 
         assertThat(dealer.cards.value.size).isEqualTo(expected)
     }
+
+    @Test
+    fun `딜러의 스코어가 16 이하일 경우 isHit은 true를 반환한다`() {
+        val cards =
+            Cards(
+                listOf(
+                    Card(CardShape.DIAMOND, Denomination.TEN),
+                    Card(CardShape.CLOVER, Denomination.TWO),
+                ),
+            )
+        val dealer = Dealer(cards = cards)
+
+        val actual = dealer.isHit()
+
+        val expected = true
+
+        assertThat(actual).isEqualTo(expected)
+    }
+
+    @Test
+    fun `딜러의 스코어가 16초과일 경우 isHit은 false를 반환한다`() {
+        val cards =
+            Cards(
+                listOf(
+                    Card(CardShape.DIAMOND, Denomination.TEN),
+                    Card(CardShape.CLOVER, Denomination.TEN),
+                ),
+            )
+        val dealer = Dealer(cards = cards)
+
+        val actual = dealer.isHit()
+
+        val expected = false
+
+        assertThat(actual).isEqualTo(expected)
+    }
+
+    @Test
+    fun `플레이어의 스코어를 통해 딜러는 자신의 결과를 반환한다`() {
+        val cards =
+            Cards(
+                listOf(
+                    Card(CardShape.DIAMOND, Denomination.TEN),
+                    Card(CardShape.CLOVER, Denomination.TEN),
+                ),
+            )
+        val dealer = Dealer(cards = cards)
+
+        val actual = dealer.updateResult(playerScore = 19)
+
+        val expected = GameResult.WIN
+
+        assertThat(actual).isEqualTo(expected)
+    }
 }

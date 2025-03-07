@@ -146,7 +146,7 @@ class BlackjackController(
     }
 
     private fun executeDealerGameLogic(dealer: Dealer) {
-        while (dealer.isUnder16()) {
+        while (dealer.isHit()) {
             dealer.appendCard(cardDeck.pickCard())
             outputView.printDealerGettingCard()
             if (isDealerBust(dealer)) break

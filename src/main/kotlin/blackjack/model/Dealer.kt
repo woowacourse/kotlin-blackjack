@@ -11,7 +11,7 @@ class Dealer(
         cards.add(card)
     }
 
-    fun isUnder16(): Boolean {
+    fun isHit(): Boolean {
         val dealerScore = cards.calculateScore()
         return PlayerBehavior.from(dealerScore) == PlayerBehavior.HIT
     }
