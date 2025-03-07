@@ -36,6 +36,10 @@ class Casino(
                 val response: Boolean = inputView.readWantExtraCard(player.name)
 
                 if (!response) {
+                    if (player.showCards().size == 2) {
+                        outputView.showPlayerCardsInfo(player)
+                        // todo(중복 if문 로직 제거 예정)
+                    }
                     break
                 }
                 player.drawCard()
