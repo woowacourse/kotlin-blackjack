@@ -7,7 +7,10 @@ enum class ResultType(val value: Char) {
     ;
 
     companion object {
-        fun judgeScore(dealerScore: Int, playerScore: Int): ResultType {
+        fun judgeScore(
+            dealerScore: Int,
+            playerScore: Int,
+        ): ResultType {
             if (dealerScore < playerScore) return WIN
             if (dealerScore == playerScore) return TIE
             return LOSS

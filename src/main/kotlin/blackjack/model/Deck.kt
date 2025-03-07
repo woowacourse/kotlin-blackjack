@@ -18,5 +18,4 @@ object Deck {
                 Card(shape, number)
             }
         }.shuffled().toMutableList()
-
 }
