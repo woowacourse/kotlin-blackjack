@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import blackjack.domain.enums.GameResult
 import blackjack.domain.enums.UserChoice
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Participant
@@ -43,12 +44,28 @@ class BlackJackGame(
 
     fun processDealerTurn(): Int {
         var count = 0
-        val dealer: Dealer = players.filterIsInstance<Dealer>().first()
         while (dealer.isOverMaxScore().not()) {
             dealer.addCard(deck.pop())
             count++
         }
         return count
+    }
+
+    fun calculateDealerResult(action: (Map<GameResult, Int>) -> Unit) {
+        val dealerMap = GameResult.entries.associateWith { 0 }.toMutableMap()
+
+        players.forEach { player ->
+            val result = GameResult.from(dealer.sum(), player.sum())
+            dealerMap[result ] = dealerMap.getOrDefault(result, 0) + 1
+        }
+        action(dealerMap)
+    }
+
+    fun calculatePlayerResult(action: (String, GameResult) -> Unit) {
+        players.forEach { player ->
+            val result = GameResult.from(dealer.sum(), player.sum())
+            action(player.name, result)
+        }
     }
 
     companion object {
