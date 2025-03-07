@@ -74,7 +74,7 @@ class OutputView {
     }
 
     fun displayDealerResult(winningResult: Map<WinningResult, Int>) {
-        println("딜러: ${winningResult[WIN]}승 ${winningResult[LOSE]}패 ${winningResult[PUSH]}무")
+        println("딜러: ${winningResult[WIN]}승 ${winningResult[PUSH]}무 ${winningResult[LOSE]}패")
     }
 
     fun displayPlayerResult(

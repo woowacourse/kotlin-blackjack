@@ -2,8 +2,8 @@ package blackjack.model
 
 enum class WinningResult {
     WIN,
-    LOSE,
     PUSH,
+    LOSE,
     ;
 
     companion object {
