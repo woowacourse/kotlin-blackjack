@@ -10,12 +10,8 @@ enum class DrawChoice(val answer: String) {
     }
 
     companion object {
-        fun from(answer: String): DrawChoice {
-            return entries.first { choice -> choice.answer == answer }
-        }
-
-        fun contains(answer: String): Boolean {
-            return entries.any { choice -> choice.answer == answer }
+        fun from(answer: String): DrawChoice? {
+            return entries.find { choice -> choice.answer == answer }
         }
     }
 }

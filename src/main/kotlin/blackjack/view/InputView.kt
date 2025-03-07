@@ -15,8 +15,7 @@ class InputView {
     fun readMoreCardCondition(player: Player): DrawChoice {
         println(PLAYER_MORE_CARD_MESSAGE_GUIDE.format(player.name))
         val condition: String = readln().trim()
-        if (!DrawChoice.contains(condition)) return readMoreCardCondition(player)
-        return DrawChoice.from(condition)
+        return DrawChoice.from(condition) ?: readMoreCardCondition(player)
     }
 
     companion object {
