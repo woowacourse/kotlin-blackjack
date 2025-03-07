@@ -3,19 +3,36 @@ package blackjack.test
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class Dealer {
+class Dealer(
+    private val players: List<Player>,
+) {
     private val deck: Deck = Deck()
     private val hand: Hand = Hand(emptyList())
-    var result: Result = Result.NOT_YET
+    val results: List<Result>
+        get() =
+            players.map { player ->
+                when (player.result) {
+                    Result.WIN -> Result.LOSE
+                    Result.DRAW -> Result.DRAW
+                    Result.LOSE -> Result.WIN
+                    Result.NOT_YET -> Result.NOT_YET
+                }
+            }
 
-    fun getCard() {
-        hand.add(deck.getCard())
+    fun getCard(card: Card = deck.getCard()) {
+        hand.add(card)
     }
 
-    fun giveCard(players: List<Player> = listOf()) {
-        players.forEach { player ->
-            player.getMoreCard(deck.getCard())
-        }
+    fun getCards(cards: List<Card>) {
+        cards.forEach { card: Card -> getCard(card) }
+    }
+
+    fun giveCard() {
+        players.forEach { player -> player.getCard(deck.getCard()) }
+    }
+
+    fun giveCard(player: Player) {
+        player.getCard(deck.getCard())
     }
 
     fun getScore(): Int? = hand.getScore()
@@ -112,20 +129,13 @@ class Deck {
 class DealerTest {
     @Test
     fun `딜러는 플레이어에게 카드를 나눠준다`() {
-        val dealer = Dealer()
         val eden = Player("Eden")
         val gio = Player("Gio")
         val players: List<Player> = listOf(eden, gio)
-        gio.getMoreCard(Card(Number(7), Suit.DIAMOND))
-        dealer.giveCard(players)
+        val dealer = Dealer(players)
+        gio.getCard(Card(Number(7), Suit.DIAMOND))
+        dealer.giveCard()
         assertThat(eden.getCountOfCards()).isEqualTo(1)
         assertThat(gio.getCountOfCards()).isEqualTo(2)
-    }
-
-    @Test
-    fun `딜러의 최종 승패 결과를 알 수 있다`() {
-        val dealer = Dealer()
-        dealer.result = Result.WIN
-        assertThat(dealer.result).isEqualTo(Result.WIN)
     }
 }

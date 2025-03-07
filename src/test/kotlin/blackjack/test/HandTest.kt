@@ -36,8 +36,14 @@ class Hand(
     }
 
     fun add(card: Card) {
-        require(getScore() != null && getScore()!! < 21) { "모든 카드의 합이 21 미만이 될 수 있을 경우에만 카드를 얻을 수 있습니다." }
-        value.add(card)
+        require(canGetCard()) { "모든 카드의 합이 21 미만이 될 수 있을 경우에만 카드를 얻을 수 있습니다." }
+        _value.add(card)
+    }
+
+    private fun canGetCard(): Boolean = getScore() != null && getScore() != 21
+
+    fun add(cards: List<Card>) {
+        cards.forEach { card -> add(card) }
     }
 }
 
