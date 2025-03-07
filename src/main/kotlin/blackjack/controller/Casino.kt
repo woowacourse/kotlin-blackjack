@@ -2,6 +2,7 @@ package blackjack.controller
 
 import blackjack.domain.model.Dealer
 import blackjack.domain.model.Player
+import blackjack.domain.model.Rule
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -15,6 +16,9 @@ class Casino(
         println()
         outputView.showDistributeCardMessage(players)
         outputParticipantCardsInfo(dealer, players)
+
+        runPlayersDrawPhase(players)
+        runDealerDrawPhase(dealer)
     }
 
     private fun outputParticipantCardsInfo(
@@ -23,5 +27,26 @@ class Casino(
     ) {
         outputView.showDealerCardsInfo(dealer)
         players.forEach { outputView.showPlayerCardsInfo(it) }
+    }
+
+    private fun runPlayersDrawPhase(players: List<Player>) {
+        players.forEach { player ->
+            while (!Rule.isBurst(player.showCards())) {
+                val response: Boolean = inputView.readWantExtraCard(player.name)
+
+                if (!response) {
+                    break
+                }
+                player.drawCard()
+                outputView.showPlayerCardsInfo(player)
+            }
+        }
+    }
+
+    private fun runDealerDrawPhase(dealer: Dealer) {
+        while (Rule.calculateShouldDrawByCards(dealer.showCards())) {
+            dealer.drawCard()
+            outputView.showDealerDrawMessage()
+        }
     }
 }
