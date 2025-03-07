@@ -13,6 +13,10 @@ class Cards(
         _cards.add(card)
     }
 
+    fun isBlackjack(firstTurn: Boolean): Boolean = CardsStatus.from(calculateScore(), firstTurn) == CardsStatus.BLACKJACK
+
+    fun isBust(firstTurn: Boolean): Boolean = CardsStatus.from(calculateScore(), firstTurn) == CardsStatus.BUST
+
     fun calculateScore(): Int {
         val aceCount: Int = cards.count { card -> card.isDenominationAce(card) }
         val score: Int = cards.sumOf { card -> card.denomination.number }
