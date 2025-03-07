@@ -31,4 +31,8 @@ class GameManager(
 
         return result
     }
+
+    fun drawCard(person: Person) {
+        person.addCard(Deck.draw())
+    }
 }
