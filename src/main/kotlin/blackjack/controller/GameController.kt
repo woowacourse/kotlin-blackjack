@@ -15,7 +15,7 @@ class GameController(
 ) {
     fun run() {
         val deck = Cards()
-        val participants = Participants(listOf(Dealer()) + inputView.readPlayerNames().map(::Player))
+        val participants = Participants(Dealer(), inputView.readPlayerNames())
         initialDeal(deck, participants)
         printInitialDeal(participants)
         participants.filterPlayers().forEach { player -> playHand(player, deck) }
