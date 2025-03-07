@@ -7,7 +7,7 @@ enum class ActionType {
 
     companion object {
         fun get(yesOrNo: YesOrNo): ActionType {
-            if (yesOrNo.input in listOf("y", "Y")) return Hit
+            if (yesOrNo.input in YesOrNo.yesValidInput) return Hit
             return Stay
         }
     }

@@ -11,7 +11,7 @@ class OutputView {
         dealer: Dealer,
         players: List<Participants>,
     ) {
-        val playerName = players.joinToString(SEPARATOR) { it.name }
+        val playerName = players.joinToString { it.name }
         println(OUTPUT_DISTRIBUTE_CARD.format(dealer.name, playerName))
         printDealerInitCard(dealer)
         printPlayerInitCard(players)
@@ -38,7 +38,7 @@ class OutputView {
     }
 
     private fun displayCard(cards: List<Card>): String {
-        return cards.joinToString(SEPARATOR) { CARD_FORMAT.format(it.cardNumber.display, it.symbol.symbol) }
+        return cards.joinToString { CARD_FORMAT.format(it.cardNumber.display, it.symbol.symbol) }
     }
 
     fun printDealerReceiveCard(
@@ -100,6 +100,5 @@ class OutputView {
         private const val PLAYER_STATUS: String = "%s: %s"
         private const val CARD: String = "카드"
         private const val CARD_FORMAT: String = "%s%s"
-        private const val SEPARATOR: String = ", "
     }
 }
