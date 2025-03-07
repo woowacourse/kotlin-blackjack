@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 abstract class Participant {
     var totalSum: Int = 0

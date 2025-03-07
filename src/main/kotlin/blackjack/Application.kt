@@ -1,4 +1,5 @@
-import blackjack.GameController
+package blackjack
+
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
