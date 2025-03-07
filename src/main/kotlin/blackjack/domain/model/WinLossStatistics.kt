@@ -10,13 +10,19 @@ class WinLossStatistics {
         val dealerScore = Rule.calculateResultByCards(dealerCards)
         val playerScore = Rule.calculateResultByCards(playerCards)
 
+        if (playerScore > 21) {
+            dealerResults[WinLoss.WIN] = (dealerResults[WinLoss.WIN] ?: 0) + 1
+            return WinLoss.LOSE
+        }
+
+        if (dealerScore in (playerScore + 1)..21) {
+            dealerResults[WinLoss.WIN] = (dealerResults[WinLoss.WIN] ?: 0) + 1
+            return WinLoss.LOSE
+        }
+
         if (dealerScore == playerScore) {
             dealerResults[WinLoss.DRAW] = (dealerResults[WinLoss.DRAW] ?: 0) + 1
             return WinLoss.DRAW
-        }
-        if (dealerScore > playerScore) {
-            dealerResults[WinLoss.WIN] = (dealerResults[WinLoss.WIN] ?: 0) + 1
-            return WinLoss.LOSE
         }
         dealerResults[WinLoss.LOSE] = (dealerResults[WinLoss.LOSE] ?: 0) + 1
         return WinLoss.WIN

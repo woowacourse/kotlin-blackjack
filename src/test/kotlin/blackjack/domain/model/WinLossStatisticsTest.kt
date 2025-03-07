@@ -37,12 +37,12 @@ class WinLossStatisticsTest {
 
     @Test
     fun `손패 두 개를 비교하여 딜러가 버스트고 플레이어가 버스트가 아닐 경우 플레이어의 승리임을 받아올 수 있다`() {
-        val dealerBlackJackCards = listOf(Card(11), Card(12), Card(9))
+        val dealerBurstCards = listOf(Card(11), Card(12), Card(9))
         val playerBlackJackCards = listOf(Card(0), Card(12))
 
         val winLossStatistics = WinLossStatistics()
 
-        assertThat(winLossStatistics.calculatePlayerWinLoss(dealerBlackJackCards, playerBlackJackCards)).isEqualTo(WinLoss.WIN)
+        assertThat(winLossStatistics.calculatePlayerWinLoss(dealerBurstCards, playerBlackJackCards)).isEqualTo(WinLoss.WIN)
     }
 
     @Test
