@@ -153,4 +153,28 @@ class BlackjackTest {
         assertThat(eden.result).isEqualTo(Result.WIN)
         assertThat(gio.result).isEqualTo(Result.LOSE)
     }
+
+    @Test
+    fun `딜러와 플레이어의 숫자가 같다면, 무승부로 처리한다`() {
+        val gio = Player("Gio")
+        val players: List<Player> = listOf(gio)
+        val dealer = Dealer(players)
+
+        gio.getCards(
+            listOf(
+                Card(Number(10), Suit.DIAMOND),
+                Card(Number(9), Suit.SPADE),
+            ),
+        )
+        dealer.getCards(
+            listOf(
+                Card(Number(10), Suit.HEART),
+                Card(Number(9), Suit.DIAMOND),
+            ),
+        )
+        val blackjack = Blackjack(dealer, players)
+        blackjack.finish()
+        assertThat(dealer.results).contains(Result.DRAW)
+        assertThat(gio.result).isEqualTo(Result.DRAW)
+    }
 }
