@@ -23,13 +23,13 @@ class Player(
         return sumScore
     }
 
-    fun calculateTotalScore() = cards.sumOf { card -> card.number.score }
-
     fun isBust() = adjustScore() > BUST_NUMBER
 
-    fun countAce() = _cards.count { it.number == Number.ACE }
+    private fun calculateTotalScore() = cards.sumOf { card -> card.number.score }
 
-    companion object{
+    private fun countAce() = _cards.count { it.number == Number.ACE }
+
+    companion object {
         private const val ADJUST_ACE_NUMBER = 10
     }
 }

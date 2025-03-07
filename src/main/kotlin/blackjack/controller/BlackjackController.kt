@@ -46,7 +46,7 @@ class BlackjackController(
         playerDrawOrStay(player)
     }
 
-    private fun dealerDrawCards(dealer: Dealer){
+    private fun dealerDrawCards(dealer: Dealer)  {
         val moreCard = dealer.isMoreCard()
         if (moreCard) {
             dealer.addCard(Deck.draw())
@@ -54,7 +54,7 @@ class BlackjackController(
         outputView.printDealerHandStatus(moreCard)
     }
 
-    private fun resultSummary(gameManager: GameManager){
+    private fun resultSummary(gameManager: GameManager)  {
         val result = gameManager.calculateResultMap()
         val dealerResult = gameManager.calculateDealerResult(result)
         outputView.printFinalResult(result, dealerResult)

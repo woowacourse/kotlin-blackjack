@@ -21,20 +21,8 @@ class OutputView {
         println()
     }
 
-    private fun initialDealerHands(cards: List<Card>): String {
-        return getHandsStatus(listOf(cards.first()))
-    }
-
     fun printPlayerHands(player: Player) {
         println(HANDS_STATUS_MESSAGE_FORMAT.format(player.name, getHandsStatus(player.cards)))
-    }
-
-    private fun getHandsStatus(cards: List<Card>): String {
-        return cards.joinToString { card ->
-            val cardShape = card.shape
-            val cardNumber = card.number
-            "${cardNumber.value}${cardShape.type}"
-        }
     }
 
     fun printDealerHandStatus(dealerCondition: Boolean) {
@@ -45,16 +33,6 @@ class OutputView {
             println(DEALER_STAY_MESSAGE)
         }
         println()
-    }
-
-    private fun printFinalPlayerHandStatus(player: Player) {
-        println(
-            FINAL_HANDS_STATUS_MESSAGE_FORMAT.format(
-                player.name,
-                getHandsStatus(player.cards),
-                player.adjustScore(),
-            ),
-        )
     }
 
     fun printFinalHandStatus(
@@ -82,6 +60,28 @@ class OutputView {
         resultMap.forEach { (player, result) ->
             println(PLAYER_RESULT_FORMAT.format(player.name, result.value))
         }
+    }
+
+    private fun initialDealerHands(cards: List<Card>): String {
+        return getHandsStatus(listOf(cards.first()))
+    }
+
+    private fun getHandsStatus(cards: List<Card>): String {
+        return cards.joinToString { card ->
+            val cardShape = card.shape
+            val cardNumber = card.number
+            "${cardNumber.value}${cardShape.type}"
+        }
+    }
+
+    private fun printFinalPlayerHandStatus(player: Player) {
+        println(
+            FINAL_HANDS_STATUS_MESSAGE_FORMAT.format(
+                player.name,
+                getHandsStatus(player.cards),
+                player.adjustScore(),
+            ),
+        )
     }
 
     companion object {
