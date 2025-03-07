@@ -27,4 +27,15 @@ class GameResultTest {
 
         assertThat(actual).isEqualTo(expected)
     }
+
+    @ParameterizedTest
+    @CsvSource(value = ["PUSH, PUSH", "WIN, LOSE", "LOSE, WIN"])
+    fun `게임 결과를 주면 반대의 게임 결과를 반환한다`(
+        gameResult: GameResult,
+        expected: GameResult,
+    ) {
+        val actual = GameResult.reversed(gameResult)
+
+        assertThat(actual).isEqualTo(expected)
+    }
 }
