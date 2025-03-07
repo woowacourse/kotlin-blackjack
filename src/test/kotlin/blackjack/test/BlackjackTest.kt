@@ -122,4 +122,35 @@ class BlackjackTest {
         assertThat(eden.result).isEqualTo(Result.WIN)
         assertThat(gio.result).isEqualTo(Result.WIN)
     }
+
+    @Test
+    fun `아직 승패가 결정되지 않았다면, 딜러와 플레이어 중 카드의 합이 21에 가까운 사람이 이긴다`() {
+        val eden = Player("Eden")
+        val gio = Player("Gio")
+        val players: List<Player> = listOf(eden, gio)
+        val dealer = Dealer(players)
+
+        eden.getCards(
+            listOf(
+                Card(Ace(), Suit.SPADE),
+                Card(Number(10), Suit.CLOVER),
+            ),
+        )
+        gio.getCards(
+            listOf(
+                Card(Number(10), Suit.DIAMOND),
+                Card(Number(9), Suit.SPADE),
+            ),
+        )
+        dealer.getCards(
+            listOf(
+                Card(Number(10), Suit.HEART),
+                Card(Number(10), Suit.DIAMOND),
+            ),
+        )
+        val blackjack = Blackjack(dealer, players)
+        blackjack.finish()
+        assertThat(eden.result).isEqualTo(Result.WIN)
+        assertThat(gio.result).isEqualTo(Result.LOSE)
+    }
 }
