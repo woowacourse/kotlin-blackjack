@@ -1,15 +1,7 @@
-package blackjack.test
+package blackjack.domain
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-
-class Ace : Rank {
-    override val possibleValues: List<Int> = ACE_VALUES
-
-    companion object {
-        val ACE_VALUES = listOf(1, 11)
-    }
-}
 
 class AceTest {
     @Test

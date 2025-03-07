@@ -1,15 +1,7 @@
-package blackjack.test
+package blackjack.domain
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-
-enum class Character(
-    override val possibleValues: List<Int>,
-) : Rank {
-    JACK(listOf(10)),
-    QUEEN(listOf(10)),
-    KING(listOf(10)),
-}
 
 class CharacterTest {
     @Test

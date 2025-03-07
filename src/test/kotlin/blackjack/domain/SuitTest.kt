@@ -1,14 +1,7 @@
-package blackjack.test
+package blackjack.domain
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-
-enum class Suit {
-    SPADE,
-    HEART,
-    DIAMOND,
-    CLOVER,
-}
 
 class SuitTest {
     @Test

@@ -1,52 +1,4 @@
-package blackjack.test
-
-import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Test
-
-class Dealer(
-    private val players: List<Player>,
-) {
-    private val deck: Deck = Deck()
-    private val hand: Hand = Hand(emptyList())
-    val results: List<Result>
-        get() =
-            players.map { player ->
-                when (player.result) {
-                    Result.WIN -> Result.LOSE
-                    Result.DRAW -> Result.DRAW
-                    Result.LOSE -> Result.WIN
-                    Result.NOT_YET -> Result.NOT_YET
-                }
-            }
-
-    fun getCard(card: Card = deck.getCard()) {
-        hand.add(card)
-    }
-
-    fun getCards(cards: List<Card>) {
-        cards.forEach { card: Card -> getCard(card) }
-    }
-
-    fun giveCard() {
-        players.forEach { player -> player.getCard(deck.getCard()) }
-    }
-
-    fun giveCard(player: Player) {
-        player.getCard(deck.getCard())
-    }
-
-    fun getScore(): Int? = hand.getScore()
-
-    fun getCountOfCards(): Int = hand.getSize()
-
-    fun hitOrStay() {
-        var dealerScore = getScore()
-        while (dealerScore != null && dealerScore < 17) {
-            getCard()
-            dealerScore = getScore()
-        }
-    }
-}
+package blackjack.domain
 
 class Deck {
     private val aceCards: List<Card> =
@@ -126,18 +78,4 @@ class Deck {
     private val cards: MutableList<Card> = (aceCards + numberCards + characterCards).shuffled().toMutableList()
 
     fun getCard(): Card = cards.removeFirst()
-}
-
-class DealerTest {
-    @Test
-    fun `딜러는 플레이어에게 카드를 나눠준다`() {
-        val eden = Player("Eden")
-        val gio = Player("Gio")
-        val players: List<Player> = listOf(eden, gio)
-        val dealer = Dealer(players)
-        gio.getCard(Card(Number(7), Suit.DIAMOND))
-        dealer.giveCard()
-        assertThat(eden.getCountOfCards()).isEqualTo(1)
-        assertThat(gio.getCountOfCards()).isEqualTo(2)
-    }
 }

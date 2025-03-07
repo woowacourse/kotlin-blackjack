@@ -1,12 +1,7 @@
-package blackjack.test
+package blackjack.domain
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-
-class Card(
-    val rank: Rank,
-    val suit: Suit,
-)
 
 class CardTest {
     @Test
