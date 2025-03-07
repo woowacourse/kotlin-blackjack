@@ -1,12 +1,12 @@
 package blackjack.model.domain
 
-import blackjack.model.domain.Status.Companion.isBust
+import blackjack.model.domain.ParticipantStatus.Companion.isBust
 import blackjack.model.service.Blackjack.Companion.BUST_STANDARD
 
 abstract class Participants() {
     abstract val name: String
     abstract val cards: MutableList<Card>
-    abstract var status: Status
+    abstract var status: ParticipantStatus
 
     val sumCardNumber: Int get() = getSumNumber()
     val cardDeck get() = cards.toList()
@@ -27,7 +27,7 @@ abstract class Participants() {
         cards.add(card)
     }
 
-    fun isBust() {
+    fun checkBust() {
         status = isBust(sumCardNumber)
     }
 }

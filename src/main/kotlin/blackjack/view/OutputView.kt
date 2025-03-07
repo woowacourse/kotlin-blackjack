@@ -2,9 +2,9 @@ package blackjack.view
 
 import blackjack.model.domain.Card
 import blackjack.model.domain.Dealer
+import blackjack.model.domain.ParticipantStatus
 import blackjack.model.domain.Participants
 import blackjack.model.domain.Player
-import blackjack.model.domain.Status
 
 class OutputView {
     fun printInitCardStatus(
@@ -67,13 +67,13 @@ class OutputView {
 
     fun dealerResult(
         dealer: Dealer,
-        statusCount: Map<Status, Int>,
+        statusCount: Map<ParticipantStatus, Int>,
     ) {
         println(FINAL_RESULT)
 
-        val winningCount = (statusCount[Status.Lose] ?: 0) + (statusCount[Status.Bust] ?: 0)
-        val losingCount = statusCount[Status.Win] ?: 0
-        val drawCount = statusCount[Status.Draw] ?: 0
+        val winningCount = (statusCount[ParticipantStatus.Lose] ?: 0) + (statusCount[ParticipantStatus.Bust] ?: 0)
+        val losingCount = statusCount[ParticipantStatus.Win] ?: 0
+        val drawCount = statusCount[ParticipantStatus.Draw] ?: 0
 
         val resultFormat: String = OUTPUT_DEALER_RESULT.format(dealer.name, winningCount, losingCount)
 
@@ -84,10 +84,10 @@ class OutputView {
         }
     }
 
-    private fun Status.determineStatus(): String {
+    private fun ParticipantStatus.determineStatus(): String {
         return when (this) {
-            Status.Win -> "승"
-            Status.Draw -> "무"
+            ParticipantStatus.Win -> "승"
+            ParticipantStatus.Draw -> "무"
             else -> "패"
         }
     }

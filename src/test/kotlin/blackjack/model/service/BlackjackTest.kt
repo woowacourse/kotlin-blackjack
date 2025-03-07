@@ -4,6 +4,7 @@ import blackjack.model.domain.Card
 import blackjack.model.domain.CardNumber
 import blackjack.model.domain.Dealer
 import blackjack.model.domain.Deck
+import blackjack.model.domain.ParticipantStatus
 import blackjack.model.domain.Player
 import blackjack.model.domain.Shape
 import blackjack.model.domain.Status
@@ -40,5 +41,8 @@ class BlackjackTest {
         assertThat(player1.status).isEqualTo(Status.Win)
         assertThat(player2.status).isEqualTo(Status.Lose)
         assertThat(player3.status).isEqualTo(Status.Draw)
+        assertThat(player1.status).isEqualTo(ParticipantStatus.Win)
+        assertThat(player2.status).isEqualTo(ParticipantStatus.Lose)
+        assertThat(player3.status).isEqualTo(ParticipantStatus.Draw)
     }
 }

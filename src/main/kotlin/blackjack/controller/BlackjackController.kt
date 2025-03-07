@@ -3,8 +3,8 @@ package blackjack.controller
 import blackjack.model.domain.ActionType
 import blackjack.model.domain.Dealer
 import blackjack.model.domain.Deck
+import blackjack.model.domain.ParticipantStatus
 import blackjack.model.domain.Player
-import blackjack.model.domain.Status
 import blackjack.model.domain.YesOrNo
 import blackjack.model.service.Blackjack
 import blackjack.model.strategy.TrueShuffle
@@ -39,7 +39,7 @@ class BlackjackController(
     }
 
     private fun hitOrStay(player: Player) {
-        while (player.status == Status.None) {
+        while (player.status == ParticipantStatus.None) {
             val playerAction = getYesOrNo(player)
             if (blackjack.shouldStopDrawing(ActionType.get(playerAction), player)) break
             outputView.printCardStatus(player)
@@ -55,7 +55,7 @@ class BlackjackController(
 
     private fun dealerReceiveCard() {
         val count: Int = blackjack.drawUntilThreshold(dealer)
-        dealer.isBust()
+        dealer.checkBust()
         outputView.printDealerReceiveCard(count, dealer)
     }
 
@@ -65,7 +65,7 @@ class BlackjackController(
         outputView.playerResult(players)
     }
 
-    private fun getDealerResult(players: List<Player>): Map<Status, Int> {
+    private fun getDealerResult(players: List<Player>): Map<ParticipantStatus, Int> {
         return players.groupingBy { it.status }.eachCount()
     }
 

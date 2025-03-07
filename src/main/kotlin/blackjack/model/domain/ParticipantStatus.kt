@@ -2,7 +2,7 @@ package blackjack.model.domain
 
 import blackjack.model.service.Blackjack
 
-enum class Status {
+enum class ParticipantStatus() {
     None,
     Win,
     Lose,
@@ -11,7 +11,7 @@ enum class Status {
     ;
 
     companion object {
-        fun isBust(number: Int): Status {
+        fun isBust(number: Int): ParticipantStatus {
             if (number > Blackjack.BUST_STANDARD) return Bust
             return None
         }
@@ -19,7 +19,7 @@ enum class Status {
         fun compare(
             target: Int,
             other: Int,
-        ): Status {
+        ): ParticipantStatus {
             if (target < other) {
                 return Lose
             } else if (target > other) {

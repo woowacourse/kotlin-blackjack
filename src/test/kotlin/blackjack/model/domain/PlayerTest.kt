@@ -28,13 +28,13 @@ class PlayerTest {
         player1.receiveCard(Card(Shape.Heart, CardNumber.Queen))
         player1.receiveCard(Card(Shape.Spade, CardNumber.Queen))
 
-        player1.isBust()
-        assertThat(player1.status).isEqualTo(Status.Bust)
+        player1.checkBust()
+        assertThat(player1.status).isEqualTo(ParticipantStatus.Bust)
     }
 
     @Test
     fun `플레이어의 숫자의 합과 받은 숫자의 합을 비교하여 승패를 결정한다`() {
-        player1.isAlive(8)
-        assertThat(player1.status).isEqualTo(Status.Win)
+        player1.compareScores(8)
+        assertThat(player1.status).isEqualTo(ParticipantStatus.Win)
     }
 }

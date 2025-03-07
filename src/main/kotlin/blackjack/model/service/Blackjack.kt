@@ -3,9 +3,9 @@ package blackjack.model.service
 import blackjack.model.domain.ActionType
 import blackjack.model.domain.Dealer
 import blackjack.model.domain.Deck
+import blackjack.model.domain.ParticipantStatus
 import blackjack.model.domain.Participants
 import blackjack.model.domain.Player
-import blackjack.model.domain.Status
 
 class Blackjack(private val deck: Deck) {
     fun initGame(players: List<Participants>) {
@@ -33,7 +33,7 @@ class Blackjack(private val deck: Deck) {
 
     private fun hitAction(player: Player) {
         player.receiveCard(deck.spreadCard())
-        player.isBust()
+        player.checkBust()
     }
 
     fun drawUntilThreshold(dealer: Dealer): Int {
@@ -49,12 +49,12 @@ class Blackjack(private val deck: Deck) {
         players: List<Player>,
         dealer: Dealer,
     ) {
-        if (dealer.status == Status.Bust) return
+        if (dealer.status == ParticipantStatus.Bust) return
 
         val dealerResult = dealer.sumCardNumber
 
         players.forEach { player ->
-            player.isAlive(dealerResult)
+            player.compareScores(dealerResult)
         }
     }
 

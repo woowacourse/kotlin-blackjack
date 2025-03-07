@@ -2,11 +2,11 @@ package blackjack.model.domain
 
 class Player(override val name: String) : Participants() {
     override val cards: MutableList<Card> = mutableListOf()
-    override var status: Status = Status.None
+    override var status: ParticipantStatus = ParticipantStatus.None
 
-    fun isAlive(number: Int) {
-        if (status != Status.Bust) {
-            status = Status.compare(sumCardNumber, number)
+    fun compareScores(number: Int) {
+        if (status != ParticipantStatus.Bust) {
+            status = ParticipantStatus.compare(sumCardNumber, number)
         }
     }
 }
