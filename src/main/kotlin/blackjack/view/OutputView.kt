@@ -60,17 +60,9 @@ class OutputView {
 
     fun playerResult(players: List<Player>) {
         players.forEach { player ->
-            println(PLAYER_STATUS.format(player.name, determineStatus(player.status)))
+            println(PLAYER_STATUS.format(player.name, player.status.determineStatus()))
         }
         println()
-    }
-
-    private fun determineStatus(status: Status): String {
-        return when (status) {
-            Status.Win -> "승"
-            Status.Draw -> "무"
-            else -> "패"
-        }
     }
 
     fun dealerResult(
@@ -87,6 +79,14 @@ class OutputView {
             println(OUTPUT_DEALER_RESULT_WITH_DRAW.format(dealer.name, winningCount, losingCount, drawCount))
         } else {
             println(OUTPUT_DEALER_RESULT.format(dealer.name, winningCount, losingCount))
+        }
+    }
+
+    private fun Status.determineStatus(): String {
+        return when (this) {
+            Status.Win -> "승"
+            Status.Draw -> "무"
+            else -> "패"
         }
     }
 

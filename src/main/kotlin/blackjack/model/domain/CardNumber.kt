@@ -17,4 +17,9 @@ enum class CardNumber(
     Jack(10, "J"),
     Queen(10, "Q"),
     King(10, "K"),
+    ;
+
+    companion object {
+        const val OTHER_ACE: Int = 10
+    }
 }
