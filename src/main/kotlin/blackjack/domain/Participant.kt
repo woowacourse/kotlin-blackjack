@@ -13,7 +13,7 @@ abstract class Participant {
     }
 
     fun isBust(): Boolean {
-        return totalSum > 21
+        return totalSum > BLACKJACK_LIMIT
     }
 
     fun canHit(): Boolean {
@@ -21,17 +21,21 @@ abstract class Participant {
     }
 
     private fun calculateTotalSum(): Int {
-        val rawScore =
-            cards.fold(0) { accumulatedScore, card ->
-                accumulatedScore + card.getScore()
-            }
-        var editedScore = rawScore
+        var score = cards.sumOf { it.getScore() }
+        var aceCount = cards.count { it.rank == Rank.ACE }
 
-        for (ace in cards.filter { it.rank == Rank.ACE && rawScore > 21 }) {
-            editedScore -= 10
-            if (editedScore <= 21) break
+        while (score > BLACKJACK_LIMIT && aceCount > 0) {
+            score -= ACE_SCORE_DIFFERENCE
+            aceCount--
         }
 
-        return editedScore
+        return score
+    }
+
+    companion object {
+        const val BLACKJACK_LIMIT = 21
+        private const val ACE_HIGH = 11
+        private const val ACE_LOW = 1
+        private const val ACE_SCORE_DIFFERENCE = ACE_HIGH - ACE_LOW
     }
 }

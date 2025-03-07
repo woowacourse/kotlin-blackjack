@@ -1,10 +1,17 @@
 package blackjack
 
-import blackjack.domain.*
+import blackjack.domain.Card
+import blackjack.domain.Dealer
+import blackjack.domain.Deck
+import blackjack.domain.GameResult
+import blackjack.domain.Player
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
-class GameController(val inputView: InputView, val outputView: OutputView) {
+class GameController(
+    private val inputView: InputView,
+    private val outputView: OutputView,
+) {
     private val shuffledCards: List<Card> = Card.getAllCard().shuffled()
     private val deck = Deck(shuffledCards)
 
@@ -13,7 +20,7 @@ class GameController(val inputView: InputView, val outputView: OutputView) {
         val players: List<Player> = getPlayers()
 
         dealer.getCard(deck)
-        setPlayerCards(players)
+        setInitialPlayerCards(players)
         outputView.showInitialCards(dealer, players)
 
         askPlayerHit(players)
@@ -33,9 +40,9 @@ class GameController(val inputView: InputView, val outputView: OutputView) {
         }
     }
 
-    private fun setPlayerCards(players: List<Player>) {
+    private fun setInitialPlayerCards(players: List<Player>) {
         players.forEach { player ->
-            repeat(2) {
+            repeat(INITIAL_CARD_COUNT) {
                 player.addCard(deck.draw())
             }
         }
@@ -43,13 +50,18 @@ class GameController(val inputView: InputView, val outputView: OutputView) {
 
     private fun askPlayerHit(players: List<Player>) {
         players.forEach { player ->
-            while (player.canHit()) {
-                val result = inputView.askPlayerHit(player.name)
-                if (result) {
-                    player.addCard(deck.draw())
-                    outputView.printPlayerCards(player)
-                }
-                if (!result) break
+            handlePlayerHit(player)
+        }
+    }
+
+    private fun handlePlayerHit(player: Player) {
+        while (player.canHit()) {
+            val result = inputView.askPlayerHit(player.name)
+            if (result) {
+                player.addCard(deck.draw())
+                outputView.printPlayerCards(player)
+            } else {
+                break
             }
         }
     }
@@ -60,5 +72,9 @@ class GameController(val inputView: InputView, val outputView: OutputView) {
     ) {
         val result = GameResult(dealer, players).getResult()
         outputView.printGameResult(result)
+    }
+
+    companion object {
+        private const val INITIAL_CARD_COUNT = 2
     }
 }
