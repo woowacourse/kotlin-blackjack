@@ -25,9 +25,10 @@ class BlackJackGameTest {
         val game = BlackJackGame(players, Deck())
         players.first().addCard(TrumpCard(CardTier.JACK, Shape.DIA))
         players.first().addCard(TrumpCard(CardTier.JACK, Shape.DIA))
-        game.playGame {
-            UserChoice.from("y")
-        }
+        game.playGame(
+            getPlayerChoice = { UserChoice.from("y") },
+            onPlayerStateUpdated = {},
+        )
         assertThat(players.first().cards.size).isEqualTo(3)
     }
 
@@ -36,9 +37,10 @@ class BlackJackGameTest {
         val players = playersFixture()
         val game = BlackJackGame(players, Deck())
 
-        game.playGame {
-            UserChoice.from("n")
-        }
+        game.playGame(
+            getPlayerChoice = { UserChoice.from("n") },
+            onPlayerStateUpdated = {},
+        )
         assertThat(players.first().cards.size).isEqualTo(0)
     }
 }
