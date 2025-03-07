@@ -2,13 +2,13 @@ package blackjack.domain
 
 class GameResult(private val dealer: Dealer, val players: List<Player>) {
     val dealerResult = DealerResult()
-    val playerResultStatus = mutableMapOf<Player, GameResultStatus>()
+    private val playerResult: MutableList<PlayerResult> = mutableListOf()
 
     private fun updateResult(
         player: Player,
         status: GameResultStatus,
     ) {
-        playerResultStatus[player] = status
+        playerResult.add(PlayerResult(player, status))
 
         when (status) {
             GameResultStatus.PLAYER_WIN -> dealerResult.addLose()
@@ -35,4 +35,6 @@ class GameResult(private val dealer: Dealer, val players: List<Player>) {
         }
         return this
     }
+
+    fun getAllPlayerResult(): List<PlayerResult> = playerResult.toList()
 }

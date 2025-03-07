@@ -40,8 +40,8 @@ object OutputView {
         println("\n##최종 승패")
         println("딜러: ${result.dealerResult.win}승 ${result.dealerResult.lose}패 ${result.dealerResult.draw}무")
 
-        result.playerResultStatus.entries.forEach { it ->
-            println("${it.key.name}: ${it.value.toDisplayName()} ")
+        result.getAllPlayerResult().forEach {
+            println("${it.player.name}: ${it.status.toDisplayName()}")
         }
     }
 }
