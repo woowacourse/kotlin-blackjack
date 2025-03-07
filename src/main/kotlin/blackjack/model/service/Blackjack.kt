@@ -1,5 +1,6 @@
 package blackjack.model.service
 
+import blackjack.model.domain.ActionType
 import blackjack.model.domain.Dealer
 import blackjack.model.domain.Deck
 import blackjack.model.domain.Participants
@@ -17,6 +18,31 @@ class Blackjack(private val deck: Deck) {
         repeat(2) {
             player.receiveCard(deck.spreadCard())
         }
+    }
+
+    fun shouldStopDrawing(
+        playerAction: ActionType,
+        player: Player,
+    ): Boolean {
+        when (playerAction) {
+            ActionType.Hit -> hitAction(player)
+            ActionType.Stay -> return true
+        }
+        return false
+    }
+
+    private fun hitAction(player: Player) {
+        player.receiveCard(deck.spreadCard())
+        player.isBust()
+    }
+
+    fun drawUntilThreshold(dealer: Dealer): Int {
+        var count: Int = 0
+        while (!dealer.overThreshold()) {
+            dealer.receiveCard(deck.spreadCard())
+            count++
+        }
+        return count
     }
 
     fun endGame(
