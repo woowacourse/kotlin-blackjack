@@ -22,8 +22,13 @@ class OutputView {
         println(CARD_INFO_MESSAGE.format(name, cardsInfoText))
     }
 
+    fun showDealerDrawMessage() {
+        println(DEALER_DRAW_MESSAGE)
+    }
+
     companion object {
         private const val DISTRIBUTE_CARD_MESSAGE = "딜러와 %s에게 각각 2장의 카드를 나누었습니다."
         private const val CARD_INFO_MESSAGE = "%s카드: %s"
+        private const val DEALER_DRAW_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다."
     }
 }
