@@ -36,6 +36,26 @@ class WinLossStatisticsTest {
     }
 
     @Test
+    fun `손패 두 개를 비교하여 딜러가 버스트고 플레이어가 버스트가 아닐 경우 플레이어의 승리임을 받아올 수 있다`() {
+        val dealerBlackJackCards = listOf(Card(11), Card(12), Card(9))
+        val playerBlackJackCards = listOf(Card(0), Card(12))
+
+        val winLossStatistics = WinLossStatistics()
+
+        assertThat(winLossStatistics.calculatePlayerWinLoss(dealerBlackJackCards, playerBlackJackCards)).isEqualTo(WinLoss.WIN)
+    }
+
+    @Test
+    fun `손패 두 개를 비교하여 딜러가 버스트고 플레이어가 버스트일 경우 플레이어의 패배임을 받아올 수 있다`() {
+        val dealerBlackJackCards = listOf(Card(11), Card(12), Card(9))
+        val playerBlackJackCards = listOf(Card(8), Card(10), Card(7))
+
+        val winLossStatistics = WinLossStatistics()
+
+        assertThat(winLossStatistics.calculatePlayerWinLoss(dealerBlackJackCards, playerBlackJackCards)).isEqualTo(WinLoss.LOSE)
+    }
+
+    @Test
     fun `딜러의 전체 승 무 패 결과를 텍스트로 받아올 수 있다`() {
         val dealerBlackJackCards = listOf(Card(0), Card(11))
         val dealerResult19Cards = listOf(Card(8), Card(10))
