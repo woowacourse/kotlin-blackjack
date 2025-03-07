@@ -6,7 +6,7 @@ import blackjack.domain.state.PlayerState
 class Player(
     val name: String,
     hand: Hand,
-) : Person(hand.copy()) {
+) : Person(hand) {
     init {
         gameState = PlayerState.FIRST_TURN
     }

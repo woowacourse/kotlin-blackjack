@@ -7,10 +7,11 @@ import blackjack.domain.card.Deck
 import blackjack.domain.state.PersonState
 
 abstract class Person(
-    protected val hand: Hand,
+    hand: Hand,
     private val calculator: ScoreCalculator = ScoreCalculator(),
 ) {
     protected lateinit var gameState: PersonState
+    protected val hand = hand.copy()
 
     abstract fun draw(deck: Deck)
 
