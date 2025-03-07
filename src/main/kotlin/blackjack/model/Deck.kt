@@ -12,14 +12,11 @@ object Deck {
         return List(count) { draw() }
     }
 
-    private fun generateCards(): MutableList<Card> {
-        val cards = mutableListOf<Card>()
-
-        Shape.entries.forEach { shape ->
-            Number.entries.forEach { number ->
-                cards.add(Card(shape, number))
+    private fun generateCards(): MutableList<Card> =
+        Shape.entries.flatMap { shape ->
+            Number.entries.map { number ->
+                Card(shape, number)
             }
-        }
-        return cards.shuffled().toMutableList()
-    }
+        }.shuffled().toMutableList()
+
 }
