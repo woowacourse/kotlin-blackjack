@@ -83,7 +83,7 @@ data class Person(
     val name: String,
     val company: String?,
     val skills: Skill?,
-    val languages: List<Language>
+    val languages: List<Language>,
 )
 
 data class Language(val name: String, val level: Int)
@@ -94,44 +94,48 @@ class DslTest {
     @ValueSource(strings = ["미플", "채넛"])
     @ParameterizedTest
     fun introduce(value: String) {
-        val person = introduce {
-            name(value)
-        }
+        val person =
+            introduce {
+                name(value)
+            }
         assertThat(person.name).isEqualTo(value)
     }
 
     @Test
     fun company() {
-        val person = introduce {
-            name("미플")
-            company("우아한테크코스")
-        }
+        val person =
+            introduce {
+                name("미플")
+                company("우아한테크코스")
+            }
         assertThat(person.name).isEqualTo("미플")
         assertThat(person.company).isEqualTo("우아한테크코스")
     }
 
     @Test
     fun skills() {
-        val person = introduce {
-            name("미플")
-            skills {
-                soft("게임하기")
-                hard("kotlin")
+        val person =
+            introduce {
+                name("미플")
+                skills {
+                    soft("게임하기")
+                    hard("kotlin")
+                }
             }
-        }
         assertThat(person.skills!!.soft[0]).isEqualTo("게임하기")
         assertThat(person.skills.hard[0]).isEqualTo("kotlin")
     }
 
     @Test
     fun language() {
-        val person = introduce {
-            name("미플")
-            languages {
-                "Korean" level 5
-                "English" level 3
+        val person =
+            introduce {
+                name("미플")
+                languages {
+                    "Korean" level 5
+                    "English" level 3
+                }
             }
-        }
         assertThat(person.languages[0].level).isEqualTo(5)
         assertThat(person.languages[1].level).isEqualTo(3)
     }
