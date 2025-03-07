@@ -19,6 +19,7 @@ class Casino(
 
         runPlayersDrawPhase(players)
         runDealerDrawPhase(dealer)
+        outputView.showCardsResult(listOf(dealer) + players)
     }
 
     private fun outputParticipantCardsInfo(
