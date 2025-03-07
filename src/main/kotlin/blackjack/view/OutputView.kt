@@ -11,15 +11,14 @@ import blackjack.model.CardSuit.CLUB
 import blackjack.model.CardSuit.DIAMOND
 import blackjack.model.CardSuit.HEART
 import blackjack.model.CardSuit.SPADE
-import blackjack.model.Players
 import blackjack.model.WinningResult
 import blackjack.model.WinningResult.LOSE
 import blackjack.model.WinningResult.PUSH
 import blackjack.model.WinningResult.WIN
 
 class OutputView {
-    fun displayFirstDrawEnd(players: Players) {
-        println("\n딜러와 ${players.value.joinToString { player -> player.name }}에게 2장을 나누었습니다.")
+    fun displayFirstDrawEnd(players: List<String>) {
+        println("\n딜러와 ${players.joinToString()}에게 2장을 나누었습니다.")
     }
 
     fun displayDealerDrawInfo(count: Int) {
