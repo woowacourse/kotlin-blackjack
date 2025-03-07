@@ -14,10 +14,10 @@ class Players(
 
     fun results(dealerScore: Int): Map<String, WinningResult> =
         value.associate { player ->
-            player.name to WinningResult.from(player.score(), dealerScore)
+            player.name to WinningResult.from(player.hand.score(), dealerScore)
         }
 
-    fun scores(): List<Int> = value.map { player -> player.score() }
+    fun scores(): List<Int> = value.map { player -> player.hand.score() }
 
     companion object {
         fun from(players: List<String>): Players = Players(players.map { name -> Player(name) })

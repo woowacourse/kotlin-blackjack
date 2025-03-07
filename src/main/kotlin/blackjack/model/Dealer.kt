@@ -4,7 +4,7 @@ class Dealer : Participant() {
     fun drawUntilFinished(cardDeck: CardDeck): Int {
         var count = INITIAL_RESULT_COUNT
 
-        while (score() <= DEALER_DRAW_CRITERIA && !isBust()) {
+        while (hand.score() <= DEALER_DRAW_CRITERIA && !hand.isBust()) {
             draw(cardDeck)
             count++
         }
@@ -16,7 +16,7 @@ class Dealer : Participant() {
         val result = WinningResult.entries.associateWith { INITIAL_SCORE }.toMutableMap()
 
         playerScores.forEach { playerScore ->
-            val winningResult = WinningResult.from(score(), playerScore)
+            val winningResult = WinningResult.from(hand.score(), playerScore)
             result[winningResult] = result.getOrDefault(winningResult, INITIAL_SCORE) + ADDITIONAL_RESULT_COUNT
         }
 

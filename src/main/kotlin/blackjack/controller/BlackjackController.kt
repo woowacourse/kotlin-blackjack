@@ -33,7 +33,7 @@ class BlackjackController(
             player.draw(cardDeck)
         }
         outputView.displayFirstDrawEnd(players.value)
-        outputView.displayParticipantCards(cards = dealer.cards().take(DEALER_FIRST_SHOWN_COUNT))
+        outputView.displayParticipantCards(cards = dealer.hand.cards.take(DEALER_FIRST_SHOWN_COUNT))
         return players
     }
 
@@ -42,7 +42,7 @@ class BlackjackController(
         cardDeck: CardDeck,
     ) {
         players.value.forEach { player ->
-            outputView.displayParticipantCards(player.name, player.cards())
+            outputView.displayParticipantCards(player.name, player.hand.cards)
         }
         players.value.forEach { player ->
             progressPlayerDrawUntilFinished(player, cardDeck)
@@ -57,9 +57,9 @@ class BlackjackController(
             if (!inputView.getIsDrawMore(player.name)) break
 
             player.draw(cardDeck)
-            outputView.displayParticipantCards(player.name, player.cards())
+            outputView.displayParticipantCards(player.name, player.hand.cards)
 
-            if (player.isBust()) return
+            if (player.hand.isBust()) return
         }
     }
 
@@ -71,15 +71,15 @@ class BlackjackController(
         outputView.displayDealerDrawInfo(dealerDrawCount)
 
         outputView.displayParticipantInfo(
-            cards = dealer.cards(),
-            score = dealer.score(),
-            isBust = dealer.isBust(),
+            cards = dealer.hand.cards,
+            score = dealer.hand.score(),
+            isBust = dealer.hand.isBust(),
         )
     }
 
     private fun displayParticipantsInfo(players: Players) {
         players.value.forEach { player ->
-            outputView.displayParticipantInfo(player.name, player.cards(), player.score(), player.isBust())
+            outputView.displayParticipantInfo(player.name, player.hand.cards, player.hand.score(), player.hand.isBust())
         }
     }
 
@@ -92,7 +92,7 @@ class BlackjackController(
         val dealerResult = dealer.result(players.scores())
         outputView.displayDealerResult(dealerResult)
 
-        val playerResults: Map<String, WinningResult> = players.results(dealer.score())
+        val playerResults: Map<String, WinningResult> = players.results(dealer.hand.score())
         playerResults.forEach { (name, winningResult) ->
             outputView.displayPlayerResult(name, winningResult)
         }
