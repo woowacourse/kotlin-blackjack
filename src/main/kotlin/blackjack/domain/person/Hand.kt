@@ -12,9 +12,8 @@ class Hand {
         _cards.add(card)
     }
 
-    fun copy(): Hand {
-        val newHand = Hand()
-        newHand._cards.addAll(_cards.map { it })
-        return newHand
-    }
+    fun copy(): Hand =
+        Hand().apply {
+            _cards.addAll(this@Hand._cards)
+        }
 }
