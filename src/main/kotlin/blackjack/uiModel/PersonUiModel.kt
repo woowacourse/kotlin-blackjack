@@ -5,7 +5,6 @@ import blackjack.domain.card.CardNumber
 import blackjack.domain.card.CardPattern
 import blackjack.domain.person.Person
 import blackjack.domain.person.Player
-import blackjack.uiModel.PersonUiModel.Companion.toUiString
 
 data class PersonUiModel(
     val name: String?,
