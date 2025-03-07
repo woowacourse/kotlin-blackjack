@@ -28,11 +28,17 @@ class PlayerTest {
     }
 
     @Test
-    fun `카드의 총 합을 계산한다`() {
-        player.addCard(Card(Shape.SPADE, Number.NINE))
-        player.addCard(Card(Shape.SPADE, Number.SEVEN))
-        val expect = 16
-        val actual = player.calculateTotalScore()
+    fun `카드 총 합이 21을 넘고 ACE가 존재하면 점수 조정을 진행한다`() {
+        player.addCards(
+            listOf(
+                Card(Shape.SPADE, Number.ACE),
+                Card(Shape.CLOVER, Number.ACE),
+                Card(Shape.DIAMOND, Number.ACE)
+            )
+        )
+        val expect = 13
+
+        val actual = player.adjustScore()
 
         assertThat(actual).isEqualTo(expect)
     }
