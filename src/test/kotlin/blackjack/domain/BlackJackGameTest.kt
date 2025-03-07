@@ -1,8 +1,5 @@
-package blackjack
+package blackjack.domain
 
-import blackjack.domain.BlackJackGame
-import blackjack.domain.Deck
-import blackjack.domain.TrumpCard
 import blackjack.domain.enums.CardTier
 import blackjack.domain.enums.Shape
 import blackjack.domain.enums.UserChoice

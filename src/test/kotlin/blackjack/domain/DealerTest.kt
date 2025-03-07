@@ -1,6 +1,5 @@
-package blackjack
+package blackjack.domain
 
-import blackjack.domain.TrumpCard
 import blackjack.domain.enums.CardTier
 import blackjack.domain.enums.Shape
 import blackjack.domain.participant.Dealer
@@ -93,5 +92,26 @@ class DealerTest {
 
         val expected = true
         assertThat(dealer.isOverMaxScore()).isEqualTo(expected)
+    }
+
+    @Test
+    fun `에이스 카드를 가지고 버스트 되지 않았으면 카드 총합에 10을 더한다`(){
+        val dealer = Dealer()
+
+        dealer.addCard(TrumpCard(CardTier.ACE, Shape.DIA))
+        dealer.addCard(TrumpCard(CardTier.NINE, Shape.HEART))
+
+        assertThat(dealer.sum()).isEqualTo(20)
+    }
+
+    @Test
+    fun `에이스 카드를 가지고 버스트 되었으면 카드 총합을 유지한다`(){
+        val dealer = Dealer()
+
+        dealer.addCard(TrumpCard(CardTier.ACE, Shape.DIA))
+        dealer.addCard(TrumpCard(CardTier.SEVEN, Shape.HEART))
+        dealer.addCard(TrumpCard(CardTier.NINE, Shape.HEART))
+
+        assertThat(dealer.sum()).isEqualTo(17)
     }
 }
