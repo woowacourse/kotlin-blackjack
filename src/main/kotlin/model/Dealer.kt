@@ -1,14 +1,26 @@
 package model
 
-class Dealer(val dealerCards: Cards) : Participant(dealerCards) {
+class Dealer(dealerCards: Cards) : Participant(dealerCards) {
     init {
         require(dealerCards.getCardsCount() == 2) { "[ERROR] 딜러는 2장의 카드를 가져야합니다." }
     }
 
-    override fun turn(allCards: Cards): Boolean {
-        if (getScore() <= 16) {
-            allCards.drawCards(1)
+    override fun turn(cards: Cards): Boolean {
+        if (isHit()) {
+            val drawnCard = drawCard(cards.allCards)
+            addCard(drawnCard)
+            return true
         }
-        return ScoreCalculator(dealerCards).totalCardScore() >= 17
+        return false
     }
+
+    fun getDrawCount(allCards: Cards): Int {
+        var drawCount = 0
+        while (isHit()) {
+            if (turn(allCards)) drawCount++
+        }
+        return drawCount
+    }
+
+    override fun isHit(): Boolean = getScore() <= 16
 }
