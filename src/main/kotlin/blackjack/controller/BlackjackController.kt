@@ -81,7 +81,7 @@ class BlackjackController(
         player: Player,
         dealer: Dealer,
     ): Boolean {
-        if (player.cards.isBlackjack(true)) {
+        if (player.isBlackjack(true)) {
             player.updateResult(GameResult.PUSH)
             dealer.updateResult(player.cards.calculateScore())
             return true
@@ -113,7 +113,7 @@ class BlackjackController(
     }
 
     private fun executePlayerGameLogic(player: Player) {
-        while (!player.cards.isBust(false)) {
+        while (!player.isBust()) {
             outputView.printPlayerBehaviorGuide(player)
             val playerBehavior: PlayerBehavior = inputView.readPlayerBehavior()
 
@@ -138,7 +138,7 @@ class BlackjackController(
     }
 
     private fun isPlayerBust(player: Player): Boolean {
-        if (player.cards.isBust(false)) {
+        if (player.isBust()) {
             outputView.printBust(player)
             return true
         }
@@ -154,7 +154,7 @@ class BlackjackController(
     }
 
     private fun isDealerBust(dealer: Dealer): Boolean {
-        if (dealer.cards.isBust(false)) {
+        if (dealer.isBust()) {
             outputView.printBust(dealer)
             return true
         }

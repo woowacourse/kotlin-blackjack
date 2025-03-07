@@ -11,7 +11,7 @@ enum class CardsStatus {
 
         fun from(
             cardsScore: Int,
-            firstTurn: Boolean,
+            firstTurn: Boolean = false,
         ): CardsStatus {
             if (firstTurn && cardsScore == 21) return BLACKJACK
             if (cardsScore > 21) return BUST

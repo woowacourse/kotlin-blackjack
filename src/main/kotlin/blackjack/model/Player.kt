@@ -10,7 +10,9 @@ open class Player(
         cards.add(card)
     }
 
-    open fun isBlackjack(firstTurn: Boolean): Boolean = cards.isBlackjack(firstTurn)
+    fun isBlackjack(firstTurn: Boolean): Boolean = cards.isBlackjack(firstTurn)
+
+    fun isBust(): Boolean = cards.isBust()
 
     fun updateResult(dealerGameResult: GameResult) {
         result = GameResult.reversed(dealerGameResult)
