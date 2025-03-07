@@ -14,7 +14,7 @@ class Rule {
 
         fun isBurst(cards: Collection<Card>): Boolean {
             val minimumSum = calculateMinimumSumByCards(cards)
-            return minimumSum <= BLACK_JACK_NUMBER
+            return minimumSum > BLACK_JACK_NUMBER
         }
 
         fun calculateShouldDrawByCards(cards: Collection<Card>): Boolean {

@@ -31,14 +31,14 @@ class RuleTest {
 
     @ParameterizedTest
     @CsvSource(
-        "true:1,1",
-        "true:1,8",
-        "true:1,1,1",
-        "true:10,1,1",
-        "true:1,1,1,1,7",
-        "false:10,1,1,10",
-        "false:10,7,5",
-        "false:1,1,1,1,7,2,9",
+        "false:1,1",
+        "false:1,8",
+        "false:1,1,1",
+        "false:10,1,1",
+        "false:1,1,1,1,7",
+        "true:10,1,1,10",
+        "true:10,7,5",
+        "true:1,1,1,1,7,2,9",
         delimiter = ':',
     )
     fun `룰에게 플레이어의 드로우 여부를 받아올 수 있다`(
