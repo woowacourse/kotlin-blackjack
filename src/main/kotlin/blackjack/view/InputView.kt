@@ -18,9 +18,9 @@ class InputView {
     }
 
     companion object {
-        private const val INPUT_PLAYERS_NAME = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)"
-        private const val DELIMITER = ","
-        private const val INPUT_HIT_OR_STAY = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)"
+        private const val INPUT_PLAYERS_NAME: String = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)"
+        private const val DELIMITER: String = ","
+        private const val INPUT_HIT_OR_STAY: String = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)"
 
         private fun validateBlank(input: String): String? {
             if (input.isEmpty()) return null

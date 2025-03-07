@@ -75,10 +75,12 @@ class OutputView {
         val losingCount = statusCount[Status.Win] ?: 0
         val drawCount = statusCount[Status.Draw] ?: 0
 
+        val resultFormat: String = OUTPUT_DEALER_RESULT.format(dealer.name, winningCount, losingCount)
+
         if (drawCount != 0) {
-            println(OUTPUT_DEALER_RESULT_WITH_DRAW.format(dealer.name, winningCount, losingCount, drawCount))
+            println(resultFormat + OUTPUT_DEALER_RESULT_DRAW.format(drawCount))
         } else {
-            println(OUTPUT_DEALER_RESULT.format(dealer.name, winningCount, losingCount))
+            println(resultFormat)
         }
     }
 
@@ -93,10 +95,10 @@ class OutputView {
     companion object {
         private const val OUTPUT_DISTRIBUTE_CARD: String = "\n%s와 %s에게 2장의 나누었습니다."
         private const val OUTPUT_DEALER_RECEIVE_CARD: String = "%s는 16이하라 한장의 카드를 더 받았습니다."
-        private const val OUTPUT_PARTICIPANTS_CARD_RESULT = " - 결과: %d"
+        private const val OUTPUT_PARTICIPANTS_CARD_RESULT: String = " - 결과: %d"
         private const val FINAL_RESULT: String = "\n## 최종 승패"
         private const val OUTPUT_DEALER_RESULT: String = "%s: %d승 %d패"
-        private const val OUTPUT_DEALER_RESULT_WITH_DRAW: String = "%s: %d승 %d패 %d무"
+        private const val OUTPUT_DEALER_RESULT_DRAW: String = "%d무"
         private const val PLAYER_STATUS: String = "%s: %s"
         private const val CARD: String = "카드"
         private const val CARD_FORMAT: String = "%s%s"
