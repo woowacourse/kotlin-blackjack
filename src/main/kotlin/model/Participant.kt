@@ -1,9 +1,24 @@
 package model
 
-abstract class Participant(val cards: Cards) {
-    abstract fun turn(allCards: Cards): Boolean
+abstract class Participant(private val cards: Cards) {
+    private val handCards: MutableList<Card>
+        get() = cards.allCards
+
+    abstract fun turn(cards: Cards): Boolean
+
+    abstract fun isHit(): Boolean
 
     fun getScore(): Int {
-        return ScoreCalculator(cards).totalCardScore()
+        return ScoreCalculator(cards).calculateTotalCardScore()
+    }
+
+    fun drawCard(allCards: MutableList<Card>): Card {
+        val drawnCard = allCards.take(1)
+        allCards.removeAll(drawnCard)
+        return drawnCard.first()
+    }
+
+    fun addCard(card: Card) {
+        handCards.add(card)
     }
 }
