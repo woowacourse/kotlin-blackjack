@@ -1,13 +1,15 @@
 package blackjack.view
 
 class InputView {
-    fun readPlayerName() {
+    fun readPlayerName(): List<String> {
         while (true) {
             println(MESSAGE_INPUT_PLAYER_NAME)
             val input = readln()
-            if (validEmpty(input)) readPlayerName()
+            if (validEmpty(input).not()) readPlayerName()
 
-            val players = input.split(",").map { it.trim().also { validEmpty(it) } }
+            val names = splitNames(input)
+            if (validateEmptyList(names).not()) readPlayerName()
+            return names
         }
     }
 
