@@ -41,7 +41,7 @@ class GameController(
         player: Player,
         deck: Cards,
     ) {
-        if (!player.isBust()) return
+        if (player.isBust()) return
         val choice = Choice(inputView.readPlayerAction(player))
         if (!choice.isHit()) {
             printStatusOnNoHit(player)
