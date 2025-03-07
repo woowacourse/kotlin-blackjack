@@ -19,6 +19,7 @@ dependencies {
     testImplementation("org.assertj", "assertj-core", "3.27.3")
     testImplementation("io.kotest", "kotest-runner-junit5", "5.9.1")
     testImplementation(kotlin("test"))
+    testImplementation(kotlin("script-runtime"))
 }
 
 tasks {
