@@ -4,6 +4,8 @@ class Player(
     val name: String,
 ) {
     private val hand: Hand = Hand(emptyList())
+    val cards: List<Card>
+        get() = hand.value
     var wantToHit: Boolean? = null
     var result: Result = Result.NOT_YET
 

@@ -1,7 +1,7 @@
 package blackjack.domain
 
 class Number(
-    value: Int,
+    val value: Int,
 ) : Rank {
     override val possibleValues: List<Int> = listOf(value)
 

@@ -5,6 +5,8 @@ class Dealer(
 ) {
     private val deck: Deck = Deck()
     private val hand: Hand = Hand(emptyList())
+    val cards: List<Card>
+        get() = hand.value
     val results: List<Result>
         get() =
             players.map { player ->

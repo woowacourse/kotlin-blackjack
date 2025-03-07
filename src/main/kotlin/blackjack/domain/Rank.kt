@@ -1,5 +1,5 @@
 package blackjack.domain
 
-interface Rank {
+sealed interface Rank {
     val possibleValues: List<Int>
 }
