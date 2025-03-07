@@ -28,7 +28,7 @@ class Player(
     }
 
     fun setResult() {
-        if (hand.getScore() == null || hand.getScore()!! > 21) {
+        if (hand.getScore() == null) {
             result = Result.LOSE
         }
     }

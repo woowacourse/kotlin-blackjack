@@ -84,7 +84,6 @@ class BlackjackTest {
         val players = listOf(gio, eden)
         val dealer = Dealer(players)
         val game = Blackjack(dealer, players)
-        game.start()
         game.waitForPlayers()
         assertThat(dealer.getScore()).isGreaterThanOrEqualTo(17)
     }
@@ -103,5 +102,24 @@ class BlackjackTest {
         assertThat(gio.result).isEqualTo(Result.WIN)
         assertThat(eden.result).isEqualTo(Result.LOSE)
         assertThat(dealer.results).isEqualTo(listOf(Result.LOSE, Result.WIN))
+    }
+
+    @Test
+    fun `딜러의 카드 숫자 합이 21을 초과할 수 밖에 없을 경우 남은 플레이어는 전부 승리한다`() {
+        val eden = Player("Eden")
+        val gio = Player("Gio")
+        val players: List<Player> = listOf(eden, gio)
+        val dealer = Dealer(players)
+        dealer.getCards(
+            listOf(
+                Card(Number(10), Suit.SPADE),
+                Card(Number(10), Suit.SPADE),
+                Card(Number(10), Suit.SPADE),
+            ),
+        )
+        val blackjack = Blackjack(dealer, players)
+        blackjack.finish()
+        assertThat(eden.result).isEqualTo(Result.WIN)
+        assertThat(gio.result).isEqualTo(Result.WIN)
     }
 }
