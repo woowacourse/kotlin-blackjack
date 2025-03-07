@@ -1,11 +1,9 @@
 package blackjack.model
 
-enum class CardsStatus(
-    val firstTurn: Boolean,
-) {
-    BLACKJACK(true),
-    BUST(false),
-    NONE(false),
+enum class CardsStatus {
+    BLACKJACK,
+    BUST,
+    NONE,
     ;
 
     companion object {
