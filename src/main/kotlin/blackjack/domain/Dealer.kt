@@ -1,7 +1,7 @@
 package blackjack.domain
 
 class Dealer : Participant() {
-    fun dealCards() {
+    fun drawCard() {
         while (calculateScore() <= DEALER_HIT_CONDITION) {
             addCard(Deck.pick())
         }

@@ -13,24 +13,22 @@ class BlackjackController(
     private val outputView: OutputView,
 ) {
     fun play() {
-        val playerNames = inputView.readPlayerNames()
         val dealer = Dealer()
-        val players = playerNames.map { Player(it) }
-        dealCards(dealer, players)
-        outputView.printDealingResult(dealer, players)
-        players.forEach { dealMoreCard(it) }
+        val players = getPlayers()
 
-        dealer.dealCards()
-        val hitCount = dealer.hand.cards.size - INITIAL_CARD_COUNT
-        outputView.printDealerHit(hitCount)
+        dealInitialCards(dealer, players)
+        playTurns(dealer, players)
 
-        outputView.printBlackjackResult(dealer, players)
-        val playerResult = getPlayerResult(dealer, players)
-        val dealerResult = getDealerResult(playerResult)
-        outputView.printMatchResult(dealerResult, playerResult)
+        outputView.printBlackjackScore(dealer, players)
+        calculateResult(dealer, players)
     }
 
-    private fun dealCards(
+    private fun getPlayers(): List<Player> {
+        val playerNames = inputView.readPlayerNames()
+        return playerNames.map { Player(it) }
+    }
+
+    private fun dealInitialCards(
         dealer: Dealer,
         players: List<Player>,
     ) {
@@ -38,25 +36,42 @@ class BlackjackController(
             dealer.addCard(Deck.pick())
             players.forEach { it.addCard(Deck.pick()) }
         }
+        outputView.printDealingResult(dealer, players)
     }
 
-    private fun dealMoreCard(player: Player) {
-        if (player.isBust()) {
-            outputView.printBust()
-            return
-        }
-        val action = inputView.readHitOrStay(player)
-        if (action == Action.HIT) {
+    private fun playTurns(
+        dealer: Dealer,
+        players: List<Player>,
+    ) {
+        players.forEach { drawCard(it) }
+        dealer.drawCard()
+        val hitCount = dealer.hand.cards.size - INITIAL_CARD_COUNT
+        outputView.printDealerHit(hitCount)
+    }
+
+    private fun drawCard(player: Player) {
+        while (!player.isBust() && inputView.readHitOrStay(player) == Action.HIT) {
             player.addCard(Deck.pick())
             outputView.printPlayerCards(player)
-            dealMoreCard(player)
         }
+        if (player.isBust()) {
+            outputView.printBust(player)
+        }
+    }
+
+    private fun calculateResult(
+        dealer: Dealer,
+        players: List<Player>,
+    ) {
+        val playerResult = getPlayerResult(dealer, players)
+        val dealerResult = getDealerResult(playerResult)
+        outputView.printMatchResult(dealerResult, playerResult)
     }
 
     private fun getPlayerResult(
         dealer: Dealer,
         players: List<Player>,
-    ): Map<String, Result> = players.associateBy({ it.name }, { it.getResult(dealer) })
+    ): Map<String, Result> = players.associate { it.name to it.getResult(dealer) }
 
     private fun getDealerResult(playerResult: Map<String, Result>): Map<Result, Int> =
         playerResult.values
@@ -64,7 +79,7 @@ class BlackjackController(
                 when (it) {
                     Result.WIN -> Result.LOSE
                     Result.LOSE -> Result.WIN
-                    Result.DRAW -> Result.DRAW
+                    Result.PUSH -> Result.PUSH
                 }
             }.eachCount()
             .withDefault { 0 }

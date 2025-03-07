@@ -162,6 +162,6 @@ class PlayerTest {
         val result = player.getResult(dealer)
 
         // then
-        assertThat(result).isEqualTo(Result.DRAW)
+        assertThat(result).isEqualTo(Result.PUSH)
     }
 }

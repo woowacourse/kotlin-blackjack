@@ -10,7 +10,7 @@ class OutputView {
         dealer: Dealer,
         players: List<Player>,
     ) {
-        val playerNames = players.joinToString(SEPARATOR) { it.name }
+        val playerNames = players.joinToString { it.name }
         println(MESSAGE_DEALING.format(playerNames))
 
         val dealerCard = dealer.hand.cards.first()
@@ -18,29 +18,29 @@ class OutputView {
         players.forEach { printPlayerCards(it) }
     }
 
-    fun printBust() {
-        println(MESSAGE_BUST)
+    fun printPlayerCards(player: Player) {
+        val playerCards = cardsInfo(player.hand.cards)
+        println(MESSAGE_PLAYER_CARD.format(player.name, playerCards))
     }
 
-    fun printPlayerCards(player: Player) {
-        val playerCards = player.hand.cards.joinToString(SEPARATOR) { cardInfo(it) }
-        println(MESSAGE_PLAYER_CARD.format(player.name, playerCards))
+    fun printBust(player: Player) {
+        println(MESSAGE_BUST.format(player.name))
     }
 
     fun printDealerHit(hitCount: Int) {
         println(MESSAGE_DEALER_HIT.format(hitCount))
     }
 
-    fun printBlackjackResult(
+    fun printBlackjackScore(
         dealer: Dealer,
         players: List<Player>,
     ) {
-        val dealerCards = dealer.hand.cards.joinToString(SEPARATOR) { cardInfo(it) }
+        val dealerCards = cardsInfo(dealer.hand.cards)
         val dealerScore = dealer.calculateScore()
         println("${MESSAGE_DEALER_CARD.format(dealerCards)} ${MESSAGE_SCORE.format(dealerScore)}")
 
         players.forEach { player ->
-            val playerCards = player.hand.cards.joinToString(SEPARATOR) { cardInfo(it) }
+            val playerCards = cardsInfo(player.hand.cards)
             val playerScore = player.calculateScore()
             println(
                 "${MESSAGE_PLAYER_CARD.format(player.name, playerCards)} ${
@@ -58,7 +58,7 @@ class OutputView {
     ) {
         println(MESSAGE_GAME_RESULT)
         val dealerWinCount = dealerResult.getValue(Result.WIN)
-        val dealerDrawCount = dealerResult.getValue(Result.DRAW)
+        val dealerDrawCount = dealerResult.getValue(Result.PUSH)
         val dealerLoseCount = dealerResult.getValue(Result.LOSE)
         println(MESSAGE_DEALER_RESULT.format(dealerWinCount, dealerDrawCount, dealerLoseCount))
 
@@ -66,6 +66,8 @@ class OutputView {
             println(MESSAGE_PLAYER_RESULT.format(it.key, it.value.message))
         }
     }
+
+    private fun cardsInfo(cards: List<Card>): String = cards.joinToString { cardInfo(it) }
 
     private fun cardInfo(card: Card): String {
         val number = card.rank.symbol
@@ -75,7 +77,7 @@ class OutputView {
 
     companion object {
         private const val MESSAGE_DEALING = "\n딜러와 %s에게 2장의 나누었습니다."
-        private const val MESSAGE_BUST = "더 이상 카드를 받을 수 없습니다."
+        private const val MESSAGE_BUST = "%s는 더 이상 카드를 받을 수 없습니다."
         private const val MESSAGE_DEALER_CARD = "딜러 카드: %s"
         private const val MESSAGE_PLAYER_CARD = "%s 카드: %s"
         private const val MESSAGE_SCORE = "- 결과: %d"
@@ -83,6 +85,5 @@ class OutputView {
         private const val MESSAGE_GAME_RESULT = "\n## 최종 승패"
         private const val MESSAGE_DEALER_RESULT = "\n딜러: %d승 %d무 %d패"
         private const val MESSAGE_PLAYER_RESULT = "%s: %s"
-        private const val SEPARATOR = ", "
     }
 }

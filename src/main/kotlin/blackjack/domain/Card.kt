@@ -3,7 +3,7 @@ package blackjack.domain
 import blackjack.enums.Rank
 import blackjack.enums.Suit
 
-data class Card(
+class Card(
     val rank: Rank,
     val suit: Suit,
 ) {

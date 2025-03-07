@@ -6,13 +6,14 @@ class Player(
     val name: String,
 ) : Participant() {
     fun getResult(dealer: Dealer): Result {
-        val dealerScore = if (dealer.isBust()) 0 else dealer.calculateScore()
-        val playerScore = calculateScore()
-        if (isBust() || playerScore < dealerScore) {
+        if (isBust()) {
             return Result.LOSE
-        } else if (playerScore == dealerScore) {
-            return Result.DRAW
         }
-        return Result.WIN
+        if (dealer.isBust()) {
+            return Result.WIN
+        }
+        val dealerScore = dealer.calculateScore()
+        val playerScore = calculateScore()
+        return Result.from(playerScore, dealerScore)
     }
 }
