@@ -19,5 +19,12 @@ enum class GameResult(
             }
             return LOSE
         }
+
+        fun reversed(result: GameResult): GameResult =
+            when (result) {
+                PUSH -> PUSH
+                WIN -> LOSE
+                LOSE -> WIN
+            }
     }
 }
