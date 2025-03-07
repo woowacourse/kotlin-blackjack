@@ -1,9 +1,9 @@
 package blackjack.model
 
 class Dealer(
-    override val name: String = "딜러",
+    private val dealerName: String = "딜러",
     override val cards: Cards = Cards(mutableListOf()),
-) : Player(name) {
+) : Player(dealerName) {
     private var _results: MutableMap<GameResult, Int> = mutableMapOf()
     val results: Map<GameResult, Int> get() = _results.toMap()
 
