@@ -5,7 +5,7 @@ import blackjack.domain.TrumpCard
 import blackjack.domain.enums.CardTier
 import blackjack.domain.participant.Dealer.Companion.ACE_EXTRACT_SCORE
 
-class Player(
+data class Player(
     val name: String,
 ) : Participant {
     private val _cards = mutableListOf<TrumpCard>()

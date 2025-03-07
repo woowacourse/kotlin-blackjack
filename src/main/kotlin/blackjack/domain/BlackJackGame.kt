@@ -4,17 +4,16 @@ import blackjack.domain.enums.GameResult
 import blackjack.domain.enums.UserChoice
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Participant
+import blackjack.domain.participant.Participants
 import blackjack.domain.participant.Player
 
 class BlackJackGame(
-    private val participants: List<Participant>,
+    private val participants: Participants,
     private val deck: Deck,
 ) {
-    private val dealer: Dealer = participants.filterIsInstance<Dealer>().first()
-    private val players: List<Player> = participants.filterIsInstance<Player>()
 
     fun handOutInitializedCards(initializedCardCount: Int = INITIAL_CARD_COUNT) {
-        participants.forEach { player ->
+        (participants.players + participants.dealer).forEach { player ->
             repeat(initializedCardCount) {
                 player.addCard(deck.pop())
             }
@@ -25,7 +24,7 @@ class BlackJackGame(
         getPlayerChoice: (String) -> UserChoice,
         onPlayerStateUpdated: (Player) -> Unit,
     ) {
-        players.forEach { player ->
+        participants.players.forEach { player ->
             while (!player.isBust()) {
                 val choice = getPlayerChoice(player.name)
                 when (choice) {
@@ -44,8 +43,8 @@ class BlackJackGame(
 
     fun processDealerTurn(): Int {
         var count = 0
-        while (dealer.isOverMaxScore().not()) {
-            dealer.addCard(deck.pop())
+        while (participants.dealer.isOverMaxScore().not()) {
+            participants.dealer.addCard(deck.pop())
             count++
         }
         return count
@@ -54,16 +53,16 @@ class BlackJackGame(
     fun calculateDealerResult(action: (Map<GameResult, Int>) -> Unit) {
         val dealerMap = GameResult.entries.associateWith { 0 }.toMutableMap()
 
-        players.forEach { player ->
-            val result = GameResult.from(dealer.sum(), player.sum())
-            dealerMap[result ] = dealerMap.getOrDefault(result, 0) + 1
+        participants.players.forEach { player ->
+            val result = GameResult.from(participants.dealer.sum(), player.sum())
+            dealerMap[result] = dealerMap.getOrDefault(result, 0) + 1
         }
         action(dealerMap)
     }
 
     fun calculatePlayerResult(action: (String, GameResult) -> Unit) {
-        players.forEach { player ->
-            val result = GameResult.from(dealer.sum(), player.sum())
+        participants.players.forEach { player ->
+            val result = GameResult.from(participants.dealer.sum(), player.sum())
             action(player.name, result)
         }
     }

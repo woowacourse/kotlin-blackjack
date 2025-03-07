@@ -5,6 +5,7 @@ import blackjack.domain.enums.CardTier
 import blackjack.domain.enums.GameResult
 import blackjack.domain.enums.Shape
 import blackjack.domain.participant.Dealer
+import blackjack.domain.participant.Participants
 import blackjack.domain.participant.Player
 import java.lang.String.format
 
@@ -27,11 +28,10 @@ class OutputView {
         }
     }
 
-    fun printDealerSum(players: List<Dealer>) {
-        players.forEach { player ->
-            print(format(MESSAGE_OUTPUT_DEALER_CARD, makeCardListMessage(player.cards)))
-            println(format(MESSAGE_OUTPUT_SUM, player.sum()))
-        }
+    fun printDealerSum(participants: Dealer) {
+        print(format(MESSAGE_OUTPUT_DEALER_CARD, makeCardListMessage(participants.cards)))
+        println(format(MESSAGE_OUTPUT_SUM, participants.sum()))
+
     }
 
     fun printPlayerSum(players: List<Player>) {
@@ -59,7 +59,8 @@ class OutputView {
             cardMessageFormat(card)
         }
 
-    private fun cardMessageFormat(card: TrumpCard): String = MESSAGE_CARD.format(card.tier.toEnglish(), card.shape.toKorean())
+    private fun cardMessageFormat(card: TrumpCard): String =
+        MESSAGE_CARD.format(card.tier.toEnglish(), card.shape.toKorean())
 
     fun printDealerExtraCard(count: Int) {
         println(format(MESSAGE_OUTPUT_DEALER_EXTRA_CARD, count))
