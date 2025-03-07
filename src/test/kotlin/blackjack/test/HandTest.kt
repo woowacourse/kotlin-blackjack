@@ -4,8 +4,10 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class Hand(
-    val value: MutableList<Card>,
+    private val _value: MutableList<Card>,
 ) {
+    val value: List<Card> get() = _value
+
     fun getSize(): Int = value.size
 
     /**
