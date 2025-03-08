@@ -9,7 +9,7 @@ class Dealer(
     fun showFirstCard(): Card = handCards.show().first()
 
     override fun compareTo(opponent: Participant): GameResult {
-        if (handCards.isBurst() && opponent.handCards.isBurst()) {
+        if (opponent.handCards.isBurst()) {
             return GameResult.WIN
         }
         return handCards.compareTo(opponent.handCards)
