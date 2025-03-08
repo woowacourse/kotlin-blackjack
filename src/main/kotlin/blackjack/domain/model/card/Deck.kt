@@ -1,11 +1,11 @@
 package blackjack.domain.model.card
 
-import blackjack.domain.generator.CardGenerator
+import blackjack.domain.generator.CardsGenerator
 
 class Deck(
-    cardGenerator: CardGenerator,
+    cardGenerator: CardsGenerator,
 ) {
-    private val cards: ArrayDeque<Card> = ArrayDeque(cardGenerator.create())
+    private val cards: ArrayDeque<Card> = ArrayDeque(cardGenerator.createCards())
 
     fun pop(): Card {
         return cards.removeFirst()
