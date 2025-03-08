@@ -44,8 +44,8 @@ class OutputView {
         val dealerResultText: String =
             dealerGameResult.filter { it.value != 0 }.map { "${it.value}${it.key.toText()}" }.joinToString()
 
-        println("## 최종 승패")
-        println("딜러: $dealerResultText")
+        println(FINAL_RESULT_MESSAGE)
+        println("$DEALER_TEXT_MESSAGE $dealerResultText")
         players.forEach { player -> player.compareTo(dealer).toText() }
     }
 
@@ -60,6 +60,8 @@ class OutputView {
         private const val CARD_INFO_MESSAGE = "%s카드: %s"
         private const val DEALER_DRAW_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다."
         private const val CARD_RESULT_MESSAGE = " - 결과: "
+        private const val FINAL_RESULT_MESSAGE = "## 최종 승패"
+        private const val DEALER_TEXT_MESSAGE = "딜러:"
 
         fun Suit.toText(): String {
             return when (this) {
