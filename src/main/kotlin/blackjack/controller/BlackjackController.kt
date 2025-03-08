@@ -4,6 +4,7 @@ import blackjack.domain.Dealer
 import blackjack.domain.Deck
 import blackjack.domain.Player
 import blackjack.domain.Players
+import blackjack.domain.ShuffledCardGenerator
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -14,9 +15,10 @@ class BlackjackController(
     fun play() {
         val dealer = Dealer()
         val players = getPlayers()
+        val deck = Deck(ShuffledCardGenerator().generate())
 
-        dealInitialCards(dealer, players)
-        playTurns(dealer, players)
+        dealInitialCards(dealer, players, deck)
+        playTurns(dealer, players, deck)
 
         outputView.printBlackjackScore(dealer, players)
         showGameResult(dealer, players)
@@ -31,10 +33,11 @@ class BlackjackController(
     private fun dealInitialCards(
         dealer: Dealer,
         players: Players,
+        deck: Deck,
     ) {
         repeat(INITIAL_CARD_COUNT) {
-            dealer.drawCard(Deck.pick())
-            players.dealCards()
+            dealer.drawCard(deck.pick())
+            players.dealCards(deck)
         }
         outputView.printDealingResult(dealer, players)
     }
@@ -42,18 +45,22 @@ class BlackjackController(
     private fun playTurns(
         dealer: Dealer,
         players: Players,
+        deck: Deck,
     ) {
-        players.players.forEach { drawCard(it) }
+        players.players.forEach { drawCard(it, deck) }
         while (dealer.canHit()) {
-            dealer.drawCard(Deck.pick())
+            dealer.drawCard(deck.pick())
         }
         val hitCount = dealer.countCards() - INITIAL_CARD_COUNT
         outputView.printDealerHit(hitCount)
     }
 
-    private fun drawCard(player: Player) {
+    private fun drawCard(
+        player: Player,
+        deck: Deck,
+    ) {
         while (player.canHit() && inputView.readPlayerHit(player)) {
-            player.drawCard(Deck.pick())
+            player.drawCard(deck.pick())
             outputView.printPlayerCards(player)
         }
         if (!player.canHit()) {
