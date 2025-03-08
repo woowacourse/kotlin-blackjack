@@ -23,7 +23,7 @@ class HandTest {
         val score = hand.calculateScore()
 
         // then
-        assertThat(score).isEqualTo(21)
+        assertThat(score.score).isEqualTo(21)
     }
 
     @Test
@@ -38,7 +38,7 @@ class HandTest {
         val score = hand.calculateScore()
 
         // then
-        assertThat(score).isEqualTo(21)
+        assertThat(score.score).isEqualTo(21)
     }
 
     @Test
@@ -53,7 +53,7 @@ class HandTest {
         val score = hand.calculateScore()
 
         // then
-        assertThat(score).isEqualTo(21)
+        assertThat(score.score).isEqualTo(21)
     }
 
     private fun Hand.Companion.of(vararg cards: Card): Hand = Hand().apply { cards.forEach { this.addCard(it) } }

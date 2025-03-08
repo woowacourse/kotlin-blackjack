@@ -1,7 +1,6 @@
 package blackjack.view
 
 import blackjack.domain.Player
-import blackjack.enums.Action
 
 class InputView {
     fun readPlayerNames(): List<String> {
@@ -14,16 +13,16 @@ class InputView {
         return readPlayerNames()
     }
 
-    fun readHitOrStay(player: Player): Action {
+    fun readPlayerHit(player: Player): Boolean {
         println(MESSAGE_INPUT_HIT_OR_STAY.format(player.name))
         val input = readln().trim()
         if (input == YES) {
-            return Action.HIT
+            return true
         } else if (input == NO) {
-            return Action.STAY
+            return false
         }
         println(ERROR_INVALID_INPUT)
-        return readHitOrStay(player)
+        return readPlayerHit(player)
     }
 
     companion object {

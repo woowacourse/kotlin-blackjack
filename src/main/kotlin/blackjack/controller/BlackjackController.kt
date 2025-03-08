@@ -4,7 +4,6 @@ import blackjack.domain.Dealer
 import blackjack.domain.Deck
 import blackjack.domain.Player
 import blackjack.domain.Players
-import blackjack.enums.Action
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -53,7 +52,7 @@ class BlackjackController(
     }
 
     private fun drawCard(player: Player) {
-        while (player.canHit() && inputView.readHitOrStay(player) == Action.HIT) {
+        while (player.canHit() && inputView.readPlayerHit(player)) {
             player.drawCard(Deck.pick())
             outputView.printPlayerCards(player)
         }
@@ -66,10 +65,15 @@ class BlackjackController(
         dealer: Dealer,
         players: Players,
     ) {
-        players.players.forEach { outputView.printPlayerResult(it.name, it.getResult(dealer)) }
+        players.players.forEach {
+            outputView.printPlayerResult(
+                it.name,
+                it.getResult(dealer.calculateScore()),
+            )
+        }
         val dealerResult =
             players.players
-                .map { dealer.getResult(it) }
+                .map { dealer.getResult(it.calculateScore()) }
                 .groupingBy { it }
                 .eachCount()
                 .withDefault { 0 }

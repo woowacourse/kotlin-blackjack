@@ -1,5 +1,7 @@
 package blackjack.enums
 
+import blackjack.domain.Score
+
 enum class Result(
     val message: String,
 ) {
@@ -10,8 +12,8 @@ enum class Result(
 
     companion object {
         fun from(
-            targetScore: Int,
-            otherScore: Int,
+            targetScore: Score,
+            otherScore: Score,
         ): Result =
             when {
                 targetScore > otherScore -> WIN

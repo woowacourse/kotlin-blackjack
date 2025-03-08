@@ -32,7 +32,7 @@ class DealerTest {
         val score = dealer.calculateScore()
 
         // then
-        assertThat(score).isEqualTo(21)
+        assertThat(score.score).isEqualTo(21)
     }
 
     @Test
@@ -50,40 +50,6 @@ class DealerTest {
         val score = dealer.calculateScore()
 
         // then
-        assertThat(score).isEqualTo(21)
-    }
-
-    @Test
-    fun `딜러가 Queen 세 장을 가지면 버스트이다`() {
-        // given
-        val queenSpade = Card(Rank.QUEEN, Suit.SPADE)
-        val queenHeart = Card(Rank.QUEEN, Suit.HEART)
-        val queenDiamond = Card(Rank.QUEEN, Suit.DIAMOND)
-        val dealer = Dealer()
-
-        // when
-        dealer.drawCard(queenSpade)
-        dealer.drawCard(queenHeart)
-        dealer.drawCard(queenDiamond)
-        val isBust = dealer.isBust()
-
-        // then
-        assertThat(isBust).isTrue()
-    }
-
-    @Test
-    fun `딜러가 Queen 두 장을 가지면 버스트가 아니다`() {
-        // given
-        val queenSpade = Card(Rank.QUEEN, Suit.SPADE)
-        val queenHeart = Card(Rank.QUEEN, Suit.HEART)
-        val dealer = Dealer()
-
-        // when
-        dealer.drawCard(queenSpade)
-        dealer.drawCard(queenHeart)
-        val isBust = dealer.isBust()
-
-        // then
-        assertThat(isBust).isFalse()
+        assertThat(score.score).isEqualTo(21)
     }
 }

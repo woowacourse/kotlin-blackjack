@@ -5,14 +5,12 @@ import blackjack.enums.Result
 class Player(
     val name: String,
 ) : Participant() {
-    override fun canHit(): Boolean = !isBust()
+    override fun canHit(): Boolean = !calculateScore().isBust()
 
-    override fun getResult(other: Participant): Result {
-        if (isBust()) return Result.LOSE
-        if (other.isBust()) return Result.WIN
-
+    override fun getResult(otherScore: Score): Result {
         val playerScore = calculateScore()
-        val otherScore = other.calculateScore()
+        if (playerScore.isBust()) return Result.LOSE
+        if (otherScore.isBust()) return Result.WIN
         return Result.from(playerScore, otherScore)
     }
 }

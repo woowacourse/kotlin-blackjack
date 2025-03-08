@@ -41,7 +41,7 @@ class PlayerTest {
         val score = player.calculateScore()
 
         // then
-        assertThat(score).isEqualTo(21)
+        assertThat(score.score).isEqualTo(21)
     }
 
     @Test
@@ -58,39 +58,7 @@ class PlayerTest {
         val score = player.calculateScore()
 
         // then
-        assertThat(score).isEqualTo(21)
-    }
-
-    @Test
-    fun `플레이어가 Queen 세 장을 가지면 버스트이다`() {
-        // given
-        val queenSpade = Card(Rank.QUEEN, Suit.SPADE)
-        val queenHeart = Card(Rank.QUEEN, Suit.HEART)
-        val queenDiamond = Card(Rank.QUEEN, Suit.DIAMOND)
-
-        // when
-        player.drawCard(queenSpade)
-        player.drawCard(queenHeart)
-        player.drawCard(queenDiamond)
-        val isBust = player.isBust()
-
-        // then
-        assertThat(isBust).isTrue()
-    }
-
-    @Test
-    fun `플레이어가 Queen 두 장을 가지면 버스트가 아니다`() {
-        // given
-        val queenSpade = Card(Rank.QUEEN, Suit.SPADE)
-        val queenHeart = Card(Rank.QUEEN, Suit.HEART)
-
-        // when
-        player.drawCard(queenSpade)
-        player.drawCard(queenHeart)
-        val isBust = player.isBust()
-
-        // then
-        assertThat(isBust).isFalse()
+        assertThat(score.score).isEqualTo(21)
     }
 
     @Test
@@ -105,7 +73,7 @@ class PlayerTest {
         player.drawCard(queenHeart)
         dealer.drawCard(queenSpade)
         dealer.drawCard(eightSpade)
-        val result = player.getResult(dealer)
+        val result = player.getResult(dealer.calculateScore())
 
         // then
         assertThat(result).isEqualTo(Result.WIN)
@@ -123,7 +91,7 @@ class PlayerTest {
         player.drawCard(queenHeart)
         dealer.drawCard(queenSpade)
         dealer.drawCard(aceSpade)
-        val result = player.getResult(dealer)
+        val result = player.getResult(dealer.calculateScore())
 
         // then
         assertThat(result).isEqualTo(Result.LOSE)
@@ -142,7 +110,7 @@ class PlayerTest {
         dealer.drawCard(queenSpade)
         dealer.drawCard(queenHeart)
         dealer.drawCard(twoSpade)
-        val result = player.getResult(dealer)
+        val result = player.getResult(dealer.calculateScore())
 
         // then
         assertThat(result).isEqualTo(Result.WIN)
@@ -159,7 +127,7 @@ class PlayerTest {
         player.drawCard(queenHeart)
         dealer.drawCard(queenSpade)
         dealer.drawCard(queenHeart)
-        val result = player.getResult(dealer)
+        val result = player.getResult(dealer.calculateScore())
 
         // then
         assertThat(result).isEqualTo(Result.PUSH)

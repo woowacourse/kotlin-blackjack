@@ -3,14 +3,12 @@ package blackjack.domain
 import blackjack.enums.Result
 
 class Dealer : Participant() {
-    override fun canHit(): Boolean = calculateScore() <= DEALER_HIT_CONDITION
+    override fun canHit(): Boolean = calculateScore().score <= DEALER_HIT_CONDITION
 
-    override fun getResult(other: Participant): Result {
-        if (other.isBust()) return Result.WIN
-        if (isBust()) return Result.LOSE
-
+    override fun getResult(otherScore: Score): Result {
         val dealerScore = calculateScore()
-        val otherScore = other.calculateScore()
+        if (otherScore.isBust()) return Result.WIN
+        if (dealerScore.isBust()) return Result.LOSE
         return Result.from(dealerScore, otherScore)
     }
 

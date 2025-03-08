@@ -9,11 +9,9 @@ abstract class Participant {
         hand.addCard(card)
     }
 
-    fun calculateScore(): Int = hand.calculateScore()
-
-    fun isBust(): Boolean = hand.isBust()
+    fun calculateScore(): Score = hand.calculateScore()
 
     abstract fun canHit(): Boolean
 
-    abstract fun getResult(other: Participant): Result
+    abstract fun getResult(otherScore: Score): Result
 }
