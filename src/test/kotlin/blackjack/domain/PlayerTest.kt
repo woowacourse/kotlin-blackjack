@@ -9,12 +9,10 @@ import org.junit.jupiter.api.Test
 
 class PlayerTest {
     private lateinit var player: Player
-    private lateinit var dealer: Dealer
 
     @BeforeEach
     fun setUp() {
         player = Player("Jason")
-        dealer = Dealer()
     }
 
     @Test
@@ -36,8 +34,7 @@ class PlayerTest {
         val queenCard = Card(Rank.QUEEN, Suit.SPADE)
 
         // when
-        player.drawCard(aceCard)
-        player.drawCard(queenCard)
+        player.drawCards(aceCard, queenCard)
         val score = player.getScore()
 
         // then
@@ -52,9 +49,7 @@ class PlayerTest {
         val nineSpade = Card(Rank.NINE, Suit.SPADE)
 
         // when
-        player.drawCard(aceSpade)
-        player.drawCard(aceDiamond)
-        player.drawCard(nineSpade)
+        player.drawCards(aceSpade, aceDiamond, nineSpade)
         val score = player.getScore()
 
         // then
@@ -62,18 +57,41 @@ class PlayerTest {
     }
 
     @Test
+    fun `플레이어 점수가 21이면 카드를 더 뽑을 수 있다`() {
+        // given
+        val queenSpade = Card(Rank.QUEEN, Suit.SPADE)
+        val aceSpade = Card(Rank.ACE, Suit.SPADE)
+
+        // when
+        player.drawCards(queenSpade, aceSpade)
+
+        // then
+        assertThat(player.canHit()).isTrue()
+    }
+
+    @Test
+    fun `플레이어 점수가 22이면 카드를 더 뽑을 수 없다`() {
+        // given
+        val queenSpade = Card(Rank.QUEEN, Suit.SPADE)
+        val queenHeart = Card(Rank.QUEEN, Suit.HEART)
+        val twoSpade = Card(Rank.TWO, Suit.SPADE)
+
+        // when
+        player.drawCards(queenSpade, queenHeart, twoSpade)
+
+        // then
+        assertThat(player.canHit()).isFalse()
+    }
+
+    @Test
     fun `플레이어의 점수가 20이고 딜러의 점수가 18이면 플레이어가 이긴다`() {
         // given
         val queenSpade = Card(Rank.QUEEN, Suit.SPADE)
         val queenHeart = Card(Rank.QUEEN, Suit.HEART)
-        val eightSpade = Card(Rank.EIGHT, Suit.SPADE)
 
         // when
-        player.drawCard(queenSpade)
-        player.drawCard(queenHeart)
-        dealer.drawCard(queenSpade)
-        dealer.drawCard(eightSpade)
-        val result = player.getResult(dealer.getScore())
+        player.drawCards(queenSpade, queenHeart)
+        val result = player.getResult(Score(18))
 
         // then
         assertThat(result).isEqualTo(Result.WIN)
@@ -84,14 +102,10 @@ class PlayerTest {
         // given
         val queenSpade = Card(Rank.QUEEN, Suit.SPADE)
         val queenHeart = Card(Rank.QUEEN, Suit.HEART)
-        val aceSpade = Card(Rank.ACE, Suit.SPADE)
 
         // when
-        player.drawCard(queenSpade)
-        player.drawCard(queenHeart)
-        dealer.drawCard(queenSpade)
-        dealer.drawCard(aceSpade)
-        val result = player.getResult(dealer.getScore())
+        player.drawCards(queenSpade, queenHeart)
+        val result = player.getResult(Score(21))
 
         // then
         assertThat(result).isEqualTo(Result.LOSE)
@@ -102,34 +116,30 @@ class PlayerTest {
         // given
         val queenSpade = Card(Rank.QUEEN, Suit.SPADE)
         val queenHeart = Card(Rank.QUEEN, Suit.HEART)
-        val twoSpade = Card(Rank.TWO, Suit.SPADE)
 
         // when
-        player.drawCard(queenSpade)
-        player.drawCard(queenHeart)
-        dealer.drawCard(queenSpade)
-        dealer.drawCard(queenHeart)
-        dealer.drawCard(twoSpade)
-        val result = player.getResult(dealer.getScore())
+        player.drawCards(queenSpade, queenHeart)
+        val result = player.getResult(Score(22))
 
         // then
         assertThat(result).isEqualTo(Result.WIN)
     }
 
     @Test
-    fun `플레이어의 점수가 20이고 딜러의 점수가 20이면 긴다`() {
+    fun `플레이어의 점수가 20이고 딜러의 점수가 20이면 비긴다`() {
         // given
         val queenSpade = Card(Rank.QUEEN, Suit.SPADE)
         val queenHeart = Card(Rank.QUEEN, Suit.HEART)
 
         // when
-        player.drawCard(queenSpade)
-        player.drawCard(queenHeart)
-        dealer.drawCard(queenSpade)
-        dealer.drawCard(queenHeart)
-        val result = player.getResult(dealer.getScore())
+        player.drawCards(queenSpade, queenHeart)
+        val result = player.getResult(Score(20))
 
         // then
         assertThat(result).isEqualTo(Result.PUSH)
+    }
+
+    private fun Participant.drawCards(vararg cards: Card) {
+        cards.forEach { this.drawCard(it) }
     }
 }
