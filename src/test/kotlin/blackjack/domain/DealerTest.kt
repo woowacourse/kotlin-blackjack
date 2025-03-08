@@ -1,7 +1,7 @@
 package blackjack.domain
 
-import blackjack.domain.card.Tier
 import blackjack.domain.card.Shape
+import blackjack.domain.card.Tier
 import blackjack.domain.card.TrumpCard
 import blackjack.domain.participant.Dealer
 import blackjack.fixture.trumpCardFixture
@@ -90,7 +90,7 @@ class DealerTest {
     }
 
     @Test
-    fun `에이스 카드를 가지고 버스트 되지 않았으면 카드 총합에 10을 더한다`()  {
+    fun `에이스 카드를 가지고 버스트 되지 않았으면 카드 총합에 10을 더한다`() {
         dealer.addCard(TrumpCard(Tier.ACE, Shape.DIA))
         dealer.addCard(TrumpCard(Tier.NINE, Shape.HEART))
 
@@ -98,7 +98,7 @@ class DealerTest {
     }
 
     @Test
-    fun `에이스 카드를 가지고 버스트 되었으면 카드 총합을 유지한다`()  {
+    fun `에이스 카드를 가지고 버스트 되었으면 카드 총합을 유지한다`() {
         dealer.addCard(TrumpCard(Tier.ACE, Shape.DIA))
         dealer.addCard(TrumpCard(Tier.SEVEN, Shape.HEART))
         dealer.addCard(TrumpCard(Tier.NINE, Shape.HEART))

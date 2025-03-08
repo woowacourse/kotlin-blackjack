@@ -1,7 +1,7 @@
 package blackjack.fixture
 
-import blackjack.domain.card.Tier
 import blackjack.domain.card.Shape
+import blackjack.domain.card.Tier
 import blackjack.domain.card.TrumpCard
 
 fun trumpCardFixture(): List<TrumpCard> =

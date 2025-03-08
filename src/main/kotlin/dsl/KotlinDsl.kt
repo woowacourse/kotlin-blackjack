@@ -19,7 +19,7 @@ fun languages(block: LanguagesBuilder.() -> Unit): Language? {
     return LanguagesBuilder().apply(block).build()
 }
 
-fun main()  {
+fun main() {
     introduce {
         name("페토")
         company("우아한형제들")
