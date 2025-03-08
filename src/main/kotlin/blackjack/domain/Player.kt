@@ -7,15 +7,12 @@ class Player(
 ) : Participant() {
     override fun canHit(): Boolean = !isBust()
 
-    fun getResult(dealer: Dealer): Result {
-        if (isBust()) {
-            return Result.LOSE
-        }
-        if (dealer.isBust()) {
-            return Result.WIN
-        }
-        val dealerScore = dealer.calculateScore()
+    override fun getResult(other: Participant): Result {
+        if (isBust()) return Result.LOSE
+        if (other.isBust()) return Result.WIN
+
         val playerScore = calculateScore()
-        return Result.from(playerScore, dealerScore)
+        val otherScore = other.calculateScore()
+        return Result.from(playerScore, otherScore)
     }
 }

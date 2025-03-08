@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import blackjack.enums.Result
+
 abstract class Participant {
     val hand = Hand()
 
@@ -12,4 +14,6 @@ abstract class Participant {
     fun isBust(): Boolean = hand.isBust()
 
     abstract fun canHit(): Boolean
+
+    abstract fun getResult(other: Participant): Result
 }

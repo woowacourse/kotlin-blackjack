@@ -53,19 +53,19 @@ class OutputView {
         }
     }
 
-    fun printMatchResult(
-        dealerResult: Map<Result, Int>,
-        playerResult: Map<Player, Result>,
-    ) {
+    fun printDealerResult(dealerResult: Map<Result, Int>) {
         println(MESSAGE_GAME_RESULT)
         val dealerWinCount = dealerResult.getValue(Result.WIN)
         val dealerDrawCount = dealerResult.getValue(Result.PUSH)
         val dealerLoseCount = dealerResult.getValue(Result.LOSE)
         println(MESSAGE_DEALER_RESULT.format(dealerWinCount, dealerDrawCount, dealerLoseCount))
+    }
 
-        playerResult.forEach {
-            println(MESSAGE_PLAYER_RESULT.format(it.key.name, it.value.message))
-        }
+    fun printPlayerResult(
+        name: String,
+        result: Result,
+    ) {
+        println(MESSAGE_PLAYER_RESULT.format(name, result.message))
     }
 
     private fun cardsInfo(cards: List<Card>): String = cards.joinToString { cardInfo(it) }

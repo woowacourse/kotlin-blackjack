@@ -1,7 +1,5 @@
 package blackjack.domain
 
-import blackjack.enums.Result
-
 class Players(
     val players: List<Player>,
 ) {
@@ -12,8 +10,6 @@ class Players(
     fun dealCards() {
         players.forEach { it.drawCard(Deck.pick()) }
     }
-
-    fun calculateResult(dealer: Dealer): Map<Player, Result> = players.associateWith { it.getResult(dealer) }
 
     companion object {
         private const val MIN_PLAYER_COUNT = 1
