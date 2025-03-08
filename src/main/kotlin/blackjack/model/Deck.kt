@@ -9,14 +9,9 @@ object Deck {
         return CARDS.removeFirstOrNull() ?: throw IllegalStateException(ERROR_NO_MORE_CARD_MESSAGE)
     }
 
-    fun drawWithCount(count: Int): List<Card> {
-        return List(count) { draw() }
-    }
-
-    private fun generateCards(): MutableList<Card> =
-        Shape.entries.flatMap { shape ->
-            Number.entries.map { number ->
-                Card(shape, number)
-            }
-        }.shuffled().toMutableList()
+    private fun generateCards(): MutableList<Card> = Shape.entries.flatMap { shape ->
+        Number.entries.map { number ->
+            Card(shape, number)
+        }
+    }.shuffled().toMutableList()
 }
