@@ -4,7 +4,9 @@ import blackjack.domain.Card
 import blackjack.domain.Dealer
 import blackjack.domain.Player
 import blackjack.domain.Players
+import blackjack.enums.Rank
 import blackjack.enums.Result
+import blackjack.enums.Suit
 
 class OutputView {
     fun printDealingResult(
@@ -65,14 +67,14 @@ class OutputView {
         name: String,
         result: Result,
     ) {
-        println(MESSAGE_PLAYER_RESULT.format(name, result.message))
+        println(MESSAGE_PLAYER_RESULT.format(name, result.toText()))
     }
 
     private fun cardsInfo(cards: List<Card>): String = cards.joinToString { cardInfo(it) }
 
     private fun cardInfo(card: Card): String {
-        val number = card.rank.symbol
-        val shape = card.suit.korean
+        val number = card.rank.toText()
+        val shape = card.suit.toText()
         return "$number$shape"
     }
 
@@ -86,5 +88,29 @@ class OutputView {
         private const val MESSAGE_GAME_RESULT = "\n## 최종 승패"
         private const val MESSAGE_DEALER_RESULT = "\n딜러: %d승 %d무 %d패"
         private const val MESSAGE_PLAYER_RESULT = "%s: %s"
+
+        private fun Rank.toText(): String =
+            when (this) {
+                Rank.ACE -> "A"
+                Rank.JACK -> "J"
+                Rank.QUEEN -> "Q"
+                Rank.KING -> "K"
+                else -> this.number.toString()
+            }
+
+        private fun Suit.toText(): String =
+            when (this) {
+                Suit.DIAMOND -> "다이아몬드"
+                Suit.CLUB -> "클로버"
+                Suit.HEART -> "하트"
+                Suit.SPADE -> "스페이드"
+            }
+
+        private fun Result.toText(): String =
+            when (this) {
+                Result.WIN -> "승"
+                Result.LOSE -> "패"
+                Result.PUSH -> "무"
+            }
     }
 }
