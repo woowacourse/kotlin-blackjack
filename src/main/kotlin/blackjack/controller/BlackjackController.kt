@@ -21,7 +21,7 @@ class BlackjackController(
         gameManager.dealInitialCardWithCount(INITIAL_HAND_OUT_CARD_COUNT)
         outputView.printAllPlayerHands(dealer, players)
 
-        playersDrawCards(players)
+        playersDrawCards(gameManager, players)
 
         dealerDrawCards(dealer)
 
@@ -30,20 +30,20 @@ class BlackjackController(
         resultSummary(gameManager)
     }
 
-    private fun playersDrawCards(players: List<Player>) {
-        players.forEach { player -> playerDrawOrStay(player) }
+    private fun playersDrawCards(gameManager: GameManager, players: List<Player>) {
+        players.forEach { player -> playerDrawOrStay(gameManager, player) }
     }
 
-    private fun playerDrawOrStay(player: Player) {
-        val condition: DrawChoice = inputView.readMoreCardCondition(player)
-        if (condition.isStay()) {
+    private fun playerDrawOrStay(gameManager: GameManager, player: Player) {
+        val userChoice: DrawChoice = inputView.readMoreCardCondition(player)
+        if (userChoice.isStay()) {
             outputView.printPlayerHands(player)
             return
         }
-        player.addCard(Deck.draw())
+        gameManager.drawCard(player)
         outputView.printPlayerHands(player)
         if (player.isBust()) return
-        playerDrawOrStay(player)
+        playerDrawOrStay(gameManager, player)
     }
 
     private fun dealerDrawCards(dealer: Dealer) {

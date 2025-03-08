@@ -9,12 +9,15 @@ class GameManager(
         players.forEach { player -> player.addCards(Deck.drawWithCount(count)) }
     }
 
+    fun drawCard(player: Player) {
+        player.addCard(Deck.draw())
+    }
+
     fun calculateResultMap(): Map<Player, ResultType> {
-        val playersStatus =
-            players.associateBy(
-                { player -> player },
-                { player -> ResultType.judgeScore(dealer, player) },
-            )
+        val playersStatus = players.associateBy(
+            { player -> player },
+            { player -> ResultType.judgeScore(dealer, player) },
+        )
         return playersStatus
     }
 
