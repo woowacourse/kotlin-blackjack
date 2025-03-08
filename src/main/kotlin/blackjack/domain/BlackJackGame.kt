@@ -10,7 +10,7 @@ class BlackJackGame(
     fun handOutInitializedCards(initializedCardCount: Int = INITIAL_CARD_COUNT) {
         (participants.players + participants.dealer).forEach { player ->
             repeat(initializedCardCount) {
-                player.addCard(deck.pop())
+                player.addCard(deck.draw())
             }
         }
     }
@@ -23,7 +23,7 @@ class BlackJackGame(
             while (!player.isBust()) {
                 val choice = getPlayerChoice(player.name)
                 when (choice) {
-                    UserChoice.HIT -> player.addCard(deck.pop())
+                    UserChoice.HIT -> player.addCard(deck.draw())
                     UserChoice.STAY -> {
                         if (player.cards.size == 2) {
                             onPlayerStateUpdated(player)
@@ -39,7 +39,7 @@ class BlackJackGame(
     fun processDealerTurn(): Int {
         var count = 0
         while (participants.dealer.isOverMaxScore().not()) {
-            participants.dealer.addCard(deck.pop())
+            participants.dealer.addCard(deck.draw())
             count++
         }
         return count

@@ -1,29 +1,28 @@
 package blackjack.domain
 
-import blackjack.domain.card.Tier
-import blackjack.domain.card.Shape
+import blackjack.domain.card.CardFactory
 import blackjack.domain.card.TrumpCard
 import java.util.ArrayDeque
 import java.util.Deque
 
-class Deck {
+class Deck(
+    cardFactory: CardFactory,
+) {
     private val cards: Deque<TrumpCard> = ArrayDeque()
 
     init {
-        getAllCards()
+        cards.addAll(cardFactory.makeCard())
     }
 
-    fun pop(): TrumpCard = cards.pop()
+    fun draw(): TrumpCard {
+        if (cards.isEmpty()) {
+            throw IllegalArgumentException(ALL_CARD_USED)
+        }
 
-    private fun getAllCards() {
-        cards.addAll(makeCards())
+        return cards.pop()
     }
 
-    private fun makeCards(): List<TrumpCard> =
-        Shape.entries
-            .flatMap { shape ->
-                Tier.entries.map { tier ->
-                    TrumpCard(tier, shape)
-                }
-            }.shuffled()
+    companion object {
+        private const val ALL_CARD_USED = "카드가 모두 소진되었습니다."
+    }
 }

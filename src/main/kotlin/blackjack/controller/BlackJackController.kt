@@ -71,17 +71,28 @@ class BlackJackController(
         players: Participants,
     ) {
         game.handOutInitializedCards()
+        displayInitialCards(players)
+        playGame(game)
+    }
+
+    private fun displayInitialCards(players: Participants) {
         displayDealerCards(players)
         displayPlayerCards(players)
+    }
 
-        game.playGame(
-            getPlayerChoice = { playerName ->
-                getUserChoice(playerName)
-            },
-            onPlayerStateUpdated = { player ->
-                outputView.printOneCardMessage(player)
-            },
-        )
+    private fun playGame(game: BlackJackGame) {
+        runCatching {
+            game.playGame(
+                getPlayerChoice = { playerName ->
+                    getUserChoice(playerName)
+                },
+                onPlayerStateUpdated = { player ->
+                    outputView.printOneCardMessage(player)
+                },
+            )
+        }.onFailure {
+            outputView.printErrorMessage(it.message)
+        }
     }
 
     private fun displayResult(
