@@ -5,8 +5,19 @@ class GameManager(
     private val players: List<Player>,
 ) {
     fun dealInitialCardWithCount(count: Int) {
-        dealer.addCards(Deck.drawWithCount(count))
-        players.forEach { player -> player.addCards(Deck.drawWithCount(count)) }
+        distributeCardWithCount(dealer, count)
+        players.forEach { player ->
+            distributeCardWithCount(player, count)
+        }
+    }
+
+    private fun distributeCardWithCount(
+        participant: Participant,
+        count: Int,
+    ) {
+        repeat(count) {
+            participant.addCard(Deck.draw())
+        }
     }
 
     fun drawCard(player: Player) {
@@ -14,10 +25,11 @@ class GameManager(
     }
 
     fun calculateResultMap(): Map<Player, ResultType> {
-        val playersStatus = players.associateBy(
-            { player -> player },
-            { player -> ResultType.judgeScore(dealer, player) },
-        )
+        val playersStatus =
+            players.associateBy(
+                { player -> player },
+                { player -> ResultType.judgeScore(dealer, player) },
+            )
         return playersStatus
     }
 
