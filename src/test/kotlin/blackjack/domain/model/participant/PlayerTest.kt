@@ -1,22 +1,21 @@
 package blackjack.domain.model.participant
 
+import blackjack.domain.model.card.Card
+import blackjack.domain.model.card.CardNumber
+import blackjack.domain.model.card.Suit
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class PlayerTest {
     @Test
-    fun `플레이어는 처음에 카드를 2장 받는다`() {
+    fun `플레이어가 드로우를 더 할 수 있는지 여부를 알 수 있다`() {
         val player = Player()
+        player.handCards.add(Card(CardNumber.TEN, Suit.SPADE))
+        player.handCards.add(Card(CardNumber.TEN, Suit.HEART))
+        player.handCards.add(Card(CardNumber.TWO, Suit.CLUB))
 
-        assertThat(player.showCards()).hasSize(2)
-    }
+        val isDrawable = player.isDrawable()
 
-    @Test
-    fun `플레이어는 덱에서 카드를 뽑을 수 있다`() {
-        val player = Player()
-
-        player.drawCard()
-
-        assertThat(player.showCards()).hasSize(3)
+        assertThat(isDrawable).isEqualTo(false)
     }
 }
