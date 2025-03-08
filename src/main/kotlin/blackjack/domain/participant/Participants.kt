@@ -4,7 +4,7 @@ class Participants(
     private val value: List<Participant>,
 ) {
     init {
-        require(players.size == players.distinct().size) {
+        require(players.size == players.map { it.name }.distinct().size) {
             ERROR_DUPLICATED_PLAYERS
         }
     }
