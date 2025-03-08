@@ -1,8 +1,8 @@
 package blackjack.domain.participant
 
 import blackjack.domain.BlackJackGame.Companion.BUST_STANDARD
-import blackjack.domain.TrumpCard
-import blackjack.domain.enums.CardTier
+import blackjack.domain.card.Tier
+import blackjack.domain.card.TrumpCard
 import blackjack.domain.participant.Dealer.Companion.ACE_EXTRACT_SCORE
 
 data class Player(
@@ -19,7 +19,7 @@ data class Player(
 
     override fun isBust(): Boolean = sumOfCards > BUST_STANDARD
 
-    override fun hasAce(): Boolean = cards.map { it.tier }.contains(CardTier.ACE)
+    override fun hasAce(): Boolean = cards.map { it.tier }.contains(Tier.ACE)
 
     private fun isBustByMaxAce(): Boolean = sumOfCards + ACE_EXTRACT_SCORE > BUST_STANDARD
 

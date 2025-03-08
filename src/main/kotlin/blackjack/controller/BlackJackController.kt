@@ -2,7 +2,7 @@ package blackjack.controller
 
 import blackjack.domain.BlackJackGame
 import blackjack.domain.Deck
-import blackjack.domain.enums.UserChoice
+import blackjack.domain.UserChoice
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Participant
 import blackjack.domain.participant.Participants

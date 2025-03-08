@@ -1,7 +1,8 @@
 package blackjack.domain
 
-import blackjack.domain.enums.CardTier
-import blackjack.domain.enums.Shape
+import blackjack.domain.card.Tier
+import blackjack.domain.card.Shape
+import blackjack.domain.card.TrumpCard
 import java.util.ArrayDeque
 import java.util.Deque
 
@@ -21,7 +22,7 @@ class Deck {
     private fun makeCards(): List<TrumpCard> =
         Shape.entries
             .flatMap { shape ->
-                CardTier.entries.map { tier ->
+                Tier.entries.map { tier ->
                     TrumpCard(tier, shape)
                 }
             }.shuffled()

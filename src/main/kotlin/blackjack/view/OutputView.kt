@@ -1,11 +1,10 @@
 package blackjack.view
 
-import blackjack.domain.TrumpCard
-import blackjack.domain.enums.CardTier
-import blackjack.domain.enums.GameResult
-import blackjack.domain.enums.Shape
+import blackjack.domain.card.Tier
+import blackjack.domain.GameResult
+import blackjack.domain.card.Shape
+import blackjack.domain.card.TrumpCard
 import blackjack.domain.participant.Dealer
-import blackjack.domain.participant.Participants
 import blackjack.domain.participant.Player
 import java.lang.String.format
 
@@ -31,7 +30,6 @@ class OutputView {
     fun printDealerSum(participants: Dealer) {
         print(format(MESSAGE_OUTPUT_DEALER_CARD, makeCardListMessage(participants.cards)))
         println(format(MESSAGE_OUTPUT_SUM, participants.sum()))
-
     }
 
     fun printPlayerSum(players: List<Player>) {
@@ -59,8 +57,7 @@ class OutputView {
             cardMessageFormat(card)
         }
 
-    private fun cardMessageFormat(card: TrumpCard): String =
-        MESSAGE_CARD.format(card.tier.toEnglish(), card.shape.toKorean())
+    private fun cardMessageFormat(card: TrumpCard): String = MESSAGE_CARD.format(card.tier.toEnglish(), card.shape.toKorean())
 
     fun printDealerExtraCard(count: Int) {
         println(format(MESSAGE_OUTPUT_DEALER_EXTRA_CARD, count))
@@ -78,12 +75,12 @@ class OutputView {
             Shape.SPADE -> "스페이드"
         }
 
-    private fun CardTier.toEnglish(): String =
+    private fun Tier.toEnglish(): String =
         when (this) {
-            CardTier.ACE -> "A"
-            CardTier.JACK -> "J"
-            CardTier.QUEEN -> "Q"
-            CardTier.KING -> "K"
+            Tier.ACE -> "A"
+            Tier.JACK -> "J"
+            Tier.QUEEN -> "Q"
+            Tier.KING -> "K"
             else -> this.values.toString()
         }
 

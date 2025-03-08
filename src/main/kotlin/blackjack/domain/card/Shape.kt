@@ -1,4 +1,4 @@
-package blackjack.domain.enums
+package blackjack.domain.card
 
 enum class Shape {
     HEART,

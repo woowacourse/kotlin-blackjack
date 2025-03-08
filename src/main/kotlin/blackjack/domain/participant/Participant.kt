@@ -1,6 +1,6 @@
 package blackjack.domain.participant
 
-import blackjack.domain.TrumpCard
+import blackjack.domain.card.TrumpCard
 
 interface Participant {
     val cards: List<TrumpCard>

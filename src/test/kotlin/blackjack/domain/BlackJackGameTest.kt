@@ -1,8 +1,8 @@
 package blackjack.domain
 
-import blackjack.domain.enums.CardTier
-import blackjack.domain.enums.Shape
-import blackjack.domain.enums.UserChoice
+import blackjack.domain.card.Tier
+import blackjack.domain.card.Shape
+import blackjack.domain.card.TrumpCard
 import blackjack.fixture.participantsFixture
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -22,8 +22,8 @@ class BlackJackGameTest {
         val game = BlackJackGame(participants, Deck())
         val player = participants.players.first()
 
-        player.addCard(TrumpCard(CardTier.JACK, Shape.DIA))
-        player.addCard(TrumpCard(CardTier.JACK, Shape.DIA))
+        player.addCard(TrumpCard(Tier.JACK, Shape.DIA))
+        player.addCard(TrumpCard(Tier.JACK, Shape.DIA))
 
         game.playGame(
             getPlayerChoice = { UserChoice.from("y") },

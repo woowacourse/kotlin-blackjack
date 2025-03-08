@@ -19,7 +19,7 @@ fun languages(block: LanguagesBuilder.() -> Unit): Language? {
     return LanguagesBuilder().apply(block).build()
 }
 
-fun main(){
+fun main()  {
     introduce {
         name("페토")
         company("우아한형제들")
@@ -36,7 +36,7 @@ fun main(){
     }
 }
 
-//introduce {
+// introduce {
 //  name("박재성")
 //  company("우아한형제들")
 //  skills {
@@ -48,4 +48,4 @@ fun main(){
 //    "Korean" level 5
 //    "English" level 3
 //  }
-//}
+// }

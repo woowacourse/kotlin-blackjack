@@ -1,9 +1,5 @@
 package blackjack.domain
 
-import blackjack.domain.enums.GameResult
-import blackjack.domain.enums.UserChoice
-import blackjack.domain.participant.Dealer
-import blackjack.domain.participant.Participant
 import blackjack.domain.participant.Participants
 import blackjack.domain.participant.Player
 
@@ -11,7 +7,6 @@ class BlackJackGame(
     private val participants: Participants,
     private val deck: Deck,
 ) {
-
     fun handOutInitializedCards(initializedCardCount: Int = INITIAL_CARD_COUNT) {
         (participants.players + participants.dealer).forEach { player ->
             repeat(initializedCardCount) {

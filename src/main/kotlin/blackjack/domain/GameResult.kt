@@ -1,4 +1,4 @@
-package blackjack.domain.enums
+package blackjack.domain
 
 import blackjack.domain.BlackJackGame.Companion.BUST_STANDARD
 

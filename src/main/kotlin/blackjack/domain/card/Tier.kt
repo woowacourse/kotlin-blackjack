@@ -1,6 +1,6 @@
-package blackjack.domain.enums
+package blackjack.domain.card
 
-enum class CardTier(
+enum class Tier(
     val values: Int,
 ) {
     ACE(1),
