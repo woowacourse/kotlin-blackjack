@@ -30,13 +30,19 @@ class BlackjackController(
         resultSummary(gameManager)
     }
 
-    private fun playersDrawCards(gameManager: GameManager, players: List<Player>) {
+    private fun playersDrawCards(
+        gameManager: GameManager,
+        players: List<Player>,
+    ) {
         players.forEach { player -> playerDrawOrStay(gameManager, player) }
     }
 
-    private fun playerDrawOrStay(gameManager: GameManager, player: Player) {
+    private fun playerDrawOrStay(
+        gameManager: GameManager,
+        player: Player,
+    ) {
         val userChoice: DrawChoice = inputView.readMoreCardCondition(player)
-        if (userChoice.isStay()) {
+        if (!userChoice.isDraw()) {
             outputView.printPlayerHands(player)
             return
         }
