@@ -14,7 +14,7 @@ class DealerTest {
                 Card(CardRank.SIX, Shape.CLUB),
             )
 
-        assertThat(cards.getCardsCount()).isEqualTo(2)
+        assertThat(cards.totalCount()).isEqualTo(2)
     }
 
     @Test
@@ -26,7 +26,7 @@ class DealerTest {
             )
 
         val dealer = Dealer(cards)
-        Assertions.assertTrue(dealer.isHit())
+        Assertions.assertTrue(dealer.canHit())
     }
 
     @Test
@@ -56,7 +56,7 @@ class DealerTest {
                 Card(CardRank.NINE, Shape.SPADE),
             )
         val deck = Cards(deckCards)
-        val drawCount = dealer.getDrawCount(deck)
+        val drawCount = dealer.drawCount(deck)
 
         assertThat(drawCount).isEqualTo(2)
     }

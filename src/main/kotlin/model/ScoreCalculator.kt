@@ -2,7 +2,7 @@ package model
 
 class ScoreCalculator(private val cards: Cards) {
     private fun calculateCardScore(): Int {
-        return cards.getCardScores().sum()
+        return cards.scores().sum()
     }
 
     private fun calculateAceScore(): Int = cards.aceCount()

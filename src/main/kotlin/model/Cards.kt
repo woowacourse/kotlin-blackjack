@@ -4,20 +4,20 @@ class Cards(allCards: List<Card>) {
     val allCards: MutableList<Card> = allCards.toMutableList()
 
     init {
-        require(allCards.toSet().size == getCardsCount()) { DUPLICATE_CARD_ERROR_MESSAGE }
+        require(allCards.toSet().size == totalCount()) { DUPLICATE_CARD_ERROR_MESSAGE }
     }
 
-    fun getInitialCards(): Cards {
+    fun initialCards(): Cards {
         val initialCards = allCards.take(2)
         allCards.removeAll(initialCards)
         return Cards(initialCards)
     }
 
-    fun getCardsCount() = allCards.size
+    fun totalCount() = allCards.size
 
-    fun getCardNames() = allCards.map { it.cardName }
+    fun names() = allCards.map { it.cardName }
 
-    fun getCardScores() = allCards.map { card -> card.cardScore }
+    fun scores() = allCards.map { card -> card.cardScore }
 
     fun aceCount() = allCards.count { card -> card.isAceCard() }
 

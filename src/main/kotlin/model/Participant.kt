@@ -6,9 +6,9 @@ abstract class Participant(private val cards: Cards) {
 
     abstract fun turn(cards: Cards): Boolean
 
-    abstract fun isHit(): Boolean
+    abstract fun canHit(): Boolean
 
-    fun getScore(): Int {
+    fun currentScore(): Int {
         return ScoreCalculator(cards).calculateTotalCardScore()
     }
 

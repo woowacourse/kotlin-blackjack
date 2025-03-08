@@ -20,7 +20,7 @@ class PlayerTest {
                 Card(CardRank.QUEEN, Shape.SPADE),
             )
 
-        assertThat(cards.getCardsCount()).isEqualTo(2)
+        assertThat(cards.totalCount()).isEqualTo(2)
     }
 
     @Test
@@ -32,7 +32,7 @@ class PlayerTest {
             )
 
         val player = Player("joy", cards)
-        Assertions.assertTrue(player.isHit())
+        Assertions.assertTrue(player.canHit())
     }
 
     @Test

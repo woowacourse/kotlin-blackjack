@@ -9,9 +9,9 @@ class CardsTest {
     @Test
     fun `원하는 개수 만큼 카드를 뽑을 수 있다`() {
         val cards = CardsGenerator().generateCards().allCards
-        val drawCards = Cards(cards).getInitialCards()
+        val drawCards = Cards(cards).initialCards()
 
-        assertThat(drawCards.getCardsCount()).isEqualTo(2)
+        assertThat(drawCards.totalCount()).isEqualTo(2)
     }
 
     @Test
@@ -22,7 +22,7 @@ class CardsTest {
                 Card(CardRank.ACE, Shape.SPADE),
             )
 
-        assertThat(cards.getCardsCount()).isEqualTo(2)
+        assertThat(cards.totalCount()).isEqualTo(2)
     }
 
     @Test
@@ -35,15 +35,15 @@ class CardsTest {
 
         val scoreLists = listOf(6, 9)
 
-        assertThat(cards.getCardScores()).isEqualTo(scoreLists)
+        assertThat(cards.scores()).isEqualTo(scoreLists)
     }
 
     @Test
     fun `지정된 개수만큼 카드를 뽑은 후 남은 카드를 반환한다`() {
         val cards = CardsGenerator().generateCards()
-        cards.getInitialCards()
+        cards.initialCards()
 
-        assertThat(cards.getCardsCount()).isEqualTo(50)
+        assertThat(cards.totalCount()).isEqualTo(50)
     }
 
     @Test

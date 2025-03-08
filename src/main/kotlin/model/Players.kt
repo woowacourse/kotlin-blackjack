@@ -13,9 +13,9 @@ class Players(private val players: List<Player>) : Iterable<Player> {
         }
     }
 
-    fun getPlayersNames(): List<String> = players.map { player -> player.name }
+    fun names(): List<String> = players.map { player -> player.name }
 
-    fun getPlayersScores(): List<Int> = players.map { player -> player.getScore() }
+    fun scores(): List<Int> = players.map { player -> player.currentScore() }
 
     companion object {
         private const val PLAYERS_NUMBER_ERROR_MESSAGE = "플레이어의 수는 1명 이상이어야 합니다"

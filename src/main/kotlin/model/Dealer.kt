@@ -2,11 +2,11 @@ package model
 
 class Dealer(dealerCards: Cards) : Participant(dealerCards) {
     init {
-        require(dealerCards.getCardsCount() == 2) { DEALER_INITIAL_CARD_ERROR_MESSAGE }
+        require(dealerCards.totalCount() == 2) { DEALER_INITIAL_CARD_ERROR_MESSAGE }
     }
 
     override fun turn(cards: Cards): Boolean {
-        if (isHit()) {
+        if (canHit()) {
             val drawnCard = drawCard(cards.allCards)
             addCard(drawnCard)
             return true
@@ -14,15 +14,15 @@ class Dealer(dealerCards: Cards) : Participant(dealerCards) {
         return false
     }
 
-    fun getDrawCount(allCards: Cards): Int {
+    fun drawCount(allCards: Cards): Int {
         var drawCount = 0
-        while (isHit()) {
+        while (canHit()) {
             if (turn(allCards)) drawCount++
         }
         return drawCount
     }
 
-    override fun isHit(): Boolean = getScore() <= 16
+    override fun canHit(): Boolean = currentScore() <= 16
 
     companion object {
         private const val DEALER_INITIAL_CARD_ERROR_MESSAGE = "[ERROR] 딜러는 2장의 카드를 가져야합니다."
