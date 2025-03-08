@@ -25,7 +25,7 @@ class BlackJackGameTest {
     @Test
     fun `게임을 시작하면 각 플레이어와 딜러는 2장의 카드를 지급받는다`() {
         game.handOutInitializedCards(2)
-        assertThat(participants.players.first().cards.size).isEqualTo(2)
+        assertThat(participants.players.first().cards.size()).isEqualTo(2)
     }
 
     @Test
@@ -40,7 +40,7 @@ class BlackJackGameTest {
             onPlayerStateUpdated = {},
         )
 
-        assertThat(player.cards.size).isEqualTo(3)
+        assertThat(player.cards.size()).isEqualTo(3)
     }
 
     @Test
@@ -49,6 +49,6 @@ class BlackJackGameTest {
             getPlayerChoice = { UserChoice.from("n") },
             onPlayerStateUpdated = {},
         )
-        assertThat(participants.players.first().cards.size).isEqualTo(0)
+        assertThat(participants.players.first().cards.size()).isEqualTo(0)
     }
 }

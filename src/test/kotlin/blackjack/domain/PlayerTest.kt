@@ -4,8 +4,10 @@ import blackjack.domain.card.Shape
 import blackjack.domain.card.Tier
 import blackjack.domain.card.TrumpCard
 import blackjack.domain.participant.Player
+import blackjack.fixture.bustTrumpCardFixture
 import blackjack.fixture.trumpCardFixture
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
@@ -23,15 +25,31 @@ class PlayerTest {
         fixture.forEach {
             player.addCard(it)
         }
-        assertThat(player.cards).containsExactly(*fixture.toTypedArray())
+        assertThat(player.cards.items).containsExactly(*fixture.toTypedArray())
+    }
+
+    @Test
+    fun `플레이어가 에이스 카드가 없으면 에이스 카드가 없음을 반환한다`() {
+        val expected = player.hasAce()
+
+        assertEquals(expected, false)
+    }
+
+    @Test
+    fun `플레이어가 에이스 카드가 있으면 에이스 카드가 있음을 반환한다`() {
+        player.addCard(TrumpCard(Tier.ACE, Shape.DIA))
+
+        val expected = player.hasAce()
+
+        assertEquals(expected, true)
     }
 
     @Test
     fun `플레이어 카드의 총합이 21을 초과하면 버스트된다`() {
-        repeat(3) {
-            player.addCard(TrumpCard(Tier.KING, Shape.DIA))
+        bustTrumpCardFixture().forEach {
+            player.addCard(it)
         }
-        assertThat(player.isBust()).isEqualTo(true)
+        assertEquals(player.isBust(), true)
     }
 
     @Test
@@ -39,7 +57,7 @@ class PlayerTest {
         player.addCard(TrumpCard(Tier.ACE, Shape.DIA))
         player.addCard(TrumpCard(Tier.NINE, Shape.HEART))
 
-        assertThat(player.sum()).isEqualTo(20)
+        assertEquals(player.totalScore(), 20)
     }
 
     @Test
@@ -48,6 +66,6 @@ class PlayerTest {
         player.addCard(TrumpCard(Tier.SEVEN, Shape.HEART))
         player.addCard(TrumpCard(Tier.NINE, Shape.HEART))
 
-        assertThat(player.sum()).isEqualTo(17)
+        assertEquals(player.totalScore(), 17)
     }
 }

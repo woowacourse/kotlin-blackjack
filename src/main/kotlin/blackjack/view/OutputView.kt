@@ -18,24 +18,24 @@ class OutputView {
     }
 
     fun printOneCardMessage(player: Player) {
-        println(format(MESSAGE_OUTPUT_PLAYER_CARD, player.name, makeCardListMessage(player.cards)))
+        println(format(MESSAGE_OUTPUT_PLAYER_CARD, player.name, makeCardListMessage(player.cards.items)))
     }
 
     fun printPlayerCards(players: List<Player>) {
         players.forEach { player ->
-            println(format(MESSAGE_OUTPUT_PLAYER_CARD, player.name, makeCardListMessage(player.cards)))
+            println(format(MESSAGE_OUTPUT_PLAYER_CARD, player.name, makeCardListMessage(player.cards.items)))
         }
     }
 
     fun printDealerSum(participants: Dealer) {
-        print(format(MESSAGE_OUTPUT_DEALER_CARD, makeCardListMessage(participants.cards)))
-        println(format(MESSAGE_OUTPUT_SUM, participants.sum()))
+        print(format(MESSAGE_OUTPUT_DEALER_CARD, makeCardListMessage(participants.cards.items)))
+        println(format(MESSAGE_OUTPUT_SUM, participants.totalScore()))
     }
 
     fun printPlayerSum(players: List<Player>) {
         players.forEach { player ->
-            print(format(MESSAGE_OUTPUT_PLAYER_CARD, player.name, makeCardListMessage(player.cards)))
-            println(format(MESSAGE_OUTPUT_SUM, player.sum()))
+            print(format(MESSAGE_OUTPUT_PLAYER_CARD, player.name, makeCardListMessage(player.cards.items)))
+            println(format(MESSAGE_OUTPUT_SUM, player.totalScore()))
         }
     }
 
@@ -52,7 +52,7 @@ class OutputView {
         println(format(MESSAGE_OUTPUT_PLAYER_RESULT, name, result.toKorean()))
     }
 
-    private fun makeCardListMessage(cards: List<TrumpCard>): String =
+    private fun makeCardListMessage(cards: Set<TrumpCard>): String =
         cards.joinToString { card ->
             cardMessageFormat(card)
         }
