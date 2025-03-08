@@ -4,7 +4,7 @@ class Cards(allCards: List<Card>) {
     val allCards: MutableList<Card> = allCards.toMutableList()
 
     init {
-        require(allCards.distinct().size == getCardsCount()) { DUPLICATE_CARD_ERROR_MESSAGE }
+        require(allCards.toSet().size == getCardsCount()) { DUPLICATE_CARD_ERROR_MESSAGE }
     }
 
     fun getInitialCards(): Cards {
