@@ -4,7 +4,7 @@ import blackjack.model.ResultType.Companion.BUST_NUMBER
 
 class Player(
     val name: String,
-) : Person() {
+) : Participant() {
     fun adjustScore(): Int {
         var sumScore = calculateTotalScore()
         var countAce = countAce()

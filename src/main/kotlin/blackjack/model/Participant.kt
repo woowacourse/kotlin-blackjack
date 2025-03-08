@@ -1,6 +1,6 @@
 package blackjack.model
 
-abstract class Person {
+abstract class Participant {
     private val _cards: MutableList<Card> = mutableListOf()
     open val cards get() = _cards.toList()
 

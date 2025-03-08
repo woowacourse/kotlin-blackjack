@@ -2,7 +2,7 @@ package blackjack.model
 
 import blackjack.model.ResultType.Companion.BUST_NUMBER
 
-class Dealer : Person() {
+class Dealer : Participant() {
     val name = DEALER_NAME
 
     fun isMoreCard() = calculateTotalScore() < DEALER_MORE_CARD_MINIMUM
