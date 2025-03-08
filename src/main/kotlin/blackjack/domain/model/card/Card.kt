@@ -5,7 +5,7 @@ data class Card(
     val suit: Suit,
 ) {
     init {
-        require(cardNumber.value in MINIMUM_CARD_NUMBER..MAXIMUM_CARD_NUMBER) { ERROR_OUT_OF_CARD_NUMBER }
+        require(cardNumber in CardNumber.entries) { ERROR_OUT_OF_CARD_NUMBER }
         require(suit in Suit.entries) { ERROR_INVALID_SUIT }
     }
 
