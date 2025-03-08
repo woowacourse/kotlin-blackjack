@@ -38,7 +38,7 @@ class BlackjackController(
             dealer.drawCard(deck.pick())
             players.drawCard(deck)
         }
-        outputView.printDealingResult(dealer, players)
+        outputView.printCardInfo(dealer, players)
     }
 
     private fun drawPlayerCards(
@@ -63,32 +63,30 @@ class BlackjackController(
         while (dealer.canHit()) {
             dealer.drawCard(deck.pick())
         }
-        val hitCount = dealer.countCards() - INITIAL_CARD_COUNT
-        outputView.printDealerHit(hitCount)
+        outputView.printDealerHit(dealer)
     }
 
     private fun showGameResult(
         dealer: Dealer,
         players: Players,
     ) {
-        outputView.printBlackjackScore(dealer, players)
+        outputView.printParticipantScore(dealer, players)
 
+        val dealerResult =
+            players.players
+                .map { dealer.getResult(it.getScore()) }
+                .groupingBy { it }
+                .eachCount()
+        outputView.printDealerResult(dealer, dealerResult)
         players.players.forEach {
             outputView.printPlayerResult(
                 it.name,
                 it.getResult(dealer.getScore()),
             )
         }
-        val dealerResult =
-            players.players
-                .map { dealer.getResult(it.getScore()) }
-                .groupingBy { it }
-                .eachCount()
-                .withDefault { 0 }
-        outputView.printDealerResult(dealerResult)
     }
 
     companion object {
-        private const val INITIAL_CARD_COUNT = 2
+        const val INITIAL_CARD_COUNT = 2
     }
 }

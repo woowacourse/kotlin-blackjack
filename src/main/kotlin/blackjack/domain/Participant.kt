@@ -2,7 +2,9 @@ package blackjack.domain
 
 import blackjack.enums.Result
 
-abstract class Participant {
+abstract class Participant(
+    val name: String,
+) {
     val hand = Hand()
 
     fun drawCard(card: Card) {

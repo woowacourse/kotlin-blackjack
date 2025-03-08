@@ -3,8 +3,8 @@ package blackjack.domain
 import blackjack.enums.Result
 
 class Player(
-    val name: String,
-) : Participant() {
+    name: String,
+) : Participant(name) {
     override fun canHit(): Boolean = !getScore().isBust()
 
     override fun getResult(otherScore: Score): Result {
