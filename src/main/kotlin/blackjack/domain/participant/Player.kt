@@ -1,7 +1,7 @@
 package blackjack.domain.participant
 
 import blackjack.domain.BlackJackGame.Companion.BUST_STANDARD
-import blackjack.domain.card.Tier
+import blackjack.domain.card.PlayerCards
 import blackjack.domain.card.TrumpCard
 import blackjack.domain.participant.Dealer.Companion.ACE_EXTRACT_SCORE
 
@@ -11,15 +11,19 @@ data class Player(
     private val _cards = mutableListOf<TrumpCard>()
     override val cards: List<TrumpCard> get() = _cards.toList()
 
-    override val sumOfCards get() = _cards.sumOf { card -> card.tier.values }
+    private var _cards2 = PlayerCards(emptySet())
+    val cards2 get() = _cards2
+
+    override val sumOfCards get() = cards2.sumOfCards
 
     override fun addCard(card: TrumpCard) {
-        _cards.add(card)
+        _cards2 = cards2.add(card)
     }
 
+    // 추상화
     override fun isBust(): Boolean = sumOfCards > BUST_STANDARD
 
-    override fun hasAce(): Boolean = cards.map { it.tier }.contains(Tier.ACE)
+    override fun hasAce(): Boolean = _cards2.hasAce()
 
     private fun isBustByMaxAce(): Boolean = sumOfCards + ACE_EXTRACT_SCORE > BUST_STANDARD
 
