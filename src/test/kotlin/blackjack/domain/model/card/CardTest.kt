@@ -1,8 +1,5 @@
-package blackjack.domain.model
+package blackjack.domain.model.card
 
-import blackjack.domain.model.card.Card
-import blackjack.domain.model.card.CardNumber
-import blackjack.domain.model.card.Suit
 import org.junit.jupiter.api.assertDoesNotThrow
 import kotlin.test.Test
 
