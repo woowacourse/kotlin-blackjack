@@ -39,12 +39,12 @@ class OutputView {
         players: Players,
     ) {
         val dealerCards = cardsInfo(dealer.hand.cards)
-        val dealerScore = dealer.calculateScore()
+        val dealerScore = dealer.getScore()
         println("${MESSAGE_DEALER_CARD.format(dealerCards)} ${MESSAGE_SCORE.format(dealerScore)}")
 
         players.players.forEach { player ->
             val playerCards = cardsInfo(player.hand.cards)
-            val playerScore = player.calculateScore()
+            val playerScore = player.getScore()
             println(
                 "${MESSAGE_PLAYER_CARD.format(player.name, playerCards)} ${
                     MESSAGE_SCORE.format(

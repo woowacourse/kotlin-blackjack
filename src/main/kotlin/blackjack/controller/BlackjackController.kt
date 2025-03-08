@@ -16,11 +16,10 @@ class BlackjackController(
         val dealer = Dealer()
         val players = getPlayers()
         val deck = Deck(ShuffledCardGenerator().generate())
-
         dealInitialCards(dealer, players, deck)
-        playTurns(dealer, players, deck)
 
-        outputView.printBlackjackScore(dealer, players)
+        drawPlayerCards(players, deck)
+        drawDealerCards(dealer, deck)
         showGameResult(dealer, players)
     }
 
@@ -37,17 +36,30 @@ class BlackjackController(
     ) {
         repeat(INITIAL_CARD_COUNT) {
             dealer.drawCard(deck.pick())
-            players.dealCards(deck)
+            players.drawCard(deck)
         }
         outputView.printDealingResult(dealer, players)
     }
 
-    private fun playTurns(
-        dealer: Dealer,
+    private fun drawPlayerCards(
         players: Players,
         deck: Deck,
     ) {
-        players.players.forEach { drawCard(it, deck) }
+        players.players.forEach { player ->
+            while (player.canHit() && inputView.readPlayerHit(player)) {
+                player.drawCard(deck.pick())
+                outputView.printPlayerCards(player)
+            }
+            if (!player.canHit()) {
+                outputView.printBust(player)
+            }
+        }
+    }
+
+    private fun drawDealerCards(
+        dealer: Dealer,
+        deck: Deck,
+    ) {
         while (dealer.canHit()) {
             dealer.drawCard(deck.pick())
         }
@@ -55,32 +67,21 @@ class BlackjackController(
         outputView.printDealerHit(hitCount)
     }
 
-    private fun drawCard(
-        player: Player,
-        deck: Deck,
-    ) {
-        while (player.canHit() && inputView.readPlayerHit(player)) {
-            player.drawCard(deck.pick())
-            outputView.printPlayerCards(player)
-        }
-        if (!player.canHit()) {
-            outputView.printBust(player)
-        }
-    }
-
     private fun showGameResult(
         dealer: Dealer,
         players: Players,
     ) {
+        outputView.printBlackjackScore(dealer, players)
+
         players.players.forEach {
             outputView.printPlayerResult(
                 it.name,
-                it.getResult(dealer.calculateScore()),
+                it.getResult(dealer.getScore()),
             )
         }
         val dealerResult =
             players.players
-                .map { dealer.getResult(it.calculateScore()) }
+                .map { dealer.getResult(it.getScore()) }
                 .groupingBy { it }
                 .eachCount()
                 .withDefault { 0 }
