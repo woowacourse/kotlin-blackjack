@@ -1,71 +1,98 @@
 package blackjack.controller
 
-import blackjack.domain.model.Dealer
-import blackjack.domain.model.Player
-import blackjack.domain.model.Rule
-import blackjack.domain.model.WinLossStatistics
+import blackjack.domain.generator.CardsGenerator
+import blackjack.domain.model.GameResult
+import blackjack.domain.model.GameResultRecord
+import blackjack.domain.model.card.Deck
+import blackjack.domain.model.participant.Dealer
+import blackjack.domain.model.participant.Participant
+import blackjack.domain.model.participant.Player
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
 class Casino(
-    val inputView: InputView,
-    val outputView: OutputView,
+    private val inputView: InputView,
+    private val outputView: OutputView,
+    private val cardsGenerator: CardsGenerator,
 ) {
-    fun gameStart() {
+    fun run() {
+        val deck = Deck(cardsGenerator)
         val players: List<Player> = inputView.readPlayerNames().map { Player(it) }
         val dealer: Dealer = Dealer()
-        println()
-        outputView.showDistributeCardMessage(players)
+        initialCardsDistribute(players + dealer, deck)
         outputParticipantCardsInfo(dealer, players)
 
-        runPlayersDrawPhase(players)
-        runDealerDrawPhase(dealer)
-        outputView.showCardsResult(listOf(dealer) + players)
+        runPlayersDrawPhase(players, deck)
+        runDealerDrawPhase(dealer, deck)
         outputFinalResult(dealer, players)
+    }
+
+    private fun initialCardsDistribute(
+        participants: List<Participant>,
+        deck: Deck,
+    ) {
+        participants.forEach { participant ->
+            repeat(2) { participant.drawCard(deck) }
+        }
     }
 
     private fun outputParticipantCardsInfo(
         dealer: Dealer,
         players: List<Player>,
     ) {
+        outputView.showDistributeCardMessage(players)
         outputView.showDealerCardsInfo(dealer)
         players.forEach { outputView.showPlayerCardsInfo(it) }
+        outputView.newLine()
     }
 
-    private fun runPlayersDrawPhase(players: List<Player>) {
-        players.forEach { player ->
-            while (!Rule.isBurst(player.showCards())) {
-                val response: Boolean = inputView.readWantExtraCard(player.name)
-
-                if (!response) {
-                    if (player.showCards().size == 2) {
-                        outputView.showPlayerCardsInfo(player)
-                        // todo(중복 if문 로직 제거 예정)
-                    }
-                    break
-                }
-                player.drawCard()
-                outputView.showPlayerCardsInfo(player)
-            }
+    private fun runPlayersDrawPhase(
+        players: List<Player>,
+        deck: Deck,
+    ) {
+        players.forEach {
+            runEachPlayerDrawPhase(it, deck)
         }
     }
 
-    private fun runDealerDrawPhase(dealer: Dealer) {
-        while (Rule.calculateShouldDrawByCards(dealer.showCards())) {
-            dealer.drawCard()
+    private fun runEachPlayerDrawPhase(
+        player: Player,
+        deck: Deck,
+    ) {
+        while (player.isDrawable()) {
+            val response: Boolean = inputView.readWantExtraCard(player.name)
+
+            if (!response) {
+                if (player.handCards.show().size == 2) {
+                    outputView.showPlayerCardsInfo(player)
+                }
+                break
+            }
+            player.drawCard(deck)
+            outputView.showPlayerCardsInfo(player)
+        }
+        outputView.newLine()
+    }
+
+    private fun runDealerDrawPhase(
+        dealer: Dealer,
+        deck: Deck,
+    ) {
+        while (dealer.isDrawable()) {
+            dealer.drawCard(deck)
             outputView.showDealerDrawMessage()
         }
+        outputView.newLine()
     }
 
     private fun outputFinalResult(
         dealer: Dealer,
         players: List<Player>,
     ) {
-        val winLossStatistics = WinLossStatistics()
-        val playersWinLoss =
-            players.map { player ->
-                player to winLossStatistics.calculatePlayerWinLoss(dealer.showCards(), player.showCards())
-            }
-        outputView.showFinalResult(winLossStatistics.getDealerWinLossText(), playersWinLoss)
+        outputView.showCardsResult(listOf(dealer) + players)
+        outputView.newLine()
+
+        val finalResult: Map<GameResult, Int> = GameResultRecord(dealer, players).getDealerResult()
+        outputView.showFinalResult(finalResult, dealer, players)
     }
 }
