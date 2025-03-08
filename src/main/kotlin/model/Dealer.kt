@@ -22,9 +22,10 @@ class Dealer(dealerCards: Cards) : Participant(dealerCards) {
         return drawCount
     }
 
-    override fun canHit(): Boolean = currentScore() <= 16
+    override fun canHit(): Boolean = currentScore() <= DEALER_HIT_LIMIT
 
     companion object {
         private const val DEALER_INITIAL_CARD_ERROR_MESSAGE = "[ERROR] 딜러는 2장의 카드를 가져야합니다."
+        private const val DEALER_HIT_LIMIT = 16
     }
 }
