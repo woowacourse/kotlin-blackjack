@@ -11,7 +11,11 @@ class Dealer(
         val dealerScore = getScore()
         if (otherScore.isBust()) return Result.WIN
         if (dealerScore.isBust()) return Result.LOSE
-        return Result.from(dealerScore, otherScore)
+        return when {
+            dealerScore > otherScore -> Result.WIN
+            dealerScore < otherScore -> Result.LOSE
+            else -> Result.PUSH
+        }
     }
 
     companion object {

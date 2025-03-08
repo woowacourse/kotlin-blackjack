@@ -11,6 +11,10 @@ class Player(
         val playerScore = getScore()
         if (playerScore.isBust()) return Result.LOSE
         if (otherScore.isBust()) return Result.WIN
-        return Result.from(playerScore, otherScore)
+        return when {
+            playerScore > otherScore -> Result.WIN
+            playerScore < otherScore -> Result.LOSE
+            else -> Result.PUSH
+        }
     }
 }
