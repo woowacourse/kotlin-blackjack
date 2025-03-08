@@ -5,11 +5,9 @@ data class Card(
     private val suit: Suit,
 ) {
     init {
-        require(cardNumber.toValue() in MINIMUM_CARD_NUMBER..MAXIMUM_CARD_NUMBER) { ERROR_OUT_OF_CARD_NUMBER }
+        require(cardNumber.value in MINIMUM_CARD_NUMBER..MAXIMUM_CARD_NUMBER) { ERROR_OUT_OF_CARD_NUMBER }
         require(suit in Suit.entries) { ERROR_INVALID_SUIT }
     }
-
-    fun getCardText(): String = cardNumber.getCardNumberName() + suit.name
 
     companion object {
         private const val MINIMUM_CARD_NUMBER = 1
