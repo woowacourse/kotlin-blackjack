@@ -1,11 +1,9 @@
 package model
 
-class Players(private val players: List<Player>) : Iterable<Player> {
+class Players(private val players: List<Player>) : List<Player> by players {
     init {
         require(players.isNotEmpty()) { PLAYERS_NUMBER_ERROR_MESSAGE }
     }
-
-    override fun iterator(): Iterator<Player> = players.iterator()
 
     fun getPlayerCardNames(): List<List<String>> {
         return players.map { player ->
