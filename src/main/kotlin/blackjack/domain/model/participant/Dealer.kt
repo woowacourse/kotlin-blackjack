@@ -1,11 +1,19 @@
 package blackjack.domain.model.participant
 
+import blackjack.domain.model.GameResult
 import blackjack.domain.model.card.Card
 
 class Dealer(
     name: String = DEFAULT_NAME,
 ) : Participant(name = name) {
     fun showFirstCard(): Card = handCards.show().first()
+
+    override fun compareTo(opponent: Participant): GameResult {
+        if (handCards.isBurst() && opponent.handCards.isBurst()) {
+            return GameResult.WIN
+        }
+        return handCards.compareTo(opponent.handCards)
+    }
 
     override fun isDrawable(): Boolean {
         return handCards.isLessOrSameThan(DEALER_DRAW_CONDITION)
