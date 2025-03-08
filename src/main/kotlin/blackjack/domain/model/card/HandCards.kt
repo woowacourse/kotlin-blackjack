@@ -39,7 +39,7 @@ class HandCards {
         return GameResult.LOSE
     }
 
-    private fun getScore(): Int {
+    fun getScore(): Int {
         val cardValues: Int = _cards.sumOf { it.cardNumber.value }
 
         if (_cards.any { it.isAce() } && cardValues + ACE_EXTRA_SCORE <= BLACK_JACK_NUMBER) {

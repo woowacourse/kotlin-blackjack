@@ -2,7 +2,7 @@ package blackjack.domain.model.card
 
 data class Card(
     val cardNumber: CardNumber,
-    private val suit: Suit,
+    val suit: Suit,
 ) {
     init {
         require(cardNumber.value in MINIMUM_CARD_NUMBER..MAXIMUM_CARD_NUMBER) { ERROR_OUT_OF_CARD_NUMBER }
