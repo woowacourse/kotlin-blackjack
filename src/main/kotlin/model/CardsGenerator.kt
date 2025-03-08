@@ -4,13 +4,13 @@ class CardsGenerator {
     fun generateCards(): Cards {
         val cards: MutableList<Card> = mutableListOf()
         Shape.entries.forEach { shape ->
-            createCardRank(cards, shape)
+            addCardsByRank(cards, shape)
         }
         cards.shuffle()
         return Cards(cards)
     }
 
-    private fun createCardRank(
+    private fun addCardsByRank(
         cards: MutableList<Card>,
         cardShape: Shape,
     ) {
