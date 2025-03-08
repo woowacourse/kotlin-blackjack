@@ -1,13 +1,12 @@
 package blackjack.view
 
-import blackjack.domain.model.Dealer
-import blackjack.domain.model.GameParticipant
-import blackjack.domain.model.Player
-import blackjack.domain.model.Rule
 import blackjack.domain.model.WinLoss
+import blackjack.domain.model.participant.Dealer
+import blackjack.domain.model.participant.Participant
+import blackjack.domain.model.participant.Player
 
 class OutputView {
-    fun showDistributeCardMessage(participants: List<GameParticipant>) {
+    fun showDistributeCardMessage(participants: List<Participant>) {
         val joinedNames = participants.joinToString { it.name }
         println(DISTRIBUTE_CARD_MESSAGE.format(joinedNames))
     }
@@ -26,13 +25,13 @@ class OutputView {
         println(DEALER_DRAW_MESSAGE)
     }
 
-    fun showCardsResult(participants: List<GameParticipant>) {
+    fun showCardsResult(participants: List<Participant>) {
         participants.forEach {
             println(makeParticipantInfo(it) + CARD_RESULT_MESSAGE + Rule.calculateResultByCards(it.showCards()))
         }
     }
 
-    private fun makeParticipantInfo(participant: GameParticipant): String {
+    private fun makeParticipantInfo(participant: Participant): String {
         val name = participant.name
         val cardsInfoText = participant.showCards().joinToString { it.getCardText() }
         return CARD_INFO_MESSAGE.format(name, cardsInfoText)

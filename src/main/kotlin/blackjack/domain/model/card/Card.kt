@@ -1,4 +1,4 @@
-package blackjack.domain.model
+package blackjack.domain.model.card
 
 data class Card(
     val cardNumber: CardNumber,
@@ -7,6 +7,10 @@ data class Card(
     init {
         require(cardNumber.value in MINIMUM_CARD_NUMBER..MAXIMUM_CARD_NUMBER) { ERROR_OUT_OF_CARD_NUMBER }
         require(suit in Suit.entries) { ERROR_INVALID_SUIT }
+    }
+
+    fun isAce(): Boolean {
+        return cardNumber == CardNumber.ACE
     }
 
     companion object {

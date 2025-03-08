@@ -1,5 +1,7 @@
 package blackjack.domain.model
 
+import blackjack.domain.model.card.Card
+
 class WinLossStatistics {
     private val dealerResults = mutableMapOf(WinLoss.WIN to 0, WinLoss.LOSE to 0, WinLoss.DRAW to 0)
 

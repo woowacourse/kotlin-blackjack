@@ -1,6 +1,6 @@
-import blackjack.domain.model.Card
 import blackjack.domain.model.WinLoss
 import blackjack.domain.model.WinLossStatistics
+import blackjack.domain.model.card.Card
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
