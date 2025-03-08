@@ -1,7 +1,9 @@
 package blackjack.controller
 
+import blackjack.domain.Card
 import blackjack.domain.Dealer
 import blackjack.domain.Deck
+import blackjack.domain.Participant
 import blackjack.domain.Player
 import blackjack.domain.Players
 import blackjack.domain.ShuffledCardGenerator
@@ -35,8 +37,8 @@ class BlackjackController(
         deck: Deck,
     ) {
         repeat(INITIAL_CARD_COUNT) {
-            dealer.drawCard(deck.pick())
-            players.drawCard(deck)
+            dealer.drawCardOrStop(deck) ?: return
+            players.players.forEach { it.drawCardOrStop(deck) ?: return }
         }
         outputView.printCardInfo(dealer, players)
     }
@@ -47,7 +49,7 @@ class BlackjackController(
     ) {
         players.players.forEach { player ->
             while (player.canHit() && inputView.readPlayerHit(player)) {
-                player.drawCard(deck.pick())
+                player.drawCardOrStop(deck) ?: return
                 outputView.printPlayerCards(player)
             }
             if (!player.canHit()) {
@@ -60,10 +62,14 @@ class BlackjackController(
         dealer: Dealer,
         deck: Deck,
     ) {
+        var count = 0
         while (dealer.canHit()) {
-            dealer.drawCard(deck.pick())
+            dealer.drawCardOrStop(deck) ?: return
+            count++
         }
-        outputView.printDealerHit(dealer)
+        if (count > 0) {
+            outputView.printDealerHit(dealer, count)
+        }
     }
 
     private fun showGameResult(
@@ -84,6 +90,12 @@ class BlackjackController(
                 it.getResult(dealer.getScore()),
             )
         }
+    }
+
+    private fun Participant.drawCardOrStop(deck: Deck): Card? {
+        val card = deck.pick() ?: return null
+        drawCard(card)
+        return card
     }
 
     companion object {

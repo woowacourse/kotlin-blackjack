@@ -1,6 +1,5 @@
 package blackjack.view
 
-import blackjack.controller.BlackjackController
 import blackjack.domain.Card
 import blackjack.domain.Dealer
 import blackjack.domain.Participant
@@ -31,9 +30,11 @@ class OutputView {
         println(MESSAGE_BUST.format(player.name))
     }
 
-    fun printDealerHit(dealer: Dealer) {
-        val hitCount = dealer.hand.cards.size - BlackjackController.INITIAL_CARD_COUNT
-        println(MESSAGE_DEALER_HIT.format(dealer.name, hitCount))
+    fun printDealerHit(
+        dealer: Dealer,
+        count: Int,
+    ) {
+        println(MESSAGE_DEALER_HIT.format(dealer.name, count))
     }
 
     fun printParticipantScore(

@@ -5,5 +5,5 @@ class Deck(
 ) {
     val cards: ArrayDeque<Card> = ArrayDeque(cards)
 
-    fun pick(): Card = cards.removeLast()
+    fun pick(): Card? = cards.removeLastOrNull()
 }
