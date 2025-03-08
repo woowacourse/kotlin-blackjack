@@ -12,7 +12,7 @@ abstract class GameParticipant(
     fun showCards(): List<Card> = cards.toList()
 
     fun drawCard() {
-        cards += Deck.giveCard()
+        cards += Deck.pop()
     }
 
     abstract fun play()

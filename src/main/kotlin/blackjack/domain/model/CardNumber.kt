@@ -8,7 +8,7 @@ value class CardNumber(
         require(cardNumber in CARD_NUMBER_RANGE) { ERROR_OUT_OF_CARD_NUMBER_RANGE }
     }
 
-    fun getValue(): Int {
+    fun toValue(): Int {
         if (cardNumber > 10) {
             return 10
         }

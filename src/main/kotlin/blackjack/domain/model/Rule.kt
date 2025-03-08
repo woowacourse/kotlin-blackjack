@@ -23,7 +23,7 @@ class Rule {
         }
 
         private fun calculateMinimumSumByCards(cards: Collection<Card>): Int {
-            val cardValues = cards.map { it.cardNumber.getValue() }
+            val cardValues = cards.map { it.cardNumber.toValue() }
             return cardValues.sum()
         }
 
