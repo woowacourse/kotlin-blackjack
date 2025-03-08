@@ -13,7 +13,7 @@ class DealerTest {
         val card = Card(Rank.ACE, Suit.SPADE)
 
         // when
-        dealer.addCard(card)
+        dealer.drawCard(card)
 
         // then
         assertThat(dealer.hand.cards.size).isEqualTo(1)
@@ -27,8 +27,8 @@ class DealerTest {
         val dealer = Dealer()
 
         // when
-        dealer.addCard(aceCard)
-        dealer.addCard(queenCard)
+        dealer.drawCard(aceCard)
+        dealer.drawCard(queenCard)
         val score = dealer.calculateScore()
 
         // then
@@ -44,9 +44,9 @@ class DealerTest {
         val dealer = Dealer()
 
         // when
-        dealer.addCard(aceSpade)
-        dealer.addCard(aceDiamond)
-        dealer.addCard(nineSpade)
+        dealer.drawCard(aceSpade)
+        dealer.drawCard(aceDiamond)
+        dealer.drawCard(nineSpade)
         val score = dealer.calculateScore()
 
         // then
@@ -62,9 +62,9 @@ class DealerTest {
         val dealer = Dealer()
 
         // when
-        dealer.addCard(queenSpade)
-        dealer.addCard(queenHeart)
-        dealer.addCard(queenDiamond)
+        dealer.drawCard(queenSpade)
+        dealer.drawCard(queenHeart)
+        dealer.drawCard(queenDiamond)
         val isBust = dealer.isBust()
 
         // then
@@ -79,8 +79,8 @@ class DealerTest {
         val dealer = Dealer()
 
         // when
-        dealer.addCard(queenSpade)
-        dealer.addCard(queenHeart)
+        dealer.drawCard(queenSpade)
+        dealer.drawCard(queenHeart)
         val isBust = dealer.isBust()
 
         // then

@@ -5,6 +5,8 @@ import blackjack.enums.Result
 class Player(
     val name: String,
 ) : Participant() {
+    override fun canHit(): Boolean = !isBust()
+
     fun getResult(dealer: Dealer): Result {
         if (isBust()) {
             return Result.LOSE

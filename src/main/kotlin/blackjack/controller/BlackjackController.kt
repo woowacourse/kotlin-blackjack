@@ -35,7 +35,7 @@ class BlackjackController(
         players: Players,
     ) {
         repeat(INITIAL_CARD_COUNT) {
-            dealer.addCard(Deck.pick())
+            dealer.drawCard(Deck.pick())
             players.dealCards()
         }
         outputView.printDealingResult(dealer, players)
@@ -47,18 +47,18 @@ class BlackjackController(
     ) {
         players.players.forEach { drawCard(it) }
         while (dealer.canHit()) {
-            dealer.addCard(Deck.pick())
+            dealer.drawCard(Deck.pick())
         }
         val hitCount = dealer.countCards() - INITIAL_CARD_COUNT
         outputView.printDealerHit(hitCount)
     }
 
     private fun drawCard(player: Player) {
-        while (!player.isBust() && inputView.readHitOrStay(player) == Action.HIT) {
-            player.addCard(Deck.pick())
+        while (player.canHit() && inputView.readHitOrStay(player) == Action.HIT) {
+            player.drawCard(Deck.pick())
             outputView.printPlayerCards(player)
         }
-        if (player.isBust()) {
+        if (!player.canHit()) {
             outputView.printBust(player)
         }
     }

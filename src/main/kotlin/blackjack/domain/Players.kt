@@ -10,7 +10,7 @@ class Players(
     }
 
     fun dealCards() {
-        players.forEach { it.addCard(Deck.pick()) }
+        players.forEach { it.drawCard(Deck.pick()) }
     }
 
     fun calculateResult(dealer: Dealer): Map<Player, Result> = players.associateWith { it.getResult(dealer) }

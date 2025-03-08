@@ -23,7 +23,7 @@ class PlayerTest {
         val card = Card(Rank.ACE, Suit.SPADE)
 
         // when
-        player.addCard(card)
+        player.drawCard(card)
 
         // then
         assertThat(player.hand.cards.size).isEqualTo(1)
@@ -36,8 +36,8 @@ class PlayerTest {
         val queenCard = Card(Rank.QUEEN, Suit.SPADE)
 
         // when
-        player.addCard(aceCard)
-        player.addCard(queenCard)
+        player.drawCard(aceCard)
+        player.drawCard(queenCard)
         val score = player.calculateScore()
 
         // then
@@ -52,9 +52,9 @@ class PlayerTest {
         val nineSpade = Card(Rank.NINE, Suit.SPADE)
 
         // when
-        player.addCard(aceSpade)
-        player.addCard(aceDiamond)
-        player.addCard(nineSpade)
+        player.drawCard(aceSpade)
+        player.drawCard(aceDiamond)
+        player.drawCard(nineSpade)
         val score = player.calculateScore()
 
         // then
@@ -69,9 +69,9 @@ class PlayerTest {
         val queenDiamond = Card(Rank.QUEEN, Suit.DIAMOND)
 
         // when
-        player.addCard(queenSpade)
-        player.addCard(queenHeart)
-        player.addCard(queenDiamond)
+        player.drawCard(queenSpade)
+        player.drawCard(queenHeart)
+        player.drawCard(queenDiamond)
         val isBust = player.isBust()
 
         // then
@@ -85,8 +85,8 @@ class PlayerTest {
         val queenHeart = Card(Rank.QUEEN, Suit.HEART)
 
         // when
-        player.addCard(queenSpade)
-        player.addCard(queenHeart)
+        player.drawCard(queenSpade)
+        player.drawCard(queenHeart)
         val isBust = player.isBust()
 
         // then
@@ -101,10 +101,10 @@ class PlayerTest {
         val eightSpade = Card(Rank.EIGHT, Suit.SPADE)
 
         // when
-        player.addCard(queenSpade)
-        player.addCard(queenHeart)
-        dealer.addCard(queenSpade)
-        dealer.addCard(eightSpade)
+        player.drawCard(queenSpade)
+        player.drawCard(queenHeart)
+        dealer.drawCard(queenSpade)
+        dealer.drawCard(eightSpade)
         val result = player.getResult(dealer)
 
         // then
@@ -119,10 +119,10 @@ class PlayerTest {
         val aceSpade = Card(Rank.ACE, Suit.SPADE)
 
         // when
-        player.addCard(queenSpade)
-        player.addCard(queenHeart)
-        dealer.addCard(queenSpade)
-        dealer.addCard(aceSpade)
+        player.drawCard(queenSpade)
+        player.drawCard(queenHeart)
+        dealer.drawCard(queenSpade)
+        dealer.drawCard(aceSpade)
         val result = player.getResult(dealer)
 
         // then
@@ -137,11 +137,11 @@ class PlayerTest {
         val twoSpade = Card(Rank.TWO, Suit.SPADE)
 
         // when
-        player.addCard(queenSpade)
-        player.addCard(queenHeart)
-        dealer.addCard(queenSpade)
-        dealer.addCard(queenHeart)
-        dealer.addCard(twoSpade)
+        player.drawCard(queenSpade)
+        player.drawCard(queenHeart)
+        dealer.drawCard(queenSpade)
+        dealer.drawCard(queenHeart)
+        dealer.drawCard(twoSpade)
         val result = player.getResult(dealer)
 
         // then
@@ -155,10 +155,10 @@ class PlayerTest {
         val queenHeart = Card(Rank.QUEEN, Suit.HEART)
 
         // when
-        player.addCard(queenSpade)
-        player.addCard(queenHeart)
-        dealer.addCard(queenSpade)
-        dealer.addCard(queenHeart)
+        player.drawCard(queenSpade)
+        player.drawCard(queenHeart)
+        dealer.drawCard(queenSpade)
+        dealer.drawCard(queenHeart)
         val result = player.getResult(dealer)
 
         // then
