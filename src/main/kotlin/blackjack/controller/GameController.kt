@@ -73,11 +73,13 @@ class GameController(
         dealer: Dealer,
         players: List<Player>,
     ) {
+        outputView.printPlayerResult(dealer)
         players.forEach { player -> outputView.printPlayerResult(player) }
-        val playersResult = dealer.getPlayerResult(players)
+
         outputView.printResultsHeader()
-        val results = dealer.getDealerResults(playersResult)
-        outputView.printDealerResults(dealer, results)
-        playersResult.forEach { (player, result) -> outputView.printPlayerResult(player, result) }
+        val playerResults = dealer.getPlayerResult(players)
+        val dealerResults = dealer.getDealerResults(playerResults)
+        outputView.printDealerResults(dealer, dealerResults)
+        playerResults.forEach { (player, result) -> outputView.printPlayerResult(player, result) }
     }
 }
