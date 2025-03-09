@@ -54,11 +54,11 @@ class BlackjackController(
     }
 
     private fun dealerDrawCards(dealer: Dealer) {
-        val moreCard = dealer.isMoreCard()
-        if (moreCard) {
+        val isDraw = dealer.isAvailDrawCard()
+        if (isDraw) {
             dealer.addCard(Deck.draw())
         }
-        outputView.printDealerHandStatus(moreCard)
+        outputView.printDealerHandStatus(isDraw)
     }
 
     private fun resultSummary(gameManager: GameManager) {
