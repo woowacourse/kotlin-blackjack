@@ -1,6 +1,6 @@
 package blackjack.model
 
-import blackjack.model.ResultType.Companion.BUST_NUMBER
+import blackjack.model.ScoreCalculator.BUST_NUMBER
 import blackjack.model.ScoreCalculator.calculateOptimalSum
 
 class Player(
