@@ -9,7 +9,7 @@ class PlayerTest {
 
     @BeforeEach
     fun `setUp`() {
-        player = Player("동전", listOf(Card(Suit.HEART, Rank.ACE)))
+        player = Player("동전", Card(Suit.HEART, Rank.ACE))
     }
 
     @Test
@@ -19,7 +19,7 @@ class PlayerTest {
 
     @Test
     fun `플레이어는 카드를 가진다`() {
-        assertThat(player.showCards()).isEqualTo(listOf(Card(Suit.HEART, Rank.ACE)))
+        assertThat(player.cards.showCards()).isEqualTo(listOf(Card(Suit.HEART, Rank.ACE)))
     }
 
     @Test
@@ -27,27 +27,10 @@ class PlayerTest {
         val actual =
             Player(
                 "동전",
-                listOf(
-                    Card(Suit.HEART, Rank.ACE),
-                    Card(Suit.HEART, Rank.KING),
-                ),
+                Card(Suit.HEART, Rank.ACE),
+                Card(Suit.HEART, Rank.KING),
             )
-        player.accept(listOf(Card(Suit.HEART, Rank.KING)))
-        assertThat(player.showCards()).isEqualTo(actual.showCards())
-    }
-
-    @Test
-    fun `카드의 보너스 점수를 추가한 총합을 반환한다`() {
-        player = Player("동전", listOf(Card(Suit.HEART, Rank.ACE), Card(Suit.HEART, Rank.KING)))
-        assertThat(player.getScore()).isEqualTo(21)
-    }
-
-    @Test
-    fun `카드의 보너스 점수가 없는 총합을 반환한다`() {
-        player =
-            Player(
-                "동전", listOf(Card(Suit.HEART, Rank.ACE), Card(Suit.HEART, Rank.KING), Card(Suit.SPADE, Rank.KING)),
-            )
-        assertThat(player.getScore()).isEqualTo(21)
+        player.cards.accept(listOf(Card(Suit.HEART, Rank.KING)))
+        assertThat(player.cards.showCards()).isEqualTo(actual.cards.showCards())
     }
 }

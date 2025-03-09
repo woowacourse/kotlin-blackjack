@@ -1,16 +1,31 @@
 package blackjack.domain.model
 
-class Dealer(override val cards: MutableList<Card> = mutableListOf()) : Participant() {
-    val name: String = DEALER_NAME
+import blackjack.domain.model.Verdict.DRAW
+import blackjack.domain.model.Verdict.LOSE
+import blackjack.domain.model.Verdict.WIN
 
-    fun getPlayerVerdict(players: List<Player>): Map<Player, Verdict> {
-        return players.associateWith { player -> Verdict.determine(this, player) }
+class Dealer(override val cards: Cards = Cards()) : Participant() {
+    constructor(vararg card: Card) : this(Cards(*card))
+
+    override val name: String = DEALER_NAME
+
+    fun getPlayerVerdict(players: List<Participant>): Map<Participant, Verdict> {
+        return players.associateWith { player -> determine(player.cards).reverse() }
     }
 
-    fun getDealerVerdicts(players: List<Player>): Map<Verdict, Int> {
-        val playersVerdict = players.map { player -> Verdict.determine(this, player) }
+    fun getDealerVerdicts(players: List<Participant>): Map<Verdict, Int> {
         return Verdict.entries.associateWith { verdict ->
-            playersVerdict.count { verdict == it.reverse() }
+            players.count { verdict == determine(it.cards) }
+        }
+    }
+
+    private fun determine(otherCards: Cards): Verdict {
+        return when {
+            cards.isBust() && otherCards.isBust() -> WIN
+            cards.isBust() -> LOSE
+            cards.getScore() > otherCards.getScore() || otherCards.isBust() -> WIN
+            cards.getScore() < otherCards.getScore() && !otherCards.isBust() -> LOSE
+            else -> DRAW
         }
     }
 

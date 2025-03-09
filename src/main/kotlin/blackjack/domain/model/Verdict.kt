@@ -13,19 +13,4 @@ enum class Verdict(val value: String) {
             else -> DRAW
         }
     }
-
-    companion object {
-        fun determine(
-            standardPlayer: Dealer,
-            comparePlayer: Player,
-        ): Verdict {
-            return when {
-                standardPlayer.isBust() && comparePlayer.isBust() -> LOSE
-                standardPlayer.isBust() -> WIN
-                standardPlayer.getScore() > comparePlayer.getScore() || comparePlayer.isBust() -> LOSE
-                standardPlayer.getScore() < comparePlayer.getScore() && !comparePlayer.isBust() -> WIN
-                else -> DRAW
-            }
-        }
-    }
 }

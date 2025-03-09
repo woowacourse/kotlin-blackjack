@@ -1,6 +1,6 @@
 package blackjack.view
 
-import blackjack.domain.model.Player
+import blackjack.domain.model.Participant
 
 class InputView {
     private val outputView = OutputView()
@@ -11,7 +11,7 @@ class InputView {
         return input.split(PLAYER_NAMES_DELIMITER).map { name: String -> name.trim() }
     }
 
-    fun readPlayerAction(player: Player): String {
+    fun readPlayerAction(player: Participant): String {
         outputView.requestPlayerAction(player)
         val input: String = readln()
         return input

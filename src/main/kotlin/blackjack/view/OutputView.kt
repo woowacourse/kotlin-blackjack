@@ -2,8 +2,8 @@ package blackjack.view
 
 import blackjack.domain.model.Dealer
 import blackjack.domain.model.Deck.Companion.START_CARD_COUNT
+import blackjack.domain.model.Participant
 import blackjack.domain.model.Participants
-import blackjack.domain.model.Player
 import blackjack.domain.model.Verdict
 
 class OutputView {
@@ -11,7 +11,7 @@ class OutputView {
         println(MESSAGE_ENTER_PLAYER_NAMES)
     }
 
-    fun requestPlayerAction(player: Player) {
+    fun requestPlayerAction(player: Participant) {
         println(MESSAGE_ENTER_PLAYER_YES_OR_NO.format(player.name))
     }
 
@@ -19,7 +19,7 @@ class OutputView {
         println(
             MESSAGE_INITIAL_HAND_DISTRIBUTED.format(
                 participants.findDealer().name,
-                participants.filterPlayers().map(Player::name).joinToString(PLAYER_CARDS_DELIMITER),
+                participants.filterPlayers().map(Participant::name).joinToString(PLAYER_CARDS_DELIMITER),
                 START_CARD_COUNT,
             ),
         )
@@ -32,24 +32,24 @@ class OutputView {
         }
     }
 
-    fun printPlayerStatus(player: Player) {
+    fun printPlayerStatus(player: Participant) {
         println(renderPlayerStatus(player))
     }
 
-    fun printPlayerResult(player: Player) {
+    fun printPlayerResult(player: Participant) {
         print(renderPlayerStatus(player))
-        println(PLAYER_RESULT_DELIMITER + player.getScore())
+        println(PLAYER_RESULT_DELIMITER + player.cards.getScore())
     }
 
     private fun renderDealerVisibleStatus(dealer: Dealer): String {
         return dealer.name + PLAYER_NAME_STATUS_DELIMITER +
-            dealer.showCards(DEALER_VISIBLE_CARD_COUNT)
+            dealer.cards.showCards(DEALER_VISIBLE_CARD_COUNT)
                 .joinToString { it.rank.value + it.suit.value }
     }
 
-    private fun renderPlayerStatus(player: Player): String {
+    private fun renderPlayerStatus(player: Participant): String {
         return player.name + PLAYER_NAME_STATUS_DELIMITER +
-            player.showCards()
+            player.cards.showCards()
                 .joinToString { it.rank.value + it.suit.value }
     }
 
@@ -73,10 +73,10 @@ class OutputView {
     }
 
     fun printPlayerVerdict(
-        player: Player,
+        participant: Participant,
         verdict: Verdict,
     ) {
-        println(player.name + NAME_RESULT_DELIMITER + verdict.value)
+        println(participant.name + NAME_RESULT_DELIMITER + verdict.value)
     }
 
     fun printErrorMessage(message: String) {

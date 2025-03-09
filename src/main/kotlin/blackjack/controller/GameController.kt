@@ -3,9 +3,8 @@ package blackjack.controller
 import blackjack.domain.model.Choice
 import blackjack.domain.model.Dealer
 import blackjack.domain.model.Deck
-import blackjack.domain.model.Deck.Companion.START_CARD_COUNT
+import blackjack.domain.model.Participant
 import blackjack.domain.model.Participants
-import blackjack.domain.model.Player
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -28,7 +27,7 @@ class GameController(
         participants: Participants,
     ) {
         participants.players.forEach { player ->
-            player.accept(deck.draw(START_CARD_COUNT))
+            player.cards.accept(deck.draw(START_CARD_COUNT))
         }
     }
 
@@ -38,31 +37,31 @@ class GameController(
     }
 
     private fun playHand(
-        player: Player,
+        participant: Participant,
         deck: Deck,
     ) {
-        if (player.isBust()) return
-        val choice = retryEvent { Choice(inputView.readPlayerAction(player)) }
+        if (participant.cards.isBust()) return
+        val choice = retryEvent { Choice(inputView.readPlayerAction(participant)) }
         if (!choice.isHit()) {
-            printStatusOnNoHit(player)
+            printStatusOnNoHit(participant)
             return
         }
-        player.accept(deck.draw())
-        outputView.printPlayerStatus(player)
-        playHand(player, deck)
+        participant.cards.accept(deck.draw())
+        outputView.printPlayerStatus(participant)
+        playHand(participant, deck)
     }
 
-    private fun printStatusOnNoHit(player: Player) {
-        if (player.showCards().count() == START_CARD_COUNT) outputView.printPlayerStatus(player)
+    private fun printStatusOnNoHit(player: Participant) {
+        if (player.cards.isStartCardCount()) outputView.printPlayerStatus(player)
     }
 
     private fun processDealerHits(
         deck: Deck,
         dealer: Dealer,
     ) {
-        while (dealer.getScore() <= Dealer.DEALER_DRAW_THRESHOLD) {
+        while (dealer.cards.getScore() <= Dealer.DEALER_DRAW_THRESHOLD) {
             outputView.printDealerHitsState()
-            dealer.accept(deck.draw())
+            dealer.cards.accept(deck.draw())
         }
     }
 
@@ -82,5 +81,9 @@ class GameController(
                 .onSuccess { return it }
                 .onFailure { outputView.printErrorMessage(it.message ?: it.stackTraceToString()) }
         }
+    }
+
+    companion object {
+        private const val START_CARD_COUNT = 2
     }
 }
