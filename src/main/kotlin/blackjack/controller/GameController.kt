@@ -64,7 +64,7 @@ class GameController(
         dealer: Dealer,
     ) {
         while (dealer.canHit()) {
-            outputView.printDealerHitsState()
+            outputView.printDealerHit()
             dealer.accept(deck.draw())
         }
     }
