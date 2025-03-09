@@ -2,13 +2,24 @@ package blackjack.model
 
 import java.util.LinkedList
 
-class CardDeck {
-    private val cards = LinkedList(CACHE_CARDS.shuffled())
+interface ShuffleStrategy{
+    fun shuffle(cardList: List<Card>) : LinkedList<Card>
+}
+
+class RandomShuffle: ShuffleStrategy{
+    override fun shuffle(cardList : List<Card>) = LinkedList(cardList.shuffled())
+}
+
+
+class CardDeck(val shuffleStrategy :ShuffleStrategy = RandomShuffle()) {
+    private val cards = shuffleStrategy.shuffle(CACHE_CARDS)
 
     fun draw(count: Int): List<Card> =
         List(count) {
             cards.poll() ?: throw IllegalArgumentException("[ERROR] 더 이상 카드를 뽑을 수 없습니다.")
         }
+
+    fun shuffleCard(cardList : List<Card>,):List<Card> = shuffleStrategy.shuffle(cardList)
 
     companion object {
         private const val DECK_COUNT = 6
