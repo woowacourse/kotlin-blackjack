@@ -44,6 +44,7 @@ class PlayerTest {
             )
 
         val player = Player("joy", cards)
-        Assertions.assertFalse(player.turn(cards))
+        val drawnCard = Card(CardRank.TWO, Shape.SPADE)
+        Assertions.assertFalse(player.turn(drawnCard))
     }
 }

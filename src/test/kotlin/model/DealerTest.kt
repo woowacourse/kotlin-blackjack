@@ -38,7 +38,8 @@ class DealerTest {
             )
 
         val dealer = Dealer(cards)
-        Assertions.assertTrue(dealer.turn(cards))
+        val drawnCard = Card(CardRank.TWO, Shape.SPADE)
+        Assertions.assertTrue(dealer.turn(drawnCard))
     }
 
     @Test
@@ -49,14 +50,8 @@ class DealerTest {
                 Card(CardRank.THREE, Shape.SPADE),
             )
         val dealer = Dealer(cards)
-
-        val deckCards =
-            mutableListOf(
-                Card(CardRank.TEN, Shape.CLUB),
-                Card(CardRank.NINE, Shape.SPADE),
-            )
-        val deck = Cards(deckCards)
-        val drawCount = dealer.drawCount(deck)
+        val drawnCard = Card(CardRank.TEN, Shape.SPADE)
+        val drawCount = dealer.drawCount(drawnCard)
 
         assertThat(drawCount).isEqualTo(2)
     }
