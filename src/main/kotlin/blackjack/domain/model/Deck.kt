@@ -1,12 +1,12 @@
 package blackjack.domain.model
 
-import java.util.Stack
+import java.util.LinkedList
 
-class Deck {
-    private val cards: Stack<Card> = Stack()
+class Deck private constructor(override val cards: LinkedList<Card>) : Cards() {
+    constructor(cards: List<Card> = (blackJackCards.shuffled())) : this(LinkedList(cards))
 
     fun draw(count: Int = DRAW_DEFAULT_COUNT): List<Card> {
-        if (cards.count() < count) cards.addAll(blackJackCards.shuffled())
+        if (cards.count() < count) accept(blackJackCards.shuffled())
         return List(count.coerceAtMost(blackJackCards.count())) { cards.pop() }
     }
 

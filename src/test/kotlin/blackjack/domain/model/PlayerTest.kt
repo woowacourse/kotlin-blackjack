@@ -19,7 +19,7 @@ class PlayerTest {
 
     @Test
     fun `플레이어는 카드를 가진다`() {
-        assertThat(player.cards.showCards()).isEqualTo(listOf(Card(Suit.HEART, Rank.ACE)))
+        assertThat(player.hands.showCards()).isEqualTo(listOf(Card(Suit.HEART, Rank.ACE)))
     }
 
     @Test
@@ -30,7 +30,7 @@ class PlayerTest {
                 Card(Suit.HEART, Rank.ACE),
                 Card(Suit.HEART, Rank.KING),
             )
-        player.cards.accept(listOf(Card(Suit.HEART, Rank.KING)))
-        assertThat(player.cards.showCards()).isEqualTo(actual.cards.showCards())
+        player.hands.accept(listOf(Card(Suit.HEART, Rank.KING)))
+        assertThat(player.hands.showCards()).isEqualTo(actual.hands.showCards())
     }
 }

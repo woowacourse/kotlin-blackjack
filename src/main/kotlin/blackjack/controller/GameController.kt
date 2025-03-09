@@ -26,7 +26,7 @@ class GameController(
         participants: Participants,
     ) {
         participants.players.forEach { player ->
-            player.cards.accept(deck.draw(START_CARD_COUNT))
+            player.hands.accept(deck.draw(START_CARD_COUNT))
         }
     }
 
@@ -39,28 +39,28 @@ class GameController(
         participant: Participant,
         deck: Deck,
     ) {
-        if (participant.cards.isBust()) return
+        if (participant.hands.isBust()) return
         val choice = retryEvent { inputView.readPlayerAction(participant) }
         if (!choice.isYes()) {
             printStatusOnNoHit(participant)
             return
         }
-        participant.cards.accept(deck.draw())
+        participant.hands.accept(deck.draw())
         outputView.printPlayerStatus(participant)
         playHand(participant, deck)
     }
 
     private fun printStatusOnNoHit(player: Participant) {
-        if (player.cards.isStartCardCount()) outputView.printPlayerStatus(player)
+        if (player.hands.isStartCardCount()) outputView.printPlayerStatus(player)
     }
 
     private fun processDealerHits(
         deck: Deck,
         dealer: Dealer,
     ) {
-        while (dealer.cards.getScore() <= Dealer.DEALER_DRAW_THRESHOLD) {
+        while (dealer.hands.getScore() <= Dealer.DEALER_DRAW_THRESHOLD) {
             outputView.printDealerHitsState()
-            dealer.cards.accept(deck.draw())
+            dealer.hands.accept(deck.draw())
         }
     }
 

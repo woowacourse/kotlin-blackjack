@@ -4,27 +4,27 @@ import blackjack.domain.model.Verdict.DRAW
 import blackjack.domain.model.Verdict.LOSE
 import blackjack.domain.model.Verdict.WIN
 
-class Dealer(override val cards: Cards = Cards()) : Participant() {
-    constructor(vararg card: Card) : this(Cards(*card))
+class Dealer(override val hands: Hands = Hands()) : Participant() {
+    constructor(vararg card: Card) : this(Hands(*card))
 
     override val name: String = DEALER_NAME
 
     fun getPlayerVerdict(players: List<Participant>): Map<Participant, Verdict> {
-        return players.associateWith { player -> determine(player.cards).reverse() }
+        return players.associateWith { player -> determine(player.hands).reverse() }
     }
 
     fun getDealerVerdicts(players: List<Participant>): Map<Verdict, Int> {
         return Verdict.entries.associateWith { verdict ->
-            players.count { verdict == determine(it.cards) }
+            players.count { verdict == determine(it.hands) }
         }
     }
 
-    private fun determine(otherCards: Cards): Verdict {
+    private fun determine(otherHands: Hands): Verdict {
         return when {
-            cards.isBust() && otherCards.isBust() -> WIN
-            cards.isBust() -> LOSE
-            cards.getScore() > otherCards.getScore() || otherCards.isBust() -> WIN
-            cards.getScore() < otherCards.getScore() && !otherCards.isBust() -> LOSE
+            hands.isBust() && otherHands.isBust() -> WIN
+            hands.isBust() -> LOSE
+            hands.getScore() > otherHands.getScore() || otherHands.isBust() -> WIN
+            hands.getScore() < otherHands.getScore() && !otherHands.isBust() -> LOSE
             else -> DRAW
         }
     }

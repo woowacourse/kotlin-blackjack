@@ -4,17 +4,17 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-class CardsTest {
-    private lateinit var cards: Cards
+class HandsTest {
+    private lateinit var hands: Hands
 
     @BeforeEach
     fun `setUp`() {
-        cards = Cards(Card(Suit.HEART, Rank.ACE), Card(Suit.HEART, Rank.KING))
+        hands = Hands(Card(Suit.HEART, Rank.ACE), Card(Suit.HEART, Rank.KING))
     }
 
     @Test
     fun `지정한 개수의 카드민 반환한다`() {
-        assertThat(cards.showCards(1)).isEqualTo(listOf(Card(Suit.HEART, Rank.ACE)))
+        assertThat(hands.showCards(1)).isEqualTo(listOf(Card(Suit.HEART, Rank.ACE)))
     }
 
     @Test
@@ -26,19 +26,19 @@ class CardsTest {
                 Card(Suit.HEART, Rank.KING),
                 Card(Suit.HEART, Rank.SIX),
             )
-        cards.accept(listOf(Card(Suit.HEART, Rank.SIX)))
-        assertThat(cards.showCards()).isEqualTo(actual.cards.showCards())
+        hands.accept(listOf(Card(Suit.HEART, Rank.SIX)))
+        assertThat(hands.showCards()).isEqualTo(actual.hands.showCards())
     }
 
     @Test
     fun `카드의 보너스 점수를 추가한 총합을 반환한다`() {
-        cards = Cards(Card(Suit.HEART, Rank.ACE), Card(Suit.HEART, Rank.KING))
-        assertThat(cards.getScore()).isEqualTo(21)
+        hands = Hands(Card(Suit.HEART, Rank.ACE), Card(Suit.HEART, Rank.KING))
+        assertThat(hands.getScore()).isEqualTo(21)
     }
 
     @Test
     fun `카드의 보너스 점수가 없는 총합을 반환한다`() {
-        cards = Cards(Card(Suit.HEART, Rank.ACE), Card(Suit.HEART, Rank.KING), Card(Suit.SPADE, Rank.KING))
-        assertThat(cards.getScore()).isEqualTo(21)
+        hands = Hands(Card(Suit.HEART, Rank.ACE), Card(Suit.HEART, Rank.KING), Card(Suit.SPADE, Rank.KING))
+        assertThat(hands.getScore()).isEqualTo(21)
     }
 }
