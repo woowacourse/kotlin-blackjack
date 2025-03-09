@@ -21,7 +21,7 @@
 
 ## 1차 피드백 사항
 - [ ] Flow에 앞서 게임이 가지는 여러가지 요소들에 대한 기본 역할들을 명확히 정의해보는 연습
-- [ ] 도메인 포함되어 있는 역할중에 UI의 역할에 어울리는 기능 이전
+- [x] 도메인 포함되어 있는 역할중에 UI의 역할에 어울리는 기능 이전
 - [ ] 협력과 자율성의 측면을 생각해보고, 객체 역할 분리
 - [ ] inputView가 outputView에 의존을 가져야 하는지 생각해보고 분리
-- [ ] open class, abstract class, interface의 차이점 학습 및 적용
+- [x] open class, abstract class, interface의 차이점 학습 및 적용

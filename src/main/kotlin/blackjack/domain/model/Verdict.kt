@@ -1,9 +1,9 @@
 package blackjack.domain.model
 
-enum class Verdict(val value: String) {
-    WIN("승"),
-    LOSE("패"),
-    DRAW("무"),
+enum class Verdict {
+    WIN,
+    LOSE,
+    DRAW,
     ;
 
     fun reverse(): Verdict {

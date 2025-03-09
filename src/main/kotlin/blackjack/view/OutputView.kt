@@ -4,6 +4,8 @@ import blackjack.domain.model.Dealer
 import blackjack.domain.model.Deck.Companion.START_CARD_COUNT
 import blackjack.domain.model.Participant
 import blackjack.domain.model.Participants
+import blackjack.domain.model.Rank
+import blackjack.domain.model.Suit
 import blackjack.domain.model.Verdict
 
 class OutputView {
@@ -44,13 +46,13 @@ class OutputView {
     private fun renderDealerVisibleStatus(dealer: Dealer): String {
         return dealer.name + PLAYER_NAME_STATUS_DELIMITER +
             dealer.cards.showCards(DEALER_VISIBLE_CARD_COUNT)
-                .joinToString { it.rank.value + it.suit.value }
+                .joinToString { convertKoreanRank(it.rank) + convertKoreanSuit(it.suit) }
     }
 
     private fun renderPlayerStatus(player: Participant): String {
         return player.name + PLAYER_NAME_STATUS_DELIMITER +
             player.cards.showCards()
-                .joinToString { it.rank.value + it.suit.value }
+                .joinToString { convertKoreanRank(it.rank) + convertKoreanSuit(it.suit) }
     }
 
     fun printDealerHitsState() {
@@ -67,7 +69,7 @@ class OutputView {
     ) {
         print(dealer.name + NAME_RESULT_DELIMITER)
         verdicts.filter { it.value > 0 }.forEach { (verdict, count) ->
-            print("${count}${verdict.value} ")
+            print("${count}${convertKoreanVerdict(verdict)} ")
         }
         println()
     }
@@ -76,11 +78,36 @@ class OutputView {
         participant: Participant,
         verdict: Verdict,
     ) {
-        println(participant.name + NAME_RESULT_DELIMITER + verdict.value)
+        println(participant.name + NAME_RESULT_DELIMITER + convertKoreanVerdict(verdict))
     }
 
     fun printErrorMessage(message: String) {
         println(message)
+    }
+
+    private fun convertKoreanSuit(suit: Suit): String {
+        return when (suit) {
+            Suit.HEART -> "하트"
+            Suit.SPADE -> "스페이드"
+            Suit.DIAMOND -> "다이아몬드"
+            Suit.CLUB -> "클로버"
+        }
+    }
+
+    private fun convertKoreanRank(rank: Rank): String {
+        return when (rank) {
+            Rank.ACE -> "A"
+            Rank.TWO, Rank.THREE, Rank.FOUR, Rank.FIVE, Rank.SIX, Rank.SEVEN, Rank.EIGHT, Rank.NINE, Rank.TEN -> rank.score.toString()
+            Rank.JACK, Rank.QUEEN, Rank.KING -> Rank.TEN.score.toString()
+        }
+    }
+
+    private fun convertKoreanVerdict(verdict: Verdict): String {
+        return when (verdict) {
+            Verdict.WIN -> "승"
+            Verdict.LOSE -> "패"
+            Verdict.DRAW -> "무"
+        }
     }
 
     companion object {
