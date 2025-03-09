@@ -2,7 +2,7 @@ package blackjack.view
 
 import blackjack.domain.model.Cards.Companion.START_CARD_COUNT
 import blackjack.domain.model.Dealer
-import blackjack.domain.model.Participants
+import blackjack.domain.model.Participant
 import blackjack.domain.model.Player
 import blackjack.domain.model.Verdict
 
@@ -15,19 +15,25 @@ class OutputView {
         println(MESSAGE_ENTER_PLAYER_YES_OR_NO.format(player.name))
     }
 
-    fun printInitialDeals(participants: Participants) {
+    fun printInitialDeals(
+        dealer: Dealer,
+        players: List<Player>,
+    ) {
         println(
             MESSAGE_INITIAL_HAND_DISTRIBUTED.format(
-                participants.findDealer().name,
-                participants.filterPlayers().map(Player::name).joinToString(PLAYER_CARDS_DELIMITER),
+                dealer.name,
+                players.map(Player::name).joinToString(PLAYER_CARDS_DELIMITER),
                 START_CARD_COUNT,
             ),
         )
     }
 
-    fun printPlayersStatus(participants: Participants) {
-        println(renderDealerVisibleStatus(participants.findDealer()))
-        participants.filterPlayers().forEach { player ->
+    fun printPlayersStatus(
+        dealer: Dealer,
+        players: List<Player>,
+    ) {
+        println(renderDealerVisibleStatus(dealer))
+        players.forEach { player ->
             println(renderPlayerStatus(player))
         }
     }
@@ -36,9 +42,9 @@ class OutputView {
         println(renderPlayerStatus(player))
     }
 
-    fun printPlayerResult(player: Player) {
-        print(renderPlayerStatus(player))
-        println(PLAYER_RESULT_DELIMITER + player.computeScore())
+    fun printPlayerResult(participant: Participant) {
+        print(renderPlayerStatus(participant))
+        println(PLAYER_RESULT_DELIMITER + participant.computeScore())
     }
 
     private fun renderDealerVisibleStatus(dealer: Dealer): String {
@@ -47,9 +53,9 @@ class OutputView {
                 .joinToString { it.rank.value + it.suit.value }
     }
 
-    private fun renderPlayerStatus(player: Player): String {
-        return player.name + PLAYER_NAME_STATUS_DELIMITER +
-            player.showHand()
+    private fun renderPlayerStatus(participant: Participant): String {
+        return participant.name + PLAYER_NAME_STATUS_DELIMITER +
+            participant.showHand()
                 .joinToString { it.rank.value + it.suit.value }
     }
 

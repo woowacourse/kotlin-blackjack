@@ -9,7 +9,7 @@ class DealerTest {
 
     @BeforeEach
     fun setUp() {
-        dealer = Dealer("동전", cards = listOf(Card(Suit.HEART, Rank.ACE)))
+        dealer = Dealer("동전", listOf(Card(Suit.HEART, Rank.ACE)))
     }
 
     @Test

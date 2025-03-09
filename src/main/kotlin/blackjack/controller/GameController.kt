@@ -4,7 +4,6 @@ import blackjack.domain.model.Action
 import blackjack.domain.model.Cards
 import blackjack.domain.model.Cards.Companion.START_CARD_COUNT
 import blackjack.domain.model.Dealer
-import blackjack.domain.model.Participants
 import blackjack.domain.model.Player
 import blackjack.view.InputView
 import blackjack.view.OutputView
@@ -15,26 +14,30 @@ class GameController(
 ) {
     fun run() {
         val deck = Cards()
-        val participants = Participants(Dealer(), inputView.readPlayerNames())
-        initialDeal(deck, participants)
-        printInitialDeal(participants)
-        participants.filterPlayers().forEach { player -> playHand(player, deck) }
-        processDealerHits(deck, participants.findDealer())
-        announceResult(participants)
+        val dealer = Dealer()
+        val players: List<Player> = inputView.readPlayerNames().map(::Player)
+        initialDeal(deck, players)
+        printInitialDeal(dealer, players)
+        players.forEach { player -> playHand(player, deck) }
+        processDealerHits(deck, dealer)
+        announceResult(dealer, players)
     }
 
     private fun initialDeal(
         deck: Cards,
-        participants: Participants,
+        players: List<Player>,
     ) {
-        participants.players.forEach { player ->
+        players.forEach { player ->
             player.accept(deck.draw(START_CARD_COUNT))
         }
     }
 
-    private fun printInitialDeal(participants: Participants) {
-        outputView.printInitialDeals(participants)
-        outputView.printPlayersStatus(participants)
+    private fun printInitialDeal(
+        dealer: Dealer,
+        players: List<Player>,
+    ) {
+        outputView.printInitialDeals(dealer, players)
+        outputView.printPlayersStatus(dealer, players)
     }
 
     private fun playHand(
@@ -66,10 +69,11 @@ class GameController(
         }
     }
 
-    private fun announceResult(participants: Participants) {
-        val dealer = participants.findDealer()
-        val players = participants.filterPlayers()
-        participants.players.forEach { player -> outputView.printPlayerResult(player) }
+    private fun announceResult(
+        dealer: Dealer,
+        players: List<Player>,
+    ) {
+        players.forEach { player -> outputView.printPlayerResult(player) }
         outputView.printResultsHeader()
         val verdicts = dealer.getDealerVerdicts(players)
         outputView.printDealerVerdicts(dealer, verdicts)
