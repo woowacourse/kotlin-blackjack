@@ -6,11 +6,12 @@ class ScoreCalculator(private val cards: Cards) {
     private var totalCardScore: Int = cards.scores().sum()
 
     fun calculateTotalCardScore(): Int {
-        val aceCount = cards.aceCount()
-        val overScore = (totalCardScore - BLACKJACK_SCORE).coerceAtLeast(DEFAULT_ZERO)
-        val decreasedScore = (overScore / ACE_MINUS_VALUE).coerceAtMost(aceCount) * ACE_MINUS_VALUE
+        var aceCount = cards.aceCount()
+        while (totalCardScore > BLACKJACK_SCORE && aceCount-- > DEFAULT_ZERO) {
+            totalCardScore -= ACE_MINUS_VALUE
+        }
 
-        return totalCardScore - decreasedScore
+        return totalCardScore
     }
 
     companion object {
