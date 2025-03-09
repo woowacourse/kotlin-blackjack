@@ -1,5 +1,6 @@
 package blackjack.domain.participant
 
+import blackjack.domain.BlackJackGame.Companion.BUST_STANDARD
 import blackjack.domain.card.PlayerCards
 import blackjack.domain.card.TrumpCard
 
@@ -11,11 +12,11 @@ abstract class Participant {
         _cards = _cards.add(card)
     }
 
+    fun isBust(): Boolean = totalScore() > BUST_STANDARD
+
     fun hasAce(): Boolean = _cards.hasAce()
 
     protected fun sumOfCards(): Int = cards.sumOfCards()
-
-    abstract fun isBust(): Boolean
 
     abstract fun totalScore(): Int
 

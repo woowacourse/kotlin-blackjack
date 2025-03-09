@@ -3,16 +3,14 @@ package blackjack.domain.participant
 import blackjack.domain.BlackJackGame.Companion.BUST_STANDARD
 
 class Dealer : Participant() {
-    override fun isBust(): Boolean {
-        return sumOfCards() + ACE_EXTRACT_SCORE > BUST_STANDARD
-    }
-
-    override fun totalScore(): Int =
-        if (hasAce() && !isBust()) {
-            sumOfCards() + ACE_EXTRACT_SCORE
+    override fun totalScore(): Int {
+        val baseScore = sumOfCards()
+        return if (hasAce() && baseScore + ACE_EXTRACT_SCORE <= BUST_STANDARD) {
+            baseScore + ACE_EXTRACT_SCORE
         } else {
-            sumOfCards()
+            baseScore
         }
+    }
 
     fun isOverMaxScore(): Boolean {
         if (hasAce() && !isBust()) {
