@@ -20,7 +20,18 @@ class GameManager(
         }
     }
 
-    fun drawCard(player: Player) {
+    fun distributeCard(
+        choice: DrawChoice,
+        player: Player,
+    ): Boolean {
+        if (choice.isDraw()) {
+            drawCard(player)
+            return true
+        }
+        return false
+    }
+
+    private fun drawCard(player: Player) {
         player.addCard(Deck.draw())
     }
 
