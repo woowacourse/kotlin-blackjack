@@ -74,10 +74,11 @@ class GameController(
         players: List<Player>,
     ) {
         players.forEach { player -> outputView.printPlayerResult(player) }
+        val playersVerdict = dealer.getPlayerVerdict(players)
         outputView.printResultsHeader()
-        val verdicts = dealer.getDealerVerdicts(players)
+        val verdicts = dealer.getDealerVerdicts(playersVerdict)
         outputView.printDealerVerdicts(dealer, verdicts)
-        dealer.getPlayerVerdict(players).forEach { (player, verdict) -> outputView.printPlayerVerdict(player, verdict) }
+        playersVerdict.forEach { (player, verdict) -> outputView.printPlayerVerdict(player, verdict) }
     }
 
     private fun <T> retryEvent(event: () -> T): T {

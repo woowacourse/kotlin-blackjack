@@ -6,13 +6,12 @@ class Dealer(name: String = DEALER_NAME) : Participant(name) {
     }
 
     fun getPlayerVerdict(players: List<Player>): Map<Player, Verdict> {
-        return players.associateWith { player -> Verdict.determine(this, player) }
+        return players.associateWith { player -> player.compareAgainst(this) }
     }
 
-    fun getDealerVerdicts(players: List<Player>): Map<Verdict, Int> {
-        val playersVerdict = players.map { player -> Verdict.determine(this, player) }
+    fun getDealerVerdicts(playerVerdicts: Map<Player, Verdict>): Map<Verdict, Int> {
         return Verdict.entries.associateWith { verdict ->
-            playersVerdict.count { verdict == it.reverse() }
+            playerVerdicts.values.count { playerVerdict -> verdict == playerVerdict.reverse() }
         }
     }
 
