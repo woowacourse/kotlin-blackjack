@@ -1,8 +1,12 @@
 package blackjack.domain
 
 import blackjack.model.BlackjackEngine
-import blackjack.model.CardDeck
+import blackjack.model.Card
+import blackjack.model.CardRank
+import blackjack.model.CardSuit
 import blackjack.model.Dealer
+import blackjack.model.Player
+import blackjack.model.Players
 import blackjack.model.WinningResult
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -40,14 +44,18 @@ class DealerTest {
     fun `딜러 점수와 플레이어 점수 리스트를 비교하여 승패 결과를 반환한다`() {
         // given
         val blackjackEngine = BlackjackEngine()
-        val dealer = blackjackEngine.prepareDealer()
+        val dealer = Dealer(listOf(Card(CardRank.TWO, CardSuit.CLUB),Card(CardRank.THREE, CardSuit.CLUB)))
 
         // when
-        val playerScores = listOf(0, 22, 0, 22, 0, dealer.hand.score())
+        val losePlayer1 = Player("패배",listOf(Card(CardRank.TWO, CardSuit.CLUB),Card(CardRank.TWO, CardSuit.CLUB)))
+        val losePlayer2 = Player("패배",listOf(Card(CardRank.TWO, CardSuit.CLUB),Card(CardRank.TWO, CardSuit.CLUB)))
+        val pushPlayer = Player("동점",listOf(Card(CardRank.TWO, CardSuit.CLUB),Card(CardRank.THREE, CardSuit.CLUB)))
+        val winningPlayer = Player("승리",listOf(Card(CardRank.TWO, CardSuit.CLUB),Card(CardRank.ACE, CardSuit.CLUB)))
+        val players = Players(listOf(losePlayer1, losePlayer2, winningPlayer, pushPlayer))
 
         // then
-        assertThat(dealer.result(playerScores)[WinningResult.WIN]).isEqualTo(3)
-        assertThat(dealer.result(playerScores)[WinningResult.LOSE]).isEqualTo(2)
-        assertThat(dealer.result(playerScores)[WinningResult.PUSH]).isEqualTo(1)
+        assertThat(dealer.result(players)[WinningResult.WIN]).isEqualTo(1)
+        assertThat(dealer.result(players)[WinningResult.LOSE]).isEqualTo(2)
+        assertThat(dealer.result(players)[WinningResult.PUSH]).isEqualTo(1)
     }
 }

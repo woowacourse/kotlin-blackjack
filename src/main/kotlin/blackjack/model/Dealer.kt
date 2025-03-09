@@ -12,11 +12,11 @@ class Dealer(val firstCard : List<Card>,) : Participant(firstCard) {
         return count
     }
 
-    fun result(playerScores: List<Int>): Map<WinningResult, Int> {
+    fun result(players: Players): Map<WinningResult, Int> {
         val result = WinningResult.entries.associateWith { INITIAL_SCORE }.toMutableMap()
 
-        playerScores.forEach { playerScore ->
-            val winningResult = WinningResult.from(hand.score(), playerScore)
+        players.value.forEach { player ->
+            val winningResult = WinningResult.from(this,player)
             result[winningResult] = result.getOrDefault(winningResult, INITIAL_SCORE) + ADDITIONAL_RESULT_COUNT
         }
 

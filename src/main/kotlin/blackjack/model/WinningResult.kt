@@ -8,13 +8,22 @@ enum class WinningResult {
 
     companion object {
         fun from(
-            targetScore: Int,
-            otherScore: Int,
-        ): WinningResult =
-            when {
-                targetScore > otherScore -> WIN
-                targetScore < otherScore -> LOSE
+            dealer: Dealer,
+            player: Player,
+        ): WinningResult {
+            val dealerBlackjack = dealer.hand.cards.size == 2 && dealer.hand.score() == 21
+            val playerBlackjack = player.hand.cards.size == 2 && player.hand.score() == 21
+
+            return when {
+                dealerBlackjack && playerBlackjack -> PUSH
+                playerBlackjack -> WIN
+                dealerBlackjack -> LOSE
+                dealer.hand.score() < player.hand.score() -> WIN
+                dealer.hand.score() > player.hand.score() -> LOSE
                 else -> PUSH
             }
+        }
+
+
     }
 }

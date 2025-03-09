@@ -71,10 +71,10 @@ class BlackjackController(
     ) {
         outputView.displayResultTitle()
 
-        val dealerResult = dealer.result(players.scores())
+        val dealerResult = dealer.result(players)
         outputView.displayDealerResult(dealerResult)
 
-        val playerResults: Map<String, WinningResult> = players.results(dealer.hand.score())
+        val playerResults: Map<String, WinningResult> = players.results(dealer)
         playerResults.forEach { (name, winningResult) ->
             outputView.displayPlayerResult(name, winningResult)
         }

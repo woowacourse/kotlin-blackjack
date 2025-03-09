@@ -12,12 +12,10 @@ class Players(
         }
     }
 
-    fun results(dealerScore: Int): Map<String, WinningResult> =
+    fun results(dealer: Dealer): Map<String, WinningResult> =
         value.associate { player ->
-            player.name to WinningResult.from(player.hand.score(), dealerScore)
+            player.name to WinningResult.from(dealer,player)
         }
-
-    fun scores(): List<Int> = value.map { player -> player.hand.score() }
 
     companion object {
         private const val MIN_PLAYER_COUNT = 1
