@@ -7,6 +7,7 @@ class InputView {
     fun readPlayerNames(): List<Player> {
         println(PLAYER_NAME_MESSAGE_GUIDE)
         val playerNames: List<String> = readln().split(PLAYER_NAME_DELIMITER).map { name -> name.trim() }
+        if (playerNames.any { playerName -> playerName.isBlank() }) return readPlayerNames()
         if (playerNames.size != playerNames.toSet().size) return readPlayerNames()
         val players = playerNames.map { playerName -> Player(playerName) }
         return players
