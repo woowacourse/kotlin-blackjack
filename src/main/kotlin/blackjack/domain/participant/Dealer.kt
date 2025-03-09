@@ -1,8 +1,8 @@
 package blackjack.domain.participant
 
 import blackjack.domain.BlackJackGame.Companion.BUST_STANDARD
-import blackjack.domain.CardTier
-import blackjack.domain.TrumpCard
+import blackjack.domain.card.CardTier
+import blackjack.domain.card.TrumpCard
 
 class Dealer : Participant {
     private val _cards = mutableListOf<TrumpCard>()

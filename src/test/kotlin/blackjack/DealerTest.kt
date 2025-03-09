@@ -1,8 +1,8 @@
 package blackjack
 
-import blackjack.domain.CardTier
-import blackjack.domain.Shape
-import blackjack.domain.TrumpCard
+import blackjack.domain.card.CardTier
+import blackjack.domain.card.Shape
+import blackjack.domain.card.TrumpCard
 import blackjack.domain.participant.Dealer
 import blackjack.fixture.trumpCardFixture
 import org.assertj.core.api.Assertions.assertThat

@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.card
 
 data class TrumpCard(
     val tier: CardTier,

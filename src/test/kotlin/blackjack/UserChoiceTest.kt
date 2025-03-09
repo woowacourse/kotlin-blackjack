@@ -1,4 +1,4 @@
-package blackjack.domain.enums
+package blackjack
 
 import blackjack.domain.UserChoice
 import org.junit.jupiter.api.Assertions.assertEquals
