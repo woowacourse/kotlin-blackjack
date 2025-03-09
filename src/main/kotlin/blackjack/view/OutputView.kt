@@ -7,14 +7,6 @@ import blackjack.domain.model.Player
 import blackjack.domain.model.Verdict
 
 class OutputView {
-    fun requestPlayerNames() {
-        println(MESSAGE_ENTER_PLAYER_NAMES)
-    }
-
-    fun requestPlayerAction(player: Player) {
-        println(MESSAGE_ENTER_PLAYER_YES_OR_NO.format(player.name))
-    }
-
     fun printInitialDeals(
         dealer: Dealer,
         players: List<Player>,
@@ -89,10 +81,6 @@ class OutputView {
         println(message)
     }
 
-    fun printInputDivider() {
-        println(INPUT_DIVIDER)
-    }
-
     private fun resultToString(result: Verdict): String {
         return when (result) {
             Verdict.WIN -> RESULT_WIN
@@ -102,8 +90,6 @@ class OutputView {
     }
 
     companion object {
-        private const val MESSAGE_ENTER_PLAYER_NAMES = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)"
-        private const val MESSAGE_ENTER_PLAYER_YES_OR_NO = "%s은(는) 한 장의 카드를 더 받겠습니까? (예는 y, 아니오는 n)"
         private const val MESSAGE_INITIAL_HAND_DISTRIBUTED = "%s와(과) %s에게 %s장의 카드를 나누었습니다."
         private const val MESSAGE_DEALER_HITS_STATE = "딜러는 16이하라 한장의 카드를 더 받았습니다."
         private const val MESSAGE_RESULTS_HEADER = "## 최종 승패"
@@ -112,7 +98,6 @@ class OutputView {
         private const val PLAYER_NAME_STATUS_DELIMITER = " 카드: "
         private const val PLAYER_RESULT_DELIMITER = " - 결과: "
         private const val NAME_RESULT_DELIMITER = ": "
-        private const val INPUT_DIVIDER = ""
         private const val RESULT_WIN = "승"
         private const val RESULT_LOSE = "패"
         private const val RESULT_DRAW = "무"
