@@ -3,6 +3,10 @@ package blackjack.domain.model
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
+import java.lang.IllegalArgumentException
 
 class PlayerTest {
     private lateinit var player: Player
@@ -49,5 +53,11 @@ class PlayerTest {
                 "동전", listOf(Card(Suit.HEART, Rank.ACE), Card(Suit.HEART, Rank.KING), Card(Suit.SPADE, Rank.KING)),
             )
         assertThat(player.getScore()).isEqualTo(21)
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = ["", " ", "\t", "\n"])
+    fun `플레이어의 이름이 공백일 시 오류가 발생한다`(value: String) {
+        assertThrows<IllegalArgumentException> { Player(value) }
     }
 }
