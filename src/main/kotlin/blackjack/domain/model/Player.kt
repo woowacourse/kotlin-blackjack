@@ -5,6 +5,10 @@ class Player(name: String) : Participant(name) {
         accept(cards)
     }
 
+    override fun canHit(): Boolean {
+        return !isBusted()
+    }
+
     fun compareAgainst(dealer: Dealer): Result {
         if (isBusted()) return Result.LOSE
         if (dealer.isBusted()) return Result.WIN

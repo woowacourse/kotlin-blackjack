@@ -3,10 +3,6 @@ package blackjack.domain.model
 abstract class Participant(val name: String) {
     private val hand = Hand()
 
-    constructor(name: String, cards: List<Card>) : this(name) {
-        accept(cards)
-    }
-
     init {
         require(name.isNotBlank()) { ERROR_MESSAGE_BLANK_PARTICIPANT_NAME }
     }
@@ -26,6 +22,8 @@ abstract class Participant(val name: String) {
     fun isBusted(): Boolean {
         return hand.isBusted()
     }
+
+    abstract fun canHit(): Boolean
 
     companion object {
         const val INITIAL_DRAW_COUNT = 2

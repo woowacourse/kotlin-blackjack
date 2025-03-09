@@ -18,7 +18,7 @@ class GameController(
         val players: List<Player> = inputView.readPlayerNames().map(::Player)
         processInitialDeals(deck, listOf(dealer) + players)
         printInitialDeals(dealer, players)
-        players.forEach { player -> processDeals(deck, player) }
+        players.forEach { player -> processPlayerHits(deck, player) }
         processDealerHits(deck, dealer)
         announceResult(dealer, players)
     }
@@ -40,11 +40,11 @@ class GameController(
         outputView.printParticipantStatus(dealer, players)
     }
 
-    private fun processDeals(
+    private fun processPlayerHits(
         deck: Deck,
         player: Player,
     ) {
-        if (player.isBusted()) return
+        if (!player.canHit()) return
         val action = inputView.readPlayerAction(player)
         if (action == Action.STAND) {
             printStatusOnNoHit(player)
@@ -52,7 +52,7 @@ class GameController(
         }
         player.accept(deck.draw())
         outputView.printPlayerStatus(player)
-        processDeals(deck, player)
+        processPlayerHits(deck, player)
     }
 
     private fun printStatusOnNoHit(player: Player) {
@@ -63,7 +63,7 @@ class GameController(
         deck: Deck,
         dealer: Dealer,
     ) {
-        while (dealer.computePoint() <= Dealer.DEALER_DRAW_THRESHOLD) {
+        while (dealer.canHit()) {
             outputView.printDealerHitsState()
             dealer.accept(deck.draw())
         }
