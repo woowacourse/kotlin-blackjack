@@ -1,7 +1,6 @@
 package blackjack.controller
 
 import blackjack.model.Dealer
-import blackjack.model.Deck
 import blackjack.model.Deck.INITIAL_HAND_OUT_CARD_COUNT
 import blackjack.model.DrawChoice
 import blackjack.model.GameManager
@@ -23,7 +22,7 @@ class BlackjackController(
 
         playersDrawCards(gameManager, players)
 
-        dealerDrawCards(dealer)
+        dealerDrawCards(gameManager, dealer)
 
         outputView.printFinalHandStatus(dealer, players)
 
@@ -53,11 +52,12 @@ class BlackjackController(
         }
     }
 
-    private fun dealerDrawCards(dealer: Dealer) {
+    private fun dealerDrawCards(
+        gameManager: GameManager,
+        dealer: Dealer,
+    ) {
         val isDraw = dealer.isAvailDrawCard()
-        if (isDraw) {
-            dealer.addCard(Deck.draw())
-        }
+        if (isDraw) gameManager.distributeCard(dealer)
         outputView.printDealerHandStatus(isDraw)
     }
 
