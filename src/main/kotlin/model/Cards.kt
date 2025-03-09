@@ -8,9 +8,15 @@ class Cards(allCards: List<Card>) {
     }
 
     fun initialCards(): Cards {
-        val initialCards = allCards.take(2)
+        val initialCards = allCards.take(INITIAL_CARD_COUNT)
         allCards.removeAll(initialCards)
         return Cards(initialCards)
+    }
+
+    fun drawCard(): Card {
+        val drawnCard = allCards.take(DRAW_DEFAULT_COUNT)
+        allCards.removeAll(drawnCard)
+        return drawnCard.first()
     }
 
     fun totalCount() = allCards.size
@@ -23,5 +29,7 @@ class Cards(allCards: List<Card>) {
 
     companion object {
         private const val DUPLICATE_CARD_ERROR_MESSAGE = "[ERROR] 카드는 중복될 수 없습니다"
+        private const val DRAW_DEFAULT_COUNT = 1
+        private const val INITIAL_CARD_COUNT = 2
     }
 }

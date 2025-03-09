@@ -5,19 +5,18 @@ class Dealer(dealerCards: Cards) : Participant(dealerCards) {
         require(dealerCards.totalCount() == 2) { DEALER_INITIAL_CARD_ERROR_MESSAGE }
     }
 
-    override fun turn(cards: Cards): Boolean {
+    override fun turn(drawnCard: Card): Boolean {
         if (canHit()) {
-            val drawnCard = drawCard(cards.allCards)
             addCard(drawnCard)
             return true
         }
         return false
     }
 
-    fun drawCount(allCards: Cards): Int {
+    fun drawCount(drawnCard: Card): Int {
         var drawCount = 0
         while (canHit()) {
-            if (turn(allCards)) drawCount++
+            if (turn(drawnCard)) drawCount++
         }
         return drawCount
     }
