@@ -6,7 +6,7 @@ enum class DrawChoice(val answer: String) {
     ;
 
     fun isDraw(): Boolean {
-        return this == NO
+        return this == YES
     }
 
     companion object {
