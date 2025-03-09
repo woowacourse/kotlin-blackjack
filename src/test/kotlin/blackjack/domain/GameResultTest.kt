@@ -48,6 +48,15 @@ class GameResultTest {
     }
 
     @Test
+    fun `딜러가 버스트되고, 플레이어는 버스트가 아닌 경우`() {
+        val dealer = Dealer(createHand(CardNumber.JACK, CardNumber.JACK, CardNumber.JACK))
+        val player = createPlayer(CardNumber.EIGHT, CardNumber.EIGHT)
+        val result = GameResult(dealer, listOf(player))
+
+        result.winStatus[player] shouldBe ResultState.WIN
+    }
+
+    @Test
     fun `승패 여부를 계산할 수 있다`() {
         val player = createPlayer(CardNumber.JACK, CardNumber.JACK)
         val result = GameResult(dealer, listOf(player))

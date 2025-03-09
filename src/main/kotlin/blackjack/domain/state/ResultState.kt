@@ -1,10 +1,6 @@
 package blackjack.domain.state
 
 import blackjack.const.GameRule
-import blackjack.domain.ScoreCalculator
-import blackjack.domain.person.Dealer
-import blackjack.domain.person.Person
-import blackjack.domain.person.Player
 
 enum class ResultState {
     WIN,
@@ -14,12 +10,9 @@ enum class ResultState {
 
     companion object {
         fun calculateWin(
-            player: Player,
-            dealer: Dealer,
+            playerScore: Int,
+            dealerScore: Int,
         ): ResultState {
-            val playerScore = player.calculateScore()
-            val dealerScore = dealer.calculateScore()
-
             if (playerScore > GameRule.BLACKJACK_SCORE) return LOSE
             if (dealerScore > GameRule.BLACKJACK_SCORE) return WIN
 
@@ -29,7 +22,5 @@ enum class ResultState {
                 else -> DRAW
             }
         }
-
-        private fun Person.calculateScore(): Int = ScoreCalculator.calculate(this.cards())
     }
 }
