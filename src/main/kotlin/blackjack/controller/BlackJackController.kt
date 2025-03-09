@@ -1,10 +1,10 @@
 package blackjack.controller
 
 import blackjack.domain.GameResult
+import blackjack.domain.ScoreCalculator
 import blackjack.domain.card.Deck
 import blackjack.domain.person.Dealer
 import blackjack.domain.person.Player
-import blackjack.uiModel.PersonUiModel
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -27,7 +27,7 @@ class BlackJackController(
     }
 
     private fun initializePlayers(): List<Player> {
-        outputView.printNameMessage()
+        outputView.printEnterPlayerNamesMessage()
         return inputView.getNames().map { Player(it) }
     }
 
@@ -37,7 +37,7 @@ class BlackJackController(
     ) {
         dealer.draw(deck)
         players.forEach { player -> player.draw(deck) }
-        outputView.printDrawMessage(combinePlayersAndDealer(dealer, players))
+        outputView.printInitialDrawMessage(dealer, players)
     }
 
     private fun processPlayerTurns(players: List<Player>) {
@@ -46,7 +46,7 @@ class BlackJackController(
 
     private fun playPlayerTurn(player: Player) {
         while (player.canDraw()) {
-            outputView.printFlagMessage(player.name)
+            outputView.printAskForDrawCardMessage(player.name)
             letPlayerDrawCard(player)
         }
     }
@@ -54,7 +54,7 @@ class BlackJackController(
     private fun letPlayerDrawCard(player: Player) {
         if (inputView.getFlag()) {
             player.draw(deck)
-            outputView.printDrawStatus(PersonUiModel.create(player))
+            outputView.printPlayerDrawStatus(player)
             return
         }
         player.changeToStay()
@@ -71,15 +71,12 @@ class BlackJackController(
         dealer: Dealer,
         players: List<Player>,
     ) {
-        outputView.printGameResult(combinePlayersAndDealer(dealer, players))
-        val gameResult = GameResult(dealer, players)
-        outputView.printResult(gameResult)
-    }
+        outputView.printDealerResult(dealer, ScoreCalculator.calculate(dealer.cards()))
+        players.forEach { player ->
+            outputView.printPlayerResult(player, ScoreCalculator.calculate(player.cards()))
+        }
 
-    private fun combinePlayersAndDealer(
-        dealer: Dealer,
-        players: List<Player>,
-    ): List<PersonUiModel> {
-        return listOf(PersonUiModel.create(dealer)) + players.map(PersonUiModel::create)
+        val gameResult = GameResult(dealer, players)
+        outputView.printGameResults(gameResult)
     }
 }
