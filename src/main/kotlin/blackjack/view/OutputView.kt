@@ -73,7 +73,7 @@ class OutputView {
     ) {
         print(dealer.name + NAME_RESULT_DELIMITER)
         verdicts.filter { it.value > 0 }.forEach { (verdict, count) ->
-            print("${count}${verdict.value} ")
+            print("${count}${resultToString(verdict)} ")
         }
         println()
     }
@@ -82,7 +82,7 @@ class OutputView {
         player: Player,
         verdict: Verdict,
     ) {
-        println(player.name + NAME_RESULT_DELIMITER + verdict.value)
+        println(player.name + NAME_RESULT_DELIMITER + resultToString(verdict))
     }
 
     fun printErrorMessage(message: String) {
@@ -91,6 +91,14 @@ class OutputView {
 
     fun printInputDivider() {
         println(INPUT_DIVIDER)
+    }
+
+    private fun resultToString(result: Verdict): String {
+        return when (result) {
+            Verdict.WIN -> RESULT_WIN
+            Verdict.LOSE -> RESULT_LOSE
+            Verdict.DRAW -> RESULT_DRAW
+        }
     }
 
     companion object {
@@ -105,5 +113,8 @@ class OutputView {
         private const val PLAYER_RESULT_DELIMITER = " - 결과: "
         private const val NAME_RESULT_DELIMITER = ": "
         private const val INPUT_DIVIDER = ""
+        private const val RESULT_WIN = "승"
+        private const val RESULT_LOSE = "패"
+        private const val RESULT_DRAW = "무"
     }
 }
