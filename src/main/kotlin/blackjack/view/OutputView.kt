@@ -17,11 +17,11 @@ import blackjack.model.WinningResult.PUSH
 import blackjack.model.WinningResult.WIN
 
 class OutputView {
-    fun displayFirstDrawEnd(players: List<String>) {
+    fun displayFirstDrawEnd(dealerName:String, players: List<String>) {
         println("\n딜러와 ${players.joinToString()}에게 2장을 나누었습니다.")
     }
 
-    fun displayDealerDrawInfo(count: Int) {
+    fun displayDealerDrawInfo(name:String, count: Int) {
         val output =
             when {
                 count == 0 -> "딜러는 16초과라 카드를 더 이상 뽑지 않았습니다."
@@ -31,14 +31,14 @@ class OutputView {
     }
 
     fun displayParticipantCards(
-        name: String = "딜러",
+        name: String ,
         cards: List<Card>,
     ) {
         println("$name 카드: ${cards.toText()}")
     }
 
     fun displayParticipantInfo(
-        name: String = "딜러",
+        name: String,
         cards: List<Card>,
         score: Int,
         isBust: Boolean,
@@ -73,8 +73,8 @@ class OutputView {
         println("\n## 최종 승패")
     }
 
-    fun displayDealerResult(winningResult: Map<WinningResult, Int>) {
-        println("딜러: ${winningResult[WIN]}승 ${winningResult[PUSH]}무 ${winningResult[LOSE]}패")
+    fun displayDealerResult(name : String, winningResult: Map<WinningResult, Int>) {
+        println("$name: ${winningResult[WIN]}승 ${winningResult[PUSH]}무 ${winningResult[LOSE]}패")
     }
 
     fun displayPlayerResult(

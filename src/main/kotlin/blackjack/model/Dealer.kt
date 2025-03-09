@@ -2,7 +2,7 @@ package blackjack.model
 
 import blackjack.model.WinningResult.Companion.dealerResult
 
-class Dealer(val firstCard : List<Card>,) : Participant(firstCard) {
+class Dealer(val firstCard : List<Card>,val name :String = "딜러" ,) : Participant(firstCard) {
     fun drawUntilFinished(cardDeck: CardDeck): Int {
         var count = INITIAL_RESULT_COUNT
 
