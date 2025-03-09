@@ -38,18 +38,18 @@ class OutputView {
 
     fun printPlayerResult(player: Player) {
         print(renderPlayerStatus(player))
-        println(PLAYER_RESULT_DELIMITER + player.getScore())
+        println(PLAYER_RESULT_DELIMITER + player.computeScore())
     }
 
     private fun renderDealerVisibleStatus(dealer: Dealer): String {
         return dealer.name + PLAYER_NAME_STATUS_DELIMITER +
-            dealer.showCards(DEALER_VISIBLE_CARD_COUNT)
+            dealer.showHand(DEALER_VISIBLE_CARD_COUNT)
                 .joinToString { it.rank.value + it.suit.value }
     }
 
     private fun renderPlayerStatus(player: Player): String {
         return player.name + PLAYER_NAME_STATUS_DELIMITER +
-            player.showCards()
+            player.showHand()
                 .joinToString { it.rank.value + it.suit.value }
     }
 

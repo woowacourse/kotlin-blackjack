@@ -20,10 +20,10 @@ enum class Verdict(val value: String) {
             comparePlayer: Player,
         ): Verdict {
             return when {
-                standardPlayer.isBust() && comparePlayer.isBust() -> LOSE
-                standardPlayer.isBust() -> WIN
-                standardPlayer.getScore() > comparePlayer.getScore() || comparePlayer.isBust() -> LOSE
-                standardPlayer.getScore() < comparePlayer.getScore() && !comparePlayer.isBust() -> WIN
+                standardPlayer.isBusted() && comparePlayer.isBusted() -> LOSE
+                standardPlayer.isBusted() -> WIN
+                standardPlayer.computeScore() > comparePlayer.computeScore() || comparePlayer.isBusted() -> LOSE
+                standardPlayer.computeScore() < comparePlayer.computeScore() && !comparePlayer.isBusted() -> WIN
                 else -> DRAW
             }
         }

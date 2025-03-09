@@ -1,6 +1,10 @@
 package blackjack.domain.model
 
-class Dealer(name: String = DEALER_NAME, cards: List<Card> = listOf()) : Player(name, cards) {
+class Dealer(name: String = DEALER_NAME) : Player(name) {
+    constructor(name: String, cards: List<Card>) : this(name) {
+        accept(cards)
+    }
+
     fun getPlayerVerdict(players: List<Player>): Map<Player, Verdict> {
         return players.associateWith { player -> Verdict.determine(this, player) }
     }
