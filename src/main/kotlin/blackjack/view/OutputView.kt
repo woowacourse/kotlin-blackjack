@@ -1,9 +1,9 @@
 package blackjack.view
 
+import blackjack.domain.CardTier
+import blackjack.domain.GameResult
+import blackjack.domain.Shape
 import blackjack.domain.TrumpCard
-import blackjack.domain.enums.CardTier
-import blackjack.domain.enums.GameResult
-import blackjack.domain.enums.Shape
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Player
 import java.lang.String.format

@@ -1,11 +1,11 @@
 package blackjack
 
 import blackjack.domain.BlackJackGame
+import blackjack.domain.CardTier
 import blackjack.domain.Deck
+import blackjack.domain.Shape
 import blackjack.domain.TrumpCard
-import blackjack.domain.enums.CardTier
-import blackjack.domain.enums.Shape
-import blackjack.domain.enums.UserChoice
+import blackjack.domain.UserChoice
 import blackjack.fixture.playersFixture
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test

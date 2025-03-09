@@ -1,7 +1,5 @@
 package blackjack.domain
 
-import blackjack.domain.enums.GameResult
-import blackjack.domain.enums.UserChoice
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Participant
 import blackjack.domain.participant.Player

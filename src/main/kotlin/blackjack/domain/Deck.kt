@@ -1,7 +1,5 @@
 package blackjack.domain
 
-import blackjack.domain.enums.CardTier
-import blackjack.domain.enums.Shape
 import java.util.ArrayDeque
 import java.util.Deque
 

@@ -1,5 +1,6 @@
 package blackjack.domain.enums
 
+import blackjack.domain.UserChoice
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Assertions.assertThrows

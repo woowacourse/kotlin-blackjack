@@ -1,8 +1,8 @@
 package blackjack.domain.participant
 
 import blackjack.domain.BlackJackGame.Companion.BUST_STANDARD
+import blackjack.domain.CardTier
 import blackjack.domain.TrumpCard
-import blackjack.domain.enums.CardTier
 import blackjack.domain.participant.Dealer.Companion.ACE_EXTRACT_SCORE
 
 class Player(
