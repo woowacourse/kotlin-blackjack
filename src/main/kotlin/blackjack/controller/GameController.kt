@@ -1,8 +1,8 @@
 package blackjack.controller
 
+import blackjack.domain.model.Action
 import blackjack.domain.model.Cards
 import blackjack.domain.model.Cards.Companion.START_CARD_COUNT
-import blackjack.domain.model.Choice
 import blackjack.domain.model.Dealer
 import blackjack.domain.model.Participants
 import blackjack.domain.model.Player
@@ -42,8 +42,8 @@ class GameController(
         deck: Cards,
     ) {
         if (player.isBusted()) return
-        val choice = retryEvent { Choice(inputView.readPlayerAction(player)) }
-        if (!choice.isHit()) {
+        val action = retryEvent { inputView.readPlayerAction(player) }
+        if (action == Action.STAND) {
             printStatusOnNoHit(player)
             return
         }
