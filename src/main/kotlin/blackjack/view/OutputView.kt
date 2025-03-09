@@ -18,7 +18,7 @@ class OutputView {
     ) {
         println(HANDS_STATUS_MESSAGE_FORMAT.format(dealer.name, initialDealerHands(dealer.cards)))
         players.forEach { player -> printPlayerHands(player) }
-        println()
+        printContentSeparator()
     }
 
     fun printPlayerHands(player: Player) {
@@ -32,7 +32,7 @@ class OutputView {
         } else {
             println(DEALER_STAY_MESSAGE)
         }
-        println()
+        printContentSeparator()
     }
 
     fun printFinalHandStatus(
@@ -47,7 +47,7 @@ class OutputView {
             ),
         )
         players.forEach { player -> printFinalPlayerHandStatus(player) }
-        println()
+        printContentSeparator()
     }
 
     fun printFinalResult(
@@ -82,6 +82,10 @@ class OutputView {
                 player.adjustScore(),
             ),
         )
+    }
+
+    private fun printContentSeparator() {
+        println()
     }
 
     companion object {
