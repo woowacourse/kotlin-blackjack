@@ -1,9 +1,9 @@
 package blackjack
 
-import blackjack.model.Card
-import blackjack.model.Number
 import blackjack.model.Participant
-import blackjack.model.Shape
+import blackjack.model.card.Card
+import blackjack.model.card.Number
+import blackjack.model.card.Shape
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -14,7 +14,7 @@ class ParticipantTest {
     @BeforeEach
     fun setUp() {
         participant =
-            object : Participant() {
+            object : Participant("참가자이름") {
                 override fun isBust(): Boolean {
                     return true
                 }
