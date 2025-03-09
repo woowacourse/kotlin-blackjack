@@ -21,9 +21,7 @@ class ParticipantsTest {
 
     @MethodSource("invalidPlayerCounts")
     @ParameterizedTest
-    fun `플레이어는 최소 2명이다`() {
-        val players = listOf(Player("peto"))
-
+    fun `플레이어는 최소 2명이다`(players: List<Player>) {
         assertThrows<IllegalArgumentException>(
             message = "플레이어는 최소 2명부터 최대 8명입니다.",
         ) {
@@ -35,7 +33,7 @@ class ParticipantsTest {
         @JvmStatic
         fun invalidPlayerCounts() =
             listOf(
-                Arguments.of(Player("peto")),
+                Arguments.of(listOf(Player("peto"))),
                 Arguments.of(
                     listOf(
                         Player("peto"), Player("bibi"), Player("hwano"), Player("por"),
