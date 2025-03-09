@@ -15,7 +15,7 @@ class CardsGenerator {
         cardShape: Shape,
     ) {
         CardRank.entries.forEach { cardRank ->
-            cards.add(Card(cardRank, cardShape))
+            cards.add(Card.of(cardRank, cardShape))
         }
     }
 }

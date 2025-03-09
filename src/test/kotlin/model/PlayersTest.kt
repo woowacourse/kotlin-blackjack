@@ -10,14 +10,14 @@ class PlayersTest {
     fun `플레이어의 수는 1명 이상이어야 한다`() {
         val cards1 =
             cardOf(
-                Card(CardRank.SIX, Shape.CLUB),
-                Card(CardRank.NINE, Shape.SPADE),
+                Card.of(CardRank.SIX, Shape.CLUB),
+                Card.of(CardRank.NINE, Shape.SPADE),
             )
 
         val cards2 =
             cardOf(
-                Card(CardRank.TEN, Shape.CLUB),
-                Card(CardRank.EIGHT, Shape.SPADE),
+                Card.of(CardRank.TEN, Shape.CLUB),
+                Card.of(CardRank.EIGHT, Shape.SPADE),
             )
 
         val player1 = Player("joy", cards1)
@@ -31,13 +31,13 @@ class PlayersTest {
     fun `플레이어들의 카드네임을 모두 알 수 있다`() {
         val cards1 =
             cardOf(
-                Card(CardRank.SIX, Shape.CLUB),
-                Card(CardRank.NINE, Shape.SPADE),
+                Card.of(CardRank.SIX, Shape.CLUB),
+                Card.of(CardRank.NINE, Shape.SPADE),
             )
         val cards2 =
             cardOf(
-                Card(CardRank.TEN, Shape.CLUB),
-                Card(CardRank.EIGHT, Shape.SPADE),
+                Card.of(CardRank.TEN, Shape.CLUB),
+                Card.of(CardRank.EIGHT, Shape.SPADE),
             )
 
         val player1 = Player("joy", cards1)
@@ -59,13 +59,13 @@ class PlayersTest {
     fun `플레이어들의 점수를 모두 알 수 있다`() {
         val cards1 =
             cardOf(
-                Card(CardRank.SIX, Shape.CLUB),
-                Card(CardRank.NINE, Shape.SPADE),
+                Card.of(CardRank.SIX, Shape.CLUB),
+                Card.of(CardRank.NINE, Shape.SPADE),
             )
         val cards2 =
             cardOf(
-                Card(CardRank.TEN, Shape.CLUB),
-                Card(CardRank.EIGHT, Shape.SPADE),
+                Card.of(CardRank.TEN, Shape.CLUB),
+                Card.of(CardRank.EIGHT, Shape.SPADE),
             )
 
         val player1 = Player("joy", cards1)
