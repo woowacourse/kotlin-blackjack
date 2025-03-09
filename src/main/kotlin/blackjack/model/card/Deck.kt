@@ -1,4 +1,4 @@
-package blackjack.model
+package blackjack.model.card
 
 object Deck {
     const val INITIAL_HAND_OUT_CARD_COUNT = 2
@@ -9,9 +9,10 @@ object Deck {
         return CARDS.removeFirstOrNull() ?: throw IllegalStateException(ERROR_NO_MORE_CARD_MESSAGE)
     }
 
-    private fun generateCards(): MutableList<Card> = Shape.entries.flatMap { shape ->
-        Number.entries.map { number ->
-            Card(shape, number)
-        }
-    }.shuffled().toMutableList()
+    private fun generateCards(): MutableList<Card> =
+        Shape.entries.flatMap { shape ->
+            Number.entries.map { number ->
+                Card(shape, number)
+            }
+        }.shuffled().toMutableList()
 }
