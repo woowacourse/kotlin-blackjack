@@ -16,7 +16,7 @@ enum class PlayerState(override val isFinal: Boolean) : PersonState {
             val cards = player.cards()
             return when {
                 cards.size < GameRule.FIRST_TURN_DRAW_AMOUNT -> FIRST_TURN
-                ScoreCalculator.calculate(cards) > GameRule.DEALER_ADDITIONAL_DRAW_BASE_SCORE -> BUST
+                ScoreCalculator.calculate(cards) > GameRule.BLACKJACK_SCORE -> BUST
                 else -> HIT
             }
         }
