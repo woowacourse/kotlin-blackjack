@@ -1,22 +1,23 @@
 package blackjack.model
 
 import blackjack.model.ResultType.Companion.BUST_NUMBER
+import blackjack.model.card.Number
 
 class Player(
     name: String,
 ) : Participant(name) {
     fun adjustScore(): Int {
-        var sumScore = calculateTotalScore()
+        var totalScore = ScoreCalculator.sum(cards)
         var countAce = countAce()
         while (countAce-- > 0) {
-            if (sumScore > BUST_NUMBER) {
-                sumScore -= ADJUST_ACE_NUMBER
+            if (totalScore > BUST_NUMBER) {
+                totalScore -= ADJUST_ACE_NUMBER
             }
         }
-        return sumScore
+        return totalScore
     }
 
-    private fun countAce() = super.cards.count { it.number == Number.ACE }
+    private fun countAce() = cards.count { it.number == Number.ACE }
 
     override fun isBust() = adjustScore() > BUST_NUMBER
 

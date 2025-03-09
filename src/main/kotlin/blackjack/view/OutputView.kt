@@ -1,10 +1,11 @@
 package blackjack.view
 
-import blackjack.model.Card
 import blackjack.model.Dealer
-import blackjack.model.Deck.INITIAL_HAND_OUT_CARD_COUNT
 import blackjack.model.Player
 import blackjack.model.ResultType
+import blackjack.model.ScoreCalculator
+import blackjack.model.card.Card
+import blackjack.model.card.Deck.Companion.INITIAL_HAND_OUT_CARD_COUNT
 
 class OutputView {
     fun printInitialHandOutCardMessage(players: List<Player>) {
@@ -43,7 +44,7 @@ class OutputView {
             FINAL_HANDS_STATUS_MESSAGE_FORMAT.format(
                 dealer.name,
                 getHandsStatus(dealer.cards),
-                dealer.calculateTotalScore(),
+                ScoreCalculator.sum(dealer.cards),
             ),
         )
         players.forEach { player -> printFinalPlayerHandStatus(player) }
