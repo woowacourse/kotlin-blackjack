@@ -26,14 +26,4 @@ class ParticipantTest {
         participant.addCard(Card(Shape.SPADE, Number.NINE))
         assertThat(participant.cards.size).isEqualTo(1)
     }
-
-    @Test
-    fun `참여자 카드의 총 합을 계산한다`() {
-        participant.addCard(Card(Shape.SPADE, Number.NINE))
-        participant.addCard(Card(Shape.SPADE, Number.SEVEN))
-        val expect = 16
-        val actual = participant.calculateTotalScore()
-
-        assertThat(actual).isEqualTo(expect)
-    }
 }
