@@ -1,7 +1,6 @@
 package blackjack.domain
 
-import blackjack.domain.card.FakeCardFactory
-import blackjack.fixture.trumpCardFixture
+import blackjack.domain.card.CardFactoryImpl
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -11,7 +10,7 @@ class DeckTest {
 
     @BeforeEach
     fun setUp() {
-        deck = Deck(FakeCardFactory(trumpCardFixture()))
+        deck = Deck(CardFactoryImpl())
     }
 
     @Test
@@ -19,7 +18,7 @@ class DeckTest {
         assertThrows<IllegalArgumentException>(
             message = "카드가 모두 소진되었습니다.",
         ) {
-            repeat(3) {
+            while (true) {
                 deck.draw()
             }
         }
