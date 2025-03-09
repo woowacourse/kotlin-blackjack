@@ -11,11 +11,12 @@ class CardDeck {
         }
 
     companion object {
-        private val CACHE_CARDS =
-            CardRank.entries.flatMap { cardRank ->
-                CardSuit.entries.map { cardSuit ->
-                    Card(cardRank, cardSuit)
-                }
+        private const val DECK_COUNT = 6
+        private val SINGLE_DECK = CardRank.entries.flatMap { cardRank ->
+            CardSuit.entries.map { cardSuit ->
+                Card(cardRank, cardSuit)
             }
+        }
+        private val CACHE_CARDS = (1..DECK_COUNT).flatMap { SINGLE_DECK }
     }
 }
