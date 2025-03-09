@@ -1,5 +1,7 @@
 package blackjack.model
 
+import blackjack.model.WinningResult.Companion.dealerResult
+
 class Dealer(val firstCard : List<Card>,) : Participant(firstCard) {
     fun drawUntilFinished(cardDeck: CardDeck): Int {
         var count = INITIAL_RESULT_COUNT
@@ -16,7 +18,7 @@ class Dealer(val firstCard : List<Card>,) : Participant(firstCard) {
         val result = WinningResult.entries.associateWith { INITIAL_SCORE }.toMutableMap()
 
         players.value.forEach { player ->
-            val winningResult = WinningResult.from(this,player)
+            val winningResult = WinningResult.from(this,player).dealerResult()
             result[winningResult] = result.getOrDefault(winningResult, INITIAL_SCORE) + ADDITIONAL_RESULT_COUNT
         }
 

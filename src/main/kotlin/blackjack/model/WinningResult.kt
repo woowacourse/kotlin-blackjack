@@ -24,6 +24,14 @@ enum class WinningResult {
             }
         }
 
+        fun WinningResult.dealerResult(): WinningResult{
+            return when{
+                this == WIN -> LOSE
+                this == LOSE -> WIN
+                else -> PUSH
+            }
+        }
+
 
     }
 }
