@@ -1,8 +1,8 @@
 package blackjack.controller
 
 import blackjack.domain.BlackJackGame
-import blackjack.domain.Deck
 import blackjack.domain.UserChoice
+import blackjack.domain.deck.ShuffledDeck
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Participant
 import blackjack.domain.participant.Player
@@ -45,10 +45,7 @@ class BlackJackController(
         )
     }
 
-    private fun readForGame(players: List<Participant>): BlackJackGame {
-        val deck = Deck()
-        return BlackJackGame(players, deck)
-    }
+    private fun readForGame(players: List<Participant>): BlackJackGame = BlackJackGame(players, ShuffledDeck())
 
     private fun getUserChoice(name: String): UserChoice =
         retryWhenException(
