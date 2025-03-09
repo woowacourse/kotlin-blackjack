@@ -20,7 +20,7 @@ class BlackJackController(
     fun run() {
         val players = readyForGamePlayers()
         displayPlayerNames(players)
-        val game = readForGame(players)
+        val game = makeGame(players)
         startGame(game, players)
         displayResult(game, players)
     }
@@ -50,7 +50,7 @@ class BlackJackController(
         outputView.printDealerCards(participants.dealer.cards.first())
     }
 
-    private fun readForGame(participants: Participants): BlackJackGame {
+    private fun makeGame(participants: Participants): BlackJackGame {
         val deck = Deck(cardFactory)
         return BlackJackGame(participants, deck)
     }
