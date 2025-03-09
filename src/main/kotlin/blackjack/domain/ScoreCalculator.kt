@@ -4,11 +4,11 @@ import blackjack.const.GameRule
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
 
-class ScoreCalculator {
+object ScoreCalculator {
     fun calculate(cards: List<Card>): Int {
         val values = cards.map { getCardValue(it) }
         val sum = values.sum()
-        return adjustAceValues(sum, values)
+        return adjustAceValues(sum, cards)
     }
 
     private fun getCardValue(card: Card): Int {
@@ -18,10 +18,10 @@ class ScoreCalculator {
 
     private fun adjustAceValues(
         sum: Int,
-        values: List<Int>,
+        cards: List<Card>,
     ): Int {
         var total = sum
-        val aceCount = values.count { it == GameRule.ACE_OTHER_SCORE }
+        val aceCount = cards.count { it.number == CardNumber.ACE }
 
         repeat(aceCount) {
             if (total > GameRule.BLACKJACK_SCORE) {

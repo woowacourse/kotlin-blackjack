@@ -10,11 +10,10 @@ class ScoreCalculatorTest {
     @Test
     fun `점수를 계산한다`() {
         // Given
-        val scoreCalculator = ScoreCalculator()
         val cards = List(3) { Card.create(CardNumber.ACE, CardPattern.HEART) }
 
         // When
-        val result = scoreCalculator.calculate(cards)
+        val result = ScoreCalculator.calculate(cards)
 
         // Then
         result shouldBe 13

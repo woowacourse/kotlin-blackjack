@@ -1,5 +1,6 @@
 package blackjack.domain.state
 
+import blackjack.domain.ScoreCalculator
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
 import blackjack.domain.card.CardPattern
@@ -25,7 +26,7 @@ class DealerStateTest {
         hand.addCard(Card.create(CardNumber.SEVEN, CardPattern.HEART))
         val dealer = Dealer(hand)
 
-        (dealer.score() > 16) shouldBe true
+        (ScoreCalculator.calculate(dealer.cards()) > 16) shouldBe true
         DealerState.from(dealer) shouldBe DealerState.FINISH
     }
 
@@ -37,7 +38,7 @@ class DealerStateTest {
         hand.addCard(Card.create(CardNumber.SIX, CardPattern.HEART))
         val dealer = Dealer(hand)
 
-        (dealer.score() <= 16) shouldBe true
+        (ScoreCalculator.calculate(dealer.cards()) <= 16) shouldBe true
         DealerState.from(dealer) shouldBe DealerState.HIT
     }
 }

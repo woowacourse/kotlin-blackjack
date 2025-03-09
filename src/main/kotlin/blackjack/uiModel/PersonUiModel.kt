@@ -1,5 +1,6 @@
 package blackjack.uiModel
 
+import blackjack.domain.ScoreCalculator
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
 import blackjack.domain.card.CardPattern
@@ -16,7 +17,7 @@ data class PersonUiModel(
             return PersonUiModel(
                 name = (person as? Player)?.name ?: "딜러",
                 cards = person.cards().map { it.toUiString() },
-                score = person.score(),
+                score = ScoreCalculator.calculate(person.cards()),
             )
         }
 
