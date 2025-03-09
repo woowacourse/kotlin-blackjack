@@ -1,9 +1,9 @@
 package blackjack
 
-import blackjack.model.Card
-import blackjack.model.Number
 import blackjack.model.Player
-import blackjack.model.Shape
+import blackjack.model.card.Card
+import blackjack.model.card.Number
+import blackjack.model.card.Shape
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -23,33 +23,25 @@ class PlayerTest {
 
     @Test
     fun `플레이어는 카드 총 합이 21을 넘으면 true를 반환한다`() {
-        player.addCards(
-            listOf(
-                Card(Shape.SPADE, Number.NINE),
-                Card(Shape.CLOVER, Number.QUEEN),
-                Card(Shape.CLOVER, Number.SEVEN),
-            ),
-        )
-        val expect = true
+        player.addCard(Card(Shape.SPADE, Number.NINE))
+        player.addCard(Card(Shape.CLOVER, Number.QUEEN))
+        player.addCard(Card(Shape.CLOVER, Number.SEVEN))
+        val expected = true
 
         val actual = player.isBust()
 
-        assertThat(actual).isEqualTo(expect)
+        assertThat(actual).isEqualTo(expected)
     }
 
     @Test
     fun `카드 총 합이 21을 넘고 ACE가 존재하면 점수 조정을 진행한다`() {
-        player.addCards(
-            listOf(
-                Card(Shape.SPADE, Number.ACE),
-                Card(Shape.CLOVER, Number.ACE),
-                Card(Shape.DIAMOND, Number.ACE),
-            ),
-        )
-        val expect = 13
+        player.addCard(Card(Shape.SPADE, Number.ACE))
+        player.addCard(Card(Shape.CLOVER, Number.ACE))
+        player.addCard(Card(Shape.DIAMOND, Number.ACE))
+        val expected = 13
 
         val actual = player.adjustScore()
 
-        assertThat(actual).isEqualTo(expect)
+        assertThat(actual).isEqualTo(expected)
     }
 }
