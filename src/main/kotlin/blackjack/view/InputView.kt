@@ -7,13 +7,19 @@ class InputView {
 
     fun readPlayerNames(): List<String> {
         outputView.requestPlayerNames()
-        val input: String = readln()
+        val input: String = readInput()
         return input.split(PLAYER_NAMES_DELIMITER).map { name: String -> name.trim() }
     }
 
     fun readPlayerAction(player: Player): String {
         outputView.requestPlayerAction(player)
+        val input: String = readInput()
+        return input
+    }
+
+    private fun readInput(): String {
         val input: String = readln()
+        outputView.printInputDivider()
         return input
     }
 
