@@ -44,7 +44,7 @@ class OutputView {
             FINAL_HANDS_STATUS_MESSAGE_FORMAT.format(
                 dealer.name,
                 getHandsStatus(dealer.cards),
-                ScoreCalculator.sum(dealer.cards),
+                ScoreCalculator.calculateOptimalSum(dealer.cards),
             ),
         )
         players.forEach { player -> printFinalPlayerHandStatus(player) }
