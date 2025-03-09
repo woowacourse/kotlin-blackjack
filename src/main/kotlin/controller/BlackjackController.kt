@@ -17,7 +17,7 @@ class BlackjackController(
     fun run() {
         val allCards = cardsGenerator.generateCards()
         val initialDealerCards = allCards.initialCards()
-        val players = Players(getPlayers(inputView.inputPlayers(), allCards))
+        val players = Players(createPlayers(inputView.inputPlayers(), allCards))
         val dealer = Dealer(initialDealerCards)
 
         showInitialGameState(players.names(), initialDealerCards, players.getPlayerCardNames())
@@ -78,7 +78,7 @@ class BlackjackController(
         }
     }
 
-    private fun getPlayers(
+    private fun createPlayers(
         playersNames: List<String>,
         allCards: Cards,
     ): List<Player> =
