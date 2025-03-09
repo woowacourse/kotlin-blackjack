@@ -41,7 +41,7 @@ class BlackjackController(
         gameManager: GameManager,
         player: Player,
     ) {
-        val userChoice: DrawChoice = inputView.readMoreCardCondition(player)
+        val userChoice: DrawChoice = inputView.readCardDrawChoice(player)
         if (!userChoice.isDraw()) {
             outputView.printPlayerHands(player)
             return

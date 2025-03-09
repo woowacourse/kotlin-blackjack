@@ -12,15 +12,15 @@ class InputView {
         return players
     }
 
-    fun readMoreCardCondition(player: Player): DrawChoice {
-        println(PLAYER_MORE_CARD_MESSAGE_GUIDE.format(player.name))
+    fun readCardDrawChoice(player: Player): DrawChoice {
+        println(PLAYER_CARD_DRAW_CHOICE_MESSAGE_GUIDE.format(player.name))
         val condition: String = readln().trim()
-        return DrawChoice.from(condition) ?: readMoreCardCondition(player)
+        return DrawChoice.from(condition) ?: readCardDrawChoice(player)
     }
 
     companion object {
         private const val PLAYER_NAME_MESSAGE_GUIDE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)"
-        private const val PLAYER_MORE_CARD_MESSAGE_GUIDE = "%s은(는) 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)"
+        private const val PLAYER_CARD_DRAW_CHOICE_MESSAGE_GUIDE = "%s은(는) 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)"
         private const val PLAYER_NAME_DELIMITER = ","
     }
 }
