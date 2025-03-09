@@ -1,9 +1,10 @@
 package blackjack.controller
 
 import blackjack.domain.model.Action
-import blackjack.domain.model.Cards
-import blackjack.domain.model.Cards.Companion.START_CARD_COUNT
 import blackjack.domain.model.Dealer
+import blackjack.domain.model.Deck
+import blackjack.domain.model.Deck.Companion.START_CARD_COUNT
+import blackjack.domain.model.Participant
 import blackjack.domain.model.Player
 import blackjack.view.InputView
 import blackjack.view.OutputView
@@ -13,10 +14,10 @@ class GameController(
     private val outputView: OutputView = OutputView(),
 ) {
     fun run() {
-        val deck = Cards()
+        val deck = Deck()
         val dealer = Dealer()
         val players: List<Player> = inputView.readPlayerNames().map(::Player)
-        initialDeal(deck, players)
+        initialDeal(deck, listOf(dealer) + players)
         printInitialDeal(dealer, players)
         players.forEach { player -> playHand(player, deck) }
         processDealerHits(deck, dealer)
@@ -24,10 +25,10 @@ class GameController(
     }
 
     private fun initialDeal(
-        deck: Cards,
-        players: List<Player>,
+        deck: Deck,
+        participants: List<Participant>,
     ) {
-        players.forEach { player ->
+        participants.forEach { player ->
             player.accept(deck.draw(START_CARD_COUNT))
         }
     }
@@ -42,7 +43,7 @@ class GameController(
 
     private fun playHand(
         player: Player,
-        deck: Cards,
+        deck: Deck,
     ) {
         if (player.isBusted()) return
         val action = retryEvent { inputView.readPlayerAction(player) }
@@ -60,7 +61,7 @@ class GameController(
     }
 
     private fun processDealerHits(
-        deck: Cards,
+        deck: Deck,
         dealer: Dealer,
     ) {
         while (dealer.computePoint() <= Dealer.DEALER_DRAW_THRESHOLD) {
@@ -83,8 +84,7 @@ class GameController(
 
     private fun <T> retryEvent(event: () -> T): T {
         while (true) {
-            kotlin.runCatching { event() }
-                .onSuccess { return it }
+            kotlin.runCatching { event() }.onSuccess { return it }
                 .onFailure { outputView.printErrorMessage(it.message ?: it.stackTraceToString()) }
         }
     }
