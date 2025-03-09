@@ -1,21 +1,14 @@
 package model
 
 class ScoreCalculator(private val cards: Cards) {
-    private fun calculateCardScore(): Int {
-        return cards.scores().sum()
-    }
-
-    private fun calculateAceScore(): Int = cards.aceCount()
-
-    private fun calculateWithoutAce(): Int = calculateCardScore() - calculateAceScore()
+    private var totalCardScore: Int = cards.scores().sum()
 
     fun calculateTotalCardScore(): Int {
-        var score = calculateWithoutAce() + cards.aceCount()
         var aceCount = cards.aceCount()
-        while (score > GameResultDecider.BLACKJACK_SCORE && aceCount-- > DEFAULT_ZERO) {
-            score -= ACE_MINUS_VALUE
+        while (totalCardScore > GameResultDecider.BLACKJACK_SCORE && aceCount-- > DEFAULT_ZERO) {
+            totalCardScore -= ACE_MINUS_VALUE
         }
-        return score
+        return totalCardScore
     }
 
     companion object {
