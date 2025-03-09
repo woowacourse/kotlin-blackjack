@@ -37,7 +37,7 @@ class GameManagerTest {
     ) {
         val gameManager = GameManager(Dealer(), listOf(player))
 
-        val actual = gameManager.distributeCard(choice, player)
+        val actual = gameManager.distributeCardWithChoice(choice, player)
 
         assertThat(actual).isEqualTo(expected)
     }
@@ -48,7 +48,7 @@ class GameManagerTest {
         val gameManager = GameManager(Dealer(), listOf(player))
         val expected = player.cards.size + 1
 
-        gameManager.distributeCard(DrawChoice.YES, player)
+        gameManager.distributeCardWithChoice(DrawChoice.YES, player)
 
         val actual = player.cards.size
 

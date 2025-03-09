@@ -20,19 +20,19 @@ class GameManager(
         }
     }
 
-    fun distributeCard(
+    fun distributeCardWithChoice(
         choice: DrawChoice,
         player: Player,
     ): Boolean {
         if (choice.isDraw()) {
-            drawCard(player)
+            distributeCard(player)
             return true
         }
         return false
     }
 
-    private fun drawCard(player: Player) {
-        player.addCard(Deck.draw())
+    fun distributeCard(participant: Participant) {
+        participant.addCard(Deck.draw())
     }
 
     fun calculateResultMap(): Map<Player, ResultType> {

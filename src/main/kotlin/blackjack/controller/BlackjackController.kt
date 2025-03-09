@@ -43,7 +43,7 @@ class BlackjackController(
     ) {
         while (true) {
             val choice: DrawChoice = inputView.readCardDrawChoice(player)
-            if (gameManager.distributeCard(choice, player)) {
+            if (gameManager.distributeCardWithChoice(choice, player)) {
                 outputView.printPlayerHands(player)
                 if (player.isBust()) break
                 continue
