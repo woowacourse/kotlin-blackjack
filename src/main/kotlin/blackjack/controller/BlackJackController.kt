@@ -15,36 +15,36 @@ class BlackJackController(
     private lateinit var deck: Deck
 
     fun play() {
-        val players = generatePlayers()
+        val players = initializePlayers()
         val dealer = Dealer()
         deck = Deck()
 
-        settingInitialCards(dealer, players)
+        dealCards(dealer, players)
         processPlayerTurns(players)
         processDealerTurns(dealer)
 
         showGameResult(dealer, players)
     }
 
-    private fun generatePlayers(): List<Player> {
+    private fun initializePlayers(): List<Player> {
         outputView.printNameMessage()
         return inputView.getNames().map { Player(it) }
     }
 
-    private fun settingInitialCards(
+    private fun dealCards(
         dealer: Dealer,
         players: List<Player>,
     ) {
         dealer.draw(deck)
-        players.forEach { person -> person.draw(deck) }
-        outputView.printDrawMessage(combinePerson(dealer, players))
+        players.forEach { player -> player.draw(deck) }
+        outputView.printDrawMessage(combinePlayersAndDealer(dealer, players))
     }
 
     private fun processPlayerTurns(players: List<Player>) {
-        players.forEach { player -> handlePlayerTurn(player) }
+        players.forEach { player -> playPlayerTurn(player) }
     }
 
-    private fun handlePlayerTurn(player: Player) {
+    private fun playPlayerTurn(player: Player) {
         while (player.canDraw()) {
             outputView.printFlagMessage(player.name)
             letPlayerDrawCard(player)
@@ -71,12 +71,12 @@ class BlackJackController(
         dealer: Dealer,
         players: List<Player>,
     ) {
-        outputView.printGameResult(combinePerson(dealer, players))
+        outputView.printGameResult(combinePlayersAndDealer(dealer, players))
         val gameResult = GameResult(dealer, players)
         outputView.printResult(gameResult)
     }
 
-    private fun combinePerson(
+    private fun combinePlayersAndDealer(
         dealer: Dealer,
         players: List<Player>,
     ): List<PersonUiModel> {
