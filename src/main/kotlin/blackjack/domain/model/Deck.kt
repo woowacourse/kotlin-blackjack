@@ -1,6 +1,6 @@
 package blackjack.domain.model
 
-class Cards(initCards: List<Card> = deckCards.shuffled()) {
+class Deck(initCards: List<Card> = deckCards.shuffled()) {
     private val cards: MutableList<Card> = initCards.toMutableList()
 
     fun draw(count: Int = DRAW_DEFAULT_COUNT): List<Card> {

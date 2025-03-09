@@ -1,9 +1,9 @@
 package blackjack.controller
 
-import blackjack.domain.model.Cards
-import blackjack.domain.model.Cards.Companion.START_CARD_COUNT
 import blackjack.domain.model.Choice
 import blackjack.domain.model.Dealer
+import blackjack.domain.model.Deck
+import blackjack.domain.model.Deck.Companion.START_CARD_COUNT
 import blackjack.domain.model.Participants
 import blackjack.domain.model.Player
 import blackjack.view.InputView
@@ -14,7 +14,7 @@ class GameController(
     private val outputView: OutputView = OutputView(),
 ) {
     fun run() {
-        val deck = Cards()
+        val deck = Deck()
         val participants = Participants(Dealer(), inputView.readPlayerNames())
         initialDeal(deck, participants)
         printInitialDeal(participants)
@@ -24,7 +24,7 @@ class GameController(
     }
 
     private fun initialDeal(
-        deck: Cards,
+        deck: Deck,
         participants: Participants,
     ) {
         participants.players.forEach { player ->
@@ -39,7 +39,7 @@ class GameController(
 
     private fun playHand(
         player: Player,
-        deck: Cards,
+        deck: Deck,
     ) {
         if (player.isBust()) return
         val choice = retryEvent { Choice(inputView.readPlayerAction(player)) }
@@ -57,7 +57,7 @@ class GameController(
     }
 
     private fun processDealerHits(
-        deck: Cards,
+        deck: Deck,
         dealer: Dealer,
     ) {
         while (dealer.getScore() <= Dealer.DEALER_DRAW_THRESHOLD) {

@@ -1,7 +1,7 @@
 package blackjack.view
 
-import blackjack.domain.model.Cards.Companion.START_CARD_COUNT
 import blackjack.domain.model.Dealer
+import blackjack.domain.model.Deck.Companion.START_CARD_COUNT
 import blackjack.domain.model.Participants
 import blackjack.domain.model.Player
 import blackjack.domain.model.Verdict
