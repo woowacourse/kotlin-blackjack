@@ -15,7 +15,7 @@ class Dealer(name: String = DEALER_NAME) : Participant(name) {
 
     fun getDealerResults(playerResults: Map<Player, Result>): Map<Result, Int> {
         return Result.entries.associateWith { result ->
-            playerResults.values.count { playerVResult -> result == playerVResult.reverse() }
+            playerResults.values.count { playerResult -> result == playerResult.reverse() }
         }
     }
 

@@ -17,10 +17,12 @@ class GameController(
         val dealer = Dealer()
         val players: List<Player> = inputView.readPlayerNames().map(::Player)
         processInitialDeals(deck, listOf(dealer) + players)
-        printInitialDeals(dealer, players)
+        announceInitialDeals(dealer, players)
+
         players.forEach { player -> processPlayerHits(deck, player) }
         processDealerHits(deck, dealer)
-        announceResult(dealer, players)
+
+        announceResults(dealer, players)
     }
 
     private fun processInitialDeals(
@@ -32,7 +34,7 @@ class GameController(
         }
     }
 
-    private fun printInitialDeals(
+    private fun announceInitialDeals(
         dealer: Dealer,
         players: List<Player>,
     ) {
@@ -69,7 +71,7 @@ class GameController(
         }
     }
 
-    private fun announceResult(
+    private fun announceResults(
         dealer: Dealer,
         players: List<Player>,
     ) {

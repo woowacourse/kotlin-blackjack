@@ -8,7 +8,7 @@ abstract class Participant(val name: String) {
     }
 
     fun showHand(count: Int = hand.cards.size): List<Card> {
-        return hand.cards.take(count).map { it.copy() }
+        return hand.cards.take(count).map { card -> card.copy() }
     }
 
     fun accept(cards: List<Card>) {
