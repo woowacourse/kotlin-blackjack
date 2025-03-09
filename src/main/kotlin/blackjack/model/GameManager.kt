@@ -1,9 +1,13 @@
 package blackjack.model
 
+import blackjack.model.card.Deck
+
 class GameManager(
     private val dealer: Dealer,
     private val players: List<Player>,
 ) {
+    private val deck = Deck.create()
+
     fun dealInitialCardWithCount(count: Int) {
         distributeCardWithCount(dealer, count)
         players.forEach { player ->
@@ -16,7 +20,7 @@ class GameManager(
         count: Int,
     ) {
         repeat(count) {
-            participant.addCard(Deck.draw())
+            participant.addCard(deck.draw())
         }
     }
 
@@ -32,7 +36,7 @@ class GameManager(
     }
 
     fun distributeCard(participant: Participant) {
-        participant.addCard(Deck.draw())
+        participant.addCard(deck.draw())
     }
 
     fun calculateResultMap(): Map<Player, ResultType> {
