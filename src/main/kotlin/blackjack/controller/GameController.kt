@@ -3,7 +3,6 @@ package blackjack.controller
 import blackjack.domain.model.Action
 import blackjack.domain.model.Dealer
 import blackjack.domain.model.Deck
-import blackjack.domain.model.Deck.Companion.START_CARD_COUNT
 import blackjack.domain.model.Participant
 import blackjack.domain.model.Player
 import blackjack.view.InputView
@@ -29,7 +28,7 @@ class GameController(
         participants: List<Participant>,
     ) {
         participants.forEach { player ->
-            player.accept(deck.draw(START_CARD_COUNT))
+            player.accept(deck.draw(Deck.INITIAL_DRAW_COUNT))
         }
     }
 
@@ -57,7 +56,7 @@ class GameController(
     }
 
     private fun printStatusOnNoHit(player: Player) {
-        if (player.showHand().count() == START_CARD_COUNT) outputView.printPlayerStatus(player)
+        if (player.showHand().count() == Deck.INITIAL_DRAW_COUNT) outputView.printPlayerStatus(player)
     }
 
     private fun processDealerHits(
