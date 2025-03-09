@@ -33,7 +33,7 @@ class BlackJackGameTest {
         val player = participants.players.first()
 
         player.addCard(TrumpCard(Tier.JACK, Shape.DIA))
-        player.addCard(TrumpCard(Tier.JACK, Shape.DIA))
+        player.addCard(TrumpCard(Tier.KING, Shape.DIA))
 
         game.playGame(
             getPlayerChoice = { UserChoice.from("y") },
