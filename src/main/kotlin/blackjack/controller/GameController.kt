@@ -16,23 +16,23 @@ class GameController(
         val deck = Deck()
         val dealer = Dealer()
         val players: List<Player> = inputView.readPlayerNames().map(::Player)
-        initialDeal(deck, listOf(dealer) + players)
-        printInitialDeal(dealer, players)
-        players.forEach { player -> playHand(player, deck) }
+        processInitialDeals(deck, listOf(dealer) + players)
+        printInitialDeals(dealer, players)
+        players.forEach { player -> processDeals(deck, player) }
         processDealerHits(deck, dealer)
         announceResult(dealer, players)
     }
 
-    private fun initialDeal(
+    private fun processInitialDeals(
         deck: Deck,
         participants: List<Participant>,
     ) {
         participants.forEach { player ->
-            player.accept(deck.draw(Deck.INITIAL_DRAW_COUNT))
+            player.accept(deck.draw(Participant.INITIAL_DRAW_COUNT))
         }
     }
 
-    private fun printInitialDeal(
+    private fun printInitialDeals(
         dealer: Dealer,
         players: List<Player>,
     ) {
@@ -40,23 +40,23 @@ class GameController(
         outputView.printParticipantStatus(dealer, players)
     }
 
-    private fun playHand(
-        player: Player,
+    private fun processDeals(
         deck: Deck,
+        player: Player,
     ) {
         if (player.isBusted()) return
-        val action = retryEvent { inputView.readPlayerAction(player) }
+        val action = inputView.readPlayerAction(player)
         if (action == Action.STAND) {
             printStatusOnNoHit(player)
             return
         }
         player.accept(deck.draw())
         outputView.printPlayerStatus(player)
-        playHand(player, deck)
+        processDeals(deck, player)
     }
 
     private fun printStatusOnNoHit(player: Player) {
-        if (player.showHand().count() == Deck.INITIAL_DRAW_COUNT) outputView.printPlayerStatus(player)
+        if (player.showHand().count() == Participant.INITIAL_DRAW_COUNT) outputView.printPlayerStatus(player)
     }
 
     private fun processDealerHits(
@@ -79,12 +79,5 @@ class GameController(
         val results = dealer.getDealerResults(playersResult)
         outputView.printDealerResults(dealer, results)
         playersResult.forEach { (player, result) -> outputView.printPlayerResult(player, result) }
-    }
-
-    private fun <T> retryEvent(event: () -> T): T {
-        while (true) {
-            kotlin.runCatching { event() }.onSuccess { return it }
-                .onFailure { outputView.printErrorMessage(it.message ?: it.stackTraceToString()) }
-        }
     }
 }

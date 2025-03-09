@@ -11,8 +11,14 @@ class InputView {
     }
 
     fun readPlayerAction(player: Player): Action {
-        println(MESSAGE_REQUEST_PLAYER_YES_OR_NO.format(player.name))
-        val input: String = readInput().lowercase()
+        return readUntilValid {
+            println(MESSAGE_REQUEST_PLAYER_YES_OR_NO.format(player.name))
+            val input: String = readInput().lowercase()
+            convertToAction(input)
+        }
+    }
+
+    private fun convertToAction(input: String): Action {
         return when (input) {
             PLAYER_ACTION_YES -> Action.HIT
             PLAYER_ACTION_NO -> Action.STAND
@@ -24,6 +30,13 @@ class InputView {
         val input: String = readln()
         println()
         return input
+    }
+
+    private fun <T> readUntilValid(event: () -> T): T {
+        while (true) {
+            kotlin.runCatching { event() }.onSuccess { return it }
+                .onFailure { println(it.message ?: it.stackTraceToString()) }
+        }
     }
 
     companion object {

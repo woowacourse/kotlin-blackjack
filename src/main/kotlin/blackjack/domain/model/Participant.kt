@@ -28,6 +28,9 @@ abstract class Participant(val name: String) {
     }
 
     companion object {
+        const val INITIAL_DRAW_COUNT = 2
+        const val DEFAULT_DRAW_COUNT = 1
+
         private const val ERROR_MESSAGE_BLANK_PARTICIPANT_NAME = "참가자의 이름은 공백일 수 없습니다."
     }
 }

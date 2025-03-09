@@ -1,7 +1,6 @@
 package blackjack.view
 
 import blackjack.domain.model.Dealer
-import blackjack.domain.model.Deck
 import blackjack.domain.model.Participant
 import blackjack.domain.model.Player
 import blackjack.domain.model.Rank
@@ -17,7 +16,7 @@ class OutputView {
             MESSAGE_INITIAL_HAND_DISTRIBUTED.format(
                 dealer.name,
                 players.map(Player::name).joinToString(PLAYER_CARDS_DELIMITER),
-                Deck.INITIAL_DRAW_COUNT,
+                Participant.INITIAL_DRAW_COUNT,
             ),
         )
     }
@@ -77,10 +76,6 @@ class OutputView {
         result: Result,
     ) {
         println(player.name + NAME_RESULT_DELIMITER + result.stringRepresentation())
-    }
-
-    fun printErrorMessage(message: String) {
-        println(message)
     }
 
     private fun Result.stringRepresentation(): String {
