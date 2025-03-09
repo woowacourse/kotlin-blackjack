@@ -1,10 +1,10 @@
 package blackjack.view
 
-import blackjack.domain.model.Cards.Companion.START_CARD_COUNT
 import blackjack.domain.model.Dealer
+import blackjack.domain.model.Deck.Companion.START_CARD_COUNT
 import blackjack.domain.model.Participant
 import blackjack.domain.model.Player
-import blackjack.domain.model.Verdict
+import blackjack.domain.model.Result
 
 class OutputView {
     fun printInitialDeals(
@@ -20,32 +20,32 @@ class OutputView {
         )
     }
 
-    fun printPlayersStatus(
+    fun printParticipantStatus(
         dealer: Dealer,
         players: List<Player>,
     ) {
-        println(renderDealerVisibleStatus(dealer))
+        println(renderDealerStatus(dealer))
         players.forEach { player ->
-            println(renderPlayerStatus(player))
+            println(renderParticipantStatus(player))
         }
     }
 
     fun printPlayerStatus(player: Player) {
-        println(renderPlayerStatus(player))
+        println(renderParticipantStatus(player))
     }
 
     fun printPlayerResult(participant: Participant) {
-        print(renderPlayerStatus(participant))
-        println(PLAYER_RESULT_DELIMITER + participant.computeScore())
+        print(renderParticipantStatus(participant))
+        println(PLAYER_RESULT_DELIMITER + participant.computePoint())
     }
 
-    private fun renderDealerVisibleStatus(dealer: Dealer): String {
+    private fun renderDealerStatus(dealer: Dealer): String {
         return dealer.name + PLAYER_NAME_STATUS_DELIMITER +
             dealer.showHand(DEALER_VISIBLE_CARD_COUNT)
                 .joinToString { it.rank.value + it.suit.value }
     }
 
-    private fun renderPlayerStatus(participant: Participant): String {
+    private fun renderParticipantStatus(participant: Participant): String {
         return participant.name + PLAYER_NAME_STATUS_DELIMITER +
             participant.showHand()
                 .joinToString { it.rank.value + it.suit.value }
@@ -59,33 +59,33 @@ class OutputView {
         println(MESSAGE_RESULTS_HEADER)
     }
 
-    fun printDealerVerdicts(
+    fun printDealerResults(
         dealer: Dealer,
-        verdicts: Map<Verdict, Int>,
+        results: Map<Result, Int>,
     ) {
         print(dealer.name + NAME_RESULT_DELIMITER)
-        verdicts.filter { it.value > 0 }.forEach { (verdict, count) ->
-            print("${count}${resultToString(verdict)} ")
+        results.filter { it.value > 0 }.forEach { (result, count) ->
+            print("${count}${resultToString(result)} ")
         }
         println()
     }
 
-    fun printPlayerVerdict(
+    fun printPlayerResult(
         player: Player,
-        verdict: Verdict,
+        result: Result,
     ) {
-        println(player.name + NAME_RESULT_DELIMITER + resultToString(verdict))
+        println(player.name + NAME_RESULT_DELIMITER + resultToString(result))
     }
 
     fun printErrorMessage(message: String) {
         println(message)
     }
 
-    private fun resultToString(result: Verdict): String {
+    private fun resultToString(result: Result): String {
         return when (result) {
-            Verdict.WIN -> RESULT_WIN
-            Verdict.LOSE -> RESULT_LOSE
-            Verdict.DRAW -> RESULT_DRAW
+            Result.WIN -> RESULT_WIN
+            Result.LOSE -> RESULT_LOSE
+            Result.DRAW -> RESULT_DRAW
         }
     }
 

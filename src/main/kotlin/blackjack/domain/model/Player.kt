@@ -5,16 +5,16 @@ class Player(name: String) : Participant(name) {
         accept(cards)
     }
 
-    fun compareAgainst(dealer: Dealer): Verdict {
-        if (isBusted()) return Verdict.LOSE
-        if (dealer.isBusted()) return Verdict.WIN
+    fun compareAgainst(dealer: Dealer): Result {
+        if (isBusted()) return Result.LOSE
+        if (dealer.isBusted()) return Result.WIN
 
-        val score: Int = computeScore()
-        val dealerScore: Int = dealer.computeScore()
+        val point: Int = computePoint()
+        val dealerPoint: Int = dealer.computePoint()
         return when {
-            score > dealerScore -> Verdict.WIN
-            score < dealerScore -> Verdict.LOSE
-            else -> Verdict.DRAW
+            point > dealerPoint -> Result.WIN
+            point < dealerPoint -> Result.LOSE
+            else -> Result.DRAW
         }
     }
 }

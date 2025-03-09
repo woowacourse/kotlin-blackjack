@@ -1,12 +1,12 @@
 package blackjack.domain.model
 
-enum class Verdict {
+enum class Result {
     WIN,
     LOSE,
     DRAW,
     ;
 
-    fun reverse(): Verdict {
+    fun reverse(): Result {
         return when (this) {
             WIN -> LOSE
             LOSE -> WIN

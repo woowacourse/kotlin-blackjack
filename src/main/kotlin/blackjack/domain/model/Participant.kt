@@ -19,8 +19,8 @@ abstract class Participant(val name: String) {
         hand.add(cards)
     }
 
-    fun computeScore(): Int {
-        return hand.computeScore()
+    fun computePoint(): Int {
+        return hand.computePoint()
     }
 
     fun isBusted(): Boolean {

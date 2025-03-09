@@ -12,24 +12,24 @@ class Hand() {
         _cards.addAll(cards)
     }
 
-    fun computeScore(): Int {
-        val score = _cards.sumOf { it.rank.score }
-        return score + computeBonusScore(score)
+    fun computePoint(): Int {
+        val point = _cards.sumOf { it.rank.point }
+        return point + computeBonusPoint(point)
     }
 
-    private fun computeBonusScore(score: Int): Int {
-        if (score + BONUS_SCORE <= BUST_THRESHOLD && hasAce()) return BONUS_SCORE
+    private fun computeBonusPoint(point: Int): Int {
+        if (point + BONUS_POINT <= BUST_THRESHOLD && hasAce()) return BONUS_POINT
         return 0
     }
 
     private fun hasAce(): Boolean = _cards.any { it.rank == Rank.ACE }
 
     fun isBusted(): Boolean {
-        return computeScore() > BUST_THRESHOLD
+        return computePoint() > BUST_THRESHOLD
     }
 
     companion object {
         private const val BUST_THRESHOLD = 21
-        private const val BONUS_SCORE = 10
+        private const val BONUS_POINT = 10
     }
 }

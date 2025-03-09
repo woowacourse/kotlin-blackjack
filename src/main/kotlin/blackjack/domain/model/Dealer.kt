@@ -5,13 +5,13 @@ class Dealer(name: String = DEALER_NAME) : Participant(name) {
         accept(cards)
     }
 
-    fun getPlayerVerdict(players: List<Player>): Map<Player, Verdict> {
+    fun getPlayerResult(players: List<Player>): Map<Player, Result> {
         return players.associateWith { player -> player.compareAgainst(this) }
     }
 
-    fun getDealerVerdicts(playerVerdicts: Map<Player, Verdict>): Map<Verdict, Int> {
-        return Verdict.entries.associateWith { verdict ->
-            playerVerdicts.values.count { playerVerdict -> verdict == playerVerdict.reverse() }
+    fun getDealerResults(playerResults: Map<Player, Result>): Map<Result, Int> {
+        return Result.entries.associateWith { result ->
+            playerResults.values.count { playerVResult -> result == playerVResult.reverse() }
         }
     }
 

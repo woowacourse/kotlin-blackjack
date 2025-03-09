@@ -37,7 +37,7 @@ class GameController(
         players: List<Player>,
     ) {
         outputView.printInitialDeals(dealer, players)
-        outputView.printPlayersStatus(dealer, players)
+        outputView.printParticipantStatus(dealer, players)
     }
 
     private fun playHand(
@@ -63,7 +63,7 @@ class GameController(
         deck: Cards,
         dealer: Dealer,
     ) {
-        while (dealer.computeScore() <= Dealer.DEALER_DRAW_THRESHOLD) {
+        while (dealer.computePoint() <= Dealer.DEALER_DRAW_THRESHOLD) {
             outputView.printDealerHitsState()
             dealer.accept(deck.draw())
         }
@@ -74,11 +74,11 @@ class GameController(
         players: List<Player>,
     ) {
         players.forEach { player -> outputView.printPlayerResult(player) }
-        val playersVerdict = dealer.getPlayerVerdict(players)
+        val playersResult = dealer.getPlayerResult(players)
         outputView.printResultsHeader()
-        val verdicts = dealer.getDealerVerdicts(playersVerdict)
-        outputView.printDealerVerdicts(dealer, verdicts)
-        playersVerdict.forEach { (player, verdict) -> outputView.printPlayerVerdict(player, verdict) }
+        val results = dealer.getDealerResults(playersResult)
+        outputView.printDealerResults(dealer, results)
+        playersResult.forEach { (player, result) -> outputView.printPlayerResult(player, result) }
     }
 
     private fun <T> retryEvent(event: () -> T): T {

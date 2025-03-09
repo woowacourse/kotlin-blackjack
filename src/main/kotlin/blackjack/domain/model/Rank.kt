@@ -1,6 +1,6 @@
 package blackjack.domain.model
 
-enum class Rank(val value: String, val score: Int) {
+enum class Rank(val value: String, val point: Int) {
     ACE("A", 1),
     TWO("2", 2),
     THREE("3", 3),
