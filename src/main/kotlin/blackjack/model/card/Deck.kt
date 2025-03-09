@@ -1,18 +1,23 @@
 package blackjack.model.card
 
-object Deck {
-    const val INITIAL_HAND_OUT_CARD_COUNT = 2
-    private const val ERROR_NO_MORE_CARD_MESSAGE = "카드가 더 없습니다."
-    private val CARDS = generateCards()
-
+class Deck private constructor(private val cards: ArrayDeque<Card>) {
     fun draw(): Card {
-        return CARDS.removeFirstOrNull() ?: throw IllegalStateException(ERROR_NO_MORE_CARD_MESSAGE)
+        return cards.removeFirstOrNull() ?: run {
+            createNewDeck()
+            draw()
+        }
     }
 
-    private fun generateCards(): MutableList<Card> =
-        Shape.entries.flatMap { shape ->
-            Number.entries.map { number ->
-                Card(shape, number)
-            }
-        }.shuffled().toMutableList()
+    private fun createNewDeck() {
+        if (cards.isNotEmpty()) cards.clear()
+        cards.addAll(DeckFactory.createDeck())
+    }
+
+    companion object {
+        const val INITIAL_HAND_OUT_CARD_COUNT = 2
+
+        fun create(): Deck {
+            return Deck(DeckFactory.createDeck())
+        }
+    }
 }
