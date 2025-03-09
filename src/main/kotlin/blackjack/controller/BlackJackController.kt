@@ -115,9 +115,8 @@ class BlackJackController(
     }
 
     private fun displayDealerResult(game: BlackJackGame) {
-        game.calculateDealerResult { result ->
-            outputView.printDealerResult(result)
-        }
+        val result = game.calculateDealerResult()
+        outputView.printDealerResult(result)
     }
 
     private fun displayPlayerResult(game: BlackJackGame) {
