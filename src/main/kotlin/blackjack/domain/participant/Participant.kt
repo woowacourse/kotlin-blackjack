@@ -7,8 +7,6 @@ abstract class Participant {
     private var _cards = PlayerCards(emptySet())
     val cards get() = _cards
 
-    fun cardSize(): Int = _cards.size()
-
     fun addCard(card: TrumpCard) {
         _cards = _cards.add(card)
     }

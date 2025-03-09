@@ -50,7 +50,7 @@ class DealerTest {
         dealer.addCard(TrumpCard(Tier.TEN, Shape.DIA))
         dealer.addCard(TrumpCard(Tier.TEN, Shape.HEART))
 
-        assertEquals(dealer.cardSize(), 3)
+        assertEquals(dealer.cards.size(), 3)
     }
 
     @Test
