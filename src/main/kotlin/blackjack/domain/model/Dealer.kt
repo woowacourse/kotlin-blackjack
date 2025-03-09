@@ -1,7 +1,7 @@
 package blackjack.domain.model
 
 class Dealer(name: String = DEALER_NAME) : Participant(name) {
-    constructor(name: String, cards: List<Card>) : this(name) {
+    constructor(name: String = DEALER_NAME, cards: List<Card>) : this(name) {
         accept(cards)
     }
 
