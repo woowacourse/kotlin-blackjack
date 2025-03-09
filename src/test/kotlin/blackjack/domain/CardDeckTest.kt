@@ -23,7 +23,7 @@ class CardDeckTest {
 
         // when & then
         assertThrows<IllegalArgumentException> {
-            cardDeck.draw(exceedCount)
+            repeat(exceedCount){cardDeck.draw()}
         }
     }
 
@@ -34,7 +34,7 @@ class CardDeckTest {
         val cardCount = 52*6
 
         // when
-        val cards: List<Card> = cardDeck.draw(cardCount)
+        val cards: List<Card> = List(cardCount){cardDeck.draw()}
 
         // then
         assertThat(cards.size).isEqualTo(cardCount)
@@ -44,11 +44,10 @@ class CardDeckTest {
     fun `카드는 랜덤으로 섞여서 나온다`() {
         // given
         val cardDeck = CardDeck(TestShuffle())
-        val cardCount = 1
         // when
-        val cards: List<Card> = cardDeck.draw(cardCount)
+        val card: Card = cardDeck.draw()
 
         // then
-        assertThat(cards[0].rank).isEqualTo(CardRank.ACE)
+        assertThat(card.rank).isEqualTo(CardRank.ACE)
     }
 }

@@ -22,7 +22,5 @@ class Players(
     companion object {
         private const val MIN_PLAYER_COUNT = 1
         private const val MAX_PLAYER_COUNT = 7
-
-        fun from(players: List<String>): Players = Players(players.map { name -> Player(name) })
     }
 }

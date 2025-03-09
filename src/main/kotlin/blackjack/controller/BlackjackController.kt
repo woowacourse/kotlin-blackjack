@@ -14,9 +14,8 @@ class BlackjackController(
 ) {
     val blackjackEngine = BlackjackEngine()
     fun run() {
-
         val dealer = blackjackEngine.prepareDealer()
-        val players = blackjackEngine.preparePlayers(Players.from(inputView.getPlayers()))
+        val players = blackjackEngine.preparePlayers(inputView.getPlayers())
         outputView.displayFirstDrawEnd(players.value.map { player -> player.name })
         outputView.displayParticipantCards(cards = dealer.hand.cards.take(DEALER_FIRST_SHOWN_COUNT))
         progressPlayersDraw(players)

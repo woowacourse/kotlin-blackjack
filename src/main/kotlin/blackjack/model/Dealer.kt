@@ -1,6 +1,6 @@
 package blackjack.model
 
-class Dealer : Participant() {
+class Dealer(val firstCard : List<Card>,) : Participant(firstCard) {
     fun drawUntilFinished(cardDeck: CardDeck): Int {
         var count = INITIAL_RESULT_COUNT
 

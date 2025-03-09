@@ -2,19 +2,18 @@ package blackjack.model
 
 class BlackjackEngine {
     val cardDeck = CardDeck()
-    fun preparePlayers(players: Players): Players {
-        players.value.forEach { player ->
-            player.draw(cardDeck)
-        }
-        return players
-    }
+    fun preparePlayers(names: List<String>): Players = Players(names.map { name ->
+        Player(name, makeFirstCards())
+    })
 
-    fun prepareDealer(): Dealer = Dealer().apply { this.draw(cardDeck) }
+    fun prepareDealer(): Dealer = Dealer(makeFirstCards())
 
-    fun playerDraw(player:Player) {
+    fun playerDraw(player: Player) {
         player.draw(cardDeck)
     }
 
     fun dealerDraw(dealer: Dealer) = dealer.drawUntilFinished(cardDeck)
+
+    fun makeFirstCards() = List(2) { cardDeck.draw() }
 
 }

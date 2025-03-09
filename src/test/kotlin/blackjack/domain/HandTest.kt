@@ -17,23 +17,21 @@ class HandTest {
     @Test
     fun `뽑은 카드를 핸드에 추가한다`() {
         // given
-        val hand = Hand()
+        val hand = Hand(listOf(Card(JACK,CLUB),Card(QUEEN,CLUB)))
         val card = Card(ACE, CLUB)
 
         // when
-        hand.addAll(listOf(card))
+        hand.add(card)
 
         // then
         assertTrue(hand.cards.contains(card))
     }
 
     @Test
-    fun `핸드에 2클로버 한 장을 가지고 있으면 2점을 반환한다`() {
+    fun `핸드에 2클로버 한 장,잭을 가지고 있으면 12점을 반환한다`() {
         // given
-        val expectedScore = 2
-        val hand = Hand()
-        val card = Card(TWO, CLUB)
-        hand.addAll(listOf(card))
+        val expectedScore = 12
+        val hand = Hand(listOf(Card(JACK,CLUB),Card(TWO, CLUB)))
 
         // when
         val score = hand.score()
@@ -45,10 +43,8 @@ class HandTest {
     @Test
     fun `핸드에 에이스를 포함한 값이 21이 넘으면 에이스를 1로 바꾼다`() {
         // given
-        val expectedScore = 2
-        val hand = Hand()
-        val card = Card(TWO, CLUB)
-        hand.addAll(listOf(card))
+        val expectedScore = 12
+        val hand = Hand(listOf(Card(ACE,CLUB),Card(ACE,CLUB)))
 
         // when
         val score = hand.score()
@@ -60,13 +56,14 @@ class HandTest {
     @Test
     fun `21점이 초과하면 Bust를 반환한다`() {
         // given
-        val hand = Hand()
+
         val card1 = Card(QUEEN, CLUB)
         val card2 = Card(KING, CLUB)
         val card3 = Card(JACK, CLUB)
+        val hand = Hand(listOf(card1,card2))
 
         // when
-        hand.addAll(listOf(card1, card2, card3))
+        hand.add(card3)
 
         // then
         assertThat(hand.isBust()).isTrue()
@@ -75,14 +72,14 @@ class HandTest {
     @Test
     fun `ACE 1장, Q 1장, 9 1장을 가지고 있으면 20점을 반환한다`() {
         // given
-        val hand = Hand()
         val card1 = Card(ACE, CLUB)
         val card2 = Card(QUEEN, CLUB)
+        val hand = Hand(listOf(card1,card2))
         val card3 = Card(NINE, CLUB)
-        val expectedScore = 20
 
-        // when
-        hand.addAll(listOf(card1, card2, card3))
+        //when
+        hand.add(card3)
+        val expectedScore = 20
 
         // then
         assertThat(hand.score()).isEqualTo(expectedScore)

@@ -2,4 +2,5 @@ package blackjack.model
 
 class Player(
     val name: String,
-) : Participant()
+    val firstCard : List<Card>,
+) : Participant(firstCard)

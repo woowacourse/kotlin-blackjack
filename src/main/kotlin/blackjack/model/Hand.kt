@@ -1,11 +1,11 @@
 package blackjack.model
 
-class Hand {
-    private val _cards: MutableList<Card> = mutableListOf()
+class Hand(firstCard: List<Card>) {
+    private val _cards: MutableList<Card> = firstCard.toMutableList()
     val cards: List<Card> get() = _cards.toList()
 
-    fun addAll(cards: List<Card>) {
-        _cards.addAll(cards)
+    fun add(card: Card) {
+        _cards.add(card)
     }
 
     fun isBust(): Boolean = score() == BUST_SCORE
