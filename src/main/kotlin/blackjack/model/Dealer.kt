@@ -2,9 +2,9 @@ package blackjack.model
 
 import blackjack.model.ResultType.Companion.BUST_NUMBER
 
-class Dealer : Participant() {
-    val name = DEALER_NAME
-
+class Dealer(
+    name: String = DEALER_NAME,
+) : Participant(name) {
     fun isAvailDrawCard() = calculateTotalScore() < DEALER_DRAW_CARD_MINIMUM_SCORE
 
     override fun isBust(): Boolean = super.calculateTotalScore() > BUST_NUMBER
