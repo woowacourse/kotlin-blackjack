@@ -80,7 +80,7 @@ class OutputView {
             FINAL_HANDS_STATUS_MESSAGE_FORMAT.format(
                 player.name,
                 getHandsStatus(player.cards),
-                player.adjustScore(),
+                ScoreCalculator.calculateOptimalSum(player.cards),
             ),
         )
     }
