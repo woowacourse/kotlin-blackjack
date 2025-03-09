@@ -1,6 +1,6 @@
 package blackjack.controller
 
-import blackjack.model.CardDeck
+import blackjack.model.BlackjackEngine
 import blackjack.model.Dealer
 import blackjack.model.Player
 import blackjack.model.Players
@@ -12,62 +12,45 @@ class BlackjackController(
     private val inputView: InputView,
     private val outputView: OutputView,
 ) {
+    val blackjackEngine = BlackjackEngine()
     fun run() {
-        val cardDeck = CardDeck()
-        val dealer = Dealer().apply { this.draw(cardDeck) }
-        val players = preparePlayers(cardDeck, dealer)
 
-        progressPlayersDraw(players, cardDeck)
-        progressDealerDraw(dealer, cardDeck)
-
+        val dealer = blackjackEngine.prepareDealer()
+        val players = blackjackEngine.preparePlayers(Players.from(inputView.getPlayers()))
+        outputView.displayFirstDrawEnd(players.value.map { player -> player.name })
+        outputView.displayParticipantCards(cards = dealer.hand.cards.take(DEALER_FIRST_SHOWN_COUNT))
+        progressPlayersDraw(players)
+        progressDealerDraw(dealer)
         displayParticipantsInfo(players)
         displayResults(dealer, players)
     }
 
-    private fun preparePlayers(
-        cardDeck: CardDeck,
-        dealer: Dealer,
-    ): Players {
-        val players = Players.from(inputView.getPlayers())
-        players.value.forEach { player ->
-            player.draw(cardDeck)
-        }
-        outputView.displayFirstDrawEnd(players.value.map { player -> player.name })
-        outputView.displayParticipantCards(cards = dealer.hand.cards.take(DEALER_FIRST_SHOWN_COUNT))
-        return players
-    }
 
     private fun progressPlayersDraw(
         players: Players,
-        cardDeck: CardDeck,
     ) {
         players.value.forEach { player ->
             outputView.displayParticipantCards(player.name, player.hand.cards)
         }
         players.value.forEach { player ->
-            progressPlayerDrawUntilFinished(player, cardDeck)
+            progressPlayerDrawUntilFinished(player)
         }
     }
 
     private fun progressPlayerDrawUntilFinished(
         player: Player,
-        cardDeck: CardDeck,
     ) {
-        while (true) {
-            if (!inputView.getIsDrawMore(player.name)) break
-
-            player.draw(cardDeck)
+        while (inputView.getIsDrawMore(player.name)) {
+            blackjackEngine.playerDraw(player)
             outputView.displayParticipantCards(player.name, player.hand.cards)
-
             if (player.hand.isBust()) return
         }
     }
 
     private fun progressDealerDraw(
         dealer: Dealer,
-        cardDeck: CardDeck,
     ) {
-        val dealerDrawCount = dealer.drawUntilFinished(cardDeck)
+        val dealerDrawCount = blackjackEngine.dealerDraw(dealer)
         outputView.displayDealerDrawInfo(dealerDrawCount)
 
         outputView.displayParticipantInfo(
