@@ -88,7 +88,7 @@ class DealerTest {
     }
 
     @Test
-    fun `에이스가 있을 때 에이스가 11로 계산 되면 버스트 되고 에이스를 1로 계산했을 때 총합이 16을 초과하면 최대 점수를 초과 했음을 반환한다`() {
+    fun `에이스가 있을 때 에이스가 11로 계산 되면 버스트 되어 에이스를 1로 계산했을 때 총합이 16을 초과하면 최대 점수를 초과 했음을 반환한다`() {
         dealer.addCard(TrumpCard(Tier.ACE, Shape.DIA))
         dealer.addCard(TrumpCard(Tier.KING, Shape.DIA))
 
