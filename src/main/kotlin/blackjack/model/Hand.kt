@@ -11,11 +11,11 @@ class Hand {
     fun isBust(): Boolean = score() == BUST_SCORE
 
     fun score(): Int {
-        val hardScore = cards.sumOf { card -> card.rank.score }
-        return maxOf(hardScore.formatIfBust(), softScore(hardScore).formatIfBust())
+        val baseScore = cards.sumOf { card -> card.rank.score }
+        return maxOf(baseScore.formatIfBust(), maxScoreWithAce(baseScore).formatIfBust())
     }
 
-    private fun softScore(hardScore: Int): Int {
+    private fun maxScoreWithAce(hardScore: Int): Int {
         val containsAce = cards.any { card -> card.rank == CardRank.ACE }
         return if (containsAce) hardScore + SOFT_OFFSET_SCORE else hardScore
     }
