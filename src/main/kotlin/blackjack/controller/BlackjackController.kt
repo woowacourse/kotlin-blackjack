@@ -1,12 +1,9 @@
 package blackjack.controller
 
-import blackjack.domain.Card
 import blackjack.domain.Dealer
 import blackjack.domain.Deck
-import blackjack.domain.Participant
 import blackjack.domain.Player
 import blackjack.domain.Players
-import blackjack.domain.ShuffledCardGenerator
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -17,7 +14,7 @@ class BlackjackController(
     fun play() {
         val dealer = Dealer()
         val players = getPlayers()
-        val deck = Deck(ShuffledCardGenerator().generate())
+        val deck = Deck.create()
         dealInitialCards(dealer, players, deck)
 
         drawPlayerCards(players, deck)
@@ -37,8 +34,8 @@ class BlackjackController(
         deck: Deck,
     ) {
         repeat(INITIAL_CARD_COUNT) {
-            dealer.drawCardOrStop(deck) ?: return
-            players.players.forEach { it.drawCardOrStop(deck) ?: return }
+            dealer.drawCard(deck.pick())
+            players.players.forEach { it.drawCard(deck.pick()) }
         }
         outputView.printCardInfo(dealer, players)
     }
@@ -49,7 +46,7 @@ class BlackjackController(
     ) {
         players.players.forEach { player ->
             while (player.canHit() && inputView.readPlayerHit(player)) {
-                player.drawCardOrStop(deck) ?: return
+                player.drawCard(deck.pick())
                 outputView.printPlayerCards(player)
             }
             if (!player.canHit()) {
@@ -64,7 +61,7 @@ class BlackjackController(
     ) {
         var count = 0
         while (dealer.canHit()) {
-            dealer.drawCardOrStop(deck) ?: return
+            dealer.drawCard(deck.pick())
             count++
         }
         if (count > 0) {
@@ -90,12 +87,6 @@ class BlackjackController(
                 it.getResult(dealer.getScore()),
             )
         }
-    }
-
-    private fun Participant.drawCardOrStop(deck: Deck): Card? {
-        val card = deck.pick() ?: return null
-        drawCard(card)
-        return card
     }
 
     companion object {

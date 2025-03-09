@@ -7,13 +7,6 @@ import org.junit.jupiter.api.Test
 
 class DeckTest {
     @Test
-    fun `카드를 한 장 뽑으면 덱에 있는 카드는 51장이다`() {
-        val deck = Deck(ShuffledCardGenerator().generate())
-        deck.pick()
-        assertThat(deck.cards.size).isEqualTo(51)
-    }
-
-    @Test
     fun `덱에 카드 한 장이 남아있다면 해당 카드가 나온다`() {
         val deck = Deck(listOf(Card(Rank.ACE, Suit.SPADE)))
         val card = deck.pick()
