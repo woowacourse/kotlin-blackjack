@@ -16,7 +16,7 @@ class Player(
         return sumScore
     }
 
-    private fun countAce() = super.cards.count { it.number == Number.ACE }
+    private fun countAce() = cards.count { it.number == Number.ACE }
 
     override fun isBust() = adjustScore() > BUST_NUMBER
 

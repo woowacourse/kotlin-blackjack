@@ -2,7 +2,7 @@ package blackjack.model
 
 abstract class Person {
     private val _cards: MutableList<Card> = mutableListOf()
-    open val cards get() = _cards.toList()
+    val cards get() = _cards.toList()
 
     fun addCard(card: Card) = _cards.add(card)
 
