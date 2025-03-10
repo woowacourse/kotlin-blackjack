@@ -11,9 +11,4 @@ class Hand {
     fun addCard(card: Card) {
         _cards.add(card)
     }
-
-    fun copy(): Hand =
-        Hand().apply {
-            _cards.addAll(this@Hand._cards)
-        }
 }

@@ -4,13 +4,11 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.Deck
 import blackjack.domain.state.PersonState
 
-abstract class Person(
-    hand: Hand,
-) {
+abstract class Person {
     protected var state: PersonState = PersonState.HIT
     val gameState: PersonState get() = state
 
-    protected val hand = hand.copy()
+    private val hand: Hand = Hand()
 
     fun draw(deck: Deck) {
         hand.addCard(deck.draw())

@@ -1,11 +1,10 @@
 package blackjack.domain.card
 
-class Deck {
-    private val _cards = mutableListOf<Card>()
+class Deck(private val _cards: MutableList<Card> = mutableListOf()) {
     val cards: List<Card> get() = _cards.toList()
 
     init {
-        _cards.addAll(generateDeck())
+        if (cards.isEmpty()) _cards.addAll(generateDeck())
         require(cards.size == DECK_SIZE) { INVALID_DECK_SIZE_ERROR_MESSAGE }
     }
 

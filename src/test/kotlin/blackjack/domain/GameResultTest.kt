@@ -1,10 +1,7 @@
 package blackjack.domain
 
-import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
-import blackjack.domain.card.CardPattern
 import blackjack.domain.person.Dealer
-import blackjack.domain.person.Hand
 import blackjack.domain.person.Player
 import blackjack.domain.state.ResultState
 import io.kotest.matchers.shouldBe
@@ -13,44 +10,72 @@ import org.junit.jupiter.api.Test
 
 class GameResultTest {
     private lateinit var dealer: Dealer
+    private lateinit var player: Player
 
     @BeforeEach
     fun setUp() {
-        dealer = Dealer(createHand(CardNumber.JACK, CardNumber.EIGHT))
+        dealer = Dealer()
+        player = Player("player")
+    }
+
+    private fun drawCardsToPlayer(cards: List<CardNumber>) {
+        val deck = generateCustomDeck(cards)
+        repeat(cards.size) { player.draw(deck) }
+    }
+
+    private fun drawCardsToDealer(cards: List<CardNumber>) {
+        val deck = generateCustomDeck(cards)
+        repeat(cards.size) { dealer.draw(deck) }
     }
 
     @Test
-    fun `플레이어가 이기는 경우`() {
-        val player = createPlayer(CardNumber.JACK, CardNumber.JACK)
+    fun `플레이어가 20점, 딜러가 0점인 경우 WIN을 반환한다`() {
+        val customCards = listOf(CardNumber.JACK, CardNumber.JACK)
+        drawCardsToPlayer(customCards)
+
         val result = GameResult(dealer, listOf(player))
+
         result.winStatus[player] shouldBe ResultState.WIN
     }
 
     @Test
-    fun `플레이어가 지는 경우`() {
-        val player = createPlayer(CardNumber.FOUR, CardNumber.EIGHT)
+    fun `플레이어가 0점, 딜러가 12점인 경우 LOSE를 반환한다`() {
+        val customCards = listOf(CardNumber.FOUR, CardNumber.EIGHT)
+        drawCardsToDealer(customCards)
+
         val result = GameResult(dealer, listOf(player))
+
         result.winStatus[player] shouldBe ResultState.LOSE
     }
 
     @Test
-    fun `플레이어가 비기는 경우`() {
-        val player = createPlayer(CardNumber.JACK, CardNumber.EIGHT)
+    fun `플레이어가 18점, 딜러가 18점인 경우 DRAW를 반환한다`() {
+        val customCards = listOf(CardNumber.JACK, CardNumber.EIGHT)
+        drawCardsToPlayer(customCards)
+        drawCardsToDealer(customCards)
+
         val result = GameResult(dealer, listOf(player))
+
         result.winStatus[player] shouldBe ResultState.DRAW
     }
 
     @Test
-    fun `플레이어가 버스트되는 경우`() {
-        val player = createPlayer(CardNumber.JACK, CardNumber.JACK, CardNumber.JACK)
+    fun `플레이어가 버스트되는 경우 LOSE를 반환한다`() {
+        val customCards = listOf(CardNumber.JACK, CardNumber.JACK, CardNumber.JACK)
+        drawCardsToPlayer(customCards)
+
         val result = GameResult(dealer, listOf(player))
+
         result.winStatus[player] shouldBe ResultState.LOSE
     }
 
     @Test
     fun `딜러가 버스트되고, 플레이어는 버스트가 아닌 경우`() {
-        val dealer = Dealer(createHand(CardNumber.JACK, CardNumber.JACK, CardNumber.JACK))
-        val player = createPlayer(CardNumber.EIGHT, CardNumber.EIGHT)
+        val playerCustomCards = listOf(CardNumber.EIGHT, CardNumber.EIGHT)
+        drawCardsToPlayer(playerCustomCards)
+        val dealerCustomCards = listOf(CardNumber.JACK, CardNumber.JACK, CardNumber.JACK)
+        drawCardsToDealer(dealerCustomCards)
+
         val result = GameResult(dealer, listOf(player))
 
         result.winStatus[player] shouldBe ResultState.WIN
@@ -58,7 +83,9 @@ class GameResultTest {
 
     @Test
     fun `승패 여부를 계산할 수 있다`() {
-        val player = createPlayer(CardNumber.JACK, CardNumber.JACK)
+        val playerCustomCards = listOf(CardNumber.JACK, CardNumber.JACK)
+        drawCardsToPlayer(playerCustomCards)
+
         val result = GameResult(dealer, listOf(player))
 
         result.countByResultState().let {
@@ -66,15 +93,5 @@ class GameResultTest {
             (it[ResultState.DRAW] ?: 0) shouldBe 0
             (it[ResultState.WIN] ?: 0) shouldBe 1
         }
-    }
-
-    private fun createHand(vararg numbers: CardNumber): Hand {
-        return Hand().apply {
-            numbers.forEach { addCard(Card.create(it, CardPattern.HEART)) }
-        }
-    }
-
-    private fun createPlayer(vararg numbers: CardNumber): Player {
-        return Player("test", createHand(*numbers))
     }
 }
