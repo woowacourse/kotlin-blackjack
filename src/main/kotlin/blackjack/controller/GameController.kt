@@ -18,11 +18,9 @@ class GameController(
         val players: List<Player> = repeatUntilValid { inputView.readPlayerNames().map(::Player) }
         processInitialDeals(deck, listOf(dealer) + players)
         announceInitialDeals(dealer, players)
-
-        players.forEach { player -> processPlayerHits(deck, player) }
+        processPlayersHits(deck, players)
         processDealerHits(deck, dealer)
-
-        announceResults(dealer, players)
+        outputView.printResults(dealer, players)
     }
 
     private fun processInitialDeals(
@@ -39,7 +37,14 @@ class GameController(
         players: List<Player>,
     ) {
         outputView.printInitialDeals(dealer, players)
-        outputView.printParticipantStatus(dealer, players)
+        outputView.printParticipantStatus(listOf(dealer) + players)
+    }
+
+    private fun processPlayersHits(
+        deck: Deck,
+        players: List<Player>,
+    ) {
+        players.forEach { player -> processPlayerHits(deck, player) }
     }
 
     private fun processPlayerHits(
@@ -69,20 +74,6 @@ class GameController(
             outputView.printDealerHit()
             dealer.accept(deck.draw())
         }
-    }
-
-    private fun announceResults(
-        dealer: Dealer,
-        players: List<Player>,
-    ) {
-        outputView.printPlayerResult(dealer)
-        players.forEach { player -> outputView.printPlayerResult(player) }
-
-        outputView.printResultsHeader()
-        val playerResults = dealer.getPlayerResults(players)
-        val dealerResults = dealer.getDealerResults(playerResults)
-        outputView.printDealerResults(dealer, dealerResults)
-        playerResults.forEach { (player, result) -> outputView.printPlayerResult(player, result) }
     }
 
     private fun <T> repeatUntilValid(event: () -> T): T {

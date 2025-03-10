@@ -16,19 +16,14 @@ class OutputView {
             MESSAGE_INITIAL_HAND_DISTRIBUTED.format(
                 dealer.name,
                 players.map(Player::name).joinToString(PLAYER_CARDS_DELIMITER),
-                Participant.INITIAL_DRAW_COUNT,
             ),
         )
         println()
     }
 
-    fun printParticipantStatus(
-        dealer: Dealer,
-        players: List<Player>,
-    ) {
-        println(renderDealerStatus(dealer))
-        players.forEach { player ->
-            println(renderParticipantStatus(player))
+    fun printParticipantStatus(participants: List<Participant>) {
+        participants.forEach { participant ->
+            println(renderParticipantStatus(participant))
         }
         println()
     }
@@ -38,15 +33,25 @@ class OutputView {
         println()
     }
 
-    fun printPlayerResult(participant: Participant) {
-        print(renderParticipantStatus(participant))
-        println(PLAYER_RESULT_DELIMITER + participant.computePoint())
+    fun printDealerHit() {
+        println(MESSAGE_DEALER_HITS_STATE)
     }
 
-    private fun renderDealerStatus(dealer: Dealer): String {
-        return dealer.name + PLAYER_NAME_STATUS_DELIMITER +
-            dealer.showHand()
-                .joinToString { card -> card.rank.stringRepresentation() + card.suit.stringRepresentation() }
+    fun printResults(
+        dealer: Dealer,
+        players: List<Player>,
+    ) {
+        (listOf(dealer) + players).forEach { player -> printParticipantResult(player) }
+        println(MESSAGE_RESULTS_HEADER)
+        val playerResults = dealer.getPlayerResults(players)
+        val dealerResults = dealer.getDealerResults(playerResults)
+        printDealerResults(dealer, dealerResults)
+        playerResults.forEach { (player, result) -> printParticipantResult(player, result) }
+    }
+
+    private fun printParticipantResult(participant: Participant) {
+        print(renderParticipantStatus(participant))
+        println(PLAYER_RESULT_DELIMITER + participant.computePoint())
     }
 
     private fun renderParticipantStatus(participant: Participant): String {
@@ -55,15 +60,7 @@ class OutputView {
                 .joinToString { card -> card.rank.stringRepresentation() + card.suit.stringRepresentation() }
     }
 
-    fun printDealerHit() {
-        println(MESSAGE_DEALER_HITS_STATE)
-    }
-
-    fun printResultsHeader() {
-        println(MESSAGE_RESULTS_HEADER)
-    }
-
-    fun printDealerResults(
+    private fun printDealerResults(
         dealer: Dealer,
         results: Map<Result, Int>,
     ) {
@@ -74,7 +71,7 @@ class OutputView {
         println()
     }
 
-    fun printPlayerResult(
+    private fun printParticipantResult(
         player: Player,
         result: Result,
     ) {
@@ -108,9 +105,10 @@ class OutputView {
         }
     }
 
-    private companion object {
-        private const val MESSAGE_INITIAL_HAND_DISTRIBUTED = "%s와(과) %s에게 %s장의 카드를 나누었습니다."
-        private const val MESSAGE_DEALER_HITS_STATE = "딜러는 16이하라 한장의 카드를 더 받았습니다."
+    companion object {
+        private const val MESSAGE_INITIAL_HAND_DISTRIBUTED =
+            "%s와(과) %s에게 ${Participant.INITIAL_DRAW_COUNT}장의 카드를 나누었습니다."
+        private const val MESSAGE_DEALER_HITS_STATE = "딜러는 ${Dealer.HIT_THRESHOLD}점 이하라 한 장의 카드를 더 받았습니다."
         private const val MESSAGE_RESULTS_HEADER = "\n## 최종 승패"
         private const val PLAYER_CARDS_DELIMITER = ", "
         private const val PLAYER_NAME_STATUS_DELIMITER = " 카드: "

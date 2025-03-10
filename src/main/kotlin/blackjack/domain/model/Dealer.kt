@@ -28,8 +28,9 @@ class Dealer(name: String = DEFAULT_NAME) : Participant(name) {
     }
 
     companion object {
+        const val HIT_THRESHOLD = 16
+
         private const val DEFAULT_NAME = "딜러"
-        private const val HIT_THRESHOLD = 16
         private const val INITIAL_VISIBLE_CARD_COUNT = 1
     }
 }
