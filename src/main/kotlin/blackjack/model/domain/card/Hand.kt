@@ -7,7 +7,7 @@ class Hand(val cards: MutableList<Card>) {
         var sum = cards.sumOf { it.cardNumber.number }
         val haveAce: Boolean = CardNumber.Ace in cards.map { it.cardNumber }
 
-        if (haveAce && sum + CardNumber.BONUS_SCORE < BUST_STANDARD) {
+        if (haveAce && sum + CardNumber.BONUS_SCORE <= BUST_STANDARD) {
             sum += CardNumber.BONUS_SCORE
         }
 

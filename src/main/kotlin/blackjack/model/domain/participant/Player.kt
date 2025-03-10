@@ -8,7 +8,7 @@ class Player(override val name: String) : Participants() {
     override var status: ParticipantStatus = ParticipantStatus.None
 
     override fun canHit(): Boolean {
-        return isBust(sumCardNumber) == ParticipantStatus.Bust
+        return isBust(sumCardNumber) != ParticipantStatus.Bust
     }
 
     fun compareScores(number: Int) {
