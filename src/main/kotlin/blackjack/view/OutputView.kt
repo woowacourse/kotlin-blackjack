@@ -27,11 +27,9 @@ class OutputView {
         }
     }
 
-    fun printDealerSum(players: List<Dealer>) {
-        players.forEach { player ->
-            print(format(MESSAGE_OUTPUT_DEALER_CARD, makeCardListMessage(player.getAllCards())))
-            println(format(MESSAGE_OUTPUT_SUM, player.finalScore()))
-        }
+    fun printDealerSum(dealer: Dealer) {
+        print(format(MESSAGE_OUTPUT_DEALER_CARD, makeCardListMessage(dealer.getAllCards())))
+        println(format(MESSAGE_OUTPUT_SUM, dealer.finalScore()))
     }
 
     fun printPlayerSum(players: List<Player>) {
