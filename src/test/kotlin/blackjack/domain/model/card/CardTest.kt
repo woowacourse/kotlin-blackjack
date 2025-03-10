@@ -17,7 +17,7 @@ class CardTest {
     ) {
         // given
         val number = Number.getByOrderNumber(orderNumber)
-        val suit = Suit(rawSuit)
+        val suit = Suit.getBySuitIndex(rawSuit)
 
         // when then
         assertDoesNotThrow { Card(number, suit) }
@@ -33,7 +33,7 @@ class CardTest {
         // given
         val actualCard = Card(index)
         val number = Number.getByOrderNumber(orderNumber)
-        val suit = Suit(rawSuit)
+        val suit = Suit.getBySuitIndex(rawSuit)
 
         // when
         val expectedCard = Card(number, suit)

@@ -17,10 +17,11 @@ class SuitTest {
         expectedSuitName: String,
     ) {
         // given
-        val suit = Suit(rawSuitIndex)
+        val suit = Suit.getBySuitIndex(rawSuitIndex)
+        val card = Card(Number.ACE, suit)
 
         // when
-        val actualSuitName = suit.getSuitName()
+        val actualSuitName = card.getSuitName()
 
         // then
         assertThat(actualSuitName).isEqualTo(expectedSuitName)
