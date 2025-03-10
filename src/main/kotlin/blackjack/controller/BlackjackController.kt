@@ -66,7 +66,7 @@ class BlackjackController(
     ) {
         outputView.displayResultTitle()
 
-        val dealerResult = dealer.result(players)
+        val dealerResult = dealer.getWinDrawLossResult(players)
         outputView.displayDealerResult(dealer.name, dealerResult)
 
         val playerResults: Map<String, WinningResult> = players.results(dealer)

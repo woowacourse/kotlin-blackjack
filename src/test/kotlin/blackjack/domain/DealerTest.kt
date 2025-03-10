@@ -54,8 +54,8 @@ class DealerTest {
         val players = Players(listOf(losePlayer1, losePlayer2, winningPlayer, pushPlayer))
 
         // then
-        assertThat(dealer.result(players)[WinningResult.WIN]).isEqualTo(1)
-        assertThat(dealer.result(players)[WinningResult.LOSE]).isEqualTo(2)
-        assertThat(dealer.result(players)[WinningResult.PUSH]).isEqualTo(1)
+        assertThat(dealer.getWinDrawLossResult(players)[WinningResult.WIN]).isEqualTo(1)
+        assertThat(dealer.getWinDrawLossResult(players)[WinningResult.LOSE]).isEqualTo(2)
+        assertThat(dealer.getWinDrawLossResult(players)[WinningResult.PUSH]).isEqualTo(1)
     }
 }

@@ -13,7 +13,7 @@ class Dealer(val firstCard: List<Card>, val name: String = DEALER_NAME) : Partic
         return hand.getHandCount()-firstCard.size
     }
 
-    fun result(players: Players): Map<WinningResult, Int> {
+    fun getWinDrawLossResult(players: Players): Map<WinningResult, Int> {
         val result = WinningResult.entries.associateWith { INITIAL_SCORE }.toMutableMap()
 
         players.value.forEach { player ->
