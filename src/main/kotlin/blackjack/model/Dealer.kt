@@ -1,7 +1,5 @@
 package blackjack.model
 
-import blackjack.model.WinningResult.Companion.dealerResult
-
 class Dealer(val firstCard: List<Card>, val name: String = DEALER_NAME) : Participant(firstCard) {
     fun drawUntilFinished(cardDeck: CardDeck) {
         while (hand.score() <= DEALER_DRAW_CRITERIA && !hand.isBust()) {
@@ -17,7 +15,7 @@ class Dealer(val firstCard: List<Card>, val name: String = DEALER_NAME) : Partic
         val result = WinningResult.entries.associateWith { INITIAL_SCORE }.toMutableMap()
 
         players.value.forEach { player ->
-            val winningResult = WinningResult.from(this, player).dealerResult()
+            val winningResult = CalculateResult.getDealerResult(this, player)
             result[winningResult] = result.getOrDefault(winningResult, INITIAL_SCORE) + ADDITIONAL_RESULT_COUNT
         }
 
