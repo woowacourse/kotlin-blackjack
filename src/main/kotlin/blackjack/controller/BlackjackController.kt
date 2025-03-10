@@ -18,7 +18,7 @@ class BlackjackController(
 
         outputView.printInitialHandOutCardMessage(players)
         gameManager = GameManager(dealer, players)
-        gameManager.dealInitialCardWithCount()
+        gameManager.startGame()
         outputView.printAllPlayerHands(dealer, players)
 
         playersDrawCards(players)

@@ -4,7 +4,12 @@ class GameManager(
     private val dealer: Dealer,
     private val players: List<Player>,
 ) {
-    private val deck = Deck()
+    private var deck = Deck()
+
+    fun startGame() {
+        deck = Deck()
+        dealInitialCardWithCount()
+    }
 
     fun dealInitialCardWithCount() {
         repeat(INITIAL_HAND_OUT_CARD_COUNT) {
