@@ -1,21 +1,13 @@
 package model
 
-class CardsGenerator {
+class CardsGenerator(private val shuffler: Shuffler = RandomShuffler()) {
     fun generateCards(): Cards {
         val cards: MutableList<Card> = mutableListOf()
         Shape.entries.forEach { shape ->
-            createCardRank(cards, shape)
+            CardRank.entries.forEach { rank ->
+                cards.add(Card.of(rank, shape))
+            }
         }
-        cards.shuffle()
-        return Cards(cards)
-    }
-
-    private fun createCardRank(
-        cards: MutableList<Card>,
-        cardShape: Shape,
-    ) {
-        CardRank.entries.forEach { cardRank ->
-            cards.add(Card.of(cardRank, cardShape))
-        }
+        return Cards(shuffler.shuffle(cards))
     }
 }

@@ -8,8 +8,8 @@ import org.junit.jupiter.api.assertThrows
 class CardsTest {
     @Test
     fun `원하는 개수 만큼 카드를 뽑을 수 있다`() {
-        val cards = CardsGenerator().generateCards().allCards
-        val drawCards = Cards(cards).getInitialCards()
+        val cards = CardsGenerator().generateCards()
+        val drawCards = cards.getInitialCards()
 
         assertThat(drawCards.getCardsCount()).isEqualTo(2)
     }

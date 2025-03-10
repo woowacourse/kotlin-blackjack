@@ -10,7 +10,7 @@ class Card(private val cardRank: CardRank, private val shape: Shape) {
     fun isAceCard(): Boolean = cardRank == CardRank.ACE
 
     companion object {
-        private val cache = mutableMapOf<Pair<CardRank, Shape>,Card>()
+        private val cache = mutableMapOf<Pair<CardRank, Shape>, Card>()
 
         fun of(
             cardRank: CardRank,
