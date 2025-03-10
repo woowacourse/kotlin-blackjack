@@ -14,7 +14,7 @@ data class Card private constructor(
     }
 
     companion object {
-        private val standardCards: Map<String, Card> =
+        val standardCards: Map<String, Card> =
             Suit.entries.flatMap { suit -> CardNumber.entries.map { cardNumber -> Card(cardNumber, suit) } }
                 .associateBy { it.cardNumber.name + it.suit.name }
 
