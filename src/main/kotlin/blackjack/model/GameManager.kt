@@ -4,10 +4,12 @@ class GameManager(
     private val dealer: Dealer,
     private val players: List<Player>,
 ) {
+    private val deck = Deck()
+
     fun dealInitialCardWithCount(count: Int) {
         repeat(count) {
-            dealer.addCard(Deck.draw())
-            players.forEach { player -> player.addCard(Deck.draw()) }
+            dealer.addCard(deck.draw())
+            players.forEach { player -> player.addCard(deck.draw()) }
         }
     }
 
@@ -35,6 +37,6 @@ class GameManager(
     }
 
     fun drawCard(person: Person) {
-        person.addCard(Deck.draw())
+        person.addCard(deck.draw())
     }
 }
