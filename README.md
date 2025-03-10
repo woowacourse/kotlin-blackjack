@@ -50,7 +50,7 @@
 - [x] Deck | 카드를 명시적으로 넣어 주기 (이러면 Deck이 셔플 방법을 몰라도 됨)
 - [ ] ParticipantStatus | 승부를 벌이는 일은 누구의 역할인지 고민 (Status or Participant)
 - [ ] Blackjack | shouldStopDrawing 메소드가 한 가지 일만 하도록 변경
-- [ ] Participants | 가시성 변경자 수정
+- [x] Participants | 가시성 변경자 수정
 - [ ] 8명 인원 제한
 - [ ] 테스트 코드 | given when then 반영
 - [ ] BlackjackTest | BeforeEach 적용

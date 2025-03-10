@@ -6,8 +6,9 @@ import blackjack.model.domain.participant.ParticipantStatus.Companion.isBust
 
 abstract class Participants() {
     abstract val name: String
-    abstract val hand: Hand
+    protected abstract val hand: Hand
     abstract var status: ParticipantStatus
+        protected set
 
     val sumCardNumber: Int get() = hand.getSumNumber()
     val cardDeck get() = hand.cards.toList()
