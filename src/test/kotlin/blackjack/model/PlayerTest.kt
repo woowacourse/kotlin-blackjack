@@ -15,7 +15,7 @@ class PlayerTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = ["", "뭉치뭉치뭉"])
+    @ValueSource(strings = ["", "뭉치뭉치뭉치"])
     fun `플레이어의 이름 길이가 1~5 사이의 길이가 아닐 경우 예외를 발생시킨다`(name: String) {
         assertThrows<IllegalArgumentException> { Player(name, Cards(emptyList())) }
     }
