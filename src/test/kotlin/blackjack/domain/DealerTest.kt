@@ -44,13 +44,13 @@ class DealerTest {
     fun `딜러 점수와 플레이어 점수 리스트를 비교하여 승패 결과를 반환한다`() {
         // given
         val blackjackEngine = BlackjackEngine()
-        val dealer = Dealer(listOf(Card(CardRank.TWO, CardSuit.CLUB),Card(CardRank.THREE, CardSuit.CLUB)))
+        val dealer = Dealer(listOf(Card.getCard(CardRank.TWO, CardSuit.CLUB),Card.getCard(CardRank.THREE, CardSuit.CLUB)))
 
         // when
-        val losePlayer1 = Player("패배",listOf(Card(CardRank.TWO, CardSuit.CLUB),Card(CardRank.TWO, CardSuit.CLUB)))
-        val losePlayer2 = Player("패배",listOf(Card(CardRank.TWO, CardSuit.CLUB),Card(CardRank.TWO, CardSuit.CLUB)))
-        val pushPlayer = Player("동점",listOf(Card(CardRank.TWO, CardSuit.CLUB),Card(CardRank.THREE, CardSuit.CLUB)))
-        val winningPlayer = Player("승리",listOf(Card(CardRank.TWO, CardSuit.CLUB),Card(CardRank.ACE, CardSuit.CLUB)))
+        val losePlayer1 = Player("패배",listOf(Card.getCard(CardRank.TWO, CardSuit.CLUB),Card.getCard(CardRank.TWO, CardSuit.CLUB)))
+        val losePlayer2 = Player("패배",listOf(Card.getCard(CardRank.TWO, CardSuit.CLUB),Card.getCard(CardRank.TWO, CardSuit.CLUB)))
+        val pushPlayer = Player("동점",listOf(Card.getCard(CardRank.TWO, CardSuit.CLUB),Card.getCard(CardRank.THREE, CardSuit.CLUB)))
+        val winningPlayer = Player("승리",listOf(Card.getCard(CardRank.TWO, CardSuit.CLUB),Card.getCard(CardRank.ACE, CardSuit.CLUB)))
         val players = Players(listOf(losePlayer1, losePlayer2, winningPlayer, pushPlayer))
 
         // then
