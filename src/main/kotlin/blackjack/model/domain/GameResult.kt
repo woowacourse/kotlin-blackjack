@@ -1,25 +1,24 @@
-package blackjack.model.domain.participant
+package blackjack.model.domain
 
 import blackjack.model.service.Blackjack
 
-enum class ParticipantStatus() {
+enum class GameResult() {
     None,
     Win,
     Lose,
-    Bust,
     Draw,
     ;
 
     companion object {
-        fun isBust(number: Int): ParticipantStatus {
-            if (number > Blackjack.BUST_STANDARD) return Bust
+        fun isBust(number: Int): GameResult {
+            if (number > Blackjack.BUST_STANDARD) return Lose
             return None
         }
 
         fun compare(
             target: Int,
             other: Int,
-        ): ParticipantStatus {
+        ): GameResult {
             if (target < other) {
                 return Lose
             } else if (target > other) {

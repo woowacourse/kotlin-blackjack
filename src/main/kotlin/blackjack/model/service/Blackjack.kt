@@ -1,8 +1,8 @@
 package blackjack.model.service
 
+import blackjack.model.domain.GameResult
 import blackjack.model.domain.card.PlayingCard
 import blackjack.model.domain.participant.Dealer
-import blackjack.model.domain.participant.ParticipantStatus
 import blackjack.model.domain.participant.Participants
 import blackjack.model.domain.participant.Player
 import blackjack.model.domain.participant.PlayerGroup
@@ -35,7 +35,7 @@ class Blackjack(private val deck: PlayingCard) {
     }
 
     fun endGame(playerGroup: PlayerGroup) {
-        if (playerGroup.dealer.status == ParticipantStatus.Bust) return
+        if (playerGroup.dealer.status == GameResult.Lose) return
 
         val dealerResult = playerGroup.dealer.sumCardNumber
 

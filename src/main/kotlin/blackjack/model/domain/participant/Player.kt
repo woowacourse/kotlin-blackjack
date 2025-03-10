@@ -1,19 +1,20 @@
 package blackjack.model.domain.participant
 
+import blackjack.model.domain.GameResult
+import blackjack.model.domain.GameResult.Companion.isBust
 import blackjack.model.domain.card.Hand
-import blackjack.model.domain.participant.ParticipantStatus.Companion.isBust
 
 data class Player(override val name: String) : Participants() {
     override val hand: Hand = Hand(mutableListOf())
-    override var status: ParticipantStatus = ParticipantStatus.None
+    override var status: GameResult = GameResult.None
 
     override fun canHit(): Boolean {
-        return isBust(sumCardNumber) != ParticipantStatus.Bust
+        return isBust(sumCardNumber) != GameResult.Lose
     }
 
     fun compareScores(number: Int) {
-        if (status != ParticipantStatus.Bust) {
-            status = ParticipantStatus.compare(sumCardNumber, number)
+        if (status != GameResult.Lose) {
+            status = GameResult.compare(sumCardNumber, number)
         }
     }
 }

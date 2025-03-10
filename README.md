@@ -55,3 +55,4 @@
 - [x] 참여자 이름 중복 검사
 - [x] 테스트 코드 | given when then 반영
 - [x] BlackjackTest | BeforeEach 적용
+- [x] ParticipantsStatus | Bust 삭제

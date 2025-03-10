@@ -2,10 +2,10 @@ package blackjack.controller
 
 import blackjack.model.domain.ActionType
 import blackjack.model.domain.CardFactory
+import blackjack.model.domain.GameResult
 import blackjack.model.domain.card.Card
 import blackjack.model.domain.card.PlayingCard
 import blackjack.model.domain.participant.Dealer
-import blackjack.model.domain.participant.ParticipantStatus
 import blackjack.model.domain.participant.Player
 import blackjack.model.domain.participant.PlayerGroup
 import blackjack.model.service.Blackjack
@@ -82,7 +82,7 @@ class BlackjackController(
         outputView.playerResult(players)
     }
 
-    private fun getDealerResult(players: List<Player>): Map<ParticipantStatus, Int> {
+    private fun getDealerResult(players: List<Player>): Map<GameResult, Int> {
         return players.groupingBy { it.status }.eachCount()
     }
 

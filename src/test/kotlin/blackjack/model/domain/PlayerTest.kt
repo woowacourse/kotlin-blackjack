@@ -3,7 +3,6 @@ package blackjack.model.domain
 import blackjack.model.domain.card.Card
 import blackjack.model.domain.card.CardNumber
 import blackjack.model.domain.card.Shape
-import blackjack.model.domain.participant.ParticipantStatus
 import blackjack.model.domain.participant.Player
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
@@ -36,7 +35,7 @@ class PlayerTest {
         // when
         player1.checkBust()
         val actual = player1.status
-        val expected = ParticipantStatus.Bust
+        val expected = GameResult.Lose
         // then
         assertThat(actual).isEqualTo(expected)
     }
@@ -46,7 +45,7 @@ class PlayerTest {
         // when
         player1.compareScores(8)
         val actual = player1.status
-        val expected = ParticipantStatus.Win
+        val expected = GameResult.Win
         // then
         assertThat(actual).isEqualTo(expected)
     }

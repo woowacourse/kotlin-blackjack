@@ -1,11 +1,12 @@
 package blackjack.model.domain.participant
 
+import blackjack.model.domain.GameResult
 import blackjack.model.domain.card.Hand
 import blackjack.model.service.Blackjack.Companion.THRESHOLD
 
 class Dealer(override val name: String = DEALER_NAME) : Participants() {
     override val hand: Hand = Hand(mutableListOf())
-    override var status: ParticipantStatus = ParticipantStatus.None
+    override var status: GameResult = GameResult.None
 
     override fun canHit(): Boolean {
         return sumCardNumber <= THRESHOLD

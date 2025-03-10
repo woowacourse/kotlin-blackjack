@@ -2,12 +2,12 @@ package blackjack.model.service
 
 import blackjack.model.domain.CardFactory.Companion.cardNumbers
 import blackjack.model.domain.CardFactory.Companion.symbols
+import blackjack.model.domain.GameResult
 import blackjack.model.domain.card.Card
 import blackjack.model.domain.card.CardNumber
 import blackjack.model.domain.card.PlayingCard
 import blackjack.model.domain.card.Shape
 import blackjack.model.domain.participant.Dealer
-import blackjack.model.domain.participant.ParticipantStatus
 import blackjack.model.domain.participant.Player
 import blackjack.model.domain.participant.PlayerGroup
 import org.assertj.core.api.Assertions.assertThat
@@ -55,9 +55,9 @@ class BlackjackTest {
         // when
         game.endGame(PlayerGroup(listOf(player1, player2, player3), dealer))
         // then
-        assertThat(player1.status).isEqualTo(ParticipantStatus.Win)
-        assertThat(player2.status).isEqualTo(ParticipantStatus.Lose)
-        assertThat(player3.status).isEqualTo(ParticipantStatus.Draw)
+        assertThat(player1.status).isEqualTo(GameResult.Win)
+        assertThat(player2.status).isEqualTo(GameResult.Lose)
+        assertThat(player3.status).isEqualTo(GameResult.Draw)
     }
 
     @Test
@@ -88,6 +88,6 @@ class BlackjackTest {
         // when
         game.hitAction(player1)
         // then
-        assertThat(player1.status).isEqualTo(ParticipantStatus.Bust)
+        assertThat(player1.status).isEqualTo(GameResult.Lose)
     }
 }
