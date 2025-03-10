@@ -8,10 +8,10 @@ import org.junit.jupiter.api.assertThrows
 
 class CardDeckTest {
     @Test
-    fun `카드는 53장 이상 반환될 수 없다`() {
+    fun `카드는 417장 이상 반환될 수 없다`() {
         // given
         val cardDeck = CardDeck()
-        val exceedCount = 53
+        val exceedCount = 417
 
         // when & then
         assertThrows<IllegalArgumentException> {
@@ -20,10 +20,10 @@ class CardDeckTest {
     }
 
     @Test
-    fun `카드는 총 52장까지 뽑을 수 있다`() {
+    fun `카드는 총 416장까지 뽑을 수 있다`() {
         // given
         val cardDeck = CardDeck()
-        val cardCount = 52
+        val cardCount = 416
 
         // when
         val cards: List<Card> = cardDeck.draw(cardCount)
