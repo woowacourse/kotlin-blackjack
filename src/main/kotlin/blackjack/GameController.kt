@@ -1,7 +1,7 @@
 package blackjack
 
+import blackjack.domain.BlackJackGame
 import blackjack.domain.Card
-import blackjack.domain.Dealer
 import blackjack.domain.Deck
 import blackjack.domain.GameResult
 import blackjack.domain.Player
@@ -16,22 +16,19 @@ class GameController(
     private val deck = Deck(shuffledCards)
 
     fun run() {
-        val dealer = Dealer()
         val players: List<Player> = getPlayers()
+        val game = BlackJackGame(players, deck, inputView, outputView)
+        game.setUp()
+        outputView.showInitialCards(game)
 
-        dealer.getCard(deck)
-        setInitialPlayerCards(players)
-        outputView.showInitialCards(dealer, players)
+        game.eachPlayerHitOrNot()
 
-        askPlayerHit(players)
-
-        if (dealer.hasAdditionalCard()) {
+        if (game.hasDealerAdditionalCard()) {
             outputView.printDealerHaveAdditionalCard()
         }
 
-        outputView.printFinalCards(dealer, players)
-
-        showResult(dealer, players)
+        outputView.printFinalCards(game)
+        showResult(game)
     }
 
     private fun getPlayers(): List<Player> {
@@ -40,41 +37,8 @@ class GameController(
         }
     }
 
-    private fun setInitialPlayerCards(players: List<Player>) {
-        players.forEach { player ->
-            repeat(INITIAL_CARD_COUNT) {
-                player.addCard(deck.draw())
-            }
-        }
-    }
-
-    private fun askPlayerHit(players: List<Player>) {
-        players.forEach { player ->
-            handlePlayerHit(player)
-        }
-    }
-
-    private fun handlePlayerHit(player: Player) {
-        while (player.canHit()) {
-            val result = inputView.askPlayerHit(player.name)
-            if (result) {
-                player.addCard(deck.draw())
-                outputView.printPlayerCards(player)
-            } else {
-                break
-            }
-        }
-    }
-
-    private fun showResult(
-        dealer: Dealer,
-        players: List<Player>,
-    ) {
-        val result = GameResult(dealer, players).getResult()
-        outputView.printGameResult(result)
-    }
-
-    companion object {
-        private const val INITIAL_CARD_COUNT = 2
+    private fun showResult(game: BlackJackGame) {
+        val result = GameResult(game.dealer, game.players)
+        outputView.printGameResult(result.getAllPlayerResult(), result.getDealerResult())
     }
 }

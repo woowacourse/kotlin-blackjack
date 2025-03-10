@@ -1,20 +1,16 @@
 package blackjack.domain
 
-class GameResult(private val dealer: Dealer, val players: List<Player>) {
-    val dealerResult = DealerResult()
-    private val playerResult: MutableList<PlayerResult> = mutableListOf()
+class GameResult(private val dealer: Dealer, private val players: List<Player>) {
+    private val dealerResult = DealerResult()
+    private val playerResults: List<PlayerResult>
 
-    private fun updateResult(
-        player: Player,
-        status: GameResultStatus,
-    ) {
-        playerResult.add(PlayerResult(player, status))
-
-        when (status) {
-            GameResultStatus.PLAYER_WIN -> dealerResult.addLose()
-            GameResultStatus.PLAYER_LOSE -> dealerResult.addWin()
-            GameResultStatus.DRAW -> dealerResult.addDraw()
-        }
+    init {
+        playerResults =
+            players.map { player ->
+                val status = getPlayerResult(player)
+                updateDealerResult(status)
+                PlayerResult(player, status)
+            }
     }
 
     fun getPlayerResult(player: Player): GameResultStatus {
@@ -28,13 +24,19 @@ class GameResult(private val dealer: Dealer, val players: List<Player>) {
         }
     }
 
-    fun getResult(): GameResult {
-        players.forEach { player ->
-            val playerResult = getPlayerResult(player)
-            updateResult(player, playerResult)
+    private fun updateDealerResult(status: GameResultStatus) {
+        when (status) {
+            GameResultStatus.PLAYER_WIN -> dealerResult.addLose()
+            GameResultStatus.PLAYER_LOSE -> dealerResult.addWin()
+            GameResultStatus.DRAW -> dealerResult.addDraw()
         }
-        return this
     }
 
-    fun getAllPlayerResult(): List<PlayerResult> = playerResult.toList()
+    fun getAllPlayerResult(): List<PlayerResult> {
+        return playerResults
+    }
+
+    fun getDealerResult(): DealerResult {
+        return dealerResult
+    }
 }
