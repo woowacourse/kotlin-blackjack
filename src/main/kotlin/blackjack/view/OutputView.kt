@@ -5,6 +5,7 @@ import blackjack.model.Dealer
 import blackjack.model.Deck.INITIAL_HAND_OUT_CARD_COUNT
 import blackjack.model.Player
 import blackjack.model.ResultType
+import blackjack.model.Shape
 
 class OutputView {
     fun printInitialHandOutCardMessage(players: List<Player>) {
@@ -68,7 +69,7 @@ class OutputView {
 
     private fun getHandsStatus(cards: List<Card>): String {
         return cards.joinToString { card ->
-            "${card.number}${card.shape.type}"
+            "${card.number}${getShapeDisplayName(card.shape)}"
         }
     }
 
@@ -80,6 +81,15 @@ class OutputView {
                 player.adjustScore(),
             ),
         )
+    }
+
+    private fun getShapeDisplayName(shape: Shape): String {
+        return when (shape) {
+            Shape.SPADE-> "스페이드"
+            Shape.DIAMOND-> "다이아몬드"
+            Shape.HEART-> "하트"
+            Shape.CLOVER -> "클로버"
+        }
     }
 
     private fun getResultDisplayName(result: ResultType): String {
