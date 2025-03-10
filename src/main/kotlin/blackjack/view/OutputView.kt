@@ -41,8 +41,10 @@ class OutputView {
 
     fun printDealerResult(result: Map<GameResult, Int>) {
         println(MESSAGE_OUTPUT_RESULT_GUIDE)
-        val (playerWin, playerLose) = result.map { it.value }
-        println(format(MESSAGE_OUTPUT_DEALER_RESULT, playerLose, playerWin))
+        val win = result[GameResult.WIN]
+        val lose = result[GameResult.LOSE]
+        val push = result[GameResult.PUSH]
+        println(format(MESSAGE_OUTPUT_DEALER_RESULT, win, lose, push))
     }
 
     fun printPlayerResult(
@@ -88,6 +90,7 @@ class OutputView {
         when (this) {
             GameResult.WIN -> "승"
             GameResult.LOSE -> "패"
+            GameResult.PUSH -> "무"
         }
 
     companion object {
@@ -97,7 +100,7 @@ class OutputView {
         private const val MESSAGE_OUTPUT_PLAYER_CARD = "%s카드: %s"
         private const val MESSAGE_OUTPUT_DEALER_CARD = "딜러: %s"
         private const val MESSAGE_OUTPUT_RESULT_GUIDE = "\n## 최종 승패"
-        private const val MESSAGE_OUTPUT_DEALER_RESULT = "딜러: %d승 %d패"
+        private const val MESSAGE_OUTPUT_DEALER_RESULT = "딜러: %d승 %d패 %d무"
         private const val MESSAGE_OUTPUT_PLAYER_RESULT = "%s: %s"
         private const val MESSAGE_CARD = "%s%s"
     }

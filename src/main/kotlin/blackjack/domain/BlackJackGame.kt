@@ -57,7 +57,7 @@ class BlackJackGame(
 
     fun calculatePlayerResult(action: (String, GameResult) -> Unit) {
         participants.players.forEach { player ->
-            val result = GameResult.from(participants.dealer.totalScore(), player.totalScore())
+            val result = GameResult.from(player.totalScore(), participants.dealer.totalScore())
             action(player.name, result)
         }
     }
