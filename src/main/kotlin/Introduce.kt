@@ -2,35 +2,11 @@ fun introduce(block: PersonBuilder.() -> Unit): Person {
     return PersonBuilder().apply(block).build()
 }
 
-class LanguageBuilder {
-    private val languages = mutableMapOf<String, Int>()
-
-    infix fun String.level(level: Int) {
-        languages[this] = level
-    }
-
-    fun build(): Map<String, Int> = languages
-}
-
-class SkillBuilder {
-    private val skills: MutableList<String> = mutableListOf()
-
-    fun soft(value: String) {
-        skills.add("soft: $value")
-    }
-
-    fun hard(value: String) {
-        skills.add("hard: $value")
-    }
-
-    fun build(): List<String> = skills
-}
-
 class PersonBuilder {
     private lateinit var name: String
     private var company: String? = null
-    private val skills: MutableList<String> = mutableListOf()
-    private lateinit var languages: Map<String, Int>
+    private var skills: Skill? = null
+    private var languages: Languages? = null
 
     fun name(value: String) {
         name = value
@@ -40,22 +16,55 @@ class PersonBuilder {
         company = value
     }
 
-    fun skills(block: SkillBuilder.() -> Unit) {
-        skills.addAll(SkillBuilder().apply(block).build())
-    }
-
-    fun languages(block: LanguageBuilder.() -> Unit) {
-        languages = LanguageBuilder().apply(block).build()
-    }
-
     fun build(): Person {
-        return Person(name, company, skills.toList(), languages)
+        return Person(name, company, skills, languages)
+    }
+
+    fun skills(block: SkillsBuilder.() -> Unit) {
+        skills = SkillsBuilder().apply(block).build()
+    }
+
+    fun languages(block: LanguagesBuilder.() -> Unit)  {
+        languages = LanguagesBuilder().apply(block).build()
     }
 }
 
-data class Person(
-    val name: String,
-    val company: String?,
-    val skills: List<String>,
-    val languages: Map<String, Int>,
-)
+class SkillsBuilder {
+    private var soft: MutableList<String> = mutableListOf()
+    private var hard: MutableList<String> = mutableListOf()
+
+    fun soft(softSkill: String)  {
+        soft.add(softSkill)
+    }
+
+    fun hard(hardSkill: String)  {
+        hard.add(hardSkill)
+    }
+
+    fun build(): Skill  {
+        return Skill(soft, hard)
+    }
+}
+
+class LanguagesBuilder {
+    private var korean: Int = 0
+    private var english: Int = 0
+
+    infix fun String.level(value: Int) {
+        when (this) {
+            "Korean" -> korean = value
+            "English" -> english = value
+            else -> null
+        }
+    }
+
+    fun build(): Languages  {
+        return Languages(korean, english)
+    }
+}
+
+data class Person(val name: String, val company: String?, val skills: Skill?, val languages: Languages?)
+
+data class Skill(val soft: List<String>, val hard: List<String>)
+
+data class Languages(val korean: Int, val english: Int)
