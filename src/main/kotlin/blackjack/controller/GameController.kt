@@ -3,6 +3,7 @@ package blackjack.controller
 import blackjack.domain.model.Dealer
 import blackjack.domain.model.Deck
 import blackjack.domain.model.Hands
+import blackjack.domain.model.Hands.Companion.START_CARD_COUNT
 import blackjack.domain.model.Participant
 import blackjack.domain.model.Participants
 import blackjack.domain.model.Player
@@ -26,9 +27,9 @@ class GameController(
         val playersNames = inputView.readPlayerNames()
         val players =
             playersNames.map { name ->
-                Player(name, Hands(List(2) { deck.draw() }))
+                Player(name, Hands(List(START_CARD_COUNT) { deck.draw() }))
             }
-        val dealer = Dealer(Hands(List(2) { deck.draw() }))
+        val dealer = Dealer(Hands(List(START_CARD_COUNT) { deck.draw() }))
         return Participants(players + dealer)
     }
 
