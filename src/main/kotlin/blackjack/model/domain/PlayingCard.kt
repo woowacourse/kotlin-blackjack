@@ -3,7 +3,7 @@ package blackjack.model.domain
 import blackjack.model.strategy.CardShuffler
 import java.util.ArrayDeque
 
-class Deck(cardShuffler: CardShuffler) {
+class PlayingCard(cardShuffler: CardShuffler) {
     private val deck: ArrayDeque<Card> = initCard(cardShuffler)
 
     fun spreadCard(): Card {

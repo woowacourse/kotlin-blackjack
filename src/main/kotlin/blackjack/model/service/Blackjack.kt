@@ -2,12 +2,12 @@ package blackjack.model.service
 
 import blackjack.model.domain.ActionType
 import blackjack.model.domain.Dealer
-import blackjack.model.domain.Deck
 import blackjack.model.domain.ParticipantStatus
 import blackjack.model.domain.Participants
 import blackjack.model.domain.Player
+import blackjack.model.domain.PlayingCard
 
-class Blackjack(private val deck: Deck) {
+class Blackjack(private val deck: PlayingCard) {
     fun initGame(players: List<Participants>) {
         players.forEach { player ->
             distributeStartingHands(player)

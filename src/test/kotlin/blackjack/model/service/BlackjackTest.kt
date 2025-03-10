@@ -4,9 +4,9 @@ import blackjack.model.domain.ActionType
 import blackjack.model.domain.Card
 import blackjack.model.domain.CardNumber
 import blackjack.model.domain.Dealer
-import blackjack.model.domain.Deck
 import blackjack.model.domain.ParticipantStatus
 import blackjack.model.domain.Player
+import blackjack.model.domain.PlayingCard
 import blackjack.model.domain.Shape
 import blackjack.model.strategy.FalseShuffle
 import org.assertj.core.api.Assertions.assertThat
@@ -17,7 +17,7 @@ class BlackjackTest {
     private val player2 = Player("환노")
     private val player3 = Player("포르")
     private val dealer = Dealer()
-    private val deck = Deck(FalseShuffle())
+    private val deck = PlayingCard(FalseShuffle())
     private val game = Blackjack(deck)
 
     @Test

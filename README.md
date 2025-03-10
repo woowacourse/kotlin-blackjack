@@ -40,9 +40,9 @@
 ## TODO
 - [x] Shape | 출력문 저장 위치 변경
 - [x] CardNumber | OTHER_ACE 네이밍 변경
-- [ ] Participants | 카드 뭉치를 갖는 일급 컬렉션 구현
+- [x] Deck | deck 네이밍 변경
 - [ ] Dealer | overThreshold 메소드 네이밍 고민
-- [ ] Deck | deck 네이밍 변경
+- [ ] Participants | 카드 뭉치를 갖는 일급 컬렉션 구현
 - [ ] YesOrNo | Enum으로 합체
 - [ ] Player | 승패 상태를 저장 위치 고민
 - [ ] Dealer | 더 뽑을 수 있는지 스스로 판단 (참여자 객체에서 판단하게 함)
