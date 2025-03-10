@@ -77,7 +77,7 @@ class HandTest {
     }
 
     @Test
-    fun `손패를 계산해 줄 수 있다`() {
+    fun `손패에 ACE 하나와 KING이 하나 있으면 21점이다`() {
         val hand: Hand =
             Hand.of(
                 Card.of(CardNumber.ACE, Suit.SPADE),
@@ -86,6 +86,35 @@ class HandTest {
         val actualScore = hand.getScore()
 
         val expectedScore = 21
+
+        assertThat(actualScore).isEqualTo(expectedScore)
+    }
+
+    @Test
+    fun `손패에 ACE 2개와 KING이 하나 있으면 12점이다`() {
+        val hand: Hand =
+            Hand.of(
+                Card.of(CardNumber.ACE, Suit.SPADE),
+                Card.of(CardNumber.ACE, Suit.HEART),
+                Card.of(CardNumber.KING, Suit.CLUB),
+            )
+        val actualScore = hand.getScore()
+
+        val expectedScore = 12
+
+        assertThat(actualScore).isEqualTo(expectedScore)
+    }
+
+    @Test
+    fun `손패에 5 하나와 JACK이 하나 있으면 15점이다`() {
+        val hand: Hand =
+            Hand.of(
+                Card.of(CardNumber.FIVE, Suit.SPADE),
+                Card.of(CardNumber.JACK, Suit.HEART),
+            )
+        val actualScore = hand.getScore()
+
+        val expectedScore = 15
 
         assertThat(actualScore).isEqualTo(expectedScore)
     }
