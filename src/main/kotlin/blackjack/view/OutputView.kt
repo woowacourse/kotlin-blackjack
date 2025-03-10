@@ -4,7 +4,6 @@ import blackjack.domain.Card
 import blackjack.domain.Dealer
 import blackjack.domain.Participant
 import blackjack.domain.Player
-import blackjack.domain.Players
 import blackjack.enums.Rank
 import blackjack.enums.Result
 import blackjack.enums.Suit
@@ -12,14 +11,14 @@ import blackjack.enums.Suit
 class OutputView {
     fun printCardInfo(
         dealer: Dealer,
-        players: Players,
+        players: List<Player>,
     ) {
-        val playerNames = players.players.joinToString { it.name }
+        val playerNames = players.joinToString { it.name }
         println(MESSAGE_DEALING.format(playerNames))
 
         val dealerCard = dealer.hand.cards.first()
         println(MESSAGE_CARD_INFO.format(dealer.name, dealerCard.toText()))
-        players.players.forEach { printPlayerCards(it) }
+        players.forEach { printPlayerCards(it) }
     }
 
     fun printPlayerCards(player: Player) {
@@ -39,10 +38,10 @@ class OutputView {
 
     fun printParticipantScore(
         dealer: Dealer,
-        players: Players,
+        players: List<Player>,
     ) {
         println("${cardsInfo(dealer)} ${MESSAGE_SCORE.format(dealer.getScore().score)}")
-        players.players.forEach {
+        players.forEach {
             println("${cardsInfo(it)} ${MESSAGE_SCORE.format(it.getScore().score)}")
         }
     }

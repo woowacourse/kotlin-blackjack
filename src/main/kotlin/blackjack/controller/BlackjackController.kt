@@ -3,8 +3,8 @@ package blackjack.controller
 import blackjack.domain.BlackjackGame
 import blackjack.domain.Dealer
 import blackjack.domain.Deck
+import blackjack.domain.Participants
 import blackjack.domain.Player
-import blackjack.domain.Players
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -13,60 +13,54 @@ class BlackjackController(
     private val outputView: OutputView,
 ) {
     fun play() {
-        val game = BlackjackGame(Deck.create())
-        val dealer = Dealer()
-        val players = getPlayers()
+        val participants = getParticipants()
+        val game = BlackjackGame(Deck.create(), participants)
 
-        startGame(game, dealer, players)
-        playGame(game, dealer, players)
-        showGameResult(dealer, players)
+        startGame(game, participants)
+        playGame(game, participants)
+        showGameResult(participants)
     }
 
-    private fun getPlayers(): Players {
+    private fun getParticipants(): Participants {
+        val dealer = Dealer()
+        val players = getPlayers()
+        return Participants(dealer, players)
+    }
+
+    private fun getPlayers(): List<Player> {
         val playerNames = inputView.readPlayerNames()
-        return Players(playerNames.map(::Player))
+        return playerNames.map(::Player)
     }
 
     private fun startGame(
         game: BlackjackGame,
-        dealer: Dealer,
-        players: Players,
+        participants: Participants,
     ) {
-        game.distributeInitialCards(dealer, players)
-        outputView.printCardInfo(dealer, players)
+        game.distributeInitialCards()
+        outputView.printCardInfo(participants.dealer, participants.players)
     }
 
     private fun playGame(
         game: BlackjackGame,
-        dealer: Dealer,
-        players: Players,
+        participants: Participants,
     ) {
         game.playPlayersTurn(
-            players,
             onResponse = inputView::readPlayerHit,
             onDone = outputView::printPlayerCards,
         )
-        game.playDealerTurn(dealer)
-        outputView.printDealerHit(dealer)
+        game.playDealerTurn()
+        outputView.printDealerHit(participants.dealer)
     }
 
-    private fun showGameResult(
-        dealer: Dealer,
-        players: Players,
-    ) {
-        outputView.printParticipantScore(dealer, players)
+    private fun showGameResult(participants: Participants) {
+        outputView.printParticipantScore(participants.dealer, participants.players)
 
-        val dealerResult =
-            players.players
-                .map { dealer.getResult(it.getScore()) }
-                .groupingBy { it }
-                .eachCount()
-        outputView.printDealerResult(dealer, dealerResult)
-        players.players.forEach {
-            outputView.printPlayerResult(
-                it.name,
-                it.getResult(dealer.getScore()),
-            )
+        val dealerResult = participants.getDealerResult()
+        outputView.printDealerResult(participants.dealer, dealerResult)
+
+        val playersResult = participants.getPlayerResults()
+        playersResult.forEach { (name, result) ->
+            outputView.printPlayerResult(name, result)
         }
     }
 }

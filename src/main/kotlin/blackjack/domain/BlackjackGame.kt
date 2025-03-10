@@ -2,27 +2,25 @@ package blackjack.domain
 
 class BlackjackGame(
     private val deck: Deck,
+    private val participants: Participants,
 ) {
-    fun distributeInitialCards(
-        dealer: Dealer,
-        players: Players,
-    ) {
+    fun distributeInitialCards() {
         repeat(INITIAL_CARD_COUNT) {
-            dealer.drawCard(deck.pick())
-            players.drawCard(deck)
+            participants.drawCard(deck)
         }
     }
 
     fun playPlayersTurn(
-        players: Players,
         onResponse: (Player) -> Boolean,
         onDone: (Player) -> Unit,
     ) {
-        players.playGame(deck, onResponse, onDone)
+        participants.players.forEach {
+            it.playGame(deck, onResponse, onDone)
+        }
     }
 
-    fun playDealerTurn(dealer: Dealer) {
-        dealer.playGame(deck)
+    fun playDealerTurn() {
+        participants.dealer.playGame(deck)
     }
 
     companion object {

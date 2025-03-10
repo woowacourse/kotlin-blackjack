@@ -1,6 +1,9 @@
 package blackjack.domain
 
-class Players(
+import blackjack.enums.Result
+
+class Participants(
+    val dealer: Dealer,
     val players: List<Player>,
 ) {
     init {
@@ -8,20 +11,15 @@ class Players(
     }
 
     fun drawCard(deck: Deck) {
+        dealer.drawCard(deck.pick())
         players.forEach {
             it.drawCard(deck.pick())
         }
     }
 
-    fun playGame(
-        deck: Deck,
-        onResponse: (Player) -> Boolean,
-        onDone: (Player) -> Unit,
-    ) {
-        players.forEach {
-            it.playGame(deck, onResponse, onDone)
-        }
-    }
+    fun getDealerResult(): Map<Result, Int> = players.map { dealer.getResult(it.getScore()) }.groupingBy { it }.eachCount()
+
+    fun getPlayerResults(): Map<String, Result> = players.associate { it.name to it.getResult(dealer.getScore()) }
 
     companion object {
         private const val MIN_PLAYER_COUNT = 1
