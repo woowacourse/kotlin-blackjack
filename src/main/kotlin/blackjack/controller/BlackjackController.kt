@@ -32,7 +32,10 @@ class BlackjackController(
     }
 
     private fun playerSetting(): List<Player> {
-        val playerNames: List<String> = inputView.readPlayerNames()
+        var playerNames: List<String>? = null
+        while (playerNames == null) {
+            playerNames = inputView.readPlayerNames()
+        }
         return playerNames.map { Player(it) }
     }
 
@@ -41,7 +44,10 @@ class BlackjackController(
     }
 
     private fun playerDrawOrStay(player: Player) {
-        val condition = inputView.readMoreCardCondition(player)
+        var condition: String? = null
+        while (condition == null) {
+            condition = inputView.readMoreCardCondition(player)
+        }
         val playerCondition = DrawChoice.from(condition)
         if (playerCondition!!.isStay()) {
             outputView.printPlayerHands(player)
