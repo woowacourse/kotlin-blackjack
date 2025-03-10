@@ -12,7 +12,7 @@ abstract class Participant(private val cards: Cards) {
         return ScoreCalculator(cards).calculateTotalCardScore()
     }
 
-    fun addCard(card: Card) {
+    protected fun addCard(card: Card) {
         handCards.add(card)
     }
 }
