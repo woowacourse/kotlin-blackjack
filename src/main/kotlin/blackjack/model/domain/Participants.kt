@@ -16,8 +16,8 @@ abstract class Participants() {
         val aCount: Int = cards.count { it.cardNumber == CardNumber.Ace }
 
         repeat(aCount) {
-            if (sum + CardNumber.OTHER_ACE > BUST_STANDARD) return@repeat
-            sum += CardNumber.OTHER_ACE
+            if (sum + CardNumber.BONUS_SCORE > BUST_STANDARD) return@repeat
+            sum += CardNumber.BONUS_SCORE
         }
 
         return sum

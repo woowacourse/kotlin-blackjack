@@ -20,6 +20,6 @@ enum class CardNumber(
     ;
 
     companion object {
-        const val OTHER_ACE: Int = 10
+        const val BONUS_SCORE: Int = 10
     }
 }

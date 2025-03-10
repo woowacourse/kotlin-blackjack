@@ -39,7 +39,7 @@
 
 ## TODO
 - [x] Shape | 출력문 저장 위치 변경
-- [ ] CardNumber | OTHER_ACE 네이밍 변경
+- [x] CardNumber | OTHER_ACE 네이밍 변경
 - [ ] Participants | 카드 뭉치를 갖는 일급 컬렉션 구현
 - [ ] Dealer | overThreshold 메소드 네이밍 고민
 - [ ] Deck | deck 네이밍 변경
