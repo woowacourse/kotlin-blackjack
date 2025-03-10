@@ -1,6 +1,7 @@
 package blackjack.controller
 
 import blackjack.domain.BlackJackGame
+import blackjack.domain.ParticipantCards
 import blackjack.domain.UserChoice
 import blackjack.domain.deck.ShuffledDeck
 import blackjack.domain.participant.Dealer
@@ -23,8 +24,8 @@ class BlackJackController(
     }
 
     private fun readyForGamePlayers(): List<Participant> {
-        val dealer: Participant = Dealer()
-        return inputView.readPlayerName().map { Player(it) } + dealer
+        val dealer: Participant = Dealer(ParticipantCards())
+        return inputView.readPlayerName().map { name -> Player(name, ParticipantCards()) } + dealer
     }
 
     private fun displayPlayerNames(players: List<Participant>) {

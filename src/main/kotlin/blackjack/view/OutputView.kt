@@ -18,26 +18,26 @@ class OutputView {
     }
 
     fun printOneCardMessage(player: Player) {
-        println(format(MESSAGE_OUTPUT_PLAYER_CARD, player.name, makeCardListMessage(player.cards)))
+        println(format(MESSAGE_OUTPUT_PLAYER_CARD, player.name, makeCardListMessage(player.getAllCards())))
     }
 
     fun printPlayerCards(players: List<Player>) {
         players.forEach { player ->
-            println(format(MESSAGE_OUTPUT_PLAYER_CARD, player.name, makeCardListMessage(player.cards)))
+            println(format(MESSAGE_OUTPUT_PLAYER_CARD, player.name, makeCardListMessage(player.getAllCards())))
         }
     }
 
     fun printDealerSum(players: List<Dealer>) {
         players.forEach { player ->
-            print(format(MESSAGE_OUTPUT_DEALER_CARD, makeCardListMessage(player.cards)))
-            println(format(MESSAGE_OUTPUT_SUM, player.sum()))
+            print(format(MESSAGE_OUTPUT_DEALER_CARD, makeCardListMessage(player.getAllCards())))
+            println(format(MESSAGE_OUTPUT_SUM, player.finalScore()))
         }
     }
 
     fun printPlayerSum(players: List<Player>) {
         players.forEach { player ->
-            print(format(MESSAGE_OUTPUT_PLAYER_CARD, player.name, makeCardListMessage(player.cards)))
-            println(format(MESSAGE_OUTPUT_SUM, player.sum()))
+            print(format(MESSAGE_OUTPUT_PLAYER_CARD, player.name, makeCardListMessage(player.getAllCards())))
+            println(format(MESSAGE_OUTPUT_SUM, player.finalScore()))
         }
     }
 

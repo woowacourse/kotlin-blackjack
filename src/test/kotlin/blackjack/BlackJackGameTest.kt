@@ -16,20 +16,20 @@ class BlackJackGameTest {
         val players = playersFixture()
         val game = BlackJackGame(players, ShuffledDeck())
         game.handOutInitializedCards(2)
-        assertThat(players.first().cards.size).isEqualTo(2)
+        assertThat(players.first().getAllCards().size).isEqualTo(2)
     }
 
     @Test
     fun `플레이어가 hit을 선택하면 카드를 한 장 추가한다`() {
         val players = playersFixture()
         val game = BlackJackGame(players, ShuffledDeck())
-        players.first().addCard(TrumpCard(CardTier.JACK, Shape.DIA))
-        players.first().addCard(TrumpCard(CardTier.JACK, Shape.DIA))
+        players.first().receiveCard(TrumpCard(CardTier.JACK, Shape.DIA))
+        players.first().receiveCard(TrumpCard(CardTier.JACK, Shape.DIA))
         game.playGame(
             getPlayerChoice = { UserChoice.from("y") },
             onPlayerStateUpdated = {},
         )
-        assertThat(players.first().cards.size).isEqualTo(3)
+        assertThat(players.first().getAllCards().size).isEqualTo(3)
     }
 
     @Test
@@ -41,6 +41,6 @@ class BlackJackGameTest {
             getPlayerChoice = { UserChoice.from("n") },
             onPlayerStateUpdated = {},
         )
-        assertThat(players.first().cards.size).isEqualTo(0)
+        assertThat(players.first().getAllCards().size).isEqualTo(0)
     }
 }

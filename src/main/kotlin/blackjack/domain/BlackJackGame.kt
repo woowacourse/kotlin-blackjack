@@ -15,7 +15,7 @@ class BlackJackGame(
     fun handOutInitializedCards(initializedCardCount: Int = INITIAL_CARD_COUNT) {
         participants.forEach { player ->
             repeat(initializedCardCount) {
-                player.addCard(deck.pop())
+                player.receiveCard(deck.pop())
             }
         }
     }
@@ -28,9 +28,9 @@ class BlackJackGame(
             while (!player.isBust()) {
                 val choice = getPlayerChoice(player.name)
                 when (choice) {
-                    UserChoice.HIT -> player.addCard(deck.pop())
+                    UserChoice.HIT -> player.receiveCard(deck.pop())
                     UserChoice.STAY -> {
-                        if (player.cards.size == 2) {
+                        if (player.getAllCards().size == 2) {
                             onPlayerStateUpdated(player)
                         }
                         break
@@ -44,7 +44,7 @@ class BlackJackGame(
     fun processDealerTurn(): Int {
         var count = 0
         while (dealer.isOverMaxScore().not()) {
-            dealer.addCard(deck.pop())
+            dealer.receiveCard(deck.pop())
             count++
         }
         return count
@@ -54,7 +54,7 @@ class BlackJackGame(
         val dealerMap = GameResult.entries.associateWith { 0 }.toMutableMap()
 
         players.forEach { player ->
-            val result = GameResult.from(dealer.sum(), player.sum())
+            val result = GameResult.from(dealer.finalScore(), player.finalScore())
             dealerMap[result ] = dealerMap.getOrDefault(result, 0) + 1
         }
         action(dealerMap)
@@ -62,7 +62,7 @@ class BlackJackGame(
 
     fun calculatePlayerResult(action: (String, GameResult) -> Unit) {
         players.forEach { player ->
-            val result = GameResult.from(dealer.sum(), player.sum())
+            val result = GameResult.from(dealer.finalScore(), player.finalScore())
             action(player.name, result)
         }
     }
