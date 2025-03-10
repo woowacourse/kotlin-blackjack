@@ -1,4 +1,4 @@
-package blackjack.uiModel
+package blackjack.uimodel
 
 import blackjack.domain.GameResult
 import blackjack.domain.state.ResultState
