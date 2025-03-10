@@ -15,4 +15,17 @@ class HandTest {
         val hand = Hand(listOf(Card(Suit.HEART, Rank.ACE), Card(Suit.HEART, Rank.KING)))
         assertThat(hand.computePoint()).isEqualTo(21)
     }
+
+    @Test
+    fun `패의 카드를 반환한다`() {
+        val hand = Hand(listOf(Card(Suit.HEART, Rank.ACE)))
+        assertThat(hand.show()).isEqualTo(listOf(Card(Suit.HEART, Rank.ACE)))
+    }
+
+    @Test
+    fun `패에 카드를 추가한다`() {
+        val hand = Hand(listOf(Card(Suit.HEART, Rank.ACE)))
+        hand.add(listOf(Card(Suit.HEART, Rank.KING)))
+        assertThat(hand.show()).isEqualTo(listOf(Card(Suit.HEART, Rank.ACE), Card(Suit.HEART, Rank.KING)))
+    }
 }

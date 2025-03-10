@@ -45,13 +45,13 @@ class OutputView {
 
     private fun renderDealerStatus(dealer: Dealer): String {
         return dealer.name + PLAYER_NAME_STATUS_DELIMITER +
-            dealer.showHand(DEALER_VISIBLE_CARD_COUNT)
+            dealer.hand.show(DEALER_VISIBLE_CARD_COUNT)
                 .joinToString { card -> card.rank.stringRepresentation() + card.suit.stringRepresentation() }
     }
 
     private fun renderParticipantStatus(participant: Participant): String {
         return participant.name + PLAYER_NAME_STATUS_DELIMITER +
-            participant.showHand()
+            participant.hand.show()
                 .joinToString { card -> card.rank.stringRepresentation() + card.suit.stringRepresentation() }
     }
 

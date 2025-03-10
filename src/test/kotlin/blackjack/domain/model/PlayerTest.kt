@@ -21,18 +21,6 @@ class PlayerTest {
         assertThat(player.name).isEqualTo("A")
     }
 
-    @Test
-    fun `플레이어는 카드를 가진다`() {
-        assertThat(player.showHand()).isEqualTo(listOf(Card(Suit.HEART, Rank.ACE)))
-    }
-
-    @Test
-    fun `플레이어는 카드를 받는다`() {
-        val actual = Player("A", listOf(Card(Suit.HEART, Rank.ACE), Card(Suit.HEART, Rank.KING)))
-        player.accept(listOf(Card(Suit.HEART, Rank.KING)))
-        assertThat(player.showHand()).isEqualTo(actual.showHand())
-    }
-
     @ParameterizedTest
     @ValueSource(strings = ["", " ", "\t", "\n"])
     fun `플레이어의 이름이 공백일 시 오류가 발생한다`(value: String) {

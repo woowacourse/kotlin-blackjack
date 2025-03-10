@@ -1,19 +1,22 @@
 package blackjack.domain.model
 
 class Hand() {
-    private val _cards: MutableList<Card> = mutableListOf()
-    val cards: List<Card> get() = _cards.toList()
+    private val cards: MutableList<Card> = mutableListOf()
 
     constructor(cards: List<Card>) : this() {
         add(cards)
     }
 
+    fun show(count: Int = cards.size): List<Card> {
+        return cards.take(count).map { card -> card.copy() }
+    }
+
     fun add(cards: List<Card>) {
-        _cards.addAll(cards)
+        this.cards.addAll(cards)
     }
 
     fun computePoint(): Int {
-        val point = _cards.sumOf { it.rank.point }
+        val point = cards.sumOf { it.rank.point }
         return point + computeBonusPoint(point)
     }
 
@@ -22,7 +25,7 @@ class Hand() {
         return 0
     }
 
-    private fun hasAce(): Boolean = _cards.any { it.rank == Rank.ACE }
+    private fun hasAce(): Boolean = cards.any { it.rank == Rank.ACE }
 
     fun isBusted(): Boolean {
         return computePoint() > BUST_THRESHOLD
