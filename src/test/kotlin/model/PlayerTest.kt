@@ -20,7 +20,7 @@ class PlayerTest {
                 Card(CardRank.QUEEN, Shape.SPADE),
             )
 
-        assertThat(cards.totalCount()).isEqualTo(2)
+        assertThat(cards.totalCount).isEqualTo(2)
     }
 
     @Test

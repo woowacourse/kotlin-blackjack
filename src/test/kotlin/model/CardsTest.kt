@@ -11,7 +11,7 @@ class CardsTest {
         val cards = CardsGenerator().generateCards().allCards
         val drawCards = Cards(cards).initialCards()
 
-        assertThat(drawCards.totalCount()).isEqualTo(2)
+        assertThat(drawCards.totalCount).isEqualTo(2)
     }
 
     @Test
@@ -22,7 +22,7 @@ class CardsTest {
                 Card(CardRank.ACE, Shape.SPADE),
             )
 
-        assertThat(cards.totalCount()).isEqualTo(2)
+        assertThat(cards.totalCount).isEqualTo(2)
     }
 
     @Test
@@ -35,7 +35,7 @@ class CardsTest {
 
         val scoreLists = listOf(6, 9)
 
-        assertThat(cards.scores()).isEqualTo(scoreLists)
+        assertThat(cards.scores).isEqualTo(scoreLists)
     }
 
     @Test
@@ -43,7 +43,7 @@ class CardsTest {
         val cards = CardsGenerator().generateCards()
         cards.initialCards()
 
-        assertThat(cards.totalCount()).isEqualTo(50)
+        assertThat(cards.totalCount).isEqualTo(50)
     }
 
     @Test
@@ -65,7 +65,7 @@ class CardsTest {
                 Card(CardRank.SIX, Shape.SPADE),
             )
         val expected = 2
-        val result = cards.aceCount()
+        val result = cards.aceCount
 
         Assertions.assertEquals(expected, result)
     }

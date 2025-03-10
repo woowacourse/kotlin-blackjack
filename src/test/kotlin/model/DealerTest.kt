@@ -14,7 +14,7 @@ class DealerTest {
                 Card(CardRank.SIX, Shape.CLUB),
             )
 
-        assertThat(cards.totalCount()).isEqualTo(2)
+        assertThat(cards.totalCount).isEqualTo(2)
     }
 
     @Test

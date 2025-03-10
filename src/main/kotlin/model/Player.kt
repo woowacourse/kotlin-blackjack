@@ -3,11 +3,12 @@ package model
 import model.GameResultDecider.Companion.BLACKJACK_SCORE
 
 class Player(val name: String, private val playerCards: Cards) : Participant(playerCards) {
+    val getPlayerCardNames: List<Pair<String, String>>
+        get() = playerCards.names
+
     init {
         require(name.isNotEmpty()) { PLAYER_BLANK_ERROR_MESSAGE }
     }
-
-    fun getPlayerCardNames(): List<Pair<String, String>> = playerCards.names()
 
     override fun turn(drawnCard: Card): Boolean {
         if (canHit()) {

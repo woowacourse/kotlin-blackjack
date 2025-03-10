@@ -21,9 +21,9 @@ class BlackjackController(
         val dealer = Dealer(initialDealerCards)
 
         showInitialGameState(
-            players.names(),
+            players.names,
             initialDealerCards,
-            players.getPlayerCardNames()
+            players.getPlayerCardNames
         )
         handlePlayerTurns(players, allCards)
         handleDealerTurn(dealer, allCards)
@@ -35,8 +35,8 @@ class BlackjackController(
         dealer: Dealer,
         players: Players,
     ) {
-        outputView.printDealerResult(initialDealerCards.names(), dealer.currentScore())
-        showPlayerResult(players, players.names())
+        outputView.printDealerResult(initialDealerCards.names, dealer.currentScore())
+        showPlayerResult(players, players.names)
         showGameResult(dealer, players)
     }
 
@@ -44,8 +44,8 @@ class BlackjackController(
         players: Players,
         playersNames: List<String>,
     ) {
-        val updatedPlayerCardsNames = players.getPlayerCardNames()
-        val playersTotalScore = players.scores()
+        val updatedPlayerCardsNames = players.getPlayerCardNames
+        val playersTotalScore = players.scores
         outputView.printPlayerResult(playersNames, updatedPlayerCardsNames, playersTotalScore)
     }
 
@@ -54,7 +54,7 @@ class BlackjackController(
         initialDealerCards: Cards,
         playerCardsNames: List<List<Pair<String, String>>>,
     ) {
-        val dealerCardNames = initialDealerCards.names()
+        val dealerCardNames = initialDealerCards.names
         outputView.printDealerAndPlayers(playersNames)
         outputView.printInitialCards(dealerCardNames, playersNames, playerCardsNames)
     }
@@ -77,7 +77,7 @@ class BlackjackController(
             while (player.canHit() && inputView.readHitOrStand(player.name)) {
                 val drawnCard = allCards.drawCard()
                 player.turn(drawnCard)
-                outputView.printPlayerCards(player.name, player.getPlayerCardNames())
+                outputView.printPlayerCards(player.name, player.getPlayerCardNames)
             }
         }
     }

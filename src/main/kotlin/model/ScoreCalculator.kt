@@ -3,10 +3,10 @@ package model
 import model.GameResultDecider.Companion.BLACKJACK_SCORE
 
 class ScoreCalculator(private val cards: Cards) {
-    private var totalCardScore: Int = cards.scores().sum()
+    private var totalCardScore: Int = cards.scores.sum()
 
     fun calculateTotalCardScore(): Int {
-        var aceCount = cards.aceCount()
+        var aceCount = cards.aceCount
         while (totalCardScore > BLACKJACK_SCORE && aceCount-- > DEFAULT_ZERO) {
             totalCardScore -= ACE_MINUS_VALUE
         }

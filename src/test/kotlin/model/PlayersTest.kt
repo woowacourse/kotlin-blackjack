@@ -52,7 +52,7 @@ class PlayersTest {
                 listOf("TEN" to "CLUB", "EIGHT" to "SPADE"),
             )
 
-        assertThat(players.getPlayerCardNames()).isEqualTo(expected)
+        assertThat(players.getPlayerCardNames).isEqualTo(expected)
     }
 
     @Test
@@ -72,7 +72,7 @@ class PlayersTest {
         val player2 = Player("jay", cards2)
 
         val players = Players(listOf(player1, player2))
-        assertThat(players.scores())
+        assertThat(players.scores)
             .containsExactly(15, 18)
     }
 }

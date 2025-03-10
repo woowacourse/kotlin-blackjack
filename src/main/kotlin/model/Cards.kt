@@ -2,9 +2,20 @@ package model
 
 class Cards(allCards: List<Card>) {
     val allCards: MutableList<Card> = allCards.toMutableList()
+    val totalCount: Int
+        get() = allCards.size
+
+    val names: List<Pair<String, String>>
+        get() = allCards.map { it.cardName }
+
+    val scores: List<Int>
+        get() = allCards.map { card -> card.cardScore }
+
+    val aceCount: Int
+        get() = allCards.count { card -> card.isAceCard }
 
     init {
-        require(allCards.toSet().size == totalCount()) { DUPLICATE_CARD_ERROR_MESSAGE }
+        require(allCards.toSet().size == totalCount) { DUPLICATE_CARD_ERROR_MESSAGE }
     }
 
     fun initialCards(): Cards {
@@ -18,14 +29,6 @@ class Cards(allCards: List<Card>) {
         allCards.removeAll(drawnCard)
         return drawnCard.first()
     }
-
-    fun totalCount() = allCards.size
-
-    fun names(): List<Pair<String, String>> = allCards.map { it.cardName }
-
-    fun scores() = allCards.map { card -> card.cardScore }
-
-    fun aceCount() = allCards.count { card -> card.isAceCard }
 
     companion object {
         private const val DUPLICATE_CARD_ERROR_MESSAGE = "[ERROR] 카드는 중복될 수 없습니다"

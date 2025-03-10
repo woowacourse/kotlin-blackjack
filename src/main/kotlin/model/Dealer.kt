@@ -2,7 +2,7 @@ package model
 
 class Dealer(dealerCards: Cards) : Participant(dealerCards) {
     init {
-        require(dealerCards.totalCount() == 2) { DEALER_INITIAL_CARD_ERROR_MESSAGE }
+        require(dealerCards.totalCount == 2) { DEALER_INITIAL_CARD_ERROR_MESSAGE }
     }
 
     override fun turn(drawnCard: Card): Boolean {
