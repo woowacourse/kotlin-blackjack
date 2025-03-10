@@ -2,7 +2,7 @@ package blackjack.domain
 
 import java.util.LinkedList
 
-class Deck(shuffledDeck: List<Card>) {
+data class Deck(val shuffledDeck: List<Card>) {
     private val deck = LinkedList(shuffledDeck)
 
     init {
