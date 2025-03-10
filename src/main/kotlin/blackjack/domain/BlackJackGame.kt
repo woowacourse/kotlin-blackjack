@@ -37,9 +37,7 @@ class BlackJackGame(
 
         participants.players.forEach { player ->
             val result = player.getResult(participants.dealer)
-            val dealerResult = if (result == GameResult.WIN) GameResult.LOSE else GameResult.WIN
-
-            dealerMap[dealerResult] = dealerMap.getOrDefault(dealerResult, 0) + 1
+            dealerMap[result] = dealerMap.getOrDefault(result, 0) + 1
         }
         action(dealerMap)
     }
