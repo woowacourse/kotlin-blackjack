@@ -38,7 +38,7 @@ class GameController(
     }
 
     private fun showResult(game: BlackJackGame) {
-        val result = GameResult(game.dealer, game.players)
+        val result = GameResult(game)
         outputView.printGameResult(result.getAllPlayerResult())
     }
 }

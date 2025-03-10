@@ -1,7 +1,9 @@
 package blackjack.domain
 
-class GameResult(private val dealer: Dealer, private val players: List<Player>) {
+class GameResult(game: BlackJackGame) {
     private val playerResults: List<PlayerResult>
+    private val dealer = game.dealer
+    private val players = game.players
 
     init {
         playerResults =

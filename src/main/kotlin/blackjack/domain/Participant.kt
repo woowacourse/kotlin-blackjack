@@ -1,15 +1,15 @@
 package blackjack.domain
 
 abstract class Participant {
-    var totalSum: Int = 0
-        private set
+    val totalSum: Int
+        get() = calculateTotalSum()
+
     val cards: MutableList<Card> = mutableListOf()
 
     abstract val hitThreshold: Int
 
     fun addCard(card: Card) {
         cards.add(card)
-        totalSum = calculateTotalSum()
     }
 
     fun isBust(): Boolean {
