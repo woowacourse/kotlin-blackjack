@@ -15,7 +15,7 @@ class BlackjackController(
     private lateinit var gameManager: GameManager
 
     fun play(dealer: Dealer) {
-        val players: List<Player> = inputView.readPlayerNames()
+        val players = playerSetting()
 
         outputView.printInitialHandOutCardMessage(players)
         gameManager = GameManager(dealer, players)
@@ -29,6 +29,11 @@ class BlackjackController(
         outputView.printFinalHandStatus(dealer, players)
 
         resultSummary(gameManager)
+    }
+
+    private fun playerSetting(): List<Player> {
+        val playerNames: List<String> = inputView.readPlayerNames()
+        return playerNames.map { Player(it) }
     }
 
     private fun playersDrawCards(players: List<Player>) {

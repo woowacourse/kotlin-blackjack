@@ -4,12 +4,14 @@ import blackjack.model.DrawChoice
 import blackjack.model.Player
 
 class InputView {
-    fun readPlayerNames(): List<Player> {
+    fun readPlayerNames(): List<String> {
         println(PLAYER_NAME_MESSAGE_GUIDE)
         val playerNames: List<String> = readln().split(PLAYER_NAME_DELIMITER).map { name -> name.trim() }
-        if (playerNames.size != playerNames.toSet().size) return readPlayerNames()
-        val players = playerNames.map { playerName -> Player(playerName) }
-        return players
+        if (playerNames.size != playerNames.toSet().size) {
+            println("중복된 이름이 있습니다. 다시 입력해주세요.")
+            return readPlayerNames()
+        }
+        return playerNames
     }
 
     fun readMoreCardCondition(player: Player): DrawChoice {
