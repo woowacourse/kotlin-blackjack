@@ -43,9 +43,9 @@ fun main() {
     blackjack.finish()
     println()
     println("## 최종 승패")
-    println("딜러: ${dealer.playerStates.joinToString()}")
+    println("딜러: ${dealer.participantStates.joinToString()}")
     players.forEach { player ->
-        println("${player.name}: ${player.playerState}")
+        println("${player.name}: ${player.participantState}")
     }
 }
 
