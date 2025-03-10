@@ -44,7 +44,7 @@
 - [x] Dealer | overThreshold 메소드 네이밍 고민
 - [x] Participants | 카드 뭉치를 갖는 일급 컬렉션 구현
 - [x] Participants | 카드 합 구하는 로직 변경
-- [ ] YesOrNo | Enum으로 합체
+- [x] YesOrNo | Enum으로 합체
 - [ ] Player | 승패 상태를 저장 위치 고민
 - [ ] Dealer | 더 뽑을 수 있는지 스스로 판단 (참여자 객체에서 판단하게 함)
 - [ ] Deck | 카드를 명시적으로 넣어 주기 (이러면 Deck이 셔플 방법을 몰라도 됨)

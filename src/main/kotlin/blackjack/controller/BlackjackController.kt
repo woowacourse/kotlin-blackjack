@@ -1,7 +1,6 @@
 package blackjack.controller
 
 import blackjack.model.domain.ActionType
-import blackjack.model.domain.YesOrNo
 import blackjack.model.domain.card.PlayingCard
 import blackjack.model.domain.participant.Dealer
 import blackjack.model.domain.participant.ParticipantStatus
@@ -40,16 +39,16 @@ class BlackjackController(
 
     private fun hitOrStay(player: Player) {
         while (player.status == ParticipantStatus.None) {
-            val playerAction = getYesOrNo(player)
-            if (blackjack.shouldStopDrawing(ActionType.get(playerAction), player)) break
+            val playerAction = getActionType(player)
+            if (blackjack.shouldStopDrawing(playerAction, player)) break
             outputView.printCardStatus(player)
         }
         if (player.cardDeck.size == 2) outputView.printCardStatus(player)
     }
 
-    private fun getYesOrNo(player: Player): YesOrNo {
+    private fun getActionType(player: Player): ActionType {
         return retryInput {
-            YesOrNo(inputView.askForHitOrStay(player))
+            ActionType.get(inputView.askForHitOrStay(player))
         }
     }
 
