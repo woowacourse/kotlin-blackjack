@@ -36,16 +36,16 @@ fun main() {
     println()
     dealer.hitOrStay()
     println()
-    println("딜러 카드: ${dealer.cards.joinToString { card -> card.prettyString }} - 결과: ${dealer.getScore()}")
+    println("딜러 카드: ${dealer.cards.joinToString { card -> card.prettyString }} - 결과: ${dealer.score}")
     players.forEach { player ->
-        println("${player.name}카드: ${player.cards.joinToString { card -> card.prettyString }} - 결과: ${dealer.getScore()}")
+        println("${player.name}카드: ${player.cards.joinToString { card -> card.prettyString }} - 결과: ${dealer.score}")
     }
     blackjack.finish()
     println()
     println("## 최종 승패")
     println("딜러: ${dealer.participantStates.joinToString()}")
     players.forEach { player ->
-        println("${player.name}: ${player.participantState}")
+        println("${player.name}: ${player.state}")
     }
 }
 

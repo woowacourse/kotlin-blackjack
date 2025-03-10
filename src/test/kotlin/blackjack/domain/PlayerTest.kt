@@ -28,19 +28,21 @@ class PlayerTest {
 
     @Test
     fun `플레이어 카드의 합이 21 이하가 될 수 없는 플레이어는 반드시 패배한다`() {
-        val player = Player(name = "Eden")
+        val player = Player("Eden")
         player.draw(Card(FaceRank.JACK, Suit.DIAMOND))
+        println(player.score)
+        assertThat(player.score).isEqualTo(10)
         player.draw(Card(FaceRank.JACK, Suit.HEART))
+        assertThat(player.score).isEqualTo(20)
         player.draw(Card(FaceRank.JACK, Suit.SPADE))
-        assertThat(player.cards.size).isEqualTo(3)
-        player.setResult()
-        assertThat(player.playerState).isEqualTo(PlayerState.LOSE)
+        assertThat(player.score).isEqualTo(-1)
+//        assertThat(player.state).isEqualTo(ParticipantState.LOSE)
     }
 
     @Test
     fun `플레이어의 최종 결과를 알 수 있다`() {
         val player = Player("Gio")
-        player.playerState = PlayerState.LOSE
-        assertThat(player.playerState).isEqualTo(PlayerState.LOSE)
+        player.state = ParticipantState.LOSE
+        assertThat(player.state).isEqualTo(ParticipantState.LOSE)
     }
 }

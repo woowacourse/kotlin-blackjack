@@ -5,16 +5,13 @@ class Blackjack(
     private val players: List<Player>,
 ) {
     fun start() {
-        dealer.getCard()
-        dealer.giveCard()
-        dealer.giveCard()
+        dealer.draw()
+        dealer.pitch()
+        dealer.pitch()
     }
 
     fun waitForPlayers() {
         players.forEach { player ->
-            player.hitOrStay(hit = {
-                dealer.giveCard(player)
-            })
         }
 
         dealer.hitOrStay()
@@ -22,32 +19,26 @@ class Blackjack(
 
     fun finish() {
         players.forEach { player ->
-            if (player.playerState != PlayerState.PLAYING) return@forEach
-            val playerScore: Int? = player.getScore()
+            if (player.state != ParticipantState.PLAYING) return@forEach
+            val playerScore: Int? = player.score
             if (playerScore == null) {
-                player.playerState = PlayerState.LOSE
+                player.state = ParticipantState.LOSE
                 return@forEach
             }
         }
 
-        val dealerScore: Int? = dealer.getScore()
-        if (dealerScore == null) {
-            val remainingPlayers = players.filter { player -> player.playerState == PlayerState.PLAYING }
-            remainingPlayers.forEach { player -> player.playerState = PlayerState.WIN }
-        }
-
-        val remainingPlayers = players.filter { player -> player.playerState == PlayerState.PLAYING }
+        val remainingPlayers = players.filter { player -> player.state == ParticipantState.PLAYING }
         remainingPlayers.forEach { player ->
             when {
-                (player.getScore() ?: 0) > (dealerScore ?: 0) -> {
-                    player.playerState = PlayerState.WIN
+                player.score > dealer.score -> {
+                    player.state = ParticipantState.WIN
                 }
 
-                (player.getScore() ?: 0) < (dealerScore ?: 0) -> {
-                    player.playerState = PlayerState.LOSE
+                player.score < dealer.score -> {
+                    player.state = ParticipantState.LOSE
                 }
 
-                else -> player.playerState = PlayerState.DRAW
+                else -> player.state = ParticipantState.DRAW
             }
         }
     }

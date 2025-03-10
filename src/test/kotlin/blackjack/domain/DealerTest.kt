@@ -8,11 +8,9 @@ class DealerTest {
     @Test
     fun `딜러는 플레이어에게 카드를 나눠준다`() {
         val eden = Player("Eden")
-        val gio = Player("Gio")
-        val players: List<Player> = listOf(eden, gio)
-        val dealer = Dealer(players, RandomShuffler)
-        gio.draw(Card(NumberRank.SEVEN, Suit.DIAMOND))
-        dealer.giveCard()
+        val gio = Player("Gio").apply { draw(Card(NumberRank.SEVEN, Suit.DIAMOND)) }
+        val dealer = Dealer(listOf(eden, gio), RandomShuffler)
+        dealer.pitch()
         assertThat(eden.cards.size).isEqualTo(1)
         assertThat(gio.cards.size).isEqualTo(2)
     }

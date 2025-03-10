@@ -3,31 +3,31 @@ package blackjack.domain
 class Dealer(
     private val players: List<Player>,
     shuffler: Shuffler,
-) {
+    hand: Hand = Hand(),
+) : Participant(hand) {
+    override val onBusted: () -> Unit = {
+        val remainingPlayers = players.filter { player -> player.state == ParticipantState.PLAYING }
+        remainingPlayers.forEach { player -> player.state = ParticipantState.WIN }
+    }
+
     private val deck: Deck = Deck(shuffler)
-    private val hand: Hand = Hand()
-    val cards: List<Card>
-        get() = hand.value
-    val playerStates: List<PlayerState>
+
+    val participantStates: List<ParticipantState>
         get() =
             players.map { player ->
-                when (player.playerState) {
-                    PlayerState.WIN -> PlayerState.LOSE
-                    PlayerState.DRAW -> PlayerState.DRAW
-                    PlayerState.LOSE -> PlayerState.WIN
-                    PlayerState.PLAYING -> PlayerState.PLAYING
+                when (player.state) {
+                    ParticipantState.WIN -> ParticipantState.LOSE
+                    ParticipantState.DRAW -> ParticipantState.DRAW
+                    ParticipantState.LOSE -> ParticipantState.WIN
+                    ParticipantState.PLAYING -> ParticipantState.PLAYING
                 }
             }
 
-    fun getCard(card: Card = deck.draw()) {
-        hand.draw(card)
+    fun draw() {
+        draw(deck.draw())
     }
 
-    fun getCards(cards: List<Card>) {
-        cards.forEach { card: Card -> getCard(card) }
-    }
-
-    fun giveCard() {
+    fun pitch() {
         players.forEach { player -> player.draw(deck.draw()) }
     }
 
@@ -35,13 +35,9 @@ class Dealer(
         player.draw(deck.draw())
     }
 
-    fun getScore(): Int? = hand.score
-
     fun hitOrStay() {
-        var dealerScore = getScore()
-        while (dealerScore != null && dealerScore < 17) {
-            getCard()
-            dealerScore = getScore()
+        while (score < 17) {
+            draw(deck.draw())
         }
     }
 }
