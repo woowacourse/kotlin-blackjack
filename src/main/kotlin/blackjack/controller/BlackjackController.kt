@@ -4,8 +4,8 @@ import blackjack.domain.Dealer
 import blackjack.domain.Deck
 import blackjack.domain.Player
 import blackjack.domain.Players
-import blackjack.enums.Action
-import blackjack.enums.Result
+import blackjack.domain.Action
+import blackjack.domain.Result
 import blackjack.view.InputView
 import blackjack.view.OutputView
 

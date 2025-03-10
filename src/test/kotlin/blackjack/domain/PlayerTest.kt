@@ -1,8 +1,5 @@
 package blackjack.domain
 
-import blackjack.enums.Rank
-import blackjack.enums.Result
-import blackjack.enums.Suit
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test

@@ -1,8 +1,5 @@
 package blackjack.domain
 
-import blackjack.enums.Rank
-import blackjack.enums.Suit
-
 class Deck private constructor() {
     companion object {
         val cards: ArrayDeque<Card> = ArrayDeque(createShuffledDeck())

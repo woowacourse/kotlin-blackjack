@@ -4,7 +4,7 @@ import blackjack.domain.Card
 import blackjack.domain.Dealer
 import blackjack.domain.Player
 import blackjack.domain.Players
-import blackjack.enums.Result
+import blackjack.domain.Result
 
 class OutputView {
     fun printDealingResult(

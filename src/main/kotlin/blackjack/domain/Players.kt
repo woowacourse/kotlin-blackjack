@@ -1,7 +1,5 @@
 package blackjack.domain
 
-import blackjack.enums.Result
-
 class Players(
     val players: List<Player>,
 ) {

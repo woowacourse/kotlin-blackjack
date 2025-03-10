@@ -1,7 +1,7 @@
 package blackjack.view
 
 import blackjack.domain.Player
-import blackjack.enums.Action
+import blackjack.domain.Action
 
 class InputView {
     fun readPlayerNames(): List<String> {
