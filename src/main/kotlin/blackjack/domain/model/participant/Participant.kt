@@ -6,7 +6,7 @@ import blackjack.domain.model.card.Hand
 
 abstract class Participant(
     val name: String,
-    val hand: Hand = Hand(),
+    val hand: Hand,
 ) {
     fun drawCard(deck: Deck) {
         val card = deck.pop()
