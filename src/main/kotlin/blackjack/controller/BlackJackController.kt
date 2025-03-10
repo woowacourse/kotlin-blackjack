@@ -51,8 +51,7 @@ class BlackJackController(
     private fun getUserChoice(name: String): UserChoice =
         retryWhenException(
             action = {
-                val input = inputView.readHitOrStay(name)
-                UserChoice.from(input)
+                inputView.readHitOrStay(name)
             },
             onError = { message ->
                 outputView.printErrorMessage(message)
