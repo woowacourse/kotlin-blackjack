@@ -16,7 +16,7 @@ class Deck(private val _cards: MutableList<Card> = mutableListOf()) {
     private fun generateDeck(): List<Card> = CardPattern.entries.flatMap(::createCard).shuffled()
 
     private fun createCard(cardPattern: CardPattern): List<Card> {
-        return CardNumber.entries.map { cardNumber -> Card.create(cardNumber, cardPattern) }
+        return CardNumber.entries.map { cardNumber -> Card(cardNumber, cardPattern) }
     }
 
     companion object {

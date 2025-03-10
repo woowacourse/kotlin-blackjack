@@ -1,15 +1,6 @@
 package blackjack.domain.card
 
-class Card private constructor(
+data class Card(
     val number: CardNumber,
     val pattern: CardPattern,
-) {
-    companion object {
-        fun create(
-            number: CardNumber,
-            pattern: CardPattern,
-        ): Card {
-            return Card(number, pattern)
-        }
-    }
-}
+)
