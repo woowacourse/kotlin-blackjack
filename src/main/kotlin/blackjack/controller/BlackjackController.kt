@@ -13,7 +13,6 @@ class BlackjackController(
 ) {
     private lateinit var gameManager: GameManager
 
-
     fun play(dealer: Dealer) {
         val players = playerSetting()
 

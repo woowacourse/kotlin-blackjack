@@ -2,7 +2,7 @@ package blackjack.view
 
 import blackjack.model.Card
 import blackjack.model.Dealer
-import blackjack.model.Deck.Companion.INITIAL_HAND_OUT_CARD_COUNT
+import blackjack.model.GameManager.Companion.INITIAL_HAND_OUT_CARD_COUNT
 import blackjack.model.Player
 import blackjack.model.ResultType
 import blackjack.model.Shape
@@ -85,9 +85,9 @@ class OutputView {
 
     private fun getShapeDisplayName(shape: Shape): String {
         return when (shape) {
-            Shape.SPADE-> "스페이드"
-            Shape.DIAMOND-> "다이아몬드"
-            Shape.HEART-> "하트"
+            Shape.SPADE -> "스페이드"
+            Shape.DIAMOND -> "다이아몬드"
+            Shape.HEART -> "하트"
             Shape.CLOVER -> "클로버"
         }
     }

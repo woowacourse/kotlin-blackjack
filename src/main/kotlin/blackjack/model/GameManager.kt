@@ -40,7 +40,7 @@ class GameManager(
         person.addCard(deck.draw())
     }
 
-    companion object{
+    companion object {
         const val INITIAL_HAND_OUT_CARD_COUNT = 2
     }
 }
