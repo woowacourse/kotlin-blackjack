@@ -14,11 +14,12 @@ class DeckTest {
     }
 
     @Test
-    fun `카드가 모두 소진되면 예외가 발생한다`() {
+    fun `총 52개의 카드가 모두 소진되면 53번째 draw에서 예외가 발생한다`() {
+        val cardMaxSize = 53
         assertThrows<IllegalArgumentException>(
             message = "카드가 모두 소진되었습니다.",
         ) {
-            while (true) {
+            repeat(cardMaxSize) {
                 deck.draw()
             }
         }
