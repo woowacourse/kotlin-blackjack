@@ -15,7 +15,7 @@ class PersonTest {
     @BeforeEach
     fun setUp() {
         person =
-            object : Person("사람") {
+            object : Person() {
                 override fun isBust(): Boolean {
                     return true
                 }
