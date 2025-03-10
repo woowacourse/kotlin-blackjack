@@ -53,5 +53,5 @@
 - [x] Participants | 가시성 변경자 수정
 - [x] 8명 인원 제한
 - [x] 참여자 이름 중복 검사
-- [ ] 테스트 코드 | given when then 반영
-- [ ] BlackjackTest | BeforeEach 적용
+- [x] 테스트 코드 | given when then 반영
+- [x] BlackjackTest | BeforeEach 적용
