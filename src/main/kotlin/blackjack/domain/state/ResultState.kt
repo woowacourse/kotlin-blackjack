@@ -1,6 +1,5 @@
 package blackjack.domain.state
 
-import blackjack.domain.calculateScore
 import blackjack.domain.person.Dealer
 import blackjack.domain.person.Player
 
@@ -18,8 +17,8 @@ enum class ResultState {
             if (player.gameState == PersonState.BUST) return LOSE
             if (dealer.gameState == PersonState.BUST) return WIN
 
-            val playerScore = player.calculateScore()
-            val dealerScore = dealer.calculateScore()
+            val playerScore = player.score
+            val dealerScore = dealer.score
 
             return when {
                 playerScore > dealerScore -> WIN

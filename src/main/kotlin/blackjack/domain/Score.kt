@@ -2,14 +2,11 @@ package blackjack.domain
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
-import blackjack.domain.person.Person
 
-object ScoreCalculator {
-    const val BLACKJACK_SCORE = 21
-    private const val ACE_BASE_SCORE = 10
-    private const val ACE_OTHER_SCORE = 11
+class Score(cards: List<Card>) {
+    val value: Int = calculate(cards)
 
-    fun calculate(cards: List<Card>): Int {
+    private fun calculate(cards: List<Card>): Int {
         val values = cards.map { getCardValue(it) }
         val sum = values.sum()
         return adjustAceValues(sum, cards)
@@ -34,6 +31,10 @@ object ScoreCalculator {
         }
         return total
     }
-}
 
-fun Person.calculateScore(): Int = ScoreCalculator.calculate(this.cards())
+    companion object {
+        const val BLACKJACK_SCORE = 21
+        private const val ACE_BASE_SCORE = 10
+        private const val ACE_OTHER_SCORE = 11
+    }
+}

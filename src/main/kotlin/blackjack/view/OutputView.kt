@@ -41,19 +41,13 @@ class OutputView {
         println(DEALER_DRAW_MESSAGE)
     }
 
-    fun printDealerResult(
-        dealer: Dealer,
-        score: Int,
-    ) {
+    fun printDealerResult(dealer: Dealer) {
         println()
-        printGameResult(DEALER, dealer.cards(), score)
+        printGameResult(DEALER, dealer.cards(), dealer.score)
     }
 
-    fun printPlayerResult(
-        player: Player,
-        score: Int,
-    ) {
-        printGameResult(player.name, player.cards(), score)
+    fun printPlayerResult(player: Player) {
+        printGameResult(player.name, player.cards(), player.score)
     }
 
     private fun printGameResult(

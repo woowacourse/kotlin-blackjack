@@ -1,7 +1,6 @@
 package blackjack.controller
 
 import blackjack.domain.GameResult
-import blackjack.domain.ScoreCalculator
 import blackjack.domain.card.Deck
 import blackjack.domain.person.Dealer
 import blackjack.domain.person.Player
@@ -68,9 +67,9 @@ class BlackJackController(
         dealer: Dealer,
         players: List<Player>,
     ) {
-        outputView.printDealerResult(dealer, ScoreCalculator.calculate(dealer.cards()))
+        outputView.printDealerResult(dealer)
         players.forEach { player ->
-            outputView.printPlayerResult(player, ScoreCalculator.calculate(player.cards()))
+            outputView.printPlayerResult(player)
         }
 
         val gameResult = GameResult(dealer, players)

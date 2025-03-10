@@ -6,16 +6,13 @@ import blackjack.domain.card.CardPattern
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
-class ScoreCalculatorTest {
+class ScoreTest {
     @Test
     fun `점수를 계산한다`() {
-        // Given
         val cards = List(3) { Card.create(CardNumber.ACE, CardPattern.HEART) }
 
-        // When
-        val result = ScoreCalculator.calculate(cards)
+        val result = Score(cards).value
 
-        // Then
         result shouldBe 13
     }
 }
