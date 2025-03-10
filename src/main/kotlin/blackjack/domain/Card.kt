@@ -5,10 +5,6 @@ import java.lang.IllegalArgumentException
 class Card private constructor(val rank: Rank, val suit: Suit) {
     fun getScore() = this.rank.score
 
-    override fun toString(): String {
-        return rank.toDisplayName() + suit.toDisplayName()
-    }
-
     companion object {
         private val POOL: List<Card> =
             Rank.entries.flatMap { rank ->
