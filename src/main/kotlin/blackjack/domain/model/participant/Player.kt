@@ -6,18 +6,18 @@ class Player(
     name: String = DEFAULT_NAME,
 ) : Participant(name = name) {
     override fun compareTo(opponent: Participant): GameResult {
-        val myScore = handCards.getScore()
-        val opponentScore = opponent.handCards.getScore()
+        val myScore = hand.getScore()
+        val opponentScore = opponent.hand.getScore()
 
         return when {
-            handCards.isBust() -> GameResult.LOSE
+            hand.isBust() -> GameResult.LOSE
             myScore > opponentScore -> GameResult.WIN
             myScore == opponentScore -> GameResult.DRAW
             else -> GameResult.LOSE
         }
     }
 
-    override fun isDrawable(): Boolean = !handCards.isBust()
+    override fun isDrawable(): Boolean = !hand.isBust()
 
     companion object {
         private const val DEFAULT_NAME = "이름 없음"

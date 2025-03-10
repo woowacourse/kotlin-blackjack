@@ -1,7 +1,7 @@
 package blackjack.domain.model.card
 
-class HandCards {
-    private val _cards = mutableListOf<Card>()
+class Hand {
+    private var _cards = mutableListOf<Card>()
     private val cards
         get() = _cards.toList()
 
@@ -22,9 +22,9 @@ class HandCards {
     }
 
     fun getScore(): Int {
-        val cardValues: Int = _cards.sumOf { it.cardNumber.value }
+        val cardValues: Int = cards.sumOf { it.cardNumber.value }
 
-        if (_cards.any { it.isAce() } && cardValues + ACE_EXTRA_SCORE <= BLACK_JACK_NUMBER) {
+        if (cards.any { it.isAce() } && cardValues + ACE_EXTRA_SCORE <= BLACK_JACK_NUMBER) {
             return cardValues + ACE_EXTRA_SCORE
         }
         return cardValues
@@ -33,5 +33,11 @@ class HandCards {
     companion object {
         private const val ACE_EXTRA_SCORE = 10
         private const val BLACK_JACK_NUMBER = 21
+
+        fun of(vararg cards: Card): Hand {
+            val hand = Hand()
+            cards.map { hand.add(it) }
+            return hand
+        }
     }
 }

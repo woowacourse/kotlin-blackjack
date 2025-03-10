@@ -73,7 +73,7 @@ class Casino(
     }
 
     private fun outputPlayerCardsInfo(player: Player) {
-        if (player.handCards.toList().size == 2) {
+        if (player.hand.toList().size == 2) {
             outputView.showPlayerCardsInfo(player)
         }
     }

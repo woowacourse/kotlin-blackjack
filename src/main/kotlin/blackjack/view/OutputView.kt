@@ -31,7 +31,7 @@ class OutputView {
 
     fun showCardsResult(participants: List<Participant>) {
         participants.forEach {
-            println(makeParticipantInfo(it) + CARD_RESULT_MESSAGE + it.handCards.getScore())
+            println(makeParticipantInfo(it) + CARD_RESULT_MESSAGE + it.hand.getScore())
         }
     }
 
@@ -52,7 +52,7 @@ class OutputView {
 
     private fun makeParticipantInfo(participant: Participant): String {
         val name = participant.name
-        val cards = participant.handCards.toList().joinToString { card -> card.toText() }
+        val cards = participant.hand.toList().joinToString { card -> card.toText() }
         return CARD_INFO_MESSAGE.format(name, cards)
     }
 

@@ -14,12 +14,12 @@ class GameResultRecordTest {
         val dealer = Dealer() // 20
         val firstPlayer = Player() // BLACKJACK
         val secondPlayer = Player() // 20
-        dealer.handCards.add(Card(CardNumber.KING, Suit.HEART))
-        dealer.handCards.add(Card(CardNumber.JACK, Suit.CLUB))
-        firstPlayer.handCards.add(Card(CardNumber.ACE, Suit.CLUB))
-        firstPlayer.handCards.add(Card(CardNumber.QUEEN, Suit.DIAMOND))
-        secondPlayer.handCards.add(Card(CardNumber.TEN, Suit.SPADE))
-        secondPlayer.handCards.add(Card(CardNumber.QUEEN, Suit.HEART))
+        dealer.hand.add(Card(CardNumber.KING, Suit.HEART))
+        dealer.hand.add(Card(CardNumber.JACK, Suit.CLUB))
+        firstPlayer.hand.add(Card(CardNumber.ACE, Suit.CLUB))
+        firstPlayer.hand.add(Card(CardNumber.QUEEN, Suit.DIAMOND))
+        secondPlayer.hand.add(Card(CardNumber.TEN, Suit.SPADE))
+        secondPlayer.hand.add(Card(CardNumber.QUEEN, Suit.HEART))
 
         val result = GameResultRecord(dealer, listOf(firstPlayer, secondPlayer)).getDealerResult()
 
