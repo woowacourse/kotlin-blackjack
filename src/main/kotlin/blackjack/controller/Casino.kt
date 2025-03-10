@@ -63,15 +63,19 @@ class Casino(
             val response: Boolean = inputView.readWantExtraCard(player.name)
 
             if (!response) {
-                if (player.handCards.toList().size == 2) {
-                    outputView.showPlayerCardsInfo(player)
-                }
+                outputPlayerCardsInfo(player)
                 break
             }
             player.drawCard(deck)
             outputView.showPlayerCardsInfo(player)
         }
         outputView.newLine()
+    }
+
+    private fun outputPlayerCardsInfo(player: Player) {
+        if (player.handCards.toList().size == 2) {
+            outputView.showPlayerCardsInfo(player)
+        }
     }
 
     private fun runDealerDrawPhase(
