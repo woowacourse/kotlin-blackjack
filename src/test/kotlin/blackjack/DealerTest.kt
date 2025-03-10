@@ -18,7 +18,8 @@ class DealerTest {
 
     @Test
     fun `딜러는 카드 총 합이 17 미만이면 카드를 받는다`() {
-        dealer.addCards(listOf(Card(Shape.SPADE, Number.TWO), Card(Shape.SPADE, Number.THREE)))
+        dealer.addCard(Card(Shape.SPADE, Number.SEVEN))
+        dealer.addCard(Card(Shape.SPADE, Number.TWO))
         val expect = true
 
         val actual = dealer.isMoreCard()
@@ -28,8 +29,8 @@ class DealerTest {
 
     @Test
     fun `딜러는 카드 총 합이 17 이상이면 카드를 받지 않는다`() {
-        val dealer = Dealer()
-        dealer.addCards(listOf(Card(Shape.SPADE, Number.SEVEN), Card(Shape.SPADE, Number.TEN)))
+        dealer.addCard(Card(Shape.SPADE, Number.SEVEN))
+        dealer.addCard(Card(Shape.SPADE, Number.TEN))
         val expect = false
 
         val actual = dealer.isMoreCard()
