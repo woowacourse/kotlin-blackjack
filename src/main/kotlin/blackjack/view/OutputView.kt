@@ -2,6 +2,7 @@ package blackjack.view
 
 import blackjack.model.Card
 import blackjack.model.Dealer
+import blackjack.model.Participant
 import blackjack.model.Player
 import blackjack.model.Players
 
@@ -39,8 +40,8 @@ class OutputView {
         println("${player.name}카드: ${player.cards.value.joinToString { it.toBlackjackView() }}")
     }
 
-    fun printBust(player: Player) {
-        println("${player.name}의 점수는 ${player.cards.calculateScore()}점으로 21점을 초과하여 죽었습니다.")
+    fun printBust(participant: Participant) {
+        println("${participant.name}의 점수는 ${participant.cards.calculateScore()}점으로 21점을 초과하여 죽었습니다.")
     }
 
     fun printDealerGettingCard() {

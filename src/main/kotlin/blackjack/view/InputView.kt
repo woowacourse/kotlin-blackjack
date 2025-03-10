@@ -9,7 +9,7 @@ class InputView {
         val players =
             readln()
                 .split(",")
-                .map { Player.from(name = it.trim()) }
+                .map { Player(name = it.trim()) }
         return Players(players)
     }
 
