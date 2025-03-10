@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 class BlackjackTest {
     @Test
     fun `게임을 시작하면 딜러는 한 장의 카드를 지급받는다`() {
-        val dealer = Dealer(emptyList())
+        val dealer = Dealer(emptyList(), RandomShuffler)
         val game = Blackjack(dealer, emptyList())
         game.start()
         assertThat(dealer.getCountOfCards()).isEqualTo(1)
@@ -17,7 +17,7 @@ class BlackjackTest {
         val gio = Player("Gio")
         val eden = Player("Eden")
         val players = listOf(gio, eden)
-        val dealer = Dealer(players)
+        val dealer = Dealer(players, RandomShuffler)
         val game = Blackjack(dealer, players)
         game.start()
         assertThat(gio.getCountOfCards()).isEqualTo(2)
@@ -29,7 +29,7 @@ class BlackjackTest {
         val gio = Player("Gio")
         val eden = Player("Eden")
         val players = listOf(gio, eden)
-        val dealer = Dealer(players)
+        val dealer = Dealer(players, RandomShuffler)
         val game = Blackjack(dealer, players)
         game.waitForPlayers()
         assertThat(dealer.getScore()).isGreaterThanOrEqualTo(17)
@@ -40,7 +40,7 @@ class BlackjackTest {
         val gio = Player("Gio")
         val eden = Player("Eden")
         val players = listOf(gio, eden)
-        val dealer = Dealer(players)
+        val dealer = Dealer(players, RandomShuffler)
         val blackjack = Blackjack(dealer, players)
         gio.getCards(listOf(Card(Number(10), Suit.SPADE), Card(Number(10), Suit.SPADE)))
         eden.getCards(listOf(Card(Number(9), Suit.SPADE), Card(Number(9), Suit.SPADE)))
@@ -56,7 +56,7 @@ class BlackjackTest {
         val eden = Player("Eden")
         val gio = Player("Gio")
         val players: List<Player> = listOf(eden, gio)
-        val dealer = Dealer(players)
+        val dealer = Dealer(players, RandomShuffler)
         dealer.getCards(
             listOf(
                 Card(Number(10), Suit.SPADE),
@@ -75,11 +75,11 @@ class BlackjackTest {
         val eden = Player("Eden")
         val gio = Player("Gio")
         val players: List<Player> = listOf(eden, gio)
-        val dealer = Dealer(players)
+        val dealer = Dealer(players, RandomShuffler)
 
         eden.getCards(
             listOf(
-                Card(Ace(), Suit.SPADE),
+                Card(Ace, Suit.SPADE),
                 Card(Number(10), Suit.CLOVER),
             ),
         )
@@ -105,7 +105,7 @@ class BlackjackTest {
     fun `딜러와 플레이어의 숫자가 같다면, 무승부로 처리한다`() {
         val gio = Player("Gio")
         val players: List<Player> = listOf(gio)
-        val dealer = Dealer(players)
+        val dealer = Dealer(players, RandomShuffler)
 
         gio.getCards(
             listOf(

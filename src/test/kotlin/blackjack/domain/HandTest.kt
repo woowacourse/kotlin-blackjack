@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 class HandTest {
     @Test
     fun `갖고 있는 카드를 확인할 수 있다`() {
-        val card = Card(Ace(), Suit.SPADE)
+        val card = Card(Ace, Suit.SPADE)
         val cards = Hand(listOf(card))
         assertThat(cards.value).isEqualTo(listOf(card))
     }
@@ -16,8 +16,8 @@ class HandTest {
         val cards =
             Hand(
                 listOf(
-                    Card(Ace(), Suit.SPADE),
-                    Card(Ace(), Suit.HEART),
+                    Card(Ace, Suit.SPADE),
+                    Card(Ace, Suit.HEART),
                     Card(Number(4), Suit.DIAMOND),
                     Card(Face.JACK, Suit.CLOVER),
                 ),

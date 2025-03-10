@@ -2,8 +2,9 @@ package blackjack.domain
 
 class Dealer(
     private val players: List<Player>,
+    shuffler: Shuffler,
 ) {
-    private val deck: Deck = Deck()
+    private val deck: Deck = Deck(shuffler)
     private val hand: Hand = Hand(emptyList())
     val cards: List<Card>
         get() = hand.value
@@ -18,7 +19,7 @@ class Dealer(
                 }
             }
 
-    fun getCard(card: Card = deck.getCard()) {
+    fun getCard(card: Card = deck.draw()) {
         hand.add(card)
     }
 
@@ -27,11 +28,11 @@ class Dealer(
     }
 
     fun giveCard() {
-        players.forEach { player -> player.getCard(deck.getCard()) }
+        players.forEach { player -> player.getCard(deck.draw()) }
     }
 
     fun giveCard(player: Player) {
-        player.getCard(deck.getCard())
+        player.getCard(deck.draw())
     }
 
     fun getScore(): Int? = hand.getScore()

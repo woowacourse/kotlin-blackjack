@@ -8,6 +8,7 @@ import blackjack.domain.Face
 import blackjack.domain.Number
 import blackjack.domain.Number2
 import blackjack.domain.Player
+import blackjack.domain.RandomShuffler
 import blackjack.domain.Rank
 import blackjack.domain.Suit
 
@@ -15,7 +16,7 @@ fun main() {
     println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
     val players: List<Player> = readln().split(",").map { name: String -> Player(name.trim()) }
     println()
-    val dealer = Dealer(players)
+    val dealer = Dealer(players, RandomShuffler)
     val blackjack = Blackjack(dealer, players)
     println("${players.joinToString { player -> player.name }}에게 2장씩 나누었습니다.")
     println("딜러가 한 장을 오픈했습니다.")
