@@ -9,14 +9,14 @@ class DealerTest {
 
     @BeforeEach
     fun setUp() {
-        dealer = Dealer(cards = listOf(Card(Suit.HEART, Rank.ACE)))
+        dealer = Dealer("딜러", Card(Suit.HEART, Rank.ACE))
     }
 
     @Test
     fun `플레이어별 승패 여부를 반환한다`() {
-        val player1 = Player("A", listOf(Card(Suit.HEART, Rank.TWO))) // 2점
-        val player2 = Player("B", listOf(Card(Suit.HEART, Rank.ACE))) // 11점
-        val player3 = Player("C", listOf(Card(Suit.HEART, Rank.ACE), Card(Suit.HEART, Rank.KING))) // 21점
+        val player1 = Player("A", Card(Suit.HEART, Rank.TWO)) // 2점
+        val player2 = Player("B", Card(Suit.HEART, Rank.ACE)) // 11점
+        val player3 = Player("C", Card(Suit.HEART, Rank.ACE), Card(Suit.HEART, Rank.KING)) // 21점
         val verdicts: Map<Player, Result> = dealer.getPlayerResults(listOf(player1, player2, player3))
         val actual: Map<Player, Result> =
             mapOf(
@@ -29,12 +29,12 @@ class DealerTest {
 
     @Test
     fun `딜러의 승패 횟수를 반환한다`() {
-        val player1 = Player("A", listOf(Card(Suit.HEART, Rank.TWO))) // 2점
-        val player2 = Player("B", listOf(Card(Suit.HEART, Rank.ACE))) // 11점
-        val player3 = Player("C", listOf(Card(Suit.HEART, Rank.ACE))) // 11점
-        val player4 = Player("D", listOf(Card(Suit.HEART, Rank.ACE))) // 11점
-        val player5 = Player("E", listOf(Card(Suit.HEART, Rank.ACE), Card(Suit.HEART, Rank.KING))) // 21점
-        val player6 = Player("F", listOf(Card(Suit.HEART, Rank.ACE), Card(Suit.HEART, Rank.KING))) // 21점
+        val player1 = Player("A", Card(Suit.HEART, Rank.TWO)) // 2점
+        val player2 = Player("B", Card(Suit.HEART, Rank.ACE)) // 11점
+        val player3 = Player("C", Card(Suit.HEART, Rank.ACE)) // 11점
+        val player4 = Player("D", Card(Suit.HEART, Rank.ACE)) // 11점
+        val player5 = Player("E", Card(Suit.HEART, Rank.ACE), Card(Suit.HEART, Rank.KING)) // 21점
+        val player6 = Player("F", Card(Suit.HEART, Rank.ACE), Card(Suit.HEART, Rank.KING)) // 21점
         val players = listOf(player1, player2, player3, player4, player5, player6)
         val playerVerdicts: Map<Player, Result> = dealer.getPlayerResults(players)
         val verdicts: Map<Result, Int> = dealer.getDealerResults(playerVerdicts)
@@ -44,13 +44,13 @@ class DealerTest {
 
     @Test
     fun `딜러의 점수가 16 이하면 히트할 수 있다`() {
-        dealer = Dealer(cards = listOf(Card(Suit.HEART, Rank.SIX), Card(Suit.HEART, Rank.KING)))
+        dealer = Dealer("딜러", Card(Suit.HEART, Rank.SIX), Card(Suit.HEART, Rank.KING))
         assertThat(dealer.canHit()).isTrue()
     }
 
     @Test
     fun `딜러의 점수가 16 초과면 히트할 수 없다`() {
-        dealer = Dealer(cards = listOf(Card(Suit.HEART, Rank.QUEEN), Card(Suit.HEART, Rank.KING)))
+        dealer = Dealer("딜러", Card(Suit.HEART, Rank.QUEEN), Card(Suit.HEART, Rank.KING))
         assertThat(dealer.canHit()).isFalse()
     }
 }

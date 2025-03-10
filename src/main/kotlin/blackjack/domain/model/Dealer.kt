@@ -3,8 +3,8 @@ package blackjack.domain.model
 class Dealer(name: String = DEFAULT_NAME) : Participant(name) {
     private var initialHandShown: Boolean = false
 
-    constructor(name: String = DEFAULT_NAME, cards: List<Card>) : this(name) {
-        accept(cards)
+    constructor(name: String, vararg cards: Card) : this(name) {
+        accept(cards.toList())
     }
 
     override fun canHit(): Boolean {

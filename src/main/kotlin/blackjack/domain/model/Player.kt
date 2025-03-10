@@ -1,8 +1,8 @@
 package blackjack.domain.model
 
 class Player(name: String) : Participant(name) {
-    constructor(name: String, cards: List<Card>) : this(name) {
-        accept(cards)
+    constructor(name: String, vararg cards: Card) : this(name) {
+        accept(cards.toList())
     }
 
     override fun canHit(): Boolean {
