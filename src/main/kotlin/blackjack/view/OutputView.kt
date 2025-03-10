@@ -5,6 +5,7 @@ import blackjack.model.domain.Dealer
 import blackjack.model.domain.ParticipantStatus
 import blackjack.model.domain.Participants
 import blackjack.model.domain.Player
+import blackjack.model.domain.Shape
 
 class OutputView {
     fun printInitCardStatus(
@@ -38,7 +39,7 @@ class OutputView {
     }
 
     private fun displayCard(cards: List<Card>): String {
-        return cards.joinToString { CARD_FORMAT.format(it.cardNumber.display, it.symbol.symbol) }
+        return cards.joinToString { CARD_FORMAT.format(it.cardNumber.display, it.symbol.toKorean()) }
     }
 
     fun printDealerReceiveCard(
@@ -89,6 +90,15 @@ class OutputView {
             ParticipantStatus.Win, ParticipantStatus.None -> "승"
             ParticipantStatus.Draw -> "무"
             else -> "패"
+        }
+    }
+
+    private fun Shape.toKorean(): String {
+        return when (this) {
+            Shape.Heart -> "하트"
+            Shape.Spade -> "스페이드"
+            Shape.Diamond -> "다이아몬드"
+            Shape.Clover -> "클로버"
         }
     }
 
