@@ -56,24 +56,24 @@ class Deck {
         )
     private val numberCards: List<Card> = spadeNumberCards + heartNumberCards + diamondNumberCards + cloverNumberCards
 
-    private val spadeCharacterCards: List<Card> =
-        listOf(Card(Character.JACK, Suit.SPADE), Card(Character.QUEEN, Suit.SPADE), Card(Character.KING, Suit.SPADE))
+    private val spadeFaceCards: List<Card> =
+        listOf(Card(Face.JACK, Suit.SPADE), Card(Face.QUEEN, Suit.SPADE), Card(Face.KING, Suit.SPADE))
 
-    private val heartCharacterCards: List<Card> =
-        listOf(Card(Character.JACK, Suit.HEART), Card(Character.QUEEN, Suit.HEART), Card(Character.KING, Suit.HEART))
+    private val heartFaceCards: List<Card> =
+        listOf(Card(Face.JACK, Suit.HEART), Card(Face.QUEEN, Suit.HEART), Card(Face.KING, Suit.HEART))
 
-    private val diamondCharacterCards: List<Card> =
+    private val diamondFaceCards: List<Card> =
         listOf(
-            Card(Character.JACK, Suit.DIAMOND),
-            Card(Character.QUEEN, Suit.DIAMOND),
-            Card(Character.KING, Suit.DIAMOND),
+            Card(Face.JACK, Suit.DIAMOND),
+            Card(Face.QUEEN, Suit.DIAMOND),
+            Card(Face.KING, Suit.DIAMOND),
         )
 
-    private val cloverCharacterCards: List<Card> =
-        listOf(Card(Character.JACK, Suit.CLOVER), Card(Character.QUEEN, Suit.CLOVER), Card(Character.KING, Suit.CLOVER))
+    private val cloverFaceCards: List<Card> =
+        listOf(Card(Face.JACK, Suit.CLOVER), Card(Face.QUEEN, Suit.CLOVER), Card(Face.KING, Suit.CLOVER))
 
     private val characterCards =
-        spadeCharacterCards + heartCharacterCards + diamondCharacterCards + cloverCharacterCards
+        spadeFaceCards + heartFaceCards + diamondFaceCards + cloverFaceCards
 
     private val cards: MutableList<Card> = (aceCards + numberCards + characterCards).shuffled().toMutableList()
 

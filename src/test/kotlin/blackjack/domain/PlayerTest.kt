@@ -24,9 +24,9 @@ class PlayerTest {
     @Test
     fun `플레이어 카드의 합이 21 이하가 될 수 없는 플레이어는 반드시 패배한다`() {
         val player = Player(name = "Eden")
-        player.getCard(Card(Character.JACK, Suit.DIAMOND))
-        player.getCard(Card(Character.JACK, Suit.HEART))
-        player.getCard(Card(Character.JACK, Suit.SPADE))
+        player.getCard(Card(Face.JACK, Suit.DIAMOND))
+        player.getCard(Card(Face.JACK, Suit.HEART))
+        player.getCard(Card(Face.JACK, Suit.SPADE))
         assertThat(player.getCountOfCards()).isEqualTo(3)
         player.setResult()
         assertThat(player.playerState).isEqualTo(PlayerState.LOSE)

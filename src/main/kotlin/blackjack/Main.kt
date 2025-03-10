@@ -3,9 +3,10 @@ package blackjack
 import blackjack.domain.Ace
 import blackjack.domain.Blackjack
 import blackjack.domain.Card
-import blackjack.domain.Character
 import blackjack.domain.Dealer
+import blackjack.domain.Face
 import blackjack.domain.Number
+import blackjack.domain.Number2
 import blackjack.domain.Player
 import blackjack.domain.Rank
 import blackjack.domain.Suit
@@ -58,10 +59,11 @@ val Rank.prettyString: String
     get() =
         when (this) {
             is Ace -> "A"
-            Character.JACK -> "J"
-            Character.QUEEN -> "Q"
-            Character.KING -> "K"
-            is Number -> value.toString()
+            Face.JACK -> "J"
+            Face.QUEEN -> "Q"
+            Face.KING -> "K"
+            is Number2 -> value.toString()
+            is Number -> TODO()
         }
 val Suit.prettyString: String
     get() =

@@ -19,7 +19,7 @@ class HandTest {
                     Card(Ace(), Suit.SPADE),
                     Card(Ace(), Suit.HEART),
                     Card(Number(4), Suit.DIAMOND),
-                    Card(Character.JACK, Suit.CLOVER),
+                    Card(Face.JACK, Suit.CLOVER),
                 ),
             )
         assertThat(cards.getScore()).isEqualTo(16)
