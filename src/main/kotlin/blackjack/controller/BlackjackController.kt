@@ -38,7 +38,7 @@ class BlackjackController(
     }
 
     private fun hitOrStay(player: Player) {
-        while (player.status == ParticipantStatus.None) {
+        while (player.canHit()) {
             val playerAction = getActionType(player)
             if (blackjack.shouldStopDrawing(playerAction, player)) break
             outputView.printCardStatus(player)

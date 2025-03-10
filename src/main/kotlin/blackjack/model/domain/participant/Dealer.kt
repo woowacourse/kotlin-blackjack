@@ -7,7 +7,7 @@ class Dealer(override val name: String = DEALER_NAME) : Participants() {
     override val hand: Hand = Hand(mutableListOf())
     override var status: ParticipantStatus = ParticipantStatus.None
 
-    fun canHit(): Boolean {
+    override fun canHit(): Boolean {
         return sumCardNumber <= THRESHOLD
     }
 

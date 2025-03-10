@@ -19,4 +19,6 @@ abstract class Participants() {
     fun checkBust() {
         status = isBust(sumCardNumber)
     }
+
+    abstract fun canHit(): Boolean
 }
