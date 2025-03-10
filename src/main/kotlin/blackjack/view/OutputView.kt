@@ -19,16 +19,8 @@ class OutputView {
         println()
     }
 
-    fun printParticipantsStatuses(participants: Participants) {
-        participants.list.forEach { participant ->
-            println(renderParticipantStatus(participant))
-        }
-        println()
-    }
-
-    fun printPlayerStatus(player: Player) {
-        println(renderParticipantStatus(player))
-        println()
+    fun printParticipantStatus(participant: Participant) {
+        println(renderParticipantStatus(participant))
     }
 
     fun printDealerHit() {
