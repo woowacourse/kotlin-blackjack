@@ -16,7 +16,7 @@ class GameManagerTest {
         val gameManager = GameManager(dealer, listOf(player1, player2))
 
         // when
-        gameManager.dealInitialCardWithCount(2)
+        gameManager.dealInitialCardWithCount()
 
         // then
         assertThat(player1.cards.size).isEqualTo(2)
