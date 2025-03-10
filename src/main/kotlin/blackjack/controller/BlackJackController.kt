@@ -26,7 +26,7 @@ class BlackJackController(
 
     private fun readyForGamePlayers(): Participants {
         val dealer: Participant = Dealer(ParticipantCards())
-        return Participants(inputView.readPlayerName().map { name -> Player(name, ParticipantCards()) } + dealer)
+        return Participants(inputView.readPlayerNames().map { name -> Player(name, ParticipantCards()) } + dealer)
     }
 
     private fun displayPlayerNames(participants: Participants) {

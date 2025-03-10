@@ -1,41 +1,36 @@
 package blackjack.view
 
 class InputView {
-    fun readPlayerName(): List<String> {
+    fun readPlayerNames(): List<String> {
         while (true) {
             println(MESSAGE_INPUT_PLAYER_NAME)
-            val input = readln()
-            if (validEmpty(input).not()) readPlayerName()
+            val input = readln().trim()
 
-            val names = splitNames(input)
-            if (validateEmptyList(names).not()) readPlayerName()
+            if (input.isBlank()) {
+                println(MESSAGE_EMPTY_INPUT)
+                continue
+            }
+
+            val names = input.split(",").map { it.trim() }
+            if (names.any { it.isBlank() }) {
+                println(MESSAGE_EMPTY_NAME)
+                continue
+            }
             return names
         }
     }
 
     fun readHitOrStay(name: String): String {
-        println(MESSAGE_ASK_PLAYER_HIT_OR_STAY.format(name))
-        val input = readln()
-        if (validEmpty(input).not()) readHitOrStay(name)
-        return input
-    }
+        while (true) {
+            println(MESSAGE_ASK_PLAYER_HIT_OR_STAY.format(name))
+            val input = readln().trim()
 
-    private fun splitNames(input: String): List<String> = input.split(",").map { it.trim() }
-
-    private fun validEmpty(input: String): Boolean {
-        if (input.isBlank()) {
-            println(MESSAGE_EMPTY_INPUT)
-            return false
+            if (input.isBlank()) {
+                println(MESSAGE_EMPTY_INPUT)
+                continue
+            }
+            return input
         }
-        return true
-    }
-
-    private fun validateEmptyList(names: List<String>): Boolean {
-        if (names.any { it.isBlank() }) {
-            println(MESSAGE_EMPTY_NAME)
-            return false
-        }
-        return true
     }
 
     companion object {
