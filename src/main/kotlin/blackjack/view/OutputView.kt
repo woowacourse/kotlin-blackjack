@@ -21,7 +21,6 @@ class OutputView {
 
     fun printParticipantStatus(participant: Participant) {
         println(renderParticipantStatus(participant))
-        println()
     }
 
     fun printDealerHit() {

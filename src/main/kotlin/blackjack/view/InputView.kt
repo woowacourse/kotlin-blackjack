@@ -11,6 +11,7 @@ class InputView {
     }
 
     fun readPlayerAction(player: Player): Action {
+        println()
         println(MESSAGE_REQUEST_PLAYER_YES_OR_NO.format(player.name))
         val input: String = readInput().lowercase()
         return convertToAction(input)

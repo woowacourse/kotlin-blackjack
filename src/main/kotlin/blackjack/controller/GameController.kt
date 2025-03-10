@@ -17,9 +17,7 @@ class GameController(
         val deck = Deck()
         val participants = repeatUntilValid { Participants(Dealer(), inputView.readPlayerNames().map(::Player)) }
         processInitialDeals(deck, participants)
-        announceInitialDeals(participants)
-        processPlayersHits(deck, participants.players)
-        processDealerHits(deck, participants.dealer)
+        processParticipantsHits(deck, participants)
         outputView.printResults(participants)
     }
 
@@ -27,23 +25,20 @@ class GameController(
         deck: Deck,
         participants: Participants,
     ) {
-        participants.list.forEach { player ->
-            player.accept(deck.draw(Participant.INITIAL_DRAW_COUNT))
-        }
-    }
-
-    private fun announceInitialDeals(participants: Participants) {
+        participants.list.forEach { player -> player.accept(deck.draw(Participant.INITIAL_DRAW_COUNT)) }
         outputView.printInitialDeals(participants)
-        participants.list.forEach { participant ->
-            outputView.printParticipantStatus(participant)
-        }
+        participants.list.forEach { participant -> outputView.printParticipantStatus(participant) }
     }
 
-    private fun processPlayersHits(
+    private fun processParticipantsHits(
         deck: Deck,
-        players: List<Player>,
+        participants: Participants,
     ) {
-        players.forEach { player -> processPlayerHits(deck, player) }
+        participants.players.forEach { player -> processPlayerHits(deck, player) }
+        while (participants.dealer.canHit()) {
+            outputView.printDealerHit()
+            participants.dealer.accept(deck.draw())
+        }
     }
 
     private fun processPlayerHits(
@@ -63,16 +58,6 @@ class GameController(
 
     private fun printStatusOnNoHit(player: Player) {
         if (player.showHand().count() == Participant.INITIAL_DRAW_COUNT) outputView.printParticipantStatus(player)
-    }
-
-    private fun processDealerHits(
-        deck: Deck,
-        dealer: Dealer,
-    ) {
-        while (dealer.canHit()) {
-            outputView.printDealerHit()
-            dealer.accept(deck.draw())
-        }
     }
 
     private fun <T> repeatUntilValid(event: () -> T): T {
