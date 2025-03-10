@@ -1,12 +1,20 @@
 package blackjack.domain.model
 
 class Dealer(name: String = DEALER_NAME) : Participant(name) {
+    private var initialHandShown: Boolean = false
+
     constructor(name: String = DEALER_NAME, cards: List<Card>) : this(name) {
         accept(cards)
     }
 
     override fun canHit(): Boolean {
         return (computePoint() <= DEALER_HIT_THRESHOLD)
+    }
+
+    override fun showHand(): List<Card> {
+        if (initialHandShown) return hand.show()
+        initialHandShown = true
+        return hand.show(DEALER_INITIAL_VISIBLE_CARD_COUNT)
     }
 
     fun getPlayerResult(players: List<Player>): Map<Player, Result> {
@@ -22,5 +30,6 @@ class Dealer(name: String = DEALER_NAME) : Participant(name) {
     companion object {
         private const val DEALER_NAME = "딜러"
         private const val DEALER_HIT_THRESHOLD = 16
+        private const val DEALER_INITIAL_VISIBLE_CARD_COUNT = 1
     }
 }

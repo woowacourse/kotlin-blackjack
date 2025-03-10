@@ -45,13 +45,13 @@ class OutputView {
 
     private fun renderDealerStatus(dealer: Dealer): String {
         return dealer.name + PLAYER_NAME_STATUS_DELIMITER +
-            dealer.hand.show(DEALER_VISIBLE_CARD_COUNT)
+            dealer.showHand()
                 .joinToString { card -> card.rank.stringRepresentation() + card.suit.stringRepresentation() }
     }
 
     private fun renderParticipantStatus(participant: Participant): String {
         return participant.name + PLAYER_NAME_STATUS_DELIMITER +
-            participant.hand.show()
+            participant.showHand()
                 .joinToString { card -> card.rank.stringRepresentation() + card.suit.stringRepresentation() }
     }
 
@@ -104,7 +104,7 @@ class OutputView {
             Rank.JACK -> RANK_JACK
             Rank.QUEEN -> RANK_QUEEN
             Rank.KING -> RANK_KING
-            else -> this.point.toString()
+            else -> point.toString()
         }
     }
 
@@ -112,7 +112,6 @@ class OutputView {
         private const val MESSAGE_INITIAL_HAND_DISTRIBUTED = "%s와(과) %s에게 %s장의 카드를 나누었습니다."
         private const val MESSAGE_DEALER_HITS_STATE = "딜러는 16이하라 한장의 카드를 더 받았습니다."
         private const val MESSAGE_RESULTS_HEADER = "\n## 최종 승패"
-        private const val DEALER_VISIBLE_CARD_COUNT = 1
         private const val PLAYER_CARDS_DELIMITER = ", "
         private const val PLAYER_NAME_STATUS_DELIMITER = " 카드: "
         private const val PLAYER_RESULT_DELIMITER = " - 결과: "

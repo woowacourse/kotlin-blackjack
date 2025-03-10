@@ -9,6 +9,10 @@ class Player(name: String) : Participant(name) {
         return !isBusted()
     }
 
+    override fun showHand(): List<Card> {
+        return hand.show()
+    }
+
     fun compareAgainst(dealer: Dealer): Result {
         if (isBusted()) return Result.LOSE
         if (dealer.isBusted()) return Result.WIN

@@ -1,7 +1,7 @@
 package blackjack.domain.model
 
 abstract class Participant(val name: String) {
-    val hand = Hand()
+    protected val hand = Hand()
 
     init {
         require(name.isNotBlank()) { ERROR_MESSAGE_BLANK_PARTICIPANT_NAME }
@@ -20,6 +20,8 @@ abstract class Participant(val name: String) {
     }
 
     abstract fun canHit(): Boolean
+
+    abstract fun showHand(): List<Card>
 
     companion object {
         const val INITIAL_DRAW_COUNT = 2

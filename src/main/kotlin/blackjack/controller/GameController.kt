@@ -58,7 +58,7 @@ class GameController(
     }
 
     private fun printStatusOnNoHit(player: Player) {
-        if (player.hand.show().count() == Participant.INITIAL_DRAW_COUNT) outputView.printPlayerStatus(player)
+        if (player.showHand().count() == Participant.INITIAL_DRAW_COUNT) outputView.printPlayerStatus(player)
     }
 
     private fun processDealerHits(
