@@ -15,7 +15,7 @@ class Hand(firstCard: List<Card>) {
         return maxOf(baseScore.formatIfBust(), maxScoreWithAce(baseScore).formatIfBust())
     }
 
-    fun getHandCount(): Int{
+    fun getHandCount(): Int {
         return cards.size
     }
 

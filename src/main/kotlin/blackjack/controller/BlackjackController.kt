@@ -16,8 +16,8 @@ class BlackjackController(
     fun run() {
         val dealer = blackjackEngine.prepareDealer()
         val players = blackjackEngine.preparePlayers(inputView.getPlayers())
-        outputView.displayFirstDrawEnd(dealer.name,players.value.map { player -> player.name })
-        outputView.displayParticipantCards(dealer.name,dealer.hand.cards.take(DEALER_FIRST_SHOWN_COUNT))
+        outputView.displayFirstDrawEnd(dealer.name, players.value.map { player -> player.name })
+        outputView.displayParticipantCards(dealer.name, dealer.hand.cards.take(DEALER_FIRST_SHOWN_COUNT))
         progressPlayersDraw(players)
         progressDealerDraw(dealer)
         displayParticipantsInfo(players)
@@ -50,8 +50,8 @@ class BlackjackController(
         dealer: Dealer,
     ) {
         blackjackEngine.dealerDraw(dealer)
-        outputView.displayDealerDrawInfo(dealer.name,dealer.getAdditionalDrawCount())
-        outputView.displayParticipantInfo(dealer.name, dealer.hand.cards, dealer.hand.score(), dealer.hand.isBust(),)
+        outputView.displayDealerDrawInfo(dealer.name, dealer.getAdditionalDrawCount())
+        outputView.displayParticipantInfo(dealer.name, dealer.hand.cards, dealer.hand.score(), dealer.hand.isBust())
     }
 
     private fun displayParticipantsInfo(players: Players) {

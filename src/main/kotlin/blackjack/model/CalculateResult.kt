@@ -5,7 +5,7 @@ import blackjack.model.WinningResult.PUSH
 import blackjack.model.WinningResult.WIN
 
 object CalculateResult {
-    private fun getResult(oneSelf: Participant, other: Participant): WinningResult{
+    private fun getResult(oneSelf: Participant, other: Participant): WinningResult {
         val oneSelfBlackjack = oneSelf.getHandSize() == 2 && oneSelf.getScore() == 21
         val otherBlackjack = other.getHandSize() == 2 && other.getScore() == 21
 
@@ -18,8 +18,8 @@ object CalculateResult {
             else -> PUSH
         }
     }
-    
-    fun getUserResult(dealer: Dealer,player: Player): WinningResult = getResult(player,dealer)
 
-    fun getDealerResult(dealer: Dealer,player: Player): WinningResult = getResult(dealer,player)
+    fun getUserResult(dealer: Dealer, player: Player): WinningResult = getResult(player, dealer)
+
+    fun getDealerResult(dealer: Dealer, player: Player): WinningResult = getResult(dealer, player)
 }

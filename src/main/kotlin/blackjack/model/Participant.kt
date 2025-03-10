@@ -11,8 +11,4 @@ abstract class Participant(firstCard: List<Card>) {
 
     fun getScore(): Int = hand.score()
 
-    companion object {
-        private const val INITIAL_DRAW_COUNT = 2
-        private const val DEFAULT_DRAW_COUNT = 1
-    }
 }

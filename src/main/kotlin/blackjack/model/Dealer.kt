@@ -7,8 +7,8 @@ class Dealer(val firstCard: List<Card>, val name: String = DEALER_NAME) : Partic
         }
     }
 
-    fun getAdditionalDrawCount():Int{
-        return hand.getHandCount()-firstCard.size
+    fun getAdditionalDrawCount(): Int {
+        return hand.getHandCount() - firstCard.size
     }
 
     fun getWinDrawLossResult(players: Players): Map<WinningResult, Int> {
