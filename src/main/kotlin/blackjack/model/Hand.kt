@@ -15,6 +15,10 @@ class Hand(firstCard: List<Card>) {
         return maxOf(baseScore.formatIfBust(), maxScoreWithAce(baseScore).formatIfBust())
     }
 
+    fun getHandCount(): Int{
+        return cards.size
+    }
+
     private fun maxScoreWithAce(hardScore: Int): Int {
         val containsAce = cards.any { card -> card.rank == CardRank.ACE }
         return if (containsAce) hardScore + SOFT_OFFSET_SCORE else hardScore

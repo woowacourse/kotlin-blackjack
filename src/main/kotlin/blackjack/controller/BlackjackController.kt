@@ -49,9 +49,8 @@ class BlackjackController(
     private fun progressDealerDraw(
         dealer: Dealer,
     ) {
-        val dealerDrawCount = blackjackEngine.dealerDraw(dealer)
-        outputView.displayDealerDrawInfo(dealer.name,dealerDrawCount)
-
+        blackjackEngine.dealerDraw(dealer)
+        outputView.displayDealerDrawInfo(dealer.name,dealer.getAdditionalDrawCount())
         outputView.displayParticipantInfo(dealer.name, dealer.hand.cards, dealer.hand.score(), dealer.hand.isBust(),)
     }
 
