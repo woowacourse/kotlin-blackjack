@@ -7,7 +7,7 @@ class Player(val name: String, private val playerCards: Cards) : Participant(pla
         require(name.isNotEmpty()) { PLAYER_BLANK_ERROR_MESSAGE }
     }
 
-    fun getPlayerCardNames(): List<String> = playerCards.names()
+    fun getPlayerCardNames(): List<Pair<String, String>> = playerCards.names()
 
     override fun turn(drawnCard: Card): Boolean {
         if (canHit()) {

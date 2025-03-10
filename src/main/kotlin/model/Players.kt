@@ -5,7 +5,7 @@ class Players(private val players: List<Player>) : List<Player> by players {
         require(players.isNotEmpty()) { PLAYERS_NUMBER_ERROR_MESSAGE }
     }
 
-    fun getPlayerCardNames(): List<List<String>> {
+    fun getPlayerCardNames(): List<List<Pair<String, String>>> {
         return players.map { player ->
             player.getPlayerCardNames()
         }

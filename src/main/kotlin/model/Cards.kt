@@ -21,7 +21,7 @@ class Cards(allCards: List<Card>) {
 
     fun totalCount() = allCards.size
 
-    fun names() = allCards.map { it.cardName }
+    fun names(): List<Pair<String, String>> = allCards.map { it.cardName }
 
     fun scores() = allCards.map { card -> card.cardScore }
 
