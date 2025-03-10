@@ -1,4 +1,4 @@
-package blackjack.domain.model
+package blackjack.domain.model.card
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.params.ParameterizedTest

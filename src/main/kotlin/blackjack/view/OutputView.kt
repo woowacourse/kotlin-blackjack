@@ -1,10 +1,10 @@
 package blackjack.view
 
-import blackjack.domain.model.Dealer
-import blackjack.domain.model.GameParticipant
-import blackjack.domain.model.Player
-import blackjack.domain.model.Rule
-import blackjack.domain.model.WinLoss
+import blackjack.domain.model.participant.Dealer
+import blackjack.domain.model.participant.GameParticipant
+import blackjack.domain.model.participant.Player
+import blackjack.domain.model.progress.Rule
+import blackjack.domain.model.progress.WinLoss
 
 class OutputView {
     fun showDistributeCardMessage(participants: List<GameParticipant>) {

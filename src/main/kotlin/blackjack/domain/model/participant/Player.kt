@@ -1,4 +1,6 @@
-package blackjack.domain.model
+package blackjack.domain.model.participant
+
+import blackjack.domain.model.progress.Rule
 
 class Player(
     name: String = DEFAULT_NAME,

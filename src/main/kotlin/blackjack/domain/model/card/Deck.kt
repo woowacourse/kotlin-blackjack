@@ -1,4 +1,4 @@
-package blackjack.domain.model
+package blackjack.domain.model.card
 
 class Deck {
     companion object {

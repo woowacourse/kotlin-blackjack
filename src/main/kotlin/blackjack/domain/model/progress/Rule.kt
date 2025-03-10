@@ -1,4 +1,6 @@
-package blackjack.domain.model
+package blackjack.domain.model.progress
+
+import blackjack.domain.model.card.Card
 
 class Rule {
     companion object {

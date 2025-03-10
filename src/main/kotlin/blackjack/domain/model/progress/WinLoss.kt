@@ -1,4 +1,4 @@
-package blackjack.domain.model
+package blackjack.domain.model.progress
 
 enum class WinLoss(
     val koreanText: String,

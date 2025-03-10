@@ -1,6 +1,6 @@
-import blackjack.domain.model.Card
-import blackjack.domain.model.WinLoss
-import blackjack.domain.model.WinLossStatistics
+package blackjack.domain.model.progress
+
+import blackjack.domain.model.card.Card
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -12,7 +12,9 @@ class WinLossStatisticsTest {
 
         val winLossStatistics = WinLossStatistics()
 
-        assertThat(winLossStatistics.calculatePlayerWinLoss(dealerBlackJackCards, playerBlackJackCards)).isEqualTo(WinLoss.DRAW)
+        assertThat(winLossStatistics.calculatePlayerWinLoss(dealerBlackJackCards, playerBlackJackCards)).isEqualTo(
+            WinLoss.DRAW,
+        )
     }
 
     @Test
@@ -22,7 +24,9 @@ class WinLossStatisticsTest {
 
         val winLossStatistics = WinLossStatistics()
 
-        assertThat(winLossStatistics.calculatePlayerWinLoss(dealerResult19Cards, playerBlackJackCards)).isEqualTo(WinLoss.WIN)
+        assertThat(winLossStatistics.calculatePlayerWinLoss(dealerResult19Cards, playerBlackJackCards)).isEqualTo(
+            WinLoss.WIN,
+        )
     }
 
     @Test
@@ -52,7 +56,9 @@ class WinLossStatisticsTest {
 
         val winLossStatistics = WinLossStatistics()
 
-        assertThat(winLossStatistics.calculatePlayerWinLoss(dealerBlackJackCards, playerBlackJackCards)).isEqualTo(WinLoss.LOSE)
+        assertThat(winLossStatistics.calculatePlayerWinLoss(dealerBlackJackCards, playerBlackJackCards)).isEqualTo(
+            WinLoss.LOSE,
+        )
     }
 
     @Test

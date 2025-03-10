@@ -1,9 +1,9 @@
 package blackjack.controller
 
-import blackjack.domain.model.Dealer
-import blackjack.domain.model.Player
-import blackjack.domain.model.Rule
-import blackjack.domain.model.WinLossStatistics
+import blackjack.domain.model.participant.Dealer
+import blackjack.domain.model.participant.Player
+import blackjack.domain.model.progress.Rule
+import blackjack.domain.model.progress.WinLossStatistics
 import blackjack.view.InputView
 import blackjack.view.OutputView
 

@@ -1,4 +1,7 @@
-package blackjack.domain.model
+package blackjack.domain.model.participant
+
+import blackjack.domain.model.card.Card
+import blackjack.domain.model.card.Deck
 
 abstract class GameParticipant(
     val name: String,
