@@ -1,7 +1,7 @@
 package blackjack.domain
 
-import blackjack.domain.person.Dealer
-import blackjack.domain.person.Player
+import blackjack.domain.participants.Dealer
+import blackjack.domain.participants.Player
 import blackjack.domain.state.ResultState
 
 class GameResult private constructor(val winStatus: Map<Player, ResultState>) {

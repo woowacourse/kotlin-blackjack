@@ -1,8 +1,7 @@
 package blackjack.domain.state
 
-import blackjack.const.GameRule
-import blackjack.domain.person.Dealer
-import blackjack.domain.person.Player
+import blackjack.domain.participants.Dealer
+import blackjack.domain.participants.Player
 
 enum class ResultState {
     WIN,
@@ -15,11 +14,11 @@ enum class ResultState {
             player: Player,
             dealer: Dealer,
         ): ResultState {
+            if (player.gameState == GameState.BUST) return LOSE
+            if (dealer.gameState == GameState.BUST) return WIN
+
             val playerScore = player.score()
             val dealerScore = dealer.score()
-
-            if (playerScore > GameRule.BLACKJACK_SCORE) return LOSE
-            if (dealerScore > GameRule.BLACKJACK_SCORE) return WIN
 
             return when {
                 playerScore > dealerScore -> WIN
