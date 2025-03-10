@@ -52,13 +52,13 @@ class OutputView {
     }
 
     fun printFinalResult(
-        resultMap: Map<Player, ResultType>,
+        playersSummary: Map<Player, ResultType>,
         dealerResult: Map<ResultType, Int>,
     ) {
         println(FINAL_RESULT_MESSAGE)
         val dealerSummary = dealerResult.map { "${it.value}${it.key.value}" }
         println(DEALER_RESULT_FORMAT.format(dealerSummary.joinToString(" ")))
-        resultMap.forEach { (player, result) ->
+        playersSummary.forEach { (player, result) ->
             println(PLAYER_RESULT_FORMAT.format(player.name, result.value))
         }
     }

@@ -60,8 +60,8 @@ class BlackjackController(
     }
 
     private fun resultSummary(gameManager: GameManager) {
-        val result = gameManager.calculateResultMap()
-        val dealerResult = gameManager.calculateDealerResult(result)
-        outputView.printFinalResult(result, dealerResult)
+        val playersSummary = gameManager.calculatePlayersSummary()
+        val dealerResult = gameManager.calculateDealerResult(playersSummary)
+        outputView.printFinalResult(playersSummary, dealerResult)
     }
 }
