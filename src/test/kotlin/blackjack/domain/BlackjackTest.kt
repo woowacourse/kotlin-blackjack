@@ -46,9 +46,9 @@ class BlackjackTest {
         eden.getCards(listOf(Card(Number(9), Suit.SPADE), Card(Number(9), Suit.SPADE)))
         dealer.getCards(listOf(Card(Number(9), Suit.SPADE), Card(Number(10), Suit.SPADE)))
         blackjack.finish()
-        assertThat(gio.result).isEqualTo(Result.WIN)
-        assertThat(eden.result).isEqualTo(Result.LOSE)
-        assertThat(dealer.results).isEqualTo(listOf(Result.LOSE, Result.WIN))
+        assertThat(gio.playerState).isEqualTo(PlayerState.WIN)
+        assertThat(eden.playerState).isEqualTo(PlayerState.LOSE)
+        assertThat(dealer.playerStates).isEqualTo(listOf(PlayerState.LOSE, PlayerState.WIN))
     }
 
     @Test
@@ -66,8 +66,8 @@ class BlackjackTest {
         )
         val blackjack = Blackjack(dealer, players)
         blackjack.finish()
-        assertThat(eden.result).isEqualTo(Result.WIN)
-        assertThat(gio.result).isEqualTo(Result.WIN)
+        assertThat(eden.playerState).isEqualTo(PlayerState.WIN)
+        assertThat(gio.playerState).isEqualTo(PlayerState.WIN)
     }
 
     @Test
@@ -97,8 +97,8 @@ class BlackjackTest {
         )
         val blackjack = Blackjack(dealer, players)
         blackjack.finish()
-        assertThat(eden.result).isEqualTo(Result.WIN)
-        assertThat(gio.result).isEqualTo(Result.LOSE)
+        assertThat(eden.playerState).isEqualTo(PlayerState.WIN)
+        assertThat(gio.playerState).isEqualTo(PlayerState.LOSE)
     }
 
     @Test
@@ -121,7 +121,7 @@ class BlackjackTest {
         )
         val blackjack = Blackjack(dealer, players)
         blackjack.finish()
-        assertThat(dealer.results).contains(Result.DRAW)
-        assertThat(gio.result).isEqualTo(Result.DRAW)
+        assertThat(dealer.playerStates).contains(PlayerState.DRAW)
+        assertThat(gio.playerState).isEqualTo(PlayerState.DRAW)
     }
 }

@@ -29,13 +29,13 @@ class PlayerTest {
         player.getCard(Card(Character.JACK, Suit.SPADE))
         assertThat(player.getCountOfCards()).isEqualTo(3)
         player.setResult()
-        assertThat(player.result).isEqualTo(Result.LOSE)
+        assertThat(player.playerState).isEqualTo(PlayerState.LOSE)
     }
 
     @Test
     fun `플레이어의 최종 결과를 알 수 있다`() {
         val player = Player("Gio")
-        player.result = Result.LOSE
-        assertThat(player.result).isEqualTo(Result.LOSE)
+        player.playerState = PlayerState.LOSE
+        assertThat(player.playerState).isEqualTo(PlayerState.LOSE)
     }
 }

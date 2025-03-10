@@ -7,14 +7,14 @@ class Dealer(
     private val hand: Hand = Hand(emptyList())
     val cards: List<Card>
         get() = hand.value
-    val results: List<Result>
+    val playerStates: List<PlayerState>
         get() =
             players.map { player ->
-                when (player.result) {
-                    Result.WIN -> Result.LOSE
-                    Result.DRAW -> Result.DRAW
-                    Result.LOSE -> Result.WIN
-                    Result.NOT_YET -> Result.NOT_YET
+                when (player.playerState) {
+                    PlayerState.WIN -> PlayerState.LOSE
+                    PlayerState.DRAW -> PlayerState.DRAW
+                    PlayerState.LOSE -> PlayerState.WIN
+                    PlayerState.PLAYING -> PlayerState.PLAYING
                 }
             }
 

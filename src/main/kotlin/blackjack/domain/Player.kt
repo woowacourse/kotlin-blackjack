@@ -7,7 +7,7 @@ class Player(
     val cards: List<Card>
         get() = hand.value
     var wantToHit: Boolean? = null
-    var result: Result = Result.NOT_YET
+    var playerState: PlayerState = PlayerState.PLAYING
 
     fun getCard(card: Card) {
         hand.add(card)
@@ -27,7 +27,7 @@ class Player(
 
     fun setResult() {
         if (hand.getScore() == null) {
-            result = Result.LOSE
+            playerState = PlayerState.LOSE
         }
     }
 

@@ -22,32 +22,32 @@ class Blackjack(
 
     fun finish() {
         players.forEach { player ->
-            if (player.result != Result.NOT_YET) return@forEach
+            if (player.playerState != PlayerState.PLAYING) return@forEach
             val playerScore: Int? = player.getScore()
             if (playerScore == null) {
-                player.result = Result.LOSE
+                player.playerState = PlayerState.LOSE
                 return@forEach
             }
         }
 
         val dealerScore: Int? = dealer.getScore()
         if (dealerScore == null) {
-            val remainingPlayers = players.filter { player -> player.result == Result.NOT_YET }
-            remainingPlayers.forEach { player -> player.result = Result.WIN }
+            val remainingPlayers = players.filter { player -> player.playerState == PlayerState.PLAYING }
+            remainingPlayers.forEach { player -> player.playerState = PlayerState.WIN }
         }
 
-        val remainingPlayers = players.filter { player -> player.result == Result.NOT_YET }
+        val remainingPlayers = players.filter { player -> player.playerState == PlayerState.PLAYING }
         remainingPlayers.forEach { player ->
             when {
                 (player.getScore() ?: 0) > (dealerScore ?: 0) -> {
-                    player.result = Result.WIN
+                    player.playerState = PlayerState.WIN
                 }
 
                 (player.getScore() ?: 0) < (dealerScore ?: 0) -> {
-                    player.result = Result.LOSE
+                    player.playerState = PlayerState.LOSE
                 }
 
-                else -> player.result = Result.DRAW
+                else -> player.playerState = PlayerState.DRAW
             }
         }
     }
