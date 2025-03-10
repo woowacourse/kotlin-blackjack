@@ -1,14 +1,6 @@
 package model
 
-class Card(private val cardRank: CardRank, private val shape: Shape) {
-    val cardScore: Int
-        get() = cardRank.score
-
-    val cardName: String
-        get() = cardRank.title + shape.title
-
-    fun isAceCard(): Boolean = cardRank == CardRank.ACE
-
+data class Card(val cardRank: CardRank, val shape: Shape) {
     companion object {
         private val cache = mutableMapOf<Pair<CardRank, Shape>, Card>()
 

@@ -7,12 +7,6 @@ class Players(private val players: List<Player>) : Iterable<Player> {
 
     override fun iterator(): Iterator<Player> = players.iterator()
 
-    fun getPlayerCardNames(): List<List<String>> {
-        return players.map { player ->
-            player.getPlayerCardNames()
-        }
-    }
-
     fun getPlayersNames(): List<String> = players.map { player -> player.name }
 
     fun getPlayersScores(): List<Int> = players.map { player -> player.getScore() }

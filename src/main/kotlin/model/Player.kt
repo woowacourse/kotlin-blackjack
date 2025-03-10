@@ -1,11 +1,11 @@
 package model
 
-class Player(val name: String, private val playerCards: Cards) : Participant(playerCards) {
+class Player(val name: String, val playerCards: Cards) : Participant(playerCards) {
     init {
         require(name.isNotEmpty()) { PLAYER_BLANK_ERROR_MESSAGE }
     }
 
-    fun getPlayerCardNames(): List<String> = playerCards.getCardNames()
+    fun getPlayerCards(): List<Card> = playerCards.getCards()
 
     override fun performTurn(cards: Cards): Boolean {
         if (decideToHit()) {

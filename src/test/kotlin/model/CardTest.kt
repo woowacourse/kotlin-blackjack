@@ -12,10 +12,10 @@ class CardTest {
 
     @Test
     fun `페이스 카드의 점수는 10점이다`() {
-        val king = Card.of(CardRank.KING, Shape.CLUB).cardScore
-        val queen = Card.of(CardRank.QUEEN, Shape.CLUB).cardScore
+        val king = Card.of(CardRank.KING, Shape.CLUB)
+        val queen = Card.of(CardRank.QUEEN, Shape.CLUB)
 
-        assertThat(queen).isEqualTo(10)
-        assertThat(king).isEqualTo(10)
+        assertThat(king.cardRank.score).isEqualTo(10)
+        assertThat(queen.cardRank.score).isEqualTo(10)
     }
 }

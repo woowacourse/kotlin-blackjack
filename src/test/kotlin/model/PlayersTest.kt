@@ -45,14 +45,19 @@ class PlayersTest {
 
         val players = Players(listOf(player1, player2))
 
-        // 예상 결과: 각 플레이어의 카드 네임 리스트
         val expected =
             listOf(
                 listOf("6클로버", "9스페이드"),
                 listOf("10클로버", "8스페이드"),
             )
 
-        assertThat(players.getPlayerCardNames()).isEqualTo(expected)
+        val playersCardNames =
+            players.map {
+                    player ->
+                player.getPlayerCards().displayNames()
+            }
+
+        assertThat(playersCardNames).isEqualTo(expected)
     }
 
     @Test

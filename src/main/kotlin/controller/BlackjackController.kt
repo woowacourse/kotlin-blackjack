@@ -6,6 +6,7 @@ import model.Dealer
 import model.GameResultDecider
 import model.Player
 import model.Players
+import model.displayNames
 import view.InputView
 import view.OutputView
 
@@ -20,7 +21,12 @@ class BlackjackController(
         val players = Players(getPlayers(inputView.inputPlayers(), allCards))
         val dealer = Dealer(initialDealerCards)
 
-        showInitialGameState(players.getPlayersNames(), initialDealerCards, players.getPlayerCardNames())
+        val playerCardNames: List<List<String>> =
+            players.map { player ->
+                player.getPlayerCards().displayNames()
+            }
+
+        showInitialGameState(players.getPlayersNames(), initialDealerCards, playerCardNames)
         handlePlayerTurns(players, allCards)
         handleDealerTurn(dealer, allCards)
         showTotalResult(initialDealerCards, dealer, players)
@@ -31,7 +37,9 @@ class BlackjackController(
         dealer: Dealer,
         players: Players,
     ) {
-        outputView.printDealerResult(initialDealerCards.getCardNames(), dealer.getScore())
+        val dealerCardNames = initialDealerCards.allCards.displayNames()
+        outputView.printDealerResult(dealerCardNames, dealer.getScore())
+
         showPlayerResult(players, players.getPlayersNames())
         showGameResult(dealer, players)
     }
@@ -40,7 +48,10 @@ class BlackjackController(
         players: Players,
         playersNames: List<String>,
     ) {
-        val updatedPlayerCardsNames = players.getPlayerCardNames()
+        val updatedPlayerCardsNames: List<List<String>> =
+            players.map { player ->
+                player.getPlayerCards().displayNames()
+            }
         val playersTotalScore = players.getPlayersScores()
         outputView.printPlayerResult(playersNames, updatedPlayerCardsNames, playersTotalScore)
     }
@@ -50,7 +61,7 @@ class BlackjackController(
         initialDealerCards: Cards,
         playerCardsNames: List<List<String>>,
     ) {
-        val dealerCardNames = initialDealerCards.getCardNames()
+        val dealerCardNames = initialDealerCards.allCards.displayNames()
         outputView.printDealerAndPlayers(playersNames)
         outputView.printInitialCards(dealerCardNames, playersNames, playerCardsNames)
     }
@@ -72,7 +83,7 @@ class BlackjackController(
         players.forEach { player ->
             while (player.decideToHit() && inputView.readHitOrStand(player.name)) {
                 player.performTurn(allCards)
-                outputView.printPlayerCards(player.name, player.getPlayerCardNames())
+                outputView.printPlayerCards(player.name, player.getPlayerCards().displayNames())
             }
         }
     }
