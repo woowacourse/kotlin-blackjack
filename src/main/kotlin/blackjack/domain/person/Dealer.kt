@@ -5,16 +5,13 @@ import blackjack.domain.state.DealerState
 
 class Dealer(hand: Hand) : Person(hand) {
     init {
-        gameState = DealerState.FIRST_TURN
+        state = DealerState.HIT
     }
 
     constructor() : this(hand = Hand())
 
     override fun draw(deck: Deck) {
-        val amount = getDrawAmount(DealerState.FIRST_TURN)
-        repeat(amount) {
-            hand.addCard(deck.draw())
-        }
-        gameState = DealerState.from(this)
+        super.draw(deck)
+        state = DealerState.from(this)
     }
 }

@@ -8,20 +8,17 @@ class Player(
     hand: Hand,
 ) : Person(hand) {
     init {
-        gameState = PlayerState.FIRST_TURN
+        state = PlayerState.HIT
     }
 
     constructor(name: String) : this(name = name, hand = Hand())
 
     override fun draw(deck: Deck) {
-        val amount = getDrawAmount(PlayerState.FIRST_TURN)
-        repeat(amount) {
-            hand.addCard(deck.draw())
-        }
-        gameState = PlayerState.from(this)
+        super.draw(deck)
+        state = PlayerState.from(this)
     }
 
     fun changeToStay() {
-        gameState = PlayerState.STAY
+        state = PlayerState.STAY
     }
 }

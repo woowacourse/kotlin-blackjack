@@ -35,8 +35,10 @@ class BlackJackController(
         dealer: Dealer,
         players: List<Player>,
     ) {
-        dealer.draw(deck)
-        players.forEach { player -> player.draw(deck) }
+        repeat(FIRST_TURN_DRAW_AMOUNT) {
+            dealer.draw(deck)
+            players.forEach { player -> player.draw(deck) }
+        }
         outputView.printInitialDrawMessage(dealer, players)
     }
 
@@ -78,5 +80,9 @@ class BlackJackController(
 
         val gameResult = GameResult(dealer, players)
         outputView.printGameResults(gameResult)
+    }
+
+    companion object {
+        private const val FIRST_TURN_DRAW_AMOUNT = 2
     }
 }
