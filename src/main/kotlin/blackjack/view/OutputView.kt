@@ -43,11 +43,11 @@ class OutputView {
 
     fun printDealerResult(dealer: Dealer) {
         println()
-        printGameResult(DEALER, dealer.cards(), dealer.score)
+        printGameResult(DEALER, dealer.cards(), dealer.score())
     }
 
     fun printPlayerResult(player: Player) {
-        printGameResult(player.name, player.cards(), player.score)
+        printGameResult(player.name, player.cards(), player.score())
     }
 
     private fun printGameResult(

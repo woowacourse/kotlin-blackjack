@@ -4,7 +4,12 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
 
 class Score(cards: List<Card>) {
-    val value: Int = calculate(cards)
+    private var _value: Int = calculate(cards)
+    val value: Int get() = _value
+
+    fun update(cards: List<Card>) {
+        _value = calculate(cards)
+    }
 
     private fun calculate(cards: List<Card>): Int {
         val values = cards.map { getCardValue(it) }

@@ -28,7 +28,7 @@ class PersonStateTest {
         repeat(customCards.size) { person.draw(deck) }
 
         assertAll(
-            { (person.score > 21) shouldBe true },
+            { (person.score() > 21) shouldBe true },
             { PersonState.from(person) shouldBe PersonState.BUST },
         )
     }
@@ -41,7 +41,7 @@ class PersonStateTest {
         repeat(customCards.size) { person.draw(deck) }
 
         assertAll(
-            { (person.score <= 21) shouldBe true },
+            { (person.score() <= 21) shouldBe true },
             { PersonState.from(person) shouldBe PersonState.HIT },
         )
     }

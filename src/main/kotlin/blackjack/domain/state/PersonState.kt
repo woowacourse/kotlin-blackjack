@@ -14,7 +14,7 @@ enum class PersonState(val isFinal: Boolean) {
         private const val DEALER_ADDITIONAL_DRAW_BASE_SCORE = 16
 
         fun from(person: Person): PersonState {
-            val score = person.score
+            val score = person.score()
             val isDealer = person is Dealer
 
             return when {
