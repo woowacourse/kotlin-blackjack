@@ -10,7 +10,7 @@ class Player(
     var playerState: PlayerState = PlayerState.PLAYING
 
     fun getCard(card: Card) {
-        hand.addAll(card)
+        hand.add(card)
     }
 
     fun getCards(cards: List<Card>) {
