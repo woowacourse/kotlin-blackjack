@@ -74,7 +74,23 @@ class DealerTest {
     }
 
     @Test
-    fun `딜러가 드로우를 더 할 수 있는지 여부를 알 수 있다`() {
+    fun `딜러 카드의 총합이 16보다 작으면 카드를 더 받을 수 있다`() {
+        val dealerHand =
+            Hand.of(
+                Card(CardNumber.KING, Suit.SPADE),
+                Card(CardNumber.SIX, Suit.CLUB),
+            )
+        val dealer = Dealer("딜러", dealerHand)
+
+        val actualIsDrawable = dealer.isDrawable()
+
+        val expected = true
+
+        assertThat(actualIsDrawable).isEqualTo(expected)
+    }
+
+    @Test
+    fun `딜러 카드의 총합이 17 이상이면 카드를 더 받을 수 있다`() {
         val dealerHand =
             Hand.of(
                 Card(CardNumber.KING, Suit.SPADE),
