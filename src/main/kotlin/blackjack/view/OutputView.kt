@@ -51,7 +51,9 @@ object OutputView {
 private fun List<Card>.format(): String {
     val cardStr = StringBuilder()
     this.forEach { card ->
-        cardStr.append(card.rank.toDisplayName() + card.suit.toDisplayName())
+        cardStr.append(card.rank.toDisplayName())
+        cardStr.append(", ")
+        cardStr.append(card.suit.toDisplayName())
     }
     return cardStr.toString()
 }
