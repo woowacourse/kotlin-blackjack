@@ -21,11 +21,12 @@ class Player(
     fun playGame(
         deck: Deck,
         onResponse: (Player) -> Boolean,
-        onDone: (Player) -> Unit,
+        onDraw: (Player) -> Unit,
     ) {
-        while (canHit() && onResponse(this)) {
-            drawCard(deck.pick())
-            onDone(this)
-        }
+        super.playGame(
+            deck,
+            shouldContinue = { onResponse(this) },
+            onDraw = { onDraw(this) },
+        )
     }
 }

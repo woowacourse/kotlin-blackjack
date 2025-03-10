@@ -12,15 +12,22 @@ class BlackjackGame(
 
     fun playPlayersTurn(
         onResponse: (Player) -> Boolean,
-        onDone: (Player) -> Unit,
+        onDraw: (Player) -> Unit,
     ) {
-        participants.players.forEach {
-            it.playGame(deck, onResponse, onDone)
+        participants.players.forEach { player ->
+            player.playGame(
+                deck,
+                onResponse = onResponse,
+                onDraw = onDraw,
+            )
         }
     }
 
-    fun playDealerTurn() {
-        participants.dealer.playGame(deck)
+    fun playDealerTurn(onDraw: (Dealer) -> Unit) {
+        participants.dealer.playGame(
+            deck,
+            onDraw = onDraw,
+        )
     }
 
     companion object {

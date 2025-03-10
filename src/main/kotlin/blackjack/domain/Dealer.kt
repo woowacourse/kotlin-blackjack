@@ -18,10 +18,15 @@ class Dealer(
         }
     }
 
-    fun playGame(deck: Deck) {
-        while (canHit()) {
-            drawCard(deck.pick())
-        }
+    fun playGame(
+        deck: Deck,
+        onDraw: (Dealer) -> Unit,
+    ) {
+        super.playGame(
+            deck,
+            shouldContinue = { canHit() },
+            onDraw = { onDraw(this) },
+        )
     }
 
     companion object {

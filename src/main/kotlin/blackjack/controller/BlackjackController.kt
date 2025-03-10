@@ -17,7 +17,7 @@ class BlackjackController(
         val game = BlackjackGame(Deck.create(), participants)
 
         startGame(game, participants)
-        playGame(game, participants)
+        playGame(game)
         showGameResult(participants)
     }
 
@@ -40,16 +40,14 @@ class BlackjackController(
         outputView.printCardInfo(participants.dealer, participants.players)
     }
 
-    private fun playGame(
-        game: BlackjackGame,
-        participants: Participants,
-    ) {
+    private fun playGame(game: BlackjackGame) {
         game.playPlayersTurn(
             onResponse = inputView::readPlayerHit,
-            onDone = outputView::printPlayerCards,
+            onDraw = outputView::printPlayerCards,
         )
-        game.playDealerTurn()
-        outputView.printDealerHit(participants.dealer)
+        game.playDealerTurn(
+            onDraw = outputView::printDealerHit,
+        )
     }
 
     private fun showGameResult(participants: Participants) {

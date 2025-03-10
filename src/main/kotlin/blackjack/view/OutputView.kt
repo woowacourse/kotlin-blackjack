@@ -30,10 +30,7 @@ class OutputView {
     }
 
     fun printDealerHit(dealer: Dealer) {
-        val count = dealer.hand.cards.size - 2
-        if (count > 0) {
-            println(MESSAGE_DEALER_HIT.format(dealer.name, count))
-        }
+        println(MESSAGE_DEALER_HIT.format(dealer.name))
     }
 
     fun printParticipantScore(
@@ -76,7 +73,7 @@ class OutputView {
         private const val MESSAGE_BUST = "%s는 더 이상 카드를 받을 수 없습니다."
         private const val MESSAGE_CARD_INFO = "%s 카드: %s"
         private const val MESSAGE_SCORE = "- 결과: %d"
-        private const val MESSAGE_DEALER_HIT = "\n%s는 16이하라 %d장의 카드를 더 받았습니다.\n"
+        private const val MESSAGE_DEALER_HIT = "%s는 16이하라 한 장의 카드를 더 받았습니다."
         private const val MESSAGE_GAME_RESULT = "\n## 최종 승패"
         private const val MESSAGE_RESULT = "%s: %s"
 
