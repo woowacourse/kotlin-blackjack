@@ -4,7 +4,9 @@ import blackjack.domain.Card
 import blackjack.domain.Dealer
 import blackjack.domain.Player
 import blackjack.domain.Players
+import blackjack.domain.Rank
 import blackjack.domain.Result
+import blackjack.domain.Suit
 
 class OutputView {
     fun printDealingResult(
@@ -64,17 +66,42 @@ class OutputView {
         println(MESSAGE_DEALER_RESULT.format(dealerWinCount, dealerDrawCount, dealerLoseCount))
 
         playerResult.forEach {
-            println(MESSAGE_PLAYER_RESULT.format(it.key.name, it.value.message))
+            val result = getResult(it.value)
+            println(MESSAGE_PLAYER_RESULT.format(it.key.name, result))
         }
     }
+
+    private fun getResult(result: Result) =
+        when (result) {
+            Result.WIN -> "승"
+            Result.LOSE -> "패"
+            Result.PUSH -> "무"
+        }
 
     private fun cardsInfo(cards: List<Card>): String = cards.joinToString { cardInfo(it) }
 
     private fun cardInfo(card: Card): String {
-        val number = card.rank.symbol
-        val shape = card.suit.korean
+        val number = getScore(card.rank)
+        val shape = getShape(card.suit)
         return "$number$shape"
     }
+
+    private fun getShape(suit: Suit) =
+        when (suit) {
+            Suit.DIAMOND -> "다이아몬드"
+            Suit.CLUB -> "클로버"
+            Suit.HEART -> "하트"
+            Suit.SPADE -> "스페이드"
+        }
+
+    private fun getScore(rank: Rank) =
+        when (rank) {
+            Rank.ACE -> "A"
+            Rank.JACK -> "J"
+            Rank.QUEEN -> "Q"
+            Rank.KING -> "K"
+            else -> rank.score
+        }
 
     companion object {
         private const val MESSAGE_DEALING = "\n딜러와 %s에게 2장의 나누었습니다."
