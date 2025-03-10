@@ -53,16 +53,18 @@ class BlackJackGame(
     fun calculateDealerResult(action: (Map<GameResult, Int>) -> Unit) {
         val dealerMap = GameResult.entries.associateWith { 0 }.toMutableMap()
 
-        players.forEach { player ->
-            val result = GameResult.from(dealer.finalScore(), player.finalScore())
-            dealerMap[result ] = dealerMap.getOrDefault(result, 0) + 1
+        participants.players.forEach { player ->
+            val result = player.getResult(participants.dealer)
+            val dealerResult = if (result == GameResult.WIN) GameResult.LOSE else GameResult.WIN
+
+            dealerMap[dealerResult] = dealerMap.getOrDefault(dealerResult, 0) + 1
         }
         action(dealerMap)
     }
 
     fun calculatePlayerResult(action: (String, GameResult) -> Unit) {
-        players.forEach { player ->
-            val result = GameResult.from(dealer.finalScore(), player.finalScore())
+        participants.players.forEach { player ->
+            val result = player.getResult(participants.dealer)
             action(player.name, result)
         }
     }
