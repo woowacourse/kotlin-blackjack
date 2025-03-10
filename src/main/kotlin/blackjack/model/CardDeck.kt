@@ -3,7 +3,7 @@ package blackjack.model
 import java.util.LinkedList
 
 class CardDeck {
-    private val cards = LinkedList(CACHE_CARDS.shuffled())
+    private val cards = LinkedList(BLACKJACK_CACHE_CARDS.shuffled())
 
     fun draw(count: Int): List<Card> =
         List(count) {
@@ -17,5 +17,6 @@ class CardDeck {
                     Card(cardRank, cardSuit)
                 }
             }
+        private val BLACKJACK_CACHE_CARDS = List(8) { CACHE_CARDS }.flatten()
     }
 }
