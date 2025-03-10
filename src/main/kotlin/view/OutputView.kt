@@ -1,29 +1,30 @@
 package view
 
 import model.PlayerResult
+import view.ViewMapper.mapToTitle
 
 class OutputView {
     fun printDealerAndPlayers(players: List<String>) {
-        val playerNames = players.joinToString(", ") { it }
+        val playerNames = players.joinToString { it }
         println("\n딜러와 ${playerNames}에게 2장의 나누었습니다.")
     }
 
     fun printInitialCards(
-        dealerCards: List<String>,
+        dealerCards: List<Pair<String, String>>,
         playerNames: List<String>,
-        playerCards: List<List<String>>,
+        playerCards: List<List<Pair<String, String>>>,
     ) {
-        println("딜러: ${dealerCards.first()}")
+        println("딜러: ${printCardNames(dealerCards).first()}")
         playerNames.forEachIndexed { index, playerName ->
-            println("$playerName: ${playerCards[index].joinToString(", ")}")
+            println("$playerName: ${printCardNames(playerCards[index]).joinToString()}")
         }
     }
 
     fun printPlayerCards(
         playerName: String,
-        playerCards: List<String>,
+        playerCards: List<Pair<String, String>>,
     ) {
-        println("${playerName}카드: ${playerCards.joinToString(", ")}")
+        println("${playerName}카드: ${printCardNames(playerCards).joinToString()}")
     }
 
     fun printDealerHit(dealerAddCount: Int) {
@@ -31,19 +32,19 @@ class OutputView {
     }
 
     fun printDealerResult(
-        dealerCards: List<String>,
+        dealerCards: List<Pair<String, String>>,
         dealerScore: Int,
     ) {
-        println("\n딜러: ${dealerCards.joinToString(", ")} - 결과: $dealerScore")
+        println("\n딜러: ${printCardNames(dealerCards).joinToString()} - 결과: $dealerScore")
     }
 
     fun printPlayerResult(
         playerNames: List<String>,
-        playerCards: List<List<String>>,
+        playerCards: List<List<Pair<String, String>>>,
         playersScore: List<Int>,
     ) {
         playerNames.forEachIndexed { index, playerName ->
-            println("$playerName: ${playerCards[index].joinToString(", ")} - 결과: ${playersScore[index]}")
+            println("$playerName: ${printCardNames(playerCards[index]).joinToString()} - 결과: ${playersScore[index]}")
         }
     }
 
@@ -59,4 +60,8 @@ class OutputView {
             println("${playResult.name}: ${playResult.result}")
         }
     }
+
+    private fun printCardNames(rawCardNames: List<Pair<String, String>>) =
+        rawCardNames.map { (rank, shape) -> rank.mapToTitle() + shape.mapToTitle() }
+
 }
