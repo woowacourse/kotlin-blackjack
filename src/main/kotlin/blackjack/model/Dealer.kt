@@ -7,10 +7,10 @@ class Dealer : Person() {
 
     fun isMoreCard() = calculateTotalScore() < DEALER_MORE_CARD_MINIMUM
 
+    override fun isBust(): Boolean = super.calculateTotalScore() > BUST_NUMBER
+
     companion object {
         private const val DEALER_NAME = "딜러"
         private const val DEALER_MORE_CARD_MINIMUM = 17
     }
-
-    override fun isBust(): Boolean = super.calculateTotalScore() > BUST_NUMBER
 }
