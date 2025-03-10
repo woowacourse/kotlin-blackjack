@@ -21,14 +21,9 @@ class InputView {
         return playerNames
     }
 
-    fun readMoreCardCondition(player: Player): String? {
+    fun readMoreCardCondition(player: Player): String {
         println(PLAYER_MORE_CARD_MESSAGE_GUIDE.format(player.name))
         val condition: String = readln().trim()
-        if (DrawChoice.from(condition) == null) {
-            println(ERROR_INVALID_CARD_CONDITION)
-            return null
-        }
-
         return condition
     }
 

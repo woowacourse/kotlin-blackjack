@@ -43,19 +43,23 @@ class BlackjackController(
     }
 
     private fun playerDrawOrStay(player: Player) {
-        var condition: String? = null
         while (true) {
-            while (condition == null) {
-                condition = inputView.readMoreCardCondition(player)
+            val playerChoice = inputView.readMoreCardCondition(player)
+            when (DrawChoice.from(playerChoice)) {
+                DrawChoice.YES -> {
+                    gameManager.drawCard(player)
+                    outputView.printPlayerHands(player)
+                    if (player.isBust()) break
+                    continue
+                }
+
+                DrawChoice.NO -> {
+                    outputView.printPlayerHands(player)
+                    break
+                }
+
+                null -> continue
             }
-            val playerChoice = DrawChoice.from(condition)!!
-            if (playerChoice.isDraw()) {
-                outputView.printPlayerHands(player)
-                if (player.isBust()) break
-                continue
-            }
-            outputView.printPlayerHands(player)
-            break
         }
     }
 
