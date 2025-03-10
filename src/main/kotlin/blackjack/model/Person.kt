@@ -6,7 +6,5 @@ abstract class Person(val name: String) {
 
     fun addCard(card: Card) = _cards.add(card)
 
-    fun calculateTotalScore() = cards.sumOf { card -> card.number.score }
-
     abstract fun isBust(): Boolean
 }

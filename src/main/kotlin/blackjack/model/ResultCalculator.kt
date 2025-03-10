@@ -23,14 +23,14 @@ object ResultCalculator {
         dealer: Dealer,
         player: Player,
     ): ResultType {
-        val dealerFinalScore = if (dealer.isBust()) 0 else dealer.calculateTotalScore()
-        val playerFinalScore = if (player.isBust()) 0 else player.calculateTotalScore()
+        val dealerFinalScore = if (dealer.isBust()) 0 else calculateTotalScore(dealer.cards)
+        val playerFinalScore = if (player.isBust()) 0 else calculateTotalScore(player.cards)
         if (dealerFinalScore < playerFinalScore) return WIN
         if (dealerFinalScore == playerFinalScore) return TIE
         return LOSS
     }
 
-    companion object {
-        const val BUST_NUMBER = 21
-    }
+    fun calculateTotalScore(cards: List<Card>) = cards.sumOf { card -> card.number.score }
+
+    private fun countAce(cards: List<Card>) = cards.count { it.number == Number.ACE }
 }
