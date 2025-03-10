@@ -9,5 +9,5 @@ fun generateCustomDeck(cards: List<CardNumber> = listOf()): Deck {
     val customCards = cards.map { Card.create(it, CardPattern.HEART) }
     val autoCards = List(52 - cards.size) { Card.create(CardNumber.TWO, CardPattern.HEART) }
 
-    return Deck((customCards + autoCards).toMutableList())
+    return Deck((customCards + autoCards))
 }
