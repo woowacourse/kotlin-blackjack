@@ -1,14 +1,14 @@
 package blackjack
 
-import blackjack.domain.Ace
 import blackjack.domain.Blackjack
 import blackjack.domain.Card
 import blackjack.domain.Dealer
-import blackjack.domain.Face
-import blackjack.domain.Number
+import blackjack.domain.MultiValueRank.AceRank
 import blackjack.domain.Player
 import blackjack.domain.RandomShuffler
 import blackjack.domain.Rank
+import blackjack.domain.SingleValueRank.FaceRank
+import blackjack.domain.SingleValueRank.NumberRank
 import blackjack.domain.Suit
 
 fun main() {
@@ -58,13 +58,13 @@ val Card.prettyString: String
 val Rank.prettyString: String
     get() =
         when (this) {
-            is Ace -> "A"
-            Face.JACK -> "J"
-            Face.QUEEN -> "Q"
-            Face.KING -> "K"
-            is Number -> possibleValues.toString()
-            is kotlin.Number -> TODO()
+            is AceRank -> "A"
+            FaceRank.JACK -> "J"
+            FaceRank.QUEEN -> "Q"
+            FaceRank.KING -> "K"
+            is NumberRank -> value.toString()
         }
+
 val Suit.prettyString: String
     get() =
         when (this) {

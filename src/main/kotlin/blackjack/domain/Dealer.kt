@@ -20,7 +20,7 @@ class Dealer(
             }
 
     fun getCard(card: Card = deck.draw()) {
-        hand.add(card)
+        hand.addAll(card)
     }
 
     fun getCards(cards: List<Card>) {

@@ -1,18 +1,22 @@
 package blackjack.domain
 
+import blackjack.domain.MultiValueRank.AceRank
+import blackjack.domain.SingleValueRank.FaceRank
+import blackjack.domain.SingleValueRank.NumberRank
+
 class Deck(
     shuffler: Shuffler,
 ) {
-    private val aceCards: List<Card> = Suit.entries.map { suit -> Card(Ace, suit) }
+    private val aceCards: List<Card> = Suit.entries.map { suit -> Card(AceRank, suit) }
     private val numberCards: List<Card> =
         Suit.entries.flatMap { suit ->
-            Number.entries.map { number: Number ->
+            NumberRank.entries.map { number: NumberRank ->
                 Card(number, suit)
             }
         }
     private val faceCards: List<Card> =
         Suit.entries.flatMap { suit ->
-            Face.entries.map { face -> Card(face, suit) }
+            FaceRank.entries.map { face: FaceRank -> Card(face, suit) }
         }
 
     private var cards: List<Card> = shuffler.shuffle(aceCards + numberCards + faceCards)

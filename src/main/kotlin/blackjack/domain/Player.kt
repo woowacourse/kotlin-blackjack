@@ -10,11 +10,11 @@ class Player(
     var playerState: PlayerState = PlayerState.PLAYING
 
     fun getCard(card: Card) {
-        hand.add(card)
+        hand.addAll(card)
     }
 
     fun getCards(cards: List<Card>) {
-        hand.add(cards)
+        hand.addAll(cards)
     }
 
     fun hitOrStay(hit: () -> Unit) {
