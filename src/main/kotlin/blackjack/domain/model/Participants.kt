@@ -1,8 +1,6 @@
 package blackjack.domain.model
 
-class Participants(val players: List<Participant>) {
-    constructor(dealer: Dealer, playersName: List<String>) : this(listOf(dealer) + playersName.map(::Player))
-
+class Participants(private val players: List<Participant>) {
     fun findDealer(): Dealer {
         return requireNotNull(players.find { it is Dealer } as? Dealer)
     }

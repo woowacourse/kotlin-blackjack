@@ -18,8 +18,8 @@ class PlayerTest {
     }
 
     @Test
-    fun `플레이어는 카드를 가진다`() {
-        assertThat(player.hands.showCards()).isEqualTo(listOf(Card(Suit.HEART, Rank.ACE)))
+    fun `플레이어는 입력 받은 숫자 만큼 반환한다 `() {
+        assertThat(player.showCards(6)).isEqualTo(listOf(Card(Suit.HEART, Rank.ACE)))
     }
 
     @Test
@@ -30,7 +30,7 @@ class PlayerTest {
                 Card(Suit.HEART, Rank.ACE),
                 Card(Suit.HEART, Rank.KING),
             )
-        player.hands.accept(listOf(Card(Suit.HEART, Rank.KING)))
-        assertThat(player.hands.showCards()).isEqualTo(actual.hands.showCards())
+        player.acceptCard(Card(Suit.HEART, Rank.KING))
+        assertThat(player.showCards()).isEqualTo(actual)
     }
 }

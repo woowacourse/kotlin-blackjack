@@ -14,20 +14,14 @@ class HandsTest {
 
     @Test
     fun `지정한 개수의 카드민 반환한다`() {
-        assertThat(hands.showCards(1)).isEqualTo(listOf(Card(Suit.HEART, Rank.ACE)))
+        assertThat(hands.extractCards(1)).isEqualTo(listOf(Card(Suit.HEART, Rank.ACE)))
     }
 
     @Test
-    fun `플레이어는 카드를 받는다`() {
-        val actual =
-            Player(
-                "동전",
-                Card(Suit.HEART, Rank.ACE),
-                Card(Suit.HEART, Rank.KING),
-                Card(Suit.HEART, Rank.SIX),
-            )
-        hands.accept(listOf(Card(Suit.HEART, Rank.SIX)))
-        assertThat(hands.showCards()).isEqualTo(actual.hands.showCards())
+    fun `카드를 추가해서 새로 만든다`() {
+        val actual = listOf(Card(Suit.HEART, Rank.ACE), Card(Suit.HEART, Rank.KING), Card(Suit.HEART, Rank.SIX))
+        val nextHands = hands.nextHand(Card(Suit.HEART, Rank.SIX))
+        assertThat(nextHands.cards).isEqualTo(actual)
     }
 
     @Test

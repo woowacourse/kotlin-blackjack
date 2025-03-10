@@ -1,7 +1,7 @@
 package blackjack.view
 
 import blackjack.domain.model.Dealer
-import blackjack.domain.model.Deck.Companion.START_CARD_COUNT
+import blackjack.domain.model.Hands.Companion.START_CARD_COUNT
 import blackjack.domain.model.Participant
 import blackjack.domain.model.Participants
 import blackjack.domain.model.Rank
@@ -30,20 +30,23 @@ class OutputView {
         println(renderPlayerStatus(player))
     }
 
-    fun printPlayerResult(player: Participant) {
-        print(renderPlayerStatus(player))
-        println(PLAYER_RESULT_DELIMITER + player.hands.getScore())
+    fun printPlayersResult(participants: Participants) {
+        val dealer = participants.findDealer()
+        println(renderDealerVisibleStatus(dealer) + PLAYER_RESULT_DELIMITER + dealer.getScore())
+        participants.filterPlayers().forEach { player ->
+            println(renderPlayerStatus(player) + PLAYER_RESULT_DELIMITER + player.getScore())
+        }
     }
 
     private fun renderDealerVisibleStatus(dealer: Dealer): String {
         return dealer.name + PLAYER_NAME_STATUS_DELIMITER +
-            dealer.hands.showCards(DEALER_VISIBLE_CARD_COUNT)
+            dealer.showCards(DEALER_VISIBLE_CARD_COUNT)
                 .joinToString { convertKoreanRank(it.rank) + convertKoreanSuit(it.suit) }
     }
 
     private fun renderPlayerStatus(player: Participant): String {
         return player.name + PLAYER_NAME_STATUS_DELIMITER +
-            player.hands.showCards()
+            player.showCards()
                 .joinToString { convertKoreanRank(it.rank) + convertKoreanSuit(it.suit) }
     }
 
@@ -103,8 +106,6 @@ class OutputView {
     }
 
     companion object {
-        private const val MESSAGE_ENTER_PLAYER_NAMES = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)"
-        private const val MESSAGE_ENTER_PLAYER_YES_OR_NO = "%s은(는) 한 장의 카드를 더 받겠습니까? (예는 y, 아니오는 n)"
         private const val MESSAGE_INITIAL_HAND_DISTRIBUTED = "%s와(과) %s에게 %s장의 카드를 나누었습니다."
         private const val MESSAGE_DEALER_HITS_STATE = "딜러는 16이하라 한장의 카드를 더 받았습니다."
         private const val MESSAGE_RESULTS_HEADER = "## 최종 승패"

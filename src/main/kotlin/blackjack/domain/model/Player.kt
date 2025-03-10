@@ -1,5 +1,5 @@
 package blackjack.domain.model
 
-class Player private constructor(override val name: String, override val hands: Hands = Hands()) : Participant() {
-    constructor(name: String, vararg card: Card) : this(name, Hands(*card))
+class Player(override val name: String, override var hands: Hands) : Participant() {
+    constructor(name: String, vararg card: Card) : this(name, Hands(card.toList()))
 }

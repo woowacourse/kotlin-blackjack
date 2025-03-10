@@ -1,16 +1,18 @@
 package blackjack.domain.model
 
-import blackjack.domain.model.Deck.Companion.START_CARD_COUNT
+class Hands(private val _cards: List<Card>) {
+    constructor(vararg card: Card) : this(card.toList())
 
-class Hands private constructor(override val cards: MutableList<Card>) : Cards() {
-    constructor(vararg cards: Card) : this(cards.toMutableList())
+    val cards get() = _cards.map { it.copy() }
 
-    fun showCards(count: Int = cards.count()): List<Card> {
-        return cards.take(count).map { it.copy() }
-    }
+    fun extractCards(count: Int): List<Card> = cards.take(count)
+
+    fun isBust(): Boolean = getScore() > BUST_THRESHOLD
+
+    fun nextHand(card: Card) = Hands(cards + card)
 
     fun getScore(): Int {
-        val score = this.cards.sumOf { it.rank.score }
+        val score = cards.sumOf { it.rank.score }
         return score + getBonusScore(totalScore = score)
     }
 
@@ -21,13 +23,12 @@ class Hands private constructor(override val cards: MutableList<Card>) : Cards()
 
     private fun hasAce(): Boolean = this.cards.any { it.rank == Rank.ACE }
 
-    fun isBust(): Boolean = getScore() > BUST_THRESHOLD
-
     fun isStartCardCount(): Boolean = cards.count() == START_CARD_COUNT
 
     companion object {
-        private const val BUST_THRESHOLD = 21
+        const val START_CARD_COUNT = 2
         private const val MAX_BONUS_SCORE = 11
         private const val BONUS_SCORE = 10
+        private const val BUST_THRESHOLD = 21
     }
 }
