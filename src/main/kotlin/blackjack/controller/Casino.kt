@@ -50,42 +50,18 @@ class Casino(
         players: List<Player>,
         deck: Deck,
     ) {
-        players.forEach {
-            runEachPlayerDrawPhase(it, deck)
-        }
-    }
-
-    private fun runEachPlayerDrawPhase(
-        player: Player,
-        deck: Deck,
-    ) {
-        while (player.isDrawable()) {
-            val response: Boolean = inputView.readWantExtraCard(player.name)
-
-            if (!response) {
-                outputPlayerCardsInfo(player)
-                break
-            }
-            player.drawCard(deck)
-            outputView.showPlayerCardsInfo(player)
+        players.forEach { player ->
+            player.play(deck, inputView::readWantExtraCard, outputView::showPlayerCardsInfo)
+            outputView.newLine()
         }
         outputView.newLine()
-    }
-
-    private fun outputPlayerCardsInfo(player: Player) {
-        if (player.hand.toList().size == 2) {
-            outputView.showPlayerCardsInfo(player)
-        }
     }
 
     private fun runDealerDrawPhase(
         dealer: Dealer,
         deck: Deck,
     ) {
-        while (dealer.isDrawable()) {
-            dealer.drawCard(deck)
-            outputView.showDealerDrawMessage()
-        }
+        dealer.play(deck, outputView::showDealerDrawMessage)
         outputView.newLine()
     }
 
