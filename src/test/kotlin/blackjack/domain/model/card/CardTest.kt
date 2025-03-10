@@ -12,15 +12,15 @@ class CardTest {
         "13, 3",
     )
     fun `유효한 카드 값을 받아 카드를 생성한다`(
-        rawCardNumber: Int,
+        orderNumber: Int,
         rawSuit: Int,
     ) {
         // given
-        val cardNumber = CardNumber(rawCardNumber)
+        val number = Number.getByOrderNumber(orderNumber)
         val suit = Suit(rawSuit)
 
         // when then
-        assertDoesNotThrow { Card(cardNumber, suit) }
+        assertDoesNotThrow { Card(number, suit) }
     }
 
     @ParameterizedTest
@@ -28,15 +28,15 @@ class CardTest {
     fun `0부터 51까지의 카드 인덱스로 카드를 만들 수 있다`(
         index: Int,
         rawSuit: Int,
-        rawCardNumber: Int,
+        orderNumber: Int,
     ) {
         // given
         val actualCard = Card(index)
-        val cardNumber = CardNumber(rawCardNumber)
+        val number = Number.getByOrderNumber(orderNumber)
         val suit = Suit(rawSuit)
 
         // when
-        val expectedCard = Card(cardNumber, suit)
+        val expectedCard = Card(number, suit)
 
         // then
         assertThat(actualCard).isEqualTo(expectedCard)

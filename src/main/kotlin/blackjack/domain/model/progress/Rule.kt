@@ -1,14 +1,15 @@
 package blackjack.domain.model.progress
 
 import blackjack.domain.model.card.Card
+import blackjack.domain.model.card.Number.ACE
 
 class Rule {
     companion object {
         fun calculateResultByCards(cards: Collection<Card>): Int {
-            val cardValues = cards.map { it.cardNumber.cardNumber }
+            val cardNumbers = cards.map { it.number }
             val minimumSum = calculateMinimumSumByCards(cards)
 
-            if (1 in cardValues && (minimumSum + 10) <= BLACK_JACK_NUMBER) {
+            if (ACE in cardNumbers && (minimumSum + 10) <= BLACK_JACK_NUMBER) {
                 return minimumSum + 10
             }
             return minimumSum
@@ -25,7 +26,7 @@ class Rule {
         }
 
         private fun calculateMinimumSumByCards(cards: Collection<Card>): Int {
-            val cardValues = cards.map { it.cardNumber.getValue() }
+            val cardValues = cards.map { it.getMinimumValue() }
             return cardValues.sum()
         }
 
