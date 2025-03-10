@@ -6,12 +6,12 @@ class Deck(shuffledDeck: List<Card>) {
     private val deck = LinkedList(shuffledDeck)
 
     init {
-        require(shuffledDeck.size == MAXIMUM_DECK_SIZE) { "덱의 사이즈는 52여야 합니다" }
-        require(shuffledDeck.distinct().size == MAXIMUM_DECK_SIZE) { "카드는 중복될 수 없습니다" }
+        require(shuffledDeck.size == MAXIMUM_DECK_SIZE) { MAX_DECK_SIZE }
+        require(shuffledDeck.distinct().size == MAXIMUM_DECK_SIZE) { MUST_NOT_DUPLICATED }
     }
 
     fun draw(): Card {
-        require(deck.isNotEmpty()) { "덱이 비어 있습니다" }
+        require(deck.isNotEmpty()) { EMPTY_DECK }
         return deck.poll()
     }
 
@@ -19,5 +19,8 @@ class Deck(shuffledDeck: List<Card>) {
 
     companion object {
         const val MAXIMUM_DECK_SIZE = 52
+        private const val MAX_DECK_SIZE = "덱의 사이즈는 52여야 합니다"
+        private const val MUST_NOT_DUPLICATED = "카드는 중복될 수 없습니다"
+        private const val EMPTY_DECK = "덱이 비어 있습니다"
     }
 }
