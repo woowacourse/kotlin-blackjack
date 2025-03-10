@@ -16,25 +16,11 @@ class GameService(private val cardDistributor: CardDistributor) {
     private fun getPlayers(playerNames: List<String>): List<Player> =
         playerNames.map { name -> Player(name, cardDistributor.distributeInitialCards()) }
 
-    fun playPlayerTurns(
-        players: Players,
-        input: (String) -> Boolean,
-    ) {
-        players.forEach { player ->
-            while (player.decideToHit() && input(player.name)) {
-                player.performTurn(cardDistributor)
-            }
-        }
-    }
-
     fun playDealerTurn(dealer: Dealer): Int {
         return dealer.getDrawCount(cardDistributor)
     }
 
-    fun getGameResult(
-        dealer: Dealer,
-        players: Players,
-    ): GameResultDecider {
+    fun getGameResult(dealer: Dealer, players: Players): GameResultDecider {
         return GameResultDecider(dealer, players)
     }
 }
