@@ -17,8 +17,7 @@ class GameController(
         val deck = Deck()
         val participants = repeatUntilValid { Participants(Dealer(), inputView.readPlayerNames().map(::Player)) }
         processInitialDeals(deck, participants)
-        outputView.printInitialDeals(participants)
-        outputView.printParticipantsStatuses(participants)
+        announceInitialDeals(participants)
         processPlayersHits(deck, participants.players)
         processDealerHits(deck, participants.dealer)
         outputView.printResults(participants)
@@ -30,6 +29,13 @@ class GameController(
     ) {
         participants.list.forEach { player ->
             player.accept(deck.draw(Participant.INITIAL_DRAW_COUNT))
+        }
+    }
+
+    private fun announceInitialDeals(participants: Participants) {
+        outputView.printInitialDeals(participants)
+        participants.list.forEach { participant ->
+            outputView.printParticipantStatus(participant)
         }
     }
 
@@ -51,12 +57,12 @@ class GameController(
             return
         }
         player.accept(deck.draw())
-        outputView.printPlayerStatus(player)
+        outputView.printParticipantStatus(player)
         processPlayerHits(deck, player)
     }
 
     private fun printStatusOnNoHit(player: Player) {
-        if (player.showHand().count() == Participant.INITIAL_DRAW_COUNT) outputView.printPlayerStatus(player)
+        if (player.showHand().count() == Participant.INITIAL_DRAW_COUNT) outputView.printParticipantStatus(player)
     }
 
     private fun processDealerHits(
