@@ -29,7 +29,6 @@ class DealerTest {
 
     @Test
     fun `딜러는 카드 총 합이 17 이상이면 카드를 받지 않는다`() {
-        dealer = Dealer()
         dealer.addCard(Card(Shape.SPADE, Number.SEVEN))
         dealer.addCard(Card(Shape.SPADE, Number.TEN))
         val expected = false
