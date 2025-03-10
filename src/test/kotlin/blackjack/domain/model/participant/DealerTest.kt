@@ -13,14 +13,14 @@ class DealerTest {
     fun `딜러의 첫 손패를 보여줄 수 있다`() {
         val dealerHand =
             Hand.of(
-                Card(CardNumber.ACE, Suit.HEART),
-                Card(CardNumber.QUEEN, Suit.CLUB),
+                Card.of(CardNumber.ACE, Suit.HEART),
+                Card.of(CardNumber.QUEEN, Suit.CLUB),
             )
         val dealer = Dealer("딜러", dealerHand)
 
         val actualFirstCard = dealer.showFirstCard()
 
-        val expectedCard = Card(CardNumber.ACE, Suit.HEART)
+        val expectedCard = Card.of(CardNumber.ACE, Suit.HEART)
 
         assertThat(actualFirstCard).isEqualTo(expectedCard)
     }
@@ -29,16 +29,16 @@ class DealerTest {
     fun `플레이어와 비교해서 승패 결과를 가져올 수 있고, 둘 다 버스트인 경우 딜러가 승리한다`() {
         val playerHand =
             Hand.of(
-                Card(CardNumber.KING, Suit.SPADE),
-                Card(CardNumber.QUEEN, Suit.CLUB),
-                Card(CardNumber.TWO, Suit.HEART),
+                Card.of(CardNumber.KING, Suit.SPADE),
+                Card.of(CardNumber.QUEEN, Suit.CLUB),
+                Card.of(CardNumber.TWO, Suit.HEART),
             )
         val player = Player("크림", playerHand)
         val dealerHand =
             Hand.of(
-                Card(CardNumber.JACK, Suit.SPADE),
-                Card(CardNumber.FIVE, Suit.CLUB),
-                Card(CardNumber.TEN, Suit.DIAMOND),
+                Card.of(CardNumber.JACK, Suit.SPADE),
+                Card.of(CardNumber.FIVE, Suit.CLUB),
+                Card.of(CardNumber.TEN, Suit.DIAMOND),
             )
         val dealer = Dealer("딜러", dealerHand)
 
@@ -53,16 +53,16 @@ class DealerTest {
     fun `플레이어와 비교해서 승패 결과를 가져올 수 있고, 둘 다 버스트가 아닌 경우 점수로 비교한다`() {
         val playerHand =
             Hand.of(
-                Card(CardNumber.KING, Suit.SPADE),
-                Card(CardNumber.QUEEN, Suit.CLUB),
-                Card(CardNumber.ACE, Suit.HEART),
+                Card.of(CardNumber.KING, Suit.SPADE),
+                Card.of(CardNumber.QUEEN, Suit.CLUB),
+                Card.of(CardNumber.ACE, Suit.HEART),
             )
         val player = Player("크림", playerHand)
 
         val dealerHand =
             Hand.of(
-                Card(CardNumber.JACK, Suit.SPADE),
-                Card(CardNumber.FIVE, Suit.CLUB),
+                Card.of(CardNumber.JACK, Suit.SPADE),
+                Card.of(CardNumber.FIVE, Suit.CLUB),
             )
         val dealer = Dealer("딜러", dealerHand)
 
@@ -77,8 +77,8 @@ class DealerTest {
     fun `딜러 카드의 총합이 16보다 작으면 카드를 더 받을 수 있다`() {
         val dealerHand =
             Hand.of(
-                Card(CardNumber.KING, Suit.SPADE),
-                Card(CardNumber.SIX, Suit.CLUB),
+                Card.of(CardNumber.KING, Suit.SPADE),
+                Card.of(CardNumber.SIX, Suit.CLUB),
             )
         val dealer = Dealer("딜러", dealerHand)
 
@@ -93,8 +93,8 @@ class DealerTest {
     fun `딜러 카드의 총합이 17 이상이면 카드를 더 받을 수 있다`() {
         val dealerHand =
             Hand.of(
-                Card(CardNumber.KING, Suit.SPADE),
-                Card(CardNumber.SEVEN, Suit.CLUB),
+                Card.of(CardNumber.KING, Suit.SPADE),
+                Card.of(CardNumber.SEVEN, Suit.CLUB),
             )
         val dealer = Dealer("딜러", dealerHand)
 

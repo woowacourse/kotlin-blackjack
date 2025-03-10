@@ -11,6 +11,6 @@ class CardTest {
         val suit = Suit.SPADE
 
         // when then
-        assertDoesNotThrow { Card(cardNumber, suit) }
+        assertDoesNotThrow { Card.of(cardNumber, suit) }
     }
 }
