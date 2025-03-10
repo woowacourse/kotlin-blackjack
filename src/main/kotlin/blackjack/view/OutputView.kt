@@ -55,10 +55,10 @@ class OutputView {
         dealerResult: Map<ResultType, Int>,
     ) {
         println(FINAL_RESULT_MESSAGE)
-        val dealerSummary = dealerResult.map { "${it.value}${it.key.value}" }
+        val dealerSummary = dealerResult.map { "${it.value}${getResultDisplayName(it.key)}" }
         println(DEALER_RESULT_FORMAT.format(dealerSummary.joinToString(" ")))
         resultMap.forEach { (player, result) ->
-            println(PLAYER_RESULT_FORMAT.format(player.name, result.value))
+            println(PLAYER_RESULT_FORMAT.format(player.name, getResultDisplayName(result)))
         }
     }
 
@@ -80,6 +80,14 @@ class OutputView {
                 player.adjustScore(),
             ),
         )
+    }
+
+    private fun getResultDisplayName(result: ResultType): String {
+        return when (result) {
+            ResultType.WIN -> "승"
+            ResultType.TIE -> "무"
+            ResultType.LOSS -> "패"
+        }
     }
 
     companion object {
