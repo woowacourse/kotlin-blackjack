@@ -14,6 +14,6 @@ class NumberTest {
     @Test
     fun `숫자는 해당 숫자로 계산한다`() {
         val number = Number(2)
-        assertThat(number.possibleValues).contains(2)
+        assertThat(number.possibleValues).hasSameElementsAs(setOf(2))
     }
 }
