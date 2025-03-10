@@ -5,6 +5,7 @@ class GameManager(
     private val players: List<Player>,
 ) {
     private val deck = Deck()
+    private val resultCalculator = ResultCalculator()
 
     fun dealInitialCardWithCount() {
         repeat(INITIAL_HAND_OUT_CARD_COUNT) {
@@ -17,7 +18,7 @@ class GameManager(
         val playersStatus =
             players.associateBy(
                 { player -> player },
-                { player -> ResultType.judgeScore(dealer, player) },
+                { player -> resultCalculator.judgeScore(dealer, player) },
             )
         return playersStatus
     }

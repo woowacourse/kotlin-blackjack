@@ -1,6 +1,6 @@
 package blackjack.model
 
-import blackjack.model.ResultType.Companion.BUST_NUMBER
+import blackjack.model.ResultCalculator.Companion.BUST_NUMBER
 
 class Player(
     name: String,

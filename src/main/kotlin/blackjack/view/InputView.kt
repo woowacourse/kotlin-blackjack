@@ -1,6 +1,5 @@
 package blackjack.view
 
-import blackjack.model.DrawChoice
 import blackjack.model.Player
 
 class InputView {
