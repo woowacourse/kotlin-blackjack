@@ -1,6 +1,7 @@
 package blackjack.view
 
 import blackjack.domain.BlackJackGame
+import blackjack.domain.Card
 import blackjack.domain.Cards
 import blackjack.domain.GameResultStatus
 import blackjack.domain.Player
@@ -12,7 +13,7 @@ import java.lang.StringBuilder
 object OutputView {
     fun showInitialCards(game: BlackJackGame) {
         println("딜러와 ${game.players.joinToString { it.name }}에게 2장을 나누었습니다.\n")
-        println("딜러: ${game.dealer.cards.getCards().first()}")
+        println("딜러: ${game.dealer.cards.getCards().first().format()}")
         game.players.forEach { player ->
             printPlayerCards(player)
         }
@@ -51,11 +52,14 @@ object OutputView {
 private fun Cards.format(): String {
     val cardStr = StringBuilder()
     this.getCards().forEach { card ->
-        cardStr.append(card.rank.toDisplayName())
+        cardStr.append(card.format())
         cardStr.append(", ")
-        cardStr.append(card.suit.toDisplayName())
     }
     return cardStr.toString()
+}
+
+private fun Card.format(): String {
+    return this.rank.toDisplayName() + this.suit.toDisplayName()
 }
 
 private fun GameResultStatus.toDisplayName(): String {

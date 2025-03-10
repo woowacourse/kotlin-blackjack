@@ -17,11 +17,14 @@ class GameController(
 
     fun run() {
         val players: List<Player> = getPlayers()
-        val game = BlackJackGame(players, deck, inputView, outputView)
+        val game = BlackJackGame(players, deck)
         game.setUp()
         outputView.showInitialCards(game)
 
-        game.eachPlayerHitOrNot()
+        game.eachPlayerHitOrNot(
+            { player -> inputView.askPlayerHit(player.name) },
+            { player -> outputView.printPlayerCards(player) },
+        )
 
         if (game.hasDealerAdditionalCard()) {
             outputView.printDealerHaveAdditionalCard()

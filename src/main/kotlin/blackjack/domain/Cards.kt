@@ -22,7 +22,7 @@ data class Cards(private val cards: MutableList<Card> = mutableListOf()) {
     }
 
     fun size(): Int {
-        return this.size()
+        return cards.size
     }
 
     fun calculateTotalSum(): Int {
