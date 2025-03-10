@@ -16,16 +16,10 @@ class CardDeck(val shuffleStrategy :ShuffleStrategy = RandomShuffle()) {
 
     fun draw(): Card =
         cards.poll() ?: throw IllegalArgumentException("[ERROR] 더 이상 카드를 뽑을 수 없습니다.")
-
-    fun shuffleCard(cardList : List<Card>,):List<Card> = shuffleStrategy.shuffle(cardList)
-
+    
     companion object {
         private const val DECK_COUNT = 6
-        private val SINGLE_DECK = CardRank.entries.flatMap { cardRank ->
-            CardSuit.entries.map { cardSuit ->
-                Card(cardRank, cardSuit)
-            }
-        }
+        private val SINGLE_DECK = Card.SINGLE_DECK
         private val CACHE_CARDS = (1..DECK_COUNT).flatMap { SINGLE_DECK }
     }
 }

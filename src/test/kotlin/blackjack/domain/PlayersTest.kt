@@ -26,15 +26,15 @@ class PlayersTest {
         // given
         val playerName = "시아"
         val playerCards = listOf(
-            Card(TWO, CLUB),
-            Card(NINE, CLUB)
+            Card.getCard(TWO, CLUB),
+            Card.getCard(NINE, CLUB)
         )
         val player = Player(playerName, playerCards)
         val players = Players(listOf(player))
 
         val dealerCards = listOf(
-            Card(TWO, DIAMOND),
-            Card(NINE, DIAMOND)
+            Card.getCard(TWO, DIAMOND),
+            Card.getCard(NINE, DIAMOND)
         )
         val dealer = Dealer(dealerCards)
 
@@ -50,15 +50,15 @@ class PlayersTest {
     fun `플레이어의 점수가 딜러의 점수보다 높으면 우승을 반환한다`() {
         val playerName = "시아"
         val playerCards = listOf(
-            Card(ACE, CLUB),
-            Card(KING, CLUB)
+            Card.getCard(ACE, CLUB),
+            Card.getCard(KING, CLUB)
         )
         val player = Player(playerName, playerCards)
         val players = Players(listOf(player))
 
         val dealerCards = listOf(
-            Card(TWO, DIAMOND),
-            Card(NINE, DIAMOND)
+            Card.getCard(TWO, DIAMOND),
+            Card.getCard(NINE, DIAMOND)
         )
         val dealer = Dealer(dealerCards)
 
@@ -75,15 +75,15 @@ class PlayersTest {
 
         val playerName = "시아"
         val playerCards = listOf(
-            Card(TWO, CLUB),
-            Card(NINE, CLUB)
+            Card.getCard(TWO, CLUB),
+            Card.getCard(NINE, CLUB)
         )
         val player = Player(playerName, playerCards)
         val players = Players(listOf(player))
 
         val dealerCards = listOf(
-            Card(KING, DIAMOND),
-            Card(QUEEN, DIAMOND)
+            Card.getCard(KING, DIAMOND),
+            Card.getCard(QUEEN, DIAMOND)
         )
         val dealer = Dealer(dealerCards)
 
