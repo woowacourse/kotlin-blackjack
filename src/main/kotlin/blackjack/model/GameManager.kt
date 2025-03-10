@@ -8,7 +8,7 @@ class GameManager(
 ) {
     private val deck = Deck.create()
 
-    fun dealInitialCardWithCount(count: Int) {
+    fun distributeInitialCardWithCount(count: Int) {
         distributeCardWithCount(dealer, count)
         players.forEach { player ->
             distributeCardWithCount(player, count)

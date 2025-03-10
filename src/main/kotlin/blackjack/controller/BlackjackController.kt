@@ -17,7 +17,7 @@ class BlackjackController(
         outputView.printInitialHandOutCardMessage(players)
 
         val gameManager = GameManager(dealer, players)
-        gameManager.dealInitialCardWithCount(INITIAL_HAND_OUT_CARD_COUNT)
+        gameManager.distributeInitialCardWithCount(INITIAL_HAND_OUT_CARD_COUNT)
         outputView.printAllPlayerHands(dealer, players)
 
         playersDrawCards(gameManager, players)
