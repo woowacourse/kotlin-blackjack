@@ -11,7 +11,13 @@ class ScoreCalculatorTest {
     fun `점수를 계산한다`() {
         // Given
         val scoreCalculator = ScoreCalculator()
-        val cards = List(3) { Card.create(CardNumber.ACE, CardPattern.HEART) }
+        val cards =
+            listOf(
+                Card(CardNumber.ACE, CardPattern.HEART),
+                Card(CardNumber.ACE, CardPattern.HEART),
+                Card(CardNumber.ACE, CardPattern.HEART),
+                Card(CardNumber.KING, CardPattern.HEART),
+            )
 
         // When
         val result = scoreCalculator.calculate(cards)
