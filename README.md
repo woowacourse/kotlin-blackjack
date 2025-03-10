@@ -28,7 +28,7 @@
 - [x] open class, abstract class, interface의 차이점 학습 및 적용
 
 ## 2차 피드백 사항
-- [ ] View라는 관점에서 입력 관리 화면, 출력 관리 화면으로 생각해서 구현
+- [x] InputView에 OutputView 상태 제거
 - [ ] draw와 카드가 부족할 경우 추가하는 기능 분리
 - [ ] draw 로직 분리
 - [ ] Hands에 방어적 복사 활용

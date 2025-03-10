@@ -9,14 +9,6 @@ import blackjack.domain.model.Suit
 import blackjack.domain.model.Verdict
 
 class OutputView {
-    fun requestPlayerNames() {
-        println(MESSAGE_ENTER_PLAYER_NAMES)
-    }
-
-    fun requestPlayerAction(player: Participant) {
-        println(MESSAGE_ENTER_PLAYER_YES_OR_NO.format(player.name))
-    }
-
     fun printInitialDeals(participants: Participants) {
         println(
             MESSAGE_INITIAL_HAND_DISTRIBUTED.format(
