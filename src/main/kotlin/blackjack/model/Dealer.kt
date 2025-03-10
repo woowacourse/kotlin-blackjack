@@ -14,8 +14,11 @@ class Dealer(
         return count
     }
 
+    fun firstVisibleCard(): List<Card> = cards.take(DEALER_FIRST_SHOWN_COUNT)
+
     companion object {
         private const val INITIAL_RESULT_COUNT = 0
         private const val DEALER_DRAW_CRITERIA = 16
+        private const val DEALER_FIRST_SHOWN_COUNT = 1
     }
 }

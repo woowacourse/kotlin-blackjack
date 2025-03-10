@@ -47,7 +47,7 @@ class BlackjackController(
         players.value.forEach { player -> player.draw(cardDeck) }
 
         outputView.displayFirstDrawEnd(players.value.map { player -> player.name })
-        outputView.displayParticipantCards(cards = dealer.cards.take(DEALER_FIRST_SHOWN_COUNT))
+        outputView.displayParticipantCards(cards = dealer.firstVisibleCard())
 
         return players
     }
@@ -108,9 +108,5 @@ class BlackjackController(
         playerResults.forEach { (name, winningResult) ->
             outputView.displayPlayerResult(name, winningResult)
         }
-    }
-
-    companion object {
-        private const val DEALER_FIRST_SHOWN_COUNT = 1
     }
 }
