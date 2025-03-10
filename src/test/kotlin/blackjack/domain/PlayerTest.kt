@@ -1,7 +1,7 @@
 package blackjack.domain
 
-import blackjack.domain.SingleValueRank.FaceRank
-import blackjack.domain.SingleValueRank.NumberRank
+import blackjack.domain.Rank.FaceRank
+import blackjack.domain.Rank.NumberRank
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows

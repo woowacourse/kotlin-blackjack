@@ -3,12 +3,9 @@ package blackjack
 import blackjack.domain.Blackjack
 import blackjack.domain.Card
 import blackjack.domain.Dealer
-import blackjack.domain.MultiValueRank.AceRank
 import blackjack.domain.Player
 import blackjack.domain.RandomShuffler
 import blackjack.domain.Rank
-import blackjack.domain.SingleValueRank.FaceRank
-import blackjack.domain.SingleValueRank.NumberRank
 import blackjack.domain.Suit
 
 fun main() {
@@ -58,11 +55,9 @@ val Card.prettyString: String
 val Rank.prettyString: String
     get() =
         when (this) {
-            is AceRank -> "A"
-            FaceRank.JACK -> "J"
-            FaceRank.QUEEN -> "Q"
-            FaceRank.KING -> "K"
-            is NumberRank -> value.toString()
+            Rank.AceRank -> "A"
+            is Rank.FaceRank -> value.toString()
+            is Rank.NumberRank -> value.toString()
         }
 
 val Suit.prettyString: String

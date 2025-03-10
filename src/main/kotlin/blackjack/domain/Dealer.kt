@@ -35,7 +35,7 @@ class Dealer(
         player.getCard(deck.draw())
     }
 
-    fun getScore(): Int? = hand.getScore()
+    fun getScore(): Int? = hand.score
 
     fun hitOrStay() {
         var dealerScore = getScore()

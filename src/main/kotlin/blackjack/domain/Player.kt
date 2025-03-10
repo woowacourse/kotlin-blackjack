@@ -14,7 +14,7 @@ class Player(
     }
 
     fun getCards(cards: List<Card>) {
-        hand.addAll(cards)
+        hand.addAll(*(cards.toTypedArray()))
     }
 
     fun hitOrStay(hit: () -> Unit) {
@@ -24,10 +24,10 @@ class Player(
     }
 
     fun setResult() {
-        if (hand.getScore() == null) {
+        if (hand.score == null) {
             playerState = PlayerState.LOSE
         }
     }
 
-    fun getScore() = hand.getScore()
+    fun getScore() = hand.score
 }
