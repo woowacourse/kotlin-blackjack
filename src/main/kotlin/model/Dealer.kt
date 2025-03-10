@@ -16,8 +16,8 @@ class Dealer(private val hand: Hand) : Participant(hand) {
 
     fun getDrawCount(cardDistributor: CardDistributor): Int {
         var drawCount = 0
-        while (decideToHit()) {
-            if (performTurn(cardDistributor)) drawCount++
+        while (performTurn(cardDistributor)) {
+            drawCount++
         }
         return drawCount
     }
