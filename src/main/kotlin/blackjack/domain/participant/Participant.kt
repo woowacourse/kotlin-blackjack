@@ -12,13 +12,19 @@ abstract class Participant {
         _cards = _cards.add(card)
     }
 
+    fun totalScore(): Int {
+        return if (hasAce() && (sumOfCards() + ACE_EXTRACT_SCORE > BUST_STANDARD).not()) {
+            sumOfCards() + ACE_EXTRACT_SCORE
+        } else {
+            sumOfCards()
+        }
+    }
+
     fun isBust(): Boolean = totalScore() > BUST_STANDARD
 
     fun hasAce(): Boolean = _cards.hasAce()
 
     protected fun sumOfCards(): Int = cards.sumOfCards()
-
-    abstract fun totalScore(): Int
 
     companion object {
         const val DEALER_MAX_SCORE = 16
