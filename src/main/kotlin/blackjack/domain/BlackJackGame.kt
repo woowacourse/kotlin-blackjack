@@ -3,11 +3,16 @@ package blackjack.domain
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
-class BlackJackGame(val players: List<Player>, private val deck: Deck, private val inputView: InputView, private val outputView: OutputView) {
+class BlackJackGame(
+    val players: List<Player>,
+    private val deck: Deck,
+    private val inputView: InputView,
+    private val outputView: OutputView,
+) {
     val dealer = Dealer()
 
     fun setUp() {
-        dealer.getCard(deck)
+        dealer.setAllCard(deck)
         setInitialPlayerCards(players)
     }
 

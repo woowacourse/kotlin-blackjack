@@ -4,7 +4,7 @@ class Dealer : Participant() {
     override val hitThreshold: Int
         get() = DEALER_HIT_THRESHOLD
 
-    fun getCard(deck: Deck) {
+    fun setAllCard(deck: Deck) {
         while (canHit()) {
             addCard(deck.draw())
         }
