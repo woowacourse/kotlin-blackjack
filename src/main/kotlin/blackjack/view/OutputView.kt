@@ -1,18 +1,12 @@
 package blackjack.view
 
-import blackjack.domain.BlackJackGame
-import blackjack.domain.Card
-import blackjack.domain.GameResultStatus
-import blackjack.domain.Player
-import blackjack.domain.PlayerResult
-import blackjack.domain.Rank
-import blackjack.domain.Suit
+import blackjack.domain.*
 import java.lang.StringBuilder
 
 object OutputView {
     fun showInitialCards(game: BlackJackGame) {
         println("딜러와 ${game.players.joinToString { it.name }}에게 2장을 나누었습니다.\n")
-        println("딜러: ${game.dealer.cards.first()}")
+        println("딜러: ${game.dealer.cards.getCards().first()}")
         game.players.forEach { player ->
             printPlayerCards(player)
         }
@@ -48,9 +42,9 @@ object OutputView {
     }
 }
 
-private fun List<Card>.format(): String {
+private fun Cards.format(): String {
     val cardStr = StringBuilder()
-    this.forEach { card ->
+    this.getCards().forEach { card ->
         cardStr.append(card.rank.toDisplayName())
         cardStr.append(", ")
         cardStr.append(card.suit.toDisplayName())
