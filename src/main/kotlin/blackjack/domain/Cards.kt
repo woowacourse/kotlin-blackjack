@@ -8,7 +8,13 @@ data class Cards(private val cards: MutableList<Card> = mutableListOf()) {
     fun getCards(): List<Card> = cards.toList()
 
     fun getScore(): Int {
-        return cards.sumOf { it.getScore() }
+        return cards.sumOf {
+            if (it.rank == Rank.ACE) {
+                ACE_SPECIFIC_SCORE
+            } else {
+                it.getScore()
+            }
+        }
     }
 
     fun countAce(): Int {
@@ -23,7 +29,7 @@ data class Cards(private val cards: MutableList<Card> = mutableListOf()) {
         var score = getScore()
         var aceCount = countAce()
         while (score > BLACKJACK_BUST_LIMIT && aceCount > 0) {
-            score -= ACE_SCORE_DIFFERENCE
+            score -= ACE_SPECIFIC_SCORE - Rank.ACE.score
             aceCount--
         }
 
@@ -32,8 +38,6 @@ data class Cards(private val cards: MutableList<Card> = mutableListOf()) {
 
     companion object {
         const val BLACKJACK_BUST_LIMIT = 21
-        private const val ACE_HIGH = 11
-        private const val ACE_LOW = 1
-        private const val ACE_SCORE_DIFFERENCE = ACE_HIGH - ACE_LOW
+        private const val ACE_SPECIFIC_SCORE = 11
     }
 }
