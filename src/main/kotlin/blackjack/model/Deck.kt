@@ -1,14 +1,11 @@
 package blackjack.model
 
 class Deck {
-    private var cards: MutableList<Card> = generateCards()
+    private var _cards: MutableList<Card> = generateCards()
+    val cards get() = _cards.toList()
 
     fun draw(): Card {
-        return cards.removeFirstOrNull() ?: throw IllegalStateException(ERROR_NO_MORE_CARD_MESSAGE)
-    }
-
-    fun drawWithCount(count: Int): List<Card> {
-        return List(count) { draw() }
+        return _cards.removeFirstOrNull() ?: throw IllegalStateException(ERROR_NO_MORE_CARD_MESSAGE)
     }
 
     private fun generateCards(): MutableList<Card> =
