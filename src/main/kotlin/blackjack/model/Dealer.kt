@@ -1,13 +1,14 @@
 package blackjack.model
 
-import blackjack.model.ResultType.Companion.BUST_NUMBER
+import blackjack.model.ResultCalculator.BUST_NUMBER
+import blackjack.model.ResultCalculator.calculateTotalScore
 
 class Dealer(
     name: String = DEALER_NAME,
 ) : Person(name) {
-    fun isMoreCard() = calculateTotalScore() < DEALER_MORE_CARD_MINIMUM
+    fun isMoreCard() = calculateTotalScore(cards) < DEALER_MORE_CARD_MINIMUM
 
-    override fun isBust(): Boolean = super.calculateTotalScore() > BUST_NUMBER
+    override fun isBust(): Boolean = calculateTotalScore(cards) > BUST_NUMBER
 
     companion object {
         private const val DEALER_NAME = "딜러"
