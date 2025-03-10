@@ -14,15 +14,4 @@ enum class Number(val score: Int) {
     JACK(10),
     QUEEN(10),
     KING(10),
-    ;
-
-    override fun toString(): String {
-        return when (this) {
-            ACE -> "A"
-            JACK -> "J"
-            QUEEN -> "Q"
-            KING -> "K"
-            else -> (ordinal + 1).toString()
-        }
-    }
 }

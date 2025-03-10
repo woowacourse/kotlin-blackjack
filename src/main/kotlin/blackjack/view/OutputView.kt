@@ -3,6 +3,11 @@ package blackjack.view
 import blackjack.model.Card
 import blackjack.model.Dealer
 import blackjack.model.GameManager.Companion.INITIAL_HAND_OUT_CARD_COUNT
+import blackjack.model.Number
+import blackjack.model.Number.ACE
+import blackjack.model.Number.JACK
+import blackjack.model.Number.KING
+import blackjack.model.Number.QUEEN
 import blackjack.model.Player
 import blackjack.model.ResultCalculator.adjustScore
 import blackjack.model.ResultCalculator.calculateTotalScore
@@ -71,7 +76,7 @@ class OutputView {
 
     private fun getHandsStatus(cards: List<Card>): String {
         return cards.joinToString { card ->
-            "${card.number}${getShapeDisplayName(card.shape)}"
+            "${getNumberDisplayName(card.number)}${getShapeDisplayName(card.shape)}"
         }
     }
 
@@ -83,6 +88,16 @@ class OutputView {
                 adjustScore(player.cards),
             ),
         )
+    }
+
+    private fun getNumberDisplayName(number: Number): String {
+        return when (number) {
+            ACE -> "A"
+            JACK -> "J"
+            QUEEN -> "Q"
+            KING -> "K"
+            else -> (number.ordinal + 1).toString()
+        }
     }
 
     private fun getShapeDisplayName(shape: Shape): String {
