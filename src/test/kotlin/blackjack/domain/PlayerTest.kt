@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import blackjack.model.BlackjackCalculator
 import blackjack.model.CardDeck
 import blackjack.model.Player
 import org.assertj.core.api.Assertions.assertThat
@@ -9,7 +10,8 @@ class PlayerTest {
     @Test
     fun `처음 생성된 참가자는 카드를 2장씩 뽑는다`() {
         // given
-        val player = Player("시아")
+        val blackjackCalculator = BlackjackCalculator()
+        val player = Player("시아", blackjackCalculator)
         val cardDeck = CardDeck()
         val expectedSize = 2
 
@@ -17,6 +19,6 @@ class PlayerTest {
         player.draw(cardDeck)
 
         // then
-        assertThat(player.hand.cards.size).isEqualTo(expectedSize)
+        assertThat(player.cards.size).isEqualTo(expectedSize)
     }
 }

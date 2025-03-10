@@ -1,21 +1,17 @@
 package blackjack.model
 
-class Hand {
-    private val _cards: MutableList<Card> = mutableListOf()
-    val cards: List<Card> get() = _cards.toList()
+class BlackjackCalculator {
+    fun isBust(cards: List<Card>): Boolean = score(cards) == BUST_SCORE
 
-    fun addAll(cards: List<Card>) {
-        _cards.addAll(cards)
-    }
-
-    fun isBust(): Boolean = score() == BUST_SCORE
-
-    fun score(): Int {
+    fun score(cards: List<Card>): Int {
         val hardScore = cards.sumOf { card -> card.rank.score }
-        return maxOf(hardScore.formatIfBust(), softScore(hardScore).formatIfBust())
+        return maxOf(hardScore.formatIfBust(), softScore(cards, hardScore).formatIfBust())
     }
 
-    private fun softScore(hardScore: Int): Int {
+    private fun softScore(
+        cards: List<Card>,
+        hardScore: Int,
+    ): Int {
         val containsAce = cards.any { card -> card.rank == CardRank.ACE }
         return if (containsAce) hardScore + SOFT_OFFSET_SCORE else hardScore
     }

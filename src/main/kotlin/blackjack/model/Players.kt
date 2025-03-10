@@ -1,6 +1,6 @@
 package blackjack.model
 
-class Players(
+class Players private constructor(
     val value: List<Player>,
 ) {
     init {
@@ -12,17 +12,13 @@ class Players(
         }
     }
 
-    fun results(dealerScore: Int): Map<String, WinningResult> =
-        value.associate { player ->
-            player.name to WinningResult.from(player.hand.score(), dealerScore)
-        }
-
-    fun scores(): List<Int> = value.map { player -> player.hand.score() }
-
     companion object {
         private const val MIN_PLAYER_COUNT = 1
         private const val MAX_PLAYER_COUNT = 7
 
-        fun from(players: List<String>): Players = Players(players.map { name -> Player(name) })
+        fun from(
+            players: List<String>,
+            blackjackCalculator: BlackjackCalculator,
+        ): Players = Players(players.map { name -> Player(name, blackjackCalculator) })
     }
 }

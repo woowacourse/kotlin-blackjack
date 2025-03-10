@@ -1,5 +1,6 @@
 package blackjack.controller
 
+import blackjack.model.BlackjackCalculator
 import blackjack.model.CardDeck
 import blackjack.model.Dealer
 import blackjack.model.Player
@@ -14,8 +15,9 @@ class BlackjackController(
 ) {
     fun run() {
         val cardDeck = CardDeck()
-        val dealer = prepareDealer(cardDeck)
-        val players = preparePlayers(cardDeck, dealer)
+        val blackjackCalculator = BlackjackCalculator()
+        val dealer = prepareDealer(cardDeck, blackjackCalculator)
+        val players = preparePlayers(cardDeck, dealer, blackjackCalculator)
 
         progressPlayersDraw(players, cardDeck)
         progressDealerDraw(dealer, cardDeck)
@@ -24,8 +26,11 @@ class BlackjackController(
         displayResults(dealer, players)
     }
 
-    private fun prepareDealer(cardDeck: CardDeck): Dealer {
-        val dealer = Dealer()
+    private fun prepareDealer(
+        cardDeck: CardDeck,
+        blackjackCalculator: BlackjackCalculator,
+    ): Dealer {
+        val dealer = Dealer(blackjackCalculator)
         dealer.draw(cardDeck)
         return dealer
     }
@@ -33,12 +38,14 @@ class BlackjackController(
     private fun preparePlayers(
         cardDeck: CardDeck,
         dealer: Dealer,
+        blackjackCalculator: BlackjackCalculator,
     ): Players {
-        val players = Players.from(inputView.getPlayers())
+        val playerNames = inputView.getPlayers()
+        val players = Players.from(playerNames, blackjackCalculator)
         players.value.forEach { player -> player.draw(cardDeck) }
 
         outputView.displayFirstDrawEnd(players.value.map { player -> player.name })
-        outputView.displayParticipantCards(cards = dealer.hand.cards.take(DEALER_FIRST_SHOWN_COUNT))
+        outputView.displayParticipantCards(cards = dealer.cards.take(DEALER_FIRST_SHOWN_COUNT))
 
         return players
     }
@@ -48,7 +55,7 @@ class BlackjackController(
         cardDeck: CardDeck,
     ) {
         players.value.forEach { player ->
-            outputView.displayParticipantCards(player.name, player.hand.cards)
+            outputView.displayParticipantCards(player.name, player.cards)
         }
         players.value.forEach { player ->
             progressPlayerDrawUntilFinished(player, cardDeck)
@@ -63,9 +70,9 @@ class BlackjackController(
             if (!inputView.getIsDrawMore(player.name)) break
 
             player.draw(cardDeck)
-            outputView.displayParticipantCards(player.name, player.hand.cards)
+            outputView.displayParticipantCards(player.name, player.cards)
 
-            if (player.hand.isBust()) return
+            if (player.isBust()) return
         }
     }
 
@@ -77,15 +84,15 @@ class BlackjackController(
         outputView.displayDealerDrawInfo(dealerDrawCount)
 
         outputView.displayParticipantInfo(
-            cards = dealer.hand.cards,
-            score = dealer.hand.score(),
-            isBust = dealer.hand.isBust(),
+            cards = dealer.cards,
+            score = dealer.score(),
+            isBust = dealer.isBust(),
         )
     }
 
     private fun displayParticipantsInfo(players: Players) {
         players.value.forEach { player ->
-            outputView.displayParticipantInfo(player.name, player.hand.cards, player.hand.score(), player.hand.isBust())
+            outputView.displayParticipantInfo(player.name, player.cards, player.score(), player.isBust())
         }
     }
 
@@ -98,7 +105,7 @@ class BlackjackController(
         val dealerResult = dealer.result(players.scores())
         outputView.displayDealerResult(dealerResult)
 
-        val playerResults: Map<String, WinningResult> = players.results(dealer.hand.score())
+        val playerResults: Map<String, WinningResult> = players.results(dealer.score())
         playerResults.forEach { (name, winningResult) ->
             outputView.displayPlayerResult(name, winningResult)
         }
