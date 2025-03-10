@@ -1,7 +1,7 @@
 package blackjack.view
 
 import blackjack.domain.BlackJackGame
-import blackjack.domain.DealerResult
+import blackjack.domain.GameResultStatus
 import blackjack.domain.Player
 import blackjack.domain.PlayerResult
 import blackjack.domain.toDisplayName
@@ -31,12 +31,13 @@ object OutputView {
         }
     }
 
-    fun printGameResult(
-        playerResults: List<PlayerResult>,
-        dealerResult: DealerResult,
-    ) {
+    fun printGameResult(playerResults: List<PlayerResult>) {
         println("\n##최종 승패")
-        println("딜러: ${dealerResult.win}승 ${dealerResult.lose}패 ${dealerResult.draw}무")
+        val dealerLose = playerResults.count { it.status == GameResultStatus.PLAYER_WIN }
+        val dealerWin = playerResults.count { it.status == GameResultStatus.PLAYER_LOSE }
+        val draw = playerResults.count { it.status == GameResultStatus.DRAW }
+
+        println("딜러: ${dealerWin}승 ${dealerLose}패 ${draw}무")
 
         playerResults.forEach {
             println("${it.player.name}: ${it.status.toDisplayName()}")

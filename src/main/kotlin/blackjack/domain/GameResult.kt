@@ -1,14 +1,12 @@
 package blackjack.domain
 
 class GameResult(private val dealer: Dealer, private val players: List<Player>) {
-    private val dealerResult = DealerResult()
     private val playerResults: List<PlayerResult>
 
     init {
         playerResults =
             players.map { player ->
                 val status = getPlayerResult(player)
-                updateDealerResult(status)
                 PlayerResult(player, status)
             }
     }
@@ -24,19 +22,7 @@ class GameResult(private val dealer: Dealer, private val players: List<Player>) 
         }
     }
 
-    private fun updateDealerResult(status: GameResultStatus) {
-        when (status) {
-            GameResultStatus.PLAYER_WIN -> dealerResult.addLose()
-            GameResultStatus.PLAYER_LOSE -> dealerResult.addWin()
-            GameResultStatus.DRAW -> dealerResult.addDraw()
-        }
-    }
-
     fun getAllPlayerResult(): List<PlayerResult> {
         return playerResults
-    }
-
-    fun getDealerResult(): DealerResult {
-        return dealerResult
     }
 }
