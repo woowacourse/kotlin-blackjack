@@ -42,9 +42,9 @@ class BlackjackTest {
         val players = listOf(gio, eden)
         val dealer = Dealer(players, RandomShuffler)
         val blackjack = Blackjack(dealer, players)
-        gio.getCards(listOf(Card(Number(10), Suit.SPADE), Card(Number(10), Suit.SPADE)))
-        eden.getCards(listOf(Card(Number(9), Suit.SPADE), Card(Number(9), Suit.SPADE)))
-        dealer.getCards(listOf(Card(Number(9), Suit.SPADE), Card(Number(10), Suit.SPADE)))
+        gio.getCards(listOf(Card(Number.TEN, Suit.SPADE), Card(Number.TEN, Suit.SPADE)))
+        eden.getCards(listOf(Card(Number.NINE, Suit.SPADE), Card(Number.NINE, Suit.SPADE)))
+        dealer.getCards(listOf(Card(Number.NINE, Suit.SPADE), Card(Number.TEN, Suit.SPADE)))
         blackjack.finish()
         assertThat(gio.playerState).isEqualTo(PlayerState.WIN)
         assertThat(eden.playerState).isEqualTo(PlayerState.LOSE)
@@ -59,9 +59,9 @@ class BlackjackTest {
         val dealer = Dealer(players, RandomShuffler)
         dealer.getCards(
             listOf(
-                Card(Number(10), Suit.SPADE),
-                Card(Number(10), Suit.SPADE),
-                Card(Number(10), Suit.SPADE),
+                Card(Number.TEN, Suit.SPADE),
+                Card(Number.TEN, Suit.SPADE),
+                Card(Number.TEN, Suit.SPADE),
             ),
         )
         val blackjack = Blackjack(dealer, players)
@@ -80,19 +80,19 @@ class BlackjackTest {
         eden.getCards(
             listOf(
                 Card(Ace, Suit.SPADE),
-                Card(Number(10), Suit.CLOVER),
+                Card(Number.TEN, Suit.CLOVER),
             ),
         )
         gio.getCards(
             listOf(
-                Card(Number(10), Suit.DIAMOND),
-                Card(Number(9), Suit.SPADE),
+                Card(Number.TEN, Suit.DIAMOND),
+                Card(Number.NINE, Suit.SPADE),
             ),
         )
         dealer.getCards(
             listOf(
-                Card(Number(10), Suit.HEART),
-                Card(Number(10), Suit.DIAMOND),
+                Card(Number.TEN, Suit.HEART),
+                Card(Number.TEN, Suit.DIAMOND),
             ),
         )
         val blackjack = Blackjack(dealer, players)
@@ -109,14 +109,14 @@ class BlackjackTest {
 
         gio.getCards(
             listOf(
-                Card(Number(10), Suit.DIAMOND),
-                Card(Number(9), Suit.SPADE),
+                Card(Number.TEN, Suit.DIAMOND),
+                Card(Number.NINE, Suit.SPADE),
             ),
         )
         dealer.getCards(
             listOf(
-                Card(Number(10), Suit.HEART),
-                Card(Number(9), Suit.DIAMOND),
+                Card(Number.TEN, Suit.HEART),
+                Card(Number.NINE, Suit.DIAMOND),
             ),
         )
         val blackjack = Blackjack(dealer, players)

@@ -6,7 +6,7 @@ class Deck(
     private val aceCards: List<Card> = Suit.entries.map { suit -> Card(Ace, suit) }
     private val numberCards: List<Card> =
         Suit.entries.flatMap { suit ->
-            Number2.entries.map { number: Number2 ->
+            Number.entries.map { number: Number ->
                 Card(number, suit)
             }
         }

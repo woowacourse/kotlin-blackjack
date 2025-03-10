@@ -6,7 +6,6 @@ import blackjack.domain.Card
 import blackjack.domain.Dealer
 import blackjack.domain.Face
 import blackjack.domain.Number
-import blackjack.domain.Number2
 import blackjack.domain.Player
 import blackjack.domain.RandomShuffler
 import blackjack.domain.Rank
@@ -63,8 +62,8 @@ val Rank.prettyString: String
             Face.JACK -> "J"
             Face.QUEEN -> "Q"
             Face.KING -> "K"
-            is Number2 -> value.toString()
-            is Number -> TODO()
+            is Number -> possibleValues.toString()
+            is kotlin.Number -> TODO()
         }
 val Suit.prettyString: String
     get() =

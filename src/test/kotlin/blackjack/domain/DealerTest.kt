@@ -10,7 +10,7 @@ class DealerTest {
         val gio = Player("Gio")
         val players: List<Player> = listOf(eden, gio)
         val dealer = Dealer(players, RandomShuffler)
-        gio.getCard(Card(Number(7), Suit.DIAMOND))
+        gio.getCard(Card(Number.SEVEN, Suit.DIAMOND))
         dealer.giveCard()
         assertThat(eden.getCountOfCards()).isEqualTo(1)
         assertThat(gio.getCountOfCards()).isEqualTo(2)

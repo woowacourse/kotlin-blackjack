@@ -18,7 +18,7 @@ class HandTest {
                 listOf(
                     Card(Ace, Suit.SPADE),
                     Card(Ace, Suit.HEART),
-                    Card(Number(4), Suit.DIAMOND),
+                    Card(Number.FOUR, Suit.DIAMOND),
                     Card(Face.JACK, Suit.CLOVER),
                 ),
             )

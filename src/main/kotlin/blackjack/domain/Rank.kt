@@ -8,7 +8,7 @@ object Ace : Rank {
     override val possibleValues: Set<Int> = setOf(1, 11)
 }
 
-enum class Number2(
+enum class Number(
     val value: Int,
 ) : Rank {
     TWO(2),
@@ -23,22 +23,6 @@ enum class Number2(
     ;
 
     override val possibleValues: Set<Int> = setOf(value)
-}
-
-class Number(
-    val value: Int,
-) : Rank {
-    override val possibleValues: Set<Int> = setOf(value)
-
-    init {
-        require(possibleValues.all { possibleValue: Int -> possibleValue in RANGE })
-    }
-
-    companion object {
-        private const val MIN = 2
-        private const val MAX = 10
-        val RANGE = MIN..MAX
-    }
 }
 
 enum class Face(
