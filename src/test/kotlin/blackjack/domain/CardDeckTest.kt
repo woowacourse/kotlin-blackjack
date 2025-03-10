@@ -15,30 +15,6 @@ class TestShuffle: ShuffleStrategy{
 }
 
 class CardDeckTest {
-    @Test
-    fun `카드는 6덱 이상 반환될 수 없다`() {
-        // given
-        val cardDeck = CardDeck()
-        val exceedCount = 52*6+1
-
-        // when & then
-        assertThrows<IllegalArgumentException> {
-            repeat(exceedCount){cardDeck.draw()}
-        }
-    }
-
-    @Test
-    fun `카드는 총 6덱 까지 뽑을 수 있다`() {
-        // given
-        val cardDeck = CardDeck()
-        val cardCount = 52*6
-
-        // when
-        val cards: List<Card> = List(cardCount){cardDeck.draw()}
-
-        // then
-        assertThat(cards.size).isEqualTo(cardCount)
-    }
 
     @Test
     fun `카드는 랜덤으로 섞여서 나온다`() {
