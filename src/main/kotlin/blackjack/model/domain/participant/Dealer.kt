@@ -1,10 +1,10 @@
 package blackjack.model.domain.participant
 
-import blackjack.model.domain.card.Card
+import blackjack.model.domain.card.Hand
 import blackjack.model.service.Blackjack.Companion.THRESHOLD
 
 class Dealer(override val name: String = DEALER_NAME) : Participants() {
-    override val cards: MutableList<Card> = mutableListOf()
+    override val hand: Hand = Hand(mutableListOf())
     override var status: ParticipantStatus = ParticipantStatus.None
 
     fun canHit(): Boolean {

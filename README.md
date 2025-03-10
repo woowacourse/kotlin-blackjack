@@ -42,14 +42,15 @@
 - [x] CardNumber | OTHER_ACE 네이밍 변경
 - [x] Deck | deck 네이밍 변경
 - [x] Dealer | overThreshold 메소드 네이밍 고민
-- [ ] Participants | 카드 뭉치를 갖는 일급 컬렉션 구현
+- [x] Participants | 카드 뭉치를 갖는 일급 컬렉션 구현
+- [x] Participants | 카드 합 구하는 로직 변경
 - [ ] YesOrNo | Enum으로 합체
 - [ ] Player | 승패 상태를 저장 위치 고민
 - [ ] Dealer | 더 뽑을 수 있는지 스스로 판단 (참여자 객체에서 판단하게 함)
 - [ ] Deck | 카드를 명시적으로 넣어 주기 (이러면 Deck이 셔플 방법을 몰라도 됨)
 - [ ] ParticipantStatus | 승부를 벌이는 일은 누구의 역할인지 고민 (Status or Participant)
-- [ ] Participant | 카드 합 구하는 로직 변경
 - [ ] Blackjack | shouldStopDrawing 메소드가 한 가지 일만 하도록 변경
-- [ ] Participant | 가시성 변경자 수정
+- [ ] Participants | 가시성 변경자 수정
 - [ ] 8명 인원 제한
 - [ ] 테스트 코드 | given when then 반영
+- [ ] BlackjackTest | BeforeEach 적용

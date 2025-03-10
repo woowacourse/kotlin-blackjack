@@ -19,11 +19,6 @@ class PlayerTest {
     }
 
     @Test
-    fun `카드 숫자의 합을 계산한다`() {
-        assertThat(player1.sumCardNumber).isEqualTo(17)
-    }
-
-    @Test
     fun `받은 카드의 목록을 반환한다`() {
         assertThat(player1.cardDeck).isEqualTo(listOf(Card(Shape.Heart, CardNumber.Ace), Card(Shape.Spade, CardNumber.Six)))
     }
