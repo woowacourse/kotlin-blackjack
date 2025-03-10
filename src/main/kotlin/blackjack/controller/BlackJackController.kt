@@ -43,30 +43,25 @@ class BlackJackController(
     }
 
     private fun processPlayerTurns(players: List<Player>) {
-        players.forEach { player -> playPlayerTurn(player) }
-    }
-
-    private fun playPlayerTurn(player: Player) {
-        while (player.canDraw()) {
-            outputView.printAskForDrawCardMessage(player.name)
-            letPlayerDrawCard(player)
+        players.forEach { player ->
+            val playerTurn = PlayerTurn(player, deck)
+            playPlayerTurn(playerTurn)
         }
     }
 
-    private fun letPlayerDrawCard(player: Player) {
-        if (inputView.getFlag()) {
-            player.draw(deck)
-            outputView.printPlayerDrawStatus(player)
-            return
-        }
-        player.changeToStay()
+    private fun playPlayerTurn(playerTurn: PlayerTurn) {
+        playerTurn.play(
+            askDraw = { outputView.printAskForDrawCardMessage(it) },
+            getFlag = { inputView.getFlag() },
+            printDrawStatus = { outputView.printPlayerDrawStatus(it) },
+        )
     }
 
     private fun processDealerTurns(dealer: Dealer) {
-        while (dealer.canDraw()) {
-            outputView.printDealerDrawMessage()
-            dealer.draw(deck)
-        }
+        val dealerTurn = DealerTurn(dealer, deck)
+        dealerTurn.play(
+            printDealerDraw = { outputView.printDealerDrawMessage() },
+        )
     }
 
     private fun showGameResult(
