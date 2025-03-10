@@ -50,3 +50,6 @@
 - [ ] ParticipantStatus | 승부를 벌이는 일은 누구의 역할인지 고민 (Status or Participant)
 - [ ] Participant | 카드 합 구하는 로직 변경
 - [ ] Blackjack | shouldStopDrawing 메소드가 한 가지 일만 하도록 변경
+- [ ] Participant | 가시성 변경자 수정
+- [ ] 8명 인원 제한
+- [ ] 테스트 코드 | given when then 반영
