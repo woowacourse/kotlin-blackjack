@@ -1,12 +1,13 @@
 package blackjack.controller
 
 import blackjack.model.domain.ActionType
+import blackjack.model.domain.CardFactory
+import blackjack.model.domain.card.Card
 import blackjack.model.domain.card.PlayingCard
 import blackjack.model.domain.participant.Dealer
 import blackjack.model.domain.participant.ParticipantStatus
 import blackjack.model.domain.participant.Player
 import blackjack.model.service.Blackjack
-import blackjack.model.strategy.TrueShuffle
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -14,7 +15,8 @@ class BlackjackController(
     private val inputView: InputView,
     private val outputView: OutputView,
 ) {
-    private val blackjack: Blackjack = Blackjack(PlayingCard(TrueShuffle()))
+    private val deck: ArrayDeque<Card> = CardFactory().makeCard()
+    private val blackjack: Blackjack = Blackjack(PlayingCard(deck))
     private val dealer: Dealer = Dealer()
 
     fun run() {

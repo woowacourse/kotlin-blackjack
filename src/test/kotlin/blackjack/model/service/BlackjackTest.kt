@@ -1,6 +1,8 @@
 package blackjack.model.service
 
 import blackjack.model.domain.ActionType
+import blackjack.model.domain.CardFactory.Companion.cardNumbers
+import blackjack.model.domain.CardFactory.Companion.symbols
 import blackjack.model.domain.card.Card
 import blackjack.model.domain.card.CardNumber
 import blackjack.model.domain.card.PlayingCard
@@ -8,7 +10,6 @@ import blackjack.model.domain.card.Shape
 import blackjack.model.domain.participant.Dealer
 import blackjack.model.domain.participant.ParticipantStatus
 import blackjack.model.domain.participant.Player
-import blackjack.model.strategy.FalseShuffle
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -17,7 +18,8 @@ class BlackjackTest {
     private val player2 = Player("환노")
     private val player3 = Player("포르")
     private val dealer = Dealer()
-    private val deck = PlayingCard(FalseShuffle())
+    private val card = symbols.flatMap { symbol -> cardNumbers.map { cardNumber -> Card(symbol, cardNumber) } }.toMutableList()
+    private val deck = PlayingCard(ArrayDeque(card))
     private val game = Blackjack(deck)
 
     @Test
