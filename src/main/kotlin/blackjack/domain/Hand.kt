@@ -10,6 +10,7 @@ class Hand(
      * */
     val score: Int?
         get() {
+            if (value.isEmpty()) return 0
             val possibleScores = ScoreCalculator.possibleScoreOf(*(value.toTypedArray()))
             return possibleScores.sortedDescending().firstOrNull { score: Int -> score <= 21 }
         }
@@ -21,5 +22,3 @@ class Hand(
 
     private fun canGetCard(): Boolean = score != null && score != 21
 }
-
-fun Hand(value: List<Card>): Hand = Hand(value.toMutableList())
