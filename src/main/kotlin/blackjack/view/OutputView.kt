@@ -53,11 +53,11 @@ class OutputView {
 
     fun printFinalResult(
         playersSummary: Map<Player, ResultType>,
-        dealerResult: Map<ResultType, Int>,
+        dealerSummary: Map<ResultType, Int>,
     ) {
         println(FINAL_RESULT_MESSAGE)
-        val dealerSummary = dealerResult.map { "${it.value}${it.key.value}" }
-        println(DEALER_RESULT_FORMAT.format(dealerSummary.joinToString(" ")))
+        val dealerResult = getDealerResult(dealerSummary)
+        println(DEALER_RESULT_FORMAT.format(dealerResult))
         playersSummary.forEach { (player, result) ->
             println(PLAYER_RESULT_FORMAT.format(player.name, result.value))
         }
@@ -83,6 +83,16 @@ class OutputView {
                 ScoreCalculator.calculateOptimalSum(player.cards),
             ),
         )
+    }
+
+    private fun getDealerResult(summary: Map<ResultType, Int>): String {
+        return buildString {
+            ResultType.entries.forEach { resultType: ResultType ->
+                if (summary[resultType] != null) {
+                    append("${summary[resultType]}${resultType.value}").append(" ")
+                }
+            }
+        }.trim()
     }
 
     private fun printContentSeparator() {
