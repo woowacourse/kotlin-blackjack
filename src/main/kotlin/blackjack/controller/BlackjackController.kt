@@ -82,7 +82,7 @@ class BlackjackController(
         dealer: Dealer,
         cardDeck: CardDeck,
     ) {
-        val dealerDrawCount = dealer.drawUntilFinished(cardDeck)
+        val dealerDrawCount = dealer.drawIfNeeded(cardDeck)
         outputView.displayDealerDrawInfo(dealerDrawCount)
 
         outputView.displayParticipantInfo(

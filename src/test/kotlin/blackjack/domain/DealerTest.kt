@@ -20,7 +20,7 @@ class DealerTest {
     @Test
     fun `딜러가 카드를 다 뽑고나면 점수는 16점을 초과하거나 버스트이다`() {
         // given & when
-        dealer.drawUntilFinished(cardDeck)
+        dealer.drawIfNeeded(cardDeck)
 
         // then
         assertThat(dealer.score() > 16 || dealer.isBust()).isTrue()
@@ -33,7 +33,7 @@ class DealerTest {
         dealer.draw(cardDeck)
 
         // when
-        val dealerDrawCount = dealer.drawUntilFinished(cardDeck)
+        val dealerDrawCount = dealer.drawIfNeeded(cardDeck)
 
         // then
         assertThat(dealerDrawCount).isEqualTo(dealer.cards.size - initialDrawCount)
