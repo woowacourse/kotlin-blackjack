@@ -3,6 +3,7 @@ package blackjack.domain.model.participant
 import blackjack.domain.model.GameResult
 import blackjack.domain.model.card.Card
 import blackjack.domain.model.card.CardNumber
+import blackjack.domain.model.card.Hand
 import blackjack.domain.model.card.Suit
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -10,27 +11,39 @@ import org.junit.jupiter.api.Test
 class PlayerTest {
     @Test
     fun `딜러와 비교해서 승패 결과를 가져올 수 있다`() {
-        val player = Player()
-        player.hand.add(Card(CardNumber.KING, Suit.SPADE))
-        player.hand.add(Card(CardNumber.ACE, Suit.HEART))
+        val playerHand =
+            Hand.of(
+                Card(CardNumber.KING, Suit.SPADE),
+                Card(CardNumber.ACE, Suit.HEART),
+            )
+        val player = Player("크림", playerHand)
+        val dealerHand =
+            Hand.of(
+                Card(CardNumber.JACK, Suit.SPADE),
+                Card(CardNumber.EIGHT, Suit.CLUB),
+            )
+        val dealer = Dealer("딜러", dealerHand)
 
-        val dealer = Dealer()
-        dealer.hand.add(Card(CardNumber.JACK, Suit.SPADE))
-        dealer.hand.add(Card(CardNumber.EIGHT, Suit.CLUB))
+        val actualResult = player.compareTo(dealer)
 
-        val result = player.compareTo(dealer)
-        assertThat(result).isEqualTo(GameResult.WIN)
+        val expectedResult = GameResult.WIN
+
+        assertThat(actualResult).isEqualTo(expectedResult)
     }
 
     @Test
     fun `플레이어가 드로우를 더 할 수 있는지 여부를 알 수 있다`() {
-        val player = Player()
-        player.hand.add(Card(CardNumber.TEN, Suit.SPADE))
-        player.hand.add(Card(CardNumber.TEN, Suit.HEART))
-        player.hand.add(Card(CardNumber.TWO, Suit.CLUB))
+        val playerHand =
+            Hand.of(
+                Card(CardNumber.TEN, Suit.SPADE),
+                Card(CardNumber.TEN, Suit.HEART),
+                Card(CardNumber.TWO, Suit.CLUB),
+            )
+        val player = Player("크림", playerHand)
+        val actualIsDrawable = player.isDrawable()
 
-        val isDrawable = player.isDrawable()
+        val expectedIsDrawable = false
 
-        assertThat(isDrawable).isEqualTo(false)
+        assertThat(actualIsDrawable).isEqualTo(expectedIsDrawable)
     }
 }
