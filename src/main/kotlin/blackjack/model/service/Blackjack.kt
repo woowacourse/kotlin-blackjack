@@ -6,6 +6,7 @@ import blackjack.model.domain.participant.Dealer
 import blackjack.model.domain.participant.ParticipantStatus
 import blackjack.model.domain.participant.Participants
 import blackjack.model.domain.participant.Player
+import blackjack.model.domain.participant.PlayerGroup
 
 class Blackjack(private val deck: PlayingCard) {
     fun initGame(players: List<Participants>) {
@@ -45,15 +46,12 @@ class Blackjack(private val deck: PlayingCard) {
         return count
     }
 
-    fun endGame(
-        players: List<Player>,
-        dealer: Dealer,
-    ) {
-        if (dealer.status == ParticipantStatus.Bust) return
+    fun endGame(playerGroup: PlayerGroup) {
+        if (playerGroup.dealer.status == ParticipantStatus.Bust) return
 
-        val dealerResult = dealer.sumCardNumber
+        val dealerResult = playerGroup.dealer.sumCardNumber
 
-        players.forEach { player ->
+        playerGroup.players.forEach { player ->
             player.compareScores(dealerResult)
         }
     }

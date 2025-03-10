@@ -7,6 +7,7 @@ import blackjack.model.domain.card.PlayingCard
 import blackjack.model.domain.participant.Dealer
 import blackjack.model.domain.participant.ParticipantStatus
 import blackjack.model.domain.participant.Player
+import blackjack.model.domain.participant.PlayerGroup
 import blackjack.model.service.Blackjack
 import blackjack.view.InputView
 import blackjack.view.OutputView
@@ -20,11 +21,11 @@ class BlackjackController(
     private val dealer: Dealer = Dealer()
 
     fun run() {
-        val players: List<Player> = inputView.askForPlayersName().map(::Player)
-        initGame(players)
-        startGame(players)
-        blackjack.endGame(players, dealer)
-        printResult(players)
+        val playerGroup = getPlayerGroup()
+        initGame(playerGroup.players)
+        startGame(playerGroup.players)
+        blackjack.endGame(playerGroup)
+        printResult(playerGroup.players)
     }
 
     private fun initGame(players: List<Player>) {
@@ -51,6 +52,13 @@ class BlackjackController(
     private fun getActionType(player: Player): ActionType {
         return retryInput {
             ActionType.get(inputView.askForHitOrStay(player))
+        }
+    }
+
+    private fun getPlayerGroup(): PlayerGroup {
+        return retryInput {
+            val players: List<Player> = inputView.askForPlayersName().map(::Player)
+            PlayerGroup(players, dealer)
         }
     }
 

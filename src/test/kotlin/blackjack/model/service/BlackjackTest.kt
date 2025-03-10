@@ -10,6 +10,7 @@ import blackjack.model.domain.card.Shape
 import blackjack.model.domain.participant.Dealer
 import blackjack.model.domain.participant.ParticipantStatus
 import blackjack.model.domain.participant.Player
+import blackjack.model.domain.participant.PlayerGroup
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -38,7 +39,7 @@ class BlackjackTest {
         player3.receiveCard(Card(Shape.Heart, CardNumber.Seven))
         dealer.receiveCard(Card(Shape.Spade, CardNumber.Seven))
 
-        game.endGame(listOf(player1, player2, player3), dealer)
+        game.endGame(PlayerGroup(listOf(player1, player2, player3), dealer))
 
         assertThat(player1.status).isEqualTo(ParticipantStatus.Win)
         assertThat(player2.status).isEqualTo(ParticipantStatus.Lose)
