@@ -1,19 +1,20 @@
 package dsl
 
 fun main() {
-    val person = introduce {
-        name("박재성")
-        company("우아한형제들")
-        skills {
-            soft("A passion for problem solving")
-            soft("Good communication skills")
-            hard("Kotlin")
+    val person =
+        introduce {
+            name("박재성")
+            company("우아한형제들")
+            skills {
+                soft("A passion for problem solving")
+                soft("Good communication skills")
+                hard("Kotlin")
+            }
+            languages {
+                "Korean" level 5
+                "English" level 3
+            }
         }
-        languages {
-            "Korean" level 5
-            "English" level 3
-        }
-    }
     println(person)
 }
 
@@ -25,7 +26,7 @@ data class Person(
     val name: String,
     val company: String?,
     val skills: Skills,
-    val languages: List<Language>
+    val languages: List<Language>,
 )
 
 class PersonBuilder {
@@ -57,7 +58,7 @@ class PersonBuilder {
 
 data class Skills(
     val softSkills: MutableList<String> = mutableListOf(),
-    val hardSkills: MutableList<String> = mutableListOf()
+    val hardSkills: MutableList<String> = mutableListOf(),
 )
 
 class SkillsBuilder {
