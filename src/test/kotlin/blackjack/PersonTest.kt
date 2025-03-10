@@ -3,6 +3,7 @@ package blackjack
 import blackjack.model.Card
 import blackjack.model.Number
 import blackjack.model.Person
+import blackjack.model.ResultCalculator
 import blackjack.model.Shape
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
@@ -14,7 +15,7 @@ class PersonTest {
     @BeforeEach
     fun setUp() {
         person =
-            object : Person() {
+            object : Person("사람") {
                 override fun isBust(): Boolean {
                     return true
                 }
@@ -32,7 +33,7 @@ class PersonTest {
         person.addCard(Card(Shape.SPADE, Number.NINE))
         person.addCard(Card(Shape.SPADE, Number.SEVEN))
         val expect = 16
-        val actual = person.calculateTotalScore()
+        val actual = ResultCalculator.calculateTotalScore(person.cards)
 
         assertThat(actual).isEqualTo(expect)
     }
