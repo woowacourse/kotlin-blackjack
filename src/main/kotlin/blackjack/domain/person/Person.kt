@@ -7,13 +7,14 @@ import blackjack.domain.state.PersonState
 abstract class Person(
     hand: Hand,
 ) {
-    protected lateinit var state: PersonState
+    protected var state: PersonState = PersonState.HIT
     val gameState: PersonState get() = state
 
     protected val hand = hand.copy()
 
-    open fun draw(deck: Deck) {
+    fun draw(deck: Deck) {
         hand.addCard(deck.draw())
+        state = PersonState.from(this)
     }
 
     fun cards(): List<Card> = hand.cards
