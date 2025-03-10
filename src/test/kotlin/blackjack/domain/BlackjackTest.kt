@@ -9,7 +9,7 @@ class BlackjackTest {
         val dealer = Dealer(emptyList(), RandomShuffler)
         val game = Blackjack(dealer, emptyList())
         game.start()
-        assertThat(dealer.getCountOfCards()).isEqualTo(1)
+        assertThat(dealer.cards.size).isEqualTo(1)
     }
 
     @Test
@@ -20,8 +20,8 @@ class BlackjackTest {
         val dealer = Dealer(players, RandomShuffler)
         val game = Blackjack(dealer, players)
         game.start()
-        assertThat(gio.getCountOfCards()).isEqualTo(2)
-        assertThat(eden.getCountOfCards()).isEqualTo(2)
+        assertThat(gio.cards.size).isEqualTo(2)
+        assertThat(eden.cards.size).isEqualTo(2)
     }
 
     @Test

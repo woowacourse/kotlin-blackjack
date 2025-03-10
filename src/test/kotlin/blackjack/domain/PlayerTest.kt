@@ -27,7 +27,7 @@ class PlayerTest {
         player.getCard(Card(Face.JACK, Suit.DIAMOND))
         player.getCard(Card(Face.JACK, Suit.HEART))
         player.getCard(Card(Face.JACK, Suit.SPADE))
-        assertThat(player.getCountOfCards()).isEqualTo(3)
+        assertThat(player.cards.size).isEqualTo(3)
         player.setResult()
         assertThat(player.playerState).isEqualTo(PlayerState.LOSE)
     }

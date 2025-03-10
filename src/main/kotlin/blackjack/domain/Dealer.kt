@@ -37,8 +37,6 @@ class Dealer(
 
     fun getScore(): Int? = hand.getScore()
 
-    fun getCountOfCards(): Int = hand.getSize()
-
     fun hitOrStay() {
         var dealerScore = getScore()
         while (dealerScore != null && dealerScore < 17) {

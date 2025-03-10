@@ -17,8 +17,6 @@ class Player(
         hand.add(cards)
     }
 
-    fun getCountOfCards(): Int = hand.getSize()
-
     fun hitOrStay(hit: () -> Unit) {
         if (wantToHit == true) {
             hit()

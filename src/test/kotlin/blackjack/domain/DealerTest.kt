@@ -12,7 +12,7 @@ class DealerTest {
         val dealer = Dealer(players, RandomShuffler)
         gio.getCard(Card(Number.SEVEN, Suit.DIAMOND))
         dealer.giveCard()
-        assertThat(eden.getCountOfCards()).isEqualTo(1)
-        assertThat(gio.getCountOfCards()).isEqualTo(2)
+        assertThat(eden.cards.size).isEqualTo(1)
+        assertThat(gio.cards.size).isEqualTo(2)
     }
 }
