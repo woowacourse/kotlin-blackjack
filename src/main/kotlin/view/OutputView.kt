@@ -1,7 +1,6 @@
 package view
 
 import model.PlayerResult
-import view.ViewMapper.mapToTitle
 
 class OutputView {
     fun printDealerAndPlayers(players: List<String>) {
