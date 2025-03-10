@@ -1,6 +1,5 @@
 package blackjack.model.service
 
-import blackjack.model.domain.ActionType
 import blackjack.model.domain.card.PlayingCard
 import blackjack.model.domain.participant.Dealer
 import blackjack.model.domain.participant.ParticipantStatus
@@ -21,18 +20,7 @@ class Blackjack(private val deck: PlayingCard) {
         }
     }
 
-    fun shouldStopDrawing(
-        playerAction: ActionType,
-        player: Player,
-    ): Boolean {
-        when (playerAction) {
-            ActionType.Hit -> hitAction(player)
-            ActionType.Stay -> return true
-        }
-        return false
-    }
-
-    private fun hitAction(player: Player) {
+    fun hitAction(player: Player) {
         player.receiveCard(deck.spreadCard())
         player.checkBust()
     }
