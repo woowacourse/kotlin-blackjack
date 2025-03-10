@@ -1,18 +1,14 @@
 package blackjack.view
 
-import blackjack.uiModel.PersonUiModel
-import blackjack.uiModel.ResultUiModel
+import blackjack.uimodel.ParticipantsUiModel
+import blackjack.uimodel.ResultUiModel
 
 class OutputView {
-    fun printNameMessage() {
-        println(ENTER_PLAYER_NAMES_MESSAGE)
-    }
-
-    fun printDrawMessage(personUiModels: List<PersonUiModel>) {
+    fun printDrawMessage(participantsUiModels: List<ParticipantsUiModel>) {
         println()
-        val nameList = personUiModels.map { it.name }.joinToString(DELIMITER)
+        val nameList = participantsUiModels.map { it.name }.joinToString(DELIMITER)
         println(FIRST_DRAW_MESSAGE.format(nameList))
-        personUiModels.forEach { person ->
+        participantsUiModels.forEach { person ->
             println(
                 DRAW_STATUS_MESSAGE.format(
                     person.name,
@@ -23,21 +19,22 @@ class OutputView {
         println()
     }
 
-    fun printFlagMessage(name: String) {
-        println(ASK_DRAW_CARD_MESSAGE.format(name))
+    fun printDrawStatus(participantsUiModel: ParticipantsUiModel) {
+        println(DRAW_STATUS_MESSAGE.format(participantsUiModel.name, participantsUiModel.cards.joinToString(DELIMITER)))
     }
 
-    fun printDrawStatus(personUiModel: PersonUiModel) {
-        println(DRAW_STATUS_MESSAGE.format(personUiModel.name, personUiModel.cards.joinToString(DELIMITER)))
-    }
-
-    fun printDealerDrawMessage() {
-        println(DEALER_DRAW_MESSAGE)
+    fun printDealerDrawMessage(flag: Boolean) {
+        println()
+        if (flag) {
+            println(DEALER_DRAW_MESSAGE)
+            println()
+            return
+        }
         println()
     }
 
-    fun printGameResult(personUiModels: List<PersonUiModel>) {
-        personUiModels.forEach { person ->
+    fun printCardScore(participantsUiModels: List<ParticipantsUiModel>) {
+        participantsUiModels.forEach { person ->
             print(DRAW_STATUS_MESSAGE.format(person.name, person.cards.joinToString(DELIMITER)))
             println(SCORE_RESULT_MESSAGE.format(person.score))
         }
@@ -55,9 +52,7 @@ class OutputView {
 
     companion object {
         private const val DEALER = "딜러"
-        private const val ENTER_PLAYER_NAMES_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)"
         private const val FIRST_DRAW_MESSAGE = "%s에게 2장을 나누었습니다."
-        private const val ASK_DRAW_CARD_MESSAGE = "%s는 한장의 카드를 더 받겠습니까? (예는 y, 아니오는 n)"
         private const val DEALER_DRAW_MESSAGE = "${DEALER}는 16이하라 한장의 카드를 더 받았습니다."
         private const val DRAW_STATUS_MESSAGE = "%s 카드: %s"
         private const val SCORE_RESULT_MESSAGE = " - 결과: %s"
