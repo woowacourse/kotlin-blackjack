@@ -48,8 +48,8 @@ class PlayersTest {
         // 예상 결과: 각 플레이어의 카드 네임 리스트
         val expected =
             listOf(
-                listOf("6클로버", "9스페이드"),
-                listOf("10클로버", "8스페이드"),
+                listOf("SIX" to "CLUB", "NINE" to "SPADE"),
+                listOf("TEN" to "CLUB", "EIGHT" to "SPADE"),
             )
 
         assertThat(players.getPlayerCardNames()).isEqualTo(expected)
