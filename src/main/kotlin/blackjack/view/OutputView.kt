@@ -7,7 +7,6 @@ import blackjack.domain.model.card.Suit
 import blackjack.domain.model.participant.Dealer
 import blackjack.domain.model.participant.Participant
 import blackjack.domain.model.participant.Player
-import blackjack.view.OutputView.Companion.toText
 
 class OutputView {
     fun newLine() = println()
@@ -51,7 +50,7 @@ class OutputView {
 
     private fun makeParticipantInfo(participant: Participant): String {
         val name = participant.name
-        val cards = participant.handCards.show().joinToString { card -> card.toText() }
+        val cards = participant.handCards.toList().joinToString { card -> card.toText() }
         return CARD_INFO_MESSAGE.format(name, cards)
     }
 

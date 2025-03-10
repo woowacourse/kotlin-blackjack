@@ -11,7 +11,7 @@ class HandCards {
         _cards += card
     }
 
-    fun show(): List<Card> {
+    fun toList(): List<Card> {
         return cards
     }
 

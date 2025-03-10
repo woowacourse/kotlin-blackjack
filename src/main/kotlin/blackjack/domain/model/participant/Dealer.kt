@@ -6,7 +6,7 @@ import blackjack.domain.model.card.Card
 class Dealer(
     name: String = DEFAULT_NAME,
 ) : Participant(name = name) {
-    fun showFirstCard(): Card = handCards.show().first()
+    fun showFirstCard(): Card = handCards.toList().first()
 
     override fun compareTo(opponent: Participant): GameResult {
         if (opponent.handCards.isBurst()) {

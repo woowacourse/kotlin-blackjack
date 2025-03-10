@@ -11,7 +11,7 @@ class HandCardsTest {
 
         handCards.add(card)
 
-        val cardsOfHand = handCards.show()
+        val cardsOfHand = handCards.toList()
         assertThat(cardsOfHand).hasSize(1)
     }
 
@@ -24,7 +24,7 @@ class HandCardsTest {
         handCards.add(queenHeart)
         handCards.add(aceSpade)
 
-        val firstCardOfHand = handCards.show()
+        val firstCardOfHand = handCards.toList()
         assertThat(firstCardOfHand).isEqualTo(listOf(queenHeart, aceSpade))
     }
 
