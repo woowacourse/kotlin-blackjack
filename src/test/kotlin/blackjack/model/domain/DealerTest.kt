@@ -25,6 +25,6 @@ class DealerTest {
 
     @Test
     fun `카드 숫자 합이 임계값보다 작은지 판단한다`() {
-        assertThat(dealer.overThreshold()).isTrue()
+        assertThat(dealer.canHit()).isTrue()
     }
 }

@@ -6,8 +6,8 @@ class Dealer(override val name: String = DEALER_NAME) : Participants() {
     override val cards: MutableList<Card> = mutableListOf()
     override var status: ParticipantStatus = ParticipantStatus.None
 
-    fun overThreshold(): Boolean {
-        return sumCardNumber > THRESHOLD
+    fun canHit(): Boolean {
+        return sumCardNumber <= THRESHOLD
     }
 
     companion object {
