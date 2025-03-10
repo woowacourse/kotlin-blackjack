@@ -13,16 +13,16 @@ fun main() {
     val players: List<Player> = readln().split(",").map { name: String -> Player(name.trim()) }
     println()
     val dealer = Dealer(players, RandomShuffler)
-    val blackjack = Blackjack(dealer, players)
+    val blackjack = Blackjack(dealer)
     println("${players.joinToString { player -> player.name }}에게 2장씩 나누었습니다.")
     println("딜러가 한 장을 오픈했습니다.")
-    blackjack.start()
+    blackjack.dealCards()
     println("딜러: ${dealer.cards.joinToString { card -> card.prettyString }}")
     players.forEach { player ->
         println("${player.name}카드: ${player.cards.joinToString { card -> card.prettyString }}")
     }
     println()
-    players.forEach { player ->
+    blackjack.startPlayerTurn { player ->
         println("${player.name}는 한 장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
         var input = readln()
         while (input == "y") {
@@ -34,7 +34,6 @@ fun main() {
         println("${player.name}카드: ${player.cards.joinToString { card -> card.prettyString }}")
     }
     println()
-    dealer.hitOrStay()
     println()
     println("딜러 카드: ${dealer.cards.joinToString { card -> card.prettyString }} - 결과: ${dealer.score}")
     players.forEach { player ->

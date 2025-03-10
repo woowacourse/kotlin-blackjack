@@ -15,8 +15,8 @@ class BlackjackTest {
     @Test
     fun `게임을 시작하면 딜러는 한 장의 카드를 지급받는다`() {
         val dealer = Dealer(emptyList(), RandomShuffler)
-        val game = Blackjack(dealer, emptyList())
-        game.start()
+        val game = Blackjack(dealer)
+        game.dealCards()
         assertThat(dealer.cards.size).isEqualTo(1)
     }
 
@@ -26,8 +26,8 @@ class BlackjackTest {
         val eden = Player("Eden")
         val players = listOf(gio, eden)
         val dealer = Dealer(players, RandomShuffler)
-        val game = Blackjack(dealer, players)
-        game.start()
+        val game = Blackjack(dealer)
+        game.dealCards()
         assertThat(gio.cards.size).isEqualTo(2)
         assertThat(eden.cards.size).isEqualTo(2)
     }
@@ -38,8 +38,8 @@ class BlackjackTest {
         val eden = Player("Eden")
         val players = listOf(gio, eden)
         val dealer = Dealer(players, RandomShuffler)
-        val game = Blackjack(dealer, players)
-        game.waitForPlayers()
+        val game = Blackjack(dealer)
+        game.startDealerTurn()
         assertThat(dealer.score).isGreaterThanOrEqualTo(17)
     }
 
@@ -59,7 +59,7 @@ class BlackjackTest {
 
         val players = listOf(gio, eden)
         val dealer = Dealer(players, RandomShuffler)
-        val blackjack = Blackjack(dealer, players)
+        val blackjack = Blackjack(dealer)
 
         dealer.draw(Card(NumberRank.NINE, Suit.SPADE), Card(NumberRank.TEN, Suit.SPADE))
         blackjack.finish()
@@ -79,7 +79,7 @@ class BlackjackTest {
             Card(NumberRank.TEN, Suit.SPADE),
             Card(NumberRank.TEN, Suit.SPADE),
         )
-        val blackjack = Blackjack(dealer, players)
+        val blackjack = Blackjack(dealer)
         blackjack.finish()
         assertThat(eden.state).isEqualTo(ParticipantState.WIN)
         assertThat(gio.state).isEqualTo(ParticipantState.WIN)
@@ -105,7 +105,7 @@ class BlackjackTest {
                     Card(NumberRank.TEN, Suit.DIAMOND),
                 )
             }
-        val blackjack = Blackjack(dealer, players)
+        val blackjack = Blackjack(dealer)
         blackjack.finish()
         assertThat(eden.state).isEqualTo(ParticipantState.WIN)
         assertThat(gio.state).isEqualTo(ParticipantState.LOSE)
@@ -122,7 +122,7 @@ class BlackjackTest {
             Dealer(players, RandomShuffler).apply {
                 draw(Card(NumberRank.TEN, Suit.HEART), Card(NumberRank.NINE, Suit.DIAMOND))
             }
-        val blackjack = Blackjack(dealer, players)
+        val blackjack = Blackjack(dealer)
         blackjack.finish()
         assertThat(dealer.participantStates).contains(ParticipantState.DRAW)
         assertThat(gio.state).isEqualTo(ParticipantState.DRAW)

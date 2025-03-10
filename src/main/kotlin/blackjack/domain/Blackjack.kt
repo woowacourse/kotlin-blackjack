@@ -2,44 +2,22 @@ package blackjack.domain
 
 class Blackjack(
     private val dealer: Dealer,
-    private val players: List<Player>,
 ) {
-    fun start() {
+    fun dealCards() {
         dealer.draw()
         dealer.pitch()
         dealer.pitch()
     }
 
-    fun waitForPlayers() {
-        players.forEach { player ->
-        }
+    fun startPlayerTurn(turn: (Player) -> Unit) {
+        dealer.startPlayerTurn(turn)
+    }
 
-        dealer.hitOrStay()
+    fun startDealerTurn() {
+        dealer.startTurn()
     }
 
     fun finish() {
-        players.forEach { player ->
-            if (player.state != ParticipantState.PLAYING) return@forEach
-            val playerScore: Int? = player.score
-            if (playerScore == null) {
-                player.state = ParticipantState.LOSE
-                return@forEach
-            }
-        }
-
-        val remainingPlayers = players.filter { player -> player.state == ParticipantState.PLAYING }
-        remainingPlayers.forEach { player ->
-            when {
-                player.score > dealer.score -> {
-                    player.state = ParticipantState.WIN
-                }
-
-                player.score < dealer.score -> {
-                    player.state = ParticipantState.LOSE
-                }
-
-                else -> player.state = ParticipantState.DRAW
-            }
-        }
+        dealer.setPlayersResult()
     }
 }

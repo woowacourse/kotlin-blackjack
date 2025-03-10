@@ -14,4 +14,12 @@ class DealerTest {
         assertThat(eden.cards.size).isEqualTo(1)
         assertThat(gio.cards.size).isEqualTo(2)
     }
+
+    @Test
+    fun `딜러는 플레이어가 카드를 더 뽑도록 할 수 있다`() {
+        val player = Player("Player")
+        val dealer = Dealer(listOf(player), FakeShuffler)
+        dealer.giveCard(player)
+        assertThat(player.cards.size).isEqualTo(1)
+    }
 }
