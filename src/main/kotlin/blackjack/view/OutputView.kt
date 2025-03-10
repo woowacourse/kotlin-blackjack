@@ -68,9 +68,7 @@ class OutputView {
 
     private fun getHandsStatus(cards: List<Card>): String {
         return cards.joinToString { card ->
-            val cardShape = card.shape
-            val cardNumber = card.number
-            "${cardNumber.value}${cardShape.type}"
+            "${card.number}${card.shape.type}"
         }
     }
 
