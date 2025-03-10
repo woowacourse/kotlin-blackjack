@@ -5,8 +5,10 @@ class GameManager(
     private val players: List<Player>,
 ) {
     fun dealInitialCardWithCount(count: Int) {
-        dealer.addCards(Deck.drawWithCount(count))
-        players.forEach { player -> player.addCards(Deck.drawWithCount(count)) }
+        repeat(count) {
+            dealer.addCard(Deck.draw())
+            players.forEach { player -> player.addCard(Deck.draw()) }
+        }
     }
 
     fun calculateResultMap(): Map<Player, ResultType> {
