@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 class CharacterTest {
     @Test
     fun `캐릭터 카드는 Jack, Queen, King이 존재한다`() {
-        assertThat(Face.entries).isEqualTo(listOf(Face.JACK, Face.QUEEN, Face.KING))
+        assertThat(Face.entries).hasSameElementsAs(listOf(Face.JACK, Face.QUEEN, Face.KING))
     }
 
     @Test
