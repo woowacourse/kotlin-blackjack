@@ -16,12 +16,12 @@ class ParticipantTest {
     }
 
     @Test
-    fun `덱에서 한 장의 카드를 가져올 수 있다`() {
+    fun `덱에서 한 장의 카드를 추가할 수 있다`() {
         val participant = FakeParticipant()
         val card = Card.of(Rank.ACE, Suit.SPADE)
 
         participant.addCard(card)
-        assertThat(participant.cards).contains(card)
+        assertThat(participant.cards.getCards()).contains(card)
     }
 
     @Test

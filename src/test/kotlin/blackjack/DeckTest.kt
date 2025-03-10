@@ -5,12 +5,18 @@ import blackjack.domain.Deck
 import blackjack.domain.Rank
 import blackjack.domain.Suit
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import kotlin.IllegalArgumentException
 
 class DeckTest {
-    private val testDeck = Deck(Card.getAllCard())
+    private lateinit var testDeck: Deck
+
+    @BeforeEach
+    fun setDeck() {
+        testDeck = Deck(Card.getAllCard())
+    }
 
     @Test
     fun `카드를 뽑을 수 있다`() {

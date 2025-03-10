@@ -1,9 +1,9 @@
 package blackjack.domain
 
-class GameResult(game: BlackJackGame) {
+class GameResult(private val dealer: Dealer, players: List<Player>) {
+    constructor(game: BlackJackGame) : this(game.dealer, game.players)
+
     private val playerResults: List<PlayerResult>
-    private val dealer = game.dealer
-    private val players = game.players
 
     init {
         playerResults =

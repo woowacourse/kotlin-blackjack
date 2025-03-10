@@ -1,7 +1,5 @@
 package blackjack.domain
 
-import blackjack.domain.Participant.Companion.BLACKJACK_BUST_LIMIT
-
 data class Cards(private val cards: MutableList<Card> = mutableListOf()) {
     fun add(card: Card) {
         cards.add(card)
