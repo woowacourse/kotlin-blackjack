@@ -7,13 +7,13 @@ enum class ResultType(val value: Char) {
 
     companion object {
         fun judgeScore(
-            dealer: Dealer,
-            player: Player,
+            reference: Participant,
+            target: Participant,
         ): ResultType {
-            val dealerFinalScore = ScoreCalculator.calculateFinalScore(dealer.cards)
-            val playerFinalScore = ScoreCalculator.calculateFinalScore(player.cards)
-            if (dealerFinalScore < playerFinalScore) return WIN
-            if (dealerFinalScore == playerFinalScore) return TIE
+            val referenceFinalScore = ScoreCalculator.calculateFinalScore(reference.cards)
+            val targetFinalScore = ScoreCalculator.calculateFinalScore(target.cards)
+            if (targetFinalScore < referenceFinalScore) return WIN
+            if (targetFinalScore == referenceFinalScore) return TIE
             return LOSS
         }
     }
