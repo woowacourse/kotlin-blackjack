@@ -1,5 +1,6 @@
 package blackjack.view
 
+import blackjack.model.Card
 import blackjack.model.Dealer
 import blackjack.model.Player
 import blackjack.model.Players
@@ -15,7 +16,7 @@ class OutputView {
     ) {
         val playersNames: String = players.joinToString(", ") { it.name }
         println("\n${dealer.name}와 ${playersNames}에게 2장의 카드를 나누었습니다.")
-        println("${dealer.name}: ${dealer.cards.getCardsInfomation()[0]}")
+        println("${dealer.name}: ${dealer.cards.value[0].toBlackjackView()}")
         players.forEach { player ->
             printPlayerCard(player)
         }
@@ -35,7 +36,7 @@ class OutputView {
     }
 
     fun printPlayerCard(player: Player) {
-        println("${player.name}카드: ${player.cards.getCardsInfomation().joinToString(", ")}")
+        println("${player.name}카드: ${player.cards.value.joinToString { it.toBlackjackView() }}")
     }
 
     fun printBust(player: Player) {
@@ -54,16 +55,16 @@ class OutputView {
         dealer.results.map { result ->
             results.add("${result.value}${result.key.koreanTitle}")
         }
+        val dealerCards: String =
+            dealer.cards.value.joinToString { it.toBlackjackView() }
         println(
-            "\n${dealer.name}카드: ${
-                dealer.cards.getCardsInfomation().joinToString(", ")
-            } - 결과: ${dealer.cards.calculateScore()}",
+            "\n${dealer.name}카드: $dealerCards - 결과: ${dealer.cards.calculateScore()}",
         )
         players.value.forEach { player ->
+            val playersCards: String =
+                player.cards.value.joinToString { it.toBlackjackView() }
             println(
-                "${player.name}카드: ${
-                    player.cards.getCardsInfomation().joinToString(", ")
-                } - 결과: ${player.cards.calculateScore()}",
+                "${player.name}카드: $playersCards - 결과: ${player.cards.calculateScore()}",
             )
         }
 
@@ -73,4 +74,6 @@ class OutputView {
             println("${player.name}: ${player.result.koreanTitle}")
         }
     }
+
+    private fun Card.toBlackjackView(): String = shape.koreanName + denomination.title
 }

@@ -14,13 +14,4 @@ class CardTest {
             { assertThat(card.denomination).isEqualTo(Denomination.TWO) },
         )
     }
-
-    @Test
-    fun `카드의 모양과 끗수를 합쳐서 반환한다`() {
-        val card = Card(CardShape.HEART, Denomination.TWO)
-
-        val actual = card.combine()
-
-        assertThat(actual).isEqualTo("2하트")
-    }
 }
