@@ -1,7 +1,5 @@
 package blackjack.domain.model.card
 
-import blackjack.domain.model.GameResult
-
 class HandCards {
     private val _cards = mutableListOf<Card>()
     private val cards
@@ -15,28 +13,12 @@ class HandCards {
         return cards
     }
 
-    fun isBurst(): Boolean {
+    fun isBust(): Boolean {
         return getScore() > BLACK_JACK_NUMBER
     }
 
     fun isLessOrSameThan(score: Int): Boolean {
         return getScore() <= score
-    }
-
-    fun compareTo(opponentHandCards: HandCards): GameResult {
-        val myScore = getScore()
-        val opponentScore = opponentHandCards.getScore()
-
-        if (isBurst()) {
-            return GameResult.LOSE
-        }
-        if (getScore() > opponentHandCards.getScore()) {
-            return GameResult.WIN
-        }
-        if (getScore() == opponentHandCards.getScore()) {
-            return GameResult.DRAW
-        }
-        return GameResult.LOSE
     }
 
     fun getScore(): Int {
