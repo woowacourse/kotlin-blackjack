@@ -5,8 +5,8 @@ enum class DrawChoice(val answer: String) {
     NO("n"),
     ;
 
-    fun isStay(): Boolean {
-        return this == NO
+    fun isDraw(): Boolean {
+        return this == YES
     }
 
     companion object {
