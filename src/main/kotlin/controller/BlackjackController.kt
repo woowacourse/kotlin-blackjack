@@ -1,9 +1,10 @@
 package controller
 
-import model.Cards
+import model.CardDistributor
 import model.CardsGenerator
 import model.Dealer
 import model.GameResultDecider
+import model.Hand
 import model.Player
 import model.Players
 import model.displayNames
@@ -16,28 +17,50 @@ class BlackjackController(
     private val cardsGenerator: CardsGenerator,
 ) {
     fun run() {
-        val allCards = cardsGenerator.generateCards()
-        val initialDealerCards = allCards.getInitialCards()
-        val players = Players(getPlayers(inputView.inputPlayers(), allCards))
+        val generatedCards = cardsGenerator.generateCards()
+        val cardDistributor = CardDistributor(generatedCards)
+
+        val initialDealerCards = cardDistributor.distributeInitialCards()
+        val players = Players(getPlayers(inputView.inputPlayers(), cardDistributor))
         val dealer = Dealer(initialDealerCards)
 
         val playerCardNames: List<List<String>> =
-            players.map { player ->
-                player.getPlayerCards().displayNames()
-            }
+            players.map { player -> player.getHand().handCards.displayNames() }
 
         showInitialGameState(players.getPlayersNames(), initialDealerCards, playerCardNames)
-        handlePlayerTurns(players, allCards)
-        handleDealerTurn(dealer, allCards)
+        handlePlayerTurns(players, cardDistributor)
+        handleDealerTurn(dealer, cardDistributor)
         showTotalResult(initialDealerCards, dealer, players)
     }
 
+    private fun showInitialGameState(
+        playersNames: List<String>,
+        initialDealerCards: Hand,
+        playerCardsNames: List<List<String>>,
+    ) {
+        val dealerCardNames = initialDealerCards.handCards.displayNames()
+        outputView.printDealerAndPlayers(playersNames)
+        outputView.printInitialCards(dealerCardNames, playersNames, playerCardsNames)
+    }
+
+    private fun handlePlayerTurns(
+        players: Players,
+        cardDistributor: CardDistributor,
+    ) {
+        players.forEach { player ->
+            while (player.decideToHit() && inputView.readHitOrStand(player.name)) {
+                player.performTurn(cardDistributor)
+                outputView.printPlayerCards(player.name, player.getHand().handCards.displayNames())
+            }
+        }
+    }
+
     private fun showTotalResult(
-        initialDealerCards: Cards,
+        initialDealerCards: Hand,
         dealer: Dealer,
         players: Players,
     ) {
-        val dealerCardNames = initialDealerCards.allCards.displayNames()
+        val dealerCardNames = initialDealerCards.handCards.displayNames()
         outputView.printDealerResult(dealerCardNames, dealer.getScore())
 
         showPlayerResult(players, players.getPlayersNames())
@@ -49,51 +72,27 @@ class BlackjackController(
         playersNames: List<String>,
     ) {
         val updatedPlayerCardsNames: List<List<String>> =
-            players.map { player ->
-                player.getPlayerCards().displayNames()
-            }
+            players.map { player -> player.getHand().handCards.displayNames() }
         val playersTotalScore = players.getPlayersScores()
         outputView.printPlayerResult(playersNames, updatedPlayerCardsNames, playersTotalScore)
     }
 
-    private fun showInitialGameState(
-        playersNames: List<String>,
-        initialDealerCards: Cards,
-        playerCardsNames: List<List<String>>,
-    ) {
-        val dealerCardNames = initialDealerCards.allCards.displayNames()
-        outputView.printDealerAndPlayers(playersNames)
-        outputView.printInitialCards(dealerCardNames, playersNames, playerCardsNames)
-    }
-
     private fun handleDealerTurn(
         dealer: Dealer,
-        allCards: Cards,
+        cardDistributor: CardDistributor,
     ) {
         if (dealer.decideToHit()) {
-            val dealerAddCount = dealer.getDrawCount(allCards)
+            val dealerAddCount = dealer.getDrawCount(cardDistributor)
             outputView.printDealerHit(dealerAddCount)
-        }
-    }
-
-    private fun handlePlayerTurns(
-        players: Players,
-        allCards: Cards,
-    ) {
-        players.forEach { player ->
-            while (player.decideToHit() && inputView.readHitOrStand(player.name)) {
-                player.performTurn(allCards)
-                outputView.printPlayerCards(player.name, player.getPlayerCards().displayNames())
-            }
         }
     }
 
     private fun getPlayers(
         playersNames: List<String>,
-        allCards: Cards,
+        cardDistributor: CardDistributor,
     ): List<Player> =
         playersNames.map { name ->
-            Player(name, allCards.getInitialCards())
+            Player(name, cardDistributor.distributeInitialCards())
         }
 
     private fun showGameResult(

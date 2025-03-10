@@ -1,19 +1,17 @@
 package model
 
-class Player(val name: String, val playerCards: Cards) : Participant(playerCards) {
+class Player(val name: String, private val hand: Hand) : Participant(hand) {
     init {
         require(name.isNotEmpty()) { PLAYER_BLANK_ERROR_MESSAGE }
     }
 
-    fun getPlayerCards(): List<Card> = playerCards.getCards()
-
-    override fun performTurn(cards: Cards): Boolean {
-        if (decideToHit()) {
-            val drawnCard = drawCard(cards.allCards)
-            addCard(drawnCard)
-            return false
+    override fun performTurn(cardDistributor: CardDistributor): Boolean {
+        return decideToHit().also {
+            if (it) {
+                val drawnCard = cardDistributor.drawCard()
+                addCard(drawnCard)
+            }
         }
-        return true
     }
 
     override fun decideToHit(): Boolean = getScore() <= GameResultDecider.BLACKJACK_SCORE
