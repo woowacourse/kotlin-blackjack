@@ -4,6 +4,7 @@ import blackjack.domain.model.Action
 import blackjack.domain.model.Dealer
 import blackjack.domain.model.Deck
 import blackjack.domain.model.Participant
+import blackjack.domain.model.Participants
 import blackjack.domain.model.Player
 import blackjack.view.InputView
 import blackjack.view.OutputView
@@ -14,30 +15,22 @@ class GameController(
 ) {
     fun run() {
         val deck = Deck()
-        val dealer = Dealer()
-        val players: List<Player> = repeatUntilValid { inputView.readPlayerNames().map(::Player) }
-        processInitialDeals(deck, listOf(dealer) + players)
-        announceInitialDeals(dealer, players)
-        processPlayersHits(deck, players)
-        processDealerHits(deck, dealer)
-        outputView.printResults(dealer, players)
+        val participants = repeatUntilValid { Participants(Dealer(), inputView.readPlayerNames().map(::Player)) }
+        processInitialDeals(deck, participants)
+        outputView.printInitialDeals(participants)
+        outputView.printParticipantsStatuses(participants)
+        processPlayersHits(deck, participants.players)
+        processDealerHits(deck, participants.dealer)
+        outputView.printResults(participants)
     }
 
     private fun processInitialDeals(
         deck: Deck,
-        participants: List<Participant>,
+        participants: Participants,
     ) {
-        participants.forEach { player ->
+        participants.list.forEach { player ->
             player.accept(deck.draw(Participant.INITIAL_DRAW_COUNT))
         }
-    }
-
-    private fun announceInitialDeals(
-        dealer: Dealer,
-        players: List<Player>,
-    ) {
-        outputView.printInitialDeals(dealer, players)
-        outputView.printParticipantStatus(listOf(dealer) + players)
     }
 
     private fun processPlayersHits(

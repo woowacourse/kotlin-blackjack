@@ -2,27 +2,25 @@ package blackjack.view
 
 import blackjack.domain.model.Dealer
 import blackjack.domain.model.Participant
+import blackjack.domain.model.Participants
 import blackjack.domain.model.Player
 import blackjack.domain.model.Rank
 import blackjack.domain.model.Result
 import blackjack.domain.model.Suit
 
 class OutputView {
-    fun printInitialDeals(
-        dealer: Dealer,
-        players: List<Player>,
-    ) {
+    fun printInitialDeals(participants: Participants) {
         println(
             MESSAGE_INITIAL_HAND_DISTRIBUTED.format(
-                dealer.name,
-                players.map(Player::name).joinToString(PLAYER_CARDS_DELIMITER),
+                participants.dealer.name,
+                participants.players.map(Player::name).joinToString(PLAYER_CARDS_DELIMITER),
             ),
         )
         println()
     }
 
-    fun printParticipantStatus(participants: List<Participant>) {
-        participants.forEach { participant ->
+    fun printParticipantsStatuses(participants: Participants) {
+        participants.list.forEach { participant ->
             println(renderParticipantStatus(participant))
         }
         println()
@@ -37,15 +35,12 @@ class OutputView {
         println(MESSAGE_DEALER_HITS_STATE)
     }
 
-    fun printResults(
-        dealer: Dealer,
-        players: List<Player>,
-    ) {
-        (listOf(dealer) + players).forEach { player -> printParticipantResult(player) }
+    fun printResults(participants: Participants) {
+        participants.list.forEach { participant -> printParticipantResult(participant) }
         println(MESSAGE_RESULTS_HEADER)
-        val playerResults = dealer.getPlayerResults(players)
-        val dealerResults = dealer.getDealerResults(playerResults)
-        printDealerResults(dealer, dealerResults)
+        val playerResults = participants.dealer.getPlayerResults(participants.players)
+        val dealerResults = participants.dealer.getDealerResults(playerResults)
+        printDealerResults(participants.dealer, dealerResults)
         playerResults.forEach { (player, result) -> printParticipantResult(player, result) }
     }
 
