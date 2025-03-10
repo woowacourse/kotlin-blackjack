@@ -16,7 +16,6 @@ abstract class Participant(
             }
 
     fun draw(card: Card) {
-        println("card.possibleScore is ${card.possibleScore}")
         hand.draw(card)
     }
 
