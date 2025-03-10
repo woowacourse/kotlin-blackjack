@@ -1,5 +1,6 @@
-package blackjack.model.domain
+package blackjack.model.domain.participant
 
+import blackjack.model.domain.card.Card
 import blackjack.model.service.Blackjack.Companion.THRESHOLD
 
 class Dealer(override val name: String = DEALER_NAME) : Participants() {

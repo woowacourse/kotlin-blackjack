@@ -1,6 +1,8 @@
-package blackjack.model.domain
+package blackjack.model.domain.participant
 
-import blackjack.model.domain.ParticipantStatus.Companion.isBust
+import blackjack.model.domain.card.Card
+import blackjack.model.domain.card.CardNumber
+import blackjack.model.domain.participant.ParticipantStatus.Companion.isBust
 import blackjack.model.service.Blackjack.Companion.BUST_STANDARD
 
 abstract class Participants() {

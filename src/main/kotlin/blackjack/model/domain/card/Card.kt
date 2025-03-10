@@ -1,4 +1,4 @@
-package blackjack.model.domain
+package blackjack.model.domain.card
 
 data class Card(
     val symbol: Shape,

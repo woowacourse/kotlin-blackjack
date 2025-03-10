@@ -1,13 +1,13 @@
 package blackjack.model.service
 
 import blackjack.model.domain.ActionType
-import blackjack.model.domain.Card
-import blackjack.model.domain.CardNumber
-import blackjack.model.domain.Dealer
-import blackjack.model.domain.ParticipantStatus
-import blackjack.model.domain.Player
-import blackjack.model.domain.PlayingCard
-import blackjack.model.domain.Shape
+import blackjack.model.domain.card.Card
+import blackjack.model.domain.card.CardNumber
+import blackjack.model.domain.card.PlayingCard
+import blackjack.model.domain.card.Shape
+import blackjack.model.domain.participant.Dealer
+import blackjack.model.domain.participant.ParticipantStatus
+import blackjack.model.domain.participant.Player
 import blackjack.model.strategy.FalseShuffle
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test

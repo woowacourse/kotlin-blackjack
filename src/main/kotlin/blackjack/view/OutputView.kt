@@ -1,11 +1,11 @@
 package blackjack.view
 
-import blackjack.model.domain.Card
-import blackjack.model.domain.Dealer
-import blackjack.model.domain.ParticipantStatus
-import blackjack.model.domain.Participants
-import blackjack.model.domain.Player
-import blackjack.model.domain.Shape
+import blackjack.model.domain.card.Card
+import blackjack.model.domain.card.Shape
+import blackjack.model.domain.participant.Dealer
+import blackjack.model.domain.participant.ParticipantStatus
+import blackjack.model.domain.participant.Participants
+import blackjack.model.domain.participant.Player
 
 class OutputView {
     fun printInitCardStatus(

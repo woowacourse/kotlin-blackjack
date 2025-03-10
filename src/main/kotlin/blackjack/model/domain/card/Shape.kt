@@ -1,4 +1,4 @@
-package blackjack.model.domain
+package blackjack.model.domain.card
 
 enum class Shape {
     Diamond,

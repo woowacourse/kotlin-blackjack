@@ -1,4 +1,6 @@
-package blackjack.model.domain
+package blackjack.model.domain.participant
+
+import blackjack.model.domain.card.Card
 
 class Player(override val name: String) : Participants() {
     override val cards: MutableList<Card> = mutableListOf()

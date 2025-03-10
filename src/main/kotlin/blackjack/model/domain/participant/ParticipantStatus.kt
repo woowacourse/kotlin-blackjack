@@ -1,4 +1,4 @@
-package blackjack.model.domain
+package blackjack.model.domain.participant
 
 import blackjack.model.service.Blackjack
 

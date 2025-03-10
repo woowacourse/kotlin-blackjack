@@ -1,11 +1,11 @@
 package blackjack.controller
 
 import blackjack.model.domain.ActionType
-import blackjack.model.domain.Dealer
-import blackjack.model.domain.ParticipantStatus
-import blackjack.model.domain.Player
-import blackjack.model.domain.PlayingCard
 import blackjack.model.domain.YesOrNo
+import blackjack.model.domain.card.PlayingCard
+import blackjack.model.domain.participant.Dealer
+import blackjack.model.domain.participant.ParticipantStatus
+import blackjack.model.domain.participant.Player
 import blackjack.model.service.Blackjack
 import blackjack.model.strategy.TrueShuffle
 import blackjack.view.InputView

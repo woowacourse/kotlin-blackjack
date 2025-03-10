@@ -1,4 +1,4 @@
-package blackjack.model.domain
+package blackjack.model.domain.card
 
 import blackjack.model.strategy.CardShuffler
 import java.util.ArrayDeque
