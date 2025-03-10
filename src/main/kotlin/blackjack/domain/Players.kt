@@ -7,6 +7,22 @@ class Players(
         require(players.size in MIN_PLAYER_COUNT..MAX_PLAYER_COUNT) { ERROR_INVALID_PLAYER_COUNT }
     }
 
+    fun drawCard(deck: Deck) {
+        players.forEach {
+            it.drawCard(deck.pick())
+        }
+    }
+
+    fun playGame(
+        deck: Deck,
+        onResponse: (Player) -> Boolean,
+        onDone: (Player) -> Unit,
+    ) {
+        players.forEach {
+            it.playGame(deck, onResponse, onDone)
+        }
+    }
+
     companion object {
         private const val MIN_PLAYER_COUNT = 1
         private const val MAX_PLAYER_COUNT = 7

@@ -1,5 +1,6 @@
 package blackjack.controller
 
+import blackjack.domain.BlackjackGame
 import blackjack.domain.Dealer
 import blackjack.domain.Deck
 import blackjack.domain.Player
@@ -12,61 +13,41 @@ class BlackjackController(
     private val outputView: OutputView,
 ) {
     fun play() {
+        val game = BlackjackGame(Deck.create())
         val dealer = Dealer()
         val players = getPlayers()
-        val deck = Deck.create()
-        dealInitialCards(dealer, players, deck)
 
-        drawPlayerCards(players, deck)
-        drawDealerCards(dealer, deck)
+        startGame(game, dealer, players)
+        playGame(game, dealer, players)
         showGameResult(dealer, players)
     }
 
     private fun getPlayers(): Players {
         val playerNames = inputView.readPlayerNames()
-        val players = playerNames.map { Player(it) }
-        return Players(players)
+        return Players(playerNames.map(::Player))
     }
 
-    private fun dealInitialCards(
+    private fun startGame(
+        game: BlackjackGame,
         dealer: Dealer,
         players: Players,
-        deck: Deck,
     ) {
-        repeat(INITIAL_CARD_COUNT) {
-            dealer.drawCard(deck.pick())
-            players.players.forEach { it.drawCard(deck.pick()) }
-        }
+        game.distributeInitialCards(dealer, players)
         outputView.printCardInfo(dealer, players)
     }
 
-    private fun drawPlayerCards(
-        players: Players,
-        deck: Deck,
-    ) {
-        players.players.forEach { player ->
-            while (player.canHit() && inputView.readPlayerHit(player)) {
-                player.drawCard(deck.pick())
-                outputView.printPlayerCards(player)
-            }
-            if (!player.canHit()) {
-                outputView.printBust(player)
-            }
-        }
-    }
-
-    private fun drawDealerCards(
+    private fun playGame(
+        game: BlackjackGame,
         dealer: Dealer,
-        deck: Deck,
+        players: Players,
     ) {
-        var count = 0
-        while (dealer.canHit()) {
-            dealer.drawCard(deck.pick())
-            count++
-        }
-        if (count > 0) {
-            outputView.printDealerHit(dealer, count)
-        }
+        game.playPlayersTurn(
+            players,
+            onResponse = inputView::readPlayerHit,
+            onDone = outputView::printPlayerCards,
+        )
+        game.playDealerTurn(dealer)
+        outputView.printDealerHit(dealer)
     }
 
     private fun showGameResult(
@@ -87,9 +68,5 @@ class BlackjackController(
                 it.getResult(dealer.getScore()),
             )
         }
-    }
-
-    companion object {
-        const val INITIAL_CARD_COUNT = 2
     }
 }

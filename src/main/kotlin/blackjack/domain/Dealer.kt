@@ -18,6 +18,12 @@ class Dealer(
         }
     }
 
+    fun playGame(deck: Deck) {
+        while (canHit()) {
+            drawCard(deck.pick())
+        }
+    }
+
     companion object {
         private const val DEALER_DEFAULT_NAME = "딜러"
         private const val DEALER_HIT_CONDITION = 16

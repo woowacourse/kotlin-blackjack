@@ -30,11 +30,11 @@ class OutputView {
         println(MESSAGE_BUST.format(player.name))
     }
 
-    fun printDealerHit(
-        dealer: Dealer,
-        count: Int,
-    ) {
-        println(MESSAGE_DEALER_HIT.format(dealer.name, count))
+    fun printDealerHit(dealer: Dealer) {
+        val count = dealer.hand.cards.size - 2
+        if (count > 0) {
+            println(MESSAGE_DEALER_HIT.format(dealer.name, count))
+        }
     }
 
     fun printParticipantScore(

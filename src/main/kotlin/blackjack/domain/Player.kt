@@ -17,4 +17,15 @@ class Player(
             else -> Result.PUSH
         }
     }
+
+    fun playGame(
+        deck: Deck,
+        onResponse: (Player) -> Boolean,
+        onDone: (Player) -> Unit,
+    ) {
+        while (canHit() && onResponse(this)) {
+            drawCard(deck.pick())
+            onDone(this)
+        }
+    }
 }
