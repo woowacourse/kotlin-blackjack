@@ -1,6 +1,8 @@
 package blackjack
 
 import blackjack.domain.Card
+import blackjack.domain.Rank
+import blackjack.domain.Suit
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -13,5 +15,12 @@ class CardTest {
         for (i in cards.indices) {
             assertThat(cards[i]).isSameAs(copied[i])
         }
+    }
+
+    @Test
+    fun `Card의 POOL은 바뀌지 않는다`() {
+        val cards = Card.getAllCard()
+        cards.toMutableList()[0] = Card.of(Rank.TEN, Suit.CLUB)
+        assertThat(Card.getAllCard()).isNotSameAs(cards)
     }
 }
