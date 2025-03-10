@@ -15,7 +15,7 @@ class GameController(
     fun run() {
         val deck = Deck()
         val dealer = Dealer()
-        val players: List<Player> = inputView.readPlayerNames().map(::Player)
+        val players: List<Player> = repeatUntilValid { inputView.readPlayerNames().map(::Player) }
         processInitialDeals(deck, listOf(dealer) + players)
         announceInitialDeals(dealer, players)
 
@@ -47,7 +47,7 @@ class GameController(
         player: Player,
     ) {
         if (!player.canHit()) return
-        val action = inputView.readPlayerAction(player)
+        val action = repeatUntilValid { inputView.readPlayerAction(player) }
         if (action == Action.STAND) {
             printStatusOnNoHit(player)
             return
@@ -83,5 +83,12 @@ class GameController(
         val dealerResults = dealer.getDealerResults(playerResults)
         outputView.printDealerResults(dealer, dealerResults)
         playerResults.forEach { (player, result) -> outputView.printPlayerResult(player, result) }
+    }
+
+    private fun <T> repeatUntilValid(event: () -> T): T {
+        while (true) {
+            kotlin.runCatching { event() }.onSuccess { return it }
+                .onFailure { println(it.message ?: it.stackTraceToString()) }
+        }
     }
 }
