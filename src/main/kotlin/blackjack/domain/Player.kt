@@ -9,12 +9,8 @@ class Player(
     var wantToHit: Boolean? = null
     var playerState: PlayerState = PlayerState.PLAYING
 
-    fun getCard(card: Card) {
-        hand.add(card)
-    }
-
-    fun getCards(cards: List<Card>) {
-        hand.addAll(*(cards.toTypedArray()))
+    fun draw(card: Card) {
+        hand.draw(card)
     }
 
     fun hitOrStay(hit: () -> Unit) {

@@ -39,13 +39,22 @@ class BlackjackTest {
 
     @Test
     fun `게임을 완료한 후 플레이어, 딜러의 승패를 알 수 있다`() {
-        val gio = Player("Gio")
-        val eden = Player("Eden")
+        val gio =
+            Player("Gio").apply {
+                draw(Card(NumberRank.TEN, Suit.SPADE))
+                draw(Card(NumberRank.TEN, Suit.SPADE))
+            }
+
+        val eden =
+            Player("Eden").apply {
+                draw(Card(NumberRank.NINE, Suit.SPADE))
+                draw(Card(NumberRank.NINE, Suit.SPADE))
+            }
+
         val players = listOf(gio, eden)
         val dealer = Dealer(players, RandomShuffler)
         val blackjack = Blackjack(dealer, players)
-        gio.getCards(listOf(Card(NumberRank.TEN, Suit.SPADE), Card(NumberRank.TEN, Suit.SPADE)))
-        eden.getCards(listOf(Card(NumberRank.NINE, Suit.SPADE), Card(NumberRank.NINE, Suit.SPADE)))
+
         dealer.getCards(listOf(Card(NumberRank.NINE, Suit.SPADE), Card(NumberRank.TEN, Suit.SPADE)))
         blackjack.finish()
         assertThat(gio.playerState).isEqualTo(PlayerState.WIN)
@@ -74,29 +83,26 @@ class BlackjackTest {
 
     @Test
     fun `아직 승패가 결정되지 않았다면, 딜러와 플레이어 중 카드의 합이 21에 가까운 사람이 이긴다`() {
-        val eden = Player("Eden")
-        val gio = Player("Gio")
+        val eden =
+            Player("Eden").apply {
+                draw(Card(AceRank, Suit.SPADE))
+                draw(Card(NumberRank.TEN, Suit.CLOVER))
+            }
+        val gio =
+            Player("Gio").apply {
+                draw(Card(NumberRank.TEN, Suit.DIAMOND))
+                draw(Card(NumberRank.NINE, Suit.SPADE))
+            }
         val players: List<Player> = listOf(eden, gio)
-        val dealer = Dealer(players, RandomShuffler)
-
-        eden.getCards(
-            listOf(
-                Card(AceRank, Suit.SPADE),
-                Card(NumberRank.TEN, Suit.CLOVER),
-            ),
-        )
-        gio.getCards(
-            listOf(
-                Card(NumberRank.TEN, Suit.DIAMOND),
-                Card(NumberRank.NINE, Suit.SPADE),
-            ),
-        )
-        dealer.getCards(
-            listOf(
-                Card(NumberRank.TEN, Suit.HEART),
-                Card(NumberRank.TEN, Suit.DIAMOND),
-            ),
-        )
+        val dealer =
+            Dealer(players, RandomShuffler).apply {
+                getCards(
+                    listOf(
+                        Card(NumberRank.TEN, Suit.HEART),
+                        Card(NumberRank.TEN, Suit.DIAMOND),
+                    ),
+                )
+            }
         val blackjack = Blackjack(dealer, players)
         blackjack.finish()
         assertThat(eden.playerState).isEqualTo(PlayerState.WIN)
@@ -105,22 +111,17 @@ class BlackjackTest {
 
     @Test
     fun `딜러와 플레이어의 숫자가 같다면, 무승부로 처리한다`() {
-        val gio = Player("Gio")
+        val gio =
+            Player("Gio").apply {
+                draw(Card(NumberRank.TEN, Suit.DIAMOND))
+                draw(Card(NumberRank.NINE, Suit.SPADE))
+            }
         val players: List<Player> = listOf(gio)
-        val dealer = Dealer(players, RandomShuffler)
-
-        gio.getCards(
-            listOf(
-                Card(NumberRank.TEN, Suit.DIAMOND),
-                Card(NumberRank.NINE, Suit.SPADE),
-            ),
-        )
-        dealer.getCards(
-            listOf(
-                Card(NumberRank.TEN, Suit.HEART),
-                Card(NumberRank.NINE, Suit.DIAMOND),
-            ),
-        )
+        val dealer =
+            Dealer(players, RandomShuffler).apply {
+                getCard(Card(NumberRank.TEN, Suit.HEART))
+                getCard(Card(NumberRank.NINE, Suit.DIAMOND))
+            }
         val blackjack = Blackjack(dealer, players)
         blackjack.finish()
         assertThat(dealer.playerStates).contains(PlayerState.DRAW)

@@ -20,7 +20,7 @@ class Dealer(
             }
 
     fun getCard(card: Card = deck.draw()) {
-        hand.add(card)
+        hand.draw(card)
     }
 
     fun getCards(cards: List<Card>) {
@@ -28,11 +28,11 @@ class Dealer(
     }
 
     fun giveCard() {
-        players.forEach { player -> player.getCard(deck.draw()) }
+        players.forEach { player -> player.draw(deck.draw()) }
     }
 
     fun giveCard(player: Player) {
-        player.getCard(deck.draw())
+        player.draw(deck.draw())
     }
 
     fun getScore(): Int? = hand.score
