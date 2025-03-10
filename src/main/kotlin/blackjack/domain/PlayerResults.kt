@@ -1,6 +1,6 @@
 package blackjack.domain
 
-class GameResult(private val dealer: Dealer, players: List<Player>) {
+class PlayerResults(private val dealer: Dealer, players: List<Player>) {
     constructor(game: BlackJackGame) : this(game.dealer, game.players)
 
     private val playerResults: List<PlayerResult>
@@ -8,12 +8,12 @@ class GameResult(private val dealer: Dealer, players: List<Player>) {
     init {
         playerResults =
             players.map { player ->
-                val status = getPlayerResult(player)
+                val status = judgePlayerResult(player)
                 PlayerResult(player, status)
             }
     }
 
-    fun getPlayerResult(player: Player): GameResultStatus {
+    fun judgePlayerResult(player: Player): GameResultStatus {
         if (player.isBust()) return GameResultStatus.PLAYER_LOSE
         if (dealer.isBust()) return GameResultStatus.PLAYER_WIN
         return when {
@@ -24,7 +24,17 @@ class GameResult(private val dealer: Dealer, players: List<Player>) {
         }
     }
 
-    fun getAllPlayerResult(): List<PlayerResult> {
-        return playerResults
+    fun toList(): List<PlayerResult> = playerResults.toList()
+
+    fun countDealerWin(): Int {
+        return playerResults.count { it.status == GameResultStatus.PLAYER_LOSE }
+    }
+
+    fun countDealerLose(): Int {
+        return playerResults.count { it.status == GameResultStatus.PLAYER_WIN }
+    }
+
+    fun countDealerDraw(): Int {
+        return playerResults.count { it.status == GameResultStatus.DRAW }
     }
 }

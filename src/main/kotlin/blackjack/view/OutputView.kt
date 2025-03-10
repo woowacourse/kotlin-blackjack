@@ -1,6 +1,12 @@
 package blackjack.view
 
-import blackjack.domain.*
+import blackjack.domain.BlackJackGame
+import blackjack.domain.Cards
+import blackjack.domain.GameResultStatus
+import blackjack.domain.Player
+import blackjack.domain.PlayerResults
+import blackjack.domain.Rank
+import blackjack.domain.Suit
 import java.lang.StringBuilder
 
 object OutputView {
@@ -28,15 +34,15 @@ object OutputView {
         }
     }
 
-    fun printGameResult(playerResults: List<PlayerResult>) {
+    fun printGameResult(playerResults: PlayerResults) {
         println("\n##최종 승패")
-        val dealerLose = playerResults.count { it.status == GameResultStatus.PLAYER_WIN }
-        val dealerWin = playerResults.count { it.status == GameResultStatus.PLAYER_LOSE }
-        val draw = playerResults.count { it.status == GameResultStatus.DRAW }
+        val dealerLose = playerResults.countDealerLose()
+        val dealerWin = playerResults.countDealerWin()
+        val draw = playerResults.countDealerDraw()
 
         println("딜러: ${dealerWin}승 ${dealerLose}패 ${draw}무")
 
-        playerResults.forEach {
+        playerResults.toList().forEach {
             println("${it.player.name}: ${it.status.toDisplayName()}")
         }
     }

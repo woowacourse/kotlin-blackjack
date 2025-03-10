@@ -3,8 +3,8 @@ package blackjack
 import blackjack.domain.BlackJackGame
 import blackjack.domain.Card
 import blackjack.domain.Deck
-import blackjack.domain.GameResult
 import blackjack.domain.Player
+import blackjack.domain.PlayerResults
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -38,7 +38,7 @@ class GameController(
     }
 
     private fun showResult(game: BlackJackGame) {
-        val result = GameResult(game)
-        outputView.printGameResult(result.getAllPlayerResult())
+        val result = PlayerResults(game)
+        outputView.printGameResult(result)
     }
 }
