@@ -32,7 +32,7 @@ class PlayerTest {
             )
 
         val player = Player("joy", cards)
-        Assertions.assertTrue(player.isHit())
+        Assertions.assertTrue(player.decideToHit())
     }
 
     @Test
@@ -44,6 +44,6 @@ class PlayerTest {
             )
 
         val player = Player("joy", cards)
-        Assertions.assertFalse(player.turn(cards))
+        Assertions.assertFalse(player.performTurn(cards))
     }
 }

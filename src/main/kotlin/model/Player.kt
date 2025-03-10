@@ -7,8 +7,8 @@ class Player(val name: String, private val playerCards: Cards) : Participant(pla
 
     fun getPlayerCardNames(): List<String> = playerCards.getCardNames()
 
-    override fun turn(cards: Cards): Boolean {
-        if (isHit()) {
+    override fun performTurn(cards: Cards): Boolean {
+        if (decideToHit()) {
             val drawnCard = drawCard(cards.allCards)
             addCard(drawnCard)
             return false
@@ -16,7 +16,7 @@ class Player(val name: String, private val playerCards: Cards) : Participant(pla
         return true
     }
 
-    override fun isHit(): Boolean = getScore() <= GameResultDecider.BLACKJACK_SCORE
+    override fun decideToHit(): Boolean = getScore() <= GameResultDecider.BLACKJACK_SCORE
 
     companion object {
         private const val PLAYER_BLANK_ERROR_MESSAGE = "[ERROR] 이름은 빈 값일 수 없습니다."

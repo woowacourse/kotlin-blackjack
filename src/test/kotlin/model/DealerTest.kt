@@ -26,7 +26,7 @@ class DealerTest {
             )
 
         val dealer = Dealer(cards)
-        Assertions.assertTrue(dealer.isHit())
+        Assertions.assertTrue(dealer.decideToHit())
     }
 
     @Test
@@ -38,7 +38,7 @@ class DealerTest {
             )
 
         val dealer = Dealer(cards)
-        Assertions.assertTrue(dealer.turn(cards))
+        Assertions.assertTrue(dealer.performTurn(cards))
     }
 
     @Test

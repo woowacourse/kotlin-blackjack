@@ -59,7 +59,7 @@ class BlackjackController(
         dealer: Dealer,
         allCards: Cards,
     ) {
-        if (dealer.isHit()) {
+        if (dealer.decideToHit()) {
             val dealerAddCount = dealer.getDrawCount(allCards)
             outputView.printDealerHit(dealerAddCount)
         }
@@ -70,8 +70,8 @@ class BlackjackController(
         allCards: Cards,
     ) {
         players.forEach { player ->
-            while (player.isHit() && inputView.readHitOrStand(player.name)) {
-                player.turn(allCards)
+            while (player.decideToHit() && inputView.readHitOrStand(player.name)) {
+                player.performTurn(allCards)
                 outputView.printPlayerCards(player.name, player.getPlayerCardNames())
             }
         }

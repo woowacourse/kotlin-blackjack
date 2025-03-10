@@ -4,9 +4,9 @@ abstract class Participant(private val cards: Cards) {
     private val handCards: MutableList<Card>
         get() = cards.allCards
 
-    abstract fun turn(cards: Cards): Boolean
+    abstract fun performTurn(cards: Cards): Boolean
 
-    abstract fun isHit(): Boolean
+    abstract fun decideToHit(): Boolean
 
     fun getScore(): Int {
         return ScoreCalculator(cards).calculateTotalCardScore()
