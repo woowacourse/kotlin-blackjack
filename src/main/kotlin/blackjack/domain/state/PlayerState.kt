@@ -1,11 +1,10 @@
 package blackjack.domain.state
 
-import blackjack.const.GameRule
-import blackjack.domain.ScoreCalculator
+import blackjack.domain.ScoreCalculator.BLACKJACK_SCORE
+import blackjack.domain.calculateScore
 import blackjack.domain.person.Player
 
 enum class PlayerState(override val isFinal: Boolean) : PersonState {
-    FIRST_TURN(false),
     HIT(false),
     BUST(true),
     STAY(true),
@@ -13,10 +12,9 @@ enum class PlayerState(override val isFinal: Boolean) : PersonState {
 
     companion object {
         fun from(player: Player): PlayerState {
-            val cards = player.cards()
+            val score = player.calculateScore()
             return when {
-                cards.size < GameRule.FIRST_TURN_DRAW_AMOUNT -> FIRST_TURN
-                ScoreCalculator.calculate(cards) > GameRule.BLACKJACK_SCORE -> BUST
+                score > BLACKJACK_SCORE -> BUST
                 else -> HIT
             }
         }

@@ -1,21 +1,23 @@
 package blackjack.domain.state
 
-import blackjack.const.GameRule
-import blackjack.domain.ScoreCalculator
+import blackjack.domain.ScoreCalculator.BLACKJACK_SCORE
+import blackjack.domain.calculateScore
 import blackjack.domain.person.Dealer
 
 enum class DealerState(override val isFinal: Boolean) : PersonState {
-    FIRST_TURN(false),
     HIT(false),
-    FINISH(true),
+    BUST(true),
+    STAY(true),
     ;
 
     companion object {
+        private const val DEALER_ADDITIONAL_DRAW_BASE_SCORE = 16
+
         fun from(dealer: Dealer): DealerState {
-            val cards = dealer.cards()
+            val score = dealer.calculateScore()
             return when {
-                cards.size < GameRule.FIRST_TURN_DRAW_AMOUNT -> FIRST_TURN
-                ScoreCalculator.calculate(cards) > GameRule.DEALER_ADDITIONAL_DRAW_BASE_SCORE -> FINISH
+                score > BLACKJACK_SCORE -> BUST
+                score > DEALER_ADDITIONAL_DRAW_BASE_SCORE -> STAY
                 else -> HIT
             }
         }
