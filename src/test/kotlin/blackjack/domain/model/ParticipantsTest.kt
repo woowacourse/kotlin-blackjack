@@ -11,6 +11,6 @@ class ParticipantsTest {
 
     @Test
     fun `딜러와 플레이어의 이름이 중복될 시 오류가 발생한다`() {
-        assertThrows<IllegalArgumentException> { Participants(Dealer("딜러"), listOf(Player("딜러"), Player("A"))) }
+        assertThrows<IllegalArgumentException> { Participants(Dealer("딜러"), listOf(Player("딜러"))) }
     }
 }
