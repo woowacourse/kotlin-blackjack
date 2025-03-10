@@ -1,12 +1,10 @@
 package blackjack.model
 
-object Deck {
-    const val INITIAL_HAND_OUT_CARD_COUNT = 2
-    private const val ERROR_NO_MORE_CARD_MESSAGE = "카드가 더 없습니다."
-    private val CARDS = generateCards()
+class Deck {
+    private var cards: MutableList<Card> = generateCards()
 
     fun draw(): Card {
-        return CARDS.removeFirstOrNull() ?: throw IllegalStateException(ERROR_NO_MORE_CARD_MESSAGE)
+        return cards.removeFirstOrNull() ?: throw IllegalStateException(ERROR_NO_MORE_CARD_MESSAGE)
     }
 
     fun drawWithCount(count: Int): List<Card> {
@@ -19,4 +17,9 @@ object Deck {
                 Card(shape, number)
             }
         }.shuffled().toMutableList()
+
+    companion object {
+        const val INITIAL_HAND_OUT_CARD_COUNT = 2
+        private const val ERROR_NO_MORE_CARD_MESSAGE = "카드가 더 없습니다."
+    }
 }
