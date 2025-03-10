@@ -30,8 +30,6 @@ class Game(
         return false
     }
 
-    fun matchResult(): GameResult = GameResult.create(dealer, players)
-
     private fun askHitForEachPlayer(
         player: Player,
         onHit: (Player) -> Unit,

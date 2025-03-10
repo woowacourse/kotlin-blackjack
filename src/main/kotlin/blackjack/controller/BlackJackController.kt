@@ -1,6 +1,7 @@
 package blackjack.controller
 
 import blackjack.domain.Game
+import blackjack.domain.GameResult
 import blackjack.domain.card.Deck
 import blackjack.domain.participants.Dealer
 import blackjack.domain.participants.Player
@@ -55,7 +56,7 @@ class BlackJackController(
 
     private fun showResult(game: Game) {
         outputView.printCardScore(toParticipantsUiModel(game.dealer, game.players))
-        val result = game.matchResult()
+        val result = GameResult.create(game.dealer, game.players)
         outputView.printResult(ResultUiModel.create(result))
     }
 
