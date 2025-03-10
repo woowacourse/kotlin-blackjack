@@ -1,19 +1,15 @@
 package blackjack.domain
 
 import blackjack.domain.deck.Deck
-import blackjack.domain.participant.Dealer
-import blackjack.domain.participant.Participant
+import blackjack.domain.participant.Participants
 import blackjack.domain.participant.Player
 
 class BlackJackGame(
-    private val participants: List<Participant>,
+    private val participants: Participants,
     private val deck: Deck,
 ) {
-    private val dealer: Dealer = participants.filterIsInstance<Dealer>().first()
-    private val players: List<Player> = participants.filterIsInstance<Player>()
-
     fun handOutInitializedCards(initializedCardCount: Int = INITIAL_CARD_COUNT) {
-        participants.forEach { player ->
+        (participants.players + participants.dealer).forEach { player ->
             repeat(initializedCardCount) {
                 player.receiveCard(deck.pop())
             }
@@ -24,27 +20,13 @@ class BlackJackGame(
         getPlayerChoice: (String) -> UserChoice,
         onPlayerStateUpdated: (Player) -> Unit,
     ) {
-        players.forEach { player ->
-            while (!player.isBust()) {
-                val choice = getPlayerChoice(player.name)
-                when (choice) {
-                    UserChoice.HIT -> player.receiveCard(deck.pop())
-                    UserChoice.STAY -> {
-                        if (player.getAllCards().size == 2) {
-                            onPlayerStateUpdated(player)
-                        }
-                        break
-                    }
-                }
-                onPlayerStateUpdated(player)
-            }
-        }
+        participants.getChoice(deck, getPlayerChoice, onPlayerStateUpdated)
     }
 
     fun processDealerTurn(): Int {
         var count = 0
-        while (dealer.isOverMaxScore().not()) {
-            dealer.receiveCard(deck.pop())
+        while (participants.dealer.isOverMaxScore().not()) {
+            participants.dealer.receiveCard(deck.pop())
             count++
         }
         return count

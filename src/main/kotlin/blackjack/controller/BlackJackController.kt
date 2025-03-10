@@ -6,6 +6,7 @@ import blackjack.domain.UserChoice
 import blackjack.domain.deck.ShuffledDeck
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Participant
+import blackjack.domain.participant.Participants
 import blackjack.domain.participant.Player
 import blackjack.util.retryWhenException
 import blackjack.view.InputView
@@ -23,30 +24,29 @@ class BlackJackController(
         displayResult(game, players)
     }
 
-    private fun readyForGamePlayers(): List<Participant> {
+    private fun readyForGamePlayers(): Participants {
         val dealer: Participant = Dealer(ParticipantCards())
-        return inputView.readPlayerName().map { name -> Player(name, ParticipantCards()) } + dealer
+        return Participants(inputView.readPlayerName().map { name -> Player(name, ParticipantCards()) } + dealer)
     }
 
-    private fun displayPlayerNames(players: List<Participant>) {
-        outputView.printNames(players.filterIsInstance<Player>())
+    private fun displayPlayerNames(participants: Participants) {
+        outputView.printNames(participants.players)
     }
 
-    private fun displayPlayerCards(players: List<Participant>) {
-        outputView.printPlayerCards(players.filterIsInstance<Player>())
+    private fun displayPlayerCards(participants: Participants) {
+        outputView.printPlayerCards(participants.players)
     }
 
-    private fun displayDealerCards(players: List<Participant>) {
+    private fun displayDealerCards(participants: Participants) {
         outputView.printDealerCards(
-            players
-                .filterIsInstance<Dealer>()
-                .first()
+            participants
+                .dealer
                 .cards
                 .first(),
         )
     }
 
-    private fun readForGame(players: List<Participant>): BlackJackGame = BlackJackGame(players, ShuffledDeck())
+    private fun readForGame(participants: Participants): BlackJackGame = BlackJackGame(participants, ShuffledDeck())
 
     private fun getUserChoice(name: String): UserChoice =
         retryWhenException(
@@ -61,11 +61,11 @@ class BlackJackController(
 
     private fun startGame(
         game: BlackJackGame,
-        players: List<Participant>,
+        participants: Participants,
     ) {
         game.handOutInitializedCards()
-        displayDealerCards(players)
-        displayPlayerCards(players)
+        displayDealerCards(participants)
+        displayPlayerCards(participants)
 
         game.playGame(
             getPlayerChoice = { playerName ->
@@ -79,10 +79,10 @@ class BlackJackController(
 
     private fun displayResult(
         game: BlackJackGame,
-        players: List<Participant>,
+        participants: Participants,
     ) {
         displayDealerExtraCard(game)
-        displaySumOfParticipants(players)
+        displaySumOfParticipants(participants)
         displayDealerResult(game)
         displayPlayerResult(game)
     }
@@ -91,9 +91,9 @@ class BlackJackController(
         outputView.printDealerExtraCard(game.processDealerTurn())
     }
 
-    private fun displaySumOfParticipants(players: List<Participant>) {
-        outputView.printDealerSum(players.filterIsInstance<Dealer>())
-        outputView.printPlayerSum(players.filterIsInstance<Player>())
+    private fun displaySumOfParticipants(participants: Participants) {
+        outputView.printDealerSum(participants.dealer)
+        outputView.printPlayerSum(participants.players)
     }
 
     private fun displayDealerResult(game: BlackJackGame) {
