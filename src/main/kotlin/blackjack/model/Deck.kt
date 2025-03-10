@@ -19,7 +19,6 @@ class Deck {
         }.shuffled().toMutableList()
 
     companion object {
-        const val INITIAL_HAND_OUT_CARD_COUNT = 2
         private const val ERROR_NO_MORE_CARD_MESSAGE = "카드가 더 없습니다."
     }
 }

@@ -6,8 +6,8 @@ class GameManager(
 ) {
     private val deck = Deck()
 
-    fun dealInitialCardWithCount(count: Int) {
-        repeat(count) {
+    fun dealInitialCardWithCount() {
+        repeat(INITIAL_HAND_OUT_CARD_COUNT) {
             dealer.addCard(deck.draw())
             players.forEach { player -> player.addCard(deck.draw()) }
         }
@@ -38,5 +38,9 @@ class GameManager(
 
     fun drawCard(person: Person) {
         person.addCard(deck.draw())
+    }
+
+    companion object{
+        const val INITIAL_HAND_OUT_CARD_COUNT = 2
     }
 }
