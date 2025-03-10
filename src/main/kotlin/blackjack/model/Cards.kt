@@ -6,9 +6,6 @@ class Cards(
     private val _value: MutableList<Card> = value.toMutableList()
     val value: List<Card> get() = _value.map { card -> card.copy() }
 
-    var size: Int = this.value.size
-        private set
-
     fun add(card: Card) {
         _value.add(card)
     }
