@@ -45,7 +45,9 @@ class OutputView {
 
         println(FINAL_RESULT_MESSAGE)
         println("$DEALER_TEXT_MESSAGE $dealerResultText")
-        players.forEach { player -> player.compareTo(dealer).toText() }
+        players.forEach {
+            println("${it.name} : ${it.compareTo(dealer).toText()}")
+        }
     }
 
     private fun makeParticipantInfo(participant: Participant): String {
@@ -62,25 +64,6 @@ class OutputView {
         private const val FINAL_RESULT_MESSAGE = "## 최종 승패"
         private const val DEALER_TEXT_MESSAGE = "딜러:"
 
-        fun Suit.toText(): String {
-            return when (this) {
-                Suit.SPADE -> "스페이드"
-                Suit.HEART -> "하트"
-                Suit.DIAMOND -> "다이아몬드"
-                Suit.CLUB -> "클로버"
-            }
-        }
-
-        fun CardNumber.toText(): String {
-            return when (this) {
-                CardNumber.ACE -> "A"
-                CardNumber.JACK -> "J"
-                CardNumber.QUEEN -> "Q"
-                CardNumber.KING -> "K"
-                else -> this.value.toString()
-            }
-        }
-
         fun Card.toText(): String {
             return cardNumber.toText() + suit.toText()
         }
@@ -90,6 +73,25 @@ class OutputView {
                 GameResult.WIN -> "승"
                 GameResult.DRAW -> "무"
                 GameResult.LOSE -> "패"
+            }
+        }
+
+        private fun Suit.toText(): String {
+            return when (this) {
+                Suit.SPADE -> "스페이드"
+                Suit.HEART -> "하트"
+                Suit.DIAMOND -> "다이아몬드"
+                Suit.CLUB -> "클로버"
+            }
+        }
+
+        private fun CardNumber.toText(): String {
+            return when (this) {
+                CardNumber.ACE -> "A"
+                CardNumber.JACK -> "J"
+                CardNumber.QUEEN -> "Q"
+                CardNumber.KING -> "K"
+                else -> this.value.toString()
             }
         }
     }
