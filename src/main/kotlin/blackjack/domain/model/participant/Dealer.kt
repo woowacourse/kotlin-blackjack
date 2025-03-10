@@ -9,10 +9,16 @@ class Dealer(
     fun showFirstCard(): Card = handCards.toList().first()
 
     override fun compareTo(opponent: Participant): GameResult {
-        if (opponent.handCards.isBurst()) {
-            return GameResult.WIN
+        val myScore = handCards.getScore()
+        val opponentScore = opponent.handCards.getScore()
+
+        return when {
+            opponent.handCards.isBust() -> GameResult.WIN
+            handCards.isBust() -> GameResult.LOSE
+            myScore > opponentScore -> GameResult.WIN
+            myScore == opponentScore -> GameResult.DRAW
+            else -> GameResult.LOSE
         }
-        return handCards.compareTo(opponent.handCards)
     }
 
     override fun isDrawable(): Boolean {
