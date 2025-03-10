@@ -68,9 +68,7 @@ class BlackJackController(
         players: List<Player>,
     ) {
         outputView.printDealerResult(dealer)
-        players.forEach { player ->
-            outputView.printPlayerResult(player)
-        }
+        players.forEach { player -> outputView.printPlayerResult(player) }
 
         val gameResult = GameResult(dealer, players)
         outputView.printGameResults(gameResult)
