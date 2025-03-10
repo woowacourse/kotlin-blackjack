@@ -13,7 +13,7 @@ abstract class Participant {
     }
 
     fun isBust(): Boolean {
-        return totalSum > BLACKJACK_LIMIT
+        return totalSum > BUST_THRESHOLD
     }
 
     fun canHit(): Boolean {
@@ -24,7 +24,7 @@ abstract class Participant {
         var score = cards.sumOf { it.getScore() }
         var aceCount = cards.count { it.rank == Rank.ACE }
 
-        while (score > BLACKJACK_LIMIT && aceCount > 0) {
+        while (score > BUST_THRESHOLD && aceCount > 0) {
             score -= ACE_SCORE_DIFFERENCE
             aceCount--
         }
@@ -33,7 +33,7 @@ abstract class Participant {
     }
 
     companion object {
-        const val BLACKJACK_LIMIT = 21
+        const val BUST_THRESHOLD = 21
         private const val ACE_HIGH = 11
         private const val ACE_LOW = 1
         private const val ACE_SCORE_DIFFERENCE = ACE_HIGH - ACE_LOW
