@@ -1,10 +1,11 @@
 package blackjack.controller
 
-import blackjack.model.BlackjackCalculator
 import blackjack.model.CardDeck
 import blackjack.model.Dealer
 import blackjack.model.Player
 import blackjack.model.Players
+import blackjack.model.ResultManager
+import blackjack.model.ScoreCalculator
 import blackjack.model.WinningResult
 import blackjack.view.InputView
 import blackjack.view.OutputView
@@ -15,22 +16,23 @@ class BlackjackController(
 ) {
     fun run() {
         val cardDeck = CardDeck()
-        val blackjackCalculator = BlackjackCalculator()
-        val dealer = prepareDealer(cardDeck, blackjackCalculator)
-        val players = preparePlayers(cardDeck, dealer, blackjackCalculator)
+        val scoreCalculator = ScoreCalculator()
+        val dealer = prepareDealer(cardDeck, scoreCalculator)
+        val players = preparePlayers(cardDeck, dealer, scoreCalculator)
+        val resultManager = ResultManager(dealer, players)
 
         progressPlayersDraw(players, cardDeck)
         progressDealerDraw(dealer, cardDeck)
 
         displayParticipantsInfo(players)
-        displayResults(dealer, players)
+        displayResults(resultManager)
     }
 
     private fun prepareDealer(
         cardDeck: CardDeck,
-        blackjackCalculator: BlackjackCalculator,
+        scoreCalculator: ScoreCalculator,
     ): Dealer {
-        val dealer = Dealer(blackjackCalculator)
+        val dealer = Dealer(scoreCalculator)
         dealer.draw(cardDeck)
         return dealer
     }
@@ -38,10 +40,10 @@ class BlackjackController(
     private fun preparePlayers(
         cardDeck: CardDeck,
         dealer: Dealer,
-        blackjackCalculator: BlackjackCalculator,
+        scoreCalculator: ScoreCalculator,
     ): Players {
         val playerNames = inputView.getPlayers()
-        val players = Players.from(playerNames, blackjackCalculator)
+        val players = Players.from(playerNames, scoreCalculator)
         players.value.forEach { player -> player.draw(cardDeck) }
 
         outputView.displayFirstDrawEnd(players.value.map { player -> player.name })
@@ -96,16 +98,13 @@ class BlackjackController(
         }
     }
 
-    private fun displayResults(
-        dealer: Dealer,
-        players: Players,
-    ) {
+    private fun displayResults(resultManager: ResultManager) {
         outputView.displayResultTitle()
 
-        val dealerResult = dealer.result(players.scores())
+        val dealerResult = resultManager.dealerResult()
         outputView.displayDealerResult(dealerResult)
 
-        val playerResults: Map<String, WinningResult> = players.results(dealer.score())
+        val playerResults: Map<String, WinningResult> = resultManager.playerResults()
         playerResults.forEach { (name, winningResult) ->
             outputView.displayPlayerResult(name, winningResult)
         }

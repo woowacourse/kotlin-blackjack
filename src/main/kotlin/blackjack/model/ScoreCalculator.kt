@@ -1,6 +1,6 @@
 package blackjack.model
 
-class BlackjackCalculator {
+class ScoreCalculator {
     fun isBust(cards: List<Card>): Boolean = score(cards) == BUST_SCORE
 
     fun score(cards: List<Card>): Int {

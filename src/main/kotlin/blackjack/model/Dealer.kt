@@ -1,8 +1,8 @@
 package blackjack.model
 
 class Dealer(
-    blackjackCalculator: BlackjackCalculator,
-) : Participant(blackjackCalculator) {
+    scoreCalculator: ScoreCalculator,
+) : Participant(scoreCalculator) {
     fun drawUntilFinished(cardDeck: CardDeck): Int {
         var count = INITIAL_RESULT_COUNT
 
@@ -14,21 +14,8 @@ class Dealer(
         return count
     }
 
-    fun result(playerScores: List<Int>): Map<WinningResult, Int> {
-        val result = WinningResult.entries.associateWith { INITIAL_SCORE }.toMutableMap()
-
-        playerScores.forEach { playerScore ->
-            val winningResult = WinningResult.from(score(), playerScore)
-            result[winningResult] = result.getOrDefault(winningResult, INITIAL_SCORE) + ADDITIONAL_RESULT_COUNT
-        }
-
-        return result.toMap()
-    }
-
     companion object {
         private const val INITIAL_RESULT_COUNT = 0
         private const val DEALER_DRAW_CRITERIA = 16
-        private const val INITIAL_SCORE = 0
-        private const val ADDITIONAL_RESULT_COUNT = 1
     }
 }
