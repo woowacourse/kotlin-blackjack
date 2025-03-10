@@ -1,23 +1,15 @@
 package blackjack.domain.model
 
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
-import java.lang.IllegalArgumentException
 
 class PlayerTest {
-    private lateinit var player: Player
-
-    @BeforeEach
-    fun setUp() {
-        player = Player("A", listOf(Card(Suit.HEART, Rank.ACE)))
-    }
-
     @Test
     fun `플레이어는 이름을 가진다`() {
+        val player = Player("A", listOf(Card(Suit.HEART, Rank.ACE)))
         assertThat(player.name).isEqualTo("A")
     }
 
@@ -29,12 +21,13 @@ class PlayerTest {
 
     @Test
     fun `플레이어가 버스트되지 않았으면 히트할 수 있다`() {
+        val player = Player("A", listOf(Card(Suit.HEART, Rank.ACE)))
         assertThat(player.canHit()).isTrue()
     }
 
     @Test
     fun `플레이어가 버스트됐으면 히트할 수 없다`() {
-        player.accept(listOf(Card(Suit.HEART, Rank.JACK), Card(Suit.HEART, Rank.QUEEN), Card(Suit.HEART, Rank.KING)))
+        val player = Player("A", listOf(Card(Suit.HEART, Rank.JACK), Card(Suit.HEART, Rank.QUEEN), Card(Suit.HEART, Rank.KING)))
         assertThat(player.canHit()).isFalse()
     }
 
