@@ -1,9 +1,9 @@
 package blackjack.model.service
 
-import blackjack.model.domain.CardFactory.Companion.cardNumbers
-import blackjack.model.domain.CardFactory.Companion.symbols
 import blackjack.model.domain.GameResult
 import blackjack.model.domain.card.Card
+import blackjack.model.domain.card.CardFactory.Companion.cardNumbers
+import blackjack.model.domain.card.CardFactory.Companion.symbols
 import blackjack.model.domain.card.CardNumber
 import blackjack.model.domain.card.PlayingCard
 import blackjack.model.domain.card.Shape

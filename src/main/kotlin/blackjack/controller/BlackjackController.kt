@@ -1,9 +1,9 @@
 package blackjack.controller
 
 import blackjack.model.domain.ActionType
-import blackjack.model.domain.CardFactory
 import blackjack.model.domain.GameResult
 import blackjack.model.domain.card.Card
+import blackjack.model.domain.card.CardFactory
 import blackjack.model.domain.card.PlayingCard
 import blackjack.model.domain.participant.Dealer
 import blackjack.model.domain.participant.Player

@@ -1,8 +1,4 @@
-package blackjack.model.domain
-
-import blackjack.model.domain.card.Card
-import blackjack.model.domain.card.CardNumber
-import blackjack.model.domain.card.Shape
+package blackjack.model.domain.card
 
 class CardFactory {
     fun makeCard(): ArrayDeque<Card> {
