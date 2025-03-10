@@ -31,14 +31,14 @@ class BlackjackController(
         dealer: Dealer,
     ) {
         repeat(2) {
-            getCardsToPlayer(players.value)
+            getCardsToPlayer(players)
             getCardsToDealer(dealer)
         }
         outputView.printPlayersCards(dealer, players.value)
     }
 
-    private fun getCardsToPlayer(players: List<Player>) {
-        players.forEach { player ->
+    private fun getCardsToPlayer(players: Players) {
+        players.value.forEach { player ->
             val card = cardDeck.pickCard()
             player.appendCard(card)
         }
