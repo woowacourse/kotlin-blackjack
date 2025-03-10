@@ -1,7 +1,7 @@
 package blackjack
 
+import blackjack.model.CardDrawDecision
 import blackjack.model.Dealer
-import blackjack.model.DrawChoice
 import blackjack.model.GameManager
 import blackjack.model.Player
 import org.assertj.core.api.Assertions.assertThat
@@ -31,7 +31,7 @@ class GameManagerTest {
     @ParameterizedTest
     @MethodSource("distributeCard")
     fun `카드 추가 응답에 맞게 카드 추가 여부를 반환한다`(
-        choice: DrawChoice,
+        choice: CardDrawDecision,
         player: Player,
         expected: Boolean,
     ) {
@@ -48,7 +48,7 @@ class GameManagerTest {
         val gameManager = GameManager(Dealer(), listOf(player))
         val expected = player.cards.size + 1
 
-        gameManager.distributeCardWithChoice(DrawChoice.YES, player)
+        gameManager.distributeCardWithChoice(CardDrawDecision.YES, player)
 
         val actual = player.cards.size
 
@@ -59,8 +59,8 @@ class GameManagerTest {
         @JvmStatic
         fun distributeCard(): Stream<Arguments> {
             return Stream.of(
-                Arguments.of(DrawChoice.YES, Player("플레이어"), true),
-                Arguments.of(DrawChoice.NO, Player("플레이어"), false),
+                Arguments.of(CardDrawDecision.YES, Player("플레이어"), true),
+                Arguments.of(CardDrawDecision.NO, Player("플레이어"), false),
             )
         }
     }

@@ -1,7 +1,7 @@
 package blackjack.controller
 
+import blackjack.model.CardDrawDecision
 import blackjack.model.Dealer
-import blackjack.model.DrawChoice
 import blackjack.model.GameManager
 import blackjack.model.Player
 import blackjack.model.card.Deck.Companion.INITIAL_HAND_OUT_CARD_COUNT
@@ -39,8 +39,8 @@ class BlackjackController(
         player: Player,
     ) {
         while (true) {
-            val choice: DrawChoice = inputView.readCardDrawChoice(player)
-            if (gameManager.distributeCardWithChoice(choice, player)) {
+            val decision: CardDrawDecision = inputView.readCardDrawChoice(player)
+            if (gameManager.distributeCardWithChoice(decision, player)) {
                 outputView.printPlayerHands(player)
                 if (player.isBust()) break
                 continue

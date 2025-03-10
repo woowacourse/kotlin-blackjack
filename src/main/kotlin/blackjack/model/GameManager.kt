@@ -25,10 +25,10 @@ class GameManager(
     }
 
     fun distributeCardWithChoice(
-        choice: DrawChoice,
+        drawDecision: CardDrawDecision,
         player: Player,
     ): Boolean {
-        if (choice.isDraw()) {
+        if (drawDecision.isDraw()) {
             distributeCard(player)
             return true
         }
