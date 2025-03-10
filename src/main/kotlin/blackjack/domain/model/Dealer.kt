@@ -20,7 +20,7 @@ class Dealer(name: String = DEALER_NAME) : Participant(name) {
     }
 
     companion object {
-        const val DEALER_NAME = "딜러"
-        const val DEALER_HIT_THRESHOLD = 16
+        private const val DEALER_NAME = "딜러"
+        private const val DEALER_HIT_THRESHOLD = 16
     }
 }
