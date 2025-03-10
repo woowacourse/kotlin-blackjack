@@ -1,8 +1,7 @@
 package blackjack.domain
 
-class Hand(
-    private val _value: MutableList<Card>,
-) {
+class Hand {
+    private val _value: MutableList<Card> = mutableListOf()
     val value: List<Card> get() = _value
 
     /**

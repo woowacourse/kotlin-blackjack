@@ -3,7 +3,7 @@ package blackjack.domain
 class Player(
     val name: String,
 ) {
-    private val hand: Hand = Hand(emptyList())
+    private val hand: Hand = Hand()
     val cards: List<Card>
         get() = hand.value
     var wantToHit: Boolean? = null

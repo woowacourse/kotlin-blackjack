@@ -5,7 +5,7 @@ class Dealer(
     shuffler: Shuffler,
 ) {
     private val deck: Deck = Deck(shuffler)
-    private val hand: Hand = Hand(emptyList())
+    private val hand: Hand = Hand()
     val cards: List<Card>
         get() = hand.value
     val playerStates: List<PlayerState>
