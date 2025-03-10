@@ -2,6 +2,8 @@ package blackjack.domain.participant
 
 import blackjack.domain.GameResult
 import blackjack.domain.ParticipantCards
+import blackjack.domain.UserChoice
+import blackjack.domain.deck.Deck
 
 class Player(
     val name: String,

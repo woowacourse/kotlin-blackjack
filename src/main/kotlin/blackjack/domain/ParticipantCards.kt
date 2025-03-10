@@ -4,9 +4,9 @@ import blackjack.domain.card.CardTier
 import blackjack.domain.card.TrumpCard
 
 class ParticipantCards(
-    private val _cards: MutableList<TrumpCard> = mutableListOf(), // 내부에서 관리
+    private val _cards: MutableList<TrumpCard> = mutableListOf(),
 ) {
-    val allCards: List<TrumpCard> get() = _cards.toList() // 외부에서는 불변 리스트로 접근하게 함
+    val allCards: List<TrumpCard> get() = _cards.toList()
     val sumOfCards: Int get() = _cards.sumOf { it.tier.values }
 
     fun add(card: TrumpCard) {
