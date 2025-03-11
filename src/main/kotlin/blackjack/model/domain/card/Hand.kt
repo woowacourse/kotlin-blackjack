@@ -1,7 +1,5 @@
 package blackjack.model.domain.card
 
-import blackjack.model.service.Blackjack.Companion.BUST_STANDARD
-
 class Hand(val cards: MutableList<Card>) {
     fun getSumNumber(): Int {
         var sum = cards.sumOf { it.cardNumber.number }
@@ -16,5 +14,9 @@ class Hand(val cards: MutableList<Card>) {
 
     fun append(card: Card) {
         cards.add(card)
+    }
+
+    companion object {
+        const val BUST_STANDARD: Int = 21
     }
 }
