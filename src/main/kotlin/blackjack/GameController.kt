@@ -1,10 +1,10 @@
 package blackjack
 
 import blackjack.domain.BlackJackGame
-import blackjack.domain.Deck
-import blackjack.domain.Player
 import blackjack.domain.card.Card
+import blackjack.domain.deck.Deck
 import blackjack.domain.gameResult.PlayerResults
+import blackjack.domain.participant.Player
 import blackjack.view.InputView
 import blackjack.view.OutputView
 import blackjack.view.blackjackView.BlackJackInputView

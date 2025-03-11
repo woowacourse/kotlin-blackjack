@@ -1,12 +1,12 @@
 package blackjack
 
-import blackjack.domain.Dealer
-import blackjack.domain.Player
 import blackjack.domain.card.Card
 import blackjack.domain.card.Rank
 import blackjack.domain.card.Suit
 import blackjack.domain.gameResult.GameResultStatus
 import blackjack.domain.gameResult.PlayerResults
+import blackjack.domain.participant.Dealer
+import blackjack.domain.participant.Player
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

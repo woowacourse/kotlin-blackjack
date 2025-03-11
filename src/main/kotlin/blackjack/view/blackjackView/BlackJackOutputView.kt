@@ -1,8 +1,8 @@
 package blackjack.view.blackjackView
 
 import blackjack.domain.BlackJackGame
-import blackjack.domain.Dealer
-import blackjack.domain.Player
+import blackjack.domain.participant.Dealer
+import blackjack.domain.participant.Player
 
 object BlackJackOutputView {
     fun showInitialCards(game: BlackJackGame) {

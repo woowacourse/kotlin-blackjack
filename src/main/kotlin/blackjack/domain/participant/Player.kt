@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.participant
 
 class Player(val name: String) : Participant() {
     override val hitThreshold: Int

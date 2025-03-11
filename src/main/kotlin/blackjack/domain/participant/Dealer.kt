@@ -1,4 +1,6 @@
-package blackjack.domain
+package blackjack.domain.participant
+
+import blackjack.domain.deck.Deck
 
 class Dealer : Participant() {
     override val hitThreshold: Int

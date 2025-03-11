@@ -1,6 +1,6 @@
 package blackjack
 
-import blackjack.domain.Participant
+import blackjack.domain.participant.Participant
 
 class FakeParticipant : Participant() {
     override val hitThreshold: Int

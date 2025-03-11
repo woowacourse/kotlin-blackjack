@@ -1,11 +1,11 @@
 package blackjack.view
 
 import blackjack.domain.BlackJackGame
-import blackjack.domain.Dealer
-import blackjack.domain.Participant
-import blackjack.domain.Player
 import blackjack.domain.gameResult.PlayerResult
 import blackjack.domain.gameResult.PlayerResults
+import blackjack.domain.participant.Dealer
+import blackjack.domain.participant.Participant
+import blackjack.domain.participant.Player
 import blackjack.view.blackjackView.format
 import blackjack.view.blackjackView.toDisplayName
 
