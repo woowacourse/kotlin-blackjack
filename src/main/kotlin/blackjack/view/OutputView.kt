@@ -26,14 +26,6 @@ class OutputView {
         println()
     }
 
-    fun printDealerBlackjackMessage(
-        dealer: Dealer,
-        blackjackPlayers: List<Player>,
-    ) {
-        println("딜러가 블랙잭이므로 게임이 종료됩니다.")
-        println("블랙잭: ${dealer.name}, ${blackjackPlayers.joinToString(", ")}")
-    }
-
     fun printPlayerBehaviorGuide(player: Player) {
         println("${player.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
     }
