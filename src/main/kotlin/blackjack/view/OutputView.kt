@@ -20,10 +20,16 @@ class OutputView {
         )
     }
 
-    fun printPlayersStatus(participants: Participants) {
+    fun printParticipantsStatus(participants: Participants) {
         participants.participants.forEach { participant ->
             println(renderParticipantsInitStatus(participant))
         }
+    }
+
+    private fun renderParticipantsInitStatus(participant: Participant): String {
+        return participant.name + PLAYER_NAME_STATUS_DELIMITER +
+            participant.showInitCards()
+                .joinToString { convertKoreanRank(it.rank) + convertKoreanSuit(it.suit) }
     }
 
     fun printPlayerStatus(player: Participant) {
@@ -34,12 +40,6 @@ class OutputView {
         participants.participants.forEach { participant ->
             println(renderParticipantsStatus(participant) + PLAYER_RESULT_DELIMITER + participant.getScore())
         }
-    }
-
-    private fun renderParticipantsInitStatus(participant: Participant): String {
-        return participant.name + PLAYER_NAME_STATUS_DELIMITER +
-            participant.showInitCards()
-                .joinToString { convertKoreanRank(it.rank) + convertKoreanSuit(it.suit) }
     }
 
     private fun renderParticipantsStatus(participant: Participant): String {

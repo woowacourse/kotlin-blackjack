@@ -36,7 +36,7 @@ class GameController(
 
     private fun printInitialDeal(participants: Participants) {
         outputView.printInitialDeals(participants)
-        outputView.printPlayersStatus(participants)
+        outputView.printParticipantsStatus(participants)
     }
 
     private fun playHand(

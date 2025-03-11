@@ -24,7 +24,7 @@
 - [x] 도메인 포함되어 있는 역할중에 UI의 역할에 어울리는 기능 이전
 - [x] 협력과 자율성의 측면을 생각해보고, 객체 역할 분리
 - [x] Deck 카드의 자료구조 변경
-- [ ] inputView가 outputView에 의존을 가져야 하는지 생각해보고 분리
+- [x] inputView가 outputView에 의존을 가져야 하는지 생각해보고 분리
 - [x] open class, abstract class, interface의 차이점 학습 및 적용
 
 ## 2차 피드백 사항
