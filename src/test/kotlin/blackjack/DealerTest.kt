@@ -2,7 +2,7 @@ package blackjack
 
 import blackjack.model.Card
 import blackjack.model.Dealer
-import blackjack.model.Number
+import blackjack.model.CardNumber
 import blackjack.model.Shape
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
@@ -18,8 +18,8 @@ class DealerTest {
 
     @Test
     fun `딜러는 카드 총 합이 17 미만이면 카드를 받는다`() {
-        dealer.addCard(Card(Shape.SPADE, Number.SEVEN))
-        dealer.addCard(Card(Shape.SPADE, Number.TWO))
+        dealer.addCard(Card(Shape.SPADE, CardNumber.SEVEN))
+        dealer.addCard(Card(Shape.SPADE, CardNumber.TWO))
         val expect = true
 
         val actual = dealer.isMoreCard()
@@ -29,8 +29,8 @@ class DealerTest {
 
     @Test
     fun `딜러는 카드 총 합이 17 이상이면 카드를 받지 않는다`() {
-        dealer.addCard(Card(Shape.SPADE, Number.SEVEN))
-        dealer.addCard(Card(Shape.SPADE, Number.TEN))
+        dealer.addCard(Card(Shape.SPADE, CardNumber.SEVEN))
+        dealer.addCard(Card(Shape.SPADE, CardNumber.TEN))
         val expect = false
 
         val actual = dealer.isMoreCard()

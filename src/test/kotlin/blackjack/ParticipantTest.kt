@@ -1,7 +1,7 @@
 package blackjack
 
 import blackjack.model.Card
-import blackjack.model.Number
+import blackjack.model.CardNumber
 import blackjack.model.Participant
 import blackjack.model.ResultCalculator
 import blackjack.model.Shape
@@ -24,14 +24,14 @@ class ParticipantTest {
 
     @Test
     fun `참여자는 카드 한 장을 받을 수 있다`() {
-        person.addCard(Card(Shape.SPADE, Number.NINE))
+        person.addCard(Card(Shape.SPADE, CardNumber.NINE))
         assertThat(person.cards.size).isEqualTo(1)
     }
 
     @Test
     fun `참여자 카드의 총 합을 계산한다`() {
-        person.addCard(Card(Shape.SPADE, Number.NINE))
-        person.addCard(Card(Shape.SPADE, Number.SEVEN))
+        person.addCard(Card(Shape.SPADE, CardNumber.NINE))
+        person.addCard(Card(Shape.SPADE, CardNumber.SEVEN))
         val expect = 16
         val actual = ResultCalculator.calculateTotalScore(person.cards)
 

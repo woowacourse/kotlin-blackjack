@@ -32,5 +32,5 @@ object ResultCalculator {
 
     fun calculateTotalScore(cards: List<Card>) = cards.sumOf { card -> card.number.score }
 
-    private fun countAce(cards: List<Card>) = cards.count { it.number == Number.ACE }
+    private fun countAce(cards: List<Card>) = cards.count { it.number == CardNumber.ACE }
 }

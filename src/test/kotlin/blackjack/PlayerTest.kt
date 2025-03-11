@@ -1,7 +1,7 @@
 package blackjack
 
 import blackjack.model.Card
-import blackjack.model.Number
+import blackjack.model.CardNumber
 import blackjack.model.Player
 import blackjack.model.Shape
 import org.assertj.core.api.Assertions.assertThat
@@ -23,9 +23,9 @@ class PlayerTest {
 
     @Test
     fun `플레이어는 카드 총 합이 21을 넘으면 isBust를 true를 반환한다`() {
-        player.addCard(Card(Shape.SPADE, Number.NINE))
-        player.addCard(Card(Shape.CLOVER, Number.QUEEN))
-        player.addCard(Card(Shape.CLOVER, Number.SEVEN))
+        player.addCard(Card(Shape.SPADE, CardNumber.NINE))
+        player.addCard(Card(Shape.CLOVER, CardNumber.QUEEN))
+        player.addCard(Card(Shape.CLOVER, CardNumber.SEVEN))
         val expect = true
 
         val actual = player.isBust()

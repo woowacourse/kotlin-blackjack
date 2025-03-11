@@ -3,11 +3,11 @@ package blackjack.view
 import blackjack.model.Card
 import blackjack.model.Dealer
 import blackjack.model.GameManager.Companion.INITIAL_HAND_OUT_CARD_COUNT
-import blackjack.model.Number
-import blackjack.model.Number.ACE
-import blackjack.model.Number.JACK
-import blackjack.model.Number.KING
-import blackjack.model.Number.QUEEN
+import blackjack.model.CardNumber
+import blackjack.model.CardNumber.ACE
+import blackjack.model.CardNumber.JACK
+import blackjack.model.CardNumber.KING
+import blackjack.model.CardNumber.QUEEN
 import blackjack.model.Player
 import blackjack.model.ResultCalculator.adjustScore
 import blackjack.model.ResultCalculator.calculateTotalScore
@@ -90,7 +90,7 @@ class OutputView {
         )
     }
 
-    private fun getNumberDisplayName(number: Number): String {
+    private fun getNumberDisplayName(number: CardNumber): String {
         return when (number) {
             ACE -> "A"
             JACK -> "J"
