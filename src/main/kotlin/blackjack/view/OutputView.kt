@@ -1,6 +1,7 @@
 package blackjack.view
 
 import blackjack.model.Card
+import blackjack.model.CardShape
 import blackjack.model.Dealer
 import blackjack.model.Participant
 import blackjack.model.Player
@@ -76,5 +77,13 @@ class OutputView {
         }
     }
 
-    private fun Card.toBlackjackView(): String = denomination.title + shape.koreanName
+    private fun Card.toBlackjackView(): String = denomination.title + shape.toKoreanName()
+
+    private fun CardShape.toKoreanName(): String =
+        when (this) {
+            CardShape.HEART -> "하트"
+            CardShape.SPADE -> "스페이드"
+            CardShape.DIAMOND -> "다이아몬드"
+            CardShape.CLOVER -> "클로버"
+        }
 }
