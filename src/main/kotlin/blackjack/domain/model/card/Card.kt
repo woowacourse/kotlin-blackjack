@@ -4,7 +4,7 @@ import blackjack.domain.model.card.Number.Companion.MAX_ORDER_NUMBER
 
 data class Card(
     val number: Number,
-    val suit: Suit,
+    val suit: Suit = Suit.SPADE,
 ) {
     constructor(cardIndex: Int) : this(
         number = Number.getByOrderNumber((cardIndex) % MAX_ORDER_NUMBER + 1),
