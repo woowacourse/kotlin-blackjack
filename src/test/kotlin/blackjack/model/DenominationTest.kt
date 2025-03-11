@@ -23,8 +23,8 @@ class DenominationTest {
     }
 
     @Test
-    fun `끗수가 Ace일 경우 숫자가 0이다`() {
+    fun `끗수가 Ace일 경우 숫자가 1이다`() {
         val actual = Denomination.ACE.number
-        assertThat(actual).isEqualTo(0)
+        assertThat(actual).isEqualTo(1)
     }
 }
