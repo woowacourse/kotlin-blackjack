@@ -1,5 +1,6 @@
 package blackjack.controller
 
+import blackjack.domain.model.participant.CardStatus
 import blackjack.domain.model.participant.Dealer
 import blackjack.domain.model.participant.Player
 import blackjack.domain.model.progress.Rule
@@ -34,7 +35,7 @@ class Casino(
 
     private fun runPlayersDrawPhase(players: List<Player>) {
         players.forEach { player ->
-            while (!Rule.isBurst(player.showCards())) {
+            while (player.handCards.getStatus() != CardStatus.BUST) {
                 val response: Boolean = inputView.readWantExtraCard(player.name)
 
                 if (!response) {

@@ -2,20 +2,17 @@ package blackjack.domain.model.participant
 
 import blackjack.domain.model.card.Card
 import blackjack.domain.model.card.Deck
+import blackjack.domain.model.card.HandCards
 
 abstract class GameParticipant(
     val name: String,
 ) {
-    private val cards = mutableListOf<Card>()
+    val handCards = HandCards()
 
-    init {
-        repeat(2) { drawCard() }
-    }
-
-    fun showCards(): List<Card> = cards.toList()
+    fun showCards(): List<Card> = handCards.currentCards()
 
     fun drawCard() {
-        cards += Deck.giveCard()
+        handCards.addCard(Deck.giveCard())
     }
 
     abstract fun play()
