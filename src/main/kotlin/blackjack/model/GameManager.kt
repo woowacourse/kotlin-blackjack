@@ -41,7 +41,7 @@ class GameManager(
         return result
     }
 
-    fun drawCard(person: Person) {
+    fun drawCard(person: Participant) {
         person.addCard(deck.draw())
     }
 

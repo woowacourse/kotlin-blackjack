@@ -5,6 +5,6 @@ import blackjack.model.ResultCalculator.adjustScore
 
 class Player(
     name: String,
-) : Person(name) {
+) : Participant(name) {
     override fun isBust() = adjustScore(cards) > BUST_NUMBER
 }

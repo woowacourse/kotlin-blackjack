@@ -2,20 +2,20 @@ package blackjack
 
 import blackjack.model.Card
 import blackjack.model.Number
-import blackjack.model.Person
+import blackjack.model.Participant
 import blackjack.model.ResultCalculator
 import blackjack.model.Shape
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-class PersonTest {
-    private lateinit var person: Person
+class ParticipantTest {
+    private lateinit var person: Participant
 
     @BeforeEach
     fun setUp() {
         person =
-            object : Person() {
+            object : Participant() {
                 override fun isBust(): Boolean {
                     return true
                 }

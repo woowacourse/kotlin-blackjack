@@ -5,7 +5,7 @@ import blackjack.model.ResultCalculator.calculateTotalScore
 
 class Dealer(
     name: String = DEALER_NAME,
-) : Person(name) {
+) : Participant(name) {
     fun isMoreCard() = calculateTotalScore(cards) < DEALER_MORE_CARD_MINIMUM
 
     override fun isBust(): Boolean = calculateTotalScore(cards) > BUST_NUMBER
