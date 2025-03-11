@@ -9,7 +9,7 @@ class PlayersTest {
     private val scoreCalculator = ScoreCalculator()
 
     @Test
-    fun `플레이어가 0명일 때 오류를 반환한다`() {
+    fun `플레이어 인원 수는 0명 초과이다`() {
         // given & when & then
         assertThrows<IllegalArgumentException> {
             Players.from(emptyList(), scoreCalculator)
@@ -17,7 +17,7 @@ class PlayersTest {
     }
 
     @Test
-    fun `플레이어가 8명일 때 오류를 반환한다`() {
+    fun `플레이어 인원 수는 8명 미만이다`() {
         // given
         val players = List(8) { "Player$it" }
 
@@ -28,7 +28,7 @@ class PlayersTest {
     }
 
     @Test
-    fun `플레이어 이름이 중복되면 오류를 반환한다`() {
+    fun `플레이어 이름은 중복될 수 없다`() {
         // given
         val players = listOf("공백", "공백", "시아")
 
