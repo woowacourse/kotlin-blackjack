@@ -2,7 +2,6 @@ package blackjack.view
 
 import blackjack.model.GameManager.Companion.INITIAL_HAND_OUT_CARD_COUNT
 import blackjack.model.ResultCalculator.adjustScore
-import blackjack.model.ResultCalculator.calculateTotalScore
 import blackjack.model.ResultType
 import blackjack.model.card.Card
 import blackjack.model.card.CardNumber
@@ -51,7 +50,7 @@ class OutputView {
             FINAL_HANDS_STATUS_MESSAGE_FORMAT.format(
                 dealer.name,
                 formattingCardStatus(dealer.cards),
-                calculateTotalScore(dealer.cards),
+                adjustScore(dealer.cards),
             ),
         )
         players.forEach { player -> printFinalPlayerHandStatus(player) }
