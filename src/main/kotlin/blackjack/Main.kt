@@ -39,7 +39,7 @@ fun main() {
     players.forEach { player ->
         println("${player.name}카드: ${player.cards.joinToString { card -> card.prettyString }} - 결과: ${dealer.score}")
     }
-    blackjack.finish()
+    blackjack.setResult()
     println()
     println("## 최종 승패")
     println("딜러: ${dealer.dealerResults.joinToString()}")

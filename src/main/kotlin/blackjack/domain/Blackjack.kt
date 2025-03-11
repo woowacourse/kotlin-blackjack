@@ -17,7 +17,7 @@ class Blackjack(
         dealer.startTurn()
     }
 
-    fun finish() {
-        dealer.setPlayersResult()
+    fun setResult() {
+        dealer.setResult()
     }
 }

@@ -7,4 +7,13 @@ class Player(
     override val onBusted: () -> Unit = {
         state = ParticipantState.LOSE
     }
+
+    fun setResult(dealerScore: Int) {
+        state =
+            when {
+                score > dealerScore -> ParticipantState.WIN
+                score < dealerScore -> ParticipantState.LOSE
+                else -> ParticipantState.DRAW
+            }
+    }
 }

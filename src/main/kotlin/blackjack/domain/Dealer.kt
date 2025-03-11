@@ -47,20 +47,8 @@ class Dealer(
         }
     }
 
-    fun setPlayersResult() {
+    fun setResult() {
         val playingPlayers = players.filter { player -> player.state == ParticipantState.PLAYING }
-        playingPlayers.forEach { player ->
-            when {
-                player.score > score -> {
-                    player.state = ParticipantState.WIN
-                }
-
-                player.score < score -> {
-                    player.state = ParticipantState.LOSE
-                }
-
-                else -> player.state = ParticipantState.DRAW
-            }
-        }
+        playingPlayers.forEach { player -> player.setResult(score) }
     }
 }
