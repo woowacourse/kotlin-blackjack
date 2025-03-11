@@ -1,8 +1,5 @@
 package blackjack.view
 
-import blackjack.domain.Card
-import blackjack.domain.Rank
-import blackjack.domain.Suit
 import blackjack.view.model.DealerResult
 import blackjack.view.model.DealerSummary
 import blackjack.view.model.PlayerResult
@@ -64,24 +61,4 @@ class OutputView {
     fun showDealerHit() {
         println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.")
     }
-
-    val Card.prettyString: String
-        get() = rank.prettyString + suit.prettyString
-
-    val Rank.prettyString: String
-        get() =
-            when (this) {
-                Rank.AceRank -> "A"
-                is Rank.FaceRank -> value.toString()
-                is Rank.NumberRank -> value.toString()
-            }
-
-    val Suit.prettyString: String
-        get() =
-            when (this) {
-                Suit.SPADE -> "스페이드"
-                Suit.HEART -> "하트"
-                Suit.DIAMOND -> "다이아몬드"
-                Suit.CLOVER -> "클로버"
-            }
 }
