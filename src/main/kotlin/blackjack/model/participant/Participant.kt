@@ -8,5 +8,7 @@ abstract class Participant(val name: String) {
 
     fun addCard(card: Card) = _cards.add(card)
 
+    abstract fun getInitialCard(): List<Card>
+
     abstract fun isBust(): Boolean
 }

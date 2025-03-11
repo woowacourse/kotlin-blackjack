@@ -24,13 +24,13 @@ class OutputView {
         dealer: Dealer,
         players: List<Player>,
     ) {
-        println(HANDS_STATUS_MESSAGE_FORMAT.format(dealer.name, initialDealerHands(dealer.cards)))
+        println(HANDS_STATUS_MESSAGE_FORMAT.format(dealer.name, formattingCardStatus(dealer.getInitialCard())))
         players.forEach { player -> printPlayerHands(player) }
         println()
     }
 
     fun printPlayerHands(player: Player) {
-        println(HANDS_STATUS_MESSAGE_FORMAT.format(player.name, getHandsStatus(player.cards)))
+        println(HANDS_STATUS_MESSAGE_FORMAT.format(player.name, formattingCardStatus(player.getInitialCard())))
     }
 
     fun printDealerHandStatus(dealerCondition: Boolean) {
@@ -50,7 +50,7 @@ class OutputView {
         println(
             FINAL_HANDS_STATUS_MESSAGE_FORMAT.format(
                 dealer.name,
-                getHandsStatus(dealer.cards),
+                formattingCardStatus(dealer.cards),
                 calculateTotalScore(dealer.cards),
             ),
         )
@@ -70,11 +70,7 @@ class OutputView {
         }
     }
 
-    private fun initialDealerHands(cards: List<Card>): String {
-        return getHandsStatus(listOf(cards.first()))
-    }
-
-    private fun getHandsStatus(cards: List<Card>): String {
+    private fun formattingCardStatus(cards: List<Card>): String {
         return cards.joinToString { card ->
             "${getNumberDisplayName(card.number)}${getShapeDisplayName(card.shape)}"
         }
@@ -84,7 +80,7 @@ class OutputView {
         println(
             FINAL_HANDS_STATUS_MESSAGE_FORMAT.format(
                 player.name,
-                getHandsStatus(player.cards),
+                formattingCardStatus(player.cards),
                 adjustScore(player.cards),
             ),
         )
