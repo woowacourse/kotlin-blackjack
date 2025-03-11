@@ -16,9 +16,10 @@ object ResultCalculator {
         var sumScore = calculateTotalScore(cards)
         var countAce = countAce(cards)
         while (countAce-- > 0) {
-            if (sumScore > BUST_NUMBER) {
-                sumScore -= ADJUST_ACE_NUMBER
+            if (sumScore + ADJUST_ACE_NUMBER >= BUST_NUMBER) {
+                break
             }
+            sumScore += ADJUST_ACE_NUMBER
         }
         return sumScore
     }
