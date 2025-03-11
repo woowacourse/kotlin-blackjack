@@ -28,7 +28,6 @@ class PlayerTest {
         player.draw(card1)
         player.draw(card2)
         player.draw(card3)
-
         assertThrows<IllegalArgumentException> { player.draw(Card(NumberRank.TWO, Suit.SPADE)) }
     }
 
