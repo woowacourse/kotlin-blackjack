@@ -15,14 +15,10 @@ class Cards(
     }
 
     fun calculateScore(): Int {
-        val aceCount: Int = value.count { card -> card.isDenominationAce(card) }
-        val score: Int = value.sumOf { card -> card.denomination.number }
-        return when (aceCount) {
-            1 -> if (score < 11) score + 11 else score + 1
-            2 -> if (score < 10) score + 11 + 1 else score + aceCount * 1
-            3 -> if (score < 9) score + 11 + 1 + 1 else score + aceCount * 1
-            4 -> if (score < 8) score + 11 + 1 + 1 + 1 else score + aceCount * 1
-            else -> score
+        var score: Int = value.sumOf { card -> card.denomination.number }
+        if (value.any { card -> card.isAce() } && score + 10 <= 21) {
+            score += 10
         }
+        return score
     }
 }
