@@ -1,5 +1,7 @@
 package blackjack.model
 
+import blackjack.model.CardsStatus.Companion.BUST_SCORE
+
 class Dealer(
     name: String = "딜러",
     cards: Cards = Cards(mutableListOf()),
@@ -13,11 +15,20 @@ class Dealer(
     }
 
     fun updateResult(playerScore: Int): GameResult {
+        if (playerScore == BUST_SCORE) {
+            val result: GameResult = GameResult.WIN
+            _results[result] = _results.getOrDefault(result, 0) + 1
+            return result
+        }
         if (isBust()) {
             val result: GameResult = GameResult.LOSE
             _results[result] = _results.getOrDefault(result, 0) + 1
             return result
         }
+        return calculateResult(playerScore)
+    }
+
+    private fun calculateResult(playerScore: Int): GameResult {
         val dealerScore: Int = cards.calculateScore()
         val result: GameResult = GameResult.of(dealerScore, playerScore)
         _results[result] = _results.getOrDefault(result, 0) + 1
