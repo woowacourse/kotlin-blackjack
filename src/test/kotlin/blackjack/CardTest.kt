@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 
 class CardTest {
     @Test
-    fun `Card는 52개의 인스턴스만 가질 수 있다`() {
+    fun `getAllCard는 각 Card 인스턴스의 원본을 담은 복제본 리스트를 반환한다`() {
         val cards = Card.getAllCard()
         val copied = cards.toList()
 
@@ -18,7 +18,7 @@ class CardTest {
     }
 
     @Test
-    fun `Card의 POOL은 바뀌지 않는다`() {
+    fun `getAllCard는 원본이 아닌 복제본을 반환한다`() {
         val cards = Card.getAllCard()
         cards.toMutableList()[0] = Card.of(Rank.TEN, Suit.CLUB)
         assertThat(Card.getAllCard()).isNotSameAs(cards)

@@ -5,21 +5,29 @@ import blackjack.domain.card.Rank
 import blackjack.domain.card.Suit
 import blackjack.domain.participant.Dealer
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class DealerTest {
+    private lateinit var dealer: Dealer
+
+    private fun setCard(vararg card: Card) {
+        card.forEach { dealer.addCard(it) }
+    }
+
+    @BeforeEach
+    fun clear() {
+        dealer = Dealer()
+    }
+
     @Test
-    fun `카드의 총합이 17이 넘으면 추가 카드를 뽑을 수 없다`() {
-        val player = Dealer()
+    fun `카드의 점수가 17 이상이면 카드 추가 여부는 false이다`() {
+        setCard(
+            Card.of(Rank.ACE, Suit.SPADE),
+            Card.of(Rank.NINE, Suit.SPADE),
+            Card.of(Rank.NINE, Suit.HEART),
+        )
 
-        val card1 = Card.of(Rank.ACE, Suit.SPADE)
-        val card2 = Card.of(Rank.NINE, Suit.SPADE)
-        val card3 = Card.of(Rank.NINE, Suit.HEART)
-
-        player.addCard(card1)
-        player.addCard(card2)
-        player.addCard(card3)
-
-        assertThat(player.canHit()).isEqualTo(false)
+        assertThat(dealer.canHit()).isFalse()
     }
 }

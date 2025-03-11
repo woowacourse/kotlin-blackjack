@@ -4,6 +4,7 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.Rank
 import blackjack.domain.card.Suit
 import blackjack.domain.participant.Participant
+import blackjack.fakeParticipant.FakeParticipant
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -16,7 +17,7 @@ class ParticipantTest {
     }
 
     @Test
-    fun `덱에서 한 장의 카드를 추가할 수 있다`() {
+    fun `카드를 추가하면 참가자가 가지는 카드에 추가한 카드를 찾을 수 있다`() {
         val participant = FakeParticipant()
         val card = Card.of(Rank.ACE, Suit.SPADE)
 
@@ -25,7 +26,7 @@ class ParticipantTest {
     }
 
     @Test
-    fun `카드의 총합을 계산할 수 있다`() {
+    fun `참가자에게 카드를 추가하면 카드의 총합을 계산한 점수의 정보를 가져올 수 있다`() {
         val player = FakeParticipant()
 
         setPlayerCard(
@@ -40,7 +41,7 @@ class ParticipantTest {
     }
 
     @Test
-    fun `플레이어는 가지고 있는 카드의 합을 계산할 수 있다(ACE 1장)`() {
+    fun `참가자에게 카드를 추가하면 카드의 총합을 계산한 점수의 정보를 가져올 수 있다(ACE 1장)`() {
         val player = FakeParticipant()
 
         setPlayerCard(
@@ -55,7 +56,7 @@ class ParticipantTest {
     }
 
     @Test
-    fun `플레이어는 가지고 있는 카드의 합을 계산할 수 있다(ACE 2장)`() {
+    fun `참가자에게 카드를 추가하면 카드의 총합을 계산한 점수의 정보를 가져올 수 있다(ACE 2장)`() {
         val player = FakeParticipant()
         setPlayerCard(
             player,
@@ -70,7 +71,7 @@ class ParticipantTest {
     }
 
     @Test
-    fun `카드의 총합이 21이 넘으면 버스트가 된다`() {
+    fun `총합이 21이 넘는 카드를 전달하면 버스트라는 사실을 알 수 있다`() {
         val player = FakeParticipant()
 
         setPlayerCard(

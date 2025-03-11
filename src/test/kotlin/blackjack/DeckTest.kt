@@ -19,7 +19,7 @@ class DeckTest {
     }
 
     @Test
-    fun `카드를 뽑을 수 있다`() {
+    fun `draw를 하면 덱에서 카드가 한 장 빠진다`() {
         val expect = testDeck.getSize()
         testDeck.draw()
         val actual = testDeck.getSize()
@@ -27,14 +27,14 @@ class DeckTest {
     }
 
     @Test
-    fun `덱에 카드가 없는 경우, 카드를 뽑을 수 없다`() {
+    fun `덱의 요소의 개수보다 더 뽑게 되면 IllegalArgumentException를 던진다 `() {
         assertThrows<IllegalArgumentException> {
             repeat(testDeck.getSize() + 1) { testDeck.draw() }
         }
     }
 
     @Test
-    fun `뽑은 카드는 덱에 존재하지 않는다`() {
+    fun `draw로 카드를 뽑으면 뽑은 카드는 덱에 존재하지 않는다`() {
         val card1 = testDeck.draw()
         repeat(51) {
             assertThat(testDeck.draw()).isNotEqualTo(card1)
@@ -42,14 +42,14 @@ class DeckTest {
     }
 
     @Test
-    fun `덱의 사이즈가 52개가 아니면 예외가 발생한다`() {
+    fun `카드의 개수가 52개가 아닌 값을 전달하면 IllegalArgumentException가 발생한다`() {
         assertThrows<IllegalArgumentException> {
             Deck(Card.getAllCard().subList(0, 10))
         }
     }
 
     @Test
-    fun `카드는 중복될 수 없습니다`() {
+    fun `중복된 요소의 카드를 전달하면 IllegalArgumentException가 발생한다`() {
         assertThrows<IllegalArgumentException> {
             val list = Card.getAllCard().toMutableList()
             list[0] = Card.of(Rank.TWO, Suit.SPADE)

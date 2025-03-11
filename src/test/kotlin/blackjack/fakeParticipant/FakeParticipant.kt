@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.fakeParticipant
 
 import blackjack.domain.participant.Participant
 
