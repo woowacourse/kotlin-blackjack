@@ -5,6 +5,8 @@ import blackjack.model.ResultType.TIE
 import blackjack.model.ResultType.WIN
 import blackjack.model.card.Card
 import blackjack.model.card.CardNumber
+import blackjack.model.participant.Dealer
+import blackjack.model.participant.Player
 
 object ResultCalculator {
     const val BUST_NUMBER = 21

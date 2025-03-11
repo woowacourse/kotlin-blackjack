@@ -1,9 +1,9 @@
 package blackjack
 
 import blackjack.model.card.Card
-import blackjack.model.Dealer
+import blackjack.model.participant.Dealer
 import blackjack.model.card.CardNumber
-import blackjack.model.Player
+import blackjack.model.participant.Player
 import blackjack.model.ResultCalculator
 import blackjack.model.ResultType
 import blackjack.model.card.Shape

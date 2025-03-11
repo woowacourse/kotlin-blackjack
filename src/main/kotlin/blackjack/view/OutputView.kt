@@ -1,14 +1,14 @@
 package blackjack.view
 
 import blackjack.model.card.Card
-import blackjack.model.Dealer
+import blackjack.model.participant.Dealer
 import blackjack.model.GameManager.Companion.INITIAL_HAND_OUT_CARD_COUNT
 import blackjack.model.card.CardNumber
 import blackjack.model.card.CardNumber.ACE
 import blackjack.model.card.CardNumber.JACK
 import blackjack.model.card.CardNumber.KING
 import blackjack.model.card.CardNumber.QUEEN
-import blackjack.model.Player
+import blackjack.model.participant.Player
 import blackjack.model.ResultCalculator.adjustScore
 import blackjack.model.ResultCalculator.calculateTotalScore
 import blackjack.model.ResultType

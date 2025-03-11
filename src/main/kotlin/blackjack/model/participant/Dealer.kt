@@ -1,4 +1,4 @@
-package blackjack.model
+package blackjack.model.participant
 
 import blackjack.model.ResultCalculator.BUST_NUMBER
 import blackjack.model.ResultCalculator.calculateTotalScore
