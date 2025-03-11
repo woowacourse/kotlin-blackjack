@@ -6,7 +6,8 @@ import org.junit.jupiter.api.Test
 class DeckTest {
     @Test
     fun `카드들에서 카드를 반환한다`() {
-        val deck = Deck(listOf(Card(Suit.HEART, Rank.SIX)))
+        val cards = listOf(Card(Suit.HEART, Rank.SIX))
+        val deck = Deck(cards)
         assertThat(deck.draw()).isEqualTo(listOf(Card(Suit.HEART, Rank.SIX)))
     }
 }

@@ -13,35 +13,15 @@ class DealerTest {
     }
 
     @Test
-    fun `플레이어별 승패 여부를 반환한다`() {
-        val player1 = Player("A", Card(Suit.HEART, Rank.TWO)) // 2점
-        val player2 = Player("B", Card(Suit.HEART, Rank.ACE)) // 11점
-        val player3 = Player("C", Card(Suit.HEART, Rank.ACE), Card(Suit.HEART, Rank.KING)) // 21점
-        val verdicts: Map<Participant, Verdict> = dealer.getPlayerVerdict(listOf(player1, player2, player3))
-        val actual: Map<Player, Verdict> =
-            mapOf(
-                player1 to Verdict.LOSE,
-                player2 to Verdict.DRAW,
-                player3 to Verdict.WIN,
-            )
-        assertThat(verdicts).isEqualTo(actual)
-    }
-
-    @Test
     fun `딜러의 승패 횟수를 반환한다`() {
-        val player1 = Player("A", Card(Suit.HEART, Rank.TWO)) // 2점
-        val player2 = Player("B", Card(Suit.HEART, Rank.ACE)) // 11점
-        val player3 = Player("C", Card(Suit.HEART, Rank.ACE)) // 11점
-        val player4 = Player("D", Card(Suit.HEART, Rank.ACE)) // 11점
-        val player5 = Player("E", Card(Suit.HEART, Rank.ACE), Card(Suit.HEART, Rank.KING)) // 21점
-        val player6 = Player("F", Card(Suit.HEART, Rank.ACE), Card(Suit.HEART, Rank.KING)) // 21점
-        val verdicts: Map<Verdict, Int> =
-            dealer.getDealerVerdicts(listOf(player1, player2, player3, player4, player5, player6))
-        val actual: Map<Verdict, Int> =
+        val results = listOf(VerdictResult.WIN, VerdictResult.WIN, VerdictResult.LOSE, VerdictResult.DRAW, VerdictResult.LOSE)
+        dealer.recordVerdict(results)
+        val verdicts: Map<VerdictResult, Int> = dealer.getRecord()
+        val actual: Map<VerdictResult, Int> =
             mapOf(
-                Verdict.WIN to 1,
-                Verdict.LOSE to 2,
-                Verdict.DRAW to 3,
+                VerdictResult.WIN to 2,
+                VerdictResult.LOSE to 2,
+                VerdictResult.DRAW to 1,
             )
         assertThat(verdicts).isEqualTo(actual)
     }

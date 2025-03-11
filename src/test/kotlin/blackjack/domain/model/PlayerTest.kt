@@ -25,8 +25,7 @@ class PlayerTest {
     @Test
     fun `플레이어는 카드를 받는다`() {
         val actual =
-            Player(
-                "동전",
+            listOf(
                 Card(Suit.HEART, Rank.ACE),
                 Card(Suit.HEART, Rank.KING),
             )
