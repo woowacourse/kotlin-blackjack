@@ -25,23 +25,7 @@ class PlayerTest {
         fixture.forEach {
             player.addCard(it)
         }
-        assertThat(player.cards.items).containsExactly(*fixture.toTypedArray())
-    }
-
-    @Test
-    fun `플레이어가 에이스 카드가 없으면 에이스 카드가 없음을 반환한다`() {
-        val expected = player.hasAce()
-
-        assertEquals(expected, false)
-    }
-
-    @Test
-    fun `플레이어가 에이스 카드가 있으면 에이스 카드가 있음을 반환한다`() {
-        player.addCard(TrumpCard(Tier.ACE, Shape.DIA))
-
-        val expected = player.hasAce()
-
-        assertEquals(expected, true)
+        assertThat(player.getCards()).containsExactly(*fixture.toTypedArray())
     }
 
     @Test

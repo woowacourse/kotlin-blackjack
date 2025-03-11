@@ -25,7 +25,7 @@ class BlackJackGame(
                 when (choice) {
                     UserChoice.HIT -> player.addCard(deck.draw())
                     UserChoice.STAY -> {
-                        if (player.cards.size() == INITIAL_CARD_COUNT) {
+                        if (player.cardSize() == INITIAL_CARD_COUNT) {
                             onPlayerStateUpdated(player)
                         }
                         break
@@ -49,7 +49,7 @@ class BlackJackGame(
         val dealerMap = GameResult.entries.associateWith { 0 }.toMutableMap()
 
         participants.players.forEach { player ->
-            val result = GameResult.from(participants.dealer.totalScore(), player.totalScore())
+            val result = GameResult.resultOfDealer(participants.dealer.totalScore(), player.totalScore())
             dealerMap[result] = dealerMap.getOrDefault(result, 0) + 1
         }
         return dealerMap
@@ -57,7 +57,7 @@ class BlackJackGame(
 
     fun calculatePlayerResult(action: (String, GameResult) -> Unit) {
         participants.players.forEach { player ->
-            val result = GameResult.from(player.totalScore(), participants.dealer.totalScore())
+            val result = GameResult.resultOfPlayer(participants.dealer.totalScore(), player.totalScore())
             action(player.name, result)
         }
     }
