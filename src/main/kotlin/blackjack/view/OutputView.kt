@@ -11,6 +11,7 @@ import blackjack.model.CardSuit.CLUB
 import blackjack.model.CardSuit.DIAMOND
 import blackjack.model.CardSuit.HEART
 import blackjack.model.CardSuit.SPADE
+import blackjack.model.GameResult
 import blackjack.model.WinningResult
 import blackjack.model.WinningResult.LOSE
 import blackjack.model.WinningResult.PUSH
@@ -69,19 +70,20 @@ class OutputView {
             CLUB -> "클로버"
         }
 
-    fun displayResultTitle() {
+    fun displayResult(result: GameResult) {
         println("\n## 최종 승패")
+        displayDealerResult(result.dealerResult)
+        displayPlayersResult(result.playerResults)
     }
 
-    fun displayDealerResult(winningResult: Map<WinningResult, Int>) {
-        println("딜러: ${winningResult[WIN]}승 ${winningResult[PUSH]}무 ${winningResult[LOSE]}패")
+    private fun displayDealerResult(result: Map<WinningResult, Int>) {
+        println("딜러: ${result[WIN]}승 ${result[PUSH]}무 ${result[LOSE]}패")
     }
 
-    fun displayPlayerResult(
-        name: String,
-        winningResult: WinningResult,
-    ) {
-        println("$name: ${winningResult.toText()}")
+    private fun displayPlayersResult(result: Map<String, WinningResult>) {
+        result.forEach { (name, winningResult) ->
+            println("$name: ${winningResult.toText()}")
+        }
     }
 
     private fun WinningResult.toText() =
