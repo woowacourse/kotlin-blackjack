@@ -14,7 +14,7 @@ class DealerTest {
     @BeforeEach
     fun setup() {
         cardDeck = CardDeck()
-        dealer = Dealer(ScoreCalculator())
+        dealer = Dealer(scoreCalculator = ScoreCalculator())
     }
 
     @Test

@@ -1,7 +1,7 @@
 package blackjack.model
 
 class Dealer(
-    name: String,
+    name: String = "",
     scoreCalculator: ScoreCalculator,
 ) : Participant(name, scoreCalculator) {
     override fun recieveCards(getCards: (Int) -> List<Card>): Boolean {

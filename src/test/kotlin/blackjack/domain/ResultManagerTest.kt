@@ -23,7 +23,7 @@ class ResultManagerTest {
     @BeforeEach
     fun setup() {
         scoreCalculator = ScoreCalculator()
-        dealer = Dealer(scoreCalculator)
+        dealer = Dealer(scoreCalculator = scoreCalculator)
 
         val playerNames = listOf("공백")
         players = Players.from(playerNames, scoreCalculator)
