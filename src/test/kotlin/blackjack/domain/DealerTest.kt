@@ -30,7 +30,7 @@ class DealerTest {
     fun `딜러 점수가 16 이전까지 뽑은 카드의 장수를 반환한다`() {
         // given
         val initialDrawCount = 2
-        dealer.draw(cardDeck)
+        dealer.recieveCards(cardDeck)
 
         // when
         val dealerDrawCount = dealer.drawIfNeeded(cardDeck)

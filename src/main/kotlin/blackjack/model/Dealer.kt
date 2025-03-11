@@ -3,22 +3,20 @@ package blackjack.model
 class Dealer(
     scoreCalculator: ScoreCalculator,
 ) : Participant(scoreCalculator) {
-    fun drawIfNeeded(cardDeck: CardDeck): Int {
-        var count = INITIAL_RESULT_COUNT
-
-        while (score() <= DEALER_DRAW_CRITERIA && !isBust()) {
-            draw(cardDeck)
-            count++
-        }
-
-        return count
+    override fun recieveCards(getCards: (Int) -> List<Card>): Boolean {
+        val count = if (cards.isEmpty()) INITIAL_DRAW_COUNT else DEFAULT_DRAW_COUNT
+        addAll(getCards(count))
+        return score() <= DRAW_CRITERIA && !isBust()
     }
 
-    fun firstVisibleCard(): List<Card> = cards.take(DEALER_FIRST_SHOWN_COUNT)
+    override fun showInitialCards(): List<Card> = cards.take(FIRST_SHOWN_COUNT)
+
+    fun additionalDrawCount(): Int = cards.size - INITIAL_DRAW_COUNT
 
     companion object {
-        private const val INITIAL_RESULT_COUNT = 0
-        private const val DEALER_DRAW_CRITERIA = 16
-        private const val DEALER_FIRST_SHOWN_COUNT = 1
+        private const val DRAW_CRITERIA = 16
+        private const val INITIAL_DRAW_COUNT = 2
+        private const val DEFAULT_DRAW_COUNT = 1
+        private const val FIRST_SHOWN_COUNT = 1
     }
 }

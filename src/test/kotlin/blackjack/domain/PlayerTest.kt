@@ -16,7 +16,7 @@ class PlayerTest {
         val expectedSize = 2
 
         // when
-        player.draw(cardDeck)
+        player.recieveCards(cardDeck)
 
         // then
         assertThat(player.cards.size).isEqualTo(expectedSize)

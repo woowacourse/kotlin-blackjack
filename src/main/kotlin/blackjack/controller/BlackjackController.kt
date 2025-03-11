@@ -33,7 +33,7 @@ class BlackjackController(
         scoreCalculator: ScoreCalculator,
     ): Dealer {
         val dealer = Dealer(scoreCalculator)
-        dealer.draw(cardDeck)
+        dealer.recieveCards(cardDeck::draw)
         return dealer
     }
 
@@ -44,10 +44,10 @@ class BlackjackController(
     ): Players {
         val playerNames = inputView.getPlayers()
         val players = Players.from(playerNames, scoreCalculator)
-        players.value.forEach { player -> player.draw(cardDeck) }
+        players.value.forEach { player -> player.recieveCards(cardDeck::draw) }
 
         outputView.displayFirstDrawEnd(players.value.map { player -> player.name })
-        outputView.displayParticipantCards(cards = dealer.firstVisibleCard())
+        outputView.displayParticipantCards(cards = dealer.showInitialCards())
 
         return players
     }
@@ -69,12 +69,12 @@ class BlackjackController(
         cardDeck: CardDeck,
     ) {
         while (true) {
-            if (!inputView.getIsDrawMore(player.name)) break
+            if (!inputView.getIsRecieveMore(player.name)) break
 
-            player.draw(cardDeck)
+            val canRecieveMore = player.recieveCards(cardDeck::draw)
             outputView.displayParticipantCards(player.name, player.cards)
 
-            if (player.isBust()) return
+            if (!canRecieveMore) return
         }
     }
 
@@ -82,9 +82,12 @@ class BlackjackController(
         dealer: Dealer,
         cardDeck: CardDeck,
     ) {
-        val dealerDrawCount = dealer.drawIfNeeded(cardDeck)
-        outputView.displayDealerDrawInfo(dealerDrawCount)
+        while (true) {
+            val canRecieveMore = dealer.recieveCards(cardDeck::draw)
+            if (!canRecieveMore) break
+        }
 
+        outputView.displayDealerDrawInfo(dealer.additionalDrawCount())
         outputView.displayParticipantInfo(
             cards = dealer.cards,
             score = dealer.score(),
