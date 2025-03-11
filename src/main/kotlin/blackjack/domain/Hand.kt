@@ -4,17 +4,14 @@ class Hand {
     private val _cards = Cards()
     val cards: List<Card> = _cards.value
 
-    fun getScore(onBusted: () -> Unit): Int =
-        _cards.score ?: run {
+    fun getHandState(onBusted: () -> Unit): HandState {
+        if (_cards.state == HandState.Bust) {
             onBusted()
-            SCORE_BUSTED
         }
+        return _cards.state
+    }
 
     fun draw(card: Card) {
         _cards.add(card)
-    }
-
-    companion object {
-        private const val SCORE_BUSTED = -1
     }
 }

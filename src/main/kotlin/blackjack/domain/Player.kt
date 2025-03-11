@@ -8,14 +8,16 @@ class Player(
     var state: PlayerState = PlayerState.PLAYING
         private set
 
-    fun setResult(dealerScore: Int) {
-        state =
+    fun setResult(dealerHandState: HandState) {
+        this.state =
             when {
-                score > dealerScore -> PlayerState.WIN
-                score < dealerScore -> PlayerState.LOSE
+                handState > dealerHandState -> PlayerState.WIN
+                handState < dealerHandState -> PlayerState.LOSE
                 else -> PlayerState.DRAW
             }
     }
+
+    fun canHitMore(): Boolean = handState is HandState.Score && score < 21
 
     fun win() {
         state = PlayerState.WIN

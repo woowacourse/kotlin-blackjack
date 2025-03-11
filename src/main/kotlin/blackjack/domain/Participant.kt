@@ -4,7 +4,8 @@ abstract class Participant {
     protected abstract val onBusted: () -> Unit
     protected val hand: Hand = Hand()
     val cards: List<Card> get() = hand.cards
-    val score: Int get() = hand.getScore(onBusted)
+    val handState: HandState get() = hand.getHandState(onBusted)
+    val score: Int = handState.score
 
     fun draw(card: Card) {
         hand.draw(card)

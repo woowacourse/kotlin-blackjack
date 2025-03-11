@@ -35,13 +35,13 @@ class Dealer(
     }
 
     fun startTurn() {
-        while (score < 17) {
+        while (handState is HandState.Score && score < 17) {
             draw(deck.draw())
         }
     }
 
     fun setResult() {
-        playingPlayers.forEach { player -> player.setResult(score) }
+        playingPlayers.forEach { player -> player.setResult(handState) }
     }
 
     private val playingPlayers: List<Player>
