@@ -9,18 +9,16 @@ import blackjack.view.InputView
 import blackjack.view.OutputView
 
 class Casino(
-    val inputView: InputView,
-    val outputView: OutputView,
+    private val inputView: InputView,
+    private val outputView: OutputView,
 ) {
-    fun gameStart() {
+    fun blackJackGame() {
         val players: List<Player> = inputView.readPlayerNames().map { Player(it) }
-        val dealer: Dealer = Dealer()
+        val dealer = Dealer()
         val participants: List<GameParticipant> = listOf(dealer) + players
         initDistributeCard(participants)
-
         outputView.showDistributeCardMessage(players)
         outputParticipantCardsInfo(dealer, players)
-
         runPlayersDrawPhase(players)
         runDealerDrawPhase(dealer)
         outputView.showCardsResult(participants)
@@ -29,7 +27,7 @@ class Casino(
 
     private fun initDistributeCard(participants: List<GameParticipant>) {
         participants.forEach { participant ->
-            repeat(2) { participant.drawCard() }
+            repeat(INIT_CARD_SIZE) { participant.drawCard() }
         }
         outputView.lineSeparator()
     }
@@ -79,6 +77,6 @@ class Casino(
     }
 
     companion object {
-        private const val INIT_CARD_SIZE = 2
+        const val INIT_CARD_SIZE = 2
     }
 }

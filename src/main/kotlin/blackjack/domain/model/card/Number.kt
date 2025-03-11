@@ -22,14 +22,12 @@ enum class Number(
 
     companion object {
         fun getByOrderNumber(orderNumber: Int): Number =
-            entries.find { it.orderNumber == orderNumber } ?: throw IllegalArgumentException(ERROR_UNKNOWN_CARD_ORDER_NUMBER)
-
-        fun getByInitial(initial: String): Number =
-            entries.find { it.initial == initial } ?: throw IllegalArgumentException(ERROR_UNKNOWN_CARD_INITIAL)
+            entries.find { it.orderNumber == orderNumber } ?: throw IllegalArgumentException(
+                ERROR_UNKNOWN_CARD_ORDER_NUMBER,
+            )
 
         const val MAX_ORDER_NUMBER = 13
 
-        private val ERROR_UNKNOWN_CARD_ORDER_NUMBER = "알 수 없는 카드 순서 번호입니다."
-        private val ERROR_UNKNOWN_CARD_INITIAL = "알 수 없는 카드 이니셜 입니다."
+        private const val ERROR_UNKNOWN_CARD_ORDER_NUMBER = "알 수 없는 카드 순서 번호입니다."
     }
 }

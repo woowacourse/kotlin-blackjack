@@ -54,11 +54,11 @@ class OutputView(
         winLossStatistics: WinLossStatistics,
         playersWinLoss: List<Pair<Player, WinLoss>>,
     ) {
-        println("## 최종 승패")
-        println("딜러: ${makeDealerWinLossText(winLossStatistics)}")
-        playersWinLoss.forEach({ (player, winLoss) ->
+        println(HEADER_FINAL_RESULT)
+        println(DEALER_RESULT_TEMPLATE.format(makeDealerWinLossText(winLossStatistics)))
+        playersWinLoss.forEach { (player, winLoss) ->
             println(player.name + ": " + Translator.winLossLocalize(winLoss, locale))
-        })
+        }
     }
 
     fun makeDealerWinLossText(winLossStatistics: WinLossStatistics): String {
@@ -79,5 +79,7 @@ class OutputView(
         private const val CARD_INFO_MESSAGE = "%s카드: %s"
         private const val DEALER_DRAW_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다."
         private const val CARD_RESULT_MESSAGE = " - 결과: "
+        private const val HEADER_FINAL_RESULT = "## 최종 승패"
+        private const val DEALER_RESULT_TEMPLATE = "딜러: %s"
     }
 }

@@ -7,5 +7,5 @@ fun main() {
     val inputView = InputView()
     val outputView = OutputView(Locale.KOREAN)
     val casino = Casino(inputView, outputView)
-    casino.gameStart()
+    casino.blackJackGame()
 }
