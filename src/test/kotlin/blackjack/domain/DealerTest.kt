@@ -30,6 +30,6 @@ class DealerTest {
         dealer.startPlayerTurn {
             player.draw(Card(Rank.AceRank, Suit.DIAMOND))
         }
-        assertThat(player.score).isEqualTo(11)
+        assertThat(player.score.value).isEqualTo(11)
     }
 }
