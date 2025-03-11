@@ -46,11 +46,11 @@ class OutputView(
     private fun makeCardText(card: Card): String = card.number.initial + Translator.suitLocalize(card.suit, locale)
 
     fun showFinalResult(
-        dealerWinLossText: String,
+        winLossStatistics: WinLossStatistics,
         playersWinLoss: List<Pair<Player, WinLoss>>,
     ) {
         println("## 최종 승패")
-        println("딜러: " + dealerWinLossText)
+        println("딜러: ${makeDealerWinLossText(winLossStatistics)}")
         playersWinLoss.forEach({ (player, winLoss) ->
             println(player.name + ": " + Translator.winLossLocalize(winLoss, locale))
         })

@@ -16,7 +16,7 @@ class WinLossStatisticsTest {
 
         val winLossStatistics = WinLossStatistics()
 
-        assertThat(winLossStatistics.calculatePlayerWinLossByParticipant(dealer, player)).isEqualTo(
+        assertThat(winLossStatistics.calculatePlayerWinLoss(dealer, player)).isEqualTo(
             WinLoss.DRAW,
         )
     }
@@ -29,7 +29,7 @@ class WinLossStatisticsTest {
         val winLossStatistics = WinLossStatistics()
 
         assertThat(
-            winLossStatistics.calculatePlayerWinLossByParticipant(
+            winLossStatistics.calculatePlayerWinLoss(
                 dealerResult19Cards,
                 playerBlackJackCards,
             ),
@@ -45,7 +45,7 @@ class WinLossStatisticsTest {
 
         val winLossStatistics = WinLossStatistics()
 
-        assertThat(winLossStatistics.calculatePlayerWinLossByParticipant(dealerResult19Cards, playerResult18Cards)).isEqualTo(WinLoss.LOSE)
+        assertThat(winLossStatistics.calculatePlayerWinLoss(dealerResult19Cards, playerResult18Cards)).isEqualTo(WinLoss.LOSE)
     }
 
     @Test
@@ -55,7 +55,7 @@ class WinLossStatisticsTest {
 
         val winLossStatistics = WinLossStatistics()
 
-        assertThat(winLossStatistics.calculatePlayerWinLossByParticipant(dealerBurstCards, playerBlackJackCards)).isEqualTo(WinLoss.WIN)
+        assertThat(winLossStatistics.calculatePlayerWinLoss(dealerBurstCards, playerBlackJackCards)).isEqualTo(WinLoss.WIN)
     }
 
     @Test
@@ -65,7 +65,7 @@ class WinLossStatisticsTest {
 
         val winLossStatistics = WinLossStatistics()
 
-        assertThat(winLossStatistics.calculatePlayerWinLossByParticipant(dealerBlackJackCards, playerBlackJackCards)).isEqualTo(
+        assertThat(winLossStatistics.calculatePlayerWinLoss(dealerBlackJackCards, playerBlackJackCards)).isEqualTo(
             WinLoss.LOSE,
         )
     }
@@ -76,8 +76,8 @@ class WinLossStatisticsTest {
         val dealerResult19Cards = Dealer(listOf(Card(8), Card(10)))
         val playerBlackJackCards = Player(cards = listOf(Card(0), Card(12)))
         val winLossStatistics = WinLossStatistics()
-        winLossStatistics.calculatePlayerWinLossByParticipant(dealerBlackJackCards, playerBlackJackCards)
-        winLossStatistics.calculatePlayerWinLossByParticipant(dealerResult19Cards, playerBlackJackCards)
+        winLossStatistics.calculatePlayerWinLoss(dealerBlackJackCards, playerBlackJackCards)
+        winLossStatistics.calculatePlayerWinLoss(dealerResult19Cards, playerBlackJackCards)
 
         val actualDealerWinLossText = OutputView(Locale.KOREAN).makeDealerWinLossText(winLossStatistics)
         val expectedDealerWinLossText = "1무 1패"

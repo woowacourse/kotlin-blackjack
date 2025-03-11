@@ -73,8 +73,8 @@ class Casino(
         val winLossStatistics = WinLossStatistics()
         val playersWinLoss =
             players.map { player ->
-                player to winLossStatistics.calculatePlayerWinLossByParticipant(dealer, player)
+                player to winLossStatistics.calculatePlayerWinLoss(dealer, player)
             }
-        outputView.showFinalResult(winLossStatistics.getDealerWinLossText(), playersWinLoss)
+        outputView.showFinalResult(winLossStatistics, playersWinLoss)
     }
 }
