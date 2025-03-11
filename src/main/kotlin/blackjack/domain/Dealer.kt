@@ -7,14 +7,14 @@ class Dealer(
     override val onBusted: () -> Unit = { playingPlayers.forEach(Player::win) }
     private val deck: Deck = Deck(shuffler)
 
-    val dealerResults: List<PlayerState>
+    val dealerResults: List<ParticipantState>
         get() =
             players.map { player ->
                 when (player.state) {
-                    PlayerState.WIN -> PlayerState.LOSE
-                    PlayerState.DRAW -> PlayerState.DRAW
-                    PlayerState.LOSE -> PlayerState.WIN
-                    PlayerState.PLAYING -> PlayerState.PLAYING
+                    ParticipantState.WIN -> ParticipantState.LOSE
+                    ParticipantState.DRAW -> ParticipantState.DRAW
+                    ParticipantState.LOSE -> ParticipantState.WIN
+                    ParticipantState.PLAYING -> ParticipantState.PLAYING
                 }
             }
 
@@ -46,5 +46,5 @@ class Dealer(
     }
 
     private val playingPlayers: List<Player>
-        get() = players.filter { player -> player.state == PlayerState.PLAYING }
+        get() = players.filter { player -> player.state == ParticipantState.PLAYING }
 }

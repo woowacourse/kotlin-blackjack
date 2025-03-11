@@ -1,12 +1,12 @@
 package blackjack.view
 
-import blackjack.domain.Player
-
 class InputView {
-    fun readPlayers(): List<Player> {
-        val players: List<Player> = readln().split(",").map { name: String -> Player(name.trim()) }
-        return players
-    }
+    fun readPlayers(): List<String> =
+        readln()
+            .splitToSequence(",")
+            .filter { it.isNotBlank() }
+            .map { name -> name.trim() }
+            .toList()
 
     fun readWantToHit(): Boolean {
         val input = readln()

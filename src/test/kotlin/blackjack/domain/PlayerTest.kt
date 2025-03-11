@@ -48,6 +48,6 @@ class PlayerTest {
                 draw(Card(NumberRank.TEN, Suit.DIAMOND))
             }
         player.score
-        assertThat(player.state).isEqualTo(PlayerState.LOSE)
+        assertThat(player.state).isEqualTo(ParticipantState.LOSE)
     }
 }

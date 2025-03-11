@@ -1,71 +1,74 @@
 package blackjack.view
 
-import blackjack.domain.Blackjack
-import blackjack.domain.Dealer
-import blackjack.domain.Player
-import blackjack.domain.RandomShuffler
+import blackjack.view.model.DealerResult
+import blackjack.view.model.PlayerResult
 
 class BlackjackView(
     private val inputView: InputView = InputView(),
     private val outputView: OutputView = OutputView(),
 ) {
-    fun readPlayers(): List<Player> {
+    fun readPlayers(): List<String> {
         outputView.requestPlayers()
         return inputView.readPlayers()
     }
 
     fun dealCards(
-        players: List<Player>,
-        dealer: Dealer,
+        playersName: List<String>,
+        dealerCardsContent: List<String>,
+        playerCardsContent: List<List<String>>,
     ) {
-        outputView.showCardDealing(players, dealer)
-    }
-
-    fun startPlayerTurn(
-        dealer: Dealer,
-        blackjack: Blackjack,
-    ) {
-        println()
-        blackjack.startPlayerTurn { player ->
-            outputView.showPlayersCard(player)
-            while (player.canHitMore()) {
-                outputView.askWantToHit(player)
-                val wantToHit = inputView.readWantToHit()
-                if (!wantToHit) return@startPlayerTurn
-                dealer.giveCard(player)
-                outputView.showPlayersCard(player)
-            }
-        }
-    }
-
-    fun startDealerTurn(
-        players: List<Player>,
-        dealer: Dealer,
-        blackjack: Blackjack,
-    ) {
-        blackjack.startDealerTurn {
-            outputView.showDealerHit()
-        }
-        outputView.endDealerTurn(players, dealer)
+        outputView.showCardDealing(
+            playersName,
+            dealerCardsContent,
+            playerCardsContent,
+        )
     }
 
     fun showResult(
-        players: List<Player>,
-        dealer: Dealer,
-        blackjack: Blackjack,
+        dealerResults: DealerResult,
+        playersResults: List<PlayerResult>,
     ) {
-        blackjack.setResult()
-        outputView.showResult(players, dealer)
+        outputView.showResult(dealerResults, playersResults)
     }
 
-    fun run() {
-        val players = readPlayers()
-        val dealer = Dealer(players, RandomShuffler)
-        val blackjack = Blackjack(dealer)
-        blackjack.dealCards()
-        dealCards(players, dealer)
-        startPlayerTurn(dealer, blackjack)
-        startDealerTurn(players, dealer, blackjack)
-        showResult(players, dealer, blackjack)
+    fun showPlayerCard(
+        name: String,
+        cards: List<String>,
+        score: Int,
+    ) {
+        outputView.showPlayerCards(
+            name,
+            cards,
+            score,
+        )
+    }
+
+    fun askWantToHit(name: String): Boolean {
+        outputView.askWantToHit(name)
+        val wantToHit = inputView.readWantToHit()
+        return wantToHit
+    }
+
+    fun onEachPlayerTurn(
+        name: String,
+        cards: List<String>,
+        score: Int,
+        canHitMore: Boolean,
+        draw: () -> Unit,
+    ) {
+    }
+
+    fun showDealerHit() {
+        outputView.showDealerHit()
+    }
+
+    fun endDealerTurn(
+        dealerCards: List<String>,
+        dealerScore: Int,
+        playerNames: List<String>,
+        playerCards: List<List<String>>,
+        playerScores: List<Int>,
+    ) {
+        outputView.endDealerTurn(dealerCards, dealerScore, playerNames, playerCards, playerScores)
     }
 }

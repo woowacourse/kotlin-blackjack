@@ -63,7 +63,7 @@ class BlackjackTest {
             }
         val blackjack = Blackjack(dealer)
         blackjack.setResult()
-        assertThat(dealer.dealerResults).isEqualTo(listOf(PlayerState.LOSE, PlayerState.WIN))
+        assertThat(dealer.dealerResults).isEqualTo(listOf(ParticipantState.LOSE, ParticipantState.WIN))
     }
 
     @Test
@@ -102,8 +102,8 @@ class BlackjackTest {
             }
         val blackjack = Blackjack(dealer)
         blackjack.setResult()
-        assertThat(winner.state).isEqualTo(PlayerState.WIN)
-        assertThat(loser.state).isEqualTo(PlayerState.LOSE)
+        assertThat(winner.state).isEqualTo(ParticipantState.WIN)
+        assertThat(loser.state).isEqualTo(ParticipantState.LOSE)
     }
 
     @Test
@@ -119,7 +119,7 @@ class BlackjackTest {
             }
         val blackjack = Blackjack(dealer)
         blackjack.setResult()
-        assertThat(dealer.dealerResults).contains(PlayerState.DRAW)
-        assertThat(drawer.state).isEqualTo(PlayerState.DRAW)
+        assertThat(dealer.dealerResults).contains(ParticipantState.DRAW)
+        assertThat(drawer.state).isEqualTo(ParticipantState.DRAW)
     }
 }

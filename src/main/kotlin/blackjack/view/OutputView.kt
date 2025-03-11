@@ -1,10 +1,10 @@
 package blackjack.view
 
 import blackjack.domain.Card
-import blackjack.domain.Dealer
-import blackjack.domain.Player
 import blackjack.domain.Rank
 import blackjack.domain.Suit
+import blackjack.view.model.DealerResult
+import blackjack.view.model.PlayerResult
 
 class OutputView {
     fun requestPlayers() {
@@ -12,45 +12,55 @@ class OutputView {
     }
 
     fun showCardDealing(
-        players: List<Player>,
-        dealer: Dealer,
+        playersName: List<String>,
+        dealerCardsContent: List<String>,
+        playerCardsContent: List<List<String>>,
     ) {
         println()
-        println("${players.joinToString { player -> player.name }}에게 2장씩 나누었습니다.")
+        println("${playersName.joinToString()}에게 2장씩 나누었습니다.")
         println("딜러가 한 장을 오픈했습니다.")
-        println("딜러: ${dealer.cards.joinToString { card -> card.prettyString }}")
-        players.forEach { player ->
-            println("${player.name}카드: ${player.cards.joinToString { card -> card.prettyString }}")
+        println("딜러: ${dealerCardsContent.joinToString()}")
+        playersName.zip(playerCardsContent).forEach { (name, cardsContent) ->
+            println("${name}카드: ${cardsContent.joinToString()}")
         }
+        println()
     }
 
-    fun askWantToHit(player: Player) {
-        println("${player.name}는 한 장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
+    fun askWantToHit(name: String) {
+        println("${name}는 한 장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
     }
 
-    fun showPlayersCard(player: Player) {
-        println("${player.name}카드: ${player.cards.joinToString { card -> card.prettyString }}, 점수 : ${player.score}")
+    fun showPlayerCards(
+        name: String,
+        cards: List<String>,
+        score: Int,
+    ) {
+        println("${name}카드: ${cards.joinToString()}, 점수 : $score")
     }
 
     fun endDealerTurn(
-        players: List<Player>,
-        dealer: Dealer,
+        dealerCards: List<String>,
+        dealerScore: Int,
+        playerNames: List<String>,
+        playerCards: List<List<String>>,
+        playerScores: List<Int>,
     ) {
-        println("\n딜러 카드: ${dealer.cards.joinToString { card -> card.prettyString }} - 결과: ${dealer.handState.score}")
-        players.forEach { player ->
-            println("${player.name}카드: ${player.cards.joinToString { card -> card.prettyString }} - 결과: ${player.handState.score}")
+        println("\n딜러 카드: ${dealerCards.joinToString()} - 결과: $dealerScore")
+        val playersCount = listOf(playerNames.size, playerCards.size, playerScores.size).min()
+        (0 until playersCount).forEach { playerIndex ->
+            println("${playerNames[playerIndex]}카드: ${playerCards[playerIndex].joinToString()} - 결과: ${playerScores[playerIndex]}")
         }
         println()
     }
 
     fun showResult(
-        players: List<Player>,
-        dealer: Dealer,
+        dealerResult: DealerResult,
+        playersResults: List<PlayerResult>,
     ) {
         println("## 최종 승패")
-        println("딜러: ${dealer.dealerResults.joinToString()}")
-        players.forEach { player ->
-            println("${player.name}: ${player.state}")
+        println("딜러: $dealerResult")
+        playersResults.forEach { playerResult ->
+            println("${playerResult.name}: ${playerResult.result}")
         }
     }
 
