@@ -62,7 +62,7 @@
 - [x] Hand | 방어적 복사 개념 적용
 - [x] OutputView | 초반 카드 보여 주는 로직을 비즈니스 로직으로 처리하기
 - [x] Introduce | 이름을 필수 요소로 적용
-- [ ] Blackjack | playerGroup 생성자 프로퍼티로 변경
+- [x] Blackjack | playerGroup 생성자 프로퍼티로 변경
 - [x] ActionType | 입력 유효성 검사 로직을 View로 이동 & 리턴값 변경
 - [x] Participants | 결과 저장 위치 변경 (Participants -> controller)
 - [x] GameResult | None 상태 삭제

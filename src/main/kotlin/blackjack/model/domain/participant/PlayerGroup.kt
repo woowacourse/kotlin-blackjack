@@ -1,9 +1,9 @@
 package blackjack.model.domain.participant
 
-class PlayerGroup(
-    val players: List<Player>,
-    val dealer: Dealer,
-) {
+class PlayerGroup(val participants: List<Participants>) {
+    val dealer = participants.filterIsInstance<Dealer>().first()
+    val players = participants.filterIsInstance<Player>()
+
     init {
         require(players.size <= MAX_PLAYERS_SIZE) { INVALID_PLAYERS_SIZE }
         require(players.toSet().size == players.size) { INVALID_PLAYERS_DUPLICATED }

@@ -15,30 +15,49 @@ class BlackjackController(
     private val inputView: InputView,
     private val outputView: OutputView,
 ) {
-    private val deck: ArrayDeque<Card> = CardFactory().makeCard()
-    private val blackjack: Blackjack = Blackjack(PlayingCard(deck))
-    private val dealer: Dealer = Dealer()
-
     fun run() {
         val playerGroup = getPlayerGroup()
-        initGame(playerGroup.players)
-        startGame(playerGroup.players)
-        endGame(playerGroup.players)
+        val blackjack = makeGame(playerGroup)
+        initGame(blackjack, playerGroup)
+        startGame(blackjack, playerGroup)
+        endGame(blackjack, playerGroup)
     }
 
-    private fun initGame(players: List<Player>) {
-        blackjack.initGame(players + dealer)
-        outputView.printInitCardStatus(dealer, players)
-    }
-
-    private fun startGame(players: List<Player>) {
-        players.forEach { player ->
-            hitOrStay(player)
+    private fun getPlayerGroup(): PlayerGroup {
+        return retryInput {
+            val players: List<Player> = inputView.askForPlayersName().map(::Player)
+            val dealer: Dealer = Dealer()
+            PlayerGroup(listOf(dealer) + players)
         }
-        dealerReceiveCard()
     }
 
-    private fun hitOrStay(player: Player) {
+    private fun makeGame(playerGroup: PlayerGroup): Blackjack {
+        val deck: ArrayDeque<Card> = CardFactory().makeCard()
+        return Blackjack(PlayingCard(deck), playerGroup)
+    }
+
+    private fun initGame(
+        blackjack: Blackjack,
+        playerGroup: PlayerGroup,
+    ) {
+        blackjack.initGame()
+        outputView.printInitCardStatus(playerGroup)
+    }
+
+    private fun startGame(
+        blackjack: Blackjack,
+        playerGroup: PlayerGroup,
+    ) {
+        playerGroup.players.forEach { player ->
+            hitOrStay(blackjack, player)
+        }
+        dealerReceiveCard(blackjack, playerGroup.dealer)
+    }
+
+    private fun hitOrStay(
+        blackjack: Blackjack,
+        player: Player,
+    ) {
         while (player.canHit()) {
             val playerAction = getActionType(player)
             if (shouldStopDrawing(playerAction)) break
@@ -61,22 +80,21 @@ class BlackjackController(
         }
     }
 
-    private fun getPlayerGroup(): PlayerGroup {
-        return retryInput {
-            val players: List<Player> = inputView.askForPlayersName().map(::Player)
-            PlayerGroup(players, dealer)
-        }
-    }
-
-    private fun dealerReceiveCard() {
-        val count: Int = blackjack.drawUntilThreshold(dealer)
+    private fun dealerReceiveCard(
+        blackjack: Blackjack,
+        dealer: Dealer,
+    ) {
+        val count: Int = blackjack.drawUntilThreshold()
         outputView.printDealerReceiveCard(count, dealer)
     }
 
-    private fun endGame(players: List<Player>) {
-        outputView.participantsCardResult(listOf(dealer) + players)
-        val gameResult = blackjack.endGame(PlayerGroup(players, dealer))
-        outputView.dealerResult(dealer, gameResult)
+    private fun endGame(
+        blackjack: Blackjack,
+        playerGroup: PlayerGroup,
+    ) {
+        outputView.participantsCardResult(playerGroup)
+        val gameResult = blackjack.endGame()
+        outputView.dealerResult(playerGroup.dealer, gameResult)
         outputView.playerResult(gameResult)
     }
 

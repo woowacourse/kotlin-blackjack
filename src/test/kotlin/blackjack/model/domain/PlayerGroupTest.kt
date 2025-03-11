@@ -13,7 +13,7 @@ class PlayerGroupTest {
         val playersName = listOf("a", "b", "c", "d", "e", "f", "g", "h", "i", "h")
         // when & then
         assertThrows<IllegalArgumentException> {
-            PlayerGroup(playersName.map(::Player), Dealer())
+            PlayerGroup(playersName.map(::Player) + Dealer())
         }
     }
 
@@ -23,7 +23,7 @@ class PlayerGroupTest {
         val playersName = listOf("jerry", "jerry")
         // when & then
         assertThrows<IllegalArgumentException> {
-            PlayerGroup(playersName.map(::Player), Dealer())
+            PlayerGroup(playersName.map(::Player) + Dealer())
         }
     }
 }

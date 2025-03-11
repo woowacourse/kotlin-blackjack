@@ -6,19 +6,17 @@ import blackjack.model.domain.card.Shape
 import blackjack.model.domain.participant.Dealer
 import blackjack.model.domain.participant.Participants
 import blackjack.model.domain.participant.Player
+import blackjack.model.domain.participant.PlayerGroup
 
 class OutputView {
-    fun printInitCardStatus(
-        dealer: Dealer,
-        players: List<Participants>,
-    ) {
-        val playerName = players.joinToString { it.name }
-        println(OUTPUT_DISTRIBUTE_CARD.format(dealer.name, playerName))
-        printInitCard(listOf(dealer) + players)
+    fun printInitCardStatus(playerGroup: PlayerGroup) {
+        val playerName = playerGroup.players.joinToString { it.name }
+        println(OUTPUT_DISTRIBUTE_CARD.format(playerGroup.dealer.name, playerName))
+        printInitCard(playerGroup)
     }
 
-    private fun printInitCard(participants: List<Participants>) {
-        participants.forEach { participant ->
+    private fun printInitCard(playerGroup: PlayerGroup) {
+        playerGroup.participants.forEach { participant ->
             val initCard = displayCard(participant.getInitCard())
             println(makeFormat(participant.name, initCard))
         }
@@ -52,8 +50,8 @@ class OutputView {
         println()
     }
 
-    fun participantsCardResult(participants: List<Participants>) {
-        participants.forEach { participant ->
+    fun participantsCardResult(playerGroup: PlayerGroup) {
+        playerGroup.participants.forEach { participant ->
             val cards = displayCard(participant.cardDeck)
             println(makeFormat(participant.name, cards) + OUTPUT_PARTICIPANTS_CARD_RESULT.format(participant.sumCardNumber))
         }

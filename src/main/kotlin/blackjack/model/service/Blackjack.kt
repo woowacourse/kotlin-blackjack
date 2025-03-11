@@ -2,14 +2,13 @@ package blackjack.model.service
 
 import blackjack.model.domain.GameResult
 import blackjack.model.domain.card.PlayingCard
-import blackjack.model.domain.participant.Dealer
 import blackjack.model.domain.participant.Participants
 import blackjack.model.domain.participant.Player
 import blackjack.model.domain.participant.PlayerGroup
 
-class Blackjack(private val deck: PlayingCard) {
-    fun initGame(players: List<Participants>) {
-        players.forEach { player ->
+class Blackjack(private val deck: PlayingCard, private val playerGroup: PlayerGroup) {
+    fun initGame() {
+        playerGroup.participants.forEach { player ->
             distributeStartingHands(player)
         }
     }
@@ -24,16 +23,16 @@ class Blackjack(private val deck: PlayingCard) {
         player.receiveCard(deck.spreadCard())
     }
 
-    fun drawUntilThreshold(dealer: Dealer): Int {
+    fun drawUntilThreshold(): Int {
         var count: Int = 0
-        while (dealer.canHit()) {
-            dealer.receiveCard(deck.spreadCard())
+        while (playerGroup.dealer.canHit()) {
+            playerGroup.dealer.receiveCard(deck.spreadCard())
             count++
         }
         return count
     }
 
-    fun endGame(playerGroup: PlayerGroup): Map<Player, GameResult> {
+    fun endGame(): Map<Player, GameResult> {
         return playerGroup.players.associateWith { it.compareScores(playerGroup.dealer) }
     }
 }
