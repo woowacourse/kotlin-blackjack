@@ -87,7 +87,7 @@ class OutputView {
 
     private fun GameResult.determineStatus(): String {
         return when (this) {
-            GameResult.Win, GameResult.None -> "승"
+            GameResult.Win -> "승"
             GameResult.Draw -> "무"
             else -> "패"
         }

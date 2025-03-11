@@ -1,7 +1,6 @@
 package blackjack.model.domain
 
 enum class GameResult() {
-    None,
     Win,
     Lose,
     Draw,
