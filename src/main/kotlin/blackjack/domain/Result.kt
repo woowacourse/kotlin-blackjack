@@ -1,6 +1,6 @@
 package blackjack.domain
 
-class DealerResult {
+class Result {
     var win: Int = 0
         private set
     var lose: Int = 0

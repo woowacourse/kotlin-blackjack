@@ -2,9 +2,11 @@ package blackjack.domain.participant
 
 import blackjack.domain.Card
 import blackjack.domain.Hand
+import blackjack.domain.Result
 
 abstract class Participant {
     val hand: Hand = Hand()
+    val result: Result = Result()
 
     val totalSum: Int
         get() = hand.getCardSum()

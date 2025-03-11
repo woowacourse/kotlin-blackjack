@@ -3,42 +3,44 @@ package blackjack.domain
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Player
 
-class GameResult(private val dealer: Dealer, val players: List<Player>) {
-    val dealerResult = DealerResult()
-    private val playerResult: MutableList<PlayerResult> = mutableListOf()
-
-    private fun updateResult(
-        player: Player,
-        status: GameResultStatus,
-    ) {
-        playerResult.add(PlayerResult(player, status))
-
-        when (status) {
-            GameResultStatus.PLAYER_WIN -> dealerResult.addLose()
-            GameResultStatus.PLAYER_LOSE -> dealerResult.addWin()
-            GameResultStatus.DRAW -> dealerResult.addDraw()
-        }
-    }
-
-    fun getPlayerResult(player: Player): GameResultStatus {
-
-        if (player.hand.isBust()) return GameResultStatus.PLAYER_LOSE
-        if (dealer.hand.isBust()) return GameResultStatus.PLAYER_WIN
-        return when {
-            dealer.totalSum > player.totalSum -> GameResultStatus.PLAYER_LOSE
-            player.totalSum > dealer.totalSum -> GameResultStatus.PLAYER_WIN
-            player.totalSum == dealer.totalSum -> GameResultStatus.DRAW
-            else -> throw IllegalArgumentException()
-        }
-    }
-
-    fun getResult(): GameResult {
+class GameResult(private val dealer: Dealer, private val players: List<Player>) {
+    fun getGameResult(): GameResult {
         players.forEach { player ->
-            val playerResult = getPlayerResult(player)
-            updateResult(player, playerResult)
+            updateResults(player, getPlayerResultStatus(player))
         }
         return this
     }
 
-    fun getAllPlayerResult(): List<PlayerResult> = playerResult.toList()
+    fun getPlayerResultStatus(player: Player): GameResultStatus {
+        return when {
+            player.hand.isBust() -> GameResultStatus.PLAYER_LOSE
+            dealer.hand.isBust() -> GameResultStatus.PLAYER_WIN
+
+            dealer.totalSum > player.totalSum -> GameResultStatus.PLAYER_LOSE
+            player.totalSum > dealer.totalSum -> GameResultStatus.PLAYER_WIN
+            else -> GameResultStatus.DRAW
+        }
+    }
+
+    private fun updateResults(
+        player: Player,
+        status: GameResultStatus,
+    ) {
+        when (status) {
+            GameResultStatus.PLAYER_WIN -> {
+                player.result.addWin()
+                dealer.result.addLose()
+            }
+
+            GameResultStatus.PLAYER_LOSE -> {
+                player.result.addLose()
+                dealer.result.addWin()
+            }
+
+            GameResultStatus.DRAW -> {
+                player.result.addDraw()
+                dealer.result.addDraw()
+            }
+        }
+    }
 }

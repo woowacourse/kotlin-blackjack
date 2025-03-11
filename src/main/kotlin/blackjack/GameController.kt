@@ -1,9 +1,9 @@
 package blackjack
 
 import blackjack.domain.Card
-import blackjack.domain.participant.Dealer
 import blackjack.domain.Deck
 import blackjack.domain.GameResult
+import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Player
 import blackjack.view.InputView
 import blackjack.view.OutputView
@@ -28,9 +28,6 @@ class GameController(
         if (dealer.hasAdditionalCard()) {
             outputView.printDealerHaveAdditionalCard()
         }
-
-        outputView.printFinalCards(dealer, players)
-
         showResult(dealer, players)
     }
 
@@ -70,8 +67,8 @@ class GameController(
         dealer: Dealer,
         players: List<Player>,
     ) {
-        val result = GameResult(dealer, players).getResult()
-        outputView.printGameResult(result)
+        GameResult(dealer, players).getGameResult()
+        outputView.printGameResult(dealer, players)
     }
 
     companion object {

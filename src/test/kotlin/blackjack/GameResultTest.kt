@@ -1,12 +1,12 @@
 package blackjack
 
 import blackjack.domain.Card
-import blackjack.domain.participant.Dealer
 import blackjack.domain.GameResult
 import blackjack.domain.GameResultStatus
-import blackjack.domain.participant.Player
 import blackjack.domain.Rank
 import blackjack.domain.Suit
+import blackjack.domain.participant.Dealer
+import blackjack.domain.participant.Player
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -21,6 +21,6 @@ class GameResultTest {
         player.addCard(Card.of(rank = Rank.TEN, suit = Suit.CLUB))
         player.addCard(Card.of(rank = Rank.TEN, suit = Suit.SPADE))
         val gameResult = GameResult(dealer, listOf(player))
-        assertThat(gameResult.getPlayerResult(player)).isEqualTo(GameResultStatus.PLAYER_WIN)
+        assertThat(gameResult.getPlayerResultStatus(player)).isEqualTo(GameResultStatus.PLAYER_WIN)
     }
 }

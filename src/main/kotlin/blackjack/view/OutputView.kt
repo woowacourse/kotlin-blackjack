@@ -1,12 +1,11 @@
 package blackjack.view
 
 import blackjack.domain.Card
-import blackjack.domain.participant.Dealer
-import blackjack.domain.GameResult
 import blackjack.domain.GameResultStatus
-import blackjack.domain.participant.Player
 import blackjack.domain.Rank
 import blackjack.domain.Suit
+import blackjack.domain.participant.Dealer
+import blackjack.domain.participant.Player
 
 object OutputView {
     fun showInitialCards(
@@ -39,12 +38,15 @@ object OutputView {
         }
     }
 
-    fun printGameResult(result: GameResult) {
+    fun printGameResult(
+        dealer: Dealer,
+        players: List<Player>,
+    ) {
         println("\n##최종 승패")
-        println("딜러: ${result.dealerResult.win}승 ${result.dealerResult.lose}패 ${result.dealerResult.draw}무")
+        println("딜러: ${dealer.result.win}승 ${dealer.result.lose}패 ${dealer.result.draw}무")
 
-        result.getAllPlayerResult().forEach {
-            println("${it.player.name}: ${it.status.toDisplayName()}")
+        players.forEach { player ->
+            println("${player.name}: ${player.result.win}승 ${player.result.lose}패 ${player.result.draw}무")
         }
     }
 
