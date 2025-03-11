@@ -14,7 +14,10 @@ class OrderedDeck : Deck {
         cards.addAll(makeCards())
     }
 
-    override fun pop(): TrumpCard = cards.pop()
+    override fun pop(): TrumpCard {
+        require(cards.isNotEmpty()) { ERROR_EMPTY_DECK_MESSAGE }
+        return cards.pop()
+    }
 
     override fun makeCards(): List<TrumpCard> =
         Shape.entries
@@ -23,4 +26,8 @@ class OrderedDeck : Deck {
                     TrumpCard(tier, shape)
                 }
             }
+
+    companion object {
+        const val ERROR_EMPTY_DECK_MESSAGE = "[ERROR] 더 이상 뽑을 카드가 없습니다."
+    }
 }
