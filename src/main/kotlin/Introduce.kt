@@ -27,7 +27,7 @@ class SkillBuilder {
 }
 
 class PersonBuilder {
-    private lateinit var name: String
+    private var name: String? = null
     private var company: String? = null
     private val skills: MutableList<String> = mutableListOf()
     private lateinit var languages: Map<String, Int>
@@ -49,13 +49,16 @@ class PersonBuilder {
     }
 
     fun build(): Person {
-        return Person(name, company, skills.toList(), languages)
+        if (name == null) {
+            throw IllegalArgumentException("[ERROR] 이름을 반드시 설정해야 합니다!")
+        }
+        return Person(name!!, company, skills.toList(), languages)
     }
 }
 
 data class Person(
     val name: String,
     val company: String?,
-    val skills: List<String>,
-    val languages: Map<String, Int>,
+    val skills: List<String>?,
+    val languages: Map<String, Int>?,
 )
