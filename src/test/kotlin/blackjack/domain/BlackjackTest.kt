@@ -38,7 +38,7 @@ class BlackjackTest {
     fun `모든 플레이어들의 결정이 끝나면 딜러는 숫자 합이 17 이상이 될 수 있을 때까지 카드를 받는다`() {
         val dealer = Dealer(emptyList(), { it })
         val game = Blackjack(dealer)
-        game.startDealerTurn()
+        game.startDealerTurn({})
         assertThat(dealer.handState.score).isGreaterThanOrEqualTo(17)
     }
 
