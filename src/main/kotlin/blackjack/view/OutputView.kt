@@ -14,14 +14,14 @@ object OutputView {
         players: List<Player>,
     ) {
         println("딜러와 ${players.joinToString { it.name }}에게 2장을 나누었습니다.\n")
-        println("딜러: ${printFormattedCard(dealer.cards.first())}")
+        println("딜러: ${printFormattedCard(dealer.hand.getCards().first())}")
         players.forEach { player ->
             printPlayerCards(player)
         }
     }
 
     fun printPlayerCards(player: Player) {
-        println("${player.name}카드: ${printCardList(player.cards)}")
+        println("${player.name}카드: ${printCardList(player.hand.getCards())}")
     }
 
     fun printDealerHaveAdditionalCard() {
@@ -32,10 +32,10 @@ object OutputView {
         dealer: Dealer,
         players: List<Player>,
     ) {
-        println("딜러 카드: ${printCardList(dealer.cards)} - 결과: ${dealer.totalSum}")
+        println("딜러 카드: ${printCardList(dealer.hand.getCards())} - 결과: ${dealer.totalSum}")
 
         players.forEach { player ->
-            println("${player.name}카드: ${printCardList(player.cards)} - 결과: ${player.totalSum}")
+            println("${player.name}카드: ${printCardList(player.hand.getCards())} - 결과: ${player.totalSum}")
         }
     }
 

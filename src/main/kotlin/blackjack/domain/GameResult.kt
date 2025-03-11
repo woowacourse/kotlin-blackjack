@@ -18,6 +18,7 @@ class GameResult(private val dealer: Dealer, val players: List<Player>) {
     }
 
     fun getPlayerResult(player: Player): GameResultStatus {
+
         if (player.isBust()) return GameResultStatus.PLAYER_LOSE
         if (dealer.isBust()) return GameResultStatus.PLAYER_WIN
         return when {

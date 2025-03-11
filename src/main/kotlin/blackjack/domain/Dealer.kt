@@ -11,7 +11,7 @@ class Dealer : Participant() {
     }
 
     fun hasAdditionalCard(): Boolean {
-        return cards.size > INITIAL_CARD_COUNT
+        return hand.getCards().size > INITIAL_CARD_COUNT
     }
 
     companion object {
