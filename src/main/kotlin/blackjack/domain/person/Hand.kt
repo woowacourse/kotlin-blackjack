@@ -7,7 +7,7 @@ class Hand {
     private val _cards: MutableList<Card> = mutableListOf()
     val cards: List<Card> get() = _cards.toList()
 
-    private var _score: Score = Score(cards)
+    private val _score: Score = Score(cards)
     val score: Int get() = _score.value
 
     fun addCard(card: Card) {
