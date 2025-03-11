@@ -1,8 +1,9 @@
 package blackjack.model
 
 class Dealer(
+    name: String,
     scoreCalculator: ScoreCalculator,
-) : Participant(scoreCalculator) {
+) : Participant(name, scoreCalculator) {
     override fun recieveCards(getCards: (Int) -> List<Card>): Boolean {
         val count = if (cards.isEmpty()) INITIAL_DRAW_COUNT else DEFAULT_DRAW_COUNT
         addAll(getCards(count))

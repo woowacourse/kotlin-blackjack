@@ -31,14 +31,14 @@ class OutputView {
     }
 
     fun displayParticipantCards(
-        name: String = "딜러",
+        name: String,
         cards: List<Card>,
     ) {
         println("$name 카드: ${cards.toText()}")
     }
 
     fun displayParticipantInfo(
-        name: String = "딜러",
+        name: String,
         cards: List<Card>,
         score: Int,
         isBust: Boolean,

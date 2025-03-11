@@ -1,6 +1,7 @@
 package blackjack.model
 
 abstract class Participant(
+    val name: String,
     private val scoreCalculator: ScoreCalculator,
 ) {
     private val _cards: MutableList<Card> = mutableListOf()

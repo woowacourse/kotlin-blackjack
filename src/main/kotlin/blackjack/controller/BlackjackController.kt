@@ -35,7 +35,7 @@ class BlackjackController(
         cardDeck: CardDeck,
         scoreCalculator: ScoreCalculator,
     ): Dealer {
-        val dealer = Dealer(scoreCalculator)
+        val dealer = Dealer(TEMP_DEALER_NAME, scoreCalculator)
         dealer.recieveCards(cardDeck::draw)
         return dealer
     }
@@ -50,7 +50,7 @@ class BlackjackController(
         players.value.forEach { player -> player.recieveCards(cardDeck::draw) }
 
         outputView.displayFirstDrawEnd(players.value.map { player -> player.name })
-        outputView.displayParticipantCards(cards = dealer.showInitialCards())
+        outputView.displayParticipantCards(dealer.name, dealer.showInitialCards())
 
         return players
     }
@@ -94,11 +94,7 @@ class BlackjackController(
         }
 
         outputView.displayDealerDrawInfo(dealer.additionalDrawCount())
-        outputView.displayParticipantInfo(
-            cards = dealer.cards,
-            score = dealer.score(),
-            isBust = dealer.isBust(),
-        )
+        outputView.displayParticipantInfo(dealer.name, dealer.cards, dealer.score(), dealer.isBust())
     }
 
     private fun displayParticipantsInfo(players: Players) {
@@ -117,5 +113,9 @@ class BlackjackController(
         playerResults.forEach { (name, winningResult) ->
             outputView.displayPlayerResult(name, winningResult)
         }
+    }
+
+    companion object {
+        private const val TEMP_DEALER_NAME = "딜러"
     }
 }
