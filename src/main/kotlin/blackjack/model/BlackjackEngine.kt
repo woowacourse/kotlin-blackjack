@@ -1,29 +1,26 @@
 package blackjack.model
 
-import blackjack.view.InputView
-import blackjack.view.OutputView
-
-class BlackjackEngine {
+class BlackjackEngine(
     val cardDeck: CardDeck = CardDeck()
-
+) {
     fun preparePlayers(names: List<String>): Players = Players(names.map { name ->
-        Player(name, makeFirstCards())
+        Player(name, makeFirstHand())
     })
 
-    fun prepareDealer(): Dealer = Dealer(makeFirstCards())
+    fun prepareDealer(): Dealer = Dealer(hand = makeFirstHand())
 
     fun playerDraw(player: Player): Unit = player.draw(cardDeck)
 
     fun dealerDraw(dealer: Dealer): Unit = dealer.drawUntilFinished(cardDeck)
 
-    fun makeFirstCards(): List<Card> = List(2) { cardDeck.draw() }
+    fun makeFirstHand(): Hand = Hand(List(2) { cardDeck.draw() })
 
     fun progressPlayersDraw(players: Players, eventListener: EventListener, eventProvider: EventProvider) {
         players.value.forEach { player ->
             eventListener.displayParticipantCards(player.name, player.hand.cards)
         }
         players.value.forEach { player ->
-            progressPlayerDrawUntilFinished(player,eventListener,eventProvider)
+            progressPlayerDrawUntilFinished(player, eventListener, eventProvider)
         }
     }
 

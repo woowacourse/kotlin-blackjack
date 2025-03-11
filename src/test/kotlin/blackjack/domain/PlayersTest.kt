@@ -12,7 +12,6 @@ import blackjack.model.Hand
 import blackjack.model.Player
 import blackjack.model.Players
 import blackjack.model.Dealer
-import blackjack.model.WinningResult
 import blackjack.model.WinningResult.LOSE
 import blackjack.model.WinningResult.PUSH
 import blackjack.model.WinningResult.WIN
@@ -25,18 +24,22 @@ class PlayersTest {
     fun `딜러와 플레이어의 점수가 같으면 무승부를 반환한다`() {
         // given
         val playerName = "시아"
-        val playerCards = listOf(
-            Card(TWO, CLUB),
-            Card(NINE, CLUB)
+        val playerHand = Hand(
+            listOf(
+                Card(TWO, CLUB),
+                Card(NINE, CLUB)
+            )
         )
-        val player = Player(playerName, playerCards)
+        val player = Player(playerName, playerHand)
         val players = Players(listOf(player))
 
-        val dealerCards = listOf(
-            Card(TWO, DIAMOND),
-            Card(NINE, DIAMOND)
+        val dealerHand = Hand(
+            listOf(
+                Card(TWO, DIAMOND),
+                Card(NINE, DIAMOND)
+            )
         )
-        val dealer = Dealer(dealerCards)
+        val dealer = Dealer(hand = dealerHand)
 
         // when
         val results = players.results(dealer)
@@ -49,18 +52,22 @@ class PlayersTest {
     @Test
     fun `플레이어의 점수가 딜러의 점수보다 높으면 우승을 반환한다`() {
         val playerName = "시아"
-        val playerCards = listOf(
-            Card(ACE, CLUB),
-            Card(KING, CLUB)
+        val playerHand = Hand(
+            listOf(
+                Card(ACE, CLUB),
+                Card(KING, CLUB)
+            )
         )
-        val player = Player(playerName, playerCards)
+        val player = Player(playerName, playerHand)
         val players = Players(listOf(player))
 
-        val dealerCards = listOf(
-            Card(TWO, DIAMOND),
-            Card(NINE, DIAMOND)
+        val dealerHand = Hand(
+            listOf(
+                Card(TWO, DIAMOND),
+                Card(NINE, DIAMOND)
+            )
         )
-        val dealer = Dealer(dealerCards)
+        val dealer = Dealer(hand = dealerHand)
 
         // when
         val results = players.results(dealer)
@@ -74,18 +81,22 @@ class PlayersTest {
     fun `플레이어의 점수가 딜러의 점수보다 낮으면 패배를 반환한다`() {
 
         val playerName = "시아"
-        val playerCards = listOf(
-            Card(TWO, CLUB),
-            Card(NINE, CLUB)
+        val playerHand = Hand(
+            listOf(
+                Card(TWO, CLUB),
+                Card(NINE, CLUB)
+            )
         )
-        val player = Player(playerName, playerCards)
+        val player = Player(playerName, playerHand)
         val players = Players(listOf(player))
 
-        val dealerCards = listOf(
-            Card(KING, DIAMOND),
-            Card(QUEEN, DIAMOND)
+        val dealerHand = Hand(
+            listOf(
+                Card(KING, DIAMOND),
+                Card(QUEEN, DIAMOND)
+            )
         )
-        val dealer = Dealer(dealerCards)
+        val dealer = Dealer(hand = dealerHand)
 
         // when
         val results = players.results(dealer)

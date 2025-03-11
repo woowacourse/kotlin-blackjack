@@ -1,14 +1,16 @@
 package blackjack.model
 
-class Dealer(val firstCard: List<Card>, val name: String = DEALER_NAME) : Participant(firstCard) {
+class Dealer(val name: String = DEALER_NAME, hand: Hand) : Participant(hand) {
+    var drawCount = 0
     fun drawUntilFinished(cardDeck: CardDeck) {
         while (hand.score() <= DEALER_DRAW_CRITERIA && !hand.isBust()) {
+            drawCount++
             draw(cardDeck)
         }
     }
 
     fun getAdditionalDrawCount(): Int {
-        return hand.getHandCount() - firstCard.size
+        return drawCount
     }
 
     fun getWinDrawLossResult(players: Players): Map<WinningResult, Int> {

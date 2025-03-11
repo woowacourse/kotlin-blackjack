@@ -1,7 +1,6 @@
 package blackjack.model
 
-abstract class Participant(firstCard: List<Card>) {
-    val hand: Hand = Hand(firstCard)
+abstract class Participant(val hand : Hand) {
 
     fun draw(cardDeck: CardDeck) {
         hand.add(cardDeck.draw())
