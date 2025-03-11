@@ -76,5 +76,5 @@ class OutputView {
         }
     }
 
-    private fun Card.toBlackjackView(): String = shape.koreanName + denomination.title
+    private fun Card.toBlackjackView(): String = denomination.title + shape.koreanName
 }
