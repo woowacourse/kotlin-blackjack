@@ -1,0 +1,57 @@
+package blackjack
+
+import blackjack.model.card.Card
+import blackjack.model.card.CardNumber
+import blackjack.model.card.Shape
+import blackjack.model.participant.Dealer
+import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+
+class DealerTest {
+    private lateinit var dealer: Dealer
+
+    @BeforeEach
+    fun setUp() {
+        dealer = Dealer()
+    }
+
+    @Test
+    fun `딜러는 카드 한 장을 받을 수 있다`() {
+        dealer.addCard(Card(Shape.SPADE, CardNumber.NINE))
+        assertThat(dealer.cards.size).isEqualTo(1)
+    }
+
+    @Test
+    fun `딜러가 처음 공개하는 카드는 1장이다`() {
+        dealer.addCard(Card(Shape.SPADE, CardNumber.NINE))
+        dealer.addCard(Card(Shape.CLOVER, CardNumber.QUEEN))
+        val expect = 1
+
+        val actual = dealer.getInitialCard().size
+
+        assertThat(actual).isEqualTo(expect)
+    }
+
+    @Test
+    fun `딜러는 카드 총 합이 17 미만이면 카드를 받는다`() {
+        dealer.addCard(Card(Shape.SPADE, CardNumber.SEVEN))
+        dealer.addCard(Card(Shape.SPADE, CardNumber.TWO))
+        val expect = true
+
+        val actual = dealer.isMoreCard()
+
+        assertThat(actual).isEqualTo(expect)
+    }
+
+    @Test
+    fun `딜러는 카드 총 합이 17 이상이면 카드를 받지 않는다`() {
+        dealer.addCard(Card(Shape.SPADE, CardNumber.SEVEN))
+        dealer.addCard(Card(Shape.SPADE, CardNumber.TEN))
+        val expect = false
+
+        val actual = dealer.isMoreCard()
+
+        assertThat(actual).isEqualTo(expect)
+    }
+}
