@@ -6,7 +6,6 @@ import blackjack.model.CardsStatus
 import blackjack.model.Dealer
 import blackjack.model.GameResult
 import blackjack.model.Player
-import blackjack.model.PlayerBehavior
 import blackjack.model.Players
 import blackjack.view.InputView
 import blackjack.view.OutputView
@@ -113,24 +112,24 @@ class BlackjackController(
     private fun executePlayerGameLogic(player: Player) {
         while (!player.isBust()) {
             outputView.printPlayerBehaviorGuide(player)
-            val playerBehavior: PlayerBehavior = inputView.readPlayerBehavior()
+            val playerBehavior: Player.Behavior = inputView.readPlayerBehavior()
 
             if (executePlayerBehavior(playerBehavior, player)) break
         }
     }
 
     private fun executePlayerBehavior(
-        playerBehavior: PlayerBehavior,
+        playerBehavior: Player.Behavior,
         player: Player,
     ): Boolean {
         when (playerBehavior) {
-            PlayerBehavior.HIT -> {
+            Player.Behavior.HIT -> {
                 player.pickCard(cardDeck)
                 outputView.printPlayerCard(player)
                 if (isPlayerBust(player)) return true
             }
 
-            PlayerBehavior.STAY -> return true
+            Player.Behavior.STAY -> return true
         }
         return false
     }

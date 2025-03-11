@@ -14,4 +14,9 @@ class Player(
     fun updateResult(dealerGameResult: GameResult) {
         result = GameResult.reversed(dealerGameResult)
     }
+
+    enum class Behavior {
+        HIT,
+        STAY,
+    }
 }
