@@ -1,4 +1,6 @@
-package blackjack.domain
+package blackjack.domain.card
+
+import blackjack.domain.Score
 
 class Hand {
     private val _cards = mutableListOf<Card>()

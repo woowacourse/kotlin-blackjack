@@ -1,6 +1,7 @@
-package blackjack.domain
+package blackjack.domain.participant
 
-import blackjack.enums.Result
+import blackjack.domain.Result
+import blackjack.domain.card.Deck
 
 class Participants(
     val dealer: Dealer,

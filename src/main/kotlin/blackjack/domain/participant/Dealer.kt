@@ -1,6 +1,8 @@
-package blackjack.domain
+package blackjack.domain.participant
 
-import blackjack.enums.Result
+import blackjack.domain.Result
+import blackjack.domain.Score
+import blackjack.domain.card.Deck
 
 class Dealer(
     name: String = DEALER_DEFAULT_NAME,

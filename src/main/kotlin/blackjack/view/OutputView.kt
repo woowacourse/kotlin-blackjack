@@ -1,12 +1,12 @@
 package blackjack.view
 
-import blackjack.domain.Card
-import blackjack.domain.Dealer
-import blackjack.domain.Participant
-import blackjack.domain.Player
-import blackjack.enums.Rank
-import blackjack.enums.Result
-import blackjack.enums.Suit
+import blackjack.domain.Result
+import blackjack.domain.card.Card
+import blackjack.domain.card.Rank
+import blackjack.domain.card.Suit
+import blackjack.domain.participant.Dealer
+import blackjack.domain.participant.Participant
+import blackjack.domain.participant.Player
 
 class OutputView {
     fun printCardInfo(

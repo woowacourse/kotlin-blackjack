@@ -1,4 +1,4 @@
-package blackjack.enums
+package blackjack.domain.card
 
 enum class Suit {
     DIAMOND,

@@ -1,6 +1,6 @@
 package blackjack.view
 
-import blackjack.domain.Player
+import blackjack.domain.participant.Player
 
 class InputView {
     fun readPlayerNames(): List<String> {

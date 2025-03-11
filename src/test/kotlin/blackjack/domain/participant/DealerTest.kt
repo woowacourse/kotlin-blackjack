@@ -1,8 +1,10 @@
-package blackjack.domain
+package blackjack.domain.participant
 
-import blackjack.enums.Rank
-import blackjack.enums.Result
-import blackjack.enums.Suit
+import blackjack.domain.Result
+import blackjack.domain.Score
+import blackjack.domain.card.Card
+import blackjack.domain.card.Rank
+import blackjack.domain.card.Suit
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test

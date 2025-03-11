@@ -1,5 +1,10 @@
 package blackjack.domain
 
+import blackjack.domain.card.Deck
+import blackjack.domain.participant.Dealer
+import blackjack.domain.participant.Participants
+import blackjack.domain.participant.Player
+
 class BlackjackGame(
     private val deck: Deck,
     private val participants: Participants,
