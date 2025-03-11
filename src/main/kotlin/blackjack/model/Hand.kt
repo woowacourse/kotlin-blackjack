@@ -12,5 +12,5 @@ class Hand(
 
     fun score(): Int = scoreCalculator.score(cards)
 
-    fun isBust(): Boolean = scoreCalculator.isBust(cards)
+    fun isBust(): Boolean = scoreCalculator.isBust(score())
 }

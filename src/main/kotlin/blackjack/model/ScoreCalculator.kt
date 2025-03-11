@@ -1,11 +1,17 @@
 package blackjack.model
 
 class ScoreCalculator {
-    fun isBust(cards: List<Card>): Boolean = score(cards) == BUST_SCORE
+    fun isBust(score: Int): Boolean = score > BUST_CRITERIA
 
     fun score(cards: List<Card>): Int {
         val hardScore = cards.sumOf { card -> card.rank.score }
-        return maxOf(hardScore.formatIfBust(), softScore(cards, hardScore).formatIfBust())
+        val softScore = softScore(cards, hardScore)
+
+        return when {
+            isBust(hardScore) -> hardScore
+            isBust(softScore) -> hardScore
+            else -> softScore
+        }
     }
 
     private fun softScore(
@@ -16,10 +22,7 @@ class ScoreCalculator {
         return if (containsAce) hardScore + SOFT_OFFSET_SCORE else hardScore
     }
 
-    private fun Int.formatIfBust(): Int = if (this > BUST_CRITERIA) BUST_SCORE else this
-
     companion object {
-        private const val BUST_SCORE = -1
         private const val BUST_CRITERIA = 21
         private const val SOFT_OFFSET_SCORE = 10
     }

@@ -55,8 +55,11 @@ class ScoreCalculatorTest {
         val card3 = Card(JACK, CLUB)
         val cards = listOf(card1, card2, card3)
 
-        // when & then
-        assertThat(scoreCalculator.isBust(cards)).isTrue()
+        // when
+        val score = scoreCalculator.score(cards)
+
+        // then
+        assertThat(scoreCalculator.isBust(score)).isTrue()
     }
 
     @Test
