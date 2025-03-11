@@ -1,0 +1,89 @@
+package blackjack.view
+
+import blackjack.model.Card
+import blackjack.model.CardShape
+import blackjack.model.Dealer
+import blackjack.model.GameResult
+import blackjack.model.Participant
+import blackjack.model.Player
+import blackjack.model.Players
+
+class OutputView {
+    fun printStartMessage() {
+        println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
+    }
+
+    fun printPlayersCards(
+        dealer: Dealer,
+        players: List<Player>,
+    ) {
+        val playersNames: String = players.joinToString(", ") { it.name }
+        println("\n${dealer.name}와 ${playersNames}에게 2장의 카드를 나누었습니다.")
+        println("${dealer.name}: ${dealer.cards.value[0].toBlackjackView()}")
+        players.forEach { player ->
+            printPlayerCard(player)
+        }
+        println()
+    }
+
+    fun printPlayerBehaviorGuide(player: Player) {
+        println("${player.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
+    }
+
+    fun printPlayerCard(player: Player) {
+        println("${player.name}카드: ${player.cards.value.joinToString { it.toBlackjackView() }}")
+    }
+
+    fun printBust(participant: Participant) {
+        println("${participant.name}의 점수는 ${participant.cards.calculateScore()}점으로 21점을 초과하여 죽었습니다.")
+    }
+
+    fun printDealerGettingCard() {
+        println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.")
+    }
+
+    fun printResult(
+        dealer: Dealer,
+        players: Players,
+    ) {
+        val results: MutableList<String> = mutableListOf()
+        dealer.results.map { result ->
+            results.add("${result.value}${result.key.toKoreanName()}")
+        }
+        val dealerCards: String =
+            dealer.cards.value.joinToString { it.toBlackjackView() }
+        println(
+            "\n${dealer.name}카드: $dealerCards - 결과: ${dealer.cards.calculateScore()}",
+        )
+        players.value.forEach { player ->
+            val playersCards: String =
+                player.cards.value.joinToString { it.toBlackjackView() }
+            println(
+                "${player.name}카드: $playersCards - 결과: ${player.cards.calculateScore()}",
+            )
+        }
+
+        println("\n## 최종 승패")
+        println("${dealer.name}: ${results.joinToString(" ")}")
+        players.value.forEach { player ->
+            println("${player.name}: ${player.result.toKoreanName()}")
+        }
+    }
+
+    private fun Card.toBlackjackView(): String = denomination.title + shape.toKoreanName()
+
+    private fun CardShape.toKoreanName(): String =
+        when (this) {
+            CardShape.HEART -> "하트"
+            CardShape.SPADE -> "스페이드"
+            CardShape.DIAMOND -> "다이아몬드"
+            CardShape.CLOVER -> "클로버"
+        }
+
+    private fun GameResult.toKoreanName(): String =
+        when (this) {
+            GameResult.PUSH -> "무"
+            GameResult.WIN -> "승"
+            GameResult.LOSE -> "패"
+        }
+}
