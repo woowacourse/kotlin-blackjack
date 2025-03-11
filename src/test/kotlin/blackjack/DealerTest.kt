@@ -1,9 +1,9 @@
 package blackjack
 
 import blackjack.model.card.Card
-import blackjack.model.participant.Dealer
 import blackjack.model.card.CardNumber
 import blackjack.model.card.Shape
+import blackjack.model.participant.Dealer
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -14,6 +14,17 @@ class DealerTest {
     @BeforeEach
     fun setUp() {
         dealer = Dealer()
+    }
+
+    @Test
+    fun `딜러가 처음 공개하는 카드는 1장이다`() {
+        dealer.addCard(Card(Shape.SPADE, CardNumber.NINE))
+        dealer.addCard(Card(Shape.CLOVER, CardNumber.QUEEN))
+        val expect = 1
+
+        val actual = dealer.getInitialCard().size
+
+        assertThat(actual).isEqualTo(expect)
     }
 
     @Test
