@@ -3,17 +3,23 @@ package blackjack.domain
 class Dealer(
     private val players: List<Player>,
     shuffler: Shuffler,
-) {
-    private val onBusted: () -> Unit = { playingPlayers.forEach(Player::win) }
-    private val hand: Hand = Hand(onBusted)
+) : Participant() {
+    override val onBusted: () -> Unit = { playingPlayers.forEach(Player::win) }
     private val deck: Deck = Deck(shuffler)
-    val cards: List<Card> = hand.cards
-    val score: Int = hand.score
 
-    val dealerResults: List<PlayerState> = players.toDealerResult()
+    val dealerResults: List<PlayerState>
+        get() =
+            players.map { player ->
+                when (player.state) {
+                    PlayerState.WIN -> PlayerState.LOSE
+                    PlayerState.DRAW -> PlayerState.DRAW
+                    PlayerState.LOSE -> PlayerState.WIN
+                    PlayerState.PLAYING -> PlayerState.PLAYING
+                }
+            }
 
-    fun draw(card: Card = deck.draw()) {
-        hand.draw(card)
+    fun draw() {
+        hand.draw(deck.draw())
     }
 
     fun pitch() {
@@ -37,16 +43,6 @@ class Dealer(
     fun setResult() {
         playingPlayers.forEach { player -> player.setResult(score) }
     }
-
-    private fun List<Player>.toDealerResult(): List<PlayerState> =
-        map { player ->
-            when (player.state) {
-                PlayerState.WIN -> PlayerState.LOSE
-                PlayerState.DRAW -> PlayerState.DRAW
-                PlayerState.LOSE -> PlayerState.WIN
-                PlayerState.PLAYING -> PlayerState.PLAYING
-            }
-        }
 
     private val playingPlayers: List<Player>
         get() = players.filter { player -> player.state == PlayerState.PLAYING }

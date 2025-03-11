@@ -56,7 +56,11 @@ class BlackjackTest {
                 draw(Card(NumberRank.NINE, Suit.SPADE))
             }
         val players = listOf(winner, loser)
-        val dealer = Dealer(players, { it })
+        val dealer =
+            Dealer(players, { it }).apply {
+                draw(Card(NumberRank.TEN, Suit.SPADE))
+                draw(Card(NumberRank.NINE, Suit.SPADE))
+            }
         val blackjack = Blackjack(dealer)
         blackjack.setResult()
         assertThat(dealer.dealerResults).isEqualTo(listOf(PlayerState.LOSE, PlayerState.WIN))

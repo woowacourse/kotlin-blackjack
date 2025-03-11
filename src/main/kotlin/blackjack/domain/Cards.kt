@@ -20,8 +20,4 @@ class Cards {
     }
 
     private fun canGetCard(): Boolean = score != null && score != 21
-
-    companion object {
-        const val SCORE_BUSTED = -1
-    }
 }
