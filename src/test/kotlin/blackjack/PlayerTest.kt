@@ -12,9 +12,9 @@ class PlayerTest {
     fun `카드의 총합이 21이 넘으면 카드를 뽑을 수 없다`() {
         val player = Player("player")
 
-        val card1 = Card.of(Rank.TEN, Suit.SPADE)
-        val card2 = Card.of(Rank.NINE, Suit.SPADE)
-        val card3 = Card.of(Rank.KING, Suit.HEART)
+        val card1 = Card.of(rank = Rank.TEN, suit = Suit.SPADE)
+        val card2 = Card.of(rank = Rank.NINE, suit = Suit.SPADE)
+        val card3 = Card.of(rank = Rank.KING, suit = Suit.HEART)
 
         player.addCard(card1)
         player.addCard(card2)

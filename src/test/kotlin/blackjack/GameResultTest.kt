@@ -14,12 +14,12 @@ class GameResultTest {
     @Test
     fun `딜러와 플레이어 중 카드의 총합이 큰 사람이 이긴다`() {
         val dealer = Dealer()
-        dealer.addCard(Card.of(Rank.NINE, Suit.CLUB))
-        dealer.addCard(Card.of(Rank.TEN, Suit.SPADE))
+        dealer.addCard(Card.of(rank = Rank.NINE, suit = Suit.CLUB))
+        dealer.addCard(Card.of(rank = Rank.TEN, suit = Suit.SPADE))
 
         val player = Player("a")
-        player.addCard(Card.of(Rank.TEN, Suit.CLUB))
-        player.addCard(Card.of(Rank.TEN, Suit.SPADE))
+        player.addCard(Card.of(rank = Rank.TEN, suit = Suit.CLUB))
+        player.addCard(Card.of(rank = Rank.TEN, suit = Suit.SPADE))
         val gameResult = GameResult(dealer, listOf(player))
         assertThat(gameResult.getPlayerResult(player)).isEqualTo(GameResultStatus.PLAYER_WIN)
     }

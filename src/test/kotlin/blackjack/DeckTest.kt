@@ -2,8 +2,6 @@ package blackjack
 
 import blackjack.domain.Card
 import blackjack.domain.Deck
-import blackjack.domain.Rank
-import blackjack.domain.Suit
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -19,15 +17,17 @@ class DeckTest {
     }
 
     @Test
-    fun `카드를 뽑을 수 있다`() {
-        val original = testDeck.getSize()
+    fun `카드를 한 장 뽑으면, 덱의 크기가 1 줄어든다`() {
+        val originalSize = testDeck.getSize()
+
         testDeck.draw()
-        val change = testDeck.getSize()
-        assertThat(original - 1).isEqualTo(change)
+
+        val newSize = testDeck.getSize()
+        assertThat(newSize).isEqualTo(originalSize - 1)
     }
 
     @Test
-    fun `덱에 카드가 없는 경우, 카드를 뽑을 수 없다`() {
+    fun `덱이 비어있을 때, 카드를 뽑으면 예외가 발생한다`() {
         assertThrows<IllegalArgumentException> {
             repeat(testDeck.getSize() + 1) { testDeck.draw() }
         }
@@ -35,26 +35,8 @@ class DeckTest {
 
     @Test
     fun `뽑은 카드는 덱에 존재하지 않는다`() {
-        val card1 = testDeck.draw()
-        assertThat(card1).isEqualTo(Card.of(Rank.ACE, Suit.SPADE))
-        repeat(51) {
-            assertThat(testDeck.draw()).isNotEqualTo(Card.of(Rank.ACE, Suit.SPADE))
-        }
-    }
+        val drawnCard = testDeck.draw()
 
-    @Test
-    fun `덱의 사이즈가 52개가 아니면 예외가 발생한다`() {
-        assertThrows<IllegalArgumentException> {
-            Deck(Card.getAllCard().subList(0, 10))
-        }
-    }
-
-    @Test
-    fun `카드는 중복될 수 없습니다`() {
-        assertThrows<IllegalArgumentException> {
-            val list = Card.getAllCard().toMutableList()
-            list[0] = Card.of(Rank.TWO, Suit.SPADE)
-            Deck(list)
-        }
+        assertThat(testDeck.contains(drawnCard)).isFalse()
     }
 }

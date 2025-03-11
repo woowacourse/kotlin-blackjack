@@ -6,12 +6,10 @@ import org.junit.jupiter.api.Test
 
 class CardTest {
     @Test
-    fun `Card는 52개의 인스턴스만 가질 수 있다`() {
-        val cards = Card.getAllCard()
-        val copied = cards.toList()
+    fun `모든 카드는 중복없이 52장이 존재한다`() {
+        val allCards = Card.getAllCard()
 
-        for (i in cards.indices) {
-            assertThat(cards[i]).isSameAs(copied[i])
-        }
+        assertThat(allCards).hasSize(52)
+        assertThat(allCards.distinct()).hasSize(52)
     }
 }

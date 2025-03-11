@@ -24,7 +24,7 @@ class ParticipantTest {
 
     @Test
     fun `덱에서 한 장의 카드를 가져올 수 있다`() {
-        val card = Card.of(Rank.ACE, Suit.SPADE)
+        val card = Card.of(rank = Rank.ACE, suit = Suit.SPADE)
 
         participant.addCard(card)
         assertThat(participant.cards).contains(card)
@@ -32,9 +32,8 @@ class ParticipantTest {
 
     @Test
     fun `카드의 총합을 계산할 수 있다`() {
-
-        val card1 = Card.of(Rank.TWO, Suit.SPADE)
-        val card2 = Card.of(Rank.THREE, Suit.SPADE)
+        val card1 = Card.of(rank = Rank.TWO, suit = Suit.SPADE)
+        val card2 = Card.of(rank = Rank.THREE, suit = Suit.SPADE)
 
         participant.addCard(card1)
         participant.addCard(card2)
@@ -44,8 +43,8 @@ class ParticipantTest {
 
     @Test
     fun `플레이어는 가지고 있는 카드의 합을 계산할 수 있다(ACE 1장)`() {
-        val card1 = Card.of(Rank.TWO, Suit.SPADE)
-        val card2 = Card.of(Rank.ACE, Suit.SPADE)
+        val card1 = Card.of(rank = Rank.TWO, suit = Suit.SPADE)
+        val card2 = Card.of(rank = Rank.ACE, suit = Suit.SPADE)
 
         participant.addCard(card1)
         participant.addCard(card2)
@@ -55,9 +54,9 @@ class ParticipantTest {
 
     @Test
     fun `플레이어는 가지고 있는 카드의 합을 계산할 수 있다(ACE 2장)`() {
-        val card1 = Card.of(Rank.ACE, Suit.SPADE)
-        val card2 = Card.of(Rank.NINE, Suit.SPADE)
-        val card3 = Card.of(Rank.ACE, Suit.HEART)
+        val card1 = Card.of(rank = Rank.ACE, suit = Suit.SPADE)
+        val card2 = Card.of(rank = Rank.NINE, suit = Suit.SPADE)
+        val card3 = Card.of(rank = Rank.ACE, suit = Suit.HEART)
 
         participant.addCard(card1)
         participant.addCard(card2)
@@ -68,9 +67,9 @@ class ParticipantTest {
 
     @Test
     fun `카드의 총합이 21이 넘으면 버스트가 된다`() {
-        val card1 = Card.of(Rank.TEN, Suit.SPADE)
-        val card2 = Card.of(Rank.NINE, Suit.SPADE)
-        val card3 = Card.of(Rank.KING, Suit.HEART)
+        val card1 = Card.of(rank = Rank.TEN, suit = Suit.SPADE)
+        val card2 = Card.of(rank = Rank.NINE, suit = Suit.SPADE)
+        val card3 = Card.of(rank = Rank.KING, suit = Suit.HEART)
 
         participant.addCard(card1)
         participant.addCard(card2)
