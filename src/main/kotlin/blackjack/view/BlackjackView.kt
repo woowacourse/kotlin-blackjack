@@ -5,7 +5,7 @@ import blackjack.domain.Dealer
 import blackjack.domain.Player
 import blackjack.domain.RandomShuffler
 
-class View(
+class BlackjackView(
     private val inputView: InputView = InputView(),
     private val outputView: OutputView = OutputView(),
 ) {

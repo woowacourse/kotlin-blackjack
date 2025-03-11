@@ -1,8 +1,8 @@
 package blackjack
 
-import blackjack.view.View
+import blackjack.view.BlackjackView
 
 fun main() {
-    val view = View()
-    view.run()
+    val blackjackView = BlackjackView()
+    blackjackView.run()
 }
