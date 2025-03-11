@@ -5,15 +5,16 @@ import blackjack.domain.card.PlayerCards
 import blackjack.domain.card.TrumpCard
 
 abstract class Participant {
-    private var _cards = PlayerCards(emptySet())
-    val cards get() = _cards
+    protected var cards = PlayerCards(emptySet())
 
     fun addCard(card: TrumpCard) {
-        _cards = _cards.add(card)
+        cards = cards.add(card)
     }
 
+    fun getCards(): Set<TrumpCard> = cards.items
+
     fun totalScore(): Int {
-        return if (hasAce() && (sumOfCards() + ACE_EXTRACT_SCORE > BUST_STANDARD).not()) {
+        return if (cards.hasAce() && (sumOfCards() + ACE_EXTRACT_SCORE > BUST_STANDARD).not()) {
             sumOfCards() + ACE_EXTRACT_SCORE
         } else {
             sumOfCards()
@@ -21,8 +22,6 @@ abstract class Participant {
     }
 
     fun isBust(): Boolean = totalScore() > BUST_STANDARD
-
-    fun hasAce(): Boolean = _cards.hasAce()
 
     protected fun sumOfCards(): Int = cards.sumOfCards()
 

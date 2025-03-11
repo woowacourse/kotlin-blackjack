@@ -25,32 +25,7 @@ class DealerTest {
         fixture.forEach {
             dealer.addCard(it)
         }
-        assertThat(dealer.cards.items).containsExactly(*fixture.toTypedArray())
-    }
-
-    @Test
-    fun `딜러가 에이스 카드가 없으면 에이스 카드가 없음을 반환한다`() {
-        val expected = dealer.hasAce()
-
-        assertEquals(expected, false)
-    }
-
-    @Test
-    fun `딜러가 에이스 카드가 있으면 에이스 카드가 있음을 반환한다`() {
-        dealer.addCard(TrumpCard(Tier.ACE, Shape.DIA))
-
-        val expected = dealer.hasAce()
-
-        assertEquals(expected, true)
-    }
-
-    @Test
-    fun `딜러 카드의 카드를 추가하면 사이즈가 증가한다`() {
-        dealer.addCard(TrumpCard(Tier.KING, Shape.DIA))
-        dealer.addCard(TrumpCard(Tier.TEN, Shape.DIA))
-        dealer.addCard(TrumpCard(Tier.TEN, Shape.HEART))
-
-        assertEquals(dealer.cards.size(), 3)
+        assertThat(dealer.getCards()).containsExactly(*fixture.toTypedArray())
     }
 
     @Test
