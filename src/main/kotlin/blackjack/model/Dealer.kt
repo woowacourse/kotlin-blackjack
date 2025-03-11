@@ -4,13 +4,9 @@ class Dealer(
     name: String = "",
     scoreCalculator: ScoreCalculator,
 ) : Participant(name, scoreCalculator) {
-    override fun recieveCards(getCards: (Int) -> List<Card>): Boolean {
-        val count = if (cards.isEmpty()) INITIAL_DRAW_COUNT else DEFAULT_DRAW_COUNT
-        addAll(getCards(count))
-        return score() <= DRAW_CRITERIA && !isBust()
-    }
-
     override fun showInitialCards(): List<Card> = cards.take(FIRST_SHOWN_COUNT)
+
+    override fun isDrawable(): Boolean = score() <= DRAW_CRITERIA && !isBust()
 
     fun additionalDrawCount(): Int = cards.size - INITIAL_DRAW_COUNT
 

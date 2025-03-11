@@ -7,9 +7,14 @@ abstract class Participant(
     private val _cards: MutableList<Card> = mutableListOf()
     val cards: List<Card> get() = _cards.toList()
 
-    abstract fun recieveCards(getCards: (Int) -> List<Card>): Boolean
-
     abstract fun showInitialCards(): List<Card>
+
+    abstract fun isDrawable(): Boolean
+
+    fun recieveCards(getCards: (Int) -> List<Card>) {
+        val count = if (cards.isEmpty()) INITIAL_DRAW_COUNT else DEFAULT_DRAW_COUNT
+        addAll(getCards(count))
+    }
 
     fun score(): Int = scoreCalculator.score(cards)
 

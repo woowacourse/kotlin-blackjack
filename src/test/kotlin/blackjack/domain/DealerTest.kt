@@ -21,8 +21,8 @@ class DealerTest {
     fun `딜러가 카드를 다 뽑고나면 점수는 16점을 초과하거나 버스트이다`() {
         // given & when
         while (true) {
-            val canRecieveMore = dealer.recieveCards(cardDeck::draw)
-            if (!canRecieveMore) break
+            dealer.recieveCards(cardDeck::draw)
+            if (!dealer.isDrawable()) break
         }
 
         // then
@@ -37,8 +37,8 @@ class DealerTest {
 
         // when
         while (true) {
-            val canRecieveMore = dealer.recieveCards(cardDeck::draw)
-            if (!canRecieveMore) break
+            dealer.recieveCards(cardDeck::draw)
+            if (!dealer.isDrawable()) break
         }
 
         // then

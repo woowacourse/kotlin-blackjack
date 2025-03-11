@@ -74,9 +74,9 @@ class BlackjackController(
         while (true) {
             when (inputView.getIsRecieveMore(player.name)) {
                 HIT -> {
-                    val canRecieveMore = player.recieveCards(cardDeck::draw)
+                    player.recieveCards(cardDeck::draw)
                     outputView.displayParticipantCards(player.name, player.cards)
-                    if (!canRecieveMore) return
+                    if (!player.isDrawable()) return
                 }
                 STAY -> break
                 UNKNOWN -> throw IllegalArgumentException("[ERROR] 올바르지 않은 입력입니다.")
@@ -88,9 +88,8 @@ class BlackjackController(
         dealer: Dealer,
         cardDeck: CardDeck,
     ) {
-        while (true) {
-            val canRecieveMore = dealer.recieveCards(cardDeck::draw)
-            if (!canRecieveMore) break
+        while (dealer.isDrawable()) {
+            dealer.recieveCards(cardDeck::draw)
         }
 
         outputView.displayDealerDrawInfo(dealer.additionalDrawCount())
