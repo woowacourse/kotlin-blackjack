@@ -17,6 +17,16 @@ class Dealer(name: String = DEFAULT_NAME) : Participant(name) {
         return hand.show(INITIAL_VISIBLE_CARD_COUNT)
     }
 
+    fun processHits(
+        deck: Deck,
+        output: (Dealer) -> Unit,
+    ) {
+        while (canHit()) {
+            output(this)
+            accept(deck.draw())
+        }
+    }
+
     fun getPlayerResults(players: List<Player>): Map<Player, Result> {
         return players.associateWith { player -> player.compareAgainst(this) }
     }

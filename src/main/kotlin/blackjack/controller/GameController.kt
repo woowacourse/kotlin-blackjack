@@ -1,6 +1,5 @@
 package blackjack.controller
 
-import blackjack.domain.model.Action
 import blackjack.domain.model.Dealer
 import blackjack.domain.model.Deck
 import blackjack.domain.model.Participant
@@ -17,7 +16,14 @@ class GameController(
         val deck = Deck()
         val participants = repeatUntilValid { Participants(Dealer(), inputView.readPlayerNames().map(::Player)) }
         processInitialDeals(deck, participants)
-        processParticipantsHits(deck, participants)
+        repeatUntilValid {
+            participants.processPlayersHits(
+                deck,
+                inputView::readPlayerAction,
+                outputView::printParticipantStatus,
+            )
+        }
+        participants.processDealerHits(deck, outputView::printDealerHit)
         outputView.printResults(participants)
     }
 
@@ -30,39 +36,10 @@ class GameController(
         participants.list.forEach { participant -> outputView.printParticipantStatus(participant) }
     }
 
-    private fun processParticipantsHits(
-        deck: Deck,
-        participants: Participants,
-    ) {
-        participants.players.forEach { player -> processPlayerHits(deck, player) }
-        while (participants.dealer.canHit()) {
-            outputView.printDealerHit()
-            participants.dealer.accept(deck.draw())
-        }
-    }
-
-    private fun processPlayerHits(
-        deck: Deck,
-        player: Player,
-    ) {
-        if (!player.canHit()) return
-        val action = repeatUntilValid { inputView.readPlayerAction(player) }
-        if (action == Action.STAND) {
-            printStatusOnNoHit(player)
-            return
-        }
-        player.accept(deck.draw())
-        outputView.printParticipantStatus(player)
-        processPlayerHits(deck, player)
-    }
-
-    private fun printStatusOnNoHit(player: Player) {
-        if (player.showHand().count() == Participant.INITIAL_DRAW_COUNT) outputView.printParticipantStatus(player)
-    }
-
     private fun <T> repeatUntilValid(event: () -> T): T {
         while (true) {
-            kotlin.runCatching { event() }.onSuccess { return it }
+            kotlin.runCatching { event() }
+                .onSuccess { return it }
                 .onFailure { println(it.message ?: it.stackTraceToString()) }
         }
     }

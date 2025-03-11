@@ -13,6 +13,21 @@ class Player(name: String) : Participant(name) {
         return hand.show()
     }
 
+    fun processHits(
+        deck: Deck,
+        input: (Player) -> Action,
+        output: (Player) -> Unit,
+    ) {
+        if (!canHit()) return
+        if (input(this) == Action.STAND) {
+            if (showHand().size == INITIAL_DRAW_COUNT) output(this)
+            return
+        }
+        accept(deck.draw())
+        output(this)
+        processHits(deck, input, output)
+    }
+
     fun compareAgainst(dealer: Dealer): Result {
         if (isBusted()) return Result.LOSE
         if (dealer.isBusted()) return Result.WIN
