@@ -34,8 +34,8 @@ class Dealer(
         players.forEach(turn)
     }
 
-    fun startTurn(onEachTurn: () -> Unit) {
-        while (handState is HandState.Score && score < 17) {
+    fun startDealerTurn(onEachTurn: () -> Unit) {
+        while (score is Score.Hittable && score.value < 17) {
             onEachTurn()
             draw(deck.draw())
         }

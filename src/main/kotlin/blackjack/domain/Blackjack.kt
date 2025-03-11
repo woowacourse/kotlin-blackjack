@@ -14,7 +14,7 @@ class Blackjack(
     }
 
     fun startDealerTurn(onEachTurn: () -> Unit) {
-        dealer.startTurn(onEachTurn)
+        dealer.startDealerTurn(onEachTurn)
     }
 
     fun setResult() {
