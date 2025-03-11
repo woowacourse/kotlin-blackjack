@@ -9,6 +9,10 @@ abstract class GameParticipant(
 ) {
     val handCards = HandCards()
 
+    init {
+        repeat(2) { drawCard() }
+    }
+
     fun showCards(): List<Card> = handCards.currentCards()
 
     fun drawCard() {

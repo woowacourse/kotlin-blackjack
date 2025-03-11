@@ -4,7 +4,7 @@ import blackjack.domain.model.card.Number.ACE
 import blackjack.domain.model.participant.CardStatus
 
 class HandCards {
-    private val cards: MutableList<Card> = MutableList(2) { Deck.giveCard() }
+    private val cards: MutableList<Card> = mutableListOf()
 
     fun currentCards(): List<Card> = cards.toList()
 
