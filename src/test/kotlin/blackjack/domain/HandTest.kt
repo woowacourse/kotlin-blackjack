@@ -7,9 +7,9 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class HandTest {
-    fun Hand.draw(vararg card: Card) {
+    fun Hand.add(vararg card: Card) {
         card.forEach { card ->
-            draw(card)
+            add(card)
         }
     }
 
@@ -17,7 +17,7 @@ class HandTest {
     fun `갖고 있는 카드를 확인할 수 있다`() {
         val card = Card(AceRank, Suit.SPADE)
         val hand = Hand()
-        hand.draw(card)
+        hand.add(card)
         assertThat(hand.value).isEqualTo(listOf(card))
     }
 
@@ -25,7 +25,7 @@ class HandTest {
     fun `카드 총합을 알 수 있다`() {
         val hand =
             Hand().apply {
-                draw(
+                add(
                     Card(AceRank, Suit.SPADE),
                     Card(AceRank, Suit.HEART),
                     Card(NumberRank.FOUR, Suit.DIAMOND),
