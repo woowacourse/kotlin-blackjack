@@ -32,6 +32,16 @@ class ResultCalculatorTest {
     }
 
     @Test
+    fun `플레이어 카드의 총 합을 계산한다`() {
+        player.addCard(Card(Shape.SPADE, CardNumber.NINE))
+        player.addCard(Card(Shape.SPADE, CardNumber.SEVEN))
+        val expect = 16
+        val actual = ResultCalculator.calculateTotalScore(player.cards)
+
+        assertThat(actual).isEqualTo(expect)
+    }
+
+    @Test
     fun `플레이어 카드 합이 딜러의 카드 합보다 작으면 LOSS를 반환한다`() {
         val dealer = Dealer()
         val player = Player("플레이어")
