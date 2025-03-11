@@ -1,17 +1,16 @@
 package blackjack.model.participant
 
 import blackjack.model.ResultCalculator.BLACKJACK_NUMBER
-import blackjack.model.ResultCalculator.calculateTotalScore
 import blackjack.model.card.Card
 
 class Dealer(
     name: String = DEALER_NAME,
 ) : Participant(name) {
-    fun isMoreCard() = calculateTotalScore(cards) < DEALER_MORE_CARD_MINIMUM
+    fun isMoreCard() = adjustScore < DEALER_MORE_CARD_MINIMUM
 
     override fun getInitialCard(): List<Card> = listOf(cards.first())
 
-    override fun isBust(): Boolean = calculateTotalScore(cards) > BLACKJACK_NUMBER
+    override fun isBust(): Boolean = adjustScore > BLACKJACK_NUMBER
 
     companion object {
         private const val DEALER_NAME = "딜러"

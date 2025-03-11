@@ -9,5 +9,5 @@ class Player(
 ) : Participant(name) {
     override fun getInitialCard(): List<Card> = cards
 
-    override fun isBust() = adjustScore(cards) > BLACKJACK_NUMBER
+    override fun isBust() = adjustScore > BLACKJACK_NUMBER
 }
