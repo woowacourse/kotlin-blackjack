@@ -1,6 +1,7 @@
 package blackjack.domain.participant
 
 import blackjack.domain.BlackJackGame.Companion.BUST_STANDARD
+import blackjack.domain.GameResult
 import blackjack.domain.ParticipantCards
 import blackjack.domain.card.TrumpCard
 
@@ -23,6 +24,8 @@ abstract class Participant(
         } else {
             cards.sumOfCards
         }
+
+    abstract fun getResult(other: Participant): GameResult
 
     companion object {
         const val ACE_SOFT_SCORE = 10

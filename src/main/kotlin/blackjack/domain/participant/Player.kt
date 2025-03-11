@@ -29,7 +29,7 @@ class Player(
         }
     }
 
-    fun getResult(other: Participant): GameResult {
+    override fun getResult(other: Participant): GameResult {
         val myScore = this.finalScore()
         val otherScore = other.finalScore()
 

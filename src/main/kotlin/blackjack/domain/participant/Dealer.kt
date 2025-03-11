@@ -1,5 +1,6 @@
 package blackjack.domain.participant
 
+import blackjack.domain.GameResult
 import blackjack.domain.ParticipantCards
 import blackjack.domain.card.TrumpCard
 
@@ -13,6 +14,17 @@ class Dealer(
             return cards.sumOfCards + ACE_SOFT_SCORE > DEALER_MAX_SCORE
         }
         return cards.sumOfCards > DEALER_MAX_SCORE
+    }
+
+    override fun getResult(other: Participant): GameResult {
+        val myScore = this.finalScore()
+        val otherScore = other.finalScore()
+
+        return when {
+            other.isBust() -> GameResult.WIN
+            myScore > otherScore -> GameResult.WIN
+            else -> GameResult.LOSE
+        }
     }
 
     companion object {

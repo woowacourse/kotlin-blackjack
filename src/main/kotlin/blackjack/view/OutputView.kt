@@ -41,8 +41,8 @@ class OutputView {
 
     fun printDealerResult(result: Map<GameResult, Int>) {
         println(MESSAGE_OUTPUT_RESULT_GUIDE)
-        val (playerWin, playerLose) = result.map { it.value }
-        println(format(MESSAGE_OUTPUT_DEALER_RESULT, playerLose, playerWin))
+        val (win, lose) = result.map { it.value }
+        println(format(MESSAGE_OUTPUT_DEALER_RESULT, win, lose))
     }
 
     fun printPlayerResult(

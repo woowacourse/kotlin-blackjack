@@ -25,7 +25,7 @@ class BlackJackGame(
 
     fun processDealerTurn(): Int {
         var count = 0
-        while (participants.dealer.isOverMaxScore().not()) {
+        while (!participants.dealer.isOverMaxScore()) {
             participants.dealer.receiveCard(deck.pop())
             count++
         }
@@ -36,7 +36,7 @@ class BlackJackGame(
         val dealerMap = GameResult.entries.associateWith { 0 }.toMutableMap()
 
         participants.players.forEach { player ->
-            val result = player.getResult(participants.dealer)
+            val result = participants.dealer.getResult(player)
             dealerMap[result] = dealerMap.getOrDefault(result, 0) + 1
         }
         action(dealerMap)
