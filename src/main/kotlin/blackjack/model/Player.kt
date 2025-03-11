@@ -1,8 +1,8 @@
 package blackjack.model
 
 class Player(
-    override val name: String,
-    override val cards: Cards = Cards(emptyList()),
+    name: String,
+    cards: Cards = Cards(emptyList()),
 ) : Participant(name, cards) {
     lateinit var result: GameResult
 
