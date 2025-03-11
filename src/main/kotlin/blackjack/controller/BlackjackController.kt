@@ -2,6 +2,7 @@ package blackjack.controller
 
 import blackjack.model.CardDeck
 import blackjack.model.Cards
+import blackjack.model.CardsStatus.Companion.BUST_SCORE
 import blackjack.model.Dealer
 import blackjack.model.GameResult
 import blackjack.model.Player
@@ -29,20 +30,10 @@ class BlackjackController(
         dealer: Dealer,
     ) {
         repeat(2) {
-            getCardsToPlayer(players)
-            getCardsToDealer(dealer)
+            players.pickCard(cardDeck)
+            dealer.pickCard(cardDeck)
         }
         outputView.printPlayersCards(dealer, players.value)
-    }
-
-    private fun getCardsToPlayer(players: Players) {
-        players.value.forEach { player ->
-            player.pickCard(cardDeck)
-        }
-    }
-
-    private fun getCardsToDealer(dealer: Dealer) {
-        dealer.pickCard(cardDeck)
     }
 
     private fun playGames(
@@ -50,22 +41,14 @@ class BlackjackController(
         dealer: Dealer,
     ) {
         players.value.forEach { player ->
-            playGame(player, dealer)
+            executePlayerGame(player)
         }
+        executeDealerGameLogic(dealer)
+        calculateResult(players, dealer)
         displayResult(players, dealer)
     }
 
-    private fun playGame(
-        player: Player,
-        dealer: Dealer,
-    ) {
-        executePlayerGameLogic(player)
-        executeDealerGameLogic(dealer)
-        val dealerResult: GameResult = dealer.updateResult(dealer.cards.calculateScore())
-        player.updateResult(dealerResult)
-    }
-
-    private fun executePlayerGameLogic(player: Player) {
+    private fun executePlayerGame(player: Player) {
         while (!player.isBust()) {
             outputView.printPlayerBehaviorGuide(player)
             val playerBehavior: Player.Behavior = inputView.readPlayerBehavior()
@@ -102,16 +85,25 @@ class BlackjackController(
         while (dealer.isHit()) {
             dealer.pickCard(cardDeck)
             outputView.printDealerGettingCard()
-            if (isDealerBust(dealer)) break
+            if (dealer.isBust()) break
         }
     }
 
-    private fun isDealerBust(dealer: Dealer): Boolean {
-        if (dealer.isBust()) {
-            outputView.printBust(dealer)
-            return true
+    private fun calculateResult(
+        players: Players,
+        dealer: Dealer,
+    ) {
+        val playersWhichNotDying: List<Player> = players.getNotDyingPlayers()
+        val playersWhichDying: List<Player> = players.getDyingPlayers()
+
+        playersWhichDying.forEach { player ->
+            val dealerResult: GameResult = dealer.updateResult(BUST_SCORE)
+            player.updateResult(dealerResult)
         }
-        return false
+        playersWhichNotDying.forEach { player ->
+            val dealerResult: GameResult = dealer.updateResult(player.getPlayerScore())
+            player.updateResult(dealerResult)
+        }
     }
 
     private fun displayResult(

@@ -11,6 +11,8 @@ class Player(
         require(name.length in 1..5) { "플레이어는 1에서 5사이 길이의 이름만 가질 수 있습니다." }
     }
 
+    fun getPlayerScore(): Int = cards.calculateScore()
+
     fun updateResult(dealerGameResult: GameResult) {
         result = GameResult.reversed(dealerGameResult)
     }
