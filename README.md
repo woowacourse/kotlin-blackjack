@@ -66,4 +66,4 @@
 - [x] ActionType | 입력 유효성 검사 로직을 View로 이동 & 리턴값 변경
 - [x] Participants | 결과 저장 위치 변경 (Participants -> controller)
 - [x] GameResult | None 상태 삭제
-- [ ] Player | compareScore 삭제 및 GameResult로 승패 판단 로직 이동
+- [x] GameResult | compare 삭제 및 Player로 승패 판단 로직 이동

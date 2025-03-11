@@ -15,11 +15,20 @@ data class Player(override val name: String) : Participants() {
         return hand.cards
     }
 
-    fun compareScores(number: Int): GameResult {
-        return if (!hand.isBust()) {
-            GameResult.compare(sumCardNumber, number)
-        } else {
-            GameResult.Lose
+    fun compareScores(dealer: Dealer): GameResult =
+        when {
+            hand.isBust() -> GameResult.Lose
+            dealer.hand.isBust() -> GameResult.Win
+            else -> compareNumber(sumCardNumber, dealer.sumCardNumber)
         }
-    }
+
+    private fun compareNumber(
+        target: Int,
+        other: Int,
+    ): GameResult =
+        when {
+            target < other -> GameResult.Lose
+            target > other -> GameResult.Win
+            else -> GameResult.Draw
+        }
 }

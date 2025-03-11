@@ -3,35 +3,71 @@ package blackjack.model.domain
 import blackjack.model.domain.card.Card
 import blackjack.model.domain.card.CardNumber
 import blackjack.model.domain.card.Shape
+import blackjack.model.domain.participant.Dealer
 import blackjack.model.domain.participant.Player
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class PlayerTest {
-    private val player1 = Player("제리")
+    private lateinit var player: Player
+    private lateinit var dealer: Dealer
+    private val aceSpade = Card(Shape.Spade, CardNumber.Ace)
+    private val twoSpade = Card(Shape.Spade, CardNumber.Two)
+    private val aceHeart = Card(Shape.Heart, CardNumber.Ace)
+    private val sixSpade = Card(Shape.Spade, CardNumber.Six)
 
     @BeforeEach
     fun setup() {
         // given
-        player1.receiveCard(Card(Shape.Heart, CardNumber.Ace))
-        player1.receiveCard(Card(Shape.Spade, CardNumber.Six))
+        player = Player("hwannow")
+        dealer = Dealer()
     }
 
     @Test
     fun `받은 카드의 목록을 반환한다`() {
+        // given
+        player.receiveCard(aceHeart)
+        player.receiveCard(sixSpade)
         // when
-        val actual = player1.cardDeck
+        val actual = player.cardDeck
         val expected = listOf(Card(Shape.Heart, CardNumber.Ace), Card(Shape.Spade, CardNumber.Six))
         // then
         assertThat(actual).isEqualTo(expected)
     }
 
     @Test
-    fun `플레이어의 숫자의 합과 받은 숫자의 합을 비교하여 승패를 결정한다`() {
+    fun `타켓값이 임계값보다 작으면 Lose상태를 반환한다`() {
+        // given
+        player.receiveCard(twoSpade)
+        dealer.receiveCard(aceSpade)
         // when
-        val actual = player1.compareScores(8)
+        val actual = player.compareScores(dealer)
+        val expected = GameResult.Lose
+        // then
+        assertThat(actual).isEqualTo(expected)
+    }
+
+    @Test
+    fun `타켓값이 임계값보다 크면 Win상태를 반환한다`() {
+        // given
+        player.receiveCard(aceSpade)
+        dealer.receiveCard(twoSpade)
+        // when
+        val actual = player.compareScores(dealer)
         val expected = GameResult.Win
+        // then
+        assertThat(actual).isEqualTo(expected)
+    }
+
+    @Test
+    fun `타켓값이 임계값과 같으면 Draw상태를 반환한다`() {
+        // given
+        player.receiveCard(aceSpade)
+        dealer.receiveCard(aceHeart)
+        // when
+        val actual = player.compareScores(dealer)
+        val expected = GameResult.Draw
         // then
         assertThat(actual).isEqualTo(expected)
     }
