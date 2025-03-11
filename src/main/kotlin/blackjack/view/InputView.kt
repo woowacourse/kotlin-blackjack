@@ -31,7 +31,6 @@ class InputView {
         private const val ERROR_PLAYER_NAME_EMPTY = "플레이어 이름은 비어있으면 안 됩니다. 다시 입력해주세요."
         private const val ERROR_INVALID_PLAYER_NAMES = "중복된 이름이 있습니다. 다시 입력해주세요."
         private const val PLAYER_MORE_CARD_MESSAGE_GUIDE = "%s은(는) 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)"
-        private const val ERROR_INVALID_CARD_CONDITION = "y나 n을 입력해야 합니다. 다시 입력해주세요."
         private const val PLAYER_NAME_DELIMITER = ","
     }
 }

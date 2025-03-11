@@ -52,9 +52,7 @@ class BlackjackController(
                     outputView.printPlayerHands(player)
                 }
 
-                DrawChoice.NO -> {
-                    break
-                }
+                DrawChoice.NO -> break
 
                 null -> continue
             }
