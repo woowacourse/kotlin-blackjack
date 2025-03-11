@@ -17,7 +17,7 @@ class OutputView(
 
     fun showDealerFirstCardsInfo(dealer: Dealer) {
         val name = dealer.name
-        val firstCard = dealer.handCards.getCardByIndex(0)
+        val firstCard = dealer.getFirstCard()
 
         println(CARD_INFO_MESSAGE.format(name, makeCardText(firstCard)))
     }
