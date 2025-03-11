@@ -36,17 +36,16 @@ class BlackjackController(
         players: Players,
     ) {
         outputView.printDealerResult(initialDealerCards.names, dealer.currentScore())
-        showPlayerResult(players, players.names)
+        showPlayerResult(players)
         showGameResult(dealer, players)
     }
 
     private fun showPlayerResult(
         players: Players,
-        playersNames: List<String>,
     ) {
         val updatedPlayerCardsNames = players.getPlayerCardNames
         val playersTotalScore = players.scores
-        outputView.printPlayerResult(playersNames, updatedPlayerCardsNames, playersTotalScore)
+        outputView.printPlayerResult(players.names, updatedPlayerCardsNames, playersTotalScore)
     }
 
     private fun showInitialGameState(
