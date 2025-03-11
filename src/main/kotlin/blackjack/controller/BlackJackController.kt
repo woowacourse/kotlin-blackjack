@@ -35,7 +35,7 @@ class BlackJackController(
     }
 
     private fun displayDealerCards(participants: Participants) {
-        outputView.printDealerCards(participants.dealer.getInitialCards())
+        outputView.printDealerCards(participants.dealer.showInitialCards())
     }
 
     private fun readForGame(participants: Participants): BlackJackGame = BlackJackGame(participants, ShuffledDeck())

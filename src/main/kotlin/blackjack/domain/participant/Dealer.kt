@@ -7,7 +7,7 @@ import blackjack.domain.card.TrumpCard
 class Dealer(
     cards: ParticipantCards,
 ) : Participant(cards) {
-    override fun getInitialCards(): List<TrumpCard> = cards.allCards.take(DEALER_INITIAL_CARD_COUNT)
+    override fun showInitialCards(): List<TrumpCard> = cards.allCards.take(DEALER_INITIAL_CARD_COUNT)
 
     override fun isDrawable(): Boolean {
         if (cards.hasAce() && !isBust(ACE_SOFT_SCORE)) {
