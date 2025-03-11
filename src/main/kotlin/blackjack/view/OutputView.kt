@@ -5,14 +5,11 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
 import blackjack.domain.card.CardPattern
 import blackjack.domain.person.Dealer
+import blackjack.domain.person.Person
 import blackjack.domain.person.Player
 import blackjack.domain.state.ResultState
 
 class OutputView {
-    fun printEnterPlayerNamesMessage() {
-        println(ENTER_PLAYER_NAMES_MESSAGE)
-    }
-
     fun printFirstDrawMessage(players: List<Player>) {
         println()
         val nameList = players.joinToString(DELIMITER) { it.name }
@@ -30,10 +27,6 @@ class OutputView {
         println()
     }
 
-    fun printAskForDrawCardMessage(name: String) {
-        println(ASK_DRAW_CARD_MESSAGE.format(name))
-    }
-
     fun printPlayerDrawStatus(player: Player) {
         printDrawStatus(player.name, player.cards.toUiString())
         println()
@@ -44,13 +37,10 @@ class OutputView {
         println(DEALER_DRAW_MESSAGE)
     }
 
-    fun printDealerResult(dealer: Dealer) {
-        println()
-        printGameResult(DEALER, dealer.cards, dealer.score)
-    }
-
-    fun printPlayerResult(player: Player) {
-        printGameResult(player.name, player.cards, player.score)
+    fun printPersonResult(person: Person) {
+        val name = (person as? Player)?.name ?: DEALER
+        if (name == DEALER) println()
+        printGameResult(name, person.cards, person.score)
     }
 
     private fun printGameResult(
@@ -117,9 +107,7 @@ class OutputView {
 
     companion object {
         private const val DEALER = "딜러"
-        private const val ENTER_PLAYER_NAMES_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)"
         private const val FIRST_DRAW_MESSAGE = "${DEALER}와 %s에게 2장을 나누었습니다."
-        private const val ASK_DRAW_CARD_MESSAGE = "%s는 한장의 카드를 더 받겠습니까? (예는 y, 아니오는 n)"
         private const val DEALER_DRAW_MESSAGE = "${DEALER}는 16이하라 한장의 카드를 더 받았습니다."
         private const val DRAW_STATUS_MESSAGE = "%s 카드: %s"
         private const val SCORE_RESULT_MESSAGE = " - 결과: %s"
