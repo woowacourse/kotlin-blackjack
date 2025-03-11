@@ -1,7 +1,7 @@
 package blackjack.controller
 
 import blackjack.model.CardDeck
-import blackjack.model.CardsMaker
+import blackjack.model.Cards
 import blackjack.model.CardsStatus
 import blackjack.model.Dealer
 import blackjack.model.GameResult
@@ -15,7 +15,7 @@ class BlackjackController(
     private val inputView: InputView,
     private val outputView: OutputView,
 ) {
-    private val cardDeck = CardDeck(CardsMaker.CARDS)
+    private val cardDeck = CardDeck(Cards.WHOLE_CARDS)
 
     fun run() {
         outputView.printStartMessage()

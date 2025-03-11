@@ -21,4 +21,17 @@ class Cards(
         }
         return score
     }
+
+    companion object {
+        private val DENOMINATIONS: List<Denomination> = Denomination.entries
+        private val SHAPES: List<CardShape> = CardShape.entries
+
+        val WHOLE_CARDS: List<Card> =
+            DENOMINATIONS
+                .flatMap { denomination ->
+                    SHAPES.map { shape ->
+                        Card(shape, denomination)
+                    }
+                }.shuffled()
+    }
 }
