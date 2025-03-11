@@ -1,16 +1,14 @@
 package blackjack.domain
 
-import java.util.LinkedList
-
-class Deck(shuffledDeck: List<Card>) {
-    private val deck = LinkedList(shuffledDeck)
+class Deck(shuffledCards: List<Card>) {
+    private val deck : ArrayDeque<Card> = ArrayDeque(shuffledCards)
 
     fun draw(): Card {
         require(deck.isNotEmpty()) { "덱이 비어 있습니다" }
-        return deck.poll()
+        return deck.removeFirst()
     }
 
     fun getSize() = deck.size
 
-    fun contains(card: Card): Boolean = deck.contains(card)
+    fun contains(card: Card) = deck.contains(card)
 }
