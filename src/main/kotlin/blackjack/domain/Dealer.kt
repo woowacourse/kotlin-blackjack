@@ -12,7 +12,7 @@ class Dealer(
 
     private val deck: Deck = Deck(shuffler)
 
-    val participantStates: List<ParticipantState>
+    val dealerResults: List<ParticipantState>
         get() =
             players.map { player ->
                 when (player.state) {
