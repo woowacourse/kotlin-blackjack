@@ -25,13 +25,25 @@ class HandsTest {
     }
 
     @Test
-    fun `카드의 보너스 점수를 추가한 총합을 반환한다`() {
+    fun `카드를 더한 값이 21이 넘을 경우 버스트 된다 `() {
+        hands = Hands(Card(Suit.HEART, Rank.JACK), Card(Suit.HEART, Rank.KING), Card(Suit.HEART, Rank.KING)) // 30
+        assertThat(hands.isBust()).isTrue()
+    }
+
+    @Test
+    fun `카드를 더한 값이 21이 넘지 않을 경우 버스트를 되지 않는다`() {
+        hands = Hands(Card(Suit.HEART, Rank.JACK), Card(Suit.HEART, Rank.KING)) // 20
+        assertThat(hands.isBust())
+    }
+
+    @Test
+    fun `카드를 더한 값이 11이하이고 에이스가 포함될 경우 10점 보너스 값을 받지 않는다`() {
         hands = Hands(Card(Suit.HEART, Rank.ACE), Card(Suit.HEART, Rank.KING))
         assertThat(hands.getScore()).isEqualTo(21)
     }
 
     @Test
-    fun `카드의 보너스 점수가 없는 총합을 반환한다`() {
+    fun `카드를 더한 값이 11이상일 경우 에이스가 포함되어도 보너스 값을 받지 않는다`() {
         hands = Hands(Card(Suit.HEART, Rank.ACE), Card(Suit.HEART, Rank.KING), Card(Suit.SPADE, Rank.KING))
         assertThat(hands.getScore()).isEqualTo(21)
     }
