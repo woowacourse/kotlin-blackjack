@@ -13,14 +13,6 @@ class BlackjackController(
     lateinit var dealer: Dealer
     lateinit var blackjack: Blackjack
 
-    fun run() {
-        initGame()
-        dealCards()
-        playPlayerTurn()
-        playDealerTurn()
-        setResult()
-    }
-
     fun initGame() {
         val playerNames: List<String> = view.readPlayers()
         players = playerNames.toPlayers
