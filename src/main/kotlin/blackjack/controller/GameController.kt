@@ -2,7 +2,6 @@ package blackjack.controller
 
 import blackjack.domain.model.Dealer
 import blackjack.domain.model.Deck
-import blackjack.domain.model.Participant
 import blackjack.domain.model.Participants
 import blackjack.domain.model.Player
 import blackjack.view.InputView
@@ -15,25 +14,16 @@ class GameController(
     fun run() {
         val deck = Deck()
         val participants = repeatUntilValid { Participants(Dealer(), inputView.readPlayerNames().map(::Player)) }
-        processInitialDeals(deck, participants)
-        repeatUntilValid {
-            participants.processPlayersHits(
-                deck,
-                inputView::readPlayerAction,
-                outputView::printParticipantStatus,
-            )
-        }
-        participants.processDealerHits(deck, outputView::printDealerHit)
-        outputView.printResults(participants)
-    }
-
-    private fun processInitialDeals(
-        deck: Deck,
-        participants: Participants,
-    ) {
-        participants.list.forEach { player -> player.accept(deck.draw(Participant.INITIAL_DRAW_COUNT)) }
+        participants.makeInitialDeals(deck)
         outputView.printInitialDeals(participants)
         participants.list.forEach { participant -> outputView.printParticipantStatus(participant) }
+        participants.processPlayersHits(
+            deck,
+            { player -> repeatUntilValid { inputView.readPlayerAction(player) } },
+            outputView::printParticipantStatus,
+        )
+        participants.processDealerHits(deck, outputView::printDealerHit)
+        outputView.printResults(participants)
     }
 
     private fun <T> repeatUntilValid(event: () -> T): T {

@@ -11,6 +11,12 @@ class Participants(val dealer: Dealer, val players: List<Player>) {
         }
     }
 
+    fun makeInitialDeals(deck: Deck) {
+        list.forEach { participant ->
+            participant.accept(deck.draw(Participant.INITIAL_DRAW_COUNT))
+        }
+    }
+
     fun processPlayersHits(
         deck: Deck,
         input: (Player) -> Action,
