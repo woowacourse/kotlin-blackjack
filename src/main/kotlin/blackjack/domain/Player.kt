@@ -17,7 +17,7 @@ class Player(
             }
     }
 
-    val hittable: Boolean get() = score is Score.Hittable && score.value != Score.SCORE_BLACKJACK
+    val hittable: Boolean get() = score is Score.Hittable && score.value != Score.SCORE_MAX_CAN_HAVE
 
     fun win() {
         state = ParticipantState.WIN
