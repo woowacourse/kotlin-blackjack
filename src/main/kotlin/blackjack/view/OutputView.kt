@@ -14,32 +14,31 @@ class OutputView {
     ) {
         val playerName = players.joinToString { it.name }
         println(OUTPUT_DISTRIBUTE_CARD.format(dealer.name, playerName))
-        printDealerInitCard(dealer)
-        printPlayerInitCard(players)
+        printInitCard(listOf(dealer) + players)
     }
 
-    private fun printDealerInitCard(dealer: Dealer) {
-        val firstCard = listOf(dealer.cardDeck.first())
-        println(PLAYER_STATUS.format(dealer.name, displayCard(firstCard)))
-    }
-
-    private fun printPlayerInitCard(players: List<Participants>) {
-        players.forEach { player ->
-            printCardStatus(player)
+    private fun printInitCard(participants: List<Participants>) {
+        participants.forEach { participant ->
+            val initCard = displayCard(participant.getInitCard())
+            println(makeFormat(participant.name, initCard))
         }
         println()
     }
 
     fun printCardStatus(player: Participants) {
-        println(makeFormat(player))
-    }
-
-    private fun makeFormat(player: Participants): String {
-        return PLAYER_STATUS.format(player.name + CARD, displayCard(player.cardDeck))
+        val cards = displayCard(player.cardDeck)
+        println(makeFormat(player.name, cards))
     }
 
     private fun displayCard(cards: List<Card>): String {
         return cards.joinToString { CARD_FORMAT.format(it.cardNumber.display, it.symbol.toKorean()) }
+    }
+
+    private fun makeFormat(
+        playerName: String,
+        cards: String,
+    ): String {
+        return PLAYER_STATUS.format(playerName + CARD, cards)
     }
 
     fun printDealerReceiveCard(
@@ -55,7 +54,8 @@ class OutputView {
 
     fun participantsCardResult(participants: List<Participants>) {
         participants.forEach { participant ->
-            println(makeFormat(participant) + OUTPUT_PARTICIPANTS_CARD_RESULT.format(participant.sumCardNumber))
+            val cards = displayCard(participant.cardDeck)
+            println(makeFormat(participant.name, cards) + OUTPUT_PARTICIPANTS_CARD_RESULT.format(participant.sumCardNumber))
         }
     }
 

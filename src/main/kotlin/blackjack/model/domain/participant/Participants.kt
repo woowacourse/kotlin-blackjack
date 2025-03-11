@@ -22,4 +22,6 @@ abstract class Participants() {
     }
 
     abstract fun canHit(): Boolean
+
+    abstract fun getInitCard(): List<Card>
 }

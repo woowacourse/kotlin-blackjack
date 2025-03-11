@@ -60,5 +60,5 @@
 - [x] Blackjack | 16 & 21 기준 딜러 & 손에게 나눠 주기
 - [x] Hand | Bust 상태 판단 역할 부여 (GameResult에서 Hand로 이동)
 - [x] Hand | 방어적 복사 개념 적용
-- [ ] OutputView | 초반 카드 보여 주는 로직을 비즈니스 로직으로 처리하기
+- [x] OutputView | 초반 카드 보여 주는 로직을 비즈니스 로직으로 처리하기
 - [x] Introduce | 이름을 필수 요소로 적용
