@@ -3,7 +3,6 @@ package blackjack.controller
 import blackjack.domain.model.participant.CardStatus
 import blackjack.domain.model.participant.Dealer
 import blackjack.domain.model.participant.Player
-import blackjack.domain.model.progress.Rule
 import blackjack.domain.model.progress.WinLossStatistics
 import blackjack.view.InputView
 import blackjack.view.OutputView
@@ -52,7 +51,7 @@ class Casino(
     }
 
     private fun runDealerDrawPhase(dealer: Dealer) {
-        while (Rule.calculateShouldDrawByCards(dealer.showCards())) {
+        while (dealer.isDrawFinish()) {
             dealer.drawCard()
             outputView.showDealerDrawMessage()
         }

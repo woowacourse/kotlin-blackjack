@@ -9,8 +9,8 @@ class WinLossStatistics {
         dealerCards: List<Card>,
         playerCards: List<Card>,
     ): WinLoss {
-        val dealerScore = Rule.calculateResultByCards(dealerCards)
-        val playerScore = Rule.calculateResultByCards(playerCards)
+        val dealerScore = Rule.calculateBestCardValueInRule(dealerCards)
+        val playerScore = Rule.calculateBestCardValueInRule(playerCards)
 
         if (playerScore > 21) {
             dealerResults[WinLoss.WIN] = (dealerResults[WinLoss.WIN] ?: 0) + 1

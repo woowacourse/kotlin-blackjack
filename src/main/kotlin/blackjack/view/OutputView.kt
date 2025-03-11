@@ -4,7 +4,6 @@ import blackjack.domain.model.card.Card
 import blackjack.domain.model.participant.Dealer
 import blackjack.domain.model.participant.GameParticipant
 import blackjack.domain.model.participant.Player
-import blackjack.domain.model.progress.Rule
 import blackjack.domain.model.progress.WinLoss
 import java.util.Locale
 
@@ -33,7 +32,7 @@ class OutputView(
 
     fun showCardsResult(participants: List<GameParticipant>) {
         participants.forEach {
-            println(makeParticipantInfoText(it) + CARD_RESULT_MESSAGE + Rule.calculateResultByCards(it.showCards()))
+            println(makeParticipantInfoText(it) + CARD_RESULT_MESSAGE + it.handCards.calculateBestCardValue())
         }
     }
 

@@ -1,7 +1,5 @@
 package blackjack.domain.model.participant
 
-import blackjack.domain.model.progress.Rule
-
 class Player(
     name: String = DEFAULT_NAME,
 ) : GameParticipant(name = name) {
@@ -9,7 +7,7 @@ class Player(
         // todo
     }
 
-    override fun isDrawFinish(): Boolean = Rule.isBurst(showCards())
+    override fun isDrawFinish(): Boolean = handCards.getStatus() == CardStatus.BUST
 
     companion object {
         private const val DEFAULT_NAME = "이름 없음"

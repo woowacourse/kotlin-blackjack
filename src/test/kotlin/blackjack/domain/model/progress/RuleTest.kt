@@ -25,52 +25,8 @@ class RuleTest {
     ) {
         val cards = rawCardNumbers.split(',').map { preparedCards[it.toInt() - 1] }
 
-        val actualResult = Rule.calculateResultByCards(cards)
+        val actualResult = Rule.calculateBestCardValueInRule(cards)
 
         assertThat(actualResult).isEqualTo(expectedResult)
-    }
-
-    @ParameterizedTest
-    @CsvSource(
-        "false:1,1",
-        "false:1,8",
-        "false:1,1,1",
-        "false:10,1,1",
-        "false:1,1,1,1,7",
-        "true:10,1,1,10",
-        "true:10,7,5",
-        "true:1,1,1,1,7,2,9",
-        "false:11,12",
-        delimiter = ':',
-    )
-    fun `룰에게 플레이어의 드로우 여부를 받아올 수 있다`(
-        expectedIsDrawable: Boolean,
-        rawCardNumbers: String,
-    ) {
-        val cards = rawCardNumbers.split(',').map { preparedCards[it.toInt() - 1] }
-
-        val actualIsDrawable = Rule.isBurst(cards)
-
-        assertThat(actualIsDrawable).isEqualTo(expectedIsDrawable)
-    }
-
-    @ParameterizedTest
-    @CsvSource(
-        "true:1,1",
-        "true:1,1,1",
-        "false:10,1",
-        "false:1,1,1,1,7",
-        "false:1,8",
-        delimiter = ':',
-    )
-    fun `룰에게 딜러의 드로우 여부를 받아올 수 있다`(
-        expectedShouldDraw: Boolean,
-        rawCardNumbers: String,
-    ) {
-        val cards = rawCardNumbers.split(',').map { preparedCards[it.toInt() - 1] }
-
-        val actualShouldDraw = Rule.calculateShouldDrawByCards(cards)
-
-        assertThat(actualShouldDraw).isEqualTo(expectedShouldDraw)
     }
 }

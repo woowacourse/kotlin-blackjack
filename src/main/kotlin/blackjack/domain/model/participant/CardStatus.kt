@@ -9,7 +9,7 @@ enum class CardStatus {
     ;
 
     companion object {
-        private const val BLACKJACK_NUMBER = 21
+        const val BLACKJACK_NUMBER = 21
 
         fun calculateCardsStatus(cards: Collection<Card>): CardStatus =
             when {
