@@ -28,11 +28,26 @@ object ResultCalculator {
         dealer: Dealer,
         player: Player,
     ): ResultType {
-        val dealerFinalScore = if (dealer.isBust()) 0 else calculateTotalScore(dealer.cards)
-        val playerFinalScore = if (player.isBust()) 0 else calculateTotalScore(player.cards)
-        if (dealerFinalScore < playerFinalScore) return WIN
-        if (dealerFinalScore == playerFinalScore) return TIE
-        return LOSS
+        return when {
+            player.isBust() -> LOSS
+            player.isBlackjack() ->
+                when {
+                    dealer.isBust() || !dealer.isBlackjack() -> WIN
+                    else -> TIE
+                }
+
+            dealer.isBust() -> WIN
+            dealer.isBlackjack() -> LOSS
+            else -> {
+                val dealerScore = adjustScore(dealer.cards)
+                val playerScore = adjustScore(player.cards)
+                when {
+                    playerScore > dealerScore -> WIN
+                    playerScore == dealerScore -> TIE
+                    else -> LOSS
+                }
+            }
+        }
     }
 
     fun calculateTotalScore(cards: List<Card>) = cards.sumOf { card -> card.number.score }
