@@ -5,10 +5,6 @@ import blackjack.domain.model.card.Card
 class Dealer(
     name: String = DEFAULT_NAME,
 ) : GameParticipant(name = name) {
-    override fun play() {
-        // todo
-    }
-
     fun getFirstCard(): Card = handCards.getCardByIndex(0)
 
     override fun isDrawFinish(): Boolean {

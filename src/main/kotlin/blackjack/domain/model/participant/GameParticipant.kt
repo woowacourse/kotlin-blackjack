@@ -15,7 +15,5 @@ abstract class GameParticipant(
         handCards.addCard(Deck.giveCard())
     }
 
-    abstract fun play()
-
     abstract fun isDrawFinish(): Boolean
 }
