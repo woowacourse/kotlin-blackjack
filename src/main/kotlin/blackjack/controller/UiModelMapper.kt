@@ -14,7 +14,7 @@ import blackjack.view.model.PlayerSummary
 val Card.prettyString: String
     get() = rank.prettyString + suit.prettyString
 
-val Rank.prettyString: String
+private val Rank.prettyString: String
     get() =
         when (this) {
             Rank.AceRank -> "A"
@@ -22,7 +22,7 @@ val Rank.prettyString: String
             is Rank.NumberRank -> value.toString()
         }
 
-val Suit.prettyString: String
+private val Suit.prettyString: String
     get() =
         when (this) {
             Suit.SPADE -> "스페이드"
@@ -46,13 +46,10 @@ val List<Player>.names: List<String>
 val List<Card>.prettyString: List<String>
     get() = map { card: Card -> card.prettyString }
 
-val List<Player>.cards: List<List<String>>
-    get() = map { player -> player.cards.prettyString }
-
 val List<String>.toPlayers: List<Player>
     get() = map { playerName -> Player(playerName) }
 
-val Dealer.toDealerResult: DealerResult
+val Dealer.result: DealerResult
     get() =
         DealerResult(
             dealerResults.count { state: ParticipantState -> state == ParticipantState.WIN },
@@ -60,18 +57,18 @@ val Dealer.toDealerResult: DealerResult
             dealerResults.count { state: ParticipantState -> state == ParticipantState.LOSE },
         )
 
-val Player.toPlayerResult: PlayerResult
+val Player.result: PlayerResult
     get() = PlayerResult(name, state.prettyString)
 
-val Dealer.toDealerSummary: DealerSummary
+val Dealer.summary: DealerSummary
     get() =
         DealerSummary(
             cards.map { card -> card.prettyString },
             score.value,
         )
 
-val Player.toPlayerSummary: PlayerSummary
+private val Player.summary: PlayerSummary
     get() = PlayerSummary(name, cards.prettyString, score.value)
 
-val List<Player>.toPlayerSummaries: List<PlayerSummary>
-    get() = map { player -> player.toPlayerSummary }
+val List<Player>.summaries: List<PlayerSummary>
+    get() = map { player -> player.summary }

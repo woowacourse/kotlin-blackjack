@@ -61,16 +61,16 @@ class BlackjackController(
 
     fun showParticipantsSummary() {
         view.showParticipantsSummary(
-            dealer.toDealerSummary,
-            players.toPlayerSummaries,
+            dealer.summary,
+            players.summaries,
         )
     }
 
     fun setResult() {
         blackjack.setResult()
         view.showResult(
-            dealer.toDealerResult,
-            players.map { player -> player.toPlayerResult },
+            dealer.result,
+            players.map { player -> player.result },
         )
     }
 }
