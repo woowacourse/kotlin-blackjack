@@ -61,7 +61,7 @@ class GameController(
         deck: Deck,
         dealer: Dealer,
     ) {
-        while (dealer.getScore() <= Dealer.DEALER_DRAW_THRESHOLD) {
+        while (dealer.isHit()) {
             outputView.printDealerHitsState()
             dealer.acceptCard(deck.draw())
         }

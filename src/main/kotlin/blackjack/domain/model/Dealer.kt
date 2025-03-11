@@ -9,6 +9,8 @@ class Dealer(override var hands: Hands, override val name: String = DEALER_NAME)
 
     override fun showInitCards(): List<Card> = showCards(INIT_VISIBLE_CARD_COUNT)
 
+    fun isHit(): Boolean = getScore() <= DEALER_DRAW_THRESHOLD
+
     fun getPlayerVerdict(players: List<Participant>): Map<Participant, Verdict> {
         return players.associateWith { player -> determine(player).reverse() }
     }
