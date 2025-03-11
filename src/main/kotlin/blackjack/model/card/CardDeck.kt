@@ -1,4 +1,4 @@
-package blackjack.model
+package blackjack.model.card
 
 class CardDeck {
     private val cards = ArrayDeque(BLACKJACK_CACHE_CARDS.shuffled())

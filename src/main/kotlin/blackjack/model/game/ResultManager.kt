@@ -1,4 +1,8 @@
-package blackjack.model
+package blackjack.model.game
+
+import blackjack.model.participant.Dealer
+import blackjack.model.participant.Players
+import blackjack.model.rule.WinningResult
 
 class ResultManager(
     private val dealer: Dealer,

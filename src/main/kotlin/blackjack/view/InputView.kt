@@ -1,9 +1,9 @@
 package blackjack.view
 
-import blackjack.model.UserCommand
-import blackjack.model.UserCommand.HIT
-import blackjack.model.UserCommand.STAY
-import blackjack.model.UserCommand.UNKNOWN
+import blackjack.model.game.UserCommand
+import blackjack.model.game.UserCommand.HIT
+import blackjack.model.game.UserCommand.STAY
+import blackjack.model.game.UserCommand.UNKNOWN
 
 class InputView {
     fun getPlayers(): List<String> {

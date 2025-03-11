@@ -1,4 +1,12 @@
-package blackjack.model
+package blackjack.model.game
+
+import blackjack.model.card.Card
+import blackjack.model.card.CardDeck
+import blackjack.model.participant.Dealer
+import blackjack.model.participant.Hand
+import blackjack.model.participant.Players
+import blackjack.model.rule.ScoreCalculator
+import blackjack.model.rule.WinningResult
 
 class GameManager {
     fun prepareDealer(

@@ -1,4 +1,6 @@
-package blackjack.model
+package blackjack.model.participant
+
+import blackjack.model.rule.ScoreCalculator
 
 class Players private constructor(
     val value: List<Player>,

@@ -1,7 +1,7 @@
 package blackjack.domain
 
-import blackjack.model.Players
-import blackjack.model.ScoreCalculator
+import blackjack.model.participant.Players
+import blackjack.model.rule.ScoreCalculator
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows

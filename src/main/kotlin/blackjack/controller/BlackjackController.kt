@@ -1,38 +1,39 @@
 package blackjack.controller
 
-import blackjack.model.CardDeck
-import blackjack.model.Dealer
-import blackjack.model.GameManager
-import blackjack.model.Player
-import blackjack.model.Players
-import blackjack.model.ResultManager
-import blackjack.model.ScoreCalculator
-import blackjack.model.UserCommand.HIT
-import blackjack.model.UserCommand.STAY
-import blackjack.model.UserCommand.UNKNOWN
+import blackjack.model.card.CardDeck
+import blackjack.model.game.GameManager
+import blackjack.model.game.ResultManager
+import blackjack.model.game.UserCommand.HIT
+import blackjack.model.game.UserCommand.STAY
+import blackjack.model.game.UserCommand.UNKNOWN
+import blackjack.model.participant.Dealer
+import blackjack.model.participant.Player
+import blackjack.model.participant.Players
+import blackjack.model.rule.ScoreCalculator
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
 class BlackjackController(
-    private val gameManager: GameManager,
     private val inputView: InputView,
     private val outputView: OutputView,
 ) {
     fun run() {
+        val gameManager = GameManager()
         val cardDeck = CardDeck()
         val scoreCalculator = ScoreCalculator()
         val dealer = gameManager.prepareDealer(TEMP_DEALER_NAME, cardDeck, scoreCalculator)
-        val players = preparePlayers(cardDeck, dealer, scoreCalculator)
+        val players = preparePlayers(gameManager, cardDeck, dealer, scoreCalculator)
         val resultManager = ResultManager(dealer, players)
 
         progressPlayersDraw(players, cardDeck)
-        progressDealerDraw(dealer, cardDeck)
+        progressDealerDraw(gameManager, dealer, cardDeck)
 
         displayParticipantsInfo(players)
-        displayResults(resultManager)
+        displayResults(gameManager, resultManager)
     }
 
     private fun preparePlayers(
+        gameManager: GameManager,
         cardDeck: CardDeck,
         dealer: Dealer,
         scoreCalculator: ScoreCalculator,
@@ -76,6 +77,7 @@ class BlackjackController(
     }
 
     private fun progressDealerDraw(
+        gameManager: GameManager,
         dealer: Dealer,
         cardDeck: CardDeck,
     ) {
@@ -91,7 +93,10 @@ class BlackjackController(
         }
     }
 
-    private fun displayResults(resultManager: ResultManager) {
+    private fun displayResults(
+        gameManager: GameManager,
+        resultManager: ResultManager,
+    ) {
         val result = gameManager.getResult(resultManager)
 
         outputView.displayResult(result)

@@ -1,14 +1,14 @@
 package blackjack.domain
 
-import blackjack.model.Card
-import blackjack.model.CardRank.ACE
-import blackjack.model.CardRank.JACK
-import blackjack.model.CardRank.KING
-import blackjack.model.CardRank.NINE
-import blackjack.model.CardRank.QUEEN
-import blackjack.model.CardRank.TWO
-import blackjack.model.CardSuit.CLUB
-import blackjack.model.ScoreCalculator
+import blackjack.model.card.Card
+import blackjack.model.card.CardRank.ACE
+import blackjack.model.card.CardRank.JACK
+import blackjack.model.card.CardRank.KING
+import blackjack.model.card.CardRank.NINE
+import blackjack.model.card.CardRank.QUEEN
+import blackjack.model.card.CardRank.TWO
+import blackjack.model.card.CardSuit.CLUB
+import blackjack.model.rule.ScoreCalculator
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test

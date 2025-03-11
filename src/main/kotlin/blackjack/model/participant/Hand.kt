@@ -1,4 +1,7 @@
-package blackjack.model
+package blackjack.model.participant
+
+import blackjack.model.card.Card
+import blackjack.model.rule.ScoreCalculator
 
 class Hand(
     private val scoreCalculator: ScoreCalculator,

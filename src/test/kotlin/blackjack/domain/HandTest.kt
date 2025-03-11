@@ -1,10 +1,10 @@
 package blackjack.domain
 
-import blackjack.model.Card
-import blackjack.model.CardRank
-import blackjack.model.CardSuit
-import blackjack.model.Hand
-import blackjack.model.ScoreCalculator
+import blackjack.model.card.Card
+import blackjack.model.card.CardRank
+import blackjack.model.card.CardSuit
+import blackjack.model.participant.Hand
+import blackjack.model.rule.ScoreCalculator
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test

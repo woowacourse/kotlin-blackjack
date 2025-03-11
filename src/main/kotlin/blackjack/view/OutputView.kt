@@ -1,21 +1,21 @@
 package blackjack.view
 
-import blackjack.model.Card
-import blackjack.model.CardRank
-import blackjack.model.CardRank.ACE
-import blackjack.model.CardRank.JACK
-import blackjack.model.CardRank.KING
-import blackjack.model.CardRank.QUEEN
-import blackjack.model.CardSuit
-import blackjack.model.CardSuit.CLUB
-import blackjack.model.CardSuit.DIAMOND
-import blackjack.model.CardSuit.HEART
-import blackjack.model.CardSuit.SPADE
-import blackjack.model.GameResult
-import blackjack.model.WinningResult
-import blackjack.model.WinningResult.LOSE
-import blackjack.model.WinningResult.PUSH
-import blackjack.model.WinningResult.WIN
+import blackjack.model.card.Card
+import blackjack.model.card.CardRank
+import blackjack.model.card.CardRank.ACE
+import blackjack.model.card.CardRank.JACK
+import blackjack.model.card.CardRank.KING
+import blackjack.model.card.CardRank.QUEEN
+import blackjack.model.card.CardSuit
+import blackjack.model.card.CardSuit.CLUB
+import blackjack.model.card.CardSuit.DIAMOND
+import blackjack.model.card.CardSuit.HEART
+import blackjack.model.card.CardSuit.SPADE
+import blackjack.model.game.GameResult
+import blackjack.model.rule.WinningResult
+import blackjack.model.rule.WinningResult.LOSE
+import blackjack.model.rule.WinningResult.PUSH
+import blackjack.model.rule.WinningResult.WIN
 
 class OutputView {
     fun displayFirstDrawEnd(players: List<String>) {

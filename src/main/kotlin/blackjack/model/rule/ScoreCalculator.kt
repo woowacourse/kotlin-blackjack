@@ -1,4 +1,7 @@
-package blackjack.model
+package blackjack.model.rule
+
+import blackjack.model.card.Card
+import blackjack.model.card.CardRank
 
 class ScoreCalculator {
     fun isBust(score: Int): Boolean = score > BUST_CRITERIA

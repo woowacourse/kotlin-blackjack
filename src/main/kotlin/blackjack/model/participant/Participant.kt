@@ -1,4 +1,6 @@
-package blackjack.model
+package blackjack.model.participant
+
+import blackjack.model.card.Card
 
 abstract class Participant(
     val name: String,
