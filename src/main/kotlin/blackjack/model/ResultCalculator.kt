@@ -28,23 +28,13 @@ object ResultCalculator {
         dealer: Dealer,
         player: Player,
     ): ResultType {
-        return when {
-            player.isBust() -> LOSS
-            player.isBlackjack() ->
-                when {
-                    dealer.isBust() || !dealer.isBlackjack() -> WIN
-                    else -> TIE
-                }
+        if (player.isBust()) return LOSS
+        if (dealer.isBust()) return WIN
 
-            dealer.isBust() -> WIN
-            dealer.isBlackjack() -> LOSS
-            else -> {
-                when {
-                    player.score > dealer.score -> WIN
-                    player.score == dealer.score -> TIE
-                    else -> LOSS
-                }
-            }
+        return when {
+            player.score > dealer.score -> WIN
+            player.score == dealer.score -> TIE
+            else -> LOSS
         }
     }
 
