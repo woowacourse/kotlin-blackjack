@@ -56,3 +56,9 @@
 - [x] 테스트 코드 | given when then 반영
 - [x] BlackjackTest | BeforeEach 적용
 - [x] ParticipantsStatus | Bust 삭제
+
+- [ ] Blackjack | 16 & 21 기준 딜러 & 참여자에게 나눠 주기
+- [ ] Hand | Bust 상태 판단 역할 부여 (GameResult에서 Hand로 이동)
+- [ ] Hand | 방어적 복사 개념 적용
+- [ ] OutputView | 초반 카드 보여 주는 로직을 비즈니스 로직으로 처리하기
+- [ ] Introduce | 이름을 필수 요소로 적용
