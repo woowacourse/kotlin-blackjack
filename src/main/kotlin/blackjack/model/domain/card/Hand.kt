@@ -4,7 +4,11 @@ import blackjack.model.domain.GameResult
 import blackjack.model.domain.GameResult.Lose
 import blackjack.model.domain.GameResult.None
 
-class Hand(val cards: MutableList<Card>) {
+class Hand(cards: MutableList<Card>) {
+    private val _cards: MutableList<Card> = cards
+    val cards: List<Card>
+        get() = _cards.deepCopy()
+
     fun getSumNumber(): Int {
         var sum = cards.sumOf { it.cardNumber.number }
         val haveAce: Boolean = CardNumber.Ace in cards.map { it.cardNumber }
@@ -17,7 +21,7 @@ class Hand(val cards: MutableList<Card>) {
     }
 
     fun append(card: Card) {
-        cards.add(card)
+        _cards.add(card)
     }
 
     fun isBust(): GameResult {
@@ -29,3 +33,5 @@ class Hand(val cards: MutableList<Card>) {
         const val BUST_STANDARD: Int = 21
     }
 }
+
+private fun MutableList<Card>.deepCopy(): List<Card> = map { it.copy() }.toList()
