@@ -13,8 +13,8 @@ enum class CardsStatus {
             cardsScore: Int,
             firstTurn: Boolean = false,
         ): CardsStatus {
-            if (firstTurn && cardsScore == 21) return BLACKJACK
-            if (cardsScore > 21) return BUST
+            if (firstTurn && cardsScore == BLACKJACK_SCORE) return BLACKJACK
+            if (cardsScore > BLACKJACK_SCORE) return BUST
             return NONE
         }
     }

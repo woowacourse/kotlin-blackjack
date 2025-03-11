@@ -2,6 +2,8 @@ package blackjack.view
 
 import blackjack.model.Player
 import blackjack.model.PlayerBehavior
+import blackjack.model.PlayerBehavior.HIT
+import blackjack.model.PlayerBehavior.STAY
 import blackjack.model.Players
 
 class InputView {
@@ -14,7 +16,14 @@ class InputView {
     }
 
     fun readPlayerBehavior(): PlayerBehavior {
-        val behavior = readln().trim().uppercase()
-        return PlayerBehavior.from(behavior)
+        val answer = readln().trim().uppercase()
+        return answer.toPlayerBehavior()
     }
+
+    private fun String.toPlayerBehavior(): PlayerBehavior =
+        when (this) {
+            "Y" -> HIT
+            "N" -> STAY
+            else -> throw IllegalArgumentException("응답은 Y/N로만 가능합니다.")
+        }
 }
