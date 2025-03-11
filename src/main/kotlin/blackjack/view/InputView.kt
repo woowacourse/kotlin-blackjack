@@ -7,7 +7,7 @@ class InputView {
         return input.split(DELIMITER).map { it.trim() }
     }
 
-    fun getFlag(): Boolean {
+    fun getHitFlag(): Boolean {
         val input = readlnOrNull() ?: ""
         validateInput(input)
         require(input == YES || input == NO) { INVALID_FLAG_MESSAGE }

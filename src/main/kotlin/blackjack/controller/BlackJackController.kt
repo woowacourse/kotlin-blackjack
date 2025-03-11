@@ -34,6 +34,7 @@ class BlackJackController(
         dealer: Dealer,
         players: List<Player>,
     ) {
+        outputView.printFirstDrawMessage(players)
         repeat(FIRST_TURN_DRAW_AMOUNT) {
             dealer.draw(deck)
             players.forEach { player -> player.draw(deck) }
@@ -51,7 +52,7 @@ class BlackJackController(
     private fun playPlayerTurn(playerTurn: PlayerTurn) {
         playerTurn.play(
             askDraw = { outputView.printAskForDrawCardMessage(it) },
-            getFlag = { inputView.getFlag() },
+            getFlag = { inputView.getHitFlag() },
             printDrawStatus = { outputView.printPlayerDrawStatus(it) },
         )
     }

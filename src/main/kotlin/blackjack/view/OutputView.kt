@@ -13,13 +13,16 @@ class OutputView {
         println(ENTER_PLAYER_NAMES_MESSAGE)
     }
 
+    fun printFirstDrawMessage(players: List<Player>) {
+        println()
+        val nameList = players.joinToString(DELIMITER) { it.name }
+        println(FIRST_DRAW_MESSAGE.format(nameList))
+    }
+
     fun printInitialDrawMessage(
         dealer: Dealer,
         players: List<Player>,
     ) {
-        println()
-        val nameList = players.joinToString(DELIMITER) { it.name }
-        println(FIRST_DRAW_MESSAGE.format(nameList))
         printDrawStatus(DEALER, dealer.cards.first().toUiString() + "\n")
         players.forEach { player ->
             printDrawStatus(player.name, player.cards.toUiString() + "\n")
