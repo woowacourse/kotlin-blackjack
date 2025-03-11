@@ -24,8 +24,8 @@ abstract class Participant {
         var score = cards.sumOf { it.getScore() }
         var aceCount = cards.count { it.rank == Rank.ACE }
 
-        while (score > BUST_THRESHOLD && aceCount > 0) {
-            score -= ACE_SCORE_DIFFERENCE
+        while (score + ACE_SCORE_DIFFERENCE <= BUST_THRESHOLD && aceCount > 0) {
+            score += ACE_SCORE_DIFFERENCE
             aceCount--
         }
 
