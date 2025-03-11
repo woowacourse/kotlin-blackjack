@@ -6,6 +6,9 @@ import blackjack.model.Player
 import blackjack.model.Players
 import blackjack.model.ResultManager
 import blackjack.model.ScoreCalculator
+import blackjack.model.UserCommand.HIT
+import blackjack.model.UserCommand.STAY
+import blackjack.model.UserCommand.UNKNOWN
 import blackjack.model.WinningResult
 import blackjack.view.InputView
 import blackjack.view.OutputView
@@ -69,12 +72,15 @@ class BlackjackController(
         cardDeck: CardDeck,
     ) {
         while (true) {
-            if (!inputView.getIsRecieveMore(player.name)) break
-
-            val canRecieveMore = player.recieveCards(cardDeck::draw)
-            outputView.displayParticipantCards(player.name, player.cards)
-
-            if (!canRecieveMore) return
+            when (inputView.getIsRecieveMore(player.name)) {
+                HIT -> {
+                    val canRecieveMore = player.recieveCards(cardDeck::draw)
+                    outputView.displayParticipantCards(player.name, player.cards)
+                    if (!canRecieveMore) return
+                }
+                STAY -> break
+                UNKNOWN -> throw IllegalArgumentException("[ERROR] 올바르지 않은 입력입니다.")
+            }
         }
     }
 
