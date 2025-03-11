@@ -15,10 +15,7 @@ class ResultManager(
 
         playerScores.forEach { playerScore ->
             val winningResult = WinningResult.from(dealer.score(), playerScore)
-            result[winningResult] = result.getOrDefault(
-                winningResult,
-                INITIAL_SCORE,
-            ) + ADDITIONAL_RESULT_COUNT
+            result[winningResult] = result.getOrDefault(winningResult, INITIAL_SCORE) + ADDITIONAL_RESULT_COUNT
         }
 
         return result.toMap()
