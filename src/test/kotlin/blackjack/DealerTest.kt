@@ -17,6 +17,12 @@ class DealerTest {
     }
 
     @Test
+    fun `딜러는 카드 한 장을 받을 수 있다`() {
+        dealer.addCard(Card(Shape.SPADE, CardNumber.NINE))
+        assertThat(dealer.cards.size).isEqualTo(1)
+    }
+
+    @Test
     fun `딜러가 처음 공개하는 카드는 1장이다`() {
         dealer.addCard(Card(Shape.SPADE, CardNumber.NINE))
         dealer.addCard(Card(Shape.CLOVER, CardNumber.QUEEN))

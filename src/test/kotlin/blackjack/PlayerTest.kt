@@ -22,6 +22,12 @@ class PlayerTest {
     }
 
     @Test
+    fun `플레이어는 카드 한 장을 받을 수 있다`() {
+        player.addCard(Card(Shape.SPADE, CardNumber.NINE))
+        assertThat(player.cards.size).isEqualTo(1)
+    }
+
+    @Test
     fun `플레이어가 처음 공개하는 카드는 2장이다`() {
         player.addCard(Card(Shape.SPADE, CardNumber.NINE))
         player.addCard(Card(Shape.CLOVER, CardNumber.QUEEN))
