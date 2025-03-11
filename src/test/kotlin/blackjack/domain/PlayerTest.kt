@@ -7,6 +7,12 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 class PlayerTest {
+    private fun Player.draw(vararg cards: Card) {
+        cards.forEach { card ->
+            draw(card)
+        }
+    }
+
     @Test
     fun `플레이어는 이름으로 구분된다`() {
         val player = Player(name = "Eden")
@@ -29,14 +35,13 @@ class PlayerTest {
     @Test
     fun `플레이어 카드의 합이 21 이하가 될 수 없는 플레이어는 반드시 패배한다`() {
         val player = Player("Eden")
-        player.draw(Card(FaceRank.JACK, Suit.DIAMOND))
-        println(player.score)
-        assertThat(player.score).isEqualTo(10)
-        player.draw(Card(FaceRank.JACK, Suit.HEART))
-        assertThat(player.score).isEqualTo(20)
-        player.draw(Card(FaceRank.JACK, Suit.SPADE))
-        assertThat(player.score).isEqualTo(-1)
-//        assertThat(player.state).isEqualTo(ParticipantState.LOSE)
+        player.draw(
+            Card(FaceRank.JACK, Suit.DIAMOND),
+            Card(FaceRank.JACK, Suit.DIAMOND),
+            Card(FaceRank.JACK, Suit.DIAMOND),
+        )
+        player.score
+        assertThat(player.state).isEqualTo(ParticipantState.LOSE)
     }
 
     @Test
