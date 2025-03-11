@@ -2,7 +2,6 @@ package blackjack.domain
 
 class Player(
     val name: String,
-    hand: Hand = Hand(),
 ) : Participant() {
     var state: ParticipantState = ParticipantState.PLAYING
         private set
