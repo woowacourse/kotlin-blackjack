@@ -3,6 +3,7 @@ package blackjack.view
 import blackjack.model.Card
 import blackjack.model.CardShape
 import blackjack.model.Dealer
+import blackjack.model.GameResult
 import blackjack.model.Participant
 import blackjack.model.Player
 import blackjack.model.Players
@@ -55,7 +56,7 @@ class OutputView {
     ) {
         val results: MutableList<String> = mutableListOf()
         dealer.results.map { result ->
-            results.add("${result.value}${result.key.koreanTitle}")
+            results.add("${result.value}${result.key.toKoreanName()}")
         }
         val dealerCards: String =
             dealer.cards.value.joinToString { it.toBlackjackView() }
@@ -73,7 +74,7 @@ class OutputView {
         println("\n## 최종 승패")
         println("${dealer.name}: ${results.joinToString(" ")}")
         players.value.forEach { player ->
-            println("${player.name}: ${player.result.koreanTitle}")
+            println("${player.name}: ${player.result.toKoreanName()}")
         }
     }
 
@@ -85,5 +86,12 @@ class OutputView {
             CardShape.SPADE -> "스페이드"
             CardShape.DIAMOND -> "다이아몬드"
             CardShape.CLOVER -> "클로버"
+        }
+
+    private fun GameResult.toKoreanName(): String =
+        when (this) {
+            GameResult.PUSH -> "무"
+            GameResult.WIN -> "승"
+            GameResult.LOSE -> "패"
         }
 }
