@@ -8,7 +8,7 @@ class DealerTurn(
     private val deck: Deck,
 ) {
     fun play(printDealerDraw: () -> Unit) {
-        while (dealer.canDraw()) {
+        while (dealer.canDraw) {
             printDealerDraw()
             dealer.draw(deck)
         }

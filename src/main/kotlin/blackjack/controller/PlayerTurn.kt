@@ -12,7 +12,7 @@ class PlayerTurn(
         getFlag: () -> Boolean,
         printDrawStatus: (Player) -> Unit,
     ) {
-        while (player.canDraw()) {
+        while (player.canDraw) {
             askDraw(player.name)
             processOnceTurn(getFlag, printDrawStatus)
         }

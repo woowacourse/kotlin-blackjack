@@ -20,9 +20,9 @@ class OutputView {
         println()
         val nameList = players.joinToString(DELIMITER) { it.name }
         println(FIRST_DRAW_MESSAGE.format(nameList))
-        printDrawStatus(DEALER, dealer.cards().first().toUiString() + "\n")
+        printDrawStatus(DEALER, dealer.cards.first().toUiString() + "\n")
         players.forEach { player ->
-            printDrawStatus(player.name, player.cards().toUiString() + "\n")
+            printDrawStatus(player.name, player.cards.toUiString() + "\n")
         }
         println()
     }
@@ -32,7 +32,7 @@ class OutputView {
     }
 
     fun printPlayerDrawStatus(player: Player) {
-        printDrawStatus(player.name, player.cards().toUiString())
+        printDrawStatus(player.name, player.cards.toUiString())
         println()
     }
 
@@ -43,11 +43,11 @@ class OutputView {
 
     fun printDealerResult(dealer: Dealer) {
         println()
-        printGameResult(DEALER, dealer.cards(), dealer.score())
+        printGameResult(DEALER, dealer.cards, dealer.score)
     }
 
     fun printPlayerResult(player: Player) {
-        printGameResult(player.name, player.cards(), player.score())
+        printGameResult(player.name, player.cards, player.score)
     }
 
     private fun printGameResult(

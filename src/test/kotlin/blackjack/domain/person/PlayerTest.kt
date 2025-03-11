@@ -27,14 +27,14 @@ class PlayerTest {
 
         player.draw(deck)
 
-        player.cards().size shouldBe 1
+        player.cards.size shouldBe 1
     }
 
     @Test
     fun `Player의 상태가 STAY라면 카드를 뽑을 수 없다`() {
         player.changeToStay()
 
-        player.canDraw() shouldBe false
+        player.canDraw shouldBe false
     }
 
     @Test
@@ -44,6 +44,6 @@ class PlayerTest {
 
         repeat(customCards.size) { player.draw(deck) }
 
-        player.canDraw() shouldBe false
+        player.canDraw shouldBe false
     }
 }
