@@ -2,6 +2,7 @@ package blackjack.controller
 
 import blackjack.domain.model.participant.CardStatus
 import blackjack.domain.model.participant.Dealer
+import blackjack.domain.model.participant.GameParticipant
 import blackjack.domain.model.participant.Player
 import blackjack.domain.model.progress.WinLossStatistics
 import blackjack.view.InputView
@@ -14,14 +15,22 @@ class Casino(
     fun gameStart() {
         val players: List<Player> = inputView.readPlayerNames().map { Player(it) }
         val dealer: Dealer = Dealer()
+        val participants: List<GameParticipant> = listOf(dealer) + players
+        initDistributeCard(participants)
         println()
         outputView.showDistributeCardMessage(players)
         outputParticipantCardsInfo(dealer, players)
 
         runPlayersDrawPhase(players)
         runDealerDrawPhase(dealer)
-        outputView.showCardsResult(listOf(dealer) + players)
+        outputView.showCardsResult(participants)
         outputFinalResult(dealer, players)
+    }
+
+    private fun initDistributeCard(participants: List<GameParticipant>) {
+        participants.forEach { participant ->
+            repeat(2) { participant.drawCard() }
+        }
     }
 
     private fun outputParticipantCardsInfo(
