@@ -7,10 +7,6 @@ class Dealer(
     private var _results: MutableMap<GameResult, Int> = mutableMapOf()
     val results: Map<GameResult, Int> get() = _results.toMap()
 
-    fun appendCard(card: Card) {
-        cards.add(card)
-    }
-
     fun isHit(): Boolean {
         val dealerScore = cards.calculateScore()
         return PlayerBehavior.from(dealerScore) == PlayerBehavior.HIT
