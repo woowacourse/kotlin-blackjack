@@ -75,7 +75,7 @@ class GameController(
         val players = participants.filterPlayers()
         initVerdict(dealer, players)
         outputView.printDealerVerdicts(dealer)
-        players.forEach { player -> outputView.printPlayerVerdict(player) }
+        outputView.printPlayersVerdict(players)
     }
 
     private fun initVerdict(

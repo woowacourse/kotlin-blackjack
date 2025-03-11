@@ -64,8 +64,10 @@ class OutputView {
         println()
     }
 
-    fun printPlayerVerdict(player: Player) {
-        println(player.name + NAME_RESULT_DELIMITER + convertKoreanVerdict(player.getCurrentVerdict()))
+    fun printPlayersVerdict(players: List<Player>) {
+        players.forEach { player ->
+            println(player.name + NAME_RESULT_DELIMITER + convertKoreanVerdict(player.getCurrentVerdict()))
+        }
     }
 
     fun printErrorMessage(message: String) {
