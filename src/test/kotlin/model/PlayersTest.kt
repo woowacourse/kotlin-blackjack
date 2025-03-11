@@ -52,7 +52,7 @@ class PlayersTest {
                 listOf("TEN" to "CLUB", "EIGHT" to "SPADE"),
             )
 
-        assertThat(players.getPlayerCardNames).isEqualTo(expected)
+        assertThat(players.cardNames).isEqualTo(expected)
     }
 
     @Test

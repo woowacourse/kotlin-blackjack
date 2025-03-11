@@ -3,7 +3,7 @@ package model
 import model.GameResultDecider.Companion.BLACKJACK_SCORE
 
 class Player(val name: String, private val playerCards: Cards) : Participant(playerCards) {
-    val getPlayerCardNames: List<Pair<String, String>>
+    val cardNames: List<Pair<String, String>>
         get() = playerCards.names
 
     init {

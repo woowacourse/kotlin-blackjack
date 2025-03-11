@@ -2,8 +2,8 @@ package model
 
 class Players(private val players: List<Player>) : List<Player> by players {
     val names: List<String> = players.map { player -> player.name }
-    val getPlayerCardNames: List<List<Pair<String, String>>>
-        get() = players.map { player -> player.getPlayerCardNames }
+    val cardNames: List<List<Pair<String, String>>>
+        get() = players.map { player -> player.cardNames }
 
     val scores: List<Int>
         get() = players.map { player -> player.currentScore() }

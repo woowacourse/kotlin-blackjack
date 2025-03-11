@@ -23,7 +23,7 @@ class BlackjackController(
         showInitialGameState(
             players.names,
             initialDealerCards,
-            players.getPlayerCardNames
+            players.cardNames
         )
         handlePlayerTurns(players, allCards)
         handleDealerTurn(dealer, allCards)
@@ -43,7 +43,7 @@ class BlackjackController(
     private fun showPlayerResult(
         players: Players,
     ) {
-        val updatedPlayerCardsNames = players.getPlayerCardNames
+        val updatedPlayerCardsNames = players.cardNames
         val playersTotalScore = players.scores
         outputView.printPlayerResult(players.names, updatedPlayerCardsNames, playersTotalScore)
     }
@@ -76,7 +76,7 @@ class BlackjackController(
             while (player.canHit() && inputView.readHitOrStand(player.name)) {
                 val drawnCard = allCards.drawCard()
                 player.turn(drawnCard)
-                outputView.printPlayerCards(player.name, player.getPlayerCardNames)
+                outputView.printPlayerCards(player.name, player.cardNames)
             }
         }
     }
