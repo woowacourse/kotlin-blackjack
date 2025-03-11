@@ -1,6 +1,6 @@
 package blackjack.model
 
-data class Player(
+class Player(
     override val name: String,
     override val cards: Cards = Cards(emptyList()),
 ) : Participant(name, cards) {
