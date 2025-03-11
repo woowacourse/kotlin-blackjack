@@ -11,4 +11,6 @@ abstract class Participant(firstCard: List<Card>) {
 
     fun getScore(): Int = hand.score()
 
+    fun isBusted(): Boolean = hand.isBust()
+
 }

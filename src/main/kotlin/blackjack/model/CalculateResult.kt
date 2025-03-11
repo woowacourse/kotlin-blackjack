@@ -5,21 +5,30 @@ import blackjack.model.WinningResult.PUSH
 import blackjack.model.WinningResult.WIN
 
 object CalculateResult {
-    private fun getResult(oneSelf: Participant, other: Participant): WinningResult {
-        val oneSelfBlackjack = oneSelf.getHandSize() == 2 && oneSelf.getScore() == 21
-        val otherBlackjack = other.getHandSize() == 2 && other.getScore() == 21
-
+    fun getUserResult(dealer: Dealer, player: Player): WinningResult {
+        val dealerBlackjack = dealer.getHandSize() == 2 && dealer.getScore() == 21
+        val playerBlackjack = player.getHandSize() == 2 && player.getScore() == 21
+        val dealerBusted = dealer.isBusted()
+        val playerBusted = player.isBusted()
         return when {
-            oneSelfBlackjack && otherBlackjack -> PUSH
-            oneSelfBlackjack -> WIN
-            otherBlackjack -> LOSE
-            oneSelf.getScore() > other.getScore() -> WIN
-            oneSelf.getScore() < other.getScore() -> LOSE
+            playerBusted -> LOSE
+            dealerBusted -> WIN
+            dealerBlackjack && playerBlackjack -> PUSH
+            dealerBlackjack -> WIN
+            playerBlackjack -> LOSE
+            dealer.getScore() > player.getScore() -> WIN
+            dealer.getScore() < player.getScore() -> LOSE
             else -> PUSH
         }
     }
 
-    fun getUserResult(dealer: Dealer, player: Player): WinningResult = getResult(player, dealer)
+    fun WinningResult.reverse(): WinningResult{
+        return when(this){
+            LOSE -> WIN
+            WIN -> LOSE
+            else -> PUSH
+        }
+    }
 
-    fun getDealerResult(dealer: Dealer, player: Player): WinningResult = getResult(dealer, player)
+    fun getDealerResult(dealer: Dealer, player: Player): WinningResult = getUserResult(dealer, player).reverse()
 }
