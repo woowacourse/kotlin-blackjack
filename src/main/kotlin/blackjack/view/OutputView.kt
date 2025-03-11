@@ -1,25 +1,30 @@
 package blackjack.view
 
+import blackjack.domain.model.card.Card
 import blackjack.domain.model.participant.Dealer
 import blackjack.domain.model.participant.GameParticipant
 import blackjack.domain.model.participant.Player
 import blackjack.domain.model.progress.Rule
 import blackjack.domain.model.progress.WinLoss
+import java.util.Locale
 
-class OutputView {
+class OutputView(
+    private val locale: Locale,
+) {
     fun showDistributeCardMessage(participants: List<GameParticipant>) {
         val joinedNames = participants.joinToString { it.name }
         println(DISTRIBUTE_CARD_MESSAGE.format(joinedNames))
     }
 
-    fun showDealerCardsInfo(dealer: Dealer) {
+    fun showDealerFirstCardsInfo(dealer: Dealer) {
         val name = dealer.name
-        val cardsInfoText = dealer.showFirstCard().getCardText()
-        println(CARD_INFO_MESSAGE.format(name, cardsInfoText))
+        val firstCard = dealer.handCards.getCardByIndex(0)
+
+        println(CARD_INFO_MESSAGE.format(name, makeCardText(firstCard)))
     }
 
     fun showPlayerCardsInfo(player: Player) {
-        println(makeParticipantInfo(player))
+        println(makeParticipantInfoText(player))
     }
 
     fun showDealerDrawMessage() {
@@ -28,15 +33,17 @@ class OutputView {
 
     fun showCardsResult(participants: List<GameParticipant>) {
         participants.forEach {
-            println(makeParticipantInfo(it) + CARD_RESULT_MESSAGE + Rule.calculateResultByCards(it.showCards()))
+            println(makeParticipantInfoText(it) + CARD_RESULT_MESSAGE + Rule.calculateResultByCards(it.showCards()))
         }
     }
 
-    private fun makeParticipantInfo(participant: GameParticipant): String {
+    private fun makeParticipantInfoText(participant: GameParticipant): String {
         val name = participant.name
-        val cardsInfoText = participant.showCards().joinToString { it.getCardText() }
+        val cardsInfoText = participant.handCards.currentCards().joinToString { makeCardText(it) }
         return CARD_INFO_MESSAGE.format(name, cardsInfoText)
     }
+
+    private fun makeCardText(card: Card): String = card.number.initial + SuitTranslator.localize(card.suit, locale)
 
     fun showFinalResult(
         dealerWinLossText: String,

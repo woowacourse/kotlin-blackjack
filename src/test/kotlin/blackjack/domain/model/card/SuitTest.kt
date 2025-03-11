@@ -1,8 +1,10 @@
 package blackjack.domain.model.card
 
+import blackjack.view.SuitTranslator
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
+import java.util.Locale
 
 class SuitTest {
     @ParameterizedTest
@@ -21,7 +23,11 @@ class SuitTest {
         val card = Card(Number.ACE, suit)
 
         // when
-        val actualSuitName = card.getSuitName()
+        val actualSuitName =
+            SuitTranslator.localize(
+                card.suit,
+                Locale.KOREAN,
+            )
 
         // then
         assertThat(actualSuitName).isEqualTo(expectedSuitName)

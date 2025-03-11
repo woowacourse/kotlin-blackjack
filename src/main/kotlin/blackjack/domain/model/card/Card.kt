@@ -13,18 +13,6 @@ data class Card(
         require(cardIndex in CARD_INDEX_RANGE) { ERROR_OUT_OF_CARD_INDEX }
     }
 
-    // TODO("카드 한글 이름 출력을 Output View로 역할 위임 예정")
-    fun getCardText(): String = number.initial + getSuitName()
-
-    // TODO("카드 문양 이름 출력을 Output View로 역할 위임 예정")
-    fun getSuitName(): String =
-        when (suit) {
-            Suit.SPADE -> "스페이드"
-            Suit.HART -> "하트"
-            Suit.DIAMOND -> "다이아몬드"
-            Suit.CLOVER -> "클로버"
-        }
-
     fun getMinimumValue(): Int = number.value.first()
 
     fun getMaximumValue(): Int = number.value.last()

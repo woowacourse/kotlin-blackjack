@@ -29,7 +29,7 @@ class Casino(
         dealer: Dealer,
         players: List<Player>,
     ) {
-        outputView.showDealerCardsInfo(dealer)
+        outputView.showDealerFirstCardsInfo(dealer)
         players.forEach { outputView.showPlayerCardsInfo(it) }
     }
 

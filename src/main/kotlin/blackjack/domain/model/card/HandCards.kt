@@ -7,6 +7,8 @@ class HandCards {
 
     fun currentCards(): List<Card> = cards.toList()
 
+    fun getCardByIndex(index: Int): Card = cards[index]
+
     fun addCard(card: Card) {
         cards += card
     }
