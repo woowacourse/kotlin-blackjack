@@ -42,7 +42,7 @@ class OutputView(
         return CARD_INFO_MESSAGE.format(name, cardsInfoText)
     }
 
-    private fun makeCardText(card: Card): String = card.number.initial + SuitTranslator.localize(card.suit, locale)
+    private fun makeCardText(card: Card): String = card.number.initial + Translator.suitLocalize(card.suit, locale)
 
     fun showFinalResult(
         dealerWinLossText: String,
@@ -51,7 +51,7 @@ class OutputView(
         println("## 최종 승패")
         println("딜러: " + dealerWinLossText)
         playersWinLoss.forEach({ (player, winLoss) ->
-            println(player.name + ": " + winLoss.koreanText)
+            println(player.name + ": " + Translator.winLossLocalize(winLoss, locale))
         })
     }
 

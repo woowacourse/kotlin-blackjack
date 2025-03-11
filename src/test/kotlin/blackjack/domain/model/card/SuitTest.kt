@@ -1,6 +1,6 @@
 package blackjack.domain.model.card
 
-import blackjack.view.SuitTranslator
+import blackjack.view.Translator
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
@@ -24,7 +24,7 @@ class SuitTest {
 
         // when
         val actualSuitName =
-            SuitTranslator.localize(
+            Translator.suitLocalize(
                 card.suit,
                 Locale.KOREAN,
             )
