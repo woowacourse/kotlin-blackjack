@@ -36,4 +36,4 @@
 - [x] 줄바꿈 출력 형식 맞추기
 - [x] 모든 todo 완료 혹은 삭제
 - [x] companion object만 존재하는 class를 object로 변경
-- [ ] DSL 실습 코드 분리
+- [x] DSL 실습 코드 분리
