@@ -3,12 +3,15 @@ package blackjack.domain.participant
 import blackjack.domain.GameResult
 import blackjack.domain.ParticipantCards
 import blackjack.domain.UserChoice
+import blackjack.domain.card.TrumpCard
 import blackjack.domain.deck.Deck
 
 class Player(
     val name: String,
     cards: ParticipantCards,
 ) : Participant(cards) {
+    override fun getInitialCards(): List<TrumpCard> = cards.allCards.take(PLAYER_INITIAL_CARD_COUNT)
+
     fun choice(
         deck: Deck,
         getPlayerChoice: (String) -> UserChoice,
@@ -36,5 +39,9 @@ class Player(
             myScore > otherScore -> GameResult.WIN
             else -> GameResult.LOSE
         }
+    }
+
+    companion object {
+        const val PLAYER_INITIAL_CARD_COUNT = 2
     }
 }

@@ -16,6 +16,4 @@ class ParticipantCards(
     fun hasAce(): Boolean = _cards.any { it.tier == CardTier.ACE }
 
     fun size(): Int = _cards.size
-
-    fun first(): TrumpCard = _cards.first()
 }

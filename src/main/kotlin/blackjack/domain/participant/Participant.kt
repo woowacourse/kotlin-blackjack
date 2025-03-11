@@ -7,6 +7,8 @@ import blackjack.domain.card.TrumpCard
 abstract class Participant(
     val cards: ParticipantCards,
 ) {
+    abstract fun getInitialCards(): List<TrumpCard>
+
     fun receiveCard(card: TrumpCard) {
         cards.add(card)
     }
