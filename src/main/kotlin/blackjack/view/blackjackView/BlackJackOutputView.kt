@@ -1,4 +1,4 @@
-package blackjack.view
+package blackjack.view.blackjackView
 
 import blackjack.domain.BlackJackGame
 import blackjack.domain.Dealer

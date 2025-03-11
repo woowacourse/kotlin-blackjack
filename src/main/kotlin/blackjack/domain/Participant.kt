@@ -1,5 +1,8 @@
 package blackjack.domain
 
+import blackjack.domain.card.Card
+import blackjack.domain.card.Cards
+
 abstract class Participant {
     val totalSum: Int
         get() = cards.calculateTotalSum()

@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.card
 
 data class Cards(private val cards: MutableList<Card> = mutableListOf()) {
     fun add(card: Card) {

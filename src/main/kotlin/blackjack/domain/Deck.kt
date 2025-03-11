@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import blackjack.domain.card.Card
 import java.util.LinkedList
 
 data class Deck(val shuffledDeck: List<Card>) {

@@ -1,7 +1,7 @@
 package blackjack.domain
 
-import blackjack.view.BlackJackInputView
-import blackjack.view.BlackJackOutputView
+import blackjack.view.blackjackView.BlackJackInputView
+import blackjack.view.blackjackView.BlackJackOutputView
 
 class BlackJackGame(
     val players: List<Player>,
@@ -24,7 +24,7 @@ class BlackJackGame(
         }
     }
 
-    fun eachPlayerHitOrNot()  {
+    fun eachPlayerHitOrNot() {
         players.forEach { player ->
             handlePlayerHit(player)
         }

@@ -4,8 +4,10 @@ import blackjack.domain.BlackJackGame
 import blackjack.domain.Dealer
 import blackjack.domain.Participant
 import blackjack.domain.Player
-import blackjack.domain.PlayerResult
-import blackjack.domain.PlayerResults
+import blackjack.domain.gameResult.PlayerResult
+import blackjack.domain.gameResult.PlayerResults
+import blackjack.view.blackjackView.format
+import blackjack.view.blackjackView.toDisplayName
 
 object OutputView {
     fun printFinalCards(game: BlackJackGame) {

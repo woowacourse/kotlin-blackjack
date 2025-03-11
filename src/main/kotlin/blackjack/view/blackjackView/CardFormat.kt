@@ -1,9 +1,9 @@
-package blackjack.view
+package blackjack.view.blackjackView
 
-import blackjack.domain.Card
-import blackjack.domain.Cards
-import blackjack.domain.Rank
-import blackjack.domain.Suit
+import blackjack.domain.card.Card
+import blackjack.domain.card.Cards
+import blackjack.domain.card.Rank
+import blackjack.domain.card.Suit
 import java.lang.StringBuilder
 
 internal fun Cards.format(): String {

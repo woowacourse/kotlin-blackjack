@@ -1,4 +1,4 @@
-package blackjack.view
+package blackjack.view.blackjackView
 
 import java.lang.IllegalArgumentException
 

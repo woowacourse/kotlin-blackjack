@@ -1,4 +1,8 @@
-package blackjack.domain
+package blackjack.domain.gameResult
+
+import blackjack.domain.BlackJackGame
+import blackjack.domain.Dealer
+import blackjack.domain.Player
 
 class PlayerResults(private val dealer: Dealer, players: List<Player>) {
     constructor(game: BlackJackGame) : this(game.dealer, game.players)

@@ -1,6 +1,6 @@
-package blackjack.view
+package blackjack.view.blackjackView
 
-import blackjack.domain.GameResultStatus
+import blackjack.domain.gameResult.GameResultStatus
 
 internal fun GameResultStatus.toDisplayName(): String {
     return when (this) {
