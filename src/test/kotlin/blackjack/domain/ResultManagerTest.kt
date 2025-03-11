@@ -104,4 +104,31 @@ class ResultManagerTest {
         // then
         assertThat(playerResult.values.first()).isEqualTo(LOSE)
     }
+
+    @Test
+    fun `딜러와 플레이어가 모두 버스트된 경우 플레이어는 패배한다`() {
+        // given
+        dealer.addAll(
+            listOf(
+                Card(CardRank.KING, CardSuit.HEART),
+                Card(CardRank.KING, CardSuit.HEART),
+                Card(CardRank.KING, CardSuit.HEART),
+            ),
+        )
+
+        players.value.first().addAll(
+            listOf(
+                Card(CardRank.KING, CardSuit.HEART),
+                Card(CardRank.KING, CardSuit.HEART),
+                Card(CardRank.KING, CardSuit.HEART),
+            ),
+        )
+
+        // when
+        resultManager = ResultManager(dealer, players)
+        val playerResult = resultManager.playerResults()
+
+        // then
+        assertThat(playerResult.values.first()).isEqualTo(LOSE)
+    }
 }

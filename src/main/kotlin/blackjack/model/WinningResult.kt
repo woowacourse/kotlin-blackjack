@@ -8,12 +8,16 @@ enum class WinningResult {
 
     companion object {
         fun from(
-            targetScore: Int,
-            otherScore: Int,
+            playerScore: Int,
+            dealerScore: Int,
+            playerBust: Boolean,
+            dealerBust: Boolean,
         ): WinningResult =
             when {
-                targetScore > otherScore -> WIN
-                targetScore < otherScore -> LOSE
+                playerBust -> LOSE
+                dealerBust -> WIN
+                playerScore > dealerScore -> WIN
+                playerScore < dealerScore -> LOSE
                 else -> PUSH
             }
     }
