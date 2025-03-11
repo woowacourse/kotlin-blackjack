@@ -43,9 +43,9 @@ class DslTest {
                 }
             }
         assertThat(person.name).isEqualTo("박재성")
-        assertThat(person.skills.contains(Skill(Skill.Type.SOFT, "A passion for problem solving"))).isTrue()
-        assertThat(person.skills.contains(Skill(Skill.Type.SOFT, "Good communication skills"))).isTrue()
-        assertThat(person.skills.contains(Skill(Skill.Type.HARD, "Kotlin"))).isTrue()
+        assertThat(person.skills).contains(Skill(Type.SOFT, "A passion for problem solving"))
+        assertThat(person.skills).contains(Skill(Type.SOFT, "Good communication skills"))
+        assertThat(person.skills).contains(Skill(Type.HARD, "Kotlin"))
     }
 
     @Test
@@ -59,7 +59,7 @@ class DslTest {
                 }
             }
         assertThat(person.name).isEqualTo("박재성")
-        assertThat(person.languages["Korean"]).isEqualTo(5)
-        assertThat(person.languages["English"]).isEqualTo(3)
+        assertThat(person.languages).contains(Language("Korean", 5))
+        assertThat(person.languages).contains(Language("English", 3))
     }
 }

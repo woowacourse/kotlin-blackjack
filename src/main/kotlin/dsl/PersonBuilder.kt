@@ -1,13 +1,15 @@
 package dsl
 
 class PersonBuilder {
-    private lateinit var name: String
+    private var name: String? = null
     private var company: String? = null
-    private val skills: MutableList<Skill> = mutableListOf()
-    private val languages: MutableMap<String, Int> = mutableMapOf()
+    private val softSkills = mutableListOf<Skill>()
+    private val hardSkills = mutableListOf<Skill>()
+    private val languages: MutableList<Language> = mutableListOf()
 
     fun build(): Person {
-        return Person(name, company, skills, languages)
+        val name = requireNotNull(name) { "이름을 반드시 초기화 해야합니다." }
+        return Person(name, company, softSkills + hardSkills, languages)
     }
 
     fun name(value: String) {
@@ -18,23 +20,13 @@ class PersonBuilder {
         company = value
     }
 
-    fun skills(block: List<Skill>.() -> Unit) {
-        skills.apply(block)
+    fun skills(block: SkillsBuilder.() -> Unit) {
+        val skills = SkillsBuilder().apply(block)
+        softSkills.addAll(skills.softSkills)
+        hardSkills.addAll(skills.hardSkills)
     }
 
-    fun soft(description: String) {
-        skills.add(Skill(Skill.Type.SOFT, description))
-    }
-
-    fun hard(description: String) {
-        skills.add(Skill(Skill.Type.HARD, description))
-    }
-
-    fun languages(block: Map<String, Int>.() -> Unit) {
-        languages.apply(block)
-    }
-
-    infix fun String.level(other: Int) {
-        languages[this] = other
+    fun languages(block: LanguageBuilder.() -> Unit) {
+        languages.addAll(LanguageBuilder().apply(block).build())
     }
 }
