@@ -1,5 +1,9 @@
 package blackjack.model
 
+import blackjack.model.card.Card
+import blackjack.model.card.CardNumber
+import blackjack.model.card.Shape
+
 class Deck {
     private var _cards: MutableList<Card> = generateCards()
     val cards get() = _cards.toList()
