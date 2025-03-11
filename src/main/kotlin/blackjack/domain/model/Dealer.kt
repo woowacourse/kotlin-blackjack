@@ -19,10 +19,10 @@ class Dealer(name: String = DEFAULT_NAME) : Participant(name) {
 
     fun processHits(
         deck: Deck,
-        output: (Dealer) -> Unit,
+        printStatus: (Dealer) -> Unit,
     ) {
         while (canHit()) {
-            output(this)
+            printStatus(this)
             accept(deck.draw())
         }
     }

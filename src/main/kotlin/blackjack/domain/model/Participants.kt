@@ -1,7 +1,7 @@
 package blackjack.domain.model
 
 class Participants(val dealer: Dealer, val players: List<Player>) {
-    val list: List<Participant> = listOf(dealer) + players
+    val all: List<Participant> = listOf(dealer) + players
 
     init {
         val playerNames: List<String> = players.map { player -> player.name }
@@ -12,7 +12,7 @@ class Participants(val dealer: Dealer, val players: List<Player>) {
     }
 
     fun makeInitialDeals(deck: Deck) {
-        list.forEach { participant ->
+        all.forEach { participant ->
             participant.accept(deck.draw(Participant.INITIAL_DRAW_COUNT))
         }
     }

@@ -28,7 +28,7 @@ class OutputView {
     }
 
     fun printResults(participants: Participants) {
-        participants.list.forEach { participant -> printParticipantResult(participant) }
+        participants.all.forEach { participant -> printParticipantResult(participant) }
         println(MESSAGE_RESULTS_HEADER)
         val playerResults = participants.dealer.getPlayerResults(participants.players)
         val dealerResults = participants.dealer.getDealerResults(playerResults)

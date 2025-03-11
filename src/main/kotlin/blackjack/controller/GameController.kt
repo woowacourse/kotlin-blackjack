@@ -25,7 +25,7 @@ class GameController(
     ) {
         participants.makeInitialDeals(deck)
         outputView.printInitialDeals(participants)
-        participants.list.forEach { participant -> outputView.printParticipantStatus(participant) }
+        participants.all.forEach { participant -> outputView.printParticipantStatus(participant) }
     }
 
     private fun processHits(

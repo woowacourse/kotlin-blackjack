@@ -15,17 +15,17 @@ class Player(name: String) : Participant(name) {
 
     fun processHits(
         deck: Deck,
-        input: (Player) -> Action,
-        output: (Player) -> Unit,
+        readAction: (Player) -> Action,
+        printStatus: (Player) -> Unit,
     ) {
         if (!canHit()) return
-        if (input(this) == Action.STAND) {
-            if (showHand().size == INITIAL_DRAW_COUNT) output(this)
+        if (readAction(this) == Action.STAND) {
+            if (showHand().size == INITIAL_DRAW_COUNT) printStatus(this)
             return
         }
         accept(deck.draw())
-        output(this)
-        processHits(deck, input, output)
+        printStatus(this)
+        processHits(deck, readAction, printStatus)
     }
 
     fun compareAgainst(dealer: Dealer): Result {
