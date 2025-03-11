@@ -21,7 +21,7 @@ class ParticipantTest {
         val card = Card.of(Rank.ACE, Suit.SPADE)
 
         participant.addCard(card)
-        assertThat(participant.cards.getCards()).contains(card)
+        assertThat(participant.cards.toList()).contains(card)
     }
 
     @Test
@@ -82,5 +82,34 @@ class ParticipantTest {
             ),
         )
         assertThat(player.isBust()).isEqualTo(true)
+    }
+
+    @Test
+    fun `A한장과 10, J,Q,K 중 한 장의 카드를 가지고 있지 않으면 블랙잭으로 판단하지 않는다`() {
+        val player = FakeParticipant()
+
+        setPlayerCard(
+            player,
+            listOf(
+                Card.of(Rank.TEN, Suit.SPADE),
+                Card.of(Rank.NINE, Suit.SPADE),
+                Card.of(Rank.KING, Suit.HEART),
+            ),
+        )
+        assertThat(player.isBlackJack()).isFalse()
+    }
+
+    @Test
+    fun `A한장과 10, J,Q,K 중 한 장의 카드를 가지고 있으면 블랙잭으로 판단한다`() {
+        val player = FakeParticipant()
+
+        setPlayerCard(
+            player,
+            listOf(
+                Card.of(Rank.ACE, Suit.SPADE),
+                Card.of(Rank.TEN, Suit.SPADE),
+            ),
+        )
+        assertThat(player.isBlackJack()).isTrue()
     }
 }

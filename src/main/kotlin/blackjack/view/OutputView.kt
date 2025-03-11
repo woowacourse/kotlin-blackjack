@@ -33,7 +33,7 @@ object OutputView {
 
     private const val FINAL_RESULT_NOTICE = "\n##최종 승패"
 
-    private fun printDealerCard(dealer: Dealer): String = "딜러: ${dealer.cards.getCards().first().format()}"
+    private fun printDealerCard(dealer: Dealer): String = "딜러: ${dealer.cards.toList().first().format()}"
 
     private fun printPlayerCard(player: Player): String = "${player.name}카드: ${player.cards.format()}"
 

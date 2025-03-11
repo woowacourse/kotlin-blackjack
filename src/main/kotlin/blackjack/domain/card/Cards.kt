@@ -7,9 +7,9 @@ class Cards {
         cards.add(card)
     }
 
-    fun getCards(): List<Card> = cards.toList()
+    fun toList(): List<Card> = cards.toList()
 
-    fun getScore(): Int {
+    private fun getScore(): Int {
         return cards.sumOf {
             if (it.rank == Rank.ACE) {
                 ACE_SPECIFIC_SCORE
@@ -21,6 +21,11 @@ class Cards {
 
     fun countAce(): Int {
         return cards.count { it.rank == Rank.ACE }
+    }
+
+    fun countScoredTen(): Int {
+        val highRanks = setOf(Rank.TEN, Rank.JACK, Rank.QUEEN, Rank.KING)
+        return cards.count { it.rank in highRanks }
     }
 
     fun size(): Int {

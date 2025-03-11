@@ -8,7 +8,7 @@ import java.lang.StringBuilder
 
 internal fun Cards.format(): String {
     val cardStr = StringBuilder()
-    this.getCards().forEach { card ->
+    this.toList().forEach { card ->
         cardStr.append(card.format())
         cardStr.append(", ")
     }

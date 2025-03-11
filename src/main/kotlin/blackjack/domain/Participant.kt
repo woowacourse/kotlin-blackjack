@@ -19,6 +19,10 @@ abstract class Participant {
         return totalSum > BLACKJACK_BUST_LIMIT
     }
 
+    fun isBlackJack(): Boolean {
+        return cards.countAce() == 1 && cards.countScoredTen() == 1
+    }
+
     fun canHit(): Boolean {
         return totalSum < hitThreshold
     }
