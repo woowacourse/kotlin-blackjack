@@ -19,15 +19,14 @@ class HandTest {
     // given
     @ValueSource(ints = [22, 23, 24, 100])
     @ParameterizedTest
-    fun `임계값 보다 숫자가 크게 되면 Bust상태를 반환한다`(input: Int) {
+    fun `임계값 보다 숫자가 크게 되면 Bust상태이다`(input: Int) {
         // given
         val cards = mutableListOf(kingSpade, nineSpade, sixHeart)
         val hand = Hand(cards)
         // when
         val actual = hand.isBust()
-        val expected = GameResult.Lose
         // then
-        assertThat(actual).isEqualTo(expected)
+        assertThat(actual).isTrue()
     }
 
     @Test

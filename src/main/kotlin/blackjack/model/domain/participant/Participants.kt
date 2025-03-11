@@ -1,24 +1,17 @@
 package blackjack.model.domain.participant
 
-import blackjack.model.domain.GameResult
 import blackjack.model.domain.card.Card
 import blackjack.model.domain.card.Hand
 
 abstract class Participants() {
     abstract val name: String
-    protected abstract val hand: Hand
-    abstract var status: GameResult
-        protected set
+    abstract val hand: Hand
 
     val sumCardNumber: Int get() = hand.getSumNumber()
     val cardDeck get() = hand.cards.toList()
 
     fun receiveCard(card: Card) {
         hand.append(card)
-    }
-
-    fun checkBust() {
-        status = hand.isBust()
     }
 
     abstract fun canHit(): Boolean

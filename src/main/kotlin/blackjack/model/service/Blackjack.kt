@@ -22,7 +22,6 @@ class Blackjack(private val deck: PlayingCard) {
 
     fun hitAction(player: Player) {
         player.receiveCard(deck.spreadCard())
-        player.checkBust()
     }
 
     fun drawUntilThreshold(dealer: Dealer): Int {
@@ -34,13 +33,8 @@ class Blackjack(private val deck: PlayingCard) {
         return count
     }
 
-    fun endGame(playerGroup: PlayerGroup) {
-        if (playerGroup.dealer.status == GameResult.Lose) return
-
+    fun endGame(playerGroup: PlayerGroup): Map<Player, GameResult> {
         val dealerResult = playerGroup.dealer.sumCardNumber
-
-        playerGroup.players.forEach { player ->
-            player.compareScores(dealerResult)
-        }
+        return playerGroup.players.associateWith { it.compareScores(dealerResult) }
     }
 }

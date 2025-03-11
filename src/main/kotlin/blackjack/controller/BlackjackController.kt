@@ -1,7 +1,6 @@
 package blackjack.controller
 
 import blackjack.model.domain.ActionType
-import blackjack.model.domain.GameResult
 import blackjack.model.domain.card.Card
 import blackjack.model.domain.card.CardFactory
 import blackjack.model.domain.card.PlayingCard
@@ -24,8 +23,7 @@ class BlackjackController(
         val playerGroup = getPlayerGroup()
         initGame(playerGroup.players)
         startGame(playerGroup.players)
-        blackjack.endGame(playerGroup)
-        printResult(playerGroup.players)
+        endGame(playerGroup.players)
     }
 
     private fun initGame(players: List<Player>) {
@@ -72,18 +70,14 @@ class BlackjackController(
 
     private fun dealerReceiveCard() {
         val count: Int = blackjack.drawUntilThreshold(dealer)
-        dealer.checkBust()
         outputView.printDealerReceiveCard(count, dealer)
     }
 
-    private fun printResult(players: List<Player>) {
+    private fun endGame(players: List<Player>) {
         outputView.participantsCardResult(listOf(dealer) + players)
-        outputView.dealerResult(dealer, getDealerResult(players))
-        outputView.playerResult(players)
-    }
-
-    private fun getDealerResult(players: List<Player>): Map<GameResult, Int> {
-        return players.groupingBy { it.status }.eachCount()
+        val gameResult = blackjack.endGame(PlayerGroup(players, dealer))
+        outputView.dealerResult(dealer, gameResult)
+        outputView.playerResult(gameResult)
     }
 
     private fun <T> retryInput(inputFunction: () -> T): T {

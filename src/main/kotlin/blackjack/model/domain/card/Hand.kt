@@ -1,9 +1,5 @@
 package blackjack.model.domain.card
 
-import blackjack.model.domain.GameResult
-import blackjack.model.domain.GameResult.Lose
-import blackjack.model.domain.GameResult.None
-
 class Hand(cards: MutableList<Card>) {
     private val _cards: MutableList<Card> = cards
     val cards: List<Card>
@@ -24,9 +20,8 @@ class Hand(cards: MutableList<Card>) {
         _cards.add(card)
     }
 
-    fun isBust(): GameResult {
-        if (getSumNumber() > BUST_STANDARD) return Lose
-        return None
+    fun isBust(): Boolean {
+        return getSumNumber() > BUST_STANDARD
     }
 
     companion object {

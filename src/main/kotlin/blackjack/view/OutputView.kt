@@ -59,22 +59,22 @@ class OutputView {
         }
     }
 
-    fun playerResult(players: List<Player>) {
-        players.forEach { player ->
-            println(PLAYER_STATUS.format(player.name, player.status.determineStatus()))
+    fun playerResult(statusCount: Map<Player, GameResult>) {
+        statusCount.forEach { result ->
+            println(PLAYER_STATUS.format(result.key.name, result.value.determineStatus()))
         }
         println()
     }
 
     fun dealerResult(
         dealer: Dealer,
-        statusCount: Map<GameResult, Int>,
+        statusCount: Map<Player, GameResult>,
     ) {
         println(FINAL_RESULT)
 
-        val winningCount = statusCount[GameResult.Lose] ?: 0
-        val losingCount = (statusCount[GameResult.Win] ?: 0) + (statusCount[GameResult.None] ?: 0)
-        val drawCount = statusCount[GameResult.Draw] ?: 0
+        val winningCount = statusCount.count { it.value == GameResult.Lose }
+        val losingCount = statusCount.count { it.value == GameResult.Win }
+        val drawCount = statusCount.count { it.value == GameResult.Draw }
 
         val resultFormat: String = OUTPUT_DEALER_RESULT.format(dealer.name, winningCount, losingCount)
 
