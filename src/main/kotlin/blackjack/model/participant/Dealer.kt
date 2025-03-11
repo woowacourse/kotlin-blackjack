@@ -6,11 +6,11 @@ import blackjack.model.card.Card
 class Dealer(
     name: String = DEALER_NAME,
 ) : Participant(name) {
-    fun isMoreCard() = adjustScore < DEALER_MORE_CARD_MINIMUM
+    fun isMoreCard() = score < DEALER_MORE_CARD_MINIMUM
 
     override fun getInitialCard(): List<Card> = listOf(cards.first())
 
-    override fun isBust(): Boolean = adjustScore > BLACKJACK_NUMBER
+    override fun isBust(): Boolean = score > BLACKJACK_NUMBER
 
     companion object {
         private const val DEALER_NAME = "딜러"
