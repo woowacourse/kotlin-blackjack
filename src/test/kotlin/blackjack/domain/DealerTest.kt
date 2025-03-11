@@ -20,7 +20,10 @@ class DealerTest {
     @Test
     fun `딜러가 카드를 다 뽑고나면 점수는 16점을 초과하거나 버스트이다`() {
         // given & when
-        dealer.drawIfNeeded(cardDeck)
+        while (true) {
+            val canRecieveMore = dealer.recieveCards(cardDeck::draw)
+            if (!canRecieveMore) break
+        }
 
         // then
         assertThat(dealer.score() > 16 || dealer.isBust()).isTrue()
@@ -30,12 +33,15 @@ class DealerTest {
     fun `딜러 점수가 16 이전까지 뽑은 카드의 장수를 반환한다`() {
         // given
         val initialDrawCount = 2
-        dealer.recieveCards(cardDeck)
+        dealer.recieveCards(cardDeck::draw)
 
         // when
-        val dealerDrawCount = dealer.drawIfNeeded(cardDeck)
+        while (true) {
+            val canRecieveMore = dealer.recieveCards(cardDeck::draw)
+            if (!canRecieveMore) break
+        }
 
         // then
-        assertThat(dealerDrawCount).isEqualTo(dealer.cards.size - initialDrawCount)
+        assertThat(dealer.additionalDrawCount()).isEqualTo(dealer.cards.size - initialDrawCount)
     }
 }
