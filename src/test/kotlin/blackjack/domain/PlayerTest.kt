@@ -41,8 +41,13 @@ class PlayerTest {
 
     @Test
     fun `플레이어의 최종 결과를 알 수 있다`() {
-        val player = Player("Gio")
-        player.state = ParticipantState.LOSE
+        val player =
+            Player("Gio").apply {
+                draw(Card(NumberRank.TEN, Suit.DIAMOND))
+                draw(Card(NumberRank.TEN, Suit.DIAMOND))
+                draw(Card(NumberRank.TEN, Suit.DIAMOND))
+            }
+        player.score
         assertThat(player.state).isEqualTo(ParticipantState.LOSE)
     }
 }
