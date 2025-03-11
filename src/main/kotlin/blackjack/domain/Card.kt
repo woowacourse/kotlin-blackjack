@@ -3,7 +3,6 @@ package blackjack.domain
 import java.lang.IllegalArgumentException
 
 class Card private constructor(val rank: Rank, val suit: Suit) {
-
     fun getScore() = this.rank.score
 
     companion object {

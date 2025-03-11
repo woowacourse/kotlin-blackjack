@@ -12,7 +12,7 @@ class HandTest {
     private lateinit var hand: Hand
 
     @BeforeEach
-    fun setUp(){
+    fun setUp() {
         hand = Hand()
     }
 

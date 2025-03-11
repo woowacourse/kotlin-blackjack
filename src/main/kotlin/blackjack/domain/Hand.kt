@@ -3,13 +3,13 @@ package blackjack.domain
 class Hand {
     private val cards: MutableList<Card> = mutableListOf()
 
-    fun getCards() : List<Card> = cards.toList()
+    fun getCards(): List<Card> = cards.toList()
 
     fun addCard(card: Card) {
         cards.add(card)
     }
 
-    fun getCardSum() : Int {
+    fun getCardSum(): Int {
         return calculateSum()
     }
 
@@ -28,6 +28,7 @@ class Hand {
 
         return sum
     }
+
     companion object {
         const val BUST_THRESHOLD = 21
         private const val ACE_HIGH = 11
