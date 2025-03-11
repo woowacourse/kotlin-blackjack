@@ -6,13 +6,13 @@ class Cards(
     private val _value: MutableList<Card> = value.toMutableList()
     val value: List<Card> get() = _value.map { card -> card.copy() }
 
+    var status: CardsStatus = CardsStatus.from(cardsScore = calculateScore(), firstTurn = true)
+        private set
+
     fun add(card: Card) {
         _value.add(card)
+        status = CardsStatus.from(cardsScore = calculateScore(), firstTurn = false)
     }
-
-    fun isBlackjack(firstTurn: Boolean): Boolean = CardsStatus.from(calculateScore(), firstTurn) == CardsStatus.BLACKJACK
-
-    fun isBust(): Boolean = CardsStatus.from(calculateScore()) == CardsStatus.BUST
 
     fun calculateScore(): Int {
         val aceCount: Int = value.count { card -> card.isDenominationAce(card) }

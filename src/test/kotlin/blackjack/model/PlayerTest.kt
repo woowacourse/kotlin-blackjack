@@ -66,7 +66,7 @@ class PlayerTest {
             )
         val player = Player("모찌", cards)
 
-        val actual = player.isBlackjack(true)
+        val actual = player.isBlackjack()
 
         assertThat(actual).isEqualTo(true)
     }
@@ -82,7 +82,7 @@ class PlayerTest {
             )
         val player = Player("모찌", cards)
 
-        val actual = player.isBlackjack(true)
+        val actual = player.isBlackjack()
 
         assertThat(actual).isEqualTo(false)
     }

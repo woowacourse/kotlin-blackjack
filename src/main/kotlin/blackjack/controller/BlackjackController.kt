@@ -53,7 +53,7 @@ class BlackjackController(
         players: Players,
         dealer: Dealer,
     ) {
-        if (dealer.isBlackjack(true)) {
+        if (dealer.isBlackjack()) {
             val blackjackPlayers: List<Player> = players.findBlackjackPlayer()
             updateGameResult(players, dealer)
             outputView.printDealerBlackjackMessage(dealer, blackjackPlayers)
@@ -81,7 +81,7 @@ class BlackjackController(
         player: Player,
         dealer: Dealer,
     ): Boolean {
-        if (player.isBlackjack(true)) {
+        if (player.isBlackjack()) {
             player.updateResult(GameResult.PUSH)
             dealer.updateResult(player.cards.calculateScore())
             return true
@@ -104,7 +104,7 @@ class BlackjackController(
         player: Player,
         dealer: Dealer,
     ): Boolean {
-        if (player.isBlackjack(true)) {
+        if (player.isBlackjack()) {
             val dealerResult: GameResult = dealer.updateResult(CardsStatus.BLACKJACK_SCORE)
             player.updateResult(dealerResult)
             return true

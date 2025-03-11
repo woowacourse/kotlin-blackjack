@@ -142,7 +142,7 @@ class CardsTest {
     }
 
     @Test
-    fun `처음 턴이고, 카드들의 상태가 블랙잭이면 true 값을 반환한다`() {
+    fun `처음 턴이고, 카드들의 점수가 21이면 블랙잭 상태를 가진다`() {
         val cards =
             Cards(
                 listOf(
@@ -150,59 +150,59 @@ class CardsTest {
                     Card(CardShape.CLOVER, Denomination.TEN),
                 ),
             )
-        val actual = cards.isBlackjack(true)
+        val actual = cards.status
 
-        val expected = true
+        val expected = CardsStatus.BLACKJACK
 
         assertThat(actual).isEqualTo(expected)
     }
 
     @Test
-    fun `처음 턴이고, 카드들의 상태가 블랙잭이 아니면 false 값을 반환한다`() {
+    fun `처음 턴이고, 카드들의 점수가 21이 아니면 NONE 상태를 가진다`() {
         val cards =
             Cards(
                 listOf(
-                    Card(CardShape.HEART, Denomination.ACE),
+                    Card(CardShape.HEART, Denomination.TEN),
                     Card(CardShape.CLOVER, Denomination.TEN),
                 ),
             )
-        val actual = cards.isBlackjack(true)
+        val actual = cards.status
 
-        val expected = true
+        val expected = CardsStatus.NONE
 
         assertThat(actual).isEqualTo(expected)
     }
 
     @Test
-    fun `카드들의 상태가 버스트이면 true 값을 반환한다`() {
+    fun `카드가 추가된 후, 카드들의 점수가 21 초과일 경우 BUST 상태를 가진다`() {
         val cards =
             Cards(
                 listOf(
-                    Card(CardShape.HEART, Denomination.ACE),
+                    Card(CardShape.HEART, Denomination.NINE),
                     Card(CardShape.CLOVER, Denomination.TEN),
-                    Card(CardShape.DIAMOND, Denomination.TEN),
-                    Card(CardShape.CLOVER, Denomination.TWO),
                 ),
             )
-        val actual = cards.isBust()
+        cards.add(Card(CardShape.DIAMOND, Denomination.TEN))
+        val actual = cards.status
 
-        val expected = true
+        val expected = CardsStatus.BUST
 
         assertThat(actual).isEqualTo(expected)
     }
 
     @Test
-    fun `카드들의 상태가 버스트가 아니면, false 값을 반환한다`() {
+    fun `카드가 추가된 후, 카드들의 점수가 21이 초과되지 않으면 NONE 상태를 가진다`() {
         val cards =
             Cards(
                 listOf(
-                    Card(CardShape.HEART, Denomination.ACE),
+                    Card(CardShape.HEART, Denomination.TEN),
                     Card(CardShape.CLOVER, Denomination.TEN),
                 ),
             )
-        val actual = cards.isBust()
+        cards.add(Card(CardShape.SPADE, Denomination.ACE))
+        val actual = cards.status
 
-        val expected = false
+        val expected = CardsStatus.NONE
 
         assertThat(actual).isEqualTo(expected)
     }

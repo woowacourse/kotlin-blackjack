@@ -4,7 +4,7 @@ abstract class Participant(
     open val name: String,
     open val cards: Cards = Cards(emptyList()),
 ) {
-    fun isBlackjack(firstTurn: Boolean): Boolean = cards.isBlackjack(firstTurn)
+    fun isBlackjack(): Boolean = cards.status == CardsStatus.BLACKJACK
 
-    fun isBust(): Boolean = cards.isBust()
+    fun isBust(): Boolean = cards.status == CardsStatus.BUST
 }
