@@ -1,5 +1,3 @@
 package blackjack.domain.card
 
-interface CardFactory {
-    fun makeCard(): List<TrumpCard>
-}
+fun interface CardFactory : () -> List<TrumpCard>
