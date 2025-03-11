@@ -3,14 +3,17 @@ package blackjack.domain
 class Dealer(
     private val players: List<Player>,
     shuffler: Shuffler,
-) : Participant() {
+) {
+    private val onBusted: () -> Unit = { playingPlayers.forEach(Player::win) }
+    private val hand: Hand = Hand(onBusted)
     private val deck: Deck = Deck(shuffler)
-    override val onBusted: () -> Unit = { playingPlayers.forEach(Player::win) }
+    val cards: List<Card> = hand.cards
+    val score: Int = hand.score
 
     val dealerResults: List<PlayerState> = players.toDealerResult()
 
-    fun draw() {
-        draw(deck.draw())
+    fun draw(card: Card = deck.draw()) {
+        hand.draw(card)
     }
 
     fun pitch() {

@@ -2,12 +2,17 @@ package blackjack.domain
 
 class Player(
     val name: String,
-) : Participant() {
+) {
+    private val onBusted: () -> Unit = { state = PlayerState.LOSE }
+    private val hand: Hand = Hand(onBusted)
+
     var state: PlayerState = PlayerState.PLAYING
         private set
+    val cards: List<Card> = hand.cards
+    val score: Int = hand.score
 
-    override val onBusted: () -> Unit = {
-        state = PlayerState.LOSE
+    fun draw(card: Card) {
+        hand.draw(card)
     }
 
     fun setResult(dealerScore: Int) {

@@ -11,7 +11,7 @@ class BlackjackTest {
         shuffler: Shuffler,
     ) = Dealer(listOf(player), shuffler)
 
-    private fun Participant.draw(vararg cards: Card) {
+    private fun Dealer.draw(vararg cards: Card) {
         cards.forEach { card ->
             draw(card)
         }
@@ -56,10 +56,7 @@ class BlackjackTest {
                 draw(Card(NumberRank.NINE, Suit.SPADE))
             }
         val players = listOf(winner, loser)
-        val dealer =
-            Dealer(players, { it }).apply {
-                draw(Card(NumberRank.NINE, Suit.SPADE), Card(NumberRank.TEN, Suit.SPADE))
-            }
+        val dealer = Dealer(players, { it })
         val blackjack = Blackjack(dealer)
         blackjack.setResult()
         assertThat(dealer.dealerResults).isEqualTo(listOf(PlayerState.LOSE, PlayerState.WIN))
