@@ -2,6 +2,7 @@ package blackjack.controller
 
 import blackjack.model.CardDeck
 import blackjack.model.Dealer
+import blackjack.model.Hand
 import blackjack.model.Player
 import blackjack.model.Players
 import blackjack.model.ResultManager
@@ -35,7 +36,7 @@ class BlackjackController(
         cardDeck: CardDeck,
         scoreCalculator: ScoreCalculator,
     ): Dealer {
-        val dealer = Dealer(TEMP_DEALER_NAME, scoreCalculator)
+        val dealer = Dealer(TEMP_DEALER_NAME, Hand(scoreCalculator))
         dealer.recieveCards(cardDeck::draw)
         return dealer
     }

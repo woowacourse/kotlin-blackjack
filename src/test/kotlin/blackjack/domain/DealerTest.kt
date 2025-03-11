@@ -2,6 +2,7 @@ package blackjack.domain
 
 import blackjack.model.CardDeck
 import blackjack.model.Dealer
+import blackjack.model.Hand
 import blackjack.model.ScoreCalculator
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
@@ -14,7 +15,7 @@ class DealerTest {
     @BeforeEach
     fun setup() {
         cardDeck = CardDeck()
-        dealer = Dealer(scoreCalculator = ScoreCalculator())
+        dealer = Dealer(hand = Hand(ScoreCalculator()))
     }
 
     @Test

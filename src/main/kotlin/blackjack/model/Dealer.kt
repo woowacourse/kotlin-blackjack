@@ -2,8 +2,8 @@ package blackjack.model
 
 class Dealer(
     name: String = "",
-    scoreCalculator: ScoreCalculator,
-) : Participant(name, scoreCalculator) {
+    hand: Hand,
+) : Participant(name, hand) {
     override fun showInitialCards(): List<Card> = cards.take(FIRST_SHOWN_COUNT)
 
     override fun isDrawable(): Boolean = score() <= DRAW_CRITERIA && !isBust()

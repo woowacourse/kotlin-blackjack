@@ -19,6 +19,6 @@ class Players private constructor(
         fun from(
             players: List<String>,
             scoreCalculator: ScoreCalculator,
-        ): Players = Players(players.map { name -> Player(name, scoreCalculator) })
+        ): Players = Players(players.map { name -> Player(name, Hand(scoreCalculator)) })
     }
 }

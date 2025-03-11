@@ -2,10 +2,9 @@ package blackjack.model
 
 abstract class Participant(
     val name: String,
-    private val scoreCalculator: ScoreCalculator,
+    private val hand: Hand,
 ) {
-    private val _cards: MutableList<Card> = mutableListOf()
-    val cards: List<Card> get() = _cards.toList()
+    val cards: List<Card> get() = hand.cards
 
     abstract fun showInitialCards(): List<Card>
 
@@ -16,13 +15,13 @@ abstract class Participant(
         addAll(getCards(count))
     }
 
-    fun score(): Int = scoreCalculator.score(cards)
+    fun score(): Int = hand.score()
 
     fun addAll(cards: List<Card>) {
-        _cards.addAll(cards)
+        hand.addAll(cards)
     }
 
-    fun isBust(): Boolean = scoreCalculator.isBust(cards)
+    fun isBust(): Boolean = hand.isBust()
 
     companion object {
         const val INITIAL_DRAW_COUNT = 2

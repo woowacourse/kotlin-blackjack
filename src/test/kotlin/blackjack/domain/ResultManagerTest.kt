@@ -4,6 +4,7 @@ import blackjack.model.Card
 import blackjack.model.CardRank
 import blackjack.model.CardSuit
 import blackjack.model.Dealer
+import blackjack.model.Hand
 import blackjack.model.Players
 import blackjack.model.ResultManager
 import blackjack.model.ScoreCalculator
@@ -23,7 +24,7 @@ class ResultManagerTest {
     @BeforeEach
     fun setup() {
         scoreCalculator = ScoreCalculator()
-        dealer = Dealer(scoreCalculator = scoreCalculator)
+        dealer = Dealer(hand = Hand(scoreCalculator))
 
         val playerNames = listOf("공백")
         players = Players.from(playerNames, scoreCalculator)
