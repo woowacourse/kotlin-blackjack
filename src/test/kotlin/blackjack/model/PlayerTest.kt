@@ -9,6 +9,8 @@ import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.ValueSource
 
 class PlayerTest {
+    private val cardDeck: CardDeck = CardDeck(listOf(Card(CardShape.CLOVER, Denomination.SIX)))
+
     @Test
     fun `플레이어가 딜러라는 이름을 가질 경우 예외를 발생시킨다`() {
         assertThrows<IllegalArgumentException> { Player("딜러", Cards(emptyList())) }
@@ -37,8 +39,7 @@ class PlayerTest {
                 listOf((Card(CardShape.HEART, Denomination.FIVE)), Card(CardShape.CLOVER, Denomination.TWO)),
             )
         val player = Player("모찌", initialCards)
-        val card = Card(CardShape.CLOVER, Denomination.SIX)
-        player.pickCard(card)
+        player.pickCard(cardDeck)
 
         assertThat(player.cards.value).isEqualTo(
             listOf(
