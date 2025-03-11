@@ -56,11 +56,10 @@ class OutputView {
         println("딜러: ${dealerWins}승 ${dealerLosses}패")
 
         playerResults.forEach { playResult ->
-            println("${playResult.name}: ${playResult.result}")
+            println("${playResult.name}: ${playResult.result.name.mapToVictoryStatus()}")
         }
     }
 
     private fun printCardNames(rawCardNames: List<Pair<String, String>>) =
         rawCardNames.map { (rank, shape) -> rank.mapToTitle() + shape.mapToTitle() }
-
 }
