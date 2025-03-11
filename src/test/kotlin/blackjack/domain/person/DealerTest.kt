@@ -22,7 +22,7 @@ class DealerTest {
 
         dealer.draw(deck)
 
-        dealer.cards().size shouldBe 1
+        dealer.cards.size shouldBe 1
     }
 
     @Test
@@ -32,7 +32,7 @@ class DealerTest {
 
         repeat(customCards.size) { dealer.draw(deck) }
 
-        dealer.canDraw() shouldBe true
+        dealer.canDraw shouldBe true
     }
 
     @Test
@@ -42,7 +42,7 @@ class DealerTest {
 
         repeat(customCards.size) { dealer.draw(deck) }
 
-        dealer.canDraw() shouldBe false
+        dealer.canDraw shouldBe false
     }
 
     @Test
@@ -52,6 +52,6 @@ class DealerTest {
 
         repeat(customCards.size) { dealer.draw(deck) }
 
-        dealer.canDraw() shouldBe false
+        dealer.canDraw shouldBe false
     }
 }
