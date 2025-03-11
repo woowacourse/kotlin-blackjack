@@ -33,7 +33,7 @@
 - [ ] 오타 및 잘못된 명명 수정
 - [ ] 누락된 접근 제어자 수정
 - [ ] 누락된 유효성 검사 추가
-- [ ] 줄바꿈 출력 형식 맞추기
+- [x] 줄바꿈 출력 형식 맞추기
 - [x] 모든 todo 완료 혹은 삭제
-- [ ] companion object만 존재하는 class를 object로 변경
+- [x] companion object만 존재하는 class를 object로 변경
 - [ ] DSL 실습 코드 분리
