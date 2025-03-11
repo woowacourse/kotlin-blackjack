@@ -1,6 +1,6 @@
 package blackjack.model.participant
 
-import blackjack.model.ResultCalculator.BUST_NUMBER
+import blackjack.model.ResultCalculator.BLACKJACK_NUMBER
 import blackjack.model.ResultCalculator.adjustScore
 import blackjack.model.card.Card
 
@@ -9,5 +9,5 @@ class Player(
 ) : Participant(name) {
     override fun getInitialCard(): List<Card> = cards
 
-    override fun isBust() = adjustScore(cards) > BUST_NUMBER
+    override fun isBust() = adjustScore(cards) > BLACKJACK_NUMBER
 }

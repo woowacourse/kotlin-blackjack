@@ -9,14 +9,14 @@ import blackjack.model.participant.Dealer
 import blackjack.model.participant.Player
 
 object ResultCalculator {
-    const val BUST_NUMBER = 21
+    const val BLACKJACK_NUMBER = 21
     private const val ADJUST_ACE_NUMBER = 10
 
     fun adjustScore(cards: List<Card>): Int {
         var sumScore = calculateTotalScore(cards)
         var countAce = countAce(cards)
         while (countAce-- > 0) {
-            if (sumScore + ADJUST_ACE_NUMBER >= BUST_NUMBER) {
+            if (sumScore + ADJUST_ACE_NUMBER > BLACKJACK_NUMBER) {
                 break
             }
             sumScore += ADJUST_ACE_NUMBER
