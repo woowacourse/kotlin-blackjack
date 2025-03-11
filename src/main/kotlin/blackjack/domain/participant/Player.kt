@@ -1,5 +1,6 @@
 package blackjack.domain.participant
 
+import blackjack.domain.BlackJackGame.Companion.BUST_STANDARD
 import blackjack.domain.GameResult
 import blackjack.domain.ParticipantCards
 import blackjack.domain.UserChoice
@@ -12,12 +13,14 @@ class Player(
 ) : Participant(cards) {
     override fun getInitialCards(): List<TrumpCard> = cards.allCards.take(PLAYER_INITIAL_CARD_COUNT)
 
+    override fun isDrawable(): Boolean = cards.sumOfCards < BUST_STANDARD
+
     fun choice(
         deck: Deck,
         getPlayerChoice: (String) -> UserChoice,
         onPlayerStateUpdated: (Player) -> Unit,
     ) {
-        while (!isBust()) {
+        while (isDrawable()) {
             val choice = getPlayerChoice(name)
             when (choice) {
                 UserChoice.HIT -> {

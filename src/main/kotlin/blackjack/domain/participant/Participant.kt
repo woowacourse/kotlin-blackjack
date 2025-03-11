@@ -16,6 +16,8 @@ abstract class Participant(
 
     fun getAllCards(): List<TrumpCard> = cards.allCards
 
+    abstract fun isDrawable(): Boolean
+
     fun isBust(extraScore: Int = ACE_HARD_SCORE): Boolean = cards.sumOfCards + extraScore > BUST_STANDARD
 
     fun finalScore(): Int =

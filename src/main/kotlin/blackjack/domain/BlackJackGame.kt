@@ -25,7 +25,7 @@ class BlackJackGame(
 
     fun processDealerTurn(): Int {
         var count = 0
-        while (!participants.dealer.isOverMaxScore()) {
+        while (!participants.dealer.isDrawable()) {
             participants.dealer.receiveCard(deck.pop())
             count++
         }

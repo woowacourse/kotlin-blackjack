@@ -9,11 +9,11 @@ class Dealer(
 ) : Participant(cards) {
     override fun getInitialCards(): List<TrumpCard> = cards.allCards.take(DEALER_INITIAL_CARD_COUNT)
 
-    fun isOverMaxScore(): Boolean {
+    override fun isDrawable(): Boolean {
         if (cards.hasAce() && !isBust(ACE_SOFT_SCORE)) {
-            return cards.sumOfCards + ACE_SOFT_SCORE > DEALER_MAX_SCORE
+            return cards.sumOfCards + ACE_SOFT_SCORE < DEALER_MAX_SCORE
         }
-        return cards.sumOfCards > DEALER_MAX_SCORE
+        return cards.sumOfCards < DEALER_MAX_SCORE
     }
 
     override fun getResult(other: Participant): GameResult {
