@@ -13,8 +13,8 @@ class OutputView {
         println(MESSAGE_OUTPUT_PLAYER_NAME_AND_CARDS.format(players.joinToString { it.name }))
     }
 
-    fun printDealerCards(dealerCard: TrumpCard) {
-        println(format(MESSAGE_OUTPUT_DEALER_CARD, cardMessageFormat(dealerCard)))
+    fun printDealerCards(dealerCard: List<TrumpCard>) {
+        println(format(MESSAGE_OUTPUT_DEALER_CARD, makeCardListMessage(dealerCard)))
     }
 
     fun printOneCardMessage(player: Player) {
