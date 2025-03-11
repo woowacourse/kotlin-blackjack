@@ -3,7 +3,6 @@ package blackjack.domain.participant
 import blackjack.domain.BlackJackGame.Companion.BUST_STANDARD
 import blackjack.domain.GameResult
 import blackjack.domain.ParticipantCards
-import blackjack.domain.UserChoice
 import blackjack.domain.card.TrumpCard
 import blackjack.domain.deck.Deck
 
@@ -17,17 +16,15 @@ class Player(
 
     fun choice(
         deck: Deck,
-        getPlayerChoice: (String) -> UserChoice,
+        getPlayerChoice: (String) -> Boolean,
         onPlayerStateUpdated: (Player) -> Unit,
     ) {
         while (isDrawable()) {
-            val choice = getPlayerChoice(name)
-            when (choice) {
-                UserChoice.HIT -> {
-                    receiveCard(deck.pop())
-                    onPlayerStateUpdated(this)
-                }
-                UserChoice.STAY -> return
+            if (getPlayerChoice(name)) {
+                receiveCard(deck.pop())
+                onPlayerStateUpdated(this)
+            } else {
+                return
             }
         }
     }

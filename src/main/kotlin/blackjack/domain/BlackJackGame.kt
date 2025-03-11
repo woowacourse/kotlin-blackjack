@@ -17,7 +17,7 @@ class BlackJackGame(
     }
 
     fun playGame(
-        getPlayerChoice: (String) -> UserChoice,
+        getPlayerChoice: (String) -> Boolean,
         onPlayerStateUpdated: (Player) -> Unit,
     ) {
         participants.getChoice(deck, getPlayerChoice, onPlayerStateUpdated)

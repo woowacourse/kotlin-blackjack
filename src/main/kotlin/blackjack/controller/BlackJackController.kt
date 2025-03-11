@@ -2,12 +2,10 @@ package blackjack.controller
 
 import blackjack.domain.BlackJackGame
 import blackjack.domain.ParticipantCards
-import blackjack.domain.UserChoice
 import blackjack.domain.deck.ShuffledDeck
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Participants
 import blackjack.domain.participant.Player
-import blackjack.util.retryWhenException
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -42,15 +40,7 @@ class BlackJackController(
 
     private fun readForGame(participants: Participants): BlackJackGame = BlackJackGame(participants, ShuffledDeck())
 
-    private fun getUserChoice(name: String): UserChoice =
-        retryWhenException(
-            action = {
-                inputView.readHitOrStay(name)
-            },
-            onError = { message ->
-                outputView.printErrorMessage(message)
-            },
-        )
+    private fun getUserChoice(name: String): Boolean = inputView.readHitOrStay(name)
 
     private fun startGame(
         game: BlackJackGame,

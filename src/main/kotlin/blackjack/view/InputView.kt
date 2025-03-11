@@ -1,7 +1,5 @@
 package blackjack.view
 
-import blackjack.domain.UserChoice
-
 class InputView {
     fun readPlayerNames(): List<String> {
         while (true) {
@@ -22,7 +20,7 @@ class InputView {
         }
     }
 
-    fun readHitOrStay(name: String): UserChoice {
+    fun readHitOrStay(name: String): Boolean {
         while (true) {
             println(MESSAGE_ASK_PLAYER_HIT_OR_STAY.format(name))
             val input = readln().trim()
@@ -31,7 +29,15 @@ class InputView {
                 println(MESSAGE_EMPTY_INPUT)
                 continue
             }
-            return UserChoice.from(input)
+
+            return when (input) {
+                "y" -> true
+                "n" -> false
+                else -> {
+                    println(MESSAGE_WRONG_INPUT)
+                    continue
+                }
+            }
         }
     }
 
@@ -41,5 +47,6 @@ class InputView {
 
         const val MESSAGE_EMPTY_INPUT = "빈 값이 입력 되었습니다."
         const val MESSAGE_EMPTY_NAME = "빈 이름이 포함되어 있습니다."
+        const val MESSAGE_WRONG_INPUT = "잘못된 값을 입력하였습니다."
     }
 }

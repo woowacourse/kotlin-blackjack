@@ -1,7 +1,6 @@
 package blackjack
 
 import blackjack.domain.BlackJackGame
-import blackjack.domain.UserChoice
 import blackjack.domain.card.CardTier
 import blackjack.domain.card.Shape
 import blackjack.domain.card.TrumpCard
@@ -31,7 +30,7 @@ class BlackJackGameTest {
         participants.players.first().receiveCard(TrumpCard(CardTier.JACK, Shape.DIA))
         participants.players.first().receiveCard(TrumpCard(CardTier.JACK, Shape.DIA))
         game.playGame(
-            getPlayerChoice = { UserChoice.from("y") },
+            getPlayerChoice = { true },
             onPlayerStateUpdated = {},
         )
         assertThat(
@@ -48,7 +47,7 @@ class BlackJackGameTest {
         val game = BlackJackGame(participants, ShuffledDeck())
 
         game.playGame(
-            getPlayerChoice = { UserChoice.from("n") },
+            getPlayerChoice = { false },
             onPlayerStateUpdated = {},
         )
         assertThat(

@@ -1,6 +1,5 @@
 package blackjack.domain.participant
 
-import blackjack.domain.UserChoice
 import blackjack.domain.deck.Deck
 
 class Participants(
@@ -9,7 +8,7 @@ class Participants(
 ) {
     fun getChoice(
         deck: Deck,
-        getPlayerChoice: (String) -> UserChoice,
+        getPlayerChoice: (String) -> Boolean,
         onPlayerStateUpdated: (Player) -> Unit,
     ) {
         players.forEach { player ->
