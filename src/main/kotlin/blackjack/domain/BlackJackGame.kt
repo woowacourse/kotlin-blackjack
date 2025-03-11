@@ -1,22 +1,32 @@
 package blackjack.domain
 
+import blackjack.view.BlackJackInputView
+import blackjack.view.BlackJackOutputView
+
 class BlackJackGame(
     val players: List<Player>,
     private val deck: Deck,
+    private val outputView: BlackJackOutputView,
+    private val inputView: BlackJackInputView,
 ) {
     val dealer = Dealer()
 
     fun setUp() {
         dealer.setAllCard(deck)
         setInitialPlayerCards(players)
+        outputView.showInitialCards(this)
     }
 
-    fun eachPlayerHitOrNot(
-        onInput: (Player) -> Boolean,
-        onPrint: (Player) -> Unit,
-    ) {
+    fun run() {
+        eachPlayerHitOrNot()
+        if (hasDealerAdditionalCard()) {
+            outputView.printDealerHaveAdditionalCard()
+        }
+    }
+
+    fun eachPlayerHitOrNot()  {
         players.forEach { player ->
-            handlePlayerHit(player, onInput, onPrint)
+            handlePlayerHit(player)
         }
     }
 
@@ -32,16 +42,12 @@ class BlackJackGame(
         }
     }
 
-    private fun handlePlayerHit(
-        player: Player,
-        onInput: (Player) -> Boolean,
-        onPrint: (Player) -> Unit,
-    ) {
+    private fun handlePlayerHit(player: Player) {
         while (player.canHit()) {
-            val result = onInput(player)
+            val result = inputView.askPlayerHit(player.name)
             if (result) {
                 player.addCard(deck.draw())
-                onPrint(player)
+                outputView.printPlayerCards(player)
             } else {
                 break
             }

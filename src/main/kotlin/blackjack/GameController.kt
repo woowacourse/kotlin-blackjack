@@ -5,6 +5,8 @@ import blackjack.domain.Card
 import blackjack.domain.Deck
 import blackjack.domain.Player
 import blackjack.domain.PlayerResults
+import blackjack.view.BlackJackInputView
+import blackjack.view.BlackJackOutputView
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -17,20 +19,9 @@ class GameController(
 
     fun run() {
         val players: List<Player> = getPlayers()
-        val game = BlackJackGame(players, deck)
+        val game = BlackJackGame(players, deck, BlackJackOutputView, BlackJackInputView)
         game.setUp()
-        outputView.showInitialCards(game)
-
-        game.eachPlayerHitOrNot(
-            { player -> inputView.askPlayerHit(player.name) },
-            { player -> outputView.printPlayerCards(player) },
-        )
-
-        if (game.hasDealerAdditionalCard()) {
-            outputView.printDealerHaveAdditionalCard()
-        }
-
-        outputView.printFinalCards(game)
+        game.run()
         showResult(game)
     }
 
@@ -41,6 +32,7 @@ class GameController(
     }
 
     private fun showResult(game: BlackJackGame) {
+        outputView.printFinalCards(game)
         val result = PlayerResults(game)
         outputView.printGameResult(result)
     }
