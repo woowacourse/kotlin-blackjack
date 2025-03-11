@@ -3,6 +3,7 @@ package blackjack.domain
 import blackjack.model.Players
 import blackjack.model.ScoreCalculator
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 
 class PlayersTest {
@@ -34,6 +35,17 @@ class PlayersTest {
 
         // when & then
         assertThrows<IllegalArgumentException> {
+            Players.from(players, scoreCalculator)
+        }
+    }
+
+    @Test
+    fun `유효한 플레이어 목록이면 정상적으로 생성된다`() {
+        // given
+        val players = listOf("인협", "동주", "민정", "메다", "제이", "디랙", "조이")
+
+        // when & then
+        assertDoesNotThrow {
             Players.from(players, scoreCalculator)
         }
     }
