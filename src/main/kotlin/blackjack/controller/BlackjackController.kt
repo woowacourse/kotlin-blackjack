@@ -29,8 +29,10 @@ class BlackjackController(
 
     private fun getPlayers(): List<Player> {
         val playerNames = inputView.readPlayerNames()
-        return playerNames.map(::Player)
+        return playerNames.map { Player(it, getBettingAmount(it)) }
     }
+
+    private fun getBettingAmount(name: String): Int = inputView.readBettingAmount(name)
 
     private fun startGame(
         game: BlackjackGame,

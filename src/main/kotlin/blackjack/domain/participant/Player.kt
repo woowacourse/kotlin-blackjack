@@ -6,6 +6,7 @@ import blackjack.domain.card.Deck
 
 class Player(
     name: String,
+    private val bettingAmount: Int,
 ) : Participant(name) {
     override fun canHit(): Boolean = !getScore().isBust()
 
