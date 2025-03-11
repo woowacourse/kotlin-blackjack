@@ -17,4 +17,9 @@ abstract class Participant(
     }
 
     fun isBust(): Boolean = scoreCalculator.isBust(cards)
+
+    companion object {
+        const val INITIAL_DRAW_COUNT = 2
+        const val DEFAULT_DRAW_COUNT = 1
+    }
 }

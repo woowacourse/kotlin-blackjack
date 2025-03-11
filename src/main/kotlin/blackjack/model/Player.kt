@@ -13,8 +13,6 @@ class Player(
     override fun showInitialCards(): List<Card> = cards.take(FIRST_SHOWN_COUNT)
 
     companion object {
-        private const val INITIAL_DRAW_COUNT = 2
-        private const val DEFAULT_DRAW_COUNT = 1
         private const val FIRST_SHOWN_COUNT = 2
     }
 }
