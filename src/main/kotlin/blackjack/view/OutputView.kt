@@ -1,7 +1,6 @@
 package blackjack.view
 
 import blackjack.model.GameManager.Companion.INITIAL_HAND_OUT_CARD_COUNT
-import blackjack.model.ResultCalculator.adjustScore
 import blackjack.model.ResultType
 import blackjack.model.card.Card
 import blackjack.model.card.CardNumber
@@ -51,7 +50,7 @@ class OutputView {
             FINAL_HANDS_STATUS_MESSAGE_FORMAT.format(
                 dealer.name,
                 formattingCardStatus(dealer.cards),
-                convertScore(dealer)
+                convertScore(dealer),
             ),
         )
         players.forEach { player -> printFinalPlayerHandStatus(player) }
@@ -87,33 +86,33 @@ class OutputView {
     }
 
     private fun convertScore(participant: Participant): String {
-        return if (participant.isBlackjack()) RESULT_BLACKJACK else participant.score.toString()
+        return if (participant.isBlackjack()) DISPLAY_NAME_BLACKJACK else participant.score.toString()
     }
 
     private fun getNumberDisplayName(number: CardNumber): String {
         return when (number) {
-            ACE -> "A"
-            JACK -> "J"
-            QUEEN -> "Q"
-            KING -> "K"
+            ACE -> DISPLAY_NAME_ACE
+            JACK -> DISPLAY_NAME_JACK
+            QUEEN -> DISPLAY_NAME_QUEEN
+            KING -> DISPLAY_NAME_KING
             else -> (number.ordinal + 1).toString()
         }
     }
 
     private fun getShapeDisplayName(shape: Shape): String {
         return when (shape) {
-            Shape.SPADE -> "스페이드"
-            Shape.DIAMOND -> "다이아몬드"
-            Shape.HEART -> "하트"
-            Shape.CLOVER -> "클로버"
+            Shape.SPADE -> DISPLAY_NAME_SPADE
+            Shape.DIAMOND -> DISPLAY_NAME_DIAMOND
+            Shape.HEART -> DISPLAY_NAME_HEART
+            Shape.CLOVER -> DISPLAY_NAME_CLOVER
         }
     }
 
     private fun getResultDisplayName(result: ResultType): String {
         return when (result) {
-            ResultType.WIN -> "승"
-            ResultType.TIE -> "무"
-            ResultType.LOSS -> "패"
+            ResultType.WIN -> DISPLAY_NAME_WIN
+            ResultType.TIE -> DISPLAY_NAME_TIE
+            ResultType.LOSS -> DISPLAY_NAME_DRAW
         }
     }
 
@@ -127,6 +126,17 @@ class OutputView {
         private const val DEALER_RESULT_FORMAT = "딜러: %s"
         private const val PLAYER_RESULT_FORMAT = "%s: %s"
 
-        private const val RESULT_BLACKJACK = "블랙잭"
+        private const val DISPLAY_NAME_BLACKJACK = "블랙잭"
+        private const val DISPLAY_NAME_ACE = "A"
+        private const val DISPLAY_NAME_JACK = "J"
+        private const val DISPLAY_NAME_QUEEN = "Q"
+        private const val DISPLAY_NAME_KING = "K"
+        private const val DISPLAY_NAME_SPADE = "스페이드"
+        private const val DISPLAY_NAME_DIAMOND = "다이아몬드"
+        private const val DISPLAY_NAME_HEART = "하트"
+        private const val DISPLAY_NAME_CLOVER = "클로버"
+        private const val DISPLAY_NAME_WIN = "승"
+        private const val DISPLAY_NAME_TIE = "무"
+        private const val DISPLAY_NAME_DRAW = "패"
     }
 }
