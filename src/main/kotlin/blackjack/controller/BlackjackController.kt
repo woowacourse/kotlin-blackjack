@@ -21,9 +21,10 @@ class BlackjackController(
         gameManager.startGame()
         outputView.printAllPlayerHands(dealer, players)
 
-        playersDrawCards(players)
-
-        dealerDrawCards(dealer)
+        if (!dealer.isBlackjack()) {
+            playersDrawCards(players)
+            dealerDrawCards(dealer)
+        }
 
         outputView.printFinalHandStatus(dealer, players)
 
