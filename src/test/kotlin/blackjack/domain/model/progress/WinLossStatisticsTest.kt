@@ -90,7 +90,7 @@ class WinLossStatisticsTest {
     @Test
     fun `딜러가 일반 21이고 플레이어가 블랙잭일 경우 플레이어의 승리임을 받아올 수 있다`() {
         assertThat(winLossStatistics.calculatePlayerWinLoss(dealer21Normal, playerBlackJack)).isEqualTo(
-            WinLoss.WIN, // todo 실제:DRAW 버그 수정 필요
+            WinLoss.WIN,
         )
     }
 

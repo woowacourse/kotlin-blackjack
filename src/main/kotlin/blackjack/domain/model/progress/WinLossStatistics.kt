@@ -20,6 +20,7 @@ class WinLossStatistics {
 
         val playerResult =
             when {
+                (playerCardStatus == CardStatus.BLACKJACK) && (dealerCardStatus != CardStatus.BLACKJACK) -> WinLoss.WIN
                 playerCardStatus == CardStatus.BUST -> WinLoss.LOSE
                 (dealerCardStatus != CardStatus.BUST) && (dealerBestValue > playerBestValue) -> WinLoss.LOSE
                 (dealerCardStatus == CardStatus.BLACKJACK) && (playerCardStatus != CardStatus.BLACKJACK) -> WinLoss.LOSE
