@@ -11,6 +11,7 @@ import blackjack.model.card.CardNumber.KING
 import blackjack.model.card.CardNumber.QUEEN
 import blackjack.model.card.Shape
 import blackjack.model.participant.Dealer
+import blackjack.model.participant.Participant
 import blackjack.model.participant.Player
 
 class OutputView {
@@ -50,7 +51,7 @@ class OutputView {
             FINAL_HANDS_STATUS_MESSAGE_FORMAT.format(
                 dealer.name,
                 formattingCardStatus(dealer.cards),
-                adjustScore(dealer.cards),
+                convertScore(dealer)
             ),
         )
         players.forEach { player -> printFinalPlayerHandStatus(player) }
@@ -80,9 +81,13 @@ class OutputView {
             FINAL_HANDS_STATUS_MESSAGE_FORMAT.format(
                 player.name,
                 formattingCardStatus(player.cards),
-                adjustScore(player.cards),
+                convertScore(player),
             ),
         )
+    }
+
+    private fun convertScore(participant: Participant): String {
+        return if (participant.isBlackjack()) RESULT_BLACKJACK else participant.score.toString()
     }
 
     private fun getNumberDisplayName(number: CardNumber): String {
@@ -118,8 +123,10 @@ class OutputView {
         private const val DEALER_STAY_MESSAGE = "딜러는 17이상이라 카드를 받지 않았습니다."
         private const val FINAL_RESULT_MESSAGE = "## 최종 승패"
         private const val HANDS_STATUS_MESSAGE_FORMAT = "%s 카드: %s"
-        private const val FINAL_HANDS_STATUS_MESSAGE_FORMAT = "%s 카드: %s - 결과: %d"
+        private const val FINAL_HANDS_STATUS_MESSAGE_FORMAT = "%s 카드: %s - 결과: %s"
         private const val DEALER_RESULT_FORMAT = "딜러: %s"
         private const val PLAYER_RESULT_FORMAT = "%s: %s"
+
+        private const val RESULT_BLACKJACK = "블랙잭"
     }
 }
