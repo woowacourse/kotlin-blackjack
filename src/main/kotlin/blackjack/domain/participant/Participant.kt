@@ -15,18 +15,17 @@ abstract class Participant(
 
     fun getAllCards(): List<TrumpCard> = cards.allCards
 
-    fun isBust(): Boolean = cards.sumOfCards > BUST_STANDARD
-
-    fun isBustByMaxAce(): Boolean = cards.sumOfCards + ACE_EXTRACT_SCORE > BUST_STANDARD
+    fun isBust(extraScore: Int = ACE_HARD_SCORE): Boolean = cards.sumOfCards + extraScore > BUST_STANDARD
 
     fun finalScore(): Int =
-        if (cards.hasAce() && !isBustByMaxAce()) {
-            cards.sumOfCards + ACE_EXTRACT_SCORE
+        if (cards.hasAce() && !isBust(ACE_SOFT_SCORE)) {
+            cards.sumOfCards + ACE_SOFT_SCORE
         } else {
             cards.sumOfCards
         }
 
     companion object {
-        const val ACE_EXTRACT_SCORE = 10
+        const val ACE_SOFT_SCORE = 10
+        const val ACE_HARD_SCORE = 0
     }
 }

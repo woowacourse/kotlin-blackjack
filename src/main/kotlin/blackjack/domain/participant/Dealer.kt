@@ -9,8 +9,8 @@ class Dealer(
     override fun getInitialCards(): List<TrumpCard> = cards.allCards.take(DEALER_INITIAL_CARD_COUNT)
 
     fun isOverMaxScore(): Boolean {
-        if (cards.hasAce() && !isBustByMaxAce()) {
-            return cards.sumOfCards + ACE_EXTRACT_SCORE > DEALER_MAX_SCORE
+        if (cards.hasAce() && !isBust(ACE_SOFT_SCORE)) {
+            return cards.sumOfCards + ACE_SOFT_SCORE > DEALER_MAX_SCORE
         }
         return cards.sumOfCards > DEALER_MAX_SCORE
     }
