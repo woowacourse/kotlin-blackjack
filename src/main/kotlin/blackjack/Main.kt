@@ -15,6 +15,7 @@ class BlackjackApplication(
             dealCards()
             playPlayerTurn()
             playDealerTurn()
+            showParticipantsSummary()
             setResult()
         }
     }

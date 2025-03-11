@@ -4,7 +4,9 @@ import blackjack.domain.Card
 import blackjack.domain.Rank
 import blackjack.domain.Suit
 import blackjack.view.model.DealerResult
+import blackjack.view.model.DealerSummary
 import blackjack.view.model.PlayerResult
+import blackjack.view.model.PlayerSummary
 
 class OutputView {
     fun requestPlayers() {
@@ -38,18 +40,13 @@ class OutputView {
         println("${name}카드: ${cards.joinToString()}, 점수 : $score")
     }
 
-    fun endDealerTurn(
-        dealerCards: List<String>,
-        dealerScore: Int,
-        playerNames: List<String>,
-        playerCards: List<List<String>>,
-        playerScores: List<Int>,
+    fun showParticipantsSummary(
+        dealerSummary: DealerSummary,
+        playerSummaries: List<PlayerSummary>,
     ) {
-        println("\n딜러 카드: ${dealerCards.joinToString()} - 결과: $dealerScore")
-        val playersCount = listOf(playerNames.size, playerCards.size, playerScores.size).min()
-        (0 until playersCount).forEach { playerIndex ->
-            println("${playerNames[playerIndex]}카드: ${playerCards[playerIndex].joinToString()} - 결과: ${playerScores[playerIndex]}")
-        }
+        println()
+        println("$dealerSummary")
+        playerSummaries.forEach { playerSummary -> println("$playerSummary") }
         println()
     }
 

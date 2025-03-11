@@ -1,7 +1,9 @@
 package blackjack.view
 
 import blackjack.view.model.DealerResult
+import blackjack.view.model.DealerSummary
 import blackjack.view.model.PlayerResult
+import blackjack.view.model.PlayerSummary
 
 class BlackjackView(
     private val inputView: InputView = InputView(),
@@ -49,26 +51,14 @@ class BlackjackView(
         return wantToHit
     }
 
-    fun onEachPlayerTurn(
-        name: String,
-        cards: List<String>,
-        score: Int,
-        canHitMore: Boolean,
-        draw: () -> Unit,
-    ) {
-    }
-
     fun showDealerHit() {
         outputView.showDealerHit()
     }
 
-    fun endDealerTurn(
-        dealerCards: List<String>,
-        dealerScore: Int,
-        playerNames: List<String>,
-        playerCards: List<List<String>>,
-        playerScores: List<Int>,
+    fun showParticipantsSummary(
+        dealerSummary: DealerSummary,
+        playerSummaries: List<PlayerSummary>,
     ) {
-        outputView.endDealerTurn(dealerCards, dealerScore, playerNames, playerCards, playerScores)
+        outputView.showParticipantsSummary(dealerSummary, playerSummaries)
     }
 }

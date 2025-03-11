@@ -57,12 +57,12 @@ class BlackjackController(
         blackjack.startDealerTurn {
             view.showDealerHit()
         }
-        view.endDealerTurn(
-            dealer.cards.map { card -> card.prettyString },
-            dealer.score.value,
-            players.map { player -> player.name },
-            players.map { player -> player.cards.map { card -> card.prettyString } },
-            players.map { player -> player.score.value },
+    }
+
+    fun showParticipantsSummary() {
+        view.showParticipantsSummary(
+            dealer.toDealerSummary,
+            players.toPlayerSummaries,
         )
     }
 
