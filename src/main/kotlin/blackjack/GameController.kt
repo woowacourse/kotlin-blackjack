@@ -3,7 +3,7 @@ package blackjack
 import blackjack.domain.BlackJackGame
 import blackjack.domain.card.Card
 import blackjack.domain.deck.Deck
-import blackjack.domain.gameResult.PlayerResults
+import blackjack.domain.gameResult.GameResults
 import blackjack.domain.participant.Player
 import blackjack.view.InputView
 import blackjack.view.OutputView
@@ -33,7 +33,7 @@ class GameController(
 
     private fun showResult(game: BlackJackGame) {
         outputView.printFinalCards(game)
-        val result = PlayerResults(game)
+        val result = GameResults(game)
         outputView.printGameResult(result)
     }
 }

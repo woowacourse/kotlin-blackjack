@@ -1,8 +1,8 @@
 package blackjack.view
 
 import blackjack.domain.BlackJackGame
+import blackjack.domain.gameResult.GameResults
 import blackjack.domain.gameResult.PlayerResult
-import blackjack.domain.gameResult.PlayerResults
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Participant
 import blackjack.domain.participant.Player
@@ -18,15 +18,15 @@ object OutputView {
         }
     }
 
-    fun printGameResult(playerResults: PlayerResults) {
+    fun printGameResult(gameResults: GameResults) {
         println(FINAL_RESULT_NOTICE)
-        val dealerLose = playerResults.countDealerLose()
-        val dealerWin = playerResults.countDealerWin()
-        val draw = playerResults.countDealerDraw()
+        val dealerLose = gameResults.countDealerLose()
+        val dealerWin = gameResults.countDealerWin()
+        val draw = gameResults.countDealerDraw()
 
         println(printDealerResult(dealerWin, dealerLose, draw))
 
-        playerResults.toList().forEach {
+        gameResults.playerResults.forEach {
             println(printPlayerResult(it))
         }
     }

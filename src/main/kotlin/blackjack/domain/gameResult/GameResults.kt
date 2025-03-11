@@ -4,10 +4,12 @@ import blackjack.domain.BlackJackGame
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Player
 
-class PlayerResults(private val dealer: Dealer, players: List<Player>) {
+class GameResults(private val dealer: Dealer, players: List<Player>) {
     constructor(game: BlackJackGame) : this(game.dealer, game.players)
 
-    private val playerResults: List<PlayerResult>
+    var playerResults: List<PlayerResult>
+        get() = playerResults.toList()
+        private set
 
     init {
         playerResults =
@@ -27,8 +29,6 @@ class PlayerResults(private val dealer: Dealer, players: List<Player>) {
             else -> throw IllegalArgumentException()
         }
     }
-
-    fun toList(): List<PlayerResult> = playerResults.toList()
 
     fun countDealerWin(): Int {
         return playerResults.count { it.status == GameResultStatus.PLAYER_LOSE }
