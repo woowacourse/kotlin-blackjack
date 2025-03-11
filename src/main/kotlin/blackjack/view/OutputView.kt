@@ -15,14 +15,14 @@ class OutputView {
 
     fun showCardDealing(
         playersName: List<String>,
-        dealerCardsContent: List<String>,
-        playerCardsContent: List<List<String>>,
+        dealerCards: List<String>,
+        playersCards: List<List<String>>,
     ) {
         println()
         println("${playersName.joinToString()}에게 2장씩 나누었습니다.")
         println("딜러가 한 장을 오픈했습니다.")
-        println("딜러: ${dealerCardsContent.joinToString()}")
-        playersName.zip(playerCardsContent).forEach { (name, cardsContent) ->
+        println("딜러: ${dealerCards.joinToString()}")
+        playersName.zip(playersCards).forEach { (name, cardsContent) ->
             println("${name}카드: ${cardsContent.joinToString()}")
         }
         println()

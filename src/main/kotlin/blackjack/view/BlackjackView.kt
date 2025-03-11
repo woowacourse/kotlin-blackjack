@@ -16,13 +16,13 @@ class BlackjackView(
 
     fun dealCards(
         playersName: List<String>,
-        dealerCardsContent: List<String>,
-        playerCardsContent: List<List<String>>,
+        dealerCards: List<String>,
+        playersCards: List<List<String>>,
     ) {
         outputView.showCardDealing(
             playersName,
-            dealerCardsContent,
-            playerCardsContent,
+            dealerCards,
+            playersCards,
         )
     }
 

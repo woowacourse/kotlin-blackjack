@@ -25,7 +25,7 @@ class BlackjackController(
         view.dealCards(
             players.names,
             dealer.cards.prettyString,
-            players.map { player -> player.cards.prettyString },
+            players.playersCards,
         )
     }
 
@@ -47,7 +47,7 @@ class BlackjackController(
             dealer.giveCard(player)
             view.showPlayerCard(
                 player.name,
-                player.cards.map { card -> card.prettyString },
+                player.cards.prettyString,
                 player.score.value,
             )
         }
@@ -70,7 +70,7 @@ class BlackjackController(
         blackjack.setResult()
         view.showResult(
             dealer.result,
-            players.map { player -> player.result },
+            players.results,
         )
     }
 }
