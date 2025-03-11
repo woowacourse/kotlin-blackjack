@@ -3,8 +3,10 @@ package blackjack.domain.model.progress
 import blackjack.domain.model.card.Card
 import blackjack.domain.model.participant.Dealer
 import blackjack.domain.model.participant.Player
+import blackjack.view.OutputView
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import java.util.Locale
 
 class WinLossStatisticsTest {
     @Test
@@ -70,15 +72,16 @@ class WinLossStatisticsTest {
 
     @Test
     fun `딜러의 전체 승 무 패 결과를 텍스트로 받아올 수 있다`() {
-        val dealerBlackJackCards = listOf(Card(0), Card(11))
-        val dealerResult19Cards = listOf(Card(8), Card(10))
-        val playerBlackJackCards = listOf(Card(0), Card(12))
+        val dealerBlackJackCards = Dealer(listOf(Card(0), Card(11)))
+        val dealerResult19Cards = Dealer(listOf(Card(8), Card(10)))
+        val playerBlackJackCards = Player(cards = listOf(Card(0), Card(12)))
         val winLossStatistics = WinLossStatistics()
-        winLossStatistics.calculatePlayerWinLoss(dealerBlackJackCards, playerBlackJackCards)
-        winLossStatistics.calculatePlayerWinLoss(dealerResult19Cards, playerBlackJackCards)
+        winLossStatistics.calculatePlayerWinLossByParticipant(dealerBlackJackCards, playerBlackJackCards)
+        winLossStatistics.calculatePlayerWinLossByParticipant(dealerResult19Cards, playerBlackJackCards)
 
+        val actualDealerWinLossText = OutputView(Locale.KOREAN).makeDealerWinLossText(winLossStatistics)
         val expectedDealerWinLossText = "1무 1패"
 
-        assertThat(winLossStatistics.getDealerWinLossText()).isEqualTo(expectedDealerWinLossText)
+        assertThat(actualDealerWinLossText).isEqualTo(expectedDealerWinLossText)
     }
 }

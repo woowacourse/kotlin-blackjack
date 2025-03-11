@@ -8,6 +8,8 @@ import blackjack.domain.model.participant.Player
 class WinLossStatistics {
     private val dealerResults = mutableMapOf<WinLoss, Int>()
 
+    fun loadDealerResults() = dealerResults.toMap()
+
     fun calculatePlayerWinLossByParticipant(
         dealer: Dealer,
         player: Player,

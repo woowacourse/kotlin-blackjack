@@ -5,6 +5,7 @@ import blackjack.domain.model.participant.Dealer
 import blackjack.domain.model.participant.GameParticipant
 import blackjack.domain.model.participant.Player
 import blackjack.domain.model.progress.WinLoss
+import blackjack.domain.model.progress.WinLossStatistics
 import java.util.Locale
 
 class OutputView(
@@ -53,6 +54,19 @@ class OutputView(
         playersWinLoss.forEach({ (player, winLoss) ->
             println(player.name + ": " + Translator.winLossLocalize(winLoss, locale))
         })
+    }
+
+    fun makeDealerWinLossText(winLossStatistics: WinLossStatistics): String {
+        val dealerWinLoss = winLossStatistics.loadDealerResults()
+
+        val winLossTexts =
+            WinLoss.entries.mapNotNull { winLoss ->
+                dealerWinLoss[winLoss]?.let { value ->
+                    value.toString() + Translator.winLossLocalize(winLoss, locale)
+                }
+            }
+
+        return winLossTexts.joinToString(" ")
     }
 
     companion object {
