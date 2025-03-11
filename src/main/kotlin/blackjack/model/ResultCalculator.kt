@@ -39,11 +39,9 @@ object ResultCalculator {
             dealer.isBust() -> WIN
             dealer.isBlackjack() -> LOSS
             else -> {
-                val dealerScore = adjustScore(dealer.cards)
-                val playerScore = adjustScore(player.cards)
                 when {
-                    playerScore > dealerScore -> WIN
-                    playerScore == dealerScore -> TIE
+                    player.score > dealer.score -> WIN
+                    player.score == dealer.score -> TIE
                     else -> LOSS
                 }
             }
