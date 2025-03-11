@@ -39,7 +39,7 @@ class BlackjackTest {
         val dealer = Dealer(emptyList(), { it })
         val game = Blackjack(dealer)
         game.startDealerTurn({})
-        assertThat(dealer.handState.score).isGreaterThanOrEqualTo(17)
+        assertThat(dealer.score.value).isGreaterThanOrEqualTo(17)
     }
 
     @Test

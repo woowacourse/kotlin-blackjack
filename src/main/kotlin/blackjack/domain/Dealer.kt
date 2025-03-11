@@ -42,7 +42,7 @@ class Dealer(
     }
 
     fun setResult() {
-        playingPlayers.forEach { player -> player.setResult(handState) }
+        playingPlayers.forEach { player -> player.setResult(score) }
     }
 
     private val playingPlayers: List<Player>
