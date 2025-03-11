@@ -1,62 +1,69 @@
 package blackjack.domain.model.progress
 
 import blackjack.domain.model.card.Card
+import blackjack.domain.model.participant.Dealer
+import blackjack.domain.model.participant.Player
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class WinLossStatisticsTest {
     @Test
     fun `손패 두 개를 비교하여 플레이어의 무승부임을 받아올 수 있다`() {
-        val dealerBlackJackCards = listOf(Card(0), Card(11))
-        val playerBlackJackCards = listOf(Card(0), Card(12))
+        val dealer = Dealer(listOf(Card(0), Card(11)))
+        val player = Player(cards = listOf(Card(0), Card(12)))
 
         val winLossStatistics = WinLossStatistics()
 
-        assertThat(winLossStatistics.calculatePlayerWinLoss(dealerBlackJackCards, playerBlackJackCards)).isEqualTo(
+        assertThat(winLossStatistics.calculatePlayerWinLossByParticipant(dealer, player)).isEqualTo(
             WinLoss.DRAW,
         )
     }
 
     @Test
     fun `손패 두 개를 비교하여 플레이어의 승리임을 받아올 수 있다`() {
-        val dealerResult19Cards = listOf(Card(8), Card(10))
-        val playerBlackJackCards = listOf(Card(0), Card(12))
+        val dealerResult19Cards = Dealer(listOf(Card(8), Card(10)))
+        val playerBlackJackCards = Player(cards = listOf(Card(0), Card(12)))
 
         val winLossStatistics = WinLossStatistics()
 
-        assertThat(winLossStatistics.calculatePlayerWinLoss(dealerResult19Cards, playerBlackJackCards)).isEqualTo(
+        assertThat(
+            winLossStatistics.calculatePlayerWinLossByParticipant(
+                dealerResult19Cards,
+                playerBlackJackCards,
+            ),
+        ).isEqualTo(
             WinLoss.WIN,
         )
     }
 
     @Test
     fun `손패 두 개를 비교하여 플레이어의 패배임을 받아올 수 있다`() {
-        val dealerResult19Cards = listOf(Card(8), Card(10))
-        val playerResult18Cards = listOf(Card(7), Card(12))
+        val dealerResult19Cards = Dealer(listOf(Card(8), Card(10)))
+        val playerResult18Cards = Player(cards = listOf(Card(7), Card(12)))
 
         val winLossStatistics = WinLossStatistics()
 
-        assertThat(winLossStatistics.calculatePlayerWinLoss(dealerResult19Cards, playerResult18Cards)).isEqualTo(WinLoss.LOSE)
+        assertThat(winLossStatistics.calculatePlayerWinLossByParticipant(dealerResult19Cards, playerResult18Cards)).isEqualTo(WinLoss.LOSE)
     }
 
     @Test
     fun `손패 두 개를 비교하여 딜러가 버스트고 플레이어가 버스트가 아닐 경우 플레이어의 승리임을 받아올 수 있다`() {
-        val dealerBurstCards = listOf(Card(11), Card(12), Card(9))
-        val playerBlackJackCards = listOf(Card(0), Card(12))
+        val dealerBurstCards = Dealer(listOf(Card(11), Card(12), Card(9)))
+        val playerBlackJackCards = Player(cards = listOf(Card(0), Card(12)))
 
         val winLossStatistics = WinLossStatistics()
 
-        assertThat(winLossStatistics.calculatePlayerWinLoss(dealerBurstCards, playerBlackJackCards)).isEqualTo(WinLoss.WIN)
+        assertThat(winLossStatistics.calculatePlayerWinLossByParticipant(dealerBurstCards, playerBlackJackCards)).isEqualTo(WinLoss.WIN)
     }
 
     @Test
     fun `손패 두 개를 비교하여 딜러가 버스트고 플레이어가 버스트일 경우 플레이어의 패배임을 받아올 수 있다`() {
-        val dealerBlackJackCards = listOf(Card(11), Card(12), Card(9))
-        val playerBlackJackCards = listOf(Card(8), Card(10), Card(7))
+        val dealerBlackJackCards = Dealer(listOf(Card(11), Card(12), Card(9)))
+        val playerBlackJackCards = Player(cards = listOf(Card(8), Card(10), Card(7)))
 
         val winLossStatistics = WinLossStatistics()
 
-        assertThat(winLossStatistics.calculatePlayerWinLoss(dealerBlackJackCards, playerBlackJackCards)).isEqualTo(
+        assertThat(winLossStatistics.calculatePlayerWinLossByParticipant(dealerBlackJackCards, playerBlackJackCards)).isEqualTo(
             WinLoss.LOSE,
         )
     }

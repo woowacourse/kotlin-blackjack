@@ -7,6 +7,10 @@ class Dealer(
 ) : GameParticipant(name = name) {
     fun getFirstCard(): Card = handCards.getCardByIndex(0)
 
+    constructor(cards: List<Card>) : this() {
+        cards.forEach { card -> handCards.addCard(card) }
+    }
+
     override fun isDrawFinish(): Boolean {
         val bestCardValue = handCards.calculateBestCardValue()
         return bestCardValue <= DEALER_DRAW_LIMIT
