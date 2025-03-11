@@ -5,7 +5,6 @@ import blackjack.domain.ParticipantCards
 import blackjack.domain.UserChoice
 import blackjack.domain.deck.ShuffledDeck
 import blackjack.domain.participant.Dealer
-import blackjack.domain.participant.Participant
 import blackjack.domain.participant.Participants
 import blackjack.domain.participant.Player
 import blackjack.util.retryWhenException
@@ -25,8 +24,8 @@ class BlackJackController(
     }
 
     private fun readyForGamePlayers(): Participants {
-        val dealer: Participant = Dealer(ParticipantCards())
-        return Participants(inputView.readPlayerNames().map { name -> Player(name, ParticipantCards()) } + dealer)
+        val dealer = Dealer(ParticipantCards())
+        return Participants(dealer, inputView.readPlayerNames().map { name -> Player(name, ParticipantCards()) })
     }
 
     private fun displayPlayerNames(participants: Participants) {
@@ -41,7 +40,7 @@ class BlackJackController(
         outputView.printDealerCards(
             participants
                 .dealer
-                .cards
+                .cards.allCards
                 .first(),
         )
     }

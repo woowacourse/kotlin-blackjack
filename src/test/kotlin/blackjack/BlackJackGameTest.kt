@@ -6,7 +6,6 @@ import blackjack.domain.card.CardTier
 import blackjack.domain.card.Shape
 import blackjack.domain.card.TrumpCard
 import blackjack.domain.deck.ShuffledDeck
-import blackjack.domain.participant.Participants
 import blackjack.fixture.playersFixture
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -14,7 +13,7 @@ import org.junit.jupiter.api.Test
 class BlackJackGameTest {
     @Test
     fun `게임을 시작하면 각 플레이어와 딜러는 2장의 카드를 지급받는다`() {
-        val participants = Participants(playersFixture())
+        val participants = playersFixture()
         val game = BlackJackGame(participants, ShuffledDeck())
         game.handOutInitializedCards(2)
         assertThat(
@@ -27,7 +26,7 @@ class BlackJackGameTest {
 
     @Test
     fun `플레이어가 hit을 선택하면 카드를 한 장 추가한다`() {
-        val participants = Participants(playersFixture())
+        val participants = playersFixture()
         val game = BlackJackGame(participants, ShuffledDeck())
         participants.players.first().receiveCard(TrumpCard(CardTier.JACK, Shape.DIA))
         participants.players.first().receiveCard(TrumpCard(CardTier.JACK, Shape.DIA))
@@ -45,7 +44,7 @@ class BlackJackGameTest {
 
     @Test
     fun `플레이어가 stay를 선택하면 카드의 장수가 유지된다`() {
-        val participants = Participants(playersFixture())
+        val participants = playersFixture()
         val game = BlackJackGame(participants, ShuffledDeck())
 
         game.playGame(
