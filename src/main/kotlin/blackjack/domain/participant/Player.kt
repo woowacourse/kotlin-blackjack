@@ -13,7 +13,7 @@ class Player(
 ) : Participant(cards) {
     override fun getInitialCards(): List<TrumpCard> = cards.allCards.take(PLAYER_INITIAL_CARD_COUNT)
 
-    override fun isDrawable(): Boolean = cards.sumOfCards < BUST_STANDARD
+    override fun isDrawable(): Boolean = cards.sumOfCards <= BUST_STANDARD
 
     fun choice(
         deck: Deck,
@@ -37,7 +37,7 @@ class Player(
         val otherScore = other.finalScore()
 
         return when {
-            this.isBust() && !other.isBust() -> GameResult.LOSE
+            this.isBust() -> GameResult.LOSE
             other.isBust() && !this.isBust() -> GameResult.WIN
             myScore > otherScore -> GameResult.WIN
             else -> GameResult.LOSE
