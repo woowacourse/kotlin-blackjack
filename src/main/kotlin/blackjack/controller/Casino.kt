@@ -43,21 +43,17 @@ class Casino(
 
     private fun runPlayersDrawPhase(players: List<Player>) {
         players.forEach { player ->
-            while (player.handCards.getStatus() != CardStatus.BUST) {
-                val response: Boolean = inputView.readWantExtraCard(player.name)
-
-                if (!response) {
-                    if (player.showCards().size == 2) {
-                        outputView.showPlayerCardsInfo(player)
-                        // todo(중복 if문 로직 제거 예정)
-                    }
-                    break
-                }
+            while (player.handCards.getStatus() != CardStatus.BUST && isPlayerWantHit(player)) {
                 player.drawCard()
+                outputView.showPlayerCardsInfo(player)
+            }
+            if (player.cardSize() == INIT_CARD_SIZE) {
                 outputView.showPlayerCardsInfo(player)
             }
         }
     }
+
+    private fun isPlayerWantHit(player: Player): Boolean = inputView.readWantExtraCard(player.name)
 
     private fun runDealerDrawPhase(dealer: Dealer) {
         while (dealer.isDrawFinish()) {
@@ -76,5 +72,9 @@ class Casino(
                 player to winLossStatistics.calculatePlayerWinLoss(dealer, player)
             }
         outputView.showFinalResult(winLossStatistics, playersWinLoss)
+    }
+
+    companion object {
+        private const val INIT_CARD_SIZE = 2
     }
 }

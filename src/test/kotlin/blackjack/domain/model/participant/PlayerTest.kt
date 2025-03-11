@@ -10,6 +10,6 @@ class PlayerTest {
 
         player.drawCard()
 
-        assertThat(player.showCards()).hasSize(1)
+        assertThat(player.cardSize()).isEqualTo(1)
     }
 }
