@@ -62,8 +62,13 @@ class OutputView {
         dealerResult: Map<ResultType, Int>,
     ) {
         println(FINAL_RESULT_MESSAGE)
-        val dealerSummary = dealerResult.map { "${it.value}${getResultDisplayName(it.key)}" }
+
+        val dealerSummary =
+            listOf(ResultType.WIN, ResultType.TIE, ResultType.LOSS)
+                .filter { type -> dealerResult.getOrDefault(type, 0) > 0 }
+                .map { resultType -> "${dealerResult[resultType]}${getResultDisplayName(resultType)}" }
         println(DEALER_RESULT_FORMAT.format(dealerSummary.joinToString(" ")))
+
         resultMap.forEach { (player, result) ->
             println(PLAYER_RESULT_FORMAT.format(player.name, getResultDisplayName(result)))
         }
