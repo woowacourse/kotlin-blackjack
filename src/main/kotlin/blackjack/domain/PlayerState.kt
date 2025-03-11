@@ -1,6 +1,6 @@
 package blackjack.domain
 
-enum class ParticipantState {
+enum class PlayerState {
     PLAYING,
     WIN,
     DRAW,

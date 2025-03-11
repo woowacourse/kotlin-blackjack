@@ -6,7 +6,6 @@ abstract class Participant(
     abstract val onBusted: () -> Unit
 
     val cards: List<Card> = hand.value
-    var state: ParticipantState = ParticipantState.PLAYING
 
     val score: Int
         get() =

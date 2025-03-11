@@ -3,23 +3,23 @@ package blackjack.domain
 class Player(
     val name: String,
 ) : Participant() {
-    var state: ParticipantState = ParticipantState.PLAYING
+    var state: PlayerState = PlayerState.PLAYING
         private set
 
     override val onBusted: () -> Unit = {
-        state = ParticipantState.LOSE
+        state = PlayerState.LOSE
     }
 
     fun setResult(dealerScore: Int) {
         state =
             when {
-                score > dealerScore -> ParticipantState.WIN
-                score < dealerScore -> ParticipantState.LOSE
-                else -> ParticipantState.DRAW
+                score > dealerScore -> PlayerState.WIN
+                score < dealerScore -> PlayerState.LOSE
+                else -> PlayerState.DRAW
             }
     }
 
     fun win() {
-        state = ParticipantState.WIN
+        state = PlayerState.WIN
     }
 }
