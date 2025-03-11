@@ -17,7 +17,7 @@ class Casino(
         val dealer: Dealer = Dealer()
         val participants: List<GameParticipant> = listOf(dealer) + players
         initDistributeCard(participants)
-        println()
+
         outputView.showDistributeCardMessage(players)
         outputParticipantCardsInfo(dealer, players)
 
@@ -31,6 +31,7 @@ class Casino(
         participants.forEach { participant ->
             repeat(2) { participant.drawCard() }
         }
+        outputView.lineSeparator()
     }
 
     private fun outputParticipantCardsInfo(
@@ -39,6 +40,7 @@ class Casino(
     ) {
         outputView.showDealerFirstCardsInfo(dealer)
         players.forEach { outputView.showPlayerCardsInfo(it) }
+        outputView.lineSeparator()
     }
 
     private fun runPlayersDrawPhase(players: List<Player>) {
@@ -51,6 +53,7 @@ class Casino(
                 outputView.showPlayerCardsInfo(player)
             }
         }
+        outputView.lineSeparator()
     }
 
     private fun isPlayerWantHit(player: Player): Boolean = inputView.readWantExtraCard(player.name)
@@ -60,6 +63,7 @@ class Casino(
             dealer.drawCard()
             outputView.showDealerDrawMessage()
         }
+        outputView.lineSeparator()
     }
 
     private fun outputFinalResult(

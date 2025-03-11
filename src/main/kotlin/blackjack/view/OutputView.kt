@@ -11,6 +11,10 @@ import java.util.Locale
 class OutputView(
     private val locale: Locale,
 ) {
+    fun lineSeparator() {
+        println()
+    }
+
     fun showDistributeCardMessage(participants: List<GameParticipant>) {
         val joinedNames = participants.joinToString { it.name }
         println(DISTRIBUTE_CARD_MESSAGE.format(joinedNames))
@@ -35,6 +39,7 @@ class OutputView(
         participants.forEach {
             println(makeParticipantInfoText(it) + CARD_RESULT_MESSAGE + it.handCards.calculateBestCardValue())
         }
+        lineSeparator()
     }
 
     private fun makeParticipantInfoText(participant: GameParticipant): String {
