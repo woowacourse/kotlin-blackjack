@@ -20,33 +20,30 @@ class OutputView {
     }
 
     fun printPlayersStatus(participants: Participants) {
-        println(renderDealerVisibleStatus(participants.findDealer()))
-        participants.filterPlayers().forEach { player ->
-            println(renderPlayerStatus(player))
+        participants.participants.forEach { participant ->
+            println(renderParticipantsInitStatus(participant))
         }
     }
 
     fun printPlayerStatus(player: Participant) {
-        println(renderPlayerStatus(player))
+        println(renderParticipantsStatus(player))
     }
 
     fun printPlayersResult(participants: Participants) {
-        val dealer = participants.findDealer()
-        println(renderDealerVisibleStatus(dealer) + PLAYER_RESULT_DELIMITER + dealer.getScore())
-        participants.filterPlayers().forEach { player ->
-            println(renderPlayerStatus(player) + PLAYER_RESULT_DELIMITER + player.getScore())
+        participants.participants.forEach { participant ->
+            println(renderParticipantsStatus(participant) + PLAYER_RESULT_DELIMITER + participant.getScore())
         }
     }
 
-    private fun renderDealerVisibleStatus(dealer: Dealer): String {
-        return dealer.name + PLAYER_NAME_STATUS_DELIMITER +
-            dealer.showCards(DEALER_VISIBLE_CARD_COUNT)
+    private fun renderParticipantsInitStatus(participant: Participant): String {
+        return participant.name + PLAYER_NAME_STATUS_DELIMITER +
+            participant.showInitCards()
                 .joinToString { convertKoreanRank(it.rank) + convertKoreanSuit(it.suit) }
     }
 
-    private fun renderPlayerStatus(player: Participant): String {
-        return player.name + PLAYER_NAME_STATUS_DELIMITER +
-            player.showCards()
+    private fun renderParticipantsStatus(participant: Participant): String {
+        return participant.name + PLAYER_NAME_STATUS_DELIMITER +
+            participant.showCards()
                 .joinToString { convertKoreanRank(it.rank) + convertKoreanSuit(it.suit) }
     }
 
@@ -109,7 +106,6 @@ class OutputView {
         private const val MESSAGE_INITIAL_HAND_DISTRIBUTED = "%s와(과) %s에게 %s장의 카드를 나누었습니다."
         private const val MESSAGE_DEALER_HITS_STATE = "딜러는 16이하라 한장의 카드를 더 받았습니다."
         private const val MESSAGE_RESULTS_HEADER = "## 최종 승패"
-        private const val DEALER_VISIBLE_CARD_COUNT = 1
         private const val PLAYER_CARDS_DELIMITER = ", "
         private const val PLAYER_NAME_STATUS_DELIMITER = " 카드: "
         private const val PLAYER_RESULT_DELIMITER = " - 결과: "

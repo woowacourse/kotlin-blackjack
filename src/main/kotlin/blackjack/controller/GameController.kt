@@ -27,7 +27,7 @@ class GameController(
         val playersNames = inputView.readPlayerNames()
         val players =
             playersNames.map { name ->
-                Player(name, Hands(List(START_CARD_COUNT) { deck.draw() }))
+                Player(Hands(List(START_CARD_COUNT) { deck.draw() }), name)
             }
         val dealer = Dealer(Hands(List(START_CARD_COUNT) { deck.draw() }))
         return Participants(players + dealer)

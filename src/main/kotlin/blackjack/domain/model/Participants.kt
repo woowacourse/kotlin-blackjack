@@ -1,11 +1,13 @@
 package blackjack.domain.model
 
-class Participants(private val players: List<Participant>) {
+class Participants(initParticipants: List<Participant>) {
+    val participants = initParticipants.sortedByDescending { it is Dealer }
+
     fun findDealer(): Dealer {
-        return requireNotNull(players.find { it is Dealer } as? Dealer)
+        return requireNotNull(participants.filterIsInstance<Dealer>().firstOrNull())
     }
 
     fun filterPlayers(): List<Participant> {
-        return players.filterNot { it is Dealer }
+        return participants.filterNot { it is Dealer }
     }
 }

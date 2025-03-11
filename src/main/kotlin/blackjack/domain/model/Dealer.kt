@@ -7,6 +7,8 @@ import blackjack.domain.model.Verdict.WIN
 class Dealer(override var hands: Hands, override val name: String = DEALER_NAME) : Participant() {
     constructor(vararg card: Card) : this(Hands(card.toList()))
 
+    override fun showInitCards(): List<Card> = showCards(INIT_VISIBLE_CARD_COUNT)
+
     fun getPlayerVerdict(players: List<Participant>): Map<Participant, Verdict> {
         return players.associateWith { player -> determine(player).reverse() }
     }
@@ -28,7 +30,8 @@ class Dealer(override var hands: Hands, override val name: String = DEALER_NAME)
     }
 
     companion object {
-        const val DEALER_NAME = "딜러"
+        private const val DEALER_NAME = "딜러"
         const val DEALER_DRAW_THRESHOLD = 16
+        private const val INIT_VISIBLE_CARD_COUNT = 1
     }
 }

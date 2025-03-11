@@ -4,6 +4,8 @@ abstract class Participant {
     abstract val name: String
     protected abstract var hands: Hands
 
+    abstract fun showInitCards(): List<Card>
+
     fun getScore() = hands.getScore()
 
     fun isStartCardCount() = hands.isStartCardCount()
