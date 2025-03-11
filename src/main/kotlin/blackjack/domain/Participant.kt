@@ -1,10 +1,8 @@
 package blackjack.domain
 
-abstract class Participant(
-    private val hand: Hand,
-) {
-    abstract val onBusted: () -> Unit
-
+abstract class Participant {
+    private val hand: Hand = Hand()
+    protected abstract val onBusted: () -> Unit
     val cards: List<Card> = hand.value
 
     val score: Int
@@ -15,10 +13,10 @@ abstract class Participant(
             }
 
     fun draw(card: Card) {
-        hand.draw(card)
+        hand.add(card)
     }
 
     companion object {
-        const val SCORE_BUSTED = -1
+        private const val SCORE_BUSTED = -1
     }
 }

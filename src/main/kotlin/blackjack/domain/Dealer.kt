@@ -3,25 +3,11 @@ package blackjack.domain
 class Dealer(
     private val players: List<Player>,
     shuffler: Shuffler,
-    hand: Hand = Hand(),
-) : Participant(hand) {
-    override val onBusted: () -> Unit = {
-        val remainingPlayers = players.filter { player -> player.state == ParticipantState.PLAYING }
-        remainingPlayers.forEach { player -> player.state = ParticipantState.WIN }
-    }
-
+) : Participant() {
     private val deck: Deck = Deck(shuffler)
+    override val onBusted: () -> Unit = { playingPlayers.forEach(Player::win) }
 
-    val dealerResults: List<ParticipantState>
-        get() =
-            players.map { player ->
-                when (player.state) {
-                    ParticipantState.WIN -> ParticipantState.LOSE
-                    ParticipantState.DRAW -> ParticipantState.DRAW
-                    ParticipantState.LOSE -> ParticipantState.WIN
-                    ParticipantState.PLAYING -> ParticipantState.PLAYING
-                }
-            }
+    val dealerResults: List<PlayerState> = players.toDealerResult()
 
     fun draw() {
         draw(deck.draw())
@@ -36,9 +22,7 @@ class Dealer(
     }
 
     fun startPlayerTurn(turn: (Player) -> Unit) {
-        players.forEach { player ->
-            turn(player)
-        }
+        players.forEach(turn)
     }
 
     fun startTurn() {
@@ -48,7 +32,19 @@ class Dealer(
     }
 
     fun setResult() {
-        val playingPlayers = players.filter { player -> player.state == ParticipantState.PLAYING }
         playingPlayers.forEach { player -> player.setResult(score) }
     }
+
+    private fun List<Player>.toDealerResult(): List<PlayerState> =
+        map { player ->
+            when (player.state) {
+                PlayerState.WIN -> PlayerState.LOSE
+                PlayerState.DRAW -> PlayerState.DRAW
+                PlayerState.LOSE -> PlayerState.WIN
+                PlayerState.PLAYING -> PlayerState.PLAYING
+            }
+        }
+
+    private val playingPlayers: List<Player>
+        get() = players.filter { player -> player.state == PlayerState.PLAYING }
 }
