@@ -21,7 +21,7 @@ class Dealer(dealerCards: Cards) : Participant(dealerCards) {
         return drawCount
     }
 
-    override fun canHit(): Boolean = currentScore() <= DEALER_HIT_LIMIT
+    override fun canHit(): Boolean = currentScore <= DEALER_HIT_LIMIT
 
     companion object {
         private const val DEFAULT_DRAW_COUNT = 0
