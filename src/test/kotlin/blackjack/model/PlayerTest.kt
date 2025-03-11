@@ -38,7 +38,7 @@ class PlayerTest {
             )
         val player = Player("모찌", initialCards)
         val card = Card(CardShape.CLOVER, Denomination.SIX)
-        player.appendCard(card)
+        player.pickCard(card)
 
         assertThat(player.cards.value).isEqualTo(
             listOf(

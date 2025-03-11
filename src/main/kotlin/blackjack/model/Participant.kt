@@ -4,7 +4,7 @@ abstract class Participant(
     val name: String,
     val cards: Cards = Cards(emptyList()),
 ) {
-    fun appendCard(cardDeck: CardDeck) {
+    fun pickCard(cardDeck: CardDeck) {
         val card = cardDeck.pickCard()
         cards.add(card)
     }

@@ -39,12 +39,12 @@ class BlackjackController(
 
     private fun getCardsToPlayer(players: Players) {
         players.value.forEach { player ->
-            player.appendCard(cardDeck)
+            player.pickCard(cardDeck)
         }
     }
 
     private fun getCardsToDealer(dealer: Dealer) {
-        dealer.appendCard(cardDeck)
+        dealer.pickCard(cardDeck)
     }
 
     private fun playGames(
@@ -125,7 +125,7 @@ class BlackjackController(
     ): Boolean {
         when (playerBehavior) {
             PlayerBehavior.HIT -> {
-                player.appendCard(cardDeck)
+                player.pickCard(cardDeck)
                 outputView.printPlayerCard(player)
                 if (isPlayerBust(player)) return true
             }
@@ -145,7 +145,7 @@ class BlackjackController(
 
     private fun executeDealerGameLogic(dealer: Dealer) {
         while (dealer.isHit()) {
-            dealer.appendCard(cardDeck)
+            dealer.pickCard(cardDeck)
             outputView.printDealerGettingCard()
             if (isDealerBust(dealer)) break
         }

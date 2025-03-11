@@ -35,7 +35,7 @@ class DealerTest {
     fun `딜러는 카드를 추가로 받을 수 있다`() {
         val dealer = Dealer()
         val card = Card(CardShape.CLOVER, Denomination.SIX)
-        dealer.appendCard(card)
+        dealer.pickCard(card)
 
         val expected = 1
 
