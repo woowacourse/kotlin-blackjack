@@ -1,6 +1,8 @@
 package blackjack.domain.card
 
-data class Cards(private val cards: MutableList<Card> = mutableListOf()) {
+class Cards {
+    private val cards = mutableListOf<Card>()
+
     fun add(card: Card) {
         cards.add(card)
     }
