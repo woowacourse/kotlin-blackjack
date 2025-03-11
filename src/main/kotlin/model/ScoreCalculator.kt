@@ -3,16 +3,21 @@ package model
 import model.GameResultDecider.Companion.BLACKJACK_SCORE
 
 class ScoreCalculator(private val cards: Cards) {
-    private var totalCardScore: Int = cards.scores.sum()
-
     fun calculateTotalCardScore(): Int {
-        var aceCount = cards.aceCount
-        while (totalCardScore > BLACKJACK_SCORE && aceCount-- > DEFAULT_ZERO) {
-            totalCardScore -= ACE_MINUS_VALUE
-        }
+        val totalCardScore = cards.scores.sum()
+        val aceCount = cards.aceCount
 
-        return totalCardScore
+        return if (totalCardScore > BLACKJACK_SCORE && aceCount > DEFAULT_ZERO) {
+            adjustAceScore(totalCardScore, aceCount)
+        } else {
+            totalCardScore
+        }
     }
+
+    private fun adjustAceScore(
+        totalCardScore: Int,
+        aceCount: Int,
+    ) = totalCardScore - ACE_MINUS_VALUE * aceCount.coerceAtMost((totalCardScore - BLACKJACK_SCORE) / ACE_MINUS_VALUE + 1)
 
     companion object {
         private const val DEFAULT_ZERO = 0
