@@ -1,7 +1,5 @@
 package blackjack.model.domain
 
-import blackjack.model.domain.card.Hand
-
 enum class GameResult() {
     None,
     Win,
@@ -10,11 +8,6 @@ enum class GameResult() {
     ;
 
     companion object {
-        fun isBust(number: Int): GameResult {
-            if (number > Hand.BUST_STANDARD) return Lose
-            return None
-        }
-
         fun compare(
             target: Int,
             other: Int,

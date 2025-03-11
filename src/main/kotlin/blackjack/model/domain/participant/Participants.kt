@@ -1,7 +1,6 @@
 package blackjack.model.domain.participant
 
 import blackjack.model.domain.GameResult
-import blackjack.model.domain.GameResult.Companion.isBust
 import blackjack.model.domain.card.Card
 import blackjack.model.domain.card.Hand
 
@@ -19,7 +18,7 @@ abstract class Participants() {
     }
 
     fun checkBust() {
-        status = isBust(sumCardNumber)
+        status = hand.isBust()
     }
 
     abstract fun canHit(): Boolean
