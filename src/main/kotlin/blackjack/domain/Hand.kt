@@ -1,7 +1,5 @@
 package blackjack.domain
 
-import blackjack.domain.Participant.Companion.BUST_THRESHOLD
-
 class Hand {
     private val cards: MutableList<Card> = mutableListOf()
 
@@ -13,6 +11,10 @@ class Hand {
 
     fun getCardSum() : Int {
         return calculateSum()
+    }
+
+    fun isBust(): Boolean {
+        return calculateSum() > BUST_THRESHOLD
     }
 
     private fun calculateSum(): Int {
@@ -27,6 +29,7 @@ class Hand {
         return sum
     }
     companion object {
+        const val BUST_THRESHOLD = 21
         private const val ACE_HIGH = 11
         private const val ACE_LOW = 1
         private const val ACE_SCORE_DIFFERENCE = ACE_HIGH - ACE_LOW

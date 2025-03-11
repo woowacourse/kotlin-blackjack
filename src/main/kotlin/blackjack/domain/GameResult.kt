@@ -1,5 +1,8 @@
 package blackjack.domain
 
+import blackjack.domain.participant.Dealer
+import blackjack.domain.participant.Player
+
 class GameResult(private val dealer: Dealer, val players: List<Player>) {
     val dealerResult = DealerResult()
     private val playerResult: MutableList<PlayerResult> = mutableListOf()
@@ -19,8 +22,8 @@ class GameResult(private val dealer: Dealer, val players: List<Player>) {
 
     fun getPlayerResult(player: Player): GameResultStatus {
 
-        if (player.isBust()) return GameResultStatus.PLAYER_LOSE
-        if (dealer.isBust()) return GameResultStatus.PLAYER_WIN
+        if (player.hand.isBust()) return GameResultStatus.PLAYER_LOSE
+        if (dealer.hand.isBust()) return GameResultStatus.PLAYER_WIN
         return when {
             dealer.totalSum > player.totalSum -> GameResultStatus.PLAYER_LOSE
             player.totalSum > dealer.totalSum -> GameResultStatus.PLAYER_WIN

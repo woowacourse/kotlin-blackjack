@@ -1,4 +1,7 @@
-package blackjack.domain
+package blackjack.domain.participant
+
+import blackjack.domain.Card
+import blackjack.domain.Hand
 
 abstract class Participant {
     val hand: Hand = Hand()
@@ -12,15 +15,7 @@ abstract class Participant {
         hand.addCard(card)
     }
 
-    fun isBust(): Boolean {
-        return totalSum > BUST_THRESHOLD
-    }
-
     fun canHit(): Boolean {
-        return totalSum < hitThreshold
-    }
-
-    companion object {
-        const val BUST_THRESHOLD = 21
+        return totalSum <= hitThreshold
     }
 }

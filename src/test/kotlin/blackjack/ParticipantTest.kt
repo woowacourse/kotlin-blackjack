@@ -1,7 +1,7 @@
 package blackjack
 
 import blackjack.domain.Card
-import blackjack.domain.Participant
+import blackjack.domain.participant.Participant
 import blackjack.domain.Rank
 import blackjack.domain.Suit
 import org.assertj.core.api.Assertions.assertThat
@@ -40,6 +40,6 @@ class ParticipantTest {
         participant.addCard(card2)
         participant.addCard(card3)
 
-        assertThat(participant.isBust()).isEqualTo(true)
+        assertThat(participant.hand.isBust()).isEqualTo(true)
     }
 }
