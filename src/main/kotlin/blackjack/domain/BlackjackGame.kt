@@ -22,8 +22,8 @@ class BlackjackGame(
         participants.players.forEach { player ->
             player.playGame(
                 deck,
-                onResponse = onResponse,
-                onDraw = onDraw,
+                shouldContinue = { onResponse(player) },
+                onDraw = { onDraw(player) },
             )
         }
     }
@@ -31,7 +31,7 @@ class BlackjackGame(
     fun playDealerTurn(onDraw: (Dealer) -> Unit) {
         participants.dealer.playGame(
             deck,
-            onDraw = onDraw,
+            onDraw = { onDraw(participants.dealer) },
         )
     }
 

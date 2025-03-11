@@ -17,18 +17,13 @@ abstract class Participant(
 
     fun getScore(): Score = hand.calculateScore()
 
-    fun playGame(
-        deck: Deck,
-        shouldContinue: () -> Boolean,
-        onDraw: () -> Unit,
-    ) {
-        while (canHit() && shouldContinue()) {
-            drawCard(deck.pick())
-            onDraw()
-        }
-    }
-
     abstract fun canHit(): Boolean
+
+    abstract fun playGame(
+        deck: Deck,
+        onDraw: (Participant) -> Unit,
+        shouldContinue: (() -> Boolean) = { true },
+    )
 
     abstract fun getResult(otherScore: Score): Result
 }

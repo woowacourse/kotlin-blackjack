@@ -9,6 +9,17 @@ class Dealer(
 ) : Participant(name) {
     override fun canHit(): Boolean = getScore().score <= DEALER_HIT_CONDITION
 
+    override fun playGame(
+        deck: Deck,
+        onDraw: (Participant) -> Unit,
+        shouldContinue: () -> Boolean,
+    ) {
+        while (canHit()) {
+            drawCard(deck.pick())
+            onDraw(this)
+        }
+    }
+
     override fun getResult(otherScore: Score): Result {
         val dealerScore = getScore()
         if (otherScore.isBust()) return Result.WIN
@@ -18,17 +29,6 @@ class Dealer(
             dealerScore < otherScore -> Result.LOSE
             else -> Result.PUSH
         }
-    }
-
-    fun playGame(
-        deck: Deck,
-        onDraw: (Dealer) -> Unit,
-    ) {
-        super.playGame(
-            deck,
-            shouldContinue = { canHit() },
-            onDraw = { onDraw(this) },
-        )
     }
 
     companion object {

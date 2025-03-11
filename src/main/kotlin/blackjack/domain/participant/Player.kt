@@ -9,6 +9,17 @@ class Player(
 ) : Participant(name) {
     override fun canHit(): Boolean = !getScore().isBust()
 
+    override fun playGame(
+        deck: Deck,
+        onDraw: (Participant) -> Unit,
+        shouldContinue: () -> Boolean,
+    ) {
+        while (canHit() && shouldContinue()) {
+            drawCard(deck.pick())
+            onDraw(this)
+        }
+    }
+
     override fun getResult(otherScore: Score): Result {
         val playerScore = getScore()
         if (playerScore.isBust()) return Result.LOSE
@@ -18,17 +29,5 @@ class Player(
             playerScore < otherScore -> Result.LOSE
             else -> Result.PUSH
         }
-    }
-
-    fun playGame(
-        deck: Deck,
-        onResponse: (Player) -> Boolean,
-        onDraw: (Player) -> Unit,
-    ) {
-        super.playGame(
-            deck,
-            shouldContinue = { onResponse(this) },
-            onDraw = { onDraw(this) },
-        )
     }
 }
