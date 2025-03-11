@@ -14,16 +14,30 @@ class GameController(
     fun run() {
         val deck = Deck()
         val participants = repeatUntilValid { Participants(Dealer(), inputView.readPlayerNames().map(::Player)) }
+        processInitialDeals(deck, participants)
+        processHits(deck, participants)
+        outputView.printResults(participants)
+    }
+
+    private fun processInitialDeals(
+        deck: Deck,
+        participants: Participants,
+    ) {
         participants.makeInitialDeals(deck)
         outputView.printInitialDeals(participants)
         participants.list.forEach { participant -> outputView.printParticipantStatus(participant) }
+    }
+
+    private fun processHits(
+        deck: Deck,
+        participants: Participants,
+    ) {
         participants.processPlayersHits(
             deck,
             { player -> repeatUntilValid { inputView.readPlayerAction(player) } },
             outputView::printParticipantStatus,
         )
         participants.processDealerHits(deck, outputView::printDealerHit)
-        outputView.printResults(participants)
     }
 
     private fun <T> repeatUntilValid(event: () -> T): T {
