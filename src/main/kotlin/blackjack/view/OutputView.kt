@@ -88,6 +88,7 @@ class OutputView {
         when (this) {
             GameResult.WIN -> "승"
             GameResult.LOSE -> "패"
+            GameResult.DRAW -> "무"
         }
 
     companion object {

@@ -22,8 +22,10 @@ class Dealer(
 
         return when {
             other.isBust() -> GameResult.WIN
+            this.isBust() && !other.isBust() -> GameResult.LOSE
             myScore > otherScore -> GameResult.WIN
-            else -> GameResult.LOSE
+            myScore < otherScore -> GameResult.LOSE
+            else -> GameResult.DRAW
         }
     }
 

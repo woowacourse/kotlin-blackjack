@@ -40,7 +40,8 @@ class Player(
             this.isBust() -> GameResult.LOSE
             other.isBust() && !this.isBust() -> GameResult.WIN
             myScore > otherScore -> GameResult.WIN
-            else -> GameResult.LOSE
+            myScore < otherScore -> GameResult.LOSE
+            else -> GameResult.DRAW
         }
     }
 

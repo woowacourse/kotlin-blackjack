@@ -1,9 +1,12 @@
 package blackjack
 
+import blackjack.domain.GameResult
 import blackjack.domain.ParticipantCards
 import blackjack.domain.card.CardTier
 import blackjack.domain.card.Shape
 import blackjack.domain.card.TrumpCard
+import blackjack.domain.participant.Dealer
+import blackjack.domain.participant.Participants
 import blackjack.domain.participant.Player
 import blackjack.fixture.trumpCardFixture
 import org.assertj.core.api.Assertions.assertThat
@@ -27,5 +30,28 @@ class PlayerTest {
             player.receiveCard(TrumpCard(CardTier.KING, Shape.DIA))
         }
         assertThat(player.isBust()).isEqualTo(true)
+    }
+
+    @Test
+    fun `플레이어가 버스트되지 않고 딜러의 카드 총합보다 카드의 총합이 크면 승리한다`() {
+        val participants = Participants(Dealer(ParticipantCards()), listOf(Player("bibi", ParticipantCards())))
+        participants.dealer.receiveCard(TrumpCard(CardTier.KING, Shape.DIA))
+        participants.dealer.receiveCard(TrumpCard(CardTier.NINE, Shape.DIA))
+        repeat(2) {
+            participants.players.first().receiveCard(TrumpCard(CardTier.KING, Shape.DIA))
+        }
+        assertThat(participants.players.first().getResult(participants.dealer)).isEqualTo(GameResult.WIN)
+    }
+
+    @Test
+    fun `플레이어가 버스트되지 않고 딜러의 카드 총합과 카드의 총합이 크면 무승부이다`() {
+        val participants = Participants(Dealer(ParticipantCards()), listOf(Player("bibi", ParticipantCards())))
+        repeat(2) {
+            participants.dealer.receiveCard(TrumpCard(CardTier.KING, Shape.DIA))
+        }
+        repeat(2) {
+            participants.players.first().receiveCard(TrumpCard(CardTier.KING, Shape.DIA))
+        }
+        assertThat(participants.players.first().getResult(participants.dealer)).isEqualTo(GameResult.DRAW)
     }
 }
