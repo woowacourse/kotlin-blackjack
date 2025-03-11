@@ -7,11 +7,7 @@ class PlayerCards(
         return PlayerCards(items + card)
     }
 
-    fun size() = items.size
-
-    fun first(): TrumpCard = items.first()
-
     fun sumOfCards(): Int = items.sumOf { card -> card.tier.values }
 
-    fun hasAce(): Boolean = items.map { it.tier }.contains(Tier.ACE)
+    fun hasAce(): Boolean = items.any { it.tier == Tier.ACE }
 }
