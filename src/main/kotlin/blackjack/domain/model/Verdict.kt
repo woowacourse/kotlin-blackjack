@@ -1,16 +1,13 @@
 package blackjack.domain.model
 
-enum class Verdict {
-    WIN,
-    LOSE,
-    DRAW,
-    ;
-
-    fun reverse(): Verdict {
-        return when (this) {
-            WIN -> LOSE
-            LOSE -> WIN
-            else -> DRAW
+class Verdict(private val dealer: Dealer) {
+    fun determine(player: Player): VerdictResult {
+        return when {
+            dealer.isBust() && player.isBust() -> VerdictResult.LOSE
+            dealer.isBust() -> VerdictResult.WIN
+            dealer.getScore() > player.getScore() || player.isBust() -> VerdictResult.LOSE
+            dealer.getScore() < player.getScore() && !player.isBust() -> VerdictResult.WIN
+            else -> VerdictResult.DRAW
         }
     }
 }

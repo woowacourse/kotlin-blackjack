@@ -4,9 +4,10 @@ import blackjack.domain.model.Dealer
 import blackjack.domain.model.Hands.Companion.START_CARD_COUNT
 import blackjack.domain.model.Participant
 import blackjack.domain.model.Participants
+import blackjack.domain.model.Player
 import blackjack.domain.model.Rank
 import blackjack.domain.model.Suit
-import blackjack.domain.model.Verdict
+import blackjack.domain.model.VerdictResult
 
 class OutputView {
     fun printInitialDeals(participants: Participants) {
@@ -29,7 +30,7 @@ class OutputView {
         println(renderParticipantsStatus(player))
     }
 
-    fun printPlayersResult(participants: Participants) {
+    fun printParticipantsResult(participants: Participants) {
         participants.participants.forEach { participant ->
             println(renderParticipantsStatus(participant) + PLAYER_RESULT_DELIMITER + participant.getScore())
         }
@@ -55,22 +56,16 @@ class OutputView {
         println(MESSAGE_RESULTS_HEADER)
     }
 
-    fun printDealerVerdicts(
-        dealer: Dealer,
-        verdicts: Map<Verdict, Int>,
-    ) {
+    fun printDealerVerdicts(dealer: Dealer) {
         print(dealer.name + NAME_RESULT_DELIMITER)
-        verdicts.filter { it.value > 0 }.forEach { (verdict, count) ->
+        dealer.getRecord().filter { it.value > 0 }.forEach { (verdict, count) ->
             print("${count}${convertKoreanVerdict(verdict)} ")
         }
         println()
     }
 
-    fun printPlayerVerdict(
-        participant: Participant,
-        verdict: Verdict,
-    ) {
-        println(participant.name + NAME_RESULT_DELIMITER + convertKoreanVerdict(verdict))
+    fun printPlayerVerdict(player: Player) {
+        println(player.name + NAME_RESULT_DELIMITER + convertKoreanVerdict(player.getCurrentVerdict()))
     }
 
     fun printErrorMessage(message: String) {
@@ -94,11 +89,11 @@ class OutputView {
         }
     }
 
-    private fun convertKoreanVerdict(verdict: Verdict): String {
+    private fun convertKoreanVerdict(verdict: VerdictResult): String {
         return when (verdict) {
-            Verdict.WIN -> "승"
-            Verdict.LOSE -> "패"
-            Verdict.DRAW -> "무"
+            VerdictResult.WIN -> "승"
+            VerdictResult.LOSE -> "패"
+            VerdictResult.DRAW -> "무"
         }
     }
 

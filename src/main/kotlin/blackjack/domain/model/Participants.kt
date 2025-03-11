@@ -7,7 +7,7 @@ class Participants(initParticipants: List<Participant>) {
         return requireNotNull(participants.filterIsInstance<Dealer>().firstOrNull())
     }
 
-    fun filterPlayers(): List<Participant> {
-        return participants.filterNot { it is Dealer }
+    fun filterPlayers(): List<Player> {
+        return participants.filterIsInstance<Player>()
     }
 }

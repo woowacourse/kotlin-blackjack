@@ -7,6 +7,7 @@ import blackjack.domain.model.Hands.Companion.START_CARD_COUNT
 import blackjack.domain.model.Participant
 import blackjack.domain.model.Participants
 import blackjack.domain.model.Player
+import blackjack.domain.model.Verdict
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -68,13 +69,27 @@ class GameController(
     }
 
     private fun announceResult(participants: Participants) {
+        outputView.printParticipantsResult(participants)
+        outputView.printResultsHeader()
         val dealer = participants.findDealer()
         val players = participants.filterPlayers()
-        outputView.printPlayersResult(participants)
-        outputView.printResultsHeader()
-        val verdicts = dealer.getDealerVerdicts(players)
-        outputView.printDealerVerdicts(dealer, verdicts)
-        dealer.getPlayerVerdict(players).forEach { (player, verdict) -> outputView.printPlayerVerdict(player, verdict) }
+        initVerdict(dealer, players)
+        outputView.printDealerVerdicts(dealer)
+        players.forEach { player -> outputView.printPlayerVerdict(player) }
+    }
+
+    private fun initVerdict(
+        dealer: Dealer,
+        players: List<Player>,
+    ) {
+        val verdict = Verdict(dealer)
+        val dealerResult =
+            players.map { player ->
+                val playerVerdictResult = verdict.determine(player)
+                player.recordVerdict(playerVerdictResult)
+                playerVerdictResult.reverse()
+            }
+        dealer.recordVerdict(dealerResult)
     }
 
     private fun <T> retryEvent(event: () -> T): T {

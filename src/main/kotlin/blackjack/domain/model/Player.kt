@@ -3,6 +3,8 @@ package blackjack.domain.model
 class Player(override var hands: Hands, override val name: String) : Participant() {
     constructor(name: String, vararg card: Card) : this(Hands(card.toList()), name)
 
+    override var record: Record = Record()
+
     override fun showInitCards() = showCards(INIT_VISIBLE_CARD_COUNT)
 
     companion object {
