@@ -11,7 +11,6 @@ abstract class Participant(private val cards: Cards) {
 
     abstract fun canHit(): Boolean
 
-
     protected fun addCard(card: Card) {
         handCards.add(card)
     }
