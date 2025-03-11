@@ -19,16 +19,16 @@ object ScoreCalculator {
     private fun possibleScoreOf(
         card1: Card,
         card2: Card,
-    ): Set<Int> = possibleScoreOf(card1.possibleScore, card2.possibleScore)
+    ): Set<Int> = possibleScoreOf(card1.possibleScores, card2.possibleScores)
 
     fun possibleScoreOf(vararg cards: Card): Set<Int> {
         if (cards.isEmpty()) return emptySet()
-        if (cards.size == 1) return cards.first().possibleScore
+        if (cards.size == 1) return cards.first().possibleScores
         if (cards.size == 2) return possibleScoreOf(cards[0], cards[1])
 
         var result = possibleScoreOf(cards[0], cards[1])
         (2..cards.size - 1).forEach { index: Int ->
-            result = possibleScoreOf(result, cards[index].possibleScore)
+            result = possibleScoreOf(result, cards[index].possibleScores)
         }
         return result
     }

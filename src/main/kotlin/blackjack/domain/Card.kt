@@ -4,5 +4,5 @@ class Card(
     val rank: Rank,
     val suit: Suit,
 ) {
-    val possibleScore: Set<Int> = rank.possibleValues
+    val possibleScores: Set<Int> = rank.possibleValues
 }
