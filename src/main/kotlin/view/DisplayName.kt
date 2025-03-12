@@ -1,5 +1,6 @@
-package model
+package view
 
+import model.Card
 import view.CardRankMessage.getCardRankMessage
 import view.ShapeMessage.getShapeMessage
 
