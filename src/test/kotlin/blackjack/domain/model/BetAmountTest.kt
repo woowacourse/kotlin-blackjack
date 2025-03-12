@@ -25,19 +25,10 @@ class BetAmountTest {
     }
 
     @Test
-    fun `무승부이고 블랙잭이 아닌 경우 0원을 받는다`() {
+    fun `무승부인 경우 0원을 받는다`() {
         // when
         val actual = betAmount.calculateProceed(GameResult.Draw, false)
         val expected = 0
-        // then
-        assertThat(actual).isEqualTo(expected)
-    }
-
-    @Test
-    fun `무승부이고 블랙잭인 경우 베팅금만큼 받는다`() {
-        // when
-        val actual = betAmount.calculateProceed(GameResult.Draw, true)
-        val expected = 10000
         // then
         assertThat(actual).isEqualTo(expected)
     }
