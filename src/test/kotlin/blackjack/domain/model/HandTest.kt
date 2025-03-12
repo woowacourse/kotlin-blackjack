@@ -6,8 +6,6 @@ import blackjack.domain.model.card.Hand
 import blackjack.domain.model.card.Shape
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.ValueSource
 
 class HandTest {
     private val aceHeart = Card(Shape.Heart, CardNumber.Ace)
@@ -16,10 +14,8 @@ class HandTest {
     private val nineSpade = Card(Shape.Spade, CardNumber.Nine)
     private val kingSpade = Card(Shape.Spade, CardNumber.King)
 
-    // given
-    @ValueSource(ints = [22, 23, 24, 100])
-    @ParameterizedTest
-    fun `임계값 보다 숫자가 크게 되면 Bust상태이다`(input: Int) {
+    @Test
+    fun `21점보다 숫자가 크면 Bust상태이다`() {
         // given
         val cards = mutableListOf(kingSpade, nineSpade, sixHeart)
         val hand = Hand(cards)
@@ -27,6 +23,17 @@ class HandTest {
         val actual = hand.isBust()
         // then
         assertThat(actual).isTrue()
+    }
+
+    @Test
+    fun `21점보다 숫자가 작으면 Bust상태가 아니다`() {
+        // given
+        val cards = mutableListOf(kingSpade, nineSpade)
+        val hand = Hand(cards)
+        // when
+        val actual = hand.isBust()
+        // then
+        assertThat(actual).isFalse()
     }
 
     @Test
