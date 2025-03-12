@@ -1,12 +1,7 @@
 package blackjack.domain.participants
 
-import blackjack.domain.state.GameState
+import blackjack.const.GameRule
 
-class Player(
-    val name: String,
-    private val checkHit: (String) -> Boolean,
-) : Participant() {
-    override fun shouldHit(): Boolean {
-        return checkHit(name) && gameState != GameState.BUST
-    }
+class Player(val name: String) : Participant() {
+    override fun canHit(): Boolean = score() <= GameRule.BLACKJACK_SCORE
 }

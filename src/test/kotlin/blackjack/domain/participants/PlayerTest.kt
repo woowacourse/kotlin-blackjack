@@ -4,8 +4,7 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
 import blackjack.domain.card.CardPattern
 import blackjack.domain.card.Deck
-import blackjack.domain.state.GameState
-import io.kotest.assertions.throwables.shouldThrowExactly
+import io.kotest.assertions.assertSoftly
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -20,20 +19,14 @@ class PlayerTest {
 
     @Test
     fun `플레이어는 이름을 가지고 있어야 한다`() {
-        val player = Player("pobi") { true }
+        val player = Player("pobi")
         player.name shouldBe "pobi"
-    }
-
-    @Test
-    fun `게임 상태를 가지고 있다`() {
-        val player = Player("pobi") { true }
-        player.gameState shouldBe GameState.FIRST_TURN
     }
 
     @Test
     fun `카드를 받을 수 있다`() {
         // Given
-        val player = Player("pobi") { true }
+        val player = Player("pobi")
         val card = deck.draw()
 
         // When
@@ -46,7 +39,7 @@ class PlayerTest {
     @Test
     fun `가지고 있는 패의 총 합을 계산한다`() {
         // Given
-        val player = Player("pobi") { true }
+        val player = Player("pobi")
         val cards = List(2) { Card(CardNumber.KING, CardPattern.HEART) }
 
         // When
@@ -61,7 +54,7 @@ class PlayerTest {
     @Test
     fun `HIT 여부를 판단한다`() {
         // Given
-        val player = Player("pobi") { false }
+        val player = Player("pobi")
         val cards = List(3) { Card(CardNumber.KING, CardPattern.HEART) }
 
         // When
@@ -70,13 +63,13 @@ class PlayerTest {
         }
 
         // Then
-        player.shouldHit() shouldBe false
+        player.canHit() shouldBe false
     }
 
     @Test
     fun `패에 2장만 존재하고, 총 합이 21이면 블랙잭이다`() {
         // Given
-        val player = Player("pobi") { true }
+        val player = Player("pobi")
         val cards =
             listOf(
                 Card(CardNumber.ACE, CardPattern.HEART),
@@ -89,13 +82,13 @@ class PlayerTest {
         }
 
         // Then
-        player.gameState shouldBe GameState.BLACKJACK
+        player.isBlackjack() shouldBe true
     }
 
     @Test
     fun `카드의 총 합이 21이 넘으면 버스트가 된다`() {
         // Given
-        val player = Player("pobi") { true }
+        val player = Player("pobi")
         val cards = List(3) { Card(CardNumber.KING, CardPattern.HEART) }
 
         // When
@@ -104,19 +97,19 @@ class PlayerTest {
         }
 
         // Then
-        player.gameState shouldBe GameState.BUST
+        player.isBust() shouldBe true
     }
 
     @Test
     fun `초기 상태일 경우 카드를 2장 받는다`() {
-        val player = Player("pobi") { true }
+        val player = Player("pobi")
         player.getDrawAmount() shouldBe 2
     }
 
     @Test
     fun `HIT일 경우 카드를 1장 받는다`() {
         // Given
-        val player = Player("pobi") { true }
+        val player = Player("pobi")
         val card = Card(CardNumber.ACE, CardPattern.HEART)
 
         // When
@@ -129,7 +122,7 @@ class PlayerTest {
     @Test
     fun `버스트가 된 경우 카드를 받을 수 없다`() {
         // Given
-        val player = Player("pobi") { true }
+        val player = Player("pobi")
         val cards = List(3) { Card(CardNumber.KING, CardPattern.HEART) }
 
         // When
@@ -138,6 +131,9 @@ class PlayerTest {
         }
 
         // Then
-        shouldThrowExactly<IllegalArgumentException> { player.getDrawAmount() }
+        assertSoftly(player) {
+            player.isBust() shouldBe true
+            player.canHit() shouldBe false
+        }
     }
 }
