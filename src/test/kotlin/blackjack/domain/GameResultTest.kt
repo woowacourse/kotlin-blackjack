@@ -1,97 +1,85 @@
 package blackjack.domain
 
 import blackjack.domain.card.CardNumber
+import blackjack.domain.card.Deck
 import blackjack.domain.person.Dealer
+import blackjack.domain.person.Person
 import blackjack.domain.person.Player
-import blackjack.domain.state.ResultState
-import io.kotest.matchers.shouldBe
+import io.kotest.matchers.doubles.shouldBeExactly
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class GameResultTest {
-    private lateinit var dealer: Dealer
     private lateinit var player: Player
+    private lateinit var dealer: Dealer
 
     @BeforeEach
     fun setUp() {
+        player = Player("player", 100)
         dealer = Dealer()
-        player = Player("player")
     }
 
-    private fun drawCardsToPlayer(cards: List<CardNumber>) {
-        val deck = generateCustomDeck(cards)
-        repeat(cards.size) { player.draw(deck) }
+    private fun setupGame(
+        playerCards: List<CardNumber>,
+        dealerCards: List<CardNumber>,
+    ): GameResult {
+        val customDeck = generateCustomDeck(playerCards + dealerCards)
+        drawCards(dealer, dealerCards, customDeck)
+        drawCards(player, playerCards, customDeck)
+        return GameResult(dealer, listOf(player))
     }
 
-    private fun drawCardsToDealer(cards: List<CardNumber>) {
-        val deck = generateCustomDeck(cards)
-        repeat(cards.size) { dealer.draw(deck) }
+    private fun drawCards(
+        person: Person,
+        cards: List<CardNumber>,
+        deck: Deck,
+    ) {
+        repeat(cards.size) { person.draw(deck) }
     }
 
     @Test
-    fun `플레이어가 20점, 딜러가 0점인 경우 WIN을 반환한다`() {
+    fun `플레이어는 100원 배팅 후 블랙잭으로 승리하면 150원을 받는다`() {
+        val gameResult = setupGame(listOf(CardNumber.ACE, CardNumber.JACK), emptyList())
+        gameResult.playerPayouts.values.first() shouldBeExactly 150.0
+    }
+
+    @Test
+    fun `플레이어는 100원 배팅 후 승리하면 100원을 받는다`() {
+        val gameResult = setupGame(listOf(CardNumber.JACK), emptyList())
+        gameResult.playerPayouts.values.first() shouldBeExactly 100.0
+    }
+
+    @Test
+    fun `플레이어는 100원 배팅 후 패배하면 0원을 받는다`() {
+        val gameResult = setupGame(emptyList(), listOf(CardNumber.JACK))
+        gameResult.playerPayouts.values.first() shouldBeExactly 0.0
+    }
+
+    @Test
+    fun `플레이어는 100원 배팅 후 딜러와 플레이어가 모두 블랙잭이면 100원을 받는다`() {
+        val gameResult =
+            setupGame(
+                listOf(CardNumber.JACK, CardNumber.ACE),
+                listOf(CardNumber.JACK, CardNumber.ACE),
+            )
+        gameResult.playerPayouts.values.first() shouldBeExactly 100.0
+    }
+
+    @Test
+    fun `무승부 시 배당금이 원금과 같아야 한다`() {
+        val gameResult = setupGame(listOf(CardNumber.JACK), listOf(CardNumber.JACK))
+        gameResult.playerPayouts.values.first() shouldBeExactly 100.0
+        gameResult.dealerProfit shouldBeExactly 0.0
+    }
+
+    @Test
+    fun `딜러는 플레이어의 손실만큼 수익을 받는다`() {
+        val players = listOf(Player("player1", 200), Player("player2", 300))
         val customCards = listOf(CardNumber.JACK, CardNumber.JACK)
-        drawCardsToPlayer(customCards)
+        val customDeck = generateCustomDeck(customCards)
+        drawCards(dealer, customCards, customDeck)
 
-        val result = GameResult(dealer, listOf(player))
-
-        result.winStatus[player] shouldBe ResultState.WIN
-    }
-
-    @Test
-    fun `플레이어가 0점, 딜러가 12점인 경우 LOSE를 반환한다`() {
-        val customCards = listOf(CardNumber.FOUR, CardNumber.EIGHT)
-        drawCardsToDealer(customCards)
-
-        val result = GameResult(dealer, listOf(player))
-
-        result.winStatus[player] shouldBe ResultState.LOSE
-    }
-
-    @Test
-    fun `플레이어가 18점, 딜러가 18점인 경우 DRAW를 반환한다`() {
-        val customCards = listOf(CardNumber.JACK, CardNumber.EIGHT)
-        drawCardsToPlayer(customCards)
-        drawCardsToDealer(customCards)
-
-        val result = GameResult(dealer, listOf(player))
-
-        result.winStatus[player] shouldBe ResultState.DRAW
-    }
-
-    @Test
-    fun `플레이어가 버스트되는 경우 LOSE를 반환한다`() {
-        val customCards = listOf(CardNumber.JACK, CardNumber.JACK, CardNumber.JACK)
-        drawCardsToPlayer(customCards)
-
-        val result = GameResult(dealer, listOf(player))
-
-        result.winStatus[player] shouldBe ResultState.LOSE
-    }
-
-    @Test
-    fun `딜러가 버스트되고, 플레이어는 버스트가 아닌 경우`() {
-        val playerCustomCards = listOf(CardNumber.EIGHT, CardNumber.EIGHT)
-        drawCardsToPlayer(playerCustomCards)
-        val dealerCustomCards = listOf(CardNumber.JACK, CardNumber.JACK, CardNumber.JACK)
-        drawCardsToDealer(dealerCustomCards)
-
-        val result = GameResult(dealer, listOf(player))
-
-        result.winStatus[player] shouldBe ResultState.WIN
-    }
-
-    @Test
-    fun `승패 여부를 계산할 수 있다`() {
-        val playerCustomCards = listOf(CardNumber.JACK, CardNumber.JACK)
-        drawCardsToPlayer(playerCustomCards)
-
-        val result = GameResult(dealer, listOf(player))
-
-        result.countByResultState().let {
-            (it[ResultState.LOSE] ?: 0) shouldBe 0
-            (it[ResultState.DRAW] ?: 0) shouldBe 0
-            (it[ResultState.WIN] ?: 0) shouldBe 1
-        }
+        val gameResult = GameResult(dealer, players)
+        gameResult.dealerProfit shouldBeExactly 500.0
     }
 }

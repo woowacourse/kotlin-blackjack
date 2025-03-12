@@ -47,7 +47,7 @@ class BlackJackGameTest {
     @Test
     fun `딜러는 17 이상이 될 때까지 카드를 뽑는다`() {
         game.dealCards()
-        game.playDealerTurns {}
+        game.playDealerTurns(printDealerDrawMessage = { })
 
         (dealer.score >= 17) shouldBe true
     }
