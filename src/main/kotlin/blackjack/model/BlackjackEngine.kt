@@ -8,13 +8,20 @@ import blackjack.model.WinningResult.PUSH
 class BlackjackEngine(
     val cardDeck: CardDeck = CardDeck()
 ) {
+    var bets: MutableMap<Player, Amount> = mutableMapOf()
+
+    fun getPlayersBet(players: Players,eventProvider: EventProvider){
+        players.getPlayers().forEach { player->
+            bets[player] = Amount(eventProvider.getBetAmount(player.name).toDouble())
+        }
+    }
+
     fun preparePlayers(eventProvider: EventProvider): Players {
         val names = eventProvider.getNames()
         return Players(names.map { name ->
             Player(
                 name,
-                makeFirstHand(),
-                Amount(eventProvider.getBetAmount(name).toDouble())
+                makeFirstHand()
             )
         })
     }
@@ -35,30 +42,29 @@ class BlackjackEngine(
             progressPlayerDrawUntilFinished(player, eventListener, eventProvider)
         }
     }
-
-    fun calculateWinnings(dealer: Dealer, players: Players) {
-        players.getPlayers().forEach { player ->
-            calculateMoney(dealer, player, dealer.getPlayerResult(player))
+    fun getDealerMoneyResults(dealer: Dealer, playersEarnMoney : Map<Player, Amount>):Pair<Dealer,Amount>{
+        val dealerAmount = Amount(0.0)
+        playersEarnMoney.forEach{ playerEarnMoney ->
+            dealerAmount.addMoney(playerEarnMoney.value.toMinus())
         }
+        return Pair(dealer,dealerAmount)
+    }
+    fun getPlayerMoneyResults(dealer: Dealer, players: Players): Map<Player, Amount> {
+        val earnMoney: MutableMap<Player, Amount> = mutableMapOf()
+        players.getPlayers().forEach { player ->
+            earnMoney[player] = calculateMoney(player, dealer.getPlayerResult(player))
+        }
+        return earnMoney
     }
 
-    private fun calculateMoney(dealer: Dealer, player: Player, winningResult: WinningResult) {
-        when (winningResult) {
-            BLACKJACK -> {
-                player.settleBlackjack()
-                dealer.settleBlackjack(player.betAmount)
-            }
-
-            WIN -> {
-                player.settleWin()
-                dealer.settleLose(player.betAmount)
-            }
-
-            PUSH -> player.settlePush()
-            LOSE -> {
-                player.settleLose()
-                dealer.settleWin(player.betAmount)
-            }
+    private fun calculateMoney(player: Player, winningResult: WinningResult): Amount {
+        val bet = bets[player]
+        if (bet == null) throw IllegalArgumentException("해당 유저를 찾을 수 없습니다")
+        return when (winningResult) {
+            BLACKJACK -> bet.toBlackjackMoney()
+            WIN -> bet
+            PUSH -> Amount(0.0)
+            LOSE -> bet.toMinus()
         }
     }
 

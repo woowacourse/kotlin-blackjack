@@ -1,10 +1,10 @@
 package blackjack.controller
 
+import blackjack.model.Amount
 import blackjack.model.BlackjackEngine
 import blackjack.model.Dealer
 import blackjack.model.Player
 import blackjack.model.Players
-import blackjack.model.WinningResult
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -16,20 +16,22 @@ class BlackjackController(
     fun run() {
         val dealer = blackjackEngine.prepareDealer()
         val players = blackjackEngine.preparePlayers(inputView)
+        blackjackEngine.getPlayersBet(players,inputView)
         outputView.displayFirstDrawEnd(dealer.name, players.value.map { player -> player.name })
         outputView.displayParticipantCards(dealer.name, dealer.hand.cards.take(DEALER_FIRST_SHOWN_COUNT))
         blackjackEngine.progressPlayersDraw(players,outputView,inputView)
         blackjackEngine.progressDealerDraw(dealer,outputView)
         displayParticipantsInfo(players)
-        blackjackEngine.calculateWinnings(dealer,players)
-        displayResult(dealer,players,outputView)
+        val playersResult = blackjackEngine.getPlayerMoneyResults(dealer,players)
+        val dealerResult = blackjackEngine.getDealerMoneyResults(dealer,playersResult)
+        displayResult(dealerResult,playersResult,outputView)
     }
 
-    private fun displayResult(dealer: Dealer,players: Players,outputView: OutputView){
+    private fun displayResult(dealerResult: Pair<Dealer, Amount>, playersResult: Map<Player, Amount>, outputView: OutputView){
         outputView.displayResultTitle()
-        outputView.displayResultMoney(dealer.name,dealer.money.getValue())
-        players.getPlayers().forEach { player->
-            outputView.displayResultMoney(player.name,player.money.getValue())
+        outputView.displayResultMoney(dealerResult.first.name,dealerResult.second.getValue())
+        playersResult.forEach { playerResult->
+            outputView.displayResultMoney(playerResult.key.name,playerResult.value.getValue())
         }
     }
 
