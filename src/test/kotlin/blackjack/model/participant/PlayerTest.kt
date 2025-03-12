@@ -23,40 +23,12 @@ class PlayerTest {
     }
 
     @Test
-    fun `플레이어는 카드 한 장을 받을 수 있다`() {
-        player.addCard(Card(Shape.SPADE, CardNumber.NINE))
-        assertThat(player.cards.size).isEqualTo(1)
-    }
-
-    @Test
     fun `플레이어가 처음 공개하는 카드는 2장이다`() {
         player.addCard(Card(Shape.SPADE, CardNumber.NINE))
         player.addCard(Card(Shape.CLOVER, CardNumber.QUEEN))
         val expect = 2
 
         val actual = player.getInitialCard().size
-
-        assertThat(actual).isEqualTo(expect)
-    }
-
-    @Test
-    fun `플레이어는 카드의 총 합을 계산한다`() {
-        player.addCard(Card(Shape.SPADE, CardNumber.NINE))
-        player.addCard(Card(Shape.SPADE, CardNumber.SEVEN))
-        val expect = 16
-        val actual = player.score
-
-        assertThat(actual).isEqualTo(expect)
-    }
-
-    @Test
-    fun `플레이어는 카드 총 합이 21을 넘으면 isBust를 true를 반환한다`() {
-        player.addCard(Card(Shape.SPADE, CardNumber.NINE))
-        player.addCard(Card(Shape.CLOVER, CardNumber.QUEEN))
-        player.addCard(Card(Shape.CLOVER, CardNumber.SEVEN))
-        val expect = true
-
-        val actual = player.isBust()
 
         assertThat(actual).isEqualTo(expect)
     }

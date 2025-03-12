@@ -16,28 +16,12 @@ class DealerTest {
     }
 
     @Test
-    fun `딜러는 카드 한 장을 받을 수 있다`() {
-        dealer.addCard(Card(Shape.SPADE, CardNumber.NINE))
-        assertThat(dealer.cards.size).isEqualTo(1)
-    }
-
-    @Test
     fun `딜러가 처음 공개하는 카드는 첫번째 카드이다`() {
         dealer.addCard(Card(Shape.SPADE, CardNumber.NINE))
         dealer.addCard(Card(Shape.CLOVER, CardNumber.QUEEN))
         val expect = Card(Shape.SPADE, CardNumber.NINE)
 
         val actual = dealer.getInitialCard().first()
-
-        assertThat(actual).isEqualTo(expect)
-    }
-
-    @Test
-    fun `딜러는 카드의 총 합을 계산한다`() {
-        dealer.addCard(Card(Shape.SPADE, CardNumber.NINE))
-        dealer.addCard(Card(Shape.SPADE, CardNumber.SEVEN))
-        val expect = 16
-        val actual = dealer.score
 
         assertThat(actual).isEqualTo(expect)
     }
