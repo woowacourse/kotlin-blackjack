@@ -19,6 +19,8 @@ data class Player(override val name: String) : Participants() {
         when {
             hand.isBust() -> GameResult.Lose
             dealer.hand.isBust() -> GameResult.Win
+            dealer.hand.isBlackjack() && !hand.isBlackjack() -> GameResult.Lose
+            !dealer.hand.isBlackjack() && hand.isBlackjack() -> GameResult.Win
             else -> compareNumber(sumCardNumber, dealer.sumCardNumber)
         }
 
