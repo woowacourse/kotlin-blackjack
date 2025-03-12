@@ -21,7 +21,7 @@ class BlackjackController(
         val gameManager = GameManager()
         val cardDeck = CardDeck()
         val scoreCalculator = ScoreCalculator()
-        val dealer = gameManager.prepareDealer(TEMP_DEALER_NAME, cardDeck, scoreCalculator)
+        val dealer = gameManager.prepareDealer(DEFAULT_DEALER_NAME, cardDeck, scoreCalculator)
         val players = preparePlayers(gameManager, cardDeck, dealer, scoreCalculator)
         val resultManager = ResultManager(dealer, players)
 
@@ -103,6 +103,6 @@ class BlackjackController(
     }
 
     companion object {
-        private const val TEMP_DEALER_NAME = "딜러"
+        private const val DEFAULT_DEALER_NAME = "딜러"
     }
 }
