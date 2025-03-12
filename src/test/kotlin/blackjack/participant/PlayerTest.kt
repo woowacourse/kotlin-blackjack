@@ -1,8 +1,11 @@
 package blackjack.participant
 
+import blackjack.model.ResultCalculator
+import blackjack.model.ResultType
 import blackjack.model.card.Card
 import blackjack.model.card.CardNumber
 import blackjack.model.card.Shape
+import blackjack.model.participant.Dealer
 import blackjack.model.participant.Player
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
@@ -56,6 +59,20 @@ class PlayerTest {
         val expect = true
 
         val actual = player.isBust()
+
+        assertThat(actual).isEqualTo(expect)
+    }
+
+    @Test
+    fun `플레이어 카드 합이 딜러의 카드 합보다 작으면 진다`() {
+        val dealer = Dealer()
+        dealer.addCard(Card(Shape.CLOVER, CardNumber.NINE))
+        dealer.addCard(Card(Shape.CLOVER, CardNumber.EIGHT))
+        player.addCard(Card(Shape.HEART, CardNumber.EIGHT))
+        player.addCard(Card(Shape.HEART, CardNumber.SEVEN))
+        val expect = ResultType.LOSS
+
+        val actual = ResultCalculator.judgeScore(dealer, player)
 
         assertThat(actual).isEqualTo(expect)
     }
