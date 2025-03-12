@@ -1,6 +1,6 @@
 package model
 
-data class Card(val cardRank: CardRank, val shape: Shape) {
+class Card private constructor(val cardRank: CardRank, val shape: Shape) {
     companion object {
         private val cache = mutableMapOf<Pair<CardRank, Shape>, Card>()
 
