@@ -7,6 +7,10 @@ import blackjack.domain.person.Person
 import blackjack.domain.person.Player
 
 class OutputView {
+    fun printErrorMessage(message: String?) {
+        println(ERROR_MESSAGE_PREFIX.format(message))
+    }
+
     fun printFirstDrawMessage(players: List<Player>) {
         println()
         val nameList = players.joinToString(DELIMITER) { it.name }
@@ -71,5 +75,6 @@ class OutputView {
         private const val RESULT_HEADLINE_MESSAGE = "## 최종 승패"
         private const val PLAYER_RESULT_MESSAGE = "%s: %s"
         private const val DELIMITER = ", "
+        private const val ERROR_MESSAGE_PREFIX = "[ERROR] %s"
     }
 }

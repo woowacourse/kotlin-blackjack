@@ -36,6 +36,6 @@ class InputView {
         private const val NO = "n"
         private const val INVALID_FLAG_MESSAGE = "$YES 혹은 ${NO}을 입력해주세요."
         private const val INVALID_INPUT_MESSAGE = "입력이 비어있습니다."
-        private const val INVALID_BET_AMOUNT_MESSAGE = "배팅 금액이 유효하지 않습니다."
+        private const val INVALID_BET_AMOUNT_MESSAGE = "배팅 금액은 숫자여야 합니다."
     }
 }

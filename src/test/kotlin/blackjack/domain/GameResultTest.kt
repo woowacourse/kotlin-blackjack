@@ -15,7 +15,7 @@ class GameResultTest {
 
     @BeforeEach
     fun setUp() {
-        player = Player("player", 100)
+        player = Player("player", BetAmount(100))
         dealer = Dealer()
     }
 
@@ -74,7 +74,7 @@ class GameResultTest {
 
     @Test
     fun `딜러는 플레이어의 손실만큼 수익을 받는다`() {
-        val players = listOf(Player("player1", 200), Player("player2", 300))
+        val players = listOf(Player("player1", BetAmount(200)), Player("player2", BetAmount(300)))
         val customCards = listOf(CardNumber.JACK, CardNumber.JACK)
         val customDeck = generateCustomDeck(customCards)
         drawCards(dealer, customCards, customDeck)

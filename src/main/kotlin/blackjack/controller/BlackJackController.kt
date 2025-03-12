@@ -1,5 +1,6 @@
 package blackjack.controller
 
+import blackjack.domain.BetAmount
 import blackjack.domain.BlackJackGame
 import blackjack.domain.person.Dealer
 import blackjack.domain.person.Player
@@ -22,13 +23,22 @@ class BlackJackController(
     }
 
     private fun initializePlayers(): List<Player> {
-        return inputView.getNames().map { name ->
-            Player(
-                name = name,
-                betAmount = inputView.getBetAmount(name),
-            )
+        val names = readPlayerNames()
+        return names.map { name ->
+            val betAmount = readPlayerBetAmount(name)
+            Player(name, betAmount)
         }
     }
+
+    private fun readPlayerNames(): List<String> =
+        retryWhenException {
+            inputView.getNames()
+        }
+
+    private fun readPlayerBetAmount(name: String): BetAmount =
+        retryWhenException {
+            BetAmount(inputView.getBetAmount(name))
+        }
 
     private fun dealCards(game: BlackJackGame) {
         outputView.printFirstDrawMessage(game.players)
@@ -38,7 +48,7 @@ class BlackJackController(
 
     private fun playPlayersTurns(game: BlackJackGame) {
         game.playPlayersTurns(
-            getIsHit = { inputView.getIsHit(it) },
+            getIsHit = { retryWhenException { inputView.getIsHit(it) } },
             printDrawStatus = { outputView.printPlayerDrawStatus(it) },
         )
     }
@@ -55,5 +65,15 @@ class BlackJackController(
 
         val gameResult = game.gameResult()
         outputView.printGameResults(gameResult)
+    }
+
+    private fun <T> retryWhenException(action: () -> T): T {
+        while (true) {
+            runCatching {
+                return action()
+            }.onFailure { e ->
+                outputView.printErrorMessage(e.message)
+            }
+        }
     }
 }
