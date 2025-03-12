@@ -4,7 +4,7 @@ import blackjack.const.GameRule
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
 
-class ScoreCalculator {
+object ScoreCalculator {
     fun calculate(cards: List<Card>): Int {
         val values = cards.map { getCardValue(it) }
         val sum = values.sum()
