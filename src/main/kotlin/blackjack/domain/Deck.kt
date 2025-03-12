@@ -9,6 +9,4 @@ class Deck(shuffledCards: List<Card>) {
     }
 
     fun getSize() = deck.size
-
-    fun contains(card: Card) = deck.contains(card)
 }

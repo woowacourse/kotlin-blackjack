@@ -37,6 +37,8 @@ class DeckTest {
     fun `뽑은 카드는 덱에 존재하지 않는다`() {
         val drawnCard = testDeck.draw()
 
-        assertThat(testDeck.contains(drawnCard)).isFalse()
+        repeat(testDeck.getSize() - 1) {
+            assertThat(testDeck.draw()).isNotEqualTo(drawnCard)
+        }
     }
 }
