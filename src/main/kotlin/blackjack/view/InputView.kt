@@ -3,6 +3,7 @@ package blackjack.view
 import blackjack.domain.Ace
 import blackjack.domain.Card
 import blackjack.domain.Character
+import blackjack.domain.Dealer
 import blackjack.domain.Number
 import blackjack.domain.Player
 import blackjack.domain.Rank
@@ -15,7 +16,10 @@ class InputView {
         return players
     }
 
-    fun askMoreCards(): Boolean {
+    fun askMoreCards(
+        dealer: Dealer,
+        players: List<Player>,
+    ) {
         players.forEach { player ->
             while (player.canGetCard()) {
                 println("\n${player.name}는 한 장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")

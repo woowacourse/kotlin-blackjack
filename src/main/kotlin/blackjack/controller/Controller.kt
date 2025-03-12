@@ -16,17 +16,6 @@ class Controller(
 
         outputView.printInitialCardsState(dealer, players)
 
-        players.forEach { player ->
-            while (player.canGetCard()) {
-                if (inputView.askMoreCards(player)) {
-                    dealer.giveCard(player)
-                    println("${player.name}카드: ${player.cards.joinToString { card -> card.prettyString }}")
-                } else {
-                    break
-                }
-            }
-        }
-
         outputView.printFinalCardsScores(dealer, players)
         blackjack.finish()
         outputView.printFinalResults(dealer, players)
