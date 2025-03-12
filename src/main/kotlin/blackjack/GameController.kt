@@ -18,7 +18,10 @@ class GameController(
     private val deck = Deck(shuffledCards)
 
     fun run() {
-        val players: List<Player> = getPlayers()
+        val players =
+            runCatchingUntilValidInput {
+                getPlayers()
+            }
         val game = BlackJackGame(players, deck, BlackJackOutputView, BlackJackInputView)
         game.setUp()
         game.run()
@@ -28,37 +31,24 @@ class GameController(
     private fun getPlayers(): List<Player> {
         val input = inputView.getPlayerNames()
         return input.map { playerName ->
-            val bettingAmount =
-                retryUntilValidInput {
-                    inputView.getPlayerBettingAmount(playerName)
-                }
-            runCatchingUntilValidInput {
-                Player(playerName, bettingAmount)
+            val bettingAmount = inputView.getPlayerBettingAmount(playerName)
+            Player(playerName, bettingAmount)
+        }
+    }
+
+    private fun <T> runCatchingUntilValidInput(action: () -> T): T {
+        var tried = 0
+        var lastException: Throwable? = null
+        while (tried < RETRY_COUNT) {
+            runCatching {
+                return action()
+            }.onFailure { e ->
+                println(e.message)
+                lastException = e
+                tried++
             }
         }
-    }
-
-    private fun <T> retryUntilValidInput(
-        count: Int = 3,
-        msg: String = "올바르지 않은 형식",
-        action: () -> T?,
-    ): T {
-        var tried = 0
-        var result: T? = null
-        while (result == null && tried < count) {
-            result = action()
-            tried++
-        }
-        requireNotNull(result) { msg }
-        return result
-    }
-
-    private fun <T> runCatchingUntilValidInput(action: () -> T?): T {
-        return retryUntilValidInput {
-            runCatching {
-                action()
-            }.getOrNull()
-        }
+        throw IllegalStateException(lastException)
     }
 
     private fun showResult(game: BlackJackGame) {
@@ -69,6 +59,5 @@ class GameController(
 
     companion object {
         const val RETRY_COUNT = 3
-        const val ERR_INVALID_FORMAT = "올바르지 않은 형식입니다"
     }
 }

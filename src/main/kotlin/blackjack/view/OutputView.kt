@@ -28,7 +28,14 @@ object OutputView {
         }
     }
 
+    fun printOnGlobalExceptionOccur(msg: String?) {
+        println(ON_GLOBAL_EXCEPTION_OCCUR)
+        println(msg)
+    }
+
     private const val FINAL_RESULT_NOTICE = "\n##최종 수익"
+
+    private const val ON_GLOBAL_EXCEPTION_OCCUR = "오류입니다 게임을 다시 시도해 주세요"
 
     private fun printDealerCard(dealer: Dealer): String = "딜러: ${dealer.cards.toList().first().format()}"
 
