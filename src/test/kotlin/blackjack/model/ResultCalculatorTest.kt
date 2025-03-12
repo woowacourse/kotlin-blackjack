@@ -1,6 +1,5 @@
-package blackjack
+package blackjack.model
 
-import blackjack.model.ResultCalculator
 import blackjack.model.card.Card
 import blackjack.model.card.CardNumber
 import blackjack.model.card.Shape
