@@ -4,6 +4,7 @@ import blackjack.domain.generator.CardsGenerator
 import blackjack.domain.model.BetAmount
 import blackjack.domain.model.GameResult
 import blackjack.domain.model.Scoreboard
+import blackjack.domain.model.card.Card
 import blackjack.domain.model.card.Deck
 import blackjack.domain.model.participant.Dealer
 import blackjack.domain.model.participant.Participant
@@ -50,8 +51,24 @@ class Casino(
         deck: Deck,
     ) {
         participants.forEach { participant ->
-            repeat(2) { participant.drawCard(deck) }
+            participant.drawCard(drawSafely(2, deck))
         }
+    }
+
+    private fun drawSafely(
+        number: Int,
+        deck: Deck,
+    ): List<Card> {
+        val drawnDeck = deck.pop(number)
+        if (drawnDeck == null) {
+            deck.refill()
+            return drawSafely(number, deck)
+        }
+        return drawnDeck
+    }
+
+    private fun refillDeck(deck: Deck) {
+        deck.refill()
     }
 
     private fun outputParticipantCardsInfo(
@@ -83,7 +100,7 @@ class Casino(
                 outputView.showPlayerCardsInfo(player)
                 break
             }
-            player.drawCard(deck)
+            player.drawCard(drawSafely(1, deck))
             outputView.showPlayerCardsInfo(player)
         }
         outputView.newLine()
@@ -94,7 +111,7 @@ class Casino(
         deck: Deck,
     ) {
         while (dealer.isDrawable()) {
-            dealer.drawCard(deck)
+            dealer.drawCard(drawSafely(1, deck))
             outputView.showDealerDrawMessage()
         }
         outputView.newLine()
