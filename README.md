@@ -64,7 +64,7 @@
 - [x] Hand | 방어적 복사를 사용하도록 변경
 - [x] Hand | haveAce 검사를 메소드로 변경
 - [x] PlayingCard | 카드를 여러장 받아오는 메소드 추가
-- [ ] BlackJack | hitAction의 bustcheck이동
+- [x] BlackJack | hitAction의 bustcheck이동
 - [ ] Participants | isBust메소드 이동
 - [ ] GameResult | bust판단 메소드 삭제 및 도메인으로 판단하도록 변경
 - [ ] Participants | status 변수 삭제

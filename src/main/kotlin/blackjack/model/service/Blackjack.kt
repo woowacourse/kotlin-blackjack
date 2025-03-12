@@ -20,7 +20,6 @@ class Blackjack(private val deck: PlayingCard) {
 
     fun hitAction(player: Player) {
         player.receiveCard(deck.spreadCard(1))
-        player.checkBust()
     }
 
     fun drawUntilThreshold(dealer: Dealer): Int {

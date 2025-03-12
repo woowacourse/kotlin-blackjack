@@ -45,6 +45,7 @@ class BlackjackController(
             val playerAction = getActionType(player)
             if (shouldStopDrawing(playerAction)) break
             blackjack.hitAction(player)
+            player.checkBust()
             outputView.printCardStatus(player)
         }
         if (player.cardDeck.size == 2) outputView.printCardStatus(player)
