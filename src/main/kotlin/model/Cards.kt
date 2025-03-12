@@ -9,6 +9,10 @@ class Cards(allCards: List<Card>) {
     }
 
     fun drawCards(count: Int): List<Card> {
+        if (_allCards.isEmpty()) {
+            _allCards.addAll(CardsGenerator().generateCards().allCards)
+        }
+
         val drawnCards = _allCards.take(count)
         _allCards.removeAll(drawnCards.toSet())
         return drawnCards
