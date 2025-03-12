@@ -5,7 +5,10 @@ import blackjack.model.WinningResult.PUSH
 import blackjack.model.WinningResult.WIN
 
 class Dealer(val name: String = DEALER_NAME, override val hand: Hand) : Participant {
+
+    override var money = Amount(0)
     var drawCount = 0
+
     fun drawUntilFinished(cardDeck: CardDeck) {
         while (hand.score() <= DEALER_DRAW_CRITERIA && !hand.isBust()) {
             drawCount++

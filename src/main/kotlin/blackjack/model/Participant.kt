@@ -4,6 +4,8 @@ interface Participant {
 
     val hand:Hand
 
+    val money : Amount
+
     fun draw(cardDeck: CardDeck) {
         hand.add(cardDeck.draw())
     }

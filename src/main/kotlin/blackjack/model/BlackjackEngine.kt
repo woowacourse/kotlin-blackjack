@@ -3,9 +3,10 @@ package blackjack.model
 class BlackjackEngine(
     val cardDeck: CardDeck = CardDeck()
 ) {
-    fun preparePlayers(names: List<String>): Players = Players(names.map { name ->
-        Player(name, makeFirstHand())
-    })
+    fun preparePlayers(eventProvider: EventProvider): Players {
+        val names = eventProvider.getNames()
+        return Players(names.map { name -> Player(name, makeFirstHand(), Amount(eventProvider.getBetAmount(name))) })
+    }
 
     fun prepareDealer(): Dealer = Dealer(hand = makeFirstHand())
 

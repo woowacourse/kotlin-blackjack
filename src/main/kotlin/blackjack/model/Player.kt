@@ -2,5 +2,8 @@ package blackjack.model
 
 class Player(
     val name: String,
-    override val hand: Hand
-) : Participant
+    override val hand: Hand,
+    val betAmount: Amount
+    ) : Participant{
+        override val money = Amount(0)
+    }
