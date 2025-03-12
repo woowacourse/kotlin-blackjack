@@ -20,11 +20,7 @@ class BlackjackController(
         val players = Players(createPlayers(inputView.inputPlayers(), allCards))
         val dealer = Dealer(initialDealerCards)
 
-        showInitialGameState(
-            players.names,
-            initialDealerCards,
-            players.cardNames,
-        )
+        showInitialGameState(players, initialDealerCards)
         handlePlayerTurns(players, allCards)
         handleDealerTurn(dealer, allCards)
         showTotalResult(initialDealerCards, dealer, players)
@@ -47,13 +43,11 @@ class BlackjackController(
     }
 
     private fun showInitialGameState(
-        playersNames: List<String>,
+        players: Players,
         initialDealerCards: Cards,
-        playerCardsNames: List<List<Pair<String, String>>>,
     ) {
-        val dealerCardNames = initialDealerCards.names
-        outputView.printDealerAndPlayers(playersNames)
-        outputView.printInitialCards(dealerCardNames, playersNames, playerCardsNames)
+        outputView.printDealerAndPlayers(players.names)
+        outputView.printInitialCards(initialDealerCards.names, players.names, players.cardNames)
     }
 
     private fun handleDealerTurn(
