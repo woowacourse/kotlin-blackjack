@@ -40,6 +40,7 @@ class ScoreboardTest {
 
         val expectedResult =
             mapOf(
+                GameResult.BLACKJACK_WIN to 0,
                 GameResult.WIN to 0,
                 GameResult.DRAW to 1,
                 GameResult.LOSE to 1,
