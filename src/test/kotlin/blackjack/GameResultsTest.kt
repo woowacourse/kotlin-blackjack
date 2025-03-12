@@ -62,6 +62,23 @@ class GameResultsTest {
     @Test
     fun `점수를 판별할 때, 플레이어와 딜러의 점수가 같다면 무승부라고 판단한다`() {
         setDealerCard(
+            Card.of(Rank.THREE, Suit.CLUB),
+            Card.of(Rank.NINE, Suit.HEART),
+            Card.of(Rank.NINE, Suit.SPADE),
+        )
+
+        setPlayerCard(
+            Card.of(Rank.TWO, Suit.CLUB),
+            Card.of(Rank.TEN, Suit.SPADE),
+            Card.of(Rank.NINE, Suit.SPADE),
+        )
+        val gameResults = GameResults(dealer, listOf(player))
+        assertThat(gameResults.judgePlayerResult(player)).isEqualTo(GameResultStatus.DRAW)
+    }
+
+    @Test
+    fun `점수를 판별할 때, 블랙잭은 21보다 높다고 판단한다`() {
+        setDealerCard(
             Card.of(Rank.ACE, Suit.CLUB),
             Card.of(Rank.TEN, Suit.SPADE),
         )
@@ -72,6 +89,6 @@ class GameResultsTest {
             Card.of(Rank.NINE, Suit.SPADE),
         )
         val gameResults = GameResults(dealer, listOf(player))
-        assertThat(gameResults.judgePlayerResult(player)).isEqualTo(GameResultStatus.DRAW)
+        assertThat(gameResults.judgePlayerResult(player)).isEqualTo(GameResultStatus.PLAYER_LOSE)
     }
 }

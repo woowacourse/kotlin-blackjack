@@ -12,7 +12,7 @@ abstract class Participant {
     abstract val hitThreshold: Int
 
     fun addCard(card: Card) {
-        cards.add(card)
+        if (canHit()) cards.add(card)
     }
 
     fun isBust(): Boolean {

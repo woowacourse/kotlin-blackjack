@@ -8,7 +8,7 @@ class Dealer : Participant() {
 
     fun setAllCard(deck: Deck) {
         while (canHit()) {
-            addCard(deck.draw())
+            cards.add(deck.draw())
         }
     }
 
