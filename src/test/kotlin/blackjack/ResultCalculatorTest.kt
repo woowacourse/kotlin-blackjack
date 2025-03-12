@@ -20,13 +20,25 @@ class ResultCalculatorTest {
     }
 
     @Test
-    fun `카드 총 합이 21을 넘고 ACE가 존재하면 점수 조정을 진행한다`() {
-        player.addCard(Card(Shape.SPADE, CardNumber.ACE))
-        player.addCard(Card(Shape.CLOVER, CardNumber.ACE))
+    fun `ACE를 11로 계산할 수 있을 때 11로 처리한다`() {
+        player.addCard(Card(Shape.SPADE, CardNumber.TWO))
+        player.addCard(Card(Shape.CLOVER, CardNumber.THREE))
         player.addCard(Card(Shape.DIAMOND, CardNumber.ACE))
-        val expect = 13
+        val expect = 16
 
-        val actual = ResultCalculator.adjustScore(player.cards)
+        val actual = ResultCalculator.calculate(player.cards)
+
+        assertThat(actual).isEqualTo(expect)
+    }
+
+    @Test
+    fun `ACE를 11로 계산할 수 없을 때 1로 처리한다`() {
+        player.addCard(Card(Shape.SPADE, CardNumber.TEN))
+        player.addCard(Card(Shape.CLOVER, CardNumber.TEN))
+        player.addCard(Card(Shape.DIAMOND, CardNumber.ACE))
+        val expect = 21
+
+        val actual = ResultCalculator.calculate(player.cards)
 
         assertThat(actual).isEqualTo(expect)
     }
