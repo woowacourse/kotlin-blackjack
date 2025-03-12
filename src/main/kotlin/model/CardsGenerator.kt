@@ -1,5 +1,8 @@
 package model
 
+import util.RandomShuffler
+import util.Shuffler
+
 class CardsGenerator(private val shuffler: Shuffler = RandomShuffler()) {
     fun generateCards(): Cards {
         val cards: MutableList<Card> = mutableListOf()
