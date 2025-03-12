@@ -43,12 +43,10 @@ class BlackjackController(
     }
 
     private fun playGame(game: BlackjackGame) {
-        game.playPlayersTurn(
-            onResponse = inputView::readPlayerHit,
-            onDraw = outputView::printPlayerCards,
-        )
-        game.playDealerTurn(
-            onDraw = outputView::printDealerHit,
+        game.playTurns(
+            onPlayerResponse = inputView::readPlayerHit,
+            onPlayerDraw = outputView::printPlayerCards,
+            onDealerDraw = outputView::printDealerHit,
         )
     }
 

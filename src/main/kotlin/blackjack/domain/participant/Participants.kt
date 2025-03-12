@@ -18,6 +18,39 @@ class Participants(
         }
     }
 
+    fun playGame(
+        deck: Deck,
+        onPlayerResponse: (Player) -> Boolean,
+        onPlayerDraw: (Player) -> Unit,
+        onDealerDraw: (Dealer) -> Unit,
+    ) {
+        playPlayersTurn(deck, onPlayerResponse, onPlayerDraw)
+        playDealerTurn(deck, onDealerDraw)
+    }
+
+    private fun playPlayersTurn(
+        deck: Deck,
+        onResponse: (Player) -> Boolean,
+        onDraw: (Player) -> Unit,
+    ) {
+        players.forEach { player ->
+            while (player.canHit() && onResponse(player)) {
+                player.drawCard(deck.pick())
+                onDraw(player)
+            }
+        }
+    }
+
+    private fun playDealerTurn(
+        deck: Deck,
+        onDraw: (Dealer) -> Unit,
+    ) {
+        while (dealer.canHit()) {
+            dealer.drawCard(deck.pick())
+            onDraw(dealer)
+        }
+    }
+
     fun getDealerResult(): Map<Result, Int> = players.map { dealer.getResult(it.getScore()) }.groupingBy { it }.eachCount()
 
     fun getPlayerResults(): Map<String, Result> = players.associate { it.name to it.getResult(dealer.getScore()) }

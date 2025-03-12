@@ -3,7 +3,6 @@ package blackjack.domain.participant
 import blackjack.domain.Result
 import blackjack.domain.Score
 import blackjack.domain.card.Card
-import blackjack.domain.card.Deck
 import blackjack.domain.card.Hand
 
 abstract class Participant(
@@ -18,12 +17,6 @@ abstract class Participant(
     fun getScore(): Score = hand.calculateScore()
 
     abstract fun canHit(): Boolean
-
-    abstract fun playGame(
-        deck: Deck,
-        onDraw: (Participant) -> Unit,
-        shouldContinue: (() -> Boolean) = { true },
-    )
 
     abstract fun getResult(otherScore: Score): Result
 }
