@@ -28,7 +28,7 @@ class BlackJackGame(
     }
 
     fun playDealerTurns(printDealerDrawMessage: () -> Unit) {
-        while (dealer.canDraw) {
+        while (dealer.isDrawable()) {
             printDealerDrawMessage()
             dealer.draw(deck)
         }
@@ -43,7 +43,7 @@ class BlackJackGame(
         getIsHit: (String) -> Boolean,
         printDrawStatus: (Player) -> Unit,
     ) {
-        while (player.canDraw) {
+        while (player.isDrawable()) {
             playPlayerTurn(player, getIsHit(player.name), printDrawStatus)
         }
     }

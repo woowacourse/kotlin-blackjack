@@ -17,8 +17,8 @@ enum class ResultState {
             if (player.gameState == PersonState.BUST) return LOSE
             if (dealer.gameState == PersonState.BUST) return WIN
 
-            val playerScore = player.score
-            val dealerScore = dealer.score
+            val playerScore = player.score()
+            val dealerScore = dealer.score()
 
             return when {
                 playerScore > dealerScore -> WIN

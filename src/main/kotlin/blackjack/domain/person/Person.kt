@@ -10,14 +10,20 @@ abstract class Person {
 
     private val hand: Hand = Hand()
 
-    val cards: List<Card> get() = hand.cards
-
-    val canDraw: Boolean get() = !gameState.isFinal
-
-    val score: Int get() = hand.score
+    fun isDrawable(): Boolean {
+        return !state.isFinal
+    }
 
     fun draw(deck: Deck) {
         hand.addCard(deck.draw())
         state = PersonState.from(this)
+    }
+
+    fun cards(): List<Card> {
+        return hand.cards()
+    }
+
+    fun score(): Int {
+        return hand.score()
     }
 }

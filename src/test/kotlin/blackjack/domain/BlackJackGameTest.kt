@@ -25,8 +25,8 @@ class BlackJackGameTest {
         game.dealCards()
 
         assertAll(
-            { dealer.cards.size shouldBe 2 },
-            { players.all { it.cards.size == 2 } shouldBe true },
+            { dealer.cards().size shouldBe 2 },
+            { players.all { it.cards().size == 2 } shouldBe true },
         )
     }
 
@@ -39,8 +39,8 @@ class BlackJackGameTest {
         val bob = players.find { it.name == "Bob" }
 
         assertAll(
-            { ((alice?.cards?.size ?: -1) > 2) shouldBe true },
-            { (bob?.cards?.size ?: -1) shouldBe 2 },
+            { ((alice?.cards()?.size ?: -1) > 2) shouldBe true },
+            { (bob?.cards()?.size ?: -1) shouldBe 2 },
         )
     }
 
@@ -49,7 +49,7 @@ class BlackJackGameTest {
         game.dealCards()
         game.playDealerTurns(printDealerDrawMessage = { })
 
-        (dealer.score >= 17) shouldBe true
+        (dealer.score() >= 17) shouldBe true
     }
 
     @Test

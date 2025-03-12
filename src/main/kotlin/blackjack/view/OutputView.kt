@@ -17,15 +17,15 @@ class OutputView {
         dealer: Dealer,
         players: List<Player>,
     ) {
-        printDrawStatus(DEALER, dealer.cards.first().toUiString() + "\n")
+        printDrawStatus(DEALER, dealer.cards().first().toUiString() + "\n")
         players.forEach { player ->
-            printDrawStatus(player.name, player.cards.toUiString() + "\n")
+            printDrawStatus(player.name, player.cards().toUiString() + "\n")
         }
         println()
     }
 
     fun printPlayerDrawStatus(player: Player) {
-        printDrawStatus(player.name, player.cards.toUiString())
+        printDrawStatus(player.name, player.cards().toUiString())
         println()
     }
 
@@ -37,7 +37,7 @@ class OutputView {
     fun printPersonResult(person: Person) {
         val name = (person as? Player)?.name ?: DEALER
         if (name == DEALER) println()
-        printGameResult(name, person.cards, person.isBlackJackString())
+        printGameResult(name, person.cards(), person.isBlackJackString())
     }
 
     private fun printGameResult(

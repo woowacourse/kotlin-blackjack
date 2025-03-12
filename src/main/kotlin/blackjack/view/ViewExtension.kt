@@ -12,7 +12,7 @@ fun Double.formatAmount(): String {
     return formatter.format(this)
 }
 
-fun Person.isBlackJackString(): String = if (this.gameState == PersonState.BLACKJACK) "BLACKJACK!" else "${this.score}"
+fun Person.isBlackJackString(): String = if (this.gameState == PersonState.BLACKJACK) "BLACKJACK!" else "${this.score()}"
 
 fun List<Card>.toUiString(): String = joinToString(", ") { it.toUiString() }
 
