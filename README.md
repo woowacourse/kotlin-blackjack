@@ -82,3 +82,4 @@
 - [x] Player & Dealer | getInitCard 메소드 로직 변경
 - [x] test | 메소드명 직관적으로 변경
 - [ ] Introduce | 이름 필수 요소 고민
+- [x] BlackjackController | PlayerGroup 파라미터 생략

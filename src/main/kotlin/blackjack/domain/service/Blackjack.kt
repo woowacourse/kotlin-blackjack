@@ -8,7 +8,7 @@ import blackjack.domain.model.participant.PlayerGroup
 
 class Blackjack(
     private val deck: PlayingCard,
-    private val playerGroup: PlayerGroup,
+    val playerGroup: PlayerGroup,
 ) {
     fun initGame() {
         playerGroup.participants.forEach { player ->

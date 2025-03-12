@@ -20,9 +20,9 @@ class BlackjackController(
         val playerGroup = getPlayerGroup()
         val playerBetAmount = getPlayersBetAmount(playerGroup.players)
         val blackjack = makeGame(playerGroup)
-        initGame(blackjack, playerGroup)
-        startGame(blackjack, playerGroup)
-        endGame(blackjack, playerGroup, playerBetAmount)
+        initGame(blackjack)
+        startGame(blackjack)
+        endGame(blackjack, playerBetAmount)
     }
 
     private fun getPlayerGroup(): PlayerGroup {
@@ -50,22 +50,16 @@ class BlackjackController(
         return Blackjack(PlayingCard(deck), playerGroup)
     }
 
-    private fun initGame(
-        blackjack: Blackjack,
-        playerGroup: PlayerGroup,
-    ) {
+    private fun initGame(blackjack: Blackjack) {
         blackjack.initGame()
-        outputView.printInitCardStatus(playerGroup)
+        outputView.printInitCardStatus(blackjack.playerGroup)
     }
 
-    private fun startGame(
-        blackjack: Blackjack,
-        playerGroup: PlayerGroup,
-    ) {
-        playerGroup.players.forEach { player ->
+    private fun startGame(blackjack: Blackjack) {
+        blackjack.playerGroup.players.forEach { player ->
             hitOrStay(blackjack, player)
         }
-        dealerReceiveCard(blackjack, playerGroup.dealer)
+        dealerReceiveCard(blackjack, blackjack.playerGroup.dealer)
     }
 
     private fun hitOrStay(
@@ -104,13 +98,12 @@ class BlackjackController(
 
     private fun endGame(
         blackjack: Blackjack,
-        playerGroup: PlayerGroup,
         playerBetAmount: Map<Player, BetAmount>,
     ) {
-        outputView.participantsCardResult(playerGroup)
+        outputView.participantsCardResult(blackjack.playerGroup)
         val gameResult = blackjack.endGame(playerBetAmount)
         val dealerResult = -gameResult.values.sum()
-        outputView.dealerResult(playerGroup.dealer, dealerResult)
+        outputView.dealerResult(blackjack.playerGroup.dealer, dealerResult)
         outputView.playerResult(gameResult)
     }
 
