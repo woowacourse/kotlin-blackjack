@@ -26,7 +26,7 @@ class DealerTest {
     }
 
     @Test
-    fun `플레이어와 비교해서 승패 결과를 가져올 수 있고, 둘 다 버스트인 경우 딜러가 승리한다`() {
+    fun `플레이어의 손패가 22점이고, 딜러의 손패가 25점이면(둘 다 버스트) 딜러가 승리한다`() {
         val playerHand =
             Hand.of(
                 Card.of(CardNumber.KING, Suit.SPADE),
@@ -50,7 +50,7 @@ class DealerTest {
     }
 
     @Test
-    fun `플레이어와 비교해서 승패 결과를 가져올 수 있고, 둘 다 버스트가 아닌 경우 점수로 비교한다`() {
+    fun `플레이어의 손패가 21점이고, 딜러의 손패가 15점이면 딜러가 패배한다`() {
         val playerHand =
             Hand.of(
                 Card.of(CardNumber.KING, Suit.SPADE),
@@ -90,7 +90,7 @@ class DealerTest {
     }
 
     @Test
-    fun `딜러 카드의 총합이 17 이상이면 카드를 더 받을 수 있다`() {
+    fun `딜러 카드의 총합이 17 이상이면 카드를 더 받을 수 없다`() {
         val dealerHand =
             Hand.of(
                 Card.of(CardNumber.KING, Suit.SPADE),
