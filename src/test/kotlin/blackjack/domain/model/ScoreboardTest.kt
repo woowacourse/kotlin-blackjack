@@ -9,7 +9,7 @@ import blackjack.domain.model.participant.Player
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class GameResultRecordTest {
+class ScoreboardTest {
     @Test
     fun `딜러와 플레이어를 비교해 딜러의 게임 결과를 가져올 수 있다`() {
         val dealer =
@@ -36,7 +36,7 @@ class GameResultRecordTest {
                     Card.of(CardNumber.QUEEN, Suit.HEART),
                 ),
             )
-        val actualResult = GameResultRecord(dealer, listOf(firstPlayer, secondPlayer)).getDealerResult()
+        val actualResult = Scoreboard(dealer, listOf(firstPlayer, secondPlayer)).getDealerResult()
 
         val expectedResult =
             mapOf(
