@@ -1,16 +1,15 @@
 package blackjack.domain.model.participant
 
 import blackjack.domain.model.GameResult
-import blackjack.domain.model.card.Deck
+import blackjack.domain.model.card.Card
 import blackjack.domain.model.card.Hand
 
 abstract class Participant(
     val name: String,
     val hand: Hand,
 ) {
-    fun drawCard(deck: Deck) {
-        val card = deck.pop()
-        hand.add(card)
+    fun drawCard(cards: List<Card>) {
+        cards.forEach(hand::add)
     }
 
     abstract fun compareTo(opponent: Participant): GameResult
