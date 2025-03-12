@@ -1,5 +1,19 @@
 package blackjack.model
 
-class Amount(val value: Int){
-    fun toMinus():Amount = Amount(-value)
+class Amount(private var value: Double) {
+    fun toMinus(): Amount = Amount(-value)
+
+    fun getValue(): Double = value
+
+    fun addMoney(amount: Amount) {
+        value = value + amount.value
+    }
+
+    fun loseMoney(amount: Amount) {
+        value = value - amount.value
+    }
+
+    fun toBlackjackMoney():Amount = Amount(value * 1.5)
+
+
 }

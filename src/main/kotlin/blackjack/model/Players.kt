@@ -12,6 +12,8 @@ class Players(
         }
     }
 
+    fun getPlayers():List<Player> = value
+
     fun results(dealer: Dealer): Map<String, WinningResult> =
         value.associate { player ->
             player.name to dealer.getPlayerResult(player)

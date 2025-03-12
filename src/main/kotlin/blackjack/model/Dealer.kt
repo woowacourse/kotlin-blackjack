@@ -7,7 +7,7 @@ import blackjack.model.WinningResult.BLACKJACK
 
 class Dealer(val name: String = DEALER_NAME, override val hand: Hand) : Participant {
 
-    override var money = Amount(0)
+    override var money = Amount(0.0)
     var drawCount = 0
 
     fun drawUntilFinished(cardDeck: CardDeck) {
@@ -57,6 +57,20 @@ class Dealer(val name: String = DEALER_NAME, override val hand: Hand) : Particip
     }
 
     fun getDealerResult(player: Player): WinningResult = getPlayerResult(player).reverse()
+
+    override fun settleBlackjack(amount: Amount) {
+        money.loseMoney(amount.toBlackjackMoney())
+    }
+
+    override fun settleWin(amount: Amount) {
+        money.addMoney(amount)
+    }
+
+    override fun settlePush(amount: Amount) {}
+
+    override fun settleLose(amount: Amount) {
+        money.loseMoney(amount)
+    }
 
 
     companion object {
