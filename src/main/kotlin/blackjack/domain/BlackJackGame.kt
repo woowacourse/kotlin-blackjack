@@ -19,11 +19,11 @@ class BlackJackGame(
     }
 
     fun playPlayersTurns(
-        getHitFlag: (String) -> Boolean,
+        getIsHit: (String) -> Boolean,
         printDrawStatus: (Player) -> Unit,
     ) {
         players.forEach { player ->
-            playPlayerTurns(player, getHitFlag, printDrawStatus)
+            playPlayerTurns(player, getIsHit, printDrawStatus)
         }
     }
 
@@ -40,20 +40,20 @@ class BlackJackGame(
 
     private fun playPlayerTurns(
         player: Player,
-        getHitFlag: (String) -> Boolean,
+        getIsHit: (String) -> Boolean,
         printDrawStatus: (Player) -> Unit,
     ) {
         while (player.canDraw) {
-            playPlayerTurn(player, getHitFlag(player.name), printDrawStatus)
+            playPlayerTurn(player, getIsHit(player.name), printDrawStatus)
         }
     }
 
     private fun playPlayerTurn(
         player: Player,
-        hitFlag: Boolean,
+        isHit: Boolean,
         printDrawStatus: (Player) -> Unit,
     ) {
-        if (hitFlag) {
+        if (isHit) {
             player.draw(deck)
             printDrawStatus(player)
             return

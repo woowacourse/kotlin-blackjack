@@ -33,7 +33,7 @@ class BlackJackGameTest {
     @Test
     fun `hitFlag이 true이면 플레이어가 카드를 추가로 뽑는다`() {
         game.dealCards()
-        game.playPlayersTurns(getHitFlag = { name -> name == "Alice" }, {})
+        game.playPlayersTurns(getIsHit = { name -> name == "Alice" }, {})
 
         val alice = players.find { it.name == "Alice" }!!
         val bob = players.find { it.name == "Bob" }!!

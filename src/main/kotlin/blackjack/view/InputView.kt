@@ -8,7 +8,7 @@ class InputView {
         return input.split(DELIMITER).map { it.trim() }
     }
 
-    fun getHitFlag(name: String): Boolean {
+    fun getIsHit(name: String): Boolean {
         println(ASK_DRAW_CARD_MESSAGE.format(name))
         val input = readlnOrNull() ?: ""
         validateInput(input)

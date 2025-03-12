@@ -33,7 +33,7 @@ class BlackJackController(
 
     private fun playPlayersTurns(game: BlackJackGame) {
         game.playPlayersTurns(
-            getHitFlag = { inputView.getHitFlag(it) },
+            getIsHit = { inputView.getIsHit(it) },
             printDrawStatus = { outputView.printPlayerDrawStatus(it) },
         )
     }
