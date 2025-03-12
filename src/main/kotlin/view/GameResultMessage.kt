@@ -7,7 +7,7 @@ object GameResultMessage {
         mapOf(
             GameResult.WIN to "승",
             GameResult.LOSE to "패",
-            GameResult.DRAW to "무"
+            GameResult.DRAW to "무",
         )
 
     fun getGameResultMessage(gameResult: GameResult): String {
