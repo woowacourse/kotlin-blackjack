@@ -24,7 +24,7 @@ class Dealer(
     }
 
     override fun isDrawable(): Boolean {
-        return hand.isLessOrSameThan(DEALER_DRAW_CONDITION)
+        return !hand.isMoreThan(DEALER_DRAW_CONDITION)
     }
 
     companion object {

@@ -63,13 +63,13 @@ class HandTest {
     }
 
     @Test
-    fun `손패에 카드 값이 특정한 값보다 이하인지 알 수 있다`() {
+    fun `손패에 카드 값이 특정한 값보다 큰 지 알 수 있다`() {
         val hand: Hand =
             Hand.of(
                 Card.of(CardNumber.TEN, Suit.SPADE),
-                Card.of(CardNumber.SIX, Suit.CLUB),
+                Card.of(CardNumber.SEVEN, Suit.CLUB),
             )
-        val actualIsLessOrSameThanSixteen = hand.isLessOrSameThan(16)
+        val actualIsLessOrSameThanSixteen = hand.isMoreThan(16)
 
         val expected = true
 

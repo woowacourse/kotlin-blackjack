@@ -17,8 +17,8 @@ class Hand {
         return getScore() > BLACK_JACK_NUMBER
     }
 
-    fun isLessOrSameThan(score: Int): Boolean {
-        return getScore() <= score
+    fun isMoreThan(score: Int): Boolean {
+        return getScore() > score
     }
 
     fun getScore(): Int {
