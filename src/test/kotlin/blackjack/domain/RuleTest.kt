@@ -112,7 +112,7 @@ class RuleTest {
         player.addCard(aceCard)
 
         // when
-        val actual = Rule.getResult(dealer, player)
+        val actual = Rule.getPlayerResult(dealer, player)
 
         // then
         assertThat(actual).isEqualTo(Result.LOSE)
@@ -129,7 +129,7 @@ class RuleTest {
         player.addCard(aceCard)
 
         // when
-        val actual = Rule.getResult(dealer, player)
+        val actual = Rule.getPlayerResult(dealer, player)
 
         // then
         assertThat(actual).isEqualTo(Result.WIN)
@@ -147,7 +147,7 @@ class RuleTest {
         player.addCard(queenCard)
 
         // when
-        val actual = Rule.getResult(dealer, player)
+        val actual = Rule.getPlayerResult(dealer, player)
 
         // then
         assertThat(actual).isEqualTo(Result.LOSE)
@@ -164,7 +164,7 @@ class RuleTest {
         player.addCard(queenCard)
 
         // when
-        val actual = Rule.getResult(dealer, player)
+        val actual = Rule.getPlayerResult(dealer, player)
 
         // then
         assertThat(actual).isEqualTo(Result.LOSE)
@@ -181,7 +181,7 @@ class RuleTest {
         player.addCard(queenCard)
 
         // when
-        val actual = Rule.getResult(dealer, player)
+        val actual = Rule.getPlayerResult(dealer, player)
 
         // then
         assertThat(actual).isEqualTo(Result.WIN)
@@ -197,7 +197,7 @@ class RuleTest {
         player.addCard(queenCard)
 
         // when
-        val actual = Rule.getResult(dealer, player)
+        val actual = Rule.getPlayerResult(dealer, player)
 
         // then
         assertThat(actual).isEqualTo(Result.LOSE)
@@ -213,7 +213,7 @@ class RuleTest {
         player.addCard(aceCard)
 
         // when
-        val actual = Rule.getResult(dealer, player)
+        val actual = Rule.getPlayerResult(dealer, player)
 
         // then
         assertThat(actual).isEqualTo(Result.WIN)
@@ -229,7 +229,7 @@ class RuleTest {
         player.addCard(queenCard)
 
         // when
-        val actual = Rule.getResult(dealer, player)
+        val actual = Rule.getPlayerResult(dealer, player)
 
         // then
         assertThat(actual).isEqualTo(Result.PUSH)

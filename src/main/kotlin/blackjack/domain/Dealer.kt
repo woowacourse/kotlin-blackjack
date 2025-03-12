@@ -11,6 +11,10 @@ class Dealer : Participant() {
         }
     }
 
+    fun getHitCount(): Int {
+        return hand.cards.size - Rule.INITIAL_CARD_COUNT
+    }
+
     companion object {
         private const val DEALER_HIT_CONDITION = 16
     }

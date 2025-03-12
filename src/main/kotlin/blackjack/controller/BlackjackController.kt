@@ -5,8 +5,8 @@ import blackjack.domain.Dealer
 import blackjack.domain.Deck
 import blackjack.domain.Player
 import blackjack.domain.Players
-import blackjack.domain.Result
 import blackjack.domain.Rule
+import blackjack.domain.Rule.getDealerResult
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -15,11 +15,10 @@ class BlackjackController(
     private val outputView: OutputView,
 ) {
     private lateinit var deck: Deck
-
     fun play() {
         val dealer = Dealer()
         val players = getPlayers()
-        deck = Deck()
+        deck = Deck.create()
 
         dealInitialCards(dealer, players)
         playTurns(dealer, players)
@@ -38,7 +37,7 @@ class BlackjackController(
         dealer: Dealer,
         players: Players,
     ) {
-        repeat(INITIAL_CARD_COUNT) {
+        repeat(Rule.INITIAL_CARD_COUNT) {
             dealer.addCard(deck.pick())
             players.dealCards(deck)
         }
@@ -51,7 +50,7 @@ class BlackjackController(
     ) {
         players.players.forEach { drawCard(it) }
         dealer.drawCard(deck)
-        val hitCount = dealer.hand.cards.size - INITIAL_CARD_COUNT
+        val hitCount = dealer.getHitCount()
         outputView.printDealerHit(hitCount)
     }
 
@@ -72,20 +71,5 @@ class BlackjackController(
         val playerResult = players.calculateResult(dealer)
         val dealerResult = getDealerResult(playerResult)
         outputView.printMatchResult(dealerResult, playerResult)
-    }
-
-    private fun getDealerResult(playerResult: Map<Player, Result>): Map<Result, Int> =
-        playerResult.values
-            .groupingBy {
-                when (it) {
-                    Result.WIN -> Result.LOSE
-                    Result.LOSE -> Result.WIN
-                    Result.PUSH -> Result.PUSH
-                }
-            }.eachCount()
-            .withDefault { 0 }
-
-    companion object {
-        private const val INITIAL_CARD_COUNT = 2
     }
 }
