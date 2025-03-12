@@ -7,10 +7,12 @@ object InputView {
         return input.split(",").map { it.trim() }
     }
 
-    fun getPlayerBettingAmount(playerName: String): Int {
+    fun getPlayerBettingAmount(playerName: String): Int? {
         println(askBettingAmount(playerName))
         val input = readln()
-        return input.toInt()
+        return runCatching {
+            input.toInt()
+        }.getOrNull()
     }
 
     private const val REQUEST_PLAYERS_NAME = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)"
