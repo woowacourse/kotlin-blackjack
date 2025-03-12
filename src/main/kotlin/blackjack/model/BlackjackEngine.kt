@@ -1,11 +1,22 @@
 package blackjack.model
 
+import blackjack.model.WinningResult.BLACKJACK
+import blackjack.model.WinningResult.WIN
+import blackjack.model.WinningResult.LOSE
+import blackjack.model.WinningResult.PUSH
+
 class BlackjackEngine(
     val cardDeck: CardDeck = CardDeck()
 ) {
     fun preparePlayers(eventProvider: EventProvider): Players {
         val names = eventProvider.getNames()
-        return Players(names.map { name -> Player(name, makeFirstHand(), Amount(eventProvider.getBetAmount(name))) })
+        return Players(names.map { name ->
+            Player(
+                name,
+                makeFirstHand(),
+                Amount(eventProvider.getBetAmount(name).toDouble())
+            )
+        })
     }
 
     fun prepareDealer(): Dealer = Dealer(hand = makeFirstHand())
@@ -24,6 +35,33 @@ class BlackjackEngine(
             progressPlayerDrawUntilFinished(player, eventListener, eventProvider)
         }
     }
+
+    fun calculateWinnings(dealer: Dealer, players: Players) {
+        players.getPlayers().forEach { player ->
+            calculateMoney(dealer, player, dealer.getPlayerResult(player))
+        }
+    }
+
+    private fun calculateMoney(dealer: Dealer, player: Player, winningResult: WinningResult) {
+        when (winningResult) {
+            BLACKJACK -> {
+                player.settleBlackjack()
+                dealer.settleBlackjack(player.betAmount)
+            }
+
+            WIN -> {
+                player.settleWin()
+                dealer.settleLose(player.betAmount)
+            }
+
+            PUSH -> player.settlePush()
+            LOSE -> {
+                player.settleLose()
+                dealer.settleWin(player.betAmount)
+            }
+        }
+    }
+
 
     private fun progressPlayerDrawUntilFinished(
         player: Player,

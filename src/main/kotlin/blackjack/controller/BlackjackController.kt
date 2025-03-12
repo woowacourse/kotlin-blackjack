@@ -21,27 +21,22 @@ class BlackjackController(
         blackjackEngine.progressPlayersDraw(players,outputView,inputView)
         blackjackEngine.progressDealerDraw(dealer,outputView)
         displayParticipantsInfo(players)
-        displayResults(dealer, players)
+        blackjackEngine.calculateWinnings(dealer,players)
+        displayResult(dealer,players,outputView)
     }
+
+    private fun displayResult(dealer: Dealer,players: Players,outputView: OutputView){
+        outputView.displayResultTitle()
+        outputView.displayResultMoney(dealer.name,dealer.money.getValue())
+        players.getPlayers().forEach { player->
+            outputView.displayResultMoney(player.name,player.money.getValue())
+        }
+    }
+
 
     private fun displayParticipantsInfo(players: Players) {
         players.value.forEach { player ->
             outputView.displayParticipantInfo(player.name, player.hand.cards, player.hand.score(), player.hand.isBust())
-        }
-    }
-
-    private fun displayResults(
-        dealer: Dealer,
-        players: Players,
-    ) {
-        outputView.displayResultTitle()
-
-        val dealerResult = dealer.getWinDrawLossResult(players)
-        outputView.displayDealerResult(dealer.name, dealerResult)
-
-        val playerResults: Map<String, WinningResult> = players.results(dealer)
-        playerResults.forEach { (name, winningResult) ->
-            outputView.displayPlayerResult(name, winningResult)
         }
     }
 

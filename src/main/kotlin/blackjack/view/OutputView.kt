@@ -1,5 +1,6 @@
 package blackjack.view
 
+import blackjack.model.Amount
 import blackjack.model.Card
 import blackjack.model.CardRank
 import blackjack.model.CardRank.ACE
@@ -16,10 +17,11 @@ import blackjack.model.WinningResult
 import blackjack.model.WinningResult.LOSE
 import blackjack.model.WinningResult.PUSH
 import blackjack.model.WinningResult.WIN
+import blackjack.model.WinningResult.BLACKJACK
 
 class OutputView : EventListener {
     fun displayFirstDrawEnd(dealerName: String, players: List<String>) {
-        println("\n딜러와 ${players.joinToString()}에게 2장을 나누었습니다.")
+        println("\n${dealerName}와 ${players.joinToString()}에게 2장을 나누었습니다.")
     }
 
     override fun displayDealerDrawInfo(name: String, count: Int) {
@@ -71,7 +73,11 @@ class OutputView : EventListener {
         }
 
     fun displayResultTitle() {
-        println("\n## 최종 승패")
+        println("\n## 최종 수익")
+    }
+
+    fun displayResultMoney(name:String, resultMoney : Double){
+        println("${name}: ${resultMoney.toInt()}")
     }
 
     fun displayDealerResult(name: String, winningResult: Map<WinningResult, Int>) {
@@ -87,6 +93,7 @@ class OutputView : EventListener {
 
     private fun WinningResult.toText() =
         when (this) {
+            BLACKJACK -> "승"
             WIN -> "승"
             LOSE -> "패"
             PUSH -> "무"
