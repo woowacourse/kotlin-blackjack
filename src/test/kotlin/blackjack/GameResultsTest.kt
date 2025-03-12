@@ -56,7 +56,7 @@ class GameResultsTest {
             Card.of(Rank.TEN, Suit.SPADE),
         )
         val gameResults = GameResults(dealer, listOf(player))
-        assertThat(gameResults.judgePlayerResult(player)).isEqualTo(GameResultStatus.PLAYER_LOSE)
+        assertThat(gameResults.judgePlayerResult(player)).isEqualTo(GameResultStatus.DEALER_BLACKJACK)
     }
 
     @Test
@@ -89,6 +89,6 @@ class GameResultsTest {
             Card.of(Rank.NINE, Suit.SPADE),
         )
         val gameResults = GameResults(dealer, listOf(player))
-        assertThat(gameResults.judgePlayerResult(player)).isEqualTo(GameResultStatus.PLAYER_LOSE)
+        assertThat(gameResults.judgePlayerResult(player)).isEqualTo(GameResultStatus.DEALER_BLACKJACK)
     }
 }

@@ -7,7 +7,6 @@ import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Participant
 import blackjack.domain.participant.Player
 import blackjack.view.blackjackView.format
-import blackjack.view.blackjackView.toDisplayName
 
 object OutputView {
     fun printFinalCards(game: BlackJackGame) {
@@ -20,18 +19,16 @@ object OutputView {
 
     fun printGameResult(gameResults: GameResults) {
         println(FINAL_RESULT_NOTICE)
-        val dealerLose = gameResults.countDealerLose()
-        val dealerWin = gameResults.countDealerWin()
-        val draw = gameResults.countDealerDraw()
 
-        println(printDealerResult(dealerWin, dealerLose, draw))
+        val dealerProfit = gameResults.playerResults.sumOf { it.profit } * -1
+        println(printDealerResult(dealerProfit))
 
         gameResults.playerResults.forEach {
             println(printPlayerResult(it))
         }
     }
 
-    private const val FINAL_RESULT_NOTICE = "\n##최종 승패"
+    private const val FINAL_RESULT_NOTICE = "\n##최종 수익"
 
     private fun printDealerCard(dealer: Dealer): String = "딜러: ${dealer.cards.toList().first().format()}"
 
@@ -39,12 +36,7 @@ object OutputView {
 
     private fun printTotalSum(participant: Participant): String = " - 결과: ${participant.totalSum}\""
 
-    private fun printDealerResult(
-        dealerWin: Int,
-        dealerLose: Int,
-        draw: Int,
-    ): String = "딜러: ${dealerWin}승 ${dealerLose}패 ${draw}무"
+    private fun printDealerResult(dealerProfit: Int): String = "딜러: $dealerProfit"
 
-    private fun printPlayerResult(playerResult: PlayerResult): String =
-        "${playerResult.player.name}: ${playerResult.status.toDisplayName()}"
+    private fun printPlayerResult(playerResult: PlayerResult): String = "${playerResult.player.name}: ${playerResult.profit}"
 }

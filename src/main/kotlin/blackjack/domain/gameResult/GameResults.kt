@@ -8,14 +8,22 @@ class GameResults(private val dealer: Dealer, players: List<Player>) {
     constructor(game: BlackJackGame) : this(game.dealer, game.players)
 
     var playerResults: List<PlayerResult>
-        get() = playerResults.toList()
+        get() = field.toList()
         private set
 
     init {
         playerResults =
             players.map { player ->
                 val status = judgePlayerResult(player)
-                PlayerResult(player, status)
+                val profit =
+                    when (status) {
+                        GameResultStatus.PLAYER_WIN -> player.bettingAmount
+                        GameResultStatus.PLAYER_LOSE -> player.bettingAmount * -1
+                        GameResultStatus.DRAW -> 0
+                        GameResultStatus.DEALER_BLACKJACK -> player.bettingAmount * -1
+                        GameResultStatus.PLAYER_BLACKJACK -> (player.bettingAmount * 1.5).toInt()
+                    }
+                PlayerResult(player, profit)
             }
     }
 
@@ -23,7 +31,7 @@ class GameResults(private val dealer: Dealer, players: List<Player>) {
         if (player.isBust()) return GameResultStatus.PLAYER_LOSE
         if (dealer.isBust()) return GameResultStatus.PLAYER_WIN
         if (player.isBlackJack() != dealer.isBlackJack()) {
-            return if (player.isBlackJack()) GameResultStatus.PLAYER_WIN else GameResultStatus.PLAYER_LOSE
+            return if (player.isBlackJack()) GameResultStatus.PLAYER_BLACKJACK else GameResultStatus.DEALER_BLACKJACK
         }
 
         return when {
@@ -32,17 +40,5 @@ class GameResults(private val dealer: Dealer, players: List<Player>) {
             player.totalSum == dealer.totalSum -> GameResultStatus.DRAW
             else -> throw IllegalArgumentException()
         }
-    }
-
-    fun countDealerWin(): Int {
-        return playerResults.count { it.status == GameResultStatus.PLAYER_LOSE }
-    }
-
-    fun countDealerLose(): Int {
-        return playerResults.count { it.status == GameResultStatus.PLAYER_WIN }
-    }
-
-    fun countDealerDraw(): Int {
-        return playerResults.count { it.status == GameResultStatus.DRAW }
     }
 }
