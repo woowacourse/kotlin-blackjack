@@ -10,7 +10,7 @@ import blackjack.uimodel.ResultUiModel
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
-class BlackJackController(
+class BlackjackController(
     private val inputView: InputView = InputView(),
     private val outputView: OutputView = OutputView(),
 ) {
@@ -26,12 +26,7 @@ class BlackJackController(
 
     private fun generatePlayers(): List<Player> {
         val playerNames = inputView.getNames()
-        return playerNames.map {
-            Player(
-                name = it,
-                checkHit = (inputView::getFlag),
-            )
-        }
+        return playerNames.map { Player(it) }
     }
 
     private fun generateGame(players: List<Player>): Game {
@@ -45,9 +40,10 @@ class BlackJackController(
     }
 
     private fun askHit(game: Game) {
-        game.askHit {
-            outputView.printDrawStatus(ParticipantsUiModel.create(it))
-        }
+        game.askHit(
+            decideHit = { inputView.getFlag(it) },
+            onHit = { outputView.printDrawStatus(ParticipantsUiModel.create(it)) },
+        )
     }
 
     private fun showDealerDraw(game: Game) {
