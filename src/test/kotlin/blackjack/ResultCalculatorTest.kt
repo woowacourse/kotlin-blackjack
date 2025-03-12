@@ -32,7 +32,7 @@ class ResultCalculatorTest {
     }
 
     @Test
-    fun `플레이어 카드 합이 딜러의 카드 합보다 작으면 LOSS를 반환한다`() {
+    fun `플레이어 카드 합이 딜러의 카드 합보다 작으면 진다`() {
         val dealer = Dealer()
         val player = Player("플레이어")
         dealer.addCard(Card(Shape.CLOVER, CardNumber.NINE))
