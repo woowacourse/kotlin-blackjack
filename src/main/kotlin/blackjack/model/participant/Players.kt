@@ -19,7 +19,7 @@ class Players private constructor(
         private const val MAX_PLAYER_COUNT = 7
 
         fun from(
-            players: List<String>,
+            players: List<Name>,
             scoreCalculator: ScoreCalculator,
         ): Players = Players(players.map { name -> Player(name, Hand(scoreCalculator)) })
     }

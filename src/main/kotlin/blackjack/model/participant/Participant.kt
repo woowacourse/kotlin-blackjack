@@ -3,7 +3,7 @@ package blackjack.model.participant
 import blackjack.model.card.Card
 
 abstract class Participant(
-    val name: String,
+    val name: Name,
     private val hand: Hand,
 ) {
     val cards: List<Card> get() = hand.cards

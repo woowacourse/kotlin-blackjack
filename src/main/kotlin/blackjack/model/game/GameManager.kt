@@ -4,13 +4,14 @@ import blackjack.model.card.Card
 import blackjack.model.card.CardDeck
 import blackjack.model.participant.Dealer
 import blackjack.model.participant.Hand
+import blackjack.model.participant.Name
 import blackjack.model.participant.Players
 import blackjack.model.rule.ScoreCalculator
 import blackjack.model.rule.WinningResult
 
 class GameManager {
     fun prepareDealer(
-        dealerName: String,
+        dealerName: Name,
         cardDeck: CardDeck,
         scoreCalculator: ScoreCalculator,
     ): Dealer {
@@ -21,7 +22,7 @@ class GameManager {
     }
 
     fun preparePlayers(
-        playerNames: List<String>,
+        playerNames: List<Name>,
         cardDeck: CardDeck,
         scoreCalculator: ScoreCalculator,
     ): Players {
@@ -41,8 +42,8 @@ class GameManager {
     }
 
     fun getResult(resultManager: ResultManager): GameResult {
-        val dealerResult: Map<WinningResult, Int> = resultManager.dealerResult()
-        val playerResults: Map<String, WinningResult> = resultManager.playerResults()
+        val dealerResult: Map<WinningResult, ResultCount> = resultManager.dealerResult()
+        val playerResults: Map<Name, WinningResult> = resultManager.playerResults()
 
         return GameResult(dealerResult, playerResults)
     }

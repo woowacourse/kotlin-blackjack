@@ -7,6 +7,7 @@ import blackjack.model.game.UserCommand.HIT
 import blackjack.model.game.UserCommand.STAY
 import blackjack.model.game.UserCommand.UNKNOWN
 import blackjack.model.participant.Dealer
+import blackjack.model.participant.Name
 import blackjack.model.participant.Player
 import blackjack.model.participant.Players
 import blackjack.model.rule.ScoreCalculator
@@ -103,6 +104,6 @@ class BlackjackController(
     }
 
     companion object {
-        private const val DEFAULT_DEALER_NAME = "딜러"
+        private val DEFAULT_DEALER_NAME = Name("딜러")
     }
 }

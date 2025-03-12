@@ -12,13 +12,15 @@ import blackjack.model.card.CardSuit.DIAMOND
 import blackjack.model.card.CardSuit.HEART
 import blackjack.model.card.CardSuit.SPADE
 import blackjack.model.game.GameResult
+import blackjack.model.game.ResultCount
+import blackjack.model.participant.Name
 import blackjack.model.rule.WinningResult
 import blackjack.model.rule.WinningResult.LOSE
 import blackjack.model.rule.WinningResult.PUSH
 import blackjack.model.rule.WinningResult.WIN
 
 class OutputView {
-    fun displayFirstDrawEnd(players: List<String>) {
+    fun displayFirstDrawEnd(players: List<Name>) {
         println("\n딜러와 ${players.joinToString()}에게 2장을 나누었습니다.")
     }
 
@@ -32,14 +34,14 @@ class OutputView {
     }
 
     fun displayParticipantCards(
-        name: String,
+        name: Name,
         cards: List<Card>,
     ) {
         println("$name 카드: ${cards.toText()}")
     }
 
     fun displayParticipantInfo(
-        name: String,
+        name: Name,
         cards: List<Card>,
         score: Int,
         isBust: Boolean,
@@ -76,11 +78,11 @@ class OutputView {
         displayPlayersResult(result.playerResults)
     }
 
-    private fun displayDealerResult(result: Map<WinningResult, Int>) {
+    private fun displayDealerResult(result: Map<WinningResult, ResultCount>) {
         println("딜러: ${result[WIN]}승 ${result[PUSH]}무 ${result[LOSE]}패")
     }
 
-    private fun displayPlayersResult(result: Map<String, WinningResult>) {
+    private fun displayPlayersResult(result: Map<Name, WinningResult>) {
         result.forEach { (name, winningResult) ->
             println("$name: ${winningResult.toText()}")
         }
