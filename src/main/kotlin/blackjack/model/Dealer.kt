@@ -4,7 +4,7 @@ import blackjack.model.WinningResult.LOSE
 import blackjack.model.WinningResult.PUSH
 import blackjack.model.WinningResult.WIN
 
-class Dealer(val name: String = DEALER_NAME, hand: Hand) : Participant(hand) {
+class Dealer(val name: String = DEALER_NAME, override val hand: Hand) : Participant {
     var drawCount = 0
     fun drawUntilFinished(cardDeck: CardDeck) {
         while (hand.score() <= DEALER_DRAW_CRITERIA && !hand.isBust()) {
@@ -27,6 +27,7 @@ class Dealer(val name: String = DEALER_NAME, hand: Hand) : Participant(hand) {
 
         return result.toMap()
     }
+
     fun getDealerResult(player: Player): WinningResult {
         val dealerBlackjack = this.getHandSize() == 2 && this.getScore() == 21
         val playerBlackjack = player.getHandSize() == 2 && player.getScore() == 21
@@ -42,15 +43,15 @@ class Dealer(val name: String = DEALER_NAME, hand: Hand) : Participant(hand) {
         }
     }
 
-    fun WinningResult.reverse(): WinningResult{
-        return when(this){
+    fun WinningResult.reverse(): WinningResult {
+        return when (this) {
             LOSE -> WIN
             WIN -> LOSE
             else -> PUSH
         }
     }
 
-    fun getUserResult( player: Player): WinningResult = getDealerResult(player).reverse()
+    fun getUserResult(player: Player): WinningResult = getDealerResult(player).reverse()
 
 
     companion object {
