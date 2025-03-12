@@ -1,8 +1,9 @@
 package blackjack.controller
 
 import blackjack.domain.generator.CardsGenerator
+import blackjack.domain.model.BetAmount
 import blackjack.domain.model.GameResult
-import blackjack.domain.model.GameResultRecord
+import blackjack.domain.model.Scoreboard
 import blackjack.domain.model.card.Deck
 import blackjack.domain.model.participant.Dealer
 import blackjack.domain.model.participant.Participant
@@ -17,7 +18,7 @@ class Casino(
 ) {
     fun run() {
         val deck: Deck = Deck(cardsGenerator)
-        val players: List<Player> = inputView.readPlayerNames().map { Player(it) }
+        val players: List<Player> = setPlayers()
         val dealer: Dealer = Dealer()
         initialCardsDistribute(players + dealer, deck)
         outputParticipantCardsInfo(dealer, players)
@@ -25,6 +26,23 @@ class Casino(
         runPlayersDrawPhase(players, deck)
         runDealerPhase(dealer, deck)
         outputFinalResult(dealer, players)
+        outputParticipantsProfit(dealer, players)
+    }
+
+    private fun setPlayers(): List<Player> {
+        val rawInputNames = inputView.readPlayerNames()
+        return rawInputNames.map {
+            Player(name = it, betAmount = setBetAmount(it))
+        }
+    }
+
+    private fun setBetAmount(playerName: String): BetAmount {
+        val input: Double = inputView.readBetAmount(playerName)
+        return runCatching {
+            BetAmount(input)
+        }.getOrElse {
+            setBetAmount(playerName)
+        }
     }
 
     private fun initialCardsDistribute(
@@ -82,6 +100,17 @@ class Casino(
         outputView.newLine()
     }
 
+    private fun outputParticipantsProfit(
+        dealer: Dealer,
+        players: List<Player>,
+    ) {
+        val scoreboard = Scoreboard(dealer, players)
+        val dealerProfit: Double = scoreboard.getDealerProfit()
+        val playersProfit: Map<Player, Double> = scoreboard.getPlayersProfit()
+
+        outputView.showProfitResult(dealerProfit, playersProfit)
+    }
+
     private fun outputFinalResult(
         dealer: Dealer,
         players: List<Player>,
@@ -89,7 +118,7 @@ class Casino(
         outputView.showCardsResult(listOf(dealer) + players)
         outputView.newLine()
 
-        val finalResult: Map<GameResult, Int> = GameResultRecord(dealer, players).getDealerResult()
+        val finalResult: Map<GameResult, Int> = Scoreboard(dealer, players).getDealerResult()
         outputView.showFinalResult(finalResult, dealer, players)
     }
 }
