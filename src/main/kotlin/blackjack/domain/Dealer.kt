@@ -5,9 +5,9 @@ class Dealer : Participant() {
         return Rule.calculateScore(hand) <= DEALER_HIT_CONDITION
     }
 
-    fun drawCard() {
+    fun drawCard(deck: Deck) {
         while (canDraw()) {
-            addCard(Deck.pick())
+            addCard(deck.pick())
         }
     }
 

@@ -1,14 +1,13 @@
 package blackjack.domain
 
-class Deck private constructor() {
-    companion object {
-        val cards: ArrayDeque<Card> = ArrayDeque(createShuffledDeck())
+class Deck {
+    val cards: ArrayDeque<Card> = ArrayDeque(createShuffledDeck())
 
-        fun pick(): Card = cards.removeLast()
+    fun pick(): Card = cards.removeLast()
 
-        private fun createShuffledDeck(): List<Card> =
-            Suit.entries
-                .flatMap { suit -> Rank.entries.map { rank -> Card(rank, suit) } }
-                .shuffled()
-    }
+    private fun createShuffledDeck(): List<Card> =
+        Suit.entries
+            .flatMap { suit -> Rank.entries.map { rank -> Card(rank, suit) } }
+            .shuffled()
+
 }

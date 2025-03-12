@@ -7,8 +7,8 @@ class Players(
         require(players.size in MIN_PLAYER_COUNT..MAX_PLAYER_COUNT) { ERROR_INVALID_PLAYER_COUNT }
     }
 
-    fun dealCards() {
-        players.forEach { it.addCard(Deck.pick()) }
+    fun dealCards(deck: Deck) {
+        players.forEach { it.addCard(deck.pick()) }
     }
 
     fun calculateResult(dealer: Dealer): Map<Player, Result> = players.associateWith { Rule.getResult(dealer, it) }

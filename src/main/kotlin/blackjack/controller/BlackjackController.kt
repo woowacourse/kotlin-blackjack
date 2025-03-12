@@ -14,9 +14,12 @@ class BlackjackController(
     private val inputView: InputView,
     private val outputView: OutputView,
 ) {
+    private lateinit var deck: Deck
+
     fun play() {
         val dealer = Dealer()
         val players = getPlayers()
+        deck = Deck()
 
         dealInitialCards(dealer, players)
         playTurns(dealer, players)
@@ -36,8 +39,8 @@ class BlackjackController(
         players: Players,
     ) {
         repeat(INITIAL_CARD_COUNT) {
-            dealer.addCard(Deck.pick())
-            players.dealCards()
+            dealer.addCard(deck.pick())
+            players.dealCards(deck)
         }
         outputView.printDealingResult(dealer, players)
     }
@@ -47,14 +50,14 @@ class BlackjackController(
         players: Players,
     ) {
         players.players.forEach { drawCard(it) }
-        dealer.drawCard()
+        dealer.drawCard(deck)
         val hitCount = dealer.hand.cards.size - INITIAL_CARD_COUNT
         outputView.printDealerHit(hitCount)
     }
 
     private fun drawCard(player: Player) {
         while (!Rule.isBust(player.hand) && inputView.readHitOrStay(player) == Action.HIT) {
-            player.addCard(Deck.pick())
+            player.addCard(deck.pick())
             outputView.printPlayerCards(player)
         }
         if (Rule.isBust(player.hand)) {
