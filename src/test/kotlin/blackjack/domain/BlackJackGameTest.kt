@@ -35,12 +35,12 @@ class BlackJackGameTest {
         game.dealCards()
         game.playPlayersTurns(getIsHit = { name -> name == "Alice" }, {})
 
-        val alice = players.find { it.name == "Alice" }!!
-        val bob = players.find { it.name == "Bob" }!!
+        val alice = players.find { it.name == "Alice" }
+        val bob = players.find { it.name == "Bob" }
 
         assertAll(
-            { (alice.cards.size > 2) shouldBe true },
-            { bob.cards.size shouldBe 2 },
+            { ((alice?.cards?.size ?: -1) > 2) shouldBe true },
+            { (bob?.cards?.size ?: -1) shouldBe 2 },
         )
     }
 
