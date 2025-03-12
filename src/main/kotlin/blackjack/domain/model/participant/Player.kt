@@ -12,7 +12,7 @@ data class Player(override val name: String) : Participants() {
     }
 
     override fun getInitCard(): List<Card> {
-        return hand.cards
+        return hand.cards.take(2)
     }
 
     fun compareScores(dealer: Dealer): GameResult =

@@ -11,7 +11,7 @@ class Dealer(override val name: String = DEALER_NAME) : Participants() {
     }
 
     override fun getInitCard(): List<Card> {
-        return listOf(hand.cards.first())
+        return hand.cards.take(1)
     }
 
     companion object {
