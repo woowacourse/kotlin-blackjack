@@ -28,7 +28,7 @@ class GameResult(dealer: Dealer, players: List<Player>) {
         val payout =
             when (resultState) {
                 ResultState.WIN -> calculateWinPayout(player)
-                ResultState.LOSE -> ZERO_PAYOUT
+                ResultState.LOSE -> player.betAmount.toDouble() * LOSING_PAYOUT_MULTIPLIER
                 ResultState.DRAW -> calculateDrawPayout(player)
             }
 
@@ -62,5 +62,6 @@ class GameResult(dealer: Dealer, players: List<Player>) {
         private const val BLACKJACK_PAYOUT_MULTIPLIER = 1.5
         private const val DRAW_PAYOUT_MULTIPLIER = 1.0
         private const val ZERO_PAYOUT = 0.0
+        private const val LOSING_PAYOUT_MULTIPLIER = -1
     }
 }
