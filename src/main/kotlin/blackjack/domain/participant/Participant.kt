@@ -21,7 +21,7 @@ abstract class Participant {
         }
     }
 
-    fun isBust(): Boolean = totalScore() > BUST_STANDARD
+    abstract fun isDrawable(): Boolean
 
     protected fun sumOfCards(): Int = cards.sumOfCards()
 

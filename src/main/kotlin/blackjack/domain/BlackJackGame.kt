@@ -20,7 +20,7 @@ class BlackJackGame(
         onPlayerStateUpdated: (Player) -> Unit,
     ) {
         participants.players.forEach { player ->
-            while (!player.isBust()) {
+            while (player.isDrawable()) {
                 val choice = getPlayerChoice(player.name)
                 when (choice) {
                     UserChoice.HIT -> player.addCard(deck.draw())
@@ -38,7 +38,7 @@ class BlackJackGame(
 
     fun processDealerTurn(): Int {
         var count = 0
-        while (participants.dealer.isOverMaxScore().not()) {
+        while (participants.dealer.isDrawable()) {
             participants.dealer.addCard(deck.draw())
             count++
         }

@@ -29,11 +29,11 @@ class PlayerTest {
     }
 
     @Test
-    fun `플레이어 카드의 총합이 21을 초과하면 버스트된다`() {
+    fun `플레이어 카드의 총합이 21을 초과하면 카드를 더 뽑을 수 없다`() {
         bustTrumpCardFixture().forEach {
             player.addCard(it)
         }
-        assertEquals(player.isBust(), true)
+        assertEquals(player.isDrawable(), false)
     }
 
     @Test
