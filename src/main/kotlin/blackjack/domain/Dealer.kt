@@ -34,13 +34,13 @@ class Dealer(
         player.getCard(deck.getCard())
     }
 
-    fun getScore(): Int? = hand.getScore()
+    fun getScore(): Int = hand.getScore()
 
     fun getCountOfCards(): Int = hand.getSize()
 
     fun hitOrStay() {
         var dealerScore = getScore()
-        while (dealerScore != null && dealerScore < 17) {
+        while (dealerScore < 17) {
             getCard()
             dealerScore = getScore()
         }

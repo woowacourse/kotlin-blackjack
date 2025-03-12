@@ -6,7 +6,7 @@ class Player(
     private val hand: Hand = Hand(emptyList())
     val cards: List<Card>
         get() = hand.value
-    var wantToHit: Boolean? = null
+
     var result: Result = Result.NOT_YET
 
     fun getCard(card: Card) {
@@ -19,14 +19,20 @@ class Player(
 
     fun getCountOfCards(): Int = hand.getSize()
 
-    fun hitOrStay(hit: () -> Unit) {
-        if (wantToHit == true) {
-            hit()
-        }
-    }
+    fun wantToHit(): Boolean = hand.getScore() <= 21
+
+//    fun hitOrStay(hit: () -> Unit): Boolean {
+//        if (wantToHit) {
+//            hit()
+//            return true
+//        }
+//        return false
+//    }
+
+    fun canGetCard(): Boolean = getScore() <= 21
 
     fun setResult() {
-        if (hand.getScore() == null) {
+        if (!wantToHit()) {
             result = Result.LOSE
         }
     }

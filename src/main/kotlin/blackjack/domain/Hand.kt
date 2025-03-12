@@ -10,7 +10,7 @@ class Hand(
     /**
      * @return null if all posible score is bigger than 21
      * */
-    fun getScore(): Int? {
+    fun getScore(): Int {
         val aces: List<Card> = value.filter { card: Card -> card.rank is Ace }
         val acesSums: List<Int> =
             when (aces.size) {
@@ -27,17 +27,15 @@ class Hand(
             otherCards.sumOf { card: Card ->
                 card.rank.possibleValues.first()
             }
-        val possibleSums: List<Int> = acesSums.map { acesSum -> acesSum + otherCardsSum }
-        val score: Int? = possibleSums.sortedDescending().firstOrNull { possibleSum -> possibleSum <= 21 }
-        return score
+        val possibleSums: List<Int> = acesSums.map { acesSum -> acesSum + otherCardsSum }.sortedDescending()
+        val validScore: Int = possibleSums.firstOrNull { possibleSum -> possibleSum <= 21 } ?: possibleSums.min()
+        return validScore
     }
 
     fun add(card: Card) {
-        require(canGetCard()) { "모든 카드의 합이 21 미만이 될 수 있을 경우에만 카드를 얻을 수 있습니다." }
+//        require(canGetCard()) { "모든 카드의 합이 21 미만이 될 수 있을 경우에만 카드를 얻을 수 있습니다." }
         _value.add(card)
     }
-
-    private fun canGetCard(): Boolean = getScore() != null && getScore() != 21
 
     fun add(cards: List<Card>) {
         cards.forEach { card -> add(card) }

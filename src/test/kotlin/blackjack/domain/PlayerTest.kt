@@ -2,7 +2,7 @@ package blackjack.domain
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
+import org.junit.jupiter.api.assertDoesNotThrow
 
 class PlayerTest {
     @Test
@@ -18,7 +18,7 @@ class PlayerTest {
         val card2 = Card(Number(7), Suit.DIAMOND)
         val card3 = Card(Number(7), Suit.DIAMOND)
         player.getCards(listOf(card1, card2, card3))
-        assertThrows<IllegalArgumentException> { player.getCard(Card(Number(2), Suit.SPADE)) }
+        assertDoesNotThrow { player.getCard(Card(Number(2), Suit.SPADE)) }
     }
 
     @Test

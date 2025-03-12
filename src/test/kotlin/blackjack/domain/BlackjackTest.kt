@@ -30,8 +30,8 @@ class BlackjackTest {
         val eden = Player("Eden")
         val players = listOf(gio, eden)
         val dealer = Dealer(players)
-        val game = Blackjack(dealer, players)
-        game.waitForPlayers()
+
+        dealer.hitOrStay()
         assertThat(dealer.getScore()).isGreaterThanOrEqualTo(17)
     }
 

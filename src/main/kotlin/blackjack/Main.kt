@@ -25,22 +25,25 @@ fun main() {
     }
     println()
     players.forEach { player ->
-        println("${player.name}는 한 장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
-        var input = readln()
-        while (input == "y") {
-            dealer.giveCard(player)
-            println("${player.name}카드: ${player.cards.joinToString { card -> card.prettyString }}")
+        while (player.canGetCard()) {
             println("${player.name}는 한 장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
-            input = readln()
+            var input = readln()
+            if (input == "n") {
+                break
+            } else if (input == "y") {
+                dealer.giveCard(player)
+                println("${player.name}카드: ${player.cards.joinToString { card -> card.prettyString }}")
+            } else {
+                println("y 또는 n을 입력하세요")
+            }
         }
-        println("${player.name}카드: ${player.cards.joinToString { card -> card.prettyString }}")
     }
     println()
     dealer.hitOrStay()
     println()
     println("딜러 카드: ${dealer.cards.joinToString { card -> card.prettyString }} - 결과: ${dealer.getScore()}")
     players.forEach { player ->
-        println("${player.name}카드: ${player.cards.joinToString { card -> card.prettyString }} - 결과: ${dealer.getScore()}")
+        println("${player.name}카드: ${player.cards.joinToString { card -> card.prettyString }} - 결과: ${player.getScore()}")
     }
     blackjack.finish()
     println()

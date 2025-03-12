@@ -10,28 +10,18 @@ class Blackjack(
         dealer.giveCard()
     }
 
-    fun waitForPlayers() {
-        players.forEach { player ->
-            player.hitOrStay(hit = {
-                dealer.giveCard(player)
-            })
-        }
-
-        dealer.hitOrStay()
-    }
-
     fun finish() {
         players.forEach { player ->
             if (player.result != Result.NOT_YET) return@forEach
-            val playerScore: Int? = player.getScore()
-            if (playerScore == null) {
+            val playerScore: Int = player.getScore()
+            if (playerScore > 21) {
                 player.result = Result.LOSE
                 return@forEach
             }
         }
 
-        val dealerScore: Int? = dealer.getScore()
-        if (dealerScore == null) {
+        val dealerScore: Int = dealer.getScore()
+        if (dealerScore > 21) {
             val remainingPlayers = players.filter { player -> player.result == Result.NOT_YET }
             remainingPlayers.forEach { player -> player.result = Result.WIN }
         }
@@ -39,11 +29,11 @@ class Blackjack(
         val remainingPlayers = players.filter { player -> player.result == Result.NOT_YET }
         remainingPlayers.forEach { player ->
             when {
-                (player.getScore() ?: 0) > (dealerScore ?: 0) -> {
+                (player.getScore()) > (dealerScore) -> {
                     player.result = Result.WIN
                 }
 
-                (player.getScore() ?: 0) < (dealerScore ?: 0) -> {
+                (player.getScore()) < (dealerScore) -> {
                     player.result = Result.LOSE
                 }
 
