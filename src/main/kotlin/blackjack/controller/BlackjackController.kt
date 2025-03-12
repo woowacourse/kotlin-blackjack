@@ -18,11 +18,11 @@ class BlackjackController(
 ) {
     fun run() {
         val playerGroup = getPlayerGroup()
-        val playerBatAmount = getBetAmount(playerGroup.players)
+        val playerBetAmount = getBetAmount(playerGroup.players)
         val blackjack = makeGame(playerGroup)
         initGame(blackjack, playerGroup)
         startGame(blackjack, playerGroup)
-        endGame(blackjack, playerGroup)
+        endGame(blackjack, playerGroup, playerBetAmount)
     }
 
     private fun getPlayerGroup(): PlayerGroup {
@@ -99,10 +99,12 @@ class BlackjackController(
     private fun endGame(
         blackjack: Blackjack,
         playerGroup: PlayerGroup,
+        playerBetAmount: Map<Player, BetAmount>,
     ) {
         outputView.participantsCardResult(playerGroup)
-        val gameResult = blackjack.endGame()
-        outputView.dealerResult(playerGroup.dealer, gameResult)
+        val gameResult = blackjack.endGame(playerBetAmount)
+        val dealerResult = -gameResult.values.sum()
+        outputView.dealerResult(playerGroup.dealer, dealerResult)
         outputView.playerResult(gameResult)
     }
 

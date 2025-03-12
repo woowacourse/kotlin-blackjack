@@ -1,6 +1,6 @@
 package blackjack.domain.service
 
-import blackjack.domain.model.GameResult
+import blackjack.domain.model.BetAmount
 import blackjack.domain.model.card.Card
 import blackjack.domain.model.card.CardFactory.Companion.cardNumbers
 import blackjack.domain.model.card.CardFactory.Companion.symbols
@@ -46,18 +46,25 @@ class BlackjackTest {
     }
 
     @Test
-    fun `게임이 끝난 후 승패를 가린다`() {
+    fun `게임이 끝난 후 수익 금액을 계산한다`() {
         // given
-        player1.receiveCard(Card(Shape.Spade, CardNumber.Ace))
-        player2.receiveCard(Card(Shape.Spade, CardNumber.Six))
-        player3.receiveCard(Card(Shape.Heart, CardNumber.Seven))
-        dealer.receiveCard(Card(Shape.Spade, CardNumber.Seven))
+        player1.receiveCard(Card(Shape.Spade, CardNumber.Ace)) // 11
+        player2.receiveCard(Card(Shape.Spade, CardNumber.Six)) // 6
+        player3.receiveCard(Card(Shape.Heart, CardNumber.Seven)) // 7
+        dealer.receiveCard(Card(Shape.Spade, CardNumber.Seven)) // 7
+
+        val betAmount: Map<Player, BetAmount> =
+            mapOf(
+                player1 to BetAmount(1000),
+                player2 to BetAmount(2000),
+                player3 to BetAmount(3000),
+            )
         // when
-        val gameResult = game.endGame()
+        val gameResult = game.endGame(betAmount)
         // then
-        assertThat(gameResult[player1]).isEqualTo(GameResult.Win)
-        assertThat(gameResult[player2]).isEqualTo(GameResult.Lose)
-        assertThat(gameResult[player3]).isEqualTo(GameResult.Draw)
+        assertThat(gameResult[player1]).isEqualTo(1000)
+        assertThat(gameResult[player2]).isEqualTo(-2000)
+        assertThat(gameResult[player3]).isEqualTo(0)
     }
 
     @Test

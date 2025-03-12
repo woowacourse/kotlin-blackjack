@@ -1,12 +1,15 @@
 package blackjack.domain.service
 
-import blackjack.domain.model.GameResult
+import blackjack.domain.model.BetAmount
 import blackjack.domain.model.card.PlayingCard
 import blackjack.domain.model.participant.Participants
 import blackjack.domain.model.participant.Player
 import blackjack.domain.model.participant.PlayerGroup
 
-class Blackjack(private val deck: PlayingCard, private val playerGroup: PlayerGroup) {
+class Blackjack(
+    private val deck: PlayingCard,
+    private val playerGroup: PlayerGroup,
+) {
     fun initGame() {
         playerGroup.participants.forEach { player ->
             distributeStartingHands(player)
@@ -32,7 +35,10 @@ class Blackjack(private val deck: PlayingCard, private val playerGroup: PlayerGr
         return count
     }
 
-    fun endGame(): Map<Player, GameResult> {
-        return playerGroup.players.associateWith { it.compareScores(playerGroup.dealer) }
+    fun endGame(betStatus: Map<Player, BetAmount>): Map<Player, Int> {
+        return playerGroup.players.associateWith { player ->
+            val result = player.compareScores(playerGroup.dealer)
+            betStatus[player]?.calculateProceed(result, player.hand.isBlackjack()) ?: throw IllegalArgumentException()
+        }
     }
 }

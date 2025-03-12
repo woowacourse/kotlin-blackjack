@@ -1,6 +1,5 @@
 package blackjack.view
 
-import blackjack.domain.model.GameResult
 import blackjack.domain.model.card.Card
 import blackjack.domain.model.card.Shape
 import blackjack.domain.model.participant.Dealer
@@ -57,38 +56,19 @@ class OutputView {
         }
     }
 
-    fun playerResult(statusCount: Map<Player, GameResult>) {
-        statusCount.forEach { result ->
-            println(PLAYER_STATUS.format(result.key.name, result.value.determineStatus()))
+    fun playerResult(statusCount: Map<Player, Int>) {
+        statusCount.forEach { (player, proceed) ->
+            println(PLAYER_STATUS.format(player.name, proceed.toString()))
         }
         println()
     }
 
     fun dealerResult(
         dealer: Dealer,
-        statusCount: Map<Player, GameResult>,
+        proceed: Int,
     ) {
         println(FINAL_RESULT)
-
-        val winningCount = statusCount.count { it.value == GameResult.Lose }
-        val losingCount = statusCount.count { it.value == GameResult.Win }
-        val drawCount = statusCount.count { it.value == GameResult.Draw }
-
-        val resultFormat: String = OUTPUT_DEALER_RESULT.format(dealer.name, winningCount, losingCount)
-
-        if (drawCount != 0) {
-            println(resultFormat + OUTPUT_DEALER_RESULT_DRAW.format(drawCount))
-        } else {
-            println(resultFormat)
-        }
-    }
-
-    private fun GameResult.determineStatus(): String {
-        return when (this) {
-            GameResult.Win -> "승"
-            GameResult.Draw -> "무"
-            else -> "패"
-        }
+        println(PLAYER_STATUS.format(dealer.name, proceed.toString()))
     }
 
     private fun Shape.toKorean(): String {
@@ -104,9 +84,7 @@ class OutputView {
         private const val OUTPUT_DISTRIBUTE_CARD: String = "\n%s와 %s에게 2장의 나누었습니다."
         private const val OUTPUT_DEALER_RECEIVE_CARD: String = "%s는 16이하라 한장의 카드를 더 받았습니다."
         private const val OUTPUT_PARTICIPANTS_CARD_RESULT: String = " - 결과: %d"
-        private const val FINAL_RESULT: String = "\n## 최종 승패"
-        private const val OUTPUT_DEALER_RESULT: String = "%s: %d승 %d패"
-        private const val OUTPUT_DEALER_RESULT_DRAW: String = " %d무"
+        private const val FINAL_RESULT: String = "\n## 최종 수익"
         private const val PLAYER_STATUS: String = "%s: %s"
         private const val CARD: String = "카드"
         private const val CARD_FORMAT: String = "%s%s"

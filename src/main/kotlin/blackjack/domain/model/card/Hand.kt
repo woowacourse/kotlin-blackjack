@@ -24,6 +24,10 @@ class Hand(cards: MutableList<Card>) {
         return getSumNumber() > BUST_STANDARD
     }
 
+    fun isBlackjack(): Boolean {
+        return _cards.size == 2 && getSumNumber() == BUST_STANDARD
+    }
+
     companion object {
         const val BUST_STANDARD: Int = 21
     }
