@@ -1,8 +1,8 @@
-package blackjack.model.domain.participant
+package blackjack.domain.model.participant
 
-import blackjack.model.domain.GameResult
-import blackjack.model.domain.card.Card
-import blackjack.model.domain.card.Hand
+import blackjack.domain.model.GameResult
+import blackjack.domain.model.card.Card
+import blackjack.domain.model.card.Hand
 
 data class Player(override val name: String) : Participants() {
     override val hand: Hand = Hand(mutableListOf())

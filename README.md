@@ -67,3 +67,10 @@
 - [x] Participants | 결과 저장 위치 변경 (Participants -> controller)
 - [x] GameResult | None 상태 삭제
 - [x] GameResult | compare 삭제 및 Player로 승패 판단 로직 이동
+
+- [x] 패키지 구조 변경
+- [ ] ActionType | Boolean -> String 타입 변경
+- [ ] Player | 결과 판단 로직 위치 고민 (Player vs Participant)
+- [ ] Player & Dealer | getInitCard 메소드 로직 변경
+- [ ] test | 메소드명 직관적으로 변경
+- [ ] Introduce | 이름 필수 요소 고민

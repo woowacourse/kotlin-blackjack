@@ -1,15 +1,15 @@
-package blackjack.model.service
+package blackjack.domain.service
 
-import blackjack.model.domain.GameResult
-import blackjack.model.domain.card.Card
-import blackjack.model.domain.card.CardFactory.Companion.cardNumbers
-import blackjack.model.domain.card.CardFactory.Companion.symbols
-import blackjack.model.domain.card.CardNumber
-import blackjack.model.domain.card.PlayingCard
-import blackjack.model.domain.card.Shape
-import blackjack.model.domain.participant.Dealer
-import blackjack.model.domain.participant.Player
-import blackjack.model.domain.participant.PlayerGroup
+import blackjack.domain.model.GameResult
+import blackjack.domain.model.card.Card
+import blackjack.domain.model.card.CardFactory.Companion.cardNumbers
+import blackjack.domain.model.card.CardFactory.Companion.symbols
+import blackjack.domain.model.card.CardNumber
+import blackjack.domain.model.card.PlayingCard
+import blackjack.domain.model.card.Shape
+import blackjack.domain.model.participant.Dealer
+import blackjack.domain.model.participant.Player
+import blackjack.domain.model.participant.PlayerGroup
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test

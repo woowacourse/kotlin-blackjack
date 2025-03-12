@@ -1,4 +1,4 @@
-package blackjack.model.domain.participant
+package blackjack.domain.model.participant
 
 class PlayerGroup(val participants: List<Participants>) {
     val dealer = participants.filterIsInstance<Dealer>().first()

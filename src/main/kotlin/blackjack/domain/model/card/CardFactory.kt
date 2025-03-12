@@ -1,4 +1,4 @@
-package blackjack.model.domain.card
+package blackjack.domain.model.card
 
 class CardFactory {
     fun makeCard(): ArrayDeque<Card> {

@@ -1,12 +1,12 @@
 package blackjack.view
 
-import blackjack.model.domain.GameResult
-import blackjack.model.domain.card.Card
-import blackjack.model.domain.card.Shape
-import blackjack.model.domain.participant.Dealer
-import blackjack.model.domain.participant.Participants
-import blackjack.model.domain.participant.Player
-import blackjack.model.domain.participant.PlayerGroup
+import blackjack.domain.model.GameResult
+import blackjack.domain.model.card.Card
+import blackjack.domain.model.card.Shape
+import blackjack.domain.model.participant.Dealer
+import blackjack.domain.model.participant.Participants
+import blackjack.domain.model.participant.Player
+import blackjack.domain.model.participant.PlayerGroup
 
 class OutputView {
     fun printInitCardStatus(playerGroup: PlayerGroup) {

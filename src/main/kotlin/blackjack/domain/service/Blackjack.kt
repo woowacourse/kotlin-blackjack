@@ -1,10 +1,10 @@
-package blackjack.model.service
+package blackjack.domain.service
 
-import blackjack.model.domain.GameResult
-import blackjack.model.domain.card.PlayingCard
-import blackjack.model.domain.participant.Participants
-import blackjack.model.domain.participant.Player
-import blackjack.model.domain.participant.PlayerGroup
+import blackjack.domain.model.GameResult
+import blackjack.domain.model.card.PlayingCard
+import blackjack.domain.model.participant.Participants
+import blackjack.domain.model.participant.Player
+import blackjack.domain.model.participant.PlayerGroup
 
 class Blackjack(private val deck: PlayingCard, private val playerGroup: PlayerGroup) {
     fun initGame() {

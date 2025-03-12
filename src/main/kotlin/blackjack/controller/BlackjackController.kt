@@ -1,13 +1,13 @@
 package blackjack.controller
 
-import blackjack.model.domain.ActionType
-import blackjack.model.domain.card.Card
-import blackjack.model.domain.card.CardFactory
-import blackjack.model.domain.card.PlayingCard
-import blackjack.model.domain.participant.Dealer
-import blackjack.model.domain.participant.Player
-import blackjack.model.domain.participant.PlayerGroup
-import blackjack.model.service.Blackjack
+import blackjack.domain.model.ActionType
+import blackjack.domain.model.card.Card
+import blackjack.domain.model.card.CardFactory
+import blackjack.domain.model.card.PlayingCard
+import blackjack.domain.model.participant.Dealer
+import blackjack.domain.model.participant.Player
+import blackjack.domain.model.participant.PlayerGroup
+import blackjack.domain.service.Blackjack
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
