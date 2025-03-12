@@ -22,6 +22,10 @@ class GameResults(private val dealer: Dealer, players: List<Player>) {
     fun judgePlayerResult(player: Player): GameResultStatus {
         if (player.isBust()) return GameResultStatus.PLAYER_LOSE
         if (dealer.isBust()) return GameResultStatus.PLAYER_WIN
+        if (player.isBlackJack() != dealer.isBlackJack()) {
+            return if (player.isBlackJack()) GameResultStatus.PLAYER_WIN else GameResultStatus.PLAYER_LOSE
+        }
+
         return when {
             dealer.totalSum > player.totalSum -> GameResultStatus.PLAYER_LOSE
             player.totalSum > dealer.totalSum -> GameResultStatus.PLAYER_WIN
