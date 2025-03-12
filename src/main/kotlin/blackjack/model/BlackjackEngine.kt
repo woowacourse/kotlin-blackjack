@@ -9,9 +9,9 @@ class BlackjackEngine(
 
     fun prepareDealer(): Dealer = Dealer(hand = makeFirstHand())
 
-    fun playerDraw(player: Player): Unit = player.draw(cardDeck)
+    fun drawPlayer(player: Player): Unit = player.draw(cardDeck)
 
-    fun dealerDraw(dealer: Dealer): Unit = dealer.drawUntilFinished(cardDeck)
+    fun drawDealer(dealer: Dealer): Unit = dealer.drawUntilFinished(cardDeck)
 
     fun makeFirstHand(): Hand = Hand(List(2) { cardDeck.draw() })
 
@@ -30,14 +30,14 @@ class BlackjackEngine(
         eventProvider: EventProvider,
     ) {
         while (eventProvider.getIsDrawMore(player.name)) {
-            playerDraw(player)
+            drawPlayer(player)
             eventListener.displayParticipantCards(player.name, player.hand.cards)
             if (player.hand.isBust()) return
         }
     }
 
     fun progressDealerDraw(dealer: Dealer, eventListener: EventListener) {
-        dealerDraw(dealer)
+        drawDealer(dealer)
         eventListener.displayDealerDrawInfo(dealer.name, dealer.getAdditionalDrawCount())
         eventListener.displayParticipantInfo(dealer.name, dealer.hand.cards, dealer.hand.score(), dealer.hand.isBust())
     }
