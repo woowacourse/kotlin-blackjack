@@ -12,9 +12,9 @@ abstract class Participant(
 
     abstract fun isDrawable(): Boolean
 
-    fun recieveCards(getCards: (Int) -> List<Card>) {
+    fun recieveCards(recieveCards: (Int) -> List<Card>) {
         val count = if (cards.isEmpty()) INITIAL_DRAW_COUNT else DEFAULT_DRAW_COUNT
-        addAll(getCards(count))
+        addAll(recieveCards(count))
     }
 
     fun score(): Int = hand.score()
