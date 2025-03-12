@@ -23,6 +23,31 @@ class OutputView {
         println()
     }
 
+    fun printFinalCardsScores(
+        dealer: Dealer,
+        players: List<Player>,
+    ) {
+        println()
+        dealer.hitOrStay()
+        println()
+        println("딜러 카드: ${dealer.cards.joinToString { card -> card.prettyString }} - 결과: ${dealer.getScore()}")
+        players.forEach { player ->
+            println("${player.name}카드: ${player.cards.joinToString { card -> card.prettyString }} - 결과: ${player.getScore()}")
+        }
+    }
+
+    fun printFinalResults(
+        dealer: Dealer,
+        players: List<Player>,
+    ) {
+        println()
+        println("## 최종 승패")
+        println("딜러: ${dealer.results.joinToString()}")
+        players.forEach { player ->
+            println("${player.name}: ${player.result}")
+        }
+    }
+
     val Card.prettyString: String
         get() = rank.prettyString + suit.prettyString
 
