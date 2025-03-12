@@ -27,7 +27,8 @@ class GameController(
 
     private fun getPlayers(): List<Player> {
         return inputView.getPlayerNames().map { playerName ->
-            Player(playerName)
+            val bettingAmount = inputView.getPlayerBettingAmount(playerName)
+            Player(playerName, bettingAmount)
         }
     }
 
