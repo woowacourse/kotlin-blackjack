@@ -21,7 +21,7 @@ class Dealer(dealerCards: Cards) : Participant(dealerCards) {
 
     private fun addDraws(drawnCard: Card): Int {
         var count = DEFAULT_DRAW_COUNT
-        while (canHit() && turn(drawnCard)) count++
+        while (turn(drawnCard)) count++
 
         return count
     }
