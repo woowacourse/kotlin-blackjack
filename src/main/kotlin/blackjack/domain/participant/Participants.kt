@@ -51,9 +51,9 @@ class Participants(
         }
     }
 
-    fun getDealerResult(): Map<Result, Int> = players.map { dealer.getResult(it.getScore()) }.groupingBy { it }.eachCount()
+    fun getDealerResult(): Map<Result, Int> = players.map { dealer.getResult(it) }.groupingBy { it }.eachCount()
 
-    fun getPlayerResults(): Map<String, Result> = players.associate { it.name to it.getResult(dealer.getScore()) }
+    fun getPlayerResults(): Map<String, Result> = players.associate { it.name to it.getResult(dealer) }
 
     companion object {
         private const val MIN_PLAYER_COUNT = 1

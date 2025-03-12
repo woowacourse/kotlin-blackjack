@@ -16,7 +16,9 @@ abstract class Participant(
 
     fun getScore(): Score = hand.calculateScore()
 
+    fun isBlackjack(): Boolean = hand.isBlackjack()
+
     abstract fun canHit(): Boolean
 
-    abstract fun getResult(otherScore: Score): Result
+    abstract fun getResult(other: Participant): Result
 }

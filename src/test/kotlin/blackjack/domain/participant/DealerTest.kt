@@ -1,7 +1,6 @@
 package blackjack.domain.participant
 
 import blackjack.domain.Result
-import blackjack.domain.Score
 import blackjack.domain.card.Card
 import blackjack.domain.card.Rank
 import blackjack.domain.card.Suit
@@ -11,10 +10,12 @@ import org.junit.jupiter.api.Test
 
 class DealerTest {
     private lateinit var dealer: Dealer
+    private lateinit var player: Player
 
     @BeforeEach
     fun setUp() {
         dealer = Dealer()
+        player = Player("포르", 0)
     }
 
     @Test
@@ -95,7 +96,8 @@ class DealerTest {
 
         // when
         dealer.drawCards(queenSpade, aceSpade)
-        val result = dealer.getResult(Score(20))
+        player.drawCards(queenSpade, queenSpade)
+        val result = dealer.getResult(player)
 
         // then
         assertThat(result).isEqualTo(Result.WIN)
@@ -109,7 +111,8 @@ class DealerTest {
 
         // when
         dealer.drawCards(queenSpade, eightSpade)
-        val result = dealer.getResult(Score(20))
+        player.drawCards(queenSpade, queenSpade)
+        val result = dealer.getResult(player)
 
         // then
         assertThat(result).isEqualTo(Result.LOSE)
@@ -124,7 +127,8 @@ class DealerTest {
 
         // when
         dealer.drawCards(queenSpade, queenHeart, twoSpade)
-        val result = dealer.getResult(Score(22))
+        player.drawCards(queenSpade, queenHeart, twoSpade)
+        val result = dealer.getResult(player)
 
         // then
         assertThat(result).isEqualTo(Result.WIN)
@@ -138,7 +142,8 @@ class DealerTest {
 
         // when
         dealer.drawCards(queenSpade, queenHeart)
-        val result = dealer.getResult(Score(20))
+        player.drawCards(queenSpade, queenHeart)
+        val result = dealer.getResult(player)
 
         // then
         assertThat(result).isEqualTo(Result.PUSH)

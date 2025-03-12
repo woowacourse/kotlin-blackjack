@@ -1,7 +1,6 @@
 package blackjack.domain.participant
 
 import blackjack.domain.Result
-import blackjack.domain.Score
 import blackjack.domain.card.Card
 import blackjack.domain.card.Rank
 import blackjack.domain.card.Suit
@@ -11,10 +10,12 @@ import org.junit.jupiter.api.Test
 
 class PlayerTest {
     private lateinit var player: Player
+    private lateinit var dealer: Dealer
 
     @BeforeEach
     fun setUp() {
         player = Player("Jason", 10000)
+        dealer = Dealer()
     }
 
     @Test
@@ -90,10 +91,12 @@ class PlayerTest {
         // given
         val queenSpade = Card(Rank.QUEEN, Suit.SPADE)
         val queenHeart = Card(Rank.QUEEN, Suit.HEART)
+        val eightSpade = Card(Rank.EIGHT, Suit.SPADE)
 
         // when
         player.drawCards(queenSpade, queenHeart)
-        val result = player.getResult(Score(18))
+        dealer.drawCards(queenSpade, eightSpade)
+        val result = player.getResult(dealer)
 
         // then
         assertThat(result).isEqualTo(Result.WIN)
@@ -104,10 +107,12 @@ class PlayerTest {
         // given
         val queenSpade = Card(Rank.QUEEN, Suit.SPADE)
         val queenHeart = Card(Rank.QUEEN, Suit.HEART)
+        val aceSpade = Card(Rank.ACE, Suit.SPADE)
 
         // when
         player.drawCards(queenSpade, queenHeart)
-        val result = player.getResult(Score(21))
+        dealer.drawCards(queenSpade, aceSpade)
+        val result = player.getResult(dealer)
 
         // then
         assertThat(result).isEqualTo(Result.LOSE)
@@ -118,10 +123,12 @@ class PlayerTest {
         // given
         val queenSpade = Card(Rank.QUEEN, Suit.SPADE)
         val queenHeart = Card(Rank.QUEEN, Suit.HEART)
+        val twoSpade = Card(Rank.TWO, Suit.SPADE)
 
         // when
         player.drawCards(queenSpade, queenHeart)
-        val result = player.getResult(Score(22))
+        dealer.drawCards(queenSpade, queenHeart, twoSpade)
+        val result = player.getResult(dealer)
 
         // then
         assertThat(result).isEqualTo(Result.WIN)
@@ -135,7 +142,8 @@ class PlayerTest {
 
         // when
         player.drawCards(queenSpade, queenHeart)
-        val result = player.getResult(Score(20))
+        dealer.drawCards(queenSpade, queenHeart)
+        val result = player.getResult(dealer)
 
         // then
         assertThat(result).isEqualTo(Result.PUSH)
