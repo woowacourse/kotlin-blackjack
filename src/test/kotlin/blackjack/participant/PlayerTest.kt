@@ -39,6 +39,16 @@ class PlayerTest {
     }
 
     @Test
+    fun `플레이어는 카드의 총 합을 계산한다`() {
+        player.addCard(Card(Shape.SPADE, CardNumber.NINE))
+        player.addCard(Card(Shape.SPADE, CardNumber.SEVEN))
+        val expect = 16
+        val actual = player.score
+
+        assertThat(actual).isEqualTo(expect)
+    }
+
+    @Test
     fun `플레이어는 카드 총 합이 21을 넘으면 isBust를 true를 반환한다`() {
         player.addCard(Card(Shape.SPADE, CardNumber.NINE))
         player.addCard(Card(Shape.CLOVER, CardNumber.QUEEN))
