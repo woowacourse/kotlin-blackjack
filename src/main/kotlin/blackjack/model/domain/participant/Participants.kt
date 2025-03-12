@@ -7,7 +7,7 @@ import blackjack.model.domain.card.Hand
 
 abstract class Participants() {
     abstract val name: String
-    protected abstract val hand: Hand
+    abstract val hand: Hand
     abstract var status: GameResult
         protected set
 
