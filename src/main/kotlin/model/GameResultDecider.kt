@@ -6,28 +6,26 @@ class GameResultDecider(private val dealer: Dealer, private val players: Players
     fun compareWinOrLose(): GameOutput {
         val playerResults: List<PlayerResult> =
             players.map { player ->
-                PlayerResult(player.name, comparePlayerResult(player.currentScore))
+                PlayerResult(player.name, comparePlayerResult(player))
             }
-
-        val dealerWins = playerResults.count { it.result == VictoryStatus.LOSE }
-        val dealerLosses = playerResults.count { it.result == VictoryStatus.WIN }
-        return GameOutput(dealerWins, dealerLosses, playerResults)
+        
+        return GameOutput(playerResults)
     }
 
-    private fun comparePlayerResult(playerScore: Int): VictoryStatus =
+    private fun comparePlayerResult(player: Player): Float =
         when {
-            dealer.currentScore > BLACKJACK_SCORE -> VictoryStatus.WIN
-            playerScore > BLACKJACK_SCORE -> VictoryStatus.LOSE
-            else -> compareScores(playerScore)
+            dealer.currentScore > BLACKJACK_SCORE -> player.betAmount
+            player.currentScore > BLACKJACK_SCORE -> -player.betAmount
+            else -> compareScores(player)
         }
 
-    private fun compareScores(playerScore: Int): VictoryStatus {
+    private fun compareScores(player: Player): Float {
         val dealerDiff = abs(BLACKJACK_SCORE - dealer.currentScore)
-        val playerDiff = abs(BLACKJACK_SCORE - playerScore)
+        val playerDiff = abs(BLACKJACK_SCORE - player.currentScore)
         return when {
-            playerDiff < dealerDiff -> VictoryStatus.WIN
-            playerDiff > dealerDiff -> VictoryStatus.LOSE
-            else -> VictoryStatus.DRAW
+            playerDiff < dealerDiff -> -player.betAmount
+            playerDiff > dealerDiff -> player.betAmount
+            else -> 0f
         }
     }
 
