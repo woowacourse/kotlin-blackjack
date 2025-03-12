@@ -17,6 +17,14 @@ class Hand {
         return getScore() > BLACK_JACK_NUMBER
     }
 
+    fun isBlackJack(): Boolean {
+        return cards.size == 2 && getScore() == BLACK_JACK_NUMBER
+    }
+
+    fun isNotBlackJack(): Boolean {
+        return !isBlackJack()
+    }
+
     fun isMoreThan(score: Int): Boolean {
         return getScore() > score
     }
