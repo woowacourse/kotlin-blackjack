@@ -80,4 +80,44 @@ class ScoreCalculatorTest {
 
         Assertions.assertEquals(totalScore, 21)
     }
+
+    @Test
+    fun `ACE가 포함되었을 때 18임을 확인할 수 있다`() {
+        val cards =
+            listOf(
+                Card.of(CardRank.ACE, Shape.CLUB),
+                Card.of(CardRank.ACE, Shape.SPADE),
+                Card.of(CardRank.ACE, Shape.SPADE),
+                Card.of(CardRank.FIVE, Shape.HEART),
+            )
+
+        val scoreCalculator = ScoreCalculator(Hand(cards))
+        val totalScore = scoreCalculator.calculateTotalCardScore()
+
+        Assertions.assertEquals(totalScore, 18)
+    }
+
+    @Test
+    fun `ACE가 포함되었을 때 21임을 확인할 수 있다`() {
+        val cards =
+            listOf(
+                Card.of(CardRank.ACE, Shape.CLUB),
+                Card.of(CardRank.ACE, Shape.SPADE),
+                Card.of(CardRank.NINE, Shape.HEART),
+            )
+
+        val cards2 =
+            listOf(
+                Card.of(CardRank.ACE, Shape.CLUB),
+                Card.of(CardRank.KING, Shape.HEART),
+            )
+
+        val scoreCalculator = ScoreCalculator(Hand(cards))
+        val scoreCalculator2 = ScoreCalculator(Hand(cards2))
+        val totalScore = scoreCalculator.calculateTotalCardScore()
+        val totalScore2 = scoreCalculator2.calculateTotalCardScore()
+
+        Assertions.assertEquals(totalScore, 21)
+        Assertions.assertEquals(totalScore2, 21)
+    }
 }
