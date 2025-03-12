@@ -31,4 +31,12 @@ class Player(
             else -> Result.PUSH
         }
     }
+
+    fun getProfit(result: Result): Double =
+        when (result) {
+            Result.BLACKJACK -> bettingAmount * 1.5
+            Result.WIN -> bettingAmount.toDouble()
+            Result.LOSE -> -bettingAmount.toDouble()
+            Result.PUSH -> 0.0
+        }
 }

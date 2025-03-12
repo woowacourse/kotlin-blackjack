@@ -101,6 +101,7 @@ class OutputView {
                 Result.WIN -> "승"
                 Result.LOSE -> "패"
                 Result.PUSH -> "무"
+                Result.BLACKJACK -> "승"
             }
     }
 }
