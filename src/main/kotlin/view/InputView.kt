@@ -1,7 +1,7 @@
 package view
 
 class InputView {
-    fun inputPlayers(): List<String> {
+    fun inputPlayerNames(): List<String> {
         println(GAME_PLAYERS_NAME_INPUT_MESSAGE)
         return readlnOrNull()?.split(",")?.map { it.trim() } ?: emptyList()
     }
@@ -13,6 +13,13 @@ class InputView {
             YES -> true
             NO -> false
             else -> throw IllegalArgumentException("[ERROR] y나 n만 입력해주세요.")
+        }
+    }
+
+    fun inputBetAmount(playerNames: List<String>): List<Float> {
+        return playerNames.map { name ->
+            println("${name}의 배팅 금액은?")
+            readln().toFloat()
         }
     }
 
