@@ -26,7 +26,7 @@ class GameResultTest {
         dealerCards.forEach { card ->
             dealer.addCard(card)
         }
-        player = Player("pobi") { true }
+        player = Player("pobi")
     }
 
     @Test
