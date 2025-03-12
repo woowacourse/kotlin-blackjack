@@ -16,28 +16,32 @@ class GameManager(private val cards: Cards) {
         players.forEach { it.receiveCards(cards::drawCards) }
     }
 
-    fun dealerPlay(): Int {
-        var drawCount = 0
-        while (dealer.decideToHit()) {
-            dealer.receiveCards(cards::drawCards)
-            drawCount++
-        }
-        return drawCount
-    }
-
     fun playersPlay(
-        shouldHit: (Player) -> Boolean,
+        getPlayerDecision: (Player) -> Boolean,
         showCards: (Player) -> Unit,
     ) {
         players.forEach { player ->
-            while (player.decideToHit() && shouldHit(player)) {
-                player.receiveCards(cards::drawCards)
-                showCards(player)
-            }
+            player.playTurn(
+                shouldHit = getPlayerDecision,
+                getCard = { cards.drawCards(1) },
+                showCards = { showCards(player) },
+            )
         }
     }
 
-    fun getGameResult(): GameOutput {
+    fun dealerPlay() {
+        dealer.playTurn { cards.drawCards(1) }
+    }
+
+    fun getDrawCount(): Int {
+        return dealer.cards.size - INITIAL_DEALER_CARDS
+    }
+
+    fun determineGameResult(): GameOutput {
         return GameResultDecider(dealer, players).compareWinOrLose()
+    }
+
+    companion object {
+        private const val INITIAL_DEALER_CARDS = 2
     }
 }

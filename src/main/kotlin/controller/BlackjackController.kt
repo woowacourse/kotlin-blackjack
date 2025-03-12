@@ -18,13 +18,18 @@ class BlackjackController(
         showInitialGameState(gameManager)
 
         gameManager.playersPlay(
-            shouldHit = { player -> inputView.readHitOrStand(player.name) },
-            showCards = { player -> outputView.printPlayerCards(player.name, player.cards.displayNames()) },
+            getPlayerDecision = { player ->
+                val decision = inputView.readHitOrStand(player.name)
+                decision
+            },
+            showCards = { player ->
+                outputView.printPlayerCards(player.name, player.cards.displayNames())
+            },
         )
 
-        val dealerDrawCount = gameManager.dealerPlay()
-        if (dealerDrawCount > 0) {
-            outputView.printDealerHit(dealerDrawCount)
+        gameManager.dealerPlay()
+        if (gameManager.getDrawCount() > 0) {
+            outputView.printDealerHit(gameManager.getDrawCount())
         }
 
         showPlayerResult(gameManager)
@@ -56,7 +61,7 @@ class BlackjackController(
     }
 
     private fun showGameResult(gameManager: GameManager) {
-        val gameResultOutput = gameManager.getGameResult()
+        val gameResultOutput = gameManager.determineGameResult()
         outputView.printResult(
             gameResultOutput.dealerWins,
             gameResultOutput.dealerLosses,
