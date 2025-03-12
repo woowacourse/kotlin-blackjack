@@ -18,7 +18,7 @@ class BlackjackController(
 ) {
     fun run() {
         val playerGroup = getPlayerGroup()
-        val playerBetAmount = getBetAmount(playerGroup.players)
+        val playerBetAmount = getPlayersBetAmount(playerGroup.players)
         val blackjack = makeGame(playerGroup)
         initGame(blackjack, playerGroup)
         startGame(blackjack, playerGroup)
@@ -33,8 +33,14 @@ class BlackjackController(
         }
     }
 
-    private fun getBetAmount(players: List<Player>): Map<Player, BetAmount> {
+    private fun getPlayersBetAmount(players: List<Player>): Map<Player, BetAmount> {
         return players.associateWith { player ->
+            getBetAmount(player)
+        }
+    }
+
+    private fun getBetAmount(player: Player): BetAmount {
+        return retryInput {
             BetAmount(inputView.askForPlayerBetAmount(player))
         }
     }
