@@ -13,12 +13,17 @@ class PlayerTest {
 
     @BeforeEach
     fun setup() {
-        player = Player("pobi")
+        player = Player("pobi", 1000)
     }
 
     @Test
-    fun `플레이어는 이름을 가지고 있어야 한다`() {
+    fun `플레이어는 이름을 가지고 있다`() {
         player.name shouldBe "pobi"
+    }
+
+    @Test
+    fun `플레이어는 배팅 금액을 가지고 있다`() {
+        player.betAmount shouldBe 1000
     }
 
     @Test

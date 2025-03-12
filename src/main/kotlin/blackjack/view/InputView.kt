@@ -8,6 +8,13 @@ class InputView {
         return input.split(DELIMITER).map { it.trim() }
     }
 
+    fun getBetAmount(name: String): Int {
+        println("\n" + ASK_BET_AMOUNT_MESSAGE.format(name))
+        val input = readlnOrNull() ?: ""
+        validateInput(input)
+        return requireNotNull(input.toIntOrNull()) { INVALID_BET_AMOUNT_MESSAGE }
+    }
+
     fun getIsHit(name: String): Boolean {
         println(ASK_DRAW_CARD_MESSAGE.format(name))
         val input = readlnOrNull() ?: ""
@@ -17,18 +24,18 @@ class InputView {
     }
 
     private fun validateInput(input: String) {
-        require(input.isNotBlank()) {
-            INVALID_INPUT_MESSAGE
-        }
+        require(input.isNotBlank()) { INVALID_INPUT_MESSAGE }
     }
 
     companion object {
         private const val ENTER_PLAYER_NAMES_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)"
         private const val ASK_DRAW_CARD_MESSAGE = "%s는 한장의 카드를 더 받겠습니까? (예는 y, 아니오는 n)"
+        private const val ASK_BET_AMOUNT_MESSAGE = "%s의 배팅 금액은?"
         private const val DELIMITER = ","
         private const val YES = "y"
         private const val NO = "n"
         private const val INVALID_FLAG_MESSAGE = "$YES 혹은 ${NO}을 입력해주세요."
         private const val INVALID_INPUT_MESSAGE = "입력이 비어있습니다."
+        private const val INVALID_BET_AMOUNT_MESSAGE = "배팅 금액이 유효하지 않습니다."
     }
 }

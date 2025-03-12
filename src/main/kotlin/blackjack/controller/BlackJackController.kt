@@ -22,7 +22,12 @@ class BlackJackController(
     }
 
     private fun initializePlayers(): List<Player> {
-        return inputView.getNames().map { Player(it) }
+        return inputView.getNames().map { name ->
+            Player(
+                name = name,
+                betAmount = inputView.getBetAmount(name),
+            )
+        }
     }
 
     private fun dealCards(game: BlackJackGame) {
