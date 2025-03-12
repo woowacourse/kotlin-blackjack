@@ -1,7 +1,7 @@
 package blackjack.view
 
 import blackjack.domain.Card
-import blackjack.domain.GameResultStatus
+import blackjack.domain.PlayerResultStatus
 import blackjack.domain.Rank
 import blackjack.domain.Suit
 import blackjack.domain.participant.Dealer
@@ -31,22 +31,22 @@ object OutputView {
         dealer: Dealer,
         players: List<Player>,
     ) {
-        println("딜러 카드: ${printCardList(dealer.hand.getCards())} - 결과: ${dealer.totalSum}")
+        println("딜러 카드: ${printCardList(dealer.hand.getCards())} - 결과: ${dealer.hand.getTotalSum()}")
 
         players.forEach { player ->
-            println("${player.name}카드: ${printCardList(player.hand.getCards())} - 결과: ${player.totalSum}")
+            println("${player.name}카드: ${printCardList(player.hand.getCards())} - 결과: ${player.hand.getTotalSum()}")
         }
     }
 
     fun printGameResult(
         dealer: Dealer,
-        players: List<Player>,
+        playersGameResult: Map<Player, PlayerResultStatus>,
     ) {
         println("\n##최종 승패")
         println("딜러: ${dealer.result.win}승 ${dealer.result.lose}패 ${dealer.result.draw}무")
 
-        players.forEach { player ->
-            println("${player.name}: ${player.result.win}승 ${player.result.lose}패 ${player.result.draw}무")
+        playersGameResult.forEach { (player, result) ->
+            println("${player.name}: ${result.toDisplayName()}")
         }
     }
 
@@ -83,10 +83,10 @@ object OutputView {
             Suit.CLUB -> "클로버"
         }
 
-    private fun GameResultStatus.toDisplayName(): String =
+    private fun PlayerResultStatus.toDisplayName(): String =
         when (this) {
-            GameResultStatus.PLAYER_WIN -> "승"
-            GameResultStatus.PLAYER_LOSE -> "패"
-            GameResultStatus.DRAW -> "무"
+            PlayerResultStatus.PLAYER_WIN -> "승"
+            PlayerResultStatus.PLAYER_LOSE -> "패"
+            PlayerResultStatus.DRAW -> "무"
         }
 }

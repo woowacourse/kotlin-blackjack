@@ -19,16 +19,23 @@ class GameController(
         val dealer = Dealer()
         val players: List<Player> = getPlayers()
 
-        dealer.getCard(deck)
-        setInitialPlayerCards(players)
+        setInitialHands(dealer, players)
         outputView.showInitialCards(dealer, players)
 
         askPlayerHit(players)
 
-        if (dealer.hasAdditionalCard()) {
-            outputView.printDealerHaveAdditionalCard()
-        }
+        handleDealerHit(dealer)
+
         showResult(dealer, players)
+    }
+
+    private fun handleDealerHit(dealer: Dealer) {
+        if (dealer.canHit()) {
+            outputView.printDealerHaveAdditionalCard()
+            while (dealer.canHit()) {
+                dealer.addCard(deck.draw())
+            }
+        }
     }
 
     private fun getPlayers(): List<Player> {
@@ -37,7 +44,13 @@ class GameController(
         }
     }
 
-    private fun setInitialPlayerCards(players: List<Player>) {
+    private fun setInitialHands(
+        dealer: Dealer,
+        players: List<Player>,
+    ) {
+        repeat(INITIAL_CARD_COUNT) {
+            dealer.addCard(deck.draw())
+        }
         players.forEach { player ->
             repeat(INITIAL_CARD_COUNT) {
                 player.addCard(deck.draw())
@@ -67,8 +80,10 @@ class GameController(
         dealer: Dealer,
         players: List<Player>,
     ) {
-        GameResult(dealer, players).getGameResult()
-        outputView.printGameResult(dealer, players)
+        val gameResult = GameResult(dealer, players)
+        gameResult.updateGameResult()
+        outputView.printFinalCards(dealer, players)
+        outputView.printGameResult(dealer, gameResult.playersGameResult)
     }
 
     companion object {
