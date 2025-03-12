@@ -2,7 +2,7 @@ package blackjack
 
 import blackjack.domain.Card
 import blackjack.domain.GameResult
-import blackjack.domain.GameResultStatus
+import blackjack.domain.PlayerResultStatus
 import blackjack.domain.Rank
 import blackjack.domain.Suit
 import blackjack.domain.participant.Dealer
@@ -20,7 +20,9 @@ class GameResultTest {
         val player = Player("a")
         player.addCard(Card.of(rank = Rank.TEN, suit = Suit.CLUB))
         player.addCard(Card.of(rank = Rank.TEN, suit = Suit.SPADE))
+
         val gameResult = GameResult(dealer, listOf(player))
-        assertThat(gameResult.getPlayerResultStatus(player)).isEqualTo(GameResultStatus.PLAYER_WIN)
+        gameResult.updateGameResult()
+        assertThat(gameResult.playersGameResult[player]).isEqualTo(PlayerResultStatus.PLAYER_WIN)
     }
 }
