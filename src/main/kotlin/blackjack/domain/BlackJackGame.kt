@@ -64,6 +64,8 @@ class BlackJackGame(
 
     companion object {
         private const val INITIAL_CARD_COUNT = 2
+        const val CARD_COUNT_OF_PLAYER_MUST_INITIAL_OPEN = 2
+        const val CARD_COUNT_OF_DEALER_MUST_INITIAL_OPEN = 1
         const val BUST_STANDARD = 21
     }
 }

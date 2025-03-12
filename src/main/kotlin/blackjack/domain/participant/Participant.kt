@@ -22,6 +22,8 @@ abstract class Participant {
         }
     }
 
+    abstract fun getInitialCards(): Set<TrumpCard>
+
     abstract fun isDrawable(): Boolean
 
     companion object {

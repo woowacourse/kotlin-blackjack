@@ -94,4 +94,12 @@ class DealerTest {
 
         assertEquals(dealer.totalScore(), 30)
     }
+
+    @Test
+    fun `최초에 카드를 받은 후 오픈할 카드 1장을 반환한다`() {
+        dealer.addCard(TrumpCard(Tier.SEVEN, Shape.HEART))
+        dealer.addCard(TrumpCard(Tier.ACE, Shape.DIA))
+
+        assertThat(dealer.getInitialCards()).containsExactly(TrumpCard(Tier.SEVEN, Shape.HEART))
+    }
 }

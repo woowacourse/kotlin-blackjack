@@ -13,8 +13,10 @@ class OutputView {
         println(MESSAGE_OUTPUT_PLAYER_NAME_AND_CARDS.format(players.joinToString { it.name }))
     }
 
-    fun printDealerCards(dealerCard: TrumpCard) {
-        println(format(MESSAGE_OUTPUT_DEALER_CARD, cardMessageFormat(dealerCard)))
+    fun printDealerCards(dealer: Dealer) {
+        val cards = dealer.getInitialCards()
+        val cardFormat = cards.joinToString { MESSAGE_CARD.format(it.tier.toEnglish(), it.shape.toKorean()) }
+        println(format(MESSAGE_OUTPUT_DEALER_CARD, cardFormat))
     }
 
     fun printOneCardMessage(player: Player) {
@@ -23,7 +25,7 @@ class OutputView {
 
     fun printPlayerCards(players: List<Player>) {
         players.forEach { player ->
-            println(format(MESSAGE_OUTPUT_PLAYER_CARD, player.name, makeCardListMessage(player.getCards())))
+            println(format(MESSAGE_OUTPUT_PLAYER_CARD, player.name, makeCardListMessage(player.getInitialCards())))
         }
     }
 

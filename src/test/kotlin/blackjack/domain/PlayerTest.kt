@@ -52,4 +52,13 @@ class PlayerTest {
 
         assertEquals(player.totalScore(), 17)
     }
+
+    @Test
+    fun `최초에 카드를 받은 후 오픈할 카드 2장을 반환한다`() {
+        player.addCard(TrumpCard(Tier.SEVEN, Shape.HEART))
+        player.addCard(TrumpCard(Tier.ACE, Shape.DIA))
+
+        assertThat(player.getInitialCards())
+            .containsExactly(TrumpCard(Tier.SEVEN, Shape.HEART), TrumpCard(Tier.ACE, Shape.DIA))
+    }
 }
