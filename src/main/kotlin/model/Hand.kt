@@ -4,8 +4,10 @@ class Hand(initialCards: List<Card>) {
     private val _handCards: MutableList<Card> = initialCards.toMutableList()
     val handCards: List<Card> get() = _handCards.toList()
 
-    fun addCard(card: Card) {
-        _handCards.add(card)
+    fun addCards(cards: List<Card>) {
+        cards.forEach {
+            _handCards.add(it)
+        }
     }
 
     fun getScore(): Int {
