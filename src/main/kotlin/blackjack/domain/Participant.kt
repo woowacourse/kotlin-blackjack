@@ -6,4 +6,6 @@ abstract class Participant {
     fun addCard(card: Card) {
         hand.addCard(card)
     }
+
+    abstract fun canDraw(): Boolean
 }

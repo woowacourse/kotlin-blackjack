@@ -1,7 +1,7 @@
 package blackjack.domain
 
 object Rule {
-    private const val BLACKJACK_SCORE = 21
+    const val BLACKJACK_SCORE = 21
     private const val ACE_VALUE_DIFFERENCE = 10
     private const val BLACKJACK_CONDITION = 2
 

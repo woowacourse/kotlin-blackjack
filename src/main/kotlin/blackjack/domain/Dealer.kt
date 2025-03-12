@@ -1,8 +1,12 @@
 package blackjack.domain
 
 class Dealer : Participant() {
+    override fun canDraw(): Boolean {
+        return Rule.calculateScore(hand) <= DEALER_HIT_CONDITION
+    }
+
     fun drawCard() {
-        while (Rule.calculateScore(hand) <= DEALER_HIT_CONDITION) {
+        while (canDraw()) {
             addCard(Deck.pick())
         }
     }
