@@ -8,6 +8,12 @@ class Cards(allCards: List<Card>) {
         require(allCards.distinct().size == _allCards.size) { DUPLICATE_CARD_ERROR_MESSAGE }
     }
 
+    fun drawCards(count: Int): List<Card> {
+        val drawnCards = _allCards.take(count)
+        _allCards.removeAll(drawnCards.toSet())
+        return drawnCards
+    }
+
     companion object {
         private const val DUPLICATE_CARD_ERROR_MESSAGE = "[ERROR] 카드는 중복될 수 없습니다"
     }
