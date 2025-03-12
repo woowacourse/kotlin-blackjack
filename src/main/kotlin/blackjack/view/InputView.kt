@@ -3,7 +3,6 @@ package blackjack.view
 import blackjack.domain.Ace
 import blackjack.domain.Card
 import blackjack.domain.Character
-import blackjack.domain.Dealer
 import blackjack.domain.Number
 import blackjack.domain.Player
 import blackjack.domain.Rank
@@ -14,25 +13,23 @@ class InputView {
         println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
         val players: List<Player> = readln().split(",").map { name: String -> Player(name.trim()) }
         return players
-        println()
     }
 
-    fun askMoreCards(
-        dealer: Dealer,
-        players: List<Player>,
-    ) {
+    fun askMoreCards(): Boolean {
         players.forEach { player ->
-            println("${player.name}는 한 장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
-            var input = readln()
-            while (input == "y") {
-                dealer.giveCard(player)
-                println("${player.name}카드: ${player.cards.joinToString { card -> card.prettyString }}")
-                println("${player.name}는 한 장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
-                input = readln()
+            while (player.canGetCard()) {
+                println("\n${player.name}는 한 장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
+                var input = readln()
+                if (input == "n") {
+                    break
+                } else if (input == "y") {
+                    dealer.giveCard(player)
+                    println("${player.name}카드: ${player.cards.joinToString { card -> card.prettyString }}")
+                } else {
+                    println("y 또는 n을 입력하세요")
+                }
             }
-            println("${player.name}카드: ${player.cards.joinToString { card -> card.prettyString }}")
         }
-        println()
     }
 
     val Card.prettyString: String
