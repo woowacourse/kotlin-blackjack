@@ -1,12 +1,9 @@
 package model
 
-import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class DealerTest {
-
     @Test
     fun `딜러는 보유한 카드가 16이하일 경우 게임을 진행할 수 있다`() {
         val cards =

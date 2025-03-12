@@ -3,6 +3,7 @@ package model
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
+import view.displayNames
 
 class PlayersTest {
     @Test
