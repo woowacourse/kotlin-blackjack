@@ -3,6 +3,7 @@ package blackjack.model
 import blackjack.model.WinningResult.LOSE
 import blackjack.model.WinningResult.PUSH
 import blackjack.model.WinningResult.WIN
+import blackjack.model.WinningResult.BLACKJACK
 
 class Dealer(val name: String = DEALER_NAME, override val hand: Hand) : Participant {
 
@@ -31,30 +32,31 @@ class Dealer(val name: String = DEALER_NAME, override val hand: Hand) : Particip
         return result.toMap()
     }
 
-    fun getDealerResult(player: Player): WinningResult {
+    fun getPlayerResult(player: Player): WinningResult {
         val dealerBlackjack = this.getHandSize() == 2 && this.getScore() == 21
         val playerBlackjack = player.getHandSize() == 2 && player.getScore() == 21
         return when {
-            player.isBusted() -> WIN
-            this.isBusted() -> LOSE
             dealerBlackjack && playerBlackjack -> PUSH
-            dealerBlackjack -> WIN
-            playerBlackjack -> LOSE
-            this.getScore() > player.getScore() -> WIN
-            this.getScore() < player.getScore() -> LOSE
+            playerBlackjack -> BLACKJACK
+            dealerBlackjack -> LOSE
+            player.isBusted() -> LOSE
+            this.isBusted() -> WIN
+            this.getScore() > player.getScore() -> LOSE
+            this.getScore() < player.getScore() -> WIN
             else -> PUSH
         }
     }
 
     fun WinningResult.reverse(): WinningResult {
         return when (this) {
+            BLACKJACK -> LOSE
             LOSE -> WIN
             WIN -> LOSE
             else -> PUSH
         }
     }
 
-    fun getUserResult(player: Player): WinningResult = getDealerResult(player).reverse()
+    fun getDealerResult(player: Player): WinningResult = getPlayerResult(player).reverse()
 
 
     companion object {

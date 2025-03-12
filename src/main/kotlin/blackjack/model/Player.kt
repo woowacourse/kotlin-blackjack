@@ -5,5 +5,5 @@ class Player(
     override val hand: Hand,
     val betAmount: Amount
     ) : Participant{
-        override val money = Amount(0)
+        override val money = betAmount.toMinus()
     }

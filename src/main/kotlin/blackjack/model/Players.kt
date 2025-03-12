@@ -14,7 +14,7 @@ class Players(
 
     fun results(dealer: Dealer): Map<String, WinningResult> =
         value.associate { player ->
-            player.name to dealer.getUserResult(player)
+            player.name to dealer.getPlayerResult(player)
         }
 
     companion object {
