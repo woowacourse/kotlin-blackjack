@@ -50,6 +50,17 @@ class OutputView {
         }
     }
 
+    fun showProfitResult(
+        dealerProfit: Double,
+        playersProfit: Map<Player, Double>,
+    ) {
+        println(FINAL_PROFIT_MESSAGE)
+        println(DEALER_TEXT_MESSAGE + "$dealerProfit")
+        playersProfit.forEach { (player, profit) ->
+            println("${player.name}: $profit")
+        }
+    }
+
     private fun makeParticipantInfo(participant: Participant): String {
         val name = participant.name
         val cards = participant.hand.toList().joinToString { card -> card.toText() }
@@ -63,6 +74,7 @@ class OutputView {
         private const val CARD_RESULT_MESSAGE = " - 결과: "
         private const val FINAL_RESULT_MESSAGE = "## 최종 승패"
         private const val DEALER_TEXT_MESSAGE = "딜러:"
+        private const val FINAL_PROFIT_MESSAGE = "## 최종 수익"
 
         fun Card.toText(): String {
             return cardNumber.toText() + suit.toText()
@@ -70,6 +82,7 @@ class OutputView {
 
         fun GameResult.toText(): String {
             return when (this) {
+                GameResult.BLACKJACK_WIN -> "승"
                 GameResult.WIN -> "승"
                 GameResult.DRAW -> "무"
                 GameResult.LOSE -> "패"
