@@ -8,7 +8,7 @@ import blackjack.model.card.Card
 abstract class Participant(val name: String) {
     private val _cards: MutableList<Card> = mutableListOf()
     val cards get() = _cards.toList()
-    var score = ResultCalculator.adjustScore(_cards)
+    var score = ResultCalculator.calculate(_cards)
         private set
 
     fun isBlackjack(): Boolean {
@@ -17,7 +17,7 @@ abstract class Participant(val name: String) {
 
     fun addCard(card: Card) {
         _cards.add(card)
-        score = ResultCalculator.adjustScore(_cards)
+        score = ResultCalculator.calculate(_cards)
     }
 
     fun isBust(): Boolean = score > BLACKJACK_NUMBER

@@ -12,7 +12,7 @@ object ResultCalculator {
     const val BLACKJACK_NUMBER = 21
     private const val ADJUST_ACE_NUMBER = 10
 
-    fun adjustScore(cards: List<Card>): Int {
+    fun calculate(cards: List<Card>): Int {
         var sumScore = calculateTotalScore(cards)
         var countAce = countAce(cards)
         while (countAce-- > 0) {
