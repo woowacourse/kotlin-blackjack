@@ -20,7 +20,7 @@ abstract class Participant(val name: String) {
         score = ResultCalculator.adjustScore(_cards)
     }
 
-    abstract fun getInitialCard(): List<Card>
+    fun isBust(): Boolean = score > BLACKJACK_NUMBER
 
-    abstract fun isBust(): Boolean
+    abstract fun getInitialCard(): List<Card>
 }
