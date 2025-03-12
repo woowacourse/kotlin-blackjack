@@ -5,7 +5,7 @@ import blackjack.domain.card.PlayerCards
 import blackjack.domain.card.TrumpCard
 
 abstract class Participant {
-    protected var cards = PlayerCards(emptySet())
+    private var cards = PlayerCards(emptySet())
 
     fun addCard(card: TrumpCard) {
         cards = cards.add(card)

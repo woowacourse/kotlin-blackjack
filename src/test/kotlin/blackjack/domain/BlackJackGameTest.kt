@@ -1,10 +1,10 @@
 package blackjack.domain
 
-import blackjack.domain.card.CardFactoryImpl
-import blackjack.domain.card.FakeCardFactory
 import blackjack.domain.card.Shape
 import blackjack.domain.card.Tier
 import blackjack.domain.card.TrumpCard
+import blackjack.domain.card.cardFactoryImpl
+import blackjack.domain.card.fakeCardFactory
 import blackjack.domain.participant.Participants
 import blackjack.fixture.participantsFixture
 import org.assertj.core.api.Assertions.assertThat
@@ -22,7 +22,7 @@ class BlackJackGameTest {
     @BeforeEach
     fun setUp() {
         participants = participantsFixture()
-        val deck = Deck(CardFactoryImpl())
+        val deck = Deck(cardFactoryImpl())
 
         game = BlackJackGame(participants, deck)
     }
@@ -30,7 +30,7 @@ class BlackJackGameTest {
     @Test
     fun `게임을 시작하면 각 플레이어와 딜러는 2장의 카드를 지급받는다`() {
         game.handOutInitializedCards(2)
-        assertThat(participants.players.first().cardSize()).isEqualTo(2)
+        assertThat(participants.players.first().getCards().size).isEqualTo(2)
     }
 
     @Test
@@ -45,7 +45,7 @@ class BlackJackGameTest {
             onPlayerStateUpdated = {},
         )
 
-        assertThat(player.cardSize()).isEqualTo(3)
+        assertThat(player.getCards().size).isEqualTo(3)
     }
 
     @Test
@@ -54,13 +54,13 @@ class BlackJackGameTest {
             getPlayerChoice = { UserChoice.from("n") },
             onPlayerStateUpdated = {},
         )
-        assertThat(participants.players.first().cardSize()).isEqualTo(0)
+        assertThat(participants.players.first().getCards().size).isEqualTo(0)
     }
 
     @MethodSource("dealerCardDrawTestSet")
     @ParameterizedTest
     fun `딜러는 카드 점수의 최소합이 16이될 때 까지 카드를 뽑는다`(cards: List<TrumpCard>) {
-        val deck = Deck(FakeCardFactory(cards))
+        val deck = Deck(fakeCardFactory(cards))
         val game = BlackJackGame(participants, deck)
 
         game.handOutInitializedCards()
