@@ -13,6 +13,8 @@ class Player(
 
         return when {
             hand.isBust() -> GameResult.LOSE
+            hand.isBlackJack() && opponent.hand.isNotBlackJack() -> GameResult.WIN
+            hand.isBlackJack() && opponent.hand.isBlackJack() -> GameResult.DRAW
             myScore > opponentScore -> GameResult.WIN
             myScore == opponentScore -> GameResult.DRAW
             else -> GameResult.LOSE
