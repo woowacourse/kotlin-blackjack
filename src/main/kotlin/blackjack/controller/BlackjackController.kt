@@ -3,12 +3,8 @@ package blackjack.controller
 import blackjack.model.card.CardDeck
 import blackjack.model.game.GameManager
 import blackjack.model.game.ResultManager
-import blackjack.model.game.UserCommand.HIT
-import blackjack.model.game.UserCommand.STAY
-import blackjack.model.game.UserCommand.UNKNOWN
 import blackjack.model.participant.Dealer
 import blackjack.model.participant.Name
-import blackjack.model.participant.Player
 import blackjack.model.participant.Players
 import blackjack.model.rule.ScoreCalculator
 import blackjack.view.InputView
@@ -26,7 +22,7 @@ class BlackjackController(
         val players = preparePlayers(gameManager, cardDeck, dealer, scoreCalculator)
         val resultManager = ResultManager(dealer, players)
 
-        progressPlayersDraw(players, cardDeck)
+        progressPlayersDraw(gameManager, players, cardDeck)
         progressDealerDraw(gameManager, dealer, cardDeck)
 
         displayParticipantsInfo(players)
@@ -49,6 +45,7 @@ class BlackjackController(
     }
 
     private fun progressPlayersDraw(
+        gameManager: GameManager,
         players: Players,
         cardDeck: CardDeck,
     ) {
@@ -56,24 +53,12 @@ class BlackjackController(
             outputView.displayParticipantCards(player.name, player.cards)
         }
         players.value.forEach { player ->
-            progressPlayerDrawUntilFinished(player, cardDeck)
-        }
-    }
-
-    private fun progressPlayerDrawUntilFinished(
-        player: Player,
-        cardDeck: CardDeck,
-    ) {
-        while (true) {
-            when (inputView.getIsRecieveMore(player.name)) {
-                HIT -> {
-                    player.recieveCards(cardDeck::draw)
-                    outputView.displayParticipantCards(player.name, player.cards)
-                    if (!player.isDrawable()) return
-                }
-                STAY -> break
-                UNKNOWN -> throw IllegalArgumentException("[ERROR] 올바르지 않은 입력입니다.")
-            }
+            gameManager.progressPlayerDrawUntilFinished(
+                player = player,
+                draw = cardDeck::draw,
+                getCommand = { inputView.getIsRecieveMore(player.name) },
+                onCardReceived = { cards -> outputView.displayParticipantCards(player.name, cards) },
+            )
         }
     }
 

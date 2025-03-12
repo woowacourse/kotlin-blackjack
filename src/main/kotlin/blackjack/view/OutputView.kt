@@ -21,7 +21,7 @@ import blackjack.model.rule.WinningResult.WIN
 
 class OutputView {
     fun displayFirstDrawEnd(players: List<Name>) {
-        println("\n딜러와 ${players.joinToString()}에게 2장을 나누었습니다.")
+        println("\n딜러와 ${players.joinToString {name -> name.value }}에게 2장을 나누었습니다.")
     }
 
     fun displayDealerDrawInfo(count: Int) {
@@ -37,7 +37,7 @@ class OutputView {
         name: Name,
         cards: List<Card>,
     ) {
-        println("$name 카드: ${cards.toText()}")
+        println("${name.value} 카드: ${cards.toText()}")
     }
 
     fun displayParticipantInfo(
@@ -47,7 +47,7 @@ class OutputView {
         isBust: Boolean,
     ) {
         val result = if (isBust) "버스트" else score
-        println("$name 카드: ${cards.toText()} - 결과: $result")
+        println("${name.value} 카드: ${cards.toText()} - 결과: $result")
     }
 
     private fun List<Card>.toText(): String =
@@ -79,12 +79,12 @@ class OutputView {
     }
 
     private fun displayDealerResult(result: Map<WinningResult, ResultCount>) {
-        println("딜러: ${result[WIN]}승 ${result[PUSH]}무 ${result[LOSE]}패")
+        println("딜러: ${result[WIN]?.value}승 ${result[PUSH]?.value}무 ${result[LOSE]?.value}패")
     }
 
     private fun displayPlayersResult(result: Map<Name, WinningResult>) {
         result.forEach { (name, winningResult) ->
-            println("$name: ${winningResult.toText()}")
+            println("${name.value}: ${winningResult.toText()}")
         }
     }
 
