@@ -13,6 +13,10 @@ class GameResult(private val dealer: Dealer, private val players: List<Player>) 
 
     fun getPlayerResultStatus(player: Player): GameResultStatus {
         return when {
+            player.hand.isBlackJack() && !dealer.hand.isBlackJack() -> GameResultStatus.PLAYER_WIN
+            player.hand.isBlackJack() && dealer.hand.isBlackJack() -> GameResultStatus.DRAW
+            dealer.hand.isBlackJack() && !player.hand.isBlackJack() -> GameResultStatus.PLAYER_LOSE
+
             player.hand.isBust() -> GameResultStatus.PLAYER_LOSE
             dealer.hand.isBust() -> GameResultStatus.PLAYER_WIN
 
