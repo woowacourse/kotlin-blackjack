@@ -7,7 +7,8 @@ import blackjack.model.card.Card
 
 abstract class Participant(val name: String) {
     private val _cards: MutableList<Card> = mutableListOf()
-    val cards get() = _cards.toList()
+    val cards: List<Card>
+        get() = _cards.map { it.copy() }.toList()
 
     val score: Int
         get() = ResultCalculator.calculate(cards)
