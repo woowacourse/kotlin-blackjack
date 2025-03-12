@@ -8,6 +8,7 @@ enum class PersonState(val isFinal: Boolean) {
     HIT(false),
     BUST(true),
     STAY(true),
+    BLACKJACK(true),
     ;
 
     companion object {
@@ -18,6 +19,7 @@ enum class PersonState(val isFinal: Boolean) {
             val isDealer = person is Dealer
 
             return when {
+                person.cards.size == 2 && person.score == BLACKJACK_SCORE -> BLACKJACK
                 score > BLACKJACK_SCORE -> BUST
                 isDealer && score > DEALER_ADDITIONAL_DRAW_BASE_SCORE -> STAY
                 else -> HIT
