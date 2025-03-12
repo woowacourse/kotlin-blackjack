@@ -15,20 +15,20 @@ class Blackjack(private val deck: PlayingCard) {
     }
 
     private fun distributeStartingHands(player: Participants) {
-        repeat(2) {
-            player.receiveCard(deck.spreadCard())
-        }
+
+        player.receiveCard(deck.spreadCard(2))
+
     }
 
     fun hitAction(player: Player) {
-        player.receiveCard(deck.spreadCard())
+        player.receiveCard(deck.spreadCard(1))
         player.checkBust()
     }
 
     fun drawUntilThreshold(dealer: Dealer): Int {
         var count: Int = 0
         while (dealer.canHit()) {
-            dealer.receiveCard(deck.spreadCard())
+            dealer.receiveCard(deck.spreadCard(1))
             count++
         }
         return count

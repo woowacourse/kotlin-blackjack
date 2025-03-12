@@ -14,8 +14,8 @@ class DealerTest {
     @BeforeEach
     fun setup() {
         // given
-        dealer.receiveCard(Card(Shape.Heart, CardNumber.Ace))
-        dealer.receiveCard(Card(Shape.Spade, CardNumber.Six))
+        dealer.receiveCard(listOf(Card(Shape.Heart, CardNumber.Ace)))
+        dealer.receiveCard(listOf(Card(Shape.Spade, CardNumber.Six)))
     }
 
     @Test

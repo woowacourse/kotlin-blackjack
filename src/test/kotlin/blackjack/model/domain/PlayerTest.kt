@@ -10,19 +10,22 @@ import org.junit.jupiter.api.Test
 
 class PlayerTest {
     private val player1 = Player("제리")
+    private val aceHeart = Card(Shape.Heart, CardNumber.Ace)
+    private val sixSpade = Card(Shape.Spade, CardNumber.Six)
+    private val queenHeart = Card(Shape.Heart, CardNumber.Queen)
+    private val queenSpade = Card(Shape.Spade, CardNumber.Queen)
 
     @BeforeEach
     fun setup() {
         // given
-        player1.receiveCard(Card(Shape.Heart, CardNumber.Ace))
-        player1.receiveCard(Card(Shape.Spade, CardNumber.Six))
+        player1.receiveCard(listOf(aceHeart, sixSpade))
     }
 
     @Test
     fun `받은 카드의 목록을 반환한다`() {
         // when
         val actual = player1.cardDeck
-        val expected = listOf(Card(Shape.Heart, CardNumber.Ace), Card(Shape.Spade, CardNumber.Six))
+        val expected = listOf(aceHeart, sixSpade)
         // then
         assertThat(actual).isEqualTo(expected)
     }
@@ -30,8 +33,7 @@ class PlayerTest {
     @Test
     fun `카드 숫자의 합을 토대로 bust를 판단한다`() {
         // given
-        player1.receiveCard(Card(Shape.Heart, CardNumber.Queen))
-        player1.receiveCard(Card(Shape.Spade, CardNumber.Queen))
+        player1.receiveCard(listOf(queenHeart, queenSpade))
         // when
         player1.checkBust()
         val actual = player1.status

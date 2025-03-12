@@ -15,8 +15,8 @@ class PlayingCardTest {
     @Test
     fun `카드를 첫번째 장에 있는 카드를 나누어준다`() {
         // when
-        val actual = deck.spreadCard()
-        val expected = Card(Shape.Diamond, CardNumber.Ace)
+        val actual = deck.spreadCard(1)
+        val expected = listOf(Card(Shape.Diamond, CardNumber.Ace))
         // then
         assertThat(actual).isEqualTo(expected)
     }

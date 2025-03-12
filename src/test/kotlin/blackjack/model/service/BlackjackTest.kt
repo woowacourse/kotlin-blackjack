@@ -48,10 +48,10 @@ class BlackjackTest {
     @Test
     fun `게임이 끝난 후 승패를 가린다`() {
         // given
-        player1.receiveCard(Card(Shape.Spade, CardNumber.Ace))
-        player2.receiveCard(Card(Shape.Spade, CardNumber.Six))
-        player3.receiveCard(Card(Shape.Heart, CardNumber.Seven))
-        dealer.receiveCard(Card(Shape.Spade, CardNumber.Seven))
+        player1.receiveCard(listOf(Card(Shape.Spade, CardNumber.Ace)))
+        player2.receiveCard(listOf(Card(Shape.Spade, CardNumber.Six)))
+        player3.receiveCard(listOf(Card(Shape.Heart, CardNumber.Seven)))
+        dealer.receiveCard(listOf(Card(Shape.Spade, CardNumber.Seven)))
         // when
         game.endGame(PlayerGroup(listOf(player1, player2, player3), dealer))
         // then
@@ -82,9 +82,9 @@ class BlackjackTest {
     @Test
     fun `플레이어가 hit을 외쳤는데 카드 숫자의 합이 21이 넘으면 bust된다`() {
         // given
-        player1.receiveCard(Card(Shape.Spade, CardNumber.King))
-        player1.receiveCard(Card(Shape.Heart, CardNumber.King))
-        player1.receiveCard(Card(Shape.Heart, CardNumber.Ace))
+        player1.receiveCard(listOf(Card(Shape.Spade, CardNumber.King)))
+        player1.receiveCard(listOf(Card(Shape.Heart, CardNumber.King)))
+        player1.receiveCard(listOf(Card(Shape.Heart, CardNumber.Ace)))
         // when
         game.hitAction(player1)
         // then

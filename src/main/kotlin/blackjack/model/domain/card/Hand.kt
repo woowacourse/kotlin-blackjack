@@ -14,7 +14,7 @@ class Hand(val cards: MutableList<Card>) {
         return sum
     }
 
-    fun append(card: Card) {
-        cards.add(card)
+    fun append(card: List<Card>) {
+        cards.addAll(card)
     }
 }
