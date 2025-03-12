@@ -15,14 +15,7 @@ class GameResults(private val dealer: Dealer, players: List<Player>) {
         playerResults =
             players.map { player ->
                 val status = judgePlayerResult(player)
-                val profit =
-                    when (status) {
-                        GameResultStatus.PLAYER_WIN -> player.bettingAmount
-                        GameResultStatus.PLAYER_LOSE -> player.bettingAmount * -1
-                        GameResultStatus.DRAW -> 0
-                        GameResultStatus.DEALER_BLACKJACK -> player.bettingAmount * -1
-                        GameResultStatus.PLAYER_BLACKJACK -> (player.bettingAmount * 1.5).toInt()
-                    }
+                val profit = status.earn(player.bettingAmount)
                 PlayerResult(player, profit)
             }
     }
