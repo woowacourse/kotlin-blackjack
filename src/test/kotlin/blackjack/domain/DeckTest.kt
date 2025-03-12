@@ -1,6 +1,6 @@
 package blackjack.domain
 
-import blackjack.domain.card.CardFactoryImpl
+import blackjack.domain.card.cardFactoryImpl
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -10,7 +10,7 @@ class DeckTest {
 
     @BeforeEach
     fun setUp() {
-        deck = Deck(CardFactoryImpl())
+        deck = Deck(cardFactoryImpl())
     }
 
     @Test

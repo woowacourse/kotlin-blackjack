@@ -11,7 +11,7 @@ class Deck(
     private val cards: Deque<TrumpCard> = ArrayDeque()
 
     init {
-        cards.addAll(cardFactory.makeCard())
+        cards.addAll(cardFactory())
     }
 
     fun draw(): TrumpCard {
