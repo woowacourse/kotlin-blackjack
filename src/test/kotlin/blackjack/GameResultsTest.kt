@@ -14,11 +14,12 @@ import org.junit.jupiter.api.Test
 class GameResultsTest {
     private lateinit var dealer: Dealer
     private lateinit var player: Player
+    private val bettingAmount = 5000
 
     @BeforeEach
     fun clear() {
         dealer = Dealer()
-        player = Player("a")
+        player = Player("a", bettingAmount)
     }
 
     private fun setDealerCard(vararg card: Card) {
@@ -90,5 +91,98 @@ class GameResultsTest {
         )
         val gameResults = GameResults(dealer, listOf(player))
         assertThat(gameResults.judgePlayerResult(player)).isEqualTo(GameResultStatus.DEALER_BLACKJACK)
+    }
+
+    @Test
+    fun `점수를 판별할 떄, 플레이어가 딜러보다 점수가 높으면 베팅한 금액만큼 수익을 얻는다`() {
+        setDealerCard(
+            Card.of(Rank.EIGHT, Suit.CLUB),
+            Card.of(Rank.TEN, Suit.SPADE),
+        )
+
+        setPlayerCard(
+            Card.of(Rank.TWO, Suit.CLUB),
+            Card.of(Rank.TEN, Suit.SPADE),
+            Card.of(Rank.NINE, Suit.SPADE),
+        )
+        val gameResults = GameResults(dealer, listOf(player))
+        assertThat(gameResults.playerResults[0].profit).isEqualTo(5000)
+    }
+
+    @Test
+    fun `점수를 판별할 떄, 플레이어가 딜러보다 점수가 낮으면 베팅한 금액만큼 금액을 잃는다`() {
+        setDealerCard(
+            Card.of(Rank.TEN, Suit.CLUB),
+            Card.of(Rank.TEN, Suit.SPADE),
+        )
+
+        setPlayerCard(
+            Card.of(Rank.TEN, Suit.SPADE),
+            Card.of(Rank.NINE, Suit.SPADE),
+        )
+        val gameResults = GameResults(dealer, listOf(player))
+        assertThat(gameResults.playerResults[0].profit).isEqualTo(-5000)
+    }
+
+    @Test
+    fun `점수를 판별할 떄, 플레이어가 블랙잭이면 베팅한 금액의 1,5배를 돌려받는다`() {
+        setDealerCard(
+            Card.of(Rank.TEN, Suit.CLUB),
+            Card.of(Rank.TEN, Suit.SPADE),
+        )
+
+        setPlayerCard(
+            Card.of(Rank.TEN, Suit.SPADE),
+            Card.of(Rank.ACE, Suit.SPADE),
+        )
+        val gameResults = GameResults(dealer, listOf(player))
+        assertThat(gameResults.playerResults[0].profit).isEqualTo(7500)
+    }
+
+    @Test
+    fun `점수를 판별할 떄, 플레이어가 블랙잭이면 딜러가 블랙잭이 아닌 21이 되어도 베팅한 금액의 1,5배를 돌려받는다`() {
+        setDealerCard(
+            Card.of(Rank.TEN, Suit.CLUB),
+            Card.of(Rank.SIX, Suit.SPADE),
+            Card.of(Rank.FIVE, Suit.SPADE),
+        )
+
+        setPlayerCard(
+            Card.of(Rank.TEN, Suit.SPADE),
+            Card.of(Rank.ACE, Suit.SPADE),
+        )
+        val gameResults = GameResults(dealer, listOf(player))
+        assertThat(gameResults.playerResults[0].profit).isEqualTo(7500)
+    }
+
+    @Test
+    fun `점수를 판별할 떄, 딜러와 플레이어가 서로 점수가 같으면 0원을 받는다`() {
+        setDealerCard(
+            Card.of(Rank.SEVEN, Suit.HEART),
+            Card.of(Rank.TEN, Suit.CLUB),
+        )
+
+        setPlayerCard(
+            Card.of(Rank.TWO, Suit.SPADE),
+            Card.of(Rank.ACE, Suit.SPADE),
+            Card.of(Rank.FOUR, Suit.SPADE),
+        )
+        val gameResults = GameResults(dealer, listOf(player))
+        assertThat(gameResults.playerResults[0].profit).isEqualTo(0)
+    }
+
+    @Test
+    fun `점수를 판별할 떄, 딜러와 플레이어가 서로 블랙잭이면 0원을 받는다`() {
+        setDealerCard(
+            Card.of(Rank.TEN, Suit.HEART),
+            Card.of(Rank.ACE, Suit.CLUB),
+        )
+
+        setPlayerCard(
+            Card.of(Rank.TEN, Suit.SPADE),
+            Card.of(Rank.ACE, Suit.SPADE),
+        )
+        val gameResults = GameResults(dealer, listOf(player))
+        assertThat(gameResults.playerResults[0].profit).isEqualTo(0)
     }
 }
