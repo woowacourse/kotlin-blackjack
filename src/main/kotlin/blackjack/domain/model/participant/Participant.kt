@@ -1,6 +1,5 @@
 package blackjack.domain.model.participant
 
-import blackjack.domain.model.BetAmount
 import blackjack.domain.model.GameResult
 import blackjack.domain.model.card.Deck
 import blackjack.domain.model.card.Hand
@@ -8,7 +7,6 @@ import blackjack.domain.model.card.Hand
 abstract class Participant(
     val name: String,
     val hand: Hand,
-    val betAmount: BetAmount,
 ) {
     fun drawCard(deck: Deck) {
         val card = deck.pop()

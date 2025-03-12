@@ -1,6 +1,5 @@
 package blackjack.domain.model.participant
 
-import blackjack.domain.model.BetAmount
 import blackjack.domain.model.GameResult
 import blackjack.domain.model.card.Card
 import blackjack.domain.model.card.Hand
@@ -8,8 +7,7 @@ import blackjack.domain.model.card.Hand
 class Dealer(
     name: String = DEFAULT_NAME,
     hand: Hand = Hand(),
-    betAmount: BetAmount,
-) : Participant(name, hand, betAmount) {
+) : Participant(name, hand) {
     fun showFirstCard(): Card = hand.toList().first()
 
     override fun compareTo(opponent: Participant): GameResult {

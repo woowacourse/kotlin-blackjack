@@ -7,8 +7,8 @@ import blackjack.domain.model.card.Hand
 class Player(
     name: String = DEFAULT_NAME,
     hand: Hand = Hand(),
-    betAmount: BetAmount,
-) : Participant(name, hand, betAmount) {
+    val betAmount: BetAmount,
+) : Participant(name, hand) {
     override fun compareTo(opponent: Participant): GameResult {
         val myScore: Int = hand.getScore()
         val opponentScore: Int = opponent.hand.getScore()
