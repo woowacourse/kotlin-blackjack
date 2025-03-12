@@ -7,9 +7,9 @@ import org.junit.jupiter.api.Test
 class DeckTest {
     @Test
     fun `고유한 52장의 카드를 가지고 있어야 한다`() {
-        val deck = Deck()
-
-        deck.cards.size shouldBe 52
+        shouldThrowExactly<IllegalArgumentException> {
+            Deck(List(53) { Card.create(CardNumber.JACK, CardPattern.HEART) })
+        }
     }
 
     @Test
