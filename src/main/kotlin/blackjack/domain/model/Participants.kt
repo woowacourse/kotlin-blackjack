@@ -2,12 +2,20 @@ package blackjack.domain.model
 
 class Participants(val dealer: Dealer, val players: List<Player>) {
     val all: List<Participant> = listOf(dealer) + players
+    var totalBet: Int = 0
 
     init {
         val playerNames: List<String> = players.map { player -> player.name }
         require(playerNames == playerNames.distinct()) { MESSAGE_ERROR_PLAYER_NAMES_NOT_UNIQUE }
         require(playerNames.none { playerName -> playerName == dealer.name }) {
             MESSAGE_ERROR_PLAYER_NAME_SAME_AS_DEALER.format(dealer.name)
+        }
+    }
+
+    fun processPlayerBets(input: (Player) -> Int) {
+        players.forEach { player ->
+            totalBet += player.placeBet(input)
+            println(totalBet)
         }
     }
 

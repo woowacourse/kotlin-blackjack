@@ -1,6 +1,8 @@
 package blackjack.domain.model
 
 class Player(name: String) : Participant(name) {
+    var bet: Int = 0
+
     constructor(name: String, vararg cards: Card) : this(name) {
         accept(cards.toList())
     }
@@ -11,6 +13,13 @@ class Player(name: String) : Participant(name) {
 
     override fun showHand(): List<Card> {
         return hand.show()
+    }
+
+    fun placeBet(input: (Player) -> Int): Int {
+        val amount = input(this)
+        require(amount >= 0) { ERROR_MESSAGE_BET_NOT_POSITIVE }
+        bet = amount
+        return amount
     }
 
     fun processHits(
@@ -39,5 +48,9 @@ class Player(name: String) : Participant(name) {
             point < dealerPoint -> Result.LOSE
             else -> Result.DRAW
         }
+    }
+
+    companion object {
+        private const val ERROR_MESSAGE_BET_NOT_POSITIVE = "베팅 금액은 음수일 수 없습니다."
     }
 }
