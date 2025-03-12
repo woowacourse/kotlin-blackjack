@@ -56,3 +56,17 @@
 - [x] 테스트 코드 | given when then 반영
 - [x] BlackjackTest | BeforeEach 적용
 - [x] ParticipantsStatus | Bust 삭제
+
+## TODO
+
+- [ ] CardNumber | 출력문 저장 위치 변경
+- [ ] ActionType | InputView에서 Yes No 판단하도록 수정
+- [ ] Hand | 방어적 복사를 사용하도록 변경
+- [ ] Hand | haveAce 검사를 메소드로 변경
+- [ ] PlayingCard | 카드를 여러장 받아오는 메소드 추가
+- [ ] BlackJack | hitAction의 bustcheck이동
+- [ ] Participants | isBust메소드 이동
+- [ ] GameResult | bust판단 메소드 삭제 및 도메인으로 판단하도록 변경
+- [ ] Participants | status 변수 삭제
+- [ ] BlackJack | 딜러 임계값 상수 이동
+- [ ] DealerTest | 테스트명 변경
