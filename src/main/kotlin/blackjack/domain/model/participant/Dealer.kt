@@ -15,10 +15,10 @@ class Dealer(
         val opponentScore: Int = opponent.hand.getScore()
 
         return when {
+            hand.isBlackJack() && opponent.hand.isNotBlackJack() -> GameResult.BLACKJACK_WIN
+            hand.isBlackJack() && opponent.hand.isBlackJack() -> GameResult.DRAW
             opponent.hand.isBust() -> GameResult.WIN
             hand.isBust() -> GameResult.LOSE
-            hand.isBlackJack() && opponent.hand.isNotBlackJack() -> GameResult.WIN
-            hand.isBlackJack() && opponent.hand.isBlackJack() -> GameResult.DRAW
             myScore > opponentScore -> GameResult.WIN
             myScore == opponentScore -> GameResult.DRAW
             else -> GameResult.LOSE

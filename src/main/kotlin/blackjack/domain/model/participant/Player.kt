@@ -7,16 +7,17 @@ import blackjack.domain.model.card.Hand
 class Player(
     name: String = DEFAULT_NAME,
     hand: Hand = Hand(),
-    val betAmount: BetAmount,
+    val betAmount: BetAmount = BetAmount(0.0),
 ) : Participant(name, hand) {
     override fun compareTo(opponent: Participant): GameResult {
         val myScore: Int = hand.getScore()
         val opponentScore: Int = opponent.hand.getScore()
 
         return when {
-            hand.isBust() -> GameResult.LOSE
-            hand.isBlackJack() && opponent.hand.isNotBlackJack() -> GameResult.WIN
+            hand.isBlackJack() && opponent.hand.isNotBlackJack() -> GameResult.BLACKJACK_WIN
             hand.isBlackJack() && opponent.hand.isBlackJack() -> GameResult.DRAW
+            hand.isBust() -> GameResult.LOSE
+            opponent.hand.isBust() -> GameResult.WIN
             myScore > opponentScore -> GameResult.WIN
             myScore == opponentScore -> GameResult.DRAW
             else -> GameResult.LOSE
