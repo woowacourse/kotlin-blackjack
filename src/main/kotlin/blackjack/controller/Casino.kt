@@ -16,14 +16,14 @@ class Casino(
     private val cardsGenerator: CardsGenerator,
 ) {
     fun run() {
-        val deck = Deck(cardsGenerator)
+        val deck: Deck = Deck(cardsGenerator)
         val players: List<Player> = inputView.readPlayerNames().map { Player(it) }
         val dealer: Dealer = Dealer()
         initialCardsDistribute(players + dealer, deck)
         outputParticipantCardsInfo(dealer, players)
 
         runPlayersDrawPhase(players, deck)
-        runDealerDrawPhase(dealer, deck)
+        runDealerPhase(dealer, deck)
         outputFinalResult(dealer, players)
     }
 
@@ -50,18 +50,35 @@ class Casino(
         players: List<Player>,
         deck: Deck,
     ) {
-        players.forEach { player ->
-            player.play(deck, inputView::readWantExtraCard, outputView::showPlayerCardsInfo)
-            outputView.newLine()
+        players.forEach {
+            runPlayerPhase(it, deck)
+        }
+    }
+
+    private fun runPlayerPhase(
+        player: Player,
+        deck: Deck,
+    ) {
+        while (player.isDrawable()) {
+            val response = inputView.readWantExtraCard(player.name)
+            if (!response) {
+                outputView.showPlayerCardsInfo(player)
+                break
+            }
+            player.drawCard(deck)
+            outputView.showPlayerCardsInfo(player)
         }
         outputView.newLine()
     }
 
-    private fun runDealerDrawPhase(
+    private fun runDealerPhase(
         dealer: Dealer,
         deck: Deck,
     ) {
-        dealer.play(deck, outputView::showDealerDrawMessage)
+        while (dealer.isDrawable()) {
+            dealer.drawCard(deck)
+            outputView.showDealerDrawMessage()
+        }
         outputView.newLine()
     }
 

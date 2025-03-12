@@ -1,31 +1,15 @@
 package blackjack.domain.model.participant
 
 import blackjack.domain.model.GameResult
-import blackjack.domain.model.card.Deck
 import blackjack.domain.model.card.Hand
 
 class Player(
     name: String = DEFAULT_NAME,
     hand: Hand = Hand(),
 ) : Participant(name, hand) {
-    fun play(
-        deck: Deck,
-        onResponse: (String) -> Boolean,
-        displayCards: (Player) -> Unit,
-    ) {
-        while (isDrawable()) {
-            if (!onResponse(name)) {
-                displayCards(this)
-                break
-            }
-            drawCard(deck)
-            displayCards(this)
-        }
-    }
-
     override fun compareTo(opponent: Participant): GameResult {
-        val myScore = hand.getScore()
-        val opponentScore = opponent.hand.getScore()
+        val myScore: Int = hand.getScore()
+        val opponentScore: Int = opponent.hand.getScore()
 
         return when {
             hand.isBust() -> GameResult.LOSE
