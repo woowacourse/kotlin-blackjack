@@ -1,9 +1,9 @@
 package blackjack.domain.model.card
 
 class Hand {
-    private var _cards = mutableListOf<Card>()
+    private var _cards = listOf<Card>()
     private val cards
-        get() = _cards.toList()
+        get() = _cards.deepCopy()
 
     fun add(card: Card) {
         _cards += card
@@ -31,6 +31,10 @@ class Hand {
     }
 
     companion object {
+        fun List<Card>.deepCopy(): List<Card> {
+            return map(Card::copy)
+        }
+
         private const val ACE_EXTRA_SCORE = 10
         private const val BLACK_JACK_NUMBER = 21
 
