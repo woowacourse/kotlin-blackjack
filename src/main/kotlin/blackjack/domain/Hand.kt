@@ -9,30 +9,35 @@ class Hand {
         cards.add(card)
     }
 
-    fun getCardSum(): Int {
-        return calculateSum()
-    }
-
     fun isBust(): Boolean {
-        return calculateSum() > BUST_THRESHOLD
+        return calculateCardsSum() > BUST_THRESHOLD
     }
 
-    private fun calculateSum(): Int {
-        var sum = cards.sumOf { it.getScore() }
-        var aceCount = cards.count { it.rank == Rank.ACE }
+    fun isBlackJack(): Boolean {
+        return hasAce() && hasTenRankCard()
+    }
 
-        while (sum + ACE_SCORE_DIFFERENCE <= BUST_THRESHOLD && aceCount > 0) {
-            sum += ACE_SCORE_DIFFERENCE
-            aceCount--
+    fun calculateCardsSum(): Int {
+        var sum = cards.sumOf { it.getScore() }
+
+        if (hasAce() && sum + ACE_BONUS_SCORE <= BUST_THRESHOLD) {
+            sum += ACE_BONUS_SCORE
         }
 
         return sum
     }
 
+    private fun hasAce(): Boolean {
+        return cards.any { it.rank == Rank.ACE }
+    }
+
+    private fun hasTenRankCard(): Boolean {
+        val tenRankCards = listOf(Rank.TEN, Rank.JACK, Rank.QUEEN, Rank.KING)
+        return cards.any { it.rank in tenRankCards }
+    }
+
     companion object {
         const val BUST_THRESHOLD = 21
-        private const val ACE_HIGH = 11
-        private const val ACE_LOW = 1
-        private const val ACE_SCORE_DIFFERENCE = ACE_HIGH - ACE_LOW
+        private const val ACE_BONUS_SCORE = 10
     }
 }

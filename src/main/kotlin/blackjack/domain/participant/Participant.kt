@@ -8,8 +8,7 @@ abstract class Participant {
     val hand: Hand = Hand()
     val result: Result = Result()
 
-    val totalSum: Int
-        get() = hand.getCardSum()
+    val totalSum = hand.calculateCardsSum()
 
     abstract val hitThreshold: Int
 
