@@ -5,23 +5,6 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class HandTest {
-    private lateinit var cardDistributor: CardDistributor
-
-    @BeforeEach
-    fun setUp() {
-        val deck =
-            Cards(
-                listOf(
-                    Card.of(CardRank.ACE, Shape.CLUB),
-                    Card.of(CardRank.TWO, Shape.DIAMOND),
-                    Card.of(CardRank.THREE, Shape.HEART),
-                    Card.of(CardRank.FOUR, Shape.SPADE),
-                    Card.of(CardRank.FIVE, Shape.CLUB),
-                ),
-            )
-        cardDistributor = CardDistributor(deck)
-    }
-
     @Test
     fun `플레이어나 딜러가 카드를 뽑을 때 마다 추가할 수 있다`() {
         val initialCards: List<Card> =
@@ -29,15 +12,21 @@ class HandTest {
                 Card.of(CardRank.ACE, Shape.CLUB),
                 Card.of(CardRank.TWO, Shape.DIAMOND),
             )
-        val drawnCard = Card.of(CardRank.QUEEN, Shape.DIAMOND)
+
+        val drawnCard =
+            listOf(
+                Card.of(CardRank.ACE, Shape.DIAMOND),
+                Card.of(CardRank.TWO, Shape.HEART),
+            )
 
         val hand = Hand(initialCards)
-        hand.addCard(drawnCard)
+        hand.addCards(drawnCard)
 
         assertThat(hand.handCards).containsExactly(
             Card.of(CardRank.ACE, Shape.CLUB),
             Card.of(CardRank.TWO, Shape.DIAMOND),
-            Card.of(CardRank.QUEEN, Shape.DIAMOND),
+            Card.of(CardRank.ACE, Shape.DIAMOND),
+            Card.of(CardRank.TWO, Shape.HEART),
         )
     }
 
