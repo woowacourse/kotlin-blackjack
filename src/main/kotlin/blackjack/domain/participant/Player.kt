@@ -12,6 +12,6 @@ class Player(
     }
 
     override fun getInitialCards(): Set<TrumpCard> {
-        return getCards().take(CARD_COUNT_OF_PLAYER_MUST_INITIAL_OPEN).toSet()
+        return cards.items.take(CARD_COUNT_OF_PLAYER_MUST_INITIAL_OPEN).toSet()
     }
 }

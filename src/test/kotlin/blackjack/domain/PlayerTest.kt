@@ -25,7 +25,7 @@ class PlayerTest {
         fixture.forEach {
             player.addCard(it)
         }
-        assertThat(player.getCards()).containsExactly(*fixture.toTypedArray())
+        assertThat(player.cards.items).containsExactly(*fixture.toTypedArray())
     }
 
     @Test

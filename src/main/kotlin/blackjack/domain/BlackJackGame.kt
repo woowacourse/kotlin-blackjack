@@ -25,7 +25,7 @@ class BlackJackGame(
                 when (choice) {
                     UserChoice.HIT -> player.addCard(deck.draw())
                     UserChoice.STAY -> {
-                        if (player.getCards().size == INITIAL_CARD_COUNT) {
+                        if (player.cards.items.size == INITIAL_CARD_COUNT) {
                             onPlayerStateUpdated(player)
                         }
                         break

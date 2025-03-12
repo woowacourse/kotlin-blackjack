@@ -25,7 +25,7 @@ class DealerTest {
         fixture.forEach {
             dealer.addCard(it)
         }
-        assertThat(dealer.getCards()).containsExactly(*fixture.toTypedArray())
+        assertThat(dealer.cards.items).containsExactly(*fixture.toTypedArray())
     }
 
     @Test

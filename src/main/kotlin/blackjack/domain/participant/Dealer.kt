@@ -9,6 +9,6 @@ class Dealer : Participant() {
     }
 
     override fun getInitialCards(): Set<TrumpCard> {
-        return getCards().take(CARD_COUNT_OF_DEALER_MUST_INITIAL_OPEN).toSet()
+        return cards.items.take(CARD_COUNT_OF_DEALER_MUST_INITIAL_OPEN).toSet()
     }
 }
