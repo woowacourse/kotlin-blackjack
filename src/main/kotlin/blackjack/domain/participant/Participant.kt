@@ -14,16 +14,15 @@ abstract class Participant {
     fun getCards(): Set<TrumpCard> = cards.items
 
     fun totalScore(): Int {
-        return if (cards.hasAce() && (sumOfCards() + ACE_EXTRACT_SCORE > BUST_STANDARD).not()) {
-            sumOfCards() + ACE_EXTRACT_SCORE
+        val sumOfCards = cards.sumOfCards()
+        return if (cards.hasAce() && (sumOfCards + ACE_EXTRACT_SCORE > BUST_STANDARD).not()) {
+            sumOfCards + ACE_EXTRACT_SCORE
         } else {
-            sumOfCards()
+            sumOfCards
         }
     }
 
     abstract fun isDrawable(): Boolean
-
-    protected fun sumOfCards(): Int = cards.sumOfCards()
 
     companion object {
         const val DEALER_MUST_REACH_SCORE = 16
