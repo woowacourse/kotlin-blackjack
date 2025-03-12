@@ -53,11 +53,11 @@ class BlackjackController(
     }
 
     private fun drawCard(player: Player) {
-        while (!Rule().isBust(player.hand) && inputView.readHitOrStay(player) == Action.HIT) {
+        while (!Rule.isBust(player.hand) && inputView.readHitOrStay(player) == Action.HIT) {
             player.addCard(Deck.pick())
             outputView.printPlayerCards(player)
         }
-        if (Rule().isBust(player.hand)) {
+        if (Rule.isBust(player.hand)) {
             outputView.printBust(player)
         }
     }

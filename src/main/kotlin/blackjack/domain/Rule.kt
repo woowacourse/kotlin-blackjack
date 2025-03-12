@@ -1,6 +1,10 @@
 package blackjack.domain
 
-class Rule {
+object Rule {
+    private const val BLACKJACK_SCORE = 21
+    private const val ACE_VALUE_DIFFERENCE = 10
+    private const val BLACKJACK_CONDITION = 2
+
     fun calculateScore(hand: Hand): Int {
         val sum = hand.cards.sumOf { it.getNumber() }
         if (hasAce(hand) && (sum + ACE_VALUE_DIFFERENCE <= BLACKJACK_SCORE)) {
@@ -42,10 +46,4 @@ class Rule {
     }
 
     private fun hasAce(hand: Hand): Boolean = hand.cards.any { it.isAce() }
-
-    companion object {
-        private const val BLACKJACK_SCORE = 21
-        private const val ACE_VALUE_DIFFERENCE = 10
-        private const val BLACKJACK_CONDITION = 2
-    }
 }

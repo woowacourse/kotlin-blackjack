@@ -5,7 +5,6 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class RuleTest {
-    private val rule = Rule()
     private var cards: List<Card> = listOf()
     private lateinit var player: Player
     private lateinit var dealer: Dealer
@@ -27,7 +26,7 @@ class RuleTest {
         val hand = Hand(cards)
 
         // when
-        val score = rule.calculateScore(hand)
+        val score = Rule.calculateScore(hand)
 
         // then
         assertThat(score).isEqualTo(10)
@@ -40,7 +39,7 @@ class RuleTest {
         val hand = Hand(cards)
 
         // when
-        val score = rule.calculateScore(hand)
+        val score = Rule.calculateScore(hand)
 
         // then
         assertThat(score).isEqualTo(21)
@@ -53,7 +52,7 @@ class RuleTest {
         val hand = Hand(cards)
 
         // when
-        val score = rule.calculateScore(hand)
+        val score = Rule.calculateScore(hand)
 
         // then
         assertThat(score).isEqualTo(13)
@@ -68,7 +67,7 @@ class RuleTest {
         player.addCard(queenCard)
 
         // when
-        val actual = rule.isBust(player.hand)
+        val actual = Rule.isBust(player.hand)
 
         // then
         assertThat(actual).isTrue()
@@ -82,7 +81,7 @@ class RuleTest {
         player.addCard(twoCard)
 
         // when
-        val actual = rule.isBust(player.hand)
+        val actual = Rule.isBust(player.hand)
 
         // then
         assertThat(actual).isFalse()
@@ -96,7 +95,7 @@ class RuleTest {
         player.addCard(twoCard)
 
         // when
-        val actual = rule.isBust(player.hand)
+        val actual = Rule.isBust(player.hand)
 
         // then
         assertThat(actual).isFalse()
@@ -113,7 +112,7 @@ class RuleTest {
         player.addCard(aceCard)
 
         // when
-        val actual = rule.getResult(dealer, player)
+        val actual = Rule.getResult(dealer, player)
 
         // then
         assertThat(actual).isEqualTo(Result.LOSE)
@@ -130,7 +129,7 @@ class RuleTest {
         player.addCard(aceCard)
 
         // when
-        val actual = rule.getResult(dealer, player)
+        val actual = Rule.getResult(dealer, player)
 
         // then
         assertThat(actual).isEqualTo(Result.WIN)
@@ -148,7 +147,7 @@ class RuleTest {
         player.addCard(queenCard)
 
         // when
-        val actual = rule.getResult(dealer, player)
+        val actual = Rule.getResult(dealer, player)
 
         // then
         assertThat(actual).isEqualTo(Result.LOSE)
@@ -165,7 +164,7 @@ class RuleTest {
         player.addCard(queenCard)
 
         // when
-        val actual = rule.getResult(dealer, player)
+        val actual = Rule.getResult(dealer, player)
 
         // then
         assertThat(actual).isEqualTo(Result.LOSE)
@@ -182,7 +181,7 @@ class RuleTest {
         player.addCard(queenCard)
 
         // when
-        val actual = rule.getResult(dealer, player)
+        val actual = Rule.getResult(dealer, player)
 
         // then
         assertThat(actual).isEqualTo(Result.WIN)
@@ -198,7 +197,7 @@ class RuleTest {
         player.addCard(queenCard)
 
         // when
-        val actual = rule.getResult(dealer, player)
+        val actual = Rule.getResult(dealer, player)
 
         // then
         assertThat(actual).isEqualTo(Result.LOSE)
@@ -214,7 +213,7 @@ class RuleTest {
         player.addCard(aceCard)
 
         // when
-        val actual = rule.getResult(dealer, player)
+        val actual = Rule.getResult(dealer, player)
 
         // then
         assertThat(actual).isEqualTo(Result.WIN)
@@ -230,7 +229,7 @@ class RuleTest {
         player.addCard(queenCard)
 
         // when
-        val actual = rule.getResult(dealer, player)
+        val actual = Rule.getResult(dealer, player)
 
         // then
         assertThat(actual).isEqualTo(Result.PUSH)
