@@ -1,0 +1,15 @@
+package blackjack.domain.model.participant
+
+import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Test
+
+class PlayerTest {
+    @Test
+    fun `플레이어는 덱에서 카드를 뽑을 수 있다`() {
+        val player = Player()
+
+        player.drawCard()
+
+        assertThat(player.cardSize()).isEqualTo(1)
+    }
+}
