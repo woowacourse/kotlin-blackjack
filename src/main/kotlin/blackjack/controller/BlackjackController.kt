@@ -6,6 +6,7 @@ import blackjack.domain.Deck
 import blackjack.domain.Player
 import blackjack.domain.Players
 import blackjack.domain.Result
+import blackjack.domain.Rule
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -52,11 +53,11 @@ class BlackjackController(
     }
 
     private fun drawCard(player: Player) {
-        while (!player.isBust() && inputView.readHitOrStay(player) == Action.HIT) {
+        while (!Rule().isBust(player.hand) && inputView.readHitOrStay(player) == Action.HIT) {
             player.addCard(Deck.pick())
             outputView.printPlayerCards(player)
         }
-        if (player.isBust()) {
+        if (Rule().isBust(player.hand)) {
             outputView.printBust(player)
         }
     }

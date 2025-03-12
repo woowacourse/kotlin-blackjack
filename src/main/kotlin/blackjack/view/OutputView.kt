@@ -6,6 +6,7 @@ import blackjack.domain.Player
 import blackjack.domain.Players
 import blackjack.domain.Rank
 import blackjack.domain.Result
+import blackjack.domain.Rule
 import blackjack.domain.Suit
 
 class OutputView {
@@ -39,12 +40,12 @@ class OutputView {
         players: Players,
     ) {
         val dealerCards = cardsInfo(dealer.hand.cards)
-        val dealerScore = dealer.calculateScore()
+        val dealerScore = Rule().calculateScore(dealer.hand)
         println("${MESSAGE_DEALER_CARD.format(dealerCards)} ${MESSAGE_SCORE.format(dealerScore)}")
 
         players.players.forEach { player ->
             val playerCards = cardsInfo(player.hand.cards)
-            val playerScore = player.calculateScore()
+            val playerScore = Rule().calculateScore(player.hand)
             println(
                 "${MESSAGE_PLAYER_CARD.format(player.name, playerCards)} ${
                     MESSAGE_SCORE.format(

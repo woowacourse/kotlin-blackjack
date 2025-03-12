@@ -11,7 +11,7 @@ class Players(
         players.forEach { it.addCard(Deck.pick()) }
     }
 
-    fun calculateResult(dealer: Dealer): Map<Player, Result> = players.associateWith { it.getResult(dealer) }
+    fun calculateResult(dealer: Dealer): Map<Player, Result> = players.associateWith { Rule().getResult(dealer, it) }
 
     companion object {
         private const val MIN_PLAYER_COUNT = 1
