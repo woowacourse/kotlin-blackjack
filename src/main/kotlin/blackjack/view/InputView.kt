@@ -12,7 +12,7 @@ class InputView {
         ) ?: askForPlayersName()
     }
 
-    fun askForHitOrStay(player: Player): Boolean {
+    fun askForHitOrStay(player: Player): String {
         println(INPUT_HIT_OR_STAY.format(player.name))
         return changeInput(readln()) ?: askForHitOrStay(player)
     }
@@ -25,9 +25,13 @@ class InputView {
         private val yesValidInput: List<String> = listOf("y", "Y")
         private val noValidInput: List<String> = listOf("n", "N")
 
-        private fun changeInput(input: String): Boolean? {
+        private fun changeInput(input: String): String? {
             if (input !in yesValidInput + noValidInput) return null
-            return input in yesValidInput
+            return if (input in yesValidInput) {
+                yesValidInput.first()
+            } else {
+                noValidInput.first()
+            }
         }
 
         private fun validateBlank(input: String): String? {

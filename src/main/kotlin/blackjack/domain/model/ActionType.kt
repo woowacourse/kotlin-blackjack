@@ -6,8 +6,11 @@ enum class ActionType {
     ;
 
     companion object {
-        fun get(yesOrNo: Boolean): ActionType {
-            if (yesOrNo) return Hit
+        private const val YES: String = "y"
+        private const val NO: String = "n"
+
+        fun get(yesOrNo: String): ActionType {
+            if (yesOrNo == YES) return Hit
             return Stay
         }
     }
