@@ -2,6 +2,7 @@ package blackjack.view
 
 import blackjack.model.domain.GameResult
 import blackjack.model.domain.card.Card
+import blackjack.model.domain.card.CardNumber
 import blackjack.model.domain.card.Shape
 import blackjack.model.domain.participant.Dealer
 import blackjack.model.domain.participant.Participants
@@ -39,7 +40,7 @@ class OutputView {
     }
 
     private fun displayCard(cards: List<Card>): String {
-        return cards.joinToString { CARD_FORMAT.format(it.cardNumber.display, it.symbol.toKorean()) }
+        return cards.joinToString { CARD_FORMAT.format(it.cardNumber.display(), it.symbol.toKorean()) }
     }
 
     fun printDealerReceiveCard(
@@ -99,6 +100,16 @@ class OutputView {
             Shape.Spade -> "스페이드"
             Shape.Diamond -> "다이아몬드"
             Shape.Clover -> "클로버"
+        }
+    }
+
+    private fun CardNumber.display(): String {
+        return when(this){
+            CardNumber.Ace -> "A"
+            CardNumber.King -> "K"
+            CardNumber.Queen -> "Q"
+            CardNumber.Jack -> "J"
+            else -> "${this.number}"
         }
     }
 

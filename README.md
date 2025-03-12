@@ -59,7 +59,7 @@
 
 ## TODO
 
-- [ ] CardNumber | 출력문 저장 위치 변경
+- [x] CardNumber | 출력문 저장 위치 변경
 - [ ] ActionType | InputView에서 Yes No 판단하도록 수정
 - [ ] Hand | 방어적 복사를 사용하도록 변경
 - [ ] Hand | haveAce 검사를 메소드로 변경
