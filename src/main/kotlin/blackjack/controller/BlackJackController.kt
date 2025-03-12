@@ -18,9 +18,9 @@ class BlackJackController(
         val players = generatePlayers()
         val game = generateGame(players)
 
-        setGame(game)
+        showInitialDraw(game)
         askHit(game)
-        drawToDealer(game)
+        showDealerDraw(game)
         showResult(game)
     }
 
@@ -40,7 +40,7 @@ class BlackJackController(
         return Game(dealer, players)
     }
 
-    private fun setGame(game: Game) {
+    private fun showInitialDraw(game: Game) {
         outputView.printDrawMessage(toParticipantsUiModel(game.dealer, game.players))
     }
 
@@ -50,7 +50,7 @@ class BlackJackController(
         }
     }
 
-    private fun drawToDealer(game: Game) {
+    private fun showDealerDraw(game: Game) {
         outputView.printDealerDrawMessage(game.processDealerHit())
     }
 
