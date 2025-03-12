@@ -13,10 +13,10 @@ class Deck(private val _cards: MutableList<Card> = mutableListOf()) {
         return _cards.removeFirst()
     }
 
-    private fun generateDeck(): List<Card> = CardPattern.entries.flatMap(::createCard).shuffled()
-
-    private fun createCard(cardPattern: CardPattern): List<Card> {
-        return CardNumber.entries.map { cardNumber -> Card(cardNumber, cardPattern) }
+    private fun generateDeck(): List<Card> {
+        return CardPattern.entries.flatMap { pattern ->
+            CardNumber.entries.map { number -> Card(number, pattern) }
+        }.shuffled()
     }
 
     companion object {
