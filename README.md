@@ -72,5 +72,5 @@
 - [x] ActionType | Boolean -> String 타입 변경
 - [ ] Player | 결과 판단 로직 위치 고민 (Player vs Participant)
 - [x] Player & Dealer | getInitCard 메소드 로직 변경
-- [ ] test | 메소드명 직관적으로 변경
+- [x] test | 메소드명 직관적으로 변경
 - [ ] Introduce | 이름 필수 요소 고민

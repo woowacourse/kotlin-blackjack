@@ -12,10 +12,10 @@ import org.junit.jupiter.api.Test
 class PlayerTest {
     private lateinit var player: Player
     private lateinit var dealer: Dealer
-    private val aceSpade = Card(Shape.Spade, CardNumber.Ace)
-    private val twoSpade = Card(Shape.Spade, CardNumber.Two)
     private val aceHeart = Card(Shape.Heart, CardNumber.Ace)
     private val sixSpade = Card(Shape.Spade, CardNumber.Six)
+    private val kingHeart = Card(Shape.Heart, CardNumber.King)
+    private val queenDiamond = Card(Shape.Diamond, CardNumber.Queen)
 
     @BeforeEach
     fun setup() {
@@ -37,10 +37,14 @@ class PlayerTest {
     }
 
     @Test
-    fun `타켓값이 임계값보다 작으면 Lose상태를 반환한다`() {
+    fun `플레이어가 버스트라면 항상 패배한다`() {
         // given
-        player.receiveCard(twoSpade)
-        dealer.receiveCard(aceSpade)
+        player.receiveCard(kingHeart)
+        player.receiveCard(queenDiamond)
+        player.receiveCard(sixSpade)
+
+        dealer.receiveCard(kingHeart)
+        dealer.receiveCard(aceHeart)
         // when
         val actual = player.compareScores(dealer)
         val expected = GameResult.Lose
@@ -49,10 +53,14 @@ class PlayerTest {
     }
 
     @Test
-    fun `타켓값이 임계값보다 크면 Win상태를 반환한다`() {
+    fun `플레이어가 버스트가 아니고, 딜러가 버스트라면 승리한다`() {
         // given
-        player.receiveCard(aceSpade)
-        dealer.receiveCard(twoSpade)
+        player.receiveCard(kingHeart)
+        player.receiveCard(aceHeart)
+
+        dealer.receiveCard(queenDiamond)
+        dealer.receiveCard(kingHeart)
+        dealer.receiveCard(sixSpade)
         // when
         val actual = player.compareScores(dealer)
         val expected = GameResult.Win
@@ -61,10 +69,28 @@ class PlayerTest {
     }
 
     @Test
-    fun `타켓값이 임계값과 같으면 Draw상태를 반환한다`() {
+    fun `플레이어와 딜러 모두 버스트가 아니라면 점수가 높은 참가자가 승리한다`() {
         // given
-        player.receiveCard(aceSpade)
+        player.receiveCard(sixSpade)
+        player.receiveCard(queenDiamond)
+
+        dealer.receiveCard(kingHeart)
         dealer.receiveCard(aceHeart)
+        // when
+        val actual = player.compareScores(dealer)
+        val expected = GameResult.Lose
+        // then
+        assertThat(actual).isEqualTo(expected)
+    }
+
+    @Test
+    fun `플레이어와 딜러 모두 버스트가 아니고, 점수가 같다면 무승부한다`() {
+        // given
+        player.receiveCard(sixSpade)
+        player.receiveCard(queenDiamond)
+
+        dealer.receiveCard(sixSpade)
+        dealer.receiveCard(queenDiamond)
         // when
         val actual = player.compareScores(dealer)
         val expected = GameResult.Draw
