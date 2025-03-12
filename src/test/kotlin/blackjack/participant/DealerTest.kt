@@ -23,12 +23,12 @@ class DealerTest {
     }
 
     @Test
-    fun `딜러가 처음 공개하는 카드는 1장이다`() {
+    fun `딜러가 처음 공개하는 카드는 첫번째 카드이다`() {
         dealer.addCard(Card(Shape.SPADE, CardNumber.NINE))
         dealer.addCard(Card(Shape.CLOVER, CardNumber.QUEEN))
-        val expect = 1
+        val expect = Card(Shape.SPADE, CardNumber.NINE)
 
-        val actual = dealer.getInitialCard().size
+        val actual = dealer.getInitialCard().first()
 
         assertThat(actual).isEqualTo(expect)
     }
