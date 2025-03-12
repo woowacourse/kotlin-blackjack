@@ -3,7 +3,6 @@ package blackjack.domain
 import blackjack.domain.participants.Dealer
 import blackjack.domain.participants.Participant
 import blackjack.domain.participants.Player
-import blackjack.domain.state.GameState
 
 class Game(
     val dealer: Dealer,
@@ -16,14 +15,17 @@ class Game(
         handOutCard(dealer)
     }
 
-    fun askHit(onHit: (Player) -> Unit) {
+    fun askHit(
+        decideHit: (String) -> Boolean,
+        onHit: (Player) -> Unit,
+    ) {
         players.forEach { player ->
-            askHitForEachPlayer(player, onHit)
+            askHitForEachPlayer(player, decideHit, onHit)
         }
     }
 
     fun processDealerHit(): Boolean {
-        if (dealer.shouldHit()) {
+        if (dealer.canHit()) {
             handOutCard(dealer)
             return true
         }
@@ -32,20 +34,22 @@ class Game(
 
     private fun askHitForEachPlayer(
         player: Player,
+        decideHit: (String) -> Boolean,
         onHit: (Player) -> Unit,
     ) {
-        if (player.gameState == GameState.BLACKJACK) return
-        processTurn(player, onHit)
+        if (player.isBlackjack()) return
+        processTurn(player, decideHit, onHit)
     }
 
     private fun processTurn(
         player: Player,
+        decideHit: (String) -> Boolean,
         onHit: (Player) -> Unit,
     ) {
-        if (player.gameState == GameState.FIRST_TURN) {
+        if (player.isBust()) {
             onHit(player)
         }
-        while (player.shouldHit()) {
+        while (player.canHit() && decideHit(player.name)) {
             handOutCard(player)
             onHit(player)
         }
@@ -53,8 +57,7 @@ class Game(
 
     private fun handOutCard(participant: Participant) {
         repeat(participant.getDrawAmount()) {
-            val card = dealer.draw()
-            participant.addCard(card)
+            dealer.handOut(participant)
         }
     }
 }
