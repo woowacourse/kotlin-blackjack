@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 
 class PlayerTest {
     @Test
-    fun `딜러와 비교해서 승패 결과를 가져올 수 있다`() {
+    fun `플레이어가 블랙잭이고 딜러가 18점이면 플레이어가 블랙잭 승리한다`() {
         val playerHand =
             Hand.of(
                 Card.of(CardNumber.KING, Suit.SPADE),
@@ -21,6 +21,29 @@ class PlayerTest {
             Hand.of(
                 Card.of(CardNumber.JACK, Suit.SPADE),
                 Card.of(CardNumber.EIGHT, Suit.CLUB),
+            )
+        val dealer = Dealer("딜러", dealerHand)
+
+        val actualResult = player.compareTo(dealer)
+
+        val expectedResult = GameResult.BLACKJACK_WIN
+
+        assertThat(actualResult).isEqualTo(expectedResult)
+    }
+
+    @Test
+    fun `딜러가 버스트고 플레이어가 12점이면 플레이어가 이긴다`() {
+        val playerHand =
+            Hand.of(
+                Card.of(CardNumber.KING, Suit.SPADE),
+                Card.of(CardNumber.TWO, Suit.HEART),
+            )
+        val player = Player("크림", playerHand)
+        val dealerHand =
+            Hand.of(
+                Card.of(CardNumber.JACK, Suit.SPADE),
+                Card.of(CardNumber.EIGHT, Suit.CLUB),
+                Card.of(CardNumber.QUEEN, Suit.DIAMOND),
             )
         val dealer = Dealer("딜러", dealerHand)
 
