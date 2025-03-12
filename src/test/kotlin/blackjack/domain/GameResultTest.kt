@@ -50,9 +50,9 @@ class GameResultTest {
     }
 
     @Test
-    fun `플레이어는 100원 배팅 후 패배하면 0원을 받는다`() {
+    fun `플레이어는 100원 배팅 후 패배하면 100원을 잃는다`() {
         val gameResult = setupGame(emptyList(), listOf(CardNumber.JACK))
-        gameResult.playerPayouts.values.first() shouldBeExactly 0.0
+        gameResult.playerPayouts.values.first() shouldBeExactly -100.0
     }
 
     @Test

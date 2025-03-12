@@ -1,26 +1,31 @@
 package blackjack.view
 
-class InputView {
-    fun getNames(): List<String> {
+class InputView : BlackJackInputView {
+    override fun getNames(): List<String> {
         println(ENTER_PLAYER_NAMES_MESSAGE)
-        val input = readlnOrNull() ?: ""
-        validateInput(input)
-        return input.split(DELIMITER).map { it.trim() }
+        val input = readLineWithValidate()
+        val names = input.split(DELIMITER).map { it.trim() }
+        names.forEach { name -> require(name.isNotBlank()) { BLACK_PLAYER_NAME_MESSAGE } }
+        return names
     }
 
-    fun getBetAmount(name: String): Int {
+    override fun getBetAmount(name: String): Int {
         println("\n" + ASK_BET_AMOUNT_MESSAGE.format(name))
-        val input = readlnOrNull() ?: ""
-        validateInput(input)
+        val input = readLineWithValidate()
         return requireNotNull(input.toIntOrNull()) { INVALID_BET_AMOUNT_MESSAGE }
     }
 
-    fun getIsHit(name: String): Boolean {
+    override fun getIsHit(name: String): Boolean {
         println(ASK_DRAW_CARD_MESSAGE.format(name))
-        val input = readlnOrNull() ?: ""
-        validateInput(input)
+        val input = readLineWithValidate()
         require(input == YES || input == NO) { INVALID_FLAG_MESSAGE }
         return input == YES
+    }
+
+    private fun readLineWithValidate(): String {
+        val input = readlnOrNull() ?: ""
+        validateInput(input)
+        return input
     }
 
     private fun validateInput(input: String) {
@@ -37,5 +42,6 @@ class InputView {
         private const val INVALID_FLAG_MESSAGE = "$YES 혹은 ${NO}을 입력해주세요."
         private const val INVALID_INPUT_MESSAGE = "입력이 비어있습니다."
         private const val INVALID_BET_AMOUNT_MESSAGE = "배팅 금액은 숫자여야 합니다."
+        private const val BLACK_PLAYER_NAME_MESSAGE = "플레이어의 이름은 비어있을 수 없습니다."
     }
 }
