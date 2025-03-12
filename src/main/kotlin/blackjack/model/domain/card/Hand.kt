@@ -5,9 +5,8 @@ import blackjack.model.service.Blackjack.Companion.BUST_STANDARD
 class Hand(val cards: MutableList<Card>) {
     fun getSumNumber(): Int {
         var sum = cards.sumOf { it.cardNumber.number }
-        val haveAce: Boolean = CardNumber.Ace in cards.map { it.cardNumber }
 
-        if (haveAce && sum + CardNumber.BONUS_SCORE <= BUST_STANDARD) {
+        if (haveAce(cards.map { it.cardNumber }) && sum + CardNumber.BONUS_SCORE <= BUST_STANDARD) {
             sum += CardNumber.BONUS_SCORE
         }
 
@@ -16,5 +15,9 @@ class Hand(val cards: MutableList<Card>) {
 
     fun append(card: List<Card>) {
         cards.addAll(card)
+    }
+
+    private fun haveAce(cardNumbers: List<CardNumber>): Boolean {
+        return CardNumber.Ace in cardNumbers
     }
 }
