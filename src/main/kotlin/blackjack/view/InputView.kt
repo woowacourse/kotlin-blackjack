@@ -37,7 +37,7 @@ class InputView {
             return input
         }
 
-        private fun validateYesOrNoInput(input: String):String? {
+        private fun validateYesOrNoInput(input: String): String? {
             if (input !in yesValidInput + noValidInput) {
                 println(ERROR_WRONG_FORMAT)
                 return null

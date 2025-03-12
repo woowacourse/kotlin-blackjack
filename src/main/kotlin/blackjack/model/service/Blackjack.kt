@@ -15,9 +15,7 @@ class Blackjack(private val deck: PlayingCard) {
     }
 
     private fun distributeStartingHands(player: Participants) {
-
         player.receiveCard(deck.spreadCard(2))
-
     }
 
     fun hitAction(player: Player) {

@@ -104,7 +104,7 @@ class OutputView {
     }
 
     private fun CardNumber.display(): String {
-        return when(this){
+        return when (this) {
             CardNumber.Ace -> "A"
             CardNumber.King -> "K"
             CardNumber.Queen -> "Q"

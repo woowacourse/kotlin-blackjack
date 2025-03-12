@@ -24,7 +24,7 @@ class PersonBuilder {
         skills = SkillsBuilder().apply(block).build()
     }
 
-    fun languages(block: LanguagesBuilder.() -> Unit)  {
+    fun languages(block: LanguagesBuilder.() -> Unit) {
         languages = LanguagesBuilder().apply(block).build()
     }
 }
@@ -33,15 +33,15 @@ class SkillsBuilder {
     private var soft: MutableList<String> = mutableListOf()
     private var hard: MutableList<String> = mutableListOf()
 
-    fun soft(softSkill: String)  {
+    fun soft(softSkill: String) {
         soft.add(softSkill)
     }
 
-    fun hard(hardSkill: String)  {
+    fun hard(hardSkill: String) {
         hard.add(hardSkill)
     }
 
-    fun build(): Skill  {
+    fun build(): Skill {
         return Skill(soft, hard)
     }
 }
@@ -58,7 +58,7 @@ class LanguagesBuilder {
         }
     }
 
-    fun build(): Languages  {
+    fun build(): Languages {
         return Languages(korean, english)
     }
 }
