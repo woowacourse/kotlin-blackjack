@@ -2,29 +2,33 @@ package blackjack.domain
 
 class Hand {
     private val cards: MutableList<Card> = mutableListOf()
+    private var totalSum: Int = 0
 
     fun getCards(): List<Card> = cards.toList()
 
+    fun getTotalSum(): Int = totalSum
+
     fun addCard(card: Card) {
         cards.add(card)
+        updateTotalSum()
     }
 
     fun isBust(): Boolean {
-        return calculateCardsSum() > BUST_THRESHOLD
+        return totalSum > BUST_THRESHOLD
     }
 
     fun isBlackJack(): Boolean {
         return hasAce() && hasTenRankCard()
     }
 
-    fun calculateCardsSum(): Int {
+    private fun updateTotalSum() {
         var sum = cards.sumOf { it.getScore() }
 
         if (hasAce() && sum + ACE_BONUS_SCORE <= BUST_THRESHOLD) {
             sum += ACE_BONUS_SCORE
         }
 
-        return sum
+        totalSum = sum
     }
 
     private fun hasAce(): Boolean {

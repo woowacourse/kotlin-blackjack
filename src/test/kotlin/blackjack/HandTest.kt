@@ -24,7 +24,7 @@ class HandTest {
         hand.addCard(card1)
         hand.addCard(card2)
 
-        assertThat(hand.calculateCardsSum()).isEqualTo(5)
+        assertThat(hand.getTotalSum()).isEqualTo(5)
     }
 
     @Test
@@ -35,7 +35,7 @@ class HandTest {
         hand.addCard(card1)
         hand.addCard(card2)
 
-        assertThat(hand.calculateCardsSum()).isEqualTo(13)
+        assertThat(hand.getTotalSum()).isEqualTo(13)
     }
 
     @Test
@@ -48,7 +48,7 @@ class HandTest {
         hand.addCard(card2)
         hand.addCard(card3)
 
-        assertThat(hand.calculateCardsSum()).isEqualTo(21)
+        assertThat(hand.getTotalSum()).isEqualTo(21)
     }
 
     @Test
@@ -61,7 +61,7 @@ class HandTest {
         hand.addCard(card2)
         hand.addCard(card3)
 
-        assertThat(hand.calculateCardsSum()).isEqualTo(12)
+        assertThat(hand.getTotalSum()).isEqualTo(12)
     }
 
     @Test

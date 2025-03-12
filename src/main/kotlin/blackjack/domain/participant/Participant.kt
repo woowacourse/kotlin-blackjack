@@ -7,8 +7,7 @@ import blackjack.domain.Result
 abstract class Participant {
     val hand: Hand = Hand()
     val result: Result = Result()
-
-    val totalSum = hand.calculateCardsSum()
+    val totalSum = hand.getTotalSum()
 
     abstract val hitThreshold: Int
 
