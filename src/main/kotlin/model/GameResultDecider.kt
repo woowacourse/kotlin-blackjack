@@ -2,8 +2,6 @@ package model
 
 import kotlin.math.abs
 
-data class PlayerResult(val name: String, val result: VictoryStatus)
-
 class GameResultDecider(private val dealer: Dealer, private val players: Players) {
     fun compareWinOrLose(): GameOutput {
         val playerResults: List<PlayerResult> =
