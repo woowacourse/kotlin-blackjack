@@ -4,9 +4,7 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
 import blackjack.domain.card.CardPattern
 import blackjack.domain.card.Deck
-import blackjack.domain.state.GameState
 import io.kotest.assertions.assertSoftly
-import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.ints.shouldBeLessThanOrEqual
 import io.kotest.matchers.shouldBe
@@ -34,16 +32,10 @@ class DealerTest {
         val dealer = Dealer(deck)
 
         // When
-        dealer.draw()
+        dealer.handOut(dealer)
 
         // Then
         deck.cards.size shouldBe 0
-    }
-
-    @Test
-    fun `게임 상태를 가지고 있다`() {
-        val dealer = Dealer(Deck())
-        dealer.gameState shouldBe GameState.FIRST_TURN
     }
 
     @Test
@@ -84,24 +76,27 @@ class DealerTest {
 
         // Then
         assertSoftly(dealer) {
-            dealer.score() shouldBeLessThanOrEqual 16
-            dealer.shouldHit() shouldBe true
-            dealer.getDrawAmount() shouldBe 1
+            score() shouldBeLessThanOrEqual 16
+            canHit() shouldBe true
+            getDrawAmount() shouldBe 1
         }
     }
 
     @Test
     fun `버스트가 된 경우 카드를 받을 수 없다`() {
         // Given
-        val player = Player("pobi") { true }
+        val dealer = Dealer(Deck())
         val cards = List(3) { Card(CardNumber.KING, CardPattern.HEART) }
 
         // When
         cards.forEach { card ->
-            player.addCard(card)
+            dealer.addCard(card)
         }
 
         // Then
-        shouldThrowExactly<IllegalArgumentException> { player.getDrawAmount() }
+        assertSoftly(dealer) {
+            isBust() shouldBe true
+            canHit() shouldBe false
+        }
     }
 }
