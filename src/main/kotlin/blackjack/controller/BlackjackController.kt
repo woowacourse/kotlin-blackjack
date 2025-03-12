@@ -1,6 +1,7 @@
 package blackjack.controller
 
 import blackjack.domain.model.ActionType
+import blackjack.domain.model.BetAmount
 import blackjack.domain.model.card.Card
 import blackjack.domain.model.card.CardFactory
 import blackjack.domain.model.card.PlayingCard
@@ -17,6 +18,7 @@ class BlackjackController(
 ) {
     fun run() {
         val playerGroup = getPlayerGroup()
+        val playerBatAmount = getBetAmount(playerGroup.players)
         val blackjack = makeGame(playerGroup)
         initGame(blackjack, playerGroup)
         startGame(blackjack, playerGroup)
@@ -28,6 +30,12 @@ class BlackjackController(
             val players: List<Player> = inputView.askForPlayersName().map(::Player)
             val dealer: Dealer = Dealer()
             PlayerGroup(listOf(dealer) + players)
+        }
+    }
+
+    private fun getBetAmount(players: List<Player>): Map<Player, BetAmount> {
+        return players.associateWith { player ->
+            BetAmount(inputView.askForPlayerBetAmount(player))
         }
     }
 
