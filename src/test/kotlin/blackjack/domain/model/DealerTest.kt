@@ -5,30 +5,42 @@ import blackjack.domain.model.card.CardNumber
 import blackjack.domain.model.card.Shape
 import blackjack.domain.model.participant.Dealer
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class DealerTest {
     private val dealer = Dealer()
-
-    @BeforeEach
-    fun setup() {
-        // given
-        dealer.receiveCard(Card(Shape.Heart, CardNumber.Ace))
-        dealer.receiveCard(Card(Shape.Spade, CardNumber.Six))
-    }
+    private val aceHeart = Card(Shape.Heart, CardNumber.Ace)
+    private val sixSpade = Card(Shape.Spade, CardNumber.Six)
+    private val twoHeart = Card(Shape.Heart, CardNumber.Two)
 
     @Test
     fun `받은 카드의 목록을 반환한다`() {
+        // given
+        dealer.receiveCard(aceHeart)
+        dealer.receiveCard(sixSpade)
         // when
         val actual = dealer.cardDeck
-        val expected = listOf(Card(Shape.Heart, CardNumber.Ace), Card(Shape.Spade, CardNumber.Six))
+        val expected = listOf(aceHeart, sixSpade)
         // then
         assertThat(actual).isEqualTo(expected)
     }
 
     @Test
-    fun `카드 숫자 합이 임계값보다 작은지 판단한다`() {
+    fun `딜러의 점수 합계가 16점 미만이라면 더 뽑을 수 있다`() {
+        // given
+        dealer.receiveCard(sixSpade)
+        dealer.receiveCard(twoHeart)
+        // when
+        val actual = dealer.canHit()
+        // then
+        assertThat(actual).isTrue()
+    }
+
+    @Test
+    fun `딜러의 점수 합계가 16점 이상이라면 더 뽑을 수 없다`() {
+        // given
+        dealer.receiveCard(aceHeart)
+        dealer.receiveCard(sixSpade)
         // when
         val actual = dealer.canHit()
         // then
