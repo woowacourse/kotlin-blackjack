@@ -20,7 +20,10 @@ class GameService(private val cardDistributor: CardDistributor) {
         return dealer.getDrawCount(cardDistributor)
     }
 
-    fun getGameResult(dealer: Dealer, players: Players): GameResultDecider {
+    fun getGameResult(
+        dealer: Dealer,
+        players: Players,
+    ): GameResultDecider {
         return GameResultDecider(dealer, players)
     }
 }

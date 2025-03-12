@@ -31,14 +31,20 @@ class BlackjackController(
         showTotalResult(dealer, players, gameService)
     }
 
-    private fun showInitialGameState(players: Players, dealer: Dealer) {
+    private fun showInitialGameState(
+        players: Players,
+        dealer: Dealer,
+    ) {
         val playerCardNames = players.map { it.getHand().handCards.displayNames() }
         val dealerCardNames = dealer.getHand().handCards.displayNames()
         outputView.printDealerAndPlayers(players.getPlayersNames())
         outputView.printInitialCards(dealerCardNames, players.getPlayersNames(), playerCardNames)
     }
 
-    fun handlePlayerTurns(players: Players, cardDistributor: CardDistributor) {
+    fun handlePlayerTurns(
+        players: Players,
+        cardDistributor: CardDistributor,
+    ) {
         players.forEach { player ->
             while (player.decideToHit() && inputView.readHitOrStand(player.name)) {
                 player.performTurn(cardDistributor)
@@ -47,7 +53,11 @@ class BlackjackController(
         }
     }
 
-    private fun showTotalResult(dealer: Dealer, players: Players, gameService: GameService) {
+    private fun showTotalResult(
+        dealer: Dealer,
+        players: Players,
+        gameService: GameService,
+    ) {
         outputView.printDealerResult(dealer.getHand().handCards.displayNames(), dealer.getScore())
         showPlayerResult(players)
         showGameResult(dealer, players, gameService)
@@ -59,12 +69,16 @@ class BlackjackController(
         outputView.printPlayerResult(players.getPlayersNames(), updatedPlayerCardsNames, playersTotalScore)
     }
 
-    private fun showGameResult(dealer: Dealer, players: Players, gameService: GameService) {
+    private fun showGameResult(
+        dealer: Dealer,
+        players: Players,
+        gameService: GameService,
+    ) {
         val gameResultOutput = gameService.getGameResult(dealer, players).compareWinOrLose()
         outputView.printResult(
             gameResultOutput.dealerWins,
             gameResultOutput.dealerLosses,
-            gameResultOutput.playerResults
+            gameResultOutput.playerResults,
         )
     }
 }
