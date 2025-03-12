@@ -9,7 +9,7 @@ class Players(private val players: List<Player>) : Iterable<Player> {
 
     fun getPlayersNames(): List<String> = players.map { player -> player.name }
 
-    fun getPlayersCardNames(): List<List<String>> = players.map { it.getCardNames() }
+    fun getPlayersCard(): List<List<Card>> = players.map { it.cards }
 
     fun getPlayersScores(): List<Int> = players.map { player -> player.getScore() }
 
