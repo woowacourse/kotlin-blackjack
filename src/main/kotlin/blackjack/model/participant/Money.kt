@@ -2,11 +2,11 @@ package blackjack.model.participant
 
 @JvmInline
 value class Money(
-    val value: Int = INITIAL_MONEY,
+    val value: Int = DEFAULT_MONEY,
 ) {
-    companion object {
-        const val INITIAL_MONEY = 0
-    }
-
     override fun toString(): String = value.toString()
+
+    companion object {
+        const val DEFAULT_MONEY = 0
+    }
 }

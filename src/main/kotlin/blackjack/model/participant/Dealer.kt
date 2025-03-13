@@ -1,13 +1,11 @@
 package blackjack.model.participant
 
 import blackjack.model.card.Card
-import blackjack.model.participant.Money.Companion.INITIAL_MONEY
 
 class Dealer private constructor(
     name: Name,
-    money: Money,
     hand: Hand,
-) : Participant(name, money, hand) {
+) : Participant(name, hand) {
     override fun showInitialCards(): List<Card> = cards.take(FIRST_SHOWN_COUNT)
 
     override fun isDrawable(): Boolean = score() <= DRAW_CRITERIA && !isBust()
@@ -21,8 +19,7 @@ class Dealer private constructor(
 
         fun create(
             name: String = DEFAULT_DEALER_NAME,
-            money: Int = INITIAL_MONEY,
             hand: Hand = Hand(),
-        ): Dealer = Dealer(Name(name), Money(money), hand)
+        ): Dealer = Dealer(Name(name), hand)
     }
 }
