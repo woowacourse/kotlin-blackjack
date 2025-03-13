@@ -6,7 +6,7 @@ class Dealer(override val name: String = DEALER_NAME) : Participants() {
     override val hand: Hand = Hand(mutableListOf())
 
     override fun canHit(): Boolean {
-        return sumCardNumber <= THRESHOLD
+        return sumCardNumber > THRESHOLD
     }
 
     companion object {

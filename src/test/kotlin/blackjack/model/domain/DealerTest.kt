@@ -25,10 +25,10 @@ class DealerTest {
     }
 
     @Test
-    fun `딜러 카드 숫자 합이 16보다 작은지 판단한다`() {
+    fun `딜러 카드 숫자 합이 16보다 작으면 카드를 받아올 수 있도록 True를 반환한다`() {
         // when
         val actual = dealer.canHit()
         // then
-        assertThat(actual).isFalse()
+        assertThat(actual).isTrue()
     }
 }

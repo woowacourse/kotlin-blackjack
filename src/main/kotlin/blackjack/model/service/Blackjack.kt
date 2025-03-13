@@ -24,7 +24,7 @@ class Blackjack(private val deck: PlayingCard) {
 
     fun drawUntilThreshold(dealer: Dealer): Int {
         var count: Int = 0
-        while (dealer.canHit()) {
+        while (!dealer.canHit()) {
             dealer.receiveCard(deck.spreadCard(1))
             count++
         }
