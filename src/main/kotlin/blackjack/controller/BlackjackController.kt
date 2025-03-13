@@ -14,43 +14,30 @@ class BlackjackController(
         val players: List<Player> = inputView.readPlayerNames()
         val blackjackGame = BlackjackGame(dealer, players)
 
-        allParticipantsInitialCards(blackjackGame)
-        playersDrawCards(blackjackGame)
-        dealerDrawCard(blackjackGame)
-        allParticipantsCardStatus(blackjackGame)
-        resultSummary(blackjackGame)
+        gameReady(blackjackGame)
+        gameStart(blackjackGame)
+        gameResult(blackjackGame)
     }
 
-    private fun allParticipantsInitialCards(blackjackGame: BlackjackGame) {
+    private fun gameReady(blackjackGame: BlackjackGame) {
         blackjackGame.processDistributeInitialCards(
             showDistributeGuideMessage = { players -> outputView.printInitialHandOutCardMessage(players) },
             showDistributedCardStatus = { dealer, players -> outputView.printAllPlayerHands(dealer, players) },
         )
     }
 
-    private fun playersDrawCards(blackjackGame: BlackjackGame) {
-        blackjackGame.processPlayerDrawCards(playerDrawDecision = { player: Player ->
-            inputView.readCardDrawChoice(player)
-        }, showPlayerCardStatus = { player: Player ->
-            outputView.printPlayerHands(player)
-        })
-    }
-
-    private fun dealerDrawCard(blackjackGame: BlackjackGame) {
-        blackjackGame.processDealerDrawCard(
+    private fun gameStart(blackjackGame: BlackjackGame) {
+        blackjackGame.processParticipantsDrawCards(
+            playerDrawDecision = { player: Player -> inputView.readCardDrawChoice(player) },
+            showPlayerCardStatus = { player: Player -> outputView.printPlayerHands(player) },
             showDealerCardStatus = { isDraw -> outputView.printDealerHandStatus(isDraw) },
         )
     }
 
-    private fun allParticipantsCardStatus(blackjackGame: BlackjackGame) {
+    private fun gameResult(blackjackGame: BlackjackGame) {
         blackjackGame.processAllParticipantsCardStatus(
-            showParticipantsCardStatus = { dealer, players ->
-                outputView.printFinalHandStatus(dealer, players)
-            },
+            showParticipantsCardStatus = { dealer, players -> outputView.printFinalHandStatus(dealer, players) },
         )
-    }
-
-    private fun resultSummary(blackjackGame: BlackjackGame) {
         blackjackGame.processResultSummary(
             showResultSummary = { playerResultSummary, dealerResultSummary ->
                 outputView.printFinalResult(playerResultSummary, dealerResultSummary)

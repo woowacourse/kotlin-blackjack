@@ -18,7 +18,18 @@ class BlackjackGame(
         showDistributedCardStatus(dealer, players)
     }
 
-    fun processPlayerDrawCards(
+    fun processParticipantsDrawCards(
+        playerDrawDecision: (Player) -> CardDrawDecision,
+        showPlayerCardStatus: (Player) -> Unit,
+        showDealerCardStatus: (Boolean) -> Unit,
+    ) {
+        if (!dealer.isBlackjack()) {
+            processPlayerDrawCards(playerDrawDecision, showPlayerCardStatus)
+            processDealerDrawCard(showDealerCardStatus)
+        }
+    }
+
+    private fun processPlayerDrawCards(
         playerDrawDecision: (Player) -> CardDrawDecision,
         showPlayerCardStatus: (Player) -> Unit,
     ) {
@@ -44,7 +55,7 @@ class BlackjackGame(
         }
     }
 
-    fun processDealerDrawCard(showDealerCardStatus: (Boolean) -> Unit) {
+    private fun processDealerDrawCard(showDealerCardStatus: (Boolean) -> Unit) {
         val isDraw = dealer.isAvailDrawCard()
         if (isDraw) gameManager.distributeCard(dealer)
         showDealerCardStatus(isDraw)
