@@ -1,7 +1,7 @@
 package blackjack.model.card
 
 class CardDeck {
-    private val cards = ArrayDeque(BLACKJACK_CACHE_CARDS.shuffled())
+    private val cards: ArrayDeque<Card> = ArrayDeque(BLACKJACK_CACHE_CARDS.shuffled())
 
     fun draw(count: Int): List<Card> =
         List(count) {
