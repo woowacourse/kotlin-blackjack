@@ -37,3 +37,13 @@
 - [x] 모든 todo 완료 혹은 삭제
 - [x] companion object만 존재하는 class를 object로 변경
 - [x] DSL 실습 코드 분리
+
+## Step1 리팩터링 요구사항 2
+- [ ] Number의 orderNumber 프로퍼티 삭제 후 getByOrderNumber 메서드 변경
+- [ ] HandCards클래스 내 카드 조회시 backing property 활용
+- [ ] DSLStudy코드를 Test로 이동
+- [ ] Deck Object를 일반 Class로 변경
+  - [ ] PlayerTest의 불필요해진 덱 관련 테스트 삭제
+- [ ] DeckTest의 테스트명 수정,
+- [ ] outputView.lineSeparator()호출을 컨트롤러에서 삭제
+- [ ] 초기 카드 장수 상수를 Casino에서 handcard로 이동
