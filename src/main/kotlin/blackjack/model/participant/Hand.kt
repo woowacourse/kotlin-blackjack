@@ -2,15 +2,20 @@ package blackjack.model.participant
 
 import blackjack.model.card.Card
 import blackjack.model.card.CardRank
+import blackjack.model.participant.HandState.ALIVE
+import blackjack.model.participant.HandState.BUST
 
 class Hand(
     initialCards: List<Card> = emptyList(),
 ) {
     private val _cards: MutableList<Card> = initialCards.toMutableList()
     val cards: List<Card> get() = _cards.toList()
+    private var _state: HandState = ALIVE
+    val state: HandState get() = _state
 
     fun addAll(cards: List<Card>) {
         _cards.addAll(cards)
+        _state = HandState.from(score(), cards.size)
     }
 
     fun score(): Int {
@@ -24,7 +29,7 @@ class Hand(
         }
     }
 
-    fun isBust(score: Int = score()): Boolean = score > BUST_CRITERIA
+    private fun isBust(score: Int): Boolean = HandState.from(score, cards.size) == BUST
 
     private fun softScore(
         cards: List<Card>,
@@ -35,7 +40,6 @@ class Hand(
     }
 
     companion object {
-        private const val BUST_CRITERIA = 21
         private const val SOFT_OFFSET_SCORE = 10
     }
 }

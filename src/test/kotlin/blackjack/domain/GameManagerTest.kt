@@ -6,9 +6,9 @@ import blackjack.model.card.CardRank
 import blackjack.model.card.CardSuit
 import blackjack.model.game.GameManager
 import blackjack.model.game.WinningManager
+import blackjack.model.game.WinningState
 import blackjack.model.participant.Name
 import blackjack.model.participant.Participant.Companion.INITIAL_DRAW_COUNT
-import blackjack.model.rule.WinningResult
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -72,10 +72,10 @@ class GameManagerTest {
         val winningManager = WinningManager(dealer, players)
 
         // when
-        val gameResult = gameManager.getResult(winningManager)
+        val gameResult = winningManager.generateResult()
 
         // then
-        assertThat(gameResult.dealerResult.keys).containsExactlyInAnyOrder(*WinningResult.entries.toTypedArray())
+        assertThat(gameResult.dealerResult.keys).containsExactlyInAnyOrder(*WinningState.entries.toTypedArray())
         assertThat(gameResult.playerResults.keys).containsExactly(Name("Alice"))
     }
 }

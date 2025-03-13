@@ -4,11 +4,11 @@ import blackjack.model.card.Card
 import blackjack.model.card.CardRank
 import blackjack.model.card.CardSuit
 import blackjack.model.game.WinningManager
+import blackjack.model.game.WinningState.LOSE
+import blackjack.model.game.WinningState.PUSH
+import blackjack.model.game.WinningState.WIN_DEFAULT
 import blackjack.model.participant.Dealer
 import blackjack.model.participant.Players
-import blackjack.model.rule.WinningResult.LOSE
-import blackjack.model.rule.WinningResult.PUSH
-import blackjack.model.rule.WinningResult.WIN
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -73,7 +73,7 @@ class WinningManagerTest {
         val playerResult = winningManager.playerResults()
 
         // then
-        assertThat(playerResult.values.first()).isEqualTo(WIN)
+        assertThat(playerResult.values.first()).isEqualTo(WIN_DEFAULT)
     }
 
     @Test

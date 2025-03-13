@@ -6,11 +6,8 @@ import blackjack.model.game.UserCommand.HIT
 import blackjack.model.game.UserCommand.STAY
 import blackjack.model.game.UserCommand.UNKNOWN
 import blackjack.model.participant.Dealer
-import blackjack.model.participant.Money
-import blackjack.model.participant.Name
 import blackjack.model.participant.Player
 import blackjack.model.participant.Players
-import blackjack.model.rule.WinningResult
 
 class GameManager {
     fun prepareDealer(
@@ -31,16 +28,6 @@ class GameManager {
         players.value.forEach { player -> player.recieveCards(cardDeck::draw) }
 
         return players
-    }
-
-    fun betPlayersMoney(
-        players: Players,
-        bettingManager: BettingManager,
-        getMoney: (Name) -> Money,
-    ) {
-        players.value.forEach { player ->
-            bettingManager.bet(player.name, getMoney(player.name))
-        }
     }
 
     fun progressPlayerDrawUntilFinished(
@@ -69,12 +56,5 @@ class GameManager {
         while (dealer.isDrawable()) {
             dealer.recieveCards(draw)
         }
-    }
-
-    fun getResult(winningManager: WinningManager): blackjack.model.game.WinningResult {
-        val dealerResult: Map<WinningResult, ResultCount> = winningManager.dealerResult()
-        val playerResults: Map<Name, WinningResult> = winningManager.playerResults()
-
-        return WinningResult(dealerResult, playerResults)
     }
 }

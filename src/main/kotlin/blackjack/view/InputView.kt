@@ -11,9 +11,9 @@ class InputView {
         return readln().split(",").map { name -> name.trim() }
     }
 
-    fun getBettingMoney(name: String): Long {
+    fun getBettingMoney(name: String): Double {
         println("\n${name}의 배팅 금액은?")
-        return readln().toLong()
+        return readln().toDouble()
     }
 
     fun getIsRecieveMore(name: String): UserCommand {

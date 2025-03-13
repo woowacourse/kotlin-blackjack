@@ -3,27 +3,31 @@ package blackjack.model.game
 import blackjack.model.participant.Dealer
 import blackjack.model.participant.Name
 import blackjack.model.participant.Players
-import blackjack.model.rule.WinningResult
 
 class WinningManager(
     private val dealer: Dealer,
     private val players: Players,
 ) {
-    fun playerResults(): Map<Name, WinningResult> =
+    fun generateResult(): WinningResult {
+        val playerResults = playerResult()
+        val dealerResult = dealerResult(playerResults)
+
+        return WinningResult(dealerResult, playerResults)
+    }
+
+    private fun playerResult(): Map<Name, WinningState> =
         players.value.associate { player ->
             player.name to
-                WinningResult.from(player.score(), dealer.score(), player.isBust(), dealer.isBust())
+                WinningState.fromPlayer(player.score(), dealer.score(), player.handState, dealer.handState)
         }
 
-    fun dealerResult(): Map<WinningResult, ResultCount> {
+    private fun dealerResult(playerResults: Map<Name, WinningState>): Map<WinningState, ResultCount> {
         val resultCounts =
-            players.value
-                .map { player ->
-                    WinningResult.from(dealer.score(), player.score(), dealer.isBust(), player.isBust())
-                }.groupingBy { it }
+            playerResults.values
+                .groupingBy { it.reverseToDealer() }
                 .eachCount()
 
-        return WinningResult.entries.associateWith { ResultCount(resultCounts[it] ?: INITIAL_SCORE) }
+        return WinningState.entries.associateWith { ResultCount(resultCounts[it] ?: INITIAL_SCORE) }
     }
 
     companion object {

@@ -1,9 +1,8 @@
 package blackjack.model.game
 
 import blackjack.model.participant.Name
-import blackjack.model.rule.WinningResult
 
 class WinningResult(
-    val dealerResult: Map<WinningResult, ResultCount>,
-    val playerResults: Map<Name, WinningResult>,
+    val dealerResult: Map<WinningState, ResultCount>,
+    val playerResults: Map<Name, WinningState>,
 )

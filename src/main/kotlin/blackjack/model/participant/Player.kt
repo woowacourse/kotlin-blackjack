@@ -1,21 +1,24 @@
 package blackjack.model.participant
 
 import blackjack.model.card.Card
+import blackjack.model.participant.Money.Companion.PLAYER_DEFAULT_MONEY
 
 class Player private constructor(
     name: Name,
+    money: Money,
     hand: Hand,
-) : Participant(name, hand) {
+) : Participant(name, money, hand) {
     override fun showInitialCards(): List<Card> = cards.take(FIRST_SHOWN_COUNT)
 
-    override fun isDrawable(): Boolean = !isBust()
+    override fun isDrawable(): Boolean = handState == HandState.ALIVE
 
     companion object {
         private const val FIRST_SHOWN_COUNT = 2
 
         fun create(
-            name: String,
+            name: Name,
+            money: Money = Money(PLAYER_DEFAULT_MONEY),
             hand: Hand = Hand(),
-        ): Player = Player(Name(name), hand)
+        ): Player = Player(name, money, hand)
     }
 }

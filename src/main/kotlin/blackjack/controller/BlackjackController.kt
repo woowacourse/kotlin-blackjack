@@ -3,7 +3,6 @@ package blackjack.controller
 import blackjack.model.card.CardDeck
 import blackjack.model.game.BettingManager
 import blackjack.model.game.GameManager
-import blackjack.model.game.WinningManager
 import blackjack.model.participant.Dealer
 import blackjack.model.participant.Dealer.Companion.DEFAULT_DEALER_NAME
 import blackjack.model.participant.Money
@@ -21,9 +20,8 @@ class BlackjackController(
         val cardDeck = CardDeck()
         val dealer = gameManager.prepareDealer(DEFAULT_DEALER_NAME, cardDeck)
         val players = preparePlayers(gameManager, cardDeck)
-        val winningManager = WinningManager(dealer, players)
 
-        gameManager.betPlayersMoney(players, bettingManager) { name ->
+        bettingManager.getPlayersMoney(players) { name ->
             Money(inputView.getBettingMoney(name.toString()))
         }
 
@@ -34,7 +32,6 @@ class BlackjackController(
         progressDealerDraw(gameManager, dealer, cardDeck)
 
         displayParticipantsInfo(players)
-        displayResults(gameManager, winningManager)
     }
 
     private fun preparePlayers(
@@ -73,21 +70,12 @@ class BlackjackController(
         gameManager.progressDealerDraw(dealer, cardDeck::draw)
 
         outputView.displayDealerDrawInfo(dealer.additionalDrawCount())
-        outputView.displayParticipantInfo(dealer.name, dealer.cards, dealer.score(), dealer.isBust())
+        outputView.displayParticipantInfo(dealer.name, dealer.cards, dealer.score())
     }
 
     private fun displayParticipantsInfo(players: Players) {
         players.value.forEach { player ->
-            outputView.displayParticipantInfo(player.name, player.cards, player.score(), player.isBust())
+            outputView.displayParticipantInfo(player.name, player.cards, player.score())
         }
-    }
-
-    private fun displayResults(
-        gameManager: GameManager,
-        winningManager: WinningManager,
-    ) {
-        val result = gameManager.getResult(winningManager)
-
-        outputView.displayResult(result)
     }
 }

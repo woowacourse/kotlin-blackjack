@@ -11,11 +11,7 @@ import blackjack.model.card.CardSuit.CLUB
 import blackjack.model.card.CardSuit.DIAMOND
 import blackjack.model.card.CardSuit.HEART
 import blackjack.model.card.CardSuit.SPADE
-import blackjack.model.game.ResultCount
 import blackjack.model.participant.Name
-import blackjack.model.rule.WinningResult.LOSE
-import blackjack.model.rule.WinningResult.PUSH
-import blackjack.model.rule.WinningResult.WIN
 
 class OutputView {
     fun displayFirstDrawEnd(players: List<Name>) {
@@ -42,10 +38,8 @@ class OutputView {
         name: Name,
         cards: List<Card>,
         score: Int,
-        isBust: Boolean,
     ) {
-        val result = if (isBust) "버스트" else score
-        println("$name 카드: ${cards.toText()} - 결과: $result")
+        println("$name 카드: ${cards.toText()} - 결과: $score")
     }
 
     private fun List<Card>.toText(): String =
@@ -68,28 +62,5 @@ class OutputView {
             HEART -> "하트"
             DIAMOND -> "다이아몬드"
             CLUB -> "클로버"
-        }
-
-    fun displayResult(result: blackjack.model.game.WinningResult) {
-        println("\n## 최종 승패")
-        displayDealerResult(result.dealerResult)
-        displayPlayersResult(result.playerResults)
-    }
-
-    private fun displayDealerResult(result: Map<blackjack.model.rule.WinningResult, ResultCount>) {
-        println("딜러: ${result[WIN]?.value}승 ${result[PUSH]?.value}무 ${result[LOSE]?.value}패")
-    }
-
-    private fun displayPlayersResult(result: Map<Name, blackjack.model.rule.WinningResult>) {
-        result.forEach { (name, winningResult) ->
-            println("$name: ${winningResult.toText()}")
-        }
-    }
-
-    private fun blackjack.model.rule.WinningResult.toText() =
-        when (this) {
-            WIN -> "승"
-            LOSE -> "패"
-            PUSH -> "무"
         }
 }

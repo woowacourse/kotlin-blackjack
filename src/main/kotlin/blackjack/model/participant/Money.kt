@@ -2,7 +2,7 @@ package blackjack.model.participant
 
 @JvmInline
 value class Money(
-    val value: Long = DEFAULT_MONEY,
+    val value: Double,
 ) {
     override fun toString(): String = value.toString()
 
@@ -10,7 +10,13 @@ value class Money(
 
     fun minus(money: Money): Money = Money(this.value - money.value)
 
+    fun multiply(number: Double): Money = Money(this.value * number)
+
+    fun divide(number: Double): Money = Money(this.value / number)
+
     companion object {
-        const val DEFAULT_MONEY = 0L
+        const val PLAYER_DEFAULT_MONEY = 1_000_000.0
+        const val DEALER_DEFAULT_MONEY = Double.MAX_VALUE
+        val ZERO = Money(0.0)
     }
 }
