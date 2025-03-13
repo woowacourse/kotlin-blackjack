@@ -20,7 +20,7 @@ abstract class Participants() {
             hand.isBust() -> GameResult.Lose
             participant.hand.isBust() -> GameResult.Win
             participant.hand.isBlackjack() && !hand.isBlackjack() -> GameResult.Lose
-            !participant.hand.isBlackjack() && hand.isBlackjack() -> GameResult.Win
+            !participant.hand.isBlackjack() && hand.isBlackjack() -> GameResult.BlackjackWin
             else -> compareNumber(sumCardNumber, participant.sumCardNumber)
         }
 

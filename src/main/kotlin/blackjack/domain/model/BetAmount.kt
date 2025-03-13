@@ -5,17 +5,9 @@ class BetAmount(private val money: Int) {
         require(money >= MINIMUM_BET_AMOUNT) { INVALID_BET_AMOUNT.format(MINIMUM_BET_AMOUNT) }
     }
 
-    fun calculateProceed(
-        result: GameResult,
-        isBlackjack: Boolean,
-    ): Int =
-        when {
-            result == GameResult.Lose -> -money
-            result == GameResult.Draw -> 0
-            result == GameResult.Win && isBlackjack -> (1.5 * money).toInt()
-            result == GameResult.Win -> money
-            else -> 0
-        }
+    fun calculateProceed(result: GameResult): Int {
+        return (money * result.earningRate).toInt()
+    }
 
     companion object {
         private const val MINIMUM_BET_AMOUNT: Int = 0

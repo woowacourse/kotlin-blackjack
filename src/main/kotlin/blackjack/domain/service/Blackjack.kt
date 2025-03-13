@@ -45,7 +45,7 @@ class Blackjack(
     fun endGame(betStatus: Map<Player, BetAmount>): Map<Player, Proceed> {
         return playerGroup.players.associateWith { player ->
             val result = player.compareScores(playerGroup.dealer)
-            val proceed = betStatus[player]?.calculateProceed(result, player.hand.isBlackjack()) ?: throw IllegalArgumentException()
+            val proceed = betStatus[player]?.calculateProceed(result) ?: throw IllegalArgumentException()
             Proceed(proceed)
         }
     }
