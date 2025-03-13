@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.participant
 
 import blackjack.model.participant.Players
 import org.junit.jupiter.api.Test
