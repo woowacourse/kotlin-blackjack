@@ -16,9 +16,9 @@ class Player private constructor(
         private const val FIRST_SHOWN_COUNT = 2
 
         fun create(
-            name: Name,
-            money: Money = Money(PLAYER_DEFAULT_MONEY),
+            name: String,
+            money: Double = PLAYER_DEFAULT_MONEY,
             hand: Hand = Hand(),
-        ): Player = Player(name, money, hand)
+        ): Player = Player(Name(name), Money(money), hand)
     }
 }

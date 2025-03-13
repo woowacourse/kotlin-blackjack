@@ -21,8 +21,8 @@ class Dealer private constructor(
 
         fun create(
             name: String = DEFAULT_DEALER_NAME,
-            money: Money = Money(DEALER_DEFAULT_MONEY),
+            money: Double = DEALER_DEFAULT_MONEY,
             hand: Hand = Hand(),
-        ): Dealer = Dealer(Name(name), money, hand)
+        ): Dealer = Dealer(Name(name), Money(money), hand)
     }
 }

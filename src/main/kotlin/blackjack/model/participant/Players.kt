@@ -23,6 +23,6 @@ class Players private constructor(
         private const val MIN_PLAYER_COUNT = 1
         private const val MAX_PLAYER_COUNT = 7
 
-        fun from(players: List<String>): Players = Players(players.map { Player.create(Name(it)) })
+        fun from(players: List<String>): Players = Players(players.map { name -> Player.create(name) })
     }
 }
