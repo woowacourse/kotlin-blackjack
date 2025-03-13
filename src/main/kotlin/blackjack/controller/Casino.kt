@@ -1,6 +1,7 @@
 package blackjack.controller
 
 import blackjack.domain.model.card.Deck
+import blackjack.domain.model.card.HandCards.Companion.INIT_CARD_SIZE
 import blackjack.domain.model.participant.CardStatus
 import blackjack.domain.model.participant.Dealer
 import blackjack.domain.model.participant.GameParticipant
@@ -30,7 +31,7 @@ class Casino(
 
     private fun initDistributeCard(participants: List<GameParticipant>) {
         participants.forEach { participant ->
-            repeat(INIT_CARD_SIZE) {
+            while (participant.cardSize() < INIT_CARD_SIZE) {
                 participant.handCards.addCard(deck.getCard())
             }
         }
@@ -50,7 +51,7 @@ class Casino(
                 player.handCards.addCard(deck.getCard())
                 outputView.showPlayerCardsInfo(player)
             }
-            if (player.cardSize() == INIT_CARD_SIZE) {
+            if (player.isInitHandCard()) {
                 outputView.showPlayerCardsInfo(player)
             }
         }
@@ -76,9 +77,5 @@ class Casino(
                 player to winLossStatistics.calculatePlayerWinLoss(dealer, player)
             }
         outputView.showFinalResult(winLossStatistics, playersWinLoss)
-    }
-
-    companion object {
-        const val INIT_CARD_SIZE = 2
     }
 }

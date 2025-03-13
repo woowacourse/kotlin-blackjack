@@ -9,5 +9,7 @@ abstract class GameParticipant(
 
     fun cardSize() = handCards.cards.size
 
+    fun isInitHandCard() = handCards.cards.size == HandCards.INIT_CARD_SIZE
+
     abstract fun isDrawFinish(): Boolean
 }

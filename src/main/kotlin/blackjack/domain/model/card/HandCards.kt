@@ -34,5 +34,6 @@ class HandCards(
 
     companion object {
         private const val ACE_VALUE_GAP = 10
+        const val INIT_CARD_SIZE = 2
     }
 }
