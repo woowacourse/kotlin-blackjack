@@ -39,7 +39,7 @@
 - [x] DSL 실습 코드 분리
 
 ## Step1 리팩터링 요구사항 2
-- [ ] Number의 orderNumber 프로퍼티 삭제 후 getByOrderNumber 메서드 변경
+- [x] Number의 orderNumber 프로퍼티 삭제 후 getByOrderNumber 메서드 변경
 - [ ] HandCards클래스 내 카드 조회시 backing property 활용
 - [ ] DSLStudy코드를 Test로 이동
 - [ ] Deck Object를 일반 Class로 변경
