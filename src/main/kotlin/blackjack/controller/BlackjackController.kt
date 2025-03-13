@@ -30,27 +30,25 @@ class BlackjackController(
     }
 
     fun playPlayerTurn() {
-        blackjack.startPlayerTurn { player ->
-            view.showPlayerCard(
-                player.name,
-                player.cards.prettyString,
-                player.score.value,
-            )
-            hitDuringWant(player)
-        }
-    }
-
-    private fun hitDuringWant(player: Player) {
-        while (player.canHit) {
-            val wantToHit: Boolean = view.askWantToHit(player.name)
-            if (!wantToHit) break
-            dealer.giveCard(player)
-            view.showPlayerCard(
-                player.name,
-                player.cards.prettyString,
-                player.score.value,
-            )
-        }
+        blackjack.startPlayerTurn(
+            onStart = { player ->
+                view.showPlayerCard(
+                    player.name,
+                    player.cards.prettyString,
+                    player.score.value,
+                )
+            },
+            wantToHit = { player ->
+                view.askWantToHit(player.name)
+            },
+            afterHit = { player ->
+                view.showPlayerCard(
+                    player.name,
+                    player.cards.prettyString,
+                    player.score.value,
+                )
+            },
+        )
     }
 
     fun playDealerTurn() {

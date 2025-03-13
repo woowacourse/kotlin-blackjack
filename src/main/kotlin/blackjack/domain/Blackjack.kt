@@ -9,8 +9,12 @@ class Blackjack(
         dealer.pitch()
     }
 
-    fun startPlayerTurn(turn: (Player) -> Unit) {
-        dealer.startPlayerTurn(turn)
+    fun startPlayerTurn(
+        onStart: (Player) -> Unit,
+        wantToHit: (Player) -> Boolean,
+        afterHit: (Player) -> Unit,
+    ) {
+        dealer.startPlayerTurn(onStart, wantToHit, afterHit)
     }
 
     fun startDealerTurn(onEachTurn: () -> Unit) {

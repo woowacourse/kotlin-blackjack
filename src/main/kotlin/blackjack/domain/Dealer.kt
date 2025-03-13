@@ -35,8 +35,27 @@ class Dealer(
         player.draw(newCard)
     }
 
-    fun startPlayerTurn(turn: (Player) -> Unit) {
-        players.forEach(turn)
+    fun startPlayerTurn(
+        onStart: (Player) -> Unit,
+        wantToHit: (Player) -> Boolean,
+        afterHit: (Player) -> Unit,
+    ) {
+        players.forEach { player ->
+            onStart(player)
+            hitDuringWant(player, wantToHit, afterHit)
+        }
+    }
+
+    private fun hitDuringWant(
+        player: Player,
+        wantToHit: (Player) -> Boolean,
+        afterHit: (Player) -> Unit,
+    ) {
+        while (player.canHit) {
+            if (!wantToHit(player)) break
+            giveCard(player)
+            afterHit(player)
+        }
     }
 
     fun startDealerTurn(onEachTurn: () -> Unit) {
