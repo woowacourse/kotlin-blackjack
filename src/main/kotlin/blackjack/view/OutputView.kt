@@ -1,19 +1,19 @@
 package blackjack.view
 
 import blackjack.domain.model.Dealer
+import blackjack.domain.model.Game
 import blackjack.domain.model.Hand
 import blackjack.domain.model.Participant
-import blackjack.domain.model.Participants
 import blackjack.domain.model.Player
 import blackjack.domain.model.Rank
 import blackjack.domain.model.Suit
 
 class OutputView {
-    fun printInitialDeals(participants: Participants) {
+    fun printInitialDeals(game: Game) {
         println(
             MESSAGE_INITIAL_HAND_DISTRIBUTED.format(
-                participants.dealer.name,
-                participants.players.map(Player::name).joinToString(PLAYER_CARDS_DELIMITER),
+                game.dealer.name,
+                game.players.map(Player::name).joinToString(PLAYER_CARDS_DELIMITER),
             ),
         )
         println()
@@ -27,12 +27,13 @@ class OutputView {
         println(MESSAGE_DEALER_HITS_STATE.format(dealer.name))
     }
 
-    fun printResults(participants: Participants) {
-        participants.all.forEach { participant -> printParticipantResult(participant) }
+    fun printResults(game: Game) {
+        printParticipantResult(game.dealer)
+        game.players.forEach { player -> printParticipantResult(player) }
         println()
         println(MESSAGE_RESULTS_HEADER)
-        val dealer: Dealer = participants.dealer
-        val players: List<Player> = participants.players
+        val dealer: Dealer = game.dealer
+        val players: List<Player> = game.players
         val playerProfits = dealer.getPlayersProfits(players)
         val dealerProfit = dealer.getDealerProfit(playerProfits)
         println("${dealer.name}${NAME_RESULT_DELIMITER}$dealerProfit")
