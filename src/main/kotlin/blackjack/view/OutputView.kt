@@ -7,7 +7,6 @@ import blackjack.domain.model.Player
 import blackjack.domain.model.Profit
 import blackjack.domain.model.Rank
 import blackjack.domain.model.Suit
-import blackjack.domain.model.VerdictResult
 
 class OutputView {
     fun printInitialDeals(participants: Participants) {
@@ -58,7 +57,7 @@ class OutputView {
 
     fun printDealerProfit(
         dealerName: String,
-        profit: Int,
+        profit: Double,
     ) {
         print(dealerName + NAME_RESULT_DELIMITER + profit)
         println()
@@ -88,14 +87,6 @@ class OutputView {
             Rank.ACE -> "A"
             Rank.TWO, Rank.THREE, Rank.FOUR, Rank.FIVE, Rank.SIX, Rank.SEVEN, Rank.EIGHT, Rank.NINE, Rank.TEN -> rank.score.toString()
             Rank.JACK, Rank.QUEEN, Rank.KING -> Rank.TEN.score.toString()
-        }
-    }
-
-    private fun convertKoreanVerdict(verdict: VerdictResult): String {
-        return when (verdict) {
-            VerdictResult.WIN -> "승"
-            VerdictResult.LOSE -> "패"
-            VerdictResult.DRAW -> "무"
         }
     }
 

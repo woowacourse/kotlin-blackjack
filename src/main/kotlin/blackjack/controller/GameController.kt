@@ -3,6 +3,7 @@ package blackjack.controller
 import blackjack.domain.model.BetAmount
 import blackjack.domain.model.Dealer
 import blackjack.domain.model.Deck
+import blackjack.domain.model.HandState
 import blackjack.domain.model.Hands
 import blackjack.domain.model.Hands.Companion.START_CARD_COUNT
 import blackjack.domain.model.Money
@@ -10,7 +11,6 @@ import blackjack.domain.model.Participant
 import blackjack.domain.model.Participants
 import blackjack.domain.model.Player
 import blackjack.domain.model.Profit
-import blackjack.domain.model.Verdict
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -51,9 +51,9 @@ class GameController(
         participant: Participant,
         deck: Deck,
     ) {
-        if (participant.isBust()) return
+        if (participant.getHandsState() != HandState.HIT) return
         val choice = retryEvent { inputView.readPlayerAction(participant) }
-        if (!choice.isYes()) {
+        if (HandState.STAY == choice) {
             printStatusOnNoHit(participant)
             return
         }
@@ -92,9 +92,9 @@ class GameController(
         participants: Participants,
         playersBetAmount: Map<Player, BetAmount>,
     ): Map<Player, Profit> {
-        val verdict = Verdict(participants.dealer)
-        return participants.players.associateWith {
-            playersBetAmount[it]?.calculate(verdict.determine(it)) ?: Profit(0)
+        val dealer = participants.dealer
+        return participants.players.associateWith { player ->
+            playersBetAmount[player]?.calculate(player.match(dealer)) ?: Profit(0.0)
         }
     }
 

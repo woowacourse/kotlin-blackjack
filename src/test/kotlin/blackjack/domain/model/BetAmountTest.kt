@@ -15,18 +15,18 @@ class BetAmountTest {
     @Test
     fun `승리 수익 금액을 계산한다`() {
         val actual = Profit(1000)
-        assertThat(betAmount.calculate(VerdictResult.WIN)).isEqualTo(actual)
+        assertThat(betAmount.calculate(MatchResult.WIN)).isEqualTo(actual)
     }
 
     @Test
     fun `패배 수익 금액을 계산한다`() {
         val actual = Profit(-1000)
-        assertThat(betAmount.calculate(VerdictResult.LOSE)).isEqualTo(actual)
+        assertThat(betAmount.calculate(MatchResult.LOSE)).isEqualTo(actual)
     }
 
     @Test
     fun `무승부 수익 금액을 계산한다`() {
         val actual = Profit(0)
-        assertThat(betAmount.calculate(VerdictResult.DRAW)).isEqualTo(actual)
+        assertThat(betAmount.calculate(MatchResult.DRAW)).isEqualTo(actual)
     }
 }

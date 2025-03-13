@@ -3,25 +3,10 @@ package blackjack.domain.model
 abstract class Participant {
     abstract val name: String
     protected abstract var hands: Hands
-    protected abstract var record: Record
 
     abstract fun showInitCards(): List<Card>
 
-    fun recordVerdict(verdictResult: VerdictResult) {
-        record = record.progress(verdictResult)
-    }
-
-    fun recordVerdict(verdictResults: List<VerdictResult>) {
-        record = record.progress(*verdictResults.toTypedArray())
-    }
-
-    fun getCurrentVerdict(): VerdictResult = record.lastVerdictResult()
-
-    fun getRecord(): Map<VerdictResult, Int> =
-        VerdictResult.entries.associateWith {
-                verdictResult ->
-            record.verdictResults.count { recordResult -> recordResult == verdictResult }
-        }
+    abstract fun getHandsState(): HandState
 
     fun getScore() = hands.getScore()
 
@@ -33,5 +18,18 @@ abstract class Participant {
         hands = hands.nextHand(card)
     }
 
-    fun isBust(): Boolean = hands.isBust()
+    fun match(otherParticipant: Participant): MatchResult {
+        val handState = getHandsState()
+        val otherHandState = otherParticipant.getHandsState()
+        val score = getScore()
+        val otherScore = otherParticipant.getScore()
+        return when {
+            handState == HandState.BLACKJACK && otherHandState == HandState.HIT -> MatchResult.DRAW
+            handState == HandState.BLACKJACK -> MatchResult.BLACKJACK
+            handState == HandState.BUST -> MatchResult.LOSE
+            score > otherScore -> MatchResult.WIN
+            score < otherScore -> MatchResult.LOSE
+            else -> MatchResult.DRAW
+        }
+    }
 }

@@ -14,14 +14,14 @@ class DealerTest {
 
     @Test
     fun `딜러의 승패 횟수를 반환한다`() {
-        val results = listOf(VerdictResult.WIN, VerdictResult.WIN, VerdictResult.LOSE, VerdictResult.DRAW, VerdictResult.LOSE)
+        val results = listOf(MatchResult.WIN, MatchResult.WIN, MatchResult.LOSE, MatchResult.DRAW, MatchResult.LOSE)
         dealer.recordVerdict(results)
-        val verdicts: Map<VerdictResult, Int> = dealer.getRecord()
-        val actual: Map<VerdictResult, Int> =
+        val verdicts: Map<MatchResult, Int> = dealer.getRecord()
+        val actual: Map<MatchResult, Int> =
             mapOf(
-                VerdictResult.WIN to 2,
-                VerdictResult.LOSE to 2,
-                VerdictResult.DRAW to 1,
+                MatchResult.WIN to 2,
+                MatchResult.LOSE to 2,
+                MatchResult.DRAW to 1,
             )
         assertThat(verdicts).isEqualTo(actual)
     }
