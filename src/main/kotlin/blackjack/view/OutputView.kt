@@ -52,6 +52,18 @@ class OutputView {
         println(format(MESSAGE_OUTPUT_PLAYER_RESULT, name, result.toKorean()))
     }
 
+    fun printDealerProfit(profit: Double) {
+        println(MESSAGE_OUTPUT_PROFIT_GUIDE)
+        println(format(MESSAGE_OUTPUT_DEALER_PROFIT, profit))
+    }
+
+    fun printPlayerProfit(
+        name: String,
+        profit: Double,
+    ) {
+        println(format(MESSAGE_OUTPUT_PLAYER_OUTPUT, name, profit))
+    }
+
     private fun makeCardListMessage(cards: List<TrumpCard>): String =
         cards.joinToString { card ->
             cardMessageFormat(card)
@@ -89,6 +101,7 @@ class OutputView {
             GameResult.WIN -> "승"
             GameResult.LOSE -> "패"
             GameResult.DRAW -> "무"
+            else -> "블랙잭"
         }
 
     companion object {
@@ -98,8 +111,11 @@ class OutputView {
         private const val MESSAGE_OUTPUT_PLAYER_CARD = "%s카드: %s"
         private const val MESSAGE_OUTPUT_DEALER_CARD = "딜러: %s"
         private const val MESSAGE_OUTPUT_RESULT_GUIDE = "\n## 최종 승패"
+        private const val MESSAGE_OUTPUT_PROFIT_GUIDE = "\n## 최종 수익"
         private const val MESSAGE_OUTPUT_DEALER_RESULT = "딜러: %d승 %d패"
+        private const val MESSAGE_OUTPUT_DEALER_PROFIT = "딜러: %.2f"
         private const val MESSAGE_OUTPUT_PLAYER_RESULT = "%s: %s"
+        private const val MESSAGE_OUTPUT_PLAYER_OUTPUT = "%s: %.2f"
         private const val MESSAGE_CARD = "%s%s"
     }
 }
