@@ -3,6 +3,7 @@ package blackjack.domain
 import blackjack.domain.card.Deck
 import blackjack.domain.person.Dealer
 import blackjack.domain.person.Player
+import blackjack.domain.result.GameResult
 
 class BlackJackGame(
     val dealer: Dealer,

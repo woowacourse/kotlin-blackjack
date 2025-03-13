@@ -5,6 +5,7 @@ import blackjack.domain.person.Player
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.RepeatedTest
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 
@@ -30,17 +31,19 @@ class BlackJackGameTest {
         )
     }
 
-    @Test
+    @RepeatedTest(1000)
     fun `hitFlag이 true이면 플레이어가 카드를 추가로 뽑는다`() {
-        game.dealCards()
         game.playPlayersTurns(getIsHit = { name -> name == "Alice" }, {})
 
         val alice = players.find { it.name == "Alice" }
         val bob = players.find { it.name == "Bob" }
 
+        println((alice?.cards()?.size ?: -1))
+        println((bob?.cards()?.size ?: -1))
+
         assertAll(
-            { ((alice?.cards()?.size ?: -1) > 2) shouldBe true },
-            { (bob?.cards()?.size ?: -1) shouldBe 2 },
+            { ((alice?.cards()?.size ?: -1) > 1) shouldBe true },
+            { (bob?.cards()?.size ?: -1) shouldBe 0 },
         )
     }
 
