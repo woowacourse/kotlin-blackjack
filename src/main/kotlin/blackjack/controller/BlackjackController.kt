@@ -16,6 +16,7 @@ class BlackjackController(
 
     fun play(dealer: Dealer) {
         val players = playerSetting()
+        playerBetting(players)
 
         outputView.printInitialHandOutCardMessage(players)
         gameManager = GameManager(dealer, players)
@@ -39,6 +40,16 @@ class BlackjackController(
         }
         val players = Players(playerNames)
         return players.value
+    }
+
+    private fun playerBetting(players: List<Player>) {
+        players.forEach { player ->
+            var betAmount = inputView.readBetAmount(player.name)
+            while (betAmount == null) {
+                betAmount = inputView.readBetAmount(player.name)
+            }
+            player.betAmount = betAmount
+        }
     }
 
     private fun playersDrawCards(players: List<Player>) {
