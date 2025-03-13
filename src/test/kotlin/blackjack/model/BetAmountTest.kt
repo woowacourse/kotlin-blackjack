@@ -25,4 +25,14 @@ class BetAmountTest {
 
         assertThat(actual).isEqualTo(expect)
     }
+
+    @Test
+    fun `배팅금액에 *로 곱셈연산을 할 수 있다`() {
+        val amount = BetAmount(100)
+        val expect = 150.0
+
+        val actual = amount * 1.5
+
+        assertThat(actual).isEqualTo(expect)
+    }
 }
