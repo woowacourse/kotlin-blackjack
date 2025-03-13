@@ -4,8 +4,9 @@ import blackjack.model.card.Card
 
 class Player private constructor(
     name: Name,
+    money: Money,
     hand: Hand,
-) : Participant(name, hand) {
+) : Participant(name, money, hand) {
     override fun showInitialCards(): List<Card> = cards.take(FIRST_SHOWN_COUNT)
 
     override fun isDrawable(): Boolean = !isBust()
@@ -15,7 +16,8 @@ class Player private constructor(
 
         fun create(
             name: String,
+            money: Int = INITIAL_MONEY,
             hand: Hand = Hand(),
-        ): Player = Player(Name(name), hand)
+        ): Player = Player(Name(name), Money(money), hand)
     }
 }

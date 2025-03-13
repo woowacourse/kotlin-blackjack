@@ -4,6 +4,7 @@ import blackjack.model.card.Card
 
 abstract class Participant(
     val name: Name,
+    val money: Money,
     private val hand: Hand,
 ) {
     val cards: List<Card> get() = hand.cards
@@ -28,5 +29,6 @@ abstract class Participant(
     companion object {
         const val INITIAL_DRAW_COUNT = 2
         const val DEFAULT_DRAW_COUNT = 1
+        const val INITIAL_MONEY = 0
     }
 }
