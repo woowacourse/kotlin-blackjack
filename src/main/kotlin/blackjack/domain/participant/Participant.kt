@@ -27,10 +27,14 @@ abstract class Participant(
             cards.sumOfCards
         }
 
+    fun isBlackJack(): Boolean = cards.size() == INITIAL_CARD_COUNT && this.finalScore() == BLACKJACK_SCORE
+
     abstract fun getResult(other: Participant): GameResult
 
     companion object {
         const val ACE_SOFT_SCORE = 10
         const val ACE_HARD_SCORE = 0
+        const val INITIAL_CARD_COUNT = 2
+        const val BLACKJACK_SCORE = 21
     }
 }

@@ -95,4 +95,15 @@ class DealerTest {
         val expected = false
         assertThat(dealer.isDrawable()).isEqualTo(expected)
     }
+
+    @Test
+    fun `처음 받은 두 장의 합이 21이면 블랙잭이다`() {
+        val dealer = Dealer(ParticipantCards())
+
+        dealer.receiveCard(TrumpCard(CardTier.KING, Shape.DIA))
+        dealer.receiveCard(TrumpCard(CardTier.ACE, Shape.DIA))
+
+        val expected = true
+        assertThat(dealer.isBlackJack()).isEqualTo(expected)
+    }
 }
