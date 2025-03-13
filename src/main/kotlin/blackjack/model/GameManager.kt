@@ -43,13 +43,13 @@ class GameManager(
         val playersSummary =
             players.associateBy(
                 { player -> player },
-                { player -> ResultType.judgeScore(reference = player, target = dealer) },
+                { player -> ResultType.judgeForPlayer(player, dealer) },
             )
         return playersSummary
     }
 
     fun getDealerGameResult(): Map<ResultType, Int> {
-        return players.groupBy { player -> ResultType.judgeScore(reference = dealer, target = player) }
+        return players.groupBy { player -> ResultType.judgeForDealer(dealer, player) }
             .mapValues { typeGroup -> typeGroup.value.size }
     }
 }
