@@ -72,4 +72,30 @@ class PlayerTest {
         val dealer = Dealer(Card(Suit.SPADE, Rank.TWO), Card(Suit.SPADE, Rank.THREE)) // 5점
         assertThat(player.compareAgainst(dealer)).isEqualTo(Result.PUSH)
     }
+
+    @Test
+    fun `플레이어가 블랙잭이고 딜러는 블랙잭이 아닐 시 플레이어가 블랙잭이 된다`() {
+        val player = Player("A", Card(Suit.HEART, Rank.ACE), Card(Suit.HEART, Rank.KING)) // 21점
+        val dealer = Dealer(Card(Suit.SPADE, Rank.TWO), Card(Suit.SPADE, Rank.THREE)) // 5점
+        assertThat(player.compareAgainst(dealer)).isEqualTo(Result.BLACKJACK)
+    }
+
+    @Test
+    fun `플레이어와 딜러가 동시에 블랙잭일 시 비긴다`() {
+        val player = Player("A", Card(Suit.HEART, Rank.ACE), Card(Suit.HEART, Rank.KING)) // 21점
+        val dealer = Dealer(Card(Suit.SPADE, Rank.ACE), Card(Suit.SPADE, Rank.KING)) // 21점
+        assertThat(player.compareAgainst(dealer)).isEqualTo(Result.PUSH)
+    }
+
+    @Test
+    fun `플레이어의 첫 패가 블랙잭이고 히트하지 않았을 시 블랙잭이다`() {
+        val player = Player("A", Card(Suit.HEART, Rank.ACE), Card(Suit.HEART, Rank.KING)) // 21점
+        assertThat(player.isBlackJack()).isTrue()
+    }
+
+    @Test
+    fun `플레이어의 첫 패가 블랙잭이었어도 히트했을 시 블랙잭이 아니다`() {
+        val player = Player("A", Card(Suit.HEART, Rank.ACE), Card(Suit.HEART, Rank.KING), Card(Suit.HEART, Rank.TWO)) // 13점
+        assertThat(player.isBlackJack()).isFalse()
+    }
 }

@@ -19,6 +19,10 @@ abstract class Participant(val name: String, cards: List<Card>) {
         return hand.isBusted()
     }
 
+    fun isBlackJack(): Boolean {
+        return hand.isBlackJack()
+    }
+
     abstract fun canHit(): Boolean
 
     abstract fun showHand(): List<Card>

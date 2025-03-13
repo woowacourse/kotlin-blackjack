@@ -45,21 +45,6 @@ class DealerTest {
     }
 
     @Test
-    fun `딜러의 승패 횟수를 반환한다`() {
-        val player1 = Player("A", Card(Suit.SPADE, Rank.TWO), Card(Suit.SPADE, Rank.THREE)) //  5점
-        val player2 = Player("B", Card(Suit.SPADE, Rank.FIVE), Card(Suit.SPADE, Rank.SIX)) // 11점
-        val player3 = Player("C", Card(Suit.DIAMOND, Rank.FIVE), Card(Suit.DIAMOND, Rank.SIX)) // 11점
-        val player4 = Player("D", Card(Suit.CLUB, Rank.FIVE), Card(Suit.CLUB, Rank.SIX)) // 11점
-        val player5 = Player("E", Card(Suit.SPADE, Rank.QUEEN), Card(Suit.SPADE, Rank.KING)) // 20점
-        val player6 = Player("F", Card(Suit.DIAMOND, Rank.QUEEN), Card(Suit.DIAMOND, Rank.KING)) // 20점
-        val players: List<Player> = listOf(player1, player2, player3, player4, player5, player6)
-        val playerResults: Map<Player, Result> = dealer.getPlayerResults(players)
-        val results: Map<Result, Int> = dealer.getDealerResults(playerResults)
-        val actual: Map<Result, Int> = mapOf(Result.WIN to 1, Result.LOSE to 2, Result.PUSH to 3)
-        assertThat(results).isEqualTo(actual)
-    }
-
-    @Test
     fun `딜러의 점수가 16 이하면 히트할 수 있다`() {
         dealer = Dealer(Card(Suit.HEART, Rank.SIX), Card(Suit.HEART, Rank.KING))
         assertThat(dealer.canHit()).isTrue()

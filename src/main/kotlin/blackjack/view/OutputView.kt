@@ -70,6 +70,7 @@ class OutputView {
         return when (this) {
             Result.WIN -> RESULT_WIN
             Result.LOSE -> RESULT_LOSE
+            Result.BLACKJACK -> RESULT_BLACKJACK
             Result.PUSH -> RESULT_DRAW
         }
     }
@@ -105,6 +106,7 @@ class OutputView {
 
         private const val RESULT_WIN = "승"
         private const val RESULT_LOSE = "패"
+        private const val RESULT_BLACKJACK = "블랙잭"
         private const val RESULT_DRAW = "무"
 
         private const val SUIT_HEART = "하트"

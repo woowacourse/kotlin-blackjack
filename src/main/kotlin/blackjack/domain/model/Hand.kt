@@ -33,7 +33,7 @@ class Hand(cards: List<Card>) {
     }
 
     fun isBlackJack(): Boolean {
-        return Hand(cards.take(STARTING_HAND_SIZE)).computePoint() == BUST_THRESHOLD
+        return computePoint() == BUST_THRESHOLD && Hand(cards.take(STARTING_HAND_SIZE)).computePoint() == BUST_THRESHOLD
     }
 
     companion object {

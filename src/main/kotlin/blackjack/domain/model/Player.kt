@@ -43,6 +43,9 @@ class Player(name: String, cards: List<Card>) : Participant(name, cards) {
         if (isBusted()) return Result.LOSE
         if (dealer.isBusted()) return Result.WIN
 
+        if (isBlackJack() && dealer.isBlackJack()) return Result.PUSH
+        if (isBlackJack()) return Result.BLACKJACK
+
         val point: Int = computePoint()
         val dealerPoint: Int = dealer.computePoint()
         return when {
