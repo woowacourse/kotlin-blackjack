@@ -26,7 +26,7 @@ class BlackJackGame(
                     player.receiveCard(deck.pop())
                     onPlayerStateUpdated(player)
                 } else {
-                    return
+                    break
                 }
             }
         }
