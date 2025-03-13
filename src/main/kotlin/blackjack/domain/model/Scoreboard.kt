@@ -1,37 +1,24 @@
 package blackjack.domain.model
 
-import blackjack.domain.model.GameResult.BLACKJACK_WIN
-import blackjack.domain.model.GameResult.DRAW
-import blackjack.domain.model.GameResult.LOSE
-import blackjack.domain.model.GameResult.WIN
-import blackjack.domain.model.participant.Dealer
+import blackjack.domain.model.participant.Participants
 import blackjack.domain.model.participant.Player
+import blackjack.domain.model.participant.PlayerBetInfo
 
 class Scoreboard(
-    private val dealer: Dealer,
-    private val players: List<Player>,
+    private val participants: Participants,
 ) {
-    fun getDealerProfit(): Double {
-        val playersProfit: Collection<Double> = getPlayersProfit().values
+    fun getDealerProfit(playerBetInfos: List<PlayerBetInfo>): Double {
+        val playersProfit: Collection<Double> = getPlayersProfit(playerBetInfos).values
         return -playersProfit.filter { it < 0.0 }.sum() - playersProfit.filter { it > 0.0 }.sum()
     }
 
-    fun getPlayersProfit(): Map<Player, Double> {
-        return players.associateWith(::getProfit)
-    }
-
-    private fun getProfit(player: Player): Double {
-        val betAmount: Double = player.betAmount.value
-        return when (player.compareTo(dealer)) {
-            BLACKJACK_WIN -> betAmount * 1.5
-            WIN -> betAmount
-            DRAW -> 0.0
-            LOSE -> -betAmount
-        }
+    fun getPlayersProfit(playerBetInfos: List<PlayerBetInfo>): Map<Player, Double> {
+        val maps: List<Map<Player, Double>> = playerBetInfos.map { it.getProfit(participants.dealer) }
+        return maps.reduce { acc, map -> acc + map }
     }
 
     fun getDealerResult(): Map<GameResult, Int> {
-        val dealerResult: List<GameResult> = players.map { player -> dealer.compareTo(player) }
+        val dealerResult: List<GameResult> = participants.players.map { player -> participants.dealer.compareTo(player) }
         val initResult: Map<GameResult, Int> = GameResult.entries.associateWith { 0 }
         return initResult + dealerResult.groupingBy { it }.eachCount()
     }
