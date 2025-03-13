@@ -1,12 +1,12 @@
 package blackjack.domain.model
 
 class Player(name: String, cards: List<Card>) : Participant(name, cards) {
-    var bet: Int = 0
+    private lateinit var bet: Bet
 
     constructor(name: String, vararg cards: Card) : this(name, cards.toList())
 
     constructor(name: String, bet: Int, vararg cards: Card) : this(name, cards.toList()) {
-        this.bet = bet
+        this.bet = Bet(bet)
     }
 
     override fun canHit(): Boolean {
@@ -17,11 +17,8 @@ class Player(name: String, cards: List<Card>) : Participant(name, cards) {
         return hand.show()
     }
 
-    fun bet(input: (Player) -> Int): Int {
-        val amount = input(this)
-        require(amount >= 0) { ERROR_MESSAGE_BET_NOT_POSITIVE }
-        bet = amount
-        return amount
+    fun bet(input: (Player) -> Int) {
+        bet = Bet(input(this))
     }
 
     fun processHits(
@@ -41,7 +38,7 @@ class Player(name: String, cards: List<Card>) : Participant(name, cards) {
 
     fun computeProfitAgainst(dealer: Dealer): Int {
         val result: Result = compareAgainst(dealer)
-        return Math.round(bet * result.profitRate).toInt()
+        return Math.round(bet.amount * result.profitRate).toInt()
     }
 
     fun compareAgainst(dealer: Dealer): Result {
@@ -58,9 +55,5 @@ class Player(name: String, cards: List<Card>) : Participant(name, cards) {
             point < dealerPoint -> Result.LOSE
             else -> Result.PUSH
         }
-    }
-
-    companion object {
-        private const val ERROR_MESSAGE_BET_NOT_POSITIVE = "베팅 금액은 음수일 수 없습니다."
     }
 }
