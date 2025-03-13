@@ -34,14 +34,15 @@ class GameManager(
     fun calculateDealerResult(resultMap: Map<Player, ResultType>): Map<ResultType, Int> {
         val result = mutableMapOf<ResultType, Int>()
 
-        resultMap.forEach {
-            when (it.value) {
-                ResultType.WIN -> result[ResultType.LOSS] = result.getOrDefault(ResultType.LOSS, 0) + 1
-                ResultType.TIE -> result[ResultType.TIE] = result.getOrDefault(ResultType.TIE, 0) + 1
-                ResultType.LOSS -> result[ResultType.WIN] = result.getOrDefault(ResultType.WIN, 0) + 1
-            }
-        }
-
+//        resultMap.forEach {
+//            when (it.value) {
+//                ResultType.WIN -> result[ResultType.LOSS] = result.getOrDefault(ResultType.LOSS, 0) + 1
+//                ResultType.TIE -> result[ResultType.TIE] = result.getOrDefault(ResultType.TIE, 0) + 1
+//                ResultType.LOSS -> result[ResultType.WIN] = result.getOrDefault(ResultType.WIN, 0) + 1
+//
+//            }
+//        }
+//
         return result
     }
 

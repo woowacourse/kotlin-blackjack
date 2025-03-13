@@ -4,4 +4,5 @@ enum class ResultType {
     WIN,
     TIE,
     LOSS,
+    BLACKJACK,
 }

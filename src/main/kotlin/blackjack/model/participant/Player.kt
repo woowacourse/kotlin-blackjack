@@ -7,5 +7,7 @@ class Player(
 ) : Participant(name) {
     var betAmount: Int = 0
 
+    var finalProfit: Double = 0.0
+
     override fun getInitialCard(): List<Card> = cards
 }

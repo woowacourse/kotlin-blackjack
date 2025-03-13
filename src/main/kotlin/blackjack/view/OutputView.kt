@@ -62,15 +62,16 @@ class OutputView {
         dealerResult: Map<ResultType, Int>,
     ) {
         println(FINAL_RESULT_MESSAGE)
-
-        val dealerSummary =
-            listOf(ResultType.WIN, ResultType.TIE, ResultType.LOSS)
-                .filter { type -> dealerResult.getOrDefault(type, 0) > 0 }
-                .map { resultType -> "${dealerResult[resultType]}${getResultDisplayName(resultType)}" }
-        println(DEALER_RESULT_FORMAT.format(dealerSummary.joinToString(" ")))
-
+        var dealerProfit = 0.0
         resultMap.forEach { (player, result) ->
-            println(PLAYER_RESULT_FORMAT.format(player.name, getResultDisplayName(result)))
+            getResultDisplayAmount(player, result)
+        }
+        resultMap.forEach { (player, _) ->
+            dealerProfit += player.finalProfit
+        }
+        println(DEALER_RESULT_FORMAT.format((dealerProfit * -1).toInt()))
+        resultMap.forEach { (player, _) ->
+            println(PLAYER_RESULT_FORMAT.format(player.name, player.finalProfit.toInt()))
         }
     }
 
@@ -113,11 +114,15 @@ class OutputView {
         }
     }
 
-    private fun getResultDisplayName(result: ResultType): String {
-        return when (result) {
-            ResultType.WIN -> DISPLAY_NAME_WIN
-            ResultType.TIE -> DISPLAY_NAME_TIE
-            ResultType.LOSS -> DISPLAY_NAME_DRAW
+    private fun getResultDisplayAmount(
+        player: Player,
+        result: ResultType,
+    ) {
+        when (result) {
+            ResultType.WIN -> player.finalProfit = player.betAmount.toDouble()
+            ResultType.TIE -> player.finalProfit = player.betAmount.toDouble()
+            ResultType.LOSS -> player.finalProfit = player.betAmount.toDouble() * -1
+            ResultType.BLACKJACK -> player.finalProfit = player.betAmount.toDouble() * 1.5
         }
     }
 
@@ -125,10 +130,10 @@ class OutputView {
         private const val INITIAL_HAND_OUT_CARD_MESSAGE_FORMAT = "\n딜러와 %s에게 %d장의 카드를 나누어 주었습니다."
         private const val DEALER_HIT_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다."
         private const val DEALER_STAY_MESSAGE = "딜러는 17이상이라 카드를 받지 않았습니다."
-        private const val FINAL_RESULT_MESSAGE = "## 최종 승패"
+        private const val FINAL_RESULT_MESSAGE = "## 최종 수익"
         private const val HANDS_STATUS_MESSAGE_FORMAT = "%s 카드: %s"
         private const val FINAL_HANDS_STATUS_MESSAGE_FORMAT = "%s 카드: %s - 결과: %s"
-        private const val DEALER_RESULT_FORMAT = "딜러: %s"
+        private const val DEALER_RESULT_FORMAT = "딜러: %d"
         private const val PLAYER_RESULT_FORMAT = "%s: %s"
 
         private const val DISPLAY_NAME_BLACKJACK = "블랙잭"
@@ -140,8 +145,5 @@ class OutputView {
         private const val DISPLAY_NAME_DIAMOND = " ♦️"
         private const val DISPLAY_NAME_HEART = " ♥️"
         private const val DISPLAY_NAME_CLOVER = " ♣️"
-        private const val DISPLAY_NAME_WIN = "승"
-        private const val DISPLAY_NAME_TIE = "무"
-        private const val DISPLAY_NAME_DRAW = "패"
     }
 }
