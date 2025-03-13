@@ -39,7 +39,7 @@ class GameManager(
         participant.addCard(deck.draw())
     }
 
-    fun calculatePlayersSummary(): Map<Player, ResultType> {
+    fun getPlayersGameResult(): Map<Player, ResultType> {
         val playersSummary =
             players.associateBy(
                 { player -> player },
@@ -48,11 +48,8 @@ class GameManager(
         return playersSummary
     }
 
-    fun calculateDealerSummary(): Map<ResultType, Int> {
-        return players.groupBy { player ->
-            ResultType.judgeScore(reference = dealer, target = player)
-        }.mapValues { typeGroup ->
-            typeGroup.value.size
-        }
+    fun getDealerGameResult(): Map<ResultType, Int> {
+        return players.groupBy { player -> ResultType.judgeScore(reference = dealer, target = player) }
+            .mapValues { typeGroup -> typeGroup.value.size }
     }
 }

@@ -52,13 +52,13 @@ class OutputView : BlackjackOutput {
     }
 
     override fun printFinalResult(
-        playersSummary: Map<Player, ResultType>,
-        dealerSummary: Map<ResultType, Int>,
+        playersGameResult: Map<Player, ResultType>,
+        dealerGameResult: Map<ResultType, Int>,
     ) {
         println(FINAL_RESULT_MESSAGE)
-        val dealerResult = getDealerResult(dealerSummary)
+        val dealerResult = getDealerResult(dealerGameResult)
         println(DEALER_RESULT_FORMAT.format(dealerResult))
-        playersSummary.forEach { (player, result) ->
+        playersGameResult.forEach { (player, result) ->
             println(PLAYER_RESULT_FORMAT.format(player.name, result.value))
         }
     }

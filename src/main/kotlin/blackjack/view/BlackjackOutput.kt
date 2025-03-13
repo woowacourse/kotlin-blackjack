@@ -22,7 +22,7 @@ interface BlackjackOutput {
     )
 
     fun printFinalResult(
-        playersSummary: Map<Player, ResultType>,
-        dealerSummary: Map<ResultType, Int>,
+        playersGameResult: Map<Player, ResultType>,
+        dealerGameResult: Map<ResultType, Int>,
     )
 }

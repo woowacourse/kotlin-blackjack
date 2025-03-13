@@ -82,9 +82,9 @@ class BlackjackGame(
         players: List<Player>,
         gameManager: GameManager,
     ) {
-        val playersSummary = gameManager.calculatePlayersSummary()
-        val dealerSummary = gameManager.calculateDealerSummary()
+        val playersGameResult = gameManager.getPlayersGameResult()
+        val dealerGameResult = gameManager.getDealerGameResult()
         outputView.printFinalHandStatus(dealer, players)
-        outputView.printFinalResult(playersSummary, dealerSummary)
+        outputView.printFinalResult(playersGameResult, dealerGameResult)
     }
 }
