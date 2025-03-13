@@ -1,11 +1,16 @@
 package blackjack.model
 
+import blackjack.model.GameStatus.BLACKJACK
 import blackjack.model.ScoreCalculator.BUST_NUMBER
 
 class Dealer(
     name: String = DEALER_NAME,
 ) : Participant(name) {
     fun isAvailDrawCard() = ScoreCalculator.sum(cards) < DEALER_DRAW_CARD_MINIMUM_SCORE
+
+    fun isBlackjack(): Boolean {
+        return gameStatus == BLACKJACK
+    }
 
     override fun isBust(): Boolean = ScoreCalculator.sum(cards) > BUST_NUMBER
 
