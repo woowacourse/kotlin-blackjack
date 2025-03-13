@@ -46,20 +46,20 @@ class BlackjackTest {
     fun `게임을 완료한 후 플레이어, 딜러의 승패를 알 수 있다`() {
         val winner =
             Player("winner").apply {
-                draw(Card(NumberRank.TEN, Suit.SPADE))
-                draw(Card(NumberRank.TEN, Suit.SPADE))
+                draw(Card.of(NumberRank.TEN, Suit.SPADE))
+                draw(Card.of(NumberRank.TEN, Suit.SPADE))
             }
 
         val loser =
             Player("loser").apply {
-                draw(Card(NumberRank.NINE, Suit.SPADE))
-                draw(Card(NumberRank.NINE, Suit.SPADE))
+                draw(Card.of(NumberRank.NINE, Suit.SPADE))
+                draw(Card.of(NumberRank.NINE, Suit.SPADE))
             }
         val players = listOf(winner, loser)
         val dealer =
             Dealer(players, { it }).apply {
-                draw(Card(NumberRank.TEN, Suit.SPADE))
-                draw(Card(NumberRank.NINE, Suit.SPADE))
+                draw(Card.of(NumberRank.TEN, Suit.SPADE))
+                draw(Card.of(NumberRank.NINE, Suit.SPADE))
             }
         val blackjack = Blackjack(dealer)
         blackjack.setResult()
@@ -71,9 +71,9 @@ class BlackjackTest {
         val player = Player("player")
         val dealer = Dealer(listOf(player), RandomShuffler)
         dealer.draw(
-            Card(NumberRank.TEN, Suit.SPADE),
-            Card(NumberRank.TEN, Suit.SPADE),
-            Card(NumberRank.TEN, Suit.SPADE),
+            Card.of(NumberRank.TEN, Suit.SPADE),
+            Card.of(NumberRank.TEN, Suit.SPADE),
+            Card.of(NumberRank.TEN, Suit.SPADE),
         )
         val blackjack = Blackjack(dealer)
         blackjack.setResult()
@@ -84,20 +84,20 @@ class BlackjackTest {
     fun `아직 승패가 결정되지 않았다면, 딜러와 플레이어 중 카드의 합이 21에 가까운 사람이 이긴다`() {
         val winner =
             Player("winner").apply {
-                draw(Card(AceRank, Suit.SPADE))
-                draw(Card(NumberRank.TEN, Suit.CLOVER))
+                draw(Card.of(AceRank, Suit.SPADE))
+                draw(Card.of(NumberRank.TEN, Suit.CLOVER))
             }
         val loser =
             Player("loser").apply {
-                draw(Card(NumberRank.TEN, Suit.DIAMOND))
-                draw(Card(NumberRank.NINE, Suit.SPADE))
+                draw(Card.of(NumberRank.TEN, Suit.DIAMOND))
+                draw(Card.of(NumberRank.NINE, Suit.SPADE))
             }
         val players: List<Player> = listOf(winner, loser)
         val dealer =
             Dealer(players, RandomShuffler).apply {
                 draw(
-                    Card(NumberRank.TEN, Suit.HEART),
-                    Card(NumberRank.TEN, Suit.DIAMOND),
+                    Card.of(NumberRank.TEN, Suit.HEART),
+                    Card.of(NumberRank.TEN, Suit.DIAMOND),
                 )
             }
         val blackjack = Blackjack(dealer)
@@ -110,12 +110,12 @@ class BlackjackTest {
     fun `딜러와 플레이어의 숫자가 같다면, 무승부로 처리한다`() {
         val drawer =
             Player("drawer").apply {
-                draw(Card(NumberRank.TEN, Suit.DIAMOND))
+                draw(Card.of(NumberRank.TEN, Suit.DIAMOND))
             }
         val players: List<Player> = listOf(drawer)
         val dealer =
             Dealer(players, RandomShuffler).apply {
-                draw(Card(NumberRank.TEN, Suit.HEART))
+                draw(Card.of(NumberRank.TEN, Suit.HEART))
             }
         val blackjack = Blackjack(dealer)
         blackjack.setResult()

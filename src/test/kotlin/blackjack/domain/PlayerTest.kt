@@ -22,22 +22,22 @@ class PlayerTest {
     @Test
     fun `플레이어는 모든 카드의 합이 21 미만이 될 수 있을 경우 계속해서 카드를 뽑을 수 있다`() {
         val player = Player(name = "Eden")
-        val card1 = Card(NumberRank.SEVEN, Suit.HEART)
-        val card2 = Card(NumberRank.SEVEN, Suit.DIAMOND)
-        val card3 = Card(NumberRank.SEVEN, Suit.DIAMOND)
+        val card1 = Card.of(NumberRank.SEVEN, Suit.HEART)
+        val card2 = Card.of(NumberRank.SEVEN, Suit.DIAMOND)
+        val card3 = Card.of(NumberRank.SEVEN, Suit.DIAMOND)
         player.draw(card1)
         player.draw(card2)
         player.draw(card3)
-        assertThrows<IllegalArgumentException> { player.draw(Card(NumberRank.TWO, Suit.SPADE)) }
+        assertThrows<IllegalArgumentException> { player.draw(Card.of(NumberRank.TWO, Suit.SPADE)) }
     }
 
     @Test
     fun `플레이어 카드의 합이 21 이하가 될 수 없는 플레이어는 반드시 패배한다`() {
         val player = Player("Eden")
         player.draw(
-            Card(FaceRank.JACK, Suit.DIAMOND),
-            Card(FaceRank.JACK, Suit.DIAMOND),
-            Card(FaceRank.JACK, Suit.DIAMOND),
+            Card.of(FaceRank.JACK, Suit.DIAMOND),
+            Card.of(FaceRank.JACK, Suit.DIAMOND),
+            Card.of(FaceRank.JACK, Suit.DIAMOND),
         )
         player.score
         assertThat(player.state).isEqualTo(ParticipantState.LOSE)
@@ -47,9 +47,9 @@ class PlayerTest {
     fun `플레이어의 최종 결과를 알 수 있다`() {
         val player =
             Player("Gio").apply {
-                draw(Card(NumberRank.TEN, Suit.DIAMOND))
-                draw(Card(NumberRank.TEN, Suit.DIAMOND))
-                draw(Card(NumberRank.TEN, Suit.DIAMOND))
+                draw(Card.of(NumberRank.TEN, Suit.DIAMOND))
+                draw(Card.of(NumberRank.TEN, Suit.DIAMOND))
+                draw(Card.of(NumberRank.TEN, Suit.DIAMOND))
             }
         player.score
         assertThat(player.state).isEqualTo(ParticipantState.LOSE)
