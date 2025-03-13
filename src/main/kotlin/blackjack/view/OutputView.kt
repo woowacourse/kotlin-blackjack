@@ -44,7 +44,7 @@ class OutputView(
 
     private fun makeParticipantInfoText(participant: GameParticipant): String {
         val name = participant.name
-        val cardsInfoText = participant.handCards.currentCards().joinToString { makeCardText(it) }
+        val cardsInfoText = participant.handCards.cards.joinToString { makeCardText(it) }
         return CARD_INFO_MESSAGE.format(name, cardsInfoText)
     }
 

@@ -8,7 +8,7 @@ abstract class GameParticipant(
 ) {
     val handCards = HandCards()
 
-    fun cardSize() = handCards.currentCards().size
+    fun cardSize() = handCards.cards.size
 
     fun drawCard() {
         handCards.addCard(Deck.giveCard())

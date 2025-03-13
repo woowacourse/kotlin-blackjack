@@ -10,7 +10,7 @@ class HandCardsTest {
 
         handCards.addCard(Card(Number.ACE))
 
-        assertThat(handCards.currentCards()).containsExactly(Card(Number.ACE))
+        assertThat(handCards.cards).containsExactly(Card(Number.ACE))
     }
 
     @Test
