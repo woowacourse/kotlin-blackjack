@@ -1,10 +1,10 @@
 package blackjack.controller
 
+import blackjack.model.BetAmount
 import blackjack.model.DrawChoice
 import blackjack.model.GameManager
 import blackjack.model.participant.Dealer
 import blackjack.model.participant.Player
-import blackjack.model.participant.Players
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -16,7 +16,6 @@ class BlackjackController(
 
     fun play(dealer: Dealer) {
         val players = playerSetting()
-        playerBetting(players)
 
         playBlackjack(dealer, players)
 
@@ -29,17 +28,13 @@ class BlackjackController(
         while (playerNames == null) {
             playerNames = inputView.readPlayerNames()
         }
-        val players = Players(playerNames)
-        return players.value
-    }
 
-    private fun playerBetting(players: List<Player>) {
-        players.forEach { player ->
-            var betAmount = inputView.readBetAmount(player.name)
+        return playerNames.map { name ->
+            var betAmount: Int? = null
             while (betAmount == null) {
-                betAmount = inputView.readBetAmount(player.name)
+                betAmount = inputView.readBetAmount(name)
             }
-            player.betAmount = betAmount
+            Player(name, BetAmount(betAmount))
         }
     }
 
