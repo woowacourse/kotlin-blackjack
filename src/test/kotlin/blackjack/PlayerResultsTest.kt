@@ -3,10 +3,10 @@ package blackjack
 import blackjack.domain.card.Card
 import blackjack.domain.card.Rank
 import blackjack.domain.card.Suit
-import blackjack.domain.gameResult.GameResults
+import blackjack.domain.gameResult.GameResult
+import blackjack.domain.gameResult.GameResultState
 import blackjack.domain.gameResult.PlayerResult
-import blackjack.domain.gameResult.Result
-import blackjack.domain.gameResult.ResultState
+import blackjack.domain.gameResult.PlayerResults
 import blackjack.domain.gameResult.state.Stay
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Player
@@ -14,7 +14,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-class GameResultsTest {
+class PlayerResultsTest {
     private lateinit var dealer: Dealer
     private lateinit var player: Player
     private val bettingAmount = 5000
@@ -44,16 +44,16 @@ class GameResultsTest {
             Card.of(Rank.TEN, Suit.CLUB),
             Card.of(Rank.TEN, Suit.SPADE),
         )
-        val gameResults = GameResults(dealer, listOf(player))
-        val playerResult =
+        val playerResults = PlayerResults(dealer, listOf(player))
+        val playerGameResult =
             PlayerResult(
                 player,
-                ResultState(
+                GameResultState(
                     Stay(player),
-                    Result.WIN,
+                    GameResult.WIN,
                 ),
             )
-        assertThat(gameResults.playerResults[0]).isEqualTo(playerResult)
+        assertThat(playerResults.toList()[0]).isEqualTo(playerGameResult)
     }
 
     @Test
@@ -67,16 +67,16 @@ class GameResultsTest {
             Card.of(Rank.TEN, Suit.CLUB),
             Card.of(Rank.TEN, Suit.SPADE),
         )
-        val gameResults = GameResults(dealer, listOf(player))
-        val playerResult =
+        val playerResults = PlayerResults(dealer, listOf(player))
+        val playerGameResult =
             PlayerResult(
                 player,
-                ResultState(
+                GameResultState(
                     Stay(player),
-                    Result.LOSE,
+                    GameResult.LOSE,
                 ),
             )
-        assertThat(gameResults.playerResults[0]).isEqualTo(playerResult)
+        assertThat(playerResults.toList()[0]).isEqualTo(playerGameResult)
     }
 
     @Test
@@ -92,16 +92,16 @@ class GameResultsTest {
             Card.of(Rank.TEN, Suit.SPADE),
             Card.of(Rank.NINE, Suit.SPADE),
         )
-        val gameResults = GameResults(dealer, listOf(player))
-        val playerResult =
+        val playerResults = PlayerResults(dealer, listOf(player))
+        val playerGameResult =
             PlayerResult(
                 player,
-                ResultState(
+                GameResultState(
                     Stay(player),
-                    Result.DRAW,
+                    GameResult.DRAW,
                 ),
             )
-        assertThat(gameResults.playerResults[0]).isEqualTo(playerResult)
+        assertThat(playerResults.toList()[0]).isEqualTo(playerGameResult)
     }
 
     @Test
@@ -116,16 +116,16 @@ class GameResultsTest {
             Card.of(Rank.TEN, Suit.SPADE),
             Card.of(Rank.NINE, Suit.SPADE),
         )
-        val gameResults = GameResults(dealer, listOf(player))
-        val playerResult =
+        val playerResults = PlayerResults(dealer, listOf(player))
+        val playerGameResult =
             PlayerResult(
                 player,
-                ResultState(
+                GameResultState(
                     Stay(player),
-                    Result.LOSE,
+                    GameResult.LOSE,
                 ),
             )
-        assertThat(gameResults.playerResults[0]).isEqualTo(playerResult)
+        assertThat(playerResults.toList()[0]).isEqualTo(playerGameResult)
     }
 
     @Test
@@ -140,8 +140,8 @@ class GameResultsTest {
             Card.of(Rank.TEN, Suit.SPADE),
             Card.of(Rank.NINE, Suit.SPADE),
         )
-        val gameResults = GameResults(dealer, listOf(player))
-        assertThat(gameResults.playerResults[0].getEarn()).isEqualTo(5000)
+        val playerResults = PlayerResults(dealer, listOf(player))
+        assertThat(playerResults.toList()[0].getEarn()).isEqualTo(5000)
     }
 
     @Test
@@ -155,8 +155,8 @@ class GameResultsTest {
             Card.of(Rank.TEN, Suit.SPADE),
             Card.of(Rank.NINE, Suit.SPADE),
         )
-        val gameResults = GameResults(dealer, listOf(player))
-        assertThat(gameResults.playerResults[0].getEarn()).isEqualTo(-5000)
+        val playerResults = PlayerResults(dealer, listOf(player))
+        assertThat(playerResults.toList()[0].getEarn()).isEqualTo(-5000)
     }
 
     @Test
@@ -170,8 +170,8 @@ class GameResultsTest {
             Card.of(Rank.TEN, Suit.SPADE),
             Card.of(Rank.ACE, Suit.SPADE),
         )
-        val gameResults = GameResults(dealer, listOf(player))
-        assertThat(gameResults.playerResults[0].getEarn()).isEqualTo(7500)
+        val playerResults = PlayerResults(dealer, listOf(player))
+        assertThat(playerResults.toList()[0].getEarn()).isEqualTo(7500)
     }
 
     @Test
@@ -186,8 +186,8 @@ class GameResultsTest {
             Card.of(Rank.TEN, Suit.SPADE),
             Card.of(Rank.ACE, Suit.SPADE),
         )
-        val gameResults = GameResults(dealer, listOf(player))
-        assertThat(gameResults.playerResults[0].getEarn()).isEqualTo(7500)
+        val playerResults = PlayerResults(dealer, listOf(player))
+        assertThat(playerResults.toList()[0].getEarn()).isEqualTo(7500)
     }
 
     @Test
@@ -202,8 +202,8 @@ class GameResultsTest {
             Card.of(Rank.ACE, Suit.SPADE),
             Card.of(Rank.FOUR, Suit.SPADE),
         )
-        val gameResults = GameResults(dealer, listOf(player))
-        assertThat(gameResults.playerResults[0].getEarn()).isEqualTo(0)
+        val playerResults = PlayerResults(dealer, listOf(player))
+        assertThat(playerResults.toList()[0].getEarn()).isEqualTo(0)
     }
 
     @Test
@@ -217,8 +217,8 @@ class GameResultsTest {
             Card.of(Rank.TEN, Suit.SPADE),
             Card.of(Rank.ACE, Suit.SPADE),
         )
-        val gameResults = GameResults(dealer, listOf(player))
-        assertThat(gameResults.playerResults[0].getEarn()).isEqualTo(0)
+        val playerResults = PlayerResults(dealer, listOf(player))
+        assertThat(playerResults.toList()[0].getEarn()).isEqualTo(0)
     }
 
     @Test
@@ -234,8 +234,8 @@ class GameResultsTest {
             Card.of(Rank.TEN, Suit.SPADE),
             Card.of(Rank.NINE, Suit.SPADE),
         )
-        val gameResults = GameResults(dealer, listOf(player))
-        assertThat(gameResults.playerResults[0].getEarn()).isEqualTo(-5000)
+        val playerResults = PlayerResults(dealer, listOf(player))
+        assertThat(playerResults.toList()[0].getEarn()).isEqualTo(-5000)
     }
 
     @Test
@@ -250,7 +250,7 @@ class GameResultsTest {
             Card.of(Rank.TEN, Suit.CLUB),
             Card.of(Rank.TEN, Suit.SPADE),
         )
-        val gameResults = GameResults(dealer, listOf(player))
-        assertThat(gameResults.playerResults[0].getEarn()).isEqualTo(-5000)
+        val playerResults = PlayerResults(dealer, listOf(player))
+        assertThat(playerResults.toList()[0].getEarn()).isEqualTo(-5000)
     }
 }

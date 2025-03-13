@@ -1,6 +1,6 @@
 package blackjack.domain.gameResult.state
 
-import blackjack.domain.gameResult.Result
+import blackjack.domain.gameResult.GameResult
 import blackjack.domain.participant.Participant
 
 data class BlackJack(private val participant: Participant) : State {
@@ -9,8 +9,8 @@ data class BlackJack(private val participant: Participant) : State {
     override val earnRate: Double
         get() = 1.5
 
-    override fun compare(state: State): Result {
-        if (state is BlackJack) return Result.DRAW
-        return Result.WIN
+    override fun compare(state: State): GameResult {
+        if (state is BlackJack) return GameResult.DRAW
+        return GameResult.WIN
     }
 }
