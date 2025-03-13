@@ -98,7 +98,7 @@ class BlackjackController(
         playerBetAmount: Map<Player, BetAmount>,
     ) {
         outputView.participantsCardResult(blackjack.playerGroup)
-        val gameResult = blackjack.endGame(playerBetAmount)
+        val gameResult = blackjack.getGameResult(playerBetAmount)
         val dealerResult = -gameResult.values.sumOf { it.amount }
         outputView.dealerResult(blackjack.playerGroup.dealer, dealerResult)
         outputView.playerResult(gameResult)

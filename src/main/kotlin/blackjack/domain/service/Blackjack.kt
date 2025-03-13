@@ -13,20 +13,12 @@ class Blackjack(
 ) {
     fun initGame() {
         playerGroup.participants.forEach { player ->
-            distributeStartingHands(player)
+            player.receiveCard(deck.spreadCard(INITIAL_CARD_COUNT))
         }
-    }
-
-    private fun distributeStartingHands(player: Participants) {
-        player.receiveCard(deck.spreadCard(INITIAL_CARD_COUNT))
     }
 
     fun canHit(participant: Participants): Boolean {
         return participant.canHit()
-    }
-
-    fun hitAction(player: Player) {
-        player.receiveCard(deck.spreadCard(ONE_CARD))
     }
 
     fun getParticipantCardSize(participant: Participants): Int {
@@ -35,14 +27,18 @@ class Blackjack(
 
     fun drawUntilDealerStands(): Int {
         var count: Int = 0
-        while (playerGroup.dealer.canHit()) {
-            playerGroup.dealer.receiveCard(deck.spreadCard(ONE_CARD))
+        while (canHit(playerGroup.dealer)) {
+            hitAction(playerGroup.dealer)
             count++
         }
         return count
     }
 
-    fun endGame(betStatus: Map<Player, BetAmount>): Map<Player, Proceed> {
+    fun hitAction(participant: Participants) {
+        participant.receiveCard(deck.spreadCard(ONE_CARD))
+    }
+
+    fun getGameResult(betStatus: Map<Player, BetAmount>): Map<Player, Proceed> {
         return playerGroup.players.associateWith { player ->
             val result = player.compareScores(playerGroup.dealer)
             val proceed = betStatus[player]?.calculateProceed(result) ?: throw IllegalArgumentException()

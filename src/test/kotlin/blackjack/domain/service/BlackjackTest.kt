@@ -61,7 +61,7 @@ class BlackjackTest {
                 player3 to BetAmount(3000),
             )
         // when
-        val gameResult = game.endGame(betAmount)
+        val gameResult = game.getGameResult(betAmount)
         // then
         assertThat(gameResult[player1]).isEqualTo(Proceed(1000))
         assertThat(gameResult[player2]).isEqualTo(Proceed(-2000))
