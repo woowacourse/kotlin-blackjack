@@ -1,9 +1,9 @@
 package blackjack.view
 
-import blackjack.domain.GameResult
 import blackjack.domain.person.Dealer
 import blackjack.domain.person.Person
 import blackjack.domain.person.Player
+import blackjack.domain.result.GameResult
 
 interface BlackJackOutputView {
     fun printInitialDrawMessage(

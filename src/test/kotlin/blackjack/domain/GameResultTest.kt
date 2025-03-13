@@ -5,6 +5,7 @@ import blackjack.domain.card.Deck
 import blackjack.domain.person.Dealer
 import blackjack.domain.person.Person
 import blackjack.domain.person.Player
+import blackjack.domain.result.GameResult
 import io.kotest.matchers.doubles.shouldBeExactly
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
