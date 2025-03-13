@@ -10,7 +10,7 @@ class GameManager(
 ) {
     private var deck = Deck()
 
-    fun startGame() {
+    fun dealInitialCards() {
         deck = Deck()
         dealInitialCardWithCount()
     }
