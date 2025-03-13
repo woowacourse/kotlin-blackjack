@@ -25,8 +25,8 @@ class GameResultTest {
         dealerCards: List<CardNumber>,
     ): GameResult {
         val customDeck = generateCustomDeck(playerCards + dealerCards)
-        drawCards(dealer, dealerCards, customDeck)
         drawCards(player, playerCards, customDeck)
+        drawCards(dealer, dealerCards, customDeck)
         return GameResult(dealer, listOf(player))
     }
 
@@ -82,5 +82,16 @@ class GameResultTest {
 
         val gameResult = GameResult(dealer, players)
         gameResult.dealerProfit shouldBeExactly 500.0
+    }
+
+    @Test
+    fun `플레이어는 100원 배팅 후 플레이어가 블랙잭이고 딜러가 블랙잭이 아닌 21점이면 플레이어는 150원을 받는다`() {
+        val playerCards = listOf(CardNumber.JACK, CardNumber.ACE)
+        val dealerCards = listOf(CardNumber.JACK, CardNumber.SIX, CardNumber.FIVE)
+
+        val gameResult = setupGame(playerCards, dealerCards)
+
+        gameResult.playerPayouts.values.first() shouldBeExactly 150.0
+        gameResult.dealerProfit shouldBeExactly -150.0
     }
 }

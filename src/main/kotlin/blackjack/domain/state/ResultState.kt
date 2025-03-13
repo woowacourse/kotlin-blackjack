@@ -14,17 +14,28 @@ enum class ResultState {
             player: Player,
             dealer: Dealer,
         ): ResultState {
-            if (player.gameState == PersonState.BUST) return LOSE
-            if (dealer.gameState == PersonState.BUST) return WIN
+            return calculateWinFromPersonState(dealer, player) ?: compareScores(player.score(), dealer.score())
+        }
 
-            val playerScore = player.score()
-            val dealerScore = dealer.score()
+        private fun calculateWinFromPersonState(
+            dealer: Dealer,
+            player: Player,
+        ): ResultState? =
+            when {
+                player.gameState == PersonState.BUST -> LOSE
+                dealer.gameState == PersonState.BUST -> WIN
+                player.gameState == PersonState.BLACKJACK && dealer.gameState != PersonState.BLACKJACK -> WIN
+                else -> null
+            }
 
-            return when {
+        private fun compareScores(
+            playerScore: Int,
+            dealerScore: Int,
+        ): ResultState =
+            when {
                 playerScore > dealerScore -> WIN
                 playerScore < dealerScore -> LOSE
                 else -> DRAW
             }
-        }
     }
 }

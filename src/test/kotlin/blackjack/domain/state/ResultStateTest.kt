@@ -59,4 +59,11 @@ class ResultStateTest {
         drawCards(dealer, listOf(CardNumber.JACK))
         ResultState.calculateWin(player, dealer) shouldBe ResultState.DRAW
     }
+
+    @Test
+    fun `딜러와 플레이어 모두 버스트가 아닐 때 플레이어만 블랙잭이라면 플레이어는 승리한다`() {
+        drawCards(dealer, listOf(CardNumber.JACK, CardNumber.SIX, CardNumber.FIVE))
+        drawCards(player, listOf(CardNumber.JACK, CardNumber.ACE))
+        ResultState.calculateWin(player, dealer) shouldBe ResultState.WIN
+    }
 }
