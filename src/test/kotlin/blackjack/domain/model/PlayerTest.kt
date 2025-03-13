@@ -97,4 +97,39 @@ class PlayerTest {
         // then
         assertThat(actual).isEqualTo(expected)
     }
+
+    @Test
+    fun `플레이어의 점수 합계가 21점 미만이라면 더 뽑을 수 있다`() {
+        // given
+        player.receiveCard(sixSpade)
+        // when
+        val actual = player.canHit()
+        // then
+        assertThat(actual).isTrue()
+    }
+
+    @Test
+    fun `플레이어의 점수 합계가 21점 이상이라면 더 뽑을 수 없다`() {
+        // given
+        player.receiveCard(kingHeart)
+        player.receiveCard(queenDiamond)
+        player.receiveCard(sixSpade)
+        // when
+        val actual = player.canHit()
+        // then
+        assertThat(actual).isFalse()
+    }
+
+    @Test
+    fun `플레이어는 초기 카드로 2장을 보여 준다`() {
+        // given
+        player.receiveCard(aceHeart)
+        player.receiveCard(sixSpade)
+        player.receiveCard(kingHeart)
+        // when
+        val actual = player.getInitCard().size
+        val expected = 2
+        // then
+        assertThat(actual).isEqualTo(expected)
+    }
 }

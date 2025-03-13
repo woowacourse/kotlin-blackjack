@@ -82,7 +82,7 @@
 - [ ] Introduce | 이름 필수 요소 고민
 - [x] BlackjackController | PlayerGroup 파라미터 생략
 
-- [ ] Hand | 테스트 코드 추가
+- [x] 테스트 코드 추가
 - [ ] Player | receive 로직 단순화 (Hand를 생성자로 해 줄지 고민)
 - [ ] BlackjackController | 블랙잭 혼자서도 게임이 가능하도록 변경
 - [ ] ActionType | Input에서 ActionType 생성

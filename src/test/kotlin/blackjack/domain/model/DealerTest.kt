@@ -46,4 +46,16 @@ class DealerTest {
         // then
         assertThat(actual).isFalse()
     }
+
+    @Test
+    fun `딜러는 초기 카드로 1장을 보여 준다`() {
+        // given
+        dealer.receiveCard(aceHeart)
+        dealer.receiveCard(sixSpade)
+        // when
+        val actual = dealer.getInitCard().size
+        val expected = 1
+        // then
+        assertThat(actual).isEqualTo(expected)
+    }
 }

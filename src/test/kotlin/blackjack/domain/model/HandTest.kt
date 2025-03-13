@@ -59,4 +59,37 @@ class HandTest {
         // then
         assertThat(actual).isEqualTo(expected)
     }
+
+    @Test
+    fun `카드가 2장이고 총합이 21이면 블랙잭이다`() {
+        // given
+        val cards = mutableListOf(aceHeart, kingSpade)
+        val hand = Hand(cards)
+        // when
+        val actual = hand.isBlackjack()
+        // then
+        assertThat(actual).isTrue()
+    }
+
+    @Test
+    fun `카드가 2장이고 총합이 21이 아닌 경우 블랙잭이 아니다`() {
+        // given
+        val cards = mutableListOf(aceHeart)
+        val hand = Hand(cards)
+        // when
+        val actual = hand.isBlackjack()
+        // then
+        assertThat(actual).isFalse()
+    }
+
+    @Test
+    fun `카드가 2장이 아니고 총합이 21인 경우 블랙잭이 아니다`() {
+        // given
+        val cards = mutableListOf(aceHeart, aceSpade, nineSpade, kingSpade)
+        val hand = Hand(cards)
+        // when
+        val actual = hand.isBlackjack()
+        // then
+        assertThat(actual).isFalse()
+    }
 }
