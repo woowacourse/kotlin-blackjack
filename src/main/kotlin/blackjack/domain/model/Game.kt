@@ -9,10 +9,8 @@ class Game(val deck: Deck, val dealer: Dealer, val players: List<Player>) {
         }
     }
 
-    fun processPlayerBets(input: (Player) -> Bet) {
-        players.forEach { player ->
-            player.placeBet(input)
-        }
+    fun processPlayersBets(input: (Player) -> Bet) {
+        players.forEach { player -> player.placeBet(input) }
     }
 
     fun processPlayersHits(
@@ -24,6 +22,14 @@ class Game(val deck: Deck, val dealer: Dealer, val players: List<Player>) {
 
     fun processDealerHits(output: (Dealer) -> Unit) {
         dealer.processHits(deck, output)
+    }
+
+    fun getPlayersProfits(): Map<Player, Int> {
+        return players.associateWith { player -> player.computeProfitAgainst(dealer) }
+    }
+
+    fun getDealerProfit(playersProfits: Map<Player, Int>): Int {
+        return -1 * playersProfits.values.sum()
     }
 
     companion object {

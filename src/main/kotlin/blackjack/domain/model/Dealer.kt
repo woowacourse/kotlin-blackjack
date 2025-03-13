@@ -29,24 +29,6 @@ class Dealer(name: String, cards: List<Card>) : Participant(name, cards) {
         }
     }
 
-    fun getPlayerResults(players: List<Player>): Map<Player, Result> {
-        return players.associateWith { player -> player.compareAgainst(this) }
-    }
-
-    fun getDealerResults(playerResults: Map<Player, Result>): Map<Result, Int> {
-        return Result.entries.associateWith { result ->
-            playerResults.values.count { playerResult -> result == playerResult.reverse() }
-        }
-    }
-
-    fun getPlayersProfits(players: List<Player>): Map<Player, Int> {
-        return players.associateWith { player -> player.computeProfitAgainst(this) }
-    }
-
-    fun getDealerProfit(playersProfits: Map<Player, Int>): Int {
-        return -1 * playersProfits.values.sum()
-    }
-
     companion object {
         const val HIT_THRESHOLD = 16
 

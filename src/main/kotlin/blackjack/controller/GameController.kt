@@ -15,7 +15,7 @@ class GameController(
 ) {
     fun run() {
         val game = initializeGame()
-        game.processPlayerBets { player -> retryOnError { Bet(inputView.readPlayerBet(player)) } }
+        game.processPlayersBets { player -> retryOnError { Bet(inputView.readPlayerBet(player)) } }
         outputView.printInitialDeals(game)
         outputView.printParticipantStatus(game.dealer)
         game.players.forEach { player -> outputView.printParticipantStatus(player) }

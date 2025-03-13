@@ -34,8 +34,8 @@ class OutputView {
         println(MESSAGE_RESULTS_HEADER)
         val dealer: Dealer = game.dealer
         val players: List<Player> = game.players
-        val playerProfits = dealer.getPlayersProfits(players)
-        val dealerProfit = dealer.getDealerProfit(playerProfits)
+        val playerProfits = game.getPlayersProfits()
+        val dealerProfit = game.getDealerProfit(playerProfits)
         println("${dealer.name}${NAME_RESULT_DELIMITER}$dealerProfit")
         playerProfits.forEach { (player, profit) ->
             println("${player.name}${NAME_RESULT_DELIMITER}$profit")
