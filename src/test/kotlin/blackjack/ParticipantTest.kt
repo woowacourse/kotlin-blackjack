@@ -22,10 +22,11 @@ class ParticipantTest {
     }
 
     @Test
-    fun `덱에서 한 장의 카드를 가져올 수 있다`() {
+    fun `참가자가 카드를 추가하면 핸드에 카드가 포함된다`() {
         val card = Card.of(rank = Rank.ACE, suit = Suit.SPADE)
 
         participant.addCard(card)
+
         assertThat(participant.hand.getCards()).contains(card)
     }
 
