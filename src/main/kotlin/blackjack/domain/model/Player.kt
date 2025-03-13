@@ -39,6 +39,11 @@ class Player(name: String, cards: List<Card>) : Participant(name, cards) {
         processHits(deck, readAction, printStatus)
     }
 
+    fun computeProfitAgainst(dealer: Dealer): Int {
+        val result: Result = compareAgainst(dealer)
+        return Math.round(bet * result.profitRate).toInt()
+    }
+
     fun compareAgainst(dealer: Dealer): Result {
         if (isBusted()) return Result.LOSE
         if (dealer.isBusted()) return Result.WIN

@@ -39,12 +39,12 @@ class Dealer(name: String, cards: List<Card>) : Participant(name, cards) {
         }
     }
 
-    fun getPlayersProfits(playerResults: Map<Player, Result>): Map<Player, Int> {
-        val playerProfits: Map<Player, Int> =
-            playerResults.mapValues { (player, result) ->
-                Math.round(player.bet * result.profitRate).toInt()
-            }
-        return playerProfits
+    fun getPlayersProfits(players: List<Player>): Map<Player, Int> {
+        return players.associateWith { player -> player.computeProfitAgainst(this) }
+    }
+
+    fun getDealerProfit(playersProfits: Map<Player, Int>): Int {
+        return -1 * playersProfits.values.sum()
     }
 
     companion object {
