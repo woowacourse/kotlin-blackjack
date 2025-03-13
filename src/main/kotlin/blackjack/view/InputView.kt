@@ -10,6 +10,11 @@ class InputView {
         return input.split(PLAYER_NAMES_DELIMITER).map { name: String -> name.trim() }
     }
 
+    fun readPlayerBetAmount(playerName: String): Int {
+        println("${playerName}의 배팅 금액은?")
+        return requireNotNull(readln().toIntOrNull())
+    }
+
     fun readPlayerAction(player: Participant): Choice {
         println(MESSAGE_ENTER_PLAYER_YES_OR_NO.format(player.name))
         val input: String = readln()

@@ -12,18 +12,18 @@ class ParticipantsTest {
 
     @BeforeEach
     fun setUp() {
-        participants = Participants(listOf(dealer, player1, player2))
+        participants = Participants(dealer, listOf(player1, player2))
     }
 
     @Test
     fun `참가자들 중 딜러를 반환한다`() {
-        val dealer = participants.findDealer()
+        val dealer = participants.dealer
         assertThat(dealer).isEqualTo(this.dealer)
     }
 
     @Test
     fun `참가자들 중 플레이어들을 반환한다`() {
-        val players = participants.filterPlayers()
+        val players = participants.players
         assertThat(players).containsExactlyInAnyOrder(this.player1, this.player2)
     }
 }

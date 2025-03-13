@@ -1,10 +1,10 @@
 package blackjack.view
 
-import blackjack.domain.model.Dealer
 import blackjack.domain.model.Hands.Companion.START_CARD_COUNT
 import blackjack.domain.model.Participant
 import blackjack.domain.model.Participants
 import blackjack.domain.model.Player
+import blackjack.domain.model.Profit
 import blackjack.domain.model.Rank
 import blackjack.domain.model.Suit
 import blackjack.domain.model.VerdictResult
@@ -13,8 +13,8 @@ class OutputView {
     fun printInitialDeals(participants: Participants) {
         println(
             MESSAGE_INITIAL_HAND_DISTRIBUTED.format(
-                participants.findDealer().name,
-                participants.filterPlayers().map(Participant::name).joinToString(PLAYER_CARDS_DELIMITER),
+                participants.dealer.name,
+                participants.players.map(Participant::name).joinToString(PLAYER_CARDS_DELIMITER),
                 START_CARD_COUNT,
             ),
         )
@@ -56,17 +56,17 @@ class OutputView {
         println(MESSAGE_RESULTS_HEADER)
     }
 
-    fun printDealerVerdicts(dealer: Dealer) {
-        print(dealer.name + NAME_RESULT_DELIMITER)
-        dealer.getRecord().filter { it.value > 0 }.forEach { (verdict, count) ->
-            print("${count}${convertKoreanVerdict(verdict)} ")
-        }
+    fun printDealerProfit(
+        dealerName: String,
+        profit: Int,
+    ) {
+        print(dealerName + NAME_RESULT_DELIMITER + profit)
         println()
     }
 
-    fun printPlayersVerdict(players: List<Player>) {
-        players.forEach { player ->
-            println(player.name + NAME_RESULT_DELIMITER + convertKoreanVerdict(player.getCurrentVerdict()))
+    fun printPlayersProfit(players: Map<Player, Profit>) {
+        players.forEach { (player, profit) ->
+            println(player.name + NAME_RESULT_DELIMITER + profit.value)
         }
     }
 
