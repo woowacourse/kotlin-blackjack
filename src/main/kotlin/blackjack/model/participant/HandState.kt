@@ -18,7 +18,7 @@ enum class HandState {
             score > BLACKJACK_SCORE -> BUST
             score < BLACKJACK_SCORE -> ALIVE
             cardCount == INITIAL_DRAW_COUNT -> BLACKJACK
-            else -> throw IllegalArgumentException("[ERROR] 유효하지 않은 상태입니다.")
+            else -> ALIVE
         }
     }
 }

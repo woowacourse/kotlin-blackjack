@@ -23,13 +23,17 @@ class BettingManager {
     fun end(
         dealer: Dealer,
         winningResult: WinningResult,
-    ): Map<Name, Money> {
+    ): BettingResult {
         val profitResult = BettingTable()
 
         profitResult.add(dealer.name, Money.ZERO)
         winningResult.playerResults.forEach { (name, result) ->
-            profitResult.add(name, bettingTable.get(name).multiply(result.profitRate))
+            val profit = bettingTable.get(name).multiply(result.profitRate)
+            profitResult.add(name, profit)
+            profitResult.add(dealer.name, profit.minus(profit))
         }
+
+        bettingTable.reset()
 
         return profitResult.playersTable
     }

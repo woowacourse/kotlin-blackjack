@@ -8,7 +8,7 @@ abstract class Participant(
     private val hand: Hand,
 ) {
     private var _money: Money = initialMoney
-    val money: Money = _money
+    val money: Money get() = _money
     val cards: List<Card> get() = hand.cards
     val handState: HandState get() = hand.state
 
@@ -21,9 +21,6 @@ abstract class Participant(
     }
 
     fun payMoney(money: Money) {
-        require(_money.minus(money).value > Money.ZERO.value) {
-            "[ERROR] 잔액이 부족합니다."
-        }
         _money = _money.minus(money)
     }
 

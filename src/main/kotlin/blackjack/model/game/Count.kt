@@ -1,6 +1,6 @@
 package blackjack.model.game
 
 @JvmInline
-value class ResultCount(
+value class Count(
     val value: Int,
 )

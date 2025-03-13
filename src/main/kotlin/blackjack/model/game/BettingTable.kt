@@ -5,7 +5,7 @@ import blackjack.model.participant.Name
 
 class BettingTable {
     private val _playersTable: MutableMap<Name, Money> = mutableMapOf()
-    val playersTable: Map<Name, Money> get() = _playersTable
+    val playersTable: BettingResult get() = BettingResult(_playersTable)
 
     fun add(
         name: Name,

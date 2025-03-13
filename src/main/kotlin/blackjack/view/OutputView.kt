@@ -11,9 +11,14 @@ import blackjack.model.card.CardSuit.CLUB
 import blackjack.model.card.CardSuit.DIAMOND
 import blackjack.model.card.CardSuit.HEART
 import blackjack.model.card.CardSuit.SPADE
+import blackjack.model.participant.Money.Companion.PLAYER_DEFAULT_MONEY
 import blackjack.model.participant.Name
 
 class OutputView {
+    fun displayInitialMoney() {
+        println("\n초기 잔액은 ${PLAYER_DEFAULT_MONEY} 입니다.")
+    }
+
     fun displayFirstDrawEnd(players: List<Name>) {
         println("\n딜러와 ${players.joinToString()}에게 2장을 나누었습니다.")
     }
@@ -63,4 +68,15 @@ class OutputView {
             DIAMOND -> "다이아몬드"
             CLUB -> "클로버"
         }
+
+    fun displayProfitTitle() {
+        println("\n## 최종 수익")
+    }
+
+    fun displayProfit(
+        name: String,
+        profit: Double,
+    ) {
+        println("$name: $profit")
+    }
 }

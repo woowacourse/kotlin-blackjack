@@ -4,8 +4,6 @@ package blackjack.model.participant
 value class Money(
     val value: Double,
 ) {
-    override fun toString(): String = value.toString()
-
     fun plus(money: Money): Money = Money(this.value + money.value)
 
     fun minus(money: Money): Money = Money(this.value - money.value)

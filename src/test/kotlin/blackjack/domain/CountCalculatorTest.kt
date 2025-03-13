@@ -12,7 +12,7 @@ import blackjack.model.participant.Hand
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class ResultCountCalculatorTest {
+class CountCalculatorTest {
     @Test
     fun `핸드에 2클로버 한 장을 가지고 있으면 2점을 반환한다`() {
         // given

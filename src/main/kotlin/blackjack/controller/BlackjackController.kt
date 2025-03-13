@@ -3,6 +3,7 @@ package blackjack.controller
 import blackjack.model.card.CardDeck
 import blackjack.model.game.BettingManager
 import blackjack.model.game.GameManager
+import blackjack.model.game.WinningManager
 import blackjack.model.participant.Dealer
 import blackjack.model.participant.Dealer.Companion.DEFAULT_DEALER_NAME
 import blackjack.model.participant.Money
@@ -20,7 +21,9 @@ class BlackjackController(
         val cardDeck = CardDeck()
         val dealer = gameManager.prepareDealer(DEFAULT_DEALER_NAME, cardDeck)
         val players = preparePlayers(gameManager, cardDeck)
+        val winningManager = WinningManager(dealer, players)
 
+        outputView.displayInitialMoney()
         bettingManager.getPlayersMoney(players) { name ->
             Money(inputView.getBettingMoney(name.toString()))
         }
@@ -32,6 +35,13 @@ class BlackjackController(
         progressDealerDraw(gameManager, dealer, cardDeck)
 
         displayParticipantsInfo(players)
+
+        val profitResult = bettingManager.end(dealer, winningManager.generateResult())
+
+        outputView.displayProfitTitle()
+        profitResult.bettingResult.forEach { (name, money) ->
+            outputView.displayProfit(name.toString(), money.value)
+        }
     }
 
     private fun preparePlayers(
