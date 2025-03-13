@@ -30,7 +30,7 @@ class Player(
         }
     }
 
-    fun getProfit(gameResult: GameResult): Double =
+    override fun getProfit(gameResult: GameResult): Double =
         when (gameResult) {
             GameResult.BLACKJACK -> bettingMoney.value * 1.5
             GameResult.WIN -> bettingMoney.value.toDouble()

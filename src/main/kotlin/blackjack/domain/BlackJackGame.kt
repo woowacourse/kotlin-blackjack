@@ -62,8 +62,8 @@ class BlackJackGame(
         var dealerFinalProfit = 0.0
 
         participants.players.forEach { player ->
-            val profit = participants.dealer.getProfit(player, participants.dealer.getResult(player))
-            dealerFinalProfit += profit
+            val profit = participants.dealer.getProfit(participants.dealer.getResult(player))
+            dealerFinalProfit += player.bettingMoney.value * profit
         }
         return dealerFinalProfit
     }

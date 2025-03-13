@@ -33,6 +33,8 @@ abstract class Participant(
 
     abstract fun getResult(other: Participant): GameResult
 
+    abstract fun getProfit(gameResult: GameResult): Double
+
     companion object {
         const val ACE_SOFT_SCORE = 10
         const val ACE_HARD_SCORE = 0
