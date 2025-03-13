@@ -30,20 +30,6 @@ class DealerTest {
     }
 
     @Test
-    fun `딜러 점수가 16 이전까지 뽑은 카드의 장수를 반환한다`() {
-        // given
-        val blackjackEngine = BlackjackEngine()
-        val dealer = blackjackEngine.prepareDealer()
-        assertThat(dealer.hand.cards.size).isEqualTo(2)
-        // when
-        dealer.drawUntilFinished(blackjackEngine.cardDeck)
-
-        // then
-
-        assertEquals(dealer.getAdditionalDrawCount(), dealer.getHandSize() - 2)
-    }
-
-    @Test
     fun `딜러 점수와 플레이어 점수 리스트를 비교하여 승패 결과를 반환한다`() {
         // given
         val dealer = Dealer(

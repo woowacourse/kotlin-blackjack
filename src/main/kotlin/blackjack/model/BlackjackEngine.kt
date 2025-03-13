@@ -16,8 +16,7 @@ class BlackjackEngine(
         }
     }
 
-    fun preparePlayers(eventProvider: EventProvider): Players {
-        val names = eventProvider.getNames()
+    fun preparePlayers(names:List<String>): Players {
         return Players(names.map { name ->
             Player(
                 name,
