@@ -53,11 +53,16 @@ class BlackjackTest {
         player3.receiveCard(listOf(Card(Shape.Heart, CardNumber.Seven)))
         dealer.receiveCard(listOf(Card(Shape.Spade, CardNumber.Seven)))
         // when
-        game.endGame(PlayerGroup(listOf(player1, player2, player3), dealer))
+        val actual = game.endGame(PlayerGroup(listOf(player1, player2, player3), dealer))
+        val expected =
+            mapOf(
+                player1 to GameResult.Win,
+                player2 to GameResult.Lose,
+                player3 to GameResult.Draw,
+            )
+
         // then
-        assertThat(player1.status).isEqualTo(GameResult.Win)
-        assertThat(player2.status).isEqualTo(GameResult.Lose)
-        assertThat(player3.status).isEqualTo(GameResult.Draw)
+        assertThat(actual).isEqualTo(expected)
     }
 
     @Test
@@ -82,12 +87,17 @@ class BlackjackTest {
     @Test
     fun `플레이어가 hit을 외쳤는데 카드 숫자의 합이 21이 넘으면 bust된다`() {
         // given
-        player1.receiveCard(listOf(Card(Shape.Spade, CardNumber.King)))
-        player1.receiveCard(listOf(Card(Shape.Heart, CardNumber.King)))
-        player1.receiveCard(listOf(Card(Shape.Heart, CardNumber.Ace)))
+        player1.receiveCard(
+            listOf(
+                Card(Shape.Spade, CardNumber.King),
+                Card(Shape.Heart, CardNumber.King),
+                Card(Shape.Heart, CardNumber.Ace),
+            ),
+        )
+        val size = player1.cardDeck.size
         // when
         game.hitAction(player1)
         // then
-        assertThat(player1.status).isEqualTo(GameResult.Lose)
+        assertThat(player1.cardDeck.size).isEqualTo(size + 1)
     }
 }

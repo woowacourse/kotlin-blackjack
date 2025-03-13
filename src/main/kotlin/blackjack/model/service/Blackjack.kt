@@ -31,13 +31,11 @@ class Blackjack(private val deck: PlayingCard) {
         return count
     }
 
-    fun endGame(playerGroup: PlayerGroup) {
-        if (playerGroup.dealer.status == GameResult.Lose) return
-
+    fun endGame(playerGroup: PlayerGroup): Map<Player, GameResult> {
         val dealerResult = playerGroup.dealer.sumCardNumber
 
-        playerGroup.players.forEach { player ->
-            player.compareScores(dealerResult)
+        return playerGroup.players.associateWith { player ->
+            player.compareScores(playerGroup.dealer.checkBust(), dealerResult)
         }
     }
 

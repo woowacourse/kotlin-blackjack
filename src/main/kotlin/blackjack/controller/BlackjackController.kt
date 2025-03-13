@@ -24,8 +24,8 @@ class BlackjackController(
         val playerGroup = getPlayerGroup()
         initGame(playerGroup.players)
         startGame(playerGroup.players)
-        blackjack.endGame(playerGroup)
-        printResult(playerGroup.players)
+        val playerResult = blackjack.endGame(playerGroup)
+        printResult(playerResult)
     }
 
     private fun initGame(players: List<Player>) {
@@ -41,11 +41,10 @@ class BlackjackController(
     }
 
     private fun hitOrStay(player: Player) {
-        while (player.canHit()) {
+        while (!player.canHit()) {
             val playerAction = getActionType(player)
             if (shouldStopDrawing(playerAction)) break
             blackjack.hitAction(player)
-            player.checkBust()
             outputView.printCardStatus(player)
         }
         if (player.cardDeck.size == 2) outputView.printCardStatus(player)
@@ -77,14 +76,14 @@ class BlackjackController(
         outputView.printDealerReceiveCard(count, dealer)
     }
 
-    private fun printResult(players: List<Player>) {
-        outputView.participantsCardResult(listOf(dealer) + players)
-        outputView.dealerResult(dealer, getDealerResult(players))
-        outputView.playerResult(players)
+    private fun printResult(playersResult: Map<Player, GameResult>) {
+        outputView.participantsCardResult(listOf(dealer) + playersResult.keys)
+        outputView.dealerResult(dealer, getDealerResult(playersResult))
+        outputView.playerResult(playersResult)
     }
 
-    private fun getDealerResult(players: List<Player>): Map<GameResult, Int> {
-        return players.groupingBy { it.status }.eachCount()
+    private fun getDealerResult(playersResult: Map<Player, GameResult>): Map<GameResult, Int> {
+        return playersResult.values.groupingBy { it }.eachCount()
     }
 
     private fun <T> retryInput(inputFunction: () -> T): T {

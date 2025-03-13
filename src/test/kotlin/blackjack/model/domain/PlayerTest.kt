@@ -35,9 +35,8 @@ class PlayerTest {
         // given
         player1.receiveCard(listOf(queenHeart, queenSpade))
         // when
-        player1.checkBust()
-        val actual = player1.status
-        val expected = GameResult.Lose
+        val actual = player1.checkBust()
+        val expected = true
         // then
         assertThat(actual).isEqualTo(expected)
     }
@@ -45,8 +44,7 @@ class PlayerTest {
     @Test
     fun `플레이어의 숫자의 합과 받은 숫자의 합을 비교하여 승패를 결정한다`() {
         // when
-        player1.compareScores(8)
-        val actual = player1.status
+        val actual = player1.compareScores(false, 8)
         val expected = GameResult.Win
         // then
         assertThat(actual).isEqualTo(expected)
