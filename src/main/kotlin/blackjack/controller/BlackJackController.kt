@@ -20,7 +20,7 @@ class BlackJackController(
         val game = readForGame(participants)
         startGame(game, participants)
         displayResult(game, participants)
-        displayProfit(participants)
+        displayProfit(game)
     }
 
     private fun readyForGameParticipants(): Participants {
@@ -74,9 +74,9 @@ class BlackJackController(
         displayPlayerResult(game)
     }
 
-    private fun displayProfit(participants: Participants) {
-        displayDealerProfit(participants)
-        displayPlayerProfit(participants)
+    private fun displayProfit(game: BlackJackGame) {
+        displayDealerProfit(game)
+        displayPlayerProfit(game)
     }
 
     private fun displayDealerExtraCard(game: BlackJackGame) {
@@ -100,21 +100,13 @@ class BlackJackController(
         }
     }
 
-    private fun displayPlayerProfit(participants: Participants) {
-        participants.players.forEach { player ->
-            val profit = player.getProfit(player.getResult(participants.dealer))
-            outputView.printPlayerProfit(player.name, profit)
+    private fun displayPlayerProfit(game: BlackJackGame) {
+        game.calculatePlayerProfit { name, profit ->
+            outputView.printPlayerProfit(name, profit)
         }
     }
 
-    private fun displayDealerProfit(participants: Participants) {
-        var finalProfit = 0.0
-
-        participants.players.forEach { player ->
-            val profit = participants.dealer.getProfit(player, participants.dealer.getResult(player))
-            finalProfit += profit
-        }
-
-        outputView.printDealerProfit(finalProfit)
+    private fun displayDealerProfit(game: BlackJackGame) {
+        outputView.printDealerProfit(game.calculateDealerProfit())
     }
 }

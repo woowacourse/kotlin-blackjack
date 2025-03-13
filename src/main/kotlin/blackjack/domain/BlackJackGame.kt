@@ -58,6 +58,23 @@ class BlackJackGame(
         }
     }
 
+    fun calculateDealerProfit(): Double {
+        var dealerFinalProfit = 0.0
+
+        participants.players.forEach { player ->
+            val profit = participants.dealer.getProfit(player, participants.dealer.getResult(player))
+            dealerFinalProfit += profit
+        }
+        return dealerFinalProfit
+    }
+
+    fun calculatePlayerProfit(action: (String, Double) -> Unit) {
+        participants.players.forEach { player ->
+            val profit = player.getProfit(player.getResult(participants.dealer))
+            action(player.name, profit)
+        }
+    }
+
     companion object {
         private const val INITIAL_CARD_COUNT = 2
         const val BUST_STANDARD = 21
