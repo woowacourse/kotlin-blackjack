@@ -12,6 +12,10 @@ sealed interface Score : Comparable<Score> {
         override val value: Int,
     ) : Score
 
+    object Max : Score {
+        override val value: Int = SCORE_MAX_CAN_HAVE
+    }
+
     object Blackjack : Score {
         override val value: Int = SCORE_MAX_CAN_HAVE
     }
@@ -33,6 +37,7 @@ fun Score(cards: List<Card>): Score {
     val score = possibleScores.filter { score -> score <= SCORE_MAX_CAN_HAVE }.max()
     return when {
         score == 21 && cards.size == 2 -> return Score.Blackjack
+        score == 21 && cards.size != 2 -> return Score.Max
         else -> return Score.Hittable(score)
     }
 }

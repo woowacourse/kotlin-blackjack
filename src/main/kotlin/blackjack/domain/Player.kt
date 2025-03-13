@@ -2,12 +2,14 @@ package blackjack.domain
 
 class Player(
     val name: String,
-) : Participant() {
-    override val onBusted: () -> Unit = { state = ParticipantState.LOSE }
-    val hittable: Boolean get() = score is Score.Hittable && score.value != Score.SCORE_MAX_CAN_HAVE
-
+) : Playable {
+    private val hand: Hand = Hand(onBusted = { state = ParticipantState.LOSE })
     var state: ParticipantState = ParticipantState.PLAYING
         private set
+
+    val cards: List<Card> get() = hand.cards
+    val canHit: Boolean get() = hand.canHit
+    val score: Score get() = hand.score
 
     fun setResult(dealerScore: Score) {
         this.state =
@@ -20,5 +22,9 @@ class Player(
 
     fun win() {
         state = ParticipantState.WIN
+    }
+
+    fun draw(card: Card) {
+        hand.draw(card)
     }
 }

@@ -21,14 +21,22 @@ class PlayerTest {
 
     @Test
     fun `플레이어는 모든 카드의 합이 21 미만이 될 수 있을 경우 계속해서 카드를 뽑을 수 있다`() {
-        val player = Player(name = "Eden")
+        val player = Player("Eden")
         val card1 = Card.of(NumberRank.SEVEN, Suit.HEART)
         val card2 = Card.of(NumberRank.SEVEN, Suit.DIAMOND)
         val card3 = Card.of(NumberRank.SEVEN, Suit.DIAMOND)
         player.draw(card1)
+        println(player.score)
+        println(player.cards)
         player.draw(card2)
+        println(player.score)
+        println(player.cards)
         player.draw(card3)
-        assertThrows<IllegalArgumentException> { player.draw(Card.of(NumberRank.TWO, Suit.SPADE)) }
+        println(player.score)
+        println(player.cards)
+        assertThrows<IllegalArgumentException> {
+            player.draw(Card.of(NumberRank.TWO, Suit.SPADE))
+        }
     }
 
     @Test

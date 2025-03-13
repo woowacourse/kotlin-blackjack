@@ -41,7 +41,7 @@ class BlackjackController(
     }
 
     private fun hitDuringWant(player: Player) {
-        while (player.hittable) {
+        while (player.canHit) {
             val wantToHit: Boolean = view.askWantToHit(player.name)
             if (!wantToHit) break
             dealer.giveCard(player)

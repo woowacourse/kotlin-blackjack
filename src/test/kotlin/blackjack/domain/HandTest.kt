@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test
 class HandTest {
     fun Hand.add(vararg card: Card) {
         card.forEach { card ->
-            add(card)
         }
     }
 

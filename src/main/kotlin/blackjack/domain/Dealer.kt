@@ -3,7 +3,13 @@ package blackjack.domain
 class Dealer(
     private val players: List<Player>,
     shuffler: Shuffler,
-) : Participant() {
+) : Playable {
+    private val hand: Hand = Hand(onBusted = { playingPlayers.forEach(Player::win) })
+    private val deck: Deck = Deck(shuffler)
+
+    val cards: List<Card> get() = hand.cards
+    val canHit: Boolean get() = hand.canHit
+    val score: Score get() = hand.score
     val dealerResults: List<ParticipantState>
         get() =
             players.map { player ->
@@ -14,9 +20,6 @@ class Dealer(
                     ParticipantState.PLAYING -> ParticipantState.PLAYING
                 }
             }
-
-    override val onBusted: () -> Unit = { playingPlayers.forEach(Player::win) }
-    private val deck: Deck = Deck(shuffler)
     private val playingPlayers: List<Player>
         get() = players.filter { player -> player.state == ParticipantState.PLAYING }
 
@@ -37,9 +40,9 @@ class Dealer(
     }
 
     fun startDealerTurn(onEachTurn: () -> Unit) {
-        while (score is Score.Hittable && score.value < 17) {
+        while (canHit) {
             onEachTurn()
-            draw(deck.draw())
+            draw()
         }
     }
 
