@@ -10,8 +10,6 @@ value class Money(
 
     fun multiply(number: Double): Money = Money(this.value * number)
 
-    fun divide(number: Double): Money = Money(this.value / number)
-
     companion object {
         val ZERO = Money(0.0)
     }
