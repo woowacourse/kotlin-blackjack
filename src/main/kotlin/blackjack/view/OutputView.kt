@@ -7,13 +7,13 @@ import blackjack.model.ScoreCalculator
 import blackjack.model.card.Card
 import blackjack.model.card.Deck.Companion.INITIAL_HAND_OUT_CARD_COUNT
 
-class OutputView {
-    fun printInitialHandOutCardMessage(players: List<Player>) {
+class OutputView : BlackjackOutput {
+    override fun printInitialHandOutCardMessage(players: List<Player>) {
         val playerNames = players.joinToString { player -> player.name }
         println(INITIAL_HAND_OUT_CARD_MESSAGE_FORMAT.format(playerNames, INITIAL_HAND_OUT_CARD_COUNT))
     }
 
-    fun printAllPlayerHands(
+    override fun printAllPlayerHands(
         dealer: Dealer,
         players: List<Player>,
     ) {
@@ -22,12 +22,12 @@ class OutputView {
         printContentSeparator()
     }
 
-    fun printPlayerHands(player: Player) {
+    override fun printPlayerHands(player: Player) {
         println(HANDS_STATUS_MESSAGE_FORMAT.format(player.name, getHandsStatus(player.cards)))
     }
 
-    fun printDealerHandStatus(dealerCondition: Boolean) {
-        println()
+    override fun printDealerHandStatus(dealerCondition: Boolean) {
+        printContentSeparator()
         if (dealerCondition) {
             println(DEALER_HIT_MESSAGE)
         } else {
@@ -36,7 +36,7 @@ class OutputView {
         printContentSeparator()
     }
 
-    fun printFinalHandStatus(
+    override fun printFinalHandStatus(
         dealer: Dealer,
         players: List<Player>,
     ) {
@@ -51,7 +51,7 @@ class OutputView {
         printContentSeparator()
     }
 
-    fun printFinalResult(
+    override fun printFinalResult(
         playersSummary: Map<Player, ResultType>,
         dealerSummary: Map<ResultType, Int>,
     ) {
@@ -64,7 +64,7 @@ class OutputView {
     }
 
     private fun initialDealerHands(cards: List<Card>): String {
-        return getHandsStatus(listOf(cards.first()))
+        return getHandsStatus(cards.take(1))
     }
 
     private fun getHandsStatus(cards: List<Card>): String {

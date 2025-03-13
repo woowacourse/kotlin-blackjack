@@ -3,8 +3,8 @@ package blackjack.view
 import blackjack.model.CardDrawDecision
 import blackjack.model.Player
 
-class InputView {
-    fun readPlayerNames(): List<Player> {
+class InputView : BlackjackInput {
+    override fun readPlayerNames(): List<Player> {
         println(PLAYER_NAME_MESSAGE_GUIDE)
         val playerNames: List<String> = readln().split(PLAYER_NAME_DELIMITER).map { name -> name.trim() }
         if (playerNames.any { playerName -> playerName.isBlank() }) return readPlayerNames()
@@ -13,7 +13,7 @@ class InputView {
         return players
     }
 
-    fun readCardDrawChoice(player: Player): CardDrawDecision {
+    override fun readCardDrawChoice(player: Player): CardDrawDecision {
         println(PLAYER_CARD_DRAW_DECISION_MESSAGE_GUIDE.format(player.name))
         val response: String = readln().trim()
         return CardDrawDecision.from(response) ?: readCardDrawChoice(player)

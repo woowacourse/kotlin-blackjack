@@ -1,73 +1,90 @@
 package blackjack.model
 
 import blackjack.model.card.Deck.Companion.INITIAL_HAND_OUT_CARD_COUNT
+import blackjack.view.BlackjackInput
+import blackjack.view.BlackjackOutput
+
+typealias Participants = Pair<Dealer, List<Player>>
+typealias GameFactor = Triple<Dealer, List<Player>, GameManager>
 
 class BlackjackGame(
-    private val dealer: Dealer,
-    private val players: List<Player>,
+    val inputView: BlackjackInput,
+    val outputView: BlackjackOutput,
 ) {
-    private val gameManager = GameManager(dealer, players)
-
-    fun processDistributeInitialCards(
-        initialCardCount: Int = INITIAL_HAND_OUT_CARD_COUNT,
-        showDistributeGuideMessage: (List<Player>) -> Unit,
-        showDistributedCardStatus: (Dealer, List<Player>) -> Unit,
-    ) {
-        showDistributeGuideMessage(players)
-        gameManager.distributeInitialCardWithCount(initialCardCount)
-        showDistributedCardStatus(dealer, players)
+    fun start() {
+        val (dealer, players, gameManager) = gameReady()
+        gameStart(dealer, players, gameManager)
+        gameResult(dealer, players, gameManager)
     }
 
-    fun processParticipantsDrawCards(
-        playerDrawDecision: (Player) -> CardDrawDecision,
-        showPlayerCardStatus: (Player) -> Unit,
-        showDealerCardStatus: (Boolean) -> Unit,
+    private fun gameReady(): GameFactor {
+        val (dealer, players) = initParticipants()
+        val gameManager = GameManager(dealer, players)
+
+        outputView.printInitialHandOutCardMessage(players)
+        gameManager.distributeInitialCardWithCount(INITIAL_HAND_OUT_CARD_COUNT)
+        outputView.printAllPlayerHands(dealer, players)
+
+        return Triple(dealer, players, gameManager)
+    }
+
+    private fun initParticipants(): Participants {
+        val dealer = Dealer()
+        val players = inputView.readPlayerNames()
+        return Pair(dealer, players)
+    }
+
+    private fun gameStart(
+        dealer: Dealer,
+        players: List<Player>,
+        gameManager: GameManager,
     ) {
         if (!dealer.isBlackjack()) {
-            processPlayerDrawCards(playerDrawDecision, showPlayerCardStatus)
-            processDealerDrawCard(showDealerCardStatus)
+            playersDrawCards(players, gameManager)
+            dealerDrawCards(dealer, gameManager)
         }
     }
 
-    private fun processPlayerDrawCards(
-        playerDrawDecision: (Player) -> CardDrawDecision,
-        showPlayerCardStatus: (Player) -> Unit,
+    private fun playersDrawCards(
+        players: List<Player>,
+        gameManager: GameManager,
     ) {
-        players.forEach { player ->
-            playerDrawOrStay(player, playerDrawDecision, showPlayerCardStatus)
-        }
+        players.forEach { player -> playerDrawOrStay(player, gameManager) }
     }
 
     private fun playerDrawOrStay(
         player: Player,
-        playerDrawDecision: (Player) -> CardDrawDecision,
-        showPlayerCardStatus: (Player) -> Unit,
+        gameManager: GameManager,
     ) {
         while (true) {
-            val decision: CardDrawDecision = playerDrawDecision(player)
+            val decision: CardDrawDecision = inputView.readCardDrawChoice(player)
             if (gameManager.distributeCardWithChoice(decision, player)) {
-                showPlayerCardStatus(player)
+                outputView.printPlayerHands(player)
                 if (player.isBust()) break
                 continue
             }
-            showPlayerCardStatus(player)
+            outputView.printPlayerHands(player)
             break
         }
     }
 
-    private fun processDealerDrawCard(showDealerCardStatus: (Boolean) -> Unit) {
+    private fun dealerDrawCards(
+        dealer: Dealer,
+        gameManager: GameManager,
+    ) {
         val isDraw = dealer.isAvailDrawCard()
         if (isDraw) gameManager.distributeCard(dealer)
-        showDealerCardStatus(isDraw)
+        outputView.printDealerHandStatus(isDraw)
     }
 
-    fun processAllParticipantsCardStatus(showParticipantsCardStatus: (Dealer, List<Player>) -> Unit) {
-        showParticipantsCardStatus(dealer, players)
-    }
-
-    fun processResultSummary(showResultSummary: (Map<Player, ResultType>, Map<ResultType, Int>) -> Unit) {
+    private fun gameResult(
+        dealer: Dealer,
+        players: List<Player>,
+        gameManager: GameManager,
+    ) {
         val playersSummary = gameManager.calculatePlayersSummary()
         val dealerSummary = gameManager.calculateDealerSummary()
-        showResultSummary(playersSummary, dealerSummary)
+        outputView.printFinalHandStatus(dealer, players)
+        outputView.printFinalResult(playersSummary, dealerSummary)
     }
 }
