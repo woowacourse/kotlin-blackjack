@@ -14,6 +14,7 @@ class Controller(
         val dealer = Dealer(players)
         val blackjack = Blackjack(dealer, players)
 
+        blackjack.start()
         outputView.printInitialCardsState(dealer, players)
         inputView.askMoreCards(dealer, players)
         outputView.printFinalCardsScores(dealer, players)
