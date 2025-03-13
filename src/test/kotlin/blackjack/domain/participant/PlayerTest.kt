@@ -1,5 +1,6 @@
 package blackjack.domain.participant
 
+import blackjack.domain.BettingAmount
 import blackjack.domain.card.Card
 import blackjack.domain.card.Rank
 import blackjack.domain.card.Suit
@@ -95,7 +96,7 @@ class PlayerTest {
         // when
         player.drawCards(queenSpade, queenHeart)
         dealer.drawCards(queenSpade, eightSpade)
-        val result = player.getProfit(dealer, 1000)
+        val result = player.getProfit(dealer, BettingAmount(1000))
 
         // then
         assertThat(result).isEqualTo(1000)
@@ -111,7 +112,7 @@ class PlayerTest {
         // when
         player.drawCards(queenSpade, queenHeart)
         dealer.drawCards(queenSpade, aceSpade)
-        val result = player.getProfit(dealer, 1000)
+        val result = player.getProfit(dealer, BettingAmount(1000))
 
         // then
         assertThat(result).isEqualTo(-1000)
@@ -127,7 +128,7 @@ class PlayerTest {
         // when
         player.drawCards(queenSpade, queenHeart)
         dealer.drawCards(queenSpade, queenHeart, twoSpade)
-        val result = player.getProfit(dealer, 1000)
+        val result = player.getProfit(dealer, BettingAmount(1000))
 
         // then
         assertThat(result).isEqualTo(1000)
@@ -142,7 +143,7 @@ class PlayerTest {
         // when
         player.drawCards(queenSpade, queenHeart)
         dealer.drawCards(queenSpade, queenHeart)
-        val result = player.getProfit(dealer, 1000)
+        val result = player.getProfit(dealer, BettingAmount(1000))
 
         // then
         assertThat(result).isEqualTo(0)
@@ -158,7 +159,7 @@ class PlayerTest {
         // when
         player.drawCards(aceSpade, queenSpade)
         dealer.drawCards(queenSpade, queenHeart)
-        val result = player.getProfit(dealer, 1000)
+        val result = player.getProfit(dealer, BettingAmount(1000))
 
         // then
         assertThat(result).isEqualTo(1500)

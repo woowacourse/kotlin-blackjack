@@ -1,5 +1,7 @@
 package blackjack.domain.participant
 
+import blackjack.domain.BettingAmount
+import blackjack.domain.GameResult
 import blackjack.domain.Score
 import blackjack.domain.card.Card
 import blackjack.domain.card.Hand
@@ -17,10 +19,15 @@ abstract class Participant(
 
     fun isBlackjack(): Boolean = hand.isBlackjack()
 
+    fun getProfit(
+        other: Participant,
+        bettingAmount: BettingAmount,
+    ): Double {
+        val result = getResult(other)
+        return bettingAmount.value * result.rate
+    }
+
     abstract fun canHit(): Boolean
 
-    abstract fun getProfit(
-        other: Participant,
-        bettingAmount: Int,
-    ): Int
+    protected abstract fun getResult(other: Participant): GameResult
 }

@@ -40,13 +40,13 @@ class OutputView {
 
     fun printDealerProfit(
         dealer: Dealer,
-        profit: Int,
+        profit: Double,
     ) {
         println(MESSAGE_GAME_RESULT)
         println(MESSAGE_RESULT.format(dealer.name, profit.toString()))
     }
 
-    fun printPlayersProfit(playersProfit: Map<Player, Int>) {
+    fun printPlayersProfit(playersProfit: Map<Player, Double>) {
         playersProfit.forEach { (player, profit) ->
             println(MESSAGE_RESULT.format(player.name, profit.toString()))
         }

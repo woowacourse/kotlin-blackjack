@@ -1,5 +1,6 @@
 package blackjack.controller
 
+import blackjack.domain.BettingAmount
 import blackjack.domain.BlackjackGame
 import blackjack.domain.card.Deck
 import blackjack.domain.participant.Dealer
@@ -29,9 +30,15 @@ class BlackjackController(
         return playerNames.map(::Player)
     }
 
-    private fun getBettingInfo(players: List<Player>): Map<Player, Int> = players.associateWith { getBettingAmount(it.name) }
+    private fun getBettingInfo(players: List<Player>): Map<Player, BettingAmount> =
+        players.associateWith {
+            getBettingAmount(it.name)
+        }
 
-    private fun getBettingAmount(name: String): Int = inputView.readBettingAmount(name)
+    private fun getBettingAmount(name: String): BettingAmount {
+        val amount = inputView.readBettingAmount(name)
+        return BettingAmount(amount)
+    }
 
     private fun startGame(
         game: BlackjackGame,
@@ -51,7 +58,7 @@ class BlackjackController(
 
     private fun showGameResult(
         participants: Participants,
-        bettingInfo: Map<Player, Int>,
+        bettingInfo: Map<Player, BettingAmount>,
     ) {
         outputView.printParticipantScore(participants.dealer, participants.players)
 

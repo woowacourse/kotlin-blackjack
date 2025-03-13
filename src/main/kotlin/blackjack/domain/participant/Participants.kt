@@ -1,5 +1,6 @@
 package blackjack.domain.participant
 
+import blackjack.domain.BettingAmount
 import blackjack.domain.card.Deck
 
 class Participants(
@@ -50,15 +51,15 @@ class Participants(
         }
     }
 
-    fun getDealerProfit(bettingInfo: Map<Player, Int>): Int =
+    fun getDealerProfit(bettingInfo: Map<Player, BettingAmount>): Double =
         players.sumOf { player ->
-            val bettingAmount = bettingInfo.getOrDefault(player, 0)
+            val bettingAmount = bettingInfo.getOrDefault(player, BettingAmount(0))
             dealer.getProfit(player, bettingAmount)
         }
 
-    fun getPlayersProfit(bettingInfo: Map<Player, Int>): Map<Player, Int> =
+    fun getPlayersProfit(bettingInfo: Map<Player, BettingAmount>): Map<Player, Double> =
         players.associateWith { player ->
-            val bettingAmount = bettingInfo.getOrDefault(player, 0)
+            val bettingAmount = bettingInfo.getOrDefault(player, BettingAmount(0))
             player.getProfit(dealer, bettingAmount)
         }
 
