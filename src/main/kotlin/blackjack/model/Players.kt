@@ -7,9 +7,12 @@ class Players(
         require(value.size in 1..8) { "참여할 수 있는 플레이어는 1명 이상 8명까지 가능합니다." }
     }
 
-    fun pickCard(cardDeck: CardDeck) {
+    fun pickCard(
+        cardDeck: CardDeck,
+        times: Int,
+    ) {
         value.forEach { player ->
-            player.pickCard(cardDeck)
+            player.pickCard(cardDeck, times)
         }
     }
 

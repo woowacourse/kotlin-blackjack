@@ -29,10 +29,8 @@ class BlackjackController(
         players: Players,
         dealer: Dealer,
     ) {
-        repeat(2) {
-            players.pickCard(cardDeck)
-            dealer.pickCard(cardDeck)
-        }
+        players.pickCard(cardDeck, 2)
+        dealer.pickCard(cardDeck, 2)
         outputView.printPlayersCards(dealer, players.value)
     }
 
