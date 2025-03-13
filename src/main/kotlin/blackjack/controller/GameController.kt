@@ -17,6 +17,8 @@ class GameController(
         val deck = Deck()
         val participants = initializeParticipants(deck)
         participants.processPlayerBets { player -> retryOnError { Bet(inputView.readPlayerBet(player)) } }
+        outputView.printInitialDeals(participants)
+        participants.all.forEach { participant -> outputView.printParticipantStatus(participant) }
         processHits(deck, participants)
         outputView.printResults(participants)
     }
@@ -31,8 +33,6 @@ class GameController(
                     },
                 )
             }
-        outputView.printInitialDeals(participants)
-        participants.all.forEach { participant -> outputView.printParticipantStatus(participant) }
         return participants
     }
 
