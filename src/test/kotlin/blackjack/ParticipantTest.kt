@@ -37,7 +37,7 @@ class ParticipantTest {
             ),
         )
 
-        assertThat(player.totalSum).isEqualTo(5)
+        assertThat(player.getTotalSum()).isEqualTo(5)
     }
 
     @Test
@@ -52,7 +52,7 @@ class ParticipantTest {
             ),
         )
 
-        assertThat(player.totalSum).isEqualTo(13)
+        assertThat(player.getTotalSum()).isEqualTo(13)
     }
 
     @Test
@@ -67,7 +67,7 @@ class ParticipantTest {
             ),
         )
 
-        assertThat(player.totalSum).isEqualTo(21)
+        assertThat(player.getTotalSum()).isEqualTo(21)
     }
 
     @Test

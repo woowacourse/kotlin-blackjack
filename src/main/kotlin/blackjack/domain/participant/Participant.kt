@@ -4,23 +4,21 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
 
 abstract class Participant {
-    val totalSum: Int
-        get() = innerCards.calculateTotalSum()
-
     protected val innerCards: Cards = Cards()
-
     abstract val hitThreshold: Int
 
     fun getCards(): List<Card> {
         return innerCards.toList()
     }
 
+    fun getTotalSum(): Int = innerCards.calculateTotalSum()
+
     fun addCard(card: Card) {
         if (canHit()) innerCards.add(card)
     }
 
     fun isBust(): Boolean {
-        return totalSum > BLACKJACK_BUST_LIMIT
+        return getTotalSum() > BLACKJACK_BUST_LIMIT
     }
 
     fun isBlackJack(): Boolean {
@@ -28,7 +26,7 @@ abstract class Participant {
     }
 
     fun canHit(): Boolean {
-        return totalSum < hitThreshold
+        return getTotalSum() < hitThreshold
     }
 
     companion object {
