@@ -5,14 +5,17 @@ import blackjack.domain.card.Cards
 
 abstract class Participant {
     val totalSum: Int
-        get() = cards.calculateTotalSum()
+        get() = innerCards.calculateTotalSum()
 
-    val cards: Cards = Cards()
+    protected val innerCards: Cards = Cards()
+
+    val cards: List<Card>
+        get() = innerCards.toList()
 
     abstract val hitThreshold: Int
 
     fun addCard(card: Card) {
-        if (canHit()) cards.add(card)
+        if (canHit()) innerCards.add(card)
     }
 
     fun isBust(): Boolean {
@@ -20,7 +23,7 @@ abstract class Participant {
     }
 
     fun isBlackJack(): Boolean {
-        return cards.countAce() == 1 && cards.countScoredTen() == 1
+        return innerCards.countAce() == 1 && innerCards.countScoredTen() == 1
     }
 
     fun canHit(): Boolean {

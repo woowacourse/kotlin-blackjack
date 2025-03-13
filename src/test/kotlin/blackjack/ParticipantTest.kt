@@ -22,7 +22,7 @@ class ParticipantTest {
         val card = Card.of(Rank.ACE, Suit.SPADE)
 
         participant.addCard(card)
-        assertThat(participant.cards.toList()).contains(card)
+        assertThat(participant.cards).contains(card)
     }
 
     @Test
