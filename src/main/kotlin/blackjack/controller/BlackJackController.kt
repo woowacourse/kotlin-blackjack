@@ -50,7 +50,7 @@ class BlackJackController(
         displayDealerCards(participants)
         displayPlayerCards(participants)
 
-        game.playGame(
+        game.choice(
             getPlayerChoice = { playerName ->
                 getUserChoice(playerName)
             },

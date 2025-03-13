@@ -16,11 +16,20 @@ class BlackJackGame(
         }
     }
 
-    fun playGame(
+    fun choice(
         getPlayerChoice: (String) -> Boolean,
         onPlayerStateUpdated: (Player) -> Unit,
     ) {
-        participants.getChoice(deck, getPlayerChoice, onPlayerStateUpdated)
+        participants.players.forEach { player ->
+            while (player.isDrawable()) {
+                if (getPlayerChoice(player.name)) {
+                    player.receiveCard(deck.pop())
+                    onPlayerStateUpdated(player)
+                } else {
+                    return
+                }
+            }
+        }
     }
 
     fun processDealerTurn(): Int {
