@@ -45,5 +45,5 @@
 - [x] Deck Object를 일반 Class로 변경
   - [x] PlayerTest의 불필요해진 덱 관련 테스트 삭제
 - [x] DeckTest의 테스트명 수정 및 추가
-- [ ] outputView.lineSeparator()호출을 컨트롤러에서 삭제
+- [x] outputView.lineSeparator()호출을 컨트롤러에서 삭제
 - [ ] 초기 카드 장수 상수를 Casino에서 handcard로 이동
