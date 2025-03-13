@@ -14,8 +14,8 @@ class DealerTest {
     @Test
     fun `카드를 받을 수 있다`() {
         // Given
-        val deck = Deck(mutableListOf(Card(CardNumber.ACE, CardPattern.HEART)))
-        val dealer = Dealer(Deck())
+        val deck = Deck.createCustomDeck(mutableListOf(Card(CardNumber.ACE, CardPattern.HEART)))
+        val dealer = Dealer(deck)
         val card = deck.draw()
 
         // When
@@ -28,7 +28,7 @@ class DealerTest {
     @Test
     fun `덱에서 카드를 한 장 나눠줄 수 있다`() {
         // Given
-        val deck = Deck(mutableListOf(Card(CardNumber.ACE, CardPattern.HEART)))
+        val deck = Deck.createCustomDeck(mutableListOf(Card(CardNumber.ACE, CardPattern.HEART)))
         val dealer = Dealer(deck)
 
         // When
@@ -41,13 +41,8 @@ class DealerTest {
     @Test
     fun `가지고 있는 패의 총 합을 계산한다`() {
         // Given
-        val dealer = Dealer(Deck())
         val cards = List(2) { Card(CardNumber.KING, CardPattern.HEART) }
-
-        // When
-        cards.forEach { card ->
-            dealer.addCard(card)
-        }
+        val dealer = Dealer(Deck.createDefaultDeck(), cards)
 
         // Then
         dealer.score() shouldBe 20
@@ -55,24 +50,19 @@ class DealerTest {
 
     @Test
     fun `초기 상태일 경우 카드를 2장 받는다`() {
-        val dealer = Dealer(Deck())
+        val dealer = Dealer(Deck.createDefaultDeck())
         dealer.getDrawAmount() shouldBe 2
     }
 
     @Test
     fun `패의 총 합이 16 이하인 경우 카드를 1장 받는다`() {
         // Given
-        val dealer = Dealer(Deck())
         val cards =
             listOf(
                 Card(CardNumber.KING, CardPattern.HEART),
                 Card(CardNumber.SIX, CardPattern.CLOVER),
             )
-
-        // When
-        cards.forEach { card ->
-            dealer.addCard(card)
-        }
+        val dealer = Dealer(Deck.createDefaultDeck(), cards)
 
         // Then
         assertSoftly(dealer) {
@@ -85,13 +75,8 @@ class DealerTest {
     @Test
     fun `버스트가 된 경우 카드를 받을 수 없다`() {
         // Given
-        val dealer = Dealer(Deck())
         val cards = List(3) { Card(CardNumber.KING, CardPattern.HEART) }
-
-        // When
-        cards.forEach { card ->
-            dealer.addCard(card)
-        }
+        val dealer = Dealer(Deck.createDefaultDeck(), cards)
 
         // Then
         assertSoftly(dealer) {
