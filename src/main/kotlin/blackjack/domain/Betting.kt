@@ -4,6 +4,10 @@ package blackjack.domain
 value class Betting(
     val amount: Int,
 ) {
+    init {
+        require(amount > 0) { "Amount must be greater than 0" }
+    }
+
     fun toProfit(
         state: ParticipantState,
         score: Score,
