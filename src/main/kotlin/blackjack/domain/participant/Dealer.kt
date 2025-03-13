@@ -11,9 +11,9 @@ class Dealer(
 
     override fun isDrawable(): Boolean {
         if (cards.hasAce() && !isBust(ACE_SOFT_SCORE)) {
-            return cards.sumOfCards + ACE_SOFT_SCORE < DEALER_MAX_SCORE
+            return cards.sumOfCards + ACE_SOFT_SCORE <= DEALER_MAX_SCORE
         }
-        return cards.sumOfCards < DEALER_MAX_SCORE
+        return cards.sumOfCards <= DEALER_MAX_SCORE
     }
 
     override fun getResult(other: Participant): GameResult {
@@ -31,15 +31,12 @@ class Dealer(
         }
     }
 
-    fun getProfit(
-        other: Player,
-        gameResult: GameResult,
-    ): Double =
+    override fun getProfit(gameResult: GameResult): Double =
         when (gameResult) {
-            GameResult.BLACKJACK -> other.bettingMoney.value.toDouble()
-            GameResult.WIN -> other.bettingMoney.value.toDouble()
+            GameResult.BLACKJACK -> 1.0
+            GameResult.WIN -> 1.0
             GameResult.DRAW -> 0.0
-            else -> (0 - other.bettingMoney.value).toDouble()
+            else -> -1.0
         }
 
     companion object {

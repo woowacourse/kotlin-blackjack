@@ -30,6 +30,17 @@ class DealerTest {
     }
 
     @Test
+    fun `총합을 구해서 16 이하면 카드를 한 장 더 뽑는다`() {
+        val dealer = Dealer(ParticipantCards())
+
+        dealer.receiveCard(TrumpCard(CardTier.KING, Shape.DIA))
+        dealer.receiveCard(TrumpCard(CardTier.SIX, Shape.HEART))
+
+        val expected = true
+        assertThat(dealer.isDrawable()).isEqualTo(expected)
+    }
+
+    @Test
     fun `에이스가 없을 때 총합을 구해서 16을 초과하면 카드를 더 이상 뽑지 않는다`() {
         val dealer = Dealer(ParticipantCards())
 
