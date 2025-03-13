@@ -58,7 +58,7 @@ class OutputView {
     }
 
     fun printFinalResult(profitResult: Map<Player, Double>) {
-        val dealerProfit = profitResult.values.sumOf { profit -> profit } * -1.0
+        val dealerProfit = profitResult.values.sumOf { profit -> profit } * DEALER_PROFIT_MULTIPLIER
         println(FINAL_RESULT_MESSAGE)
         println(DEALER_RESULT_FORMAT.format(dealerProfit.formatAmount()))
         profitResult.forEach { (player, profit) ->
@@ -129,5 +129,6 @@ class OutputView {
         private const val DISPLAY_NAME_DIAMOND = " ♦️"
         private const val DISPLAY_NAME_HEART = " ♥️"
         private const val DISPLAY_NAME_CLOVER = " ♣️"
+        private const val DEALER_PROFIT_MULTIPLIER = -1.0
     }
 }
