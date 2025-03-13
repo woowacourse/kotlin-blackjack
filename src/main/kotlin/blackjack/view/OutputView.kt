@@ -12,6 +12,7 @@ import blackjack.model.card.Shape
 import blackjack.model.participant.Dealer
 import blackjack.model.participant.Participant
 import blackjack.model.participant.Player
+import java.text.DecimalFormat
 
 class OutputView {
     fun printInitialHandOutCardMessage(players: List<Player>) {
@@ -114,16 +115,9 @@ class OutputView {
         }
     }
 
-    private fun getResultDisplayAmount(
-        player: Player,
-        result: ResultType,
-    ) {
-        when (result) {
-            ResultType.WIN -> player.finalProfit = player.betAmount.toDouble()
-            ResultType.TIE -> player.finalProfit = player.betAmount.toDouble()
-            ResultType.LOSS -> player.finalProfit = player.betAmount.toDouble() * -1
-            ResultType.BLACKJACK -> player.finalProfit = player.betAmount.toDouble() * 1.5
-        }
+    private fun Double.formatAmount(): String {
+        val formatter = DecimalFormat("#.##")
+        return formatter.format(this)
     }
 
     companion object {
