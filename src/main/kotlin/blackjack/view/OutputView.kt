@@ -75,16 +75,12 @@ class OutputView {
         println(format(MESSAGE_OUTPUT_DEALER_EXTRA_CARD, count))
     }
 
-    fun printErrorMessage(message: String?) {
-        println(message)
-    }
-
     private fun Shape.toKorean(): String =
         when (this) {
-            Shape.HEART -> "하트"
-            Shape.DIA -> "다이아몬드"
-            Shape.CLOVER -> "클로버"
-            Shape.SPADE -> "스페이드"
+            Shape.HEART -> "하트♥\uFE0F"
+            Shape.DIA -> "다이아몬드♦\uFE0F"
+            Shape.CLOVER -> "클로버♣\uFE0F"
+            Shape.SPADE -> "스페이드♠\uFE0F"
         }
 
     private fun CardTier.toEnglish(): String =
