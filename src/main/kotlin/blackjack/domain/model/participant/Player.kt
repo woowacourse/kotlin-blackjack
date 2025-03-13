@@ -1,13 +1,11 @@
 package blackjack.domain.model.participant
 
-import blackjack.domain.model.BetAmount
 import blackjack.domain.model.GameResult
 import blackjack.domain.model.card.Hand
 
 class Player(
     name: String = DEFAULT_NAME,
     hand: Hand = Hand(),
-    val betAmount: BetAmount = BetAmount(0.0),
 ) : Participant(name, hand) {
     override fun compareTo(opponent: Participant): GameResult {
         val myScore: Int = hand.getScore()
