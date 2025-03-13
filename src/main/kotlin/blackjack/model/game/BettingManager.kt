@@ -3,6 +3,7 @@ package blackjack.model.game
 import blackjack.model.participant.Dealer
 import blackjack.model.participant.Money
 import blackjack.model.participant.Name
+import blackjack.model.participant.Participants
 import blackjack.model.participant.Players
 
 class BettingManager {
@@ -20,21 +21,43 @@ class BettingManager {
         }
     }
 
-    fun end(
-        dealer: Dealer,
+    fun result(
+        participants: Participants,
         winningResult: WinningResult,
     ): BettingResult {
-        val profitResult = BettingTable()
+        val bettingResult = BettingTable()
 
+        updateTable(bettingResult, participants.dealer, winningResult)
+
+        bettingTable.reset()
+        distributeMoney(participants, bettingResult.table)
+
+        return bettingResult.table
+    }
+
+    private fun updateTable(
+        profitResult: BettingTable,
+        dealer: Dealer,
+        winningResult: WinningResult,
+    ) {
         profitResult.add(dealer.name, Money.ZERO)
+
         winningResult.playerResults.forEach { (name, result) ->
             val profit = bettingTable.get(name).multiply(result.profitRate)
             profitResult.add(name, profit)
             profitResult.add(dealer.name, profit.minus(profit))
         }
+    }
 
-        bettingTable.reset()
-
-        return profitResult.table
+    private fun distributeMoney(
+        participants: Participants,
+        bettingResult: BettingResult,
+    ) {
+        bettingResult.value.forEach { (name, money) ->
+            when (name == participants.dealer.name) {
+                true -> participants.dealer.recieveMoney(money)
+                false -> participants.players.receiveMoney(name, money)
+            }
+        }
     }
 }

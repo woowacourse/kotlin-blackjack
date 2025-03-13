@@ -12,6 +12,13 @@ class Players private constructor(
         }
     }
 
+    fun receiveMoney(
+        name: Name,
+        money: Money,
+    ) {
+        value.find { it.name == name }?.recieveMoney(money) ?: return
+    }
+
     companion object {
         private const val MIN_PLAYER_COUNT = 1
         private const val MAX_PLAYER_COUNT = 7

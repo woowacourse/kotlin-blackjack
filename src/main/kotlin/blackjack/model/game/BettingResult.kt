@@ -5,5 +5,5 @@ import blackjack.model.participant.Name
 
 @JvmInline
 value class BettingResult(
-    val bettingResult: Map<Name, Money>,
+    val value: Map<Name, Money>,
 )

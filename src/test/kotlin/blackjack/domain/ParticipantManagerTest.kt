@@ -72,7 +72,7 @@ class ParticipantManagerTest {
         val winningManager = WinningManager(dealer, players)
 
         // when
-        val gameResult = winningManager.generateResult()
+        val gameResult = winningManager.result()
 
         // then
         assertThat(gameResult.dealerResult.keys).containsExactlyInAnyOrder(*WinningState.entries.toTypedArray())

@@ -7,8 +7,7 @@ abstract class Participant(
     initialMoney: Money,
     private val hand: Hand,
 ) {
-    private var _money: Money = initialMoney
-    val money: Money get() = _money
+    private var money: Money = initialMoney
     val cards: List<Card> get() = hand.cards
     val handState: HandState get() = hand.state
 
@@ -17,11 +16,11 @@ abstract class Participant(
     abstract fun isDrawable(): Boolean
 
     fun recieveMoney(money: Money) {
-        _money = _money.plus(money)
+        this.money = this.money.plus(money)
     }
 
     fun payMoney(money: Money) {
-        _money = _money.minus(money)
+        this.money = this.money.minus(money)
     }
 
     fun recieveCards(recieveCards: (Int) -> List<Card>) {

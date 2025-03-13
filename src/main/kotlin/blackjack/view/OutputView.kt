@@ -16,7 +16,7 @@ import blackjack.model.participant.Player.Companion.PLAYER_DEFAULT_MONEY
 
 class OutputView {
     fun displayInitialMoney() {
-        println("\n초기 잔액은 $PLAYER_DEFAULT_MONEY 입니다.")
+        println("\n초기 플레이어의 잔액은 $PLAYER_DEFAULT_MONEY 입니다.")
     }
 
     fun displayFirstDrawEnd(players: List<Name>) {

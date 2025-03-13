@@ -1,14 +1,12 @@
 package blackjack.model.game
 
-import blackjack.model.participant.Dealer
 import blackjack.model.participant.Name
-import blackjack.model.participant.Players
+import blackjack.model.participant.Participants
 
 class WinningManager(
-    private val dealer: Dealer,
-    private val players: Players,
+    private val participants: Participants,
 ) {
-    fun generateResult(): WinningResult {
+    fun result(): WinningResult {
         val playerResults = playerResult()
         val dealerResult = dealerResult(playerResults)
 
@@ -16,9 +14,14 @@ class WinningManager(
     }
 
     private fun playerResult(): Map<Name, WinningState> =
-        players.value.associate { player ->
+        participants.players.value.associate { player ->
             player.name to
-                WinningState.fromPlayer(player.score(), dealer.score(), player.handState, dealer.handState)
+                WinningState.fromPlayer(
+                    playerScore = player.score(),
+                    dealerScore = participants.dealer.score(),
+                    playerHandState = player.handState,
+                    dealerHandState = participants.dealer.handState,
+                )
         }
 
     private fun dealerResult(playerResults: Map<Name, WinningState>): Map<WinningState, Count> {
@@ -27,7 +30,9 @@ class WinningManager(
                 .groupingBy { it.reverseToDealer() }
                 .eachCount()
 
-        return WinningState.entries.associateWith { Count(resultCounts.getOrDefault(it, INITIAL_SCORE)) }
+        return WinningState.entries.associateWith {
+            Count(resultCounts.getOrDefault(it, INITIAL_SCORE))
+        }
     }
 
     companion object {
