@@ -84,8 +84,13 @@ class BlackjackController(
 
     private fun getActionType(player: Player): ActionType {
         return retryInput {
-            ActionType.get(inputView.askForHitOrStay(player))
+            get(inputView.askForHitOrStay(player))
         }
+    }
+
+    private fun get(yesOrNo: String): ActionType {
+        if (yesOrNo == YES) return ActionType.Hit
+        return ActionType.Stay
     }
 
     private fun dealerReceiveCard(blackjack: Blackjack) {
@@ -110,5 +115,10 @@ class BlackjackController(
                 println(e.message)
                 retryInput(inputFunction)
             }
+    }
+
+    companion object {
+        private const val YES: String = "y"
+        private const val NO: String = "n"
     }
 }
