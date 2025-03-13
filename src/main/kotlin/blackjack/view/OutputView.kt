@@ -41,7 +41,7 @@ object OutputView {
 
     private const val ON_GLOBAL_EXCEPTION_OCCUR = "오류입니다 게임을 다시 시도해 주세요"
 
-    private fun printDealerCard(dealer: Dealer): String = "딜러: ${dealer.cards.toList().first().format()}"
+    private fun printDealerCard(dealer: Dealer): String = "딜러: ${dealer.cards.format()}"
 
     private fun printPlayerCard(player: Player): String = "${player.name}카드: ${player.cards.format()}"
 

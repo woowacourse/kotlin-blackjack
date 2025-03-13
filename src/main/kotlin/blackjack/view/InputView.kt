@@ -21,11 +21,12 @@ object InputView : NullableRetry {
     }
 
     override fun onOnceFailure() {
-        println("올바르지 않은 값입니다 다시 시도해주세요")
+        println(REQUEST_RETRY)
     }
 
     private const val RETRY_COUNT = 3
     private const val REQUEST_PLAYERS_NAME = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)"
+    private const val REQUEST_RETRY = "올바르지 않은 값입니다 다시 시도해주세요"
 
     private fun askBettingAmount(name: String): String = "${name}의 배팅 금액은?"
 }
