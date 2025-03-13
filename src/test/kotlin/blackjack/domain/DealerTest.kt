@@ -5,6 +5,8 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class DealerTest {
+    private fun Player(name: String): Player = Player(name, 0)
+
     @Test
     fun `딜러는 플레이어에게 카드를 나눠준다`() {
         val eden = Player("Eden")

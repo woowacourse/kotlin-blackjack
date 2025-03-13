@@ -6,6 +6,8 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class BlackjackTest {
+    private fun Player(name: String): Player = Player(name, 0)
+
     private fun Dealer(
         player: Player,
         shuffler: Shuffler,
