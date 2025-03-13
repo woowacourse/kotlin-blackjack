@@ -3,19 +3,19 @@ package model
 import kotlin.math.abs
 
 class GameResultDecider(private val dealer: Dealer, private val players: Players) {
-    fun compareWinOrLose(): GameOutput {
+    fun compareWinOrLose(): GameResult {
         val playerResults: List<PlayerResult> =
             players.map { player ->
                 PlayerResult(player.name, comparePlayerResult(player))
             }
 
-        return GameOutput(playerResults)
+        return GameResult(dealerResult(playerResults), playerResults)
     }
 
     private fun comparePlayerResult(player: Player): Float =
         when {
             player.isBackJack && !dealer.isBackJack -> player.betAmount * 1.5f
-            player.isBackJack && dealer.isBackJack -> player.betAmount
+            player.isBackJack && dealer.isBackJack -> 0f
             dealer.currentScore > BLACKJACK_SCORE -> player.betAmount
             player.currentScore > BLACKJACK_SCORE -> -player.betAmount
             else -> compareScores(player)
@@ -29,6 +29,14 @@ class GameResultDecider(private val dealer: Dealer, private val players: Players
             playerDiff > dealerDiff -> -player.betAmount
             else -> 0f
         }
+    }
+
+    private fun dealerResult(playerResults: List<PlayerResult>): Float {
+        var initialDealerAmount = players.map { it.betAmount }.sum()
+        val playersTotalProfit = playerResults.filter { it.profit >= 0f }.map { it.profit }.sum()
+        if (playersTotalProfit == 0f) initialDealerAmount = 0f
+
+        return initialDealerAmount - playersTotalProfit
     }
 
     companion object {
