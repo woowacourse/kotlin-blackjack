@@ -5,8 +5,6 @@ import blackjack.model.card.CardNumber
 import blackjack.model.card.Shape
 import blackjack.model.participant.Dealer
 import blackjack.model.participant.Player
-import blackjack.model.participant.Players
-import kotlinx.coroutines.Delay
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -14,6 +12,7 @@ import org.junit.jupiter.api.Test
 class ResultCalculatorTest {
     private lateinit var player: Player
     private lateinit var dealer: Dealer
+
     private fun fakeCards(vararg cards: Card): List<Card> = cards.map { it }
 
     @BeforeEach
@@ -110,5 +109,4 @@ class ResultCalculatorTest {
 
         assertThat(actual).isEqualTo(expect)
     }
-
 }
