@@ -1,4 +1,3 @@
 package blackjack.domain.model
 
-@JvmInline
-value class Profit(val value: Double)
+class Profit(val name: String, val value: Double)

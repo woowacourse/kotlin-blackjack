@@ -3,8 +3,8 @@ package blackjack.view
 import blackjack.domain.model.Hands.Companion.START_CARD_COUNT
 import blackjack.domain.model.Participant
 import blackjack.domain.model.Participants
-import blackjack.domain.model.Player
 import blackjack.domain.model.Profit
+import blackjack.domain.model.Profits
 import blackjack.domain.model.Rank
 import blackjack.domain.model.Suit
 
@@ -55,17 +55,14 @@ class OutputView {
         println(MESSAGE_RESULTS_HEADER)
     }
 
-    fun printDealerProfit(
-        dealerName: String,
-        profit: Double,
-    ) {
-        print(dealerName + NAME_RESULT_DELIMITER + profit)
+    fun printDealerProfit(profit: Profit) {
+        print(profit.name + NAME_RESULT_DELIMITER + profit.value)
         println()
     }
 
-    fun printPlayersProfit(players: Map<Player, Profit>) {
-        players.forEach { (player, profit) ->
-            println(player.name + NAME_RESULT_DELIMITER + profit.value)
+    fun printPlayersProfit(profits: Profits) {
+        profits.value.forEach { profit ->
+            println(profit.name + NAME_RESULT_DELIMITER + profit.value)
         }
     }
 

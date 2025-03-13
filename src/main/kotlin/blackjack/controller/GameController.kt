@@ -1,16 +1,14 @@
 package blackjack.controller
 
-import blackjack.domain.model.BetAmount
+import blackjack.domain.model.Bets
 import blackjack.domain.model.Dealer
 import blackjack.domain.model.Deck
 import blackjack.domain.model.HandState
 import blackjack.domain.model.Hands
 import blackjack.domain.model.Hands.Companion.START_CARD_COUNT
-import blackjack.domain.model.Money
 import blackjack.domain.model.Participant
 import blackjack.domain.model.Participants
 import blackjack.domain.model.Player
-import blackjack.domain.model.Profit
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -21,15 +19,12 @@ class GameController(
     fun run() {
         val deck = Deck()
         val participants = initialParticipants(deck)
+        val bets = participants.bets { name -> inputView.readPlayerBetAmount(name) }
         printInitialDeal(participants)
-        val playersBetAmount =
-            participants.players.associateWith {
-                val money = Money(inputView.readPlayerBetAmount(it.name))
-                BetAmount(money)
-            }
         participants.players.forEach { player -> playHand(player, deck) }
         processDealerHits(deck, participants.dealer)
-        announceResult(participants, playersBetAmount)
+        announceParticipantsResult(participants)
+        announceResult(participants.dealer, bets)
     }
 
     private fun initialParticipants(deck: Deck): Participants {
@@ -76,26 +71,19 @@ class GameController(
         }
     }
 
-    private fun announceResult(
-        participants: Participants,
-        playersBetAmount: Map<Player, BetAmount>,
-    ) {
+    private fun announceParticipantsResult(participants: Participants) {
         outputView.printParticipantsResult(participants)
-        outputView.printResultsHeader()
-        val playersProfit = initPlayersProfit(participants, playersBetAmount)
-        val dealerProfit = playersProfit.values.sumOf { it.value } * -1
-        outputView.printDealerProfit(participants.dealer.name, dealerProfit)
-        outputView.printPlayersProfit(playersProfit)
     }
 
-    private fun initPlayersProfit(
-        participants: Participants,
-        playersBetAmount: Map<Player, BetAmount>,
-    ): Map<Player, Profit> {
-        val dealer = participants.dealer
-        return participants.players.associateWith { player ->
-            playersBetAmount[player]?.calculate(player.match(dealer)) ?: Profit(0.0)
-        }
+    private fun announceResult(
+        dealer: Dealer,
+        bets: Bets,
+    ) {
+        outputView.printResultsHeader()
+        val playersProfit = bets.getProfits(dealer)
+        val dealerProfit = playersProfit.calculateTotalLosses(dealer.name)
+        outputView.printDealerProfit(dealerProfit)
+        outputView.printPlayersProfit(playersProfit)
     }
 
     private fun <T> retryEvent(event: () -> T): T {

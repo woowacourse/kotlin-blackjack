@@ -25,7 +25,6 @@ class Hands(private val _cards: List<Card>) {
 
     companion object {
         const val START_CARD_COUNT = 2
-        private const val MAX_BONUS_SCORE = 11
         private const val BONUS_SCORE = 10
         const val BUST_THRESHOLD = 21
     }
