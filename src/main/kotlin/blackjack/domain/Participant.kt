@@ -2,7 +2,7 @@ package blackjack.domain
 
 abstract class Participant {
     protected abstract val onBusted: () -> Unit
-    protected val hand: Hand = Hand(onBusted)
+    protected val hand: Hand by lazy { Hand(onBusted) }
     val cards: List<Card> get() = hand.cards
     val score: Score get() = hand.score
 
