@@ -18,18 +18,9 @@ class BlackjackController(
         val players = playerSetting()
         playerBetting(players)
 
-        outputView.printInitialHandOutCardMessage(players)
-        gameManager = GameManager(dealer, players)
-        gameManager.startGame()
-        outputView.printAllPlayerHands(dealer, players)
-
-        if (!dealer.isBlackjack()) {
-            playersDrawCards(players)
-            dealerDrawCards(dealer)
-        }
+        playBlackjack(dealer, players)
 
         outputView.printFinalHandStatus(dealer, players)
-
         resultSummary(gameManager)
     }
 
@@ -49,6 +40,21 @@ class BlackjackController(
                 betAmount = inputView.readBetAmount(player.name)
             }
             player.betAmount = betAmount
+        }
+    }
+
+    private fun playBlackjack(
+        dealer: Dealer,
+        players: List<Player>,
+    ) {
+        outputView.printInitialHandOutCardMessage(players)
+        gameManager = GameManager(dealer, players)
+        gameManager.dealInitialCards()
+        outputView.printAllPlayerHands(dealer, players)
+
+        if (!dealer.isBlackjack()) {
+            playersDrawCards(players)
+            dealerDrawCards(dealer)
         }
     }
 
