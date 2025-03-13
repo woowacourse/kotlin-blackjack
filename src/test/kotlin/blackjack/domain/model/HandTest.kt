@@ -18,14 +18,14 @@ class HandTest {
 
     @Test
     fun `패의 카드를 반환한다`() {
-        val hand = Hand(listOf(Card(Suit.HEART, Rank.ACE)))
-        assertThat(hand.show()).isEqualTo(listOf(Card(Suit.HEART, Rank.ACE)))
+        val hand = Hand(listOf(Card(Suit.HEART, Rank.ACE), Card(Suit.HEART, Rank.TWO)))
+        assertThat(hand.show()).isEqualTo(listOf(Card(Suit.HEART, Rank.ACE), Card(Suit.HEART, Rank.TWO)))
     }
 
     @Test
     fun `패에 카드를 추가한다`() {
-        val hand = Hand(listOf(Card(Suit.HEART, Rank.ACE)))
+        val hand = Hand(listOf(Card(Suit.HEART, Rank.ACE), Card(Suit.HEART, Rank.TWO)))
         hand.add(listOf(Card(Suit.HEART, Rank.KING)))
-        assertThat(hand.show()).isEqualTo(listOf(Card(Suit.HEART, Rank.ACE), Card(Suit.HEART, Rank.KING)))
+        assertThat(hand.show()).isEqualTo(listOf(Card(Suit.HEART, Rank.ACE), Card(Suit.HEART, Rank.TWO), Card(Suit.HEART, Rank.KING)))
     }
 }

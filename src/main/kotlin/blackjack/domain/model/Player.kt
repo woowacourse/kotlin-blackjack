@@ -1,13 +1,11 @@
 package blackjack.domain.model
 
-class Player(name: String) : Participant(name) {
+class Player(name: String, cards: List<Card>) : Participant(name, cards) {
     var bet: Int = 0
 
-    constructor(name: String, vararg cards: Card) : this(name) {
-        accept(cards.toList())
-    }
+    constructor(name: String, vararg cards: Card) : this(name, cards.toList())
 
-    constructor(name: String, bet: Int, vararg cards: Card) : this(name, *cards) {
+    constructor(name: String, bet: Int, vararg cards: Card) : this(name, cards.toList()) {
         this.bet = bet
     }
 
@@ -33,7 +31,7 @@ class Player(name: String) : Participant(name) {
     ) {
         if (!canHit()) return
         if (readAction(this) == Action.STAND) {
-            if (showHand().size == INITIAL_DRAW_COUNT) printStatus(this)
+            if (showHand().size == Hand.STARTING_HAND_SIZE) printStatus(this)
             return
         }
         accept(deck.draw())

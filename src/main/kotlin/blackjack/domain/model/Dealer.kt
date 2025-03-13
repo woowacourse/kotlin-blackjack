@@ -1,11 +1,13 @@
 package blackjack.domain.model
 
-class Dealer(name: String = DEFAULT_NAME) : Participant(name) {
+class Dealer(name: String, cards: List<Card>) : Participant(name, cards) {
     private var initialHandShown: Boolean = false
 
-    constructor(name: String, vararg cards: Card) : this(name) {
-        accept(cards.toList())
-    }
+    constructor(cards: List<Card>) : this(DEFAULT_NAME, cards)
+
+    constructor(vararg cards: Card) : this(DEFAULT_NAME, cards.toList())
+
+    constructor(name: String, vararg cards: Card) : this(name, cards.toList())
 
     override fun canHit(): Boolean {
         return (computePoint() <= HIT_THRESHOLD)

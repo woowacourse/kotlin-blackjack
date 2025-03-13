@@ -1,7 +1,7 @@
 package blackjack.domain.model
 
-abstract class Participant(val name: String) {
-    protected val hand = Hand()
+abstract class Participant(val name: String, cards: List<Card>) {
+    protected val hand = Hand(cards)
 
     init {
         require(name.isNotBlank()) { ERROR_MESSAGE_BLANK_PARTICIPANT_NAME }
@@ -24,7 +24,6 @@ abstract class Participant(val name: String) {
     abstract fun showHand(): List<Card>
 
     companion object {
-        const val INITIAL_DRAW_COUNT = 2
         const val DEFAULT_DRAW_COUNT = 1
 
         private const val ERROR_MESSAGE_BLANK_PARTICIPANT_NAME = "참가자의 이름은 공백일 수 없습니다."

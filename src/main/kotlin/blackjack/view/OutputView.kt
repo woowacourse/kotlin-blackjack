@@ -1,6 +1,7 @@
 package blackjack.view
 
 import blackjack.domain.model.Dealer
+import blackjack.domain.model.Hand
 import blackjack.domain.model.Participant
 import blackjack.domain.model.Participants
 import blackjack.domain.model.Player
@@ -94,7 +95,7 @@ class OutputView {
 
     companion object {
         private const val MESSAGE_INITIAL_HAND_DISTRIBUTED =
-            "%s와(과) %s에게 ${Participant.INITIAL_DRAW_COUNT}장의 카드를 나누었습니다."
+            "%s와(과) %s에게 ${Hand.STARTING_HAND_SIZE}장의 카드를 나누었습니다."
         private const val MESSAGE_DEALER_HITS_STATE = "%s은(는) ${Dealer.HIT_THRESHOLD}점 이하라 한 장의 카드를 더 받았습니다."
         private const val MESSAGE_RESULTS_HEADER = "\n## 최종 승패"
         private const val PLAYER_CARDS_DELIMITER = ", "

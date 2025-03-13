@@ -1,9 +1,10 @@
 package blackjack.domain.model
 
-class Hand() {
+class Hand(cards: List<Card>) {
     private val cards: MutableList<Card> = mutableListOf()
 
-    constructor(cards: List<Card>) : this() {
+    init {
+        require(cards.size >= STARTING_HAND_SIZE) { ERROR_MESSAGE_INCORRECT_STARTING_HAND }
         add(cards)
     }
 
@@ -31,8 +32,15 @@ class Hand() {
         return computePoint() > BUST_THRESHOLD
     }
 
+    fun isBlackJack(): Boolean {
+        return Hand(cards.take(STARTING_HAND_SIZE)).computePoint() == BUST_THRESHOLD
+    }
+
     companion object {
+        const val STARTING_HAND_SIZE = 2
         private const val BUST_THRESHOLD = 21
         private const val BONUS_POINT = 10
+
+        private const val ERROR_MESSAGE_INCORRECT_STARTING_HAND = "시작 시 ${STARTING_HAND_SIZE}장의 카드를 보유해야 합니다."
     }
 }
