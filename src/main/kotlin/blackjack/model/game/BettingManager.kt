@@ -1,6 +1,5 @@
 package blackjack.model.game
 
-import blackjack.model.participant.Dealer
 import blackjack.model.participant.Money
 import blackjack.model.participant.Name
 import blackjack.model.participant.Participants
@@ -11,53 +10,38 @@ class BettingManager {
 
     fun getPlayersMoney(
         players: Players,
-        getMoney: (Name) -> Money,
+        getBettingMoney: (Name) -> Money,
     ) {
         players.value.forEach { player ->
-            val money = getMoney(player.name)
+            val bettingMoney = getBettingMoney(player.name)
 
-            player.payMoney(money)
-            bettingTable.add(player.name, money)
+            player.payMoney(bettingMoney)
+            bettingTable.add(player.name, bettingMoney)
         }
     }
 
     fun result(
-        participants: Participants,
         winningResult: WinningResult,
+        participants: Participants,
     ): BettingResult {
-        val bettingResult = BettingTable()
-
-        updateTable(bettingResult, participants.dealer, winningResult)
-
+        val resultBettingTable = BettingTable()
+        updateTable(winningResult, resultBettingTable, participants)
         bettingTable.reset()
-        distributeMoney(participants, bettingResult.table)
-
-        return bettingResult.table
+        return resultBettingTable.table
     }
 
     private fun updateTable(
-        profitResult: BettingTable,
-        dealer: Dealer,
         winningResult: WinningResult,
+        resultBettingTable: BettingTable,
+        participants: Participants,
     ) {
-        profitResult.add(dealer.name, Money.ZERO)
-
         winningResult.playerResults.forEach { (name, result) ->
             val profit = bettingTable.get(name).multiply(result.profitRate)
-            profitResult.add(name, profit)
-            profitResult.add(dealer.name, profit.minus(profit))
-        }
-    }
+            resultBettingTable.add(participants.dealer.name, profit.reverse())
+            resultBettingTable.add(name, profit)
 
-    private fun distributeMoney(
-        participants: Participants,
-        bettingResult: BettingResult,
-    ) {
-        bettingResult.value.forEach { (name, money) ->
-            when (name == participants.dealer.name) {
-                true -> participants.dealer.recieveMoney(money)
-                false -> participants.players.receiveMoney(name, money)
-            }
+            participants.dealer.recieveMoney(profit.reverse())
+            participants.players.receiveMoney(name, profit)
         }
     }
 }

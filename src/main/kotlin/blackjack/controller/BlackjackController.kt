@@ -89,8 +89,8 @@ class BlackjackController(
             outputView.displayParticipantInfo(player.name, player.cards, player.score())
         }
 
-        val winningManager = WinningManager(participants)
-        val bettingResult = bettingManager.result(participants, winningManager.result())
+        val winningResult = WinningManager(participants).result()
+        val bettingResult = bettingManager.result(winningResult, participants)
 
         outputView.displayProfitTitle()
         bettingResult.value.forEach { (name, money) ->

@@ -10,6 +10,8 @@ value class Money(
 
     fun multiply(number: Double): Money = Money(this.value * number)
 
+    fun reverse(): Money = Money(-this.value)
+
     companion object {
         val ZERO = Money(0.0)
     }
