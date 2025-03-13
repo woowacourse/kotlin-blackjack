@@ -32,7 +32,7 @@ class BlackjackEngine(
 
     fun drawDealer(dealer: Dealer): Unit = dealer.drawUntilFinished(cardDeck)
 
-    fun makeFirstHand(): Hand = Hand(List(2) { cardDeck.draw() })
+    fun makeFirstHand(): Hand = Hand(List(START_CARD_COUNT) { cardDeck.draw() })
 
     fun progressPlayersDraw(players: Players, eventListener: EventListener, eventProvider: EventProvider) {
         players.value.forEach { player ->
@@ -83,8 +83,12 @@ class BlackjackEngine(
 
     fun progressDealerDraw(dealer: Dealer, eventListener: EventListener) {
         drawDealer(dealer)
-        eventListener.displayDealerDrawInfo(dealer.name, dealer.getAdditionalDrawCount())
+        eventListener.displayDealerDrawInfo(dealer.name, dealer.getHandSize()-START_CARD_COUNT)
         eventListener.displayParticipantInfo(dealer.name, dealer.hand.cards, dealer.hand.score(), dealer.hand.isBust())
+    }
+
+    companion object{
+        const val START_CARD_COUNT = 2
     }
 
 }

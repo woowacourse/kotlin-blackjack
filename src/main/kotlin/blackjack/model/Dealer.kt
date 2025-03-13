@@ -7,18 +7,10 @@ import blackjack.model.WinningResult.BLACKJACK
 
 class Dealer(val name: String = DEALER_NAME, override val hand: Hand) : Participant {
 
-
-    var drawCount = 0
-
     fun drawUntilFinished(cardDeck: CardDeck) {
         while (hand.score() <= DEALER_DRAW_CRITERIA && !hand.isBust()) {
-            drawCount++
             draw(cardDeck)
         }
-    }
-
-    fun getAdditionalDrawCount(): Int {
-        return drawCount
     }
 
     fun getWinDrawLossResult(players: Players): Map<WinningResult, Int> {
