@@ -41,9 +41,29 @@ class InputView {
         }
     }
 
+    fun readBettingMoney(name: String): Int {
+        while (true) {
+            println(MESSAGE_ASK_PLAYER_BET.format(name))
+            val input = readln().trim()
+
+            if (input.isBlank()) {
+                println(MESSAGE_EMPTY_INPUT)
+                continue
+            }
+
+            if (input.toIntOrNull() == null) {
+                println(MESSAGE_WRONG_INPUT)
+                continue
+            }
+
+            return input.toInt()
+        }
+    }
+
     companion object {
         const val MESSAGE_INPUT_PLAYER_NAME = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)"
         const val MESSAGE_ASK_PLAYER_HIT_OR_STAY = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)"
+        const val MESSAGE_ASK_PLAYER_BET = "%s의 배팅 금액은?"
 
         const val MESSAGE_EMPTY_INPUT = "빈 값이 입력 되었습니다."
         const val MESSAGE_EMPTY_NAME = "빈 이름이 포함되어 있습니다."
