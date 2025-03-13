@@ -29,7 +29,7 @@ class BlackJackController(
         val dealer: Participant = Dealer()
         return retryWhenException(
             action = {
-                val players = inputView.readPlayerName().map { Player(it) }
+                val players = inputView.readPlayerName().map(::Player)
                 Participants(players + dealer)
             },
             onError = { message ->
@@ -106,7 +106,10 @@ class BlackJackController(
     }
 
     private fun displayDealerExtraCard(game: BlackJackGame) {
-        outputView.printDealerExtraCard(game.processDealerTurn())
+        when (val drawCount = game.processDealerTurn()) {
+            0 -> return
+            else -> outputView.printDealerExtraCard(drawCount)
+        }
     }
 
     private fun displaySumOfParticipants(participants: Participants) {
