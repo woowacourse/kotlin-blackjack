@@ -5,9 +5,7 @@ import blackjack.model.card.CardRank
 import blackjack.model.card.CardSuit
 import blackjack.model.game.ResultManager
 import blackjack.model.participant.Dealer
-import blackjack.model.participant.Hand
 import blackjack.model.participant.Players
-import blackjack.model.rule.ScoreCalculator
 import blackjack.model.rule.WinningResult.LOSE
 import blackjack.model.rule.WinningResult.PUSH
 import blackjack.model.rule.WinningResult.WIN
@@ -16,18 +14,16 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class ResultManagerTest {
-    private lateinit var scoreCalculator: ScoreCalculator
     private lateinit var dealer: Dealer
     private lateinit var players: Players
     private lateinit var resultManager: ResultManager
 
     @BeforeEach
     fun setup() {
-        scoreCalculator = ScoreCalculator()
-        dealer = Dealer(hand = Hand(scoreCalculator))
+        dealer = Dealer.create()
 
         val playerNames = listOf("공백")
-        players = Players.from(playerNames, scoreCalculator)
+        players = Players.from(playerNames)
     }
 
     @Test

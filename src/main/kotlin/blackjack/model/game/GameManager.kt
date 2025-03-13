@@ -6,31 +6,27 @@ import blackjack.model.game.UserCommand.HIT
 import blackjack.model.game.UserCommand.STAY
 import blackjack.model.game.UserCommand.UNKNOWN
 import blackjack.model.participant.Dealer
-import blackjack.model.participant.Hand
 import blackjack.model.participant.Name
 import blackjack.model.participant.Player
 import blackjack.model.participant.Players
-import blackjack.model.rule.ScoreCalculator
 import blackjack.model.rule.WinningResult
 
 class GameManager {
     fun prepareDealer(
-        dealerName: Name,
+        dealerName: String,
         cardDeck: CardDeck,
-        scoreCalculator: ScoreCalculator,
     ): Dealer {
-        val dealer = Dealer(dealerName, Hand(scoreCalculator))
+        val dealer = Dealer.create(dealerName)
         dealer.recieveCards(cardDeck::draw)
 
         return dealer
     }
 
     fun preparePlayers(
-        playerNames: List<Name>,
+        playerNames: List<String>,
         cardDeck: CardDeck,
-        scoreCalculator: ScoreCalculator,
     ): Players {
-        val players = Players.from(playerNames, scoreCalculator)
+        val players = Players.from(playerNames)
         players.value.forEach { player -> player.recieveCards(cardDeck::draw) }
 
         return players

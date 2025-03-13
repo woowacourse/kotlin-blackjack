@@ -21,7 +21,7 @@ import blackjack.model.rule.WinningResult.WIN
 
 class OutputView {
     fun displayFirstDrawEnd(players: List<Name>) {
-        println("\n딜러와 ${players.joinToString {name -> name.value }}에게 2장을 나누었습니다.")
+        println("\n딜러와 ${players.joinToString()}에게 2장을 나누었습니다.")
     }
 
     fun displayDealerDrawInfo(count: Int) {
@@ -37,7 +37,7 @@ class OutputView {
         name: Name,
         cards: List<Card>,
     ) {
-        println("${name.value} 카드: ${cards.toText()}")
+        println("$name 카드: ${cards.toText()}")
     }
 
     fun displayParticipantInfo(
@@ -47,7 +47,7 @@ class OutputView {
         isBust: Boolean,
     ) {
         val result = if (isBust) "버스트" else score
-        println("${name.value} 카드: ${cards.toText()} - 결과: $result")
+        println("$name 카드: ${cards.toText()} - 결과: $result")
     }
 
     private fun List<Card>.toText(): String =
@@ -84,7 +84,7 @@ class OutputView {
 
     private fun displayPlayersResult(result: Map<Name, WinningResult>) {
         result.forEach { (name, winningResult) ->
-            println("${name.value}: ${winningResult.toText()}")
+            println("$name: ${winningResult.toText()}")
         }
     }
 

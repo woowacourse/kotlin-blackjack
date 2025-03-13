@@ -8,27 +8,20 @@ import blackjack.model.card.CardRank.NINE
 import blackjack.model.card.CardRank.QUEEN
 import blackjack.model.card.CardRank.TWO
 import blackjack.model.card.CardSuit.CLUB
-import blackjack.model.rule.ScoreCalculator
+import blackjack.model.participant.Hand
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class ResultCountCalculatorTest {
-    private lateinit var scoreCalculator: ScoreCalculator
-
-    @BeforeEach
-    fun setup() {
-        scoreCalculator = ScoreCalculator()
-    }
-
     @Test
     fun `핸드에 2클로버 한 장을 가지고 있으면 2점을 반환한다`() {
         // given
         val expectedScore = 2
         val card = Card(TWO, CLUB)
+        val hand = Hand(listOf(card))
 
         // when
-        val score = scoreCalculator.score(listOf(card))
+        val score = hand.score()
 
         // then
         assertThat(score).isEqualTo(expectedScore)
@@ -39,9 +32,10 @@ class ResultCountCalculatorTest {
         // given
         val expectedScore = 2
         val card = Card(TWO, CLUB)
+        val hand = Hand(listOf(card))
 
         // when
-        val score = scoreCalculator.score(listOf(card))
+        val score = hand.score()
 
         // then
         assertThat(score).isEqualTo(expectedScore)
@@ -54,12 +48,13 @@ class ResultCountCalculatorTest {
         val card2 = Card(KING, CLUB)
         val card3 = Card(JACK, CLUB)
         val cards = listOf(card1, card2, card3)
+        val hand = Hand(cards)
 
         // when
-        val score = scoreCalculator.score(cards)
+        val score = hand.score()
 
         // then
-        assertThat(scoreCalculator.isBust(score)).isTrue()
+        assertThat(hand.isBust(score)).isTrue()
     }
 
     @Test
@@ -69,9 +64,10 @@ class ResultCountCalculatorTest {
         val card2 = Card(QUEEN, CLUB)
         val card3 = Card(NINE, CLUB)
         val cards = listOf(card1, card2, card3)
+        val hand = Hand(cards)
         val expectedScore = 20
 
         // when & then
-        assertThat(scoreCalculator.score(cards)).isEqualTo(expectedScore)
+        assertThat(hand.score()).isEqualTo(expectedScore)
     }
 }

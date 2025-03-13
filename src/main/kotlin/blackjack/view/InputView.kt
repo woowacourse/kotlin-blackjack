@@ -4,16 +4,15 @@ import blackjack.model.game.UserCommand
 import blackjack.model.game.UserCommand.HIT
 import blackjack.model.game.UserCommand.STAY
 import blackjack.model.game.UserCommand.UNKNOWN
-import blackjack.model.participant.Name
 
 class InputView {
-    fun getPlayers(): List<Name> {
+    fun getPlayers(): List<String> {
         println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
-        return readln().split(",").map { name -> Name(name.trim()) }
+        return readln().split(",").map { name -> name.trim() }
     }
 
-    fun getIsRecieveMore(name: Name): UserCommand {
-        println("\n${name.value}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
+    fun getIsRecieveMore(name: String): UserCommand {
+        println("\n${name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
         return when (readln().lowercase()) {
             "y" -> HIT
             "n" -> STAY

@@ -4,19 +4,16 @@ import blackjack.model.card.Card
 import blackjack.model.card.CardRank
 import blackjack.model.card.CardSuit
 import blackjack.model.participant.Hand
-import blackjack.model.rule.ScoreCalculator
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class HandTest {
-    private lateinit var scoreCalculator: ScoreCalculator
     private lateinit var hand: Hand
 
     @BeforeEach
     fun setup() {
-        scoreCalculator = ScoreCalculator()
-        hand = Hand(scoreCalculator)
+        hand = Hand()
     }
 
     @Test

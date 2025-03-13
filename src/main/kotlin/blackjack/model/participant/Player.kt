@@ -2,7 +2,7 @@ package blackjack.model.participant
 
 import blackjack.model.card.Card
 
-class Player(
+class Player private constructor(
     name: Name,
     hand: Hand,
 ) : Participant(name, hand) {
@@ -12,5 +12,10 @@ class Player(
 
     companion object {
         private const val FIRST_SHOWN_COUNT = 2
+
+        fun create(
+            name: String,
+            hand: Hand = Hand(),
+        ): Player = Player(Name(name), hand)
     }
 }

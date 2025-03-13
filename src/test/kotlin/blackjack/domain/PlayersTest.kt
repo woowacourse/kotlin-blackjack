@@ -1,19 +1,16 @@
 package blackjack.domain
 
 import blackjack.model.participant.Players
-import blackjack.model.rule.ScoreCalculator
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 
 class PlayersTest {
-    private val scoreCalculator = ScoreCalculator()
-
     @Test
     fun `플레이어 인원 수는 0명 초과이다`() {
         // given & when & then
         assertThrows<IllegalArgumentException> {
-            Players.from(emptyList(), scoreCalculator)
+            Players.from(emptyList())
         }
     }
 
@@ -24,7 +21,7 @@ class PlayersTest {
 
         // when & then
         assertThrows<IllegalArgumentException> {
-            Players.from(players, scoreCalculator)
+            Players.from(players)
         }
     }
 
@@ -35,7 +32,7 @@ class PlayersTest {
 
         // when & then
         assertThrows<IllegalArgumentException> {
-            Players.from(players, scoreCalculator)
+            Players.from(players)
         }
     }
 
@@ -46,7 +43,7 @@ class PlayersTest {
 
         // when & then
         assertDoesNotThrow {
-            Players.from(players, scoreCalculator)
+            Players.from(players)
         }
     }
 }

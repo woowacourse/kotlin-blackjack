@@ -1,7 +1,5 @@
 package blackjack.model.participant
 
-import blackjack.model.rule.ScoreCalculator
-
 class Players private constructor(
     val value: List<Player>,
 ) {
@@ -18,9 +16,6 @@ class Players private constructor(
         private const val MIN_PLAYER_COUNT = 1
         private const val MAX_PLAYER_COUNT = 7
 
-        fun from(
-            players: List<Name>,
-            scoreCalculator: ScoreCalculator,
-        ): Players = Players(players.map { name -> Player(name, Hand(scoreCalculator)) })
+        fun from(players: List<String>): Players = Players(players.map { name -> Player.create(name) })
     }
 }

@@ -2,8 +2,8 @@ package blackjack.model.participant
 
 import blackjack.model.card.Card
 
-class Dealer(
-    name: Name = Name(""),
+class Dealer private constructor(
+    name: Name,
     hand: Hand,
 ) : Participant(name, hand) {
     override fun showInitialCards(): List<Card> = cards.take(FIRST_SHOWN_COUNT)
@@ -15,5 +15,11 @@ class Dealer(
     companion object {
         private const val DRAW_CRITERIA = 16
         private const val FIRST_SHOWN_COUNT = 1
+        const val DEFAULT_DEALER_NAME = "딜러"
+
+        fun create(
+            name: String = DEFAULT_DEALER_NAME,
+            hand: Hand = Hand(),
+        ): Dealer = Dealer(Name(name), hand)
     }
 }

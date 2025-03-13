@@ -4,9 +4,8 @@ import blackjack.model.card.CardDeck
 import blackjack.model.game.GameManager
 import blackjack.model.game.ResultManager
 import blackjack.model.participant.Dealer
-import blackjack.model.participant.Name
+import blackjack.model.participant.Dealer.Companion.DEFAULT_DEALER_NAME
 import blackjack.model.participant.Players
-import blackjack.model.rule.ScoreCalculator
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -17,9 +16,8 @@ class BlackjackController(
     fun run() {
         val gameManager = GameManager()
         val cardDeck = CardDeck()
-        val scoreCalculator = ScoreCalculator()
-        val dealer = gameManager.prepareDealer(DEFAULT_DEALER_NAME, cardDeck, scoreCalculator)
-        val players = preparePlayers(gameManager, cardDeck, dealer, scoreCalculator)
+        val dealer = gameManager.prepareDealer(DEFAULT_DEALER_NAME, cardDeck)
+        val players = preparePlayers(gameManager, cardDeck, dealer)
         val resultManager = ResultManager(dealer, players)
 
         progressPlayersDraw(gameManager, players, cardDeck)
@@ -33,10 +31,9 @@ class BlackjackController(
         gameManager: GameManager,
         cardDeck: CardDeck,
         dealer: Dealer,
-        scoreCalculator: ScoreCalculator,
     ): Players {
         val playerNames = inputView.getPlayers()
-        val players = gameManager.preparePlayers(playerNames, cardDeck, scoreCalculator)
+        val players = gameManager.preparePlayers(playerNames, cardDeck)
 
         outputView.displayFirstDrawEnd(players.value.map { player -> player.name })
         outputView.displayParticipantCards(dealer.name, dealer.showInitialCards())
@@ -56,7 +53,7 @@ class BlackjackController(
             gameManager.progressPlayerDrawUntilFinished(
                 player = player,
                 draw = cardDeck::draw,
-                getCommand = { inputView.getIsRecieveMore(player.name) },
+                getCommand = { inputView.getIsRecieveMore(player.name.toString()) },
                 onCardReceived = { cards -> outputView.displayParticipantCards(player.name, cards) },
             )
         }
@@ -86,9 +83,5 @@ class BlackjackController(
         val result = gameManager.getResult(resultManager)
 
         outputView.displayResult(result)
-    }
-
-    companion object {
-        private val DEFAULT_DEALER_NAME = Name("딜러")
     }
 }
