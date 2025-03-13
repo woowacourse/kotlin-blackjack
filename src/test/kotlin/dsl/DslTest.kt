@@ -1,32 +1,17 @@
 package dsl
 
+import dsl.DslTest.Companion.ERROR_NAME_EMPTY
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
-
-/**
- * val intro = introduce {
- *         name("박재성")
- *         company("우아한형제들")
- *         skills {
- *             soft("A passion for problem solving")
- *             soft("Good communication skills")
- *             hard("Kotlin")
- *         }
- *         languages {
- *             "Korean" level 5
- *             "English" level 3
- *         }
- *     }
- */
 
 fun introduce(block: PersonBuilder.() -> Unit): Person {
     return PersonBuilder().apply(block).build()
 }
 
 class PersonBuilder {
-    private lateinit var name: String
+    private var name: String? = null
     private var company: String? = null
     private var skills: Skill? = null
     private var languages: List<Language> = emptyList()
@@ -48,7 +33,7 @@ class PersonBuilder {
     }
 
     fun build(): Person {
-        return Person(name, company, skills, languages)
+        return Person(requireNotNull(name) { ERROR_NAME_EMPTY }, company, skills, languages)
     }
 }
 
@@ -138,5 +123,9 @@ class DslTest {
             }
         assertThat(person.languages[0].level).isEqualTo(5)
         assertThat(person.languages[1].level).isEqualTo(3)
+    }
+
+    companion object {
+        const val ERROR_NAME_EMPTY = "name은 비어있으면 안 됩니다."
     }
 }
