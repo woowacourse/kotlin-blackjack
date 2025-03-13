@@ -102,7 +102,7 @@ class BlackjackController(
     ) {
         outputView.participantsCardResult(blackjack.playerGroup)
         val gameResult = blackjack.endGame(playerBetAmount)
-        val dealerResult = -gameResult.values.sum()
+        val dealerResult = -gameResult.values.sumOf { it.amount }
         outputView.dealerResult(blackjack.playerGroup.dealer, dealerResult)
         outputView.playerResult(gameResult)
     }

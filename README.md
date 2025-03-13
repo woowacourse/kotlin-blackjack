@@ -86,4 +86,4 @@
 - [ ] Player | receive 로직 단순화 (Hand를 생성자로 해 줄지 고민)
 - [ ] BlackjackController | 블랙잭 혼자서도 게임이 가능하도록 변경
 - [ ] ActionType | Input에서 ActionType 생성
-- [ ] 수익률을 value class로 선언
+- [x] 수익률을 value class로 선언

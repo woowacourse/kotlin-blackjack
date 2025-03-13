@@ -1,6 +1,7 @@
 package blackjack.domain.service
 
 import blackjack.domain.model.BetAmount
+import blackjack.domain.model.Proceed
 import blackjack.domain.model.card.Card
 import blackjack.domain.model.card.CardFactory.Companion.cardNumbers
 import blackjack.domain.model.card.CardFactory.Companion.symbols
@@ -62,9 +63,9 @@ class BlackjackTest {
         // when
         val gameResult = game.endGame(betAmount)
         // then
-        assertThat(gameResult[player1]).isEqualTo(1000)
-        assertThat(gameResult[player2]).isEqualTo(-2000)
-        assertThat(gameResult[player3]).isEqualTo(0)
+        assertThat(gameResult[player1]).isEqualTo(Proceed(1000))
+        assertThat(gameResult[player2]).isEqualTo(Proceed(-2000))
+        assertThat(gameResult[player3]).isEqualTo(Proceed(0))
     }
 
     @Test

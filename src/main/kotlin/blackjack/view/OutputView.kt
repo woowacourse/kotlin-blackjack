@@ -1,5 +1,6 @@
 package blackjack.view
 
+import blackjack.domain.model.Proceed
 import blackjack.domain.model.card.Card
 import blackjack.domain.model.card.Shape
 import blackjack.domain.model.participant.Dealer
@@ -56,9 +57,9 @@ class OutputView {
         }
     }
 
-    fun playerResult(statusCount: Map<Player, Int>) {
+    fun playerResult(statusCount: Map<Player, Proceed>) {
         statusCount.forEach { (player, proceed) ->
-            println(PLAYER_STATUS.format(player.name, proceed.toString()))
+            println(PLAYER_STATUS.format(player.name, proceed.amount.toString()))
         }
         println()
     }
