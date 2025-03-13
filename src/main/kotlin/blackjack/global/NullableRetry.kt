@@ -14,7 +14,7 @@ interface NullableRetry {
             result = nullableAction()
             tried++
         }
-        requireNotNull(result) { "$retryCount 번 이상 잘못된 값을 입력하였습니다" }
+        result ?: throw RetryException()
         return result
     }
 }

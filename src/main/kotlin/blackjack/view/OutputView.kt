@@ -20,10 +20,10 @@ object OutputView {
     fun printGameResult(playerResults: PlayerResults) {
         println(FINAL_RESULT_NOTICE)
 
-        val dealerProfit = playerResults.playerResults.sumOf { it.getEarn() } * -1
+        val dealerProfit = playerResults.toList().sumOf { it.getEarn() } * -1
         println(printDealerResult(dealerProfit))
 
-        playerResults.playerResults.forEach {
+        playerResults.toList().forEach {
             println(printPlayerResult(it))
         }
     }

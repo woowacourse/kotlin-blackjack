@@ -7,17 +7,15 @@ interface ThrowableRetry {
         retryCount: Int,
         action: () -> T,
     ): T {
-        var tried = 0
-        var lastException: Throwable? = null
-        while (tried < retryCount) {
+        repeat(retryCount) {
             runCatching {
                 return action()
             }.onFailure { e ->
+                // 재시도 실패 시 생긴 예외는 핸들링 안함
+                if (e is RetryException) throw RetryException()
                 onOnceFailure(e)
-                lastException = e
-                tried++
             }
         }
-        throw IllegalStateException(lastException)
+        throw RetryException()
     }
 }
