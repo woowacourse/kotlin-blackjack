@@ -1,9 +1,5 @@
-package blackjack.domain
+package blackjack.domain.card
 
-import blackjack.domain.card.PlayerCards
-import blackjack.domain.card.Shape
-import blackjack.domain.card.Tier
-import blackjack.domain.card.TrumpCard
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
