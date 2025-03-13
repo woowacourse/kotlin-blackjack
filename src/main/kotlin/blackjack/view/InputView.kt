@@ -1,5 +1,6 @@
 package blackjack.view
 
+import blackjack.domain.model.ActionType
 import blackjack.domain.model.participant.Player
 
 class InputView {
@@ -17,7 +18,7 @@ class InputView {
         return toInteger(readln()) ?: askForPlayerBetAmount(player)
     }
 
-    fun askForHitOrStay(player: Player): String {
+    fun askForHitOrStay(player: Player): ActionType {
         println(INPUT_HIT_OR_STAY.format(player.name))
         return changeInput(readln()) ?: askForHitOrStay(player)
     }
@@ -35,12 +36,12 @@ class InputView {
             return input.toIntOrNull()
         }
 
-        private fun changeInput(input: String): String? {
+        private fun changeInput(input: String): ActionType? {
             if (input !in yesValidInput + noValidInput) return null
             return if (input in yesValidInput) {
-                yesValidInput.first()
+                ActionType.Hit
             } else {
-                noValidInput.first()
+                ActionType.Stay
             }
         }
 
