@@ -23,8 +23,8 @@ class Hand(private val _cards: MutableList<Card>) {
         return CardNumber.Ace in cardNumbers
     }
 
-    fun isBust(number: Int): Boolean {
-        return number > BUST_STANDARD
+    fun isBust(): Boolean {
+        return getSumNumber() > BUST_STANDARD
     }
 
     private fun MutableList<Card>.deepCopy(): List<Card> = map { it.copy() }

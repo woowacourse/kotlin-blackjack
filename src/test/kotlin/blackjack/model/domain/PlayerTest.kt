@@ -29,7 +29,7 @@ class PlayerTest {
         // given
         player1.receiveCard(listOf(Card.from("QueenHeart"), Card.from("QueenSpade")))
         // when
-        val actual = player1.checkBust()
+        val actual = player1.hand.isBust()
         val expected = true
         // then
         assertThat(actual).isEqualTo(expected)

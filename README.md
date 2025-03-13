@@ -46,9 +46,7 @@
 - [x] Participants | 카드 합 구하는 로직 변경
 - [x] YesOrNo | Enum으로 합체
 - [x] Dealer | 더 뽑을 수 있는지 스스로 판단 (참여자 객체에서 판단하게 함)
-- [ ] Player | 승패 상태를 저장 위치 고민
 - [x] Deck | 카드를 명시적으로 넣어 주기 (이러면 Deck이 셔플 방법을 몰라도 됨)
-- [ ] ParticipantStatus | 승부를 벌이는 일은 누구의 역할인지 고민 (Status or Participant)
 - [x] Blackjack | shouldStopDrawing 메소드가 한 가지 일만 하도록 변경
 - [x] Participants | 가시성 변경자 수정
 - [x] 8명 인원 제한
@@ -70,3 +68,4 @@
 - [x] Participants | status 변수 삭제
 - [x] BlackJack | 딜러 임계값 상수 이동
 - [x] DealerTest | 테스트명 변경
+- [x] Participants | checkBust메소드 Hand의 isBust로 병합

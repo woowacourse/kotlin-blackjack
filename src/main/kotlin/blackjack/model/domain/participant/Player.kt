@@ -7,7 +7,7 @@ data class Player(override val name: String) : Participants() {
     override val hand: Hand = Hand(mutableListOf())
 
     override fun canHit(): Boolean {
-        return hand.isBust(sumCardNumber)
+        return hand.isBust()
     }
 
     fun compareScores(
@@ -15,7 +15,7 @@ data class Player(override val name: String) : Participants() {
         number: Int,
     ): GameResult =
         when {
-            hand.isBust(sumCardNumber) -> GameResult.Lose
+            hand.isBust() -> GameResult.Lose
             isDealerBust -> GameResult.Win
             else -> GameResult.compare(sumCardNumber, number)
         }

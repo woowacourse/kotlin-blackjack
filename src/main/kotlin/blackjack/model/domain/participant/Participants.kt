@@ -14,9 +14,5 @@ abstract class Participants() {
         hand.append(cards)
     }
 
-    fun checkBust(): Boolean {
-        return hand.isBust(sumCardNumber)
-    }
-
     abstract fun canHit(): Boolean
 }

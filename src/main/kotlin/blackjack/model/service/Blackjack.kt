@@ -35,7 +35,7 @@ class Blackjack(private val deck: PlayingCard) {
         val dealerResult = playerGroup.dealer.sumCardNumber
 
         return playerGroup.players.associateWith { player ->
-            player.compareScores(playerGroup.dealer.checkBust(), dealerResult)
+            player.compareScores(playerGroup.dealer.hand.isBust(), dealerResult)
         }
     }
 

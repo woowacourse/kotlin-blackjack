@@ -72,7 +72,7 @@ class BlackjackController(
 
     private fun dealerReceiveCard() {
         val count: Int = blackjack.drawUntilThreshold(dealer)
-        dealer.checkBust()
+        dealer.hand.isBust()
         outputView.printDealerReceiveCard(count, dealer)
     }
 
