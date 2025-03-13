@@ -8,6 +8,7 @@ import blackjack.domain.Rank
 import blackjack.domain.Suit
 import blackjack.view.model.DealerResult
 import blackjack.view.model.DealerSummary
+import blackjack.view.model.PlayerConfig
 import blackjack.view.model.PlayerResult
 import blackjack.view.model.PlayerSummary
 
@@ -59,8 +60,8 @@ private val Card.prettyString: String
 val List<Player>.playersCards: List<List<String>>
     get() = map { player -> player.cards.prettyString }
 
-val List<String>.toPlayers: List<Player>
-    get() = map { playerName -> Player(playerName) }
+val List<PlayerConfig>.toPlayers: List<Player>
+    get() = map { playerConfig -> Player(playerConfig.name, playerConfig.bettingAmount) }
 
 val Dealer.result: DealerResult
     get() =

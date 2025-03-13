@@ -6,6 +6,7 @@ import blackjack.domain.Player
 import blackjack.domain.RandomShuffler
 import blackjack.view.AskView
 import blackjack.view.ResultView
+import blackjack.view.model.PlayerConfig
 
 class BlackjackController(
     val askView: AskView = AskView(),
@@ -16,8 +17,8 @@ class BlackjackController(
     lateinit var blackjack: Blackjack
 
     fun initGame() {
-        val playerNames: List<String> = askView.readPlayers()
-        players = playerNames.toPlayers
+        val playerConfigs: List<PlayerConfig> = askView.readPlayers()
+        players = playerConfigs.toPlayers
         dealer = Dealer(players, RandomShuffler)
         blackjack = Blackjack(dealer)
     }
