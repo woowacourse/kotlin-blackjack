@@ -7,6 +7,10 @@ class Player(name: String) : Participant(name) {
         accept(cards.toList())
     }
 
+    constructor(name: String, bet: Int, vararg cards: Card) : this(name, *cards) {
+        this.bet = bet
+    }
+
     override fun canHit(): Boolean {
         return !isBusted()
     }
@@ -15,7 +19,7 @@ class Player(name: String) : Participant(name) {
         return hand.show()
     }
 
-    fun placeBet(input: (Player) -> Int): Int {
+    fun bet(input: (Player) -> Int): Int {
         val amount = input(this)
         require(amount >= 0) { ERROR_MESSAGE_BET_NOT_POSITIVE }
         bet = amount
@@ -46,7 +50,7 @@ class Player(name: String) : Participant(name) {
         return when {
             point > dealerPoint -> Result.WIN
             point < dealerPoint -> Result.LOSE
-            else -> Result.DRAW
+            else -> Result.PUSH
         }
     }
 

@@ -2,7 +2,6 @@ package blackjack.domain.model
 
 class Participants(val dealer: Dealer, val players: List<Player>) {
     val all: List<Participant> = listOf(dealer) + players
-    var totalBet: Int = 0
 
     init {
         val playerNames: List<String> = players.map { player -> player.name }
@@ -14,8 +13,7 @@ class Participants(val dealer: Dealer, val players: List<Player>) {
 
     fun processPlayerBets(input: (Player) -> Int) {
         players.forEach { player ->
-            totalBet += player.placeBet(input)
-            println(totalBet)
+            player.bet(input)
         }
     }
 

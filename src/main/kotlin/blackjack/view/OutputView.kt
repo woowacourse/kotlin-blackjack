@@ -69,7 +69,7 @@ class OutputView {
         return when (this) {
             Result.WIN -> RESULT_WIN
             Result.LOSE -> RESULT_LOSE
-            Result.DRAW -> RESULT_DRAW
+            Result.PUSH -> RESULT_DRAW
         }
     }
 

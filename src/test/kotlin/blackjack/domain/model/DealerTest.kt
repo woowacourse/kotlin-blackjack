@@ -21,7 +21,7 @@ class DealerTest {
         val actual: Map<Player, Result> =
             mapOf(
                 player1 to Result.LOSE,
-                player2 to Result.DRAW,
+                player2 to Result.PUSH,
                 player3 to Result.WIN,
             )
         assertThat(verdicts).isEqualTo(actual)
@@ -38,7 +38,7 @@ class DealerTest {
         val players = listOf(player1, player2, player3, player4, player5, player6)
         val playerVerdicts: Map<Player, Result> = dealer.getPlayerResults(players)
         val verdicts: Map<Result, Int> = dealer.getDealerResults(playerVerdicts)
-        val actual: Map<Result, Int> = mapOf(Result.WIN to 1, Result.LOSE to 2, Result.DRAW to 3)
+        val actual: Map<Result, Int> = mapOf(Result.WIN to 1, Result.LOSE to 2, Result.PUSH to 3)
         assertThat(verdicts).isEqualTo(actual)
     }
 

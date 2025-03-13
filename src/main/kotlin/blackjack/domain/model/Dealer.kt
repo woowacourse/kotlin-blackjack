@@ -37,6 +37,14 @@ class Dealer(name: String = DEFAULT_NAME) : Participant(name) {
         }
     }
 
+    fun getPlayersProfits(playerResults: Map<Player, Result>): Map<Player, Int> {
+        val playerProfits: Map<Player, Int> =
+            playerResults.mapValues { (player, result) ->
+                Math.round(player.bet * result.profitRate).toInt()
+            }
+        return playerProfits
+    }
+
     companion object {
         const val HIT_THRESHOLD = 16
 

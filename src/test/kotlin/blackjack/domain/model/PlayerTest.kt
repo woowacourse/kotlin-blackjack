@@ -70,6 +70,6 @@ class PlayerTest {
     fun `플레이어와 딜러가 비긴다`() {
         val player = Player("A", Card(Suit.CLUB, Rank.ACE), Card(Suit.CLUB, Rank.TWO)) // 13점
         val dealer = Dealer("딜러", Card(Suit.CLUB, Rank.ACE), Card(Suit.CLUB, Rank.TWO)) // 13점
-        assertThat(player.compareAgainst(dealer)).isEqualTo(Result.DRAW)
+        assertThat(player.compareAgainst(dealer)).isEqualTo(Result.PUSH)
     }
 }
