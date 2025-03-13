@@ -13,18 +13,18 @@ class CharacterTest {
     @Test
     fun `캐릭터 카드 Jack은 숫자 10으로 계산한다`() {
         val faceCard = FaceRank.JACK
-        assertThat(faceCard.value).isEqualTo(10)
+        assertThat(faceCard.possibleValues).hasSameElementsAs(setOf(10))
     }
 
     @Test
     fun `캐릭터 카드 Queen은 숫자 10으로 계산한다`() {
         val faceCard = FaceRank.QUEEN
-        assertThat(faceCard.value).isEqualTo(10)
+        assertThat(faceCard.possibleValues).hasSameElementsAs(setOf(10))
     }
 
     @Test
     fun `캐릭터 카드 King은 숫자 10으로 계산한다`() {
         val faceCard = FaceRank.KING
-        assertThat(faceCard.value).isEqualTo(10)
+        assertThat(faceCard.possibleValues).hasSameElementsAs(setOf(10))
     }
 }

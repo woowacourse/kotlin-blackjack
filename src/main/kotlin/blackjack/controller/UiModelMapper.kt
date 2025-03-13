@@ -15,8 +15,18 @@ private val Rank.prettyString: String
     get() =
         when (this) {
             Rank.AceRank -> "A"
-            is Rank.FaceRank -> value.toString()
-            is Rank.NumberRank -> value.toString()
+            Rank.NumberRank.TWO -> "2"
+            Rank.NumberRank.THREE -> "3"
+            Rank.NumberRank.FOUR -> "4"
+            Rank.NumberRank.FIVE -> "5"
+            Rank.NumberRank.SIX -> "6"
+            Rank.NumberRank.SEVEN -> "7"
+            Rank.NumberRank.EIGHT -> "8"
+            Rank.NumberRank.NINE -> "9"
+            Rank.NumberRank.TEN -> "10"
+            Rank.FaceRank.JACK -> "J"
+            Rank.FaceRank.QUEEN -> "Q"
+            Rank.FaceRank.KING -> "K"
         }
 
 private val Suit.prettyString: String
