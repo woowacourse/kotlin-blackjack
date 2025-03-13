@@ -2,7 +2,7 @@ package blackjack
 
 import blackjack.model.Player
 import blackjack.model.card.Card
-import blackjack.model.card.Number
+import blackjack.model.card.CardNumber
 import blackjack.model.card.Shape
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
@@ -23,9 +23,9 @@ class PlayerTest {
 
     @Test
     fun `플레이어는 카드 총 합이 21을 넘으면 true를 반환한다`() {
-        player.addCard(Card(Shape.SPADE, Number.NINE))
-        player.addCard(Card(Shape.CLOVER, Number.QUEEN))
-        player.addCard(Card(Shape.CLOVER, Number.SEVEN))
+        player.addCard(Card(Shape.SPADE, CardNumber.NINE))
+        player.addCard(Card(Shape.CLOVER, CardNumber.QUEEN))
+        player.addCard(Card(Shape.CLOVER, CardNumber.SEVEN))
         val expected = true
 
         val actual = player.isBust()

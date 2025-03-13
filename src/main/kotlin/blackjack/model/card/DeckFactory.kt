@@ -8,7 +8,7 @@ object DeckFactory {
 
     private fun generateCards(): MutableList<Card> =
         Shape.entries.flatMap { shape ->
-            Number.entries.map { number ->
+            CardNumber.entries.map { number ->
                 Card(shape, number)
             }
         }.toMutableList()

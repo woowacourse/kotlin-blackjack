@@ -1,7 +1,7 @@
 package blackjack.model
 
 import blackjack.model.card.Card
-import blackjack.model.card.Number
+import blackjack.model.card.CardNumber
 
 object ScoreCalculator {
     private const val ADJUST_ACE_NUMBER = 10
@@ -12,7 +12,7 @@ object ScoreCalculator {
 
     fun calculateOptimalSum(cards: List<Card>): Int {
         var totalScore = sum(cards)
-        var countAce = countNumber(cards, Number.ACE)
+        var countAce = countNumber(cards, CardNumber.ACE)
         while (countAce-- > 0) {
             if (totalScore > BUST_NUMBER) totalScore -= ADJUST_ACE_NUMBER
         }
@@ -27,7 +27,7 @@ object ScoreCalculator {
 
     private fun countNumber(
         cards: List<Card>,
-        targetNumber: Number,
+        targetNumber: CardNumber,
     ): Int {
         return cards.count { card -> card.number == targetNumber }
     }
