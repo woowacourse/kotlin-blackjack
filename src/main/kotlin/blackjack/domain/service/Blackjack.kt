@@ -18,9 +18,7 @@ class Blackjack(
     }
 
     private fun distributeStartingHands(player: Participants) {
-        repeat(2) {
-            player.receiveCard(deck.spreadCard())
-        }
+        player.receiveCard(deck.spreadCard(INITIAL_CARD_COUNT))
     }
 
     fun canHit(participant: Participants): Boolean {
@@ -28,7 +26,7 @@ class Blackjack(
     }
 
     fun hitAction(player: Player) {
-        player.receiveCard(deck.spreadCard())
+        player.receiveCard(deck.spreadCard(ONE_CARD))
     }
 
     fun getParticipantCardSize(participant: Participants): Int {
@@ -38,7 +36,7 @@ class Blackjack(
     fun drawUntilThreshold(): Int {
         var count: Int = 0
         while (playerGroup.dealer.canHit()) {
-            playerGroup.dealer.receiveCard(deck.spreadCard())
+            playerGroup.dealer.receiveCard(deck.spreadCard(ONE_CARD))
             count++
         }
         return count
@@ -50,5 +48,10 @@ class Blackjack(
             val proceed = betStatus[player]?.calculateProceed(result, player.hand.isBlackjack()) ?: throw IllegalArgumentException()
             Proceed(proceed)
         }
+    }
+
+    companion object {
+        private const val INITIAL_CARD_COUNT: Int = 2
+        private const val ONE_CARD: Int = 1
     }
 }

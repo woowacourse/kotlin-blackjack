@@ -1,22 +1,23 @@
 package blackjack.domain.model
 
 import blackjack.domain.model.card.Card
-import blackjack.domain.model.card.CardNumber
+import blackjack.domain.model.card.CardFactory
 import blackjack.domain.model.card.PlayingCard
-import blackjack.domain.model.card.Shape
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
 
 class PlayingCardTest {
     // given
-    private val cards: ArrayDeque<Card> = ArrayDeque(listOf(Card(Shape.Diamond, CardNumber.Ace)))
+    private val cards: ArrayDeque<Card> = CardFactory().makeCard()
     private val deck: PlayingCard = PlayingCard(cards)
 
-    @Test
-    fun `카드를 첫번째 장에 있는 카드를 나누어준다`() {
+    @ValueSource(ints = [1, 10, 20])
+    @ParameterizedTest
+    fun `필요한 개수만큼 카드를 반환한다`(input: Int) {
         // when
-        val actual = deck.spreadCard()
-        val expected = Card(Shape.Diamond, CardNumber.Ace)
+        val actual = deck.spreadCard(input).size
+        val expected = input
         // then
         assertThat(actual).isEqualTo(expected)
     }

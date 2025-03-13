@@ -11,8 +11,8 @@ abstract class Participants() {
     val sumCardNumber: Int get() = hand.getSumNumber()
     val cardDeck get() = hand.cards.toList()
 
-    fun receiveCard(card: Card) {
-        hand.append(card)
+    fun receiveCard(cards: List<Card>) {
+        hand.append(cards)
     }
 
     fun compareScores(participant: Participants): GameResult =

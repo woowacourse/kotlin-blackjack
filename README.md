@@ -83,7 +83,7 @@
 - [x] BlackjackController | PlayerGroup 파라미터 생략
 
 - [x] 테스트 코드 추가
-- [ ] Player | receive 로직 단순화 (Hand를 생성자로 해 줄지 고민)
+- [x] Player | receive 로직 단순화 (Hand를 생성자로 해 줄지 고민)
 - [x] BlackjackController | 블랙잭 혼자서도 게임이 가능하도록 변경
 - [ ] ActionType | Input에서 ActionType 생성
 - [x] 수익률을 value class로 선언

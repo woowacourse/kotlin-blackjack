@@ -16,8 +16,7 @@ class DealerTest {
     @Test
     fun `받은 카드의 목록을 반환한다`() {
         // given
-        dealer.receiveCard(aceHeart)
-        dealer.receiveCard(sixSpade)
+        dealer.receiveCard(listOf(aceHeart, sixSpade))
         // when
         val actual = dealer.cardDeck
         val expected = listOf(aceHeart, sixSpade)
@@ -28,8 +27,7 @@ class DealerTest {
     @Test
     fun `딜러의 점수 합계가 16점 미만이라면 더 뽑을 수 있다`() {
         // given
-        dealer.receiveCard(sixSpade)
-        dealer.receiveCard(twoHeart)
+        dealer.receiveCard(listOf(sixSpade, twoHeart))
         // when
         val actual = dealer.canHit()
         // then
@@ -39,8 +37,7 @@ class DealerTest {
     @Test
     fun `딜러의 점수 합계가 16점 이상이라면 더 뽑을 수 없다`() {
         // given
-        dealer.receiveCard(aceHeart)
-        dealer.receiveCard(sixSpade)
+        dealer.receiveCard(listOf(aceHeart, sixSpade))
         // when
         val actual = dealer.canHit()
         // then
@@ -50,8 +47,7 @@ class DealerTest {
     @Test
     fun `딜러는 초기 카드로 1장을 보여 준다`() {
         // given
-        dealer.receiveCard(aceHeart)
-        dealer.receiveCard(sixSpade)
+        dealer.receiveCard(listOf(aceHeart, sixSpade))
         // when
         val actual = dealer.getInitCard().size
         val expected = 1

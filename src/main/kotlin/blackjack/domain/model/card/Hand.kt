@@ -16,8 +16,8 @@ class Hand(cards: MutableList<Card>) {
         return sum
     }
 
-    fun append(card: Card) {
-        _cards.add(card)
+    fun append(cards: List<Card>) {
+        _cards.addAll(cards)
     }
 
     fun isBust(): Boolean {

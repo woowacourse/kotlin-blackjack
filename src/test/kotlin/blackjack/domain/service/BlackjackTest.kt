@@ -49,10 +49,10 @@ class BlackjackTest {
     @Test
     fun `게임이 끝난 후 수익 금액을 계산한다`() {
         // given
-        player1.receiveCard(Card(Shape.Spade, CardNumber.Ace)) // 11
-        player2.receiveCard(Card(Shape.Spade, CardNumber.Six)) // 6
-        player3.receiveCard(Card(Shape.Heart, CardNumber.Seven)) // 7
-        dealer.receiveCard(Card(Shape.Spade, CardNumber.Seven)) // 7
+        player1.receiveCard(listOf(Card(Shape.Spade, CardNumber.Ace))) // 11
+        player2.receiveCard(listOf(Card(Shape.Spade, CardNumber.Six))) // 6
+        player3.receiveCard(listOf(Card(Shape.Heart, CardNumber.Seven))) // 7
+        dealer.receiveCard(listOf(Card(Shape.Spade, CardNumber.Seven))) // 7
 
         val betAmount: Map<Player, BetAmount> =
             mapOf(
