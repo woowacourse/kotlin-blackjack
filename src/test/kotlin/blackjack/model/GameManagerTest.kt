@@ -13,7 +13,7 @@ class GameManagerTest {
 
     @BeforeEach
     fun setUp() {
-        player = Player("미플")
+        player = Player("미플", BetAmount(100))
         dealer = Dealer()
         gameManager = GameManager(dealer, listOf(player))
     }
@@ -28,7 +28,6 @@ class GameManagerTest {
 
     @Test
     fun `플레이어가 블랙잭으로 승리하면 수익은 배팅 금액의 150%이다`() {
-        player.betAmount = 100
         val result = mapOf(player to ResultType.BLACKJACK)
         val expect = 150.0
 
@@ -39,7 +38,6 @@ class GameManagerTest {
 
     @Test
     fun `플레이어가 블랙잭이 아니고 승리하면 수익은 배팅 금액의 1배이다`() {
-        player.betAmount = 100
         val result = mapOf(player to ResultType.WIN)
         val expect = 100.0
 
@@ -49,10 +47,9 @@ class GameManagerTest {
     }
 
     @Test
-    fun `플레이어가 비기면 수익은 배팅 금액의 1배이다`() {
-        player.betAmount = 100
+    fun `플레이어가 비기면 수익은 0이다`() {
         val result = mapOf(player to ResultType.TIE)
-        val expect = 100.0
+        val expect = 0.0
 
         val actual = gameManager.calculateProfit(result)[player]
 
@@ -61,7 +58,6 @@ class GameManagerTest {
 
     @Test
     fun `플레이어가 지면 수익은 배팅 금액의 -1배이다`() {
-        player.betAmount = 100
         val result = mapOf(player to ResultType.LOSS)
         val expect = -100.0
 
