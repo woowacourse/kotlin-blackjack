@@ -1,7 +1,6 @@
 package blackjack.model.participant
 
 import blackjack.model.card.Card
-import blackjack.model.participant.Money.Companion.DEALER_DEFAULT_MONEY
 
 class Dealer private constructor(
     name: Name,
@@ -15,9 +14,10 @@ class Dealer private constructor(
     fun additionalDrawCount(): Int = cards.size - INITIAL_DRAW_COUNT
 
     companion object {
+        const val DEFAULT_DEALER_NAME = "딜러"
         private const val DRAW_CRITERIA = 16
         private const val FIRST_SHOWN_COUNT = 1
-        const val DEFAULT_DEALER_NAME = "딜러"
+        private const val DEALER_DEFAULT_MONEY = Double.MAX_VALUE
 
         fun create(
             name: String = DEFAULT_DEALER_NAME,

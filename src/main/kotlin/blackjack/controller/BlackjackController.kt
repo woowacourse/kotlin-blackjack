@@ -2,7 +2,7 @@ package blackjack.controller
 
 import blackjack.model.card.CardDeck
 import blackjack.model.game.BettingManager
-import blackjack.model.game.GameManager
+import blackjack.model.game.ParticipantManager
 import blackjack.model.game.WinningManager
 import blackjack.model.participant.Dealer
 import blackjack.model.participant.Dealer.Companion.DEFAULT_DEALER_NAME
@@ -16,11 +16,11 @@ class BlackjackController(
     private val outputView: OutputView,
 ) {
     fun run() {
-        val gameManager = GameManager()
+        val participantManager = ParticipantManager()
         val bettingManager = BettingManager()
         val cardDeck = CardDeck()
-        val dealer = gameManager.prepareDealer(DEFAULT_DEALER_NAME, cardDeck)
-        val players = preparePlayers(gameManager, cardDeck)
+        val dealer = participantManager.prepareDealer(DEFAULT_DEALER_NAME, cardDeck)
+        val players = preparePlayers(participantManager, cardDeck)
         val winningManager = WinningManager(dealer, players)
 
         outputView.displayInitialMoney()
@@ -31,8 +31,8 @@ class BlackjackController(
         outputView.displayFirstDrawEnd(players.value.map { player -> player.name })
         outputView.displayParticipantCards(dealer.name, dealer.showInitialCards())
 
-        progressPlayersDraw(gameManager, players, cardDeck)
-        progressDealerDraw(gameManager, dealer, cardDeck)
+        progressPlayersDraw(participantManager, players, cardDeck)
+        progressDealerDraw(participantManager, dealer, cardDeck)
 
         displayParticipantsInfo(players)
 
@@ -45,17 +45,17 @@ class BlackjackController(
     }
 
     private fun preparePlayers(
-        gameManager: GameManager,
+        participantManager: ParticipantManager,
         cardDeck: CardDeck,
     ): Players {
         val playerNames = inputView.getPlayers()
-        val players = gameManager.preparePlayers(playerNames, cardDeck)
+        val players = participantManager.preparePlayers(playerNames, cardDeck)
 
         return players
     }
 
     private fun progressPlayersDraw(
-        gameManager: GameManager,
+        participantManager: ParticipantManager,
         players: Players,
         cardDeck: CardDeck,
     ) {
@@ -63,7 +63,7 @@ class BlackjackController(
             outputView.displayParticipantCards(player.name, player.cards)
         }
         players.value.forEach { player ->
-            gameManager.progressPlayerDrawUntilFinished(
+            participantManager.progressPlayerDrawUntilFinished(
                 player = player,
                 draw = cardDeck::draw,
                 getCommand = { inputView.getIsRecieveMore(player.name.toString()) },
@@ -73,11 +73,11 @@ class BlackjackController(
     }
 
     private fun progressDealerDraw(
-        gameManager: GameManager,
+        participantManager: ParticipantManager,
         dealer: Dealer,
         cardDeck: CardDeck,
     ) {
-        gameManager.progressDealerDraw(dealer, cardDeck::draw)
+        participantManager.progressDealerDraw(dealer, cardDeck::draw)
 
         outputView.displayDealerDrawInfo(dealer.additionalDrawCount())
         outputView.displayParticipantInfo(dealer.name, dealer.cards, dealer.score())

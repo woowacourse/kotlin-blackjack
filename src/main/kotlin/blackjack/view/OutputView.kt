@@ -11,12 +11,12 @@ import blackjack.model.card.CardSuit.CLUB
 import blackjack.model.card.CardSuit.DIAMOND
 import blackjack.model.card.CardSuit.HEART
 import blackjack.model.card.CardSuit.SPADE
-import blackjack.model.participant.Money.Companion.PLAYER_DEFAULT_MONEY
 import blackjack.model.participant.Name
+import blackjack.model.participant.Player.Companion.PLAYER_DEFAULT_MONEY
 
 class OutputView {
     fun displayInitialMoney() {
-        println("\n초기 잔액은 ${PLAYER_DEFAULT_MONEY} 입니다.")
+        println("\n초기 잔액은 $PLAYER_DEFAULT_MONEY 입니다.")
     }
 
     fun displayFirstDrawEnd(players: List<Name>) {
