@@ -48,8 +48,8 @@ class GameManager(
         return playersSummary
     }
 
-    fun getDealerGameResult(): Map<ResultType, Int> {
-        return players.groupBy { player -> ResultType.judgeForDealer(dealer, player) }
+    fun getDealerGameResult(): Map<ResultType, Int> =
+        players
+            .groupBy { player -> ResultType.judgeForDealer(dealer, player) }
             .mapValues { typeGroup -> typeGroup.value.size }
-    }
 }

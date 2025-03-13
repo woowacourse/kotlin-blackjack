@@ -7,11 +7,12 @@ object DeckFactory {
     }
 
     private fun generateCards(): MutableList<Card> =
-        Shape.entries.flatMap { shape ->
-            CardNumber.entries.map { number ->
-                Card(shape, number)
-            }
-        }.toMutableList()
+        Shape.entries
+            .flatMap { shape ->
+                CardNumber.entries.map { number ->
+                    Card(shape, number)
+                }
+            }.toMutableList()
 
     private fun <T> ArrayDeque<T>.create(elements: List<T>): ArrayDeque<T> {
         this.addAll(elements)

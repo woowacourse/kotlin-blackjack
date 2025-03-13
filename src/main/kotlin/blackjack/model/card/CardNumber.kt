@@ -1,6 +1,8 @@
 package blackjack.model.card
 
-enum class CardNumber(val score: Int) {
+enum class CardNumber(
+    val score: Int,
+) {
     ACE(11),
     TWO(2),
     THREE(3),

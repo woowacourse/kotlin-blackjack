@@ -82,13 +82,9 @@ class OutputView : BlackjackOutput {
         }
     }
 
-    private fun initialDealerHands(cards: List<Card>): String {
-        return getHandsStatus(cards.take(1))
-    }
+    private fun initialDealerHands(cards: List<Card>): String = getHandsStatus(cards.take(1))
 
-    private fun getHandsStatus(cards: List<Card>): String {
-        return cards.joinToString { card -> card.toUi() }
-    }
+    private fun getHandsStatus(cards: List<Card>): String = cards.joinToString { card -> card.toUi() }
 
     private fun printFinalPlayerHandStatus(player: Player) {
         println(
@@ -100,26 +96,23 @@ class OutputView : BlackjackOutput {
         )
     }
 
-    private fun getDealerResult(summary: Map<ResultType, Int>): String {
-        return buildString {
+    private fun getDealerResult(summary: Map<ResultType, Int>): String =
+        buildString {
             ResultType.entries.forEach { resultType: ResultType ->
                 if (summary[resultType] != null) {
                     append("${summary[resultType]}${resultType.value}").append(" ")
                 }
             }
         }.trim()
-    }
 
     private fun printContentSeparator() {
         println()
     }
 
-    private fun Card.toUi(): String {
-        return "${this.number.toUi()}${this.shape.toUi()}"
-    }
+    private fun Card.toUi(): String = "${this.number.toUi()}${this.shape.toUi()}"
 
-    private fun CardNumber.toUi(): String {
-        return when (this) {
+    private fun CardNumber.toUi(): String =
+        when (this) {
             ACE -> "A"
             TWO -> "2"
             THREE -> "3"
@@ -134,16 +127,14 @@ class OutputView : BlackjackOutput {
             QUEEN -> "Q"
             KING -> "K"
         }
-    }
 
-    private fun Shape.toUi(): String {
-        return when (this) {
+    private fun Shape.toUi(): String =
+        when (this) {
             SPADE -> "스페이드"
             DIAMOND -> "다이아몬드"
             HEART -> "하트"
             CLOVER -> "클로버"
         }
-    }
 
     companion object {
         private const val INITIAL_HAND_OUT_CARD_MESSAGE_FORMAT = "\n딜러와 %s에게 %d장의 카드를 나누어 주었습니다."

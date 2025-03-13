@@ -7,9 +7,7 @@ class Dealer(
 ) : Participant(name) {
     fun isAvailDrawCard() = ScoreCalculator.sum(cards) < DEALER_DRAW_CARD_MINIMUM_SCORE
 
-    fun isBlackjack(): Boolean {
-        return gameStatus == BLACKJACK
-    }
+    fun isBlackjack(): Boolean = gameStatus == BLACKJACK
 
     companion object {
         private const val DEALER_NAME = "딜러"

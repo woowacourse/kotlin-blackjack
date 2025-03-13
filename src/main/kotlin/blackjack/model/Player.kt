@@ -1,3 +1,5 @@
 package blackjack.model
 
-class Player(name: String) : Participant(name)
+class Player(
+    name: String,
+) : Participant(name)

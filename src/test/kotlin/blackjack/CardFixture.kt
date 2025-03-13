@@ -19,7 +19,5 @@ object CardFixture {
         return cardNumbers.take(count)
     }
 
-    fun combine(vararg cards: List<Card>): List<Card> {
-        return cards.reduce { wholeCards, cardElements -> wholeCards + cardElements }
-    }
+    fun combine(vararg cards: List<Card>): List<Card> = cards.reduce { wholeCards, cardElements -> wholeCards + cardElements }
 }

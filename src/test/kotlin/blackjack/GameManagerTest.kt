@@ -57,11 +57,10 @@ class GameManagerTest {
 
     companion object {
         @JvmStatic
-        fun distributeCard(): Stream<Arguments> {
-            return Stream.of(
+        fun distributeCard(): Stream<Arguments> =
+            Stream.of(
                 Arguments.of(CardDrawDecision.YES, Player("플레이어"), true),
                 Arguments.of(CardDrawDecision.NO, Player("플레이어"), false),
             )
-        }
     }
 }

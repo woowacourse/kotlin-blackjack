@@ -28,7 +28,5 @@ object ScoreCalculator {
     private fun countNumber(
         cards: List<Card>,
         targetNumber: CardNumber,
-    ): Int {
-        return cards.count { card -> card.number == targetNumber }
-    }
+    ): Int = cards.count { card -> card.number == targetNumber }
 }

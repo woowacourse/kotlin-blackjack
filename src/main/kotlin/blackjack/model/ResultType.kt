@@ -3,7 +3,9 @@ package blackjack.model
 import blackjack.model.GameStatus.BLACKJACK
 import blackjack.model.GameStatus.BUST
 
-enum class ResultType(val value: Char) {
+enum class ResultType(
+    val value: Char,
+) {
     WIN('승'),
     TIE('무'),
     LOSE('패'), ;
