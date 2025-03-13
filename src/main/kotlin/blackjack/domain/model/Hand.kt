@@ -26,7 +26,7 @@ class Hand(cards: List<Card>) {
         return 0
     }
 
-    private fun hasAce(): Boolean = cards.any { it.rank == Rank.ACE }
+    private fun hasAce(): Boolean = cards.any { card -> card.isAce() }
 
     fun isBusted(): Boolean {
         return computePoint() > BUST_THRESHOLD
