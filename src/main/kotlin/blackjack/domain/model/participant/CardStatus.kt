@@ -1,7 +1,7 @@
 package blackjack.domain.model.participant
 
-import blackjack.controller.Casino.Companion.INIT_CARD_SIZE
 import blackjack.domain.model.card.Card
+import blackjack.domain.model.card.HandCards.Companion.INIT_CARD_SIZE
 
 enum class CardStatus {
     BLACKJACK,
