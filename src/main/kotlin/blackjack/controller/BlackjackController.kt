@@ -4,6 +4,7 @@ import blackjack.model.DrawChoice
 import blackjack.model.GameManager
 import blackjack.model.participant.Dealer
 import blackjack.model.participant.Player
+import blackjack.model.participant.Players
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -36,7 +37,8 @@ class BlackjackController(
         while (playerNames == null) {
             playerNames = inputView.readPlayerNames()
         }
-        return playerNames.map { Player(it) }
+        val players = Players(playerNames)
+        return players.value
     }
 
     private fun playersDrawCards(players: List<Player>) {
