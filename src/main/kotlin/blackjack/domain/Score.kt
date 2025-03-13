@@ -1,6 +1,7 @@
 package blackjack.domain
 
 import blackjack.domain.Score.Companion.SCORE_MAX_CAN_HAVE
+import blackjack.domain.Score.Companion.SIZE_BLACKJACK
 
 sealed interface Score : Comparable<Score> {
     val value: Int
@@ -27,6 +28,7 @@ sealed interface Score : Comparable<Score> {
 
     companion object {
         const val SCORE_MAX_CAN_HAVE: Int = 21
+        const val SIZE_BLACKJACK: Int = 2
     }
 }
 
@@ -36,8 +38,8 @@ fun Score(cards: List<Card>): Score {
     if (possibleScores.all { score: Int -> score > SCORE_MAX_CAN_HAVE }) return Score.Bust(possibleScores.min())
     val score = possibleScores.filter { score -> score <= SCORE_MAX_CAN_HAVE }.max()
     return when {
-        score == 21 && cards.size == 2 -> return Score.Blackjack
-        score == 21 && cards.size != 2 -> return Score.Max
+        score == SCORE_MAX_CAN_HAVE && cards.size == SIZE_BLACKJACK -> return Score.Blackjack
+        score == SCORE_MAX_CAN_HAVE && cards.size != SIZE_BLACKJACK -> return Score.Max
         else -> return Score.Hittable(score)
     }
 }
