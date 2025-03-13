@@ -50,49 +50,53 @@ class BlackjackController(
         return Blackjack(PlayingCard(deck), playerGroup)
     }
 
+    // *** 게임을 준비해라 ***
     private fun initGame(blackjack: Blackjack) {
         blackjack.initGame()
         outputView.printInitCardStatus(blackjack.playerGroup)
     }
 
+    // *** 게임 시작해라 *** (플레이어와 딜러의 행동 처리)
     private fun startGame(blackjack: Blackjack) {
         blackjack.playerGroup.players.forEach { player ->
-            hitOrStay(blackjack, player)
+            playPlayerTurn(blackjack, player)
         }
-        dealerReceiveCard(blackjack)
+        playDealerTurn(blackjack)
     }
 
-    private fun hitOrStay(
+    // 플레이어의 행동을 처리해라
+    private fun playPlayerTurn(
         blackjack: Blackjack,
         player: Player,
     ) {
-        while (blackjack.canHit(player)) {
-            val playerAction = getActionType(player)
-            if (shouldStopDrawing(playerAction)) break
+        // 플레이어가 hit 가능한 상태인지 체크해라
+        while (blackjack.canHit(player) && wantsToHit(player)) {
+            // 플레이어에게 카드 한장을 줘라
             blackjack.hitAction(player)
             outputView.printCardStatus(player)
         }
         if (blackjack.getParticipantCardSize(player) == 2) outputView.printCardStatus(player)
     }
 
-    private fun shouldStopDrawing(playerAction: ActionType): Boolean {
+    // 플레이어가 카드를 받고 싶어하는지 체크해라
+    private fun wantsToHit(player: Player): Boolean {
+        val playerAction =
+            retryInput {
+                inputView.askForHitOrStay(player)
+            }
         return when (playerAction) {
-            ActionType.Hit -> false
-            ActionType.Stay -> true
+            ActionType.Hit -> true
+            ActionType.Stay -> false
         }
     }
 
-    private fun getActionType(player: Player): ActionType {
-        return retryInput {
-            inputView.askForHitOrStay(player)
-        }
-    }
-
-    private fun dealerReceiveCard(blackjack: Blackjack) {
+    // 딜러의 행동을 처리해라
+    private fun playDealerTurn(blackjack: Blackjack) {
         val count: Int = blackjack.drawUntilDealerStands()
         outputView.printDealerReceiveCard(count, blackjack.playerGroup.dealer)
     }
 
+    // *** 게임 정산해라 ***
     private fun endGame(
         blackjack: Blackjack,
         playerBetAmount: Map<Player, BetAmount>,
