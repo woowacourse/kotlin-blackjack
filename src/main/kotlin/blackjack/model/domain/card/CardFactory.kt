@@ -2,7 +2,7 @@ package blackjack.model.domain.card
 
 class CardFactory {
     fun makeCard(): ArrayDeque<Card> {
-        val cards = symbols.flatMap { symbol -> cardNumbers.map { cardNumber -> Card(symbol, cardNumber) } }.toMutableList()
+        val cards = Card.CARDDECK.values.toMutableList()
         return ArrayDeque(cards.shuffled())
     }
 

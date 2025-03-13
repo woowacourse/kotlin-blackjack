@@ -1,8 +1,6 @@
 package blackjack.model.domain
 
 import blackjack.model.domain.card.Card
-import blackjack.model.domain.card.CardNumber
-import blackjack.model.domain.card.Shape
 import blackjack.model.domain.participant.Dealer
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
@@ -14,15 +12,14 @@ class DealerTest {
     @BeforeEach
     fun setup() {
         // given
-        dealer.receiveCard(listOf(Card(Shape.Heart, CardNumber.Ace)))
-        dealer.receiveCard(listOf(Card(Shape.Spade, CardNumber.Six)))
+        dealer.receiveCard(listOf(Card.from("AceHeart"), Card.from("SixSpade")))
     }
 
     @Test
     fun `받은 카드의 목록을 반환한다`() {
         // when
         val actual = dealer.cardDeck
-        val expected = listOf(Card(Shape.Heart, CardNumber.Ace), Card(Shape.Spade, CardNumber.Six))
+        val expected = listOf(Card.from("AceHeart"), Card.from("SixSpade"))
         // then
         assertThat(actual).isEqualTo(expected)
     }

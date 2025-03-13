@@ -4,9 +4,7 @@ import blackjack.model.domain.GameResult
 import blackjack.model.domain.card.Card
 import blackjack.model.domain.card.CardFactory.Companion.cardNumbers
 import blackjack.model.domain.card.CardFactory.Companion.symbols
-import blackjack.model.domain.card.CardNumber
 import blackjack.model.domain.card.PlayingCard
-import blackjack.model.domain.card.Shape
 import blackjack.model.domain.participant.Dealer
 import blackjack.model.domain.participant.Player
 import blackjack.model.domain.participant.PlayerGroup
@@ -48,10 +46,10 @@ class BlackjackTest {
     @Test
     fun `게임이 끝난 후 승패를 가린다`() {
         // given
-        player1.receiveCard(listOf(Card(Shape.Spade, CardNumber.Ace)))
-        player2.receiveCard(listOf(Card(Shape.Spade, CardNumber.Six)))
-        player3.receiveCard(listOf(Card(Shape.Heart, CardNumber.Seven)))
-        dealer.receiveCard(listOf(Card(Shape.Spade, CardNumber.Seven)))
+        player1.receiveCard(listOf(Card.from("AceSpade")))
+        player2.receiveCard(listOf(Card.from("SixSpade")))
+        player3.receiveCard(listOf(Card.from("SevenHeart")))
+        dealer.receiveCard(listOf(Card.from("SevenSpade")))
         // when
         val actual = game.endGame(PlayerGroup(listOf(player1, player2, player3), dealer))
         val expected =
@@ -89,9 +87,9 @@ class BlackjackTest {
         // given
         player1.receiveCard(
             listOf(
-                Card(Shape.Spade, CardNumber.King),
-                Card(Shape.Heart, CardNumber.King),
-                Card(Shape.Heart, CardNumber.Ace),
+                Card.from("KingSpade"),
+                Card.from("KingHeart"),
+                Card.from("AceHeart"),
             ),
         )
         val size = player1.cardDeck.size

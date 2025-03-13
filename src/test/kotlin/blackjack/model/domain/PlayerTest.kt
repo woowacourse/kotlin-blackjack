@@ -1,8 +1,6 @@
 package blackjack.model.domain
 
 import blackjack.model.domain.card.Card
-import blackjack.model.domain.card.CardNumber
-import blackjack.model.domain.card.Shape
 import blackjack.model.domain.participant.Player
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
@@ -10,22 +8,18 @@ import org.junit.jupiter.api.Test
 
 class PlayerTest {
     private val player1 = Player("제리")
-    private val aceHeart = Card(Shape.Heart, CardNumber.Ace)
-    private val sixSpade = Card(Shape.Spade, CardNumber.Six)
-    private val queenHeart = Card(Shape.Heart, CardNumber.Queen)
-    private val queenSpade = Card(Shape.Spade, CardNumber.Queen)
 
     @BeforeEach
     fun setup() {
         // given
-        player1.receiveCard(listOf(aceHeart, sixSpade))
+        player1.receiveCard(listOf(Card.from("AceHeart"), Card.from("SixSpade")))
     }
 
     @Test
     fun `받은 카드의 목록을 반환한다`() {
         // when
         val actual = player1.cardDeck
-        val expected = listOf(aceHeart, sixSpade)
+        val expected = listOf(Card.from("AceHeart"), Card.from("SixSpade"))
         // then
         assertThat(actual).isEqualTo(expected)
     }
@@ -33,7 +27,7 @@ class PlayerTest {
     @Test
     fun `카드 숫자의 합을 토대로 bust를 판단한다`() {
         // given
-        player1.receiveCard(listOf(queenHeart, queenSpade))
+        player1.receiveCard(listOf(Card.from("QueenHeart"), Card.from("QueenSpade")))
         // when
         val actual = player1.checkBust()
         val expected = true
