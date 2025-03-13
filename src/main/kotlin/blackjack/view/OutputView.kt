@@ -23,13 +23,8 @@ class OutputView {
         println(DRAW_STATUS_MESSAGE.format(participantsUiModel.name, participantsUiModel.cards.joinToString(DELIMITER)))
     }
 
-    fun printDealerDrawMessage(flag: Boolean) {
-        println()
-        if (flag) {
-            println(DEALER_DRAW_MESSAGE)
-            println()
-            return
-        }
+    fun printDealerDrawMessage() {
+        println(DEALER_DRAW_MESSAGE)
         println()
     }
 
