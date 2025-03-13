@@ -89,7 +89,7 @@ class BlackjackController(
     }
 
     private fun dealerReceiveCard(blackjack: Blackjack) {
-        val count: Int = blackjack.drawUntilThreshold()
+        val count: Int = blackjack.drawUntilDealerStands()
         outputView.printDealerReceiveCard(count, blackjack.playerGroup.dealer)
     }
 

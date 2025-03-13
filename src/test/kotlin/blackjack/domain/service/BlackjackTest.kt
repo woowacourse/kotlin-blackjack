@@ -73,7 +73,7 @@ class BlackjackTest {
         // given
         game.initGame()
         // when
-        game.drawUntilThreshold()
+        game.drawUntilDealerStands()
         // then
         assertThat(dealer.cardDeck.size).isGreaterThan(2)
     }

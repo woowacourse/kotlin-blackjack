@@ -89,5 +89,5 @@
 - [x] 수익률을 value class로 선언
 - [x] BetAmount | 수익 금액 로직 개선
 - [x] ActionType | View에서 행동을 반환하도록 변경
-- [ ] Blackjack | drawUntilThreshold 메소드 네이밍 변경
+- [x] Blackjack | drawUntilThreshold 메소드 네이밍 변경
 - [ ] Map 사용 지양하기 (방법 고민)

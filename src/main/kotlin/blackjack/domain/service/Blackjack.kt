@@ -33,7 +33,7 @@ class Blackjack(
         return participant.cardDeck.size
     }
 
-    fun drawUntilThreshold(): Int {
+    fun drawUntilDealerStands(): Int {
         var count: Int = 0
         while (playerGroup.dealer.canHit()) {
             playerGroup.dealer.receiveCard(deck.spreadCard(ONE_CARD))
