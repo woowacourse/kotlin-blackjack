@@ -118,4 +118,33 @@ class HandTest {
 
         assertThat(actualScore).isEqualTo(expectedScore)
     }
+
+    @Test
+    fun `손패가 두장으로 이루어진 21점이면 블랙잭이다`() {
+        val hand: Hand =
+            Hand.of(
+                Card.of(CardNumber.ACE, Suit.SPADE),
+                Card.of(CardNumber.KING, Suit.HEART),
+            )
+        val actualIsBlackJack = hand.isBlackJack()
+
+        val expectedResult = true
+
+        assertThat(actualIsBlackJack).isEqualTo(expectedResult)
+    }
+
+    @Test
+    fun `손패가 세장으로 이루어진 21점이면 블랙잭이 아니다`() {
+        val hand: Hand =
+            Hand.of(
+                Card.of(CardNumber.QUEEN, Suit.SPADE),
+                Card.of(CardNumber.KING, Suit.HEART),
+                Card.of(CardNumber.ACE, Suit.DIAMOND),
+            )
+        val actualIsBlackJack = hand.isBlackJack()
+
+        val expectedResult = false
+
+        assertThat(actualIsBlackJack).isEqualTo(expectedResult)
+    }
 }
