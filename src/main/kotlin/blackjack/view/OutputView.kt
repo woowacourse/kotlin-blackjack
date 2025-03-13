@@ -6,7 +6,6 @@ import blackjack.domain.model.Participant
 import blackjack.domain.model.Participants
 import blackjack.domain.model.Player
 import blackjack.domain.model.Rank
-import blackjack.domain.model.Result
 import blackjack.domain.model.Suit
 
 class OutputView {
@@ -30,11 +29,16 @@ class OutputView {
 
     fun printResults(participants: Participants) {
         participants.all.forEach { participant -> printParticipantResult(participant) }
+        println()
         println(MESSAGE_RESULTS_HEADER)
-        val playerResults = participants.dealer.getPlayerResults(participants.players)
-        val dealerResults = participants.dealer.getDealerResults(playerResults)
-        printDealerResults(participants.dealer, dealerResults)
-        playerResults.forEach { (player, result) -> printParticipantResult(player, result) }
+        val dealer: Dealer = participants.dealer
+        val players: List<Player> = participants.players
+        val playerProfits = dealer.getPlayersProfits(players)
+        val dealerProfit = dealer.getDealerProfit(playerProfits)
+        println("${dealer.name}${NAME_RESULT_DELIMITER}$dealerProfit")
+        playerProfits.forEach { (player, profit) ->
+            println("${player.name}${NAME_RESULT_DELIMITER}$profit")
+        }
     }
 
     private fun printParticipantResult(participant: Participant) {
@@ -46,33 +50,6 @@ class OutputView {
         return participant.name + PLAYER_NAME_STATUS_DELIMITER +
             participant.showHand()
                 .joinToString { card -> card.rank.stringRepresentation() + card.suit.stringRepresentation() }
-    }
-
-    private fun printDealerResults(
-        dealer: Dealer,
-        results: Map<Result, Int>,
-    ) {
-        print(dealer.name + NAME_RESULT_DELIMITER)
-        results.filter { result -> result.value > 0 }.forEach { (result, count) ->
-            print("${count}${result.stringRepresentation()} ")
-        }
-        println()
-    }
-
-    private fun printParticipantResult(
-        player: Player,
-        result: Result,
-    ) {
-        println(player.name + NAME_RESULT_DELIMITER + result.stringRepresentation())
-    }
-
-    private fun Result.stringRepresentation(): String {
-        return when (this) {
-            Result.WIN -> RESULT_WIN
-            Result.LOSE -> RESULT_LOSE
-            Result.BLACKJACK -> RESULT_BLACKJACK
-            Result.PUSH -> RESULT_DRAW
-        }
     }
 
     private fun Suit.stringRepresentation(): String {
@@ -98,16 +75,11 @@ class OutputView {
         private const val MESSAGE_INITIAL_HAND_DISTRIBUTED =
             "%s와(과) %s에게 ${Hand.STARTING_HAND_SIZE}장의 카드를 나누었습니다."
         private const val MESSAGE_DEALER_HITS_STATE = "%s은(는) ${Dealer.HIT_THRESHOLD}점 이하라 한 장의 카드를 더 받았습니다."
-        private const val MESSAGE_RESULTS_HEADER = "\n## 최종 승패"
+        private const val MESSAGE_RESULTS_HEADER = "## 최종 수익"
         private const val PLAYER_CARDS_DELIMITER = ", "
         private const val PLAYER_NAME_STATUS_DELIMITER = " 카드: "
         private const val PLAYER_RESULT_DELIMITER = " - 결과: "
         private const val NAME_RESULT_DELIMITER = ": "
-
-        private const val RESULT_WIN = "승"
-        private const val RESULT_LOSE = "패"
-        private const val RESULT_BLACKJACK = "블랙잭"
-        private const val RESULT_DRAW = "무"
 
         private const val SUIT_HEART = "하트"
         private const val SUIT_DIAMOND = "다이아몬드"
