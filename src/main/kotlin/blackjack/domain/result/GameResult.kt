@@ -10,20 +10,16 @@ class GameResult(dealer: Dealer, players: List<Player>) {
     val dealerProfit: Double
 
     init {
-        var totalDealerProfit = ZERO_PAYOUT
-        playerPayouts =
-            players.associateWith { player ->
-                val resultState = ResultState.calculateWin(player, dealer)
-                totalDealerProfit += calculateDealerProfit(player, resultState)
-                calculatePlayerPayout(player, resultState)
-            }
-        dealerProfit = totalDealerProfit
+        playerPayouts = players.associateWith { player -> calculatePlayerPayout(dealer, player) }
+        dealerProfit = calculateDealerProfit()
     }
 
     private fun calculatePlayerPayout(
+        dealer: Dealer,
         player: Player,
-        resultState: ResultState,
     ): Double {
+        val resultState = ResultState.calculateWin(player, dealer)
+
         return when (resultState) {
             ResultState.WIN -> calculateWinPayout(player)
             ResultState.LOSE -> calculateLosePayout(player)
@@ -35,7 +31,7 @@ class GameResult(dealer: Dealer, players: List<Player>) {
         if (player.gameState == PersonState.BLACKJACK) {
             return player.betAmount * BLACKJACK_PAYOUT_MULTIPLIER
         }
-        return player.betAmount * DRAW_PAYOUT_MULTIPLIER
+        return player.betAmount * WINNING_PAYOUT_MULTIPLIER
     }
 
     private fun calculateLosePayout(player: Player): Double {
@@ -43,22 +39,17 @@ class GameResult(dealer: Dealer, players: List<Player>) {
     }
 
     private fun calculateDrawPayout(player: Player): Double {
-        return player.betAmount * DRAW_PAYOUT_MULTIPLIER
+        return player.betAmount * ZERO_PAYOUT
     }
 
-    private fun calculateDealerProfit(
-        player: Player,
-        resultState: ResultState,
-    ): Double {
-        if (resultState == ResultState.LOSE) {
-            return player.betAmount.toDouble()
-        }
-        return ZERO_PAYOUT
+    private fun calculateDealerProfit(): Double {
+        val profit = playerPayouts.values.sum() * LOSING_PAYOUT_MULTIPLIER
+        return if (profit == -ZERO_PAYOUT) ZERO_PAYOUT else profit
     }
 
     companion object {
         private const val BLACKJACK_PAYOUT_MULTIPLIER = 1.5
-        private const val DRAW_PAYOUT_MULTIPLIER = 1.0
+        private const val WINNING_PAYOUT_MULTIPLIER = 1.0
         private const val ZERO_PAYOUT = 0.0
         private const val LOSING_PAYOUT_MULTIPLIER = -1
     }
