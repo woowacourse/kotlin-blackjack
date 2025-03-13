@@ -1,10 +1,6 @@
 package model
 
 class Dealer(dealerCards: Cards) : Participant(dealerCards) {
-    init {
-        require(dealerCards.totalCount == 2) { DEALER_INITIAL_CARD_ERROR_MESSAGE }
-    }
-
     override fun turn(drawnCard: Card): Boolean {
         if (canHit()) {
             addCard(drawnCard)
@@ -30,7 +26,6 @@ class Dealer(dealerCards: Cards) : Participant(dealerCards) {
 
     companion object {
         private const val DEFAULT_DRAW_COUNT = 0
-        private const val DEALER_INITIAL_CARD_ERROR_MESSAGE = "[ERROR] 딜러는 2장의 카드를 가져야합니다."
         private const val DEALER_HIT_LIMIT = 16
     }
 }
