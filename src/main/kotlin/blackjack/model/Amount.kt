@@ -9,10 +9,6 @@ class Amount(private var value: Double) {
         value = value + amount.value
     }
 
-    fun loseMoney(amount: Amount) {
-        value = value - amount.value
-    }
-
     fun toBlackjackMoney():Amount = Amount(value * 1.5)
 
 
