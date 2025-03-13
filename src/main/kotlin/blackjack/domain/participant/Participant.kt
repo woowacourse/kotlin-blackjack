@@ -9,10 +9,11 @@ abstract class Participant {
 
     protected val innerCards: Cards = Cards()
 
-    val cards: List<Card>
-        get() = innerCards.toList()
-
     abstract val hitThreshold: Int
+
+    fun getCards(): List<Card> {
+        return innerCards.toList()
+    }
 
     fun addCard(card: Card) {
         if (canHit()) innerCards.add(card)
