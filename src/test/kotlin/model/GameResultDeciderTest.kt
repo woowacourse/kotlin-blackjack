@@ -1,7 +1,6 @@
 package model
 
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
@@ -11,11 +10,6 @@ class GameResultDeciderTest {
     private lateinit var dealer: Dealer
     private lateinit var players: Players
 
-    @BeforeEach
-    fun setDealer() {
-        dealer = Dealer(Cards(listOf(Card(CardRank.QUEEN, Shape.CLUB), Card(CardRank.JACK, Shape.SPADE))))
-    }
-
     private fun assertProfit(expectedProfit: Float) {
         val winOrLose = GameResultDecider(dealer, players).compareWinOrLose()
         assertEquals(expectedProfit, winOrLose.playerResults[0].profit)
@@ -24,38 +18,43 @@ class GameResultDeciderTest {
     @ParameterizedTest
     @MethodSource("makeTestPlayers")
     fun `플레이어의 점수가 21점 초과시 베팅 금액을 모두 잃는다`(player: Player) {
+        dealer = Dealer(Cards(listOf(Card(CardRank.QUEEN, Shape.CLUB), Card(CardRank.JACK, Shape.SPADE))))
         players = Players(listOf(player))
         assertProfit(expectedProfit = -10000f)
     }
 
     @Test
-    fun `딜러의 처음 두 장의 카드 합이 21이 아니며 플레이어의 처음 두 장의 카드 합이 21일 경우 플레이어는 베팅 금액의 1_5배를 받는다`() {
-        players =
-            Players(
-                listOf(
-                    Player(
-                        "jay",
-                        Cards(listOf(Card(CardRank.QUEEN, Shape.CLUB), Card(CardRank.ACE, Shape.SPADE))),
-                        10000f
-                    ),
-                ),
-            )
+    fun `딜러의 처음 두 장의 카드 합이 블랙잭이 아니며 플레이어의 처음 두 장의 카드 합이 블랙잭일 경우 플레이어는 베팅 금액의 1_5배를 수익으로 받는다`() {
+        dealer = Dealer(Cards(listOf(Card(CardRank.QUEEN, Shape.CLUB), Card(CardRank.JACK, Shape.SPADE))))
+        val player =
+            Player("jay", Cards(listOf(Card(CardRank.QUEEN, Shape.CLUB), Card(CardRank.ACE, Shape.SPADE))), 10000f)
+        players = Players(listOf(player))
         assertProfit(expectedProfit = 15000f)
     }
 
     @Test
-    fun `딜러와 플레이어 모두 블랙잭일 때 플레이어는 베팅 금액을 받는다`() {
+    fun `딜러와 플레이어 모두 블랙잭일 때 플레이어는 베팅 금액을 돌려 받는다`() {
         dealer = Dealer(Cards(listOf(Card(CardRank.KING, Shape.CLUB), Card(CardRank.ACE, Shape.HEART))))
-        players =
-            Players(
+        val player =
+            Player("jay", Cards(listOf(Card(CardRank.QUEEN, Shape.CLUB), Card(CardRank.ACE, Shape.SPADE))), 10000f)
+        players = Players(listOf(player))
+        assertProfit(expectedProfit = 0f)
+    }
+
+    @Test
+    fun `딜러의 점수가 블랙잭 점수를 초과할 경우 플레이어는 베팅 금액만큼 수익을 받는다`() {
+        val cards =
+            Cards(
                 listOf(
-                    Player(
-                        "jay",
-                        Cards(listOf(Card(CardRank.QUEEN, Shape.CLUB), Card(CardRank.ACE, Shape.SPADE))),
-                        10000f
-                    ),
+                    Card(CardRank.QUEEN, Shape.CLUB),
+                    Card(CardRank.JACK, Shape.SPADE),
+                    Card(CardRank.KING, Shape.SPADE),
                 ),
             )
+        val player =
+            Player("jay", Cards(listOf(Card(CardRank.KING, Shape.CLUB), Card(CardRank.KING, Shape.SPADE))), 10000f)
+        dealer = Dealer(cards)
+        players = Players(listOf(player))
         assertProfit(expectedProfit = 10000f)
     }
 
