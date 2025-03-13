@@ -12,7 +12,7 @@ class ParticipantManager {
         getPlayerNames: () -> List<String>,
     ): Participants {
         val dealer = prepareDealer(dealerName, cardDeck)
-        val players = Players.from(getPlayerNames())
+        val players = preparePlayers(getPlayerNames(), cardDeck)
 
         return Participants(dealer, players)
     }
@@ -32,7 +32,9 @@ class ParticipantManager {
         cardDeck: CardDeck,
     ): Players {
         val players = Players.from(playerNames)
-        players.value.forEach { player -> player.recieveCards(cardDeck::draw) }
+        players.value.forEach { player ->
+            player.recieveCards(cardDeck::draw)
+        }
 
         return players
     }
