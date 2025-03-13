@@ -28,7 +28,7 @@ class DealerTest {
     }
 
     @Test
-    fun `카드 숫자 합이 임계값보다 작은지 판단한다`() {
+    fun `딜러 카드 숫자 합이 16보다 작은지 판단한다`() {
         // when
         val actual = dealer.canHit()
         // then

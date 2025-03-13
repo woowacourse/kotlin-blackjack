@@ -69,4 +69,4 @@
 - [x] GameResult | bust판단 메소드 삭제
 - [x] Participants | status 변수 삭제
 - [x] BlackJack | 딜러 임계값 상수 이동
-- [ ] DealerTest | 테스트명 변경
+- [x] DealerTest | 테스트명 변경
