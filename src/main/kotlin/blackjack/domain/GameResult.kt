@@ -9,29 +9,16 @@ enum class GameResult {
     ;
 
     companion object {
-        fun resultOfPlayer(
+        fun from(
             dealerSum: Int,
             playerSum: Int,
+            isPlayer: Boolean,
         ): GameResult {
             return when {
-                (dealerSum > BUST_STANDARD) && (playerSum <= BUST_STANDARD) -> WIN
-                playerSum > BUST_STANDARD -> LOSE
-                playerSum > dealerSum -> WIN
-                playerSum < dealerSum -> LOSE
-                else -> PUSH
-            }
-        }
-
-        fun resultOfDealer(
-            dealerSum: Int,
-            playerSum: Int,
-        ): GameResult {
-            return when {
-                (dealerSum > BUST_STANDARD) && (playerSum > BUST_STANDARD) -> WIN
-                dealerSum > BUST_STANDARD -> LOSE
-                playerSum > BUST_STANDARD -> WIN
-                playerSum > dealerSum -> LOSE
-                playerSum < dealerSum -> WIN
+                (dealerSum > BUST_STANDARD) && (playerSum > BUST_STANDARD) -> if (isPlayer) LOSE else WIN
+                dealerSum > BUST_STANDARD -> if (isPlayer) WIN else LOSE
+                playerSum > BUST_STANDARD || playerSum < dealerSum -> if (isPlayer) LOSE else WIN
+                playerSum > dealerSum -> if (isPlayer) WIN else LOSE
                 else -> PUSH
             }
         }

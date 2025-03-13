@@ -49,7 +49,7 @@ class BlackJackGame(
         val dealerMap = GameResult.entries.associateWith { 0 }.toMutableMap()
 
         participants.players.forEach { player ->
-            val result = GameResult.resultOfDealer(participants.dealer.totalScore(), player.totalScore())
+            val result = GameResult.from(participants.dealer.totalScore(), player.totalScore(), false)
             dealerMap[result] = dealerMap.getOrDefault(result, 0) + 1
         }
         return dealerMap
@@ -57,7 +57,7 @@ class BlackJackGame(
 
     fun calculatePlayerResult(action: (String, GameResult) -> Unit) {
         participants.players.forEach { player ->
-            val result = GameResult.resultOfPlayer(participants.dealer.totalScore(), player.totalScore())
+            val result = GameResult.from(participants.dealer.totalScore(), player.totalScore(), true)
             action(player.name, result)
         }
     }
