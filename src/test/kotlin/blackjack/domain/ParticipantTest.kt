@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 import blackjack.domain.card.Shape
 import blackjack.domain.card.Tier
