@@ -13,7 +13,7 @@ class Dealer(
     private val deck: Deck = Deck(shuffler)
     private val playingPlayers: List<Player>
         get() = players.filter { player -> player.state == ParticipantState.PLAYING }
-    private val newCard get() = deck.draw()
+    private val newCard get() = deck.take()
 
     fun draw() {
         hand.draw(newCard)

@@ -27,7 +27,7 @@ class Deck(
         refillDeck()
     }
 
-    fun draw(): Card {
+    fun take(): Card {
         val card: Card =
             cards.firstOrNull() ?: run {
                 refillDeck()
