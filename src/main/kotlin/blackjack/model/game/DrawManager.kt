@@ -1,6 +1,9 @@
 package blackjack.model.game
 
 import blackjack.model.card.Card
+import blackjack.model.game.UserCommand.HIT
+import blackjack.model.game.UserCommand.STAY
+import blackjack.model.game.UserCommand.UNKNOWN
 import blackjack.model.participant.Dealer
 import blackjack.model.participant.Player
 
@@ -13,13 +16,13 @@ class DrawManager {
     ) {
         while (true) {
             when (getCommand()) {
-                UserCommand.HIT -> {
+                HIT -> {
                     player.recieveCards(draw)
                     onCardReceived(player.cards)
                     if (!player.isDrawable()) return
                 }
-                UserCommand.STAY -> break
-                UserCommand.UNKNOWN -> throw IllegalArgumentException("[ERROR] 올바르지 않은 입력입니다.")
+                STAY -> break
+                UNKNOWN -> throw IllegalArgumentException("[ERROR] 올바르지 않은 입력입니다.")
             }
         }
     }
