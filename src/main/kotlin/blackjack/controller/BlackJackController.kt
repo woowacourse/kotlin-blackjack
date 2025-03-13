@@ -1,6 +1,7 @@
 package blackjack.controller
 
 import blackjack.domain.BlackJackGame
+import blackjack.domain.Money
 import blackjack.domain.ParticipantCards
 import blackjack.domain.deck.ShuffledDeck
 import blackjack.domain.participant.Dealer
@@ -14,17 +15,20 @@ class BlackJackController(
     private val outputView: OutputView,
 ) {
     fun run() {
-        val players = readyForGamePlayers()
-        displayPlayerNames(players)
-        val game = readForGame(players)
-        startGame(game, players)
-        displayResult(game, players)
+        val participants = readyForGameParticipants()
+        displayPlayerNames(participants)
+        val game = readForGame(participants)
+        startGame(game, participants)
+        displayResult(game, participants)
+        displayProfit(participants)
     }
 
-    private fun readyForGamePlayers(): Participants {
+    private fun readyForGameParticipants(): Participants {
         val dealer = Dealer(ParticipantCards())
-        return Participants(dealer, inputView.readPlayerNames().map { name -> Player(name, ParticipantCards()) })
+        return Participants(dealer, inputView.readPlayerNames().map { name -> Player(name, ParticipantCards(), readBettingMoney(name)) })
     }
+
+    private fun readBettingMoney(name: String): Money = Money(inputView.readBettingMoney(name))
 
     private fun displayPlayerNames(participants: Participants) {
         outputView.printNames(participants.players)
@@ -70,6 +74,11 @@ class BlackJackController(
         displayPlayerResult(game)
     }
 
+    private fun displayProfit(participants: Participants) {
+        displayDealerProfit(participants)
+        displayPlayerProfit(participants)
+    }
+
     private fun displayDealerExtraCard(game: BlackJackGame) {
         outputView.printDealerExtraCard(game.processDealerTurn())
     }
@@ -89,5 +98,23 @@ class BlackJackController(
         game.calculatePlayerResult { name, result ->
             outputView.printPlayerResult(name, result)
         }
+    }
+
+    private fun displayPlayerProfit(participants: Participants) {
+        participants.players.forEach { player ->
+            val profit = player.getProfit(player.getResult(participants.dealer))
+            outputView.printPlayerProfit(player.name, profit)
+        }
+    }
+
+    private fun displayDealerProfit(participants: Participants) {
+        var finalProfit = 0.0
+
+        participants.players.forEach { player ->
+            val profit = participants.dealer.getProfit(player, participants.dealer.getResult(player))
+            finalProfit += profit
+        }
+
+        outputView.printDealerProfit(finalProfit)
     }
 }
