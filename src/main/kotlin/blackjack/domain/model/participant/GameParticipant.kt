@@ -1,6 +1,5 @@
 package blackjack.domain.model.participant
 
-import blackjack.domain.model.card.Deck
 import blackjack.domain.model.card.HandCards
 
 abstract class GameParticipant(
@@ -9,10 +8,6 @@ abstract class GameParticipant(
     val handCards = HandCards()
 
     fun cardSize() = handCards.cards.size
-
-    fun drawCard() {
-        handCards.addCard(Deck.giveCard())
-    }
 
     abstract fun isDrawFinish(): Boolean
 }

@@ -1,5 +1,6 @@
 package blackjack.controller
 
+import blackjack.domain.model.card.Deck
 import blackjack.domain.model.participant.CardStatus
 import blackjack.domain.model.participant.Dealer
 import blackjack.domain.model.participant.GameParticipant
@@ -11,9 +12,11 @@ import blackjack.view.OutputView
 class Casino(
     private val inputView: InputView,
     private val outputView: OutputView,
+    private val deck: Deck,
 ) {
     fun blackJackGame() {
         val players: List<Player> = inputView.readPlayerNames().map { Player(it) }
+
         val dealer = Dealer()
         val participants: List<GameParticipant> = listOf(dealer) + players
         initDistributeCard(participants)
@@ -27,7 +30,9 @@ class Casino(
 
     private fun initDistributeCard(participants: List<GameParticipant>) {
         participants.forEach { participant ->
-            repeat(INIT_CARD_SIZE) { participant.drawCard() }
+            repeat(INIT_CARD_SIZE) {
+                participant.handCards.addCard(deck.getCard())
+            }
         }
         outputView.lineSeparator()
     }
@@ -44,7 +49,7 @@ class Casino(
     private fun runPlayersDrawPhase(players: List<Player>) {
         players.forEach { player ->
             while (player.handCards.getStatus() != CardStatus.BUST && isPlayerWantHit(player)) {
-                player.drawCard()
+                player.handCards.addCard(deck.getCard())
                 outputView.showPlayerCardsInfo(player)
             }
             if (player.cardSize() == INIT_CARD_SIZE) {
@@ -58,7 +63,7 @@ class Casino(
 
     private fun runDealerDrawPhase(dealer: Dealer) {
         while (dealer.isDrawFinish()) {
-            dealer.drawCard()
+            dealer.handCards.addCard(deck.getCard())
             outputView.showDealerDrawMessage()
         }
         outputView.lineSeparator()

@@ -1,12 +1,14 @@
 package blackjack.domain.model.card
 
-object Deck {
-    private val cards = ArrayDeque(Card.CARD_INDEX_RANGE.shuffled().map { Card(it) })
-
-    fun giveCard(): Card {
-        require(!cards.isEmpty()) { ERROR_EMPTY_DECK }
-        return cards.removeLast()
+class Deck(
+    private val _card: ArrayDeque<Card> = ArrayDeque(Card.CARD_INDEX_RANGE.shuffled().map { Card(it) }),
+) {
+    fun getCard(): Card {
+        require(!_card.isEmpty()) { ERROR_EMPTY_DECK }
+        return _card.removeFirst()
     }
 
-    private const val ERROR_EMPTY_DECK = "모든 카드가 소진되어 덱이 비었습니다"
+    companion object {
+        private const val ERROR_EMPTY_DECK = "모든 카드가 소진되어 덱이 비었습니다"
+    }
 }
