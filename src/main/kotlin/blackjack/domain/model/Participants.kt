@@ -11,9 +11,9 @@ class Participants(val dealer: Dealer, val players: List<Player>) {
         }
     }
 
-    fun processPlayerBets(input: (Player) -> Int) {
+    fun processPlayerBets(input: (Player) -> Bet) {
         players.forEach { player ->
-            player.bet(input)
+            player.placeBet(input)
         }
     }
 

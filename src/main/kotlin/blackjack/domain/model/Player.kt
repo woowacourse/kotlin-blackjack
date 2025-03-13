@@ -17,8 +17,8 @@ class Player(name: String, cards: List<Card>) : Participant(name, cards) {
         return hand.show()
     }
 
-    fun bet(input: (Player) -> Int) {
-        bet = Bet(input(this))
+    fun placeBet(input: (Player) -> Bet) {
+        bet = input(this)
     }
 
     fun processHits(
