@@ -41,6 +41,5 @@ class Blackjack(private val deck: PlayingCard) {
 
     companion object {
         const val BUST_STANDARD: Int = 21
-        const val THRESHOLD: Int = 16
     }
 }

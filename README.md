@@ -68,5 +68,5 @@
 - [x] Participants | checkBust메소드 이동
 - [x] GameResult | bust판단 메소드 삭제
 - [x] Participants | status 변수 삭제
-- [ ] BlackJack | 딜러 임계값 상수 이동
+- [x] BlackJack | 딜러 임계값 상수 이동
 - [ ] DealerTest | 테스트명 변경

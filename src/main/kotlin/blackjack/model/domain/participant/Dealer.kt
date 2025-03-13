@@ -1,7 +1,6 @@
 package blackjack.model.domain.participant
 
 import blackjack.model.domain.card.Hand
-import blackjack.model.service.Blackjack.Companion.THRESHOLD
 
 class Dealer(override val name: String = DEALER_NAME) : Participants() {
     override val hand: Hand = Hand(mutableListOf())
@@ -12,5 +11,6 @@ class Dealer(override val name: String = DEALER_NAME) : Participants() {
 
     companion object {
         private const val DEALER_NAME: String = "딜러"
+        const val THRESHOLD: Int = 16
     }
 }
