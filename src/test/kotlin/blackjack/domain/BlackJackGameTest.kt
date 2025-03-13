@@ -8,6 +8,7 @@ import blackjack.domain.card.fakeCardFactory
 import blackjack.domain.participant.Participants
 import blackjack.fixture.participantsFixture
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Assertions.assertAll
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -69,6 +70,22 @@ class BlackJackGameTest {
         assertEquals(result, 2)
     }
 
+    @MethodSource("dealerWinningTestSet")
+    @ParameterizedTest
+    fun `딜러의 승패 결과가 2승 0패 0무가 나온다`(cards: List<TrumpCard>) {
+        val deck = Deck(fakeCardFactory(cards))
+        val game = BlackJackGame(participants, deck)
+        game.handOutInitializedCards()
+
+        val result = game.calculateDealerResult()
+
+        assertAll(
+            { assertEquals(result[GameResult.WIN], 2) },
+            { assertEquals(result[GameResult.LOSE], 0) },
+            { assertEquals(result[GameResult.PUSH], 0) },
+        )
+    }
+
     companion object {
         @JvmStatic
         fun dealerCardDrawTestSet() =
@@ -89,6 +106,24 @@ class BlackJackGameTest {
                         // 추가 카드 2 (점수 합이 16 미만일 경우)
                         TrumpCard(Tier.SEVEN, Shape.DIA),
                         TrumpCard(Tier.SEVEN, Shape.HEART),
+                    ),
+                ),
+            )
+
+        @JvmStatic
+        fun dealerWinningTestSet() =
+            listOf(
+                Arguments.of(
+                    listOf(
+                        // 플레이어 카드
+                        TrumpCard(Tier.TWO, Shape.HEART),
+                        TrumpCard(Tier.THREE, Shape.HEART),
+                        TrumpCard(Tier.TWO, Shape.DIA),
+                        TrumpCard(Tier.THREE, Shape.DIA),
+                        // 딜러 초기 카드 1
+                        TrumpCard(Tier.ACE, Shape.DIA),
+                        // 딜러 초기 카드 2
+                        TrumpCard(Tier.JACK, Shape.DIA),
                     ),
                 ),
             )
