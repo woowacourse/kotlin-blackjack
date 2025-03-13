@@ -5,7 +5,7 @@ class Participants(
     val players: List<Player>,
 ) {
     init {
-        require(players.size == MAXIMUM_PLAYERS) { ERROR_OVER_MAX_PLAYERS_MESSAGE }
+        require(players.size <= MAXIMUM_PLAYERS) { ERROR_OVER_MAX_PLAYERS_MESSAGE }
     }
 
     companion object {
