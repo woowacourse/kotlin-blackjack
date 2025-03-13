@@ -9,7 +9,7 @@ class Player(
     val name: String,
     cards: ParticipantCards,
 ) : Participant(cards) {
-    override fun showInitialCards(): List<TrumpCard> = cards.allCards.take(PLAYER_INITIAL_CARD_COUNT)
+    override fun showInitialCards(): List<TrumpCard> = takeCards(PLAYER_INITIAL_CARD_COUNT)
 
     override fun isDrawable(): Boolean = cards.sumOfCards <= BUST_STANDARD
 
