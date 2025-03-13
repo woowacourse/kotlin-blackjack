@@ -3,7 +3,7 @@ package blackjack.domain
 import blackjack.model.card.Card
 import blackjack.model.card.CardRank
 import blackjack.model.card.CardSuit
-import blackjack.model.game.ResultManager
+import blackjack.model.game.WinningManager
 import blackjack.model.participant.Dealer
 import blackjack.model.participant.Players
 import blackjack.model.rule.WinningResult.LOSE
@@ -13,10 +13,10 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-class ResultManagerTest {
+class WinningManagerTest {
     private lateinit var dealer: Dealer
     private lateinit var players: Players
-    private lateinit var resultManager: ResultManager
+    private lateinit var winningManager: WinningManager
 
     @BeforeEach
     fun setup() {
@@ -44,8 +44,8 @@ class ResultManagerTest {
         )
 
         // when
-        resultManager = ResultManager(dealer, players)
-        val playerResult = resultManager.playerResults()
+        winningManager = WinningManager(dealer, players)
+        val playerResult = winningManager.playerResults()
 
         // then
         assertThat(playerResult.values.first()).isEqualTo(PUSH)
@@ -69,8 +69,8 @@ class ResultManagerTest {
         )
 
         // when
-        resultManager = ResultManager(dealer, players)
-        val playerResult = resultManager.playerResults()
+        winningManager = WinningManager(dealer, players)
+        val playerResult = winningManager.playerResults()
 
         // then
         assertThat(playerResult.values.first()).isEqualTo(WIN)
@@ -94,8 +94,8 @@ class ResultManagerTest {
         )
 
         // when
-        resultManager = ResultManager(dealer, players)
-        val playerResult = resultManager.playerResults()
+        winningManager = WinningManager(dealer, players)
+        val playerResult = winningManager.playerResults()
 
         // then
         assertThat(playerResult.values.first()).isEqualTo(LOSE)
@@ -121,8 +121,8 @@ class ResultManagerTest {
         )
 
         // when
-        resultManager = ResultManager(dealer, players)
-        val playerResult = resultManager.playerResults()
+        winningManager = WinningManager(dealer, players)
+        val playerResult = winningManager.playerResults()
 
         // then
         assertThat(playerResult.values.first()).isEqualTo(LOSE)

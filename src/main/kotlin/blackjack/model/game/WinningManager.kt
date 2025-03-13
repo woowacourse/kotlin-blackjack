@@ -5,7 +5,7 @@ import blackjack.model.participant.Name
 import blackjack.model.participant.Players
 import blackjack.model.rule.WinningResult
 
-class ResultManager(
+class WinningManager(
     private val dealer: Dealer,
     private val players: Players,
 ) {

@@ -5,7 +5,7 @@ import blackjack.model.card.CardDeck
 import blackjack.model.card.CardRank
 import blackjack.model.card.CardSuit
 import blackjack.model.game.GameManager
-import blackjack.model.game.ResultManager
+import blackjack.model.game.WinningManager
 import blackjack.model.participant.Name
 import blackjack.model.participant.Participant.Companion.INITIAL_DRAW_COUNT
 import blackjack.model.rule.WinningResult
@@ -69,10 +69,10 @@ class GameManagerTest {
         // given
         val dealer = gameManager.prepareDealer("딜러", cardDeck)
         val players = gameManager.preparePlayers(listOf("Alice"), cardDeck)
-        val resultManager = ResultManager(dealer, players)
+        val winningManager = WinningManager(dealer, players)
 
         // when
-        val gameResult = gameManager.getResult(resultManager)
+        val gameResult = gameManager.getResult(winningManager)
 
         // then
         assertThat(gameResult.dealerResult.keys).containsExactlyInAnyOrder(*WinningResult.entries.toTypedArray())

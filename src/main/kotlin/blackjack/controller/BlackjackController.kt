@@ -1,10 +1,12 @@
 package blackjack.controller
 
 import blackjack.model.card.CardDeck
+import blackjack.model.game.BettingManager
 import blackjack.model.game.GameManager
-import blackjack.model.game.ResultManager
+import blackjack.model.game.WinningManager
 import blackjack.model.participant.Dealer
 import blackjack.model.participant.Dealer.Companion.DEFAULT_DEALER_NAME
+import blackjack.model.participant.Money
 import blackjack.model.participant.Players
 import blackjack.view.InputView
 import blackjack.view.OutputView
@@ -15,28 +17,32 @@ class BlackjackController(
 ) {
     fun run() {
         val gameManager = GameManager()
+        val bettingManager = BettingManager()
         val cardDeck = CardDeck()
         val dealer = gameManager.prepareDealer(DEFAULT_DEALER_NAME, cardDeck)
-        val players = preparePlayers(gameManager, cardDeck, dealer)
-        val resultManager = ResultManager(dealer, players)
+        val players = preparePlayers(gameManager, cardDeck)
+        val winningManager = WinningManager(dealer, players)
+
+        gameManager.betPlayersMoney(players, bettingManager) { name ->
+            Money(inputView.getBettingMoney(name.toString()))
+        }
+
+        outputView.displayFirstDrawEnd(players.value.map { player -> player.name })
+        outputView.displayParticipantCards(dealer.name, dealer.showInitialCards())
 
         progressPlayersDraw(gameManager, players, cardDeck)
         progressDealerDraw(gameManager, dealer, cardDeck)
 
         displayParticipantsInfo(players)
-        displayResults(gameManager, resultManager)
+        displayResults(gameManager, winningManager)
     }
 
     private fun preparePlayers(
         gameManager: GameManager,
         cardDeck: CardDeck,
-        dealer: Dealer,
     ): Players {
         val playerNames = inputView.getPlayers()
         val players = gameManager.preparePlayers(playerNames, cardDeck)
-
-        outputView.displayFirstDrawEnd(players.value.map { player -> player.name })
-        outputView.displayParticipantCards(dealer.name, dealer.showInitialCards())
 
         return players
     }
@@ -78,9 +84,9 @@ class BlackjackController(
 
     private fun displayResults(
         gameManager: GameManager,
-        resultManager: ResultManager,
+        winningManager: WinningManager,
     ) {
-        val result = gameManager.getResult(resultManager)
+        val result = gameManager.getResult(winningManager)
 
         outputView.displayResult(result)
     }
