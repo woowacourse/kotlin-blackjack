@@ -6,6 +6,7 @@ import blackjack.domain.model.card.CardNumber
 import blackjack.domain.model.card.Suit
 import blackjack.domain.model.participant.Dealer
 import blackjack.domain.model.participant.Participant
+import blackjack.domain.model.participant.Participants
 import blackjack.domain.model.participant.Player
 
 class OutputView {
@@ -29,24 +30,24 @@ class OutputView {
         println(DEALER_DRAW_MESSAGE)
     }
 
-    fun showCardsResult(participants: List<Participant>) {
-        participants.forEach {
+    fun showCardsResult(participants: Participants) {
+        println(makeParticipantInfo(participants.dealer) + CARD_RESULT_MESSAGE + participants.dealer.hand.getScore())
+        participants.players.forEach {
             println(makeParticipantInfo(it) + CARD_RESULT_MESSAGE + it.hand.getScore())
         }
     }
 
     fun showFinalResult(
         dealerGameResult: Map<GameResult, Int>,
-        dealer: Dealer,
-        players: List<Player>,
+        participants: Participants,
     ) {
         val dealerResultText: String =
             dealerGameResult.filter { it.value != 0 }.map { "${it.value}${it.key.toText()}" }.joinToString()
 
         println(FINAL_RESULT_MESSAGE)
         println("$DEALER_TEXT_MESSAGE $dealerResultText")
-        players.forEach {
-            println("${it.name} : ${it.compareTo(dealer).toText()}")
+        participants.players.forEach {
+            println("${it.name} : ${it.compareTo(participants.dealer).toText()}")
         }
     }
 
@@ -91,10 +92,10 @@ class OutputView {
 
         private fun Suit.toText(): String {
             return when (this) {
-                Suit.SPADE -> "스페이드"
-                Suit.HEART -> "하트"
-                Suit.DIAMOND -> "다이아몬드"
-                Suit.CLUB -> "클로버"
+                Suit.SPADE -> "스페이드 ♠"
+                Suit.HEART -> "하트 ♥"
+                Suit.DIAMOND -> "다이아몬드 ♦"
+                Suit.CLUB -> "클로버 ♣"
             }
         }
 

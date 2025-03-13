@@ -1,14 +1,15 @@
 package blackjack.controller
 
 import blackjack.domain.generator.CardsGenerator
-import blackjack.domain.model.BetAmount
 import blackjack.domain.model.GameResult
 import blackjack.domain.model.Scoreboard
 import blackjack.domain.model.card.Card
 import blackjack.domain.model.card.Deck
+import blackjack.domain.model.participant.BetAmount
 import blackjack.domain.model.participant.Dealer
-import blackjack.domain.model.participant.Participant
+import blackjack.domain.model.participant.Participants
 import blackjack.domain.model.participant.Player
+import blackjack.domain.model.participant.PlayerBetInfo
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -19,22 +20,27 @@ class Casino(
 ) {
     fun run() {
         val deck: Deck = Deck(cardsGenerator)
-        val players: List<Player> = setPlayers()
-        val dealer: Dealer = Dealer()
-        initialCardsDistribute(players + dealer, deck)
-        outputParticipantCardsInfo(dealer, players)
+        val participants: Participants = Participants(Dealer(), setPlayers())
+        val playerBetInfos: List<PlayerBetInfo> = setPlayerBetInfos(participants.players)
+        initialCardsDistribute(participants, deck)
+        outputParticipantCardsInfo(participants)
 
-        runPlayersDrawPhase(players, deck)
-        runDealerPhase(dealer, deck)
-        outputFinalResult(dealer, players)
-        outputParticipantsProfit(dealer, players)
+        runPlayersDrawPhase(participants.players, deck)
+        runDealerPhase(participants.dealer, deck)
+        outputFinalResult(participants)
+        outputParticipantsProfit(participants, playerBetInfos)
+    }
+
+    private fun setPlayerBetInfos(players: List<Player>): List<PlayerBetInfo> {
+        return players.map {
+            val betAmount = setBetAmount(it.name)
+            PlayerBetInfo(it, betAmount)
+        }
     }
 
     private fun setPlayers(): List<Player> {
         val rawInputNames = inputView.readPlayerNames()
-        return rawInputNames.map {
-            Player(name = it, betAmount = setBetAmount(it))
-        }
+        return rawInputNames.map(::Player)
     }
 
     private fun setBetAmount(playerName: String): BetAmount {
@@ -47,10 +53,11 @@ class Casino(
     }
 
     private fun initialCardsDistribute(
-        participants: List<Participant>,
+        participants: Participants,
         deck: Deck,
     ) {
-        participants.forEach { participant ->
+        participants.dealer.drawCard(drawSafely(2, deck))
+        participants.players.forEach { participant ->
             participant.drawCard(drawSafely(2, deck))
         }
     }
@@ -71,13 +78,10 @@ class Casino(
         deck.refill()
     }
 
-    private fun outputParticipantCardsInfo(
-        dealer: Dealer,
-        players: List<Player>,
-    ) {
-        outputView.showDistributeCardMessage(players)
-        outputView.showDealerCardsInfo(dealer)
-        players.forEach { outputView.showPlayerCardsInfo(it) }
+    private fun outputParticipantCardsInfo(participants: Participants) {
+        outputView.showDistributeCardMessage(participants.players)
+        outputView.showDealerCardsInfo(participants.dealer)
+        participants.players.forEach { outputView.showPlayerCardsInfo(it) }
         outputView.newLine()
     }
 
@@ -118,24 +122,21 @@ class Casino(
     }
 
     private fun outputParticipantsProfit(
-        dealer: Dealer,
-        players: List<Player>,
+        participants: Participants,
+        playerBetInfos: List<PlayerBetInfo>,
     ) {
-        val scoreboard = Scoreboard(dealer, players)
-        val dealerProfit: Double = scoreboard.getDealerProfit()
-        val playersProfit: Map<Player, Double> = scoreboard.getPlayersProfit()
+        val scoreboard = Scoreboard(participants)
+        val dealerProfit: Double = scoreboard.getDealerProfit(playerBetInfos)
+        val playersProfit: Map<Player, Double> = scoreboard.getPlayersProfit(playerBetInfos)
 
         outputView.showProfitResult(dealerProfit, playersProfit)
     }
 
-    private fun outputFinalResult(
-        dealer: Dealer,
-        players: List<Player>,
-    ) {
-        outputView.showCardsResult(listOf(dealer) + players)
+    private fun outputFinalResult(participants: Participants) {
+        outputView.showCardsResult(participants)
         outputView.newLine()
 
-        val finalResult: Map<GameResult, Int> = Scoreboard(dealer, players).getDealerResult()
-        outputView.showFinalResult(finalResult, dealer, players)
+        val finalResult: Map<GameResult, Int> = Scoreboard(participants).getDealerResult()
+        outputView.showFinalResult(finalResult, participants)
     }
 }
