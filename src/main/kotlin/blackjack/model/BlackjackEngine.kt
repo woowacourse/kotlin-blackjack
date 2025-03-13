@@ -10,13 +10,13 @@ class BlackjackEngine(
 ) {
     var bets: MutableMap<Player, Amount> = mutableMapOf()
 
-    fun getPlayersBet(players: Players,eventProvider: EventProvider){
-        players.getPlayers().forEach { player->
+    fun getPlayersBet(players: Players, eventProvider: EventProvider) {
+        players.getPlayers().forEach { player ->
             bets[player] = Amount(eventProvider.getBetAmount(player.name).toDouble())
         }
     }
 
-    fun preparePlayers(names:List<String>): Players {
+    fun preparePlayers(names: List<String>): Players {
         return Players(names.map { name ->
             Player(
                 name,
@@ -41,13 +41,15 @@ class BlackjackEngine(
             progressPlayerDrawUntilFinished(player, eventListener, eventProvider)
         }
     }
-    fun getDealerMoneyResults(dealer: Dealer, playersEarnMoney : Map<Player, Amount>):Pair<Dealer,Amount>{
+
+    fun getDealerMoneyResults(dealer: Dealer, playersEarnMoney: Map<Player, Amount>): Pair<Dealer, Amount> {
         val dealerAmount = Amount(0.0)
-        playersEarnMoney.forEach{ playerEarnMoney ->
+        playersEarnMoney.forEach { playerEarnMoney ->
             dealerAmount.addMoney(playerEarnMoney.value.toMinus())
         }
-        return Pair(dealer,dealerAmount)
+        return Pair(dealer, dealerAmount)
     }
+
     fun getPlayerMoneyResults(dealer: Dealer, players: Players): Map<Player, Amount> {
         val earnMoney: MutableMap<Player, Amount> = mutableMapOf()
         players.getPlayers().forEach { player ->
@@ -82,11 +84,11 @@ class BlackjackEngine(
 
     fun progressDealerDraw(dealer: Dealer, eventListener: EventListener) {
         drawDealer(dealer)
-        eventListener.displayDealerDrawInfo(dealer.name, dealer.getHandSize()-START_CARD_COUNT)
+        eventListener.displayDealerDrawInfo(dealer.name, dealer.getHandSize() - START_CARD_COUNT)
         eventListener.displayParticipantInfo(dealer.name, dealer.hand.cards, dealer.hand.score(), dealer.hand.isBust())
     }
 
-    companion object{
+    companion object {
         const val START_CARD_COUNT = 2
     }
 

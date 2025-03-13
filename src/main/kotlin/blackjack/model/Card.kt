@@ -1,6 +1,6 @@
 package blackjack.model
 
-class Card (
+class Card(
     val rank: CardRank,
     val suit: CardSuit,
 ) {
@@ -11,7 +11,7 @@ class Card (
             }
         }
 
-        fun getCashed(rank:CardRank,suit:CardSuit):Card{
+        fun getCashed(rank: CardRank, suit: CardSuit): Card {
             return SINGLE_DECK.findLast { it.rank == rank && it.suit == suit }
                 ?: throw IllegalArgumentException("[ERROR] 잘못된 카드 번호나 문양입니다.")
         }

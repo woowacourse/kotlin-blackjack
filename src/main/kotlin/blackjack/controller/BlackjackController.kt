@@ -16,22 +16,22 @@ class BlackjackController(
     fun run() {
         val dealer = blackjackEngine.prepareDealer()
         val players = blackjackEngine.preparePlayers(inputView.getNames())
-        blackjackEngine.getPlayersBet(players,inputView)
+        blackjackEngine.getPlayersBet(players, inputView)
         outputView.displayFirstDrawEnd(dealer.name, players.value.map { player -> player.name })
         outputView.displayParticipantCards(dealer.name, dealer.hand.cards.take(DEALER_FIRST_SHOWN_COUNT))
-        blackjackEngine.progressPlayersDraw(players,outputView,inputView)
-        blackjackEngine.progressDealerDraw(dealer,outputView)
+        blackjackEngine.progressPlayersDraw(players, outputView, inputView)
+        blackjackEngine.progressDealerDraw(dealer, outputView)
         displayParticipantsInfo(players)
-        displayResult(dealer,players,outputView)
+        displayResult(dealer, players, outputView)
     }
 
-    private fun displayResult(dealer: Dealer, players: Players, outputView: OutputView){
+    private fun displayResult(dealer: Dealer, players: Players, outputView: OutputView) {
         outputView.displayResultTitle()
-        val playersResult = blackjackEngine.getPlayerMoneyResults(dealer,players)
-        val dealerResult = blackjackEngine.getDealerMoneyResults(dealer,playersResult)
-        outputView.displayResultMoney(dealerResult.first.name,dealerResult.second.getValue())
-        playersResult.forEach { playerResult->
-            outputView.displayResultMoney(playerResult.key.name,playerResult.value.getValue())
+        val playersResult = blackjackEngine.getPlayerMoneyResults(dealer, players)
+        val dealerResult = blackjackEngine.getDealerMoneyResults(dealer, playersResult)
+        outputView.displayResultMoney(dealerResult.first.name, dealerResult.second.getValue())
+        playersResult.forEach { playerResult ->
+            outputView.displayResultMoney(playerResult.key.name, playerResult.value.getValue())
         }
     }
 

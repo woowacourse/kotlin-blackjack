@@ -76,7 +76,7 @@ class OutputView : EventListener {
         println("\n## 최종 수익")
     }
 
-    fun displayResultMoney(name:String, resultMoney : Double){
+    fun displayResultMoney(name: String, resultMoney: Double) {
         println("${name}: ${resultMoney.toInt()}")
     }
 
