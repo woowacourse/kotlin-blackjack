@@ -1,7 +1,6 @@
 package blackjack.model
 
 import blackjack.model.GameStatus.BLACKJACK
-import blackjack.model.ScoreCalculator.BUST_NUMBER
 
 class Dealer(
     name: String = DEALER_NAME,
@@ -11,8 +10,6 @@ class Dealer(
     fun isBlackjack(): Boolean {
         return gameStatus == BLACKJACK
     }
-
-    override fun isBust(): Boolean = ScoreCalculator.sum(cards) > BUST_NUMBER
 
     companion object {
         private const val DEALER_NAME = "딜러"

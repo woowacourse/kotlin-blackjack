@@ -14,12 +14,7 @@ class ParticipantTest {
 
     @BeforeEach
     fun setUp() {
-        participant =
-            object : Participant("참가자이름") {
-                override fun isBust(): Boolean {
-                    return true
-                }
-            }
+        participant = Participant("참가자이름")
     }
 
     @Test
