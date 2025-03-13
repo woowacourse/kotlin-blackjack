@@ -5,10 +5,14 @@ import blackjack.domain.Rank.FaceRank
 import blackjack.domain.Rank.NumberRank
 
 class Deck(
-    shuffler: Shuffler,
+    private val shuffler: Shuffler,
 ) {
     fun draw(): Card {
-        val card = cards.first()
+        val card: Card =
+            cards.firstOrNull() ?: run {
+                refillDeck()
+                cards.first()
+            }
         cards = cards.minus(card)
         return card
     }
@@ -25,5 +29,15 @@ class Deck(
             FaceRank.entries.map { face: FaceRank -> Card(face, suit) }
         }
 
-    private var cards: List<Card> = shuffler.shuffle(aceCards + numberCards + faceCards)
+    private val cardPack = aceCards + numberCards + faceCards
+
+    private var cards: List<Card> = emptyList()
+
+    init {
+        refillDeck()
+    }
+
+    private fun refillDeck() {
+        cards = shuffler.shuffle(cardPack)
+    }
 }
