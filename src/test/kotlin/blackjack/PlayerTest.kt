@@ -64,4 +64,27 @@ class PlayerTest {
 
         assertThat(player.getProfit(GameResult.BLACKJACK)).isEqualTo(expected)
     }
+
+    @Test
+    fun `플레이어와 딜러 둘 다 블랙잭이면 무승부이다`() {
+        val player = Player("bibi", ParticipantCards(), Money(10000))
+        val dealer = Dealer(ParticipantCards())
+        player.receiveCard(TrumpCard(CardTier.KING, Shape.DIA))
+        player.receiveCard(TrumpCard(CardTier.ACE, Shape.DIA))
+        dealer.receiveCard(TrumpCard(CardTier.KING, Shape.DIA))
+        dealer.receiveCard(TrumpCard(CardTier.ACE, Shape.DIA))
+
+        val expected = GameResult.DRAW
+
+        assertThat(player.getResult(dealer)).isEqualTo(expected)
+    }
+
+    @Test
+    fun `플레이어와 딜러 둘 다 블랙잭이면 베팅 금액을 돌려받는다`() {
+        val player = Player("bibi", ParticipantCards(), Money(10000))
+
+        val expected = 0.00
+
+        assertThat(player.getProfit(GameResult.DRAW)).isEqualTo(expected)
+    }
 }
