@@ -4,9 +4,9 @@ import blackjack.const.GameRule
 import blackjack.domain.ScoreCalculator
 import blackjack.domain.card.Card
 
-abstract class Participant(
-    private val _hand: MutableList<Card> = mutableListOf(),
-) {
+abstract class Participant(initialHand: List<Card> = emptyList()) {
+    private val _hand: MutableList<Card> = initialHand.map { it.copy() }.toMutableList()
+
     val hand: List<Card>
         get() = _hand.toList()
 
