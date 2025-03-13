@@ -35,6 +35,6 @@ class BettingManager {
 
         bettingTable.reset()
 
-        return profitResult.playersTable
+        return profitResult.table
     }
 }
