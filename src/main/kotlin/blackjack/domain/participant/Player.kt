@@ -20,6 +20,7 @@ class Player(
         val otherScore = other.finalScore()
 
         return when {
+            other.isBlackJack() && !isBlackJack() -> GameResult.LOSE
             isBlackJack() && !other.isBlackJack() -> GameResult.BLACKJACK
             this.isBust() -> GameResult.LOSE
             other.isBust() && !this.isBust() -> GameResult.WIN

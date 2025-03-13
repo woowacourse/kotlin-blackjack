@@ -21,7 +21,8 @@ class Dealer(
         val otherScore = other.finalScore()
 
         return when {
-            isBlackJack() -> GameResult.BLACKJACK
+            !isBlackJack() && other.isBlackJack() -> GameResult.LOSE
+            isBlackJack() && !other.isBlackJack() -> GameResult.BLACKJACK
             other.isBust() -> GameResult.WIN
             this.isBust() && !other.isBust() -> GameResult.LOSE
             myScore > otherScore -> GameResult.WIN
