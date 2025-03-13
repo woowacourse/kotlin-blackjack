@@ -74,10 +74,6 @@ class Casino(
         return drawnDeck
     }
 
-    private fun refillDeck(deck: Deck) {
-        deck.refill()
-    }
-
     private fun outputParticipantCardsInfo(participants: Participants) {
         outputView.showDistributeCardMessage(participants.players)
         outputView.showDealerCardsInfo(participants.dealer)
