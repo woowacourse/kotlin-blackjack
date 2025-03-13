@@ -10,11 +10,14 @@ import blackjack.domain.Rank
 import blackjack.domain.Suit
 
 class OutputView {
+    fun dealInitialCards(players: List<Player>) {
+        println("${players.joinToString { player -> player.name }}에게 2장씩 나누었습니다.")
+    }
+
     fun printInitialCardsState(
         dealer: Dealer,
         players: List<Player>,
     ) {
-        println("${players.joinToString { player -> player.name }}에게 2장씩 나누었습니다.")
         println("딜러가 한 장을 오픈했습니다.")
         println("딜러: ${dealer.cards.joinToString { card -> card.prettyString }}")
         players.forEach { player ->
