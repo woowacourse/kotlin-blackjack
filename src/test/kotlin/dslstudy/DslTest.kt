@@ -1,6 +1,6 @@
 
-import dslstudy.Person
-import dslstudy.PersonBuilder
+import dslstudy.person.Person
+import dslstudy.person.PersonBuilder
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest

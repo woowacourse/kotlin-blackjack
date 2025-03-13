@@ -1,4 +1,4 @@
-package dslstudy
+package dslstudy.person
 
 class PersonBuilder {
     private lateinit var name: String
