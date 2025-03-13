@@ -111,9 +111,4 @@ class BlackjackController(
                 retryInput(inputFunction)
             }
     }
-
-    companion object {
-        private const val YES: String = "y"
-        private const val NO: String = "n"
-    }
 }
