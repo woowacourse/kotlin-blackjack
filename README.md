@@ -48,3 +48,13 @@
 - [x] DeckTest의 테스트명 수정 및 추가
 - [x] outputView.lineSeparator()호출을 컨트롤러에서 삭제
 - [x] 초기 카드 장수 상수를 Casino에서 handcard로 이동
+
+## Step2 기능 요구사항
+- [ ] BetHistory에 플레이어별 베팅 기록 추가
+- [ ] 베팅 금액 입력 로직 추가
+- [ ] WinLossStatistics가 playerResult를 보관 후 반환하도록 수정
+- [ ] ProfitStatistics를 추가하여 참가자별 수익 계산 로직 추가
+  - [ ] BetHistory를 보고 플레이어별 수익 계산 및 기록
+  - [ ] (플레이어의 수익의 합)의 역으로 딜러의 수익 역산 로직 추가
+- [ ] ProfitStatistics를 사용한 최종 수익 콘솔 출력
+  - [ ] step1의 최종 결과를 콘솔 출력하지 않도록 수정
