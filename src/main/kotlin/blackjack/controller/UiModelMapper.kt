@@ -22,10 +22,10 @@ private val Rank.prettyString: String
 private val Suit.prettyString: String
     get() =
         when (this) {
-            Suit.SPADE -> "스페이드"
-            Suit.HEART -> "하트"
-            Suit.DIAMOND -> "다이아몬드"
-            Suit.CLOVER -> "클로버"
+            Suit.SPADE -> "♠"
+            Suit.HEART -> "♥"
+            Suit.DIAMOND -> "♦"
+            Suit.CLOVER -> "♣"
         }
 
 val ParticipantState.prettyString: String
