@@ -21,17 +21,18 @@ class Dealer(
     private val deck: Deck = Deck(shuffler)
     private val playingPlayers: List<Player>
         get() = players.filter { player -> player.state == ParticipantState.PLAYING }
+    private val newCard get() = deck.draw()
 
     fun draw() {
-        hand.draw(deck.draw())
+        hand.draw(newCard)
     }
 
     fun pitch() {
-        players.forEach { player -> player.draw(deck.draw()) }
+        players.forEach { player -> player.draw(newCard) }
     }
 
     fun giveCard(player: Player) {
-        player.draw(deck.draw())
+        player.draw(newCard)
     }
 
     fun startPlayerTurn(turn: (Player) -> Unit) {
