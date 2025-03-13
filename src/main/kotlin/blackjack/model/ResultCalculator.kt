@@ -1,5 +1,6 @@
 package blackjack.model
 
+import blackjack.model.ResultType.BLACKJACK
 import blackjack.model.ResultType.LOSS
 import blackjack.model.ResultType.TIE
 import blackjack.model.ResultType.WIN
@@ -29,6 +30,13 @@ object ResultCalculator {
         player: Player,
     ): ResultType {
         if (player.isBust()) return LOSS
+        if (player.isBlackjack()) {
+            return if (dealer.isBlackjack()) {
+                TIE
+            } else {
+                BLACKJACK
+            }
+        }
         if (dealer.isBust()) return WIN
 
         return when {
