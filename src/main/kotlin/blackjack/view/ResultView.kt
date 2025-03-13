@@ -5,18 +5,13 @@ import blackjack.view.model.DealerSummary
 import blackjack.view.model.PlayerResult
 import blackjack.view.model.PlayerSummary
 
-class OutputView {
-    fun requestPlayers() {
-        println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
-    }
-
-    fun showCardDealing(
+class ResultView {
+    fun showDealing(
         playersName: List<String>,
         dealerCards: List<String>,
         playersCards: List<List<String>>,
     ) {
-        println()
-        println("${playersName.joinToString()}에게 2장씩 나누었습니다.")
+        println("\n${playersName.joinToString()}에게 2장씩 나누었습니다.")
         println("딜러가 한 장을 오픈했습니다.")
         println("딜러: ${dealerCards.joinToString()}")
         playersName.zip(playersCards).forEach { (name, cardsContent) ->
@@ -25,11 +20,7 @@ class OutputView {
         println()
     }
 
-    fun askWantToHit(name: String) {
-        println("${name}는 한 장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
-    }
-
-    fun showPlayerCards(
+    fun showPlayerCard(
         name: String,
         cards: List<String>,
         score: Int,
@@ -37,12 +28,15 @@ class OutputView {
         println("${name}카드: ${cards.joinToString()}, 점수 : $score")
     }
 
+    fun showDealerHit() {
+        println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.")
+    }
+
     fun showParticipantsSummary(
         dealerSummary: DealerSummary,
         playerSummaries: List<PlayerSummary>,
     ) {
-        println()
-        println("$dealerSummary")
+        println("\n$dealerSummary")
         playerSummaries.forEach { playerSummary -> println("$playerSummary") }
         println()
     }
@@ -56,9 +50,5 @@ class OutputView {
         playersResults.forEach { playerResult ->
             println("${playerResult.name}: ${playerResult.result}")
         }
-    }
-
-    fun showDealerHit() {
-        println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.")
     }
 }

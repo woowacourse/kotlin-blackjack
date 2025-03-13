@@ -4,17 +4,19 @@ import blackjack.domain.Blackjack
 import blackjack.domain.Dealer
 import blackjack.domain.Player
 import blackjack.domain.RandomShuffler
-import blackjack.view.BlackjackView
+import blackjack.view.AskView
+import blackjack.view.ResultView
 
 class BlackjackController(
-    val view: BlackjackView = BlackjackView(),
+    val askView: AskView = AskView(),
+    val resultView: ResultView = ResultView(),
 ) {
     lateinit var players: List<Player>
     lateinit var dealer: Dealer
     lateinit var blackjack: Blackjack
 
     fun initGame() {
-        val playerNames: List<String> = view.readPlayers()
+        val playerNames: List<String> = askView.readPlayers()
         players = playerNames.toPlayers
         dealer = Dealer(players, RandomShuffler)
         blackjack = Blackjack(dealer)
@@ -22,7 +24,7 @@ class BlackjackController(
 
     fun dealCards() {
         blackjack.dealCards()
-        view.dealCards(
+        resultView.showDealing(
             players.names,
             dealer.cards.prettyString,
             players.playersCards,
@@ -32,17 +34,17 @@ class BlackjackController(
     fun playPlayerTurn() {
         blackjack.startPlayerTurn(
             onStart = { player ->
-                view.showPlayerCard(
+                resultView.showPlayerCard(
                     player.name,
                     player.cards.prettyString,
                     player.score.value,
                 )
             },
             wantToHit = { player ->
-                view.askWantToHit(player.name)
+                askView.askWantToHit(player.name)
             },
             afterHit = { player ->
-                view.showPlayerCard(
+                resultView.showPlayerCard(
                     player.name,
                     player.cards.prettyString,
                     player.score.value,
@@ -53,12 +55,12 @@ class BlackjackController(
 
     fun playDealerTurn() {
         blackjack.startDealerTurn {
-            view.showDealerHit()
+            resultView.showDealerHit()
         }
     }
 
     fun showParticipantsSummary() {
-        view.showParticipantsSummary(
+        resultView.showParticipantsSummary(
             dealer.summary,
             players.summaries,
         )
@@ -66,7 +68,7 @@ class BlackjackController(
 
     fun setResult() {
         blackjack.setResult()
-        view.showResult(
+        resultView.showResult(
             dealer.result,
             players.results,
         )
