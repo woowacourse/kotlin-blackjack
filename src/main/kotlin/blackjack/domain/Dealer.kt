@@ -4,9 +4,6 @@ class Dealer(
     private val players: List<Player>,
     shuffler: Shuffler,
 ) : Participant() {
-    override val onBusted: () -> Unit = { playingPlayers.forEach(Player::win) }
-    private val deck: Deck = Deck(shuffler)
-
     val dealerResults: List<ParticipantState>
         get() =
             players.map { player ->
@@ -17,6 +14,11 @@ class Dealer(
                     ParticipantState.PLAYING -> ParticipantState.PLAYING
                 }
             }
+
+    override val onBusted: () -> Unit = { playingPlayers.forEach(Player::win) }
+    private val deck: Deck = Deck(shuffler)
+    private val playingPlayers: List<Player>
+        get() = players.filter { player -> player.state == ParticipantState.PLAYING }
 
     fun draw() {
         hand.draw(deck.draw())
@@ -44,7 +46,4 @@ class Dealer(
     fun setResult() {
         playingPlayers.forEach { player -> player.setResult(score) }
     }
-
-    private val playingPlayers: List<Player>
-        get() = players.filter { player -> player.state == ParticipantState.PLAYING }
 }

@@ -4,6 +4,7 @@ class Player(
     val name: String,
 ) : Participant() {
     override val onBusted: () -> Unit = { state = ParticipantState.LOSE }
+    val hittable: Boolean get() = score is Score.Hittable && score.value != Score.SCORE_MAX_CAN_HAVE
 
     var state: ParticipantState = ParticipantState.PLAYING
         private set
@@ -16,8 +17,6 @@ class Player(
                 else -> ParticipantState.DRAW
             }
     }
-
-    val hittable: Boolean get() = score is Score.Hittable && score.value != Score.SCORE_MAX_CAN_HAVE
 
     fun win() {
         state = ParticipantState.WIN

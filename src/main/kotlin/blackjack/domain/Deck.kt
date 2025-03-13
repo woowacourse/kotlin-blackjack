@@ -7,16 +7,6 @@ import blackjack.domain.Rank.NumberRank
 class Deck(
     private val shuffler: Shuffler,
 ) {
-    fun draw(): Card {
-        val card: Card =
-            cards.firstOrNull() ?: run {
-                refillDeck()
-                cards.first()
-            }
-        cards = cards.minus(card)
-        return card
-    }
-
     private val aceCards: List<Card> = Suit.entries.map { suit -> Card(AceRank, suit) }
     private val numberCards: List<Card> =
         Suit.entries.flatMap { suit ->
@@ -35,6 +25,16 @@ class Deck(
 
     init {
         refillDeck()
+    }
+
+    fun draw(): Card {
+        val card: Card =
+            cards.firstOrNull() ?: run {
+                refillDeck()
+                cards.first()
+            }
+        cards = cards.minus(card)
+        return card
     }
 
     private fun refillDeck() {
