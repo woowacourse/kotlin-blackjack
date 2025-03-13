@@ -41,9 +41,10 @@
 ## Step1 리팩터링 요구사항 2
 - [x] Number의 orderNumber 프로퍼티 삭제 후 getByOrderNumber 메서드 변경
 - [x] HandCards클래스 내 카드 조회시 backing property 활용
+  - [ ] 손패 내부의 카드를 한번에 초기화 하도록 테스트 코드 변경
 - [x] DSLStudy코드를 Test로 이동
 - [x] Deck Object를 일반 Class로 변경
   - [x] PlayerTest의 불필요해진 덱 관련 테스트 삭제
 - [x] DeckTest의 테스트명 수정 및 추가
 - [x] outputView.lineSeparator()호출을 컨트롤러에서 삭제
-- [ ] 초기 카드 장수 상수를 Casino에서 handcard로 이동
+- [x] 초기 카드 장수 상수를 Casino에서 handcard로 이동
