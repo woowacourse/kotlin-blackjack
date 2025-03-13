@@ -7,7 +7,7 @@ abstract class Participant(private val cards: Cards) {
     val currentScore: Int
         get() = ScoreCalculator(cards).calculateTotalCardScore()
 
-    val isBackJack: Boolean = ScoreCalculator(cards).initialTotalCardScore == 21
+    val isBackJack: Boolean = ScoreCalculator(cards).initialTotalCardScore == 21 && handCards.size == 2
 
     abstract fun turn(drawnCard: Card): Boolean
 
