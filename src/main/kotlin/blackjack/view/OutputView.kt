@@ -1,5 +1,6 @@
 package blackjack.view
 
+import blackjack.domain.Profit
 import blackjack.domain.card.Card
 import blackjack.domain.card.Rank
 import blackjack.domain.card.Suit
@@ -40,15 +41,15 @@ class OutputView {
 
     fun printDealerProfit(
         dealer: Dealer,
-        profit: Double,
+        profit: Profit,
     ) {
         println(MESSAGE_GAME_RESULT)
-        println(MESSAGE_RESULT.format(dealer.name, profit.toString()))
+        println(MESSAGE_RESULT.format(dealer.name, profit.value.toString()))
     }
 
-    fun printPlayersProfit(playersProfit: Map<Player, Double>) {
+    fun printPlayersProfit(playersProfit: Map<Player, Profit>) {
         playersProfit.forEach { (player, profit) ->
-            println(MESSAGE_RESULT.format(player.name, profit.toString()))
+            println(MESSAGE_RESULT.format(player.name, profit.value.toString()))
         }
     }
 
