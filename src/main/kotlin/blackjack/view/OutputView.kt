@@ -1,7 +1,6 @@
 package blackjack.view
 
 import blackjack.model.GameManager.Companion.INITIAL_HAND_OUT_CARD_COUNT
-import blackjack.model.ResultType
 import blackjack.model.card.Card
 import blackjack.model.card.CardNumber
 import blackjack.model.card.CardNumber.ACE
@@ -58,21 +57,12 @@ class OutputView {
         println()
     }
 
-    fun printFinalResult(
-        resultMap: Map<Player, ResultType>,
-        dealerResult: Map<ResultType, Int>,
-    ) {
+    fun printFinalResult(profitResult: Map<Player, Double>) {
+        val dealerProfit = profitResult.values.sumOf { profit -> profit } * -1.0
         println(FINAL_RESULT_MESSAGE)
-        var dealerProfit = 0.0
-        resultMap.forEach { (player, result) ->
-            getResultDisplayAmount(player, result)
-        }
-        resultMap.forEach { (player, _) ->
-            dealerProfit += player.finalProfit
-        }
-        println(DEALER_RESULT_FORMAT.format((dealerProfit * -1).toInt()))
-        resultMap.forEach { (player, _) ->
-            println(PLAYER_RESULT_FORMAT.format(player.name, player.finalProfit.toInt()))
+        println(DEALER_RESULT_FORMAT.format(dealerProfit.formatAmount()))
+        profitResult.forEach { (player, profit) ->
+            println(PLAYER_RESULT_FORMAT.format(player.name, profit.formatAmount()))
         }
     }
 
@@ -127,7 +117,7 @@ class OutputView {
         private const val FINAL_RESULT_MESSAGE = "## 최종 수익"
         private const val HANDS_STATUS_MESSAGE_FORMAT = "%s 카드: %s"
         private const val FINAL_HANDS_STATUS_MESSAGE_FORMAT = "%s 카드: %s - 결과: %s"
-        private const val DEALER_RESULT_FORMAT = "딜러: %d"
+        private const val DEALER_RESULT_FORMAT = "딜러: %s"
         private const val PLAYER_RESULT_FORMAT = "%s: %s"
 
         private const val DISPLAY_NAME_BLACKJACK = "블랙잭"
