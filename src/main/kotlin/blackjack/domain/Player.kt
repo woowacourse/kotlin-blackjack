@@ -2,7 +2,7 @@ package blackjack.domain
 
 class Player(
     val name: String,
-    private val bettingAmount: Int,
+    private val betting: Betting,
 ) : Playable {
     private val hand: Hand = Hand(onBusted = { state = ParticipantState.LOSE })
     override val cards: List<Card> get() = hand.cards
@@ -10,7 +10,7 @@ class Player(
     var state: ParticipantState = ParticipantState.PLAYING
         private set
     val canHit: Boolean get() = hand.canHit
-    val profit: Int get() = Betting(bettingAmount).toProfit(state, score)
+    val profit: Int get() = betting.toProfit(state, score)
 
     fun setResult(dealerScore: Score) {
         this.state =

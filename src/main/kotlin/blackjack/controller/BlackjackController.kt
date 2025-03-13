@@ -69,9 +69,8 @@ class BlackjackController(
 
     fun setResult() {
         blackjack.setResult()
-        resultView.showResult(
-            dealer.result,
-            players.results,
+        resultView.showProfit(
+            dealer.playersResult,
         )
     }
 }

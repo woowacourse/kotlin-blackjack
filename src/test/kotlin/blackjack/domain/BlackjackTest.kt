@@ -6,7 +6,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class BlackjackTest {
-    private fun Player(name: String): Player = Player(name, 0)
+    private fun Player(name: String): Player = Player(name, Betting(0))
 
     private fun Dealer(
         player: Player,
@@ -65,7 +65,7 @@ class BlackjackTest {
             }
         val blackjack = Blackjack(dealer)
         blackjack.setResult()
-        assertThat(dealer.dealerResults).isEqualTo(listOf(ParticipantState.LOSE, ParticipantState.WIN))
+        assertThat(dealer.playersProfit).isEqualTo(listOf(ParticipantState.LOSE, ParticipantState.WIN))
     }
 
     @Test
@@ -121,7 +121,6 @@ class BlackjackTest {
             }
         val blackjack = Blackjack(dealer)
         blackjack.setResult()
-        assertThat(dealer.dealerResults).contains(ParticipantState.DRAW)
         assertThat(drawer.state).isEqualTo(ParticipantState.DRAW)
     }
 }

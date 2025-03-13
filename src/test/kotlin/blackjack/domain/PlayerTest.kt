@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 class PlayerTest {
-    private fun Player(name: String): Player = Player(name, 0)
+    private fun Player(name: String): Player = Player(name, Betting(0))
 
     private fun Player.draw(vararg cards: Card) {
         cards.forEach { card ->

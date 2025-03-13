@@ -1,12 +1,12 @@
 package blackjack.controller
 
+import blackjack.domain.Betting
 import blackjack.domain.Card
 import blackjack.domain.Dealer
 import blackjack.domain.ParticipantState
 import blackjack.domain.Player
 import blackjack.domain.Rank
 import blackjack.domain.Suit
-import blackjack.view.model.DealerResult
 import blackjack.view.model.DealerSummary
 import blackjack.view.model.PlayerConfig
 import blackjack.view.model.PlayerResult
@@ -61,21 +61,13 @@ val List<Player>.playersCards: List<List<String>>
     get() = map { player -> player.cards.prettyString }
 
 val List<PlayerConfig>.toPlayers: List<Player>
-    get() = map { playerConfig -> Player(playerConfig.name, playerConfig.bettingAmount) }
+    get() = map { playerConfig -> Player(playerConfig.name, Betting(playerConfig.bettingAmount)) }
 
-val Dealer.result: DealerResult
+val Dealer.playersResult: List<PlayerResult>
     get() =
-        DealerResult(
-            dealerResults.count { state: ParticipantState -> state == ParticipantState.WIN },
-            dealerResults.count { state: ParticipantState -> state == ParticipantState.DRAW },
-            dealerResults.count { state: ParticipantState -> state == ParticipantState.LOSE },
-        )
-
-val List<Player>.results: List<PlayerResult>
-    get() = map { player -> player.result }
-
-private val Player.result: PlayerResult
-    get() = PlayerResult(name, state.prettyString)
+        playersName.zip(playersProfit).map { (name, profit) ->
+            PlayerResult(name, profit)
+        }
 
 val Dealer.summary: DealerSummary
     get() =

@@ -6,16 +6,8 @@ class Dealer(
 ) : Playable {
     override val cards: List<Card> get() = hand.cards
     override val score: Score get() = hand.score
-    val dealerResults: List<ParticipantState>
-        get() =
-            players.map { player ->
-                when (player.state) {
-                    ParticipantState.WIN -> ParticipantState.LOSE
-                    ParticipantState.DRAW -> ParticipantState.DRAW
-                    ParticipantState.LOSE -> ParticipantState.WIN
-                    ParticipantState.PLAYING -> ParticipantState.PLAYING
-                }
-            }
+    val playersName: List<String> get() = players.map { player -> player.name }
+    val playersProfit: List<Int> get() = players.map { player -> player.profit }
 
     private val hand: Hand = Hand(onBusted = { playingPlayers.forEach(Player::win) })
     private val deck: Deck = Deck(shuffler)

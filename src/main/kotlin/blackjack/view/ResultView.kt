@@ -1,6 +1,5 @@
 package blackjack.view
 
-import blackjack.view.model.DealerResult
 import blackjack.view.model.DealerSummary
 import blackjack.view.model.PlayerResult
 import blackjack.view.model.PlayerSummary
@@ -41,14 +40,11 @@ class ResultView {
         println()
     }
 
-    fun showResult(
-        dealerResult: DealerResult,
-        playersResults: List<PlayerResult>,
-    ) {
-        println("## 최종 승패")
-        println("딜러: $dealerResult")
-        playersResults.forEach { playerResult ->
-            println("${playerResult.name}: ${playerResult.result}")
+    fun showProfit(playersResult: List<PlayerResult>) {
+        println("## 최종 수익")
+        println("딜러: ${playersResult.sumOf { -it.profit }}")
+        playersResult.forEach { playerResult ->
+            println("${playerResult.name}: ${playerResult.profit}")
         }
     }
 }
