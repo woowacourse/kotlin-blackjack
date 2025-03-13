@@ -19,12 +19,8 @@ class ResultView {
         println()
     }
 
-    fun showPlayerCard(
-        name: String,
-        cards: List<String>,
-        score: Int,
-    ) {
-        println("${name}카드: ${cards.joinToString()}, 점수 : $score")
+    fun showPlayerCard(playerSummary: PlayerSummary) {
+        println("${playerSummary.name}카드: ${playerSummary.cards.joinToString()}, 점수 : ${playerSummary.score}")
     }
 
     fun showDealerHit() {
@@ -36,7 +32,9 @@ class ResultView {
         playerSummaries: List<PlayerSummary>,
     ) {
         println("\n$dealerSummary")
-        playerSummaries.forEach { playerSummary -> println("$playerSummary") }
+        playerSummaries.forEach { playerSummary ->
+            println("${playerSummary.name}카드: ${playerSummary.cards.joinToString()} - 결과: $playerSummary.score")
+        }
         println()
     }
 

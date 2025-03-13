@@ -7,6 +7,7 @@ import blackjack.domain.RandomShuffler
 import blackjack.view.AskView
 import blackjack.view.ResultView
 import blackjack.view.model.PlayerConfig
+import blackjack.view.model.PlayerSummary
 
 class BlackjackController(
     val askView: AskView = AskView(),
@@ -36,9 +37,11 @@ class BlackjackController(
         blackjack.startPlayerTurn(
             onStart = { player ->
                 resultView.showPlayerCard(
-                    player.name,
-                    player.cards.prettyString,
-                    player.score.value,
+                    PlayerSummary(
+                        player.name,
+                        player.cards.prettyString,
+                        player.score.value,
+                    ),
                 )
             },
             wantToHit = { player ->
@@ -46,9 +49,11 @@ class BlackjackController(
             },
             afterHit = { player ->
                 resultView.showPlayerCard(
-                    player.name,
-                    player.cards.prettyString,
-                    player.score.value,
+                    PlayerSummary(
+                        player.name,
+                        player.cards.prettyString,
+                        player.score.value,
+                    ),
                 )
             },
         )
