@@ -32,7 +32,7 @@ class PlayerTest {
     }
 
     @Test
-    fun `딜러가 버스트고 플레이어가 12점이면 플레이어가 이긴다`() {
+    fun `플레이어가 12점이고 딜러가 버스트이면 플레이어가 승리한다`() {
         val playerHand =
             Hand.of(
                 Card.of(CardNumber.KING, Suit.SPADE),
@@ -50,6 +50,29 @@ class PlayerTest {
         val actualResult = player.compareTo(dealer)
 
         val expectedResult = GameResult.WIN
+
+        assertThat(actualResult).isEqualTo(expectedResult)
+    }
+
+    @Test
+    fun `플레이어가 버스트고 딜러가 17점이면 플레이어가 패배한다`() {
+        val playerHand =
+            Hand.of(
+                Card.of(CardNumber.KING, Suit.SPADE),
+                Card.of(CardNumber.QUEEN, Suit.HEART),
+                Card.of(CardNumber.JACK, Suit.DIAMOND),
+            )
+        val player = Player("크림", playerHand)
+        val dealerHand =
+            Hand.of(
+                Card.of(CardNumber.JACK, Suit.SPADE),
+                Card.of(CardNumber.SEVEN, Suit.CLUB),
+            )
+        val dealer = Dealer("딜러", dealerHand)
+
+        val actualResult = player.compareTo(dealer)
+
+        val expectedResult = GameResult.LOSE
 
         assertThat(actualResult).isEqualTo(expectedResult)
     }
