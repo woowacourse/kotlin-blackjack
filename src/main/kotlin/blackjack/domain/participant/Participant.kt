@@ -2,9 +2,12 @@ package blackjack.domain.participant
 
 import blackjack.domain.Card
 import blackjack.domain.Hand
+import blackjack.domain.HandStatus
 
 abstract class Participant {
     val hand: Hand = Hand()
+
+    fun getStatus(): HandStatus = HandStatus.from(hand)
 
     abstract val hitThreshold: Int
 
@@ -13,6 +16,10 @@ abstract class Participant {
     }
 
     fun canHit(): Boolean {
-        return hand.getTotalSum() <= hitThreshold
+        return hand.canHit(hitThreshold)
+    }
+
+    fun getTotalSum(): Int {
+        return hand.getTotalSum()
     }
 }

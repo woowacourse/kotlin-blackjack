@@ -1,43 +1,37 @@
 package blackjack.domain
 
-class Hand {
-    private val cards: MutableList<Card> = mutableListOf()
-    private var totalSum: Int = 0
-
+class Hand(
+    private val cards: MutableList<Card> = mutableListOf(),
+) {
     fun getCards(): List<Card> = cards.toList()
-
-    fun getTotalSum(): Int = totalSum
 
     fun addCard(card: Card) {
         cards.add(card)
-        updateTotalSum()
     }
 
     fun isBust(): Boolean {
-        return totalSum > BUST_THRESHOLD
+        return getTotalSum() > BUST_THRESHOLD
     }
 
     fun isBlackJack(): Boolean {
-        return hasAce() && hasTenRankCard()
+        return cards.size == 2 && getTotalSum() == 21
     }
 
-    private fun updateTotalSum() {
+    fun canHit(hitThreshold: Int): Boolean {
+        return getTotalSum() <= hitThreshold
+    }
+
+    fun getTotalSum(): Int {
         var sum = cards.sumOf { it.getScore() }
 
         if (hasAce() && sum + ACE_BONUS_SCORE <= BUST_THRESHOLD) {
             sum += ACE_BONUS_SCORE
         }
-
-        totalSum = sum
+        return sum
     }
 
     private fun hasAce(): Boolean {
-        return cards.any { it.rank == Rank.ACE }
-    }
-
-    private fun hasTenRankCard(): Boolean {
-        val tenRankCards = listOf(Rank.TEN, Rank.JACK, Rank.QUEEN, Rank.KING)
-        return cards.any { it.rank in tenRankCards }
+        return cards.any { it.isAce() }
     }
 
     companion object {
