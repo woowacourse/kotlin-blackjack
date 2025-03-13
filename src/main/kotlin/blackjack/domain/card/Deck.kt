@@ -1,28 +1,32 @@
 package blackjack.domain.card
 
-class Deck(initCards: List<Card> = emptyList()) {
+class Deck(initCards: List<Card> = CACHED_CARDS) {
     private val _cards: MutableList<Card> = initCards.toMutableList()
-    val cards: List<Card> get() = _cards.toList()
+    val cards: List<Card> get() = _cards
 
     init {
-        if (cards.isEmpty()) _cards.addAll(generateDeck())
-        require(cards.size == DECK_SIZE) { INVALID_DECK_SIZE_ERROR_MESSAGE }
+        validateDeckSize()
     }
 
     fun draw(): Card {
-        require(cards.isNotEmpty()) { NO_SUCH_ELEMENT_ERROR_MESSAGE }
+        if (cards.isEmpty()) regenerateDeck()
         return _cards.removeFirst()
     }
 
-    private fun generateDeck(): List<Card> = CardPattern.entries.flatMap(::createCard).shuffled()
-
-    private fun createCard(cardPattern: CardPattern): List<Card> {
-        return CardNumber.entries.map { cardNumber -> Card.create(cardNumber, cardPattern) }
+    private fun regenerateDeck() {
+        _cards.addAll(CACHED_CARDS)
+        validateDeckSize()
     }
+
+    private fun validateDeckSize() = require(cards.size == DECK_SIZE) { INVALID_DECK_SIZE_ERROR_MESSAGE.format(cards.size) }
 
     companion object {
         private const val DECK_SIZE = 52
-        private const val INVALID_DECK_SIZE_ERROR_MESSAGE = "덱은 52장의 카드로 구성되어야 합니다."
-        private const val NO_SUCH_ELEMENT_ERROR_MESSAGE = "남은 카드가 없습니다."
+        private const val INVALID_DECK_SIZE_ERROR_MESSAGE = "덱은 52장의 카드로 구성되어야 합니다. (%s 장)"
+
+        private val CACHED_CARDS: List<Card> = CardPattern.entries.flatMap(::createCard)
+            get() = field.shuffled()
+
+        private fun createCard(cardPattern: CardPattern): List<Card> = CardNumber.entries.map { Card.create(it, cardPattern) }
     }
 }

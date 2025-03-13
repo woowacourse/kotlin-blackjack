@@ -21,10 +21,11 @@ class DeckTest {
     }
 
     @Test
-    fun `덱에 남은 카드가 없을 때 드로우를 할 수 없다`() {
-        shouldThrowExactly<IllegalArgumentException> {
-            val deck = Deck()
-            repeat(53) { deck.draw() }
-        }
+    fun `덱에 새로운 카드가 없다면 다시 셔플된 카드를 보충한다`() {
+        val deck = Deck()
+
+        repeat(53) { deck.draw() }
+
+        deck.cards.size shouldBe 51
     }
 }
