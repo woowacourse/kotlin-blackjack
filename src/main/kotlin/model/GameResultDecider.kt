@@ -14,8 +14,9 @@ class GameResultDecider(private val dealer: Dealer, private val players: Players
 
     private fun comparePlayerResult(player: Player): Float =
         when {
-            dealer.currentScore > BLACKJACK_SCORE -> player.betAmount
             player.isBackJack && !dealer.isBackJack -> player.betAmount * 1.5f
+            player.isBackJack && dealer.isBackJack -> player.betAmount
+            dealer.currentScore > BLACKJACK_SCORE -> player.betAmount
             player.currentScore > BLACKJACK_SCORE -> -player.betAmount
             else -> compareScores(player)
         }
