@@ -24,11 +24,6 @@ class InputView {
             return null
         }
 
-        if (betAmount.toInt() <= 0) {
-            println(ERROR_BET_AMOUNT_VALUE)
-            return null
-        }
-
         return betAmount.toInt()
     }
 
@@ -43,7 +38,6 @@ class InputView {
         private const val ERROR_PLAYER_NAME_EMPTY = "플레이어 이름은 비어있으면 안 됩니다. 다시 입력해주세요."
         private const val PLAYER_BET_AMOUNT_MESSAGE_GUIDE = "%s의 배팅 금액은?"
         private const val ERROR_BET_AMOUNT_TYPE = "배팅 금액은 정수를 입력해야 합니다. 다시 입력해주세요."
-        private const val ERROR_BET_AMOUNT_VALUE = "배팅 금액은 1원 이상이어야 합니다. 다시 입력해주세요."
         private const val PLAYER_MORE_CARD_MESSAGE_GUIDE = "%s은(는) 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)"
         private const val PLAYER_NAME_DELIMITER = ","
     }
