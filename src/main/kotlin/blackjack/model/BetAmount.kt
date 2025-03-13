@@ -2,7 +2,7 @@ package blackjack.model
 
 data class BetAmount(private val amount: Int) {
     init {
-        require(amount >= 0) { ERROR_BET_AMOUNT_VALUE }
+        require(amount > 0) { ERROR_BET_AMOUNT_VALUE }
     }
 
     fun toDouble(): Double = amount.toDouble()
