@@ -3,7 +3,6 @@ package blackjack.controller
 import blackjack.domain.Betting
 import blackjack.domain.Card
 import blackjack.domain.Dealer
-import blackjack.domain.ParticipantState
 import blackjack.domain.Player
 import blackjack.domain.Rank
 import blackjack.domain.Suit
@@ -37,15 +36,6 @@ private val Suit.prettyString: String
             Suit.HEART -> "♥"
             Suit.DIAMOND -> "♦"
             Suit.CLOVER -> "♣"
-        }
-
-val ParticipantState.prettyString: String
-    get() =
-        when (this) {
-            ParticipantState.PLAYING -> "진행중"
-            ParticipantState.WIN -> "승"
-            ParticipantState.DRAW -> "무"
-            ParticipantState.LOSE -> "패"
         }
 
 val List<Player>.names: List<String>
