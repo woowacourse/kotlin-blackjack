@@ -13,20 +13,15 @@ import org.junit.jupiter.api.Test
 
 class GameResultTest {
     private lateinit var dealer: Dealer
-    private lateinit var player: Player
 
     @BeforeEach
     fun setUp() {
-        dealer = Dealer(Deck())
         val dealerCards =
             listOf(
                 Card(CardNumber.JACK, CardPattern.HEART),
                 Card(CardNumber.EIGHT, CardPattern.HEART),
             )
-        dealerCards.forEach { card ->
-            dealer.addCard(card)
-        }
-        player = Player("pobi")
+        dealer = Dealer(Deck.createDefaultDeck(), dealerCards)
     }
 
     @Test
@@ -37,9 +32,7 @@ class GameResultTest {
                 Card(CardNumber.JACK, CardPattern.HEART),
                 Card(CardNumber.JACK, CardPattern.HEART),
             )
-        playerCards.forEach { card ->
-            player.addCard(card)
-        }
+        val player = Player("test", playerCards)
 
         // When
         val result = GameResult.create(dealer, listOf(player))
@@ -56,9 +49,7 @@ class GameResultTest {
                 Card(CardNumber.JACK, CardPattern.HEART),
                 Card(CardNumber.SEVEN, CardPattern.HEART),
             )
-        playerCards.forEach { card ->
-            player.addCard(card)
-        }
+        val player = Player("test", playerCards)
 
         // When
         val result = GameResult.create(dealer, listOf(player))
@@ -75,9 +66,7 @@ class GameResultTest {
                 Card(CardNumber.JACK, CardPattern.HEART),
                 Card(CardNumber.EIGHT, CardPattern.HEART),
             )
-        playerCards.forEach { card ->
-            player.addCard(card)
-        }
+        val player = Player("test", playerCards)
 
         // When
         val result = GameResult.create(dealer, listOf(player))
@@ -95,9 +84,7 @@ class GameResultTest {
                 Card(CardNumber.JACK, CardPattern.HEART),
                 Card(CardNumber.TWO, CardPattern.HEART),
             )
-        playerCards.forEach { card ->
-            player.addCard(card)
-        }
+        val player = Player("test", playerCards)
 
         // When
         val result = GameResult.create(dealer, listOf(player))
@@ -110,16 +97,13 @@ class GameResultTest {
     fun `딜러와 플레이어 모두 버스트되면 플레이어가 패배한다`() {
         // Given
         dealer.addCard(Card(CardNumber.FIVE, CardPattern.HEART))
-
         val playerCards =
             listOf(
                 Card(CardNumber.JACK, CardPattern.HEART),
                 Card(CardNumber.JACK, CardPattern.HEART),
                 Card(CardNumber.TWO, CardPattern.HEART),
             )
-        playerCards.forEach { card ->
-            player.addCard(card)
-        }
+        val player = Player("test", playerCards)
 
         // When
         val result = GameResult.create(dealer, listOf(player))
@@ -136,12 +120,8 @@ class GameResultTest {
                 Card(CardNumber.ACE, CardPattern.HEART),
                 Card(CardNumber.KING, CardPattern.HEART),
             )
-        val blackjackDealer = Dealer(Deck())
-
-        blackjackCards.forEach { card ->
-            player.addCard(card)
-            blackjackDealer.addCard(card)
-        }
+        val blackjackDealer = Dealer(Deck.createDefaultDeck(), blackjackCards)
+        val player = Player("test", blackjackCards)
 
         // When
         val result = GameResult.create(blackjackDealer, listOf(player))
