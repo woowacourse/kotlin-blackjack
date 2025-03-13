@@ -59,20 +59,20 @@ class BlackjackController(
         blackjack.playerGroup.players.forEach { player ->
             hitOrStay(blackjack, player)
         }
-        dealerReceiveCard(blackjack, blackjack.playerGroup.dealer)
+        dealerReceiveCard(blackjack)
     }
 
     private fun hitOrStay(
         blackjack: Blackjack,
         player: Player,
     ) {
-        while (player.canHit()) {
+        while (blackjack.canHit(player)) {
             val playerAction = getActionType(player)
             if (shouldStopDrawing(playerAction)) break
             blackjack.hitAction(player)
             outputView.printCardStatus(player)
         }
-        if (player.cardDeck.size == 2) outputView.printCardStatus(player)
+        if (blackjack.getParticipantCardSize(player) == 2) outputView.printCardStatus(player)
     }
 
     private fun shouldStopDrawing(playerAction: ActionType): Boolean {
@@ -88,12 +88,9 @@ class BlackjackController(
         }
     }
 
-    private fun dealerReceiveCard(
-        blackjack: Blackjack,
-        dealer: Dealer,
-    ) {
+    private fun dealerReceiveCard(blackjack: Blackjack) {
         val count: Int = blackjack.drawUntilThreshold()
-        outputView.printDealerReceiveCard(count, dealer)
+        outputView.printDealerReceiveCard(count, blackjack.playerGroup.dealer)
     }
 
     private fun endGame(

@@ -23,8 +23,16 @@ class Blackjack(
         }
     }
 
+    fun canHit(participant: Participants): Boolean {
+        return participant.canHit()
+    }
+
     fun hitAction(player: Player) {
         player.receiveCard(deck.spreadCard())
+    }
+
+    fun getParticipantCardSize(participant: Participants): Int {
+        return participant.cardDeck.size
     }
 
     fun drawUntilThreshold(): Int {
