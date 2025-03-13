@@ -12,29 +12,24 @@ class ShuffledDeck : Deck {
 
     init {
         repeat(MAX_DECK_COUNT) {
-            deckPool.add(createDeck())
+            deckPool.add(makeCards())
         }
     }
 
     override fun pop(): TrumpCard {
-        require(deckPool.isNotEmpty()) { ERROR_EMPTY_DECK_POOL_MESSAGE }
+        while (currentDeckIndex < MAX_DECK_COUNT) {
+            val currentDeck = deckPool[currentDeckIndex]
 
-        val currentDeck = deckPool[currentDeckIndex]
-
-        if (currentDeck.isEmpty()) {
-            if (currentDeckIndex < MAX_DECK_COUNT) {
-                currentDeckIndex++
+            if (currentDeck.isNotEmpty()) {
+                return currentDeck.pop()
             } else {
-                throw IllegalArgumentException(ERROR_EMPTY_DECK_MESSAGE)
+                currentDeckIndex++
             }
         }
-
-        return currentDeck.pop()
+        throw IllegalArgumentException(ERROR_EMPTY_DECK_MESSAGE)
     }
 
-    override fun makeCards(): List<TrumpCard> = createDeck().toList()
-
-    private fun createDeck(): Deque<TrumpCard> {
+    override fun makeCards(): Deque<TrumpCard> {
         val shuffledCards =
             Shape.entries
                 .flatMap { shape ->
@@ -46,9 +41,7 @@ class ShuffledDeck : Deck {
     }
 
     companion object {
-        const val MAX_DECK_COUNT = 7
-
+        const val MAX_DECK_COUNT = 8
         const val ERROR_EMPTY_DECK_MESSAGE = "[ERROR] 더 이상 뽑을 카드가 없습니다."
-        const val ERROR_EMPTY_DECK_POOL_MESSAGE = "[ERROR] 사용할 수 있는 덱이 없습니다."
     }
 }

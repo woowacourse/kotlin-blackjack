@@ -16,14 +16,11 @@ class DeckTest {
     }
 
     @Test
-    fun `덱에 있는 카드 이상의 카드를 뽑을 수 없다`() {
-        // given
+    fun `8개의 덱에 있는 카드 이상의 카드를 뽑을 수 없다`() {
         val deck = ShuffledDeck()
 
-        // when
-        repeat(52) { deck.pop() }
+        repeat(416) { deck.pop() }
 
-        // then
         assertThrows<IllegalArgumentException> { deck.pop() }
     }
 }
