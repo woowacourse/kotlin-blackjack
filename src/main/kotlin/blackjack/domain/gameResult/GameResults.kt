@@ -1,6 +1,7 @@
 package blackjack.domain.gameResult
 
 import blackjack.domain.BlackJackGame
+import blackjack.domain.gameResult.state.State
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Player
 
@@ -11,27 +12,26 @@ class GameResults(private val dealer: Dealer, players: List<Player>) {
         get() = field.toList()
         private set
 
+//    init {
+//        playerResults =
+//            players.map { player ->
+//                val resultState = judgePlayerResult(player)
+//                val profit = (resultState.getEarnRate()*player.bettingAmount).toInt()
+//                PlayerResult(player, profit)
+//            }
+//    }
+
     init {
         playerResults =
             players.map { player ->
-                val status = judgePlayerResult(player)
-                val profit = status.earn(player.bettingAmount)
-                PlayerResult(player, profit)
+                PlayerResult(player, judgePlayerResult(player))
             }
     }
 
-    fun judgePlayerResult(player: Player): GameResultStatus {
-        if (player.isBust()) return GameResultStatus.PLAYER_LOSE
-        if (dealer.isBust()) return GameResultStatus.PLAYER_WIN
-        if (player.isBlackJack() != dealer.isBlackJack()) {
-            return if (player.isBlackJack()) GameResultStatus.PLAYER_BLACKJACK else GameResultStatus.DEALER_BLACKJACK
-        }
-
-        return when {
-            dealer.totalSum > player.totalSum -> GameResultStatus.PLAYER_LOSE
-            player.totalSum > dealer.totalSum -> GameResultStatus.PLAYER_WIN
-            player.totalSum == dealer.totalSum -> GameResultStatus.DRAW
-            else -> throw IllegalArgumentException()
-        }
+    private fun judgePlayerResult(player: Player): ResultState {
+        val playerState = State.of(player)
+        val dealerState = State.of(dealer)
+        val result = playerState.compare(dealerState)
+        return ResultState(playerState, result)
     }
 }
