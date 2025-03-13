@@ -11,7 +11,7 @@ class BettingTable {
         name: Name,
         money: Money,
     ) {
-        _table[name] = _table.getOrDefault(name, Money.ZERO).plus(money)
+        _table[name] = _table[name]?.plus(money) ?: money
     }
 
     fun get(name: Name): Money = _table.getOrDefault(name, Money.ZERO)
