@@ -1,6 +1,7 @@
-package model
+package model.result
 
-import model.GameResultDecider.Companion.BLACKJACK_SCORE
+import model.card.Cards
+import model.result.GameResultDecider.Companion.BLACKJACK_SCORE
 
 class ScoreCalculator(private val cards: Cards) {
     val initialTotalCardScore = cards.scores.sum()
@@ -18,7 +19,8 @@ class ScoreCalculator(private val cards: Cards) {
     private fun adjustAceScore(
         initialTotalCardScore: Int,
         aceCount: Int,
-    ) = initialTotalCardScore - ACE_MINUS_VALUE * aceCount.coerceAtMost((initialTotalCardScore - BLACKJACK_SCORE) / ACE_MINUS_VALUE + 1)
+    ) =
+        initialTotalCardScore - ACE_MINUS_VALUE * aceCount.coerceAtMost((initialTotalCardScore - BLACKJACK_SCORE) / ACE_MINUS_VALUE + 1)
 
     companion object {
         private const val DEFAULT_ZERO = 0

@@ -1,4 +1,4 @@
-package model
+package model.card
 
 class CardsGenerator {
     fun generateCards(): Cards {

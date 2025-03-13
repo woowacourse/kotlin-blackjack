@@ -1,4 +1,4 @@
-package model
+package model.participant
 
 class Players(private val players: List<Player>) : List<Player> by players {
     val names: List<String> = players.map { player -> player.name }

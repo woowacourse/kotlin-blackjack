@@ -1,4 +1,4 @@
-package model
+package model.card
 
 enum class Shape {
     HEART,

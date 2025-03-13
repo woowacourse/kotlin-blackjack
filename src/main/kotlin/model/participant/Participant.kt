@@ -1,4 +1,8 @@
-package model
+package model.participant
+
+import model.card.Card
+import model.card.Cards
+import model.result.ScoreCalculator
 
 abstract class Participant(private val cards: Cards) {
     private val handCards: MutableList<Card>

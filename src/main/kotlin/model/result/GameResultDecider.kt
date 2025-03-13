@@ -1,5 +1,8 @@
-package model
+package model.result
 
+import model.participant.Dealer
+import model.participant.Player
+import model.participant.Players
 import kotlin.math.abs
 
 class GameResultDecider(private val dealer: Dealer, private val players: Players) {

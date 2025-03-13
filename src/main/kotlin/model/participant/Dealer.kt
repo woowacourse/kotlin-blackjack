@@ -1,4 +1,7 @@
-package model
+package model.participant
+
+import model.card.Card
+import model.card.Cards
 
 class Dealer(dealerCards: Cards) : Participant(dealerCards) {
     override fun turn(drawnCard: Card): Boolean {

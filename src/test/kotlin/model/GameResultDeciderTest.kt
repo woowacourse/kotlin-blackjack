@@ -1,5 +1,13 @@
 package model
 
+import model.card.Card
+import model.card.CardRank
+import model.card.Cards
+import model.card.Shape
+import model.participant.Dealer
+import model.participant.Player
+import model.participant.Players
+import model.result.GameResultDecider
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest

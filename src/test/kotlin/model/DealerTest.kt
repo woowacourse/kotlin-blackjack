@@ -1,6 +1,10 @@
 package model
 
 import model.CardsTest.Companion.cardOf
+import model.card.Card
+import model.card.CardRank
+import model.card.Shape
+import model.participant.Dealer
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test

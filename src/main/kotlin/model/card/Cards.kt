@@ -1,4 +1,4 @@
-package model
+package model.card
 
 class Cards(allCards: List<Card>) {
     val allCards: MutableList<Card> = allCards.toMutableList()

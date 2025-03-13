@@ -1,4 +1,4 @@
-package model
+package model.card
 
 enum class CardRank(val score: Int) {
     ACE(11),

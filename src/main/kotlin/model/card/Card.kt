@@ -1,4 +1,4 @@
-package model
+package model.card
 
 data class Card(private val cardRank: CardRank, private val shape: Shape) {
     val cardScore: Int = cardRank.score
