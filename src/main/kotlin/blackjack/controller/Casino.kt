@@ -34,7 +34,6 @@ class Casino(
                 participant.handCards.addCard(deck.getCard())
             }
         }
-        outputView.lineSeparator()
     }
 
     private fun outputParticipantCardsInfo(
@@ -42,8 +41,7 @@ class Casino(
         players: List<Player>,
     ) {
         outputView.showDealerFirstCardsInfo(dealer)
-        players.forEach { outputView.showPlayerCardsInfo(it) }
-        outputView.lineSeparator()
+        outputView.showPlayersCardsInfo(players)
     }
 
     private fun runPlayersDrawPhase(players: List<Player>) {
@@ -56,7 +54,7 @@ class Casino(
                 outputView.showPlayerCardsInfo(player)
             }
         }
-        outputView.lineSeparator()
+        outputView.endDrawPhase()
     }
 
     private fun isPlayerWantHit(player: Player): Boolean = inputView.readWantExtraCard(player.name)
@@ -66,7 +64,6 @@ class Casino(
             dealer.handCards.addCard(deck.getCard())
             outputView.showDealerDrawMessage()
         }
-        outputView.lineSeparator()
     }
 
     private fun outputFinalResult(

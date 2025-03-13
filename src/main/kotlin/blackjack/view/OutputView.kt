@@ -16,6 +16,7 @@ class OutputView(
     }
 
     fun showDistributeCardMessage(participants: List<GameParticipant>) {
+        lineSeparator()
         val joinedNames = participants.joinToString { it.name }
         println(DISTRIBUTE_CARD_MESSAGE.format(joinedNames))
     }
@@ -27,12 +28,20 @@ class OutputView(
         println(CARD_INFO_MESSAGE.format(name, makeCardText(firstCard)))
     }
 
+    fun showPlayersCardsInfo(players: Collection<Player>) {
+        players.forEach { player ->
+            println(makeParticipantInfoText(player))
+        }
+        lineSeparator()
+    }
+
     fun showPlayerCardsInfo(player: Player) {
         println(makeParticipantInfoText(player))
     }
 
     fun showDealerDrawMessage() {
         println(DEALER_DRAW_MESSAGE)
+        lineSeparator()
     }
 
     fun showCardsResult(participants: List<GameParticipant>) {
@@ -72,6 +81,10 @@ class OutputView(
             }
 
         return winLossTexts.joinToString(" ")
+    }
+
+    fun endDrawPhase() {
+        lineSeparator()
     }
 
     companion object {
