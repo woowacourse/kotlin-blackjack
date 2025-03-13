@@ -30,6 +30,17 @@ class Dealer(
         }
     }
 
+    fun getProfit(
+        other: Player,
+        gameResult: GameResult,
+    ): Double =
+        when (gameResult) {
+            GameResult.BLACKJACK -> other.bettingMoney.value.toDouble()
+            GameResult.WIN -> other.bettingMoney.value.toDouble()
+            GameResult.DRAW -> 0.0
+            else -> (0 - other.bettingMoney.value).toDouble()
+        }
+
     companion object {
         private const val DEALER_MAX_SCORE = 16
         private const val DEALER_INITIAL_CARD_COUNT = 1
