@@ -1,6 +1,5 @@
 package blackjack.domain.participant
 
-import blackjack.domain.Result
 import blackjack.domain.Score
 import blackjack.domain.card.Card
 import blackjack.domain.card.Hand
@@ -20,5 +19,8 @@ abstract class Participant(
 
     abstract fun canHit(): Boolean
 
-    abstract fun getResult(other: Participant): Result
+    abstract fun getProfit(
+        other: Participant,
+        bettingAmount: Int,
+    ): Int
 }

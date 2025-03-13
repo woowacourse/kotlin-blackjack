@@ -13,24 +13,23 @@ class BlackjackController(
     private val outputView: OutputView,
 ) {
     fun play() {
-        val participants = getParticipants()
+        val dealer = Dealer()
+        val players = getPlayers()
+        val bettingInfo = getBettingInfo(players)
+        val participants = Participants(dealer, players)
         val game = BlackjackGame(Deck.create(), participants)
 
         startGame(game, participants)
         playGame(game)
-        showGameResult(participants)
-    }
-
-    private fun getParticipants(): Participants {
-        val dealer = Dealer()
-        val players = getPlayers()
-        return Participants(dealer, players)
+        showGameResult(participants, bettingInfo)
     }
 
     private fun getPlayers(): List<Player> {
         val playerNames = inputView.readPlayerNames()
-        return playerNames.map { Player(it, getBettingAmount(it)) }
+        return playerNames.map(::Player)
     }
+
+    private fun getBettingInfo(players: List<Player>): Map<Player, Int> = players.associateWith { getBettingAmount(it.name) }
 
     private fun getBettingAmount(name: String): Int = inputView.readBettingAmount(name)
 
@@ -50,15 +49,15 @@ class BlackjackController(
         )
     }
 
-    private fun showGameResult(participants: Participants) {
+    private fun showGameResult(
+        participants: Participants,
+        bettingInfo: Map<Player, Int>,
+    ) {
         outputView.printParticipantScore(participants.dealer, participants.players)
 
-        val dealerResult = participants.getDealerResult()
-        outputView.printDealerResult(participants.dealer, dealerResult)
-
-        val playersResult = participants.getPlayerResults()
-        playersResult.forEach { (name, result) ->
-            outputView.printPlayerResult(name, result)
-        }
+        val dealerProfit = participants.getDealerProfit(bettingInfo)
+        val playersProfit = participants.getPlayersProfit(bettingInfo)
+        outputView.printDealerProfit(participants.dealer, dealerProfit)
+        outputView.printPlayersProfit(playersProfit)
     }
 }

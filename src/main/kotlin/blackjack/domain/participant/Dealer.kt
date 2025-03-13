@@ -1,21 +1,24 @@
 package blackjack.domain.participant
 
-import blackjack.domain.Result
-
 class Dealer(
     name: String = DEALER_DEFAULT_NAME,
 ) : Participant(name) {
     override fun canHit(): Boolean = getScore().score <= DEALER_HIT_CONDITION
 
-    override fun getResult(other: Participant): Result {
-        val dealerScore = getScore()
+    override fun getProfit(
+        other: Participant,
+        bettingAmount: Int,
+    ): Int {
+        val thisScore = getScore()
         val otherScore = other.getScore()
-        if (otherScore.isBust()) return Result.WIN
-        if (dealerScore.isBust()) return Result.LOSE
+
         return when {
-            dealerScore > otherScore -> Result.WIN
-            dealerScore < otherScore -> Result.LOSE
-            else -> Result.PUSH
+            (!this.isBlackjack() && other.isBlackjack()) -> -(bettingAmount * 1.5).toInt()
+            (otherScore.isBust()) -> bettingAmount
+            (thisScore.isBust()) -> -bettingAmount
+            thisScore > otherScore -> bettingAmount
+            thisScore < otherScore -> -bettingAmount
+            else -> 0
         }
     }
 

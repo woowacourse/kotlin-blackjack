@@ -20,7 +20,7 @@ class Hand {
         return Score(score)
     }
 
-    fun isBlackjack(): Boolean = _cards.size == 2 && calculateScore() == Score(21)
+    fun isBlackjack(): Boolean = _cards.size == 2 && calculateScore().isPerfectScore()
 
     private fun hasAce(): Boolean = _cards.any { it.isAce() }
 

@@ -1,6 +1,5 @@
 package blackjack.view
 
-import blackjack.domain.Result
 import blackjack.domain.card.Card
 import blackjack.domain.card.Rank
 import blackjack.domain.card.Suit
@@ -25,10 +24,6 @@ class OutputView {
         println(cardsInfo(player))
     }
 
-    fun printBust(player: Player) {
-        println(MESSAGE_BUST.format(player.name))
-    }
-
     fun printDealerHit(dealer: Dealer) {
         println(MESSAGE_DEALER_HIT.format(dealer.name))
     }
@@ -43,24 +38,18 @@ class OutputView {
         }
     }
 
-    fun printDealerResult(
+    fun printDealerProfit(
         dealer: Dealer,
-        dealerResult: Map<Result, Int>,
+        profit: Int,
     ) {
         println(MESSAGE_GAME_RESULT)
-        val order = listOf(Result.WIN, Result.PUSH, Result.LOSE)
-        val joinedResult =
-            order
-                .mapNotNull { result -> dealerResult[result]?.let { "$it${result.toText()}" } }
-                .joinToString(" ")
-        println(MESSAGE_RESULT.format(dealer.name, joinedResult))
+        println(MESSAGE_RESULT.format(dealer.name, profit.toString()))
     }
 
-    fun printPlayerResult(
-        name: String,
-        result: Result,
-    ) {
-        println(MESSAGE_RESULT.format(name, result.toText()))
+    fun printPlayersProfit(playersProfit: Map<Player, Int>) {
+        playersProfit.forEach { (player, profit) ->
+            println(MESSAGE_RESULT.format(player.name, profit.toString()))
+        }
     }
 
     private fun cardsInfo(participant: Participant): String {
@@ -70,11 +59,10 @@ class OutputView {
 
     companion object {
         private const val MESSAGE_DEALING = "\n딜러와 %s에게 2장의 나누었습니다."
-        private const val MESSAGE_BUST = "%s는 더 이상 카드를 받을 수 없습니다."
         private const val MESSAGE_CARD_INFO = "%s 카드: %s"
         private const val MESSAGE_SCORE = "- 결과: %d"
         private const val MESSAGE_DEALER_HIT = "%s는 16이하라 한 장의 카드를 더 받았습니다."
-        private const val MESSAGE_GAME_RESULT = "\n## 최종 승패"
+        private const val MESSAGE_GAME_RESULT = "\n## 최종 수익"
         private const val MESSAGE_RESULT = "%s: %s"
 
         private fun Rank.toText(): String =
@@ -95,13 +83,5 @@ class OutputView {
             }
 
         private fun Card.toText(): String = "${this.rank.toText()}${this.suit.toText()}"
-
-        private fun Result.toText(): String =
-            when (this) {
-                Result.WIN -> "승"
-                Result.LOSE -> "패"
-                Result.PUSH -> "무"
-                Result.BLACKJACK -> "승"
-            }
     }
 }
