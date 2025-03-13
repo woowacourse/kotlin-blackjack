@@ -29,7 +29,7 @@ class BlackJackGameTest {
         val game = BlackJackGame(participants, ShuffledDeck())
         participants.players.first().receiveCard(TrumpCard(CardTier.JACK, Shape.DIA))
         participants.players.first().receiveCard(TrumpCard(CardTier.JACK, Shape.DIA))
-        game.playGame(
+        game.choice(
             getPlayerChoice = { true },
             onPlayerStateUpdated = {},
         )
@@ -46,7 +46,7 @@ class BlackJackGameTest {
         val participants = playersFixture()
         val game = BlackJackGame(participants, ShuffledDeck())
 
-        game.playGame(
+        game.choice(
             getPlayerChoice = { false },
             onPlayerStateUpdated = {},
         )
