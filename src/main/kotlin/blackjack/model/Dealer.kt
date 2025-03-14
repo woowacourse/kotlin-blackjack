@@ -8,11 +8,6 @@ class Dealer(
 ) : Participant(name, hand) {
     val profit: Money = Money(0.0)
 
-    fun isHit(): Boolean {
-        val dealerScore = hand.calculateScore()
-        return dealerScore <= DEALER_HIT_SCORE
-    }
-
     fun getResult(playerScore: Int): GameResult {
         if (playerScore == BUST_SCORE) return GameResult.WIN
         if (isBust()) return GameResult.LOSE
@@ -20,6 +15,8 @@ class Dealer(
     }
 
     private fun calculateResult(playerScore: Int): GameResult = GameResult.of(getScore(), playerScore)
+
+    override fun canHit(): Boolean = getScore() <= DEALER_HIT_SCORE
 
     override fun gainMoney(money: Money) {
         profit.plus(money)

@@ -1,5 +1,7 @@
 package blackjack.model
 
+import blackjack.model.CardsStatus.Companion.BLACKJACK_SCORE
+
 class Player(
     name: String,
     hand: Hand = Hand(emptyList()),
@@ -14,6 +16,8 @@ class Player(
     fun getBettingMoney(money: BettingMoney) {
         bettingMoney = money
     }
+
+    override fun canHit(): Boolean = getScore() < BLACKJACK_SCORE && !isBlackjack() && !isBust()
 
     override fun gainMoney(money: Money) {
         bettingMoney.plus(money)

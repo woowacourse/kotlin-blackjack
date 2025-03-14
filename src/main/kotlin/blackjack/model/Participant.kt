@@ -20,6 +20,8 @@ abstract class Participant(
 
     fun isBust(): Boolean = hand.status == CardsStatus.BUST
 
+    abstract fun canHit(): Boolean
+
     abstract fun gainMoney(money: Money)
 
     abstract fun lossMoney(money: Money)

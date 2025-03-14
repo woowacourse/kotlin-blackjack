@@ -96,7 +96,7 @@ class BlackjackController(
     }
 
     private fun executePlayerGame(player: Player) {
-        while (!player.isBust()) {
+        while (player.canHit()) {
             outputView.printPlayerBehaviorGuide(player)
             val playerBehavior: Behavior = inputView.readPlayerBehavior()
 
@@ -129,7 +129,7 @@ class BlackjackController(
     }
 
     private fun executeDealerGameLogic(dealer: Dealer) {
-        while (dealer.isHit()) {
+        while (dealer.canHit()) {
             dealer.pickCard(cardDeck)
             outputView.printDealerGettingCard()
             if (dealer.isBust()) break
