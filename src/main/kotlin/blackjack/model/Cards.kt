@@ -6,12 +6,12 @@ class Cards(
     private val _value: MutableList<Card> = value.toMutableList()
     val value: List<Card> get() = _value.map { card -> card.copy() }
 
-    var status: CardsStatus = CardsStatus.from(cardsScore = calculateScore(), firstTurn = true)
+    var status: CardsStatus = CardsStatus.from(cardsScore = calculateScore(), cardsSize = value.size)
         private set
 
     fun add(card: Card) {
         _value.add(card)
-        status = CardsStatus.from(cardsScore = calculateScore(), firstTurn = false)
+        status = CardsStatus.from(cardsScore = calculateScore(), cardsSize = value.size)
     }
 
     fun calculateScore(): Int {

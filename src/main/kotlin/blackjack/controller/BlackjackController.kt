@@ -8,6 +8,7 @@ import blackjack.model.Dealer
 import blackjack.model.GameResult
 import blackjack.model.Money
 import blackjack.model.Player
+import blackjack.model.Player.Behavior
 import blackjack.model.Players
 import blackjack.view.InputView
 import blackjack.view.OutputView
@@ -49,6 +50,7 @@ class BlackjackController(
         players: Players,
         dealer: Dealer,
     ) {
+        if (handleDealerBlackjack(dealer, players)) return
         players.value.forEach { player ->
             executePlayerGame(player)
         }
@@ -57,27 +59,63 @@ class BlackjackController(
         displayResult(players, dealer)
     }
 
-    private fun executePlayerGame(player: Player) {
-        while (!player.isBust()) {
-            outputView.printPlayerBehaviorGuide(player)
-            val playerBehavior: Player.Behavior = inputView.readPlayerBehavior()
+    private fun handleDealerBlackjack(
+        dealer: Dealer,
+        players: Players,
+    ): Boolean {
+        if (dealer.isBlackjack()) {
+            executeBlackjackPlayersLogic(players, dealer)
+            executeNotBlackjackPlayersLogic(players, dealer)
+            displayResult(players, dealer)
+            return true
+        }
+        return false
+    }
 
-            if (executePlayerBehavior(playerBehavior, player)) break
+    private fun executeBlackjackPlayersLogic(
+        players: Players,
+        dealer: Dealer,
+    ) {
+        val blackjackPlayers: List<Player> = players.getBlackjackPlayers()
+
+        blackjackPlayers.forEach { player ->
+            val money: Money = player.bettingMoney.multiple(1.5)
+            executePlayerGainMoney(dealer, money, player)
         }
     }
 
-    private fun executePlayerBehavior(
-        playerBehavior: Player.Behavior,
+    private fun executeNotBlackjackPlayersLogic(
+        players: Players,
+        dealer: Dealer,
+    ) {
+        val notBlackjackPlayers: List<Player> = players.getNotBlackjackPlayers()
+        notBlackjackPlayers.forEach { player ->
+            val money: Money = player.bettingMoney
+            executeDealerGainMoney(dealer, money, player)
+        }
+    }
+
+    private fun executePlayerGame(player: Player) {
+        while (!player.isBust()) {
+            outputView.printPlayerBehaviorGuide(player)
+            val playerBehavior: Behavior = inputView.readPlayerBehavior()
+
+            if (isTurnOver(playerBehavior, player)) break
+        }
+    }
+
+    private fun isTurnOver(
+        playerBehavior: Behavior,
         player: Player,
     ): Boolean {
         when (playerBehavior) {
-            Player.Behavior.HIT -> {
+            Behavior.HIT -> {
                 player.pickCard(cardDeck)
                 outputView.printPlayerCard(player)
                 if (isPlayerBust(player)) return true
             }
 
-            Player.Behavior.STAY -> return true
+            Behavior.STAY -> return true
         }
         return false
     }
@@ -124,16 +162,32 @@ class BlackjackController(
             GameResult.PUSH -> Unit
             GameResult.WIN -> {
                 val money: Money = player.bettingMoney
-                dealer.gainMoney(money)
-                player.lossMoney(money)
+                executeDealerGainMoney(dealer, money, player)
             }
 
             GameResult.LOSE -> {
                 val money: Money = player.bettingMoney
-                dealer.lossMoney(money)
-                player.gainMoney(money)
+                executePlayerGainMoney(dealer, money, player)
             }
         }
+    }
+
+    private fun executeDealerGainMoney(
+        dealer: Dealer,
+        money: Money,
+        player: Player,
+    ) {
+        dealer.gainMoney(money)
+        player.lossMoney(money)
+    }
+
+    private fun executePlayerGainMoney(
+        dealer: Dealer,
+        money: Money,
+        player: Player,
+    ) {
+        dealer.lossMoney(money)
+        player.gainMoney(money)
     }
 
     private fun displayResult(

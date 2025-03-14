@@ -12,9 +12,9 @@ enum class CardsStatus {
 
         fun from(
             cardsScore: Int,
-            firstTurn: Boolean = false,
+            cardsSize: Int,
         ): CardsStatus {
-            if (firstTurn && cardsScore == BLACKJACK_SCORE) return BLACKJACK
+            if (cardsSize == 2 && cardsScore == BLACKJACK_SCORE) return BLACKJACK
             if (cardsScore > BLACKJACK_SCORE) return BUST
             return NONE
         }

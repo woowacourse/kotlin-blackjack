@@ -6,7 +6,7 @@ class Dealer(
     name: String = "딜러",
     cards: Cards = Cards(mutableListOf()),
 ) : Participant(name, cards) {
-    val profit: Money = Money(0)
+    val profit: Money = Money(0.0)
 
     fun isHit(): Boolean {
         val dealerScore = cards.calculateScore()

@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Assertions.assertAll
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.ValueSource
 
 class PlayerTest {
@@ -119,17 +118,5 @@ class PlayerTest {
         val actual = player.isBust()
 
         assertThat(actual).isEqualTo(false)
-    }
-
-    @ParameterizedTest
-    @CsvSource(value = ["WIN, LOSE", "LOSE, WIN", "PUSH, PUSH"])
-    fun `딜러의 게임 결과를 받아서 반대의 값을 저장한다`(
-        dealerGameResult: GameResult,
-        expected: GameResult,
-    ) {
-        val player = Player("모찌")
-        player.updateResult(dealerGameResult)
-
-        assertThat(player.bettingMoney).isEqualTo(expected)
     }
 }

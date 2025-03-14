@@ -16,6 +16,10 @@ class Players(
         }
     }
 
+    fun getBlackjackPlayers(): List<Player> = value.filter { player -> player.isBlackjack() }
+
+    fun getNotBlackjackPlayers(): List<Player> = value.filterNot { player -> player.isBlackjack() }
+
     fun getNotDyingPlayers(): List<Player> = value.filterNot { player -> player.isBust() }
 
     fun getDyingPlayers(): List<Player> = value.filter { player -> player.isBust() }
