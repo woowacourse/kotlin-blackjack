@@ -2,8 +2,8 @@ package blackjack.model
 
 class Player(
     name: String,
-    cards: Cards = Cards(emptyList()),
-) : Participant(name, cards) {
+    hand: Hand = Hand(emptyList()),
+) : Participant(name, hand) {
     lateinit var bettingMoney: BettingMoney
 
     init {

@@ -3,11 +3,11 @@ package blackjack.model
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class CardsTest {
+class HandTest {
     @Test
     fun `카드들을 생성자로 카드 리스트를 받는다`() {
         val cards = listOf((Card(CardShape.HEART, Denomination.FIVE)), Card(CardShape.CLOVER, Denomination.TWO))
-        val actual = Cards(cards)
+        val actual = Hand(cards)
 
         assertThat(actual.value).isEqualTo(cards)
     }
@@ -15,7 +15,7 @@ class CardsTest {
     @Test
     fun `Ace 카드가 1~4개가 아닐 때 일때, 카드들의 점수를 반환한다`() {
         val cards = listOf((Card(CardShape.HEART, Denomination.FIVE)), Card(CardShape.CLOVER, Denomination.TWO))
-        val actual = Cards(cards).calculateScore()
+        val actual = Hand(cards).calculateScore()
 
         assertThat(actual).isEqualTo(7)
     }
@@ -23,7 +23,7 @@ class CardsTest {
     @Test
     fun `Ace 카드가 1개이고 카드들의 점수가 11미만 일때, Ace의 점수를 11로 판단하고, 카드의 스코어에 Ace의 점수를 추가하여 반환한다`() {
         val cards = listOf((Card(CardShape.HEART, Denomination.ACE)), Card(CardShape.CLOVER, Denomination.KING))
-        val actual = Cards(cards).calculateScore()
+        val actual = Hand(cards).calculateScore()
 
         assertThat(actual).isEqualTo(21)
     }
@@ -31,7 +31,7 @@ class CardsTest {
     @Test
     fun `Ace 카드가 1개이고 카드들의 점수가 11이상 일때, Ace의 점수를 1로 판단하고, 카드의 스코어에 Ace의 점수를 추가하여 반환한다`() {
         val cards = listOf((Card(CardShape.HEART, Denomination.ACE)), Card(CardShape.CLOVER, Denomination.TWO))
-        val actual = Cards(cards).calculateScore()
+        val actual = Hand(cards).calculateScore()
 
         assertThat(actual).isEqualTo(13)
     }
@@ -44,7 +44,7 @@ class CardsTest {
                 Card(CardShape.CLOVER, Denomination.THREE),
                 Card(CardShape.DIAMOND, Denomination.ACE),
             )
-        val actual = Cards(cards).calculateScore()
+        val actual = Hand(cards).calculateScore()
 
         assertThat(actual).isEqualTo(15)
     }
@@ -57,7 +57,7 @@ class CardsTest {
                 Card(CardShape.CLOVER, Denomination.TEN),
                 Card(CardShape.DIAMOND, Denomination.ACE),
             )
-        val actual = Cards(cards).calculateScore()
+        val actual = Hand(cards).calculateScore()
 
         assertThat(actual).isEqualTo(12)
     }
@@ -71,7 +71,7 @@ class CardsTest {
                 Card(CardShape.DIAMOND, Denomination.ACE),
                 Card(CardShape.CLOVER, Denomination.ACE),
             )
-        val actual = Cards(cards).calculateScore()
+        val actual = Hand(cards).calculateScore()
 
         assertThat(actual).isEqualTo(16)
     }
@@ -85,7 +85,7 @@ class CardsTest {
                 Card(CardShape.DIAMOND, Denomination.ACE),
                 Card(CardShape.CLOVER, Denomination.ACE),
             )
-        val actual = Cards(cards).calculateScore()
+        val actual = Hand(cards).calculateScore()
 
         assertThat(actual).isEqualTo(12)
     }
@@ -100,7 +100,7 @@ class CardsTest {
                 Card(CardShape.CLOVER, Denomination.ACE),
                 Card(CardShape.SPADE, Denomination.ACE),
             )
-        val actual = Cards(cards).calculateScore()
+        val actual = Hand(cards).calculateScore()
 
         assertThat(actual).isEqualTo(17)
     }
@@ -115,24 +115,24 @@ class CardsTest {
                 Card(CardShape.CLOVER, Denomination.ACE),
                 Card(CardShape.SPADE, Denomination.ACE),
             )
-        val actual = Cards(cards).calculateScore()
+        val actual = Hand(cards).calculateScore()
 
         assertThat(actual).isEqualTo(13)
     }
 
     @Test
     fun `카드들에 카드를 추가한다`() {
-        val cards =
-            Cards(
+        val hand =
+            Hand(
                 listOf(
                     Card(CardShape.HEART, Denomination.ACE),
                     Card(CardShape.CLOVER, Denomination.NINE),
                 ),
             )
         val addCard = Card(CardShape.CLOVER, Denomination.TWO)
-        cards.add(addCard)
+        hand.add(addCard)
 
-        assertThat(cards.value).isEqualTo(
+        assertThat(hand.value).isEqualTo(
             listOf(
                 Card(CardShape.HEART, Denomination.ACE),
                 Card(CardShape.CLOVER, Denomination.NINE),
@@ -143,14 +143,14 @@ class CardsTest {
 
     @Test
     fun `처음 턴이고, 카드들의 점수가 21이면 블랙잭 상태를 가진다`() {
-        val cards =
-            Cards(
+        val hand =
+            Hand(
                 listOf(
                     Card(CardShape.HEART, Denomination.ACE),
                     Card(CardShape.CLOVER, Denomination.TEN),
                 ),
             )
-        val actual = cards.status
+        val actual = hand.status
 
         val expected = CardsStatus.BLACKJACK
 
@@ -159,14 +159,14 @@ class CardsTest {
 
     @Test
     fun `처음 턴이고, 카드들의 점수가 21이 아니면 NONE 상태를 가진다`() {
-        val cards =
-            Cards(
+        val hand =
+            Hand(
                 listOf(
                     Card(CardShape.HEART, Denomination.TEN),
                     Card(CardShape.CLOVER, Denomination.TEN),
                 ),
             )
-        val actual = cards.status
+        val actual = hand.status
 
         val expected = CardsStatus.NONE
 
@@ -175,15 +175,15 @@ class CardsTest {
 
     @Test
     fun `카드가 추가된 후, 카드들의 점수가 21 초과일 경우 BUST 상태를 가진다`() {
-        val cards =
-            Cards(
+        val hand =
+            Hand(
                 listOf(
                     Card(CardShape.HEART, Denomination.NINE),
                     Card(CardShape.CLOVER, Denomination.TEN),
                 ),
             )
-        cards.add(Card(CardShape.DIAMOND, Denomination.TEN))
-        val actual = cards.status
+        hand.add(Card(CardShape.DIAMOND, Denomination.TEN))
+        val actual = hand.status
 
         val expected = CardsStatus.BUST
 
@@ -192,15 +192,15 @@ class CardsTest {
 
     @Test
     fun `카드가 추가된 후, 카드들의 점수가 21이 초과되지 않으면 NONE 상태를 가진다`() {
-        val cards =
-            Cards(
+        val hand =
+            Hand(
                 listOf(
                     Card(CardShape.HEART, Denomination.TEN),
                     Card(CardShape.CLOVER, Denomination.TEN),
                 ),
             )
-        cards.add(Card(CardShape.SPADE, Denomination.ACE))
-        val actual = cards.status
+        hand.add(Card(CardShape.SPADE, Denomination.ACE))
+        val actual = hand.status
 
         val expected = CardsStatus.NONE
 

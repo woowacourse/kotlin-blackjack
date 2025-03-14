@@ -2,7 +2,7 @@ package blackjack.model
 
 abstract class Participant(
     val name: String,
-    val cards: Cards = Cards(emptyList()),
+    val hand: Hand = Hand(emptyList()),
 ) {
     fun pickCard(
         cardDeck: CardDeck,
@@ -10,15 +10,15 @@ abstract class Participant(
     ) {
         repeat(times) {
             val card = cardDeck.pickCard()
-            cards.add(card)
+            hand.add(card)
         }
     }
 
-    fun getScore(): Int = cards.calculateScore()
+    fun getScore(): Int = hand.calculateScore()
 
-    fun isBlackjack(): Boolean = cards.status == CardsStatus.BLACKJACK
+    fun isBlackjack(): Boolean = hand.status == CardsStatus.BLACKJACK
 
-    fun isBust(): Boolean = cards.status == CardsStatus.BUST
+    fun isBust(): Boolean = hand.status == CardsStatus.BUST
 
     abstract fun gainMoney(money: Money)
 

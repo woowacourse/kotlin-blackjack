@@ -12,35 +12,35 @@ class PlayerTest {
 
     @Test
     fun `플레이어가 딜러라는 이름을 가질 경우 예외를 발생시킨다`() {
-        assertThrows<IllegalArgumentException> { Player("딜러", Cards(emptyList())) }
+        assertThrows<IllegalArgumentException> { Player("딜러", Hand(emptyList())) }
     }
 
     @ParameterizedTest
     @ValueSource(strings = ["", "뭉치뭉치뭉치"])
     fun `플레이어의 이름 길이가 1~5 사이의 길이가 아닐 경우 예외를 발생시킨다`(name: String) {
-        assertThrows<IllegalArgumentException> { Player(name, Cards(emptyList())) }
+        assertThrows<IllegalArgumentException> { Player(name, Hand(emptyList())) }
     }
 
     @Test
     fun `플레이어는 이름과 카드 리스트를 가진다`() {
         val cards = listOf((Card(CardShape.HEART, Denomination.FIVE)), Card(CardShape.CLOVER, Denomination.TWO))
-        val player = Player("모찌", Cards(cards))
+        val player = Player("모찌", Hand(cards))
         assertAll({
             assertThat(player.name).isEqualTo("모찌")
-            assertThat(player.cards.value).isEqualTo(cards)
+            assertThat(player.hand.value).isEqualTo(cards)
         })
     }
 
     @Test
     fun `플레이어는 카드를 추가로 받을 수 있다`() {
-        val initialCards =
-            Cards(
+        val initialHand =
+            Hand(
                 listOf((Card(CardShape.HEART, Denomination.FIVE)), Card(CardShape.CLOVER, Denomination.TWO)),
             )
-        val player = Player("모찌", initialCards)
+        val player = Player("모찌", initialHand)
         player.pickCard(cardDeck)
 
-        assertThat(player.cards.value).isEqualTo(
+        assertThat(player.hand.value).isEqualTo(
             listOf(
                 Card(CardShape.HEART, Denomination.FIVE),
                 Card(CardShape.CLOVER, Denomination.TWO),
@@ -52,19 +52,19 @@ class PlayerTest {
     @Test
     fun `플레이어가 이름만 가질 경우, 가진 카드 리스트는 비어있다`() {
         val player = Player("모찌")
-        assertThat(player.cards.value.size).isEqualTo(0)
+        assertThat(player.hand.value.size).isEqualTo(0)
     }
 
     @Test
     fun `플레이어의 턴이 처음이고, 카드가 blackjack이면 true를 반환한다`() {
-        val cards =
-            Cards(
+        val hand =
+            Hand(
                 listOf(
                     Card(CardShape.HEART, Denomination.TEN),
                     Card(CardShape.CLOVER, Denomination.ACE),
                 ),
             )
-        val player = Player("모찌", cards)
+        val player = Player("모찌", hand)
 
         val actual = player.isBlackjack()
 
@@ -73,14 +73,14 @@ class PlayerTest {
 
     @Test
     fun `플레이어의 턴이 처음이고, 카드가 blackjack이 아니면 false를 반환한다`() {
-        val cards =
-            Cards(
+        val hand =
+            Hand(
                 listOf(
                     Card(CardShape.HEART, Denomination.TEN),
                     Card(CardShape.DIAMOND, Denomination.NINE),
                 ),
             )
-        val player = Player("모찌", cards)
+        val player = Player("모찌", hand)
 
         val actual = player.isBlackjack()
 
@@ -89,15 +89,15 @@ class PlayerTest {
 
     @Test
     fun `플레이어의 카드가 bust이면 true를 반환한다`() {
-        val cards =
-            Cards(
+        val hand =
+            Hand(
                 listOf(
                     Card(CardShape.HEART, Denomination.TEN),
                     Card(CardShape.CLOVER, Denomination.TEN),
                     Card(CardShape.DIAMOND, Denomination.NINE),
                 ),
             )
-        val player = Player("모찌", cards)
+        val player = Player("모찌", hand)
 
         val actual = player.isBust()
 
@@ -106,14 +106,14 @@ class PlayerTest {
 
     @Test
     fun `플레이어의 카드가 bust가 아니면 false를 반환한다`() {
-        val cards =
-            Cards(
+        val hand =
+            Hand(
                 listOf(
                     Card(CardShape.HEART, Denomination.TEN),
                     Card(CardShape.DIAMOND, Denomination.NINE),
                 ),
             )
-        val player = Player("모찌", cards)
+        val player = Player("모찌", hand)
 
         val actual = player.isBust()
 

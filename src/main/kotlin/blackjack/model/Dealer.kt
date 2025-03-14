@@ -4,12 +4,12 @@ import blackjack.model.CardsStatus.Companion.BUST_SCORE
 
 class Dealer(
     name: String = "딜러",
-    cards: Cards = Cards(mutableListOf()),
-) : Participant(name, cards) {
+    hand: Hand = Hand(mutableListOf()),
+) : Participant(name, hand) {
     val profit: Money = Money(0.0)
 
     fun isHit(): Boolean {
-        val dealerScore = cards.calculateScore()
+        val dealerScore = hand.calculateScore()
         return dealerScore <= 16
     }
 
