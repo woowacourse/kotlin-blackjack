@@ -14,16 +14,15 @@ data class Card private constructor(
     }
 
     companion object {
-        val standardCards: Map<String, Card> =
+        val standardCards: Map<Pair<CardNumber, Suit>, Card> =
             Suit.entries.flatMap { suit -> CardNumber.entries.map { cardNumber -> Card(cardNumber, suit) } }
-                .associateBy { it.cardNumber.name + it.suit.name }
+                .associateBy { it.cardNumber to it.suit }
 
         fun of(
             cardNumber: CardNumber,
             suit: Suit,
         ): Card {
-            val query = cardNumber.name + suit.name
-            return standardCards[query] ?: throw IllegalArgumentException(INVALID_CARD_QUERY)
+            return standardCards[cardNumber to suit] ?: throw IllegalArgumentException(INVALID_CARD_QUERY)
         }
 
         private const val MINIMUM_CARD_NUMBER = 1
