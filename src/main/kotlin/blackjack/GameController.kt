@@ -40,7 +40,7 @@ class GameController(
     private fun showResult(game: BlackJackGame) {
         outputView.printFinalCards(game)
         val result = PlayerResults(game)
-        outputView.printGameResult(result)
+        outputView.printGameResult(result.toList())
     }
 
     override fun onOnceFailure(e: Throwable) {

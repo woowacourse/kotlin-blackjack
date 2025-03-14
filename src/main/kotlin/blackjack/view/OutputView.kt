@@ -1,8 +1,7 @@
 package blackjack.view
 
 import blackjack.domain.BlackJackGame
-import blackjack.domain.gameResult.PlayerResult
-import blackjack.domain.gameResult.PlayerResults
+import blackjack.domain.gameResult.GameResultState
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Participant
 import blackjack.domain.participant.Player
@@ -17,10 +16,10 @@ object OutputView {
         }
     }
 
-    fun printGameResult(playerResults: PlayerResults) {
+    fun printGameResult(playerResults: List<GameResultState>) {
         println(FINAL_RESULT_NOTICE)
 
-        val dealerProfit = playerResults.toList().sumOf { it.getEarn() } * -1
+        val dealerProfit = playerResults.sumOf { it.getEarn() } * -1
         println(printDealerResult(dealerProfit))
 
         playerResults.toList().forEach {
@@ -49,5 +48,5 @@ object OutputView {
 
     private fun printDealerResult(dealerProfit: Int): String = "딜러: $dealerProfit"
 
-    private fun printPlayerResult(playerResult: PlayerResult): String = "${playerResult.player.name}: ${playerResult.getEarn()}"
+    private fun printPlayerResult(playerResult: GameResultState): String = "${playerResult.state.player.name}: ${playerResult.getEarn()}"
 }

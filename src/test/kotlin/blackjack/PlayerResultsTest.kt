@@ -5,9 +5,8 @@ import blackjack.domain.card.Rank
 import blackjack.domain.card.Suit
 import blackjack.domain.gameResult.GameResult
 import blackjack.domain.gameResult.GameResultState
-import blackjack.domain.gameResult.PlayerResult
 import blackjack.domain.gameResult.PlayerResults
-import blackjack.domain.gameResult.state.Stay
+import blackjack.domain.gameResult.state.PlayerStay
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Player
 import org.assertj.core.api.Assertions.assertThat
@@ -46,12 +45,9 @@ class PlayerResultsTest {
         )
         val playerResults = PlayerResults(dealer, listOf(player))
         val playerGameResult =
-            PlayerResult(
-                player,
-                GameResultState(
-                    Stay(player),
-                    GameResult.WIN,
-                ),
+            GameResultState(
+                PlayerStay(player),
+                GameResult.WIN,
             )
         assertThat(playerResults.toList()[0]).isEqualTo(playerGameResult)
     }
@@ -69,12 +65,9 @@ class PlayerResultsTest {
         )
         val playerResults = PlayerResults(dealer, listOf(player))
         val playerGameResult =
-            PlayerResult(
-                player,
-                GameResultState(
-                    Stay(player),
-                    GameResult.LOSE,
-                ),
+            GameResultState(
+                PlayerStay(player),
+                GameResult.LOSE,
             )
         assertThat(playerResults.toList()[0]).isEqualTo(playerGameResult)
     }
@@ -94,12 +87,9 @@ class PlayerResultsTest {
         )
         val playerResults = PlayerResults(dealer, listOf(player))
         val playerGameResult =
-            PlayerResult(
-                player,
-                GameResultState(
-                    Stay(player),
-                    GameResult.DRAW,
-                ),
+            GameResultState(
+                PlayerStay(player),
+                GameResult.DRAW,
             )
         assertThat(playerResults.toList()[0]).isEqualTo(playerGameResult)
     }
@@ -118,12 +108,9 @@ class PlayerResultsTest {
         )
         val playerResults = PlayerResults(dealer, listOf(player))
         val playerGameResult =
-            PlayerResult(
-                player,
-                GameResultState(
-                    Stay(player),
-                    GameResult.LOSE,
-                ),
+            GameResultState(
+                PlayerStay(player),
+                GameResult.LOSE,
             )
         assertThat(playerResults.toList()[0]).isEqualTo(playerGameResult)
     }
@@ -172,6 +159,21 @@ class PlayerResultsTest {
         )
         val playerResults = PlayerResults(dealer, listOf(player))
         assertThat(playerResults.toList()[0].getEarn()).isEqualTo(7500)
+    }
+
+    @Test
+    fun `점수를 판별할 떄, 딜러가 블랙잭이면 베팅한 금액만큼 잃는다`() {
+        setDealerCard(
+            Card.of(Rank.TEN, Suit.SPADE),
+            Card.of(Rank.ACE, Suit.SPADE),
+        )
+
+        setPlayerCard(
+            Card.of(Rank.TEN, Suit.SPADE),
+            Card.of(Rank.EIGHT, Suit.SPADE),
+        )
+        val playerResults = PlayerResults(dealer, listOf(player))
+        assertThat(playerResults.toList()[0].getEarn()).isEqualTo(-5000)
     }
 
     @Test
