@@ -23,17 +23,17 @@ class Player(name: String, cards: List<Card>) : Participant(name, cards) {
 
     fun processHits(
         deck: Deck,
-        readAction: (Player) -> Action,
-        printStatus: (Player) -> Unit,
+        input: (Player) -> Action,
+        output: (String, List<Card>) -> Unit,
     ) {
         if (!canHit()) return
-        if (readAction(this) == Action.STAND) {
-            if (showHand().size == Hand.STARTING_HAND_SIZE) printStatus(this)
+        if (input(this) == Action.STAND) {
+            if (showHand().size == Hand.STARTING_HAND_SIZE) output(name, hand.show())
             return
         }
         accept(deck.draw())
-        printStatus(this)
-        processHits(deck, readAction, printStatus)
+        output(name, hand.show())
+        processHits(deck, input, output)
     }
 
     fun computeProfitAgainst(dealer: Dealer): Int {

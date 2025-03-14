@@ -14,16 +14,13 @@ class GameController(
     private val outputView: OutputView = OutputView(),
 ) {
     fun run() {
-        val game = initializeGame()
-        game.processPlayersBets { player -> retryOnError { Bet(inputView.readPlayerBet(player)) } }
-        outputView.printInitialDeals(game)
-        outputView.printParticipantStatus(game.dealer)
-        game.players.forEach { player -> outputView.printParticipantStatus(player) }
+        val game = makeGame()
+        initialize(game)
         processHits(game)
-        outputView.printResults(game)
+        announceResults(game)
     }
 
-    private fun initializeGame(): Game {
+    private fun makeGame(): Game {
         val deck = Deck()
         val game =
             retryOnError {
@@ -38,12 +35,23 @@ class GameController(
         return game
     }
 
+    private fun initialize(game: Game) {
+        game.processBets { player -> retryOnError { Bet(inputView.readPlayerBet(player)) } }
+        game.showInitialDeal(outputView::printInitialDeals)
+        game.showInitialStatus(outputView::printParticipantStatus)
+    }
+
     private fun processHits(game: Game) {
         game.processPlayersHits(
             { player -> retryOnError { inputView.readPlayerAction(player) } },
             outputView::printParticipantStatus,
         )
         game.processDealerHits(outputView::printDealerHit)
+    }
+
+    private fun announceResults(game: Game) {
+        game.showFinalStatus(outputView::printParticipantResult)
+        game.showProfits(outputView.printFinalResult())
     }
 
     private fun <T> retryOnError(function: () -> T): T {

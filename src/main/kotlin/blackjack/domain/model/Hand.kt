@@ -8,8 +8,8 @@ class Hand(cards: List<Card>) {
         add(cards)
     }
 
-    fun show(count: Int = cards.size): List<Card> {
-        return cards.take(count).map { card -> card.copy() }
+    fun show(): List<Card> {
+        return cards.map { card -> card.copy() }
     }
 
     fun add(cards: List<Card>) {
