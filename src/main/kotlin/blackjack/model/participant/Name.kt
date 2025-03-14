@@ -2,7 +2,7 @@ package blackjack.model.participant
 
 @JvmInline
 value class Name(
-    private val value: String,
+    val value: String,
 ) {
     init {
         require(value.isNotBlank()) {

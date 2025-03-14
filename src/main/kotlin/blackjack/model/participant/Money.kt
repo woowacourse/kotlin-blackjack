@@ -12,6 +12,8 @@ value class Money(
 
     operator fun unaryMinus(): Money = Money(-this.value)
 
+    operator fun compareTo(other: Money): Int = this.value.compareTo(other.value)
+
     companion object {
         val ZERO = Money(0.0)
     }

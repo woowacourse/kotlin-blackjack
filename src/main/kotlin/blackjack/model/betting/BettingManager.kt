@@ -15,7 +15,7 @@ class BettingManager(
     ) {
         players.value.forEach { player ->
             val bettingMoney = getBettingMoney(player.name)
-            require(bettingMoney.value > Money.ZERO.value) {
+            require(bettingMoney > Money.ZERO) {
                 ("[ERROR] 베팅 금액은 0원보다 높아야 합니다.")
             }
             player.payMoney(bettingMoney)
