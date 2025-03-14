@@ -1,12 +1,7 @@
 package blackjack.domain
 
-import blackjack.domain.BlackJackGame.Companion.BUST_STANDARD
 import blackjack.domain.card.CardTier
 import blackjack.domain.card.TrumpCard
-import blackjack.domain.participant.Participant.Companion.ACE_HARD_SCORE
-import blackjack.domain.participant.Participant.Companion.ACE_SOFT_SCORE
-import blackjack.domain.participant.Participant.Companion.BLACKJACK_SCORE
-import blackjack.domain.participant.Participant.Companion.INITIAL_CARD_COUNT
 
 class ParticipantCards(
     private val _cards: MutableList<TrumpCard> = mutableListOf(),
@@ -31,4 +26,12 @@ class ParticipantCards(
         }
 
     fun isBlackJack(): Boolean = size == INITIAL_CARD_COUNT && finalScore() == BLACKJACK_SCORE
+
+    companion object {
+        const val BUST_STANDARD = 21
+        private const val ACE_SOFT_SCORE = 10
+        private const val ACE_HARD_SCORE = 0
+        private const val INITIAL_CARD_COUNT = 2
+        private const val BLACKJACK_SCORE = 21
+    }
 }

@@ -54,7 +54,7 @@ class BlackJackController(
         displayDealerCards(participants)
         displayPlayerCards(participants)
 
-        game.choice(
+        game.processPlayerTurn(
             getPlayerChoice = { playerName ->
                 getUserChoice(playerName)
             },

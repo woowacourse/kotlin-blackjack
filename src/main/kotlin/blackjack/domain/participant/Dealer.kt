@@ -46,5 +46,6 @@ class Dealer(
         private const val DEALER_MAX_SCORE = 16
         private const val DEALER_INITIAL_CARD_COUNT = 1
         private const val DEALER_BLACKJACK_MULTIPLY = 1.0
+        private const val ACE_SOFT_SCORE = 10
     }
 }

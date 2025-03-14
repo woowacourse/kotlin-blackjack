@@ -8,7 +8,7 @@ class BlackJackGame(
     private val participants: Participants,
     private val deck: Deck,
 ) {
-    fun handOutInitializedCards(initializedCardCount: Int = INITIAL_CARD_COUNT) {
+    fun handOutInitializedCards(initializedCardCount: Int = INITIAL_CARD_TAKE_COUNT) {
         (participants.players + participants.dealer).forEach { player ->
             repeat(initializedCardCount) {
                 player.receiveCard(deck.pop())
@@ -16,7 +16,7 @@ class BlackJackGame(
         }
     }
 
-    fun choice(
+    fun processPlayerTurn(
         getPlayerChoice: (String) -> Boolean,
         onPlayerStateUpdated: (Player) -> Unit,
     ) {
@@ -59,7 +59,6 @@ class BlackJackGame(
     }
 
     companion object {
-        private const val INITIAL_CARD_COUNT = 2
-        const val BUST_STANDARD = 21
+        private const val INITIAL_CARD_TAKE_COUNT = 2
     }
 }
