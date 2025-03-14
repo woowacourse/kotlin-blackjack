@@ -66,6 +66,7 @@ class BlackjackController(
         if (dealer.isBlackjack()) {
             executeBlackjackPlayersLogic(players, dealer)
             executeNotBlackjackPlayersLogic(players, dealer)
+            outputView.printDealerBlackjack()
             displayResult(players, dealer)
             return true
         }

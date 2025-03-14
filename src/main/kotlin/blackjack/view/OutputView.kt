@@ -30,6 +30,10 @@ class OutputView {
         println()
     }
 
+    fun printDealerBlackjack() {
+        println("딜러의 블랙잭으로 게임이 종료됩니다.")
+    }
+
     fun printPlayerBehaviorGuide(player: Player) {
         println("${player.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
     }
