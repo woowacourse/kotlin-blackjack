@@ -8,6 +8,7 @@ import blackjack.domain.model.participant.GameParticipant
 import blackjack.domain.model.participant.Player
 import blackjack.domain.model.progress.BetAmount
 import blackjack.domain.model.progress.BetHistory
+import blackjack.domain.model.progress.ProfitStatistics
 import blackjack.domain.model.progress.WinLossStatistics
 import blackjack.view.InputView
 import blackjack.view.OutputView
@@ -28,7 +29,9 @@ class Casino(
         runPlayersDrawPhase(players)
         runDealerDrawPhase(dealer)
         outputView.showCardsResult(participants)
-        outputFinalResult(dealer, players)
+        val winLossStatistics = getWinLossStatistics(dealer, players)
+        // outputFinalResult(winLossStatistics, players)
+        outputFinalProfit(ProfitStatistics(betHistory, winLossStatistics), players)
     }
 
     private fun askBetAmountPhase(players: List<Player>): BetHistory {
@@ -85,15 +88,28 @@ class Casino(
         }
     }
 
-    private fun outputFinalResult(
+    private fun getWinLossStatistics(
         dealer: Dealer,
         players: List<Player>,
-    ) {
+    ): WinLossStatistics {
         val winLossStatistics = WinLossStatistics()
-        val playersWinLoss =
-            players.map { player ->
-                player to winLossStatistics.calculatePlayerWinLoss(dealer, player)
-            }
-        outputView.showFinalResult(winLossStatistics, playersWinLoss)
+        players.forEach { player ->
+            winLossStatistics.calculatePlayerWinLoss(dealer, player)
+        }
+        return winLossStatistics
+    }
+
+    private fun outputFinalResult(
+        winLossStatistics: WinLossStatistics,
+        players: List<Player>,
+    ) {
+        outputView.showFinalResult(winLossStatistics, players)
+    }
+
+    private fun outputFinalProfit(
+        profitStatistics: ProfitStatistics,
+        players: List<Player>,
+    ) {
+        outputView.showFinalProfit(profitStatistics, players)
     }
 }

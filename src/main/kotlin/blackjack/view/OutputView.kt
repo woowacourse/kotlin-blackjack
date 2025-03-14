@@ -4,6 +4,7 @@ import blackjack.domain.model.card.Card
 import blackjack.domain.model.participant.Dealer
 import blackjack.domain.model.participant.GameParticipant
 import blackjack.domain.model.participant.Player
+import blackjack.domain.model.progress.ProfitStatistics
 import blackjack.domain.model.progress.WinLoss
 import blackjack.domain.model.progress.WinLossStatistics
 import java.util.Locale
@@ -61,12 +62,30 @@ class OutputView(
 
     fun showFinalResult(
         winLossStatistics: WinLossStatistics,
-        playersWinLoss: List<Pair<Player, WinLoss>>,
+        players: List<Player>,
     ) {
         println(HEADER_FINAL_RESULT)
         println(DEALER_RESULT_TEMPLATE.format(makeDealerWinLossText(winLossStatistics)))
-        playersWinLoss.forEach { (player, winLoss) ->
-            println(player.name + ": " + Translator.winLossLocalize(winLoss, locale))
+        players.forEach { player ->
+            println(
+                player.name + ": " +
+                    Translator.winLossLocalize(
+                        winLossStatistics.playerWinLoseInfo[player] ?: throw IllegalArgumentException(ERROR_INVALID_PLAYER),
+                        locale,
+                    ),
+            )
+        }
+    }
+
+    fun showFinalProfit(
+        profitStatistics: ProfitStatistics,
+        players: List<Player>,
+    ) {
+        println(HEADER_FINAL_PROFIT)
+        println(DEALER_RESULT_TEMPLATE.format(profitStatistics.dealerProfits.toString()))
+        val playerProfits = profitStatistics.playerProfits
+        players.forEach { player ->
+            println(player.name + ": " + playerProfits[player])
         }
     }
 
@@ -97,6 +116,9 @@ class OutputView(
         private const val DEALER_DRAW_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다."
         private const val CARD_RESULT_MESSAGE = " - 결과: "
         private const val HEADER_FINAL_RESULT = "## 최종 승패"
+        private const val HEADER_FINAL_PROFIT = "## 최종 수익"
         private const val DEALER_RESULT_TEMPLATE = "딜러: %s"
+
+        private const val ERROR_INVALID_PLAYER = "플레이어를 찾을 수 없습니다."
     }
 }
