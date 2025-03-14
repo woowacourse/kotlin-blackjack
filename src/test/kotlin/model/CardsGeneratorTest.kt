@@ -81,7 +81,7 @@ class CardsGeneratorTest {
                 CardName(CardRank.TWO.name, Shape.HEART.name),
                 CardName(CardRank.TWO.name, Shape.SPADE.name),
                 CardName(CardRank.TWO.name, Shape.CLUB.name),
-                CardName(CardRank.TWO.name, Shape.DIAMOND.name)
+                CardName(CardRank.TWO.name, Shape.DIAMOND.name),
             )
     }
 }

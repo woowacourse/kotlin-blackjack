@@ -19,8 +19,7 @@ class ScoreCalculator(private val cards: Cards) {
     private fun adjustAceScore(
         initialTotalCardScore: Int,
         aceCount: Int,
-    ) =
-        initialTotalCardScore - ACE_MINUS_VALUE * aceCount.coerceAtMost((initialTotalCardScore - BLACKJACK_SCORE) / ACE_MINUS_VALUE + 1)
+    ) = initialTotalCardScore - ACE_MINUS_VALUE * aceCount.coerceAtMost((initialTotalCardScore - BLACKJACK_SCORE) / ACE_MINUS_VALUE + 1)
 
     companion object {
         private const val DEFAULT_ZERO = 0

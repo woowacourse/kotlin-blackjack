@@ -24,17 +24,18 @@ class ProfitCalculatorTest {
     @Test
     fun `플레이어의 점수가 21점 초과시 베팅 금액을 모두 잃는다`() {
         dealer = Dealer(Cards(listOf(Card(CardRank.QUEEN, Shape.CLUB), Card(CardRank.JACK, Shape.SPADE))))
-        val player = Player(
-            "jay",
-            Cards(
-                listOf(
-                    Card(CardRank.QUEEN, Shape.CLUB),
-                    Card(CardRank.JACK, Shape.SPADE),
-                    Card(CardRank.FIVE, Shape.SPADE),
-                )
-            ),
-            10000f,
-        )
+        val player =
+            Player(
+                "jay",
+                Cards(
+                    listOf(
+                        Card(CardRank.QUEEN, Shape.CLUB),
+                        Card(CardRank.JACK, Shape.SPADE),
+                        Card(CardRank.FIVE, Shape.SPADE),
+                    ),
+                ),
+                10000f,
+            )
         players = Players(listOf(player))
         assertPlayerProfit(expectedProfit = -10000f)
     }

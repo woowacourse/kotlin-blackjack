@@ -48,7 +48,10 @@ class OutputView {
         }
     }
 
-    fun printResult(dealerResult: Float, playerProfits: List<PlayerProfit>) {
+    fun printResult(
+        dealerResult: Float,
+        playerProfits: List<PlayerProfit>,
+    ) {
         println("\n## 최종 수익")
         println("딜러: ${dealerResult.roundToInteger()}")
         playerProfits.forEach { playResult ->
@@ -56,6 +59,5 @@ class OutputView {
         }
     }
 
-    private fun printCardNames(rawCardNames: List<CardName>) =
-        rawCardNames.map { (rank, shape) -> rank.mapToTitle() + shape.mapToTitle() }
+    private fun printCardNames(rawCardNames: List<CardName>) = rawCardNames.map { (rank, shape) -> rank.mapToTitle() + shape.mapToTitle() }
 }
