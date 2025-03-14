@@ -66,12 +66,10 @@ class Casino(
         number: Int,
         deck: Deck,
     ): List<Card> {
-        val drawnDeck = deck.pop(number)
-        if (drawnDeck == null) {
+        return deck.pop(number) ?: run {
             deck.refill()
-            return drawSafely(number, deck)
+            drawSafely(number, deck)
         }
-        return drawnDeck
     }
 
     private fun outputParticipantCardsInfo(participants: Participants) {
