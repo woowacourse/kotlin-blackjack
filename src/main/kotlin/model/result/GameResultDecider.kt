@@ -35,11 +35,12 @@ class GameResultDecider(private val dealer: Dealer, private val players: Players
     }
 
     private fun dealerResult(playerResults: List<PlayerResult>): Float {
-        var initialDealerAmount = players.map { it.betAmount }.sum()
-        val playersTotalProfit = playerResults.filter { it.profit >= 0f }.map { it.profit }.sum()
-        if (playersTotalProfit == 0f) initialDealerAmount = 0f
+        var initialDealerProfit = players.map { it.betAmount }.sum()
 
-        return initialDealerAmount - playersTotalProfit
+        playerResults.forEachIndexed { index, playerResult ->
+            if (playerResult.profit >= 0) initialDealerProfit -= players[index].betAmount
+        }
+        return initialDealerProfit
     }
 
     companion object {
