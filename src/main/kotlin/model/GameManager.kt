@@ -1,22 +1,25 @@
 package model
 
-import jdk.internal.util.xml.impl.Input
-
 class GameManager(private val cards: Cards) {
     private lateinit var dealer: Dealer
     private lateinit var players: Players
 
     fun getDealer(): Dealer = dealer
+
     fun getPlayers(): Players = players
 
-    fun startGame(playerNames: List<String>, input: Map<String,Int>, bettingManager: BettingManager) {
+    fun startGame(
+        playerNames: List<String>,
+        input: Map<String, Int>,
+        bettingManager: BettingManager,
+    ) {
         dealer = Dealer(Hand(emptyList()))
         dealer.receiveCards(cards::drawCards)
 
         players = Players(playerNames.map { Player(it, Hand(emptyList())) })
         players.forEach { it.receiveCards(cards::drawCards) }
 
-        val betAmounts: Map<String,Int> = input
+        val betAmounts: Map<String, Int> = input
 
         players.forEach { player ->
             val bet = betAmounts[player.name] ?: 0

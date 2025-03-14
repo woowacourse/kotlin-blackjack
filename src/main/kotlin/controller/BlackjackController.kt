@@ -3,7 +3,6 @@ package controller
 import model.BettingManager
 import model.CardsGenerator
 import model.GameManager
-import model.Players
 import view.InputView
 import view.OutputView
 import view.displayNames

@@ -1,17 +1,16 @@
 package model
 
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
-import org.assertj.core.api.Assertions.assertThat
 
 class BettingManagerTest {
-
-    lateinit private var player: Player
+    private lateinit var player: Player
 
     @BeforeEach
-    fun setUp(){
+    fun setUp() {
         val cards =
             listOf(
                 Card.of(CardRank.KING, Shape.DIAMOND),
@@ -21,13 +20,12 @@ class BettingManagerTest {
         player = Player("joy", Hand(cards))
     }
 
-
     @Test
     fun `플레이어는 원하는 만큼 베팅할 수 있다`() {
         val bettingManager = BettingManager()
         val bettingAmount = 10000
 
-        assertDoesNotThrow {bettingManager.placeBet(player,bettingAmount) }
+        assertDoesNotThrow { bettingManager.placeBet(player, bettingAmount) }
     }
 
     @Test
@@ -35,14 +33,14 @@ class BettingManagerTest {
         val bettingManager = BettingManager()
         val bettingAmount = 0
 
-        assertThrows<IllegalArgumentException> {bettingManager.placeBet(player,bettingAmount) }
+        assertThrows<IllegalArgumentException> { bettingManager.placeBet(player, bettingAmount) }
     }
 
     @Test
     fun `플레이어는 원하는 값을 받을 수 있다`() {
         val bettingManager = BettingManager()
         val bettingAmount = 10000
-        bettingManager.placeBet(player,bettingAmount)
+        bettingManager.placeBet(player, bettingAmount)
 
         assertThat(bettingManager.getProfit(player)).isEqualTo(bettingAmount)
     }
