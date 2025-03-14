@@ -22,7 +22,7 @@ class ResultCalculatorTest {
     }
 
     @Test
-    fun `ACE를 11로 계산할 수 있을 때 11로 처리한다`() {
+    fun `ACE를 11로 계산했을 때 버스트가 아니라면 11로 처리한다`() {
         val cards =
             fakeCards(
                 Card(Shape.SPADE, CardNumber.TWO),
@@ -37,7 +37,7 @@ class ResultCalculatorTest {
     }
 
     @Test
-    fun `ACE를 11로 계산할 수 없을 때 1로 처리한다`() {
+    fun `ACE를 11로 계산했을 때 버스트라면 1로 처리한다`() {
         val cards =
             fakeCards(
                 Card(Shape.SPADE, CardNumber.TEN),
