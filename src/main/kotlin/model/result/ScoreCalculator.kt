@@ -1,7 +1,7 @@
 package model.result
 
 import model.card.Cards
-import model.result.GameResultDecider.Companion.BLACKJACK_SCORE
+import model.result.ProfitCalculator.Companion.BLACKJACK_SCORE
 
 class ScoreCalculator(private val cards: Cards) {
     val initialTotalCardScore = cards.scores.sum()

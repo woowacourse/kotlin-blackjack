@@ -3,7 +3,7 @@ package model.participant
 import model.card.Card
 import model.card.CardName
 import model.card.Cards
-import model.result.GameResultDecider.Companion.BLACKJACK_SCORE
+import model.result.ProfitCalculator.Companion.BLACKJACK_SCORE
 
 class Player(val name: String, private val playerCards: Cards, val betAmount: Float) : Participant(playerCards) {
     val cardNames: List<CardName>

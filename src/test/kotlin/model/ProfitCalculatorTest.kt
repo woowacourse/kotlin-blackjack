@@ -7,19 +7,19 @@ import model.card.Shape
 import model.participant.Dealer
 import model.participant.Player
 import model.participant.Players
-import model.result.GameResultDecider
+import model.result.ProfitCalculator
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import java.util.stream.Stream
 
-class GameResultDeciderTest {
+class ProfitCalculatorTest {
     private lateinit var dealer: Dealer
     private lateinit var players: Players
 
     private fun assertProfit(expectedProfit: Float) {
-        val winOrLose = GameResultDecider(dealer, players).totalGameResult()
+        val winOrLose = ProfitCalculator(dealer, players).totalGameResult()
         assertEquals(expectedProfit, winOrLose.playerResults[0].profit)
     }
 
