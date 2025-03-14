@@ -13,7 +13,7 @@ class Scoreboard(
     }
 
     fun getPlayersProfit(playerBetInfos: List<PlayerBetInfo>): Map<Player, Double> {
-        val maps: List<Map<Player, Double>> = playerBetInfos.map { it.getProfit(participants.dealer) }
+        val maps: List<Map<Player, Double>> = playerBetInfos.map { it.profit(participants.dealer) }
         return maps.reduce { acc, map -> acc + map }
     }
 

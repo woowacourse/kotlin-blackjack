@@ -9,15 +9,20 @@ class PlayerBetInfo(
     private val player: Player,
     private val betAmount: BetAmount,
 ) {
-    fun getProfit(dealer: Dealer): Map<Player, Double> {
+    fun profit(dealer: Dealer): Map<Player, Double> {
         val betAmount: Double = betAmount.value
         val profit: Double =
             when (player.compareTo(dealer)) {
-                BLACKJACK_WIN -> betAmount * 1.5
+                BLACKJACK_WIN -> betAmount * BLACKJACK_RATE
                 WIN -> betAmount
-                DRAW -> 0.0
+                DRAW -> DRAW_RATE
                 LOSE -> -betAmount
             }
         return mapOf(player to profit)
+    }
+
+    companion object {
+        private const val BLACKJACK_RATE = 1.5
+        private const val DRAW_RATE = 0.0
     }
 }
