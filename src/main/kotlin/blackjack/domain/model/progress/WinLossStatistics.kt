@@ -6,8 +6,12 @@ import blackjack.domain.model.participant.Player
 
 class WinLossStatistics {
     private val dealerResults = mutableMapOf<WinLoss, Int>()
+    private val _playerWinLoseInfo = mutableMapOf<Player, WinLoss>()
 
     fun loadDealerResults() = dealerResults.toMap()
+
+    val playerWinLoseInfo: Map<Player, WinLoss>
+        get() = _playerWinLoseInfo.toMap()
 
     fun calculatePlayerWinLoss(
         dealer: Dealer,
@@ -27,11 +31,14 @@ class WinLossStatistics {
                 (dealerBestValue == playerBestValue) -> WinLoss.DRAW
                 else -> WinLoss.WIN
             }
-        updateDealerResult(playerResult)
+        updateResult(player, playerResult)
         return playerResult
     }
 
-    private fun updateDealerResult(playerResult: WinLoss) {
+    private fun updateResult(
+        player: Player,
+        playerResult: WinLoss,
+    ) {
         val dealerResult =
             when (playerResult) {
                 WinLoss.WIN -> WinLoss.LOSE
@@ -39,5 +46,6 @@ class WinLossStatistics {
                 WinLoss.DRAW -> WinLoss.DRAW
             }
         dealerResults[dealerResult] = (dealerResults[dealerResult] ?: 0) + 1
+        _playerWinLoseInfo[player] = playerResult
     }
 }
