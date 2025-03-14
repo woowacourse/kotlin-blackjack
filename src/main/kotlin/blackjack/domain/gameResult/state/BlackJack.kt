@@ -8,7 +8,7 @@ data class BlackJack<T : Participant>(override val participant: T) : State<T> {
         get() = 1.5
 
     override fun compare(state: State<out Participant>): GameResult {
-        if (state is BlackJack<out Participant>) return GameResult.DRAW
+        if (state is BlackJack) return GameResult.DRAW
         return GameResult.WIN
     }
 }
