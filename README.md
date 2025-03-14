@@ -51,7 +51,7 @@
 
 ## Step2 기능 요구사항
 - [x] BetHistory에 플레이어별 베팅 기록 추가
-- [ ] 베팅 금액 입력 로직 추가
+- [x] 베팅 금액 입력 로직 추가
 - [ ] WinLossStatistics가 playerResult를 보관 후 반환하도록 수정
 - [ ] ProfitStatistics를 추가하여 참가자별 수익 계산 로직 추가
   - [ ] BetHistory를 보고 플레이어별 수익 계산 및 기록
