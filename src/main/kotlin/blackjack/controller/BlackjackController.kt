@@ -49,9 +49,9 @@ class BlackjackController(
         players: Players,
     ) {
         outputView.displayResultTitle()
-        outputView.displayResultMoney(dealer.name, dealer.items.money.getValue())
+        outputView.displayResultMoney(dealer.name, dealer.items.money.value)
         players.value.forEach { player ->
-            outputView.displayResultMoney(player.name, player.items.money.getValue())
+            outputView.displayResultMoney(player.name, player.items.money.value)
         }
     }
 
@@ -63,12 +63,12 @@ class BlackjackController(
         outputView.displayCurrentResultTitle()
         outputView.displayResultMoney(
             dealer.name,
-            currentResult[dealer]?.getValue() ?: throw IllegalArgumentException("[ERROR] 딜러를 찾을 수 없습니다."),
+            currentResult[dealer]?.value ?: throw IllegalArgumentException("[ERROR] 딜러를 찾을 수 없습니다."),
         )
         players.value.forEach { player ->
             outputView.displayResultMoney(
                 player.name,
-                currentResult[player]?.getValue() ?: throw IllegalArgumentException("[ERROR] 플레이어를 찾을 수 없습니다."),
+                currentResult[player]?.value ?: throw IllegalArgumentException("[ERROR] 플레이어를 찾을 수 없습니다."),
             )
         }
     }
