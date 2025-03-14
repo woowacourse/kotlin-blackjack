@@ -78,7 +78,7 @@ class PlayerTest {
     }
 
     @Test
-    fun `플레이어가 드로우를 더 할 수 있는지 여부를 알 수 있다`() {
+    fun `플레이어 카드의 총합이 22 이상이면 카드를 더 받을 수 없다`() {
         val playerHand =
             Hand.of(
                 Card.of(CardNumber.TEN, Suit.SPADE),
