@@ -1,9 +1,9 @@
-package blackjack.model.participant
+package blackjack.model.hand
 
 import blackjack.model.card.Card
 import blackjack.model.card.CardRank
-import blackjack.model.participant.HandState.ALIVE
-import blackjack.model.participant.HandState.BUST
+import blackjack.model.hand.HandState.ALIVE
+import blackjack.model.hand.HandState.BUST
 
 class Hand(
     initialCards: List<Card> = emptyList(),

@@ -1,6 +1,6 @@
-package blackjack.model.game
+package blackjack.model.winning
 
-import blackjack.model.participant.HandState
+import blackjack.model.hand.HandState
 
 enum class WinningState(
     val profitRate: Double,

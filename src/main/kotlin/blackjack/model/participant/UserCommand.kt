@@ -1,4 +1,4 @@
-package blackjack.model.game
+package blackjack.model.participant
 
 enum class UserCommand(
     val command: String,

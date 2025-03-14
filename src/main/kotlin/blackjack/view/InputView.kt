@@ -1,6 +1,6 @@
 package blackjack.view
 
-import blackjack.model.game.UserCommand
+import blackjack.model.participant.UserCommand
 
 class InputView {
     fun getPlayers(): List<String> {

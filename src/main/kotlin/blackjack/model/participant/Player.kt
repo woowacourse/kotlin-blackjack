@@ -1,6 +1,8 @@
 package blackjack.model.participant
 
 import blackjack.model.card.Card
+import blackjack.model.hand.Hand
+import blackjack.model.hand.HandState
 
 class Player private constructor(
     name: Name,

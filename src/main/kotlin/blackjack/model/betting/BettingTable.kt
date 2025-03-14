@@ -1,4 +1,4 @@
-package blackjack.model.game
+package blackjack.model.betting
 
 import blackjack.model.participant.Money
 import blackjack.model.participant.Name

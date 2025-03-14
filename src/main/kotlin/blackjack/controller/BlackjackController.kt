@@ -1,15 +1,15 @@
 package blackjack.controller
 
+import blackjack.model.betting.BettingManager
 import blackjack.model.card.CardDeck
-import blackjack.model.game.BettingManager
-import blackjack.model.game.DrawManager
-import blackjack.model.game.ParticipantManager
-import blackjack.model.game.WinningManager
 import blackjack.model.participant.Dealer
 import blackjack.model.participant.Dealer.Companion.DEFAULT_DEALER_NAME
+import blackjack.model.participant.DrawManager
 import blackjack.model.participant.Money
+import blackjack.model.participant.ParticipantManager
 import blackjack.model.participant.Participants
 import blackjack.model.participant.Players
+import blackjack.model.winning.WinningManager
 import blackjack.view.InputView
 import blackjack.view.OutputView
 

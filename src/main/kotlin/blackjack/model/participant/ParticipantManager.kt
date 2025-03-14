@@ -1,9 +1,6 @@
-package blackjack.model.game
+package blackjack.model.participant
 
 import blackjack.model.card.CardDeck
-import blackjack.model.participant.Dealer
-import blackjack.model.participant.Participants
-import blackjack.model.participant.Players
 
 class ParticipantManager {
     fun prepareParticipants(

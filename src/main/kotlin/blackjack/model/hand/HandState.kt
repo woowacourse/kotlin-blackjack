@@ -1,6 +1,4 @@
-package blackjack.model.participant
-
-import blackjack.model.participant.Participant.Companion.INITIAL_DRAW_COUNT
+package blackjack.model.hand
 
 enum class HandState {
     ALIVE,
@@ -10,6 +8,7 @@ enum class HandState {
 
     companion object {
         private const val BLACKJACK_SCORE = 21
+        private const val BLACKJACK_CARD_COUNT = 2
 
         fun from(
             score: Int,
@@ -17,7 +16,7 @@ enum class HandState {
         ) = when {
             score > BLACKJACK_SCORE -> BUST
             score < BLACKJACK_SCORE -> ALIVE
-            cardCount == INITIAL_DRAW_COUNT -> BLACKJACK
+            cardCount == BLACKJACK_CARD_COUNT -> BLACKJACK
             else -> ALIVE
         }
     }

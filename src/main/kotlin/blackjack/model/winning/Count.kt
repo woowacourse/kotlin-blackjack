@@ -1,4 +1,4 @@
-package blackjack.model.game
+package blackjack.model.winning
 
 @JvmInline
 value class Count(

@@ -1,6 +1,8 @@
 package blackjack.model.participant
 
 import blackjack.model.card.Card
+import blackjack.model.hand.Hand
+import blackjack.model.hand.HandState
 
 abstract class Participant(
     val name: Name,

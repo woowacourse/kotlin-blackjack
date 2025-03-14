@@ -1,11 +1,9 @@
-package blackjack.model.game
+package blackjack.model.participant
 
 import blackjack.model.card.Card
-import blackjack.model.game.UserCommand.HIT
-import blackjack.model.game.UserCommand.STAY
-import blackjack.model.game.UserCommand.UNKNOWN
-import blackjack.model.participant.Dealer
-import blackjack.model.participant.Player
+import blackjack.model.participant.UserCommand.HIT
+import blackjack.model.participant.UserCommand.STAY
+import blackjack.model.participant.UserCommand.UNKNOWN
 
 class DrawManager {
     fun progressPlayerDraw(

@@ -1,9 +1,10 @@
-package blackjack.model.game
+package blackjack.model.betting
 
 import blackjack.model.participant.Money
 import blackjack.model.participant.Name
 import blackjack.model.participant.Participants
 import blackjack.model.participant.Players
+import blackjack.model.winning.WinningResult
 
 class BettingManager(
     private val bettingTable: BettingTable = BettingTable(),
