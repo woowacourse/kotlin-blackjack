@@ -11,6 +11,7 @@ import blackjack.model.card.CardSuit.CLUB
 import blackjack.model.card.CardSuit.DIAMOND
 import blackjack.model.card.CardSuit.HEART
 import blackjack.model.card.CardSuit.SPADE
+import blackjack.model.hand.Score
 import blackjack.model.participant.Name
 import blackjack.model.participant.Player.Companion.PLAYER_DEFAULT_MONEY
 
@@ -42,7 +43,7 @@ class OutputView {
     fun displayParticipantInfo(
         name: Name,
         cards: List<Card>,
-        score: Int,
+        score: Score,
     ) {
         println("$name 카드: ${cards.toText()} - 결과: $score")
     }

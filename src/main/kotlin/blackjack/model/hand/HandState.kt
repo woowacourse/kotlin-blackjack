@@ -7,11 +7,11 @@ enum class HandState {
     ;
 
     companion object {
-        private const val BLACKJACK_SCORE = 21
+        private val BLACKJACK_SCORE = Score(21)
         private const val BLACKJACK_CARD_COUNT = 2
 
         fun from(
-            score: Int,
+            score: Score,
             cardCount: Int,
         ) = when {
             score > BLACKJACK_SCORE -> BUST

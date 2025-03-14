@@ -15,8 +15,8 @@ class Hand(
         _cards.addAll(cards)
     }
 
-    fun score(): Int {
-        val hardScore = cards.sumOf { card -> card.rank.score }
+    fun score(): Score {
+        val hardScore = Score(cards.sumOf { card -> card.rank.score })
         val softScore = softScore(cards, hardScore)
 
         return when {
@@ -26,17 +26,17 @@ class Hand(
         }
     }
 
-    private fun Int.isBustScore(): Boolean = HandState.from(this, cards.size) == BUST
+    private fun Score.isBustScore(): Boolean = HandState.from(this, cards.size) == BUST
 
     private fun softScore(
         cards: List<Card>,
-        hardScore: Int,
-    ): Int {
+        hardScore: Score,
+    ): Score {
         val containsAce = cards.any { card -> card.rank == CardRank.ACE }
         return if (containsAce) hardScore + SOFT_OFFSET_SCORE else hardScore
     }
 
     companion object {
-        private const val SOFT_OFFSET_SCORE = 10
+        private val SOFT_OFFSET_SCORE = Score(10)
     }
 }

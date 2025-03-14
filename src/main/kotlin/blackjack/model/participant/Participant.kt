@@ -3,6 +3,7 @@ package blackjack.model.participant
 import blackjack.model.card.Card
 import blackjack.model.hand.Hand
 import blackjack.model.hand.HandState
+import blackjack.model.hand.Score
 
 abstract class Participant(
     val name: Name,
@@ -15,7 +16,7 @@ abstract class Participant(
 
     val handState: HandState get() = hand.state
 
-    val score: Int get() = hand.score()
+    val score: Score get() = hand.score()
 
     abstract fun showInitialCards(): List<Card>
 

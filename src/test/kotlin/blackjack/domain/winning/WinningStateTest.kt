@@ -1,6 +1,7 @@
 package blackjack.domain.winning
 
 import blackjack.model.hand.HandState
+import blackjack.model.hand.Score
 import blackjack.model.winning.WinningState
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
@@ -11,8 +12,8 @@ class WinningStateTest {
         // given && when
         val result =
             WinningState.fromPlayer(
-                playerScore = 21,
-                dealerScore = 20,
+                playerScore = Score(21),
+                dealerScore = Score(20),
                 playerHandState = HandState.BLACKJACK,
                 dealerHandState = HandState.ALIVE,
             )
@@ -26,8 +27,8 @@ class WinningStateTest {
         // given && when
         val result =
             WinningState.fromPlayer(
-                playerScore = 21,
-                dealerScore = 21,
+                playerScore = Score(21),
+                dealerScore = Score(21),
                 playerHandState = HandState.BLACKJACK,
                 dealerHandState = HandState.BLACKJACK,
             )
@@ -41,8 +42,8 @@ class WinningStateTest {
         // given && when
         val result =
             WinningState.fromPlayer(
-                playerScore = 21,
-                dealerScore = 21,
+                playerScore = Score(21),
+                dealerScore = Score(21),
                 playerHandState = HandState.ALIVE,
                 dealerHandState = HandState.BLACKJACK,
             )
@@ -56,8 +57,8 @@ class WinningStateTest {
         // given && when
         val result =
             WinningState.fromPlayer(
-                playerScore = 22,
-                dealerScore = 18,
+                playerScore = Score(22),
+                dealerScore = Score(18),
                 playerHandState = HandState.BUST,
                 dealerHandState = HandState.ALIVE,
             )
@@ -71,8 +72,8 @@ class WinningStateTest {
         // given && when
         val result =
             WinningState.fromPlayer(
-                playerScore = 18,
-                dealerScore = 22,
+                playerScore = Score(18),
+                dealerScore = Score(22),
                 playerHandState = HandState.ALIVE,
                 dealerHandState = HandState.BUST,
             )
@@ -86,8 +87,8 @@ class WinningStateTest {
         // given && when
         val result =
             WinningState.fromPlayer(
-                playerScore = 19,
-                dealerScore = 18,
+                playerScore = Score(19),
+                dealerScore = Score(18),
                 playerHandState = HandState.ALIVE,
                 dealerHandState = HandState.ALIVE,
             )
@@ -101,8 +102,8 @@ class WinningStateTest {
         // given && when
         val result =
             WinningState.fromPlayer(
-                playerScore = 18,
-                dealerScore = 19,
+                playerScore = Score(18),
+                dealerScore = Score(19),
                 playerHandState = HandState.ALIVE,
                 dealerHandState = HandState.ALIVE,
             )
@@ -116,8 +117,8 @@ class WinningStateTest {
         // given && when
         val result =
             WinningState.fromPlayer(
-                playerScore = 20,
-                dealerScore = 20,
+                playerScore = Score(20),
+                dealerScore = Score(20),
                 playerHandState = HandState.ALIVE,
                 dealerHandState = HandState.ALIVE,
             )

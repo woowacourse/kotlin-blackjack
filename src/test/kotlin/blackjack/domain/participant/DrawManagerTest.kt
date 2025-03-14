@@ -4,6 +4,7 @@ import blackjack.domain.ACE_HEART
 import blackjack.domain.SIX_HEART
 import blackjack.domain.TEN_HEART
 import blackjack.model.card.Card
+import blackjack.model.hand.Score
 import blackjack.model.participant.Dealer
 import blackjack.model.participant.DrawManager
 import blackjack.model.participant.Player
@@ -68,7 +69,7 @@ class DrawManagerTest {
     }
 
     @Test
-    fun `딜러가 16 이하일 때 카드를 받는다`() {
+    fun `딜러의 점수가 16 이하일 때 카드를 받는다`() {
         // given
         dealer.recieveCards { listOf(SIX_HEART) }
         val draw: (Int) -> List<Card> = { listOf(SIX_HEART) }
@@ -77,11 +78,11 @@ class DrawManagerTest {
         drawManager.progressDealerDraw(dealer, draw)
 
         // then
-        assertTrue(dealer.score > 16)
+        assertTrue(dealer.score > Score(16))
     }
 
     @Test
-    fun `딜러가 17 이상이면 카드를 받지 않는다`() {
+    fun `딜러의 점수가 17 이상이면 카드를 받지 않는다`() {
         // given
         dealer.recieveCards { listOf(TEN_HEART, ACE_HEART) }
         val draw: (Int) -> List<Card> = { listOf(SIX_HEART) }

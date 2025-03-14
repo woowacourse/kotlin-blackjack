@@ -1,6 +1,7 @@
 package blackjack.model.winning
 
 import blackjack.model.hand.HandState
+import blackjack.model.hand.Score
 
 enum class WinningState(
     val profitRate: Double,
@@ -21,8 +22,8 @@ enum class WinningState(
 
     companion object {
         fun fromPlayer(
-            playerScore: Int,
-            dealerScore: Int,
+            playerScore: Score,
+            dealerScore: Score,
             playerHandState: HandState,
             dealerHandState: HandState,
         ): WinningState =

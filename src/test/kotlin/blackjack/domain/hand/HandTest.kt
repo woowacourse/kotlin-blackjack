@@ -5,6 +5,7 @@ import blackjack.model.card.CardRank
 import blackjack.model.card.CardSuit
 import blackjack.model.hand.Hand
 import blackjack.model.hand.HandState
+import blackjack.model.hand.Score
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
@@ -55,7 +56,7 @@ class HandTest {
         hand.addAll(listOf(card1, card2))
 
         // then
-        assertEquals(14, hand.score())
+        assertEquals(Score(14), hand.score())
     }
 
     @Test
@@ -68,7 +69,7 @@ class HandTest {
         hand.addAll(listOf(card1, card2))
 
         // then
-        assertEquals(20, hand.score())
+        assertEquals(Score(20), hand.score())
     }
 
     @Test
@@ -83,6 +84,6 @@ class HandTest {
 
         // then
         assertEquals(HandState.BUST, hand.state)
-        assertTrue(hand.score() > 21)
+        assertTrue(hand.score() > Score(21))
     }
 }

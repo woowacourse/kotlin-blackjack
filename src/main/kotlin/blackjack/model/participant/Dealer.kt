@@ -2,6 +2,7 @@ package blackjack.model.participant
 
 import blackjack.model.card.Card
 import blackjack.model.hand.Hand
+import blackjack.model.hand.Score
 
 class Dealer private constructor(
     name: Name,
@@ -16,7 +17,7 @@ class Dealer private constructor(
 
     companion object {
         const val DEFAULT_DEALER_NAME = "딜러"
-        private const val DRAW_CRITERIA = 16
+        private val DRAW_CRITERIA = Score(16)
         private const val FIRST_SHOWN_COUNT = 1
         private const val DEALER_DEFAULT_MONEY = Double.MAX_VALUE
 
