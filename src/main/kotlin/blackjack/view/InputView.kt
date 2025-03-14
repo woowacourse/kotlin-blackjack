@@ -16,12 +16,16 @@ class InputView : BlackjackInput {
     override fun readCardDrawChoice(player: Player): CardDrawDecision {
         println(PLAYER_CARD_DRAW_DECISION_MESSAGE_GUIDE.format(player.name))
         val response: String = readln().trim()
-        return CardDrawDecision.from(response) ?: readCardDrawChoice(player)
+        if (response == PLAYER_CARD_DRAW_POSITIVE_RESPONSE) return CardDrawDecision.YES
+        if (response == PLAYER_CARD_DRAW_NEGATIVE_RESPONSE) return CardDrawDecision.NO
+        return readCardDrawChoice(player)
     }
 
     companion object {
         private const val PLAYER_NAME_MESSAGE_GUIDE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)"
         private const val PLAYER_CARD_DRAW_DECISION_MESSAGE_GUIDE = "%s은(는) 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)"
         private const val PLAYER_NAME_DELIMITER = ","
+        private const val PLAYER_CARD_DRAW_POSITIVE_RESPONSE = "y"
+        private const val PLAYER_CARD_DRAW_NEGATIVE_RESPONSE = "n"
     }
 }
