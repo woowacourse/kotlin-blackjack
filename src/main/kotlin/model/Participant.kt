@@ -5,7 +5,7 @@ abstract class Participant(private val hand: Hand) {
 
     abstract fun decideToHit(): Boolean
 
-    fun getScore(): Int = hand.getScore()
+    fun getTotalScore(): Int = ScoreCalculator(hand).calculateTotalCardScore()
 
     fun receiveCards(getCards: (Int) -> List<Card>) {
         val count = if (cards.isEmpty()) INITIAL_DRAW_COUNT else DEFAULT_DRAW_COUNT
@@ -14,7 +14,7 @@ abstract class Participant(private val hand: Hand) {
 
     fun getHand(): Hand = hand
 
-    private fun isBust(): Boolean = getScore() > GameResultDecider.BLACKJACK_SCORE
+    private fun isBust(): Boolean = getTotalScore() > GameResultDecider.BLACKJACK_SCORE
 
     fun isBlackJack(): Boolean = isBust() && cards.size == 2
 
