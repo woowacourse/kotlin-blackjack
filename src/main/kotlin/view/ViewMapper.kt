@@ -1,5 +1,7 @@
 package view
 
+import kotlin.math.roundToInt
+
 fun String.mapToTitle(): String {
     return when (this) {
         "ACE" -> "A"
@@ -23,11 +25,12 @@ fun String.mapToTitle(): String {
     }
 }
 
-fun String.mapToVictoryStatus(): String {
-    return when (this) {
-        "WIN" -> "승"
-        "LOSE" -> "패"
-        "DRAW" -> "무"
-        else -> throw IllegalArgumentException("[ERROR] 존재하지 않는 결과입니다.")
-    }
-}
+fun Float.roundToInteger() = this.roundToInt()
+//fun String.mapToVictoryStatus(): String {
+//    return when (this) {
+//        "WIN" -> "승"
+//        "LOSE" -> "패"
+//        "DRAW" -> "무"
+//        else -> throw IllegalArgumentException("[ERROR] 존재하지 않는 결과입니다.")
+//    }
+//}

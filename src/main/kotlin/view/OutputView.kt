@@ -50,9 +50,9 @@ class OutputView {
 
     fun printResult(dealerResult: Float, playerResults: List<PlayerResult>) {
         println("\n## 최종 수익")
-        println("딜러: $dealerResult")
+        println("딜러: ${dealerResult.roundToInteger()}")
         playerResults.forEach { playResult ->
-            println("${playResult.name}: ${playResult.profit.toInt()}")
+            println("${playResult.name}: ${playResult.profit.roundToInteger()}")
         }
     }
 
