@@ -1,7 +1,10 @@
 package blackjack.model
 
+import java.math.MathContext
+import java.math.RoundingMode
+
 data class Card(
-    val shape: Suit,
+    val suit: Suit,
     val denomination: Denomination,
 ) {
     fun isAce(): Boolean = denomination == Denomination.ACE
@@ -17,5 +20,7 @@ data class Card(
                         Card(shape, denomination)
                     }
                 }.shuffled()
+
+        val math: MathContext = MathContext(2, RoundingMode.HALF_EVEN)
     }
 }

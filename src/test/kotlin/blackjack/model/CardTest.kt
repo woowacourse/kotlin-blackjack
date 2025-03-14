@@ -10,7 +10,7 @@ class CardTest {
         val card = Card(Suit.HEART, Denomination.TWO)
 
         assertAll(
-            { assertThat(card.shape).isEqualTo(Suit.HEART) },
+            { assertThat(card.suit).isEqualTo(Suit.HEART) },
             { assertThat(card.denomination).isEqualTo(Denomination.TWO) },
         )
     }
