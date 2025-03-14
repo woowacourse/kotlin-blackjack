@@ -1,6 +1,7 @@
 package blackjack.controller
 
 import blackjack.model.BettingMoney
+import blackjack.model.BettingMoney.Companion.BLACKJACK_MULTIPLE
 import blackjack.model.Card
 import blackjack.model.CardDeck
 import blackjack.model.CardsStatus.Companion.BUST_SCORE
@@ -80,7 +81,7 @@ class BlackjackController(
         val blackjackPlayers: List<Player> = players.getBlackjackPlayers()
 
         blackjackPlayers.forEach { player ->
-            val money: Money = player.bettingMoney.multiple(1.5)
+            val money: Money = player.bettingMoney.multiple(BLACKJACK_MULTIPLE)
             executePlayerGainMoney(dealer, money, player)
         }
     }

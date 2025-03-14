@@ -8,4 +8,8 @@ class BettingMoney(
     }
 
     fun getProfit(): Money = Money(value.toInt() - initialValue)
+
+    companion object {
+        const val BLACKJACK_MULTIPLE: Double = 1.5
+    }
 }
