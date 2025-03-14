@@ -1,46 +1,74 @@
 package blackjack.domain.participant
 
-import blackjack.model.card.CardDeck
+import blackjack.model.card.Card
+import blackjack.model.card.CardRank
+import blackjack.model.card.CardSuit
 import blackjack.model.participant.Dealer
-import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class DealerTest {
-    private lateinit var cardDeck: CardDeck
     private lateinit var dealer: Dealer
 
     @BeforeEach
     fun setup() {
-        cardDeck = CardDeck()
         dealer = Dealer.create()
     }
 
     @Test
-    fun `딜러가 카드를 다 뽑고나면 점수는 16점을 초과하거나 버스트이다`() {
-        // given & when
-        while (true) {
-            dealer.recieveCards(cardDeck::draw)
-            if (!dealer.isDrawable()) break
-        }
+    fun `딜러의 처음 공개하는 카드는 1장이어야 한다`() {
+        // given
+        val card1 = Card(CardRank.ACE, CardSuit.HEART)
+        val card2 = Card(CardRank.TEN, CardSuit.HEART)
+        dealer.addAll(listOf(card1, card2))
+
+        // when
+        val initialVisibleCards = dealer.showInitialCards()
 
         // then
-        assertThat(dealer.score() > 16 || dealer.isBust()).isTrue()
+        assertEquals(1, initialVisibleCards.size)
+        assertEquals(card1, initialVisibleCards.first())
     }
 
     @Test
-    fun `딜러 점수가 16 이전까지 뽑은 카드의 장수를 반환한다`() {
+    fun `딜러의 점수가 16 이하이면 추가로 카드를 뽑을 수 있다`() {
         // given
-        val initialDrawCount = 2
-        dealer.recieveCards(cardDeck::draw)
+        val card1 = Card(CardRank.TEN, CardSuit.HEART)
+        val card2 = Card(CardRank.SIX, CardSuit.HEART)
+        dealer.addAll(listOf(card1, card2))
+
+        // when & then
+        assertTrue(dealer.isDrawable())
+    }
+
+    @Test
+    fun `딜러의 점수가 17 이상이면 추가로 카드를 뽑을 수 없다`() {
+        // given
+        val card1 = Card(CardRank.TEN, CardSuit.HEART)
+        val card2 = Card(CardRank.SEVEN, CardSuit.HEART)
+        dealer.addAll(listOf(card1, card2))
+
+        // when & then
+        assertFalse(dealer.isDrawable())
+    }
+
+    @Test
+    fun `딜러가 처음 2장을 받은 후 추가로 카드를 뽑은 개수를 반환한다`() {
+        // given
+        val initialCards =
+            listOf(
+                Card(CardRank.TEN, CardSuit.HEART),
+                Card(CardRank.SIX, CardSuit.HEART),
+            )
+        dealer.addAll(initialCards)
 
         // when
-        while (true) {
-            dealer.recieveCards(cardDeck::draw)
-            if (!dealer.isDrawable()) break
-        }
+        dealer.addAll(listOf(Card(CardRank.TWO, CardSuit.CLUB)))
 
         // then
-        assertThat(dealer.additionalDrawCount()).isEqualTo(dealer.cards.size - initialDrawCount)
+        assertEquals(1, dealer.additionalDrawCount)
     }
 }
