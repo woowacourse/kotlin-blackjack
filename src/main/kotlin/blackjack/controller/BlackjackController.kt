@@ -27,7 +27,7 @@ class BlackjackController(
         val participants =
             participantManager.prepareParticipants(
                 dealerName = DEFAULT_DEALER_NAME,
-                cardDeck = cardDeck,
+                distributeCards = cardDeck::draw,
                 getPlayerNames = inputView::getPlayers,
             )
         val (dealer, players) = participants.dealer to participants.players

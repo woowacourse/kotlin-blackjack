@@ -1,36 +1,36 @@
 package blackjack.model.participant
 
-import blackjack.model.card.CardDeck
+import blackjack.model.card.Card
 
 class ParticipantManager {
     fun prepareParticipants(
         dealerName: String,
-        cardDeck: CardDeck,
+        distributeCards: (Int) -> List<Card>,
         getPlayerNames: () -> List<String>,
     ): Participants {
-        val dealer = prepareDealer(dealerName, cardDeck)
-        val players = preparePlayers(getPlayerNames(), cardDeck)
+        val dealer = prepareDealer(dealerName, distributeCards)
+        val players = preparePlayers(getPlayerNames(), distributeCards)
 
         return Participants(dealer, players)
     }
 
     private fun prepareDealer(
         dealerName: String,
-        cardDeck: CardDeck,
+        distributeCards: (Int) -> List<Card>,
     ): Dealer {
         val dealer = Dealer.create(dealerName)
-        dealer.recieveCards(cardDeck::draw)
+        dealer.recieveCards(distributeCards)
 
         return dealer
     }
 
     private fun preparePlayers(
         playerNames: List<String>,
-        cardDeck: CardDeck,
+        distributeCards: (Int) -> List<Card>,
     ): Players {
         val players = Players.from(playerNames)
         players.value.forEach { player ->
-            player.recieveCards(cardDeck::draw)
+            player.recieveCards(distributeCards)
         }
 
         return players
