@@ -2,6 +2,7 @@ package model.participant
 
 import model.card.Card
 import model.card.Cards
+import model.result.ProfitCalculator.Companion.BLACKJACK_SCORE
 import model.result.ScoreCalculator
 
 abstract class Participant(private val cards: Cards) {
@@ -11,7 +12,8 @@ abstract class Participant(private val cards: Cards) {
     val currentScore: Int
         get() = ScoreCalculator(cards).calculateTotalCardScore()
 
-    val isBackJack: Boolean = ScoreCalculator(cards).initialTotalCardScore == 21 && handCards.size == 2
+    val isBackJack: Boolean =
+        ScoreCalculator(cards).initialTotalCardScore == BLACKJACK_SCORE && handCards.size == INITIAL_CARDS_COUNT
 
     abstract fun turn(drawnCard: Card): Boolean
 
@@ -19,5 +21,9 @@ abstract class Participant(private val cards: Cards) {
 
     protected fun addCard(card: Card) {
         handCards.add(card)
+    }
+
+    companion object {
+        private const val INITIAL_CARDS_COUNT = 2
     }
 }
