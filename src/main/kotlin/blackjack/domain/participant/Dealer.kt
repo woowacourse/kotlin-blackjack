@@ -4,7 +4,7 @@ import blackjack.domain.BlackJackGame.Companion.CARD_COUNT_OF_DEALER_MUST_INITIA
 import blackjack.domain.card.TrumpCard
 
 class Dealer : Participant() {
-    override fun isDrawable(): Boolean {
+    override fun canHit(): Boolean {
         return totalScore() <= DEALER_MUST_REACH_SCORE
     }
 

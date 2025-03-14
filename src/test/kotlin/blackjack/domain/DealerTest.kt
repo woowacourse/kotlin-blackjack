@@ -34,7 +34,7 @@ class DealerTest {
             dealer.addCard(it)
         }
 
-        assertEquals(dealer.isDrawable(), false)
+        assertEquals(dealer.canHit(), false)
     }
 
     @Test
@@ -42,7 +42,7 @@ class DealerTest {
         dealer.addCard(TrumpCard(Tier.ACE, Shape.DIA))
         dealer.addCard(TrumpCard(Tier.KING, Shape.DIA))
 
-        assertEquals(dealer.isDrawable(), false)
+        assertEquals(dealer.canHit(), false)
     }
 
     @Test
@@ -50,7 +50,7 @@ class DealerTest {
         dealer.addCard(TrumpCard(Tier.ACE, Shape.DIA))
         dealer.addCard(TrumpCard(Tier.TWO, Shape.DIA))
 
-        assertEquals(dealer.isDrawable(), true)
+        assertEquals(dealer.canHit(), true)
     }
 
     @Test
@@ -58,7 +58,7 @@ class DealerTest {
         dealer.addCard(TrumpCard(Tier.ACE, Shape.DIA))
         dealer.addCard(TrumpCard(Tier.KING, Shape.DIA))
 
-        assertEquals(dealer.isDrawable(), false)
+        assertEquals(dealer.canHit(), false)
     }
 
     @Test
@@ -66,7 +66,7 @@ class DealerTest {
         dealer.addCard(TrumpCard(Tier.ACE, Shape.DIA))
         dealer.addCard(TrumpCard(Tier.ACE, Shape.HEART))
 
-        assertEquals(dealer.isDrawable(), true)
+        assertEquals(dealer.canHit(), true)
     }
 
     @Test
@@ -75,7 +75,7 @@ class DealerTest {
         dealer.addCard(TrumpCard(Tier.ACE, Shape.HEART))
         dealer.addCard(TrumpCard(Tier.NINE, Shape.HEART))
 
-        assertEquals(dealer.isDrawable(), false)
+        assertEquals(dealer.canHit(), false)
     }
 
     @Test

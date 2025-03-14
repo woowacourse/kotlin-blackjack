@@ -16,7 +16,7 @@ class ParticipantTest {
             object : Participant() {
                 override fun getInitialCards(): Set<TrumpCard> = emptySet()
 
-                override fun isDrawable(): Boolean = true
+                override fun canHit(): Boolean = true
             }
 
         val originalCards = participant.cards

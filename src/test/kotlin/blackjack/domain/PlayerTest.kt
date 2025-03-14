@@ -33,7 +33,7 @@ class PlayerTest {
         bustTrumpCardFixture().forEach {
             player.addCard(it)
         }
-        assertEquals(player.isDrawable(), false)
+        assertEquals(player.canHit(), false)
     }
 
     @Test

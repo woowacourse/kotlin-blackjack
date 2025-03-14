@@ -24,7 +24,7 @@ abstract class Participant {
 
     abstract fun getInitialCards(): Set<TrumpCard>
 
-    abstract fun isDrawable(): Boolean
+    abstract fun canHit(): Boolean
 
     private fun PlayerCards.deepCopy(): PlayerCards = PlayerCards(this.items.map { it.copy() }.toSet())
 
