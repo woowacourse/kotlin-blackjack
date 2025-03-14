@@ -1,11 +1,13 @@
-package blackjack.domain.model.participant
+package blackjack.domain.model.betting
 
 import blackjack.domain.model.GameResult.BLACKJACK_WIN
 import blackjack.domain.model.GameResult.DRAW
 import blackjack.domain.model.GameResult.LOSE
 import blackjack.domain.model.GameResult.WIN
+import blackjack.domain.model.participant.Dealer
+import blackjack.domain.model.participant.Player
 
-class PlayerBetInfo(
+class BetRecord(
     private val player: Player,
     private val betAmount: BetAmount,
 ) {

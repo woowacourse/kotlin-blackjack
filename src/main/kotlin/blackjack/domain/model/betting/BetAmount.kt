@@ -1,4 +1,4 @@
-package blackjack.domain.model.participant
+package blackjack.domain.model.betting
 
 @JvmInline
 value class BetAmount(
