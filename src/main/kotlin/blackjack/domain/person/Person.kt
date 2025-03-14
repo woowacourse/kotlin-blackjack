@@ -1,5 +1,6 @@
 package blackjack.domain.person
 
+import blackjack.domain.Score
 import blackjack.domain.card.Card
 import blackjack.domain.card.Deck
 import blackjack.domain.state.PersonState
@@ -20,10 +21,10 @@ abstract class Person {
     }
 
     fun cards(): List<Card> {
-        return hand.cards()
+        return hand.cards
     }
 
-    fun score(): Int {
-        return hand.score()
+    fun score(): Score {
+        return Score.create(hand.cards)
     }
 }

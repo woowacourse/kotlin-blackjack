@@ -13,6 +13,6 @@ class HandTest {
         val card = Card.create(CardNumber.ACE, CardPattern.HEART)
         repeat(3) { hand.addCard(card) }
 
-        hand.cards().size shouldBe 3
+        hand.cards.size shouldBe 3
     }
 }

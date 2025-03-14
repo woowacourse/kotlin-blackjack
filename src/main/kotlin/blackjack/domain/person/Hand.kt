@@ -1,22 +1,12 @@
 package blackjack.domain.person
 
-import blackjack.domain.Score
 import blackjack.domain.card.Card
 
 class Hand {
-    private val cards: PersonCards = PersonCards()
-    private val score: Score = Score(cards())
+    private val _cards: MutableList<Card> = mutableListOf()
+    val cards: List<Card> get() = _cards.toList()
 
     fun addCard(card: Card) {
-        cards.add(card)
-        score.update(cards())
-    }
-
-    fun cards(): List<Card> {
-        return cards.list()
-    }
-
-    fun score(): Int {
-        return score.value
+        _cards.add(card)
     }
 }
