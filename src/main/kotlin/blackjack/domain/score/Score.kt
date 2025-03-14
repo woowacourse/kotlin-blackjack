@@ -2,7 +2,9 @@ package blackjack.domain.score
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.Rank
+import blackjack.domain.gameResult.GameResult
 import blackjack.domain.participant.Participant
+import java.lang.IllegalStateException
 
 data class Score(private val cards: List<Card>) {
     constructor(participant: Participant) : this(participant.getCards())
@@ -45,6 +47,15 @@ data class Score(private val cards: List<Card>) {
 
     fun isEqualTo(other: Score): Boolean {
         return value == other.value
+    }
+
+    fun compare(other: Score): GameResult {
+        return when {
+            this > other -> GameResult.WIN
+            this < other -> GameResult.LOSE
+            this.isEqualTo(other) -> GameResult.DRAW
+            else -> throw IllegalStateException("")
+        }
     }
 
     companion object {
