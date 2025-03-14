@@ -52,7 +52,7 @@ class BlackJackGameTest {
         game.dealCards()
         game.playDealerTurns(printDealerDrawMessage = { })
 
-        (dealer.score() >= 17) shouldBe true
+        (dealer.score().value >= 17) shouldBe true
     }
 
     @Test

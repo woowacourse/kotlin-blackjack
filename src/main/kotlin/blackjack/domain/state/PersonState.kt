@@ -1,6 +1,5 @@
 package blackjack.domain.state
 
-import blackjack.domain.Score.Companion.BLACKJACK_SCORE
 import blackjack.domain.person.Dealer
 import blackjack.domain.person.Person
 
@@ -12,16 +11,16 @@ enum class PersonState(val isFinal: Boolean) {
     ;
 
     companion object {
-        private const val DEALER_ADDITIONAL_DRAW_BASE_SCORE = 16
+        private const val BLACKJACK_CARD_BASE_AMOUNT = 2
 
         fun from(person: Person): PersonState {
             val score = person.score()
             val isDealer = person is Dealer
 
             return when {
-                person.cards().size == 2 && person.score() == BLACKJACK_SCORE -> BLACKJACK
-                score > BLACKJACK_SCORE -> BUST
-                isDealer && score > DEALER_ADDITIONAL_DRAW_BASE_SCORE -> STAY
+                person.cards().size == BLACKJACK_CARD_BASE_AMOUNT && score.isBlackJackScore() -> BLACKJACK
+                score.isBustScore() -> BUST
+                isDealer && score.isDealerStayScore() -> STAY
                 else -> HIT
             }
         }

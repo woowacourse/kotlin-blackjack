@@ -1,5 +1,6 @@
 package blackjack.domain.state
 
+import blackjack.domain.Score
 import blackjack.domain.person.Dealer
 import blackjack.domain.person.Player
 
@@ -29,12 +30,12 @@ enum class ResultState {
             }
 
         private fun compareScores(
-            playerScore: Int,
-            dealerScore: Int,
+            playerScore: Score,
+            dealerScore: Score,
         ): ResultState =
             when {
-                playerScore > dealerScore -> WIN
-                playerScore < dealerScore -> LOSE
+                playerScore.value > dealerScore.value -> WIN
+                playerScore.value < dealerScore.value -> LOSE
                 else -> DRAW
             }
     }

@@ -3,43 +3,39 @@ package blackjack.domain
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
 
-class Score(cards: List<Card>) {
-    private var _value: Int = calculate(cards)
-    val value: Int get() = _value
+class Score(val value: Int) {
+    fun isBlackJackScore(): Boolean = value == BLACKJACK_SCORE
 
-    fun update(cards: List<Card>) {
-        _value = calculate(cards)
-    }
+    fun isBustScore(): Boolean = value > BLACKJACK_SCORE
 
-    private fun calculate(cards: List<Card>): Int {
-        val values = cards.map { getCardValue(it) }
-        val sum = values.sum()
-        return adjustAceValues(sum, cards)
-    }
-
-    private fun getCardValue(card: Card): Int {
-        if (card.number == CardNumber.ACE) return ACE_OTHER_SCORE
-        return card.number.value
-    }
-
-    private fun adjustAceValues(
-        sum: Int,
-        cards: List<Card>,
-    ): Int {
-        var total = sum
-        val aceCount = cards.count { it.number == CardNumber.ACE }
-
-        repeat(aceCount) {
-            if (total > BLACKJACK_SCORE) {
-                total -= ACE_BASE_SCORE
-            }
-        }
-        return total
-    }
+    fun isDealerStayScore(): Boolean = value > DEALER_ADDITIONAL_DRAW_BASE_SCORE
 
     companion object {
-        const val BLACKJACK_SCORE = 21
         private const val ACE_BASE_SCORE = 10
         private const val ACE_OTHER_SCORE = 11
+        private const val BLACKJACK_SCORE = 21
+        private const val DEALER_ADDITIONAL_DRAW_BASE_SCORE = 16
+
+        fun create(cards: List<Card>): Score {
+            val value = calculate(cards)
+            return Score(value)
+        }
+
+        private fun calculate(cards: List<Card>): Int {
+            val sum = cards.sumOf { getCardValue(it) }
+            return adjustAceValues(sum, cards)
+        }
+
+        private fun getCardValue(card: Card): Int = if (card.number == CardNumber.ACE) ACE_OTHER_SCORE else card.number.value
+
+        private fun adjustAceValues(
+            sum: Int,
+            cards: List<Card>,
+        ): Int {
+            val aceCount = cards.count { it.number == CardNumber.ACE }
+            var total = sum
+            repeat(aceCount) { if (total > BLACKJACK_SCORE) total -= ACE_BASE_SCORE }
+            return total
+        }
     }
 }
