@@ -37,8 +37,24 @@ class GameManager(private val cards: Cards) {
         return dealer.cards.size - INITIAL_DEALER_CARDS
     }
 
-    fun determineGameResult(): GameOutput {
-        return GameResultDecider(dealer, players).compareWinOrLose()
+    fun determineBettingAmounts(bettingManager: BettingManager): Map<Player, Int> {
+        val gameOutput = GameResultDecider(dealer, players).compareWinOrLose()
+
+        return players.associateWith { player ->
+            val playerResult = gameOutput.playerResults.firstOrNull { it.player == player }
+            when (playerResult?.result) {
+                GameResult.WIN -> bettingManager.getProfit(player)
+                GameResult.LOSE -> -bettingManager.getProfit(player)
+                GameResult.BLACKJACK -> (bettingManager.getProfit(player) * 1.5).toInt()
+                GameResult.PUSH -> 0
+                else -> 0
+            }
+        }
+    }
+
+    fun determineDealerProfit(bettingManager: BettingManager): Int {
+        val totalPlayerProfit = determineBettingAmounts(bettingManager).values.sum()
+        return -totalPlayerProfit
     }
 
     companion object {
