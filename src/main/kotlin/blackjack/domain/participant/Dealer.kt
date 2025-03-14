@@ -33,14 +33,15 @@ class Dealer(
 
     override fun getProfit(gameResult: GameResult): Double =
         when (gameResult) {
-            GameResult.BLACKJACK -> 1.0
-            GameResult.WIN -> 1.0
-            GameResult.DRAW -> 0.0
-            else -> -1.0
+            GameResult.BLACKJACK -> DEALER_BLACKJACK_MULTIPLY
+            GameResult.WIN -> WIN_MULTIPLY
+            GameResult.DRAW -> DRAW_MULTIPLY
+            else -> LOSE_MULTIPLY
         }
 
     companion object {
         private const val DEALER_MAX_SCORE = 16
         private const val DEALER_INITIAL_CARD_COUNT = 1
+        private const val DEALER_BLACKJACK_MULTIPLY = 1.0
     }
 }

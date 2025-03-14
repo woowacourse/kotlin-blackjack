@@ -32,13 +32,17 @@ class Player(
 
     override fun getProfit(gameResult: GameResult): Double =
         when (gameResult) {
-            GameResult.BLACKJACK -> bettingMoney.value * 1.5
-            GameResult.WIN -> bettingMoney.value.toDouble()
-            GameResult.DRAW -> 0.0
-            else -> -1.0 * bettingMoney.value
+            GameResult.BLACKJACK -> bettingMoney.value * PLAYER_BLACKJACK_MULTIPLY
+            GameResult.WIN -> bettingMoney.value * WIN_MULTIPLY
+            GameResult.DRAW -> DRAW_MULTIPLY
+            else -> bettingMoney.value * LOSE_MULTIPLY
         }
 
     companion object {
-        const val PLAYER_INITIAL_CARD_COUNT = 2
+        private const val PLAYER_INITIAL_CARD_COUNT = 2
+        private const val PLAYER_BLACKJACK_MULTIPLY = 1.5
+        const val WIN_MULTIPLY = 1.0
+        const val DRAW_MULTIPLY = 0.0
+        const val LOSE_MULTIPLY = -1.0
     }
 }
