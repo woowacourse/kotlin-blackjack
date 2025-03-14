@@ -148,6 +148,7 @@ class BlackjackController(
             executeMoneyLogic(dealerResult, player, dealer)
         }
         playersWhichNotDying.forEach { player ->
+            if (player.isBlackjack()) return executeBlackjackPlayersLogic(players, dealer)
             val dealerResult: GameResult = dealer.getResult(player.getScore())
             executeMoneyLogic(dealerResult, player, dealer)
         }
