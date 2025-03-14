@@ -8,7 +8,7 @@ class Dealer(
     name: String = DEFAULT_NAME,
     hand: Hand = Hand(),
 ) : Participant(name, hand) {
-    fun showFirstCard(): Card = hand.toList().first()
+    override fun showFirstHand(): List<Card> = listOf(handCards().first())
 
     override fun compareTo(opponent: Participant): GameResult {
         val myScore: Int = hand.getScore()

@@ -12,6 +12,10 @@ abstract class Participant(
         cards.forEach(hand::add)
     }
 
+    fun handCards(): List<Card> = hand.toList()
+
+    abstract fun showFirstHand(): List<Card>
+
     abstract fun compareTo(opponent: Participant): GameResult
 
     abstract fun isDrawable(): Boolean

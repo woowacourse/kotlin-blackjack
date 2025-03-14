@@ -18,9 +18,9 @@ class DealerTest {
             )
         val dealer = Dealer("딜러", dealerHand)
 
-        val actualFirstCard = dealer.showFirstCard()
+        val actualFirstCard = dealer.showFirstHand()
 
-        val expectedCard = Card.of(CardNumber.ACE, Suit.HEART)
+        val expectedCard = listOf(Card.of(CardNumber.ACE, Suit.HEART))
 
         assertThat(actualFirstCard).isEqualTo(expectedCard)
     }

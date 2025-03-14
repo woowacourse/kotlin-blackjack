@@ -56,7 +56,7 @@ class Casino(
         participants: Participants,
         deck: Deck,
     ) {
-        participants.dealer.drawCard(drawSafely(2, deck))
+        participants.dealer.drawCard(drawSafely(1, deck))
         participants.players.forEach { participant ->
             participant.drawCard(drawSafely(2, deck))
         }
@@ -108,6 +108,7 @@ class Casino(
         dealer: Dealer,
         deck: Deck,
     ) {
+        dealer.drawCard(drawSafely(1, deck))
         while (dealer.isDrawable()) {
             dealer.drawCard(drawSafely(1, deck))
             outputView.showDealerDrawMessage()

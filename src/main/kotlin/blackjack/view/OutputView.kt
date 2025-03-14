@@ -18,8 +18,8 @@ class OutputView {
     }
 
     fun showDealerCardsInfo(dealer: Dealer) {
-        val cardsInfoText: String = dealer.showFirstCard().toText()
-        println(CARD_INFO_MESSAGE.format(dealer.name, cardsInfoText))
+        val dealerCard = dealer.showFirstHand().first()
+        println(CARD_INFO_MESSAGE.format(dealer.name, dealerCard.toText()))
     }
 
     fun showPlayerCardsInfo(player: Player) {
