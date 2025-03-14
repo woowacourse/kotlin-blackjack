@@ -1,5 +1,6 @@
 package blackjack.model
 
+import blackjack.model.amount.BetAmount
 import blackjack.model.participant.Dealer
 import blackjack.model.participant.Player
 import org.assertj.core.api.Assertions.assertThat

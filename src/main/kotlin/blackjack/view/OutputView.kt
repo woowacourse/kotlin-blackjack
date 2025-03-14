@@ -1,7 +1,7 @@
 package blackjack.view
 
 import blackjack.model.GameManager.Companion.INITIAL_HAND_OUT_CARD_COUNT
-import blackjack.model.WinningMoney
+import blackjack.model.amount.WinningMoney
 import blackjack.model.card.Card
 import blackjack.model.card.CardNumber
 import blackjack.model.card.CardNumber.ACE

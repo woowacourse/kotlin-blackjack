@@ -1,6 +1,6 @@
 package blackjack.model.participant
 
-import blackjack.model.BetAmount
+import blackjack.model.amount.BetAmount
 import blackjack.model.ResultCalculator
 import blackjack.model.ResultType
 import blackjack.model.card.Card

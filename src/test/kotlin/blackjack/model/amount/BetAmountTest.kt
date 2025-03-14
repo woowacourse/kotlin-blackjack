@@ -1,4 +1,4 @@
-package blackjack.model
+package blackjack.model.amount
 
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
