@@ -6,7 +6,7 @@ import blackjack.domain.card.Suit
 import blackjack.domain.gameResult.BlackJackResult
 import blackjack.domain.gameResult.GameResult
 import blackjack.domain.gameResult.PlayerResult
-import blackjack.domain.gameResult.state.PlayerStay
+import blackjack.domain.gameResult.state.Stay
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Player
 import org.assertj.core.api.Assertions.assertThat
@@ -46,7 +46,7 @@ class BlackJackResultTest {
         val blackJackResult = BlackJackResult(dealer, listOf(player))
         val playerGameResult =
             PlayerResult(
-                PlayerStay(player),
+                Stay(player),
                 GameResult.WIN,
             )
         assertThat(blackJackResult.playerResults[0]).isEqualTo(playerGameResult)
@@ -66,7 +66,7 @@ class BlackJackResultTest {
         val blackJackResult = BlackJackResult(dealer, listOf(player))
         val playerGameResult =
             PlayerResult(
-                PlayerStay(player),
+                Stay(player),
                 GameResult.LOSE,
             )
         assertThat(blackJackResult.playerResults[0]).isEqualTo(playerGameResult)
@@ -88,7 +88,7 @@ class BlackJackResultTest {
         val blackJackResult = BlackJackResult(dealer, listOf(player))
         val playerGameResult =
             PlayerResult(
-                PlayerStay(player),
+                Stay(player),
                 GameResult.DRAW,
             )
         assertThat(blackJackResult.playerResults[0]).isEqualTo(playerGameResult)
@@ -109,7 +109,7 @@ class BlackJackResultTest {
         val blackJackResult = BlackJackResult(dealer, listOf(player))
         val playerGameResult =
             PlayerResult(
-                PlayerStay(player),
+                Stay(player),
                 GameResult.LOSE,
             )
         assertThat(blackJackResult.playerResults[0]).isEqualTo(playerGameResult)
