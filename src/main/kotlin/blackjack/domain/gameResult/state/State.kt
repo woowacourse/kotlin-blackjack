@@ -14,7 +14,8 @@ fun <T : Participant> State(participant: T): State<T> {
 
 interface State<T : Participant> {
     val participant: T
-    val earnRate: Double
+
+    fun getEarnRate(gameResult: GameResult): Double
 
     fun compare(state: State<out Participant>): GameResult
 }
