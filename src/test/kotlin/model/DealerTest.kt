@@ -55,7 +55,7 @@ class DealerTest {
             )
         val dealer = Dealer(cards)
         val drawnCard = Card(CardRank.TEN, Shape.SPADE)
-        val drawCount = dealer.drawCount(drawnCard)
+        val drawCount = dealer.drawCount { drawnCard }
 
         assertThat(drawCount).isEqualTo(2)
     }
