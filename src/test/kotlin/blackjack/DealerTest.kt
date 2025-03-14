@@ -26,7 +26,7 @@ class DealerTest {
         repeat(3) {
             dealer.receiveCard(TrumpCard(CardTier.KING, Shape.DIA))
         }
-        assertThat(dealer.isBust()).isEqualTo(true)
+        assertThat(dealer.cards.isBust()).isEqualTo(true)
     }
 
     @Test
@@ -115,6 +115,6 @@ class DealerTest {
         dealer.receiveCard(TrumpCard(CardTier.ACE, Shape.DIA))
 
         val expected = true
-        assertThat(dealer.isBlackJack()).isEqualTo(expected)
+        assertThat(dealer.cards.isBlackJack()).isEqualTo(expected)
     }
 }

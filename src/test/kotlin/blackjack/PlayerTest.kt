@@ -30,7 +30,7 @@ class PlayerTest {
         repeat(3) {
             player.receiveCard(TrumpCard(CardTier.KING, Shape.DIA))
         }
-        assertThat(player.isBust()).isEqualTo(true)
+        assertThat(player.cards.isBust()).isEqualTo(true)
     }
 
     @Test
