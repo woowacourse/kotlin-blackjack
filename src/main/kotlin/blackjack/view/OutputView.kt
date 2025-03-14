@@ -5,6 +5,7 @@ import blackjack.domain.gameResult.PlayerResult
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Participant
 import blackjack.domain.participant.Player
+import blackjack.domain.score.Score
 import blackjack.view.blackjackView.format
 
 object OutputView {
@@ -44,7 +45,7 @@ object OutputView {
 
     private fun printPlayerCard(player: Player): String = "${player.name}카드: ${player.getCards().format()}"
 
-    private fun printTotalSum(participant: Participant): String = " - 결과: ${participant.getTotalSum()}\""
+    private fun printTotalSum(participant: Participant): String = " - 결과: ${Score(participant)}\""
 
     private fun printDealerResult(dealerProfit: Int): String = "딜러: $dealerProfit"
 

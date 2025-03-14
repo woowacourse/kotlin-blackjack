@@ -55,35 +55,4 @@ class CardsTest {
         setCards(card1, card2)
         assertThat(cards.countScoredTen()).isEqualTo(2)
     }
-
-    @Test
-    fun `카드가 자기 자신의 총합을 계산하면 카드의 총합을 알 수 있다`() {
-        setCards(
-            Card.of(Rank.TWO, Suit.SPADE),
-            Card.of(Rank.THREE, Suit.SPADE),
-        )
-
-        assertThat(cards.calculateTotalSum()).isEqualTo(5)
-    }
-
-    @Test
-    fun `카드가 자기 자신의 총합을 계산하면 카드의 총합을 알 수 있다(ACE 1장)`() {
-        setCards(
-            Card.of(Rank.TWO, Suit.SPADE),
-            Card.of(Rank.ACE, Suit.SPADE),
-        )
-
-        assertThat(cards.calculateTotalSum()).isEqualTo(13)
-    }
-
-    @Test
-    fun `카드가 자기 자신의 총합을 계산하면 카드의 총합을 알 수 있다(ACE 2장)`() {
-        setCards(
-            Card.of(Rank.ACE, Suit.SPADE),
-            Card.of(Rank.NINE, Suit.SPADE),
-            Card.of(Rank.ACE, Suit.HEART),
-        )
-
-        assertThat(cards.calculateTotalSum()).isEqualTo(21)
-    }
 }

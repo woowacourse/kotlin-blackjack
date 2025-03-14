@@ -9,16 +9,6 @@ class Cards {
 
     fun toList(): List<Card> = cards.toList()
 
-    private fun getScore(): Int {
-        return cards.sumOf {
-            if (it.rank == Rank.ACE) {
-                ACE_SPECIFIC_SCORE
-            } else {
-                it.getScore()
-            }
-        }
-    }
-
     fun countAce(): Int {
         return cards.count { it.rank == Rank.ACE }
     }
@@ -32,19 +22,7 @@ class Cards {
         return cards.size
     }
 
-    fun calculateTotalSum(): Int {
-        var score = getScore()
-        var aceCount = countAce()
-        while (score > BLACKJACK_BUST_LIMIT && aceCount > 0) {
-            score -= ACE_SPECIFIC_SCORE - Rank.ACE.score
-            aceCount--
-        }
-
-        return score
-    }
-
     companion object {
-        const val BLACKJACK_BUST_LIMIT = 21
         private const val ACE_SPECIFIC_SCORE = 11
     }
 }

@@ -2,23 +2,22 @@ package blackjack.domain.participant
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
+import blackjack.domain.score.Score
 
 abstract class Participant {
-    protected val innerCards: Cards = Cards()
+    val innerCards: Cards = Cards()
     abstract val hitThreshold: Int
 
     fun getCards(): List<Card> {
         return innerCards.toList()
     }
 
-    fun getTotalSum(): Int = innerCards.calculateTotalSum()
-
     fun addCard(card: Card) {
         if (canHit()) innerCards.add(card)
     }
 
     fun isBust(): Boolean {
-        return getTotalSum() > BLACKJACK_BUST_LIMIT
+        return Score(this) > BLACKJACK_BUST_LIMIT
     }
 
     fun isBlackJack(): Boolean {
@@ -26,7 +25,7 @@ abstract class Participant {
     }
 
     fun canHit(): Boolean {
-        return getTotalSum() < hitThreshold
+        return Score(this) < hitThreshold
     }
 
     companion object {

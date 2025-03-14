@@ -4,6 +4,7 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.Rank
 import blackjack.domain.card.Suit
 import blackjack.domain.participant.Participant
+import blackjack.domain.score.Score
 import blackjack.fakeParticipant.FakeParticipant
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -36,8 +37,7 @@ class ParticipantTest {
                 Card.of(Rank.THREE, Suit.SPADE),
             ),
         )
-
-        assertThat(player.getTotalSum()).isEqualTo(5)
+        assertThat(Score(player).value).isEqualTo(5)
     }
 
     @Test
@@ -52,7 +52,7 @@ class ParticipantTest {
             ),
         )
 
-        assertThat(player.getTotalSum()).isEqualTo(13)
+        assertThat(Score(player).value).isEqualTo(13)
     }
 
     @Test
@@ -67,7 +67,7 @@ class ParticipantTest {
             ),
         )
 
-        assertThat(player.getTotalSum()).isEqualTo(21)
+        assertThat(Score(player).value).isEqualTo(21)
     }
 
     @Test
