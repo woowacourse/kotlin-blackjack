@@ -3,6 +3,7 @@ package blackjack.domain.model.progress
 import blackjack.domain.model.card.Card
 import blackjack.domain.model.card.Number
 import blackjack.domain.model.participant.Player
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class ProfitStatisticsTest {
@@ -24,6 +25,6 @@ class ProfitStatisticsTest {
             )
 
         val profitStatistics = ProfitStatistics(betHistory, winLossStatistics)
-        assertThat(profitStatistics.profits).equalTo(mapOf(meda to 1000, cream to 0, peto to 4500))
+        assertThat(profitStatistics.profits).isEqualTo(mapOf(meda to 1000f, cream to -2000f, peto to 4500f))
     }
 }
