@@ -1,12 +1,12 @@
 package blackjack.view
 
 import blackjack.model.Card
-import blackjack.model.CardShape
 import blackjack.model.Dealer
 import blackjack.model.GameResult
 import blackjack.model.Participant
 import blackjack.model.Player
 import blackjack.model.Players
+import blackjack.model.Suit
 
 class OutputView {
     fun printStartMessage() {
@@ -76,12 +76,12 @@ class OutputView {
 
     private fun Card.toBlackjackView(): String = denomination.title + shape.toKoreanName()
 
-    private fun CardShape.toKoreanName(): String =
+    private fun Suit.toKoreanName(): String =
         when (this) {
-            CardShape.HEART -> "하트"
-            CardShape.SPADE -> "스페이드"
-            CardShape.DIAMOND -> "다이아몬드"
-            CardShape.CLOVER -> "클로버"
+            Suit.HEART -> "하트"
+            Suit.SPADE -> "스페이드"
+            Suit.DIAMOND -> "다이아몬드"
+            Suit.CLOVER -> "클로버"
         }
 
     private fun GameResult.toKoreanName(): String =

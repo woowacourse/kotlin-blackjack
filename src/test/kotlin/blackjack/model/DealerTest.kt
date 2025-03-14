@@ -5,11 +5,11 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 
 class DealerTest {
-    private val cardDeck: CardDeck = CardDeck(listOf(Card(CardShape.CLOVER, Denomination.SIX)))
+    private val cardDeck: CardDeck = CardDeck(listOf(Card(Suit.CLOVER, Denomination.SIX)))
 
     @Test
     fun `딜러는 이름과 카드들을 가진다`() {
-        val hand = Hand(listOf((Card(CardShape.HEART, Denomination.FIVE)), Card(CardShape.CLOVER, Denomination.TWO)))
+        val hand = Hand(listOf((Card(Suit.HEART, Denomination.FIVE)), Card(Suit.CLOVER, Denomination.TWO)))
         val dealer = Dealer(hand = hand)
 
         assertAll({ assertThat(dealer.name).isEqualTo("딜러") }, { assertThat(dealer.hand).isEqualTo(hand) })
@@ -38,7 +38,7 @@ class DealerTest {
         val dealer = Dealer()
         dealer.pickCard(cardDeck)
 
-        val expected: List<Card> = listOf(Card(CardShape.CLOVER, Denomination.SIX))
+        val expected: List<Card> = listOf(Card(Suit.CLOVER, Denomination.SIX))
         assertThat(dealer.hand.value).isEqualTo(expected)
     }
 
@@ -47,8 +47,8 @@ class DealerTest {
         val hand =
             Hand(
                 listOf(
-                    Card(CardShape.DIAMOND, Denomination.TEN),
-                    Card(CardShape.CLOVER, Denomination.TWO),
+                    Card(Suit.DIAMOND, Denomination.TEN),
+                    Card(Suit.CLOVER, Denomination.TWO),
                 ),
             )
         val dealer = Dealer(hand = hand)
@@ -65,8 +65,8 @@ class DealerTest {
         val hand =
             Hand(
                 listOf(
-                    Card(CardShape.DIAMOND, Denomination.TEN),
-                    Card(CardShape.CLOVER, Denomination.TEN),
+                    Card(Suit.DIAMOND, Denomination.TEN),
+                    Card(Suit.CLOVER, Denomination.TEN),
                 ),
             )
         val dealer = Dealer(hand = hand)
@@ -83,8 +83,8 @@ class DealerTest {
         val hand =
             Hand(
                 listOf(
-                    Card(CardShape.DIAMOND, Denomination.TEN),
-                    Card(CardShape.CLOVER, Denomination.TEN),
+                    Card(Suit.DIAMOND, Denomination.TEN),
+                    Card(Suit.CLOVER, Denomination.TEN),
                 ),
             )
         val dealer = Dealer(hand = hand)

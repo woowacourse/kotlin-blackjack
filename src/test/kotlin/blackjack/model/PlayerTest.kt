@@ -8,7 +8,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
 class PlayerTest {
-    private val cardDeck: CardDeck = CardDeck(listOf(Card(CardShape.CLOVER, Denomination.SIX)))
+    private val cardDeck: CardDeck = CardDeck(listOf(Card(Suit.CLOVER, Denomination.SIX)))
 
     @Test
     fun `플레이어가 딜러라는 이름을 가질 경우 예외를 발생시킨다`() {
@@ -23,7 +23,7 @@ class PlayerTest {
 
     @Test
     fun `플레이어는 이름과 카드 리스트를 가진다`() {
-        val cards = listOf((Card(CardShape.HEART, Denomination.FIVE)), Card(CardShape.CLOVER, Denomination.TWO))
+        val cards = listOf((Card(Suit.HEART, Denomination.FIVE)), Card(Suit.CLOVER, Denomination.TWO))
         val player = Player("모찌", Hand(cards))
         assertAll({
             assertThat(player.name).isEqualTo("모찌")
@@ -35,16 +35,16 @@ class PlayerTest {
     fun `플레이어는 카드를 추가로 받을 수 있다`() {
         val initialHand =
             Hand(
-                listOf((Card(CardShape.HEART, Denomination.FIVE)), Card(CardShape.CLOVER, Denomination.TWO)),
+                listOf((Card(Suit.HEART, Denomination.FIVE)), Card(Suit.CLOVER, Denomination.TWO)),
             )
         val player = Player("모찌", initialHand)
         player.pickCard(cardDeck)
 
         assertThat(player.hand.value).isEqualTo(
             listOf(
-                Card(CardShape.HEART, Denomination.FIVE),
-                Card(CardShape.CLOVER, Denomination.TWO),
-                Card(CardShape.CLOVER, Denomination.SIX),
+                Card(Suit.HEART, Denomination.FIVE),
+                Card(Suit.CLOVER, Denomination.TWO),
+                Card(Suit.CLOVER, Denomination.SIX),
             ),
         )
     }
@@ -60,8 +60,8 @@ class PlayerTest {
         val hand =
             Hand(
                 listOf(
-                    Card(CardShape.HEART, Denomination.TEN),
-                    Card(CardShape.CLOVER, Denomination.ACE),
+                    Card(Suit.HEART, Denomination.TEN),
+                    Card(Suit.CLOVER, Denomination.ACE),
                 ),
             )
         val player = Player("모찌", hand)
@@ -76,8 +76,8 @@ class PlayerTest {
         val hand =
             Hand(
                 listOf(
-                    Card(CardShape.HEART, Denomination.TEN),
-                    Card(CardShape.DIAMOND, Denomination.NINE),
+                    Card(Suit.HEART, Denomination.TEN),
+                    Card(Suit.DIAMOND, Denomination.NINE),
                 ),
             )
         val player = Player("모찌", hand)
@@ -92,9 +92,9 @@ class PlayerTest {
         val hand =
             Hand(
                 listOf(
-                    Card(CardShape.HEART, Denomination.TEN),
-                    Card(CardShape.CLOVER, Denomination.TEN),
-                    Card(CardShape.DIAMOND, Denomination.NINE),
+                    Card(Suit.HEART, Denomination.TEN),
+                    Card(Suit.CLOVER, Denomination.TEN),
+                    Card(Suit.DIAMOND, Denomination.NINE),
                 ),
             )
         val player = Player("모찌", hand)
@@ -109,8 +109,8 @@ class PlayerTest {
         val hand =
             Hand(
                 listOf(
-                    Card(CardShape.HEART, Denomination.TEN),
-                    Card(CardShape.DIAMOND, Denomination.NINE),
+                    Card(Suit.HEART, Denomination.TEN),
+                    Card(Suit.DIAMOND, Denomination.NINE),
                 ),
             )
         val player = Player("모찌", hand)
