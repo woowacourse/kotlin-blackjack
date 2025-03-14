@@ -19,8 +19,8 @@ class ProfitCalculatorTest {
     private lateinit var players: Players
 
     private fun assertProfit(expectedProfit: Float) {
-        val winOrLose = ProfitCalculator(dealer, players).totalGameResult()
-        assertEquals(expectedProfit, winOrLose.playerResults[0].profit)
+        val profitCalculator = ProfitCalculator(dealer, players)
+        assertEquals(expectedProfit, profitCalculator.playerProfits[0].profit)
     }
 
     @ParameterizedTest

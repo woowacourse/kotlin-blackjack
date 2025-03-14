@@ -7,7 +7,7 @@ import kotlin.math.abs
 
 class ProfitCalculator(private val dealer: Dealer, private val players: Players) {
     val playerProfits: List<PlayerProfit> =
-        players.map { player -> PlayerProfit(player.name, comparePlayerResult(player)) }
+        players.map { player -> PlayerProfit(player.name, playerProfit(player)) }
 
     fun dealerProfit(playerProfits: List<PlayerProfit>): Float {
         var initialDealerProfit = players.map { it.betAmount }.sum()
@@ -19,7 +19,7 @@ class ProfitCalculator(private val dealer: Dealer, private val players: Players)
         return initialDealerProfit
     }
 
-    private fun comparePlayerResult(player: Player): Float =
+    private fun playerProfit(player: Player): Float =
         when {
             player.isBackJack && !dealer.isBackJack -> player.betAmount * ONE_AND_HALF
             player.isBackJack && dealer.isBackJack -> ZERO
