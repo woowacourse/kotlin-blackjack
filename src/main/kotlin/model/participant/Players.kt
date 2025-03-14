@@ -1,8 +1,10 @@
 package model.participant
 
+import model.card.CardName
+
 class Players(private val players: List<Player>) : List<Player> by players {
     val names: List<String> = players.map { player -> player.name }
-    val cardNames: List<List<Pair<String, String>>>
+    val cardNames: List<List<CardName>>
         get() = players.map { player -> player.cardNames }
 
     val scores: List<Int>

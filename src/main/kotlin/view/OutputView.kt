@@ -1,6 +1,7 @@
 package view
 
-import model.PlayerResult
+import model.card.CardName
+import model.result.PlayerResult
 
 class OutputView {
     fun printDealerAndPlayers(players: List<String>) {
@@ -9,9 +10,9 @@ class OutputView {
     }
 
     fun printInitialCards(
-        dealerCards: List<Pair<String, String>>,
+        dealerCards: List<CardName>,
         playerNames: List<String>,
-        playerCards: List<List<Pair<String, String>>>,
+        playerCards: List<List<CardName>>,
     ) {
         println("딜러: ${printCardNames(dealerCards).first()}")
         playerNames.forEachIndexed { index, playerName ->
@@ -21,7 +22,7 @@ class OutputView {
 
     fun printPlayerCards(
         playerName: String,
-        playerCards: List<Pair<String, String>>,
+        playerCards: List<CardName>,
     ) {
         println("${playerName}카드: ${printCardNames(playerCards).joinToString()}")
     }
@@ -31,7 +32,7 @@ class OutputView {
     }
 
     fun printDealerResult(
-        dealerCards: List<Pair<String, String>>,
+        dealerCards: List<CardName>,
         dealerScore: Int,
     ) {
         println("\n딜러: ${printCardNames(dealerCards).joinToString()} - 결과: $dealerScore")
@@ -39,7 +40,7 @@ class OutputView {
 
     fun printPlayerResult(
         playerNames: List<String>,
-        playerCards: List<List<Pair<String, String>>>,
+        playerCards: List<List<CardName>>,
         playersScore: List<Int>,
     ) {
         playerNames.forEachIndexed { index, playerName ->
@@ -47,19 +48,14 @@ class OutputView {
         }
     }
 
-    fun printResult(
-        dealerWins: Int,
-        dealerLosses: Int,
-        playerResults: List<PlayerResult>,
-    ) {
-        println("\n## 최종 승패")
-        println("딜러: ${dealerWins}승 ${dealerLosses}패")
-
+    fun printResult(dealerResult: Float, playerResults: List<PlayerResult>) {
+        println("\n## 최종 수익")
+        println("딜러: $dealerResult")
         playerResults.forEach { playResult ->
-            println("${playResult.name}: ${playResult.result.name.mapToVictoryStatus()}")
+            println("${playResult.name}: ${playResult.profit.toInt()}")
         }
     }
 
-    private fun printCardNames(rawCardNames: List<Pair<String, String>>) =
+    private fun printCardNames(rawCardNames: List<CardName>) =
         rawCardNames.map { (rank, shape) -> rank.mapToTitle() + shape.mapToTitle() }
 }
