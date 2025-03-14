@@ -3,17 +3,15 @@ package blackjack.model.winning
 import blackjack.model.participant.Name
 import blackjack.model.participant.Participants
 
-class WinningManager(
-    private val participants: Participants,
-) {
-    fun result(): WinningResult {
-        val playerResults = playerResult()
+class WinningManager {
+    fun result(participants: Participants): WinningResult {
+        val playerResults = playerResult(participants)
         val dealerResult = dealerResult(playerResults)
 
         return WinningResult(dealerResult, playerResults)
     }
 
-    private fun playerResult(): Map<Name, WinningState> =
+    private fun playerResult(participants: Participants): Map<Name, WinningState> =
         participants.players.value.associate { player ->
             player.name to
                 WinningState.fromPlayer(
