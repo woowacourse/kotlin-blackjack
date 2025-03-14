@@ -1,14 +1,14 @@
-package blackjack.domain.game
+package blackjack.domain.betting
 
-import blackjack.model.game.BettingManager
-import blackjack.model.game.BettingTable
-import blackjack.model.game.WinningResult
-import blackjack.model.game.WinningState
+import blackjack.model.betting.BettingManager
+import blackjack.model.betting.BettingTable
 import blackjack.model.participant.Dealer
 import blackjack.model.participant.Money
 import blackjack.model.participant.Name
 import blackjack.model.participant.Participants
 import blackjack.model.participant.Players
+import blackjack.model.winning.WinningResult
+import blackjack.model.winning.WinningState
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow

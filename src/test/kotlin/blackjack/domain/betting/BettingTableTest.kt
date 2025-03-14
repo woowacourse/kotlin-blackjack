@@ -1,6 +1,6 @@
-package blackjack.domain.game
+package blackjack.domain.betting
 
-import blackjack.model.game.BettingTable
+import blackjack.model.betting.BettingTable
 import blackjack.model.participant.Money
 import blackjack.model.participant.Name
 import org.junit.jupiter.api.Assertions.assertEquals
