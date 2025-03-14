@@ -1,7 +1,9 @@
 package controller
 
+import model.BettingManager
 import model.CardsGenerator
 import model.GameManager
+import model.Players
 import view.InputView
 import view.OutputView
 import view.displayNames
@@ -13,7 +15,12 @@ class BlackjackController(
 ) {
     fun run() {
         val gameManager = GameManager(cardsGenerator.generateCards())
-        gameManager.startGame(inputView.inputPlayers())
+        val bettingManager = BettingManager()
+
+        val playerNames = inputView.inputPlayers()
+        gameManager.startGame(playerNames)
+
+        setupBets(playerNames, gameManager.getPlayers(), bettingManager)
 
         showInitialGameState(gameManager)
 
@@ -31,9 +38,22 @@ class BlackjackController(
         if (gameManager.getDrawCount() > 0) {
             outputView.printDealerHit(gameManager.getDrawCount())
         }
-
         showPlayerResult(gameManager)
-        showGameResult(gameManager)
+
+        showGameResult(gameManager, bettingManager)
+    }
+
+    private fun setupBets(
+        playerNames: List<String>,
+        players: Players,
+        bettingManager: BettingManager,
+    ) {
+        val betAmounts: Map<String, Int> = inputView.inputBettingAmount(playerNames)
+
+        players.forEach { player ->
+            val bet = betAmounts[player.name] ?: 0
+            bettingManager.placeBet(player, bet)
+        }
     }
 
     private fun showInitialGameState(gameManager: GameManager) {
@@ -60,12 +80,14 @@ class BlackjackController(
         outputView.printPlayerResult(players.getPlayersNames(), updatedPlayerCardsNames, playersTotalScore)
     }
 
-    private fun showGameResult(gameManager: GameManager) {
-        val gameResultOutput = gameManager.determineGameResult()
+    private fun showGameResult(
+        gameManager: GameManager,
+        bettingManager: BettingManager,
+    ) {
+        val gameResultOutput = gameManager.determineBettingAmounts(bettingManager)
         outputView.printResult(
-            gameResultOutput.dealerWins,
-            gameResultOutput.dealerLosses,
-            gameResultOutput.playerResults,
+            gameManager.determineDealerProfit(bettingManager),
+            gameResultOutput,
         )
     }
 }
