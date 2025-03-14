@@ -4,7 +4,7 @@ class Dealer(private val hand: Hand) : Participant(hand) {
     override fun decideToHit(): Boolean = getScore() <= STANDARD_DEALER_HIT
 
     fun playTurn(getCard: () -> List<Card>) {
-        while (decideToHit()) {
+        while (decideToHit() && !isBlackJack()) {
             receiveCards { getCard() }
         }
     }
