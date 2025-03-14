@@ -18,9 +18,9 @@ class BlackjackController(
         val bettingManager = BettingManager()
 
         val playerNames = inputView.inputPlayers()
-        gameManager.startGame(playerNames)
 
-        setupBets(playerNames, gameManager.getPlayers(), bettingManager)
+        val inputBettingAmount = inputView.inputBettingAmount(playerNames)
+        gameManager.startGame(playerNames, inputBettingAmount, bettingManager)
 
         showInitialGameState(gameManager)
 
@@ -39,21 +39,7 @@ class BlackjackController(
             outputView.printDealerHit(gameManager.getDrawCount())
         }
         showPlayerResult(gameManager)
-
         showGameResult(gameManager, bettingManager)
-    }
-
-    private fun setupBets(
-        playerNames: List<String>,
-        players: Players,
-        bettingManager: BettingManager,
-    ) {
-        val betAmounts: Map<String, Int> = inputView.inputBettingAmount(playerNames)
-
-        players.forEach { player ->
-            val bet = betAmounts[player.name] ?: 0
-            bettingManager.placeBet(player, bet)
-        }
     }
 
     private fun showInitialGameState(gameManager: GameManager) {
