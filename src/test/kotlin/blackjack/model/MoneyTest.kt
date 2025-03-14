@@ -14,4 +14,37 @@ class MoneyTest {
 
         assertThat(actual).isEqualTo(expected)
     }
+
+    @Test
+    fun `돈을 더한 금액 만큼 돈을 반환한다`() {
+        val money = Money(1_000.0)
+
+        val actual: Double = money.plus(Money(500.0)).value
+
+        val expected = 1_500.0
+
+        assertThat(actual).isEqualTo(expected)
+    }
+
+    @Test
+    fun `돈을 뺀 금액 만큼 돈을 반환한다`() {
+        val money = Money(1_000.0)
+
+        val actual: Double = money.minus(Money(500.0)).value
+
+        val expected = 500.0
+
+        assertThat(actual).isEqualTo(expected)
+    }
+
+    @Test
+    fun `매개변수로 받은 배수만큼 곱한 돈을 반환한다`() {
+        val money = Money(1_000.0)
+
+        val actual: Double = money.multiple(1.5).value
+
+        val expected = 1_500.0
+
+        assertThat(actual).isEqualTo(expected)
+    }
 }

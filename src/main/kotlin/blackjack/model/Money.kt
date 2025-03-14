@@ -7,13 +7,9 @@ open class Money(
     var value: Double = initialValue
         private set
 
-    fun plus(money: Money) {
-        value += money.initialValue
-    }
+    fun plus(money: Money): Money = Money(value + money.value)
 
-    fun minus(money: Money) {
-        value -= money.initialValue
-    }
+    fun minus(money: Money): Money = Money(value - money.value)
 
     fun multiple(times: Double): Money = Money(times * initialValue)
 }
