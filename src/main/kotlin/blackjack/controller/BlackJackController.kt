@@ -4,6 +4,7 @@ import blackjack.domain.BetAmount
 import blackjack.domain.BlackJackGame
 import blackjack.domain.person.Dealer
 import blackjack.domain.person.Player
+import blackjack.utils.retryWhenException
 import blackjack.view.BlackJackInputView
 import blackjack.view.BlackJackOutputView
 
@@ -67,13 +68,9 @@ class BlackJackController(
         outputView.printGameResult(gameResult)
     }
 
-    private fun <T> retryWhenException(action: () -> T): T {
-        while (true) {
-            runCatching {
-                return action()
-            }.onFailure { e ->
-                outputView.printMessage(e.message)
-            }
-        }
-    }
+    private fun <T> retryWhenException(action: () -> T) =
+        retryWhenException(
+            action = action,
+            onFailure = { e -> outputView.printMessage(e.message) },
+        )
 }
