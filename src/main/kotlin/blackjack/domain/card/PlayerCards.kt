@@ -3,7 +3,7 @@ package blackjack.domain.card
 class PlayerCards(
     val items: Set<TrumpCard>,
 ) {
-    fun add(card: TrumpCard): PlayerCards {
+    operator fun plus(card: TrumpCard): PlayerCards {
         return PlayerCards(items + card)
     }
 

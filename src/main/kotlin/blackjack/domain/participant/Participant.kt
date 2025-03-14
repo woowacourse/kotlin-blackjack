@@ -9,8 +9,8 @@ abstract class Participant {
     val cards: PlayerCards
         get() = _cards.deepCopy()
 
-    fun addCard(card: TrumpCard) {
-        _cards = cards.add(card)
+    fun addCard(newCard: TrumpCard) {
+        _cards = cards + newCard
     }
 
     fun totalScore(): Int {
