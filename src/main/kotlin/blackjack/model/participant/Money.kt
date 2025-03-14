@@ -4,9 +4,9 @@ package blackjack.model.participant
 value class Money(
     val value: Double,
 ) {
-    operator fun plus(money: Money): Money = Money(this.value + money.value)
+    operator fun plus(other: Money): Money = Money(this.value + other.value)
 
-    operator fun minus(money: Money): Money = Money(this.value - money.value)
+    operator fun minus(other: Money): Money = Money(this.value - other.value)
 
     operator fun times(number: Double): Money = Money(this.value * number)
 
