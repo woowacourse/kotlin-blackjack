@@ -6,6 +6,7 @@ import blackjack.domain.card.Suit
 import blackjack.domain.participant.Participant
 import blackjack.domain.score.Score
 import blackjack.fakeParticipant.FakeParticipant
+import blackjack.fixture.Fixture.BLACK_JACK
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -107,8 +108,7 @@ class ParticipantTest {
         setPlayerCard(
             player,
             listOf(
-                Card.of(Rank.ACE, Suit.SPADE),
-                Card.of(Rank.TEN, Suit.SPADE),
+                *BLACK_JACK,
             ),
         )
         assertThat(player.isBlackJack()).isTrue()

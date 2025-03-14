@@ -9,6 +9,9 @@ import blackjack.domain.gameResult.PlayerResult
 import blackjack.domain.gameResult.state.Stay
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Player
+import blackjack.fixture.Fixture.BLACK_JACK
+import blackjack.fixture.Fixture.BUST
+import blackjack.fixture.Fixture.TWENTY_ONE
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -55,8 +58,7 @@ class BlackJackResultTest {
     @Test
     fun `점수를 판별할 때, 플레이어가 딜러보다 더 점수가 높을 때 진다고 판단한다`() {
         setDealerCard(
-            Card.of(Rank.ACE, Suit.CLUB),
-            Card.of(Rank.TEN, Suit.SPADE),
+            *BLACK_JACK,
         )
 
         setPlayerCard(
@@ -75,15 +77,11 @@ class BlackJackResultTest {
     @Test
     fun `점수를 판별할 때, 플레이어와 딜러의 점수가 같다면 무승부라고 판단한다`() {
         setDealerCard(
-            Card.of(Rank.THREE, Suit.CLUB),
-            Card.of(Rank.NINE, Suit.HEART),
-            Card.of(Rank.NINE, Suit.SPADE),
+            *TWENTY_ONE,
         )
 
         setPlayerCard(
-            Card.of(Rank.TWO, Suit.CLUB),
-            Card.of(Rank.TEN, Suit.SPADE),
-            Card.of(Rank.NINE, Suit.SPADE),
+            *TWENTY_ONE,
         )
         val blackJackResult = BlackJackResult(dealer, listOf(player))
         val playerGameResult =
@@ -97,14 +95,11 @@ class BlackJackResultTest {
     @Test
     fun `점수를 판별할 때, 블랙잭은 21보다 높다고 판단한다`() {
         setDealerCard(
-            Card.of(Rank.ACE, Suit.CLUB),
-            Card.of(Rank.TEN, Suit.SPADE),
+            *BLACK_JACK,
         )
 
         setPlayerCard(
-            Card.of(Rank.TWO, Suit.CLUB),
-            Card.of(Rank.TEN, Suit.SPADE),
-            Card.of(Rank.NINE, Suit.SPADE),
+            *TWENTY_ONE,
         )
         val blackJackResult = BlackJackResult(dealer, listOf(player))
         val playerGameResult =
@@ -123,9 +118,7 @@ class BlackJackResultTest {
         )
 
         setPlayerCard(
-            Card.of(Rank.TWO, Suit.CLUB),
-            Card.of(Rank.TEN, Suit.SPADE),
-            Card.of(Rank.NINE, Suit.SPADE),
+            *TWENTY_ONE,
         )
         val blackJackResult = BlackJackResult(dealer, listOf(player))
         assertThat(blackJackResult.playerResults[0].getProfit()).isEqualTo(5000)
@@ -154,8 +147,7 @@ class BlackJackResultTest {
         )
 
         setPlayerCard(
-            Card.of(Rank.TEN, Suit.SPADE),
-            Card.of(Rank.ACE, Suit.SPADE),
+            *BLACK_JACK,
         )
         val blackJackResult = BlackJackResult(dealer, listOf(player))
         assertThat(blackJackResult.playerResults[0].getProfit()).isEqualTo(7500)
@@ -164,8 +156,7 @@ class BlackJackResultTest {
     @Test
     fun `점수를 판별할 떄, 딜러가 블랙잭이면 베팅한 금액만큼 잃는다`() {
         setDealerCard(
-            Card.of(Rank.TEN, Suit.SPADE),
-            Card.of(Rank.ACE, Suit.SPADE),
+            *BLACK_JACK,
         )
 
         setPlayerCard(
@@ -179,14 +170,11 @@ class BlackJackResultTest {
     @Test
     fun `점수를 판별할 떄, 플레이어가 블랙잭이면 딜러가 블랙잭이 아닌 21이 되어도 베팅한 금액의 1,5배를 돌려받는다`() {
         setDealerCard(
-            Card.of(Rank.TEN, Suit.CLUB),
-            Card.of(Rank.SIX, Suit.SPADE),
-            Card.of(Rank.FIVE, Suit.SPADE),
+            *TWENTY_ONE,
         )
 
         setPlayerCard(
-            Card.of(Rank.TEN, Suit.SPADE),
-            Card.of(Rank.ACE, Suit.SPADE),
+            *BLACK_JACK,
         )
         val blackJackResult = BlackJackResult(dealer, listOf(player))
         assertThat(blackJackResult.playerResults[0].getProfit()).isEqualTo(7500)
@@ -211,13 +199,11 @@ class BlackJackResultTest {
     @Test
     fun `점수를 판별할 떄, 딜러와 플레이어가 서로 블랙잭이면 0원을 받는다`() {
         setDealerCard(
-            Card.of(Rank.TEN, Suit.HEART),
-            Card.of(Rank.ACE, Suit.CLUB),
+            *BLACK_JACK,
         )
 
         setPlayerCard(
-            Card.of(Rank.TEN, Suit.SPADE),
-            Card.of(Rank.ACE, Suit.SPADE),
+            *BLACK_JACK,
         )
         val blackJackResult = BlackJackResult(dealer, listOf(player))
         assertThat(blackJackResult.playerResults[0].getProfit()).isEqualTo(0)
@@ -226,15 +212,11 @@ class BlackJackResultTest {
     @Test
     fun `점수를 판별할 떄, 플레이어가 버스트이면 딜러의 결과에 상관없이 베팅 금액을 잃는다`() {
         setDealerCard(
-            Card.of(Rank.EIGHT, Suit.CLUB),
-            Card.of(Rank.EIGHT, Suit.SPADE),
-            Card.of(Rank.NINE, Suit.SPADE),
+            *BUST,
         )
 
         setPlayerCard(
-            Card.of(Rank.TEN, Suit.CLUB),
-            Card.of(Rank.TEN, Suit.SPADE),
-            Card.of(Rank.NINE, Suit.SPADE),
+            *BUST,
         )
         val blackJackResult = BlackJackResult(dealer, listOf(player))
         assertThat(blackJackResult.playerResults[0].getProfit()).isEqualTo(-5000)
@@ -243,9 +225,7 @@ class BlackJackResultTest {
     @Test
     fun `점수를 판별할 떄, 딜러가 버스트이면 베팅 금액만큼 얻는다`() {
         setDealerCard(
-            Card.of(Rank.EIGHT, Suit.CLUB),
-            Card.of(Rank.EIGHT, Suit.SPADE),
-            Card.of(Rank.NINE, Suit.SPADE),
+            *BUST,
         )
 
         setPlayerCard(
