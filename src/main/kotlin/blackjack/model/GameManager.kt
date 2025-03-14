@@ -1,8 +1,8 @@
 package blackjack.model
 
 import blackjack.model.ResultCalculator.BLACKJACK_PROFIT_MULTIPLIER
-import blackjack.model.ResultCalculator.TIE_PROFIT_MULTIPLIER
 import blackjack.model.ResultCalculator.LOSS_PROFIT_MULTIPLIER
+import blackjack.model.ResultCalculator.TIE_PROFIT_MULTIPLIER
 import blackjack.model.participant.Dealer
 import blackjack.model.participant.Participant
 import blackjack.model.participant.Player
@@ -37,17 +37,21 @@ class GameManager(
     fun calculateProfit(result: Map<Player, ResultType>): Map<Player, Double> {
         return result.map { (player, resultType) ->
             player to
-                    when (resultType) {
-                        ResultType.BLACKJACK -> player.betAmount * BLACKJACK_PROFIT_MULTIPLIER
-                        ResultType.WIN -> player.betAmount.toDouble()
-                        ResultType.TIE -> player.betAmount.toDouble() * TIE_PROFIT_MULTIPLIER
-                        ResultType.LOSS -> player.betAmount * LOSS_PROFIT_MULTIPLIER
-                    }
+                when (resultType) {
+                    ResultType.BLACKJACK -> player.betAmount.toDouble() * BLACKJACK_PROFIT_MULTIPLIER
+                    ResultType.WIN -> player.betAmount.toDouble()
+                    ResultType.TIE -> player.betAmount.toDouble() * TIE_PROFIT_MULTIPLIER
+                    ResultType.LOSS -> player.betAmount.toDouble() * LOSS_PROFIT_MULTIPLIER
+                }
         }.toMap()
     }
 
     fun drawCard(person: Participant) {
         person.addCard(deck.draw())
+    }
+
+    private fun BetAmount.toDouble(): Double {
+        return this.amount.toDouble()
     }
 
     companion object {
