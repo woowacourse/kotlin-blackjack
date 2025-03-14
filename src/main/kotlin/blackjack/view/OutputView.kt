@@ -11,12 +11,7 @@ class OutputView {
         dealerName: String,
         playerNames: List<String>,
     ) {
-        println(
-            MESSAGE_INITIAL_HAND_DISTRIBUTED.format(
-                dealerName,
-                playerNames.joinToString(PLAYER_CARDS_DELIMITER),
-            ),
-        )
+        println(MESSAGE_INITIAL_HAND_DISTRIBUTED.format(dealerName, playerNames.joinToString(CARDS_DELIMITER)))
         println()
     }
 
@@ -32,26 +27,26 @@ class OutputView {
         cards: List<Card>,
         point: Int,
     ) {
-        println(renderParticipantCards(name, cards) + PLAYER_RESULT_DELIMITER + point)
+        println(renderParticipantCards(name, cards) + PARTICIPANT_STATUS_RESULT_DELIMITER + point)
     }
 
     private fun renderParticipantCards(
         name: String,
         cards: List<Card>,
     ): String {
-        return name + PLAYER_NAME_STATUS_DELIMITER +
+        return name + PARTICIPANT_NAME_CARDS_DELIMITER +
             cards.joinToString { card ->
                 card.rank.stringRepresentation() + card.suit.stringRepresentation()
             }
     }
 
     fun printDealerHit(dealer: Dealer) {
-        println(MESSAGE_DEALER_HITS_STATE.format(dealer.name))
+        println(MESSAGE_DEALER_HIT.format(dealer.name))
     }
 
     fun printFinalResult(): (String, Int) -> Unit {
         println()
-        println(MESSAGE_RESULTS_HEADER)
+        println(FINAL_RESULT_HEADER)
         return { name: String, profit: Int -> printParticipantProfit(name, profit) }
     }
 
@@ -59,7 +54,7 @@ class OutputView {
         name: String,
         profit: Int,
     ) {
-        println(name + NAME_RESULT_DELIMITER + profit)
+        println(name + PARTICIPANT_PROFIT_DELIMITER + profit)
     }
 
     private fun Suit.stringRepresentation(): String {
@@ -82,14 +77,14 @@ class OutputView {
     }
 
     companion object {
-        private const val MESSAGE_INITIAL_HAND_DISTRIBUTED =
-            "%s와(과) %s에게 ${Hand.STARTING_HAND_SIZE}장의 카드를 나누었습니다."
-        private const val MESSAGE_DEALER_HITS_STATE = "%s은(는) ${Dealer.HIT_THRESHOLD}점 이하라 한 장의 카드를 더 받았습니다."
-        private const val MESSAGE_RESULTS_HEADER = "## 최종 수익"
-        private const val PLAYER_CARDS_DELIMITER = ", "
-        private const val PLAYER_NAME_STATUS_DELIMITER = " 카드: "
-        private const val PLAYER_RESULT_DELIMITER = " - 결과: "
-        private const val NAME_RESULT_DELIMITER = ": "
+        private const val MESSAGE_INITIAL_HAND_DISTRIBUTED = "%s와(과) %s에게 ${Hand.STARTING_HAND_SIZE}장의 카드를 나누었습니다."
+        private const val MESSAGE_DEALER_HIT = "%s은(는) ${Dealer.HIT_THRESHOLD}점 이하라 한 장의 카드를 더 받았습니다."
+
+        private const val CARDS_DELIMITER = ", "
+        private const val PARTICIPANT_NAME_CARDS_DELIMITER = " 카드: "
+        private const val PARTICIPANT_STATUS_RESULT_DELIMITER = " - 결과: "
+        private const val PARTICIPANT_PROFIT_DELIMITER = ": "
+        private const val FINAL_RESULT_HEADER = "## 최종 수익"
 
         private const val SUIT_HEART = "하트"
         private const val SUIT_DIAMOND = "다이아몬드"
