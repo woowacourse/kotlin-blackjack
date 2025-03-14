@@ -2,13 +2,13 @@ package model
 
 import kotlin.math.abs
 
-data class PlayerResult(val name: String, val result: GameResult)
+data class PlayerResult(val player: Player, val result: GameResult)
 
 class GameResultDecider(private val dealer: Dealer, private val players: Players) {
     fun compareWinOrLose(): GameOutput {
         val playerResults: List<PlayerResult> =
             players.map { player ->
-                PlayerResult(player.name, comparePlayerResult(player.getScore()))
+                PlayerResult(player, comparePlayerResult(player))
             }
 
         val dealerWins = playerResults.count { it.result == GameResult.LOSE }
@@ -16,11 +16,13 @@ class GameResultDecider(private val dealer: Dealer, private val players: Players
         return GameOutput(dealerWins, dealerLosses, playerResults)
     }
 
-    private fun comparePlayerResult(playerScore: Int): GameResult =
+    private fun comparePlayerResult(player: Player): GameResult =
         when {
             dealer.getScore() > BLACKJACK_SCORE -> GameResult.WIN
-            playerScore > BLACKJACK_SCORE -> GameResult.LOSE
-            else -> compareScores(playerScore)
+            dealer.isBlackJack() && player.isBlackJack() -> GameResult.PUSH
+            player.isBlackJack() -> GameResult.BLACKJACK
+            player.getScore() > BLACKJACK_SCORE -> GameResult.LOSE
+            else -> compareScores(player.getScore())
         }
 
     private fun compareScores(playerScore: Int): GameResult {
@@ -29,7 +31,7 @@ class GameResultDecider(private val dealer: Dealer, private val players: Players
         return when {
             playerDiff < dealerDiff -> GameResult.WIN
             playerDiff > dealerDiff -> GameResult.LOSE
-            else -> GameResult.DRAW
+            else -> GameResult.PUSH
         }
     }
 
