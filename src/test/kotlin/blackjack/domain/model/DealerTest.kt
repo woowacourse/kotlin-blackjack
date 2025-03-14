@@ -18,7 +18,7 @@ class DealerTest {
         val player1 = Player("pobi", 10000, Card(Suit.HEART, Rank.TWO), Card(Suit.SPADE, Rank.EIGHT), Card(Suit.CLUB, Rank.ACE)) // 21점
         val player2 = Player("jason", 20000, Card(Suit.CLUB, Rank.SEVEN), Card(Suit.SPADE, Rank.KING)) // 17점
         val game = Game(Deck(), dealer, listOf(player1, player2))
-        val playersProfits: Map<Player, Int> = game.getPlayersProfits()
+        val playersProfits: Map<Player, Int> = game.aggregatePlayersProfits()
         val actual: Map<Player, Int> =
             mapOf(
                 player1 to 10000,
@@ -35,7 +35,7 @@ class DealerTest {
         val player3 = Player("C", 33333, Card(Suit.SPADE, Rank.QUEEN), Card(Suit.SPADE, Rank.KING)) // 20점
         val player4 = Player("D", 55555, Card(Suit.SPADE, Rank.ACE), Card(Suit.SPADE, Rank.KING)) // 21점
         val game = Game(Deck(), dealer, listOf(player1, player2, player3, player4))
-        val playersProfits: Map<Player, Int> = game.getPlayersProfits()
+        val playersProfits: Map<Player, Int> = game.aggregatePlayersProfits()
         val actual: Map<Player, Int> =
             mapOf(
                 player1 to -11111,
@@ -52,8 +52,8 @@ class DealerTest {
         val player1 = Player("pobi", 10000, Card(Suit.HEART, Rank.TWO), Card(Suit.SPADE, Rank.EIGHT), Card(Suit.CLUB, Rank.ACE)) // 21점
         val player2 = Player("jason", 20000, Card(Suit.CLUB, Rank.SEVEN), Card(Suit.SPADE, Rank.KING)) // 17점
         val game = Game(Deck(), dealer, listOf(player1, player2))
-        val playersProfits: Map<Player, Int> = game.getPlayersProfits()
-        val dealerProfit: Int = game.getDealerProfit(playersProfits)
+        val playersProfits: Map<Player, Int> = game.aggregatePlayersProfits()
+        val dealerProfit: Int = game.computeDealerProfit(playersProfits)
         val actual: Int = -10000 + 20000
         assertThat(dealerProfit).isEqualTo(actual)
     }
@@ -67,8 +67,8 @@ class DealerTest {
         val player4 = Player("D", 55555, Card(Suit.SPADE, Rank.ACE), Card(Suit.SPADE, Rank.KING)) // 21점
         val players: List<Player> = listOf(player1, player2, player3, player4)
         val game = Game(Deck(), dealer, players)
-        val playersProfits: Map<Player, Int> = game.getPlayersProfits()
-        val dealerProfit: Int = game.getDealerProfit(playersProfits)
+        val playersProfits: Map<Player, Int> = game.aggregatePlayersProfits()
+        val dealerProfit: Int = game.computeDealerProfit(playersProfits)
         val actual: Int = 11111 + 0 - 33333 - 27778
         assertThat(dealerProfit).isEqualTo(actual)
     }

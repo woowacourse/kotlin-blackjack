@@ -16,7 +16,7 @@ class GameController(
     fun run() {
         val game = makeGame()
         initialize(game)
-        processHits(game)
+        play(game)
         announceResults(game)
     }
 
@@ -41,7 +41,7 @@ class GameController(
         game.showInitialStatus(outputView::printParticipantStatus)
     }
 
-    private fun processHits(game: Game) {
+    private fun play(game: Game) {
         game.processPlayersHits(
             { player -> retryOnError { inputView.readPlayerAction(player) } },
             outputView::printParticipantStatus,

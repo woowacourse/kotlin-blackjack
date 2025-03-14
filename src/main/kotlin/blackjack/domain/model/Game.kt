@@ -17,29 +17,6 @@ class Game(
         players.forEach { player -> player.placeBet(input) }
     }
 
-    fun showInitialStatus(output: (String, List<Card>) -> Unit) {
-        output(dealer.name, dealer.showStartingHand())
-        players.forEach { player -> output(player.name, player.showHand()) }
-    }
-
-    fun showFinalStatus(output: (String, List<Card>, Int) -> Unit) {
-        output(dealer.name, dealer.showHand(), dealer.computePoint())
-        players.forEach { player -> output(player.name, player.showHand(), player.computePoint()) }
-    }
-
-    fun showProfits(output: (String, Int) -> Unit) {
-        val playerProfits: Map<Player, Int> = getPlayersProfits()
-        val dealerProfit: Int = getDealerProfit(playerProfits)
-        output(dealer.name, dealerProfit)
-        playerProfits.forEach { (player, profit) ->
-            output(player.name, profit)
-        }
-    }
-
-    fun showInitialDeal(output: (String, List<String>) -> Unit) {
-        output(dealer.name, players.map(Player::name))
-    }
-
     fun processPlayersHits(
         input: (Player) -> Action,
         output: (String, List<Card>) -> Unit,
@@ -51,12 +28,35 @@ class Game(
         dealer.processHits(deck, output)
     }
 
-    fun getPlayersProfits(): Map<Player, Int> {
+    fun aggregatePlayersProfits(): Map<Player, Int> {
         return players.associateWith { player -> player.computeProfitAgainst(dealer) }
     }
 
-    fun getDealerProfit(playersProfits: Map<Player, Int>): Int {
+    fun computeDealerProfit(playersProfits: Map<Player, Int>): Int {
         return -1 * playersProfits.values.sum()
+    }
+
+    fun showInitialDeal(output: (String, List<String>) -> Unit) {
+        output(dealer.name, players.map(Player::name))
+    }
+
+    fun showInitialStatus(output: (String, List<Card>) -> Unit) {
+        output(dealer.name, dealer.showStartingHand())
+        players.forEach { player -> output(player.name, player.showHand()) }
+    }
+
+    fun showFinalStatus(output: (String, List<Card>, Int) -> Unit) {
+        output(dealer.name, dealer.showHand(), dealer.computePoint())
+        players.forEach { player -> output(player.name, player.showHand(), player.computePoint()) }
+    }
+
+    fun showProfits(output: (String, Int) -> Unit) {
+        val playerProfits: Map<Player, Int> = aggregatePlayersProfits()
+        val dealerProfit: Int = computeDealerProfit(playerProfits)
+        output(dealer.name, dealerProfit)
+        playerProfits.forEach { (player, profit) ->
+            output(player.name, profit)
+        }
     }
 
     companion object {
