@@ -56,5 +56,5 @@
 - [x] ProfitStatistics를 추가하여 참가자별 수익 계산 로직 추가
   - [x] BetHistory를 보고 플레이어별 수익 계산 및 기록
   - [x] (플레이어의 수익의 합)의 역으로 딜러의 수익 역산 로직 추가
-- [ ] ProfitStatistics를 사용한 최종 수익 콘솔 출력
-  - [ ] step1의 최종 결과를 콘솔 출력하지 않도록 수정
+- [x] ProfitStatistics를 사용한 최종 수익 콘솔 출력
+  - [x] step1의 최종 결과를 콘솔 출력하지 않도록 수정
