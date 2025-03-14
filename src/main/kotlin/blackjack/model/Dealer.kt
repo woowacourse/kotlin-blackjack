@@ -9,10 +9,10 @@ class Dealer(
     val name: String = DEALER_NAME,
     override val hand: Hand,
 ) : Participant {
-    fun drawUntilFinished(cardDeck: CardDeck) {
-        while (hand.score() <= DEALER_DRAW_CRITERIA && !hand.isBust()) {
-            draw(cardDeck)
-        }
+    tailrec fun drawUntilFinished(cardDeck: CardDeck) {
+        if (hand.score() > DEALER_DRAW_CRITERIA || hand.isBust()) return
+        draw(cardDeck)
+        drawUntilFinished(cardDeck)
     }
 
     fun getWinDrawLossResult(players: Players): Map<WinningResult, Int> {

@@ -10,27 +10,33 @@ class InputView : EventProvider {
 
     override fun getIsDrawMore(name: String): Boolean {
         println("\n${name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
-        while (true) {
-            val value = readln().lowercase()
-            if (value != "y" && value != "n") {
-                println("[ERROR] 잘못된 입력값입니다.")
-            } else {
-                return value == "y"
-            }
-        }
+        return getIsDrawMoreInput()
     }
 
     override fun getBetAmount(name: String): Int {
         println("${name}의 배팅 금액은?")
-        while (true) {
-            val value = readln().toIntOrNull()
-            if (value == null) {
-                println("[ERROR] 정수가 아닌 입력입니다.")
-            } else if (value < 0) {
-                println("[ERROR] 음수는 입력할 수 없습니다.")
-            } else {
-                return value
-            }
+        return getBetAmountInput()
+    }
+
+    private tailrec fun getIsDrawMoreInput(): Boolean {
+        val value = readln().lowercase()
+        if (value != "y" && value != "n") {
+            println("[ERROR] 잘못된 입력값입니다.")
+        } else {
+            return value == "y"
         }
+        return getIsDrawMoreInput()
+    }
+
+    private tailrec fun getBetAmountInput(): Int {
+        val value = readln().toIntOrNull()
+        if (value == null) {
+            println("[ERROR] 정수가 아닌 입력입니다.")
+        } else if (value < 0) {
+            println("[ERROR] 음수는 입력할 수 없습니다.")
+        } else {
+            return value
+        }
+        return getBetAmountInput()
     }
 }

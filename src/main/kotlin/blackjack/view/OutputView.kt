@@ -12,11 +12,6 @@ import blackjack.model.CardSuit.DIAMOND
 import blackjack.model.CardSuit.HEART
 import blackjack.model.CardSuit.SPADE
 import blackjack.model.EventListener
-import blackjack.model.WinningResult
-import blackjack.model.WinningResult.BLACKJACK
-import blackjack.model.WinningResult.LOSE
-import blackjack.model.WinningResult.PUSH
-import blackjack.model.WinningResult.WIN
 
 class OutputView : EventListener {
     fun displayFirstDrawEnd(
@@ -87,26 +82,4 @@ class OutputView : EventListener {
     ) {
         println("$name: ${resultMoney.toInt()}")
     }
-
-    fun displayDealerResult(
-        name: String,
-        winningResult: Map<WinningResult, Int>,
-    ) {
-        println("$name: ${winningResult[WIN]}승 ${winningResult[PUSH]}무 ${winningResult[LOSE]}패")
-    }
-
-    fun displayPlayerResult(
-        name: String,
-        winningResult: WinningResult,
-    ) {
-        println("$name: ${winningResult.toText()}")
-    }
-
-    private fun WinningResult.toText() =
-        when (this) {
-            BLACKJACK -> "승"
-            WIN -> "승"
-            LOSE -> "패"
-            PUSH -> "무"
-        }
 }
