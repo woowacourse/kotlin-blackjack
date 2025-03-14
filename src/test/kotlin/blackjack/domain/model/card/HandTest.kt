@@ -10,7 +10,7 @@ class HandTest {
             Hand.of(
                 Card.of(CardNumber.ACE, Suit.CLUB),
             )
-        val actualCardsList = hand.toList()
+        val actualCardsList = hand.cards
 
         val expectedSize = 1
 
@@ -26,7 +26,7 @@ class HandTest {
                 queenHeart,
                 aceSpade,
             )
-        val actualCardList = hand.toList()
+        val actualCardList = hand.cards
 
         val expectedCardList = listOf(queenHeart, aceSpade)
 

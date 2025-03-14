@@ -2,15 +2,11 @@ package blackjack.domain.model.card
 
 class Hand {
     private var _cards = listOf<Card>()
-    private val cards
+    val cards
         get() = _cards.deepCopy()
 
     fun add(card: Card) {
         _cards += card
-    }
-
-    fun toList(): List<Card> {
-        return cards
     }
 
     fun isBust(): Boolean {

@@ -12,7 +12,7 @@ abstract class Participant(
         cards.forEach(hand::add)
     }
 
-    fun handCards(): List<Card> = hand.toList()
+    fun handCards(): List<Card> = hand.cards
 
     abstract fun showFirstHand(): List<Card>
 

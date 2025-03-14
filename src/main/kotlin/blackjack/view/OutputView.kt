@@ -64,7 +64,7 @@ class OutputView {
 
     private fun makeParticipantInfo(participant: Participant): String {
         val name = participant.name
-        val cards = participant.hand.toList().joinToString { card -> card.toText() }
+        val cards = participant.hand.cards.joinToString { card -> card.toText() }
         return CARD_INFO_MESSAGE.format(name, cards)
     }
 
