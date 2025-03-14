@@ -6,9 +6,10 @@ import blackjack.model.hand.HandState
 
 abstract class Participant(
     val name: Name,
-    private var money: Money,
+    private var _money: Money,
     private val hand: Hand,
 ) {
+    val money: Money get() = _money
     abstract val isDrawable: Boolean
     val cards: List<Card> get() = hand.cards
 
@@ -19,11 +20,11 @@ abstract class Participant(
     abstract fun showInitialCards(): List<Card>
 
     fun recieveMoney(money: Money) {
-        this.money += money
+        this._money += money
     }
 
     fun payMoney(money: Money) {
-        this.money -= money
+        this._money -= money
     }
 
     fun recieveCards(recieveCards: (Int) -> List<Card>) {
