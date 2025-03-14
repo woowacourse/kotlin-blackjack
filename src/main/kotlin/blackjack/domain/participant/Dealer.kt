@@ -3,6 +3,9 @@ package blackjack.domain.participant
 import blackjack.domain.GameResult
 import blackjack.domain.ParticipantCards
 import blackjack.domain.card.TrumpCard
+import blackjack.domain.participant.Player.Companion.DRAW_MULTIPLY
+import blackjack.domain.participant.Player.Companion.LOSE_MULTIPLY
+import blackjack.domain.participant.Player.Companion.WIN_MULTIPLY
 
 class Dealer(
     cards: ParticipantCards,
@@ -10,21 +13,21 @@ class Dealer(
     override fun showInitialCards(): List<TrumpCard> = takeCards(DEALER_INITIAL_CARD_COUNT)
 
     override fun isDrawable(): Boolean {
-        if (cards.hasAce() && !isBust(ACE_SOFT_SCORE)) {
+        if (cards.hasAce() && !cards.isBust(ACE_SOFT_SCORE)) {
             return cards.sumOfCards + ACE_SOFT_SCORE <= DEALER_MAX_SCORE
         }
         return cards.sumOfCards <= DEALER_MAX_SCORE
     }
 
     override fun getResult(other: Participant): GameResult {
-        val myScore = this.finalScore()
-        val otherScore = other.finalScore()
+        val myScore = cards.finalScore()
+        val otherScore = other.cards.finalScore()
 
         return when {
-            !isBlackJack() && other.isBlackJack() -> GameResult.LOSE
-            isBlackJack() && !other.isBlackJack() -> GameResult.BLACKJACK
-            other.isBust() -> GameResult.WIN
-            this.isBust() && !other.isBust() -> GameResult.LOSE
+            !cards.isBlackJack() && other.cards.isBlackJack() -> GameResult.LOSE
+            cards.isBlackJack() && !other.cards.isBlackJack() -> GameResult.BLACKJACK
+            other.cards.isBust() -> GameResult.WIN
+            this.cards.isBust() && !other.cards.isBust() -> GameResult.LOSE
             myScore > otherScore -> GameResult.WIN
             myScore < otherScore -> GameResult.LOSE
             else -> GameResult.DRAW

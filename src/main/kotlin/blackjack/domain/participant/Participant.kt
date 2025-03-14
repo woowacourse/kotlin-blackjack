@@ -1,6 +1,5 @@
 package blackjack.domain.participant
 
-import blackjack.domain.BlackJackGame.Companion.BUST_STANDARD
 import blackjack.domain.GameResult
 import blackjack.domain.ParticipantCards
 import blackjack.domain.card.TrumpCard
@@ -19,17 +18,6 @@ abstract class Participant(
     fun getAllCards(): List<TrumpCard> = cards.allCards
 
     abstract fun isDrawable(): Boolean
-
-    fun isBust(extraScore: Int = ACE_HARD_SCORE): Boolean = cards.sumOfCards + extraScore > BUST_STANDARD
-
-    fun finalScore(): Int =
-        if (cards.hasAce() && !isBust(ACE_SOFT_SCORE)) {
-            cards.sumOfCards + ACE_SOFT_SCORE
-        } else {
-            cards.sumOfCards
-        }
-
-    fun isBlackJack(): Boolean = cards.size() == INITIAL_CARD_COUNT && this.finalScore() == BLACKJACK_SCORE
 
     abstract fun getResult(other: Participant): GameResult
 

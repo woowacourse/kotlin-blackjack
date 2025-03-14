@@ -16,14 +16,14 @@ class Player(
     override fun isDrawable(): Boolean = cards.sumOfCards <= BUST_STANDARD
 
     override fun getResult(other: Participant): GameResult {
-        val myScore = this.finalScore()
-        val otherScore = other.finalScore()
+        val myScore = cards.finalScore()
+        val otherScore = other.cards.finalScore()
 
         return when {
-            other.isBlackJack() && !isBlackJack() -> GameResult.LOSE
-            isBlackJack() && !other.isBlackJack() -> GameResult.BLACKJACK
-            this.isBust() -> GameResult.LOSE
-            other.isBust() && !this.isBust() -> GameResult.WIN
+            other.cards.isBlackJack() && !cards.isBlackJack() -> GameResult.LOSE
+            cards.isBlackJack() && !other.cards.isBlackJack() -> GameResult.BLACKJACK
+            cards.isBust() -> GameResult.LOSE
+            other.cards.isBust() && !cards.isBust() -> GameResult.WIN
             myScore > otherScore -> GameResult.WIN
             myScore < otherScore -> GameResult.LOSE
             else -> GameResult.DRAW
