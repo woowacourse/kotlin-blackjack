@@ -1,6 +1,7 @@
-package blackjack.model
+package blackjack.model.user
 
-import blackjack.model.GameStatus.BLACKJACK
+import blackjack.model.ScoreCalculator
+import blackjack.model.state.GameStatus.BLACKJACK
 
 class Dealer(
     name: String = DEALER_NAME,

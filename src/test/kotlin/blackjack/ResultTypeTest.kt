@@ -1,11 +1,11 @@
 package blackjack
 
-import blackjack.model.Dealer
-import blackjack.model.Player
-import blackjack.model.ResultType
 import blackjack.model.card.Card
 import blackjack.model.card.CardNumber
 import blackjack.model.card.Shape
+import blackjack.model.state.ResultType
+import blackjack.model.user.Dealer
+import blackjack.model.user.Player
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test

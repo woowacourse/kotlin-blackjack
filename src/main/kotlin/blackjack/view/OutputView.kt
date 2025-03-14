@@ -1,8 +1,5 @@
 package blackjack.view
 
-import blackjack.model.Dealer
-import blackjack.model.Player
-import blackjack.model.ResultType
 import blackjack.model.ScoreCalculator
 import blackjack.model.card.Card
 import blackjack.model.card.CardNumber
@@ -25,6 +22,9 @@ import blackjack.model.card.Shape.CLOVER
 import blackjack.model.card.Shape.DIAMOND
 import blackjack.model.card.Shape.HEART
 import blackjack.model.card.Shape.SPADE
+import blackjack.model.state.ResultType
+import blackjack.model.user.Dealer
+import blackjack.model.user.Player
 
 class OutputView : BlackjackOutput {
     override fun printInitialHandOutCardMessage(players: List<Player>) {

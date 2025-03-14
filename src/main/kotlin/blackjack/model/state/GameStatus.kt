@@ -1,4 +1,4 @@
-package blackjack.model
+package blackjack.model.state
 
 import blackjack.model.ScoreCalculator.BUST_NUMBER
 import blackjack.model.card.Deck.Companion.INITIAL_HAND_OUT_CARD_COUNT

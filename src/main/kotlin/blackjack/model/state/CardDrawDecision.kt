@@ -1,4 +1,4 @@
-package blackjack.model
+package blackjack.model.state
 
 enum class CardDrawDecision(
     val response: String,

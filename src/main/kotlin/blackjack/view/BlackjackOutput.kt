@@ -1,8 +1,8 @@
 package blackjack.view
 
-import blackjack.model.Dealer
-import blackjack.model.Player
-import blackjack.model.ResultType
+import blackjack.model.state.ResultType
+import blackjack.model.user.Dealer
+import blackjack.model.user.Player
 
 interface BlackjackOutput {
     fun printInitialHandOutCardMessage(players: List<Player>)

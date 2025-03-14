@@ -1,9 +1,9 @@
 package blackjack
 
-import blackjack.model.CardDrawDecision
-import blackjack.model.Dealer
 import blackjack.model.GameManager
-import blackjack.model.Player
+import blackjack.model.state.CardDrawDecision
+import blackjack.model.user.Dealer
+import blackjack.model.user.Player
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest

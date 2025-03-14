@@ -1,7 +1,10 @@
-package blackjack.model
+package blackjack.model.state
 
-import blackjack.model.GameStatus.BLACKJACK
-import blackjack.model.GameStatus.BUST
+import blackjack.model.ScoreCalculator
+import blackjack.model.state.GameStatus.BLACKJACK
+import blackjack.model.state.GameStatus.BUST
+import blackjack.model.user.Dealer
+import blackjack.model.user.Player
 
 enum class ResultType(
     val value: Char,

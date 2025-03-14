@@ -1,4 +1,4 @@
-package blackjack.model
+package blackjack.model.user
 
 class Player(
     name: String,

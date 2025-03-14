@@ -1,7 +1,7 @@
 package blackjack.view
 
-import blackjack.model.CardDrawDecision
-import blackjack.model.Player
+import blackjack.model.state.CardDrawDecision
+import blackjack.model.user.Player
 
 class InputView : BlackjackInput {
     override fun readPlayerNames(): List<Player> {

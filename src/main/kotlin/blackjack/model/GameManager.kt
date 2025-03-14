@@ -1,6 +1,11 @@
 package blackjack.model
 
 import blackjack.model.card.Deck
+import blackjack.model.state.CardDrawDecision
+import blackjack.model.state.ResultType
+import blackjack.model.user.Dealer
+import blackjack.model.user.Participant
+import blackjack.model.user.Player
 
 class GameManager(
     private val dealer: Dealer,

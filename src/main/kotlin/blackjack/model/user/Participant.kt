@@ -1,6 +1,8 @@
-package blackjack.model
+package blackjack.model.user
 
+import blackjack.model.ScoreCalculator
 import blackjack.model.card.Card
+import blackjack.model.state.GameStatus
 
 open class Participant(
     val name: String,
