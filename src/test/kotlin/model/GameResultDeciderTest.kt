@@ -19,7 +19,7 @@ class GameResultDeciderTest {
     private lateinit var players: Players
 
     private fun assertProfit(expectedProfit: Float) {
-        val winOrLose = GameResultDecider(dealer, players).compareWinOrLose()
+        val winOrLose = GameResultDecider(dealer, players).totalGameResult()
         assertEquals(expectedProfit, winOrLose.playerResults[0].profit)
     }
 

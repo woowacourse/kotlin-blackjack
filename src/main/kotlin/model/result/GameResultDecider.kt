@@ -6,7 +6,7 @@ import model.participant.Players
 import kotlin.math.abs
 
 class GameResultDecider(private val dealer: Dealer, private val players: Players) {
-    fun compareWinOrLose(): GameResult {
+    fun totalGameResult(): GameResult {
         val playerResults: List<PlayerResult> =
             players.map { player ->
                 PlayerResult(player.name, comparePlayerResult(player))
