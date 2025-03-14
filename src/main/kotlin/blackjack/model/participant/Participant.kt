@@ -3,12 +3,14 @@ package blackjack.model.participant
 import blackjack.model.GameManager.Companion.INITIAL_HAND_OUT_CARD_COUNT
 import blackjack.model.ResultCalculator
 import blackjack.model.ResultCalculator.BLACKJACK_NUMBER
+import blackjack.model.amount.BetAmount
 import blackjack.model.card.Card
+import blackjack.model.card.CardNumber
+import blackjack.model.card.Shape
 
 abstract class Participant(val name: String) {
     private val _cards: MutableList<Card> = mutableListOf()
-    val cards: List<Card>
-        get() = _cards.map { it.copy() }.toList()
+    val cards get() = _cards.toList()
 
     val score: Int
         get() = ResultCalculator.calculate(cards)
