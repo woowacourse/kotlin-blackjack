@@ -1,6 +1,9 @@
 package blackjack.domain.model
 
-class Dealer(name: String, cards: List<Card>) : Participant(name, cards) {
+class Dealer(
+    name: String,
+    cards: List<Card>,
+) : Participant(name, cards) {
     constructor(cards: List<Card>) : this(DEFAULT_NAME, cards)
     constructor(vararg cards: Card) : this(DEFAULT_NAME, cards.toList())
     constructor(name: String, vararg cards: Card) : this(name, cards.toList())
@@ -19,16 +22,16 @@ class Dealer(name: String, cards: List<Card>) : Participant(name, cards) {
 
     fun processHits(
         deck: Deck,
-        printStatus: (Dealer) -> Unit,
+        output: (String, Int) -> Unit,
     ) {
         while (canHit()) {
-            printStatus(this)
+            output(name, HIT_THRESHOLD)
             accept(deck.draw())
         }
     }
 
     companion object {
-        const val HIT_THRESHOLD = 16
+        private const val HIT_THRESHOLD = 16
         private const val DEFAULT_NAME = "딜러"
     }
 }

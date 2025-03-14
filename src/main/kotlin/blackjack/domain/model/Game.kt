@@ -1,6 +1,10 @@
 package blackjack.domain.model
 
-class Game(val deck: Deck, val dealer: Dealer, val players: List<Player>) {
+class Game(
+    private val deck: Deck,
+    private val dealer: Dealer,
+    private val players: List<Player>,
+) {
     init {
         val playerNames: List<String> = players.map { player -> player.name }
         require(playerNames == playerNames.distinct()) { MESSAGE_ERROR_PLAYER_NAMES_NOT_UNIQUE }
@@ -43,7 +47,7 @@ class Game(val deck: Deck, val dealer: Dealer, val players: List<Player>) {
         players.forEach { player -> player.processHits(deck, input, output) }
     }
 
-    fun processDealerHits(output: (Dealer) -> Unit) {
+    fun processDealerHits(output: (String, Int) -> Unit) {
         dealer.processHits(deck, output)
     }
 

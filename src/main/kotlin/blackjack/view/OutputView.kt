@@ -1,7 +1,6 @@
 package blackjack.view
 
 import blackjack.domain.model.Card
-import blackjack.domain.model.Dealer
 import blackjack.domain.model.Hand
 import blackjack.domain.model.Rank
 import blackjack.domain.model.Suit
@@ -40,8 +39,11 @@ class OutputView {
             }
     }
 
-    fun printDealerHit(dealer: Dealer) {
-        println(MESSAGE_DEALER_HIT.format(dealer.name))
+    fun printDealerHit(
+        name: String,
+        hitThreshold: Int,
+    ) {
+        println(MESSAGE_DEALER_HIT.format(name, hitThreshold))
     }
 
     fun printFinalResult(): (String, Int) -> Unit {
@@ -78,7 +80,7 @@ class OutputView {
 
     companion object {
         private const val MESSAGE_INITIAL_HAND_DISTRIBUTED = "%s와(과) %s에게 ${Hand.STARTING_HAND_SIZE}장의 카드를 나누었습니다."
-        private const val MESSAGE_DEALER_HIT = "%s은(는) ${Dealer.HIT_THRESHOLD}점 이하라 한 장의 카드를 더 받았습니다."
+        private const val MESSAGE_DEALER_HIT = "%s은(는) %s점 이하라 한 장의 카드를 더 받았습니다."
 
         private const val CARDS_DELIMITER = ", "
         private const val PARTICIPANT_NAME_CARDS_DELIMITER = " 카드: "

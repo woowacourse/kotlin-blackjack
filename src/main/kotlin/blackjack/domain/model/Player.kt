@@ -1,6 +1,9 @@
 package blackjack.domain.model
 
-class Player(name: String, cards: List<Card>) : Participant(name, cards) {
+class Player(
+    name: String,
+    cards: List<Card>,
+) : Participant(name, cards) {
     private lateinit var bet: Bet
 
     constructor(name: String, vararg cards: Card) : this(name, cards.toList())
