@@ -81,8 +81,8 @@ class BlackjackController(
         val blackjackPlayers: List<Player> = players.getBlackjackPlayers()
 
         blackjackPlayers.forEach { player ->
-            val money: Money = player.bettingMoney.multiple(BLACKJACK_MULTIPLE)
-            executePlayerGainMoney(dealer, money, player)
+            player.bettingMoney.multiple(BLACKJACK_MULTIPLE)
+            executePlayerGainMoney(dealer, player.bettingMoney, player)
         }
     }
 

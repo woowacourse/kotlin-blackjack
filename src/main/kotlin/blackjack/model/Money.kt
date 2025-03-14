@@ -3,13 +3,21 @@ package blackjack.model
 open class Money(
     value: Double,
 ) {
-    protected val initialValue: Double = value
+    private val initialValue: Double = value
     var value: Double = initialValue
         private set
 
-    fun plus(money: Money): Money = Money(value + money.value)
+    fun plus(money: Money) {
+        value += money.value
+    }
 
-    fun minus(money: Money): Money = Money(value - money.value)
+    fun minus(money: Money) {
+        value -= money.value
+    }
 
-    fun multiple(times: Double): Money = Money(times * initialValue)
+    fun multiple(times: Double) {
+        value *= times
+    }
+
+    fun getProfit(): Double = value - initialValue
 }
