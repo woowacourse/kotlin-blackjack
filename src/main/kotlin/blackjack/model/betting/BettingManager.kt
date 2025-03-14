@@ -18,8 +18,7 @@ class BettingManager(
             require(bettingMoney > Money.ZERO) {
                 ("[ERROR] 베팅 금액은 0원보다 높아야 합니다.")
             }
-            player.payMoney(bettingMoney)
-            bettingTable.add(player.name, bettingMoney)
+            bettingTable.add(player.name, player.payMoney(bettingMoney))
         }
     }
 

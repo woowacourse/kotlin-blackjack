@@ -23,8 +23,9 @@ abstract class Participant(
         this._money += money
     }
 
-    fun payMoney(money: Money) {
+    fun payMoney(money: Money): Money {
         this._money -= money
+        return money
     }
 
     fun recieveCards(recieveCards: (Int) -> List<Card>) {
