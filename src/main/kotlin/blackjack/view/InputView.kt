@@ -1,6 +1,9 @@
 package blackjack.view
 
 import blackjack.model.participant.UserCommand
+import blackjack.model.participant.UserCommand.HIT
+import blackjack.model.participant.UserCommand.STAY
+import blackjack.model.participant.UserCommand.UNKNOWN
 
 class InputView {
     fun getPlayers(): List<String> {
@@ -15,6 +18,10 @@ class InputView {
 
     fun getIsRecieveMore(name: String): UserCommand {
         println("\n${name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
-        return UserCommand.from(readln())
+        return when (readln().lowercase()) {
+            "y" -> HIT
+            "n" -> STAY
+            else -> UNKNOWN
+        }
     }
 }
