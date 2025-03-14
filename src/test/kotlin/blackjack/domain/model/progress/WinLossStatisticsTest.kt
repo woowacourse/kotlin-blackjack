@@ -95,6 +95,19 @@ class WinLossStatisticsTest {
     }
 
     @Test
+    fun `플레이어의 승 무 패 정보를 보관하고 가져올 수 있다`() {
+        winLossStatistics.calculatePlayerWinLoss(dealerBust, player21Normal)
+        winLossStatistics.calculatePlayerWinLoss(dealerBlackJack, playerBust)
+
+        assertThat(winLossStatistics.playerWinLoseInfo).isEqualTo(
+            mapOf(
+                player21Normal to WinLoss.WIN,
+                playerBust to WinLoss.LOSE,
+            ),
+        )
+    }
+
+    @Test
     fun `딜러의 전체 승 무 패 결과를 텍스트로 받아올 수 있다`() {
         winLossStatistics.calculatePlayerWinLoss(dealerBlackJack, playerBlackJack) // 무승부
         winLossStatistics.calculatePlayerWinLoss(dealer18, player19) // 딜러 패배
