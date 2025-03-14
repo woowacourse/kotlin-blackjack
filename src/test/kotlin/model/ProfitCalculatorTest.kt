@@ -8,27 +8,35 @@ import model.participant.Dealer
 import model.participant.Player
 import model.participant.Players
 import model.result.ProfitCalculator
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.MethodSource
-import java.util.stream.Stream
 
 class ProfitCalculatorTest {
     private lateinit var dealer: Dealer
     private lateinit var players: Players
 
-    private fun assertProfit(expectedProfit: Float) {
+    private fun assertPlayerProfit(expectedProfit: Float) {
         val profitCalculator = ProfitCalculator(dealer, players)
         assertEquals(expectedProfit, profitCalculator.playerProfits[0].profit)
     }
 
-    @ParameterizedTest
-    @MethodSource("makeTestPlayers")
-    fun `플레이어의 점수가 21점 초과시 베팅 금액을 모두 잃는다`(player: Player) {
+    @Test
+    fun `플레이어의 점수가 21점 초과시 베팅 금액을 모두 잃는다`() {
         dealer = Dealer(Cards(listOf(Card(CardRank.QUEEN, Shape.CLUB), Card(CardRank.JACK, Shape.SPADE))))
+        val player = Player(
+            "jay",
+            Cards(
+                listOf(
+                    Card(CardRank.QUEEN, Shape.CLUB),
+                    Card(CardRank.JACK, Shape.SPADE),
+                    Card(CardRank.FIVE, Shape.SPADE),
+                )
+            ),
+            10000f,
+        )
         players = Players(listOf(player))
-        assertProfit(expectedProfit = -10000f)
+        assertPlayerProfit(expectedProfit = -10000f)
     }
 
     @Test
@@ -37,7 +45,7 @@ class ProfitCalculatorTest {
         val player =
             Player("jay", Cards(listOf(Card(CardRank.QUEEN, Shape.CLUB), Card(CardRank.ACE, Shape.SPADE))), 10000f)
         players = Players(listOf(player))
-        assertProfit(expectedProfit = 15000f)
+        assertPlayerProfit(expectedProfit = 15000f)
     }
 
     @Test
@@ -46,7 +54,7 @@ class ProfitCalculatorTest {
         val player =
             Player("jay", Cards(listOf(Card(CardRank.QUEEN, Shape.CLUB), Card(CardRank.ACE, Shape.SPADE))), 10000f)
         players = Players(listOf(player))
-        assertProfit(expectedProfit = 0f)
+        assertPlayerProfit(expectedProfit = 0f)
     }
 
     @Test
@@ -63,35 +71,17 @@ class ProfitCalculatorTest {
             Player("jay", Cards(listOf(Card(CardRank.KING, Shape.CLUB), Card(CardRank.KING, Shape.SPADE))), 10000f)
         dealer = Dealer(cards)
         players = Players(listOf(player))
-        assertProfit(expectedProfit = 10000f)
+        assertPlayerProfit(expectedProfit = 10000f)
     }
 
-    companion object {
-        @JvmStatic
-        private fun makeTestPlayers(): Stream<Player> =
-            listOf(
-                Player(
-                    "jay",
-                    Cards(
-                        listOf(
-                            Card(CardRank.QUEEN, Shape.CLUB),
-                            Card(CardRank.JACK, Shape.SPADE),
-                            Card(CardRank.FIVE, Shape.SPADE),
-                        ),
-                    ),
-                    10000f,
-                ),
-                Player(
-                    "jay",
-                    Cards(
-                        listOf(
-                            Card(CardRank.KING, Shape.CLUB),
-                            Card(CardRank.JACK, Shape.SPADE),
-                            Card(CardRank.TEN, Shape.SPADE),
-                        ),
-                    ),
-                    10000f,
-                ),
-            ).stream()
+    @Test
+    fun `플레이어가 패배할 때 딜러의 수익은 플레이어의 베팅금액과 같다`() {
+        val dealerCard =
+            Cards(listOf(Card(CardRank.QUEEN, Shape.CLUB), Card(CardRank.ACE, Shape.SPADE)))
+        dealer = Dealer(dealerCard)
+        val player =
+            Player("jay", Cards(listOf(Card(CardRank.KING, Shape.CLUB), Card(CardRank.KING, Shape.SPADE))), 10000f)
+        players = Players(listOf(player))
+        assertThat(ProfitCalculator(dealer, players).dealerProfit()).isEqualTo(10000f)
     }
 }
