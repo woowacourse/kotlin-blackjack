@@ -15,8 +15,6 @@ class Player(
         bettingMoney = money
     }
 
-    fun getPlayerScore(): Int = cards.calculateScore()
-
     override fun gainMoney(money: Money) {
         bettingMoney.plus(money)
     }

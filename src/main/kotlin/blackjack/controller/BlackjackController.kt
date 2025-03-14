@@ -110,7 +110,7 @@ class BlackjackController(
             executeMoneyLogic(dealerResult, player, dealer)
         }
         playersWhichNotDying.forEach { player ->
-            val dealerResult: GameResult = dealer.getResult(player.getPlayerScore())
+            val dealerResult: GameResult = dealer.getResult(player.getScore())
             executeMoneyLogic(dealerResult, player, dealer)
         }
     }
@@ -124,13 +124,13 @@ class BlackjackController(
             GameResult.PUSH -> Unit
             GameResult.WIN -> {
                 val money: Money = player.bettingMoney
-                dealer.gainProfit(money)
+                dealer.gainMoney(money)
                 player.lossMoney(money)
             }
 
             GameResult.LOSE -> {
                 val money: Money = player.bettingMoney
-                dealer.lossProfit(money)
+                dealer.lossMoney(money)
                 player.gainMoney(money)
             }
         }

@@ -14,6 +14,8 @@ abstract class Participant(
         }
     }
 
+    fun getScore(): Int = cards.calculateScore()
+
     fun isBlackjack(): Boolean = cards.status == CardsStatus.BLACKJACK
 
     fun isBust(): Boolean = cards.status == CardsStatus.BUST

@@ -50,10 +50,6 @@ class OutputView {
         dealer: Dealer,
         players: Players,
     ) {
-        val results: MutableList<String> = mutableListOf()
-        dealer.results.map { result ->
-            results.add("${result.value}${result.key.toKoreanName()}")
-        }
         val dealerCards: String =
             dealer.cards.value.joinToString { it.toBlackjackView() }
         println(
