@@ -36,20 +36,24 @@ class GameManager(
         return playersStatus
     }
 
-    fun calculateProfit(result: Map<Player, ResultType>): Map<Player, WinningMoney> {
+    fun gameResult(result: Map<Player, ResultType>): List<Profit> {
         return result.map { (player, resultType) ->
-            val profit = when (resultType) {
-                ResultType.BLACKJACK -> WinningMoney(player.betAmount.toDouble() * BLACKJACK_PROFIT_MULTIPLIER)
-                ResultType.WIN -> WinningMoney(player.betAmount.toDouble())
-                ResultType.TIE -> WinningMoney(player.betAmount.toDouble() * TIE_PROFIT_MULTIPLIER)
-                ResultType.LOSS -> WinningMoney(player.betAmount.toDouble() * LOSS_PROFIT_MULTIPLIER)
-            }
-            player to profit
-        }.toMap()
+            Profit(player, calculateProfit(resultType, player))
+        }
     }
 
     fun drawCard(person: Participant) {
         person.addCard(deck.draw())
+    }
+
+    private fun calculateProfit(
+        resultType: ResultType,
+        player: Player,
+    ) = when (resultType) {
+        ResultType.BLACKJACK -> WinningMoney(player.betAmount.toDouble() * BLACKJACK_PROFIT_MULTIPLIER)
+        ResultType.WIN -> WinningMoney(player.betAmount.toDouble())
+        ResultType.TIE -> WinningMoney(player.betAmount.toDouble() * TIE_PROFIT_MULTIPLIER)
+        ResultType.LOSS -> WinningMoney(player.betAmount.toDouble() * LOSS_PROFIT_MULTIPLIER)
     }
 
     private fun BetAmount.toDouble(): Double {

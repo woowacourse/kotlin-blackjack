@@ -1,8 +1,8 @@
 package blackjack.controller
 
-import blackjack.model.amount.BetAmount
 import blackjack.model.DrawChoice
 import blackjack.model.GameManager
+import blackjack.model.amount.BetAmount
 import blackjack.model.participant.Dealer
 import blackjack.model.participant.Player
 import blackjack.view.InputView
@@ -86,7 +86,7 @@ class BlackjackController(
 
     private fun resultSummary(gameManager: GameManager) {
         val result = gameManager.calculateResultMap()
-        val profitResult = gameManager.calculateProfit(result)
+        val profitResult = gameManager.gameResult(result)
         outputView.printFinalResult(profitResult)
     }
 }

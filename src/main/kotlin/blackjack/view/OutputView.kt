@@ -1,7 +1,7 @@
 package blackjack.view
 
 import blackjack.model.GameManager.Companion.INITIAL_HAND_OUT_CARD_COUNT
-import blackjack.model.amount.WinningMoney
+import blackjack.model.Profit
 import blackjack.model.card.Card
 import blackjack.model.card.CardNumber
 import blackjack.model.card.CardNumber.ACE
@@ -58,12 +58,12 @@ class OutputView {
         println()
     }
 
-    fun printFinalResult(profitResult: Map<Player, WinningMoney>) {
-        val dealerProfit = profitResult.values.sumOf { profit -> profit.winningMoney } * DEALER_PROFIT_MULTIPLIER
+    fun printFinalResult(profitResult: List<Profit>) {
+        val dealerProfit = profitResult.sumOf { it.winningMoney.amount } * DEALER_PROFIT_MULTIPLIER
         println(FINAL_RESULT_MESSAGE)
         println(DEALER_RESULT_FORMAT.format(dealerProfit.formatAmount()))
-        profitResult.forEach { (player, profit) ->
-            println(PLAYER_RESULT_FORMAT.format(player.name, profit.winningMoney.formatAmount()))
+        profitResult.forEach { profit ->
+            println(PLAYER_RESULT_FORMAT.format(profit.player.name, profit.winningMoney.amount.formatAmount()))
         }
     }
 
