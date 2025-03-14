@@ -79,7 +79,7 @@ class BlackjackController(
         drawManager.progressDealerDraw(dealer, cardDeck::draw)
 
         outputView.displayDealerDrawInfo(dealer.additionalDrawCount)
-        outputView.displayParticipantInfo(dealer.name, dealer.cards, dealer.score())
+        outputView.displayParticipantInfo(dealer.name, dealer.cards, dealer.score)
     }
 
     private fun endGame(
@@ -88,7 +88,7 @@ class BlackjackController(
         bettingManager: BettingManager,
     ) {
         participants.players.value.forEach { player ->
-            outputView.displayParticipantInfo(player.name, player.cards, player.score())
+            outputView.displayParticipantInfo(player.name, player.cards, player.score)
         }
 
         val winningResult = winningManager.result(participants)

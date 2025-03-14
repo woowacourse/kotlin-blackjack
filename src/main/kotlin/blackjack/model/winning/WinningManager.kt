@@ -15,8 +15,8 @@ class WinningManager {
         participants.players.value.associate { player ->
             player.name to
                 WinningState.fromPlayer(
-                    playerScore = player.score(),
-                    dealerScore = participants.dealer.score(),
+                    playerScore = player.score,
+                    dealerScore = participants.dealer.score,
                     playerHandState = player.handState,
                     dealerHandState = participants.dealer.handState,
                 )
