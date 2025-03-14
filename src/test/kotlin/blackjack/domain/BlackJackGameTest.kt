@@ -17,7 +17,7 @@ class BlackJackGameTest {
     @BeforeEach
     fun setUp() {
         dealer = Dealer()
-        players = listOf(Player("Alice"), Player("Bob"))
+        players = listOf(Player("Alice", BetAmount(100)), Player("Bob", BetAmount(100)))
         game = BlackJackGame(dealer, players)
     }
 

@@ -2,7 +2,6 @@ package blackjack.domain
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
-import io.kotest.matchers.types.shouldBeTypeOf
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
@@ -19,20 +18,6 @@ class BetAmountTest {
         shouldThrow<IllegalArgumentException> {
             BetAmount(-1000)
         }
-    }
-
-    @Test
-    fun `배팅 금액을 Int형으로 반환할 수 있다`() {
-        val actual = betAmount.toInt()
-
-        actual.shouldBeTypeOf<Int>()
-    }
-
-    @Test
-    fun `배팅 금액을 Double형으로 반환할 수 있다`() {
-        val actual = betAmount.toDouble()
-
-        actual.shouldBeTypeOf<Double>()
     }
 
     @Test

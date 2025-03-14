@@ -24,7 +24,7 @@ class PlayerTest {
 
     @Test
     fun `플레이어는 배팅 금액을 가지고 있다`() {
-        player.betAmount.toDouble() shouldBe 1000.0
+        player.betAmount.value shouldBe 1000.0
     }
 
     @Test

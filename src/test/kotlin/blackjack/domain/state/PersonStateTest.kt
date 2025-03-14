@@ -1,5 +1,6 @@
 package blackjack.domain.state
 
+import blackjack.domain.BetAmount
 import blackjack.domain.card.CardNumber
 import blackjack.domain.card.Deck
 import blackjack.domain.generateCustomDeck
@@ -17,7 +18,7 @@ class PersonStateTest {
 
     @BeforeEach
     fun setUp() {
-        person = Player("player1")
+        person = Player("player1", BetAmount(1000))
     }
 
     @Test

@@ -5,7 +5,7 @@ import blackjack.domain.state.PersonState
 
 class Player(
     val name: String,
-    val betAmount: BetAmount = BetAmount(),
+    val betAmount: BetAmount,
 ) : Person() {
     fun changeToStay() {
         state = PersonState.STAY

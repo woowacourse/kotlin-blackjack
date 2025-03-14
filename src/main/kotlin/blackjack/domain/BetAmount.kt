@@ -1,13 +1,9 @@
 package blackjack.domain
 
-class BetAmount(private val value: Int = MIN_BET_AMOUNT) {
+class BetAmount(val value: Int) {
     init {
         require(value >= MIN_BET_AMOUNT) { INVALID_BET_AMOUNT_MESSAGE }
     }
-
-    fun toInt(): Int = value
-
-    fun toDouble(): Double = value.toDouble()
 
     operator fun times(multiplier: Int): Int = value * multiplier
 
