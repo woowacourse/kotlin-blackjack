@@ -9,7 +9,7 @@ class Scoreboard(
 ) {
     fun getDealerProfit(playerBetInfos: List<PlayerBetInfo>): Double {
         val playersProfit: Collection<Double> = getPlayersProfit(playerBetInfos).values
-        return -playersProfit.filter { it < 0.0 }.sum() - playersProfit.filter { it > 0.0 }.sum()
+        return -playersProfit.sum()
     }
 
     fun getPlayersProfit(playerBetInfos: List<PlayerBetInfo>): Map<Player, Double> {
