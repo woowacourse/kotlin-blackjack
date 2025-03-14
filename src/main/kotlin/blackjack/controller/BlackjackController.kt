@@ -64,8 +64,8 @@ class BlackjackController(
         players.value.forEach { player ->
             drawManager.progressPlayerDraw(
                 player = player,
-                draw = cardDeck::draw,
-                getCommand = { inputView.getIsRecieveMore(player.name.toString()) },
+                cardDeck = cardDeck,
+                choice = { inputView.getIsRecieveMore(player.name.toString()) },
                 onCardReceived = { cards -> outputView.displayParticipantCards(player.name, cards) },
             )
         }
@@ -76,7 +76,7 @@ class BlackjackController(
         cardDeck: CardDeck,
         drawManager: DrawManager,
     ) {
-        drawManager.progressDealerDraw(dealer, cardDeck::draw)
+        drawManager.progressDealerDraw(dealer, cardDeck)
 
         outputView.displayDealerDrawInfo(dealer.additionalDrawCount)
         outputView.displayParticipantInfo(dealer.name, dealer.cards, dealer.score)
