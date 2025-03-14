@@ -1,7 +1,6 @@
 package blackjack.model.participant
 
 import blackjack.model.card.Card
-import blackjack.model.card.CardDeck
 import blackjack.model.participant.UserCommand.HIT
 import blackjack.model.participant.UserCommand.STAY
 import blackjack.model.participant.UserCommand.UNKNOWN
@@ -9,14 +8,14 @@ import blackjack.model.participant.UserCommand.UNKNOWN
 class DrawManager {
     fun progressPlayerDraw(
         player: Player,
-        cardDeck: CardDeck,
+        cards: (Int) -> List<Card>,
         choice: () -> UserCommand,
         onCardReceived: (List<Card>) -> Unit,
     ) {
         while (true) {
             when (choice()) {
                 HIT -> {
-                    player.recieveCards(cardDeck::draw)
+                    player.recieveCards(cards)
                     onCardReceived(player.cards)
                     if (!player.isDrawable()) return
                 }
@@ -28,10 +27,10 @@ class DrawManager {
 
     fun progressDealerDraw(
         dealer: Dealer,
-        cardDeck: CardDeck,
+        cards: (Int) -> List<Card>,
     ) {
         while (dealer.isDrawable()) {
-            dealer.recieveCards(cardDeck::draw)
+            dealer.recieveCards(cards)
         }
     }
 }
