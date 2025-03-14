@@ -1,5 +1,8 @@
 package blackjack.domain.participant
 
+import blackjack.domain.ACE_HEART
+import blackjack.domain.SIX_HEART
+import blackjack.domain.TEN_HEART
 import blackjack.model.card.Card
 import blackjack.model.card.CardRank
 import blackjack.model.card.CardSuit
@@ -21,8 +24,8 @@ class DealerTest {
     @Test
     fun `딜러의 처음 공개하는 카드는 1장이어야 한다`() {
         // given
-        val card1 = Card(CardRank.ACE, CardSuit.HEART)
-        val card2 = Card(CardRank.TEN, CardSuit.HEART)
+        val card1 = ACE_HEART
+        val card2 = TEN_HEART
         dealer.addAll(listOf(card1, card2))
 
         // when
@@ -36,8 +39,8 @@ class DealerTest {
     @Test
     fun `딜러의 점수가 16 이하이면 추가로 카드를 뽑을 수 있다`() {
         // given
-        val card1 = Card(CardRank.TEN, CardSuit.HEART)
-        val card2 = Card(CardRank.SIX, CardSuit.HEART)
+        val card1 = TEN_HEART
+        val card2 = SIX_HEART
         dealer.addAll(listOf(card1, card2))
 
         // when & then
@@ -47,7 +50,7 @@ class DealerTest {
     @Test
     fun `딜러의 점수가 17 이상이면 추가로 카드를 뽑을 수 없다`() {
         // given
-        val card1 = Card(CardRank.TEN, CardSuit.HEART)
+        val card1 = TEN_HEART
         val card2 = Card(CardRank.SEVEN, CardSuit.HEART)
         dealer.addAll(listOf(card1, card2))
 
@@ -60,8 +63,8 @@ class DealerTest {
         // given
         val initialCards =
             listOf(
-                Card(CardRank.TEN, CardSuit.HEART),
-                Card(CardRank.SIX, CardSuit.HEART),
+                TEN_HEART,
+                SIX_HEART,
             )
         dealer.addAll(initialCards)
 
