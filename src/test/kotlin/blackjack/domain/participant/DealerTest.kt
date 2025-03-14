@@ -41,7 +41,7 @@ class DealerTest {
         dealer.addAll(listOf(card1, card2))
 
         // when & then
-        assertTrue(dealer.isDrawable())
+        assertTrue(dealer.isDrawable)
     }
 
     @Test
@@ -52,7 +52,7 @@ class DealerTest {
         dealer.addAll(listOf(card1, card2))
 
         // when & then
-        assertFalse(dealer.isDrawable())
+        assertFalse(dealer.isDrawable)
     }
 
     @Test

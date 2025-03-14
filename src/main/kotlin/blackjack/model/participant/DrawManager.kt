@@ -17,7 +17,7 @@ class DrawManager {
                 HIT -> {
                     player.recieveCards(cards)
                     onCardReceived(player.cards)
-                    if (!player.isDrawable()) return
+                    if (!player.isDrawable) return
                 }
                 STAY -> break
                 UNKNOWN -> throw IllegalArgumentException("[ERROR] 올바르지 않은 입력입니다.")
@@ -29,7 +29,7 @@ class DrawManager {
         dealer: Dealer,
         cards: (Int) -> List<Card>,
     ) {
-        while (dealer.isDrawable()) {
+        while (dealer.isDrawable) {
             dealer.recieveCards(cards)
         }
     }

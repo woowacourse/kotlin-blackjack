@@ -9,9 +9,9 @@ class Player private constructor(
     money: Money,
     hand: Hand,
 ) : Participant(name, money, hand) {
-    override fun showInitialCards(): List<Card> = cards.take(FIRST_SHOWN_COUNT)
+    override val isDrawable: Boolean get() = handState == HandState.ALIVE
 
-    override fun isDrawable(): Boolean = handState == HandState.ALIVE
+    override fun showInitialCards(): List<Card> = cards.take(FIRST_SHOWN_COUNT)
 
     companion object {
         const val PLAYER_DEFAULT_MONEY = 1_000_000.0

@@ -8,11 +8,11 @@ class Dealer private constructor(
     money: Money,
     hand: Hand,
 ) : Participant(name, money, hand) {
+    override val isDrawable: Boolean get() = score <= DRAW_CRITERIA
+
     val additionalDrawCount: Int get() = cards.size - INITIAL_DRAW_COUNT
 
     override fun showInitialCards(): List<Card> = cards.take(FIRST_SHOWN_COUNT)
-
-    override fun isDrawable(): Boolean = score <= DRAW_CRITERIA
 
     companion object {
         const val DEFAULT_DEALER_NAME = "딜러"
