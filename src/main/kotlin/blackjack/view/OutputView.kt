@@ -87,6 +87,10 @@ class OutputView(
         lineSeparator()
     }
 
+    fun showErrorMessage(errorMessage: String) {
+        println(errorMessage)
+    }
+
     companion object {
         private const val DISTRIBUTE_CARD_MESSAGE = "딜러와 %s에게 각각 2장의 카드를 나누었습니다."
         private const val CARD_INFO_MESSAGE = "%s카드: %s"

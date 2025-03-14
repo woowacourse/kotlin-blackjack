@@ -6,6 +6,8 @@ import blackjack.domain.model.participant.CardStatus
 import blackjack.domain.model.participant.Dealer
 import blackjack.domain.model.participant.GameParticipant
 import blackjack.domain.model.participant.Player
+import blackjack.domain.model.progress.BetAmount
+import blackjack.domain.model.progress.BetHistory
 import blackjack.domain.model.progress.WinLossStatistics
 import blackjack.view.InputView
 import blackjack.view.OutputView
@@ -17,7 +19,7 @@ class Casino(
 ) {
     fun blackJackGame() {
         val players: List<Player> = inputView.readPlayerNames().map { Player(it) }
-
+        val betHistory = askBetAmountPhase(players)
         val dealer = Dealer()
         val participants: List<GameParticipant> = listOf(dealer) + players
         initDistributeCard(participants)
@@ -28,6 +30,22 @@ class Casino(
         outputView.showCardsResult(participants)
         outputFinalResult(dealer, players)
     }
+
+    private fun askBetAmountPhase(players: List<Player>): BetHistory {
+        val betHistory = BetHistory()
+        players.forEach { player ->
+            val betAmount = askSingleBetAmount(player)
+            betHistory.addBetLog(player, betAmount)
+        }
+        return betHistory
+    }
+
+    private fun askSingleBetAmount(player: Player): BetAmount =
+        runCatching {
+            BetAmount(inputView.readBetAmount(player.name))
+        }.onFailure { exception ->
+            exception.message?.let { outputView.showErrorMessage(it) }
+        }.getOrNull() ?: askSingleBetAmount(player)
 
     private fun initDistributeCard(participants: List<GameParticipant>) {
         participants.forEach { participant ->
