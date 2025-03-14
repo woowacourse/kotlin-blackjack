@@ -17,7 +17,7 @@ class MoneyTest {
     fun `베팅 금액은 베팅한 금액을 가진다`() {
         val money = Money(100_000)
 
-        val actual = money.value
+        val actual = money.initialValue
 
         val expected = 100_000
 

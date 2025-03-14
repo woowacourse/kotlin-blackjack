@@ -1,9 +1,17 @@
 package blackjack.model
 
-class Money(
-    val value: Int,
+open class Money(
+    value: Int,
 ) {
-    init {
-        require(value in 1..300_000_000) { "베팅 금액은 최소 1원 이상 최대 3억원까지 가능합니다. $value 는 범위에 해당되지 않습니다." }
+    protected val initialValue: Int = value
+    var value: Int = initialValue
+        private set
+
+    fun plus(money: Money) {
+        value += money.initialValue
+    }
+
+    fun minus(money: Money) {
+        value -= money.initialValue
     }
 }

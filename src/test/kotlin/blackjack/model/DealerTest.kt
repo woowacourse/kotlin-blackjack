@@ -89,7 +89,7 @@ class DealerTest {
             )
         val dealer = Dealer(cards = cards)
 
-        val actual = dealer.updateResult(playerScore = 19)
+        val actual = dealer.getResult(playerScore = 19)
 
         val expected = GameResult.WIN
 

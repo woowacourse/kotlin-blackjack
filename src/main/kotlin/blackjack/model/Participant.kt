@@ -17,4 +17,8 @@ abstract class Participant(
     fun isBlackjack(): Boolean = cards.status == CardsStatus.BLACKJACK
 
     fun isBust(): Boolean = cards.status == CardsStatus.BUST
+
+    abstract fun gainMoney(money: Money)
+
+    abstract fun lossMoney(money: Money)
 }

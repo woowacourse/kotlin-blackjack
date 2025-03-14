@@ -13,6 +13,10 @@ class OutputView {
         println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
     }
 
+    fun printBettingMessage(player: Player) {
+        println("${player.name}의 배팅 금액은?")
+    }
+
     fun printPlayersCards(
         dealer: Dealer,
         players: List<Player>,
@@ -63,10 +67,10 @@ class OutputView {
             )
         }
 
-        println("\n## 최종 승패")
-        println("${dealer.name}: ${results.joinToString(" ")}")
+        println("\n## 최종 수익")
+        println("${dealer.name}: ${dealer.profit.value}")
         players.value.forEach { player ->
-            println("${player.name}: ${player.result.toKoreanName()}")
+            println("${player.name}: ${player.bettingMoney.getProfit().value}")
         }
     }
 

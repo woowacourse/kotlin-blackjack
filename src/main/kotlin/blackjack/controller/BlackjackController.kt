@@ -1,10 +1,12 @@
 package blackjack.controller
 
+import blackjack.model.BettingMoney
 import blackjack.model.CardDeck
 import blackjack.model.Cards
 import blackjack.model.CardsStatus.Companion.BUST_SCORE
 import blackjack.model.Dealer
 import blackjack.model.GameResult
+import blackjack.model.Money
 import blackjack.model.Player
 import blackjack.model.Players
 import blackjack.view.InputView
@@ -21,8 +23,17 @@ class BlackjackController(
         val players: Players = inputView.readPlayers()
         val dealer = Dealer()
 
+        getBettingMoney(players)
         getCards(players, dealer)
         playGames(players, dealer)
+    }
+
+    private fun getBettingMoney(players: Players) {
+        players.value.forEach { player ->
+            outputView.printBettingMessage(player)
+            val money: BettingMoney = inputView.readBettingMoney()
+            player.getBettingMoney(money)
+        }
     }
 
     private fun getCards(
@@ -95,12 +106,33 @@ class BlackjackController(
         val playersWhichDying: List<Player> = players.getDyingPlayers()
 
         playersWhichDying.forEach { player ->
-            val dealerResult: GameResult = dealer.updateResult(BUST_SCORE)
-            player.updateResult(dealerResult)
+            val dealerResult: GameResult = dealer.getResult(BUST_SCORE)
+            executeMoneyLogic(dealerResult, player, dealer)
         }
         playersWhichNotDying.forEach { player ->
-            val dealerResult: GameResult = dealer.updateResult(player.getPlayerScore())
-            player.updateResult(dealerResult)
+            val dealerResult: GameResult = dealer.getResult(player.getPlayerScore())
+            executeMoneyLogic(dealerResult, player, dealer)
+        }
+    }
+
+    private fun executeMoneyLogic(
+        dealerResult: GameResult,
+        player: Player,
+        dealer: Dealer,
+    ) {
+        when (dealerResult) {
+            GameResult.PUSH -> Unit
+            GameResult.WIN -> {
+                val money: Money = player.bettingMoney
+                dealer.gainProfit(money)
+                player.lossMoney(money)
+            }
+
+            GameResult.LOSE -> {
+                val money: Money = player.bettingMoney
+                dealer.lossProfit(money)
+                player.gainMoney(money)
+            }
         }
     }
 

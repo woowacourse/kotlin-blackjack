@@ -130,6 +130,6 @@ class PlayerTest {
         val player = Player("모찌")
         player.updateResult(dealerGameResult)
 
-        assertThat(player.result).isEqualTo(expected)
+        assertThat(player.bettingMoney).isEqualTo(expected)
     }
 }
