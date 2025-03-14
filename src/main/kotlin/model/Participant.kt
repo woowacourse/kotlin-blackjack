@@ -14,6 +14,10 @@ abstract class Participant(private val hand: Hand) {
 
     fun getHand(): Hand = hand
 
+    private fun isBust(): Boolean = getScore() > GameResultDecider.BLACKJACK_SCORE
+
+    fun isBlackJack(): Boolean = isBust() && cards.size == 2
+
     companion object {
         private const val INITIAL_DRAW_COUNT = 2
         private const val DEFAULT_DRAW_COUNT = 1
