@@ -9,7 +9,7 @@ class ProfitCalculator(private val dealer: Dealer, private val players: Players)
     val playerProfits: List<PlayerProfit> =
         players.map { player -> PlayerProfit(player.name, playerProfit(player)) }
 
-    fun dealerProfit(playerProfits: List<PlayerProfit>): Float {
+    fun dealerProfit(): Float {
         var initialDealerProfit = players.map { it.betAmount }.sum()
 
         playerProfits.forEachIndexed { index, playerResult ->
