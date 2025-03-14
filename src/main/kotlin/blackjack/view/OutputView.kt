@@ -1,6 +1,5 @@
 package blackjack.view
 
-import blackjack.domain.GameResult
 import blackjack.domain.card.CardTier
 import blackjack.domain.card.Shape
 import blackjack.domain.card.TrumpCard
@@ -29,13 +28,13 @@ class OutputView {
 
     fun printDealerSum(dealer: Dealer) {
         print(format(MESSAGE_OUTPUT_DEALER_CARD, makeCardListMessage(dealer.getAllCards())))
-        println(format(MESSAGE_OUTPUT_SUM, dealer.finalScore()))
+        println(format(MESSAGE_OUTPUT_SUM, dealer.cards.finalScore()))
     }
 
     fun printPlayerSum(players: List<Player>) {
         players.forEach { player ->
             print(format(MESSAGE_OUTPUT_PLAYER_CARD, player.name, makeCardListMessage(player.getAllCards())))
-            println(format(MESSAGE_OUTPUT_SUM, player.finalScore()))
+            println(format(MESSAGE_OUTPUT_SUM, player.cards.finalScore()))
         }
     }
 
@@ -77,14 +76,6 @@ class OutputView {
             CardTier.QUEEN -> "Q"
             CardTier.KING -> "K"
             else -> this.values.toString()
-        }
-
-    private fun GameResult.toKorean(): String =
-        when (this) {
-            GameResult.WIN -> "승"
-            GameResult.LOSE -> "패"
-            GameResult.DRAW -> "무"
-            else -> "블랙잭"
         }
 
     companion object {
