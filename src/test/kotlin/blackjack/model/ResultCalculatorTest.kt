@@ -78,7 +78,7 @@ class ResultCalculatorTest {
     }
 
     @Test
-    fun `플레이어의 score가 딜러의 score보다 작으면 진다`() {
+    fun `참여자 모두 버스트되지 않고 플레이어의 score가 딜러의 score보다 작으면 진다`() {
         player.addCard(Card(Shape.SPADE, CardNumber.NINE))
         dealer.addCard(Card(Shape.SPADE, CardNumber.TEN))
         val expect = ResultType.LOSS
@@ -89,7 +89,7 @@ class ResultCalculatorTest {
     }
 
     @Test
-    fun `플레이어의 score가 딜러의 score보다 크면 이긴다`() {
+    fun `참여자 모두 버스트되지 않고 플레이어의 score가 딜러의 score보다 크면 이긴다`() {
         player.addCard(Card(Shape.SPADE, CardNumber.NINE))
         dealer.addCard(Card(Shape.SPADE, CardNumber.THREE))
         val expect = ResultType.WIN
@@ -100,7 +100,7 @@ class ResultCalculatorTest {
     }
 
     @Test
-    fun `플레이어의 score가 딜러의 score와 같으면 비긴다`() {
+    fun `참여자 모두 버스트되지 않고 플레이어의 score가 딜러의 score와 같으면 비긴다`() {
         player.addCard(Card(Shape.SPADE, CardNumber.NINE))
         dealer.addCard(Card(Shape.SPADE, CardNumber.NINE))
         val expect = ResultType.TIE
