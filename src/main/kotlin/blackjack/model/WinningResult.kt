@@ -18,8 +18,9 @@ enum class WinningResult {
                 otherBlackjack && oneBlackjack -> PUSH
                 oneBlackjack -> BLACKJACK
                 otherBlackjack -> LOSE
-                one.isBusted() -> LOSE
+                (one.isBusted() && other.isBusted() && one is Player) -> LOSE
                 other.isBusted() -> WIN
+                one.isBusted() -> LOSE
                 other.getScore() > one.getScore() -> LOSE
                 other.getScore() < one.getScore() -> WIN
                 else -> PUSH
