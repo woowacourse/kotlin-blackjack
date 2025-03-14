@@ -1,15 +1,19 @@
 package blackjack.model
 
 interface Participant {
-    val hand: Hand
+    val items: Items
 
     fun draw(cardDeck: CardDeck) {
-        hand.add(cardDeck.draw())
+        items.hand.add(cardDeck.draw())
     }
 
-    fun getHandSize(): Int = hand.getHandCount()
+    fun getHandSize(): Int = items.hand.getHandCount()
 
-    fun getScore(): Int = hand.score()
+    fun getScore(): Int = items.hand.score()
 
-    fun isBusted(): Boolean = hand.isBust()
+    fun isBusted(): Boolean = items.hand.isBust()
+
+    fun compareHand(other: Participant): WinningResult
+
+    fun addPrize(prize: Money) = items.money.addMoney(prize)
 }

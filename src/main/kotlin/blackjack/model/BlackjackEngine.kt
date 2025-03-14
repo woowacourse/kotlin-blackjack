@@ -1,21 +1,16 @@
 package blackjack.model
 
-import blackjack.model.WinningResult.BLACKJACK
-import blackjack.model.WinningResult.LOSE
-import blackjack.model.WinningResult.PUSH
-import blackjack.model.WinningResult.WIN
-
 class BlackjackEngine(
     val cardDeck: CardDeck = CardDeck(),
 ) {
-    var bets: MutableMap<Player, Amount> = mutableMapOf()
+    var bets: MutableMap<Player, Money> = mutableMapOf()
 
     fun getPlayersBet(
         players: Players,
         eventProvider: EventProvider,
     ) {
         players.getPlayers().forEach { player ->
-            bets[player] = Amount(eventProvider.getBetAmount(player.name).toDouble())
+            bets[player] = Money(eventProvider.getBetAmount(player.name).toDouble())
         }
     }
 
@@ -24,18 +19,18 @@ class BlackjackEngine(
             names.map { name ->
                 Player(
                     name,
-                    makeFirstHand(),
+                    Items(makeFirstHand(), Money(0.0)),
                 )
             },
         )
 
-    fun prepareDealer(): Dealer = Dealer(hand = makeFirstHand())
+    fun prepareDealer(): Dealer = Dealer(items = Items(makeFirstHand(), Money(0.0)))
 
-    fun drawPlayer(player: Player): Unit = player.draw(cardDeck)
+    private fun drawPlayer(player: Player): Unit = player.draw(cardDeck)
 
-    fun drawDealer(dealer: Dealer): Unit = dealer.drawUntilFinished(cardDeck)
+    private fun drawDealer(dealer: Dealer): Unit = dealer.drawUntilFinished(cardDeck)
 
-    fun makeFirstHand(): Hand = Hand(List(START_CARD_COUNT) { cardDeck.draw() })
+    private fun makeFirstHand(): Hand = Hand(List(START_CARD_COUNT) { cardDeck.draw() })
 
     fun progressPlayersDraw(
         players: Players,
@@ -43,46 +38,10 @@ class BlackjackEngine(
         eventProvider: EventProvider,
     ) {
         players.value.forEach { player ->
-            eventListener.displayParticipantCards(player.name, player.hand.cards)
+            eventListener.displayParticipantCards(player.name, player.items.hand.cards)
         }
         players.value.forEach { player ->
             progressPlayerDrawUntilFinished(player, eventListener, eventProvider)
-        }
-    }
-
-    fun getDealerMoneyResults(
-        dealer: Dealer,
-        playersEarnMoney: Map<Player, Amount>,
-    ): Pair<Dealer, Amount> {
-        val dealerAmount = Amount(0.0)
-        playersEarnMoney.forEach { playerEarnMoney ->
-            dealerAmount.addMoney(playerEarnMoney.value.toMinus())
-        }
-        return Pair(dealer, dealerAmount)
-    }
-
-    fun getPlayerMoneyResults(
-        dealer: Dealer,
-        players: Players,
-    ): Map<Player, Amount> {
-        val earnMoney: MutableMap<Player, Amount> = mutableMapOf()
-        players.getPlayers().forEach { player ->
-            earnMoney[player] = calculateMoney(player, dealer.getPlayerResult(player))
-        }
-        return earnMoney
-    }
-
-    private fun calculateMoney(
-        player: Player,
-        winningResult: WinningResult,
-    ): Amount {
-        val bet = bets[player]
-        if (bet == null) throw IllegalArgumentException("해당 유저를 찾을 수 없습니다")
-        return when (winningResult) {
-            BLACKJACK -> bet.toBlackjackMoney()
-            WIN -> bet
-            PUSH -> Amount(0.0)
-            LOSE -> bet.toMinus()
         }
     }
 
@@ -93,8 +52,8 @@ class BlackjackEngine(
     ) {
         while (eventProvider.getIsDrawMore(player.name)) {
             drawPlayer(player)
-            eventListener.displayParticipantCards(player.name, player.hand.cards)
-            if (player.hand.isBust()) return
+            eventListener.displayParticipantCards(player.name, player.items.hand.cards)
+            if (player.items.hand.isBust()) return
         }
     }
 
@@ -104,7 +63,44 @@ class BlackjackEngine(
     ) {
         drawDealer(dealer)
         eventListener.displayDealerDrawInfo(dealer.name, dealer.getHandSize() - START_CARD_COUNT)
-        eventListener.displayParticipantInfo(dealer.name, dealer.hand.cards, dealer.hand.score(), dealer.hand.isBust())
+        eventListener.displayParticipantInfo(
+            dealer.name,
+            dealer.items.hand.cards,
+            dealer.items.hand.score(),
+            dealer.items.hand.isBust(),
+        )
+    }
+
+    fun progressCalculateResult(
+        dealer: Dealer,
+        players: Players,
+    ): Map<Participant, Money> {
+        val participantPrize = mutableMapOf<Participant, Money>()
+        val dealerMoney = Money(0.0)
+        players.value.forEach { player ->
+            val playerBets = bets[player] ?: throw (IllegalArgumentException("[ERROR] 유저를 찾을 수 없습니다."))
+            val playerMoney = playerBets.multiplyMoney(WinningResult.getPrize(player.compareHand(dealer)))
+            participantPrize[player] = playerMoney
+            dealerMoney.addMoney(playerBets.multiplyMoney(WinningResult.getPrize(dealer.compareHand(player))))
+        }
+        participantPrize[dealer] = dealerMoney
+        return participantPrize
+    }
+
+    fun progressCalculateFullResult(currentResult: Map<Participant, Money>) {
+        currentResult.forEach { (participant, money) ->
+            participant.addPrize(money)
+        }
+    }
+
+    fun setParticipantCard(
+        dealer: Dealer,
+        players: Players,
+    ) {
+        dealer.items = Items(makeFirstHand(), dealer.items.money)
+        players.value.forEach { player ->
+            player.items = Items(makeFirstHand(), player.items.money)
+        }
     }
 
     companion object {

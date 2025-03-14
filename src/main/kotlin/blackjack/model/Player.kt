@@ -2,5 +2,7 @@ package blackjack.model
 
 class Player(
     val name: String,
-    override val hand: Hand,
-) : Participant
+    override var items: Items,
+) : Participant {
+    override fun compareHand(other: Participant): WinningResult = WinningResult.getResult(this, other)
+}

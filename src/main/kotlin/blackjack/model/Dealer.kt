@@ -7,10 +7,10 @@ import blackjack.model.WinningResult.WIN
 
 class Dealer(
     val name: String = DEALER_NAME,
-    override val hand: Hand,
+    override var items: Items,
 ) : Participant {
     tailrec fun drawUntilFinished(cardDeck: CardDeck) {
-        if (hand.score() > DEALER_DRAW_CRITERIA || hand.isBust()) return
+        if (items.hand.score() > DEALER_DRAW_CRITERIA || items.hand.isBust()) return
         draw(cardDeck)
         drawUntilFinished(cardDeck)
     }
@@ -24,6 +24,12 @@ class Dealer(
         }
 
         return result.toMap()
+    }
+
+    override fun compareHand(other: Participant): WinningResult {
+        val result = WinningResult.getResult(this, other)
+        if (result == BLACKJACK) return WIN
+        return result
     }
 
     fun getPlayerResult(player: Player): WinningResult {

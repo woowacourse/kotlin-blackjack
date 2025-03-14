@@ -2,6 +2,8 @@ package blackjack.controller
 
 import blackjack.model.BlackjackEngine
 import blackjack.model.Dealer
+import blackjack.model.Money
+import blackjack.model.Participant
 import blackjack.model.Players
 import blackjack.view.InputView
 import blackjack.view.OutputView
@@ -10,37 +12,75 @@ class BlackjackController(
     private val inputView: InputView,
     private val outputView: OutputView,
 ) {
-    val blackjackEngine = BlackjackEngine()
+    private val blackjackEngine = BlackjackEngine()
+    private val dealer = blackjackEngine.prepareDealer()
+    private val players = blackjackEngine.preparePlayers(inputView.getNames())
 
-    fun run() {
-        val dealer = blackjackEngine.prepareDealer()
-        val players = blackjackEngine.preparePlayers(inputView.getNames())
+    tailrec fun run() {
         blackjackEngine.getPlayersBet(players, inputView)
         outputView.displayFirstDrawEnd(dealer.name, players.value.map { player -> player.name })
-        outputView.displayParticipantCards(dealer.name, dealer.hand.cards.take(DEALER_FIRST_SHOWN_COUNT))
-        blackjackEngine.progressPlayersDraw(players, outputView, inputView)
-        blackjackEngine.progressDealerDraw(dealer, outputView)
-        displayParticipantsInfo(players)
-        displayResult(dealer, players, outputView)
+        outputView.displayParticipantCards(
+            dealer.name,
+            dealer.items.hand.cards
+                .take(DEALER_FIRST_SHOWN_COUNT),
+        )
+        progressDraw()
+        displayParticipantsInfo()
+        displayResult()
+        if (!inputView.moreGame()) return
+        blackjackEngine.setParticipantCard(dealer, players)
+        return run()
     }
 
-    private fun displayResult(
+    private fun displayResult() {
+        val currentResult = blackjackEngine.progressCalculateResult(dealer, players)
+        displayCurrentResult(currentResult, dealer, players)
+        blackjackEngine.progressCalculateFullResult(currentResult)
+        displayFullResult(dealer, players)
+    }
+
+    private fun progressDraw() {
+        blackjackEngine.progressPlayersDraw(players, outputView, inputView)
+        blackjackEngine.progressDealerDraw(dealer, outputView)
+    }
+
+    private fun displayFullResult(
         dealer: Dealer,
         players: Players,
-        outputView: OutputView,
     ) {
         outputView.displayResultTitle()
-        val playersResult = blackjackEngine.getPlayerMoneyResults(dealer, players)
-        val dealerResult = blackjackEngine.getDealerMoneyResults(dealer, playersResult)
-        outputView.displayResultMoney(dealerResult.first.name, dealerResult.second.getValue())
-        playersResult.forEach { playerResult ->
-            outputView.displayResultMoney(playerResult.key.name, playerResult.value.getValue())
+        outputView.displayResultMoney(dealer.name, dealer.items.money.getValue())
+        players.value.forEach { player ->
+            outputView.displayResultMoney(player.name, player.items.money.getValue())
         }
     }
 
-    private fun displayParticipantsInfo(players: Players) {
+    private fun displayCurrentResult(
+        currentResult: Map<Participant, Money>,
+        dealer: Dealer,
+        players: Players,
+    ) {
+        outputView.displayCurrentResultTitle()
+        outputView.displayResultMoney(
+            dealer.name,
+            currentResult[dealer]?.getValue() ?: throw IllegalArgumentException("[ERROR] 딜러를 찾을 수 없습니다."),
+        )
         players.value.forEach { player ->
-            outputView.displayParticipantInfo(player.name, player.hand.cards, player.hand.score(), player.hand.isBust())
+            outputView.displayResultMoney(
+                player.name,
+                currentResult[player]?.getValue() ?: throw IllegalArgumentException("[ERROR] 플레이어를 찾을 수 없습니다."),
+            )
+        }
+    }
+
+    private fun displayParticipantsInfo() {
+        players.value.forEach { player ->
+            outputView.displayParticipantInfo(
+                player.name,
+                player.items.hand.cards,
+                player.items.hand.score(),
+                player.items.hand.isBust(),
+            )
         }
     }
 

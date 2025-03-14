@@ -82,4 +82,8 @@ class OutputView : EventListener {
     ) {
         println("$name: ${resultMoney.toInt()}")
     }
+
+    fun displayCurrentResultTitle() {
+        println("\n## 배팅 결과")
+    }
 }

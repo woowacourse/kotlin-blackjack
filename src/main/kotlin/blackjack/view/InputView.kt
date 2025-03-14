@@ -39,4 +39,19 @@ class InputView : EventProvider {
         }
         return getBetAmountInput()
     }
+
+    fun moreGame(): Boolean {
+        println("\n한판 더 하시겠습니까?")
+        return moreGameInput()
+    }
+
+    private tailrec fun moreGameInput(): Boolean {
+        val value = readln().lowercase()
+        if (value != "y" && value != "n") {
+            println("[ERROR] 잘못된 입력값입니다.")
+        } else {
+            return value == "y"
+        }
+        return moreGameInput()
+    }
 }
