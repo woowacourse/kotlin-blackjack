@@ -13,11 +13,7 @@ class Dealer(
     }
 
     fun showStartingHand(): List<Card> {
-        return hand.show().take(1)
-    }
-
-    override fun showHand(): List<Card> {
-        return hand.show()
+        return showHand().take(1)
     }
 
     fun processHits(

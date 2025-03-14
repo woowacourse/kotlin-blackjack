@@ -16,10 +16,6 @@ class Player(
         return !isBusted()
     }
 
-    override fun showHand(): List<Card> {
-        return hand.show()
-    }
-
     fun placeBet(input: (Player) -> Bet) {
         bet = input(this)
     }

@@ -23,9 +23,11 @@ abstract class Participant(val name: String, cards: List<Card>) {
         return hand.isBlackJack()
     }
 
-    abstract fun canHit(): Boolean
+    fun showHand(): List<Card> {
+        return hand.show()
+    }
 
-    abstract fun showHand(): List<Card>
+    abstract fun canHit(): Boolean
 
     companion object {
         const val DEFAULT_DRAW_COUNT = 1
