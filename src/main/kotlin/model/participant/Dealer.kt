@@ -12,16 +12,17 @@ class Dealer(dealerCards: Cards) : Participant(dealerCards) {
         return false
     }
 
-    fun drawCount(drawnCard: Card): Int {
+    fun drawCount(drawCard: () -> Card): Int {
         var drawCount = DEFAULT_DRAW_COUNT
-        drawCount += addDraws(drawnCard)
+        drawCount += addDraws(drawCard)
         return drawCount
     }
 
-    private fun addDraws(drawnCard: Card): Int {
+    private fun addDraws(drawCard: () -> Card): Int {
         var count = DEFAULT_DRAW_COUNT
-        while (turn(drawnCard)) count++
-
+        while (turn(drawCard())) {
+            count++
+        }
         return count
     }
 
