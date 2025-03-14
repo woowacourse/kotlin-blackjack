@@ -11,7 +11,6 @@ import blackjack.model.Players
 import blackjack.model.WinningResult
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 
@@ -32,40 +31,45 @@ class DealerTest {
     @Test
     fun `딜러 점수와 플레이어 점수 리스트를 비교하여 승패 결과를 반환한다`() {
         // given
-        val dealer = Dealer(
-            hand = Hand(
-                listOf(
-                    Card.getCashed(CardRank.TWO, CardSuit.CLUB),
-                    Card.getCashed(CardRank.THREE, CardSuit.CLUB)
-                )
+        val dealer =
+            Dealer(
+                hand =
+                    Hand(
+                        listOf(
+                            Card.getCashed(CardRank.TWO, CardSuit.CLUB),
+                            Card.getCashed(CardRank.THREE, CardSuit.CLUB),
+                        ),
+                    ),
             )
-        )
 
         // when
-        val losePlayer1 = Player(
-            "패배",
-            Hand(listOf(Card.getCashed(CardRank.TWO, CardSuit.CLUB), Card.getCashed(CardRank.TWO, CardSuit.CLUB)))
-        )
-        val losePlayer2 = Player(
-            "패배",
-            Hand(listOf(Card.getCashed(CardRank.TWO, CardSuit.CLUB), Card.getCashed(CardRank.TWO, CardSuit.CLUB)))
-        )
-        val pushPlayer = Player(
-            "동점",
-            Hand(listOf(Card.getCashed(CardRank.TWO, CardSuit.CLUB), Card.getCashed(CardRank.THREE, CardSuit.CLUB)))
-        )
-        val winningPlayer = Player(
-            "승리",
-            Hand(listOf(Card.getCashed(CardRank.TWO, CardSuit.CLUB), Card.getCashed(CardRank.ACE, CardSuit.CLUB)))
-        )
+        val losePlayer1 =
+            Player(
+                "패배",
+                Hand(listOf(Card.getCashed(CardRank.TWO, CardSuit.CLUB), Card.getCashed(CardRank.TWO, CardSuit.CLUB))),
+            )
+        val losePlayer2 =
+            Player(
+                "패배",
+                Hand(listOf(Card.getCashed(CardRank.TWO, CardSuit.CLUB), Card.getCashed(CardRank.TWO, CardSuit.CLUB))),
+            )
+        val pushPlayer =
+            Player(
+                "동점",
+                Hand(listOf(Card.getCashed(CardRank.TWO, CardSuit.CLUB), Card.getCashed(CardRank.THREE, CardSuit.CLUB))),
+            )
+        val winningPlayer =
+            Player(
+                "승리",
+                Hand(listOf(Card.getCashed(CardRank.TWO, CardSuit.CLUB), Card.getCashed(CardRank.ACE, CardSuit.CLUB))),
+            )
         val players = Players(listOf(losePlayer1, losePlayer2, winningPlayer, pushPlayer))
 
         // then
         assertAll(
             { assertEquals(dealer.getWinDrawLossResult(players)[WinningResult.WIN], 2) },
             { assertEquals(dealer.getWinDrawLossResult(players)[WinningResult.LOSE], 1) },
-            { assertEquals(dealer.getWinDrawLossResult(players)[WinningResult.PUSH], 1) }
+            { assertEquals(dealer.getWinDrawLossResult(players)[WinningResult.PUSH], 1) },
         )
-
     }
 }

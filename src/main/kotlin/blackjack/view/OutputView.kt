@@ -1,6 +1,5 @@
 package blackjack.view
 
-import blackjack.model.Amount
 import blackjack.model.Card
 import blackjack.model.CardRank
 import blackjack.model.CardRank.ACE
@@ -14,17 +13,23 @@ import blackjack.model.CardSuit.HEART
 import blackjack.model.CardSuit.SPADE
 import blackjack.model.EventListener
 import blackjack.model.WinningResult
+import blackjack.model.WinningResult.BLACKJACK
 import blackjack.model.WinningResult.LOSE
 import blackjack.model.WinningResult.PUSH
 import blackjack.model.WinningResult.WIN
-import blackjack.model.WinningResult.BLACKJACK
 
 class OutputView : EventListener {
-    fun displayFirstDrawEnd(dealerName: String, players: List<String>) {
+    fun displayFirstDrawEnd(
+        dealerName: String,
+        players: List<String>,
+    ) {
         println("\n${dealerName}와 ${players.joinToString()}에게 2장을 나누었습니다.")
     }
 
-    override fun displayDealerDrawInfo(name: String, count: Int) {
+    override fun displayDealerDrawInfo(
+        name: String,
+        count: Int,
+    ) {
         val output =
             when {
                 count == 0 -> "딜러는 16초과라 카드를 더 이상 뽑지 않았습니다."
@@ -76,11 +81,17 @@ class OutputView : EventListener {
         println("\n## 최종 수익")
     }
 
-    fun displayResultMoney(name: String, resultMoney: Double) {
-        println("${name}: ${resultMoney.toInt()}")
+    fun displayResultMoney(
+        name: String,
+        resultMoney: Double,
+    ) {
+        println("$name: ${resultMoney.toInt()}")
     }
 
-    fun displayDealerResult(name: String, winningResult: Map<WinningResult, Int>) {
+    fun displayDealerResult(
+        name: String,
+        winningResult: Map<WinningResult, Int>,
+    ) {
         println("$name: ${winningResult[WIN]}승 ${winningResult[PUSH]}무 ${winningResult[LOSE]}패")
     }
 

@@ -5,5 +5,4 @@ enum class WinningResult {
     WIN,
     PUSH,
     LOSE,
-    ;
 }

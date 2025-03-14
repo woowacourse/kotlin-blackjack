@@ -17,7 +17,7 @@ class HandTest {
     @Test
     fun `뽑은 카드를 핸드에 추가한다`() {
         // given
-        val hand = Hand(listOf(Card.getCashed(JACK,CLUB),Card.getCashed(QUEEN,CLUB)))
+        val hand = Hand(listOf(Card.getCashed(JACK, CLUB), Card.getCashed(QUEEN, CLUB)))
         val card = Card.getCashed(ACE, CLUB)
 
         // when
@@ -31,7 +31,7 @@ class HandTest {
     fun `핸드에 2클로버 한 장,잭을 가지고 있으면 12점을 반환한다`() {
         // given
         val expectedScore = 12
-        val hand = Hand(listOf(Card.getCashed(JACK,CLUB),Card.getCashed(TWO, CLUB)))
+        val hand = Hand(listOf(Card.getCashed(JACK, CLUB), Card.getCashed(TWO, CLUB)))
 
         // when
         val score = hand.score()
@@ -44,7 +44,7 @@ class HandTest {
     fun `핸드에 에이스를 포함한 값이 21이 넘으면 에이스를 1로 바꾼다`() {
         // given
         val expectedScore = 12
-        val hand = Hand(listOf(Card.getCashed(ACE,CLUB),Card.getCashed(ACE,CLUB)))
+        val hand = Hand(listOf(Card.getCashed(ACE, CLUB), Card.getCashed(ACE, CLUB)))
 
         // when
         val score = hand.score()
@@ -60,7 +60,7 @@ class HandTest {
         val card1 = Card.getCashed(QUEEN, CLUB)
         val card2 = Card.getCashed(KING, CLUB)
         val card3 = Card.getCashed(JACK, CLUB)
-        val hand = Hand(listOf(card1,card2))
+        val hand = Hand(listOf(card1, card2))
 
         // when
         hand.add(card3)
@@ -74,10 +74,10 @@ class HandTest {
         // given
         val card1 = Card.getCashed(ACE, CLUB)
         val card2 = Card.getCashed(QUEEN, CLUB)
-        val hand = Hand(listOf(card1,card2))
+        val hand = Hand(listOf(card1, card2))
         val card3 = Card.getCashed(NINE, CLUB)
 
-        //when
+        // when
         hand.add(card3)
         val expectedScore = 20
 

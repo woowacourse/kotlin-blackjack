@@ -1,7 +1,6 @@
 package blackjack.model
 
 interface Participant {
-
     val hand: Hand
 
     fun draw(cardDeck: CardDeck) {
@@ -13,5 +12,4 @@ interface Participant {
     fun getScore(): Int = hand.score()
 
     fun isBusted(): Boolean = hand.isBust()
-
 }

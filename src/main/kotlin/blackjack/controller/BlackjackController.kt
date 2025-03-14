@@ -1,9 +1,7 @@
 package blackjack.controller
 
-import blackjack.model.Amount
 import blackjack.model.BlackjackEngine
 import blackjack.model.Dealer
-import blackjack.model.Player
 import blackjack.model.Players
 import blackjack.view.InputView
 import blackjack.view.OutputView
@@ -13,6 +11,7 @@ class BlackjackController(
     private val outputView: OutputView,
 ) {
     val blackjackEngine = BlackjackEngine()
+
     fun run() {
         val dealer = blackjackEngine.prepareDealer()
         val players = blackjackEngine.preparePlayers(inputView.getNames())
@@ -25,7 +24,11 @@ class BlackjackController(
         displayResult(dealer, players, outputView)
     }
 
-    private fun displayResult(dealer: Dealer, players: Players, outputView: OutputView) {
+    private fun displayResult(
+        dealer: Dealer,
+        players: Players,
+        outputView: OutputView,
+    ) {
         outputView.displayResultTitle()
         val playersResult = blackjackEngine.getPlayerMoneyResults(dealer, players)
         val dealerResult = blackjackEngine.getDealerMoneyResults(dealer, playersResult)

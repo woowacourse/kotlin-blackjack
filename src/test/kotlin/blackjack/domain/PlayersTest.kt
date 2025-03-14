@@ -8,38 +8,39 @@ import blackjack.model.CardRank.QUEEN
 import blackjack.model.CardRank.TWO
 import blackjack.model.CardSuit.CLUB
 import blackjack.model.CardSuit.DIAMOND
+import blackjack.model.Dealer
 import blackjack.model.Hand
 import blackjack.model.Player
 import blackjack.model.Players
-import blackjack.model.Dealer
+import blackjack.model.WinningResult.BLACKJACK
 import blackjack.model.WinningResult.LOSE
 import blackjack.model.WinningResult.PUSH
 import blackjack.model.WinningResult.WIN
-import blackjack.model.WinningResult.BLACKJACK
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class PlayersTest {
-
     @Test
     fun `딜러와 플레이어의 점수가 같으면 무승부를 반환한다`() {
         // given
         val playerName = "시아"
-        val playerHand = Hand(
-            listOf(
-                Card(TWO, CLUB),
-                Card(NINE, CLUB)
+        val playerHand =
+            Hand(
+                listOf(
+                    Card(TWO, CLUB),
+                    Card(NINE, CLUB),
+                ),
             )
-        )
         val player = Player(playerName, playerHand)
         val players = Players(listOf(player))
 
-        val dealerHand = Hand(
-            listOf(
-                Card(TWO, DIAMOND),
-                Card(NINE, DIAMOND)
+        val dealerHand =
+            Hand(
+                listOf(
+                    Card(TWO, DIAMOND),
+                    Card(NINE, DIAMOND),
+                ),
             )
-        )
         val dealer = Dealer(hand = dealerHand)
 
         // when
@@ -49,24 +50,27 @@ class PlayersTest {
         val expected = mapOf(playerName to PUSH)
         assertThat(results).isEqualTo(expected)
     }
+
     @Test
     fun `플레이어의 점수가 블랙잭이면 블랙잭을 반환한다`() {
         val playerName = "시아"
-        val playerHand = Hand(
-            listOf(
-                Card(ACE, CLUB),
-                Card(KING, CLUB)
+        val playerHand =
+            Hand(
+                listOf(
+                    Card(ACE, CLUB),
+                    Card(KING, CLUB),
+                ),
             )
-        )
         val player = Player(playerName, playerHand)
         val players = Players(listOf(player))
 
-        val dealerHand = Hand(
-            listOf(
-                Card(TWO, DIAMOND),
-                Card(NINE, DIAMOND)
+        val dealerHand =
+            Hand(
+                listOf(
+                    Card(TWO, DIAMOND),
+                    Card(NINE, DIAMOND),
+                ),
             )
-        )
         val dealer = Dealer(hand = dealerHand)
 
         // when
@@ -76,24 +80,27 @@ class PlayersTest {
         val expected = mapOf(playerName to BLACKJACK)
         assertThat(results).isEqualTo(expected)
     }
+
     @Test
     fun `플레이어의 점수가 딜러의 점수보다 높으면 우승을 반환한다`() {
         val playerName = "시아"
-        val playerHand = Hand(
-            listOf(
-                Card(QUEEN, CLUB),
-                Card(KING, CLUB)
+        val playerHand =
+            Hand(
+                listOf(
+                    Card(QUEEN, CLUB),
+                    Card(KING, CLUB),
+                ),
             )
-        )
         val player = Player(playerName, playerHand)
         val players = Players(listOf(player))
 
-        val dealerHand = Hand(
-            listOf(
-                Card(TWO, DIAMOND),
-                Card(NINE, DIAMOND)
+        val dealerHand =
+            Hand(
+                listOf(
+                    Card(TWO, DIAMOND),
+                    Card(NINE, DIAMOND),
+                ),
             )
-        )
         val dealer = Dealer(hand = dealerHand)
 
         // when
@@ -106,23 +113,24 @@ class PlayersTest {
 
     @Test
     fun `플레이어의 점수가 딜러의 점수보다 낮으면 패배를 반환한다`() {
-
         val playerName = "시아"
-        val playerHand = Hand(
-            listOf(
-                Card(TWO, CLUB),
-                Card(NINE, CLUB)
+        val playerHand =
+            Hand(
+                listOf(
+                    Card(TWO, CLUB),
+                    Card(NINE, CLUB),
+                ),
             )
-        )
         val player = Player(playerName, playerHand)
         val players = Players(listOf(player))
 
-        val dealerHand = Hand(
-            listOf(
-                Card(KING, DIAMOND),
-                Card(QUEEN, DIAMOND)
+        val dealerHand =
+            Hand(
+                listOf(
+                    Card(KING, DIAMOND),
+                    Card(QUEEN, DIAMOND),
+                ),
             )
-        )
         val dealer = Dealer(hand = dealerHand)
 
         // when

@@ -5,16 +5,18 @@ class Card(
     val suit: CardSuit,
 ) {
     companion object {
-        val SINGLE_DECK = CardRank.entries.flatMap { cardRank ->
-            CardSuit.entries.map { cardSuit ->
-                Card(cardRank, cardSuit)
+        val SINGLE_DECK =
+            CardRank.entries.flatMap { cardRank ->
+                CardSuit.entries.map { cardSuit ->
+                    Card(cardRank, cardSuit)
+                }
             }
-        }
 
-        fun getCashed(rank: CardRank, suit: CardSuit): Card {
-            return SINGLE_DECK.findLast { it.rank == rank && it.suit == suit }
+        fun getCashed(
+            rank: CardRank,
+            suit: CardSuit,
+        ): Card =
+            SINGLE_DECK.findLast { it.rank == rank && it.suit == suit }
                 ?: throw IllegalArgumentException("[ERROR] 잘못된 카드 번호나 문양입니다.")
-        }
     }
 }
-
