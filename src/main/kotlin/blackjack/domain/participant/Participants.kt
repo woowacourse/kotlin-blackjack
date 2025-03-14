@@ -2,6 +2,7 @@ package blackjack.domain.participant
 
 import blackjack.domain.BettingAmount
 import blackjack.domain.Profit
+import blackjack.domain.card.Card
 import blackjack.domain.card.Deck
 
 class Participants(
@@ -20,34 +21,34 @@ class Participants(
     }
 
     fun playGame(
-        deck: Deck,
-        onPlayerResponse: (Player) -> Boolean,
+        draw: () -> Card,
+        onPlayerChoice: (Player) -> Boolean,
         onPlayerDraw: (Player) -> Unit,
         onDealerDraw: (Dealer) -> Unit,
     ) {
-        playPlayersTurn(deck, onPlayerResponse, onPlayerDraw)
-        playDealerTurn(deck, onDealerDraw)
+        playPlayersTurn(draw, onPlayerChoice, onPlayerDraw)
+        playDealerTurn(draw, onDealerDraw)
     }
 
     private fun playPlayersTurn(
-        deck: Deck,
-        onResponse: (Player) -> Boolean,
+        draw: () -> Card,
+        onChoice: (Player) -> Boolean,
         onDraw: (Player) -> Unit,
     ) {
         players.forEach { player ->
-            while (player.canHit() && onResponse(player)) {
-                player.drawCard(deck.pick())
+            while (player.canHit() && onChoice(player)) {
+                player.drawCard(draw())
                 onDraw(player)
             }
         }
     }
 
     private fun playDealerTurn(
-        deck: Deck,
+        draw: () -> Card,
         onDraw: (Dealer) -> Unit,
     ) {
         while (dealer.canHit()) {
-            dealer.drawCard(deck.pick())
+            dealer.drawCard(draw())
             onDraw(dealer)
         }
     }

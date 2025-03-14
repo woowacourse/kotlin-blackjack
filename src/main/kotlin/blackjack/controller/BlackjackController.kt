@@ -54,7 +54,7 @@ class BlackjackController(
 
     private fun playGame(game: BlackjackGame) {
         game.playTurns(
-            onPlayerResponse = inputView::readPlayerHit,
+            onPlayerChoice = inputView::readPlayerHit,
             onPlayerDraw = outputView::printPlayerCards,
             onDealerDraw = outputView::printDealerHit,
         )
