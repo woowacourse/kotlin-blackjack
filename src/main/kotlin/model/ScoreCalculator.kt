@@ -8,7 +8,7 @@ class ScoreCalculator(private val hand: Hand) {
     fun calculateTotalCardScore(): Int {
         var score = hand.getScore()
         var aceCount = countAce()
-        while (score + ACE_PLUS_VALUE <= GameResultDecider.BLACKJACK_SCORE && countAce() > DEFAULT_ZERO) {
+        while (aceCount > DEFAULT_ZERO && score + ACE_PLUS_VALUE <= GameResultDecider.BLACKJACK_SCORE) {
             score += ACE_PLUS_VALUE
             aceCount--
         }
