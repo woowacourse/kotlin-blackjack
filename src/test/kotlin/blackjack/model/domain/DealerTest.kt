@@ -1,0 +1,34 @@
+package blackjack.model.domain
+
+import blackjack.model.domain.card.Card
+import blackjack.model.domain.participant.Dealer
+import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+
+class DealerTest {
+    private val dealer = Dealer()
+
+    @BeforeEach
+    fun setup() {
+        // given
+        dealer.receiveCard(listOf(Card.from("AceHeart"), Card.from("SixSpade")))
+    }
+
+    @Test
+    fun `받은 카드의 목록을 반환한다`() {
+        // when
+        val actual = dealer.cardDeck
+        val expected = listOf(Card.from("AceHeart"), Card.from("SixSpade"))
+        // then
+        assertThat(actual).isEqualTo(expected)
+    }
+
+    @Test
+    fun `딜러 카드 숫자 합이 16보다 작으면 카드를 받아올 수 있도록 True를 반환한다`() {
+        // when
+        val actual = dealer.canHit()
+        // then
+        assertThat(actual).isTrue()
+    }
+}
