@@ -3,9 +3,9 @@ package blackjack
 import blackjack.domain.card.Card
 import blackjack.domain.card.Rank
 import blackjack.domain.card.Suit
+import blackjack.domain.gameResult.BlackJackResult
 import blackjack.domain.gameResult.GameResult
-import blackjack.domain.gameResult.GameResultState
-import blackjack.domain.gameResult.PlayerResults
+import blackjack.domain.gameResult.PlayerResult
 import blackjack.domain.gameResult.state.PlayerStay
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Player
@@ -13,7 +13,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-class PlayerResultsTest {
+class BlackJackResultTest {
     private lateinit var dealer: Dealer
     private lateinit var player: Player
     private val bettingAmount = 5000
@@ -43,13 +43,13 @@ class PlayerResultsTest {
             Card.of(Rank.TEN, Suit.CLUB),
             Card.of(Rank.TEN, Suit.SPADE),
         )
-        val playerResults = PlayerResults(dealer, listOf(player))
+        val blackJackResult = BlackJackResult(dealer, listOf(player))
         val playerGameResult =
-            GameResultState(
+            PlayerResult(
                 PlayerStay(player),
                 GameResult.WIN,
             )
-        assertThat(playerResults.toList()[0]).isEqualTo(playerGameResult)
+        assertThat(blackJackResult.playerResults[0]).isEqualTo(playerGameResult)
     }
 
     @Test
@@ -63,13 +63,13 @@ class PlayerResultsTest {
             Card.of(Rank.TEN, Suit.CLUB),
             Card.of(Rank.TEN, Suit.SPADE),
         )
-        val playerResults = PlayerResults(dealer, listOf(player))
+        val blackJackResult = BlackJackResult(dealer, listOf(player))
         val playerGameResult =
-            GameResultState(
+            PlayerResult(
                 PlayerStay(player),
                 GameResult.LOSE,
             )
-        assertThat(playerResults.toList()[0]).isEqualTo(playerGameResult)
+        assertThat(blackJackResult.playerResults[0]).isEqualTo(playerGameResult)
     }
 
     @Test
@@ -85,13 +85,13 @@ class PlayerResultsTest {
             Card.of(Rank.TEN, Suit.SPADE),
             Card.of(Rank.NINE, Suit.SPADE),
         )
-        val playerResults = PlayerResults(dealer, listOf(player))
+        val blackJackResult = BlackJackResult(dealer, listOf(player))
         val playerGameResult =
-            GameResultState(
+            PlayerResult(
                 PlayerStay(player),
                 GameResult.DRAW,
             )
-        assertThat(playerResults.toList()[0]).isEqualTo(playerGameResult)
+        assertThat(blackJackResult.playerResults[0]).isEqualTo(playerGameResult)
     }
 
     @Test
@@ -106,13 +106,13 @@ class PlayerResultsTest {
             Card.of(Rank.TEN, Suit.SPADE),
             Card.of(Rank.NINE, Suit.SPADE),
         )
-        val playerResults = PlayerResults(dealer, listOf(player))
+        val blackJackResult = BlackJackResult(dealer, listOf(player))
         val playerGameResult =
-            GameResultState(
+            PlayerResult(
                 PlayerStay(player),
                 GameResult.LOSE,
             )
-        assertThat(playerResults.toList()[0]).isEqualTo(playerGameResult)
+        assertThat(blackJackResult.playerResults[0]).isEqualTo(playerGameResult)
     }
 
     @Test
@@ -127,8 +127,8 @@ class PlayerResultsTest {
             Card.of(Rank.TEN, Suit.SPADE),
             Card.of(Rank.NINE, Suit.SPADE),
         )
-        val playerResults = PlayerResults(dealer, listOf(player))
-        assertThat(playerResults.toList()[0].getEarn()).isEqualTo(5000)
+        val blackJackResult = BlackJackResult(dealer, listOf(player))
+        assertThat(blackJackResult.playerResults[0].getProfit()).isEqualTo(5000)
     }
 
     @Test
@@ -142,8 +142,8 @@ class PlayerResultsTest {
             Card.of(Rank.TEN, Suit.SPADE),
             Card.of(Rank.NINE, Suit.SPADE),
         )
-        val playerResults = PlayerResults(dealer, listOf(player))
-        assertThat(playerResults.toList()[0].getEarn()).isEqualTo(-5000)
+        val blackJackResult = BlackJackResult(dealer, listOf(player))
+        assertThat(blackJackResult.playerResults[0].getProfit()).isEqualTo(-5000)
     }
 
     @Test
@@ -157,8 +157,8 @@ class PlayerResultsTest {
             Card.of(Rank.TEN, Suit.SPADE),
             Card.of(Rank.ACE, Suit.SPADE),
         )
-        val playerResults = PlayerResults(dealer, listOf(player))
-        assertThat(playerResults.toList()[0].getEarn()).isEqualTo(7500)
+        val blackJackResult = BlackJackResult(dealer, listOf(player))
+        assertThat(blackJackResult.playerResults[0].getProfit()).isEqualTo(7500)
     }
 
     @Test
@@ -172,8 +172,8 @@ class PlayerResultsTest {
             Card.of(Rank.TEN, Suit.SPADE),
             Card.of(Rank.EIGHT, Suit.SPADE),
         )
-        val playerResults = PlayerResults(dealer, listOf(player))
-        assertThat(playerResults.toList()[0].getEarn()).isEqualTo(-5000)
+        val blackJackResult = BlackJackResult(dealer, listOf(player))
+        assertThat(blackJackResult.playerResults[0].getProfit()).isEqualTo(-5000)
     }
 
     @Test
@@ -188,8 +188,8 @@ class PlayerResultsTest {
             Card.of(Rank.TEN, Suit.SPADE),
             Card.of(Rank.ACE, Suit.SPADE),
         )
-        val playerResults = PlayerResults(dealer, listOf(player))
-        assertThat(playerResults.toList()[0].getEarn()).isEqualTo(7500)
+        val blackJackResult = BlackJackResult(dealer, listOf(player))
+        assertThat(blackJackResult.playerResults[0].getProfit()).isEqualTo(7500)
     }
 
     @Test
@@ -204,8 +204,8 @@ class PlayerResultsTest {
             Card.of(Rank.ACE, Suit.SPADE),
             Card.of(Rank.FOUR, Suit.SPADE),
         )
-        val playerResults = PlayerResults(dealer, listOf(player))
-        assertThat(playerResults.toList()[0].getEarn()).isEqualTo(0)
+        val blackJackResult = BlackJackResult(dealer, listOf(player))
+        assertThat(blackJackResult.playerResults[0].getProfit()).isEqualTo(0)
     }
 
     @Test
@@ -219,8 +219,8 @@ class PlayerResultsTest {
             Card.of(Rank.TEN, Suit.SPADE),
             Card.of(Rank.ACE, Suit.SPADE),
         )
-        val playerResults = PlayerResults(dealer, listOf(player))
-        assertThat(playerResults.toList()[0].getEarn()).isEqualTo(0)
+        val blackJackResult = BlackJackResult(dealer, listOf(player))
+        assertThat(blackJackResult.playerResults[0].getProfit()).isEqualTo(0)
     }
 
     @Test
@@ -236,8 +236,8 @@ class PlayerResultsTest {
             Card.of(Rank.TEN, Suit.SPADE),
             Card.of(Rank.NINE, Suit.SPADE),
         )
-        val playerResults = PlayerResults(dealer, listOf(player))
-        assertThat(playerResults.toList()[0].getEarn()).isEqualTo(-5000)
+        val blackJackResult = BlackJackResult(dealer, listOf(player))
+        assertThat(blackJackResult.playerResults[0].getProfit()).isEqualTo(-5000)
     }
 
     @Test
@@ -252,7 +252,7 @@ class PlayerResultsTest {
             Card.of(Rank.TEN, Suit.CLUB),
             Card.of(Rank.TEN, Suit.SPADE),
         )
-        val playerResults = PlayerResults(dealer, listOf(player))
-        assertThat(playerResults.toList()[0].getEarn()).isEqualTo(-5000)
+        val blackJackResult = BlackJackResult(dealer, listOf(player))
+        assertThat(blackJackResult.playerResults[0].getProfit()).isEqualTo(-5000)
     }
 }

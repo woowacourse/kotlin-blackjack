@@ -3,7 +3,7 @@ package blackjack
 import blackjack.domain.BlackJackGame
 import blackjack.domain.card.Card
 import blackjack.domain.deck.Deck
-import blackjack.domain.gameResult.PlayerResults
+import blackjack.domain.gameResult.BlackJackResult
 import blackjack.domain.participant.Player
 import blackjack.global.ThrowableRetry
 import blackjack.view.InputView
@@ -39,8 +39,8 @@ class GameController(
 
     private fun showResult(game: BlackJackGame) {
         outputView.printFinalCards(game)
-        val result = PlayerResults(game)
-        outputView.printGameResult(result.toList())
+        val result = BlackJackResult(game)
+        outputView.printGameResult(result.playerResults)
     }
 
     override fun onOnceFailure(e: Throwable) {
