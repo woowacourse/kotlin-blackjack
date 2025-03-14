@@ -60,7 +60,7 @@ class BlackjackController(
         val dealer = gameManager.getDealer()
         val players = gameManager.getPlayers()
 
-        outputView.printDealerResult(dealer.cards.displayNames(), dealer.getScore())
+        outputView.printDealerResult(dealer.cards.displayNames(), dealer.getTotalScore())
         val updatedPlayerCardsNames = players.getPlayersCard().map { it.displayNames() }
         val playersTotalScore = players.getPlayersScores()
         outputView.printPlayerResult(players.getPlayersNames(), updatedPlayerCardsNames, playersTotalScore)

@@ -18,15 +18,15 @@ class GameResultDecider(private val dealer: Dealer, private val players: Players
 
     private fun comparePlayerResult(player: Player): GameResult =
         when {
-            dealer.getScore() > BLACKJACK_SCORE -> GameResult.WIN
+            dealer.getTotalScore() > BLACKJACK_SCORE -> GameResult.WIN
             dealer.isBlackJack() && player.isBlackJack() -> GameResult.PUSH
             player.isBlackJack() -> GameResult.BLACKJACK
-            player.getScore() > BLACKJACK_SCORE -> GameResult.LOSE
-            else -> compareScores(player.getScore())
+            player.getTotalScore() > BLACKJACK_SCORE -> GameResult.LOSE
+            else -> compareScores(player.getTotalScore())
         }
 
     private fun compareScores(playerScore: Int): GameResult {
-        val dealerDiff = abs(BLACKJACK_SCORE - dealer.getScore())
+        val dealerDiff = abs(BLACKJACK_SCORE - dealer.getTotalScore())
         val playerDiff = abs(BLACKJACK_SCORE - playerScore)
         return when {
             playerDiff < dealerDiff -> GameResult.WIN

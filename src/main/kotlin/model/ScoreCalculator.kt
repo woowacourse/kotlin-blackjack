@@ -1,18 +1,13 @@
 package model
 
 class ScoreCalculator(private val hand: Hand) {
-    private fun countAce(): Int {
-        return hand.handCards.count { it.cardRank == CardRank.ACE }
-    }
-
     fun calculateTotalCardScore(): Int {
-        var score = hand.getScore()
-        var aceCount = countAce()
-        while (aceCount > DEFAULT_ZERO && score + ACE_PLUS_VALUE <= GameResultDecider.BLACKJACK_SCORE) {
-            score += ACE_PLUS_VALUE
-            aceCount--
+        val baseScore = hand.getScore()
+        return if (hand.handCards.any { it.cardRank == CardRank.ACE } && baseScore + ACE_PLUS_VALUE <= GameResultDecider.BLACKJACK_SCORE) {
+            baseScore + ACE_PLUS_VALUE
+        } else {
+            baseScore
         }
-        return score
     }
 
     companion object {
