@@ -2,9 +2,9 @@ package blackjack.domain.model.progress
 
 import blackjack.domain.model.participant.Player
 
-class BetHistory {
-    private val _playerBets = mutableMapOf<Player, Int>()
-
+class BetHistory(
+    private val _playerBets: MutableMap<Player, Int> = mutableMapOf(),
+) {
     val playerBets: Map<Player, Int>
         get() = _playerBets.toMap()
 

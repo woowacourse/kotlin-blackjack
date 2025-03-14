@@ -4,10 +4,10 @@ import blackjack.domain.model.participant.CardStatus
 import blackjack.domain.model.participant.Dealer
 import blackjack.domain.model.participant.Player
 
-class WinLossStatistics {
-    private val dealerResults = mutableMapOf<WinLoss, Int>()
-    private val _playerWinLoseInfo = mutableMapOf<Player, WinLoss>()
-
+class WinLossStatistics(
+    private val dealerResults: MutableMap<WinLoss, Int> = mutableMapOf(),
+    private val _playerWinLoseInfo: MutableMap<Player, WinLoss> = mutableMapOf(),
+) {
     fun loadDealerResults() = dealerResults.toMap()
 
     val playerWinLoseInfo: Map<Player, WinLoss>
