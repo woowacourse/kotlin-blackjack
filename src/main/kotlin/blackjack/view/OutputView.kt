@@ -82,10 +82,10 @@ class OutputView(
         players: List<Player>,
     ) {
         println(HEADER_FINAL_PROFIT)
-        println(DEALER_RESULT_TEMPLATE.format(profitStatistics.dealerProfits.toString()))
+        println(DEALER_RESULT_TEMPLATE.format("%.0f".format(profitStatistics.dealerProfits)))
         val playerProfits = profitStatistics.playerProfits
         players.forEach { player ->
-            println(player.name + ": " + playerProfits[player])
+            println("%s: %.0f".format(player.name, playerProfits[player]))
         }
     }
 

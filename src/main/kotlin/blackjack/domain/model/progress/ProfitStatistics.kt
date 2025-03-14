@@ -19,7 +19,7 @@ class ProfitStatistics(
             }
         }
     val dealerProfits: Float
-        get() = -playerProfits.values.sum()
+        get() = -playerProfits.values.sum() + 0.0f // -0 방지
 
     private fun calculateProfit(
         betAmount: Int,
