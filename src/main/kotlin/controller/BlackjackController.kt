@@ -1,11 +1,11 @@
 package controller
 
-import model.Cards
-import model.CardsGenerator
-import model.Dealer
-import model.GameResultDecider
-import model.Player
-import model.Players
+import model.card.Cards
+import model.card.CardsGenerator
+import model.participant.Dealer
+import model.participant.Player
+import model.participant.Players
+import model.result.ProfitCalculator
 import view.InputView
 import view.OutputView
 
@@ -17,7 +17,8 @@ class BlackjackController(
     fun run() {
         val allCards = cardsGenerator.generateCards()
         val initialDealerCards = allCards.initialCards()
-        val players = Players(createPlayers(inputView.inputPlayers(), allCards))
+        val playerNames = inputView.inputPlayerNames()
+        val players = Players(createPlayers(playerNames, allCards, inputView.inputBetAmount(playerNames)))
         val dealer = Dealer(initialDealerCards)
 
         showInitialGameState(players, initialDealerCards)
@@ -27,11 +28,11 @@ class BlackjackController(
     }
 
     private fun showTotalResult(
-        initialDealerCards: Cards,
+        dealerCards: Cards,
         dealer: Dealer,
         players: Players,
     ) {
-        outputView.printDealerResult(initialDealerCards.names, dealer.currentScore)
+        outputView.printDealerResult(dealerCards.names, dealer.currentScore)
         showPlayerResult(players)
         showGameResult(dealer, players)
     }
@@ -55,7 +56,7 @@ class BlackjackController(
         allCards: Cards,
     ) {
         if (dealer.canHit()) {
-            val dealerAddCount = dealer.drawCount(allCards.drawCard())
+            val dealerAddCount = dealer.drawCount { allCards.drawCard() }
             outputView.printDealerHit(dealerAddCount)
         }
     }
@@ -77,19 +78,16 @@ class BlackjackController(
         dealer: Dealer,
         players: Players,
     ) {
-        val gameResultOutput = GameResultDecider(dealer, players).compareWinOrLose()
-        outputView.printResult(
-            gameResultOutput.dealerWins,
-            gameResultOutput.dealerLosses,
-            gameResultOutput.playerResults,
-        )
+        val profitCalculator = ProfitCalculator(dealer, players)
+        outputView.printResult(profitCalculator.dealerProfit(), profitCalculator.playerProfits)
     }
 
     private fun createPlayers(
-        playersNames: List<String>,
+        playerNames: List<String>,
         allCards: Cards,
+        betAmounts: List<Float>,
     ): List<Player> =
-        playersNames.map { name ->
-            Player(name, allCards.initialCards())
+        playerNames.mapIndexed { index, name ->
+            Player(name, allCards.initialCards(), betAmounts[index])
         }
 }
