@@ -18,7 +18,7 @@ class BlackjackController(
     private val inputView: InputView,
     private val outputView: OutputView,
 ) {
-    private val cardDeck = CardDeck(Card.WHOLE_CARDS)
+    private val cardDeck = CardDeck(Card.whole_cards)
 
     fun run() {
         outputView.printStartMessage()

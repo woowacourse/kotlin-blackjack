@@ -7,13 +7,13 @@ data class Card(
     fun isAce(): Boolean = denomination == Denomination.ACE
 
     companion object {
-        private val DENOMINATIONS: List<Denomination> = Denomination.entries
-        private val SHAPES: List<Suit> = Suit.entries
+        private val denominations: List<Denomination> = Denomination.entries
+        private val suits: List<Suit> = Suit.entries
 
-        val WHOLE_CARDS: List<Card> =
-            DENOMINATIONS
+        val whole_cards: List<Card> =
+            denominations
                 .flatMap { denomination ->
-                    SHAPES.map { shape ->
+                    suits.map { shape ->
                         Card(shape, denomination)
                     }
                 }.shuffled()
