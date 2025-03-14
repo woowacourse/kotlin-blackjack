@@ -70,8 +70,6 @@ class BlackJackController(
     ) {
         displayDealerExtraCard(game)
         displaySumOfParticipants(participants)
-        displayDealerResult(game)
-        displayPlayerResult(game)
     }
 
     private fun displayProfit(game: BlackJackGame) {
@@ -86,18 +84,6 @@ class BlackJackController(
     private fun displaySumOfParticipants(participants: Participants) {
         outputView.printDealerSum(participants.dealer)
         outputView.printPlayerSum(participants.players)
-    }
-
-    private fun displayDealerResult(game: BlackJackGame) {
-        game.calculateDealerResult { result ->
-            outputView.printDealerResult(result)
-        }
-    }
-
-    private fun displayPlayerResult(game: BlackJackGame) {
-        game.calculatePlayerResult { name, result ->
-            outputView.printPlayerResult(name, result)
-        }
     }
 
     private fun displayPlayerProfit(game: BlackJackGame) {

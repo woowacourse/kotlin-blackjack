@@ -41,23 +41,6 @@ class BlackJackGame(
         return count
     }
 
-    fun calculateDealerResult(action: (Map<GameResult, Int>) -> Unit) {
-        val dealerMap = GameResult.entries.associateWith { 0 }.toMutableMap()
-
-        participants.players.forEach { player ->
-            val result = participants.dealer.getResult(player)
-            dealerMap[result] = dealerMap.getOrDefault(result, 0) + 1
-        }
-        action(dealerMap)
-    }
-
-    fun calculatePlayerResult(action: (String, GameResult) -> Unit) {
-        participants.players.forEach { player ->
-            val result = player.getResult(participants.dealer)
-            action(player.name, result)
-        }
-    }
-
     fun calculateDealerProfit(): Double {
         var dealerFinalProfit = 0.0
 

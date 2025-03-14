@@ -35,7 +35,7 @@ class Player(
             GameResult.BLACKJACK -> bettingMoney.value * 1.5
             GameResult.WIN -> bettingMoney.value.toDouble()
             GameResult.DRAW -> 0.0
-            else -> (0 - bettingMoney.value).toDouble()
+            else -> -1.0 * bettingMoney.value
         }
 
     companion object {

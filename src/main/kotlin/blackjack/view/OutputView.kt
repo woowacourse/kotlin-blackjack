@@ -39,19 +39,6 @@ class OutputView {
         }
     }
 
-    fun printDealerResult(result: Map<GameResult, Int>) {
-        println(MESSAGE_OUTPUT_RESULT_GUIDE)
-        val (win, lose) = result.map { it.value }
-        println(format(MESSAGE_OUTPUT_DEALER_RESULT, win, lose))
-    }
-
-    fun printPlayerResult(
-        name: String,
-        result: GameResult,
-    ) {
-        println(format(MESSAGE_OUTPUT_PLAYER_RESULT, name, result.toKorean()))
-    }
-
     fun printDealerProfit(profit: Double) {
         println(MESSAGE_OUTPUT_PROFIT_GUIDE)
         println(format(MESSAGE_OUTPUT_DEALER_PROFIT, profit))
@@ -106,11 +93,8 @@ class OutputView {
         private const val MESSAGE_OUTPUT_SUM = " - 결과: %d"
         private const val MESSAGE_OUTPUT_PLAYER_CARD = "%s카드: %s"
         private const val MESSAGE_OUTPUT_DEALER_CARD = "딜러: %s"
-        private const val MESSAGE_OUTPUT_RESULT_GUIDE = "\n## 최종 승패"
         private const val MESSAGE_OUTPUT_PROFIT_GUIDE = "\n## 최종 수익"
-        private const val MESSAGE_OUTPUT_DEALER_RESULT = "딜러: %d승 %d패"
         private const val MESSAGE_OUTPUT_DEALER_PROFIT = "딜러: %.2f"
-        private const val MESSAGE_OUTPUT_PLAYER_RESULT = "%s: %s"
         private const val MESSAGE_OUTPUT_PLAYER_OUTPUT = "%s: %.2f"
         private const val MESSAGE_CARD = "%s%s"
     }
