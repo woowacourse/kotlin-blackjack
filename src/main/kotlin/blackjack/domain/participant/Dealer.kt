@@ -5,11 +5,11 @@ import blackjack.domain.GameResult
 class Dealer(
     name: String = DEALER_DEFAULT_NAME,
 ) : Participant(name) {
-    override fun canHit(): Boolean = getScore().score <= DEALER_HIT_CONDITION
+    override fun canHit(): Boolean = score().score <= DEALER_HIT_CONDITION
 
     override fun getResult(other: Participant): GameResult {
-        val thisScore = getScore()
-        val otherScore = other.getScore()
+        val thisScore = score()
+        val otherScore = other.score()
         return when {
             (!this.isBlackjack() && other.isBlackjack()) -> GameResult.LOSE_BLACKJACK
             (otherScore.isBust()) -> GameResult.WIN

@@ -33,9 +33,9 @@ class OutputView {
         dealer: Dealer,
         players: List<Player>,
     ) {
-        println("${cardsInfo(dealer)} ${MESSAGE_SCORE.format(dealer.getScore().score)}")
+        println("${cardsInfo(dealer)} ${MESSAGE_SCORE.format(dealer.score().score)}")
         players.forEach {
-            println("${cardsInfo(it)} ${MESSAGE_SCORE.format(it.getScore().score)}")
+            println("${cardsInfo(it)} ${MESSAGE_SCORE.format(it.score().score)}")
         }
     }
 
@@ -77,10 +77,10 @@ class OutputView {
 
         private fun Suit.toText(): String =
             when (this) {
-                Suit.DIAMOND -> "다이아몬드"
-                Suit.CLUB -> "클로버"
-                Suit.HEART -> "하트"
-                Suit.SPADE -> "스페이드"
+                Suit.DIAMOND -> "♦︎"
+                Suit.CLUB -> "♣︎"
+                Suit.HEART -> "♥︎"
+                Suit.SPADE -> "♠︎"
             }
 
         private fun Card.toText(): String = "${this.rank.toText()}${this.suit.toText()}"

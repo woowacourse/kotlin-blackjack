@@ -38,7 +38,7 @@ class PlayerTest {
 
         // when
         player.drawCards(aceCard, queenCard)
-        val score = player.getScore()
+        val score = player.score()
 
         // then
         assertThat(score.score).isEqualTo(21)
@@ -53,7 +53,7 @@ class PlayerTest {
 
         // when
         player.drawCards(aceSpade, aceDiamond, nineSpade)
-        val score = player.getScore()
+        val score = player.score()
 
         // then
         assertThat(score.score).isEqualTo(21)

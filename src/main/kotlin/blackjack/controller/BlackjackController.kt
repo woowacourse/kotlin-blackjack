@@ -14,15 +14,19 @@ class BlackjackController(
     private val outputView: OutputView,
 ) {
     fun play() {
-        val dealer = Dealer()
-        val players = getPlayers()
-        val bettingInfo = getBettingInfo(players)
-        val participants = Participants(dealer, players)
+        val participants = getParticipants()
+        val bettingInfo = getBettingInfo(participants.players)
         val game = BlackjackGame(Deck.create(), participants)
 
         startGame(game, participants)
         playGame(game)
         showGameResult(participants, bettingInfo)
+    }
+
+    private fun getParticipants(): Participants {
+        val dealer = Dealer()
+        val players = getPlayers()
+        return Participants(dealer, players)
     }
 
     private fun getPlayers(): List<Player> {

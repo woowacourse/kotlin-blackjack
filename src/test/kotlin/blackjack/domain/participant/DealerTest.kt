@@ -39,7 +39,7 @@ class DealerTest {
         // when
         dealer.drawCard(aceCard)
         dealer.drawCard(queenCard)
-        val score = dealer.getScore()
+        val score = dealer.score()
 
         // then
         assertThat(score.score).isEqualTo(21)
@@ -56,7 +56,7 @@ class DealerTest {
         dealer.drawCard(aceSpade)
         dealer.drawCard(aceDiamond)
         dealer.drawCard(nineSpade)
-        val score = dealer.getScore()
+        val score = dealer.score()
 
         // then
         assertThat(score.score).isEqualTo(21)

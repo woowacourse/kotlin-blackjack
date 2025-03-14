@@ -11,7 +11,7 @@ class Hand {
         _cards.add(card)
     }
 
-    fun calculateScore(): Score {
+    fun score(): Score {
         val score = _cards.sumOf { it.getNumber() }
         val aceAdjustedScore = Score(score + ACE_VALUE_DIFFERENCE)
         if (hasAce() && !aceAdjustedScore.isBust()) {
@@ -20,7 +20,7 @@ class Hand {
         return Score(score)
     }
 
-    fun isBlackjack(): Boolean = _cards.size == 2 && calculateScore().isPerfectScore()
+    fun isBlackjack(): Boolean = _cards.size == 2 && score().isPerfectScore()
 
     private fun hasAce(): Boolean = _cards.any { it.isAce() }
 

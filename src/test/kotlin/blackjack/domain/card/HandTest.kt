@@ -18,7 +18,7 @@ class HandTest {
         val hand = Hand.of(aceCard, queenCard)
 
         // when
-        val score = hand.calculateScore()
+        val score = hand.score()
 
         // then
         assertThat(score.score).isEqualTo(21)
@@ -33,7 +33,7 @@ class HandTest {
         val hand = Hand.of(aceSpade, aceDiamond, nineSpade)
 
         // when
-        val score = hand.calculateScore()
+        val score = hand.score()
 
         // then
         assertThat(score.score).isEqualTo(21)
@@ -48,7 +48,7 @@ class HandTest {
         val hand = Hand.of(aceSpade, queenSpade, queenDiamond)
 
         // when
-        val score = hand.calculateScore()
+        val score = hand.score()
 
         // then
         assertThat(score.score).isEqualTo(21)
