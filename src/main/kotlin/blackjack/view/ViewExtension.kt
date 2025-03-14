@@ -4,10 +4,11 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
 import blackjack.domain.card.CardPattern
 import blackjack.domain.person.Person
+import blackjack.domain.result.Profit
 import blackjack.domain.state.PersonState
 import java.text.DecimalFormat
 
-fun Double.formatAmount(): String {
+fun Profit.formatAmount(): String {
     val formatter = DecimalFormat("#.##")
     return formatter.format(this)
 }

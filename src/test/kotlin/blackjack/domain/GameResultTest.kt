@@ -41,19 +41,19 @@ class GameResultTest {
     @Test
     fun `플레이어는 100원 배팅 후 블랙잭으로 승리하면 150원을 받는다`() {
         val gameResult = setupGame(listOf(CardNumber.ACE, CardNumber.JACK), emptyList())
-        gameResult.playerPayouts.values.first() shouldBeExactly 150.0
+        gameResult.playerPayouts.values.first().value shouldBeExactly 150.0
     }
 
     @Test
     fun `플레이어는 100원 배팅 후 승리하면 100원을 받는다`() {
         val gameResult = setupGame(listOf(CardNumber.JACK), emptyList())
-        gameResult.playerPayouts.values.first() shouldBeExactly 100.0
+        gameResult.playerPayouts.values.first().value shouldBeExactly 100.0
     }
 
     @Test
     fun `플레이어는 100원 배팅 후 패배하면 100원을 잃는다`() {
         val gameResult = setupGame(emptyList(), listOf(CardNumber.JACK))
-        gameResult.playerPayouts.values.first() shouldBeExactly -100.0
+        gameResult.playerPayouts.values.first().value shouldBeExactly -100.0
     }
 
     @Test
@@ -63,14 +63,14 @@ class GameResultTest {
                 listOf(CardNumber.JACK, CardNumber.ACE),
                 listOf(CardNumber.JACK, CardNumber.ACE),
             )
-        gameResult.playerPayouts.values.first() shouldBeExactly 0.0
+        gameResult.playerPayouts.values.first().value shouldBeExactly 0.0
     }
 
     @Test
     fun `무승부 시 배팅금을 돌려받는다`() {
         val gameResult = setupGame(listOf(CardNumber.JACK), listOf(CardNumber.JACK))
-        gameResult.playerPayouts.values.first() shouldBeExactly 0.0
-        gameResult.dealerProfit shouldBeExactly 0.0
+        gameResult.playerPayouts.values.first().value shouldBeExactly 0.0
+        gameResult.dealerProfit.value shouldBeExactly 0.0
     }
 
     @Test
@@ -81,7 +81,7 @@ class GameResultTest {
         drawCards(dealer, customCards, customDeck)
 
         val gameResult = GameResult(dealer, players)
-        gameResult.dealerProfit shouldBeExactly 500.0
+        gameResult.dealerProfit.value shouldBeExactly 500.0
     }
 
     @Test
@@ -91,7 +91,7 @@ class GameResultTest {
 
         val gameResult = setupGame(playerCards, dealerCards)
 
-        gameResult.playerPayouts.values.first() shouldBeExactly 150.0
-        gameResult.dealerProfit shouldBeExactly -150.0
+        gameResult.playerPayouts.values.first().value shouldBeExactly 150.0
+        gameResult.dealerProfit.value shouldBeExactly -150.0
     }
 }

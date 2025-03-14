@@ -6,8 +6,8 @@ import blackjack.domain.state.PersonState
 import blackjack.domain.state.ResultState
 
 class GameResult(dealer: Dealer, players: List<Player>) {
-    val playerPayouts: Map<Player, Double>
-    val dealerProfit: Double
+    val playerPayouts: Map<Player, Profit>
+    val dealerProfit: Profit
 
     init {
         playerPayouts = players.associateWith { player -> calculatePlayerPayout(dealer, player) }
@@ -17,14 +17,16 @@ class GameResult(dealer: Dealer, players: List<Player>) {
     private fun calculatePlayerPayout(
         dealer: Dealer,
         player: Player,
-    ): Double {
+    ): Profit {
         val resultState = ResultState.calculateWin(player, dealer)
+        val profit =
+            when (resultState) {
+                ResultState.WIN -> calculateWinPayout(player)
+                ResultState.LOSE -> calculateLosePayout(player)
+                ResultState.DRAW -> calculateDrawPayout(player)
+            }
 
-        return when (resultState) {
-            ResultState.WIN -> calculateWinPayout(player)
-            ResultState.LOSE -> calculateLosePayout(player)
-            ResultState.DRAW -> calculateDrawPayout(player)
-        }
+        return Profit(profit)
     }
 
     private fun calculateWinPayout(player: Player): Double {
@@ -35,16 +37,17 @@ class GameResult(dealer: Dealer, players: List<Player>) {
     }
 
     private fun calculateLosePayout(player: Player): Double {
-        return player.betAmount.toDouble() * LOSING_PAYOUT_MULTIPLIER
+        return (player.betAmount * LOSING_PAYOUT_MULTIPLIER).toDouble()
     }
 
     private fun calculateDrawPayout(player: Player): Double {
         return player.betAmount * ZERO_PAYOUT
     }
 
-    private fun calculateDealerProfit(): Double {
-        val profit = playerPayouts.values.sum() * LOSING_PAYOUT_MULTIPLIER
-        return if (profit == -ZERO_PAYOUT) ZERO_PAYOUT else profit
+    private fun calculateDealerProfit(): Profit {
+        val profit = playerPayouts.values.sumOf { it.value } * LOSING_PAYOUT_MULTIPLIER
+        val result = if (profit == -ZERO_PAYOUT) ZERO_PAYOUT else profit
+        return Profit(result)
     }
 
     companion object {
