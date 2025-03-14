@@ -77,9 +77,9 @@ class BettingManagerTest {
         val resultTable = bettingManager.result(winningResult, participants)
 
         // then
-        assertEquals(money1.multiply(1.5), resultTable.value[Name("공백")])
-        assertEquals(money2.multiply(1.0), resultTable.value[Name("비비")])
-        assertEquals(money3.multiply(0.0), resultTable.value[Name("메다")])
-        assertEquals(money4.multiply(-1.0), resultTable.value[Name("제이")])
+        assertEquals(money1.times(1.5), resultTable.value[Name("공백")])
+        assertEquals(money2.times(1.0), resultTable.value[Name("비비")])
+        assertEquals(money3.times(0.0), resultTable.value[Name("메다")])
+        assertEquals(money4.times(-1.0), resultTable.value[Name("제이")])
     }
 }

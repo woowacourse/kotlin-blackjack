@@ -39,14 +39,14 @@ class BettingManager(
         participants: Participants,
     ) {
         winningResult.playerResults.forEach { (name, result) ->
-            val profit = bettingTable.get(name).multiply(result.profitRate)
+            val profit = bettingTable.get(name) * result.profitRate
 
-            resultBettingTable.add(participants.dealer.name, profit.reverse())
+            resultBettingTable.add(participants.dealer.name, -profit)
             resultBettingTable.add(name, profit)
 
             println(resultBettingTable.table.value)
 
-            participants.dealer.recieveMoney(profit.reverse())
+            participants.dealer.recieveMoney(-profit)
             participants.players.receiveMoney(name, profit)
         }
     }

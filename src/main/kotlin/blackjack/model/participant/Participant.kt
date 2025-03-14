@@ -20,11 +20,11 @@ abstract class Participant(
     abstract fun isDrawable(): Boolean
 
     fun recieveMoney(money: Money) {
-        this.money = this.money.plus(money)
+        this.money += money
     }
 
     fun payMoney(money: Money) {
-        this.money = this.money.minus(money)
+        this.money -= money
     }
 
     fun recieveCards(recieveCards: (Int) -> List<Card>) {
