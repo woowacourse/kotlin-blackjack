@@ -32,4 +32,27 @@ class PlayerTest {
         player.acceptCard(Card(Suit.HEART, Rank.KING))
         assertThat(player.showCards()).isEqualTo(actual)
     }
+
+    @Test
+    fun `플레이어는 21 미만일 경우 히트 상태를 반환한다`() {
+        val handState = player.getHandsState()
+        val actual = HandState.HIT
+        assertThat(handState).isEqualTo(actual)
+    }
+
+    @Test
+    fun `플레이어는 21이고 두장일 경우에 블랙잭 상태를 반환한다`() {
+        player = Player("동전", Card(Suit.HEART, Rank.KING), Card(Suit.HEART, Rank.ACE))
+        val handState = player.getHandsState()
+        val actual = HandState.BLACKJACK
+        assertThat(handState).isEqualTo(actual)
+    }
+
+    @Test
+    fun `플레이어는 21 초과일 경우 버스트를 반환한다`() {
+        player = Player("동전", Card(Suit.HEART, Rank.KING), Card(Suit.HEART, Rank.KING), Card(Suit.HEART, Rank.SIX))
+        val handState = player.getHandsState()
+        val actual = HandState.BUST
+        assertThat(handState).isEqualTo(actual)
+    }
 }

@@ -13,16 +13,33 @@ class DealerTest {
     }
 
     @Test
-    fun `딜러의 승패 횟수를 반환한다`() {
-        val results = listOf(MatchResult.WIN, MatchResult.WIN, MatchResult.LOSE, MatchResult.DRAW, MatchResult.LOSE)
-        dealer.recordVerdict(results)
-        val verdicts: Map<MatchResult, Int> = dealer.getRecord()
-        val actual: Map<MatchResult, Int> =
-            mapOf(
-                MatchResult.WIN to 2,
-                MatchResult.LOSE to 2,
-                MatchResult.DRAW to 1,
-            )
-        assertThat(verdicts).isEqualTo(actual)
+    fun `딜러는 16 이하일 경우 HIT 상태를 반환한다`() {
+        val handState = dealer.getHandsState()
+        val actual = HandState.HIT
+        assertThat(handState).isEqualTo(actual)
+    }
+
+    @Test
+    fun `딜러는 21이고 두장일 경우에 BLACKJACK 상태를 반환한다`() {
+        dealer = Dealer(Card(Suit.HEART, Rank.ACE), Card(Suit.HEART, Rank.KING))
+        val handState = dealer.getHandsState()
+        val actual = HandState.BLACKJACK
+        assertThat(handState).isEqualTo(actual)
+    }
+
+    @Test
+    fun `딜러는 21 초과일 경우 BUST를 반환한다`() {
+        dealer = Dealer(Card(Suit.HEART, Rank.KING), Card(Suit.HEART, Rank.KING), Card(Suit.HEART, Rank.SIX))
+        val handState = dealer.getHandsState()
+        val actual = HandState.BUST
+        assertThat(handState).isEqualTo(actual)
+    }
+
+    @Test
+    fun `딜러는 17이상 21 미만일 경우 STAY를 반환한다`() {
+        dealer = Dealer(Card(Suit.HEART, Rank.KING), Card(Suit.HEART, Rank.SEVEN))
+        val handState = dealer.getHandsState()
+        val actual = HandState.STAY
+        assertThat(handState).isEqualTo(actual)
     }
 }

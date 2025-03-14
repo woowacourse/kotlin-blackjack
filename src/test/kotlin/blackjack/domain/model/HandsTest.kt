@@ -25,18 +25,6 @@ class HandsTest {
     }
 
     @Test
-    fun `카드를 더한 값이 21이 넘을 경우 버스트 된다 `() {
-        hands = Hands(Card(Suit.HEART, Rank.JACK), Card(Suit.HEART, Rank.KING), Card(Suit.HEART, Rank.KING)) // 30
-        assertThat(hands.isBust()).isTrue()
-    }
-
-    @Test
-    fun `카드를 더한 값이 21이 넘지 않을 경우 버스트를 되지 않는다`() {
-        hands = Hands(Card(Suit.HEART, Rank.JACK), Card(Suit.HEART, Rank.KING)) // 20
-        assertThat(hands.isBust())
-    }
-
-    @Test
     fun `카드를 더한 값이 11이하이고 에이스가 포함될 경우 10점 보너스를 받는다`() {
         hands = Hands(Card(Suit.HEART, Rank.ACE), Card(Suit.HEART, Rank.KING)) // 1+10 +10
         assertThat(hands.getScore()).isEqualTo(21)
