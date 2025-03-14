@@ -1,5 +1,8 @@
 package blackjack.model
 
+import blackjack.model.CardsStatus.Companion.BLACKJACK_SCORE
+import blackjack.model.Denomination.Companion.ACE_BONUS_NUMBER
+
 class Hand(
     value: List<Card>,
 ) {
@@ -15,10 +18,12 @@ class Hand(
     }
 
     fun calculateScore(): Int {
-        var score: Int = value.sumOf { card -> card.denomination.number }
-        if (value.any { card -> card.isAce() } && score + 10 <= 21) {
-            score += 10
+        val score: Int = value.sumOf { card -> card.denomination.number }
+        val modifiedScore: Int = score + ACE_BONUS_NUMBER
+        return if (modifiedScore <= BLACKJACK_SCORE && value.any { card -> card.isAce() }) {
+            modifiedScore
+        } else {
+            score
         }
-        return score
     }
 }

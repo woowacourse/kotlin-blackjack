@@ -17,4 +17,9 @@ enum class Denomination(
     JACK("J", 10),
     QUEEN("Q", 10),
     KING("K", 10),
+    ;
+
+    companion object {
+        const val ACE_BONUS_NUMBER = 10
+    }
 }

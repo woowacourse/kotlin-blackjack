@@ -7,7 +7,7 @@ enum class CardsStatus {
     ;
 
     companion object {
-        private const val BLACKJACK_SCORE = 21
+        const val BLACKJACK_SCORE = 21
         const val BUST_SCORE = 0
 
         fun from(

@@ -10,7 +10,7 @@ class Dealer(
 
     fun isHit(): Boolean {
         val dealerScore = hand.calculateScore()
-        return dealerScore <= 16
+        return dealerScore <= DEALER_HIT_SCORE
     }
 
     fun getResult(playerScore: Int): GameResult {
@@ -27,5 +27,9 @@ class Dealer(
 
     override fun lossMoney(money: Money) {
         profit.minus(money)
+    }
+
+    companion object {
+        private const val DEALER_HIT_SCORE = 16
     }
 }
