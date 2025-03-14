@@ -1,5 +1,8 @@
 package blackjack.model
 
+import blackjack.model.ResultCalculator.BLACKJACK_PROFIT_MULTIPLIER
+import blackjack.model.ResultCalculator.TIE_PROFIT_MULTIPLIER
+import blackjack.model.ResultCalculator.LOSS_PROFIT_MULTIPLIER
 import blackjack.model.participant.Dealer
 import blackjack.model.participant.Participant
 import blackjack.model.participant.Player
@@ -34,12 +37,12 @@ class GameManager(
     fun calculateProfit(result: Map<Player, ResultType>): Map<Player, Double> {
         return result.map { (player, resultType) ->
             player to
-                when (resultType) {
-                    ResultType.BLACKJACK -> player.betAmount * BLACKJACK_PROFIT_MULTIPLIER
-                    ResultType.WIN -> player.betAmount.toDouble()
-                    ResultType.TIE -> player.betAmount.toDouble() * TIE_PROFIT_MULTIPLIER
-                    ResultType.LOSS -> player.betAmount * LOSS_PROFIT_MULTIPLIER
-                }
+                    when (resultType) {
+                        ResultType.BLACKJACK -> player.betAmount * BLACKJACK_PROFIT_MULTIPLIER
+                        ResultType.WIN -> player.betAmount.toDouble()
+                        ResultType.TIE -> player.betAmount.toDouble() * TIE_PROFIT_MULTIPLIER
+                        ResultType.LOSS -> player.betAmount * LOSS_PROFIT_MULTIPLIER
+                    }
         }.toMap()
     }
 
@@ -49,8 +52,5 @@ class GameManager(
 
     companion object {
         const val INITIAL_HAND_OUT_CARD_COUNT = 2
-        const val BLACKJACK_PROFIT_MULTIPLIER = 1.5
-        const val LOSS_PROFIT_MULTIPLIER = -1.0
-        const val TIE_PROFIT_MULTIPLIER = 0.0
     }
 }
