@@ -53,7 +53,7 @@ class BlackjackController(
 
     private fun hitOrStay(player: Player) {
         while (!player.canHit()) {
-            val playerAction = getActionType(player)
+            val playerAction = inputView.askForHitOrStay(player)
             if (shouldStopDrawing(playerAction)) break
             blackjack.hitAction(player)
             outputView.printCardStatus(player)
@@ -66,12 +66,6 @@ class BlackjackController(
         return when (playerAction) {
             ActionType.Hit -> false
             ActionType.Stay -> true
-        }
-    }
-
-    private fun getActionType(player: Player): ActionType {
-        return retryInput {
-            ActionType.get(inputView.askForHitOrStay(player))
         }
     }
 

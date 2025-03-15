@@ -1,5 +1,6 @@
 package blackjack.view
 
+import blackjack.model.domain.ActionType
 import blackjack.model.domain.participant.Player
 
 class InputView {
@@ -17,9 +18,13 @@ class InputView {
         return validatePositive(readln())?.toFloat() ?: askForBetAmount(player)
     }
 
-    fun askForHitOrStay(player: Player): String {
+    fun askForHitOrStay(player: Player): ActionType {
         println(INPUT_HIT_OR_STAY.format(player.name))
-        return validateYesOrNoInput(readln()) ?: askForHitOrStay(player)
+        val result = validateYesOrNoInput(readln()) ?: askForHitOrStay(player)
+        return when (result) {
+            in yesValidInput -> ActionType.Hit
+            else -> ActionType.Stay
+        }
     }
 
     companion object {
