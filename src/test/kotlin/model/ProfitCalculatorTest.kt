@@ -16,7 +16,7 @@ class ProfitCalculatorTest {
     private lateinit var dealer: Dealer
     private lateinit var players: Players
 
-    private fun assertPlayerProfit(expectedProfit: Float) {
+    private fun assertCalculatePlayerProfit(expectedProfit: Float) {
         val profitCalculator = ProfitCalculator(dealer, players)
         assertEquals(expectedProfit, profitCalculator.playerProfits[0].money)
     }
@@ -37,7 +37,7 @@ class ProfitCalculatorTest {
             )
         player.betting(10000f)
         players = Players(listOf(player))
-        assertPlayerProfit(expectedProfit = -10000f)
+        assertCalculatePlayerProfit(expectedProfit = -10000f)
     }
 
     @Test
@@ -47,7 +47,7 @@ class ProfitCalculatorTest {
             Player("jay", Cards(listOf(Card(CardRank.QUEEN, Shape.CLUB), Card(CardRank.ACE, Shape.SPADE))))
         players = Players(listOf(player))
         player.betting(10000f)
-        assertPlayerProfit(expectedProfit = 15000f)
+        assertCalculatePlayerProfit(expectedProfit = 15000f)
     }
 
     @Test
@@ -57,7 +57,7 @@ class ProfitCalculatorTest {
             Player("jay", Cards(listOf(Card(CardRank.QUEEN, Shape.CLUB), Card(CardRank.ACE, Shape.SPADE))))
         player.betting(10000f)
         players = Players(listOf(player))
-        assertPlayerProfit(expectedProfit = 0f)
+        assertCalculatePlayerProfit(expectedProfit = 0f)
     }
 
     @Test
@@ -75,7 +75,7 @@ class ProfitCalculatorTest {
         player.betting(10000f)
         dealer = Dealer(cards)
         players = Players(listOf(player))
-        assertPlayerProfit(expectedProfit = 10000f)
+        assertCalculatePlayerProfit(expectedProfit = 10000f)
     }
 
     @Test
@@ -87,6 +87,6 @@ class ProfitCalculatorTest {
             Player("jay", Cards(listOf(Card(CardRank.KING, Shape.CLUB), Card(CardRank.KING, Shape.SPADE))))
         player.betting(10000f)
         players = Players(listOf(player))
-        assertThat(ProfitCalculator(dealer, players).dealerProfit()).isEqualTo(10000f)
+        assertThat(ProfitCalculator(dealer, players).calculateDealerProfit()).isEqualTo(10000f)
     }
 }
