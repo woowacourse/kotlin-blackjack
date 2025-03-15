@@ -1,5 +1,6 @@
 package blackjack.controller
 
+import blackjack.domain.BettingAmount
 import blackjack.domain.BlackJackGame
 import blackjack.domain.Deck
 import blackjack.domain.UserChoice
@@ -7,9 +8,11 @@ import blackjack.domain.card.CardFactory
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Participants
 import blackjack.domain.participant.Player
+import blackjack.domain.participant.PlayerState
 import blackjack.util.retryWhenException
 import blackjack.view.InputView
 import blackjack.view.OutputView
+import blackjack.view.model.PlayerUiModel
 
 class BlackJackController(
     private val inputView: InputView,
@@ -112,14 +115,14 @@ class BlackJackController(
         }
     }
 
-    private fun displayResult(
+    private fun endGame(
         game: BlackJackGame,
         participants: Participants,
     ) {
         displayDealerExtraCard(game)
         displaySumOfParticipants(participants)
         displayDealerResult(game)
-        displayPlayerResult(game)
+        displayPlayerResult(participants)
     }
 
     private fun displayDealerExtraCard(game: BlackJackGame) {
@@ -139,9 +142,13 @@ class BlackJackController(
         outputView.printDealerResult(result)
     }
 
-    private fun displayPlayerResult(game: BlackJackGame) {
-        game.calculatePlayerResult { name, result ->
-            outputView.printPlayerResult(name, result)
-        }
+    private fun displayPlayerResult(player: Participants) {
+        val result =
+            player.players.map {
+                val dividend = it.compare(player.dealer).dividend
+                val money = it.profit(dividend)
+                PlayerUiModel(money, it.name)
+            }
+        outputView.printPlayerResult(result)
     }
 }

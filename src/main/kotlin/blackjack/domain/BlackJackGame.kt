@@ -56,22 +56,15 @@ class BlackJackGame(
     fun calculateDealerResult(): Map<GameResult, Int> {
         val dealerMap = GameResult.entries.associateWith { 0 }.toMutableMap()
 
-        participants.players.forEach { player ->
-            val result = GameResult.from(participants.dealer.totalScore(), player.totalScore(), false)
-            dealerMap[result] = dealerMap.getOrDefault(result, 0) + 1
-        }
+//        participants.players.forEach { player ->
+//            val result = GameResult.from(participants.dealer.totalScore(), player.totalScore(), false)
+//            dealerMap[result] = dealerMap.getOrDefault(result, 0) + 1
+//        }
         return dealerMap
     }
 
-    fun calculatePlayerResult(action: (String, GameResult) -> Unit) {
-        participants.players.forEach { player ->
-            val result = GameResult.from(participants.dealer.totalScore(), player.totalScore(), true)
-            action(player.name, result)
-        }
-    }
-
     companion object {
-        private const val INITIAL_CARD_COUNT = 2
+        const val INITIAL_CARD_COUNT = 2
         const val CARD_COUNT_OF_PLAYER_MUST_INITIAL_OPEN = 2
         const val CARD_COUNT_OF_DEALER_MUST_INITIAL_OPEN = 1
         const val BUST_STANDARD = 21

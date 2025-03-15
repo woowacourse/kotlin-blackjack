@@ -49,11 +49,10 @@ class OutputView {
         println(format(MESSAGE_OUTPUT_DEALER_RESULT, win, lose, push))
     }
 
-    fun printPlayerResult(
-        name: String,
-        result: GameResult,
-    ) {
-        println(format(MESSAGE_OUTPUT_PLAYER_RESULT, name, result.toKorean()))
+    fun printPlayerResult(result: List<PlayerUiModel>) {
+        result.forEach {
+            println(format(MESSAGE_OUTPUT_PLAYER_RESULT, it.name, it.profit))
+        }
     }
 
     private fun makeCardListMessage(cards: Set<TrumpCard>): String =
@@ -86,13 +85,6 @@ class OutputView {
             Tier.QUEEN -> "Q"
             Tier.KING -> "K"
             else -> this.values.toString()
-        }
-
-    private fun GameResult.toKorean(): String =
-        when (this) {
-            GameResult.WIN -> "승"
-            GameResult.LOSE -> "패"
-            GameResult.PUSH -> "무"
         }
 
     companion object {
