@@ -10,6 +10,12 @@ fun trumpCardFixture(): List<TrumpCard> =
         TrumpCard(Tier.KING, Shape.HEART),
     )
 
+fun blackJackCardFixture(): List<TrumpCard> =
+    listOf(
+        TrumpCard(Tier.ACE, Shape.DIA),
+        TrumpCard(Tier.KING, Shape.HEART),
+    )
+
 fun bustTrumpCardFixture(): List<TrumpCard> =
     listOf(
         TrumpCard(Tier.KING, Shape.DIA),
