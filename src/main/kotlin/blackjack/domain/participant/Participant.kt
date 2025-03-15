@@ -18,6 +18,24 @@ sealed class Participant {
         _cards = cards + newCard
     }
 
+    fun compare(other: Participant): GameResult {
+        return when {
+            hasBlackJack() && !other.hasBlackJack() -> BLACKJACK
+            hasBlackJack() && other.hasBlackJack() -> PUSH
+            isBust() && other.isBust() -> {
+                when (other) {
+                    is Player -> WIN
+                    is Dealer -> LOSE
+                }
+            }
+            isBust() -> LOSE
+            other.isBust() -> WIN
+            totalScore() > other.totalScore() -> WIN
+            totalScore() < other.totalScore() -> LOSE
+            else -> PUSH
+        }
+    }
+
     fun totalScore(): Int {
         val sumOfCards = cards.sumOfCards()
         return if (cards.hasAce() && (sumOfCards + ACE_EXTRACT_SCORE > BUST_STANDARD).not()) {
@@ -36,24 +54,6 @@ sealed class Participant {
     abstract fun getInitialCards(): Set<TrumpCard>
 
     abstract fun canHit(): Boolean
-
-    fun compare(other: Participant): GameResult {
-        return when {
-            hasBlackJack() && !other.hasBlackJack() -> BLACKJACK
-            hasBlackJack() && other.hasBlackJack() -> PUSH
-            isBust() && other.isBust() -> {
-                when (other) {
-                    is Player -> WIN
-                    is Dealer -> LOSE
-                }
-            }
-            isBust() -> LOSE
-            other.isBust() -> WIN
-            totalScore() > other.totalScore() -> WIN
-            totalScore() < other.totalScore() -> LOSE
-            else -> PUSH
-        }
-    }
 
     private fun PlayerCards.deepCopy(): PlayerCards = PlayerCards(this.items.map { it.copy() }.toSet())
 
