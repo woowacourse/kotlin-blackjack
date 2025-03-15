@@ -56,12 +56,14 @@ class OutputView {
         println()
     }
 
-    fun printFinalResult(profitResult: List<Profit>) {
-        val dealerProfit = profitResult.sumOf { it.winningMoney.amount } * DEALER_PROFIT_MULTIPLIER
+    fun printFinalResult(profitResults: List<Profit>) {
         println(FINAL_RESULT_MESSAGE)
+
+        val dealerProfit = profitResults.find { it.participant is Dealer }!!.winningMoney.amount
         println(DEALER_RESULT_FORMAT.format(dealerProfit.formatAmount()))
-        profitResult.forEach { profit ->
-            println(PLAYER_RESULT_FORMAT.format(profit.player.name, profit.winningMoney.amount.formatAmount()))
+
+        profitResults.filter { it.participant !is Dealer }.forEach { profit ->
+            println(PLAYER_RESULT_FORMAT.format(profit.participant.name, profit.winningMoney.amount.formatAmount()))
         }
     }
 
@@ -128,6 +130,5 @@ class OutputView {
         private const val DISPLAY_NAME_DIAMOND = " ♦️"
         private const val DISPLAY_NAME_HEART = " ♥️"
         private const val DISPLAY_NAME_CLOVER = " ♣️"
-        private const val DEALER_PROFIT_MULTIPLIER = -1.0
     }
 }

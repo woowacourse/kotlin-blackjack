@@ -37,9 +37,13 @@ class GameManager(
     }
 
     fun gameResult(result: Map<Player, ResultType>): List<Profit> {
-        return result.map { (player, resultType) ->
-            Profit(player, calculateProfit(resultType, player))
-        }
+        val playerProfits =
+            result.map { (player, resultType) ->
+                Profit(player, calculateProfit(resultType, player))
+            }
+
+        val dealerProfit = calculateDealerProfit(playerProfits)
+        return playerProfits + listOf(dealerProfit)
     }
 
     fun drawCard(person: Participant) {
@@ -56,11 +60,19 @@ class GameManager(
         ResultType.LOSS -> WinningMoney(player.betAmount.toDouble() * LOSS_PROFIT_MULTIPLIER)
     }
 
+    private fun calculateDealerProfit(
+        profitResults: List<Profit>,
+    ): Profit {
+        val totalPlayerProfit = profitResults.sumOf { it.winningMoney.amount }
+        return Profit(dealer, WinningMoney(totalPlayerProfit * DEALER_PROFIT_MULTIPLIER))
+    }
+
     private fun BetAmount.toDouble(): Double {
         return this.amount.toDouble()
     }
 
     companion object {
         const val INITIAL_HAND_OUT_CARD_COUNT = 2
+        const val DEALER_PROFIT_MULTIPLIER = -1.0
     }
 }
