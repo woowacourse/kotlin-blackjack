@@ -14,6 +14,8 @@ value class Money(
 
     operator fun compareTo(other: Money): Int = this.value.compareTo(other.value)
 
+    override fun toString(): String = value.toString()
+
     companion object {
         val ZERO = Money(0.0)
     }
