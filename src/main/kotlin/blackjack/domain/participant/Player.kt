@@ -1,13 +1,19 @@
 package blackjack.domain.participant
 
+import blackjack.domain.BettingAmount
 import blackjack.domain.BlackJackGame.Companion.BUST_STANDARD
 import blackjack.domain.BlackJackGame.Companion.CARD_COUNT_OF_PLAYER_MUST_INITIAL_OPEN
 import blackjack.domain.card.TrumpCard
 
 class Player(
-    val name: String,
+    private val state: PlayerState,
 ) : Participant() {
-    override fun isDrawable(): Boolean {
+    constructor(name: String) : this(PlayerState(name, BettingAmount(1)))
+
+    val name: String get() = state.name
+    val money: BettingAmount get() = state.money
+
+    override fun canHit(): Boolean {
         return totalScore() <= BUST_STANDARD
     }
 

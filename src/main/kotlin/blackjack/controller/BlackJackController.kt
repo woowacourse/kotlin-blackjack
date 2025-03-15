@@ -5,7 +5,6 @@ import blackjack.domain.Deck
 import blackjack.domain.UserChoice
 import blackjack.domain.card.CardFactory
 import blackjack.domain.participant.Dealer
-import blackjack.domain.participant.Participant
 import blackjack.domain.participant.Participants
 import blackjack.domain.participant.Player
 import blackjack.util.retryWhenException
@@ -18,19 +17,37 @@ class BlackJackController(
     private val cardFactory: CardFactory,
 ) {
     fun run() {
-        val players = readyForGamePlayers()
-        displayPlayerNames(players)
-        val game = makeGame(players)
-        startGame(game, players)
-        displayResult(game, players)
+        val participants = readyForParticipants()
+        displayPlayerNames(participants)
+        val game = makeGame(participants)
+        startGame(game, participants)
+        endGame(game, participants)
     }
 
-    private fun readyForGamePlayers(): Participants {
-        val dealer: Participant = Dealer()
+    private fun readyForParticipants(): Participants {
         return retryWhenException(
             action = {
-                val players = inputView.readPlayerName().map(::Player)
-                Participants(players + dealer)
+                val players = readPlayers().map { Player(it) }
+                Participants(players + Dealer())
+            },
+            onError = { message ->
+                outputView.printErrorMessage(message)
+            },
+        )
+    }
+
+    private fun readPlayers(): List<PlayerState> {
+        return inputView.readPlayerName().map {
+            val bettingAmount = readBettingAmount(it)
+            PlayerState(it, bettingAmount)
+        }
+    }
+
+    private fun readBettingAmount(name: String): BettingAmount {
+        return retryWhenException(
+            action = {
+                val input = inputView.readBettingAmount(name)
+                BettingAmount(input)
             },
             onError = { message ->
                 outputView.printErrorMessage(message)
