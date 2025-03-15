@@ -1,8 +1,15 @@
 package blackjack.domain.model
 
-import blackjack.domain.model.card.Card
-import blackjack.domain.model.card.Rank
-import blackjack.domain.model.card.Suit
+import blackjack.Fixtures.HEART_ACE
+import blackjack.Fixtures.HEART_JACK
+import blackjack.Fixtures.HEART_KING
+import blackjack.Fixtures.HEART_QUEEN
+import blackjack.Fixtures.HEART_THREE
+import blackjack.Fixtures.HEART_TWO
+import blackjack.Fixtures.SPADE_ACE
+import blackjack.Fixtures.SPADE_JACK
+import blackjack.Fixtures.SPADE_THREE
+import blackjack.Fixtures.SPADE_TWO
 import blackjack.domain.model.participant.Dealer
 import blackjack.domain.model.participant.Player
 import blackjack.domain.model.result.GameResult
@@ -21,87 +28,87 @@ class PlayerTest {
 
     @Test
     fun `플레이어는 모든 카드를 공개한다`() {
-        val player = Player("A", Card(Suit.HEART, Rank.TWO), Card(Suit.HEART, Rank.THREE))
-        assertThat(player.showHand()).isEqualTo(listOf(Card(Suit.HEART, Rank.TWO), Card(Suit.HEART, Rank.THREE)))
+        val player = Player("A", HEART_TWO, HEART_THREE)
+        assertThat(player.showHand()).isEqualTo(listOf(HEART_TWO, HEART_THREE))
     }
 
     @Test
     fun `플레이어가 버스트되지 않았으면 히트할 수 있다`() {
-        val player = Player("A", Card(Suit.HEART, Rank.TWO), Card(Suit.HEART, Rank.THREE)) // 5점
+        val player = Player("A", HEART_TWO, HEART_THREE) // 5점
         assertThat(player.canHit()).isTrue()
     }
 
     @Test
     fun `플레이어가 버스트됐으면 히트할 수 없다`() {
-        val player = Player("A", Card(Suit.HEART, Rank.JACK), Card(Suit.HEART, Rank.QUEEN), Card(Suit.HEART, Rank.KING)) // 30점
+        val player = Player("A", HEART_JACK, HEART_QUEEN, HEART_KING) // 30점
         assertThat(player.canHit()).isFalse()
     }
 
     @Test
     fun `플레이어가 버스트되지 않았고 점수가 딜러보다 높을 시 플레이어가 승리한다`() {
-        val player = Player("A", Card(Suit.HEART, Rank.QUEEN), Card(Suit.HEART, Rank.KING)) // 20점
-        val dealer = Dealer(Card(Suit.SPADE, Rank.TWO), Card(Suit.SPADE, Rank.THREE)) // 5점
+        val player = Player("A", HEART_QUEEN, HEART_KING) // 20점
+        val dealer = Dealer(SPADE_TWO, SPADE_THREE) // 5점
         assertThat(player.compareAgainst(dealer)).isEqualTo(GameResult.WIN)
     }
 
     @Test
     fun `플레이어는 버스트되지 않고 딜러는 버스트됐을 시 플레이어가 승리한다`() {
-        val player = Player("A", Card(Suit.HEART, Rank.TWO), Card(Suit.HEART, Rank.THREE)) // 5점
-        val dealer = Dealer(Card(Suit.SPADE, Rank.JACK), Card(Suit.SPADE, Rank.QUEEN), Card(Suit.SPADE, Rank.KING)) // 30점
+        val player = Player("A", HEART_TWO, HEART_THREE) // 5점
+        val dealer = Dealer(SPADE_JACK, HEART_QUEEN, HEART_KING) // 30점
         assertThat(player.compareAgainst(dealer)).isEqualTo(GameResult.WIN)
     }
 
     @Test
     fun `딜러가 버스트되지 않았고 플레이어의 점수가 딜러보다 낮을 시 플레이어가 패배한다`() {
-        val player = Player("A", Card(Suit.HEART, Rank.TWO), Card(Suit.HEART, Rank.THREE)) // 5점
-        val dealer = Dealer(Card(Suit.SPADE, Rank.QUEEN), Card(Suit.SPADE, Rank.KING)) // 20점
+        val player = Player("A", HEART_TWO, HEART_THREE) // 5점
+        val dealer = Dealer(HEART_QUEEN, HEART_KING) // 20점
         assertThat(player.compareAgainst(dealer)).isEqualTo(GameResult.LOSE)
     }
 
     @Test
     fun `플레이어는 버스트되고 딜러는 버스트되지 않았을 시 플레이어가 패배한다`() {
-        val player = Player("A", Card(Suit.HEART, Rank.JACK), Card(Suit.HEART, Rank.QUEEN), Card(Suit.HEART, Rank.KING)) // 30점
-        val dealer = Dealer(Card(Suit.SPADE, Rank.TWO), Card(Suit.SPADE, Rank.THREE)) // 5점
+        val player = Player("A", HEART_JACK, HEART_QUEEN, HEART_KING) // 30점
+        val dealer = Dealer(SPADE_TWO, SPADE_THREE) // 5점
         assertThat(player.compareAgainst(dealer)).isEqualTo(GameResult.LOSE)
     }
 
     @Test
     fun `플레이어와 딜러가 모두 버스트됐을 시 플레이어가 패배한다`() {
-        val player = Player("A", Card(Suit.HEART, Rank.JACK), Card(Suit.HEART, Rank.QUEEN), Card(Suit.HEART, Rank.KING)) // 30점
-        val dealer = Dealer(Card(Suit.SPADE, Rank.JACK), Card(Suit.SPADE, Rank.QUEEN), Card(Suit.SPADE, Rank.KING)) // 30점
+        val player = Player("A", HEART_JACK, HEART_QUEEN, HEART_KING) // 30점
+        val dealer = Dealer(SPADE_JACK, HEART_QUEEN, HEART_KING) // 30점
         assertThat(player.compareAgainst(dealer)).isEqualTo(GameResult.LOSE)
     }
 
     @Test
     fun `플레이어와 딜러가 모두 버스트되지 않고 점수가 같을 시 비긴다`() {
-        val player = Player("A", Card(Suit.HEART, Rank.TWO), Card(Suit.HEART, Rank.THREE)) // 5점
-        val dealer = Dealer(Card(Suit.SPADE, Rank.TWO), Card(Suit.SPADE, Rank.THREE)) // 5점
+        val player = Player("A", HEART_TWO, HEART_THREE) // 5점
+        val dealer = Dealer(SPADE_TWO, SPADE_THREE) // 5점
         assertThat(player.compareAgainst(dealer)).isEqualTo(GameResult.PUSH)
     }
 
     @Test
     fun `플레이어가 블랙잭이고 딜러는 블랙잭이 아닐 시 플레이어가 블랙잭이 된다`() {
-        val player = Player("A", Card(Suit.HEART, Rank.ACE), Card(Suit.HEART, Rank.KING)) // 21점
-        val dealer = Dealer(Card(Suit.SPADE, Rank.TWO), Card(Suit.SPADE, Rank.THREE)) // 5점
+        val player = Player("A", HEART_ACE, HEART_KING) // 21점
+        val dealer = Dealer(SPADE_TWO, SPADE_THREE) // 5점
         assertThat(player.compareAgainst(dealer)).isEqualTo(GameResult.BLACKJACK)
     }
 
     @Test
     fun `플레이어와 딜러가 동시에 블랙잭일 시 비긴다`() {
-        val player = Player("A", Card(Suit.HEART, Rank.ACE), Card(Suit.HEART, Rank.KING)) // 21점
-        val dealer = Dealer(Card(Suit.SPADE, Rank.ACE), Card(Suit.SPADE, Rank.KING)) // 21점
+        val player = Player("A", HEART_ACE, HEART_KING) // 21점
+        val dealer = Dealer(SPADE_ACE, HEART_KING) // 21점
         assertThat(player.compareAgainst(dealer)).isEqualTo(GameResult.PUSH)
     }
 
     @Test
     fun `플레이어의 첫 패가 블랙잭이고 히트하지 않았을 시 블랙잭이다`() {
-        val player = Player("A", Card(Suit.HEART, Rank.ACE), Card(Suit.HEART, Rank.KING)) // 21점
+        val player = Player("A", HEART_ACE, HEART_KING) // 21점
         assertThat(player.isBlackJack()).isTrue()
     }
 
     @Test
     fun `플레이어의 첫 패가 블랙잭이었어도 히트했을 시 블랙잭이 아니다`() {
-        val player = Player("A", Card(Suit.HEART, Rank.ACE), Card(Suit.HEART, Rank.KING), Card(Suit.HEART, Rank.TWO)) // 13점
+        val player = Player("A", HEART_ACE, HEART_KING, HEART_TWO) // 13점
         assertThat(player.isBlackJack()).isFalse()
     }
 }
