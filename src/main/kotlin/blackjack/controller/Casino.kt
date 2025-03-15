@@ -11,6 +11,7 @@ import blackjack.domain.model.card.Deck
 import blackjack.domain.model.participant.Dealer
 import blackjack.domain.model.participant.Participant
 import blackjack.domain.model.participant.Player
+import blackjack.domain.model.participant.PlayerResponse
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -87,8 +88,8 @@ class Casino(
         deck: Deck,
     ) {
         while (player.isDrawable()) {
-            val response = inputView.readWantExtraCard(player.name)
-            if (!response) {
+            val response = PlayerResponse(inputView.readWantExtraCard(player.name))
+            if (!response.value) {
                 outputView.showParticipantCardsInfo(player)
                 break
             }
