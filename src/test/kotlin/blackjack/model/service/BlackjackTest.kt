@@ -18,6 +18,7 @@ class BlackjackTest {
     private lateinit var card: List<Card>
     private lateinit var deck: PlayingCard
     private lateinit var game: Blackjack
+    private lateinit var playerGroup: PlayerGroup
 
     // given
     @BeforeEach
@@ -28,13 +29,14 @@ class BlackjackTest {
         dealer = Dealer()
         card = Card.CARDDECK.values.toList()
         deck = PlayingCard(ArrayDeque(card))
-        game = Blackjack(deck)
+        playerGroup = PlayerGroup(listOf(player1, player2, player3), dealer)
+        game = Blackjack(deck, playerGroup)
     }
 
     @Test
     fun `게임 시작시 카드를 2장을 나눈다`() {
         // when
-        game.initGame(listOf(player1, player2, dealer))
+        game.initGame()
         // then
         assertThat(dealer.cardDeck.size).isEqualTo(2)
         assertThat(player1.cardDeck.size).isEqualTo(2)
@@ -49,7 +51,7 @@ class BlackjackTest {
         player3.receiveCard(listOf(Card.from("SevenHeart")))
         dealer.receiveCard(listOf(Card.from("SevenSpade")))
         // when
-        val actual = game.endGame(PlayerGroup(listOf(player1, player2, player3), dealer))
+        val actual = game.endGame()
         val expected =
             mapOf(
                 player1 to GameResult.Win,
@@ -64,7 +66,7 @@ class BlackjackTest {
     @Test
     fun `딜러는 처음에 받은 2장의 합계가 16이하이면 카드를 추가로 받는다`() {
         // given
-        game.initGame(listOf(player1, player2, dealer))
+        game.initGame()
         // when
         game.drawUntilThreshold(dealer)
         // then

@@ -83,7 +83,7 @@
 - [x] InputView | 입력에 따라 도메인이 출력되도록 수정
 - [x] Hand | 객체에 메시지를 던지도록 수정
 - [x] Player | 계산하는 로직 추가
-- [ ] BlackJack | PlayerGroup을 인수로 받도록 수정
+- [x] BlackJack | PlayerGroup을 인수로 받도록 수정
 - [ ] BlackJack | drawUntilThreshold 메서드명 수정
 - [ ] BlackJack | BUST_STANDARD 상수 이동
 - [ ] Dealer | 카드 공개 메서드 추상화

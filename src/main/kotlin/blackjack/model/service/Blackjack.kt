@@ -7,12 +7,14 @@ import blackjack.model.domain.participant.Participants
 import blackjack.model.domain.participant.Player
 import blackjack.model.domain.participant.PlayerGroup
 
-class Blackjack(private val deck: PlayingCard) {
-    fun initGame(players: List<Participants>) {
-        players.forEach { player ->
+class Blackjack(private val deck: PlayingCard, private val playerGroup: PlayerGroup) {
+    fun initGame() {
+        playerGroup.players.forEach { player ->
             distributeStartingHands(player)
             player.hand.isBlackJack()
         }
+        distributeStartingHands(playerGroup.dealer)
+        playerGroup.dealer.hand.isBlackJack()
     }
 
     private fun distributeStartingHands(player: Participants) {
@@ -32,7 +34,7 @@ class Blackjack(private val deck: PlayingCard) {
         return count
     }
 
-    fun endGame(playerGroup: PlayerGroup): Map<Player, GameResult> {
+    fun endGame(): Map<Player, GameResult> {
         val dealerResult = playerGroup.dealer.sumCardNumber
 
         return playerGroup.players.associateWith { player ->

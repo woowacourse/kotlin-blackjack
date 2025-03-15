@@ -19,15 +19,15 @@ class BlackjackController(
     private val outputView: OutputView,
 ) {
     private val deck: ArrayDeque<Card> = CardFactory().makeCard()
-    private val blackjack: Blackjack = Blackjack(PlayingCard(deck))
     private val dealer = Dealer()
+    private val playerGroup: PlayerGroup = getPlayerGroup()
+    private val blackjack: Blackjack = Blackjack(PlayingCard(deck), playerGroup)
 
     fun run() {
-        val playerGroup = getPlayerGroup()
         val playersBetAmount = getPlayerBetAmount(playerGroup)
         initGame(playerGroup)
         startGame(playerGroup)
-        val playerResult = blackjack.endGame(playerGroup)
+        val playerResult = blackjack.endGame()
         val playersSettleMoney = settleMoney(playerResult, playersBetAmount)
 
         printResult(playersSettleMoney)
@@ -40,7 +40,7 @@ class BlackjackController(
     }
 
     private fun initGame(playerGroup: PlayerGroup) {
-        blackjack.initGame(playerGroup.players + playerGroup.dealer)
+        blackjack.initGame()
         outputView.printInitCardStatus(playerGroup.dealer, playerGroup.players)
     }
 
