@@ -63,13 +63,13 @@ class PlayerTest {
     }
 
     @Test
-    fun `내 상태가 BlackJack 이면 게임이 이긴다`() {
+    fun `내 상태가 BlackJack 이면 게임이 Blackjack 상태로 이긴다`() {
         // given
         player1.receiveCard(listOf(Card.from("QueenHeart"), Card.from("AceHeart")))
         player1.hand.isBlackJack()
         // when
         val actual = player1.compareScores(Status.NEUTRAL, 21)
-        val expected = GameResult.Win
+        val expected = GameResult.BlackjackWin
         // then
         assertThat(actual).isEqualTo(expected)
     }
