@@ -1,4 +1,4 @@
-package blackjack.model
+package blackjack
 
 import blackjack.CardFixture.Companion.CLOVER_ACE
 import blackjack.CardFixture.Companion.CLOVER_JACK
@@ -7,6 +7,8 @@ import blackjack.CardFixture.Companion.HEART_ACE
 import blackjack.CardFixture.Companion.HEART_JACK
 import blackjack.CardFixture.Companion.HEART_KING
 import blackjack.CardFixture.Companion.HEART_QUEEN
+import blackjack.model.Money
+import blackjack.model.ProfitCalculator
 import blackjack.model.user.Dealer
 import blackjack.model.user.Player
 import org.junit.jupiter.api.Assertions.assertEquals
