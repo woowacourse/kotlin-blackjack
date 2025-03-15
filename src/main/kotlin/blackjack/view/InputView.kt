@@ -3,14 +3,14 @@ package blackjack.view
 class InputView {
     fun readPlayerNames(): List<String> {
         println(ALERT_PLAYER_NAME_INPUT)
-        val rawInput: String = readln()
-        return rawInput.split(",").map { it.trim() }
+        val input: String = readln()
+        return input.split(",").map { it.trim() }
     }
 
     fun readWantExtraCard(name: String): Boolean {
         println(ALERT_READ_WANT_EXTRA_CARD.format(name))
-        val rawInput: String = readln()
-        return rawInput.toBooleanOrNull() ?: run {
+        val input: String = readln()
+        return input.toBooleanOrNull() ?: run {
             println(ERROR_WRONG_WANT_EXTRA_CARD_INPUT)
             readWantExtraCard(name)
         }
@@ -18,8 +18,8 @@ class InputView {
 
     fun readBetAmount(name: String): Double {
         println(ALERT_HOW_MUCH_BET_AMOUNT.format(name))
-        val rawInput: String = readln()
-        return rawInput.toDoubleOrNull() ?: run {
+        val input: String = readln()
+        return input.toDoubleOrNull() ?: run {
             println(ERROR_WRONG_BET_AMOUNT)
             readBetAmount(name)
         }

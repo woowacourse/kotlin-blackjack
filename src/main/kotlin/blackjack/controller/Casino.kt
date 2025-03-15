@@ -40,14 +40,14 @@ class Casino(
         }
 
     private fun setPlayers(): List<Player> {
-        val rawInputNames = inputView.readPlayerNames()
-        return rawInputNames.map(::Player)
+        val names = inputView.readPlayerNames()
+        return names.map(::Player)
     }
 
     private fun setBetAmount(playerName: String): BetAmount {
-        val input: Double = inputView.readBetAmount(playerName)
+        val amount: Double = inputView.readBetAmount(playerName)
         return runCatching {
-            BetAmount(input)
+            BetAmount(amount)
         }.getOrElse {
             setBetAmount(playerName)
         }
