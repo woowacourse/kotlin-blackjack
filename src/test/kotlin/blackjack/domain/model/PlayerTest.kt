@@ -40,56 +40,56 @@ class PlayerTest {
     fun `플레이어가 버스트되지 않았고 점수가 딜러보다 높을 시 플레이어가 승리한다`() {
         val player = Player("A", Card(Suit.HEART, Rank.QUEEN), Card(Suit.HEART, Rank.KING)) // 20점
         val dealer = Dealer(Card(Suit.SPADE, Rank.TWO), Card(Suit.SPADE, Rank.THREE)) // 5점
-        assertThat(player.compareAgainst(dealer)).isEqualTo(Result.WIN)
+        assertThat(player.compareAgainst(dealer)).isEqualTo(GameResult.WIN)
     }
 
     @Test
     fun `플레이어는 버스트되지 않고 딜러는 버스트됐을 시 플레이어가 승리한다`() {
         val player = Player("A", Card(Suit.HEART, Rank.TWO), Card(Suit.HEART, Rank.THREE)) // 5점
         val dealer = Dealer(Card(Suit.SPADE, Rank.JACK), Card(Suit.SPADE, Rank.QUEEN), Card(Suit.SPADE, Rank.KING)) // 30점
-        assertThat(player.compareAgainst(dealer)).isEqualTo(Result.WIN)
+        assertThat(player.compareAgainst(dealer)).isEqualTo(GameResult.WIN)
     }
 
     @Test
     fun `딜러가 버스트되지 않았고 플레이어의 점수가 딜러보다 낮을 시 플레이어가 패배한다`() {
         val player = Player("A", Card(Suit.HEART, Rank.TWO), Card(Suit.HEART, Rank.THREE)) // 5점
         val dealer = Dealer(Card(Suit.SPADE, Rank.QUEEN), Card(Suit.SPADE, Rank.KING)) // 20점
-        assertThat(player.compareAgainst(dealer)).isEqualTo(Result.LOSE)
+        assertThat(player.compareAgainst(dealer)).isEqualTo(GameResult.LOSE)
     }
 
     @Test
     fun `플레이어는 버스트되고 딜러는 버스트되지 않았을 시 플레이어가 패배한다`() {
         val player = Player("A", Card(Suit.HEART, Rank.JACK), Card(Suit.HEART, Rank.QUEEN), Card(Suit.HEART, Rank.KING)) // 30점
         val dealer = Dealer(Card(Suit.SPADE, Rank.TWO), Card(Suit.SPADE, Rank.THREE)) // 5점
-        assertThat(player.compareAgainst(dealer)).isEqualTo(Result.LOSE)
+        assertThat(player.compareAgainst(dealer)).isEqualTo(GameResult.LOSE)
     }
 
     @Test
     fun `플레이어와 딜러가 모두 버스트됐을 시 플레이어가 패배한다`() {
         val player = Player("A", Card(Suit.HEART, Rank.JACK), Card(Suit.HEART, Rank.QUEEN), Card(Suit.HEART, Rank.KING)) // 30점
         val dealer = Dealer(Card(Suit.SPADE, Rank.JACK), Card(Suit.SPADE, Rank.QUEEN), Card(Suit.SPADE, Rank.KING)) // 30점
-        assertThat(player.compareAgainst(dealer)).isEqualTo(Result.LOSE)
+        assertThat(player.compareAgainst(dealer)).isEqualTo(GameResult.LOSE)
     }
 
     @Test
     fun `플레이어와 딜러가 모두 버스트되지 않고 점수가 같을 시 비긴다`() {
         val player = Player("A", Card(Suit.HEART, Rank.TWO), Card(Suit.HEART, Rank.THREE)) // 5점
         val dealer = Dealer(Card(Suit.SPADE, Rank.TWO), Card(Suit.SPADE, Rank.THREE)) // 5점
-        assertThat(player.compareAgainst(dealer)).isEqualTo(Result.PUSH)
+        assertThat(player.compareAgainst(dealer)).isEqualTo(GameResult.PUSH)
     }
 
     @Test
     fun `플레이어가 블랙잭이고 딜러는 블랙잭이 아닐 시 플레이어가 블랙잭이 된다`() {
         val player = Player("A", Card(Suit.HEART, Rank.ACE), Card(Suit.HEART, Rank.KING)) // 21점
         val dealer = Dealer(Card(Suit.SPADE, Rank.TWO), Card(Suit.SPADE, Rank.THREE)) // 5점
-        assertThat(player.compareAgainst(dealer)).isEqualTo(Result.BLACKJACK)
+        assertThat(player.compareAgainst(dealer)).isEqualTo(GameResult.BLACKJACK)
     }
 
     @Test
     fun `플레이어와 딜러가 동시에 블랙잭일 시 비긴다`() {
         val player = Player("A", Card(Suit.HEART, Rank.ACE), Card(Suit.HEART, Rank.KING)) // 21점
         val dealer = Dealer(Card(Suit.SPADE, Rank.ACE), Card(Suit.SPADE, Rank.KING)) // 21점
-        assertThat(player.compareAgainst(dealer)).isEqualTo(Result.PUSH)
+        assertThat(player.compareAgainst(dealer)).isEqualTo(GameResult.PUSH)
     }
 
     @Test

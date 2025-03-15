@@ -2,7 +2,7 @@ package blackjack.domain.model.participant
 
 import blackjack.domain.model.Action
 import blackjack.domain.model.Bet
-import blackjack.domain.model.Result
+import blackjack.domain.model.GameResult
 import blackjack.domain.model.card.Card
 import blackjack.domain.model.card.Deck
 import blackjack.domain.model.card.Hand
@@ -43,23 +43,23 @@ class Player(
     }
 
     fun computeProfitAgainst(dealer: Dealer): Int {
-        val result: Result = compareAgainst(dealer)
-        return Math.round(bet.amount * result.profitRate).toInt()
+        val gameResult: GameResult = compareAgainst(dealer)
+        return Math.round(bet.amount * gameResult.profitRate).toInt()
     }
 
-    fun compareAgainst(dealer: Dealer): Result {
-        if (isBusted()) return Result.LOSE
-        if (dealer.isBusted()) return Result.WIN
+    fun compareAgainst(dealer: Dealer): GameResult {
+        if (isBusted()) return GameResult.LOSE
+        if (dealer.isBusted()) return GameResult.WIN
 
-        if (isBlackJack() && dealer.isBlackJack()) return Result.PUSH
-        if (isBlackJack()) return Result.BLACKJACK
+        if (isBlackJack() && dealer.isBlackJack()) return GameResult.PUSH
+        if (isBlackJack()) return GameResult.BLACKJACK
 
         val point: Int = computePoint()
         val dealerPoint: Int = dealer.computePoint()
         return when {
-            point > dealerPoint -> Result.WIN
-            point < dealerPoint -> Result.LOSE
-            else -> Result.PUSH
+            point > dealerPoint -> GameResult.WIN
+            point < dealerPoint -> GameResult.LOSE
+            else -> GameResult.PUSH
         }
     }
 }
