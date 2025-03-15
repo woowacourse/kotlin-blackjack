@@ -20,4 +20,6 @@ class Player(
     override fun getInitialCards(): Set<TrumpCard> {
         return cards.items.take(CARD_COUNT_OF_PLAYER_MUST_INITIAL_OPEN).toSet()
     }
+
+    fun profit(dividend: Double) = state.money.calc(dividend)
 }
