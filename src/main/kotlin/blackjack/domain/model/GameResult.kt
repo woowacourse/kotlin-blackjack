@@ -9,7 +9,7 @@ enum class GameResult(private val profitRate: Double) {
     PUSH(0.0),
     ;
 
-    fun computeProfit(player: Player): Int {
+    fun cashOut(player: Player): Int {
         return Math.round(player.bet.amount * profitRate).toInt()
     }
 }

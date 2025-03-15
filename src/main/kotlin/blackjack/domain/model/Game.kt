@@ -33,16 +33,6 @@ class Game(
         dealer.processHits(deck, output)
     }
 
-    fun aggregatePlayersProfits(): Map<Player, Int> {
-        return players.associateWith { player ->
-            player.compareAgainst(dealer).computeProfit(player)
-        }
-    }
-
-    fun computeDealerProfit(playersProfits: Map<Player, Int>): Int {
-        return -1 * playersProfits.values.sum()
-    }
-
     fun showStatus(output: (Participant) -> Unit) {
         output(dealer)
         players.forEach { player -> output(player) }

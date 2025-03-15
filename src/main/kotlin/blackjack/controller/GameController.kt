@@ -2,6 +2,7 @@ package blackjack.controller
 
 import blackjack.domain.model.Bet
 import blackjack.domain.model.Game
+import blackjack.domain.model.Scoreboard
 import blackjack.domain.model.card.Deck
 import blackjack.domain.model.card.Hand
 import blackjack.domain.model.participant.Dealer
@@ -51,7 +52,7 @@ class GameController(
 
     private fun announceResults(game: Game) {
         game.showStatus(outputView::printParticipantStatusWithPoint)
-        outputView.printFinalResult(game)
+        outputView.printFinalResult(Scoreboard(game.dealer, game.players))
     }
 
     private fun <T> retryOnError(function: () -> T): T {

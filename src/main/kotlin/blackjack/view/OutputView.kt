@@ -1,6 +1,7 @@
 package blackjack.view
 
 import blackjack.domain.model.Game
+import blackjack.domain.model.Scoreboard
 import blackjack.domain.model.card.Hand
 import blackjack.domain.model.card.Rank
 import blackjack.domain.model.card.Suit
@@ -43,12 +44,12 @@ class OutputView {
         println(MESSAGE_DEALER_HIT.format(dealer.name, hitThreshold))
     }
 
-    fun printFinalResult(game: Game) {
+    fun printFinalResult(scoreboard: Scoreboard) {
         println()
         println(FINAL_RESULT_HEADER)
-        val playerProfits: Map<Player, Int> = game.aggregatePlayersProfits()
-        println(game.dealer.name + PARTICIPANT_PROFIT_DELIMITER + game.computeDealerProfit(playerProfits))
-        playerProfits.forEach { (player, profit) ->
+        val playersProfits: Map<Player, Int> = scoreboard.playersProfits()
+        println(scoreboard.dealer.name + PARTICIPANT_PROFIT_DELIMITER + scoreboard.dealerProfit(playersProfits))
+        playersProfits.forEach { (player, profit) ->
             println(player.name + PARTICIPANT_PROFIT_DELIMITER + profit)
         }
     }
