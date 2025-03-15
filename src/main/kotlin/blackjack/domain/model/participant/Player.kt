@@ -11,7 +11,7 @@ class Player(
     name: String,
     cards: List<Card>,
 ) : Participant(name, cards) {
-    private lateinit var bet: Bet
+    lateinit var bet: Bet
 
     constructor(name: String, vararg cards: Card) : this(name, cards.toList())
 
@@ -40,11 +40,6 @@ class Player(
         accept(deck.draw())
         output(this)
         processHits(deck, input, output)
-    }
-
-    fun computeProfitAgainst(dealer: Dealer): Int {
-        val gameResult: GameResult = compareAgainst(dealer)
-        return Math.round(bet.amount * gameResult.profitRate).toInt()
     }
 
     fun compareAgainst(dealer: Dealer): GameResult {

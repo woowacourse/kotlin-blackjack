@@ -6,7 +6,7 @@ import blackjack.domain.model.participant.Participant
 import blackjack.domain.model.participant.Player
 
 class Game(
-    val deck: Deck,
+    private val deck: Deck,
     val dealer: Dealer,
     val players: List<Player>,
 ) {
@@ -34,7 +34,9 @@ class Game(
     }
 
     fun aggregatePlayersProfits(): Map<Player, Int> {
-        return players.associateWith { player -> player.computeProfitAgainst(dealer) }
+        return players.associateWith { player ->
+            player.compareAgainst(dealer).computeProfit(player)
+        }
     }
 
     fun computeDealerProfit(playersProfits: Map<Player, Int>): Int {
