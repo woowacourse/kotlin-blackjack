@@ -87,19 +87,19 @@ class BlackjackController(
         playerNames: List<String>,
         allCards: Cards,
     ): Players {
-        val players = playerNames.map { name ->
-            Player(name, allCards.initialCards())
-        }
+        val players =
+            playerNames.map { name ->
+                Player(name, allCards.initialCards())
+            }
         return Players(players)
     }
 
     private fun updateBet(
         players: List<Player>,
-        betAmounts: List<Float>
+        betAmounts: List<Float>,
     ) {
         players.forEachIndexed { index, player ->
             player.betting(betAmounts[index])
         }
     }
 }
-

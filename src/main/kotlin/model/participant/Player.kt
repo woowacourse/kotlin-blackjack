@@ -4,11 +4,12 @@ import model.card.Card
 import model.card.CardName
 import model.card.Cards
 import model.result.ProfitCalculator.Companion.BLACKJACK_SCORE
+import model.result.ProfitCalculator.Companion.ZERO
 
 class Player(val name: String, private val playerCards: Cards) : Participant(playerCards) {
-    var betAmount: Float = 0F
+    var betAmount: Float = ZERO
         private set(value) {
-            require(value > 0F) { PLAYER_AMOUNT_ERROR_MESSAGE }
+            require(value > ZERO) { PLAYER_AMOUNT_ERROR_MESSAGE }
             field = value
         }
     val cardNames: List<CardName>

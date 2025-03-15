@@ -60,6 +60,5 @@ class OutputView {
         }
     }
 
-    private fun printCardNames(rawCardNames: List<CardName>) =
-        rawCardNames.map { (rank, shape) -> rank.mapToTitle() + shape.mapToTitle() }
+    private fun printCardNames(rawCardNames: List<CardName>) = rawCardNames.map { (rank, shape) -> rank.mapToTitle() + shape.mapToTitle() }
 }

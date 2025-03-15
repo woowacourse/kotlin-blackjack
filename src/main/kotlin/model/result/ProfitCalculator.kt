@@ -31,7 +31,7 @@ class ProfitCalculator(private val dealer: Dealer, players: Players) {
 
     companion object {
         const val BLACKJACK_SCORE = 21
-        private const val ZERO = 0f
+        const val ZERO = 0f
         private const val ONE_AND_HALF = 1.5f
     }
 }
