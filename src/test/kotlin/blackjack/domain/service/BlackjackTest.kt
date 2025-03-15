@@ -3,6 +3,7 @@ package blackjack.domain.service
 import blackjack.domain.model.BetAmount
 import blackjack.domain.model.BetStatus
 import blackjack.domain.model.Proceed
+import blackjack.domain.model.ProceedStatus
 import blackjack.domain.model.card.Card
 import blackjack.domain.model.card.CardFactory.Companion.cardNumbers
 import blackjack.domain.model.card.CardFactory.Companion.symbols
@@ -50,21 +51,12 @@ class BlackjackTest {
     }
 
     @Test
-    fun `게임이 끝난 후 수익 금액을 계산한다`() {
-        // given
-        player1.receiveCard(listOf(Card(Shape.Spade, CardNumber.Ace))) // 11
-        player2.receiveCard(listOf(Card(Shape.Spade, CardNumber.Six))) // 6
-        player3.receiveCard(listOf(Card(Shape.Heart, CardNumber.Seven))) // 7
-        dealer.receiveCard(listOf(Card(Shape.Spade, CardNumber.Seven))) // 7
-
-        val betStatus = players.map { BetStatus(it, BetAmount(10000)) }
-
+    fun `플레이어가 hit을 외치면 카드 한장을 뽑는다`() {
         // when
-        val gameResult = game.getGameResult(betStatus)
+        val size = player1.cardDeck.size
+        game.hitAction(player1)
         // then
-        assertThat(gameResult[player1]).isEqualTo(Proceed(10000))
-        assertThat(gameResult[player2]).isEqualTo(Proceed(-10000))
-        assertThat(gameResult[player3]).isEqualTo(Proceed(0))
+        assertThat(player1.cardDeck.size).isEqualTo(size + 1)
     }
 
     @Test
@@ -78,11 +70,34 @@ class BlackjackTest {
     }
 
     @Test
-    fun `플레이어가 hit을 외치면 카드 한장을 뽑습니다`() {
+    fun `게임이 끝난 후 플레이어의 수익 금액을 계산한다`() {
+        // given
+        player1.receiveCard(listOf(Card(Shape.Spade, CardNumber.Ace))) // 11
+        player2.receiveCard(listOf(Card(Shape.Spade, CardNumber.Six))) // 6
+        player3.receiveCard(listOf(Card(Shape.Heart, CardNumber.Seven))) // 7
+        dealer.receiveCard(listOf(Card(Shape.Spade, CardNumber.Seven))) // 7
+
+        val betStatus = players.map { BetStatus(it, BetAmount(10000)) }
+
         // when
-        val size = player1.cardDeck.size
-        game.hitAction(player1)
+        val gameResult = game.calculatePlayersProceed(betStatus)
         // then
-        assertThat(player1.cardDeck.size).isEqualTo(size + 1)
+        assertThat(gameResult.find { it.participant == player1 }!!.proceed).isEqualTo(Proceed(10000))
+        assertThat(gameResult.find { it.participant == player2 }!!.proceed).isEqualTo(Proceed(-10000))
+        assertThat(gameResult.find { it.participant == player3 }!!.proceed).isEqualTo(Proceed(0))
+    }
+
+    @Test
+    fun `딜러의 수익 금액은 플레이어의 총 수익 금액과 부호가 반대다`() {
+        // given
+        val player1Proceed = ProceedStatus(player1, Proceed(1000))
+        val player2Proceed = ProceedStatus(player2, Proceed(2000))
+        val player3Proceed = ProceedStatus(player3, Proceed(-2000))
+
+        val playerProceedStatus = listOf(player1Proceed, player2Proceed, player3Proceed)
+        // when
+        val dealerResult = game.calculateDealerProceed(playerProceedStatus)
+        // then
+        assertThat(dealerResult.proceed).isEqualTo(Proceed(-1000))
     }
 }

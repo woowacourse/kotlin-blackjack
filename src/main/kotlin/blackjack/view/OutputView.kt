@@ -1,11 +1,10 @@
 package blackjack.view
 
-import blackjack.domain.model.Proceed
+import blackjack.domain.model.ProceedStatus
 import blackjack.domain.model.card.Card
 import blackjack.domain.model.card.Shape
 import blackjack.domain.model.participant.Dealer
 import blackjack.domain.model.participant.Participants
-import blackjack.domain.model.participant.Player
 import blackjack.domain.model.participant.PlayerGroup
 
 class OutputView {
@@ -57,19 +56,20 @@ class OutputView {
         }
     }
 
-    fun playerResult(statusCount: Map<Player, Proceed>) {
-        statusCount.forEach { (player, proceed) ->
-            println(PLAYER_STATUS.format(player.name, proceed.amount.toString()))
+    fun playerResult(proceedStatus: List<ProceedStatus>) {
+        proceedStatus.forEach {
+            println(getParticipantsResult(it))
         }
         println()
     }
 
-    fun dealerResult(
-        dealer: Dealer,
-        proceed: Int,
-    ) {
+    fun dealerResult(dealerResult: ProceedStatus) {
         println(FINAL_RESULT)
-        println(PLAYER_STATUS.format(dealer.name, proceed.toString()))
+        println(getParticipantsResult(dealerResult))
+    }
+
+    private fun getParticipantsResult(proceedStatus: ProceedStatus): String {
+        return PLAYER_STATUS.format(proceedStatus.participant.name, proceedStatus.proceed.amount.toString())
     }
 
     private fun Shape.toKorean(): String {
