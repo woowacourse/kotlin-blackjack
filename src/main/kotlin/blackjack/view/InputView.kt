@@ -9,6 +9,16 @@ object InputView {
         return input.split(",").map { it.trim() }
     }
 
+    fun getBetAmounts(playerNames: List<String>): Map<String, Int> {
+        val betAmounts = mutableMapOf<String, Int>()
+        for (name in playerNames) {
+            println("${name}의 배팅 금액은?")
+            val amount = readln().toInt()
+            betAmounts[name] = amount
+        }
+        return betAmounts
+    }
+
     fun askPlayerHit(name: String): Boolean {
         println("${name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
         val input = readln()
