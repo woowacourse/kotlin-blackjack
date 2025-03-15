@@ -26,9 +26,7 @@ class BlackjackGame(
         }
     }
 
-    fun calculateResults(): List<Profit> {
-        return gameManager.gameResult(gameManager.calculateResultMap())
-    }
+    fun calculateResults(): List<Profit> = gameManager.gameResult(gameManager.calculateResultMap())
 
     private fun drawCards(
         player: Player,
