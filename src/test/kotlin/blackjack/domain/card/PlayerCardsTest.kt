@@ -15,7 +15,7 @@ class PlayerCardsTest {
 
     @Test
     fun `카드를 추가하면 보유한 카드가 1장 늘어난다`() {
-        val newCard = cards + TrumpCard(Denomination.TEN, Shape.DIA)
+        val newCard = cards + TrumpCard(Denomination.TEN, Suit.DIA)
 
         assertEquals(newCard.items.size, 1)
     }
@@ -28,7 +28,7 @@ class PlayerCardsTest {
 
     @Test
     fun `에이스 카드가 있으면 에이스 카드가 있음을 반환한다`() {
-        val newCard = cards + TrumpCard(Denomination.ACE, Shape.DIA)
+        val newCard = cards + TrumpCard(Denomination.ACE, Suit.DIA)
         val expected = newCard.hasAce()
 
         assertEquals(expected, true)

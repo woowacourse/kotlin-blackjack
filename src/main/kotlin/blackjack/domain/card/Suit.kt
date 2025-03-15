@@ -1,6 +1,6 @@
 package blackjack.domain.card
 
-enum class Shape {
+enum class Suit {
     HEART,
     DIA,
     CLOVER,

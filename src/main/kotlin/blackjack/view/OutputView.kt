@@ -1,7 +1,7 @@
 package blackjack.view
 
 import blackjack.domain.card.Denomination
-import blackjack.domain.card.Shape
+import blackjack.domain.card.Suit
 import blackjack.domain.card.TrumpCard
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Player
@@ -16,7 +16,7 @@ class OutputView {
 
     fun printDealerCards(dealer: Dealer) {
         val cards = dealer.getInitialCards()
-        val cardFormat = cards.joinToString { MESSAGE_CARD.format(it.denomination.toEnglish(), it.shape.toKorean()) }
+        val cardFormat = cards.joinToString { MESSAGE_CARD.format(it.denomination.toEnglish(), it.suit.toKorean()) }
         println(format(MESSAGE_OUTPUT_DEALER_CARD, cardFormat))
     }
 
@@ -58,7 +58,7 @@ class OutputView {
             cardMessageFormat(card)
         }
 
-    private fun cardMessageFormat(card: TrumpCard): String = MESSAGE_CARD.format(card.denomination.toEnglish(), card.shape.toKorean())
+    private fun cardMessageFormat(card: TrumpCard): String = MESSAGE_CARD.format(card.denomination.toEnglish(), card.suit.toKorean())
 
     fun printDealerExtraCard(count: Int) {
         println(format(MESSAGE_OUTPUT_DEALER_EXTRA_CARD, count))
@@ -68,12 +68,12 @@ class OutputView {
         println(message)
     }
 
-    private fun Shape.toKorean(): String =
+    private fun Suit.toKorean(): String =
         when (this) {
-            Shape.HEART -> "하트"
-            Shape.DIA -> "다이아몬드"
-            Shape.CLOVER -> "클로버"
-            Shape.SPADE -> "스페이드"
+            Suit.HEART -> "하트"
+            Suit.DIA -> "다이아몬드"
+            Suit.CLOVER -> "클로버"
+            Suit.SPADE -> "스페이드"
         }
 
     private fun Denomination.toEnglish(): String =

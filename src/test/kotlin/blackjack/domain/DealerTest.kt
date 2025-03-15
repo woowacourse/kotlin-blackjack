@@ -1,7 +1,7 @@
 package blackjack.domain
 
 import blackjack.domain.card.Denomination
-import blackjack.domain.card.Shape
+import blackjack.domain.card.Suit
 import blackjack.domain.card.TrumpCard
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Player
@@ -45,49 +45,49 @@ class DealerTest {
 
     @Test
     fun `에이스가 있을 때 에이스가 11로 계산 되어도 버스트 되지 않고 총합이 16을 초과하면 카드를 더 뽑을 수 없음을 반환한다`() {
-        dealer.addCard(TrumpCard(Denomination.ACE, Shape.DIA))
-        dealer.addCard(TrumpCard(Denomination.KING, Shape.DIA))
+        dealer.addCard(TrumpCard(Denomination.ACE, Suit.DIA))
+        dealer.addCard(TrumpCard(Denomination.KING, Suit.DIA))
 
         assertEquals(dealer.canHit(), false)
     }
 
     @Test
     fun `에이스가 있을 때 에이스가 11로 계산 되어도 버스트 되지 않고 총합이 16을 초과하지 않으면 카드를 더 뽑을 수 있음을 반환한다`() {
-        dealer.addCard(TrumpCard(Denomination.ACE, Shape.DIA))
-        dealer.addCard(TrumpCard(Denomination.TWO, Shape.DIA))
+        dealer.addCard(TrumpCard(Denomination.ACE, Suit.DIA))
+        dealer.addCard(TrumpCard(Denomination.TWO, Suit.DIA))
 
         assertEquals(dealer.canHit(), true)
     }
 
     @Test
     fun `에이스가 있을 때 에이스가 11로 계산 되면 버스트 되어 에이스를 1로 계산했을 때 총합이 16을 초과하면 카드를 더 뽑을 수 없음을 반환한다`() {
-        dealer.addCard(TrumpCard(Denomination.ACE, Shape.DIA))
-        dealer.addCard(TrumpCard(Denomination.KING, Shape.DIA))
+        dealer.addCard(TrumpCard(Denomination.ACE, Suit.DIA))
+        dealer.addCard(TrumpCard(Denomination.KING, Suit.DIA))
 
         assertEquals(dealer.canHit(), false)
     }
 
     @Test
     fun `에이스가 두 개일 때 버스트 되지 않고 16을 초과하지 않으면 카드를 더 뽑을 수 있음을 반환한다`() {
-        dealer.addCard(TrumpCard(Denomination.ACE, Shape.DIA))
-        dealer.addCard(TrumpCard(Denomination.ACE, Shape.HEART))
+        dealer.addCard(TrumpCard(Denomination.ACE, Suit.DIA))
+        dealer.addCard(TrumpCard(Denomination.ACE, Suit.HEART))
 
         assertEquals(dealer.canHit(), true)
     }
 
     @Test
     fun `에이스가 여러 개일 때 버스트 되지 않고 16을 초과하면 카드를 더 뽑을 수 없음을 반환한다`() {
-        dealer.addCard(TrumpCard(Denomination.ACE, Shape.DIA))
-        dealer.addCard(TrumpCard(Denomination.ACE, Shape.HEART))
-        dealer.addCard(TrumpCard(Denomination.NINE, Shape.HEART))
+        dealer.addCard(TrumpCard(Denomination.ACE, Suit.DIA))
+        dealer.addCard(TrumpCard(Denomination.ACE, Suit.HEART))
+        dealer.addCard(TrumpCard(Denomination.NINE, Suit.HEART))
 
         assertEquals(dealer.canHit(), false)
     }
 
     @Test
     fun `에이스 카드를 가지고 버스트 되지 않았으면 카드 총합에 10을 더한다`() {
-        dealer.addCard(TrumpCard(Denomination.ACE, Shape.DIA))
-        dealer.addCard(TrumpCard(Denomination.NINE, Shape.HEART))
+        dealer.addCard(TrumpCard(Denomination.ACE, Suit.DIA))
+        dealer.addCard(TrumpCard(Denomination.NINE, Suit.HEART))
 
         assertEquals(dealer.totalScore(), 20)
     }
@@ -101,10 +101,10 @@ class DealerTest {
 
     @Test
     fun `최초에 카드를 받은 후 오픈할 카드 1장을 반환한다`() {
-        dealer.addCard(TrumpCard(Denomination.SEVEN, Shape.HEART))
-        dealer.addCard(TrumpCard(Denomination.ACE, Shape.DIA))
+        dealer.addCard(TrumpCard(Denomination.SEVEN, Suit.HEART))
+        dealer.addCard(TrumpCard(Denomination.ACE, Suit.DIA))
 
-        assertThat(dealer.getInitialCards()).containsExactly(TrumpCard(Denomination.SEVEN, Shape.HEART))
+        assertThat(dealer.getInitialCards()).containsExactly(TrumpCard(Denomination.SEVEN, Suit.HEART))
     }
 
     @Test
