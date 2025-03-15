@@ -1,6 +1,8 @@
 package blackjack.controller
 
 import blackjack.domain.GameResult
+import blackjack.domain.betting.BettingAmount
+import blackjack.domain.betting.BettingInfo
 import blackjack.domain.card.Deck
 import blackjack.domain.participants.Dealer
 import blackjack.domain.participants.Participant
@@ -16,17 +18,25 @@ class BlackjackController(
 ) {
     fun play() {
         val players = generatePlayers()
+        val bettingInfos = generateBettingInfos(players)
         val dealer = Dealer(Deck.createDefaultDeck())
 
         initialDraw(dealer, players)
         processPlayersTurn(dealer, players)
         processDealerTurn(dealer)
-        showResult(dealer, players)
+        showResult(dealer, players, bettingInfos)
     }
 
     private fun generatePlayers(): List<Player> {
         val playerNames = inputView.getNames()
         return playerNames.map { Player(it) }
+    }
+
+    private fun generateBettingInfos(players: List<Player>): List<BettingInfo> {
+        return players.map { player ->
+            val bettingAmount = BettingAmount(inputView.getBettingAmount(player.name))
+            BettingInfo(player, bettingAmount)
+        }
     }
 
     private fun initialDraw(
@@ -53,7 +63,7 @@ class BlackjackController(
         dealer: Dealer,
         player: Player,
     ) {
-        while (player.canHit() && inputView.getFlag(player.name)) {
+        while (player.canHit() && inputView.getUserChoice(player.name)) {
             handOutCard(dealer, player)
             outputView.printDrawStatus(ParticipantsUiModel.create(player))
         }
@@ -78,10 +88,12 @@ class BlackjackController(
     private fun showResult(
         dealer: Dealer,
         players: List<Player>,
+        bettingInfos: List<BettingInfo>,
     ) {
         outputView.printCardScore(toParticipantsUiModel(dealer, players))
         val result = GameResult.create(dealer, players)
-        outputView.printResult(ResultUiModel.create(result))
+        val profits = result.calculateProfits(bettingInfos)
+        outputView.printResult(ResultUiModel.create(profits))
     }
 
     private fun toParticipantsUiModel(
