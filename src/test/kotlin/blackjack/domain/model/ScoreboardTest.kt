@@ -5,7 +5,6 @@ import blackjack.domain.model.card.CardNumber
 import blackjack.domain.model.card.Hand
 import blackjack.domain.model.card.Suit
 import blackjack.domain.model.participant.Dealer
-import blackjack.domain.model.participant.Participants
 import blackjack.domain.model.participant.Player
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -37,7 +36,7 @@ class ScoreboardTest {
                     Card.of(CardNumber.QUEEN, Suit.HEART),
                 ),
             )
-        val actualResult = Scoreboard(Participants(dealer, listOf(firstPlayer, secondPlayer))).getDealerResult()
+        val actualResult = Scoreboard(dealer, listOf(firstPlayer, secondPlayer)).getDealerResult()
 
         val expectedResult =
             mapOf(

@@ -6,52 +6,50 @@ import blackjack.domain.model.card.CardNumber
 import blackjack.domain.model.card.Suit
 import blackjack.domain.model.participant.Dealer
 import blackjack.domain.model.participant.Participant
-import blackjack.domain.model.participant.Participants
 import blackjack.domain.model.participant.Player
 
 class OutputView {
     fun newLine() = println()
 
-    fun showDistributeCardMessage(participants: List<Participant>) {
-        val joinedNames: String = participants.joinToString { it.name }
-        println(DISTRIBUTE_CARD_MESSAGE.format(joinedNames))
+    fun showParticipantFirstCardsInfo(participants: List<Participant>) {
+        showDistributeCardMessage(participants)
+
+        participants.forEach { participant ->
+            val participantHandCards = participant.showFirstHand()
+            println(CARD_INFO_MESSAGE.format(participant.name, participantHandCards.joinToString { it.toText() }))
+        }
     }
 
-    fun showDealerCardsInfo(dealer: Dealer) {
-        val dealerCard = dealer.showFirstHand().first()
-        println(CARD_INFO_MESSAGE.format(dealer.name, dealerCard.toText()))
-    }
-
-    fun showPlayerCardsInfo(player: Player) {
-        println(makeParticipantInfo(player))
+    fun showParticipantCardsInfo(participant: Participant) {
+        println(makeParticipantInfo(participant))
     }
 
     fun showDealerDrawMessage() {
         println(DEALER_DRAW_MESSAGE)
     }
 
-    fun showCardsResult(participants: Participants) {
-        println(makeParticipantInfo(participants.dealer) + CARD_RESULT_MESSAGE + participants.dealer.hand.getScore())
-        participants.players.forEach {
+    fun showCardsResult(participants: List<Participant>) {
+        participants.forEach {
             println(makeParticipantInfo(it) + CARD_RESULT_MESSAGE + it.hand.getScore())
         }
     }
 
-    fun showFinalResult(
+    fun showGameResults(
         dealerGameResult: Map<GameResult, Int>,
-        participants: Participants,
+        dealer: Dealer,
+        players: List<Player>,
     ) {
         val dealerResultText: String =
             dealerGameResult.filter { it.value != 0 }.map { "${it.value}${it.key.toText()}" }.joinToString()
 
         println(FINAL_RESULT_MESSAGE)
         println("$DEALER_TEXT_MESSAGE $dealerResultText")
-        participants.players.forEach {
-            println("${it.name} : ${it.compareTo(participants.dealer).toText()}")
+        players.forEach {
+            println("${it.name} : ${it.compareTo(dealer).toText()}")
         }
     }
 
-    fun showProfitResult(
+    fun showProfitResults(
         dealerProfit: Double,
         playersProfit: Map<Player, Double>,
     ) {
@@ -60,6 +58,11 @@ class OutputView {
         playersProfit.forEach { (player, profit) ->
             println("${player.name}: $profit")
         }
+    }
+
+    private fun showDistributeCardMessage(participants: List<Participant>) {
+        val joinedNames: String = participants.joinToString { it.name }
+        println(DISTRIBUTE_CARD_MESSAGE.format(joinedNames))
     }
 
     private fun makeParticipantInfo(participant: Participant): String {
@@ -77,36 +80,31 @@ class OutputView {
         private const val DEALER_TEXT_MESSAGE = "딜러:"
         private const val FINAL_PROFIT_MESSAGE = "## 최종 수익"
 
-        fun Card.toText(): String {
-            return cardNumber.toText() + suit.toText()
-        }
+        fun Card.toText(): String = cardNumber.toText() + suit.toText()
 
-        fun GameResult.toText(): String {
-            return when (this) {
+        fun GameResult.toText(): String =
+            when (this) {
                 GameResult.BLACKJACK_WIN -> "승"
                 GameResult.WIN -> "승"
                 GameResult.DRAW -> "무"
                 GameResult.LOSE -> "패"
             }
-        }
 
-        private fun Suit.toText(): String {
-            return when (this) {
+        private fun Suit.toText(): String =
+            when (this) {
                 Suit.SPADE -> "스페이드 ♠"
                 Suit.HEART -> "하트 ♥"
                 Suit.DIAMOND -> "다이아몬드 ♦"
                 Suit.CLUB -> "클로버 ♣"
             }
-        }
 
-        private fun CardNumber.toText(): String {
-            return when (this) {
+        private fun CardNumber.toText(): String =
+            when (this) {
                 CardNumber.ACE -> "A"
                 CardNumber.JACK -> "J"
                 CardNumber.QUEEN -> "Q"
                 CardNumber.KING -> "K"
                 else -> this.value.toString()
             }
-        }
     }
 }
