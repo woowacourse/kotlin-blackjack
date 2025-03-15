@@ -1,7 +1,5 @@
 package blackjack.model.domain.card
 
-import blackjack.model.service.Blackjack.Companion.BUST_STANDARD
-
 class Hand(private val _cards: MutableList<Card>) {
     private var _status: Status = Status.NEUTRAL
 
@@ -31,4 +29,8 @@ class Hand(private val _cards: MutableList<Card>) {
     }
 
     private fun MutableList<Card>.deepCopy(): List<Card> = map { it.copy() }
+
+    companion object {
+        const val BUST_STANDARD: Int = 21
+    }
 }

@@ -86,7 +86,7 @@
 - [x] BlackJack | PlayerGroup을 인수로 받도록 수정
 - [x] BlackJack | 중복 메서드 수정
 - [x] BlackJack | drawUntilThreshold 메서드명 수정
-- [ ] BlackJack | BUST_STANDARD 상수 이동
+- [x] BlackJack | BUST_STANDARD 상수 이동
 - [ ] Dealer | 카드 공개 메서드 추상화
 - [ ] DealerTest | Dealer의 테스트 추가 작성
 - [ ] HandTest | Hand의 테스트 추가 작성

@@ -41,8 +41,4 @@ class Blackjack(private val deck: PlayingCard, private val playerGroup: PlayerGr
             player.compareScores(playerGroup.dealer.hand.status, dealerResult)
         }
     }
-
-    companion object {
-        const val BUST_STANDARD: Int = 21
-    }
 }
