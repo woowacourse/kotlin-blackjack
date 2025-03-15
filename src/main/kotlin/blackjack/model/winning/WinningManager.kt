@@ -22,14 +22,14 @@ class WinningManager {
                 )
         }
 
-    private fun dealerResult(playerResults: Map<Name, WinningState>): Map<WinningState, Count> {
+    private fun dealerResult(playerResults: Map<Name, WinningState>): Map<WinningState, WinningCount> {
         val resultCounts =
             playerResults.values
                 .groupingBy { it.reverseToDealer() }
                 .eachCount()
 
         return WinningState.entries.associateWith {
-            Count(resultCounts.getOrDefault(it, INITIAL_SCORE))
+            WinningCount(resultCounts.getOrDefault(it, INITIAL_SCORE))
         }
     }
 
