@@ -3,23 +3,12 @@ package model.result
 import model.participant.Dealer
 import model.participant.Player
 import model.participant.Players
-import kotlin.math.abs
 
-class ProfitCalculator(private val dealer: Dealer, private val players: Players) {
+class ProfitCalculator(private val dealer: Dealer, players: Players) {
     val playerProfits: List<PlayerProfit> =
         players.map { player -> PlayerProfit(player.name, calculatePlayerProfit(player)) }
 
-    val dealerProfit = DealerProfit(calculateDealerProfit())
-
-    private fun calculateDealerProfit(): Float {
-        var initialDealerProfit = players.map { it.betAmount }.sum()
-
-        playerProfits.forEachIndexed { index, playerProfit ->
-            if (playerProfit.money >= ZERO) initialDealerProfit -= players[index].betAmount
-        }
-
-        return initialDealerProfit
-    }
+    val dealerProfit: DealerProfit = DealerProfit(playerProfits.map { -it.money }.sum())
 
     private fun calculatePlayerProfit(player: Player): Float =
         when {
@@ -31,12 +20,11 @@ class ProfitCalculator(private val dealer: Dealer, private val players: Players)
         }
 
     private fun compareScores(player: Player): Float {
-        val dealerDiff = abs(BLACKJACK_SCORE - dealer.score)
-        val playerDiff = abs(BLACKJACK_SCORE - player.score)
-
+        val dealerScore = dealer.score
+        val playerScore = player.score
         return when {
-            playerDiff < dealerDiff -> player.betAmount
-            playerDiff > dealerDiff -> -player.betAmount
+            playerScore < dealerScore -> -player.betAmount
+            playerScore > dealerScore -> player.betAmount
             else -> ZERO
         }
     }
