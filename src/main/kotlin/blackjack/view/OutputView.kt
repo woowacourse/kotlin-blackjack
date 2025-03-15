@@ -1,7 +1,7 @@
 package blackjack.view
 
+import blackjack.domain.card.Denomination
 import blackjack.domain.card.Shape
-import blackjack.domain.card.Tier
 import blackjack.domain.card.TrumpCard
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Player
@@ -16,7 +16,7 @@ class OutputView {
 
     fun printDealerCards(dealer: Dealer) {
         val cards = dealer.getInitialCards()
-        val cardFormat = cards.joinToString { MESSAGE_CARD.format(it.tier.toEnglish(), it.shape.toKorean()) }
+        val cardFormat = cards.joinToString { MESSAGE_CARD.format(it.denomination.toEnglish(), it.shape.toKorean()) }
         println(format(MESSAGE_OUTPUT_DEALER_CARD, cardFormat))
     }
 
@@ -58,7 +58,7 @@ class OutputView {
             cardMessageFormat(card)
         }
 
-    private fun cardMessageFormat(card: TrumpCard): String = MESSAGE_CARD.format(card.tier.toEnglish(), card.shape.toKorean())
+    private fun cardMessageFormat(card: TrumpCard): String = MESSAGE_CARD.format(card.denomination.toEnglish(), card.shape.toKorean())
 
     fun printDealerExtraCard(count: Int) {
         println(format(MESSAGE_OUTPUT_DEALER_EXTRA_CARD, count))
@@ -76,12 +76,12 @@ class OutputView {
             Shape.SPADE -> "스페이드"
         }
 
-    private fun Tier.toEnglish(): String =
+    private fun Denomination.toEnglish(): String =
         when (this) {
-            Tier.ACE -> "A"
-            Tier.JACK -> "J"
-            Tier.QUEEN -> "Q"
-            Tier.KING -> "K"
+            Denomination.ACE -> "A"
+            Denomination.JACK -> "J"
+            Denomination.QUEEN -> "Q"
+            Denomination.KING -> "K"
             else -> this.values.toString()
         }
 

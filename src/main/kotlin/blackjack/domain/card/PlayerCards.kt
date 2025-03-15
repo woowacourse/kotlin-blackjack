@@ -14,7 +14,7 @@ class PlayerCards(
         return items.size == INITIAL_CARD_COUNT && (score) == BUST_STANDARD
     }
 
-    fun sumOfCards(): Int = items.sumOf { card -> card.tier.values }
+    fun sumOfCards(): Int = items.sumOf { card -> card.denomination.values }
 
-    fun hasAce(): Boolean = items.any { it.tier == Tier.ACE }
+    fun hasAce(): Boolean = items.any { it.denomination == Denomination.ACE }
 }

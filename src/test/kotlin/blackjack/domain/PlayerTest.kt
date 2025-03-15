@@ -1,7 +1,7 @@
 package blackjack.domain
 
+import blackjack.domain.card.Denomination
 import blackjack.domain.card.Shape
-import blackjack.domain.card.Tier
 import blackjack.domain.card.TrumpCard
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Player
@@ -43,28 +43,28 @@ class PlayerTest {
 
     @Test
     fun `에이스 카드를 가지고 버스트 되지 않았으면 카드 총합에 10을 더한다`() {
-        player.addCard(TrumpCard(Tier.ACE, Shape.DIA))
-        player.addCard(TrumpCard(Tier.NINE, Shape.HEART))
+        player.addCard(TrumpCard(Denomination.ACE, Shape.DIA))
+        player.addCard(TrumpCard(Denomination.NINE, Shape.HEART))
 
         assertEquals(player.totalScore(), 20)
     }
 
     @Test
     fun `에이스 카드를 가지고 버스트 되었으면 카드 총합을 유지한다`() {
-        player.addCard(TrumpCard(Tier.ACE, Shape.DIA))
-        player.addCard(TrumpCard(Tier.SEVEN, Shape.HEART))
-        player.addCard(TrumpCard(Tier.NINE, Shape.HEART))
+        player.addCard(TrumpCard(Denomination.ACE, Shape.DIA))
+        player.addCard(TrumpCard(Denomination.SEVEN, Shape.HEART))
+        player.addCard(TrumpCard(Denomination.NINE, Shape.HEART))
 
         assertEquals(player.totalScore(), 17)
     }
 
     @Test
     fun `최초에 카드를 받은 후 오픈할 카드 2장을 반환한다`() {
-        player.addCard(TrumpCard(Tier.SEVEN, Shape.HEART))
-        player.addCard(TrumpCard(Tier.ACE, Shape.DIA))
+        player.addCard(TrumpCard(Denomination.SEVEN, Shape.HEART))
+        player.addCard(TrumpCard(Denomination.ACE, Shape.DIA))
 
         assertThat(player.getInitialCards())
-            .containsExactly(TrumpCard(Tier.SEVEN, Shape.HEART), TrumpCard(Tier.ACE, Shape.DIA))
+            .containsExactly(TrumpCard(Denomination.SEVEN, Shape.HEART), TrumpCard(Denomination.ACE, Shape.DIA))
     }
 
     @Test
