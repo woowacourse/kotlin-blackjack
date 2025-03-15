@@ -12,8 +12,8 @@ class ProfitCalculator(private val dealer: Dealer, private val players: Players)
     fun dealerProfit(): Float {
         var initialDealerProfit = players.map { it.betAmount }.sum()
 
-        playerProfits.forEachIndexed { index, playerResult ->
-            if (playerResult.profit >= ZERO) initialDealerProfit -= players[index].betAmount
+        playerProfits.forEachIndexed { index, playerProfit ->
+            if (playerProfit.money >= ZERO) initialDealerProfit -= players[index].betAmount
         }
 
         return initialDealerProfit
@@ -21,8 +21,8 @@ class ProfitCalculator(private val dealer: Dealer, private val players: Players)
 
     private fun playerProfit(player: Player): Float =
         when {
-            player.isBackJack && !dealer.isBackJack -> player.betAmount * ONE_AND_HALF
-            player.isBackJack && dealer.isBackJack -> ZERO
+            player.isBlackJack && !dealer.isBlackJack -> player.betAmount * ONE_AND_HALF
+            player.isBlackJack && dealer.isBlackJack -> ZERO
             dealer.isBust -> player.betAmount
             player.isBust -> -player.betAmount
             else -> compareScores(player)

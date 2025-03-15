@@ -12,7 +12,7 @@ abstract class Participant(private val cards: Cards) {
     val score: Int
         get() = ScoreCalculator(cards).calculateTotalCardScore()
 
-    val isBackJack: Boolean =
+    val isBlackJack: Boolean =
         handCards.size == INITIAL_CARDS_COUNT && ScoreCalculator(cards).initialTotalCardScore == BLACKJACK_SCORE
 
     val isBust: Boolean = score > BLACKJACK_SCORE
