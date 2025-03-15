@@ -33,7 +33,12 @@ class BlackjackGame(
 
     private fun initParticipants(): Participants {
         val dealer = Dealer()
-        val players = inputView.readPlayerNames()
+        val playersName = inputView.readPlayerNames()
+
+        val players =
+            playersName.map { name ->
+                Player(name, inputView.readPlayerBetAmount(name))
+            }
         return Pair(dealer, players)
     }
 
