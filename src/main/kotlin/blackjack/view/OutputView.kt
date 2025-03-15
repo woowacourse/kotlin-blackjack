@@ -1,12 +1,11 @@
 package blackjack.view
 
-import blackjack.model.domain.GameResult
 import blackjack.model.domain.card.Card
 import blackjack.model.domain.card.CardNumber
 import blackjack.model.domain.card.Shape
 import blackjack.model.domain.participant.Dealer
 import blackjack.model.domain.participant.Participants
-import blackjack.model.domain.participant.Player
+import blackjack.model.domain.participant.PlayerBetAmount
 
 class OutputView {
     fun printInitCardStatus(
@@ -60,37 +59,26 @@ class OutputView {
         }
     }
 
-    fun playerResult(playersResult: Map<Player, GameResult>) {
-        playersResult.forEach { (player, gameResult) ->
-            println(PLAYER_STATUS.format(player.name, gameResult.determineStatus()))
+    fun playerResult(playersBetAmount: List<PlayerBetAmount>) {
+        playersBetAmount.forEach { (player, betAmount) ->
+            println(PLAYER_STATUS.format(player.name, formatNumber(betAmount.amount)))
         }
         println()
     }
 
     fun dealerResult(
         dealer: Dealer,
-        statusCount: Map<GameResult, Int>,
+        losePlayersBetAmount: List<PlayerBetAmount>,
     ) {
         println(FINAL_RESULT)
-
-        val winningCount = statusCount[GameResult.Lose] ?: 0
-        val losingCount = statusCount[GameResult.Win] ?: 0
-        val drawCount = statusCount[GameResult.Draw] ?: 0
-
-        val resultFormat: String = OUTPUT_DEALER_RESULT.format(dealer.name, winningCount, losingCount)
-
-        if (drawCount != 0) {
-            println(resultFormat + OUTPUT_DEALER_RESULT_DRAW.format(drawCount))
-        } else {
-            println(resultFormat)
-        }
+        println(PLAYER_STATUS.format(dealer.name, formatNumber(-losePlayersBetAmount.map { it.betAmount.amount }.sum())))
     }
 
-    private fun GameResult.determineStatus(): String {
-        return when (this) {
-            GameResult.Win -> "승"
-            GameResult.Draw -> "무"
-            else -> "패"
+    private fun formatNumber(value: Float): String {
+        return if (value % 1.0 == 0.0) {
+            value.toInt().toString()
+        } else {
+            value.toString()
         }
     }
 
@@ -118,8 +106,6 @@ class OutputView {
         private const val OUTPUT_DEALER_RECEIVE_CARD: String = "%s는 16이하라 한장의 카드를 더 받았습니다."
         private const val OUTPUT_PARTICIPANTS_CARD_RESULT: String = " - 결과: %d"
         private const val FINAL_RESULT: String = "\n## 최종 승패"
-        private const val OUTPUT_DEALER_RESULT: String = "%s: %d승 %d패"
-        private const val OUTPUT_DEALER_RESULT_DRAW: String = " %d무"
         private const val PLAYER_STATUS: String = "%s: %s"
         private const val CARD: String = "카드"
         private const val CARD_FORMAT: String = "%s%s"

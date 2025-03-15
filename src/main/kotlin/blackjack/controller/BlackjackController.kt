@@ -1,13 +1,14 @@
 package blackjack.controller
 
 import blackjack.model.domain.ActionType
-import blackjack.model.domain.BetAmount
+import blackjack.model.domain.BettingMoney
 import blackjack.model.domain.GameResult
 import blackjack.model.domain.card.Card
 import blackjack.model.domain.card.CardFactory
 import blackjack.model.domain.card.PlayingCard
 import blackjack.model.domain.participant.Dealer
 import blackjack.model.domain.participant.Player
+import blackjack.model.domain.participant.PlayerBetAmount
 import blackjack.model.domain.participant.PlayerGroup
 import blackjack.model.service.Blackjack
 import blackjack.view.InputView
@@ -27,11 +28,15 @@ class BlackjackController(
         initGame(playerGroup.players)
         startGame(playerGroup.players)
         val playerResult = blackjack.endGame(playerGroup)
-        printResult(playerResult)
+        val playersSettleMoney = settleMoney(playerResult, playersBetAmount)
+
+        printResult(playersSettleMoney)
     }
 
-    private fun getPlayerBetAmount(players: List<Player>): Map<Player, BetAmount> {
-        return players.associateWith { BetAmount(inputView.askForBetAmount(it)) }
+    private fun getPlayerBetAmount(players: List<Player>): List<PlayerBetAmount> {
+        return retryInput {
+            players.map { PlayerBetAmount(it, BettingMoney(inputView.askForBetAmount(it))) }
+        }
     }
 
     private fun initGame(players: List<Player>) {
@@ -83,14 +88,38 @@ class BlackjackController(
         outputView.printDealerReceiveCard(count, dealer)
     }
 
-    private fun printResult(playersResult: Map<Player, GameResult>) {
-        outputView.participantsCardResult(listOf(dealer) + playersResult.keys)
-        outputView.dealerResult(dealer, getDealerResult(playersResult))
-        outputView.playerResult(playersResult)
+    private fun settlePlayerBet(
+        playerBetAmount: PlayerBetAmount,
+        gameResult: GameResult,
+    ): PlayerBetAmount {
+        val settledBetAmount =
+            when (gameResult) {
+                GameResult.BlackjackWin -> BettingMoney(playerBetAmount.betAmount.blackjackMoney)
+                GameResult.Win -> BettingMoney(playerBetAmount.betAmount.winMoney)
+                GameResult.Lose -> BettingMoney(playerBetAmount.betAmount.loseMoney)
+                GameResult.Draw -> BettingMoney(playerBetAmount.betAmount.drawMoney)
+            }
+        return PlayerBetAmount(playerBetAmount.player, settledBetAmount)
     }
 
-    private fun getDealerResult(playersResult: Map<Player, GameResult>): Map<GameResult, Int> {
-        return playersResult.values.groupingBy { it }.eachCount()
+    private fun settleMoney(
+        playersResult: Map<Player, GameResult>,
+        playersBetAmount: List<PlayerBetAmount>,
+    ): List<PlayerBetAmount> {
+        return playersBetAmount.map { playerBetAmount ->
+            val result = playersResult[playerBetAmount.player] ?: return@map playerBetAmount
+            settlePlayerBet(playerBetAmount, result)
+        }
+    }
+
+    private fun printResult(playerBetAmount: List<PlayerBetAmount>) {
+        outputView.participantsCardResult(listOf(dealer) + playerBetAmount.map { it.player })
+        outputView.dealerResult(dealer, getLosePlayers(playerBetAmount))
+        outputView.playerResult(playerBetAmount)
+    }
+
+    private fun getLosePlayers(playerBetAmount: List<PlayerBetAmount>): List<PlayerBetAmount> {
+        return playerBetAmount.filter { it.betAmount.amount < 0 }
     }
 
     private fun <T> retryInput(inputFunction: () -> T): T {

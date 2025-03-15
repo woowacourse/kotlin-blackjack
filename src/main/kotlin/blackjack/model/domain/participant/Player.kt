@@ -20,7 +20,7 @@ data class Player(override val name: String) : Participants() {
             status == Status.BUST -> GameResult.Win
             status == Status.BLACKJACK && hand.status == Status.BLACKJACK -> GameResult.Draw
             status == Status.BLACKJACK -> GameResult.Lose
-            hand.status == Status.BLACKJACK -> GameResult.Win
+            hand.status == Status.BLACKJACK -> GameResult.BlackjackWin
             else -> GameResult.compare(sumCardNumber, number)
         }
 }

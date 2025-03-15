@@ -12,9 +12,9 @@ class InputView {
         ) ?: askForPlayersName()
     }
 
-    fun askForBetAmount(player: Player): Int {
+    fun askForBetAmount(player: Player): Float {
         println(INPUT_BET_AMOUNT.format(player.name))
-        return validateBlank(readln())?.toIntOrNull() ?: askForBetAmount(player)
+        return validatePositive(readln())?.toFloat() ?: askForBetAmount(player)
     }
 
     fun askForHitOrStay(player: Player): String {
@@ -40,6 +40,11 @@ class InputView {
             input.forEach {
                 validateBlank(it) ?: return null
             }
+            return input
+        }
+
+        private fun validatePositive(input: String): String? {
+            if (input.isEmpty() || input.toFloat() <= 0) return null
             return input
         }
 

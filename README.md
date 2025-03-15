@@ -77,4 +77,4 @@
 - [x] Player | BlackJack인지 여부에 따라 승패 판단 기준 추가
 - [x] InputView | 플레이어들의 베팅 금액 입력
 - [x] PlayerBetAmount | 플레이어와 베팅 금액을 매핑하는 클래스 추가
-- [ ] BlackjackController | 카드의 승패와 블랙잭여부에 따라 베팅 결과 출력
+- [x] BlackjackController | 플레이어의 승패와 블랙잭여부에 따라 베팅 결과 출력
