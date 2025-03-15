@@ -4,8 +4,7 @@ import kotlin.math.abs
 
 data class PlayerResult(val player: Player, val result: GameResult)
 
-
-enum class GameResult(val profit: Float) {
+enum class GameResult(val profitRate: Float) {
     WIN(1f),
     LOSE(-1f),
     PUSH(0f),
@@ -15,7 +14,10 @@ enum class GameResult(val profit: Float) {
     companion object {
         const val BLACKJACK_SCORE = 21
 
-        fun compareWinOrLose(dealer: Dealer, players: Players): List<PlayerResult> {
+        fun compareWinOrLose(
+            dealer: Dealer,
+            players: Players,
+        ): List<PlayerResult> {
             val playerResults: List<PlayerResult> =
                 players.map { player ->
                     PlayerResult(player, decideResult(dealer, player))
@@ -23,7 +25,10 @@ enum class GameResult(val profit: Float) {
             return playerResults
         }
 
-        private fun decideResult(dealer: Dealer, player: Player): GameResult {
+        private fun decideResult(
+            dealer: Dealer,
+            player: Player,
+        ): GameResult {
             return when {
                 dealer.isBust() -> WIN
                 player.isBust() -> LOSE
@@ -34,7 +39,10 @@ enum class GameResult(val profit: Float) {
             }
         }
 
-        private fun compareScore(dealer: Dealer, player: Player): GameResult {
+        private fun compareScore(
+            dealer: Dealer,
+            player: Player,
+        ): GameResult {
             val dealerDiff = abs(BLACKJACK_SCORE - dealer.getTotalScore())
             val playerDiff = abs(BLACKJACK_SCORE - player.getTotalScore())
             return when {
@@ -46,12 +54,13 @@ enum class GameResult(val profit: Float) {
 
         fun decideProfitRates(playerResults: List<PlayerResult>): Map<Player, Float> {
             return playerResults.associate { playerResult ->
-                playerResult.player to when (playerResult.result) {
-                    WIN -> WIN.profit
-                    LOSE -> LOSE.profit
-                    BLACKJACK -> BLACKJACK.profit
-                    PUSH -> PUSH.profit
-                }
+                playerResult.player to
+                    when (playerResult.result) {
+                        WIN -> WIN.profitRate
+                        LOSE -> LOSE.profitRate
+                        BLACKJACK -> BLACKJACK.profitRate
+                        PUSH -> PUSH.profitRate
+                    }
             }
         }
     }

@@ -62,7 +62,7 @@ class GameManager(private val cards: Cards) {
         }
     }
 
-    fun determineDealerProfit(playersProfit: Map<Player,Int>): Int {
+    fun determineDealerProfit(playersProfit: Map<Player, Int>): Int {
         val totalPlayerProfit = playersProfit.values.sum()
         return -totalPlayerProfit
     }
