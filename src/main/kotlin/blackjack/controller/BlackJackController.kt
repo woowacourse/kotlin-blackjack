@@ -1,7 +1,7 @@
 package blackjack.controller
 
 import blackjack.domain.*
-import blackjack.domain.card.CardFactory
+import blackjack.domain.card.cardFactoryImpl
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Participants
 import blackjack.domain.participant.Player
@@ -15,7 +15,6 @@ import blackjack.view.model.PlayerUiModel
 class BlackJackController(
     private val inputView: InputView,
     private val outputView: OutputView,
-    private val cardFactory: CardFactory,
 ) {
     fun run() {
         val participants = readyForParticipants()
@@ -69,7 +68,7 @@ class BlackJackController(
     }
 
     private fun makeGame(participants: Participants): BlackJackGame {
-        val deck = Deck(cardFactory)
+        val deck = Deck(cardFactoryImpl())
         return BlackJackGame(participants, deck)
     }
 
