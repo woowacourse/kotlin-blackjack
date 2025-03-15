@@ -2,11 +2,13 @@ package blackjack.domain
 
 @JvmInline
 value class BettingAmount(
-    val value: Int,
+    private val value: Int,
 ) {
     init {
         require(value >= MIN_BETTING_AMOUNT) { ERROR_INVALID_RANGE }
     }
+
+    fun profit(result: GameResult): Profit = Profit(value * result.rate)
 
     companion object {
         private const val MIN_BETTING_AMOUNT = 0

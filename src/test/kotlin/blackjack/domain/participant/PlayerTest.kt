@@ -1,6 +1,6 @@
 package blackjack.domain.participant
 
-import blackjack.domain.BettingAmount
+import blackjack.domain.GameResult
 import blackjack.domain.card.Card
 import blackjack.domain.card.Rank
 import blackjack.domain.card.Suit
@@ -87,7 +87,7 @@ class PlayerTest {
     }
 
     @Test
-    fun `플레이어가 1000원 배팅하여 점수가 20이고 딜러의 점수가 18이면 플레이어의 수익은 1000원이다`() {
+    fun `플레이어의 점수가 20이고 딜러의 점수가 18이면 플레이어가 이긴다`() {
         // given
         val queenSpade = Card(Rank.QUEEN, Suit.SPADE)
         val queenHeart = Card(Rank.QUEEN, Suit.HEART)
@@ -96,14 +96,14 @@ class PlayerTest {
         // when
         player.drawCards(queenSpade, queenHeart)
         dealer.drawCards(queenSpade, eightSpade)
-        val result = player.getProfit(dealer, BettingAmount(1000))
+        val result = player.getResult(dealer)
 
         // then
-        assertThat(result).isEqualTo(1000)
+        assertThat(result).isEqualTo(GameResult.WIN)
     }
 
     @Test
-    fun `플레이어가 1000원 배팅하여 점수가 20이고 딜러의 점수가 21이면 수익은 -1000원이다`() {
+    fun `플레이어의 점수가 20이고 딜러의 점수가 21이면 플레이어가 진다`() {
         // given
         val queenSpade = Card(Rank.QUEEN, Suit.SPADE)
         val queenHeart = Card(Rank.QUEEN, Suit.HEART)
@@ -112,14 +112,14 @@ class PlayerTest {
         // when
         player.drawCards(queenSpade, queenHeart)
         dealer.drawCards(queenSpade, aceSpade)
-        val result = player.getProfit(dealer, BettingAmount(1000))
+        val result = player.getResult(dealer)
 
         // then
-        assertThat(result).isEqualTo(-1000)
+        assertThat(result).isEqualTo(GameResult.LOSE)
     }
 
     @Test
-    fun `플레이어가 1000원 배팅하여 점수가 20이고 딜러의 점수가 22이면 수익은 1000원이다`() {
+    fun `플레이어의 점수가 20이고 딜러의 점수가 22이면 플레이어가 이긴다`() {
         // given
         val queenSpade = Card(Rank.QUEEN, Suit.SPADE)
         val queenHeart = Card(Rank.QUEEN, Suit.HEART)
@@ -128,14 +128,14 @@ class PlayerTest {
         // when
         player.drawCards(queenSpade, queenHeart)
         dealer.drawCards(queenSpade, queenHeart, twoSpade)
-        val result = player.getProfit(dealer, BettingAmount(1000))
+        val result = player.getResult(dealer)
 
         // then
-        assertThat(result).isEqualTo(1000)
+        assertThat(result).isEqualTo(GameResult.WIN)
     }
 
     @Test
-    fun `플레이어가 1000원 배팅하여 점수가 20이고 딜러의 점수가 20이면 수익은 0이다`() {
+    fun `플레이어의 점수가 20이고 딜러의 점수가 20이면 비긴다`() {
         // given
         val queenSpade = Card(Rank.QUEEN, Suit.SPADE)
         val queenHeart = Card(Rank.QUEEN, Suit.HEART)
@@ -143,14 +143,14 @@ class PlayerTest {
         // when
         player.drawCards(queenSpade, queenHeart)
         dealer.drawCards(queenSpade, queenHeart)
-        val result = player.getProfit(dealer, BettingAmount(1000))
+        val result = player.getResult(dealer)
 
         // then
-        assertThat(result).isEqualTo(0)
+        assertThat(result).isEqualTo(GameResult.PUSH)
     }
 
     @Test
-    fun `플레이어가 1000원 배팅하여 블랙잭이고 딜러의 점수가 20이면 수익은 1500원이다`() {
+    fun `플레이어가 블랙잭이고 딜러의 점수가 20이면 플레이어가 블랙잭으로 이긴다`() {
         // given
         val aceSpade = Card(Rank.ACE, Suit.SPADE)
         val queenSpade = Card(Rank.QUEEN, Suit.SPADE)
@@ -159,10 +159,10 @@ class PlayerTest {
         // when
         player.drawCards(aceSpade, queenSpade)
         dealer.drawCards(queenSpade, queenHeart)
-        val result = player.getProfit(dealer, BettingAmount(1000))
+        val result = player.getResult(dealer)
 
         // then
-        assertThat(result).isEqualTo(1500)
+        assertThat(result).isEqualTo(GameResult.WIN_BLACKJACK)
     }
 
     private fun Participant.drawCards(vararg cards: Card) {
