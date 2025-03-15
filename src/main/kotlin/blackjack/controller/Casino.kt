@@ -4,7 +4,6 @@ import blackjack.domain.generator.CardsGenerator
 import blackjack.domain.model.GameResult
 import blackjack.domain.model.Scoreboard
 import blackjack.domain.model.betting.BetAmount
-import blackjack.domain.model.betting.BetRecord
 import blackjack.domain.model.betting.BetRecords
 import blackjack.domain.model.card.Card
 import blackjack.domain.model.card.Deck
@@ -25,24 +24,20 @@ class Casino(
         val dealer = Dealer()
         val players: List<Player> = setPlayers()
         val participants: List<Participant> = listOf(dealer) + players
-        val playerBetInfos: List<BetRecord> = setPlayerBetInfos(players)
         initialCardsDistribute(participants, deck)
 
         runPlayersPhase(players, deck)
         runDealerPhase(dealer, deck)
         outputGameResults(dealer, players)
-        outputParticipantsProfit(BetRecords(dealer, playerBetInfos))
+        outputParticipantsProfit(BetRecords(dealer, players))
     }
-
-    private fun setPlayerBetInfos(players: List<Player>): List<BetRecord> =
-        players.map {
-            val betAmount = setBetAmount(it.name)
-            BetRecord(it, betAmount)
-        }
 
     private fun setPlayers(): List<Player> {
         val names = inputView.readPlayerNames()
-        return names.map(::Player)
+        return names.map {
+            val betAmount = setBetAmount(it)
+            Player(it, betAmount = betAmount)
+        }
     }
 
     private fun setBetAmount(playerName: String): BetAmount {
