@@ -1,10 +1,7 @@
 package blackjack.domain.model.card
 
-enum class Denomination(
-    val number: Int,
-    val display: String = "$number",
-) {
-    Ace(1, "A"),
+enum class Denomination(val number: Int) {
+    Ace(1),
     Two(2),
     Three(3),
     Four(4),
@@ -14,9 +11,9 @@ enum class Denomination(
     Eight(8),
     Nine(9),
     Ten(10),
-    Jack(10, "J"),
-    Queen(10, "Q"),
-    King(10, "K"),
+    Jack(10),
+    Queen(10),
+    King(10),
     ;
 
     companion object {

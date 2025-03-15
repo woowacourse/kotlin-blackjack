@@ -2,6 +2,7 @@ package blackjack.view
 
 import blackjack.domain.model.ProceedStatus
 import blackjack.domain.model.card.Card
+import blackjack.domain.model.card.Denomination
 import blackjack.domain.model.card.Suit
 import blackjack.domain.model.participant.Dealer
 import blackjack.domain.model.participant.Participants
@@ -29,7 +30,7 @@ class OutputView {
     }
 
     private fun displayCard(cards: List<Card>): String {
-        return cards.joinToString { CARD_FORMAT.format(it.cardNumber.display, it.symbol.toKorean()) }
+        return cards.joinToString { CARD_FORMAT.format(it.cardNumber.toDisplay(), it.symbol.toKorean()) }
     }
 
     private fun makeFormat(
@@ -71,6 +72,16 @@ class OutputView {
 
     private fun getParticipantsResult(proceedStatus: ProceedStatus): String {
         return PLAYER_STATUS.format(proceedStatus.participant.name, proceedStatus.proceed.amount.toString())
+    }
+
+    private fun Denomination.toDisplay(): String {
+        return when (this) {
+            Denomination.Ace -> "A"
+            Denomination.Jack -> "J"
+            Denomination.Queen -> "Q"
+            Denomination.King -> "K"
+            else -> number.toString()
+        }
     }
 
     private fun Suit.toKorean(): String {
