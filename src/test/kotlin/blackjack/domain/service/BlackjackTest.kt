@@ -1,6 +1,7 @@
 package blackjack.domain.service
 
 import blackjack.domain.model.BetAmount
+import blackjack.domain.model.BetStatus
 import blackjack.domain.model.Proceed
 import blackjack.domain.model.card.Card
 import blackjack.domain.model.card.CardFactory.Companion.cardNumbers
@@ -19,6 +20,7 @@ class BlackjackTest {
     private lateinit var player1: Player
     private lateinit var player2: Player
     private lateinit var player3: Player
+    private lateinit var players: List<Player>
     private lateinit var dealer: Dealer
     private lateinit var card: List<Card>
     private lateinit var deck: PlayingCard
@@ -30,6 +32,7 @@ class BlackjackTest {
         player1 = Player("제리")
         player2 = Player("환노")
         player3 = Player("포르")
+        players = listOf(player1, player2, player3)
         dealer = Dealer()
         card = symbols.flatMap { symbol -> cardNumbers.map { cardNumber -> Card(symbol, cardNumber) } }.toMutableList()
         deck = PlayingCard(ArrayDeque(card))
@@ -54,17 +57,13 @@ class BlackjackTest {
         player3.receiveCard(listOf(Card(Shape.Heart, CardNumber.Seven))) // 7
         dealer.receiveCard(listOf(Card(Shape.Spade, CardNumber.Seven))) // 7
 
-        val betAmount: Map<Player, BetAmount> =
-            mapOf(
-                player1 to BetAmount(1000),
-                player2 to BetAmount(2000),
-                player3 to BetAmount(3000),
-            )
+        val betStatus = players.map { BetStatus(it, BetAmount(10000)) }
+
         // when
-        val gameResult = game.getGameResult(betAmount)
+        val gameResult = game.getGameResult(betStatus)
         // then
-        assertThat(gameResult[player1]).isEqualTo(Proceed(1000))
-        assertThat(gameResult[player2]).isEqualTo(Proceed(-2000))
+        assertThat(gameResult[player1]).isEqualTo(Proceed(10000))
+        assertThat(gameResult[player2]).isEqualTo(Proceed(-10000))
         assertThat(gameResult[player3]).isEqualTo(Proceed(0))
     }
 

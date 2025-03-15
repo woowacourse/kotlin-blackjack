@@ -2,6 +2,7 @@ package blackjack.controller
 
 import blackjack.domain.model.ActionType
 import blackjack.domain.model.BetAmount
+import blackjack.domain.model.BetStatus
 import blackjack.domain.model.card.Card
 import blackjack.domain.model.card.CardFactory
 import blackjack.domain.model.card.PlayingCard
@@ -33,10 +34,8 @@ class BlackjackController(
         }
     }
 
-    private fun getPlayersBetAmount(players: List<Player>): Map<Player, BetAmount> {
-        return players.associateWith { player ->
-            getBetAmount(player)
-        }
+    private fun getPlayersBetAmount(players: List<Player>): List<BetStatus> {
+        return players.map { BetStatus(it, getBetAmount(it)) }
     }
 
     private fun getBetAmount(player: Player): BetAmount {
@@ -99,7 +98,7 @@ class BlackjackController(
     // *** 게임 정산해라 ***
     private fun endGame(
         blackjack: Blackjack,
-        playerBetAmount: Map<Player, BetAmount>,
+        playerBetAmount: List<BetStatus>,
     ) {
         outputView.participantsCardResult(blackjack.playerGroup)
         val gameResult = blackjack.getGameResult(playerBetAmount)

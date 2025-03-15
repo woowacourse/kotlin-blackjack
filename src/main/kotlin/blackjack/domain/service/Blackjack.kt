@@ -1,6 +1,6 @@
 package blackjack.domain.service
 
-import blackjack.domain.model.BetAmount
+import blackjack.domain.model.BetStatus
 import blackjack.domain.model.Proceed
 import blackjack.domain.model.card.PlayingCard
 import blackjack.domain.model.participant.Participants
@@ -38,11 +38,11 @@ class Blackjack(
         participant.receiveCard(deck.spreadCard(ONE_CARD))
     }
 
-    fun getGameResult(betStatus: Map<Player, BetAmount>): Map<Player, Proceed> {
+    fun getGameResult(betStatus: List<BetStatus>): Map<Player, Proceed> {
         return playerGroup.players.associateWith { player ->
             val result = player.compareScores(playerGroup.dealer)
-            val proceed = betStatus[player]?.calculateProceed(result) ?: throw IllegalArgumentException()
-            Proceed(proceed)
+            val playerBetInfo = betStatus.find { it.player == player } ?: throw IllegalArgumentException()
+            Proceed(playerBetInfo.betAmount.calculateProceed(result))
         }
     }
 
