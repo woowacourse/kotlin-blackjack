@@ -1,10 +1,14 @@
 package blackjack.domain.model
 
-import blackjack.domain.model.card.Card
-import blackjack.domain.model.card.CardNumber
-import blackjack.domain.model.card.Shape
+import blackjack.domain.SPADE_EIGHT
+import blackjack.domain.SPADE_FIVE
+import blackjack.domain.SPADE_FOUR
+import blackjack.domain.SPADE_SIX
+import blackjack.domain.blackjackCardList
+import blackjack.domain.bustCardList
 import blackjack.domain.model.participant.Dealer
 import blackjack.domain.model.participant.Player
+import blackjack.domain.notBustCardList
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -12,10 +16,6 @@ import org.junit.jupiter.api.Test
 class PlayerTest {
     private lateinit var player: Player
     private lateinit var dealer: Dealer
-    private val aceHeart = Card(Shape.Heart, CardNumber.Ace)
-    private val sixSpade = Card(Shape.Spade, CardNumber.Six)
-    private val kingHeart = Card(Shape.Heart, CardNumber.King)
-    private val queenDiamond = Card(Shape.Diamond, CardNumber.Queen)
 
     @BeforeEach
     fun setup() {
@@ -27,10 +27,10 @@ class PlayerTest {
     @Test
     fun `받은 카드의 목록을 반환한다`() {
         // given
-        player.receiveCard(listOf(aceHeart, sixSpade))
+        player.receiveCard(listOf(SPADE_SIX, SPADE_FIVE))
         // when
         val actual = player.cardDeck
-        val expected = listOf(Card(Shape.Heart, CardNumber.Ace), Card(Shape.Spade, CardNumber.Six))
+        val expected = listOf(SPADE_SIX, SPADE_FIVE)
         // then
         assertThat(actual).isEqualTo(expected)
     }
@@ -38,9 +38,9 @@ class PlayerTest {
     @Test
     fun `플레이어가 버스트라면 항상 패배한다`() {
         // given
-        player.receiveCard(listOf(kingHeart, queenDiamond, sixSpade))
+        player.receiveCard(bustCardList())
 
-        dealer.receiveCard(listOf(kingHeart, aceHeart))
+        dealer.receiveCard(blackjackCardList())
         // when
         val actual = player.compareScores(dealer)
         val expected = GameResult.Lose
@@ -51,9 +51,9 @@ class PlayerTest {
     @Test
     fun `플레이어가 버스트가 아니고, 딜러가 버스트라면 승리한다`() {
         // given
-        player.receiveCard(listOf(kingHeart, aceHeart))
+        player.receiveCard(notBustCardList())
 
-        dealer.receiveCard(listOf(queenDiamond, kingHeart, sixSpade))
+        dealer.receiveCard(bustCardList())
         // when
         val actual = player.compareScores(dealer)
         val expected = GameResult.Win
@@ -64,9 +64,9 @@ class PlayerTest {
     @Test
     fun `플레이어와 딜러 모두 버스트가 아니라면 점수가 높은 참가자가 승리한다`() {
         // given
-        player.receiveCard(listOf(sixSpade, queenDiamond))
+        player.receiveCard(listOf(SPADE_FOUR))
 
-        dealer.receiveCard(listOf(kingHeart, aceHeart))
+        dealer.receiveCard(listOf(SPADE_EIGHT))
         // when
         val actual = player.compareScores(dealer)
         val expected = GameResult.Lose
@@ -77,9 +77,9 @@ class PlayerTest {
     @Test
     fun `플레이어와 딜러 모두 버스트가 아니고, 점수가 같다면 무승부한다`() {
         // given
-        player.receiveCard(listOf(sixSpade, queenDiamond))
+        player.receiveCard(listOf(SPADE_EIGHT))
 
-        dealer.receiveCard(listOf(sixSpade, queenDiamond))
+        dealer.receiveCard(listOf(SPADE_EIGHT))
         // when
         val actual = player.compareScores(dealer)
         val expected = GameResult.Draw
@@ -90,7 +90,7 @@ class PlayerTest {
     @Test
     fun `플레이어의 점수 합계가 21점 미만이라면 더 뽑을 수 있다`() {
         // given
-        player.receiveCard(listOf(sixSpade))
+        player.receiveCard(notBustCardList())
         // when
         val actual = player.canHit()
         // then
@@ -100,7 +100,7 @@ class PlayerTest {
     @Test
     fun `플레이어의 점수 합계가 21점 이상이라면 더 뽑을 수 없다`() {
         // given
-        player.receiveCard(listOf(kingHeart, queenDiamond, sixSpade))
+        player.receiveCard(bustCardList())
         // when
         val actual = player.canHit()
         // then
@@ -110,7 +110,7 @@ class PlayerTest {
     @Test
     fun `플레이어는 초기 카드로 2장을 보여 준다`() {
         // given
-        player.receiveCard(listOf(aceHeart, sixSpade, kingHeart))
+        player.receiveCard(bustCardList())
         // when
         val actual = player.getInitCard().size
         val expected = 2

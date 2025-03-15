@@ -101,10 +101,8 @@ class BlackjackController(
         playerBetAmount: List<BetStatus>,
     ) {
         outputView.participantsCardResult(blackjack.playerGroup)
-        val playersResult = blackjack.calculatePlayersProceed(playerBetAmount)
-        val dealerResult = blackjack.calculateDealerProceed(playersResult)
-        outputView.dealerResult(dealerResult)
-        outputView.playerResult(playersResult)
+        val gameResult = blackjack.endGame(playerBetAmount)
+        outputView.printGameResult(gameResult)
     }
 
     private fun <T> retryInput(inputFunction: () -> T): T {

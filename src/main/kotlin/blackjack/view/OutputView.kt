@@ -5,6 +5,7 @@ import blackjack.domain.model.card.Card
 import blackjack.domain.model.card.Shape
 import blackjack.domain.model.participant.Dealer
 import blackjack.domain.model.participant.Participants
+import blackjack.domain.model.participant.Player
 import blackjack.domain.model.participant.PlayerGroup
 
 class OutputView {
@@ -56,16 +57,16 @@ class OutputView {
         }
     }
 
-    fun playerResult(proceedStatus: List<ProceedStatus>) {
-        proceedStatus.forEach {
+    fun printGameResult(proceedStatus: List<ProceedStatus>) {
+        println(FINAL_RESULT)
+
+        val dealerStatus = proceedStatus.first { it.participant is Dealer }
+        println(getParticipantsResult(dealerStatus))
+
+        val playerStatus = proceedStatus.filter { it.participant is Player }
+        playerStatus.forEach {
             println(getParticipantsResult(it))
         }
-        println()
-    }
-
-    fun dealerResult(dealerResult: ProceedStatus) {
-        println(FINAL_RESULT)
-        println(getParticipantsResult(dealerResult))
     }
 
     private fun getParticipantsResult(proceedStatus: ProceedStatus): String {

@@ -6,24 +6,24 @@ import blackjack.domain.bustCardList
 import blackjack.domain.model.BetAmount
 import blackjack.domain.model.BetStatus
 import blackjack.domain.model.Proceed
+import blackjack.domain.model.ProceedStatus
 import blackjack.domain.model.card.Card
 import blackjack.domain.model.card.CardFactory.Companion.cardNumbers
 import blackjack.domain.model.card.CardFactory.Companion.symbols
 import blackjack.domain.model.card.PlayingCard
 import blackjack.domain.model.participant.Dealer
 import blackjack.domain.model.participant.Player
-import blackjack.domain.model.participant.PlayerGroup
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-class BlackjackTest {
+class BlackjackResultTest {
     private lateinit var player1: Player
     private lateinit var player2: Player
     private lateinit var player3: Player
     private lateinit var players: List<Player>
     private lateinit var dealer: Dealer
-    private lateinit var game: Blackjack
+    private lateinit var gameResult: BlackjackResult
 
     // given
     @BeforeEach
@@ -35,40 +35,11 @@ class BlackjackTest {
         dealer = Dealer()
         val card = symbols.flatMap { symbol -> cardNumbers.map { cardNumber -> Card(symbol, cardNumber) } }.toMutableList()
         val deck = PlayingCard(ArrayDeque(card))
-        game = Blackjack(deck, PlayerGroup(listOf(player1, player2, player3, dealer)))
+        gameResult = BlackjackResult(dealer)
     }
 
     @Test
-    fun `게임 시작시 카드를 2장을 나눈다`() {
-        // when
-        game.initGame()
-        // then
-        assertThat(dealer.cardDeck.size).isEqualTo(2)
-        assertThat(player1.cardDeck.size).isEqualTo(2)
-        assertThat(player2.cardDeck.size).isEqualTo(2)
-    }
-
-    @Test
-    fun `플레이어가 hit을 외치면 카드 한장을 뽑는다`() {
-        // when
-        val size = player1.cardDeck.size
-        game.hitAction(player1)
-        // then
-        assertThat(player1.cardDeck.size).isEqualTo(size + 1)
-    }
-
-    @Test
-    fun `딜러는 처음에 받은 2장의 합계가 16이하이면 카드를 추가로 받는다`() {
-        // given
-        game.initGame()
-        // when
-        game.drawUntilDealerStands()
-        // then
-        assertThat(dealer.cardDeck.size).isGreaterThan(2)
-    }
-
-    @Test
-    fun `딜러와 플레이어들의 수익 금액을 반환한다`() {
+    fun `게임이 끝난 후 플레이어의 수익 금액을 계산한다`() {
         // given
         player1.receiveCard(blackjackCardList())
         player2.receiveCard(bustCardList())
@@ -76,12 +47,26 @@ class BlackjackTest {
         dealer.receiveCard(listOf(SPADE_SEVEN))
 
         val betStatus = players.map { BetStatus(it, BetAmount(10000)) }
+
         // when
-        val gameResult = game.endGame(betStatus)
+        val gameResult = gameResult.calculatePlayersProceed(betStatus)
         // then
         assertThat(gameResult.find { it.participant == player1 }!!.proceed).isEqualTo(Proceed(15000))
         assertThat(gameResult.find { it.participant == player2 }!!.proceed).isEqualTo(Proceed(-10000))
         assertThat(gameResult.find { it.participant == player3 }!!.proceed).isEqualTo(Proceed(0))
-        assertThat(gameResult.find { it.participant == dealer }!!.proceed).isEqualTo(Proceed(-5000))
+    }
+
+    @Test
+    fun `딜러의 수익 금액은 플레이어의 총 수익 금액과 부호가 반대다`() {
+        // given
+        val player1Proceed = ProceedStatus(player1, Proceed(1000))
+        val player2Proceed = ProceedStatus(player2, Proceed(2000))
+        val player3Proceed = ProceedStatus(player3, Proceed(-2000))
+
+        val playerProceedStatus = listOf(player1Proceed, player2Proceed, player3Proceed)
+        // when
+        val dealerResult = gameResult.calculateDealerProceed(playerProceedStatus)
+        // then
+        assertThat(dealerResult.proceed).isEqualTo(Proceed(-1000))
     }
 }
