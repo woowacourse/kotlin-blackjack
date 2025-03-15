@@ -78,7 +78,7 @@
 - [x] InputView | 플레이어들의 베팅 금액 입력
 - [x] PlayerBetAmount | 플레이어와 베팅 금액을 매핑하는 클래스 추가
 - [x] BlackjackController | 플레이어의 승패와 블랙잭여부에 따라 베팅 결과 출력
-- [ ] CardFactory | 테스트에만 사용한 코드 제거
+- [x] CardFactory | 테스트에만 사용한 코드 제거
 - [ ] BlackjackController | PlayerGroup 추가적으로 활용
 - [ ] InputView | 입력에 따라 도메인이 출력되도록 수정
 - [ ] Hand | 객체에 메시지를 던지도록 수정

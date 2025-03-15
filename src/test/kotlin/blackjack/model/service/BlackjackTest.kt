@@ -2,8 +2,6 @@ package blackjack.model.service
 
 import blackjack.model.domain.GameResult
 import blackjack.model.domain.card.Card
-import blackjack.model.domain.card.CardFactory.Companion.cardNumbers
-import blackjack.model.domain.card.CardFactory.Companion.symbols
 import blackjack.model.domain.card.PlayingCard
 import blackjack.model.domain.participant.Dealer
 import blackjack.model.domain.participant.Player
@@ -28,7 +26,7 @@ class BlackjackTest {
         player2 = Player("환노")
         player3 = Player("포르")
         dealer = Dealer()
-        card = symbols.flatMap { symbol -> cardNumbers.map { cardNumber -> Card(symbol, cardNumber) } }.toMutableList()
+        card = Card.CARDDECK.values.toList()
         deck = PlayingCard(ArrayDeque(card))
         game = Blackjack(deck)
     }
