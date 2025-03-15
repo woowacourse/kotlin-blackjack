@@ -21,6 +21,18 @@ data class Player(override val name: String) : Participants() {
             status == Status.BLACKJACK && hand.status == Status.BLACKJACK -> GameResult.Draw
             status == Status.BLACKJACK -> GameResult.Lose
             hand.status == Status.BLACKJACK -> GameResult.BlackjackWin
-            else -> GameResult.compare(sumCardNumber, number)
+            else -> compare(sumCardNumber, number)
         }
+
+    private fun compare(
+        target: Int,
+        other: Int,
+    ): GameResult {
+        if (target < other) {
+            return GameResult.Lose
+        } else if (target > other) {
+            return GameResult.Win
+        }
+        return GameResult.Draw
+    }
 }
