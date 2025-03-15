@@ -34,8 +34,8 @@ class ProfitCalculatorTest {
                         Card(CardRank.FIVE, Shape.SPADE),
                     ),
                 ),
-                10000f,
             )
+        player.betting(10000f)
         players = Players(listOf(player))
         assertPlayerProfit(expectedProfit = -10000f)
     }
@@ -44,8 +44,9 @@ class ProfitCalculatorTest {
     fun `딜러의 처음 두 장의 카드 합이 블랙잭이 아니며 플레이어의 처음 두 장의 카드 합이 블랙잭일 경우 플레이어는 베팅 금액의 1_5배를 수익으로 받는다`() {
         dealer = Dealer(Cards(listOf(Card(CardRank.QUEEN, Shape.CLUB), Card(CardRank.JACK, Shape.SPADE))))
         val player =
-            Player("jay", Cards(listOf(Card(CardRank.QUEEN, Shape.CLUB), Card(CardRank.ACE, Shape.SPADE))), 10000f)
+            Player("jay", Cards(listOf(Card(CardRank.QUEEN, Shape.CLUB), Card(CardRank.ACE, Shape.SPADE))))
         players = Players(listOf(player))
+        player.betting(10000f)
         assertPlayerProfit(expectedProfit = 15000f)
     }
 
@@ -53,7 +54,8 @@ class ProfitCalculatorTest {
     fun `딜러와 플레이어 모두 블랙잭일 때 플레이어는 베팅 금액을 돌려 받는다`() {
         dealer = Dealer(Cards(listOf(Card(CardRank.KING, Shape.CLUB), Card(CardRank.ACE, Shape.HEART))))
         val player =
-            Player("jay", Cards(listOf(Card(CardRank.QUEEN, Shape.CLUB), Card(CardRank.ACE, Shape.SPADE))), 10000f)
+            Player("jay", Cards(listOf(Card(CardRank.QUEEN, Shape.CLUB), Card(CardRank.ACE, Shape.SPADE))))
+        player.betting(10000f)
         players = Players(listOf(player))
         assertPlayerProfit(expectedProfit = 0f)
     }
@@ -69,7 +71,8 @@ class ProfitCalculatorTest {
                 ),
             )
         val player =
-            Player("jay", Cards(listOf(Card(CardRank.KING, Shape.CLUB), Card(CardRank.KING, Shape.SPADE))), 10000f)
+            Player("jay", Cards(listOf(Card(CardRank.KING, Shape.CLUB), Card(CardRank.KING, Shape.SPADE))))
+        player.betting(10000f)
         dealer = Dealer(cards)
         players = Players(listOf(player))
         assertPlayerProfit(expectedProfit = 10000f)
@@ -81,7 +84,8 @@ class ProfitCalculatorTest {
             Cards(listOf(Card(CardRank.QUEEN, Shape.CLUB), Card(CardRank.ACE, Shape.SPADE)))
         dealer = Dealer(dealerCard)
         val player =
-            Player("jay", Cards(listOf(Card(CardRank.KING, Shape.CLUB), Card(CardRank.KING, Shape.SPADE))), 10000f)
+            Player("jay", Cards(listOf(Card(CardRank.KING, Shape.CLUB), Card(CardRank.KING, Shape.SPADE))))
+        player.betting(10000f)
         players = Players(listOf(player))
         assertThat(ProfitCalculator(dealer, players).dealerProfit()).isEqualTo(10000f)
     }

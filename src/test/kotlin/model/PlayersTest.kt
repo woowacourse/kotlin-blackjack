@@ -26,8 +26,8 @@ class PlayersTest {
                 Card(CardRank.EIGHT, Shape.SPADE),
             )
 
-        val player1 = Player("joy", cards1, 10000f)
-        val player2 = Player("jay", cards2, 10000f)
+        val player1 = Player("joy", cards1)
+        val player2 = Player("jay", cards2)
 
         val players = listOf(player1, player2)
         assertDoesNotThrow { Players(players) }
@@ -46,8 +46,8 @@ class PlayersTest {
                 Card(CardRank.EIGHT, Shape.SPADE),
             )
 
-        val player1 = Player("joy", cards1, 10000f)
-        val player2 = Player("jay", cards2, 10000f)
+        val player1 = Player("joy", cards1)
+        val player2 = Player("jay", cards2)
 
         val players = Players(listOf(player1, player2))
 
@@ -73,8 +73,8 @@ class PlayersTest {
                 Card(CardRank.EIGHT, Shape.SPADE),
             )
 
-        val player1 = Player("joy", cards1, 10000f)
-        val player2 = Player("jay", cards2, 10000f)
+        val player1 = Player("joy", cards1)
+        val player2 = Player("jay", cards2)
 
         val players = Players(listOf(player1, player2))
         assertThat(players.scores)

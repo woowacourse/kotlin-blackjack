@@ -5,13 +5,21 @@ import model.card.CardName
 import model.card.Cards
 import model.result.ProfitCalculator.Companion.BLACKJACK_SCORE
 
-class Player(val name: String, private val playerCards: Cards, val betAmount: Float) : Participant(playerCards) {
+class Player(val name: String, private val playerCards: Cards) : Participant(playerCards) {
+    var betAmount: Float = 0F
+        private set(value) {
+            require(value > 0F) { PLAYER_AMOUNT_ERROR_MESSAGE }
+            field = value
+        }
     val cardNames: List<CardName>
         get() = playerCards.names
 
     init {
         require(name.isNotEmpty()) { PLAYER_BLANK_ERROR_MESSAGE }
-        require(betAmount > 0f) { PLAYER_AMOUNT_ERROR_MESSAGE }
+    }
+
+    fun betting(betAmount: Float) {
+        this.betAmount = betAmount
     }
 
     override fun turn(drawnCard: Card): Boolean {

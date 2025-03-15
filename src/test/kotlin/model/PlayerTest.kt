@@ -16,7 +16,7 @@ import org.junit.jupiter.params.provider.ValueSource
 class PlayerTest {
     @Test
     fun `플레이어의 이름은 공백일 수 없다`() {
-        assertThrows<IllegalArgumentException> { Player("", Cards(mutableListOf()), 10000f) }
+        assertThrows<IllegalArgumentException> { Player("", Cards(mutableListOf())) }
     }
 
     @Test
@@ -26,13 +26,13 @@ class PlayerTest {
 
     @Test
     fun `플레이어는 카드를 받을지 결정할 수 있다`() {
-        val player = Player("joy", cards, 10000f)
+        val player = Player("joy", cards)
         Assertions.assertTrue(player.canHit())
     }
 
     @Test
     fun `플레이어는 카드를 뽑을 수 있다`() {
-        val player = Player("joy", cards, 10000f)
+        val player = Player("joy", cards)
         val drawnCard = Card(CardRank.TWO, Shape.SPADE)
         Assertions.assertFalse(player.turn(drawnCard))
     }
@@ -40,7 +40,7 @@ class PlayerTest {
     @ParameterizedTest
     @ValueSource(ints = [0, -1000, -2000])
     fun `플레이어의 베팅 금액은 0원 이하일 수 없다`(amount: Float) {
-        assertThrows<IllegalArgumentException> { Player("joy", cards, amount) }
+        assertThrows<IllegalArgumentException> { Player("joy", cards).betting(amount) }
     }
 
     companion object {
