@@ -13,14 +13,14 @@ class GameManager(
 ) {
     private val deck = Deck.create()
 
-    fun distributeInitialCardWithCount(count: Int) {
-        distributeCardWithCount(dealer, count)
+    fun drawInitialCardWithCount(count: Int) {
+        drawCardWithCount(dealer, count)
         players.forEach { player ->
-            distributeCardWithCount(player, count)
+            drawCardWithCount(player, count)
         }
     }
 
-    private fun distributeCardWithCount(
+    private fun drawCardWithCount(
         participant: Participant,
         count: Int,
     ) {
@@ -29,18 +29,18 @@ class GameManager(
         }
     }
 
-    fun distributeCardWithChoice(
+    fun drawCardWithChoice(
         drawDecision: CardDrawDecision,
         player: Player,
     ): Boolean {
         if (drawDecision.isDraw()) {
-            distributeCard(player)
+            drawCard(player)
             return true
         }
         return false
     }
 
-    fun distributeCard(participant: Participant) {
+    fun drawCard(participant: Participant) {
         participant.addCard(deck.draw())
     }
 

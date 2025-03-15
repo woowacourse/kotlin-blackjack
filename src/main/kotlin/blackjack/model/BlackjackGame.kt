@@ -25,7 +25,7 @@ class BlackjackGame(
         val gameManager = GameManager(dealer, players)
 
         outputView.printInitialHandOutCardMessage(players)
-        gameManager.distributeInitialCardWithCount(INITIAL_HAND_OUT_CARD_COUNT)
+        gameManager.drawInitialCardWithCount(INITIAL_HAND_OUT_CARD_COUNT)
         outputView.printAllPlayerHands(dealer, players)
 
         return Triple(dealer, players, gameManager)
@@ -66,7 +66,7 @@ class BlackjackGame(
     ) {
         while (true) {
             val decision: CardDrawDecision = inputView.readCardDrawChoice(player)
-            if (gameManager.distributeCardWithChoice(decision, player)) {
+            if (gameManager.drawCardWithChoice(decision, player)) {
                 outputView.printPlayerHands(player)
                 if (player.isBust()) break
                 continue
@@ -81,7 +81,7 @@ class BlackjackGame(
         gameManager: GameManager,
     ) {
         val isDraw = dealer.isAvailDrawCard()
-        if (isDraw) gameManager.distributeCard(dealer)
+        if (isDraw) gameManager.drawCard(dealer)
         outputView.printDealerHandStatus(isDraw)
     }
 
