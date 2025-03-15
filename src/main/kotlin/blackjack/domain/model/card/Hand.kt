@@ -3,6 +3,8 @@ package blackjack.domain.model.card
 class Hand(cards: List<Card>) {
     private val cards: MutableList<Card> = mutableListOf()
 
+    constructor(vararg cards: Card) : this(cards.toList())
+
     init {
         require(cards.size >= STARTING_HAND_SIZE) { ERROR_MESSAGE_INCORRECT_STARTING_HAND }
         add(cards)
