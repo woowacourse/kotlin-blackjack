@@ -81,7 +81,7 @@
 - [x] CardFactory | 테스트에만 사용한 코드 제거
 - [x] BlackjackController | PlayerGroup 추가적으로 활용
 - [x] InputView | 입력에 따라 도메인이 출력되도록 수정
-- [ ] Hand | 객체에 메시지를 던지도록 수정
+- [x] Hand | 객체에 메시지를 던지도록 수정
 - [ ] Player | 계산하는 로직 추가
 - [ ] BlackJack | PlayerGroup을 인수로 받도록 수정
 - [ ] BlackJack | drawUntilThreshold 메서드명 수정

@@ -11,7 +11,7 @@ class Hand(private val _cards: MutableList<Card>) {
     fun getSumNumber(): Int {
         var sum = cards.sumOf { it.cardNumber.number }
 
-        if (haveAce(cards.map { it.cardNumber }) && sum + CardNumber.BONUS_SCORE <= BUST_STANDARD) {
+        if (_cards.any { it.isAce() } && sum + CardNumber.BONUS_SCORE <= BUST_STANDARD) {
             sum += CardNumber.BONUS_SCORE
         }
 
@@ -20,10 +20,6 @@ class Hand(private val _cards: MutableList<Card>) {
 
     fun append(card: List<Card>) {
         _cards.addAll(card)
-    }
-
-    private fun haveAce(cardNumbers: List<CardNumber>): Boolean {
-        return CardNumber.Ace in cardNumbers
     }
 
     fun isBust() {
