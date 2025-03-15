@@ -2,7 +2,6 @@ package blackjack.controller
 
 import blackjack.model.BlackjackGame
 import blackjack.model.DrawChoice
-import blackjack.model.GameManager
 import blackjack.model.amount.BetAmount
 import blackjack.model.participant.Dealer
 import blackjack.model.participant.Player
@@ -28,13 +27,13 @@ class BlackjackController(
     private fun startBlackjackGame(
         blackjackGame: BlackjackGame,
         dealer: Dealer,
-        players: List<Player>
+        players: List<Player>,
     ) {
         blackjackGame.startGame(
             wantsToDraw = { player -> getValidDrawChoice(player) },
             printPlayerHands = { player -> outputView.printPlayerHands(player) },
             printDealerHandStatus = { status -> outputView.printDealerHandStatus(status) },
-            printAllHands = { _, _ -> outputView.printAllPlayerHands(dealer, players) }
+            printAllHands = { _, _ -> outputView.printAllPlayerHands(dealer, players) },
         )
     }
 

@@ -34,13 +34,11 @@ class OutputView {
     }
 
     fun printDealerHandStatus(dealerCondition: Boolean) {
-        println()
         if (dealerCondition) {
             println(DEALER_HIT_MESSAGE)
         } else {
             println(DEALER_STAY_MESSAGE)
         }
-        println()
     }
 
     fun printFinalHandStatus(

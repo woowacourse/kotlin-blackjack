@@ -5,7 +5,7 @@ import blackjack.model.participant.Player
 
 class BlackjackGame(
     private val dealer: Dealer,
-    private val players: List<Player>
+    private val players: List<Player>,
 ) {
     private val gameManager = GameManager(dealer, players)
 
@@ -13,7 +13,7 @@ class BlackjackGame(
         wantsToDraw: (Player) -> DrawChoice,
         printPlayerHands: (Player) -> Unit,
         printDealerHandStatus: (Boolean) -> Unit,
-        printAllHands: (Dealer, List<Player>) -> Unit
+        printAllHands: (Dealer, List<Player>) -> Unit,
     ) {
         gameManager.dealInitialCards()
         printAllHands(dealer, players)
@@ -26,10 +26,14 @@ class BlackjackGame(
         }
     }
 
-    fun drawCards(
+    fun calculateResults(): List<Profit> {
+        return gameManager.gameResult(gameManager.calculateResultMap())
+    }
+
+    private fun drawCards(
         player: Player,
         wantsToDraw: (Player) -> DrawChoice,
-        printPlayerHands: (Player) -> Unit
+        printPlayerHands: (Player) -> Unit,
     ) {
         while (!player.isBust() && wantsToDraw(player) == DrawChoice.YES) {
             gameManager.drawCard(player)
@@ -38,7 +42,7 @@ class BlackjackGame(
         printPlayerHands(player)
     }
 
-    fun dealerDrawCards(printDealerHandStatus: (Boolean) -> Unit) {
+    private fun dealerDrawCards(printDealerHandStatus: (Boolean) -> Unit) {
         val condition = dealer.isMoreCard()
         if (!condition) {
             printDealerHandStatus(false)
@@ -49,9 +53,4 @@ class BlackjackGame(
             gameManager.drawCard(dealer)
         }
     }
-
-    fun calculateResults(): List<Profit> {
-        return gameManager.gameResult(gameManager.calculateResultMap())
-    }
-
 }
