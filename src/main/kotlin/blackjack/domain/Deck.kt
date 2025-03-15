@@ -13,7 +13,7 @@ class Deck {
         return cards
     }
 
-    fun pick(): Card {
+    fun draw(): Card {
         if (_cards.isEmpty()) {
             _cards = create()
         }
