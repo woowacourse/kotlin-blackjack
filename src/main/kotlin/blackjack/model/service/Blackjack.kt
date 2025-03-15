@@ -18,11 +18,11 @@ class Blackjack(private val deck: PlayingCard, private val playerGroup: PlayerGr
     }
 
     private fun distributeStartingHands(player: Participants) {
-        player.receiveCard(deck.spreadCard(2))
+        player.receiveCard(deck.spreadCard(INIT_CARD_AMOUNT))
     }
 
     fun hitAction(participants: Participants) {
-        participants.receiveCard(deck.spreadCard(1))
+        participants.receiveCard(deck.spreadCard(ONE_CARD_AMOUNT))
     }
 
     fun drawUntilThresholdWithCount(dealer: Dealer): Int {
@@ -40,5 +40,10 @@ class Blackjack(private val deck: PlayingCard, private val playerGroup: PlayerGr
         return playerGroup.players.associateWith { player ->
             player.compareScores(playerGroup.dealer.hand.status, dealerResult)
         }
+    }
+
+    companion object {
+        const val INIT_CARD_AMOUNT = 2
+        const val ONE_CARD_AMOUNT = 1
     }
 }
