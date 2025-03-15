@@ -1,22 +1,22 @@
 package blackjack.domain
 
 import blackjack.domain.model.card.Card
-import blackjack.domain.model.card.CardNumber
-import blackjack.domain.model.card.Shape
+import blackjack.domain.model.card.Denomination
+import blackjack.domain.model.card.Suit
 
-val SPADE_ACE = Card(Shape.Spade, CardNumber.Ace)
-val SPADE_TWO = Card(Shape.Spade, CardNumber.Two)
-val SPADE_THREE = Card(Shape.Spade, CardNumber.Three)
-val SPADE_FOUR = Card(Shape.Spade, CardNumber.Four)
-val SPADE_FIVE = Card(Shape.Spade, CardNumber.Five)
-val SPADE_SIX = Card(Shape.Spade, CardNumber.Six)
-val SPADE_SEVEN = Card(Shape.Spade, CardNumber.Seven)
-val SPADE_EIGHT = Card(Shape.Spade, CardNumber.Eight)
-val SPADE_NINE = Card(Shape.Spade, CardNumber.Nine)
-val SPADE_TEN = Card(Shape.Spade, CardNumber.Ten)
-val SPADE_JACK = Card(Shape.Spade, CardNumber.Jack)
-val SPADE_QUEEN = Card(Shape.Spade, CardNumber.Queen)
-val SPADE_KING = Card(Shape.Spade, CardNumber.King)
+val SPADE_ACE = Card(Suit.Spade, Denomination.Ace)
+val SPADE_TWO = Card(Suit.Spade, Denomination.Two)
+val SPADE_THREE = Card(Suit.Spade, Denomination.Three)
+val SPADE_FOUR = Card(Suit.Spade, Denomination.Four)
+val SPADE_FIVE = Card(Suit.Spade, Denomination.Five)
+val SPADE_SIX = Card(Suit.Spade, Denomination.Six)
+val SPADE_SEVEN = Card(Suit.Spade, Denomination.Seven)
+val SPADE_EIGHT = Card(Suit.Spade, Denomination.Eight)
+val SPADE_NINE = Card(Suit.Spade, Denomination.Nine)
+val SPADE_TEN = Card(Suit.Spade, Denomination.Ten)
+val SPADE_JACK = Card(Suit.Spade, Denomination.Jack)
+val SPADE_QUEEN = Card(Suit.Spade, Denomination.Queen)
+val SPADE_KING = Card(Suit.Spade, Denomination.King)
 
 fun bustCardList(): List<Card> =
     listOf(

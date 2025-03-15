@@ -1,8 +1,8 @@
 package blackjack.domain.model.card
 
-enum class Shape {
+enum class Suit {
     Diamond,
     Heart,
-    Clover,
+    Club,
     Spade,
 }

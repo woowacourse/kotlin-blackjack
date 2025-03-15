@@ -1,6 +1,6 @@
 package blackjack.domain.model.card
 
-enum class CardNumber(
+enum class Denomination(
     val number: Int,
     val display: String = "$number",
 ) {

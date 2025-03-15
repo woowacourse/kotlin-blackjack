@@ -7,7 +7,7 @@ class CardFactory {
     }
 
     companion object {
-        val symbols = Shape.entries
-        val cardNumbers = CardNumber.entries
+        val symbols = Suit.entries
+        val cardNumbers = Denomination.entries
     }
 }

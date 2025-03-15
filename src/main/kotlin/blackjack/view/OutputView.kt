@@ -2,7 +2,7 @@ package blackjack.view
 
 import blackjack.domain.model.ProceedStatus
 import blackjack.domain.model.card.Card
-import blackjack.domain.model.card.Shape
+import blackjack.domain.model.card.Suit
 import blackjack.domain.model.participant.Dealer
 import blackjack.domain.model.participant.Participants
 import blackjack.domain.model.participant.Player
@@ -73,12 +73,12 @@ class OutputView {
         return PLAYER_STATUS.format(proceedStatus.participant.name, proceedStatus.proceed.amount.toString())
     }
 
-    private fun Shape.toKorean(): String {
+    private fun Suit.toKorean(): String {
         return when (this) {
-            Shape.Heart -> "하트"
-            Shape.Spade -> "스페이드"
-            Shape.Diamond -> "다이아몬드"
-            Shape.Clover -> "클로버"
+            Suit.Heart -> "하트"
+            Suit.Spade -> "스페이드"
+            Suit.Diamond -> "다이아몬드"
+            Suit.Club -> "클로버"
         }
     }
 
