@@ -5,22 +5,23 @@ import blackjack.domain.participants.Player
 
 enum class ResultState {
     WIN,
+    BLACKJACK_WIN,
     LOSE,
     DRAW,
     ;
 
     companion object {
-        fun calculateWin(
+        fun from(
             player: Player,
             dealer: Dealer,
         ): ResultState {
-            if (player.isBust()) return LOSE
-            if (dealer.isBust()) return WIN
-
             val playerScore = player.score()
             val dealerScore = dealer.score()
 
             return when {
+                player.isBlackjack() -> BLACKJACK_WIN
+                player.isBust() -> LOSE
+                dealer.isBust() -> WIN
                 playerScore > dealerScore -> WIN
                 playerScore < dealerScore -> LOSE
                 else -> DRAW
