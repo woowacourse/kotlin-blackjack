@@ -1,4 +1,11 @@
-package blackjack.domain.model
+package blackjack.domain.model.participant
+
+import blackjack.domain.model.Action
+import blackjack.domain.model.Bet
+import blackjack.domain.model.Result
+import blackjack.domain.model.card.Card
+import blackjack.domain.model.card.Deck
+import blackjack.domain.model.card.Hand
 
 class Player(
     name: String,

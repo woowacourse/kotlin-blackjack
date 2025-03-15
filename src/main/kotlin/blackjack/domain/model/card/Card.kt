@@ -1,4 +1,4 @@
-package blackjack.domain.model
+package blackjack.domain.model.card
 
 data class Card(val suit: Suit, val rank: Rank) {
     fun isAce(): Boolean {

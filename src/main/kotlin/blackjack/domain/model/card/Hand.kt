@@ -1,4 +1,4 @@
-package blackjack.domain.model
+package blackjack.domain.model.card
 
 class Hand(cards: List<Card>) {
     private val cards: MutableList<Card> = mutableListOf()

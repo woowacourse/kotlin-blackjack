@@ -1,5 +1,8 @@
 package blackjack.domain.model
 
+import blackjack.domain.model.card.Deck
+import blackjack.domain.model.participant.Dealer
+import blackjack.domain.model.participant.Player
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 

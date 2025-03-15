@@ -1,9 +1,9 @@
 package blackjack.view
 
-import blackjack.domain.model.Card
-import blackjack.domain.model.Hand
-import blackjack.domain.model.Rank
-import blackjack.domain.model.Suit
+import blackjack.domain.model.card.Card
+import blackjack.domain.model.card.Hand
+import blackjack.domain.model.card.Rank
+import blackjack.domain.model.card.Suit
 
 class OutputView {
     fun printInitialDeals(

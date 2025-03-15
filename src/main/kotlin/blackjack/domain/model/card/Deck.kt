@@ -1,4 +1,6 @@
-package blackjack.domain.model
+package blackjack.domain.model.card
+
+import blackjack.domain.model.participant.Participant
 
 class Deck(cards: List<Card> = pack.shuffled()) {
     private val cards: MutableList<Card> = cards.toMutableList()
