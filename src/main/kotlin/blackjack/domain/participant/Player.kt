@@ -11,7 +11,7 @@ class Player(
     constructor(name: String) : this(PlayerState(name, BettingAmount(1)))
 
     val name: String get() = state.name
-    val money: BettingAmount get() = state.money
+    val money: Int get() = state.money.value
 
     override fun canHit(): Boolean {
         return totalScore() <= BUST_STANDARD

@@ -1,11 +1,12 @@
 package blackjack.view
 
-import blackjack.domain.GameResult
 import blackjack.domain.card.Shape
 import blackjack.domain.card.Tier
 import blackjack.domain.card.TrumpCard
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Player
+import blackjack.view.model.DealerUiModel
+import blackjack.view.model.PlayerUiModel
 import java.lang.String.format
 
 class OutputView {
@@ -41,12 +42,9 @@ class OutputView {
         }
     }
 
-    fun printDealerResult(result: Map<GameResult, Int>) {
+    fun printDealerResult(result: DealerUiModel) {
         println(MESSAGE_OUTPUT_RESULT_GUIDE)
-        val win = result[GameResult.WIN]
-        val lose = result[GameResult.LOSE]
-        val push = result[GameResult.PUSH]
-        println(format(MESSAGE_OUTPUT_DEALER_RESULT, win, lose, push))
+        println(format(MESSAGE_OUTPUT_DEALER_RESULT, result.profit))
     }
 
     fun printPlayerResult(result: List<PlayerUiModel>) {
@@ -94,7 +92,7 @@ class OutputView {
         private const val MESSAGE_OUTPUT_PLAYER_CARD = "%s카드: %s"
         private const val MESSAGE_OUTPUT_DEALER_CARD = "딜러: %s"
         private const val MESSAGE_OUTPUT_RESULT_GUIDE = "\n## 최종 승패"
-        private const val MESSAGE_OUTPUT_DEALER_RESULT = "딜러: %d승 %d패 %d무"
+        private const val MESSAGE_OUTPUT_DEALER_RESULT = "딜러: %s"
         private const val MESSAGE_OUTPUT_PLAYER_RESULT = "%s: %s"
         private const val MESSAGE_CARD = "%s%s"
     }

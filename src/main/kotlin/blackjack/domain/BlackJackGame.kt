@@ -53,16 +53,6 @@ class BlackJackGame(
         return count
     }
 
-    fun calculateDealerResult(): Map<GameResult, Int> {
-        val dealerMap = GameResult.entries.associateWith { 0 }.toMutableMap()
-
-//        participants.players.forEach { player ->
-//            val result = GameResult.from(participants.dealer.totalScore(), player.totalScore(), false)
-//            dealerMap[result] = dealerMap.getOrDefault(result, 0) + 1
-//        }
-        return dealerMap
-    }
-
     companion object {
         const val INITIAL_CARD_COUNT = 2
         const val CARD_COUNT_OF_PLAYER_MUST_INITIAL_OPEN = 2

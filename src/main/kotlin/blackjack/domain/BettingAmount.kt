@@ -1,7 +1,7 @@
 package blackjack.domain
 
 @JvmInline
-value class BettingAmount(private val value: Int) {
+value class BettingAmount(val value: Int) {
     init {
         require(value > 0) { INITIAL_CARD_COUNT }
     }

@@ -1,9 +1,6 @@
 package blackjack.controller
 
-import blackjack.domain.BettingAmount
-import blackjack.domain.BlackJackGame
-import blackjack.domain.Deck
-import blackjack.domain.UserChoice
+import blackjack.domain.*
 import blackjack.domain.card.CardFactory
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Participants
@@ -12,6 +9,7 @@ import blackjack.domain.participant.PlayerState
 import blackjack.util.retryWhenException
 import blackjack.view.InputView
 import blackjack.view.OutputView
+import blackjack.view.model.DealerUiModel
 import blackjack.view.model.PlayerUiModel
 
 class BlackJackController(
@@ -121,7 +119,7 @@ class BlackJackController(
     ) {
         displayDealerExtraCard(game)
         displaySumOfParticipants(participants)
-        displayDealerResult(game)
+        displayDealerResult(participants)
         displayPlayerResult(participants)
     }
 
@@ -137,9 +135,16 @@ class BlackJackController(
         outputView.printPlayerSum(participants.players)
     }
 
-    private fun displayDealerResult(game: BlackJackGame) {
-        val result = game.calculateDealerResult()
-        outputView.printDealerResult(result)
+    private fun displayDealerResult(participants: Participants) {
+        var sum = 0.0
+        participants.players.forEach {
+            val result = participants.dealer.compare(it)
+            if (result == GameResult.BLACKJACK || result == GameResult.WIN) {
+                sum += it.money
+            }
+        }
+
+        outputView.printDealerResult(DealerUiModel(sum))
     }
 
     private fun displayPlayerResult(player: Participants) {
