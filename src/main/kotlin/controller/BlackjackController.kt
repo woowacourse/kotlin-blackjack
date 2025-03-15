@@ -37,6 +37,7 @@ class BlackjackController(
         if (gameManager.getDrawCount() > 0) {
             outputView.printDealerHit(gameManager.getDrawCount())
         }
+
         showPlayerResult(gameManager)
         showGameResult(gameManager, bettingManager)
     }

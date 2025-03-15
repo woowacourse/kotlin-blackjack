@@ -1,7 +1,6 @@
 package model
 
 import model.GameResult.Companion.compareWinOrLose
-import model.GameResult.Companion.decideProfitRates
 
 class GameManager(private val cards: Cards) {
     private lateinit var dealer: Dealer
@@ -53,13 +52,10 @@ class GameManager(private val cards: Cards) {
 
     fun determinePlayersProfit(bettingManager: BettingManager): Map<Player, Int> {
         val playerResults = compareWinOrLose(dealer, players)
-        val profitRates: Map<Player, Float> = decideProfitRates(playerResults)
 
-        return players.associateWith { player ->
-            val baseBet = bettingManager.getProfit(player)
-            val multiplier = profitRates[player] ?: 0f
-            (baseBet * multiplier).toInt()
-        }
+        val profitCalculator = ProfitCalculator()
+        val playersTotalProfits = profitCalculator.calculateFinalProfits(playerResults, bettingManager, players)
+        return playersTotalProfits
     }
 
     fun determineDealerProfit(playersProfit: Map<Player, Int>): Int {
