@@ -51,17 +51,5 @@ enum class GameResult(val profitRate: Float) {
                 else -> PUSH
             }
         }
-
-        fun decideProfitRates(playerResults: List<PlayerResult>): Map<Player, Float> {
-            return playerResults.associate { playerResult ->
-                playerResult.player to
-                    when (playerResult.result) {
-                        WIN -> WIN.profitRate
-                        LOSE -> LOSE.profitRate
-                        BLACKJACK -> BLACKJACK.profitRate
-                        PUSH -> PUSH.profitRate
-                    }
-            }
-        }
     }
 }
