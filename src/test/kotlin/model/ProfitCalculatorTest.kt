@@ -87,6 +87,6 @@ class ProfitCalculatorTest {
             Player("jay", Cards(listOf(Card(CardRank.KING, Shape.CLUB), Card(CardRank.KING, Shape.SPADE))))
         player.betting(10000f)
         players = Players(listOf(player))
-        assertThat(ProfitCalculator(dealer, players).calculateDealerProfit()).isEqualTo(10000f)
+        assertThat(ProfitCalculator(dealer, players).dealerProfit.money).isEqualTo(10000f)
     }
 }
