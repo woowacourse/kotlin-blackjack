@@ -41,7 +41,7 @@ class BlackJackGameTest {
         player.addCard(TrumpCard(Tier.JACK, Shape.DIA))
         player.addCard(TrumpCard(Tier.KING, Shape.DIA))
 
-        game.playGame(
+        game.playerTurn(
             getPlayerChoice = { UserChoice.from("y") },
             onPlayerStateUpdated = {},
         )
@@ -51,7 +51,7 @@ class BlackJackGameTest {
 
     @Test
     fun `플레이어가 stay를 선택하면 카드의 장수가 유지된다`() {
-        game.playGame(
+        game.playerTurn(
             getPlayerChoice = { UserChoice.from("n") },
             onPlayerStateUpdated = {},
         )

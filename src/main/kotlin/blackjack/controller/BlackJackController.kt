@@ -99,7 +99,7 @@ class BlackJackController(
 
     private fun playGame(game: BlackJackGame) {
         runCatching {
-            game.playGame(
+            game.playerTurn(
                 getPlayerChoice = { playerName ->
                     getUserChoice(playerName)
                 },

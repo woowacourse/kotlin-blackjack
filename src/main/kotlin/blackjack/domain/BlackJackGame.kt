@@ -15,30 +15,38 @@ class BlackJackGame(
         }
     }
 
-    fun playGame(
+    fun playerTurn(
         getPlayerChoice: (String) -> UserChoice,
         onPlayerStateUpdated: (Player) -> Unit,
     ) {
         participants.players.forEach { player ->
-            while (player.isDrawable()) {
-                val choice = getPlayerChoice(player.name)
-                when (choice) {
-                    UserChoice.HIT -> player.addCard(deck.draw())
-                    UserChoice.STAY -> {
-                        if (player.cards.items.size == INITIAL_CARD_COUNT) {
-                            onPlayerStateUpdated(player)
-                        }
-                        break
+            processPlayerTurn(player, getPlayerChoice, onPlayerStateUpdated)
+        }
+    }
+
+    private fun processPlayerTurn(
+        player: Player,
+        getPlayerChoice: (String) -> UserChoice,
+        onPlayerStateUpdated: (Player) -> Unit,
+    ) {
+        while (player.canHit()) {
+            val choice = getPlayerChoice(player.name)
+            when (choice) {
+                UserChoice.HIT -> player.addCard(deck.draw())
+                UserChoice.STAY -> {
+                    if (player.cards.items.size == INITIAL_CARD_COUNT) {
+                        onPlayerStateUpdated(player)
                     }
+                    break
                 }
-                onPlayerStateUpdated(player)
             }
+            onPlayerStateUpdated(player)
         }
     }
 
     fun processDealerTurn(): Int {
         var count = 0
-        while (participants.dealer.isDrawable()) {
+        while (participants.dealer.canHit()) {
             participants.dealer.addCard(deck.draw())
             count++
         }
