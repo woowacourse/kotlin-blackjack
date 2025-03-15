@@ -4,16 +4,10 @@ import blackjack.model.domain.card.Card
 import blackjack.model.domain.card.Status
 import blackjack.model.domain.participant.Player
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class PlayerTest {
     private val player1 = Player("제리")
-
-    @BeforeEach
-    fun setup() {
-        // given
-    }
 
     @Test
     fun `받은 카드의 목록을 반환한다`() {
