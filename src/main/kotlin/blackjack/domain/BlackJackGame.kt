@@ -45,12 +45,11 @@ class BlackJackGame(
     }
 
     fun processDealerTurn(): Int {
-        var count = 0
-        while (participants.dealer.canHit()) {
-            participants.dealer.addCard(deck.draw())
-            count++
+        val dealer = participants.dealer
+        while (dealer.canHit()) {
+            dealer.addCard(deck.draw())
         }
-        return count
+        return dealer.cards.items.size - INITIAL_CARD_COUNT
     }
 
     companion object {
