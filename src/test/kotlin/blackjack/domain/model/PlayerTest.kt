@@ -13,16 +13,16 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
 class PlayerTest {
-    @Test
-    fun `플레이어는 이름을 가진다`() {
-        val player = Player("A", Card(Suit.HEART, Rank.ACE), Card(Suit.HEART, Rank.TWO))
-        assertThat(player.name).isEqualTo("A")
-    }
-
     @ParameterizedTest
     @ValueSource(strings = ["", " ", "\t", "\n"])
     fun `플레이어의 이름이 공백일 시 오류가 발생한다`(value: String) {
         assertThrows<IllegalArgumentException> { Player(value) }
+    }
+
+    @Test
+    fun `플레이어는 모든 카드를 공개한다`() {
+        val player = Player("A", Card(Suit.HEART, Rank.TWO), Card(Suit.HEART, Rank.THREE))
+        assertThat(player.showHand()).isEqualTo(listOf(Card(Suit.HEART, Rank.TWO), Card(Suit.HEART, Rank.THREE)))
     }
 
     @Test
