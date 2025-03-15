@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import blackjack.domain.betting.BettingAmount
+import blackjack.domain.betting.BettingInfo
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
 import blackjack.domain.card.CardPattern
@@ -127,6 +129,66 @@ class GameResultTest {
         val result = GameResult.create(blackjackDealer, listOf(player))
 
         // Then
-        result.winStatus[player] shouldBe ResultState.DRAW
+        result.winStatus[player] shouldBe ResultState.BLACKJACK_WIN
+    }
+
+    @Test
+    fun `승리한 경우 베팅 금액만큼 받는다`() {
+        // Given
+        val player = Player("test")
+        val bettingAmount = BettingAmount(10000)
+        val bettingInfo = BettingInfo(player, bettingAmount)
+        val gameResult = GameResult(mapOf(player to ResultState.WIN))
+
+        // When
+        val profit = gameResult.calculateProfits(listOf(bettingInfo))
+
+        // Then
+        profit[player]?.value shouldBe 10000
+    }
+
+    @Test
+    fun `블랙잭으로 승리한 경우 베팅 금액의 1․5배만큼 받는다`() {
+        // Given
+        val player = Player("test")
+        val bettingAmount = BettingAmount(10000)
+        val bettingInfo = BettingInfo(player, bettingAmount)
+        val gameResult = GameResult(mapOf(player to ResultState.BLACKJACK_WIN))
+
+        // When
+        val profit = gameResult.calculateProfits(listOf(bettingInfo))
+
+        // Then
+        profit[player]?.value shouldBe 15000
+    }
+
+    @Test
+    fun `패배한 경우 베팅 금액만큼 잃는다`() {
+        // Given
+        val player = Player("test")
+        val bettingAmount = BettingAmount(10000)
+        val bettingInfo = BettingInfo(player, bettingAmount)
+        val gameResult = GameResult(mapOf(player to ResultState.LOSE))
+
+        // When
+        val profit = gameResult.calculateProfits(listOf(bettingInfo))
+
+        // Then
+        profit[player]?.value shouldBe -10000
+    }
+
+    @Test
+    fun `무승부인 경우 0원을 받는다`() {
+        // Given
+        val player = Player("test")
+        val bettingAmount = BettingAmount(10000)
+        val bettingInfo = BettingInfo(player, bettingAmount)
+        val gameResult = GameResult(mapOf(player to ResultState.DRAW))
+
+        // When
+        val profit = gameResult.calculateProfits(listOf(bettingInfo))
+
+        // Then
+        profit[player]?.value shouldBe 0
     }
 }
