@@ -86,8 +86,11 @@ class BlackjackController(
         playerNames: List<String>,
         allCards: Cards,
         betAmounts: List<Float>,
-    ): List<Player> =
-        playerNames.mapIndexed { index, name ->
+    ): Players {
+        val players = playerNames.mapIndexed { index, name ->
             Player(name, allCards.initialCards(), betAmounts[index])
         }
+        return Players(players)
+    }
 }
+
