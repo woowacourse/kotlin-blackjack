@@ -1,8 +1,8 @@
 package blackjack.view
 
 import blackjack.domain.Card
-import blackjack.domain.PlayerResultStatus
 import blackjack.domain.Rank
+import blackjack.domain.ResultStatus
 import blackjack.domain.Suit
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Player
@@ -40,7 +40,7 @@ object OutputView {
 
     fun printGameResult(
         dealer: Dealer,
-        playersGameResult: Map<Player, PlayerResultStatus>,
+        playersGameResult: Map<Player, ResultStatus>,
     ) {
         println("\n##최종 승패")
         println("딜러: ${dealer.result.win}승 ${dealer.result.lose}패 ${dealer.result.draw}무")
@@ -83,10 +83,11 @@ object OutputView {
             Suit.CLUB -> "클로버"
         }
 
-    private fun PlayerResultStatus.toDisplayName(): String =
+    private fun ResultStatus.toDisplayName(): String =
         when (this) {
-            PlayerResultStatus.PLAYER_WIN -> "승"
-            PlayerResultStatus.PLAYER_LOSE -> "패"
-            PlayerResultStatus.DRAW -> "무"
+            ResultStatus.BLACKJACK_WIN -> "블랙잭 !"
+            ResultStatus.PLAYER_WIN -> "승"
+            ResultStatus.PLAYER_LOSE -> "패"
+            ResultStatus.DRAW -> "무"
         }
 }

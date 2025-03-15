@@ -1,5 +1,6 @@
 package blackjack
 
+import blackjack.domain.BetAmount
 import blackjack.domain.Card
 import blackjack.domain.Rank
 import blackjack.domain.Suit
@@ -10,7 +11,7 @@ import org.junit.jupiter.api.Test
 class PlayerTest {
     @Test
     fun `카드의 총합이 21이 넘으면 카드를 뽑을 수 없다`() {
-        val player = Player("player")
+        val player = Player("player", BetAmount(10000))
 
         val card1 = Card.of(rank = Rank.TEN, suit = Suit.SPADE)
         val card2 = Card.of(rank = Rank.NINE, suit = Suit.SPADE)
