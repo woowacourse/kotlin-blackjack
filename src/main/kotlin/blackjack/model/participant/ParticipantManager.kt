@@ -19,7 +19,7 @@ class ParticipantManager {
         distributeCards: (Int) -> List<Card>,
     ): Dealer {
         val dealer = Dealer.create(dealerName)
-        dealer.recieveCards(distributeCards)
+        dealer.receiveCards(distributeCards)
 
         return dealer
     }
@@ -30,7 +30,7 @@ class ParticipantManager {
     ): Players {
         val players = Players.from(playerNames)
         players.value.forEach { player ->
-            player.recieveCards(distributeCards)
+            player.receiveCards(distributeCards)
         }
 
         return players

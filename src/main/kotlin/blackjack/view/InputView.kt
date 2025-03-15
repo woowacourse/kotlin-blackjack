@@ -16,7 +16,7 @@ class InputView {
         return readln().toDouble()
     }
 
-    fun getIsRecieveMore(name: String): UserCommand {
+    fun getIsReceiveMore(name: String): UserCommand {
         println("\n${name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
         return when (readln().lowercase()) {
             "y" -> HIT

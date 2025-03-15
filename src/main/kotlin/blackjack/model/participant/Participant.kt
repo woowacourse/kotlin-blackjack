@@ -20,7 +20,7 @@ abstract class Participant(
 
     abstract fun showInitialCards(): List<Card>
 
-    fun recieveMoney(money: Money) {
+    fun receiveMoney(money: Money) {
         this._money += money
     }
 
@@ -29,9 +29,9 @@ abstract class Participant(
         return money
     }
 
-    fun recieveCards(recieveCards: (Int) -> List<Card>) {
+    fun receiveCards(drawCards: (Int) -> List<Card>) {
         val count = if (cards.isEmpty()) INITIAL_DRAW_COUNT else DEFAULT_DRAW_COUNT
-        addAll(recieveCards(count))
+        addAll(drawCards(count))
     }
 
     fun addAll(cards: List<Card>) {

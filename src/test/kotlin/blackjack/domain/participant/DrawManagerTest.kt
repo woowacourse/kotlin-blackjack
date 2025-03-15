@@ -71,7 +71,7 @@ class DrawManagerTest {
     @Test
     fun `딜러의 점수가 16 이하일 때 카드를 받는다`() {
         // given
-        dealer.recieveCards { listOf(SIX_HEART) }
+        dealer.receiveCards { listOf(SIX_HEART) }
         val draw: (Int) -> List<Card> = { listOf(SIX_HEART) }
 
         // when
@@ -84,7 +84,7 @@ class DrawManagerTest {
     @Test
     fun `딜러의 점수가 17 이상이면 카드를 받지 않는다`() {
         // given
-        dealer.recieveCards { listOf(TEN_HEART, ACE_HEART) }
+        dealer.receiveCards { listOf(TEN_HEART, ACE_HEART) }
         val draw: (Int) -> List<Card> = { listOf(SIX_HEART) }
 
         // when

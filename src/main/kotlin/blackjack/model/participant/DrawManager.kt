@@ -15,7 +15,7 @@ class DrawManager {
         while (true) {
             when (choice()) {
                 HIT -> {
-                    player.recieveCards(cards)
+                    player.receiveCards(cards)
                     onCardReceived(player.cards)
                     if (!player.isDrawable) return
                 }
@@ -30,7 +30,7 @@ class DrawManager {
         cards: (Int) -> List<Card>,
     ) {
         while (dealer.isDrawable) {
-            dealer.recieveCards(cards)
+            dealer.receiveCards(cards)
         }
     }
 }

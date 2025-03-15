@@ -16,7 +16,7 @@ class Players private constructor(
         name: Name,
         money: Money,
     ) {
-        value.find { it.name == name }?.recieveMoney(money) ?: return
+        value.find { it.name == name }?.receiveMoney(money) ?: return
     }
 
     companion object {

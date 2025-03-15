@@ -43,7 +43,7 @@ class BettingManager(
             resultBettingTable.add(participants.dealer.name, -profit)
             resultBettingTable.add(name, profit)
 
-            participants.dealer.recieveMoney(-profit)
+            participants.dealer.receiveMoney(-profit)
             participants.players.receiveMoney(name, profit)
         }
     }

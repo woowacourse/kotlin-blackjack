@@ -31,9 +31,9 @@ class ParticipantTest {
     }
 
     @Test
-    fun `recieveMoney 호출 시 돈이 증가한다`() {
+    fun `receiveMoney 호출 시 돈이 증가한다`() {
         // when
-        participant.recieveMoney(Money(10_000.0))
+        participant.receiveMoney(Money(10_000.0))
 
         // then
         assertEquals(Money(20_000.0), participant.money)
@@ -50,17 +50,17 @@ class ParticipantTest {
     }
 
     @Test
-    fun `recieveCards 호출 시 처음에는 2장, 이후에는 1장을 받는다`() {
+    fun `receiveCards 호출 시 처음에는 2장, 이후에는 1장을 받는다`() {
         // given
         val cardDeck = listOf(Card(CardRank.ACE, CardSuit.HEART), Card(CardRank.TEN, CardSuit.SPADE), Card(CardRank.KING, CardSuit.CLUB))
         var drawIndex = 0
         val drawCards: (Int) -> List<Card> = { count -> cardDeck.subList(drawIndex, drawIndex + count).also { drawIndex += count } }
 
         // when
-        participant.recieveCards(drawCards)
+        participant.receiveCards(drawCards)
         val firstDrawSize = participant.cards.size
 
-        participant.recieveCards(drawCards)
+        participant.receiveCards(drawCards)
         val secondDrawSize = participant.cards.size
 
         // then
