@@ -23,14 +23,14 @@ class ProfitCalculator(private val dealer: Dealer, private val players: Players)
         when {
             player.isBackJack && !dealer.isBackJack -> player.betAmount * ONE_AND_HALF
             player.isBackJack && dealer.isBackJack -> ZERO
-            dealer.currentScore > BLACKJACK_SCORE -> player.betAmount
-            player.currentScore > BLACKJACK_SCORE -> -player.betAmount
+            dealer.score > BLACKJACK_SCORE -> player.betAmount
+            player.score > BLACKJACK_SCORE -> -player.betAmount
             else -> compareScores(player)
         }
 
     private fun compareScores(player: Player): Float {
-        val dealerDiff = abs(BLACKJACK_SCORE - dealer.currentScore)
-        val playerDiff = abs(BLACKJACK_SCORE - player.currentScore)
+        val dealerDiff = abs(BLACKJACK_SCORE - dealer.score)
+        val playerDiff = abs(BLACKJACK_SCORE - player.score)
 
         return when {
             playerDiff < dealerDiff -> player.betAmount

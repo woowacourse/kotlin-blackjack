@@ -8,7 +8,7 @@ class Players(private val players: List<Player>) : List<Player> by players {
         get() = players.map { player -> player.cardNames }
 
     val scores: List<Int>
-        get() = players.map { player -> player.currentScore }
+        get() = players.map { player -> player.score }
 
     init {
         require(players.isNotEmpty()) { PLAYERS_NUMBER_ERROR_MESSAGE }

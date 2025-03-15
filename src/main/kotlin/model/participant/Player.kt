@@ -30,7 +30,7 @@ class Player(val name: String, private val playerCards: Cards) : Participant(pla
         return true
     }
 
-    override fun canHit(): Boolean = currentScore <= BLACKJACK_SCORE
+    override fun canHit(): Boolean = score <= BLACKJACK_SCORE
 
     companion object {
         private const val PLAYER_BLANK_ERROR_MESSAGE = "[ERROR] 이름은 빈 값일 수 없습니다."

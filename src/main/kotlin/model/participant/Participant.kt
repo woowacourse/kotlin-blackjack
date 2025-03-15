@@ -9,7 +9,7 @@ abstract class Participant(private val cards: Cards) {
     private val handCards: MutableList<Card>
         get() = cards.allCards
 
-    val currentScore: Int
+    val score: Int
         get() = ScoreCalculator(cards).calculateTotalCardScore()
 
     val isBackJack: Boolean =

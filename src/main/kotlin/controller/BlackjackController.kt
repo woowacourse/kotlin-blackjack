@@ -33,7 +33,7 @@ class BlackjackController(
         dealer: Dealer,
         players: Players,
     ) {
-        outputView.printDealerResult(dealerCards.names, dealer.currentScore)
+        outputView.printDealerResult(dealerCards.names, dealer.score)
         showPlayerResult(players)
         showGameResult(dealer, players)
     }
