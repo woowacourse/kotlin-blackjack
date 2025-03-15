@@ -1,23 +1,30 @@
 package blackjack.uimodel
 
-import blackjack.domain.GameResult
-import blackjack.domain.state.ResultState
+import blackjack.domain.betting.ProfitAmount
+import blackjack.domain.participants.Player
 
 data class ResultUiModel(
     val name: String,
-    val result: String,
+    val profit: Int,
 ) {
     companion object {
-        fun create(gameResult: GameResult): List<ResultUiModel> {
-            return gameResult.winStatus.map { ResultUiModel(it.key.name, it.value.toUiModel()) }
-        }
+        fun create(profitResult: Map<Player, ProfitAmount>): List<ResultUiModel> {
+            val dealerProfit = -profitResult.values.sumOf { it.value }
+            val dealerResult =
+                ResultUiModel(
+                    name = "딜러",
+                    profit = dealerProfit,
+                )
 
-        private fun ResultState.toUiModel(): String {
-            return when (this) {
-                ResultState.WIN -> "승"
-                ResultState.DRAW -> "무"
-                else -> "패"
-            }
+            val playersResult =
+                profitResult.map { (player, profitAmount) ->
+                    ResultUiModel(
+                        name = player.name,
+                        profit = profitAmount.value,
+                    )
+                }
+
+            return listOf(dealerResult) + playersResult
         }
     }
 }
