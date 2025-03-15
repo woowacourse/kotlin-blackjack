@@ -4,7 +4,6 @@ import blackjack.model.betting.BettingManager
 import blackjack.model.card.CardDeck
 import blackjack.model.participant.Dealer
 import blackjack.model.participant.Dealer.Companion.DEFAULT_DEALER_NAME
-import blackjack.model.participant.ParticipantManager
 import blackjack.model.participant.Participants
 import blackjack.model.participant.Players
 import blackjack.model.winning.WinningManager
@@ -15,14 +14,13 @@ class BlackjackController(
     private val inputView: InputView,
     private val outputView: OutputView,
 ) {
-    private val participantManager: ParticipantManager = ParticipantManager()
     private val bettingManager: BettingManager = BettingManager()
     private val winningManager: WinningManager = WinningManager()
 
     fun run() {
         val cardDeck = CardDeck()
         val participants =
-            participantManager.prepareParticipants(
+            Participants.create(
                 dealerName = DEFAULT_DEALER_NAME,
                 distributeCards = cardDeck::draw,
                 getPlayerNames = inputView::getPlayers,

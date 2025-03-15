@@ -3,7 +3,6 @@ package blackjack.domain.participant
 import blackjack.domain.SIX_HEART
 import blackjack.domain.TEN_HEART
 import blackjack.model.participant.Name
-import blackjack.model.participant.ParticipantManager
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
