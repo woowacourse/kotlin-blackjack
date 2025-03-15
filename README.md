@@ -69,3 +69,10 @@
 - [x] BlackJack | 딜러 임계값 상수 이동
 - [x] DealerTest | 테스트명 변경
 - [x] Participants | checkBust메소드 Hand의 isBust로 병합
+
+## TODO
+
+- [ ] Hand | 손에 카드에 따라 Bust와 BlackJack을 판단하는 메소드 추가
+- [ ] Blackjack | 처음 카드를 받았을 때 BlackJack인지 판단
+- [ ] InputView | 플레이어들의 베팅 금액 입력
+- [ ] BlackjackController | 카드의 승패와 블랙잭여부에 따라 결과 출력
