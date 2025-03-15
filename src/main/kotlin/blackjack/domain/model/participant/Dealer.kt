@@ -20,7 +20,10 @@ class Dealer(
     }
 
     override fun showHand(): List<Card> {
-        if (isInitialOpen) return super.showHand().take(INITIAL_OPEN_SIZE)
+        if (isInitialOpen) {
+            isInitialOpen = false
+            return super.showHand().take(INITIAL_OPEN_SIZE)
+        }
         return super.showHand()
     }
 
@@ -28,7 +31,6 @@ class Dealer(
         deck: Deck,
         output: (Dealer, Int) -> Unit,
     ) {
-        isInitialOpen = false
         while (canHit()) {
             output(this, HIT_THRESHOLD)
             accept(deck.draw())
