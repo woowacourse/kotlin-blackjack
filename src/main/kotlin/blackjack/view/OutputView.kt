@@ -1,13 +1,13 @@
 package blackjack.view
 
 import blackjack.domain.model.Game
-import blackjack.domain.model.Scoreboard
 import blackjack.domain.model.card.Hand
 import blackjack.domain.model.card.Rank
 import blackjack.domain.model.card.Suit
 import blackjack.domain.model.participant.Dealer
 import blackjack.domain.model.participant.Participant
 import blackjack.domain.model.participant.Player
+import blackjack.domain.model.result.Scoreboard
 
 class OutputView {
     fun printInitialDeals(game: Game) {

@@ -2,11 +2,11 @@ package blackjack.controller
 
 import blackjack.domain.model.Bet
 import blackjack.domain.model.Game
-import blackjack.domain.model.Scoreboard
 import blackjack.domain.model.card.Deck
 import blackjack.domain.model.card.Hand
 import blackjack.domain.model.participant.Dealer
 import blackjack.domain.model.participant.Player
+import blackjack.domain.model.result.Scoreboard
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
