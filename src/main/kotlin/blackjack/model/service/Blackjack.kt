@@ -21,14 +21,14 @@ class Blackjack(private val deck: PlayingCard, private val playerGroup: PlayerGr
         player.receiveCard(deck.spreadCard(2))
     }
 
-    fun hitAction(player: Player) {
-        player.receiveCard(deck.spreadCard(1))
+    fun hitAction(participants: Participants) {
+        participants.receiveCard(deck.spreadCard(1))
     }
 
     fun drawUntilThreshold(dealer: Dealer): Int {
         var count: Int = 0
         while (!dealer.canHit()) {
-            dealer.receiveCard(deck.spreadCard(1))
+            hitAction(dealer)
             count++
         }
         return count
