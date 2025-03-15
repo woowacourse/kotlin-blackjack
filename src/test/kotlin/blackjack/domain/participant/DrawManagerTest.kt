@@ -7,6 +7,7 @@ import blackjack.model.card.Card
 import blackjack.model.hand.Score
 import blackjack.model.participant.Dealer
 import blackjack.model.participant.DrawManager
+import blackjack.model.participant.Name
 import blackjack.model.participant.Player
 import blackjack.model.participant.UserCommand
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -23,7 +24,7 @@ class DrawManagerTest {
     @BeforeEach
     fun setup() {
         drawManager = DrawManager()
-        player = Player.create("공백")
+        player = Player.create(Name("공백"))
         dealer = Dealer.create()
     }
 

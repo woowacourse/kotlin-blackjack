@@ -3,7 +3,7 @@ package blackjack.domain.participant
 import blackjack.domain.ACE_HEART
 import blackjack.domain.TEN_HEART
 import blackjack.model.hand.Hand
-import blackjack.model.participant.Money
+import blackjack.model.participant.Name
 import blackjack.model.participant.Player
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
@@ -14,11 +14,11 @@ class PlayerTest {
     @Test
     fun `플레이어가 정상적으로 생성된다`() {
         // when
-        val player = Player.create(name = "공백")
+        val player = Player.create(Name("공백"))
 
         // then
         assertEquals("공백", player.name.value)
-        assertEquals(Money(Player.PLAYER_DEFAULT_MONEY), player.money)
+        assertEquals(Player.PLAYER_DEFAULT_MONEY, player.money)
         assertTrue(player.cards.isEmpty())
     }
 
@@ -32,7 +32,7 @@ class PlayerTest {
                     ACE_HEART,
                 ),
             )
-        val player = Player.create(name = "비비", hand = hand)
+        val player = Player.create(name = Name("비비"), hand = hand)
 
         // when
         val initialCards = player.showInitialCards()
@@ -54,8 +54,8 @@ class PlayerTest {
                 listOf(TEN_HEART, TEN_HEART, TEN_HEART),
             )
 
-        val alivePlayer = Player.create(name = "메다", hand = aliveHand)
-        val bustPlayer = Player.create(name = "제이", hand = bustHand)
+        val alivePlayer = Player.create(name = Name("메다"), hand = aliveHand)
+        val bustPlayer = Player.create(name = Name("제이"), hand = bustHand)
 
         // when & then
         assertTrue(alivePlayer.isDrawable)

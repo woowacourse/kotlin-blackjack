@@ -5,7 +5,6 @@ import blackjack.model.card.CardDeck
 import blackjack.model.participant.Dealer
 import blackjack.model.participant.Dealer.Companion.DEFAULT_DEALER_NAME
 import blackjack.model.participant.DrawManager
-import blackjack.model.participant.Money
 import blackjack.model.participant.ParticipantManager
 import blackjack.model.participant.Participants
 import blackjack.model.participant.Players
@@ -46,7 +45,7 @@ class BlackjackController(
     private fun progressBetting(players: Players) {
         outputView.displayInitialMoney()
         bettingManager.getPlayersMoney(players) { name ->
-            Money(inputView.getBettingMoney(name.toString()))
+            inputView.getBettingMoney(name)
         }
     }
 
@@ -61,7 +60,7 @@ class BlackjackController(
             drawManager.progressPlayerDraw(
                 player = player,
                 cards = cardDeck::draw,
-                choice = { inputView.getIsReceiveMore(player.name.toString()) },
+                choice = { inputView.getIsReceiveMore(player.name) },
                 onCardReceived = { cards -> outputView.displayParticipantCards(player.name, cards) },
             )
         }

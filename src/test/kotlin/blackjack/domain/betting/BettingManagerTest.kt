@@ -19,7 +19,7 @@ class BettingManagerTest {
     fun `베팅 금액이 0 이하이면 예외 발생`() {
         // given
         val bettingManager = BettingManager()
-        val players = Players.from(listOf("시아", "공백"))
+        val players = Players.from("시아", "공백")
         val getBettingMoney: (Name) -> Money = { Money.ZERO }
 
         // when & then
@@ -32,7 +32,7 @@ class BettingManagerTest {
     fun `정상적인 베팅 금액이 입력되면 정상적으로 진행된다`() {
         // given
         val bettingManager = BettingManager()
-        val players = Players.from(listOf("시아", "공백"))
+        val players = Players.from("시아", "공백")
         val getBettingMoney: (Name) -> Money = { Money(1000.0) }
 
         // when & then
@@ -45,7 +45,7 @@ class BettingManagerTest {
     fun `승패 결과에 따라 올바르게 베팅 결과가 계산된다`() {
         // given
         val dealer = Dealer.create()
-        val players = Players.from(listOf("공백", "비비", "메다", "제이"))
+        val players = Players.from("공백", "비비", "메다", "제이")
 
         val participants = Participants(dealer, players)
         val bettingTable = BettingTable()

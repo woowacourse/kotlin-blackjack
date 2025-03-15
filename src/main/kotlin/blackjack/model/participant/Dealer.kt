@@ -16,15 +16,15 @@ class Dealer private constructor(
     override fun showInitialCards(): List<Card> = cards.take(FIRST_SHOWN_COUNT)
 
     companion object {
-        const val DEFAULT_DEALER_NAME = "딜러"
-        private val DRAW_CRITERIA = Score(16)
+        val DEFAULT_DEALER_NAME = Name("딜러")
         private const val FIRST_SHOWN_COUNT = 1
-        private const val DEALER_DEFAULT_MONEY = Double.MAX_VALUE
+        private val DRAW_CRITERIA = Score(16)
+        private val DEALER_DEFAULT_MONEY = Money(Double.MAX_VALUE)
 
         fun create(
-            name: String = DEFAULT_DEALER_NAME,
-            money: Double = DEALER_DEFAULT_MONEY,
+            name: Name = DEFAULT_DEALER_NAME,
+            money: Money = DEALER_DEFAULT_MONEY,
             hand: Hand = Hand(),
-        ): Dealer = Dealer(Name(name), Money(money), hand)
+        ): Dealer = Dealer(name, money, hand)
     }
 }

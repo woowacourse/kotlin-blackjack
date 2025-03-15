@@ -14,7 +14,7 @@ class PlayersTest {
 
     @BeforeEach
     fun setup() {
-        players = Players.from(listOf("공백", "오이", "시아"))
+        players = Players.from("공백", "오이", "시아")
     }
 
     @Test
@@ -28,7 +28,7 @@ class PlayersTest {
     @Test
     fun `플레이어 인원 수는 8명 미만이다`() {
         // given
-        val players = List(8) { "Player$it" }
+        val players = List(8) { Name("Player$it") }
 
         // when & then
         assertThrows<IllegalArgumentException> {
@@ -38,23 +38,17 @@ class PlayersTest {
 
     @Test
     fun `플레이어 이름은 중복될 수 없다`() {
-        // given
-        val players = listOf("공백", "공백", "시아")
-
-        // when & then
+        // given & when & then
         assertThrows<IllegalArgumentException> {
-            Players.from(players)
+            Players.from("공백", "공백", "시아")
         }
     }
 
     @Test
     fun `유효한 플레이어 목록이면 정상적으로 생성된다`() {
-        // given
-        val players = listOf("인협", "동주", "민정", "메다", "제이", "디랙", "조이")
-
-        // when & then
+        // given & when & then
         assertDoesNotThrow {
-            Players.from(players)
+            Players.from("인협", "동주", "민정", "메다", "제이", "디랙", "조이")
         }
     }
 

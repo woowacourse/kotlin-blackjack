@@ -14,13 +14,13 @@ class Player private constructor(
     override fun showInitialCards(): List<Card> = cards.take(FIRST_SHOWN_COUNT)
 
     companion object {
-        const val PLAYER_DEFAULT_MONEY = 1_000_000.0
+        val PLAYER_DEFAULT_MONEY = Money(1_000_000.0)
         private const val FIRST_SHOWN_COUNT = 2
 
         fun create(
-            name: String,
-            money: Double = PLAYER_DEFAULT_MONEY,
+            name: Name,
+            money: Money = PLAYER_DEFAULT_MONEY,
             hand: Hand = Hand(),
-        ): Player = Player(Name(name), Money(money), hand)
+        ): Player = Player(name, money, hand)
     }
 }

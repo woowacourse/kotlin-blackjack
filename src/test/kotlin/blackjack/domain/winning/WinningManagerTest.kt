@@ -23,8 +23,7 @@ class WinningManagerTest {
     fun setup() {
         winningManager = WinningManager()
 
-        val playerNames = listOf("공백")
-        participants = Participants(Dealer.create(), Players.from(playerNames))
+        participants = Participants(Dealer.create(), Players.from("공백"))
     }
 
     @Test

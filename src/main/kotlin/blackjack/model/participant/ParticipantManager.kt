@@ -4,9 +4,9 @@ import blackjack.model.card.Card
 
 class ParticipantManager {
     fun prepareParticipants(
-        dealerName: String,
+        dealerName: Name,
         distributeCards: (Int) -> List<Card>,
-        getPlayerNames: () -> List<String>,
+        getPlayerNames: () -> List<Name>,
     ): Participants {
         val dealer = prepareDealer(dealerName, distributeCards)
         val players = preparePlayers(getPlayerNames(), distributeCards)
@@ -15,7 +15,7 @@ class ParticipantManager {
     }
 
     private fun prepareDealer(
-        dealerName: String,
+        dealerName: Name,
         distributeCards: (Int) -> List<Card>,
     ): Dealer {
         val dealer = Dealer.create(dealerName)
@@ -25,7 +25,7 @@ class ParticipantManager {
     }
 
     private fun preparePlayers(
-        playerNames: List<String>,
+        playerNames: List<Name>,
         distributeCards: (Int) -> List<Card>,
     ): Players {
         val players = Players.from(playerNames)

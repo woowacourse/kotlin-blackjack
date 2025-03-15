@@ -2,6 +2,7 @@ package blackjack.domain.participant
 
 import blackjack.domain.SIX_HEART
 import blackjack.domain.TEN_HEART
+import blackjack.model.participant.Name
 import blackjack.model.participant.ParticipantManager
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
@@ -16,9 +17,9 @@ class ParticipantManagerTest {
         // when
         val participants =
             participantManager.prepareParticipants(
-                dealerName = "딜러",
+                dealerName = Name("딜러"),
                 distributeCards = { listOf(TEN_HEART, SIX_HEART) },
-                getPlayerNames = { listOf("공백", "오이") },
+                getPlayerNames = { listOf("공백", "오이").map { Name(it) } },
             )
 
         // then
@@ -37,9 +38,9 @@ class ParticipantManagerTest {
         val dealer =
             participantManager
                 .prepareParticipants(
-                    dealerName = "딜러",
+                    dealerName = Name("딜러"),
                     distributeCards = { listOf(TEN_HEART, SIX_HEART) },
-                    getPlayerNames = { listOf("공백", "오이") },
+                    getPlayerNames = { listOf("공백", "오이").map { Name(it) } },
                 ).dealer
 
         // then
@@ -58,9 +59,9 @@ class ParticipantManagerTest {
         val players =
             participantManager
                 .prepareParticipants(
-                    dealerName = "딜러",
+                    dealerName = Name("딜러"),
                     distributeCards = { listOf(TEN_HEART, SIX_HEART) },
-                    getPlayerNames = { listOf("공백", "오이") },
+                    getPlayerNames = { listOf("공백", "오이").map { Name(it) } },
                 ).players
 
         // then
