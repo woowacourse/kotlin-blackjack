@@ -27,7 +27,7 @@ class Blackjack(private val deck: PlayingCard, private val playerGroup: PlayerGr
 
     fun drawUntilThresholdWithCount(dealer: Dealer): Int {
         var count: Int = 0
-        while (!dealer.canHit()) {
+        while (dealer.canHit()) {
             hitAction(dealer)
             count++
         }

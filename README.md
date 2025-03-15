@@ -88,5 +88,5 @@
 - [x] BlackJack | drawUntilThreshold 메서드명 수정
 - [x] BlackJack | BUST_STANDARD 상수 이동
 - [x] Dealer | 카드 공개 메서드 추상화
-- [ ] DealerTest | Dealer의 테스트 추가 작성
+- [x] DealerTest | Dealer의 테스트 추가 작성
 - [ ] HandTest | Hand의 테스트 추가 작성
