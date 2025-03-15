@@ -50,7 +50,7 @@ class GameManager(
         person.addCard(deck.draw())
     }
 
-    private fun calculateProfit(
+    fun calculateProfit(
         resultType: ResultType,
         player: Player,
     ) = when (resultType) {
@@ -60,9 +60,7 @@ class GameManager(
         ResultType.LOSS -> WinningMoney(player.betAmount.toDouble() * LOSS_PROFIT_MULTIPLIER)
     }
 
-    private fun calculateDealerProfit(
-        profitResults: List<Profit>,
-    ): Profit {
+    private fun calculateDealerProfit(profitResults: List<Profit>): Profit {
         val totalPlayerProfit = profitResults.sumOf { it.winningMoney.amount }
         return Profit(dealer, WinningMoney(totalPlayerProfit * DEALER_PROFIT_MULTIPLIER))
     }
