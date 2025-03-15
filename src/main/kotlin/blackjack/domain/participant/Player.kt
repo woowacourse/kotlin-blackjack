@@ -2,31 +2,31 @@ package blackjack.domain.participant
 
 import blackjack.domain.BetAmount
 import blackjack.domain.HandStatus
-import blackjack.domain.ResultStatus
+import blackjack.domain.PlayerResultStatus
 
 class Player(val name: String, private val betAmount: BetAmount) : Participant() {
     override val hitThreshold: Int
         get() = PLAYER_HIT_THRESHOLD
 
-    fun setPlayerStatus(dealer: Dealer): ResultStatus {
+    fun setPlayerStatus(dealer: Dealer): PlayerResultStatus {
         val playerStatus = getStatus()
         val dealerStatus = dealer.getStatus()
 
         val result =
             when {
                 // 블랙잭 판별
-                playerStatus == HandStatus.BLACKJACK && dealerStatus != HandStatus.BLACKJACK -> ResultStatus.BLACKJACK_WIN
-                playerStatus == HandStatus.BLACKJACK && dealerStatus == HandStatus.BLACKJACK -> ResultStatus.DRAW
-                dealerStatus == HandStatus.BLACKJACK -> ResultStatus.PLAYER_LOSE
+                playerStatus == HandStatus.BLACKJACK && dealerStatus != HandStatus.BLACKJACK -> PlayerResultStatus.BLACKJACK_WIN
+                playerStatus == HandStatus.BLACKJACK && dealerStatus == HandStatus.BLACKJACK -> PlayerResultStatus.DRAW
+                dealerStatus == HandStatus.BLACKJACK -> PlayerResultStatus.PLAYER_LOSE
 
                 // 버스트 판별
-                playerStatus == HandStatus.BUST -> ResultStatus.PLAYER_LOSE
-                dealerStatus == HandStatus.BUST -> ResultStatus.PLAYER_WIN
+                playerStatus == HandStatus.BUST -> PlayerResultStatus.PLAYER_LOSE
+                dealerStatus == HandStatus.BUST -> PlayerResultStatus.PLAYER_WIN
 
                 // 점수 비교
-                getTotalSum() > dealer.getTotalSum() -> ResultStatus.PLAYER_WIN
-                getTotalSum() < dealer.getTotalSum() -> ResultStatus.PLAYER_LOSE
-                else -> ResultStatus.DRAW
+                getTotalSum() > dealer.getTotalSum() -> PlayerResultStatus.PLAYER_WIN
+                getTotalSum() < dealer.getTotalSum() -> PlayerResultStatus.PLAYER_LOSE
+                else -> PlayerResultStatus.DRAW
             }
         betAmount.update(result)
         return result

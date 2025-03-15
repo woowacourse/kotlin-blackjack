@@ -1,9 +1,9 @@
 package blackjack.domain.participant
 
-import blackjack.domain.Result
+import blackjack.domain.DealerResult
 
 class Dealer : Participant() {
-    val result: Result = Result()
+    val dealerResult: DealerResult = DealerResult()
 
     override val hitThreshold: Int
         get() = DEALER_HIT_THRESHOLD
