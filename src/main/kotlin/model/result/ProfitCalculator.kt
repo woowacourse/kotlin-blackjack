@@ -23,8 +23,8 @@ class ProfitCalculator(private val dealer: Dealer, private val players: Players)
         when {
             player.isBackJack && !dealer.isBackJack -> player.betAmount * ONE_AND_HALF
             player.isBackJack && dealer.isBackJack -> ZERO
-            dealer.score > BLACKJACK_SCORE -> player.betAmount
-            player.score > BLACKJACK_SCORE -> -player.betAmount
+            dealer.isBust -> player.betAmount
+            player.isBust -> -player.betAmount
             else -> compareScores(player)
         }
 
