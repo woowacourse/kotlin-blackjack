@@ -1,6 +1,6 @@
 package blackjack.model.user
 
-import blackjack.model.ScoreCalculator
+import blackjack.model.GameJudge
 import blackjack.model.card.Card
 import blackjack.model.state.GameStatus
 
@@ -9,10 +9,8 @@ open class Participant(
 ) {
     private val _cards: MutableList<Card> = mutableListOf()
     val cards get() = _cards.toList()
-    val gameStatus: GameStatus
-        get() = GameStatus.of(ScoreCalculator.calculateOptimalSum(cards), cards.size)
 
     fun addCard(card: Card) = _cards.add(card)
 
-    fun isBust(): Boolean = gameStatus == GameStatus.BUST
+    fun isBust(): Boolean = GameJudge.judge(cards) == GameStatus.BUST
 }

@@ -6,7 +6,8 @@ import blackjack.model.card.Deck.Companion.INITIAL_HAND_OUT_CARD_COUNT
 enum class GameStatus {
     BLACKJACK,
     BUST,
-    IN_PROGRESS, ;
+    STAY,
+    ;
 
     companion object {
         fun of(
@@ -15,7 +16,7 @@ enum class GameStatus {
         ): GameStatus {
             if (score == BUST_NUMBER && cardCount == INITIAL_HAND_OUT_CARD_COUNT) return BLACKJACK
             if (score > BUST_NUMBER) return BUST
-            return IN_PROGRESS
+            return STAY
         }
     }
 }

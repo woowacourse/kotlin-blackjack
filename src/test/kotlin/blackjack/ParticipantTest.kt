@@ -1,9 +1,6 @@
 package blackjack
 
 import blackjack.CardFixture.Companion.CLOVER_NINE
-import blackjack.CardFixture.Companion.CLOVER_TEN
-import blackjack.CardFixture.Companion.HEART_ACE
-import blackjack.model.state.GameStatus
 import blackjack.model.user.Participant
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
@@ -21,13 +18,5 @@ class ParticipantTest {
     fun `참여자는 카드 한 장을 받을 수 있다`() {
         participant.addCard(CLOVER_NINE)
         assertThat(participant.cards.size).isEqualTo(1)
-    }
-
-    @Test
-    fun `참여자 게임 진행 상태는 변수를 호출하는 시점에 평가된다`() {
-        participant.addCard(CLOVER_TEN)
-        assertThat(participant.gameStatus).isEqualTo(GameStatus.IN_PROGRESS)
-        participant.addCard(HEART_ACE)
-        assertThat(participant.gameStatus).isEqualTo(GameStatus.BLACKJACK)
     }
 }
