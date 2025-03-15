@@ -38,3 +38,10 @@
 ### 딜러
 - [x] 참가자 | 딜러는 "딜러"라는 이름을 가진다
 - [x] 참가자 | 플레이어는 뽑은 카드를 핸드에게 추가한다
+
+### 플레잉 상태
+- [x] Ready에서 draw 하면 Hit으로 전환
+- [x] Hit에서 draw 했을 때, bust면 Bust로 전환
+- [x] Hit에서 draw 했을 때, blackjack면 Blackjack로 전환
+- [x] Hit에서 draw 했을 때 bust나 blackjack이 아니면 Hit으로 전환
+- [x] Hit에서 stay 했을 때 stay로 전환
