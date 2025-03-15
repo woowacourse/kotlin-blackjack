@@ -15,4 +15,6 @@ class Hand(initialCards: List<Card>) {
     }
 
     fun getCardsCount(): Int = _handCards.size
+
+    fun isAceExist() : Boolean = _handCards.any{it.cardRank == CardRank.ACE}
 }
