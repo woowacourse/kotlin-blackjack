@@ -20,35 +20,35 @@ class BlackjackController(
 ) {
     private val deck: ArrayDeque<Card> = CardFactory().makeCard()
     private val blackjack: Blackjack = Blackjack(PlayingCard(deck))
-    private val dealer: Dealer = Dealer()
+    private val dealer = Dealer()
 
     fun run() {
         val playerGroup = getPlayerGroup()
-        val playersBetAmount = getPlayerBetAmount(playerGroup.players)
-        initGame(playerGroup.players)
-        startGame(playerGroup.players)
+        val playersBetAmount = getPlayerBetAmount(playerGroup)
+        initGame(playerGroup)
+        startGame(playerGroup)
         val playerResult = blackjack.endGame(playerGroup)
         val playersSettleMoney = settleMoney(playerResult, playersBetAmount)
 
         printResult(playersSettleMoney)
     }
 
-    private fun getPlayerBetAmount(players: List<Player>): List<PlayerBetAmount> {
+    private fun getPlayerBetAmount(playerGroup: PlayerGroup): List<PlayerBetAmount> {
         return retryInput {
-            players.map { PlayerBetAmount(it, BettingMoney(inputView.askForBetAmount(it))) }
+            playerGroup.players.map { PlayerBetAmount(it, BettingMoney(inputView.askForBetAmount(it))) }
         }
     }
 
-    private fun initGame(players: List<Player>) {
-        blackjack.initGame(players + dealer)
-        outputView.printInitCardStatus(dealer, players)
+    private fun initGame(playerGroup: PlayerGroup) {
+        blackjack.initGame(playerGroup.players + playerGroup.dealer)
+        outputView.printInitCardStatus(playerGroup.dealer, playerGroup.players)
     }
 
-    private fun startGame(players: List<Player>) {
-        players.forEach { player ->
+    private fun startGame(playerGroup: PlayerGroup) {
+        playerGroup.players.forEach { player ->
             hitOrStay(player)
         }
-        dealerReceiveCard()
+        dealerReceiveCard(playerGroup.dealer)
     }
 
     private fun hitOrStay(player: Player) {
@@ -82,7 +82,7 @@ class BlackjackController(
         }
     }
 
-    private fun dealerReceiveCard() {
+    private fun dealerReceiveCard(dealer: Dealer) {
         val count: Int = blackjack.drawUntilThreshold(dealer)
         dealer.hand.isBust()
         outputView.printDealerReceiveCard(count, dealer)
