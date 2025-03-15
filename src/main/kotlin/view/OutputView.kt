@@ -1,6 +1,7 @@
 package view
 
 import model.card.CardName
+import model.result.DealerProfit
 import model.result.PlayerProfit
 
 class OutputView {
@@ -49,11 +50,11 @@ class OutputView {
     }
 
     fun printResult(
-        dealerResult: Float,
+        dealerResult: DealerProfit,
         playerProfits: List<PlayerProfit>,
     ) {
         println("\n## 최종 수익")
-        println("딜러: ${dealerResult.roundToInteger()}")
+        println("딜러: ${dealerResult.money.roundToInteger()}")
         playerProfits.forEach { playResult ->
             println("${playResult.name}: ${playResult.money.roundToInteger()}")
         }
