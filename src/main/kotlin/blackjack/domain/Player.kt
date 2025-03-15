@@ -1,6 +1,6 @@
 package blackjack.domain
 
-class Player(name: String): Participant(name) {
+class Player(name: String) : Participant(name) {
     var bettingAmount = 0
         private set
 

@@ -3,8 +3,8 @@ package blackjack.domain
 import blackjack.domain.card.Card
 import blackjack.domain.card.Denomination
 import blackjack.domain.card.Suit
-import org.junit.jupiter.api.Test
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
@@ -34,7 +34,7 @@ class CardTest {
     }
 
     @ParameterizedTest(name = "카드 {0}은(는) 점수 {0}을(를) 가져야 한다")
-    @ValueSource(ints = [2,3,4,5,6,7,8,9,10])
+    @ValueSource(ints = [2, 3, 4, 5, 6, 7, 8, 9, 10])
     fun `카드는 끗수가 숫자면 숫자를 점수로 갖는다`(int: Int) {
         val denominationMap = Denomination.entries.associateBy { it.value }
         val card = Card(Suit.CLUB, denominationMap.getOrDefault(int, Denomination.ACE))

@@ -13,9 +13,9 @@ class HandTest {
 
     @Test
     fun `핸드는 카드의 합을 구한다`() {
-        val hand = Hand(listOf(TestFixture.ClubTen, TestFixture.ClubJack))
+        val hand = Hand(listOf(TestFixture.ClubTwo, TestFixture.ClubThree))
         val sum = hand.sum()
-        val expected = TestFixture.ClubTen.denomination.value + TestFixture.ClubJack.denomination.value
+        val expected = TestFixture.ClubTwo.denomination.value + TestFixture.ClubThree.denomination.value
         assertThat(sum).isEqualTo(expected)
     }
 }

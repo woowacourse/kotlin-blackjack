@@ -9,7 +9,14 @@ class Deck {
     val cards: List<Card> get() = _cards
 
     private fun create(): ArrayDeque<Card> {
-        val cards = Suit.entries.flatMap<Suit, Card> { suit -> Denomination.entries.map{ denomination -> Card( suit = suit, denomination = denomination) } }.shuffled().toCollection(ArrayDeque())
+        val cards =
+            Suit.entries.flatMap<Suit, Card> {
+                    suit ->
+                Denomination.entries.map {
+                        denomination ->
+                    Card(suit = suit, denomination = denomination)
+                }
+            }.shuffled().toCollection(ArrayDeque())
         return cards
     }
 
