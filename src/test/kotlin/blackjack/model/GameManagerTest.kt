@@ -29,6 +29,16 @@ class GameManagerTest {
     }
 
     @Test
+    fun `참가자는 카드를 한 장 드로우할 수 있다`() {
+        gameManager.drawCard(player)
+        gameManager.drawCard(dealer)
+
+        assertThat(player.cards.size).isEqualTo(1)
+        assertThat(dealer.cards.size).isEqualTo(1)
+    }
+
+
+    @Test
     fun `플레이어가 블랙잭으로 승리하면 수익은 배팅 금액의 150%이다`() {
         val resultType = ResultType.BLACKJACK
         val expect = 150.0
