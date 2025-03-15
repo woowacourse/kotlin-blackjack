@@ -32,12 +32,11 @@ class Casino(
         outputParticipantsProfit(BetRecords(participants.dealer, playerBetInfos))
     }
 
-    private fun setPlayerBetInfos(players: List<Player>): List<BetRecord> {
-        return players.map {
+    private fun setPlayerBetInfos(players: List<Player>): List<BetRecord> =
+        players.map {
             val betAmount = setBetAmount(it.name)
             BetRecord(it, betAmount)
         }
-    }
 
     private fun setPlayers(): List<Player> {
         val rawInputNames = inputView.readPlayerNames()
@@ -57,21 +56,20 @@ class Casino(
         participants: Participants,
         deck: Deck,
     ) {
-        participants.dealer.drawCard(drawSafely(1, deck))
+        participants.dealer.draw(drawSafely(1, deck))
         participants.players.forEach { participant ->
-            participant.drawCard(drawSafely(2, deck))
+            participant.draw(drawSafely(2, deck))
         }
     }
 
     private fun drawSafely(
         number: Int,
         deck: Deck,
-    ): List<Card> {
-        return deck.pop(number) ?: run {
+    ): List<Card> =
+        deck.pop(number) ?: run {
             deck.refill()
             drawSafely(number, deck)
         }
-    }
 
     private fun outputParticipantCardsInfo(participants: Participants) {
         outputView.showDistributeCardMessage(participants.players)
@@ -99,7 +97,7 @@ class Casino(
                 outputView.showPlayerCardsInfo(player)
                 break
             }
-            player.drawCard(drawSafely(1, deck))
+            player.draw(drawSafely(1, deck))
             outputView.showPlayerCardsInfo(player)
         }
         outputView.newLine()
@@ -109,9 +107,9 @@ class Casino(
         dealer: Dealer,
         deck: Deck,
     ) {
-        dealer.drawCard(drawSafely(1, deck))
+        dealer.draw(drawSafely(1, deck))
         while (dealer.isDrawable()) {
-            dealer.drawCard(drawSafely(1, deck))
+            dealer.draw(drawSafely(1, deck))
             outputView.showDealerDrawMessage()
         }
         outputView.newLine()

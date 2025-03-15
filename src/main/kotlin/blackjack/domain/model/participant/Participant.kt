@@ -8,7 +8,7 @@ abstract class Participant(
     val name: String,
     val hand: Hand,
 ) {
-    fun drawCard(cards: List<Card>) {
+    fun draw(cards: List<Card>) {
         cards.forEach(hand::add)
     }
 
