@@ -30,15 +30,15 @@ class Player(
     fun processHits(
         deck: Deck,
         input: (Player) -> Action,
-        output: (String, List<Card>) -> Unit,
+        output: (Player) -> Unit,
     ) {
         if (!canHit()) return
         if (input(this) == Action.STAND) {
-            if (showHand().size == Hand.STARTING_HAND_SIZE) output(name, hand.show())
+            if (showHand().size == Hand.STARTING_HAND_SIZE) output(this)
             return
         }
         accept(deck.draw())
-        output(name, hand.show())
+        output(this)
         processHits(deck, input, output)
     }
 

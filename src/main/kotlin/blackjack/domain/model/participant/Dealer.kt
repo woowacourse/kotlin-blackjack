@@ -21,10 +21,10 @@ class Dealer(
 
     fun processHits(
         deck: Deck,
-        output: (String, Int) -> Unit,
+        output: (Dealer, Int) -> Unit,
     ) {
         while (canHit()) {
-            output(name, HIT_THRESHOLD)
+            output(this, HIT_THRESHOLD)
             accept(deck.draw())
         }
     }

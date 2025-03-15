@@ -1,62 +1,56 @@
 package blackjack.view
 
-import blackjack.domain.model.card.Card
+import blackjack.domain.model.Game
 import blackjack.domain.model.card.Hand
 import blackjack.domain.model.card.Rank
 import blackjack.domain.model.card.Suit
+import blackjack.domain.model.participant.Dealer
+import blackjack.domain.model.participant.Participant
+import blackjack.domain.model.participant.Player
 
 class OutputView {
-    fun printInitialDeals(
-        dealerName: String,
-        playerNames: List<String>,
-    ) {
-        println(MESSAGE_INITIAL_HAND_DISTRIBUTED.format(dealerName, playerNames.joinToString(CARDS_DELIMITER)))
+    fun printInitialDeals(game: Game) {
+        println(
+            MESSAGE_INITIAL_HAND_DISTRIBUTED.format(
+                game.dealer.name,
+                game.players.joinToString(CARDS_DELIMITER) { player -> player.name },
+            ),
+        )
         println()
     }
 
-    fun printParticipantStatus(
-        name: String,
-        cards: List<Card>,
-    ) {
-        println(renderParticipantCards(name, cards))
+    fun printParticipantStatus(participant: Participant) {
+        println(renderParticipantCards(participant))
     }
 
-    fun printParticipantResult(
-        name: String,
-        cards: List<Card>,
-        point: Int,
-    ) {
-        println(renderParticipantCards(name, cards) + PARTICIPANT_STATUS_RESULT_DELIMITER + point)
+    fun printParticipantStatusWithPoint(participant: Participant) {
+        println(
+            renderParticipantCards(participant) + PARTICIPANT_STATUS_RESULT_DELIMITER + participant.computePoint(),
+        )
     }
 
-    private fun renderParticipantCards(
-        name: String,
-        cards: List<Card>,
-    ): String {
-        return name + PARTICIPANT_NAME_CARDS_DELIMITER +
-            cards.joinToString { card ->
+    private fun renderParticipantCards(participant: Participant): String {
+        return participant.name + PARTICIPANT_NAME_CARDS_DELIMITER +
+            participant.showHand().joinToString { card ->
                 card.rank.stringRepresentation() + card.suit.stringRepresentation()
             }
     }
 
     fun printDealerHit(
-        name: String,
+        dealer: Dealer,
         hitThreshold: Int,
     ) {
-        println(MESSAGE_DEALER_HIT.format(name, hitThreshold))
+        println(MESSAGE_DEALER_HIT.format(dealer.name, hitThreshold))
     }
 
-    fun printFinalResult(): (String, Int) -> Unit {
+    fun printFinalResult(game: Game) {
         println()
         println(FINAL_RESULT_HEADER)
-        return { name: String, profit: Int -> printParticipantProfit(name, profit) }
-    }
-
-    private fun printParticipantProfit(
-        name: String,
-        profit: Int,
-    ) {
-        println(name + PARTICIPANT_PROFIT_DELIMITER + profit)
+        val playerProfits: Map<Player, Int> = game.aggregatePlayersProfits()
+        println(game.dealer.name + PARTICIPANT_PROFIT_DELIMITER + game.computeDealerProfit(playerProfits))
+        playerProfits.forEach { (player, profit) ->
+            println(player.name + PARTICIPANT_PROFIT_DELIMITER + profit)
+        }
     }
 
     private fun Suit.stringRepresentation(): String {
