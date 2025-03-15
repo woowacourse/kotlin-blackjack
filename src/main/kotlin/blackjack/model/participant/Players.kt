@@ -1,5 +1,8 @@
 package blackjack.model.participant
 
+import blackjack.model.betting.BettingTable
+import blackjack.model.card.Card
+
 class Players private constructor(
     val value: List<Player>,
 ) {
@@ -17,6 +20,30 @@ class Players private constructor(
         money: Money,
     ) {
         value.find { it.name == name }?.receiveMoney(money) ?: return
+    }
+
+    fun getMoney(getBettingMoney: (Name) -> Money): BettingTable {
+        val bettingTable = BettingTable()
+
+        value.forEach { player ->
+            val bettingMoney = getBettingMoney(player.name)
+            require(bettingMoney > Money.ZERO) {
+                ("[ERROR] 베팅 금액은 0원보다 높아야 합니다.")
+            }
+            bettingTable.add(player.name, player.payMoney(bettingMoney))
+        }
+
+        return bettingTable
+    }
+
+    fun draw(
+        newCards: (Int) -> List<Card>,
+        choice: (Name) -> UserCommand,
+        onCardReceived: (Name, List<Card>) -> Unit,
+    ) {
+        value.forEach { player ->
+            player.progressDraw(newCards, choice, onCardReceived)
+        }
     }
 
     companion object {

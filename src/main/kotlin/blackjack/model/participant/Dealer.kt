@@ -15,6 +15,12 @@ class Dealer private constructor(
 
     override fun showInitialCards(): List<Card> = cards.take(FIRST_SHOWN_COUNT)
 
+    fun draw(cards: (Int) -> List<Card>) {
+        while (isDrawable) {
+            receiveCards(cards)
+        }
+    }
+
     companion object {
         val DEFAULT_DEALER_NAME = Name("딜러")
         private const val FIRST_SHOWN_COUNT = 1

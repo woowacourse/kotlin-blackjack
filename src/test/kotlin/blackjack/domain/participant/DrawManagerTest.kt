@@ -6,7 +6,6 @@ import blackjack.domain.TEN_HEART
 import blackjack.model.card.Card
 import blackjack.model.hand.Score
 import blackjack.model.participant.Dealer
-import blackjack.model.participant.DrawManager
 import blackjack.model.participant.Name
 import blackjack.model.participant.Player
 import blackjack.model.participant.UserCommand

@@ -1,27 +1,11 @@
 package blackjack.model.betting
 
-import blackjack.model.participant.Money
-import blackjack.model.participant.Name
 import blackjack.model.participant.Participants
-import blackjack.model.participant.Players
 import blackjack.model.winning.WinningResult
 
 class BettingManager(
     private val bettingTable: BettingTable = BettingTable(),
 ) {
-    fun getPlayersMoney(
-        players: Players,
-        getBettingMoney: (Name) -> Money,
-    ) {
-        players.value.forEach { player ->
-            val bettingMoney = getBettingMoney(player.name)
-            require(bettingMoney > Money.ZERO) {
-                ("[ERROR] 베팅 금액은 0원보다 높아야 합니다.")
-            }
-            bettingTable.add(player.name, player.payMoney(bettingMoney))
-        }
-    }
-
     fun result(
         winningResult: WinningResult,
         participants: Participants,

@@ -13,6 +13,24 @@ class Player private constructor(
 
     override fun showInitialCards(): List<Card> = cards.take(FIRST_SHOWN_COUNT)
 
+    fun progressDraw(
+        newCards: (Int) -> List<Card>,
+        choice: (Name) -> UserCommand,
+        onCardReceived: (Name, List<Card>) -> Unit,
+    ) {
+        while (true) {
+            when (choice(name)) {
+                UserCommand.HIT -> {
+                    receiveCards(newCards)
+                    onCardReceived(name, cards)
+                    if (!isDrawable) return
+                }
+                UserCommand.STAY -> break
+                UserCommand.UNKNOWN -> throw IllegalArgumentException("[ERROR] 올바르지 않은 입력입니다.")
+            }
+        }
+    }
+
     companion object {
         val PLAYER_DEFAULT_MONEY = Money(1_000_000.0)
         private const val FIRST_SHOWN_COUNT = 2

@@ -4,7 +4,6 @@ import blackjack.model.betting.BettingManager
 import blackjack.model.card.CardDeck
 import blackjack.model.participant.Dealer
 import blackjack.model.participant.Dealer.Companion.DEFAULT_DEALER_NAME
-import blackjack.model.participant.DrawManager
 import blackjack.model.participant.ParticipantManager
 import blackjack.model.participant.Participants
 import blackjack.model.participant.Players
@@ -17,7 +16,6 @@ class BlackjackController(
     private val outputView: OutputView,
 ) {
     private val participantManager: ParticipantManager = ParticipantManager()
-    private val drawManager: DrawManager = DrawManager()
     private val bettingManager: BettingManager = BettingManager()
     private val winningManager: WinningManager = WinningManager()
 
@@ -44,7 +42,7 @@ class BlackjackController(
 
     private fun progressBetting(players: Players) {
         outputView.displayInitialMoney()
-        bettingManager.getPlayersMoney(players) { name ->
+        players.getMoney { name ->
             inputView.getBettingMoney(name)
         }
     }
@@ -56,21 +54,18 @@ class BlackjackController(
         players.value.forEach { player ->
             outputView.displayParticipantCards(player.name, player.cards)
         }
-        players.value.forEach { player ->
-            drawManager.progressPlayerDraw(
-                player = player,
-                cards = cardDeck::draw,
-                choice = { inputView.getIsReceiveMore(player.name) },
-                onCardReceived = { cards -> outputView.displayParticipantCards(player.name, cards) },
-            )
-        }
+        players.draw(
+            newCards = cardDeck::draw,
+            choice = { inputView.getIsReceiveMore(it) },
+            onCardReceived = { name, cards -> outputView.displayParticipantCards(name, cards) },
+        )
     }
 
     private fun progressDealerDraw(
         dealer: Dealer,
         cardDeck: CardDeck,
     ) {
-        drawManager.progressDealerDraw(dealer, cardDeck::draw)
+        dealer.draw(cardDeck::draw)
 
         outputView.displayDealerDrawInfo(dealer.additionalDrawCount)
         outputView.displayParticipantInfo(dealer.name, dealer.cards, dealer.score)
