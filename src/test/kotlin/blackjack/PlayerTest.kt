@@ -1,5 +1,6 @@
 package blackjack
 
+import blackjack.model.BetMoney
 import blackjack.model.card.Card
 import blackjack.model.card.CardNumber
 import blackjack.model.card.Shape
@@ -13,7 +14,7 @@ class PlayerTest {
 
     @BeforeEach
     fun setUp() {
-        player = Player("미플")
+        player = Player("미플", BetMoney(1_000L))
     }
 
     @Test
