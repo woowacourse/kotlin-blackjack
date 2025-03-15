@@ -18,7 +18,7 @@ class ProfitCalculatorTest {
 
     private fun assertPlayerProfit(expectedProfit: Float) {
         val profitCalculator = ProfitCalculator(dealer, players)
-        assertEquals(expectedProfit, profitCalculator.playerProfits[0].profit)
+        assertEquals(expectedProfit, profitCalculator.playerProfits[0].money)
     }
 
     @Test
