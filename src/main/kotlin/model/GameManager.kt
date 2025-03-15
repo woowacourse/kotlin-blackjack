@@ -1,5 +1,8 @@
 package model
 
+import model.GameResult.Companion.compareWinOrLose
+import model.GameResult.Companion.decideProfitRates
+
 class GameManager(private val cards: Cards) {
     private lateinit var dealer: Dealer
     private lateinit var players: Players
@@ -48,29 +51,23 @@ class GameManager(private val cards: Cards) {
         return dealer.cards.size - INITIAL_DEALER_CARDS
     }
 
-    fun determineBettingAmounts(bettingManager: BettingManager): Map<Player, Int> {
-        val gameOutput = GameResultDecider(dealer, players).compareWinOrLose()
+    fun determinePlayersProfit(bettingManager: BettingManager): Map<Player, Int> {
+        val playerResults = compareWinOrLose(dealer, players)
+        val profitRates: Map<Player, Float> = decideProfitRates(playerResults)
 
         return players.associateWith { player ->
-            val playerProfit = bettingManager.getProfit(player)
-            val playerResult = gameOutput.playerResults.firstOrNull { it.player == player }
-            when (playerResult?.result) {
-                GameResult.WIN -> playerProfit
-                GameResult.LOSE -> -playerProfit
-                GameResult.BLACKJACK -> (playerProfit * BLACKJACK_PROFIT).toInt()
-                GameResult.PUSH -> 0
-                else -> 0
-            }
+            val baseBet = bettingManager.getProfit(player)
+            val multiplier = profitRates[player] ?: 0f
+            (baseBet * multiplier).toInt()
         }
     }
 
-    fun determineDealerProfit(bettingManager: BettingManager): Int {
-        val totalPlayerProfit = determineBettingAmounts(bettingManager).values.sum()
+    fun determineDealerProfit(playersProfit: Map<Player,Int>): Int {
+        val totalPlayerProfit = playersProfit.values.sum()
         return -totalPlayerProfit
     }
 
     companion object {
         private const val INITIAL_DEALER_CARDS = 2
-        private const val BLACKJACK_PROFIT = 1.5
     }
 }
