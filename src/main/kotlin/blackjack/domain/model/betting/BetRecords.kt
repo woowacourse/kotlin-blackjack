@@ -5,7 +5,7 @@ import blackjack.domain.model.participant.Player
 
 class BetRecords(
     private val dealer: Dealer,
-    private val records: List<BetRecord>,
+    private val players: List<Player>,
 ) {
     fun dealerProfit(): Double {
         val playersProfit: Collection<Double> = playersProfit().values
@@ -13,7 +13,7 @@ class BetRecords(
     }
 
     fun playersProfit(): Map<Player, Double> {
-        val maps: List<Map<Player, Double>> = records.map { it.profit(dealer) }
+        val maps: List<Map<Player, Double>> = players.map { it.makeProfitRecord(dealer) }
         return maps.reduce { acc, map -> acc + map }
     }
 }
