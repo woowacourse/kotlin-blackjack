@@ -78,3 +78,14 @@
 - [x] InputView | 플레이어들의 베팅 금액 입력
 - [x] PlayerBetAmount | 플레이어와 베팅 금액을 매핑하는 클래스 추가
 - [x] BlackjackController | 플레이어의 승패와 블랙잭여부에 따라 베팅 결과 출력
+- [ ] CardFactory | 테스트에만 사용한 코드 제거
+- [ ] BlackjackController | PlayerGroup 추가적으로 활용
+- [ ] InputView | 입력에 따라 도메인이 출력되도록 수정
+- [ ] Hand | 객체에 메시지를 던지도록 수정
+- [ ] Player | 계산하는 로직 추가
+- [ ] BlackJack | PlayerGroup을 인수로 받도록 수정
+- [ ] BlackJack | drawUntilThreshold 메서드명 수정
+- [ ] BlackJack | BUST_STANDARD 상수 이동
+- [ ] Dealer | 카드 공개 메서드 추상화
+- [ ] DealerTest | Dealer의 테스트 추가 작성
+- [ ] HandTest | Hand의 테스트 추가 작성
