@@ -1,8 +1,8 @@
 package blackjack.model
 
 import blackjack.model.card.Deck
+import blackjack.model.dto.ParticipantProfitInfo
 import blackjack.model.state.CardDrawDecision
-import blackjack.model.state.ResultType
 import blackjack.model.user.Dealer
 import blackjack.model.user.Participant
 import blackjack.model.user.Player
@@ -44,17 +44,13 @@ class GameManager(
         participant.addCard(deck.draw())
     }
 
-    fun getPlayersGameResult(): Map<Player, ResultType> {
-        val playersSummary =
-            players.associateBy(
-                { player -> player },
-                { player -> ResultType.judgeForPlayer(player, dealer) },
-            )
-        return playersSummary
-    }
+    fun getPlayersProfit(): List<ParticipantProfitInfo> =
+        players.map { player ->
+            ParticipantProfitInfo(player.name, ProfitCalculator.calculateProfit(dealer, player))
+        }
 
-    fun getDealerGameResult(): Map<ResultType, Int> =
-        players
-            .groupBy { player -> ResultType.judgeForDealer(dealer, player) }
-            .mapValues { typeGroup -> typeGroup.value.size }
+    fun getDealerProfit(playerProfitInfo: List<ParticipantProfitInfo>): ParticipantProfitInfo {
+        val playersSum = playerProfitInfo.sumOf { player -> player.profit.amount }
+        return ParticipantProfitInfo(dealer.name, Money(playersSum * -1))
+    }
 }

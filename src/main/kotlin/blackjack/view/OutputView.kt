@@ -22,7 +22,7 @@ import blackjack.model.card.Shape.CLOVER
 import blackjack.model.card.Shape.DIAMOND
 import blackjack.model.card.Shape.HEART
 import blackjack.model.card.Shape.SPADE
-import blackjack.model.state.ResultType
+import blackjack.model.dto.ParticipantProfitInfo
 import blackjack.model.user.Dealer
 import blackjack.model.user.Player
 
@@ -71,14 +71,13 @@ class OutputView : BlackjackOutput {
     }
 
     override fun printFinalResult(
-        playersGameResult: Map<Player, ResultType>,
-        dealerGameResult: Map<ResultType, Int>,
+        playersProfitInfo: List<ParticipantProfitInfo>,
+        dealerProfitInfo: ParticipantProfitInfo,
     ) {
-        println(FINAL_RESULT_MESSAGE)
-        val dealerResult = getDealerResult(dealerGameResult)
-        println(DEALER_RESULT_FORMAT.format(dealerResult))
-        playersGameResult.forEach { (player, result) ->
-            println(PLAYER_RESULT_FORMAT.format(player.name, result.value))
+        println(FINAL_PROFIT_MESSAGE)
+        println(PARTICIPANT_RESULT_FORMAT.format(dealerProfitInfo.name, dealerProfitInfo.profit.amount))
+        playersProfitInfo.forEach { playerProfitInfo ->
+            println(PARTICIPANT_RESULT_FORMAT.format(playerProfitInfo.name, playerProfitInfo.profit.amount))
         }
     }
 
@@ -95,15 +94,6 @@ class OutputView : BlackjackOutput {
             ),
         )
     }
-
-    private fun getDealerResult(summary: Map<ResultType, Int>): String =
-        buildString {
-            ResultType.entries.forEach { resultType: ResultType ->
-                if (summary[resultType] != null) {
-                    append("${summary[resultType]}${resultType.value}").append(" ")
-                }
-            }
-        }.trim()
 
     private fun printContentSeparator() {
         println()
@@ -140,10 +130,9 @@ class OutputView : BlackjackOutput {
         private const val INITIAL_HAND_OUT_CARD_MESSAGE_FORMAT = "\n딜러와 %s에게 %d장의 카드를 나누어 주었습니다."
         private const val DEALER_HIT_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다."
         private const val DEALER_STAY_MESSAGE = "딜러는 17이상이라 카드를 받지 않았습니다."
-        private const val FINAL_RESULT_MESSAGE = "## 최종 승패"
+        private const val FINAL_PROFIT_MESSAGE = "## 최종 수익"
         private const val HANDS_STATUS_MESSAGE_FORMAT = "%s 카드: %s"
         private const val FINAL_HANDS_STATUS_MESSAGE_FORMAT = "%s 카드: %s - 결과: %d"
-        private const val DEALER_RESULT_FORMAT = "딜러: %s"
-        private const val PLAYER_RESULT_FORMAT = "%s: %s"
+        private const val PARTICIPANT_RESULT_FORMAT = "%s: %d"
     }
 }

@@ -1,6 +1,6 @@
 package blackjack.view
 
-import blackjack.model.state.ResultType
+import blackjack.model.dto.ParticipantProfitInfo
 import blackjack.model.user.Dealer
 import blackjack.model.user.Player
 
@@ -22,7 +22,7 @@ interface BlackjackOutput {
     )
 
     fun printFinalResult(
-        playersGameResult: Map<Player, ResultType>,
-        dealerGameResult: Map<ResultType, Int>,
+        playersProfitInfo: List<ParticipantProfitInfo>,
+        dealerProfitInfo: ParticipantProfitInfo,
     )
 }
