@@ -1,6 +1,7 @@
 package blackjack.model
 
 import blackjack.model.amount.BetAmount
+import blackjack.model.amount.WinningMoney
 import blackjack.model.participant.Dealer
 import blackjack.model.participant.Player
 import org.assertj.core.api.Assertions.assertThat
@@ -63,6 +64,19 @@ class GameManagerTest {
         val expect = -100.0
 
         val actual = gameManager.calculateProfit(resultType, player).amount
+
+        assertThat(actual).isEqualTo(expect)
+    }
+
+    @Test
+    fun `딜러의 수익은 플레이어 수익 총 합의 -1을 곱한 값이다`() {
+        val totalPlayerProfit = listOf(
+            Profit(player, WinningMoney(100.0)),
+            Profit(player, WinningMoney(200.0))
+        )
+        val expect = -300.0
+
+        val actual = gameManager.calculateDealerProfit(totalPlayerProfit).winningMoney.amount
 
         assertThat(actual).isEqualTo(expect)
     }
