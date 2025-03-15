@@ -9,7 +9,7 @@ object ProfitCalculator {
     fun calculateProfit(
         dealer: Dealer,
         player: Player,
-    ): BetMoney {
+    ): Money {
         val dealerGameStatus = dealer.gameStatus
         val playerGameStatus = player.gameStatus
         if (playerGameStatus == BUST) return player.money.toLoseMoney()

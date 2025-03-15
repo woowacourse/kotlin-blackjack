@@ -3,7 +3,7 @@ package blackjack
 import blackjack.CardFixture.Companion.HEART_NINE
 import blackjack.CardFixture.Companion.HEART_QUEEN
 import blackjack.CardFixture.Companion.HEART_SEVEN
-import blackjack.model.BetMoney
+import blackjack.model.Money
 import blackjack.model.user.Player
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
@@ -14,7 +14,7 @@ class PlayerTest {
 
     @BeforeEach
     fun setUp() {
-        player = Player("미플", BetMoney(1_000L))
+        player = Player("미플", Money(1_000L))
     }
 
     @Test

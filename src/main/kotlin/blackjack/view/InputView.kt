@@ -1,6 +1,6 @@
 package blackjack.view
 
-import blackjack.model.BetMoney
+import blackjack.model.Money
 import blackjack.model.state.CardDrawDecision
 import blackjack.model.user.Player
 
@@ -13,10 +13,10 @@ class InputView : BlackjackInput {
         return playerNames
     }
 
-    override fun readPlayerBetAmount(name: String): BetMoney {
+    override fun readPlayerBetAmount(name: String): Money {
         println(PLAYER_BET_AMOUNT_MESSAGE_FORMAT.format(name))
         val amount = readln().toLongOrNull() ?: return readPlayerBetAmount(name)
-        return BetMoney(amount)
+        return Money(amount)
     }
 
     override fun readCardDrawChoice(player: Player): CardDrawDecision {

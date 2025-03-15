@@ -12,7 +12,7 @@ import blackjack.CardFixture.Companion.HEART_KING
 import blackjack.CardFixture.Companion.HEART_NINE
 import blackjack.CardFixture.Companion.HEART_QUEEN
 import blackjack.CardFixture.Companion.HEART_SEVEN
-import blackjack.model.BetMoney
+import blackjack.model.Money
 import blackjack.model.state.ResultType
 import blackjack.model.user.Dealer
 import blackjack.model.user.Player
@@ -28,7 +28,7 @@ class ResultTypeTest {
     @BeforeEach
     fun setUp() {
         dealer = Dealer()
-        player = Player("Mr.플레이어", BetMoney(1_000L))
+        player = Player("Mr.플레이어", Money(1_000L))
     }
 
     @Test

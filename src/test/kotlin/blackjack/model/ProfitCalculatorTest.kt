@@ -19,7 +19,7 @@ class ProfitCalculatorTest {
 
     @BeforeEach
     fun setUp() {
-        player = Player("플레이어", BetMoney(1_000L))
+        player = Player("플레이어", Money(1_000L))
         dealer = Dealer()
     }
 
@@ -28,7 +28,7 @@ class ProfitCalculatorTest {
         player.addCard(CLOVER_JACK)
         player.addCard(HEART_QUEEN)
         player.addCard(HEART_KING)
-        val expected = BetMoney(-1_000L)
+        val expected = Money(-1_000L)
 
         val actual = ProfitCalculator.calculateProfit(dealer, player)
 
@@ -39,7 +39,7 @@ class ProfitCalculatorTest {
     fun `플레이어만 Blackjack 이면 원금의 150%를 얻는다`() {
         player.addCard(CLOVER_JACK)
         player.addCard(CLOVER_ACE)
-        val expected = BetMoney(1_500L)
+        val expected = Money(1_500L)
 
         val actual = ProfitCalculator.calculateProfit(dealer, player)
 
@@ -52,7 +52,7 @@ class ProfitCalculatorTest {
         player.addCard(CLOVER_ACE)
         dealer.addCard(HEART_QUEEN)
         dealer.addCard(HEART_ACE)
-        val expected = BetMoney(0L)
+        val expected = Money(0L)
 
         val actual = ProfitCalculator.calculateProfit(dealer, player)
 
@@ -67,7 +67,7 @@ class ProfitCalculatorTest {
         dealer.addCard(HEART_QUEEN)
         dealer.addCard(HEART_KING)
         dealer.addCard(HEART_JACK)
-        val expected = BetMoney(1_000L)
+        val expected = Money(1_000L)
 
         val actual = ProfitCalculator.calculateProfit(dealer, player)
 
@@ -80,7 +80,7 @@ class ProfitCalculatorTest {
         player.addCard(DIAMOND_ACE)
         dealer.addCard(HEART_KING)
         dealer.addCard(HEART_JACK)
-        val expected = BetMoney(-1_000L)
+        val expected = Money(-1_000L)
 
         val actual = ProfitCalculator.calculateProfit(dealer, player)
 

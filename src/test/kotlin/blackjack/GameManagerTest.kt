@@ -1,7 +1,7 @@
 package blackjack
 
-import blackjack.model.BetMoney
 import blackjack.model.GameManager
+import blackjack.model.Money
 import blackjack.model.state.CardDrawDecision
 import blackjack.model.user.Dealer
 import blackjack.model.user.Player
@@ -16,8 +16,8 @@ class GameManagerTest {
     @Test
     fun `초기 세팅은 플레이어와 딜러에게 카드 2장씩 나눠준다`() {
         // given
-        val player1 = Player("a", BetMoney(1_000L))
-        val player2 = Player("b", BetMoney(1_000L))
+        val player1 = Player("a", Money(1_000L))
+        val player2 = Player("b", Money(1_000L))
         val dealer = Dealer()
         val gameManager = GameManager(dealer, listOf(player1, player2))
 
@@ -45,7 +45,7 @@ class GameManagerTest {
 
     @Test
     fun `카드 추가 요청을 한다면 플레이어 카드는 한 장 추가된다`() {
-        val player = Player("플레이어", BetMoney(1_000L))
+        val player = Player("플레이어", Money(1_000L))
         val gameManager = GameManager(Dealer(), listOf(player))
         val expected = player.cards.size + 1
 
@@ -60,8 +60,8 @@ class GameManagerTest {
         @JvmStatic
         fun distributeCard(): Stream<Arguments> =
             Stream.of(
-                Arguments.of(CardDrawDecision.YES, Player("플레이어", BetMoney(1_000L)), true),
-                Arguments.of(CardDrawDecision.NO, Player("플레이어", BetMoney(1_000L)), false),
+                Arguments.of(CardDrawDecision.YES, Player("플레이어", Money(1_000L)), true),
+                Arguments.of(CardDrawDecision.NO, Player("플레이어", Money(1_000L)), false),
             )
     }
 }

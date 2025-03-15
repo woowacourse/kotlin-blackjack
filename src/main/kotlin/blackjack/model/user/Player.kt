@@ -1,8 +1,8 @@
 package blackjack.model.user
 
-import blackjack.model.BetMoney
+import blackjack.model.Money
 
 class Player(
     name: String,
-    val money: BetMoney,
+    val money: Money,
 ) : Participant(name)
