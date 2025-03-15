@@ -22,3 +22,9 @@ fun bustTrumpCardFixture(): List<TrumpCard> =
         TrumpCard(Tier.KING, Shape.HEART),
         TrumpCard(Tier.KING, Shape.SPADE),
     )
+
+fun minCardFixture(): List<TrumpCard> =
+    listOf(
+        TrumpCard(Tier.TWO, Shape.DIA),
+        TrumpCard(Tier.THREE, Shape.HEART),
+    )
