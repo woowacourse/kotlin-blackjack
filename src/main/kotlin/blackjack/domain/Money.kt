@@ -1,6 +1,7 @@
 package blackjack.domain
 
-class Money(
+@JvmInline
+value class Money(
     val value: Int,
 ) {
     init {
