@@ -3,7 +3,10 @@ package blackjack.model.domain.card
 import blackjack.model.service.Blackjack.Companion.BUST_STANDARD
 
 class Hand(private val _cards: MutableList<Card>) {
+    private var _status: Status = Status.NEUTRAL
+
     val cards get() = _cards.deepCopy()
+    val status get() = _status
 
     fun getSumNumber(): Int {
         var sum = cards.sumOf { it.cardNumber.number }
@@ -23,8 +26,12 @@ class Hand(private val _cards: MutableList<Card>) {
         return CardNumber.Ace in cardNumbers
     }
 
-    fun isBust(): Boolean {
-        return getSumNumber() > BUST_STANDARD
+    fun isBust() {
+        if (getSumNumber() > BUST_STANDARD) this._status = Status.BUST
+    }
+
+    fun isBlackJack() {
+        if (getSumNumber() == BUST_STANDARD) this._status = Status.BLACKJACK
     }
 
     private fun MutableList<Card>.deepCopy(): List<Card> = map { it.copy() }

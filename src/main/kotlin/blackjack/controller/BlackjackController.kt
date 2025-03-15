@@ -46,6 +46,7 @@ class BlackjackController(
             if (shouldStopDrawing(playerAction)) break
             blackjack.hitAction(player)
             outputView.printCardStatus(player)
+            player.hand.isBust()
         }
         if (player.cardDeck.size == 2) outputView.printCardStatus(player)
     }
