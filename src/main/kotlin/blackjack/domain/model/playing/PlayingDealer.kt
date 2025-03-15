@@ -1,11 +1,12 @@
-package blackjack.domain.model
+package blackjack.domain.model.playing
 
+import blackjack.domain.model.Card
+import blackjack.domain.model.HandState
+import blackjack.domain.model.Hands
 import blackjack.domain.model.Hands.Companion.BUST_THRESHOLD
 
-class Dealer(override var hands: Hands, override val name: String = DEALER_NAME) : Participant() {
+class PlayingDealer(override var hands: Hands, override val name: String = DEALER_NAME) : PlayingParticipant() {
     constructor(vararg card: Card) : this(Hands(card.toList()))
-
-    override fun showInitCards(): List<Card> = showCards(INIT_VISIBLE_CARD_COUNT)
 
     override fun getHandsState(): HandState {
         val score = getScore()
@@ -24,6 +25,5 @@ class Dealer(override var hands: Hands, override val name: String = DEALER_NAME)
     companion object {
         private const val DEALER_NAME = "딜러"
         const val DEALER_DRAW_THRESHOLD = 16
-        private const val INIT_VISIBLE_CARD_COUNT = 1
     }
 }

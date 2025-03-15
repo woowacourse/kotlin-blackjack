@@ -1,10 +1,13 @@
-package blackjack.domain.model
+package blackjack.domain.model.playing
 
-abstract class Participant {
+import blackjack.domain.model.Card
+import blackjack.domain.model.HandState
+import blackjack.domain.model.Hands
+import blackjack.domain.model.MatchResult
+
+abstract class PlayingParticipant {
     abstract val name: String
     protected abstract var hands: Hands
-
-    abstract fun showInitCards(): List<Card>
 
     abstract fun getHandsState(): HandState
 
@@ -18,11 +21,11 @@ abstract class Participant {
         hands = hands.nextHand(card)
     }
 
-    fun match(otherParticipant: Participant): MatchResult {
+    fun match(otherPlayingParticipant: PlayingParticipant): MatchResult {
         val handState = getHandsState()
-        val otherHandState = otherParticipant.getHandsState()
+        val otherHandState = otherPlayingParticipant.getHandsState()
         val score = getScore()
-        val otherScore = otherParticipant.getScore()
+        val otherScore = otherPlayingParticipant.getScore()
         return when {
             handState == HandState.BLACKJACK && otherHandState == HandState.HIT -> MatchResult.DRAW
             handState == HandState.BLACKJACK -> MatchResult.BLACKJACK

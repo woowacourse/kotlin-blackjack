@@ -1,14 +1,13 @@
 package blackjack.controller
 
-import blackjack.domain.model.Bets
-import blackjack.domain.model.Dealer
+import InitialParticipants
 import blackjack.domain.model.Deck
-import blackjack.domain.model.HandState
-import blackjack.domain.model.Hands
-import blackjack.domain.model.Hands.Companion.START_CARD_COUNT
-import blackjack.domain.model.Participant
-import blackjack.domain.model.Participants
-import blackjack.domain.model.Player
+import blackjack.domain.model.Money
+import blackjack.domain.model.betting.BettingPlayer
+import blackjack.domain.model.betting.BettingPlayers
+import blackjack.domain.model.profit.ProfitParticipants
+import blackjack.domain.model.service.InitService
+import blackjack.domain.model.service.PlayingService
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -18,72 +17,47 @@ class GameController(
 ) {
     fun run() {
         val deck = Deck()
-        val participants = initialParticipants(deck)
-        val bets = participants.bets { name -> inputView.readPlayerBetAmount(name) }
-        printInitialDeal(participants)
-        participants.players.forEach { player -> playHand(player, deck) }
-        processDealerHits(deck, participants.dealer)
-        announceParticipantsResult(participants)
-        announceResult(participants.dealer, bets)
+        val playerNames = inputView.readPlayerNames()
+        val initService = InitService(playerNames, deck)
+        val bettingPlayers = initBettingPlayers(playerNames)
+        val initialParticipants = initParticipants(initService)
+        val playingService = PlayingService(initialParticipants.toPlayingParticipants(), deck)
+        playHand(playingService)
+        announceResult(playingService.calculateProfitPlayers(bettingPlayers))
     }
 
-    private fun initialParticipants(deck: Deck): Participants {
-        val playersNames = inputView.readPlayerNames()
-        val players =
-            playersNames.map { name ->
-                Player(Hands(List(START_CARD_COUNT) { deck.draw() }), name)
+    private fun initBettingPlayers(playerNames: Set<String>): BettingPlayers {
+        val bettingPlayers =
+            playerNames.map { name ->
+                val money = retryEvent { Money(inputView.readPlayerBetAmount(name)) }
+                BettingPlayer(name, money)
             }
-        val dealer = Dealer(Hands(List(START_CARD_COUNT) { deck.draw() }))
-        return Participants(dealer, players)
+        return BettingPlayers(bettingPlayers)
     }
 
-    private fun printInitialDeal(participants: Participants) {
-        outputView.printInitialDeals(participants)
-        outputView.printParticipantsStatus(participants)
+    private fun initParticipants(initService: InitService): InitialParticipants {
+        val initialParticipants = initService.initPlayingParticipants()
+        outputView.printInitialDeals(initialParticipants)
+        outputView.printParticipantsStatus(initialParticipants)
+        return initialParticipants
     }
 
-    private fun playHand(
-        participant: Participant,
-        deck: Deck,
-    ) {
-        if (participant.getHandsState() != HandState.HIT) return
-        val choice = retryEvent { inputView.readPlayerAction(participant) }
-        if (HandState.STAY == choice) {
-            printStatusOnNoHit(participant)
-            return
-        }
-        participant.acceptCard(deck.draw())
-        outputView.printPlayerStatus(participant)
-        playHand(participant, deck)
-    }
-
-    private fun printStatusOnNoHit(player: Participant) {
-        if (player.isStartCardCount()) outputView.printPlayerStatus(player)
-    }
-
-    private fun processDealerHits(
-        deck: Deck,
-        dealer: Dealer,
-    ) {
-        while (dealer.isHit()) {
+    private fun playHand(playingService: PlayingService) {
+        playingService.playPlayers(
+            retryEvent { inputView::readPlayerAction },
+            outputView::printPlayerStatus,
+            outputView::printPlayerStatus,
+        )
+        playingService.playDealer {
             outputView.printDealerHitsState()
-            dealer.acceptCard(deck.draw())
         }
+        outputView.printParticipantsResult(playingService.playingParticipants)
     }
 
-    private fun announceParticipantsResult(participants: Participants) {
-        outputView.printParticipantsResult(participants)
-    }
-
-    private fun announceResult(
-        dealer: Dealer,
-        bets: Bets,
-    ) {
+    private fun announceResult(profitParticipants: ProfitParticipants) {
         outputView.printResultsHeader()
-        val playersProfit = bets.getProfits(dealer)
-        val dealerProfit = playersProfit.calculateTotalLosses(dealer.name)
-        outputView.printDealerProfit(dealerProfit)
-        outputView.printPlayersProfit(playersProfit)
+        outputView.printDealerProfit(profitParticipants.profitDealer)
+        outputView.printPlayersProfit(profitParticipants.profitPlayer)
     }
 
     private fun <T> retryEvent(event: () -> T): T {

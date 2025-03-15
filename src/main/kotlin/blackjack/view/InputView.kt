@@ -1,13 +1,13 @@
 package blackjack.view
 
 import blackjack.domain.model.HandState
-import blackjack.domain.model.Participant
+import blackjack.domain.model.playing.PlayingParticipant
 
 class InputView {
-    fun readPlayerNames(): List<String> {
+    fun readPlayerNames(): Set<String> {
         println(MESSAGE_ENTER_PLAYER_NAMES)
         val input: String = readln()
-        return input.split(PLAYER_NAMES_DELIMITER).map { name: String -> name.trim() }
+        return input.split(PLAYER_NAMES_DELIMITER).map { name: String -> name.trim() }.toSet()
     }
 
     fun readPlayerBetAmount(playerName: String): Double {
@@ -15,7 +15,7 @@ class InputView {
         return requireNotNull(readln().toDoubleOrNull())
     }
 
-    fun readPlayerAction(player: Participant): HandState {
+    fun readPlayerAction(player: PlayingParticipant): HandState {
         println(MESSAGE_ENTER_PLAYER_YES_OR_NO.format(player.name))
         val input: String = readln()
         require(input == CHOICE_YES || input == CHOICE_NO) { ERROR_INVALID_CHOICE }

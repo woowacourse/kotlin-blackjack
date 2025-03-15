@@ -5,6 +5,8 @@ class Hands(private val _cards: List<Card>) {
 
     val cards get() = _cards.map { it.copy() }
 
+    val size get() = _cards.size
+
     fun extractCards(count: Int): List<Card> = cards.take(count)
 
     fun nextHand(card: Card) = Hands(cards + card)
