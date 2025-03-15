@@ -9,21 +9,18 @@ data class Card private constructor(
         require(suit in Suit.entries) { ERROR_INVALID_SUIT }
     }
 
-    fun isAce(): Boolean {
-        return cardNumber == CardNumber.ACE
-    }
+    fun isAce(): Boolean = cardNumber == CardNumber.ACE
 
     companion object {
         val standardCards: Map<Pair<CardNumber, Suit>, Card> =
-            Suit.entries.flatMap { suit -> CardNumber.entries.map { cardNumber -> Card(cardNumber, suit) } }
+            Suit.entries
+                .flatMap { suit -> CardNumber.entries.map { cardNumber -> Card(cardNumber, suit) } }
                 .associateBy { it.cardNumber to it.suit }
 
         fun of(
             cardNumber: CardNumber,
             suit: Suit,
-        ): Card {
-            return standardCards[cardNumber to suit] ?: throw IllegalArgumentException(INVALID_CARD_QUERY)
-        }
+        ): Card = standardCards[cardNumber to suit] ?: throw IllegalArgumentException(INVALID_CARD_QUERY)
 
         private const val MINIMUM_CARD_NUMBER = 1
         private const val MAXIMUM_CARD_NUMBER = 13

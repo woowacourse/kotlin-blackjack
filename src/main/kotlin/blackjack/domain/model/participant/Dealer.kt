@@ -11,23 +11,13 @@ class Dealer(
     override fun showFirstHand(): List<Card> = listOf(handCards().first())
 
     override fun compareTo(opponent: Participant): GameResult {
-        val myScore: Int = hand.getScore()
-        val opponentScore: Int = opponent.hand.getScore()
-
-        return when {
-            hand.isBlackJack() && opponent.hand.isNotBlackJack() -> GameResult.BLACKJACK_WIN
-            hand.isBlackJack() && opponent.hand.isBlackJack() -> GameResult.DRAW
-            opponent.hand.isBust() -> GameResult.WIN
-            hand.isBust() -> GameResult.LOSE
-            myScore > opponentScore -> GameResult.WIN
-            myScore == opponentScore -> GameResult.DRAW
-            else -> GameResult.LOSE
+        if (hand.isBust() && opponent.hand.isNotBust()) {
+            return GameResult.LOSE
         }
+        return super.compareTo(opponent)
     }
 
-    override fun isDrawable(): Boolean {
-        return !hand.isMoreThan(DEALER_DRAW_CONDITION)
-    }
+    override fun isDrawable(): Boolean = !hand.isMoreThan(DEALER_DRAW_CONDITION)
 
     companion object {
         private const val DEFAULT_NAME = "딜러"

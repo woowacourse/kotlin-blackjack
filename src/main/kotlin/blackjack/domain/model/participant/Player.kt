@@ -11,18 +11,10 @@ class Player(
     override fun showFirstHand(): List<Card> = handCards()
 
     override fun compareTo(opponent: Participant): GameResult {
-        val myScore: Int = hand.getScore()
-        val opponentScore: Int = opponent.hand.getScore()
-
-        return when {
-            hand.isBlackJack() && opponent.hand.isNotBlackJack() -> GameResult.BLACKJACK_WIN
-            hand.isBlackJack() && opponent.hand.isBlackJack() -> GameResult.DRAW
-            hand.isBust() -> GameResult.LOSE
-            opponent.hand.isBust() -> GameResult.WIN
-            myScore > opponentScore -> GameResult.WIN
-            myScore == opponentScore -> GameResult.DRAW
-            else -> GameResult.LOSE
+        if (hand.isBust()) {
+            return GameResult.LOSE
         }
+        return super.compareTo(opponent)
     }
 
     override fun isDrawable(): Boolean = !hand.isBust()

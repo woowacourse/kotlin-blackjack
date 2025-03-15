@@ -14,9 +14,20 @@ abstract class Participant(
 
     fun handCards(): List<Card> = hand.cards
 
-    abstract fun showFirstHand(): List<Card>
+    open fun compareTo(opponent: Participant): GameResult {
+        val myScore: Int = hand.getScore()
+        val opponentScore: Int = opponent.hand.getScore()
 
-    abstract fun compareTo(opponent: Participant): GameResult
+        return when {
+            hand.isBlackJack() && opponent.hand.isNotBlackJack() -> GameResult.BLACKJACK_WIN
+            hand.isBlackJack() && opponent.hand.isBlackJack() -> GameResult.DRAW
+            opponent.hand.isBust() || myScore > opponentScore -> GameResult.WIN
+            myScore == opponentScore -> GameResult.DRAW
+            else -> GameResult.LOSE
+        }
+    }
+
+    abstract fun showFirstHand(): List<Card>
 
     abstract fun isDrawable(): Boolean
 }

@@ -9,21 +9,15 @@ class Hand {
         _cards += card
     }
 
-    fun isBust(): Boolean {
-        return getScore() > BLACK_JACK_NUMBER
-    }
+    fun isBust(): Boolean = getScore() > BLACK_JACK_NUMBER
 
-    fun isBlackJack(): Boolean {
-        return cards.size == 2 && getScore() == BLACK_JACK_NUMBER
-    }
+    fun isNotBust(): Boolean = !isBust()
 
-    fun isNotBlackJack(): Boolean {
-        return !isBlackJack()
-    }
+    fun isBlackJack(): Boolean = cards.size == 2 && getScore() == BLACK_JACK_NUMBER
 
-    fun isMoreThan(score: Int): Boolean {
-        return getScore() > score
-    }
+    fun isNotBlackJack(): Boolean = !isBlackJack()
+
+    fun isMoreThan(score: Int): Boolean = getScore() > score
 
     fun getScore(): Int {
         val cardValues: Int = cards.sumOf { it.cardNumber.value }
@@ -35,9 +29,7 @@ class Hand {
     }
 
     companion object {
-        fun List<Card>.deepCopy(): List<Card> {
-            return map(Card::copy)
-        }
+        fun List<Card>.deepCopy(): List<Card> = map(Card::copy)
 
         private const val ACE_EXTRA_SCORE = 10
         private const val BLACK_JACK_NUMBER = 21
