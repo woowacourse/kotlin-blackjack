@@ -1,6 +1,7 @@
 package blackjack.model.domain.participant
 
 import blackjack.model.domain.GameResult
+import blackjack.model.domain.card.Card
 import blackjack.model.domain.card.Hand
 import blackjack.model.domain.card.Status
 
@@ -9,6 +10,10 @@ data class Player(override val name: String) : Participants() {
 
     override fun canHit(): Boolean {
         return hand.status == Status.BUST
+    }
+
+    override fun showInitCards(): List<Card> {
+        return hand.cards
     }
 
     fun compareScores(

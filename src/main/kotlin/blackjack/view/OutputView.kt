@@ -14,18 +14,12 @@ class OutputView {
     ) {
         val playerName = players.joinToString { it.name }
         println(OUTPUT_DISTRIBUTE_CARD.format(dealer.name, playerName))
-        printDealerInitCard(dealer)
-        printPlayerInitCard(players)
-    }
-
-    private fun printDealerInitCard(dealer: Dealer) {
-        val firstCard = listOf(dealer.cardDeck.first())
-        println(PLAYER_STATUS.format(dealer.name, displayCard(firstCard)))
+        printPlayerInitCard(listOf(dealer) + players)
     }
 
     private fun printPlayerInitCard(players: List<Participants>) {
         players.forEach { player ->
-            printCardStatus(player)
+            println(PLAYER_STATUS.format(player.name + CARD, displayCard(player.showInitCards())))
         }
         println()
     }
