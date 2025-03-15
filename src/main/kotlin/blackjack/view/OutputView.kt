@@ -45,9 +45,9 @@ class OutputView : BlackjackOutput {
         println(HANDS_STATUS_MESSAGE_FORMAT.format(player.name, getHandsStatus(player.cards)))
     }
 
-    override fun printDealerHandStatus(dealerCondition: Boolean) {
+    override fun printDealerHandStatus(isDraw: Boolean) {
         printContentSeparator()
-        if (dealerCondition) {
+        if (isDraw) {
             println(DEALER_HIT_MESSAGE)
         } else {
             println(DEALER_STAY_MESSAGE)

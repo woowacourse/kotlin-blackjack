@@ -40,7 +40,15 @@ class GameManager(
         return false
     }
 
-    fun drawCard(participant: Participant) {
+    fun isDrawCardBasedOnDealer(): Boolean {
+        if (dealer.isAvailDrawCard()) {
+            drawCard(dealer)
+            return true
+        }
+        return false
+    }
+
+    private fun drawCard(participant: Participant) {
         participant.addCard(deck.draw())
     }
 

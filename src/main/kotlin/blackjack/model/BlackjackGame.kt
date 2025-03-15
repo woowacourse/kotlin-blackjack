@@ -49,7 +49,7 @@ class BlackjackGame(
     ) {
         if (!dealer.isBlackjack()) {
             playersDrawCards(players, gameManager)
-            dealerDrawCards(dealer, gameManager)
+            dealerDrawCards(gameManager)
         }
     }
 
@@ -76,12 +76,8 @@ class BlackjackGame(
         }
     }
 
-    private fun dealerDrawCards(
-        dealer: Dealer,
-        gameManager: GameManager,
-    ) {
-        val isDraw = dealer.isAvailDrawCard()
-        if (isDraw) gameManager.drawCard(dealer)
+    private fun dealerDrawCards(gameManager: GameManager) {
+        val isDraw = gameManager.isDrawCardBasedOnDealer()
         outputView.printDealerHandStatus(isDraw)
     }
 

@@ -14,7 +14,7 @@ interface BlackjackOutput {
 
     fun printPlayerHands(player: Player)
 
-    fun printDealerHandStatus(dealerCondition: Boolean)
+    fun printDealerHandStatus(isDraw: Boolean)
 
     fun printFinalHandStatus(
         dealer: Dealer,
