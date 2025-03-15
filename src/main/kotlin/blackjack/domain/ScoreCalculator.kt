@@ -12,7 +12,7 @@ object ScoreCalculator {
     }
 
     private fun getCardValue(card: Card): Int {
-        if (card.number == CardNumber.ACE) return GameRule.ACE_OTHER_SCORE
+        if (card.number == CardNumber.ACE) return ACE_OTHER_SCORE
         return card.number.value
     }
 
@@ -21,13 +21,16 @@ object ScoreCalculator {
         values: List<Int>,
     ): Int {
         var total = sum
-        val aceCount = values.count { it == GameRule.ACE_OTHER_SCORE }
+        val aceCount = values.count { it == ACE_OTHER_SCORE }
 
         repeat(aceCount) {
             if (total > GameRule.BLACKJACK_SCORE) {
-                total -= GameRule.ACE_BASE_SCORE
+                total -= ACE_BASE_SCORE
             }
         }
         return total
     }
+
+    private const val ACE_BASE_SCORE = 10
+    private const val ACE_OTHER_SCORE = 11
 }

@@ -17,7 +17,7 @@ abstract class Participant(initialHand: List<Card> = emptyList()) {
     }
 
     fun isBlackjack(): Boolean {
-        return score() == GameRule.BLACKJACK_SCORE && _hand.size == GameRule.FIRST_TURN_DRAW_AMOUNT
+        return score() == GameRule.BLACKJACK_SCORE && _hand.size == FIRST_TURN_DRAW_AMOUNT
     }
 
     fun isBust(): Boolean = score() > GameRule.BLACKJACK_SCORE
@@ -26,13 +26,18 @@ abstract class Participant(initialHand: List<Card> = emptyList()) {
 
     fun getDrawAmount(): Int {
         if (hand.isEmpty()) {
-            return GameRule.FIRST_TURN_DRAW_AMOUNT
+            return FIRST_TURN_DRAW_AMOUNT
         }
 
         if (canHit()) {
-            return GameRule.HIT_DRAW_AMOUNT
+            return HIT_DRAW_AMOUNT
         }
 
-        throw IllegalArgumentException("[ERROR] 카드를 뽑을 수 없습니다.")
+        return 0
+    }
+
+    companion object {
+        private const val FIRST_TURN_DRAW_AMOUNT = 2
+        private const val HIT_DRAW_AMOUNT = 1
     }
 }
