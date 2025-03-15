@@ -22,6 +22,10 @@ abstract class Participant {
         }
     }
 
+    fun hasBlackJack(): Boolean {
+        return cards.hasBlackJack(totalScore())
+    }
+
     abstract fun getInitialCards(): Set<TrumpCard>
 
     abstract fun canHit(): Boolean

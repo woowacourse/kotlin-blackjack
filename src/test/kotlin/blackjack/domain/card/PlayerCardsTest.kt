@@ -1,5 +1,6 @@
 package blackjack.domain.card
 
+import blackjack.fixture.blackJackCardFixture
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -30,6 +31,18 @@ class PlayerCardsTest {
         val newCard = cards + TrumpCard(Tier.ACE, Shape.DIA)
         val expected = newCard.hasAce()
 
+        assertEquals(expected, true)
+    }
+
+    @Test
+    fun `카드가 두 장이고 블랙잭이면 참을 반환한다`() {
+        var newCards = cards
+        blackJackCardFixture().forEach {
+            newCards += it
+        }
+        println(newCards.items)
+
+        val expected = newCards.hasBlackJack(21)
         assertEquals(expected, true)
     }
 }
