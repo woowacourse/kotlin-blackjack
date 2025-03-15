@@ -5,6 +5,7 @@ import blackjack.domain.card.Suit
 import blackjack.domain.card.TrumpCard
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Player
+import blackjack.domain.participant.PlayerState
 import blackjack.fixture.blackJackCardFixture
 import blackjack.fixture.bustTrumpCardFixture
 import blackjack.fixture.minCardFixture
@@ -21,7 +22,7 @@ class PlayerTest {
     @BeforeEach
     fun setUp() {
         dealer = Dealer()
-        player = Player("peto")
+        player = Player(PlayerState("", BettingAmount(1)))
     }
 
     @Test
