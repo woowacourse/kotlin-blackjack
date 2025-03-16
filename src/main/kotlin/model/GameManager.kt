@@ -30,14 +30,12 @@ class GameManager(private val cards: Cards) {
     }
 
     fun playersPlay(
-        showCards: (Player) -> Unit,
+        showCards: (Player) -> Unit
     ) {
-        players.forEach { player ->
-            player.playTurn(
-                getCard = { cards.drawCards(1) },
-                showCards = { showCards(player) },
-            )
-        }
+        players.playersToPlayTurn(
+            getCard = { cards.drawCards(1) },
+            showCards = showCards
+        )
     }
 
     fun dealerPlay() {
