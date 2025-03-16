@@ -6,7 +6,10 @@ import blackjack.domain.model.progress.BetAmount
 class Dealer(
     participantInfo: ParticipantInfo = ParticipantInfo(DEFAULT_NAME, BetAmount()),
 ) : GameParticipant(participantInfo = participantInfo) {
-    fun getFirstCard(): Card = handCards.getCardByIndex(0)
+    override val initCards: List<Card>
+        get() = cards.subList(0, 1)
+
+//    fun getFirstCard(): Card = handCards.getCardByIndex(0)
 
     constructor(cards: List<Card>) : this() {
         cards.forEach { card -> handCards.addCard(card) }

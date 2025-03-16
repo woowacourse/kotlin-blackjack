@@ -6,6 +6,9 @@ import blackjack.domain.model.progress.BetAmount
 class Player(
     playerInfo: ParticipantInfo = ParticipantInfo(DEFAULT_NAME, BetAmount()),
 ) : GameParticipant(participantInfo = playerInfo) {
+    override val initCards: List<Card>
+        get() = cards.subList(0, 2)
+
     override fun isDrawFinish(): Boolean = this.cardStatus == CardStatus.BUST
 
     constructor(name: String = DEFAULT_NAME, cards: List<Card> = emptyList()) : this(ParticipantInfo(name, BetAmount())) {

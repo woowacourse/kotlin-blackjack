@@ -25,6 +25,8 @@ abstract class GameParticipant(
     val cards: List<Card>
         get() = handCards.cards.toList()
 
+    abstract val initCards: List<Card>
+
     protected fun calculateWinLoss(rival: GameParticipant): WinLoss =
         when {
             (cardStatus == CardStatus.BLACKJACK) && (rival.cardStatus != CardStatus.BLACKJACK) -> WinLoss.WIN

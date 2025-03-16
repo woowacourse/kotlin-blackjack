@@ -22,7 +22,7 @@ class Casino(
         val participants: List<GameParticipant> = listOf(dealer) + players
         initDistributeCard(participants)
         outputView.showDistributeCardMessage(players)
-        outputParticipantCardsInfo(dealer, players)
+        outputView.showInitCardInfo(participants)
         runPlayersDrawPhase(players)
         runDealerDrawPhase(dealer)
         outputView.showCardsResult(participants)
@@ -52,14 +52,6 @@ class Casino(
                 participant.drawCardFromDeck(deck)
             }
         }
-    }
-
-    private fun outputParticipantCardsInfo(
-        dealer: Dealer,
-        players: List<Player>,
-    ) {
-        outputView.showDealerFirstCardsInfo(dealer)
-        outputView.showPlayersCardsInfo(players)
     }
 
     private fun runPlayersDrawPhase(players: List<Player>) {
