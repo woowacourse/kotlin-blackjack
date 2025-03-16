@@ -13,4 +13,17 @@ class DeckTest {
 
         assertThat(actual.size).isEqualTo(expectedSize)
     }
+
+    @Test
+    fun `원하는 카드로 덱을 구성할 수 있다`() {
+        val deck =
+            Deck {
+                listOf(SPADE_ACE, CLUB_KING)
+            }
+        val actualCards = deck.pop(2)
+
+        val expectedCards = listOf(SPADE_ACE, CLUB_KING)
+
+        assertThat(actualCards).isEqualTo(expectedCards)
+    }
 }
