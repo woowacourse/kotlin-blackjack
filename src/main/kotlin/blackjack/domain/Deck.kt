@@ -7,6 +7,4 @@ class Deck(cards: List<Card>) {
         require(deck.isNotEmpty()) { "덱이 비어 있습니다" }
         return deck.removeFirst()
     }
-
-    fun getSize() = deck.size
 }
