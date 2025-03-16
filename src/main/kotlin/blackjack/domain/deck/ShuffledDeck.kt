@@ -30,19 +30,19 @@ class ShuffledDeck : Deck {
         }
     }
 
-    override fun makeCards(): Deque<TrumpCard> {
-        val shuffledCards =
+    override fun makeCards(): Deque<TrumpCard> = ArrayDeque(SHUFFLED_DECK)
+
+    companion object {
+        private const val MAX_DECK_COUNT = 8
+        private const val ERROR_EMPTY_DECK_MESSAGE = "[ERROR] 더 이상 뽑을 카드가 없습니다."
+
+        private val SHUFFLED_DECK: List<TrumpCard> by lazy {
             Shape.entries
                 .flatMap { shape ->
                     CardTier.entries.map { tier ->
                         TrumpCard(tier, shape)
                     }
                 }.shuffled()
-        return ArrayDeque(shuffledCards)
-    }
-
-    companion object {
-        const val MAX_DECK_COUNT = 8
-        const val ERROR_EMPTY_DECK_MESSAGE = "[ERROR] 더 이상 뽑을 카드가 없습니다."
+        }
     }
 }
