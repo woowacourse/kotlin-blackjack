@@ -4,8 +4,8 @@ package blackjack.domain
 value class Score(
     val value: Int,
 ) {
-    val isBlackjackScore: Boolean get() = value == 21
-    val isBustedScore: Boolean get() = value > 21
+    val isBlackjackScore: Boolean get() = value == SCORE_BLACKJACK
+    val isBustedScore: Boolean get() = value > SCORE_BLACKJACK
 
     operator fun compareTo(other: Score): Int = value.compareTo(other.value)
 
