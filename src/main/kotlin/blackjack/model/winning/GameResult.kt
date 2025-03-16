@@ -8,11 +8,11 @@ class GameResult(
 ) {
     @JvmInline
     value class PlayersResult(
-        val value: Map<Name, WinningState>,
+        val value: Map<Name, WinningState> = emptyMap(),
     )
 
     @JvmInline
     value class DealerResult(
-        val value: Map<WinningState, WinningCount>,
+        val value: Map<WinningState, WinningCount> = emptyMap(),
     )
 }

@@ -3,8 +3,8 @@ package blackjack.domain.participant
 import blackjack.domain.SIX_HEART
 import blackjack.domain.TEN_HEART
 import blackjack.model.card.Card
-import blackjack.model.card.CardRank
-import blackjack.model.card.CardSuit
+import blackjack.model.card.CardCount
+import blackjack.model.card.CardDeck
 import blackjack.model.hand.Hand
 import blackjack.model.participant.Money
 import blackjack.model.participant.Name
@@ -23,7 +23,7 @@ class ParticipantTest {
     }
 
     @Test
-    fun `Participant가 정상적으로 생성된다`() {
+    fun `"공백"이라는 이름, 10000원, 빈 패를 가진 Participant가 정상적으로 생성된다`() {
         // then
         assertEquals("공백", participant.name.value)
         assertEquals(Money(10_000.0), participant.money)
@@ -42,19 +42,17 @@ class ParticipantTest {
     @Test
     fun `payMoney 호출 시 돈이 차감된다`() {
         // when
-        val paidMoney = participant.payMoney(Money(3000.0))
+        participant.payMoney(Money(3000.0))
 
         // then
         assertEquals(Money(7000.0), participant.money)
-        assertEquals(Money(3000.0), paidMoney)
     }
 
     @Test
     fun `receiveCards 호출 시 처음에는 2장, 이후에는 1장을 받는다`() {
         // given
-        val cardDeck = listOf(Card(CardRank.ACE, CardSuit.HEART), Card(CardRank.TEN, CardSuit.SPADE), Card(CardRank.KING, CardSuit.CLUB))
-        var drawIndex = 0
-        val drawCards: (Int) -> List<Card> = { count -> cardDeck.subList(drawIndex, drawIndex + count).also { drawIndex += count } }
+        val cardDeck = CardDeck()
+        val drawCards: (CardCount) -> List<Card> = { cardDeck.draw(it) }
 
         // when
         participant.receiveCards(drawCards)

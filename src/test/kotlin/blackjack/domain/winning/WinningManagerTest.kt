@@ -1,4 +1,4 @@
-package blackjack.domain.game
+package blackjack.domain.winning
 
 import blackjack.domain.ACE_HEART
 import blackjack.domain.SEVEN_HEART

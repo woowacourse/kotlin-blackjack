@@ -7,6 +7,7 @@ import blackjack.model.participant.Money
 import blackjack.model.participant.Name
 import blackjack.model.participant.Participants
 import blackjack.model.participant.Players
+import blackjack.model.winning.GameResult
 import blackjack.model.winning.WinningState
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
@@ -15,7 +16,7 @@ import org.junit.jupiter.api.assertThrows
 
 class BettingMachineTest {
     @Test
-    fun `베팅 금액이 0 이하이면 예외 발생`() {
+    fun `베팅 금액이 0 이하이면 예외를 발생시킨다`() {
         // given
         val bettingMachine = BettingMachine()
         val players = Players.from("시아", "공백")
@@ -23,12 +24,12 @@ class BettingMachineTest {
 
         // when & then
         assertThrows<IllegalArgumentException> {
-            bettingMachine.getPlayersMoney(players, getBettingMoney)
+            bettingMachine.betMoney(players, getBettingMoney)
         }
     }
 
     @Test
-    fun `정상적인 베팅 금액이 입력되면 정상적으로 진행된다`() {
+    fun `0원을 초과하고 플레이어가 가진 잔액보다 적은 돈을 베팅하면 정상적으로 진행된다`() {
         // given
         val bettingMachine = BettingMachine()
         val players = Players.from("시아", "공백")
@@ -36,7 +37,7 @@ class BettingMachineTest {
 
         // when & then
         assertDoesNotThrow {
-            bettingMachine.getPlayersMoney(players, getBettingMoney)
+            bettingMachine.betMoney(players, getBettingMoney)
         }
     }
 
@@ -60,20 +61,22 @@ class BettingMachineTest {
 
         val bettingMachine = BettingMachine(bettingTable)
 
-        val winningResult =
-            WinningResult(
-                dealerResult = mapOf(),
-                playersResults =
-                    mapOf(
-                        Name("공백") to WinningState.WIN_BY_BLACKJACK,
-                        Name("비비") to WinningState.WIN_DEFAULT,
-                        Name("메다") to WinningState.PUSH,
-                        Name("제이") to WinningState.LOSE,
+        val gameResult =
+            GameResult(
+                playersResult =
+                    GameResult.PlayersResult(
+                        mapOf(
+                            Name("공백") to WinningState.WIN_BY_BLACKJACK,
+                            Name("비비") to WinningState.WIN_DEFAULT,
+                            Name("메다") to WinningState.PUSH,
+                            Name("제이") to WinningState.LOSE,
+                        ),
                     ),
+                dealerResult = GameResult.DealerResult(),
             )
 
         // when
-        val resultTable = bettingMachine.result(winningResult, participants)
+        val resultTable = bettingMachine.result(gameResult, participants)
 
         // then
         assertEquals(money1.times(1.5), resultTable.value[Name("공백")])

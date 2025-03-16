@@ -4,6 +4,7 @@ import blackjack.domain.ACE_HEART
 import blackjack.domain.SIX_HEART
 import blackjack.domain.TEN_HEART
 import blackjack.model.card.Card
+import blackjack.model.card.CardCount
 import blackjack.model.card.CardRank
 import blackjack.model.card.CardSuit
 import blackjack.model.participant.Dealer
@@ -72,6 +73,32 @@ class DealerTest {
         dealer.addAll(listOf(Card(CardRank.TWO, CardSuit.CLUB)))
 
         // then
-        assertEquals(1, dealer.additionalDrawCount)
+        assertEquals(CardCount(1), dealer.additionalDrawCount)
+    }
+
+    @Test
+    fun `딜러의 점수가 16 이하일 때 카드를 받는다`() {
+        // given
+        dealer.addAll(listOf(SIX_HEART))
+        val draw: (CardCount) -> List<Card> = { listOf(SIX_HEART) }
+
+        // when
+        dealer.draw(draw)
+
+        // then
+        assertEquals(true, dealer.score.value > 16)
+    }
+
+    @Test
+    fun `딜러의 점수가 17 이상이면 카드를 받지 않는다`() {
+        // given
+        dealer.addAll(listOf(TEN_HEART, ACE_HEART))
+        val draw: (CardCount) -> List<Card> = { listOf(SIX_HEART) }
+
+        // when
+        dealer.draw(draw)
+
+        // then
+        assertEquals(2, dealer.cards.size)
     }
 }

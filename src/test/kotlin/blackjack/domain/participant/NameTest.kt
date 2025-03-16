@@ -7,7 +7,7 @@ import org.junit.jupiter.api.assertThrows
 
 class NameTest {
     @Test
-    fun `닉네임이 공백이면 오류를 반환한다`() {
+    fun `닉네임이 공백이면 예외가 발생한다`() {
         // given & when & then
         assertThrows<IllegalArgumentException> {
             Name("")
