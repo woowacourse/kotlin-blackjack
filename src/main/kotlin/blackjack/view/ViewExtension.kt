@@ -10,10 +10,10 @@ import java.text.DecimalFormat
 
 fun Profit.formatAmount(): String {
     val formatter = DecimalFormat("#.##")
-    return formatter.format(this)
+    return formatter.format(this.value)
 }
 
-fun Person.isBlackJackString(): String = if (this.gameState == PersonState.BLACKJACK) "BLACKJACK!" else "${this.score()}"
+fun Person.isBlackJackString(): String = if (this.gameState == PersonState.BLACKJACK) "BLACKJACK!" else "${this.score().value}"
 
 fun List<Card>.toUiString(): String = joinToString(", ") { it.toUiString() }
 

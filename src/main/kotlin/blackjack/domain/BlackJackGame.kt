@@ -4,64 +4,114 @@ import blackjack.domain.card.Deck
 import blackjack.domain.person.Dealer
 import blackjack.domain.person.Player
 import blackjack.domain.result.GameResult
+import blackjack.view.BlackJackInputView
+import blackjack.view.BlackJackOutputView
 
 class BlackJackGame(
-    val dealer: Dealer,
-    players: List<Player>,
-    private val deck: Deck = Deck(),
+    private val inputView: BlackJackInputView,
+    private val outputView: BlackJackOutputView,
 ) {
-    val players = players.toList()
+    private lateinit var deck: Deck
+    private lateinit var dealer: Dealer
+    private lateinit var players: List<Player>
 
-    fun dealCards() {
+    fun play() {
+        prepareGame()
+        runGame()
+        finishGame()
+    }
+
+    private fun prepareGame() {
+        deck = Deck()
+        dealer = Dealer()
+        players = generatePlayers()
+    }
+
+    private fun runGame() {
+        dealCards()
+        playPlayersTurns()
+        playDealerTurns()
+    }
+
+    private fun finishGame() {
+        showPersonFinalCardStatus()
+        showGameResult()
+    }
+
+    private fun generatePlayers(): List<Player> {
+        val names = readPlayerNames()
+        return names.map { name ->
+            val betAmount = readPlayerBetAmount(name)
+            Player(name, betAmount)
+        }
+    }
+
+    private fun dealCards() {
         repeat(FIRST_TURN_DRAW_AMOUNT) {
             dealer.draw(deck)
             players.forEach { player -> player.draw(deck) }
         }
+
+        outputView.printInitialDrawMessage(dealer, players)
     }
 
-    fun playPlayersTurns(
-        getIsHit: (String) -> Boolean,
-        printDrawStatus: (Player) -> Unit,
-    ) {
-        players.forEach { player ->
-            playPlayerTurns(player, getIsHit, printDrawStatus)
-        }
+    private fun playPlayersTurns() {
+        players.forEach { player -> playPlayerTurns(player) }
     }
 
-    fun playDealerTurns(printDealerDrawMessage: () -> Unit) {
+    private fun playDealerTurns() {
         while (dealer.isDrawable()) {
-            printDealerDrawMessage()
+            outputView.printDealerDrawNotice()
             dealer.draw(deck)
         }
     }
 
-    fun gameResult(): GameResult {
-        return GameResult(dealer, players)
+    private fun showPersonFinalCardStatus() {
+        outputView.printPersonResult(dealer)
+        players.forEach { player -> outputView.printPersonResult(player) }
     }
 
-    private fun playPlayerTurns(
-        player: Player,
-        getIsHit: (String) -> Boolean,
-        printDrawStatus: (Player) -> Unit,
-    ) {
+    private fun showGameResult() {
+        val gameResult = GameResult(dealer, players)
+        outputView.printGameResult(gameResult)
+    }
+
+    private fun readPlayerNames(): List<String> =
+        retryWhenException {
+            inputView.getNames()
+        }
+
+    private fun readPlayerBetAmount(name: String): BetAmount =
+        retryWhenException {
+            BetAmount(inputView.getBetAmount(name))
+        }
+
+    private fun playPlayerTurns(player: Player) {
         while (player.isDrawable()) {
-            playPlayerTurn(player, getIsHit(player.name), printDrawStatus)
+            playPlayerTurn(player)
         }
     }
 
-    private fun playPlayerTurn(
-        player: Player,
-        isHit: Boolean,
-        printDrawStatus: (Player) -> Unit,
-    ) {
-        if (isHit) {
+    private fun playPlayerTurn(player: Player) {
+        if (isHit(player.name)) {
             player.draw(deck)
-            printDrawStatus(player)
+            outputView.printPlayerDrawStatus(player)
             return
         }
 
         player.changeToStay()
     }
+
+    private fun isHit(name: String): Boolean =
+        retryWhenException {
+            inputView.getIsHit(name)
+        }
+
+    private fun <T> retryWhenException(action: () -> T) =
+        blackjack.utils.retryWhenException(
+            action = action,
+            onFailure = { e -> outputView.printMessage(e.message) },
+        )
 
     companion object {
         private const val FIRST_TURN_DRAW_AMOUNT = 2
