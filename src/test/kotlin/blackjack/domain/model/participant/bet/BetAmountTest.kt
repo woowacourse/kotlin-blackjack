@@ -1,6 +1,5 @@
-package blackjack.domain.model.progress
+package blackjack.domain.model.participant.bet
 
-import blackjack.domain.model.participant.bet.BetAmount
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
