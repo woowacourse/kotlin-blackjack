@@ -14,7 +14,7 @@ class Hand(cards: List<Card>) {
 
     fun sum(): Int {
         val sum = _cards.sumOf { it.denomination.value }
-        if (containsAce() && sum == DEFAULT_ACE_AND_TEN_SCORE) {
+        if (containsAce() && sum + ACE_ADDITIONAL_SCORE <= BLACKJACK_SCORE) {
             return sum + ACE_ADDITIONAL_SCORE
         }
         return sum
@@ -23,15 +23,14 @@ class Hand(cards: List<Card>) {
     fun isBust(): Boolean = sum() > BLACKJACK_SCORE
 
     fun isBlackjack(): Boolean {
-        return containsAce() && cards.size == BLACKJACK_SIZE && sum() == BLACKJACK_SCORE
+        return containsAce() && _cards.size == BLACKJACK_SIZE && sum() == BLACKJACK_SCORE
     }
 
-    private fun containsAce(): Boolean = cards.any { it.denomination == Denomination.ACE }
+    private fun containsAce(): Boolean = _cards.any { it.denomination == Denomination.ACE }
 
     companion object {
         private const val BLACKJACK_SCORE = 21
         private const val BLACKJACK_SIZE = 2
-        private const val DEFAULT_ACE_AND_TEN_SCORE = 11
         private const val ACE_ADDITIONAL_SCORE = 10
     }
 }
