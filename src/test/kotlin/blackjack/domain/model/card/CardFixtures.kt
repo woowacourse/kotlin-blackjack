@@ -23,4 +23,5 @@ val HEART_QUEEN = Card.of(CardNumber.QUEEN, Suit.HEART)
 val HEART_KING = Card.of(CardNumber.KING, Suit.HEART)
 
 val DIAMOND_ACE = Card.of(CardNumber.ACE, Suit.DIAMOND)
+val DIAMOND_SEVEN = Card.of(CardNumber.SEVEN, Suit.DIAMOND)
 val DIAMOND_QUEEN = Card.of(CardNumber.QUEEN, Suit.DIAMOND)
