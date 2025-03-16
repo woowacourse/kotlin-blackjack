@@ -5,7 +5,6 @@ import blackjack.domain.card.Suit
 import blackjack.domain.card.TrumpCard
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Player
-import blackjack.view.model.DealerUiModel
 import blackjack.view.model.PlayerUiModel
 import java.lang.String.format
 
@@ -42,9 +41,9 @@ class OutputView {
         }
     }
 
-    fun printDealerResult(result: DealerUiModel) {
+    fun printDealerResult(profit: Double) {
         println(MESSAGE_OUTPUT_RESULT_GUIDE)
-        println(format(MESSAGE_OUTPUT_DEALER_RESULT, result.profit))
+        println(format(MESSAGE_OUTPUT_DEALER_RESULT, profit))
     }
 
     fun printPlayerResult(result: List<PlayerUiModel>) {
