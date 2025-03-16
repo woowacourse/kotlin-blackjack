@@ -3,8 +3,8 @@ package blackjack.model
 interface Participant {
     val items: Items
 
-    fun draw(cardDeck: CardDeck) {
-        items.hand.add(cardDeck.draw())
+    fun draw(card: Card) {
+        items.hand.add(card)
     }
 
     fun getHandSize(): Int = items.hand.getHandCount()

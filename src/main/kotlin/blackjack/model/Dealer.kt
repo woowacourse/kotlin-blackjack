@@ -11,7 +11,7 @@ class Dealer(
 ) : Participant {
     tailrec fun drawUntilFinished(cardDeck: CardDeck) {
         if (items.hand.score() > DEALER_DRAW_CRITERIA || items.hand.isBust()) return
-        draw(cardDeck)
+        draw(cardDeck.draw())
         drawUntilFinished(cardDeck)
     }
 

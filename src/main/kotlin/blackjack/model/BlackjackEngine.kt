@@ -22,7 +22,7 @@ class BlackjackEngine(
 
     fun prepareDealer(): Dealer = Dealer.makeDealer(makeFirstHand())
 
-    private fun drawPlayer(player: Player): Unit = player.draw(cardDeck)
+    private fun drawPlayer(player: Player): Unit = player.draw(cardDeck.draw())
 
     private fun drawDealer(dealer: Dealer): Unit = dealer.drawUntilFinished(cardDeck)
 
