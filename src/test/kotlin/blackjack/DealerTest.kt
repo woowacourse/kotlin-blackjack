@@ -1,10 +1,13 @@
 package blackjack
 
+import blackjack.domain.GameResult
 import blackjack.domain.ParticipantCards
 import blackjack.domain.card.CardTier
 import blackjack.domain.card.Shape
 import blackjack.domain.card.TrumpCard
 import blackjack.domain.participant.Dealer
+import blackjack.domain.participant.Participants
+import blackjack.domain.participant.Player
 import blackjack.fixture.trumpCardFixture
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -17,7 +20,7 @@ class DealerTest {
         fixture.forEach {
             dealer.receiveCard(it)
         }
-        assertThat(dealer.getAllCards()).containsExactly(*fixture.toTypedArray())
+        assertThat(dealer.cards.allCards).containsExactly(*fixture.toTypedArray())
     }
 
     @Test
@@ -116,5 +119,31 @@ class DealerTest {
 
         val expected = true
         assertThat(dealer.cards.isBlackJack()).isEqualTo(expected)
+    }
+
+    @Test
+    fun `딜러가 버스트되어도 플레이어가 버스트라면 딜러는 승리한다`() {
+        val participants = Participants(Dealer(ParticipantCards()), listOf(Player("bibi", ParticipantCards())))
+        participants.dealer.receiveCard(TrumpCard(CardTier.KING, Shape.DIA))
+        participants.dealer.receiveCard(TrumpCard(CardTier.KING, Shape.DIA))
+        participants.dealer.receiveCard(TrumpCard(CardTier.KING, Shape.DIA))
+
+        participants.players.first().receiveCard(TrumpCard(CardTier.KING, Shape.DIA))
+        participants.players.first().receiveCard(TrumpCard(CardTier.KING, Shape.DIA))
+        participants.players.first().receiveCard(TrumpCard(CardTier.KING, Shape.DIA))
+        assertThat(participants.dealer.getResult(participants.players.first())).isEqualTo(GameResult.WIN)
+    }
+
+    @Test
+    fun `딜러만 버스트이면 딜러는 진다`() {
+        val participants = Participants(Dealer(ParticipantCards()), listOf(Player("bibi", ParticipantCards())))
+        participants.dealer.receiveCard(TrumpCard(CardTier.KING, Shape.DIA))
+        participants.dealer.receiveCard(TrumpCard(CardTier.KING, Shape.DIA))
+        participants.dealer.receiveCard(TrumpCard(CardTier.KING, Shape.DIA))
+
+        repeat(2) {
+            participants.players.first().receiveCard(TrumpCard(CardTier.KING, Shape.DIA))
+        }
+        assertThat(participants.dealer.getResult(participants.players.first())).isEqualTo(GameResult.LOSE)
     }
 }

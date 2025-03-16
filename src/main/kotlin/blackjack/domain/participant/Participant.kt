@@ -15,11 +15,21 @@ abstract class Participant(
 
     fun takeCards(count: Int): List<TrumpCard> = cards.allCards.take(count)
 
-    fun getAllCards(): List<TrumpCard> = cards.allCards
+    fun getResult(other: Participant): GameResult {
+        val myScore = cards.finalScore()
+        val otherScore = other.cards.finalScore()
+
+        return when {
+            !cards.isBlackJack() && other.cards.isBlackJack() -> GameResult.LOSE
+            cards.isBlackJack() && !other.cards.isBlackJack() -> GameResult.BLACKJACK
+            other.cards.isBust() -> GameResult.WIN
+            this is Dealer && cards.isBust() && !other.cards.isBust() -> GameResult.LOSE
+            this !is Dealer && cards.isBust() -> GameResult.LOSE
+            myScore > otherScore -> GameResult.WIN
+            myScore < otherScore -> GameResult.LOSE
+            else -> GameResult.DRAW
+        }
+    }
 
     abstract fun isDrawable(): Boolean
-
-    abstract fun getResult(other: Participant): GameResult
-
-    abstract fun getProfit(gameResult: GameResult): Double
 }

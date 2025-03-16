@@ -1,11 +1,7 @@
 package blackjack.domain.participant
 
-import blackjack.domain.GameResult
 import blackjack.domain.ParticipantCards
 import blackjack.domain.card.TrumpCard
-import blackjack.domain.participant.Player.Companion.DRAW_MULTIPLY
-import blackjack.domain.participant.Player.Companion.LOSE_MULTIPLY
-import blackjack.domain.participant.Player.Companion.WIN_MULTIPLY
 
 class Dealer(
     cards: ParticipantCards,
@@ -19,18 +15,9 @@ class Dealer(
         return cards.sumOfCards <= DEALER_MAX_SCORE
     }
 
-    override fun getProfit(gameResult: GameResult): Double =
-        when (gameResult) {
-            GameResult.BLACKJACK -> DEALER_BLACKJACK_MULTIPLY
-            GameResult.WIN -> WIN_MULTIPLY
-            GameResult.DRAW -> DRAW_MULTIPLY
-            else -> LOSE_MULTIPLY
-        }
-
     companion object {
         private const val DEALER_MAX_SCORE = 16
         private const val DEALER_INITIAL_CARD_COUNT = 1
-        private const val DEALER_BLACKJACK_MULTIPLY = 1.0
         private const val ACE_SOFT_SCORE = 10
     }
 }
