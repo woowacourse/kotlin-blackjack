@@ -15,47 +15,19 @@ class Participants(
 
     fun drawCard(deck: Deck) {
         dealer.receiveCard(deck.pick())
-        players.forEach {
-            it.receiveCard(deck.pick())
-        }
+        players.forEach { it.receiveCard(deck.pick()) }
     }
 
     fun playGame(
         draw: () -> Card,
-        onPlayerChoice: (Participant) -> Boolean,
-        onPlayerDraw: (Participant) -> Unit,
-        onDealerDraw: (Participant) -> Unit,
+        shouldContinue: (Participant) -> Boolean,
+        onDraw: (Participant) -> Unit,
     ) {
-        playPlayersTurn(draw, onPlayerChoice, onPlayerDraw)
-        playDealerTurn(draw, onDealerDraw)
+        players.forEach { it.playGame(draw, shouldContinue, onDraw) }
+        dealer.playGame(draw, shouldContinue, onDraw)
     }
 
     fun blackjackResult(): BlackjackResult = BlackjackResult(dealerResult(), playersResult())
-
-    private fun playPlayersTurn(
-        draw: () -> Card,
-        onChoice: (Participant) -> Boolean,
-        onDraw: (Participant) -> Unit,
-    ) {
-        players.forEach { player ->
-            player.playGame(
-                draw = draw,
-                shouldContinue = onChoice,
-                onDraw = onDraw,
-            )
-        }
-    }
-
-    private fun playDealerTurn(
-        draw: () -> Card,
-        onDraw: (Participant) -> Unit,
-    ) {
-        dealer.playGame(
-            draw = draw,
-            shouldContinue = { true },
-            onDraw = onDraw,
-        )
-    }
 
     private fun dealerResult(): Map<Player, GameResult> = players.associateWith { dealer.resultAgainst(it) }
 

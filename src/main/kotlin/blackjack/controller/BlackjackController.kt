@@ -54,9 +54,18 @@ class BlackjackController(
 
     private fun playGame(game: BlackjackGame) {
         game.playTurns(
-            onPlayerChoice = inputView::readPlayerHit,
-            onPlayerDraw = outputView::printPlayerCards,
-            onDealerDraw = outputView::printDealerHit,
+            shouldContinue = { participant ->
+                when (participant) {
+                    is Player -> inputView.readPlayerHit(participant)
+                    is Dealer -> true
+                }
+            },
+            onDraw = { participant ->
+                when (participant) {
+                    is Player -> outputView.printPlayerCards(participant)
+                    is Dealer -> outputView.printDealerHit(participant)
+                }
+            },
         )
     }
 

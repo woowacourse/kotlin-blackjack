@@ -5,7 +5,7 @@ import blackjack.domain.Score
 import blackjack.domain.card.Card
 import blackjack.domain.card.Hand
 
-abstract class Participant(
+sealed class Participant(
     val name: String,
 ) {
     val hand = Hand()

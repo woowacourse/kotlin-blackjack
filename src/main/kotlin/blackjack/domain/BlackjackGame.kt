@@ -15,11 +15,10 @@ class BlackjackGame(
     }
 
     fun playTurns(
-        onPlayerChoice: (Participant) -> Boolean,
-        onPlayerDraw: (Participant) -> Unit,
-        onDealerDraw: (Participant) -> Unit,
+        shouldContinue: (Participant) -> Boolean,
+        onDraw: (Participant) -> Unit,
     ) {
-        participants.playGame(deck::pick, onPlayerChoice, onPlayerDraw, onDealerDraw)
+        participants.playGame(deck::pick, shouldContinue, onDraw)
     }
 
     companion object {
