@@ -12,7 +12,7 @@ class Blackjack(
 ) {
     fun initGame() {
         playerGroup.participants.forEach { player ->
-            player.receiveCard(deck.spreadCard(INITIAL_CARD_COUNT))
+            hitAction(player, INITIAL_CARD_COUNT)
         }
     }
 
@@ -33,8 +33,11 @@ class Blackjack(
         return count
     }
 
-    fun hitAction(participant: Participants) {
-        participant.receiveCard(deck.spreadCard(ONE_CARD))
+    fun hitAction(
+        participant: Participants,
+        count: Int = ONE_CARD,
+    ) {
+        participant.receiveCard(deck.spreadCard(count))
     }
 
     fun endGame(betStatus: List<BetStatus>): List<ProceedStatus> {
