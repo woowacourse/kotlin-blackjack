@@ -30,12 +30,10 @@ class GameManager(private val cards: Cards) {
     }
 
     fun playersPlay(
-        getPlayerDecision: (Player) -> Boolean,
         showCards: (Player) -> Unit,
     ) {
         players.forEach { player ->
             player.playTurn(
-                shouldHit = getPlayerDecision,
                 getCard = { cards.drawCards(1) },
                 showCards = { showCards(player) },
             )

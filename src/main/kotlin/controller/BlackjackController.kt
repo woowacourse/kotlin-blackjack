@@ -23,16 +23,6 @@ class BlackjackController(
 
         showInitialGameState(gameManager)
 
-        gameManager.playersPlay(
-            getPlayerDecision = { player ->
-                val decision = inputView.readHitOrStand(player.name)
-                decision
-            },
-            showCards = { player ->
-                outputView.printPlayerCards(player.name, player.cards.displayNames())
-            },
-        )
-
         gameManager.dealerPlay()
         if (gameManager.getDrawCount() > 0) {
             outputView.printDealerHit(gameManager.getDrawCount())
@@ -53,6 +43,16 @@ class BlackjackController(
             players.getPlayersCard().map {
                 it.displayNames()
             },
+        )
+
+        gameManager.getPlayers().forEach { player ->
+            player.decisionMaker = {inputView.readHitOrStand(player.name)}
+        }
+
+        gameManager.playersPlay(
+            showCards = { player ->
+                outputView.printPlayerCards(player.name, player.cards.displayNames())
+            }
         )
     }
 
