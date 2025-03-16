@@ -9,7 +9,7 @@ class Card private constructor(
     companion object {
         private val cardCache = mutableMapOf<Pair<Rank, Suit>, Card>()
 
-        fun of(
+        operator fun invoke(
             rank: Rank,
             suit: Suit,
         ): Card = cardCache.getOrPut(rank to suit) { Card(rank, suit) }

@@ -9,16 +9,16 @@ import blackjack.domain.card.Suit
 class Deck(
     private val shuffler: Shuffler,
 ) {
-    private val aceCards: List<Card> = Suit.entries.map { suit -> Card.of(AceRank, suit) }
+    private val aceCards: List<Card> = Suit.entries.map { suit -> Card(AceRank, suit) }
     private val numberCards: List<Card> =
         Suit.entries.flatMap { suit ->
             NumberRank.entries.map { number: NumberRank ->
-                Card.of(number, suit)
+                Card(number, suit)
             }
         }
     private val faceCards: List<Card> =
         Suit.entries.flatMap { suit ->
-            FaceRank.entries.map { face: FaceRank -> Card.of(face, suit) }
+            FaceRank.entries.map { face: FaceRank -> Card(face, suit) }
         }
 
     private val cardPack = aceCards + numberCards + faceCards
