@@ -2,7 +2,6 @@ package blackjack.domain.state
 
 import blackjack.domain.Dealer
 import blackjack.domain.Hand
-import blackjack.domain.Participant
 import blackjack.domain.Result
 
 class Blackjack(override val hand: Hand) : Finished(hand, BLACKJACK_PROFIT) {

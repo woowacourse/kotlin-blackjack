@@ -2,7 +2,6 @@ package blackjack.domain.state
 
 import blackjack.domain.Dealer
 import blackjack.domain.Hand
-import blackjack.domain.Participant
 import blackjack.domain.Result
 
 class Stay(override val hand: Hand) : Finished(hand, STAY_PROFIT) {
@@ -11,7 +10,7 @@ class Stay(override val hand: Hand) : Finished(hand, STAY_PROFIT) {
     }
 
     override fun decideResult(dealer: Dealer): Result {
-        return when(dealer.state) {
+        return when (dealer.state) {
             is Blackjack -> Result.LOSE
             is Bust -> Result.WIN
             else -> compareTo(dealer)
