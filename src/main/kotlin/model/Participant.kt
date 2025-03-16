@@ -1,13 +1,9 @@
 package model
 
-import model.GameResult.Companion.BLACKJACK_SCORE
-
 abstract class Participant(private val hand: Hand) {
     val cards: List<Card> get() = hand.handCards
 
     abstract fun decideToHit(): Boolean
-
-    fun getTotalScore(): Int = ScoreCalculator(hand).calculateTotalCardScore()
 
     fun receiveCards(getCards: (Int) -> List<Card>) {
         val count = if (cards.isEmpty()) INITIAL_DRAW_COUNT else DEFAULT_DRAW_COUNT
@@ -15,10 +11,10 @@ abstract class Participant(private val hand: Hand) {
     }
 
     fun getHand(): Hand = hand
+    fun getTotalScore(): Int = hand.getTotalScore()
 
-    fun isBust(): Boolean = getTotalScore() > BLACKJACK_SCORE
-
-    fun isBlackJack(): Boolean = isBust() && cards.size == 2
+    fun isBust(): Boolean = hand.isBust()
+    fun isBlackJack(): Boolean = hand.isBlackJack()
 
     companion object {
         private const val INITIAL_DRAW_COUNT = 2
