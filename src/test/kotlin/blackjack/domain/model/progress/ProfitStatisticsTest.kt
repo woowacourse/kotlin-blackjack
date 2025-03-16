@@ -25,12 +25,12 @@ class ProfitStatisticsTest {
     @Test
     fun `참가자별 수익을 계산한다`() {
         val profitStatistics = ProfitStatistics(betHistory, winLossStatistics)
-        assertThat(profitStatistics.playerProfits).isEqualTo(mapOf(meda to 1000f, cream to -2000f, peto to 4500f))
+        assertThat(profitStatistics.playerProfits).isEqualTo(mapOf(meda to 1000.0, cream to -2000.0, peto to 4500.0))
     }
 
     @Test
     fun `딜러의 수익을 계산한다`() {
         val profitStatistics = ProfitStatistics(betHistory, winLossStatistics)
-        assertThat(profitStatistics.dealerProfits).isEqualTo(-3500f)
+        assertThat(profitStatistics.dealerProfits).isEqualTo(-3500.0)
     }
 }

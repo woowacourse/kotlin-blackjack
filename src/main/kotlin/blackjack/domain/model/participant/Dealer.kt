@@ -1,10 +1,11 @@
 package blackjack.domain.model.participant
 
 import blackjack.domain.model.card.Card
+import blackjack.domain.model.progress.BetAmount
 
 class Dealer(
-    name: String = DEFAULT_NAME,
-) : GameParticipant(name = name) {
+    participantInfo: ParticipantInfo = ParticipantInfo(DEFAULT_NAME, BetAmount()),
+) : GameParticipant(participantInfo = participantInfo) {
     fun getFirstCard(): Card = handCards.getCardByIndex(0)
 
     constructor(cards: List<Card>) : this() {
@@ -14,6 +15,11 @@ class Dealer(
     override fun isDrawFinish(): Boolean {
         val bestCardValue = handCards.calculateBestCardValue()
         return bestCardValue <= DEALER_DRAW_LIMIT
+    }
+
+    fun calculateProfit(players: Collection<Player>): Double {
+        val playersProfitSum = players.sumOf { player -> player.calculateProfit(this) }
+        return -playersProfitSum + 0.0
     }
 
     companion object {

@@ -4,11 +4,9 @@ import blackjack.domain.model.card.Deck
 import blackjack.domain.model.participant.CardStatus
 import blackjack.domain.model.participant.Dealer
 import blackjack.domain.model.participant.GameParticipant
+import blackjack.domain.model.participant.ParticipantInfo
 import blackjack.domain.model.participant.Player
 import blackjack.domain.model.progress.BetAmount
-import blackjack.domain.model.progress.BetHistory
-import blackjack.domain.model.progress.ProfitStatistics
-import blackjack.domain.model.progress.WinLossStatistics
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -18,8 +16,7 @@ class Casino(
     private val deck: Deck,
 ) {
     fun blackJackGame() {
-        val players: List<Player> = inputView.readPlayerNames().map { Player(it) }
-        val betHistory = askBetAmountPhase(players)
+        val players: List<Player> = initPlayers()
         val dealer = Dealer()
         val participants: List<GameParticipant> = listOf(dealer) + players
         initDistributeCard(participants)
@@ -28,26 +25,25 @@ class Casino(
         runPlayersDrawPhase(players)
         runDealerDrawPhase(dealer)
         outputView.showCardsResult(participants)
-        val winLossStatistics = getWinLossStatistics(dealer, players)
-        // outputFinalResult(winLossStatistics, players)
-        outputFinalProfit(ProfitStatistics(betHistory, winLossStatistics), players)
+//        val winLossStatistics = getWinLossStatistics(dealer, players)
+//         outputFinalResult(winLossStatistics, players)
+        outputFinalProfit(dealer, players)
     }
 
-    private fun askBetAmountPhase(players: List<Player>): BetHistory {
-        val betHistory = BetHistory()
-        players.forEach { player ->
-            val betAmount = askSingleBetAmount(player)
-            betHistory.addBetLog(player, betAmount)
+    private fun initPlayers(): List<Player> {
+        val playerNames = inputView.readPlayerNames()
+        return playerNames.map { playerName ->
+            val betAmount = askSingleBetAmount(playerName)
+            Player(ParticipantInfo(playerName, betAmount))
         }
-        return betHistory
     }
 
-    private fun askSingleBetAmount(player: Player): BetAmount =
+    private fun askSingleBetAmount(playerName: String): BetAmount =
         runCatching {
-            BetAmount(inputView.readBetAmount(player.name))
+            BetAmount(inputView.readBetAmount(playerName))
         }.onFailure { exception ->
             exception.message?.let { outputView.showErrorMessage(it) }
-        }.getOrNull() ?: askSingleBetAmount(player)
+        }.getOrNull() ?: askSingleBetAmount(playerName)
 
     private fun initDistributeCard(participants: List<GameParticipant>) {
         participants.forEach { participant ->
@@ -87,28 +83,33 @@ class Casino(
         }
     }
 
-    private fun getWinLossStatistics(
-        dealer: Dealer,
-        players: List<Player>,
-    ): WinLossStatistics {
-        val winLossStatistics = WinLossStatistics()
-        players.forEach { player ->
-            winLossStatistics.calculatePlayerWinLoss(dealer, player)
-        }
-        return winLossStatistics
-    }
+//    private fun getWinLossStatistics(
+//        dealer: Dealer,
+//        players: List<Player>,
+//    ): WinLossStatistics {
+//        val winLossStatistics = WinLossStatistics()
+//        players.forEach { player ->
+//            winLossStatistics.calculatePlayerWinLoss(dealer, player)
+//        }
+//        return winLossStatistics
+//    }
 
-    private fun outputFinalResult(
-        winLossStatistics: WinLossStatistics,
-        players: List<Player>,
-    ) {
-        outputView.showFinalResult(winLossStatistics, players)
-    }
+//    private fun outputFinalResult(
+//        winLossStatistics: WinLossStatistics,
+//        players: List<Player>,
+//    ) {
+//        outputView.showFinalResult(winLossStatistics, players)
+//    }
 
     private fun outputFinalProfit(
-        profitStatistics: ProfitStatistics,
+        dealer: Dealer,
         players: List<Player>,
     ) {
-        outputView.showFinalProfit(profitStatistics, players)
+        val dealerProfitInfo: Pair<GameParticipant, Double> = dealer to dealer.calculateProfit(players)
+        val playerProfitInfos: List<Pair<GameParticipant, Double>> =
+            players.map { player ->
+                player to player.calculateProfit(dealer)
+            }
+        outputView.showFinalProfit(listOf(dealerProfitInfo) + playerProfitInfos)
     }
 }

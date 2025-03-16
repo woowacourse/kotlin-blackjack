@@ -12,6 +12,6 @@ class BetHistory(
         player: Player,
         betAmount: BetAmount,
     ) {
-        _playerBets[player] = betAmount.betAmount
+        _playerBets[player] = betAmount.value
     }
 }

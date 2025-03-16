@@ -4,7 +4,6 @@ import blackjack.domain.model.card.Card
 import blackjack.domain.model.participant.Dealer
 import blackjack.domain.model.participant.GameParticipant
 import blackjack.domain.model.participant.Player
-import blackjack.domain.model.progress.ProfitStatistics
 import blackjack.domain.model.progress.WinLoss
 import blackjack.domain.model.progress.WinLossStatistics
 import java.util.Locale
@@ -77,15 +76,10 @@ class OutputView(
         }
     }
 
-    fun showFinalProfit(
-        profitStatistics: ProfitStatistics,
-        players: List<Player>,
-    ) {
+    fun showFinalProfit(participantProfitInfos: List<Pair<GameParticipant, Double>>) {
         println(HEADER_FINAL_PROFIT)
-        println(DEALER_RESULT_TEMPLATE.format("%.0f".format(profitStatistics.dealerProfits)))
-        val playerProfits = profitStatistics.playerProfits
-        players.forEach { player ->
-            println("%s: %.0f".format(player.name, playerProfits[player]))
+        participantProfitInfos.forEach { (participant, profit) ->
+            println("%s: %.0f".format(participant.name, profit))
         }
     }
 

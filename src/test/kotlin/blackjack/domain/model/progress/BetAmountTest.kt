@@ -15,6 +15,6 @@ class BetAmountTest {
     @ParameterizedTest
     @ValueSource(ints = [1, 1, 1000])
     fun `베팅 금액은 0원을 초과하는 값을 가진다`(rawBetAmount: Int) {
-        assertThat(BetAmount(rawBetAmount).betAmount).isEqualTo(rawBetAmount)
+        assertThat(BetAmount(rawBetAmount).value).isEqualTo(rawBetAmount)
     }
 }
