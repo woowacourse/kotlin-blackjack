@@ -27,7 +27,7 @@ class Player(
         bet = input(this)
     }
 
-    fun processHits(
+    tailrec fun processHits(
         deck: Deck,
         input: (Player) -> Action,
         output: (Player) -> Unit,

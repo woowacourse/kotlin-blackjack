@@ -27,14 +27,14 @@ class Dealer(
         return super.showHand()
     }
 
-    fun processHits(
+    tailrec fun processHits(
         deck: Deck,
         output: (Dealer, Int) -> Unit,
     ) {
-        while (canHit()) {
-            output(this, HIT_THRESHOLD)
-            accept(deck.draw())
-        }
+        if (!canHit()) return
+        output(this, HIT_THRESHOLD)
+        accept(deck.draw())
+        processHits(deck, output)
     }
 
     companion object {
