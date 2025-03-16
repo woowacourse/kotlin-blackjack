@@ -4,8 +4,14 @@ import blackjack.model.card.Card
 import blackjack.model.card.CardCount
 import blackjack.model.hand.Hand
 import blackjack.model.hand.HandState
+import blackjack.model.hand.HandState.BLACKJACK
+import blackjack.model.hand.HandState.BUST
 import blackjack.model.hand.Score
 import blackjack.model.winning.WinningState
+import blackjack.model.winning.WinningState.LOSE
+import blackjack.model.winning.WinningState.PUSH
+import blackjack.model.winning.WinningState.WIN_BY_BLACKJACK
+import blackjack.model.winning.WinningState.WIN_DEFAULT
 
 abstract class Participant(
     val name: Name,
@@ -37,17 +43,17 @@ abstract class Participant(
 
     fun winningState(other: Participant): WinningState =
         when {
-            handState == HandState.BLACKJACK && other.handState != HandState.BLACKJACK -> WinningState.WIN_BY_BLACKJACK
-            handState == HandState.BLACKJACK && other.handState == HandState.BLACKJACK -> WinningState.PUSH
-            other.handState == HandState.BLACKJACK -> WinningState.LOSE
+            handState == BLACKJACK && other.handState != BLACKJACK -> WIN_BY_BLACKJACK
+            handState == BLACKJACK && other.handState == BLACKJACK -> PUSH
+            other.handState == BLACKJACK -> LOSE
 
-            handState == HandState.BUST -> WinningState.LOSE
-            other.handState == HandState.BUST -> WinningState.WIN_DEFAULT
+            handState == BUST -> LOSE
+            other.handState == BUST -> WIN_DEFAULT
 
-            score > other.score -> WinningState.WIN_DEFAULT
-            score < other.score -> WinningState.LOSE
+            score > other.score -> WIN_DEFAULT
+            score < other.score -> LOSE
 
-            else -> WinningState.PUSH
+            else -> PUSH
         }
 
     companion object {
