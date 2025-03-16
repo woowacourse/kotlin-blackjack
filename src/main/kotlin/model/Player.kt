@@ -7,13 +7,13 @@ class Player(val name: String, private val hand: Hand) : Participant(hand) {
 
     var decisionMaker: () -> Boolean = { false }
 
-    fun playTurn(
+    tailrec fun playTurn(
         getCard: () -> List<Card>,
         showCards: () -> Unit,
     ) {
-        while (decideToHit() && decisionMaker()) {
-            receiveCards { getCard() }
-            showCards()
-        }
+        if (!decideToHit() || !decisionMaker()) return
+        receiveCards { getCard() }
+        showCards()
+        playTurn(getCard, showCards)
     }
 }
