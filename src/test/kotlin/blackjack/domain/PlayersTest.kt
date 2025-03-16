@@ -27,21 +27,21 @@ class PlayersTest {
         val playerHand =
             Hand(
                 listOf(
-                    Card(TWO, CLUB),
-                    Card(NINE, CLUB),
+                    Card.getCashed(TWO, CLUB),
+                    Card.getCashed(NINE, CLUB),
                 ),
             )
-        val player = Player(playerName, playerHand)
+        val player = Player.makePlayer(playerName, playerHand)
         val players = Players(listOf(player))
 
         val dealerHand =
             Hand(
                 listOf(
-                    Card(TWO, DIAMOND),
-                    Card(NINE, DIAMOND),
+                    Card.getCashed(TWO, DIAMOND),
+                    Card.getCashed(NINE, DIAMOND),
                 ),
             )
-        val dealer = Dealer(hand = dealerHand)
+        val dealer = Dealer.makeDealer(hand = dealerHand)
 
         // when
         val results = players.results(dealer)
@@ -57,21 +57,21 @@ class PlayersTest {
         val playerHand =
             Hand(
                 listOf(
-                    Card(ACE, CLUB),
-                    Card(KING, CLUB),
+                    Card.getCashed(ACE, CLUB),
+                    Card.getCashed(KING, CLUB),
                 ),
             )
-        val player = Player(playerName, playerHand)
+        val player = Player.makePlayer(playerName, playerHand)
         val players = Players(listOf(player))
 
         val dealerHand =
             Hand(
                 listOf(
-                    Card(TWO, DIAMOND),
-                    Card(NINE, DIAMOND),
+                    Card.getCashed(TWO, DIAMOND),
+                    Card.getCashed(NINE, DIAMOND),
                 ),
             )
-        val dealer = Dealer(hand = dealerHand)
+        val dealer = Dealer.makeDealer(hand = dealerHand)
 
         // when
         val results = players.results(dealer)
@@ -87,21 +87,21 @@ class PlayersTest {
         val playerHand =
             Hand(
                 listOf(
-                    Card(QUEEN, CLUB),
-                    Card(KING, CLUB),
+                    Card.getCashed(QUEEN, CLUB),
+                    Card.getCashed(KING, CLUB),
                 ),
             )
-        val player = Player(playerName, playerHand)
+        val player = Player.makePlayer(playerName, playerHand)
         val players = Players(listOf(player))
 
         val dealerHand =
             Hand(
                 listOf(
-                    Card(TWO, DIAMOND),
-                    Card(NINE, DIAMOND),
+                    Card.getCashed(TWO, DIAMOND),
+                    Card.getCashed(NINE, DIAMOND),
                 ),
             )
-        val dealer = Dealer(hand = dealerHand)
+        val dealer = Dealer.makeDealer(hand = dealerHand)
 
         // when
         val results = players.results(dealer)
@@ -117,21 +117,21 @@ class PlayersTest {
         val playerHand =
             Hand(
                 listOf(
-                    Card(TWO, CLUB),
-                    Card(NINE, CLUB),
+                    Card.getCashed(TWO, CLUB),
+                    Card.getCashed(NINE, CLUB),
                 ),
             )
-        val player = Player(playerName, playerHand)
+        val player = Player.makePlayer(playerName, playerHand)
         val players = Players(listOf(player))
 
         val dealerHand =
             Hand(
                 listOf(
-                    Card(KING, DIAMOND),
-                    Card(QUEEN, DIAMOND),
+                    Card.getCashed(KING, DIAMOND),
+                    Card.getCashed(QUEEN, DIAMOND),
                 ),
             )
-        val dealer = Dealer(hand = dealerHand)
+        val dealer = Dealer.makeDealer(hand = dealerHand)
 
         // when
         val results = players.results(dealer)

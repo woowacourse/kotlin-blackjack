@@ -16,14 +16,11 @@ class BlackjackEngine(
     fun preparePlayers(names: List<String>): Players =
         Players(
             names.map { name ->
-                Player(
-                    name,
-                    Items(makeFirstHand(), Money(0.0)),
-                )
+                Player.makePlayer(name, makeFirstHand())
             },
         )
 
-    fun prepareDealer(): Dealer = Dealer(items = Items(makeFirstHand(), Money(0.0)))
+    fun prepareDealer(): Dealer = Dealer.makeDealer(makeFirstHand())
 
     private fun drawPlayer(player: Player): Unit = player.draw(cardDeck)
 

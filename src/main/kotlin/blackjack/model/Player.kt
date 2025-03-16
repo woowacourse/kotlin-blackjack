@@ -5,4 +5,11 @@ class Player(
     override var items: Items,
 ) : Participant {
     override fun compareHand(other: Participant): WinningResult = WinningResult.getResult(this, other)
+
+    companion object {
+        fun makePlayer(
+            name: String,
+            hand: Hand,
+        ): Player = Player(name, Items(hand, Money(0.0)))
+    }
 }

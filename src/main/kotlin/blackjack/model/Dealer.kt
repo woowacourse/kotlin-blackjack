@@ -62,5 +62,7 @@ class Dealer(
         private const val DEALER_DRAW_CRITERIA = 16
         private const val INITIAL_SCORE = 0
         private const val ADDITIONAL_RESULT_COUNT = 1
+
+        fun makeDealer(hand: Hand): Dealer = Dealer(DEALER_NAME, Items(hand, Money(0.0)))
     }
 }
