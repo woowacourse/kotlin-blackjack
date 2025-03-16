@@ -1,7 +1,9 @@
 package blackjack.domain
 
-import blackjack.domain.Rank.AceRank
-import blackjack.domain.Rank.NumberRank
+import blackjack.domain.card.Card
+import blackjack.domain.card.Rank.AceRank
+import blackjack.domain.card.Rank.NumberRank
+import blackjack.domain.card.Suit
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

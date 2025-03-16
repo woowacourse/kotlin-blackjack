@@ -1,7 +1,7 @@
-package blackjack.domain.update
+package blackjack.domain
 
 @JvmInline
-value class NewBetting(
+value class Betting(
     val amount: Int,
 ) {
     init {

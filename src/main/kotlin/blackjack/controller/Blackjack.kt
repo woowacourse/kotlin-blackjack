@@ -2,8 +2,8 @@ package blackjack.controller
 
 import blackjack.domain.Deck
 import blackjack.domain.RandomShuffler
-import blackjack.domain.update.participant.NewDealer
-import blackjack.domain.update.participant.NewPlayer
+import blackjack.domain.participant.Dealer
+import blackjack.domain.participant.Player
 import blackjack.view.AskView
 import blackjack.view.ResultView
 import blackjack.view.model.PlayerSummary
@@ -14,8 +14,8 @@ class Blackjack(
 ) {
     fun play() {
         val deck = Deck(RandomShuffler)
-        val players: List<NewPlayer> = askView.readPlayers().toNewPlayers(deck)
-        val dealer = NewDealer(deck)
+        val players: List<Player> = askView.readPlayers().toPlayers(deck)
+        val dealer = Dealer(deck)
         resultView.showDealing(
             playersName = players.names,
             dealerCards = dealer.cardsPrettyString,
@@ -30,7 +30,7 @@ class Blackjack(
         resultView.showProfit(players.toResults(dealer.state))
     }
 
-    private fun startPlayersTurn(players: List<NewPlayer>) {
+    private fun startPlayersTurn(players: List<Player>) {
         players.forEach { player ->
             resultView.showPlayerCard(
                 PlayerSummary(
@@ -58,7 +58,7 @@ class Blackjack(
         }
     }
 
-    private fun startDealerTurn(dealer: NewDealer) {
+    private fun startDealerTurn(dealer: Dealer) {
         dealer.hit()
         while (!dealer.isFinished) {
             if (dealer.score < 17) {

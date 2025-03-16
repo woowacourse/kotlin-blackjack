@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import blackjack.domain.card.Card
+
 object ScoreCalculator {
     fun possibleScoreOf(vararg cards: Card): Set<Int> {
         if (cards.isEmpty()) return emptySet()

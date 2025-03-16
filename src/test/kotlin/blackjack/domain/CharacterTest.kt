@@ -1,6 +1,6 @@
 package blackjack.domain
 
-import blackjack.domain.Rank.FaceRank
+import blackjack.domain.card.Rank.FaceRank
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

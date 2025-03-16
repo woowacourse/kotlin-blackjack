@@ -1,24 +1,24 @@
 package blackjack.controller
 
-import blackjack.domain.Card
+import blackjack.domain.Betting
 import blackjack.domain.Deck
-import blackjack.domain.Rank
-import blackjack.domain.Suit
-import blackjack.domain.update.NewBetting
-import blackjack.domain.update.participant.NewDealer
-import blackjack.domain.update.participant.NewPlayer
-import blackjack.domain.update.participant.Participant
-import blackjack.domain.update.state.NewParticipantState
+import blackjack.domain.card.Card
+import blackjack.domain.card.Rank
+import blackjack.domain.card.Suit
+import blackjack.domain.participant.Dealer
+import blackjack.domain.participant.Participant
+import blackjack.domain.participant.Player
+import blackjack.domain.state.ParticipantState
 import blackjack.view.model.DealerSummary
 import blackjack.view.model.PlayerConfig
 import blackjack.view.model.PlayerResult
 import blackjack.view.model.PlayerSummary
 
-fun List<PlayerConfig>.toNewPlayers(deck: Deck): List<NewPlayer> = map { playerConfig -> playerConfig.toNewPlayer(deck) }
+fun List<PlayerConfig>.toPlayers(deck: Deck): List<Player> = map { playerConfig -> playerConfig.toPlayer(deck) }
 
-private fun PlayerConfig.toNewPlayer(deck: Deck): NewPlayer = NewPlayer(name, NewBetting(bettingAmount), deck)
+private fun PlayerConfig.toPlayer(deck: Deck): Player = Player(name, Betting(bettingAmount), deck)
 
-val List<NewPlayer>.names: List<String> get() = map { player -> player.name }
+val List<Player>.names: List<String> get() = map { player -> player.name }
 
 private val Rank.prettyString: String
     get() =
@@ -47,7 +47,7 @@ private val Suit.prettyString: String
             Suit.CLOVER -> "♣"
         }
 
-val NewDealer.cardsPrettyString: List<String> get() = cards.prettyString
+val Dealer.cardsPrettyString: List<String> get() = cards.prettyString
 
 val List<Participant>.cardsPrettyStrings: List<List<String>>
     get() = map { participant -> participant.cards.prettyString }
@@ -65,11 +65,11 @@ val Participant.summary: DealerSummary
             score.value,
         )
 
-private val NewPlayer.summary: PlayerSummary
+private val Player.summary: PlayerSummary
     get() = PlayerSummary(name, cards.prettyString, score.value)
 
-val List<NewPlayer>.summaries: List<PlayerSummary>
+val List<Player>.summaries: List<PlayerSummary>
     get() = map { player -> player.summary }
 
-fun List<NewPlayer>.toResults(dealerState: NewParticipantState): List<PlayerResult> =
+fun List<Player>.toResults(dealerState: ParticipantState): List<PlayerResult> =
     map { player -> PlayerResult(player.name, player.calculateProfit(dealerState).toInt()) }

@@ -1,24 +1,24 @@
-package blackjack.domain.update.participant
+package blackjack.domain.participant
 
+import blackjack.domain.Betting
 import blackjack.domain.Deck
-import blackjack.domain.update.GameResult
-import blackjack.domain.update.NewBetting
-import blackjack.domain.update.state.Blackjack
-import blackjack.domain.update.state.Busted
-import blackjack.domain.update.state.Finished
-import blackjack.domain.update.state.NewParticipantState
-import blackjack.domain.update.state.Stay
+import blackjack.domain.GameResult
+import blackjack.domain.state.Blackjack
+import blackjack.domain.state.Busted
+import blackjack.domain.state.Finished
+import blackjack.domain.state.ParticipantState
+import blackjack.domain.state.Stay
 
-class NewPlayer(
+class Player(
     val name: String,
-    private val betting: NewBetting,
+    private val betting: Betting,
     deck: Deck,
 ) : Participant(deck) {
     init {
         ready()
     }
 
-    fun calculateProfit(dealerState: NewParticipantState): Double {
+    fun calculateProfit(dealerState: ParticipantState): Double {
         val gameResult = getResult(dealerState)
         return gameResult.calculateProfit(betting.amount)
     }
@@ -27,7 +27,7 @@ class NewPlayer(
         hit()
     }
 
-    private fun getResult(dealerState: NewParticipantState): GameResult {
+    private fun getResult(dealerState: ParticipantState): GameResult {
         val playerState = state
         check(playerState is Finished) { "Player's turn is not finished" }
         check(dealerState is Finished) { "Dealer's turn is not finished" }

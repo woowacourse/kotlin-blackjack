@@ -1,17 +1,17 @@
-package blackjack.domain.update.participant
+package blackjack.domain.participant
 
 import blackjack.domain.Deck
-import blackjack.domain.update.card.Card
-import blackjack.domain.update.state.Finished
-import blackjack.domain.update.state.Hittable
-import blackjack.domain.update.state.NewParticipantState
-import blackjack.domain.update.state.Playing
-import blackjack.domain.update.state.Ready
+import blackjack.domain.card.Card
+import blackjack.domain.state.Finished
+import blackjack.domain.state.Hittable
+import blackjack.domain.state.ParticipantState
+import blackjack.domain.state.Playing
+import blackjack.domain.state.Ready
 
 abstract class Participant(
     private val deck: Deck,
 ) {
-    var state: NewParticipantState = Ready(deck.take())
+    var state: ParticipantState = Ready(deck.take())
         private set
     val cards get() = state.cards
     val score get() = state.score

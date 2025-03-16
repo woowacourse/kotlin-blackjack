@@ -1,7 +1,7 @@
-package blackjack.domain.update.participant
+package blackjack.domain.participant
 
 import blackjack.domain.Deck
 
-class NewDealer(
+class Dealer(
     deck: Deck,
 ) : Participant(deck)

@@ -1,4 +1,4 @@
-package blackjack.domain.update
+package blackjack.domain
 
 enum class GameResult(
     private val profitRate: Double,

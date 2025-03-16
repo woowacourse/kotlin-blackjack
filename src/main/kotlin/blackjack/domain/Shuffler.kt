@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import blackjack.domain.card.Card
+
 fun interface Shuffler {
     fun shuffle(cards: List<Card>): List<Card>
 }
