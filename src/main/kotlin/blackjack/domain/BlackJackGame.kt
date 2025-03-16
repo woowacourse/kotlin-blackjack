@@ -40,19 +40,16 @@ class BlackJackGame(
         return count
     }
 
-    fun calculateDealerProfit(): Double {
-        var dealerFinalProfit = 0.0
-
-        participants.players.forEach { player ->
-            val profit = participants.dealer.getProfit(participants.dealer.getResult(player))
-            dealerFinalProfit += player.bettingMoney.value * profit
+    fun getDealerProfit(): Double =
+        participants.players.sumOf { player ->
+            val result = participants.dealer.getResult(player)
+            result.calculateDealerProfit(table.getPlayerBettingMoney(player))
         }
-        return dealerFinalProfit
-    }
 
-    fun calculatePlayerProfit(action: (String, Double) -> Unit) {
+    fun getPlayerProfit(action: (String, Double) -> Unit) {
         participants.players.forEach { player ->
-            val profit = player.getProfit(player.getResult(participants.dealer))
+            val result = player.getResult(participants.dealer)
+            val profit = result.calculatePlayerProfit(table.getPlayerBettingMoney(player))
             action(player.name, profit)
         }
     }
