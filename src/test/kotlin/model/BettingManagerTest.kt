@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
+import util.TestCards
 
 class BettingManagerTest {
     private lateinit var player: Player
@@ -13,8 +14,8 @@ class BettingManagerTest {
     fun setUp() {
         val cards =
             listOf(
-                Card.of(CardRank.KING, Shape.DIAMOND),
-                Card.of(CardRank.QUEEN, Shape.DIAMOND),
+                TestCards.DIAMOND_KING,
+                TestCards.DIAMOND_QUEEN,
             )
 
         player = Player("joy", Hand(cards))
