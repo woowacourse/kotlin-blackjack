@@ -5,10 +5,10 @@ import blackjack.domain.Score
 class Hand {
     private val _cards = mutableListOf<Card>()
     val cards: List<Card>
-        get() = _cards.toList()
+        get() = _cards.deepCopy()
 
     fun addCard(card: Card) {
-        _cards.add(card)
+        _cards += card
     }
 
     fun score(): Score {
@@ -20,11 +20,14 @@ class Hand {
         return Score(score)
     }
 
-    fun isBlackjack(): Boolean = _cards.size == 2 && score().isPerfectScore()
+    fun isBlackjack(): Boolean = _cards.size == BLACKJACK_CARD_COUNT && score().isPerfectScore()
 
     private fun hasAce(): Boolean = _cards.any { it.isAce() }
 
     companion object {
         private const val ACE_VALUE_DIFFERENCE = 10
+        private const val BLACKJACK_CARD_COUNT = 2
+
+        private fun List<Card>.deepCopy(): List<Card> = map { it.copy() }
     }
 }
