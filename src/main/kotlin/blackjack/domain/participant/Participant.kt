@@ -13,7 +13,7 @@ abstract class Participant(
         cards.add(card)
     }
 
-    fun takeCards(count: Int): List<TrumpCard> = getAllCards().take(count)
+    fun takeCards(count: Int): List<TrumpCard> = cards.allCards.take(count)
 
     fun getAllCards(): List<TrumpCard> = cards.allCards
 
