@@ -1,6 +1,7 @@
 package blackjack.model.participant
 
 import blackjack.model.card.Card
+import blackjack.model.winning.GameResult
 
 class Participants(
     val dealer: Dealer,
@@ -11,6 +12,12 @@ class Participants(
             "[ERROR] 플레이어와 딜러의 이름은 중복될 수 없습니다."
         }
     }
+
+    fun winningResult(): GameResult =
+        GameResult(
+            playersResult = players.winningResult(dealer),
+            dealerResult = dealer.winningResult(players),
+        )
 
     companion object {
         fun create(

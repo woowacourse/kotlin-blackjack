@@ -1,43 +1,42 @@
 package blackjack.domain.betting
 
-import blackjack.model.betting.BettingManager
+import blackjack.model.betting.BettingMachine
 import blackjack.model.betting.BettingTable
 import blackjack.model.participant.Dealer
 import blackjack.model.participant.Money
 import blackjack.model.participant.Name
 import blackjack.model.participant.Participants
 import blackjack.model.participant.Players
-import blackjack.model.winning.WinningResult
 import blackjack.model.winning.WinningState
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 
-class BettingManagerTest {
+class BettingMachineTest {
     @Test
     fun `베팅 금액이 0 이하이면 예외 발생`() {
         // given
-        val bettingManager = BettingManager()
+        val bettingMachine = BettingMachine()
         val players = Players.from("시아", "공백")
         val getBettingMoney: (Name) -> Money = { Money.ZERO }
 
         // when & then
         assertThrows<IllegalArgumentException> {
-            bettingManager.getPlayersMoney(players, getBettingMoney)
+            bettingMachine.getPlayersMoney(players, getBettingMoney)
         }
     }
 
     @Test
     fun `정상적인 베팅 금액이 입력되면 정상적으로 진행된다`() {
         // given
-        val bettingManager = BettingManager()
+        val bettingMachine = BettingMachine()
         val players = Players.from("시아", "공백")
         val getBettingMoney: (Name) -> Money = { Money(1000.0) }
 
         // when & then
         assertDoesNotThrow {
-            bettingManager.getPlayersMoney(players, getBettingMoney)
+            bettingMachine.getPlayersMoney(players, getBettingMoney)
         }
     }
 
@@ -59,12 +58,12 @@ class BettingManagerTest {
         bettingTable.add(Name("메다"), money3)
         bettingTable.add(Name("제이"), money4)
 
-        val bettingManager = BettingManager(bettingTable)
+        val bettingMachine = BettingMachine(bettingTable)
 
         val winningResult =
             WinningResult(
                 dealerResult = mapOf(),
-                playerResults =
+                playersResults =
                     mapOf(
                         Name("공백") to WinningState.WIN_BY_BLACKJACK,
                         Name("비비") to WinningState.WIN_DEFAULT,
@@ -74,7 +73,7 @@ class BettingManagerTest {
             )
 
         // when
-        val resultTable = bettingManager.result(winningResult, participants)
+        val resultTable = bettingMachine.result(winningResult, participants)
 
         // then
         assertEquals(money1.times(1.5), resultTable.value[Name("공백")])

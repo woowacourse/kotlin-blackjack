@@ -7,7 +7,6 @@ import blackjack.domain.TEN_HEART
 import blackjack.model.participant.Dealer
 import blackjack.model.participant.Participants
 import blackjack.model.participant.Players
-import blackjack.model.winning.WinningManager
 import blackjack.model.winning.WinningState.LOSE
 import blackjack.model.winning.WinningState.PUSH
 import blackjack.model.winning.WinningState.WIN_DEFAULT
@@ -38,7 +37,7 @@ class WinningManagerTest {
         )
 
         // when
-        val playerResult = winningManager.result(participants).playerResults
+        val playerResult = winningManager.result(participants).playersResults
 
         // then
         assertThat(playerResult.values.first()).isEqualTo(PUSH)
@@ -56,7 +55,7 @@ class WinningManagerTest {
         )
 
         // when
-        val playerResult = winningManager.result(participants).playerResults
+        val playerResult = winningManager.result(participants).playersResults
 
         // then
         assertThat(playerResult.values.first()).isEqualTo(WIN_DEFAULT)
@@ -74,7 +73,7 @@ class WinningManagerTest {
         )
 
         // when
-        val playerResult = winningManager.result(participants).playerResults
+        val playerResult = winningManager.result(participants).playersResults
 
         // then
         assertThat(playerResult.values.first()).isEqualTo(LOSE)
@@ -92,7 +91,7 @@ class WinningManagerTest {
         )
 
         // when
-        val playerResult = winningManager.result(participants).playerResults
+        val playerResult = winningManager.result(participants).playersResults
 
         // then
         assertThat(playerResult.values.first()).isEqualTo(LOSE)

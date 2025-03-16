@@ -1,12 +1,11 @@
 package blackjack.controller
 
-import blackjack.model.betting.BettingManager
+import blackjack.model.betting.BettingMachine
 import blackjack.model.card.CardDeck
 import blackjack.model.participant.Dealer
 import blackjack.model.participant.Dealer.Companion.DEFAULT_DEALER_NAME
 import blackjack.model.participant.Participants
 import blackjack.model.participant.Players
-import blackjack.model.winning.WinningManager
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -14,9 +13,6 @@ class BlackjackController(
     private val inputView: InputView,
     private val outputView: OutputView,
 ) {
-    private val bettingManager: BettingManager = BettingManager()
-    private val winningManager: WinningManager = WinningManager()
-
     fun run() {
         val cardDeck = CardDeck()
         val participants =
@@ -27,7 +23,7 @@ class BlackjackController(
             )
         val (dealer, players) = participants.dealer to participants.players
 
-        progressBetting(players)
+        val bettingMachine = progressBetting(players)
 
         outputView.displayFirstDrawEnd(players.value.map { player -> player.name })
         outputView.displayParticipantCards(dealer.name, dealer.showInitialCards())
@@ -35,14 +31,18 @@ class BlackjackController(
         progressPlayersDraw(players, cardDeck)
         progressDealerDraw(dealer, cardDeck)
 
-        endGame(participants)
+        endGame(participants, bettingMachine)
     }
 
-    private fun progressBetting(players: Players) {
+    private fun progressBetting(players: Players): BettingMachine {
+        val bettingMachine = BettingMachine()
+
         outputView.displayInitialMoney()
-        players.getMoney { name ->
+        bettingMachine.betMoney(players) { name ->
             inputView.getBettingMoney(name)
         }
+
+        return bettingMachine
     }
 
     private fun progressPlayersDraw(
@@ -69,13 +69,15 @@ class BlackjackController(
         outputView.displayParticipantInfo(dealer.name, dealer.cards, dealer.score)
     }
 
-    private fun endGame(participants: Participants) {
+    private fun endGame(
+        participants: Participants,
+        bettingMachine: BettingMachine,
+    ) {
         participants.players.value.forEach { player ->
             outputView.displayParticipantInfo(player.name, player.cards, player.score)
         }
-
-        val winningResult = winningManager.result(participants)
-        val bettingResult = bettingManager.result(winningResult, participants)
+        val gameResult = participants.winningResult()
+        val bettingResult = bettingMachine.result(gameResult, participants)
 
         outputView.displayProfitTitle()
         bettingResult.value.forEach { (name, money) ->
