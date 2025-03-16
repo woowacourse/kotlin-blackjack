@@ -16,7 +16,7 @@ class InputView : BlackjackInput {
     override fun readPlayerBetAmount(name: String): Money {
         println(PLAYER_BET_AMOUNT_MESSAGE_FORMAT.format(name))
         val amount = readln().toLongOrNull() ?: return readPlayerBetAmount(name)
-        return Money(amount)
+        return Money.from(amount)
     }
 
     override fun readCardDrawChoice(player: Player): CardDrawDecision {

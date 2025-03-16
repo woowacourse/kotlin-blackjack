@@ -59,6 +59,6 @@ class GameManager(
 
     fun getDealerProfit(playerProfitInfo: List<ParticipantProfitInfo>): ParticipantProfitInfo {
         val playersSum = playerProfitInfo.sumOf { player -> player.profit.amount }
-        return ParticipantProfitInfo(dealer.name, Money(playersSum * -1))
+        return ParticipantProfitInfo(dealer.name, Money.from(playersSum * -1))
     }
 }

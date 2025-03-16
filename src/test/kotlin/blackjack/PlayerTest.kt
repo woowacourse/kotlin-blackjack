@@ -14,7 +14,7 @@ class PlayerTest {
 
     @BeforeEach
     fun setUp() {
-        player = Player("미플", Money(1_000L))
+        player = Player("미플", Money.from(1_000L))
     }
 
     @Test
