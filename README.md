@@ -61,7 +61,7 @@
 
 ## Step2 리팩터링 요구사항
 - [x] GameParticipant의 isInitHandCard() 함수를 사용하도록 수정
-- [ ] 외부에서 게임 참가자의 HandCard 직접 접근하지 않도록 수정
+- [x] 외부에서 게임 참가자의 HandCard 직접 접근하지 않도록 수정
 - [ ] HandCards 클래스에 방어적 복사 적용
 - [ ] intial로 Suit 객체를 가져올 수 있는 로직 추가
 - [ ] 최소 베팅 금액 상수화
