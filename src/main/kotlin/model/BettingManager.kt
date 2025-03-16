@@ -1,18 +1,18 @@
 package model
 
 class BettingManager {
-    private val bets: MutableMap<Player, Int> = mutableMapOf()
+    private val bets: MutableMap<Player, Money> = mutableMapOf()
 
     fun placeBet(
         player: Player,
         amount: Int,
-    ) {
+    ){
         require(amount > 0) { INITIAL_BETTING_AMOUNT_MESSAGE }
-        bets[player] = amount
+        bets[player] = Money(amount)
     }
 
-    fun getProfit(player: Player): Int {
-        return bets[player] ?: 0
+    fun getProfit(player: Player): Money {
+        return bets[player] ?: Money(0)
     }
 
     companion object {

@@ -1,5 +1,6 @@
 package view
 
+import model.Money
 import model.Player
 
 class OutputView {
@@ -49,13 +50,13 @@ class OutputView {
 
     fun printResult(
         dealerProfit: Int,
-        playersProfit: Map<Player, Int>,
+        playersProfit: Map<Player, Money>,
     ) {
         println("\n## 최종 수익")
         println("딜러: $dealerProfit")
 
         playersProfit.forEach { (player, profit) ->
-            println("${player.name}: $profit")
+            println("${player.name}: ${profit.toInt()}")
         }
     }
 }

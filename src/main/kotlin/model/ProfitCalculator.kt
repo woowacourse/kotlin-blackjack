@@ -20,12 +20,13 @@ class ProfitCalculator {
         playerResults: List<PlayerResult>,
         bettingManager: BettingManager,
         players: Players,
-    ): Map<Player, Int> {
+    ): Map<Player, Money> {
         val profitRates = calculateProfitRates(playerResults)
+
         return players.associateWith { player ->
             val baseBet = bettingManager.getProfit(player)
             val multiplier = profitRates[player] ?: 0f
-            (baseBet * multiplier).toInt()
+            baseBet.multiply(multiplier)
         }
     }
 }
