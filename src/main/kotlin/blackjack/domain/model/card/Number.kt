@@ -27,8 +27,12 @@ enum class Number(
                 entries[orderNumber - 1]
             }.getOrElse { throw IllegalArgumentException(ERROR_UNKNOWN_CARD_ORDER_NUMBER) }
 
+        fun getByInitial(initial: String): Number =
+            entries.find { it.initial == initial } ?: throw IllegalArgumentException(ERROR_UNKNOWN_CARD_INITIAL)
+
         const val MAX_ORDER_NUMBER = 13
 
         private const val ERROR_UNKNOWN_CARD_ORDER_NUMBER = "알 수 없는 카드 순서 번호입니다."
+        private const val ERROR_UNKNOWN_CARD_INITIAL = "알 수 없는 카드 이니셜입니다."
     }
 }
