@@ -18,9 +18,9 @@ abstract class Participants() {
     fun compareScores(participant: Participants): GameResult =
         when {
             hand.isBust() -> GameResult.Lose
-            participant.hand.isBust() -> GameResult.Win
-            participant.hand.isBlackjack() && !hand.isBlackjack() -> GameResult.Lose
             !participant.hand.isBlackjack() && hand.isBlackjack() -> GameResult.BlackjackWin
+            participant.hand.isBlackjack() && !hand.isBlackjack() -> GameResult.Lose
+            participant.hand.isBust() -> GameResult.Win
             else -> compareNumber(sumCardNumber, participant.sumCardNumber)
         }
 
