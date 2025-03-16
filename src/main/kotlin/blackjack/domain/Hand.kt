@@ -14,7 +14,7 @@ class Hand(
     }
 
     fun isBlackJack(): Boolean {
-        return cards.size == 2 && getTotalSum() == 21
+        return cards.size == BLACKJACK_CONDITION_NUMBER && getTotalSum() == BLACKJACK_CONDITION_SUM
     }
 
     fun canHit(hitThreshold: Int): Boolean {
@@ -35,7 +35,9 @@ class Hand(
     }
 
     companion object {
-        const val BUST_THRESHOLD = 21
+        private const val BLACKJACK_CONDITION_NUMBER = 2
+        private const val BLACKJACK_CONDITION_SUM = 21
+        private const val BUST_THRESHOLD = 21
         private const val ACE_BONUS_SCORE = 10
     }
 }
