@@ -8,7 +8,7 @@ class Player(val name: String, private val betAmount: BetAmount) : Participant()
     override val hitThreshold: Int
         get() = PLAYER_HIT_THRESHOLD
 
-    fun setPlayerStatus(dealer: Dealer): PlayerResultStatus {
+    fun getPlayerStatus(dealer: Dealer): PlayerResultStatus {
         val playerStatus = getStatus()
         val dealerStatus = dealer.getStatus()
 

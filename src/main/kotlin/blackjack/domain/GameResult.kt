@@ -4,7 +4,7 @@ import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Player
 
 class GameResult(private val dealer: Dealer, players: List<Player>) {
-    val playersGameResult: Map<Player, PlayerResultStatus> = players.associateWith { it.setPlayerStatus(dealer) }
+    val playersGameResult: Map<Player, PlayerResultStatus> = players.associateWith { it.getPlayerStatus(dealer) }
 
     fun updateGameResult() {
         playersGameResult.forEach { (player, result) ->
