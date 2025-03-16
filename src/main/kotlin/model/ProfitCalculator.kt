@@ -19,7 +19,7 @@ class ProfitCalculator {
     fun calculateFinalProfits(
         playerResults: List<PlayerResult>,
         bettingManager: BettingManager,
-        players: Players
+        players: Players,
     ): Map<Player, Int> {
         val profitRates = calculateProfitRates(playerResults)
         return players.associateWith { player ->
