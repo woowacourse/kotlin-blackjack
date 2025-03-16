@@ -24,7 +24,7 @@ class Players private constructor(
 
     fun draw(
         newCards: (Int) -> List<Card>,
-        choice: (Name) -> UserCommand,
+        choice: (Name) -> PlayerAction,
         onCardReceived: (Name, List<Card>) -> Unit,
     ) {
         value.forEach { player ->

@@ -2,10 +2,10 @@ package blackjack.view
 
 import blackjack.model.participant.Money
 import blackjack.model.participant.Name
-import blackjack.model.participant.UserCommand
-import blackjack.model.participant.UserCommand.HIT
-import blackjack.model.participant.UserCommand.STAY
-import blackjack.model.participant.UserCommand.UNKNOWN
+import blackjack.model.participant.PlayerAction
+import blackjack.model.participant.PlayerAction.HIT
+import blackjack.model.participant.PlayerAction.STAY
+import blackjack.model.participant.PlayerAction.UNKNOWN
 
 class InputView {
     fun getPlayers(): List<Name> {
@@ -18,7 +18,7 @@ class InputView {
         return Money(readln().toDouble())
     }
 
-    fun getIsReceiveMore(name: Name): UserCommand {
+    fun getIsReceiveMore(name: Name): PlayerAction {
         println("\n${name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
         return when (readln().lowercase()) {
             "y" -> HIT

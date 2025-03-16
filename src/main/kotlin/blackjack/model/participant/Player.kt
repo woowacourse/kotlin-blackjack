@@ -15,18 +15,18 @@ class Player private constructor(
 
     fun progressDraw(
         newCards: (Int) -> List<Card>,
-        choice: (Name) -> UserCommand,
+        choice: (Name) -> PlayerAction,
         onCardReceived: (Name, List<Card>) -> Unit,
     ) {
         while (true) {
             when (choice(name)) {
-                UserCommand.HIT -> {
+                PlayerAction.HIT -> {
                     receiveCards(newCards)
                     onCardReceived(name, cards)
                     if (!isDrawable) return
                 }
-                UserCommand.STAY -> break
-                UserCommand.UNKNOWN -> throw IllegalArgumentException("[ERROR] 올바르지 않은 입력입니다.")
+                PlayerAction.STAY -> break
+                PlayerAction.UNKNOWN -> throw IllegalArgumentException("[ERROR] 올바르지 않은 입력입니다.")
             }
         }
     }

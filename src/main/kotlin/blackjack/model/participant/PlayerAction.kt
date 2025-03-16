@@ -1,6 +1,6 @@
 package blackjack.model.participant
 
-enum class UserCommand {
+enum class PlayerAction {
     HIT,
     STAY,
     UNKNOWN,

@@ -8,7 +8,7 @@ import blackjack.model.hand.Score
 import blackjack.model.participant.Dealer
 import blackjack.model.participant.Name
 import blackjack.model.participant.Player
-import blackjack.model.participant.UserCommand
+import blackjack.model.participant.PlayerAction
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
@@ -31,7 +31,7 @@ class DrawManagerTest {
     fun `플레이어가 HIT을 선택하면 카드를 받는다`() {
         // given
         val draw: (Int) -> List<Card> = { listOf(TEN_HEART) }
-        val getCommand: () -> UserCommand = { UserCommand.HIT }
+        val getCommand: () -> PlayerAction = { PlayerAction.HIT }
         val onCardReceived: (List<Card>) -> Unit = {}
 
         // when
@@ -45,7 +45,7 @@ class DrawManagerTest {
     fun `플레이어가 STAY를 선택하면 카드를 받지 않는다`() {
         // given
         val draw: (Int) -> List<Card> = { listOf(SIX_HEART) }
-        val getCommand: () -> UserCommand = { UserCommand.STAY }
+        val getCommand: () -> PlayerAction = { PlayerAction.STAY }
         val onCardReceived: (List<Card>) -> Unit = {}
 
         // when
@@ -59,7 +59,7 @@ class DrawManagerTest {
     fun `플레이어가 잘못된 명령을 입력하면 예외가 발생한다`() {
         // given
         val draw: (Int) -> List<Card> = { listOf(SIX_HEART) }
-        val getCommand: () -> UserCommand = { UserCommand.UNKNOWN }
+        val getCommand: () -> PlayerAction = { PlayerAction.UNKNOWN }
         val onCardReceived: (List<Card>) -> Unit = {}
 
         // when & then
