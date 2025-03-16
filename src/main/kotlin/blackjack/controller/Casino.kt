@@ -6,6 +6,7 @@ import blackjack.domain.model.participant.Dealer
 import blackjack.domain.model.participant.GameParticipant
 import blackjack.domain.model.participant.ParticipantInfo
 import blackjack.domain.model.participant.Player
+import blackjack.domain.model.participant.Profit
 import blackjack.domain.model.progress.BetAmount
 import blackjack.view.InputView
 import blackjack.view.OutputView
@@ -105,8 +106,8 @@ class Casino(
         dealer: Dealer,
         players: List<Player>,
     ) {
-        val dealerProfitInfo: Pair<GameParticipant, Double> = dealer to dealer.calculateProfit(players)
-        val playerProfitInfos: List<Pair<GameParticipant, Double>> =
+        val dealerProfitInfo: Pair<GameParticipant, Profit> = dealer to dealer.calculateProfit(players)
+        val playerProfitInfos: List<Pair<GameParticipant, Profit>> =
             players.map { player ->
                 player to player.calculateProfit(dealer)
             }

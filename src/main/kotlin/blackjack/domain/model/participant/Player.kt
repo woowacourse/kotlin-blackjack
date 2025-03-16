@@ -12,9 +12,9 @@ class Player(
         cards.forEach { card -> this.handCards.addCard(card) }
     }
 
-    fun calculateProfit(dealer: Dealer): Double {
+    fun calculateProfit(dealer: Dealer): Profit {
         val profitRate = ProfitRate.calculateProfitRate(this.calculateWinLoss(dealer), this.cardStatus)
-        return profitRate.value * this.betAmount.value
+        return Profit(profitRate.value * this.betAmount.value)
     }
 
     companion object {
