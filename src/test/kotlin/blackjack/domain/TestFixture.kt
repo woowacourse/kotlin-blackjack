@@ -18,4 +18,7 @@ object TestFixture {
     val ClubJack = Card(Suit.CLUB, Denomination.JACK)
     val ClubQueen = Card(Suit.CLUB, Denomination.QUEEN)
     val ClubKing = Card(Suit.CLUB, Denomination.KING)
+
+    val Dealer = Dealer()
+    val Player = Player("name1")
 }
