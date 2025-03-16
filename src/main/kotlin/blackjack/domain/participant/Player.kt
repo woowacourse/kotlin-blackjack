@@ -18,5 +18,5 @@ class Player(
         return cards.items.take(CARD_COUNT_OF_PLAYER_MUST_INITIAL_OPEN).toSet()
     }
 
-    fun profit(dividend: Double) = state.money.calc(dividend)
+    fun profit(dividend: Double) = state.money * dividend
 }

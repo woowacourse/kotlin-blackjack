@@ -6,7 +6,7 @@ value class BettingAmount(val value: Int) {
         require(value > 0) { INITIAL_CARD_COUNT }
     }
 
-    fun calc(dividend: Double): Double {
+    operator fun times(dividend: Double): Double {
         return value * dividend
     }
 
