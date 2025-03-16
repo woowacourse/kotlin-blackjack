@@ -40,6 +40,23 @@ class GameManager(
         return false
     }
 
+    fun processDrawOrStayBasedOnPlayer(
+        player: Player,
+        playerDrawDecision: (Player) -> CardDrawDecision,
+        showPlayerHands: (Player) -> Unit,
+    ) {
+        while (true) {
+            val decision: CardDrawDecision = playerDrawDecision(player)
+            if (drawCardWithChoice(decision, player)) {
+                showPlayerHands(player)
+                if (player.isBust()) break
+                continue
+            }
+            showPlayerHands(player)
+            break
+        }
+    }
+
     fun isDrawCardBasedOnDealer(): Boolean {
         if (dealer.isAvailDrawCard()) {
             drawCard(dealer)

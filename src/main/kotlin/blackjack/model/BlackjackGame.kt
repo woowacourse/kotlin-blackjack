@@ -1,7 +1,6 @@
 package blackjack.model
 
 import blackjack.model.card.Deck.Companion.INITIAL_HAND_OUT_CARD_COUNT
-import blackjack.model.state.CardDrawDecision
 import blackjack.model.user.Dealer
 import blackjack.model.user.Player
 import blackjack.view.BlackjackInput
@@ -57,22 +56,12 @@ class BlackjackGame(
         players: List<Player>,
         gameManager: GameManager,
     ) {
-        players.forEach { player -> playerDrawOrStay(player, gameManager) }
-    }
-
-    private fun playerDrawOrStay(
-        player: Player,
-        gameManager: GameManager,
-    ) {
-        while (true) {
-            val decision: CardDrawDecision = inputView.readCardDrawChoice(player)
-            if (gameManager.drawCardWithChoice(decision, player)) {
-                outputView.printPlayerHands(player)
-                if (player.isBust()) break
-                continue
-            }
-            outputView.printPlayerHands(player)
-            break
+        players.forEach { player ->
+            gameManager.processDrawOrStayBasedOnPlayer(
+                player = player,
+                playerDrawDecision = { inputView.readCardDrawChoice(player) },
+                showPlayerHands = { outputView.printPlayerHands(player) },
+            )
         }
     }
 
