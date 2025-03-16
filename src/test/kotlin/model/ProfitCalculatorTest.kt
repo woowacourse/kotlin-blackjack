@@ -25,7 +25,7 @@ class ProfitCalculatorTest {
 
         val finalProfits = profitCalculator.calculateFinalProfits(playerResults, bettingManager, players)
 
-        assertThat(finalProfits[player]).isEqualTo(100)
+        assertThat(finalProfits[player]?.toInt()).isEqualTo(100)
     }
 
     @Test
@@ -38,7 +38,7 @@ class ProfitCalculatorTest {
 
         val finalProfits = profitCalculator.calculateFinalProfits(playerResults, bettingManager, players)
 
-        assertThat(finalProfits[player]).isEqualTo(-100)
+        assertThat(finalProfits[player]?.toInt()).isEqualTo(-100)
     }
 
     @Test
@@ -51,7 +51,7 @@ class ProfitCalculatorTest {
 
         val finalProfits = profitCalculator.calculateFinalProfits(playerResults, bettingManager, players)
 
-        assertThat(finalProfits[player]).isEqualTo(0)
+        assertThat(finalProfits[player]?.toInt()).isEqualTo(0)
     }
 
     @Test
@@ -64,6 +64,6 @@ class ProfitCalculatorTest {
 
         val finalProfits = profitCalculator.calculateFinalProfits(playerResults, bettingManager, players)
 
-        assertThat(finalProfits[player]).isEqualTo(150)
+        assertThat(finalProfits[player]?.toInt()).isEqualTo(150)
     }
 }

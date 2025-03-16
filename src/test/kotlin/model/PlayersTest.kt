@@ -29,33 +29,23 @@ class PlayersTest {
     }
 
     @Test
-    fun `플레이어들의 카드네임을 모두 알 수 있다`() {
-        val cards1 =
-            listOf(
-                TestCards.CLUB_SIX,
-                TestCards.SPADE_NINE,
-            )
-        val cards2 =
-            listOf(
-                TestCards.CLUB_TEN,
-                TestCards.SPADE_EIGHT,
-            )
+    fun `플레이어들의 카드 네임을 모두 알 수 있다`() {
+        val cards1 = listOf(TestCards.CLUB_SIX, TestCards.SPADE_NINE)
+        val cards2 = listOf(TestCards.CLUB_TEN, TestCards.SPADE_EIGHT)
 
         val player1 = Player("joy", Hand(cards1))
         val player2 = Player("jay", Hand(cards2))
 
         val players = Players(listOf(player1, player2))
 
-        val expected =
-            listOf(
-                TestCards.CLUB_SIX,
-                TestCards.SPADE_NINE,
-            )
+        val expected = listOf(
+            cards1.displayNames(),
+            cards2.displayNames()
+        )
 
-        val playersCardNames =
-            players.map { player ->
-                player.getHand().handCards.displayNames()
-            }
+        val playersCardNames = players.map { player ->
+            player.getHand().handCards.displayNames()
+        }
 
         assertThat(playersCardNames).isEqualTo(expected)
     }
