@@ -1,8 +1,10 @@
 package blackjack.domain
 
 class Card(
-    private val rank: Rank,
-    private val suit: Suit,
+    val rank: Rank,
+    val suit: Suit,
 ) {
     fun getScore(): Int = rank.score
+
+    fun hasAce(): Boolean = rank == Rank.ACE
 }
