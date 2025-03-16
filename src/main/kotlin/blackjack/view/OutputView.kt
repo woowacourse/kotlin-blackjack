@@ -48,7 +48,7 @@ class OutputView {
         println()
         println(FINAL_RESULT_HEADER)
         val playersProfits: Map<Player, Int> = scoreboard.playersProfits()
-        println(scoreboard.dealer.name + PARTICIPANT_PROFIT_DELIMITER + scoreboard.dealerProfit(playersProfits))
+        println(scoreboard.dealer.name + PARTICIPANT_PROFIT_DELIMITER + scoreboard.dealerProfit(scoreboard.players))
         playersProfits.forEach { (player, profit) ->
             println(player.name + PARTICIPANT_PROFIT_DELIMITER + profit)
         }

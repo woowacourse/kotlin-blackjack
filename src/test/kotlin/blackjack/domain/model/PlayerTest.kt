@@ -90,7 +90,7 @@ class PlayerTest {
     fun `플레이어가 블랙잭이고 딜러는 블랙잭이 아닐 시 플레이어가 블랙잭이 된다`() {
         val player = Player("A", HEART_ACE, HEART_KING) // 21점
         val dealer = Dealer(SPADE_TWO, SPADE_THREE) // 5점
-        assertThat(player.compareAgainst(dealer)).isEqualTo(GameResult.BLACKJACK)
+        assertThat(player.compareAgainst(dealer)).isEqualTo(GameResult.BLACKJACK_WIN)
     }
 
     @Test

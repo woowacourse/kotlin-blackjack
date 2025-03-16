@@ -42,19 +42,9 @@ class Player(
         processHits(deck, input, output)
     }
 
-    fun compareAgainst(dealer: Dealer): GameResult {
+    override fun compareAgainst(other: Participant): GameResult {
         if (isBusted()) return GameResult.LOSE
-        if (dealer.isBusted()) return GameResult.WIN
-
-        if (isBlackJack() && dealer.isBlackJack()) return GameResult.PUSH
-        if (isBlackJack()) return GameResult.BLACKJACK
-
-        val point: Int = computePoint()
-        val dealerPoint: Int = dealer.computePoint()
-        return when {
-            point > dealerPoint -> GameResult.WIN
-            point < dealerPoint -> GameResult.LOSE
-            else -> GameResult.PUSH
-        }
+        if (other.isBusted()) return GameResult.WIN
+        return super.compareAgainst(other)
     }
 }

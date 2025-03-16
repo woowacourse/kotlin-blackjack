@@ -39,7 +39,7 @@ class ScoreboardTest {
                 player1 to -11111,
                 player2 to 0,
                 player3 to 33333,
-                player4 to 27778,
+                player4 to 27777,
             )
         assertThat(playersProfits).isEqualTo(actual)
     }
@@ -50,7 +50,7 @@ class ScoreboardTest {
         val player1 = Player("pobi", 10000, Card(Suit.HEART, Rank.TWO), Card(Suit.SPADE, Rank.EIGHT), Card(Suit.CLUB, Rank.ACE)) // 21점
         val player2 = Player("jason", 20000, Card(Suit.CLUB, Rank.SEVEN), Card(Suit.SPADE, Rank.KING)) // 17점
         val scoreboard = Scoreboard(dealer, listOf(player1, player2))
-        val dealerProfit: Int = scoreboard.dealerProfit(scoreboard.playersProfits())
+        val dealerProfit: Int = scoreboard.dealerProfit(scoreboard.players)
         val actual: Int = -10000 + 20000
         assertThat(dealerProfit).isEqualTo(actual)
     }
@@ -63,8 +63,8 @@ class ScoreboardTest {
         val player3 = Player("C", 33333, Card(Suit.SPADE, Rank.QUEEN), Card(Suit.SPADE, Rank.KING)) // 20점
         val player4 = Player("D", 55555, Card(Suit.SPADE, Rank.ACE), Card(Suit.SPADE, Rank.KING)) // 21점
         val scoreboard = Scoreboard(dealer, listOf(player1, player2, player3, player4))
-        val dealerProfit: Int = scoreboard.dealerProfit(scoreboard.playersProfits())
-        val actual: Int = 11111 + 0 - 33333 - 27778
+        val dealerProfit: Int = scoreboard.dealerProfit(scoreboard.players)
+        val actual: Int = 11111 + 0 - 33333 - 27777
         assertThat(dealerProfit).isEqualTo(actual)
     }
 }

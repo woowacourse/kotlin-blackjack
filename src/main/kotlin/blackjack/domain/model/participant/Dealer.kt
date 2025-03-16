@@ -2,6 +2,7 @@ package blackjack.domain.model.participant
 
 import blackjack.domain.model.card.Card
 import blackjack.domain.model.card.Deck
+import blackjack.domain.model.result.GameResult
 
 class Dealer(
     name: String,
@@ -25,6 +26,12 @@ class Dealer(
             return super.showHand().take(INITIAL_OPEN_SIZE)
         }
         return super.showHand()
+    }
+
+    override fun compareAgainst(other: Participant): GameResult {
+        if (other.isBusted()) return GameResult.WIN
+        if (!isBlackJack() && other.isBlackJack()) return GameResult.BLACKJACK_LOSE
+        return super.compareAgainst(other)
     }
 
     tailrec fun processHits(
