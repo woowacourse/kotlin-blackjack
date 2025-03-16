@@ -22,9 +22,9 @@ class Participants(
 
     fun playGame(
         draw: () -> Card,
-        onPlayerChoice: (Player) -> Boolean,
-        onPlayerDraw: (Player) -> Unit,
-        onDealerDraw: (Dealer) -> Unit,
+        onPlayerChoice: (Participant) -> Boolean,
+        onPlayerDraw: (Participant) -> Unit,
+        onDealerDraw: (Participant) -> Unit,
     ) {
         playPlayersTurn(draw, onPlayerChoice, onPlayerDraw)
         playDealerTurn(draw, onDealerDraw)
@@ -32,25 +32,27 @@ class Participants(
 
     private fun playPlayersTurn(
         draw: () -> Card,
-        onChoice: (Player) -> Boolean,
-        onDraw: (Player) -> Unit,
+        onChoice: (Participant) -> Boolean,
+        onDraw: (Participant) -> Unit,
     ) {
         players.forEach { player ->
-            while (player.canHit() && onChoice(player)) {
-                player.drawCard(draw())
-                onDraw(player)
-            }
+            player.playGame(
+                draw = draw,
+                shouldContinue = onChoice,
+                onDraw = onDraw,
+            )
         }
     }
 
     private fun playDealerTurn(
         draw: () -> Card,
-        onDraw: (Dealer) -> Unit,
+        onDraw: (Participant) -> Unit,
     ) {
-        while (dealer.canHit()) {
-            dealer.drawCard(draw())
-            onDraw(dealer)
-        }
+        dealer.playGame(
+            draw = draw,
+            shouldContinue = { true },
+            onDraw = onDraw,
+        )
     }
 
     fun blackjackResult(): BlackjackResult = BlackjackResult(dealerResult(), playersResult())

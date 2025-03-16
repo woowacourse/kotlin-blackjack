@@ -1,9 +1,8 @@
 package blackjack.domain
 
 import blackjack.domain.card.Deck
-import blackjack.domain.participant.Dealer
+import blackjack.domain.participant.Participant
 import blackjack.domain.participant.Participants
-import blackjack.domain.participant.Player
 
 class BlackjackGame(
     private val deck: Deck,
@@ -16,9 +15,9 @@ class BlackjackGame(
     }
 
     fun playTurns(
-        onPlayerChoice: (Player) -> Boolean,
-        onPlayerDraw: (Player) -> Unit,
-        onDealerDraw: (Dealer) -> Unit,
+        onPlayerChoice: (Participant) -> Boolean,
+        onPlayerDraw: (Participant) -> Unit,
+        onDealerDraw: (Participant) -> Unit,
     ) {
         participants.playGame(deck::pick, onPlayerChoice, onPlayerDraw, onDealerDraw)
     }

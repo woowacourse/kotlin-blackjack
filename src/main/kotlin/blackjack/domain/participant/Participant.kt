@@ -18,6 +18,17 @@ abstract class Participant(
 
     fun isBlackjack(): Boolean = hand.isBlackjack()
 
+    fun playGame(
+        draw: () -> Card,
+        shouldContinue: (Participant) -> Boolean,
+        onDraw: (Participant) -> Unit,
+    ) {
+        while (canHit() && shouldContinue(this)) {
+            drawCard(draw())
+            onDraw(this)
+        }
+    }
+
     abstract fun canHit(): Boolean
 
     abstract fun getResult(other: Participant): GameResult

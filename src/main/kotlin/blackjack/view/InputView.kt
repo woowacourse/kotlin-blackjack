@@ -1,6 +1,6 @@
 package blackjack.view
 
-import blackjack.domain.participant.Player
+import blackjack.domain.participant.Participant
 
 class InputView {
     fun readPlayerNames(): List<String> {
@@ -23,7 +23,7 @@ class InputView {
         return readBettingAmount(name)
     }
 
-    fun readPlayerHit(player: Player): Boolean {
+    fun readPlayerHit(player: Participant): Boolean {
         println(MESSAGE_INPUT_HIT_OR_STAY.format(player.name))
         val input = readln().trim()
         if (input == YES) {

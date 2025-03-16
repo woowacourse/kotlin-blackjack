@@ -21,11 +21,11 @@ class OutputView {
         players.forEach { printPlayerCards(it) }
     }
 
-    fun printPlayerCards(player: Player) {
+    fun printPlayerCards(player: Participant) {
         println(cardsInfo(player))
     }
 
-    fun printDealerHit(dealer: Dealer) {
+    fun printDealerHit(dealer: Participant) {
         println(MESSAGE_DEALER_HIT.format(dealer.name))
     }
 
