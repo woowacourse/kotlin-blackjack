@@ -81,7 +81,7 @@ class BlackjackController(
 
         outputView.displayProfitTitle()
         bettingResult.value.forEach { (name, money) ->
-            outputView.displayProfit(name.toString(), money.value)
+            outputView.displayProfit(name, money)
         }
     }
 }

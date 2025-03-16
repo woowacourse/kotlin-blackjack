@@ -1,6 +1,7 @@
 package blackjack.view
 
 import blackjack.model.card.Card
+import blackjack.model.card.CardCount
 import blackjack.model.card.CardRank
 import blackjack.model.card.CardRank.ACE
 import blackjack.model.card.CardRank.JACK
@@ -12,6 +13,7 @@ import blackjack.model.card.CardSuit.DIAMOND
 import blackjack.model.card.CardSuit.HEART
 import blackjack.model.card.CardSuit.SPADE
 import blackjack.model.hand.Score
+import blackjack.model.participant.Money
 import blackjack.model.participant.Name
 import blackjack.model.participant.Player.Companion.PLAYER_DEFAULT_MONEY
 
@@ -24,10 +26,10 @@ class OutputView {
         println("\n딜러와 ${players.joinToString()}에게 2장을 나누었습니다.")
     }
 
-    fun displayDealerDrawInfo(count: Int) {
+    fun displayDealerDrawInfo(count: CardCount) {
         val output =
             when {
-                count == 0 -> "딜러는 16초과라 카드를 더 이상 뽑지 않았습니다."
+                count.value == 0 -> "딜러는 16초과라 카드를 더 이상 뽑지 않았습니다."
                 else -> "딜러는 16이하라 $count 장의 카드를 더 받았습니다."
             }
         println("\n" + output + "\n")
@@ -75,9 +77,9 @@ class OutputView {
     }
 
     fun displayProfit(
-        name: String,
-        profit: Double,
+        name: Name,
+        profit: Money,
     ) {
-        println("$name: $profit")
+        println("$name: ${profit.value}")
     }
 }

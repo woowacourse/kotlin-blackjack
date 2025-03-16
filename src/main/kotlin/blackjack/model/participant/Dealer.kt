@@ -1,6 +1,7 @@
 package blackjack.model.participant
 
 import blackjack.model.card.Card
+import blackjack.model.card.CardCount
 import blackjack.model.hand.Hand
 import blackjack.model.hand.Score
 import blackjack.model.winning.GameResult
@@ -13,11 +14,11 @@ class Dealer private constructor(
 ) : Participant(name, money, hand) {
     override val isDrawable: Boolean get() = score <= DRAW_CRITERIA
 
-    val additionalDrawCount: Int get() = cards.size - INITIAL_DRAW_COUNT
+    val additionalDrawCount: CardCount get() = CardCount(cards.size) - INITIAL_DRAW_COUNT
 
     override fun showInitialCards(): List<Card> = cards.take(FIRST_SHOWN_COUNT)
 
-    fun draw(cards: (Int) -> List<Card>) {
+    fun draw(cards: (CardCount) -> List<Card>) {
         while (isDrawable) {
             receiveCards(cards)
         }

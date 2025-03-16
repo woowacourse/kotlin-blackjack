@@ -1,6 +1,7 @@
 package blackjack.model.participant
 
 import blackjack.model.card.Card
+import blackjack.model.card.CardCount
 import blackjack.model.hand.Hand
 import blackjack.model.hand.HandState
 import blackjack.model.hand.Score
@@ -29,7 +30,7 @@ abstract class Participant(
         _money -= money
     }
 
-    fun receiveCards(drawCards: (Int) -> List<Card>) {
+    fun receiveCards(drawCards: (CardCount) -> List<Card>) {
         val count = if (cards.isEmpty()) INITIAL_DRAW_COUNT else DEFAULT_DRAW_COUNT
         addAll(drawCards(count))
     }
@@ -54,7 +55,7 @@ abstract class Participant(
         }
 
     companion object {
-        const val INITIAL_DRAW_COUNT = 2
-        const val DEFAULT_DRAW_COUNT = 1
+        val INITIAL_DRAW_COUNT = CardCount(2)
+        val DEFAULT_DRAW_COUNT = CardCount(1)
     }
 }

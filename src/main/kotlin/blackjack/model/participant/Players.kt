@@ -1,6 +1,7 @@
 package blackjack.model.participant
 
 import blackjack.model.card.Card
+import blackjack.model.card.CardCount
 import blackjack.model.winning.GameResult
 
 class Players private constructor(
@@ -23,7 +24,7 @@ class Players private constructor(
     }
 
     fun draw(
-        newCards: (Int) -> List<Card>,
+        newCards: (CardCount) -> List<Card>,
         choice: (Name) -> PlayerAction,
         onCardReceived: (Name, List<Card>) -> Unit,
     ) {

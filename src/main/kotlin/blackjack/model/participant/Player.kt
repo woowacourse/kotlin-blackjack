@@ -1,6 +1,7 @@
 package blackjack.model.participant
 
 import blackjack.model.card.Card
+import blackjack.model.card.CardCount
 import blackjack.model.hand.Hand
 import blackjack.model.hand.HandState
 
@@ -14,7 +15,7 @@ class Player private constructor(
     override fun showInitialCards(): List<Card> = cards.take(FIRST_SHOWN_COUNT)
 
     fun progressDraw(
-        newCards: (Int) -> List<Card>,
+        newCards: (CardCount) -> List<Card>,
         choice: (Name) -> PlayerAction,
         onCardReceived: (Name, List<Card>) -> Unit,
     ) {

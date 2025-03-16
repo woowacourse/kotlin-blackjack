@@ -1,6 +1,7 @@
 package blackjack.model.participant
 
 import blackjack.model.card.Card
+import blackjack.model.card.CardCount
 import blackjack.model.winning.GameResult
 
 class Participants(
@@ -22,7 +23,7 @@ class Participants(
     companion object {
         fun create(
             dealerName: Name,
-            distributeCards: (Int) -> List<Card>,
+            distributeCards: (CardCount) -> List<Card>,
             getPlayerNames: () -> List<Name>,
         ): Participants {
             val dealer = Dealer.create(dealerName)
