@@ -34,7 +34,10 @@ class Players private constructor(
     }
 
     fun winningResult(dealer: Dealer): PlayersResult {
-        val result = value.associate { it.name to it.winningState(dealer) }
+        val result =
+            value.associate { player ->
+                player.name to player.winningState(dealer)
+            }
         return PlayersResult(result)
     }
 

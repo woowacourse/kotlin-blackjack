@@ -4,6 +4,9 @@ import blackjack.model.card.Card
 import blackjack.model.card.CardCount
 import blackjack.model.hand.Hand
 import blackjack.model.hand.HandState
+import blackjack.model.participant.PlayerAction.HIT
+import blackjack.model.participant.PlayerAction.STAY
+import blackjack.model.participant.PlayerAction.UNKNOWN
 
 class Player private constructor(
     name: Name,
@@ -21,13 +24,13 @@ class Player private constructor(
     ) {
         while (true) {
             when (choice(name)) {
-                PlayerAction.HIT -> {
+                HIT -> {
                     receiveCards(newCards)
                     onCardReceived(name, cards)
                     if (!isDrawable) return
                 }
-                PlayerAction.STAY -> break
-                PlayerAction.UNKNOWN -> throw IllegalArgumentException("[ERROR] 올바르지 않은 입력입니다.")
+                STAY -> break
+                UNKNOWN -> throw IllegalArgumentException("[ERROR] 올바르지 않은 입력입니다.")
             }
         }
     }
