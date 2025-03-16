@@ -4,8 +4,10 @@ import blackjack.domain.model.card.Number.ACE
 import blackjack.domain.model.participant.CardStatus
 
 class HandCards(
-    private val _cards: MutableList<Card> = mutableListOf(),
+    initCards: List<Card> = emptyList(),
 ) {
+    private val _cards: MutableList<Card> = initCards.toMutableList()
+
     val cards: List<Card>
         get() = this._cards.toList()
 
