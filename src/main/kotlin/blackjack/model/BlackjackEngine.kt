@@ -8,7 +8,7 @@ class BlackjackEngine(
     var bets: MutableMap<Player, Money> = mutableMapOf()
 
     fun getPlayersBet(players: Players) {
-        players.getPlayers().forEach { player ->
+        players.value.forEach { player ->
             bets[player] = Money(eventProvider.getBetAmount(player.name).toDouble())
         }
     }
