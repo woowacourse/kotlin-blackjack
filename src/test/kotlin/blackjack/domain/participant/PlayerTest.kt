@@ -165,6 +165,30 @@ class PlayerTest {
         assertThat(result).isEqualTo(GameResult.WIN_BLACKJACK)
     }
 
+    @Test
+    fun `플레이어가 카드 뽑기를 한 번 하면 카드를 한 장 뽑는다`() {
+        // given
+        var firstCall = true
+        val shouldContinue: (Participant) -> Boolean = {
+            if (firstCall) {
+                firstCall = false
+                true
+            } else {
+                false
+            }
+        }
+
+        // when
+        player.playGame(
+            draw = { Card(Rank.ACE, Suit.SPADE) },
+            shouldContinue = shouldContinue,
+            onDraw = {},
+        )
+
+        // then
+        assertThat(player.hand.cards.size).isEqualTo(1)
+    }
+
     private fun Participant.drawCards(vararg cards: Card) {
         cards.forEach { this.receiveCard(it) }
     }
