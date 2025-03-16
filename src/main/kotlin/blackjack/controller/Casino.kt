@@ -83,15 +83,31 @@ class Casino(
         deck: Deck,
     ) {
         while (player.isDrawable()) {
-            val response = PlayerResponse(inputView.readWantExtraCard(player.name))
-            if (!response.value) {
-                outputView.showParticipantCardsInfo(player)
+            val response: PlayerResponse = inputView.readWantExtraCard(player.name)
+            playerActByResponse(player, deck, response)
+
+            if (response == PlayerResponse.STAY) {
                 break
             }
-            player.draw(drawSafely(1, deck))
-            outputView.showParticipantCardsInfo(player)
         }
         outputView.newLine()
+    }
+
+    private fun playerActByResponse(
+        player: Player,
+        deck: Deck,
+        playerResponse: PlayerResponse,
+    ) {
+        when (playerResponse) {
+            PlayerResponse.STAY -> {
+                outputView.showParticipantCardsInfo(player)
+            }
+
+            PlayerResponse.HIT -> {
+                player.draw(drawSafely(1, deck))
+                outputView.showParticipantCardsInfo(player)
+            }
+        }
     }
 
     private fun runDealerPhase(

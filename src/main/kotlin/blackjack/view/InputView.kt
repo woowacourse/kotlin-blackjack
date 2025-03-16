@@ -1,5 +1,7 @@
 package blackjack.view
 
+import blackjack.domain.model.participant.PlayerResponse
+
 class InputView {
     fun readPlayerNames(): List<String> {
         println(ALERT_PLAYER_NAME_INPUT)
@@ -7,10 +9,10 @@ class InputView {
         return input.split(",").map { it.trim() }
     }
 
-    fun readWantExtraCard(name: String): Boolean {
+    fun readWantExtraCard(name: String): PlayerResponse {
         println(ALERT_READ_WANT_EXTRA_CARD.format(name))
         val input: String = readln()
-        return input.toBooleanOrNull() ?: run {
+        return input.toPlayerResponseOrNull() ?: run {
             println(ERROR_WRONG_WANT_EXTRA_CARD_INPUT)
             readWantExtraCard(name)
         }
@@ -33,10 +35,10 @@ class InputView {
         private const val ERROR_WRONG_WANT_EXTRA_CARD_INPUT = "잘못된 입력입니다 Y 또는 N만 입력해 주세요"
         private const val ERROR_WRONG_BET_AMOUNT = "잘못된 베팅 금액 입력입니다"
 
-        private fun String.toBooleanOrNull(): Boolean? =
+        private fun String.toPlayerResponseOrNull(): PlayerResponse? =
             when (this.uppercase()) {
-                "Y" -> true
-                "N" -> false
+                "Y" -> PlayerResponse.HIT
+                "N" -> PlayerResponse.STAY
                 else -> null
             }
     }
