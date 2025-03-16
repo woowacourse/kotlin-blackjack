@@ -1,7 +1,7 @@
 package blackjack.domain.update.participant
 
-import blackjack.domain.Card
 import blackjack.domain.Deck
+import blackjack.domain.update.card.Card
 import blackjack.domain.update.state.Finished
 import blackjack.domain.update.state.Hittable
 import blackjack.domain.update.state.NewParticipantState
