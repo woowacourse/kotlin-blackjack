@@ -1,19 +1,22 @@
 package blackjack.domain
 
 import blackjack.domain.card.Card
-import blackjack.domain.card.Rank.FaceRank
 import blackjack.domain.card.Rank.NumberRank
 import blackjack.domain.card.Suit
+import blackjack.domain.fixture.CARD_KING_SPADE
+import blackjack.domain.fixture.CARD_SEVEN_HEART
+import blackjack.domain.participant.Player
+import blackjack.domain.state.Busted
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 class PlayerTest {
-    private fun Player(name: String): Player = Player(name, Betting(0))
+    private fun Player(name: String): Player = Player(name, Betting(1_000.0), Deck { it })
 
-    private fun Player.draw(vararg cards: Card) {
+    private fun Player.hitCards(vararg cards: Card) {
         cards.forEach { card ->
-            draw(card)
+            hit(card)
         }
     }
 
@@ -26,44 +29,29 @@ class PlayerTest {
     @Test
     fun `플레이어는 모든 카드의 합이 21 미만이 될 수 있을 경우 계속해서 카드를 뽑을 수 있다`() {
         val player = Player("Eden")
-        val card1 = Card.of(NumberRank.SEVEN, Suit.HEART)
-        val card2 = Card.of(NumberRank.SEVEN, Suit.DIAMOND)
-        val card3 = Card.of(NumberRank.SEVEN, Suit.DIAMOND)
-        player.draw(card1)
-        println(player.score)
-        println(player.cards)
-        player.draw(card2)
-        println(player.score)
-        println(player.cards)
-        player.draw(card3)
-        println(player.score)
-        println(player.cards)
-        assertThrows<IllegalArgumentException> {
-            player.draw(Card.of(NumberRank.TWO, Suit.SPADE))
+        player.hitCards(CARD_SEVEN_HEART, CARD_SEVEN_HEART, CARD_SEVEN_HEART)
+        assertThrows<IllegalStateException> {
+            player.hit(Card(NumberRank.TWO, Suit.SPADE))
         }
     }
 
     @Test
     fun `플레이어 카드의 합이 21 이하가 될 수 없는 플레이어는 반드시 패배한다`() {
         val player = Player("Eden")
-        player.draw(
-            Card.of(FaceRank.JACK, Suit.DIAMOND),
-            Card.of(FaceRank.JACK, Suit.DIAMOND),
-            Card.of(FaceRank.JACK, Suit.DIAMOND),
+        player.hitCards(
+            CARD_SEVEN_HEART,
+            CARD_SEVEN_HEART,
+            CARD_KING_SPADE,
         )
-        player.score
-        assertThat(player.state).isEqualTo(ParticipantState.LOSE)
+        assertThat(player.state).isInstanceOf(Busted::class.java)
     }
 
     @Test
     fun `플레이어의 최종 결과를 알 수 있다`() {
         val player =
             Player("Gio").apply {
-                draw(Card.of(NumberRank.TEN, Suit.DIAMOND))
-                draw(Card.of(NumberRank.TEN, Suit.DIAMOND))
-                draw(Card.of(NumberRank.TEN, Suit.DIAMOND))
+                hitCards(CARD_SEVEN_HEART, CARD_SEVEN_HEART, CARD_SEVEN_HEART)
             }
-        player.score
-        assertThat(player.state).isEqualTo(ParticipantState.LOSE)
+        assertThat(player.state).isInstanceOf(Busted::class.java)
     }
 }
