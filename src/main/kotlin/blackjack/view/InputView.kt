@@ -26,7 +26,7 @@ class InputView {
         }
     }
 
-    fun lineSeparator() {
+    private fun lineSeparator() {
         println()
     }
 

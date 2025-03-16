@@ -37,7 +37,7 @@ abstract class GameParticipant(
             else -> WinLoss.WIN
         }
 
-    val cardSize: Int
+    private val cardSize: Int
         get() = handCards.cards.size
 
     fun isInitHandCard() = cardSize == HandCards.INIT_CARD_SIZE

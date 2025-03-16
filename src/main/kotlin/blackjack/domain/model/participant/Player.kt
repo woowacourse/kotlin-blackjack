@@ -14,10 +14,6 @@ class Player(
 
     override fun isDrawFinish(): Boolean = this.cardStatus == CardStatus.BUST
 
-    constructor(name: String = DEFAULT_NAME, cards: List<Card> = emptyList()) : this(ParticipantInfo(name, BetAmount())) {
-        cards.forEach { card -> this.handCards.addCard(card) }
-    }
-
     constructor(participantInfo: ParticipantInfo, cards: List<Card> = emptyList()) : this(participantInfo) {
         cards.forEach { card -> this.handCards.addCard(card) }
     }

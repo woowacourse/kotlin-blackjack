@@ -9,7 +9,7 @@ import java.util.Locale
 class OutputView(
     private val locale: Locale,
 ) {
-    fun lineSeparator() {
+    private fun lineSeparator() {
         println()
     }
 
