@@ -114,7 +114,6 @@ class Casino(
         dealer: Dealer,
         deck: Deck,
     ) {
-        dealer.draw(drawSafely(1, deck))
         while (dealer.isDrawable()) {
             dealer.draw(drawSafely(1, deck))
             outputView.showDealerDrawMessage()
