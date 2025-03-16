@@ -7,7 +7,9 @@ class HandTest {
     @Test
     fun `손패에 카드를 추가할 수 있다`() {
         val hand: Hand =
-            Hand.of(CLUB_ACE)
+            Hand().apply {
+                add(DIAMOND_ACE)
+            }
         val actualCardsList = hand.cards
 
         val expectedSize = 1
@@ -17,16 +19,14 @@ class HandTest {
 
     @Test
     fun `손패에 카드 목록을 확인할 수 있다`() {
-        val queenHeart = HEART_QUEEN
-        val aceSpade = SPADE_ACE
         val hand: Hand =
             Hand.of(
-                queenHeart,
-                aceSpade,
+                HEART_QUEEN,
+                SPADE_ACE,
             )
         val actualCardList = hand.cards
 
-        val expectedCardList = listOf(queenHeart, aceSpade)
+        val expectedCardList = listOf(HEART_QUEEN, SPADE_ACE)
 
         assertThat(actualCardList).isEqualTo(expectedCardList)
     }
