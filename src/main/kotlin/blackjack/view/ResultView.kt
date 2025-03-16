@@ -33,7 +33,7 @@ class ResultView {
     ) {
         println("\n$dealerSummary")
         playerSummaries.forEach { playerSummary ->
-            println("${playerSummary.name}카드: ${playerSummary.cards.joinToString()} - 결과: $playerSummary.score")
+            println("${playerSummary.name}카드: ${playerSummary.cards.joinToString()} - 결과: ${playerSummary.score}")
         }
         println()
     }
