@@ -60,10 +60,10 @@ class ParticipantsTest {
     @Test
     fun `딜러의 점수보다 플레이어의 점수가 같으면 무승부를 반환한다`() {
         // given
-        participants.dealer.addAll(listOf(ACE_HEART, SEVEN_HEART))
+        participants.dealer.receiveCards { listOf(ACE_HEART, SEVEN_HEART) }
         participants.players.value
             .first()
-            .addAll(listOf(ACE_HEART, SEVEN_HEART))
+            .receiveCards { listOf(ACE_HEART, SEVEN_HEART) }
 
         // when
         val playerResult = participants.winningResult().playersResult
@@ -75,10 +75,10 @@ class ParticipantsTest {
     @Test
     fun `딜러의 점수보다 플레이어의 점수가 높으면 우승을 반환한다`() {
         // given
-        participants.dealer.addAll(listOf(ACE_HEART, SIX_HEART))
+        participants.dealer.receiveCards { listOf(ACE_HEART, SIX_HEART) }
         participants.players.value
             .first()
-            .addAll(listOf(ACE_HEART, SEVEN_HEART))
+            .receiveCards { listOf(ACE_HEART, SEVEN_HEART) }
 
         // when
         val playerResult = participants.winningResult().playersResult
@@ -90,10 +90,10 @@ class ParticipantsTest {
     @Test
     fun `딜러의 점수보다 플레이어의 점수가 낮으면 패배를 반환한다`() {
         // given
-        participants.dealer.addAll(listOf(ACE_HEART, SEVEN_HEART))
+        participants.dealer.receiveCards { listOf(ACE_HEART, SEVEN_HEART) }
         participants.players.value
             .first()
-            .addAll(listOf(ACE_HEART, SIX_HEART))
+            .receiveCards { listOf(ACE_HEART, SIX_HEART) }
 
         // when
         val playerResult = participants.winningResult().playersResult
@@ -105,10 +105,10 @@ class ParticipantsTest {
     @Test
     fun `딜러와 플레이어가 모두 버스트된 경우 플레이어는 패배한다`() {
         // given
-        participants.dealer.addAll(listOf(TEN_HEART, TEN_HEART, TEN_HEART))
+        participants.dealer.receiveCards { listOf(TEN_HEART, TEN_HEART, TEN_HEART) }
         participants.players.value
             .first()
-            .addAll(listOf(TEN_HEART, TEN_HEART, TEN_HEART))
+            .receiveCards { listOf(TEN_HEART, TEN_HEART, TEN_HEART) }
 
         // when
         val playerResult = participants.winningResult().playersResult

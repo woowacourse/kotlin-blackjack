@@ -72,7 +72,7 @@ class ParticipantTest {
         val cards = listOf(SIX_HEART, TEN_HEART)
 
         // when
-        participant.addAll(cards)
+        participant.receiveCards { cards }
 
         // then
         assertEquals(2, participant.cards.size)

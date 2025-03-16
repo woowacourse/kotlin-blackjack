@@ -32,11 +32,7 @@ abstract class Participant(
 
     fun receiveCards(drawCards: (CardCount) -> List<Card>) {
         val count = if (cards.isEmpty()) INITIAL_DRAW_COUNT else DEFAULT_DRAW_COUNT
-        addAll(drawCards(count))
-    }
-
-    fun addAll(cards: List<Card>) {
-        hand.addAll(cards)
+        hand.addAll(drawCards(count))
     }
 
     fun winningState(other: Participant): WinningState =

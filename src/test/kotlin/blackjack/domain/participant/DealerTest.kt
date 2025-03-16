@@ -27,7 +27,7 @@ class DealerTest {
         // given
         val card1 = ACE_HEART
         val card2 = TEN_HEART
-        dealer.addAll(listOf(card1, card2))
+        dealer.receiveCards { listOf(card1, card2) }
 
         // when
         val initialVisibleCards = dealer.showInitialCards()
@@ -42,7 +42,7 @@ class DealerTest {
         // given
         val card1 = TEN_HEART
         val card2 = SIX_HEART
-        dealer.addAll(listOf(card1, card2))
+        dealer.receiveCards { listOf(card1, card2) }
 
         // when & then
         assertTrue(dealer.isDrawable)
@@ -53,7 +53,7 @@ class DealerTest {
         // given
         val card1 = TEN_HEART
         val card2 = Card(CardRank.SEVEN, CardSuit.HEART)
-        dealer.addAll(listOf(card1, card2))
+        dealer.receiveCards { listOf(card1, card2) }
 
         // when & then
         assertFalse(dealer.isDrawable)
@@ -67,10 +67,10 @@ class DealerTest {
                 TEN_HEART,
                 SIX_HEART,
             )
-        dealer.addAll(initialCards)
+        dealer.receiveCards { initialCards }
 
         // when
-        dealer.addAll(listOf(Card(CardRank.TWO, CardSuit.CLUB)))
+        dealer.receiveCards { listOf(Card(CardRank.TWO, CardSuit.CLUB)) }
 
         // then
         assertEquals(CardCount(1), dealer.additionalDrawCount)
@@ -79,7 +79,7 @@ class DealerTest {
     @Test
     fun `딜러의 점수가 16 이하일 때 카드를 받는다`() {
         // given
-        dealer.addAll(listOf(SIX_HEART))
+        dealer.receiveCards { listOf(SIX_HEART) }
         val draw: (CardCount) -> List<Card> = { listOf(SIX_HEART) }
 
         // when
@@ -92,7 +92,7 @@ class DealerTest {
     @Test
     fun `딜러의 점수가 17 이상이면 카드를 받지 않는다`() {
         // given
-        dealer.addAll(listOf(TEN_HEART, ACE_HEART))
+        dealer.receiveCards { listOf(TEN_HEART, ACE_HEART) }
         val draw: (CardCount) -> List<Card> = { listOf(SIX_HEART) }
 
         // when
