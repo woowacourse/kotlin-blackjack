@@ -89,7 +89,7 @@ class PlayersTest {
         val onCardReceived: (Name, List<Card>) -> Unit = { _, _ -> }
 
         // when
-        players.draw(draw, getCommand, onCardReceived)
+        players.progressDraw(draw, getCommand, onCardReceived)
 
         // then
         assertEquals(
@@ -109,7 +109,7 @@ class PlayersTest {
         val onCardReceived: (Name, List<Card>) -> Unit = { _, _ -> }
 
         // when
-        players.draw(draw, getCommand, onCardReceived)
+        players.progressDraw(draw, getCommand, onCardReceived)
 
         // then
         assertEquals(
@@ -130,7 +130,7 @@ class PlayersTest {
 
         // when & then
         assertThrows<IllegalArgumentException> {
-            players.draw(draw, getCommand, onCardReceived)
+            players.progressDraw(draw, getCommand, onCardReceived)
         }
     }
 }

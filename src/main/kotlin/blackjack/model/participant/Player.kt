@@ -14,7 +14,7 @@ class Player private constructor(
 
     override fun showInitialCards(): List<Card> = cards.take(FIRST_SHOWN_COUNT)
 
-    fun progressDraw(
+    fun draw(
         newCards: (CardCount) -> List<Card>,
         choice: (Name) -> PlayerAction,
         onCardReceived: (Name, List<Card>) -> Unit,

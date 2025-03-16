@@ -23,13 +23,13 @@ class Players private constructor(
         value.find { player -> player.name == name }?.receiveMoney(money) ?: return
     }
 
-    fun draw(
+    fun progressDraw(
         newCards: (CardCount) -> List<Card>,
         choice: (Name) -> PlayerAction,
         onCardReceived: (Name, List<Card>) -> Unit,
     ) {
         value.forEach { player ->
-            player.progressDraw(newCards, choice, onCardReceived)
+            player.draw(newCards, choice, onCardReceived)
         }
     }
 
