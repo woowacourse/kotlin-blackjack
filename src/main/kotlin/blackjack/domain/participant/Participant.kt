@@ -29,7 +29,7 @@ sealed class Participant(
         }
     }
 
-    fun compare(
+    protected fun compare(
         thisScore: Score,
         otherScore: Score,
     ): GameResult =
