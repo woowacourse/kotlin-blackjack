@@ -1,6 +1,5 @@
 package blackjack.domain.person
 
-import blackjack.domain.BetAmount
 import blackjack.domain.card.CardNumber
 import blackjack.domain.card.Deck
 import blackjack.domain.generateCustomDeck
@@ -14,17 +13,12 @@ class PlayerTest {
 
     @BeforeEach
     fun setup() {
-        player = Player("pobi", BetAmount(1000))
+        player = Player("pobi")
     }
 
     @Test
     fun `플레이어는 이름을 가지고 있다`() {
         player.name shouldBe "pobi"
-    }
-
-    @Test
-    fun `플레이어는 배팅 금액을 가지고 있다`() {
-        player.betAmount.value shouldBe 1000.0
     }
 
     @Test

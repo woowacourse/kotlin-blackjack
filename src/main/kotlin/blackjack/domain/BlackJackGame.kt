@@ -3,6 +3,7 @@ package blackjack.domain
 import blackjack.domain.card.Deck
 import blackjack.domain.person.Dealer
 import blackjack.domain.person.Player
+import blackjack.domain.person.PlayerBetInfo
 import blackjack.domain.result.GameResult
 import blackjack.view.BlackJackInputView
 import blackjack.view.BlackJackOutputView
@@ -13,7 +14,7 @@ class BlackJackGame(
 ) {
     private lateinit var deck: Deck
     private lateinit var dealer: Dealer
-    private lateinit var players: List<Player>
+    private lateinit var playerBetInfos: List<PlayerBetInfo>
 
     fun play() {
         prepareGame()
@@ -24,7 +25,7 @@ class BlackJackGame(
     private fun prepareGame() {
         deck = Deck()
         dealer = Dealer()
-        players = generatePlayers()
+        playerBetInfos = generatePlayers()
     }
 
     private fun runGame() {
@@ -38,25 +39,25 @@ class BlackJackGame(
         showGameResult()
     }
 
-    private fun generatePlayers(): List<Player> {
-        val names = readPlayerNames()
-        return names.map { name ->
-            val betAmount = readPlayerBetAmount(name)
-            Player(name, betAmount)
+    private fun generatePlayers(): List<PlayerBetInfo> {
+        val players = readPlayerNames()
+        return players.map { player ->
+            val betAmount = readPlayerBetAmount(player.name)
+            PlayerBetInfo(player, betAmount)
         }
     }
 
     private fun dealCards() {
         repeat(FIRST_TURN_DRAW_AMOUNT) {
             dealer.draw(deck)
-            players.forEach { player -> player.draw(deck) }
+            playerBetInfos.forEach { info -> info.player.draw(deck) }
         }
 
-        outputView.printInitialDrawMessage(dealer, players)
+        outputView.printInitialDrawMessage(dealer, playerBetInfos.map { info -> info.player })
     }
 
     private fun playPlayersTurns() {
-        players.forEach { player -> playPlayerTurns(player) }
+        playerBetInfos.forEach { info -> playPlayerTurns(info.player) }
     }
 
     private fun playDealerTurns() {
@@ -68,17 +69,17 @@ class BlackJackGame(
 
     private fun showPersonFinalCardStatus() {
         outputView.printPersonResult(dealer)
-        players.forEach { player -> outputView.printPersonResult(player) }
+        playerBetInfos.forEach { info -> outputView.printPersonResult(info.player) }
     }
 
     private fun showGameResult() {
-        val gameResult = GameResult(dealer, players)
+        val gameResult = GameResult(dealer, playerBetInfos)
         outputView.printGameResult(gameResult)
     }
 
-    private fun readPlayerNames(): List<String> =
+    private fun readPlayerNames(): List<Player> =
         retryWhenException {
-            inputView.getNames()
+            inputView.getNames().map { name -> Player(name) }
         }
 
     private fun readPlayerBetAmount(name: String): BetAmount =
