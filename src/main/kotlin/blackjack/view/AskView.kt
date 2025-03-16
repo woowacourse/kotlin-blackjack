@@ -13,7 +13,7 @@ class AskView {
                 .toList()
         return names.map { name ->
             println("${name}의 베팅 금액은?")
-            val bettingAmount = readln().toInt()
+            val bettingAmount = readln().toDouble()
             PlayerConfig(name, bettingAmount)
         }
     }

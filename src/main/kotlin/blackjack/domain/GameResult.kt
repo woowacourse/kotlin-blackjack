@@ -9,5 +9,5 @@ enum class GameResult(
     LOSE(-1.0),
     ;
 
-    fun calculateProfit(bettingAmount: Int): Double = (bettingAmount * profitRate)
+    fun calculateProfit(bettingAmount: Double): Double = (bettingAmount * profitRate)
 }
