@@ -9,7 +9,7 @@ class BlackjackResult(private val dealer: Dealer) {
     fun calculatePlayersProceed(betStatus: List<BetStatus>): List<ProceedStatus> {
         return betStatus.map { betInfo ->
             val result = betInfo.player.compareScores(dealer)
-            ProceedStatus(betInfo.player, Proceed(betInfo.betAmount.calculateProceed(result)))
+            ProceedStatus(betInfo.player, Proceed(betInfo.betAmount * result.earningRate))
         }
     }
 

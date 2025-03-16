@@ -5,8 +5,8 @@ class BetAmount(private val money: Int) {
         require(money >= MINIMUM_BET_AMOUNT) { INVALID_BET_AMOUNT.format(MINIMUM_BET_AMOUNT) }
     }
 
-    fun calculateProceed(result: GameResult): Int {
-        return (money * result.earningRate).toInt()
+    operator fun times(dividend: Double): Int {
+        return (money * dividend).toInt()
     }
 
     companion object {

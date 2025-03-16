@@ -16,16 +16,16 @@ class Hand(cards: MutableList<Card>) {
         return sum
     }
 
-    fun append(cards: List<Card>) {
-        _cards.addAll(cards)
-    }
-
     fun isBust(): Boolean {
         return getSumNumber() > BUST_STANDARD
     }
 
     fun isBlackjack(): Boolean {
         return _cards.size == 2 && getSumNumber() == BUST_STANDARD
+    }
+
+    operator fun plus(cards: List<Card>) {
+        _cards.addAll(cards)
     }
 
     companion object {
