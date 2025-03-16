@@ -19,21 +19,6 @@ class Dealer(
         return cards.sumOfCards <= DEALER_MAX_SCORE
     }
 
-    override fun getResult(other: Participant): GameResult {
-        val myScore = cards.finalScore()
-        val otherScore = other.cards.finalScore()
-
-        return when {
-            !cards.isBlackJack() && other.cards.isBlackJack() -> GameResult.LOSE
-            cards.isBlackJack() && !other.cards.isBlackJack() -> GameResult.BLACKJACK
-            other.cards.isBust() -> GameResult.WIN
-            this.cards.isBust() && !other.cards.isBust() -> GameResult.LOSE
-            myScore > otherScore -> GameResult.WIN
-            myScore < otherScore -> GameResult.LOSE
-            else -> GameResult.DRAW
-        }
-    }
-
     override fun getProfit(gameResult: GameResult): Double =
         when (gameResult) {
             GameResult.BLACKJACK -> DEALER_BLACKJACK_MULTIPLY

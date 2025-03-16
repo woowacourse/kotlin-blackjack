@@ -1,6 +1,7 @@
 package blackjack.controller
 
 import blackjack.domain.BlackJackGame
+import blackjack.domain.BlackJackTable
 import blackjack.domain.Money
 import blackjack.domain.ParticipantCards
 import blackjack.domain.deck.ShuffledDeck
@@ -25,10 +26,11 @@ class BlackJackController(
 
     private fun readyForGameParticipants(): Participants {
         val dealer = Dealer(ParticipantCards())
-        return Participants(dealer, inputView.readPlayerNames().map { name -> Player(name, ParticipantCards(), readBettingMoney(name)) })
+        return Participants(dealer, inputView.readPlayerNames().map { name -> Player(name, ParticipantCards()) })
     }
 
-    private fun readBettingMoney(name: String): Money = Money(inputView.readBettingMoney(name))
+    private fun readBettingMoney(participants: Participants): Map<Player, Money> =
+        participants.players.associateWith { player -> inputView.readBettingMoney(player.name) }
 
     private fun displayPlayerNames(participants: Participants) {
         outputView.printNames(participants.players)
@@ -42,7 +44,9 @@ class BlackJackController(
         outputView.printDealerCards(participants.dealer.showInitialCards())
     }
 
-    private fun readForGame(participants: Participants): BlackJackGame = BlackJackGame(participants, ShuffledDeck())
+    private fun readForGame(participants: Participants): BlackJackGame = BlackJackGame(participants, setTheTable(participants))
+
+    private fun setTheTable(participants: Participants): BlackJackTable = BlackJackTable(ShuffledDeck(), readBettingMoney(participants))
 
     private fun getUserChoice(name: String): Boolean = inputView.readHitOrStay(name)
 
@@ -87,12 +91,12 @@ class BlackJackController(
     }
 
     private fun displayPlayerProfit(game: BlackJackGame) {
-        game.calculatePlayerProfit { name, profit ->
+        game.getPlayerProfit { name, profit ->
             outputView.printPlayerProfit(name, profit)
         }
     }
 
     private fun displayDealerProfit(game: BlackJackGame) {
-        outputView.printDealerProfit(game.calculateDealerProfit())
+        outputView.printDealerProfit(game.getDealerProfit())
     }
 }
