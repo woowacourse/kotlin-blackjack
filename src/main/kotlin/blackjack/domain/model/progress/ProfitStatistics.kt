@@ -13,7 +13,7 @@ class ProfitStatistics(
             return betHistory.playerBets.entries.associate { (player, betAmount) ->
                 val winLoss =
                     playerWinLoseInfo[player] ?: throw IllegalArgumentException(ERROR_NOT_FOUND_WIN_LOSS.format(player))
-                val profitRate = calculateProfitRate(winLoss, player.handCards.getStatus())
+                val profitRate = calculateProfitRate(winLoss, player.cardStatus)
 
                 player to calculateProfit(betAmount, profitRate)
             }

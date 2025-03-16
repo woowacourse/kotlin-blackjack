@@ -52,7 +52,7 @@ class Casino(
     private fun initDistributeCard(participants: List<GameParticipant>) {
         participants.forEach { participant ->
             while (!participant.isInitHandCard()) {
-                participant.handCards.addCard(deck.getCard())
+                participant.drawCardFromDeck(deck)
             }
         }
     }
@@ -67,8 +67,8 @@ class Casino(
 
     private fun runPlayersDrawPhase(players: List<Player>) {
         players.forEach { player ->
-            while (player.handCards.getStatus() != CardStatus.BUST && isPlayerWantHit(player)) {
-                player.handCards.addCard(deck.getCard())
+            while (player.cardStatus != CardStatus.BUST && isPlayerWantHit(player)) {
+                player.drawCardFromDeck(deck)
                 outputView.showPlayerCardsInfo(player)
             }
             if (player.isInitHandCard()) {
@@ -82,7 +82,7 @@ class Casino(
 
     private fun runDealerDrawPhase(dealer: Dealer) {
         while (dealer.isDrawFinish()) {
-            dealer.handCards.addCard(deck.getCard())
+            dealer.drawCardFromDeck(deck)
             outputView.showDealerDrawMessage()
         }
     }

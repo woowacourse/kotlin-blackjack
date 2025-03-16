@@ -47,14 +47,14 @@ class OutputView(
 
     fun showCardsResult(participants: List<GameParticipant>) {
         participants.forEach {
-            println(makeParticipantInfoText(it) + CARD_RESULT_MESSAGE + it.handCards.calculateBestCardValue())
+            println(makeParticipantInfoText(it) + CARD_RESULT_MESSAGE + it.bestValue)
         }
         lineSeparator()
     }
 
     private fun makeParticipantInfoText(participant: GameParticipant): String {
         val name = participant.name
-        val cardsInfoText = participant.handCards.cards.joinToString { makeCardText(it) }
+        val cardsInfoText = participant.cards.joinToString { makeCardText(it) }
         return CARD_INFO_MESSAGE.format(name, cardsInfoText)
     }
 

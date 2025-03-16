@@ -5,10 +5,10 @@ import blackjack.domain.model.card.Card
 class Player(
     name: String = DEFAULT_NAME,
 ) : GameParticipant(name = name) {
-    override fun isDrawFinish(): Boolean = handCards.getStatus() == CardStatus.BUST
+    override fun isDrawFinish(): Boolean = this.cardStatus == CardStatus.BUST
 
     constructor(name: String = DEFAULT_NAME, cards: List<Card>) : this(name) {
-        cards.forEach { card -> handCards.addCard(card) }
+        cards.forEach { card -> this.handCards.addCard(card) }
     }
 
     companion object {

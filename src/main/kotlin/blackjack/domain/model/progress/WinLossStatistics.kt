@@ -17,10 +17,10 @@ class WinLossStatistics(
         dealer: Dealer,
         player: Player,
     ): WinLoss {
-        val dealerBestValue = dealer.handCards.calculateBestCardValue()
-        val playerBestValue = player.handCards.calculateBestCardValue()
-        val dealerCardStatus = dealer.handCards.getStatus()
-        val playerCardStatus = player.handCards.getStatus()
+        val dealerBestValue = dealer.bestValue
+        val playerBestValue = player.bestValue
+        val dealerCardStatus = dealer.cardStatus
+        val playerCardStatus = player.cardStatus
 
         val playerResult =
             when {
