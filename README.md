@@ -63,7 +63,7 @@
 - [x] GameParticipant의 isInitHandCard() 함수를 사용하도록 수정
 - [x] 외부에서 게임 참가자의 HandCard 직접 접근하지 않도록 수정
 - [x] HandCards 클래스에 방어적 복사 적용
-- [ ] intial로 Suit 객체를 가져올 수 있는 로직 추가
+- [ ] intial로 Number 객체를 가져올 수 있는 로직 추가
 - [ ] 최소 베팅 금액 상수화
 - [ ] 게임 참가자가 직접 수익이 얼마인지 알려줄 수 있도록 수정
 - [ ] ProfitRate와 Profit 클래스를 추가하여 수익률 계산 로직 수정
