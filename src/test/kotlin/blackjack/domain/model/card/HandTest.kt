@@ -7,9 +7,7 @@ class HandTest {
     @Test
     fun `손패에 카드를 추가할 수 있다`() {
         val hand: Hand =
-            Hand.of(
-                Card.of(CardNumber.ACE, Suit.CLUB),
-            )
+            Hand.of(CLUB_ACE)
         val actualCardsList = hand.cards
 
         val expectedSize = 1
@@ -19,8 +17,8 @@ class HandTest {
 
     @Test
     fun `손패에 카드 목록을 확인할 수 있다`() {
-        val queenHeart = Card.of(CardNumber.QUEEN, Suit.HEART)
-        val aceSpade = Card.of(CardNumber.ACE, Suit.SPADE)
+        val queenHeart = HEART_QUEEN
+        val aceSpade = SPADE_ACE
         val hand: Hand =
             Hand.of(
                 queenHeart,
@@ -37,9 +35,9 @@ class HandTest {
     fun `손패에 카드 값이 21이 넘으면 버스트인지 알 수 있다`() {
         val hand: Hand =
             Hand.of(
-                Card.of(CardNumber.TEN, Suit.HEART),
-                Card.of(CardNumber.KING, Suit.SPADE),
-                Card.of(CardNumber.TWO, Suit.CLUB),
+                HEART_TEN,
+                SPADE_KING,
+                CLUB_TWO,
             )
         val actualIsBust = hand.isBust()
 
@@ -52,8 +50,8 @@ class HandTest {
     fun `손패에 카드 값이 21이 넘지 않으면 버스트가 아닌지 알 수 있다`() {
         val hand: Hand =
             Hand.of(
-                Card.of(CardNumber.TEN, Suit.HEART),
-                Card.of(CardNumber.TWO, Suit.CLUB),
+                HEART_TEN,
+                CLUB_TWO,
             )
         val actualIsBust = hand.isBust()
 
@@ -66,8 +64,8 @@ class HandTest {
     fun `손패에 카드 값이 특정한 값보다 큰 지 알 수 있다`() {
         val hand: Hand =
             Hand.of(
-                Card.of(CardNumber.TEN, Suit.SPADE),
-                Card.of(CardNumber.SEVEN, Suit.CLUB),
+                SPADE_TEN,
+                CLUB_SEVEN,
             )
         val actualIsLessOrSameThanSixteen = hand.isMoreThan(16)
 
@@ -80,8 +78,8 @@ class HandTest {
     fun `손패에 ACE 하나와 KING이 하나 있으면 21점이다`() {
         val hand: Hand =
             Hand.of(
-                Card.of(CardNumber.ACE, Suit.SPADE),
-                Card.of(CardNumber.KING, Suit.CLUB),
+                SPADE_ACE,
+                CLUB_KING,
             )
         val actualScore = hand.getScore()
 
@@ -94,9 +92,9 @@ class HandTest {
     fun `손패에 ACE 2개와 KING이 하나 있으면 12점이다`() {
         val hand: Hand =
             Hand.of(
-                Card.of(CardNumber.ACE, Suit.SPADE),
-                Card.of(CardNumber.ACE, Suit.HEART),
-                Card.of(CardNumber.KING, Suit.CLUB),
+                SPADE_ACE,
+                HEART_ACE,
+                CLUB_KING,
             )
         val actualScore = hand.getScore()
 
@@ -109,8 +107,8 @@ class HandTest {
     fun `손패에 5 하나와 JACK이 하나 있으면 15점이다`() {
         val hand: Hand =
             Hand.of(
-                Card.of(CardNumber.FIVE, Suit.SPADE),
-                Card.of(CardNumber.JACK, Suit.HEART),
+                SPADE_FIVE,
+                HEART_JACK,
             )
         val actualScore = hand.getScore()
 
@@ -123,8 +121,8 @@ class HandTest {
     fun `손패가 두장으로 이루어진 21점이면 블랙잭이다`() {
         val hand: Hand =
             Hand.of(
-                Card.of(CardNumber.ACE, Suit.SPADE),
-                Card.of(CardNumber.KING, Suit.HEART),
+                SPADE_ACE,
+                HEART_KING,
             )
         val actualIsBlackJack = hand.isBlackJack()
 
@@ -137,9 +135,9 @@ class HandTest {
     fun `손패가 세장으로 이루어진 21점이면 블랙잭이 아니다`() {
         val hand: Hand =
             Hand.of(
-                Card.of(CardNumber.QUEEN, Suit.SPADE),
-                Card.of(CardNumber.KING, Suit.HEART),
-                Card.of(CardNumber.ACE, Suit.DIAMOND),
+                SPADE_QUEEN,
+                HEART_KING,
+                DIAMOND_ACE,
             )
         val actualIsBlackJack = hand.isBlackJack()
 
