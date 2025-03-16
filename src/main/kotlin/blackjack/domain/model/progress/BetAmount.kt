@@ -5,10 +5,12 @@ value class BetAmount(
     val betAmount: Int,
 ) {
     init {
-        require(betAmount > 0) { ERROR_INVALID_BET_AMOUNT }
+        require(betAmount > MINIMUM_BET_AMOUNT) { ERROR_INVALID_BET_AMOUNT }
     }
 
     companion object {
+        private const val MINIMUM_BET_AMOUNT = 0
+
         private const val ERROR_INVALID_BET_AMOUNT = "베팅 금액은 0보다 커야 합니다"
     }
 }
