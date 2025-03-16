@@ -12,12 +12,12 @@ class BlackjackController(
     private val inputView: InputView,
     private val outputView: OutputView,
 ) {
-    private val blackjackEngine = BlackjackEngine()
+    private val blackjackEngine = BlackjackEngine(eventListener = outputView, eventProvider = inputView)
     private val dealer = blackjackEngine.prepareDealer()
     private val players = blackjackEngine.preparePlayers(inputView.getNames())
 
     tailrec fun run() {
-        blackjackEngine.getPlayersBet(players, inputView)
+        blackjackEngine.getPlayersBet(players)
         outputView.displayFirstDrawEnd(dealer.name, players.value.map { player -> player.name })
         outputView.displayParticipantCards(
             dealer.name,
@@ -40,8 +40,8 @@ class BlackjackController(
     }
 
     private fun progressDraw() {
-        blackjackEngine.progressPlayersDraw(players, outputView, inputView)
-        blackjackEngine.progressDealerDraw(dealer, outputView)
+        blackjackEngine.progressPlayersDraw(players)
+        blackjackEngine.progressDealerDraw(dealer)
     }
 
     private fun displayFullResult(

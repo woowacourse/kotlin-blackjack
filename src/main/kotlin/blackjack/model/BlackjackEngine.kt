@@ -2,13 +2,12 @@ package blackjack.model
 
 class BlackjackEngine(
     val cardDeck: CardDeck = CardDeck(),
+    val eventListener: EventListener,
+    val eventProvider: EventProvider,
 ) {
     var bets: MutableMap<Player, Money> = mutableMapOf()
 
-    fun getPlayersBet(
-        players: Players,
-        eventProvider: EventProvider,
-    ) {
+    fun getPlayersBet(players: Players) {
         players.getPlayers().forEach { player ->
             bets[player] = Money(eventProvider.getBetAmount(player.name).toDouble())
         }
@@ -32,24 +31,16 @@ class BlackjackEngine(
 
     private fun makeFirstHand(): Hand = Hand(List(START_CARD_COUNT) { cardDeck.draw() })
 
-    fun progressPlayersDraw(
-        players: Players,
-        eventListener: EventListener,
-        eventProvider: EventProvider,
-    ) {
+    fun progressPlayersDraw(players: Players) {
         players.value.forEach { player ->
             eventListener.displayParticipantCards(player.name, player.items.hand.cards)
         }
         players.value.forEach { player ->
-            progressPlayerDrawUntilFinished(player, eventListener, eventProvider)
+            progressPlayerDrawUntilFinished(player)
         }
     }
 
-    private fun progressPlayerDrawUntilFinished(
-        player: Player,
-        eventListener: EventListener,
-        eventProvider: EventProvider,
-    ) {
+    private fun progressPlayerDrawUntilFinished(player: Player) {
         while (eventProvider.getIsDrawMore(player.name)) {
             drawPlayer(player)
             eventListener.displayParticipantCards(player.name, player.items.hand.cards)
@@ -57,10 +48,7 @@ class BlackjackEngine(
         }
     }
 
-    fun progressDealerDraw(
-        dealer: Dealer,
-        eventListener: EventListener,
-    ) {
+    fun progressDealerDraw(dealer: Dealer) {
         drawDealer(dealer)
         eventListener.displayDealerDrawInfo(dealer.name, dealer.getHandSize() - START_CARD_COUNT)
         eventListener.displayParticipantInfo(
