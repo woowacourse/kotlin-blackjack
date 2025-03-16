@@ -1,7 +1,6 @@
 package blackjack.controller
 
 import blackjack.domain.model.card.Deck
-import blackjack.domain.model.card.HandCards.Companion.INIT_CARD_SIZE
 import blackjack.domain.model.participant.CardStatus
 import blackjack.domain.model.participant.Dealer
 import blackjack.domain.model.participant.GameParticipant
@@ -52,7 +51,7 @@ class Casino(
 
     private fun initDistributeCard(participants: List<GameParticipant>) {
         participants.forEach { participant ->
-            while (participant.cardSize() < INIT_CARD_SIZE) {
+            while (!participant.isInitHandCard()) {
                 participant.handCards.addCard(deck.getCard())
             }
         }
