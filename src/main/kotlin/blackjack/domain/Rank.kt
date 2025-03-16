@@ -1,7 +1,7 @@
 package blackjack.domain
 
 enum class Rank(
-    private val score: Int,
+    val score: Int,
 ) {
     ACE(1),
     TWO(2),
