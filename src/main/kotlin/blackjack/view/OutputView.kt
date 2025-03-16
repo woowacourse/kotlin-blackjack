@@ -15,7 +15,7 @@ class OutputView {
         showDistributeCardMessage(participants)
 
         participants.forEach { participant ->
-            val participantHandCards = participant.showFirstHand()
+            val participantHandCards: List<Card> = participant.showFirstHand()
             println(CARD_INFO_MESSAGE.format(participant.name, participantHandCards.joinToString { it.toText() }))
         }
     }
@@ -66,8 +66,8 @@ class OutputView {
     }
 
     private fun makeParticipantInfo(participant: Participant): String {
-        val name = participant.name
-        val cards = participant.hand.cards.joinToString { card -> card.toText() }
+        val name: String = participant.name
+        val cards: String = participant.hand.cards.joinToString { card -> card.toText() }
         return CARD_INFO_MESSAGE.format(name, cards)
     }
 
