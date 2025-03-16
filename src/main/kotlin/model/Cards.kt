@@ -1,9 +1,6 @@
 package model
 
-import util.RandomShuffler
-import util.Shuffler
-
-class Cards(allCards: List<Card>,private val shuffler: Shuffler = RandomShuffler() ) {
+class Cards(allCards: List<Card>) {
     private val _allCards: MutableList<Card> = allCards.toMutableList()
     val allCards: List<Card> get() = _allCards.toList()
 
@@ -12,12 +9,19 @@ class Cards(allCards: List<Card>,private val shuffler: Shuffler = RandomShuffler
     }
 
     fun drawCards(count: Int): List<Card> {
+        if (_allCards.isEmpty()) {
+            regenerateDeck()
+        }
         require(_allCards.size >= count) { REMAINING_CARD_ERROR_MESSAGE }
 
         val drawnCards = _allCards.take(count)
         _allCards.removeAll(drawnCards.toSet())
 
         return drawnCards
+    }
+
+    private fun regenerateDeck() {
+        _allCards.addAll(CardsGenerator().generateCards().allCards)
     }
 
     companion object {
