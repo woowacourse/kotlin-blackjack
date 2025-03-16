@@ -6,7 +6,7 @@ class BettingManager {
     fun placeBet(
         player: Player,
         amount: Int,
-    ){
+    ) {
         require(amount > 0) { INITIAL_BETTING_AMOUNT_MESSAGE }
         bets[player] = Money(amount)
     }
