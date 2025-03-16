@@ -1,15 +1,14 @@
 package blackjack.domain.model.participant
 
 import blackjack.domain.model.card.Card
-import blackjack.domain.model.progress.BetAmount
+import blackjack.domain.model.participant.bet.BetAmount
+import blackjack.domain.model.participant.bet.Profit
 
 class Dealer(
     participantInfo: ParticipantInfo = ParticipantInfo(DEFAULT_NAME, BetAmount()),
 ) : GameParticipant(participantInfo = participantInfo) {
     override val initCards: List<Card>
         get() = cards.subList(0, 1)
-
-//    fun getFirstCard(): Card = handCards.getCardByIndex(0)
 
     constructor(cards: List<Card>) : this() {
         cards.forEach { card -> handCards.addCard(card) }

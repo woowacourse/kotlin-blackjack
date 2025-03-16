@@ -1,10 +1,10 @@
 package blackjack.domain.model.participant
 
 import blackjack.domain.model.card.Card
+import blackjack.domain.model.card.CardStatus
 import blackjack.domain.model.card.Deck
 import blackjack.domain.model.card.HandCards
-import blackjack.domain.model.progress.BetAmount
-import blackjack.domain.model.progress.WinLoss
+import blackjack.domain.model.participant.bet.BetAmount
 
 abstract class GameParticipant(
     protected val participantInfo: ParticipantInfo,

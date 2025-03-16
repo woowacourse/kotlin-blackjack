@@ -1,7 +1,6 @@
 package blackjack.domain.model.card
 
 import blackjack.domain.model.card.Number.ACE
-import blackjack.domain.model.participant.CardStatus
 
 class HandCards(
     initCards: List<Card> = emptyList(),

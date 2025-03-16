@@ -1,6 +1,6 @@
 package blackjack.domain.model.participant
 
-import blackjack.domain.model.progress.BetAmount
+import blackjack.domain.model.participant.bet.BetAmount
 
 data class ParticipantInfo(
     val name: String,

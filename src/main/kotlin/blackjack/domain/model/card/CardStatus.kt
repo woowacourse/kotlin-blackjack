@@ -1,6 +1,5 @@
-package blackjack.domain.model.participant
+package blackjack.domain.model.card
 
-import blackjack.domain.model.card.Card
 import blackjack.domain.model.card.HandCards.Companion.INIT_CARD_SIZE
 
 enum class CardStatus {

@@ -1,6 +1,7 @@
-package blackjack.domain.model.participant
+package blackjack.domain.model.participant.bet
 
-import blackjack.domain.model.progress.WinLoss
+import blackjack.domain.model.card.CardStatus
+import blackjack.domain.model.participant.WinLoss
 
 enum class ProfitRate(
     val value: Double,
