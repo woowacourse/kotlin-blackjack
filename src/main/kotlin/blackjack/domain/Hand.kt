@@ -22,5 +22,5 @@ class Hand(
         cards = cards + card
     }
 
-    private fun Set<Int>.hasHittableScore(): Boolean = any { score: Int -> score <= Score.Companion.SCORE_BLACKJACK }
+    private fun Set<Int>.hasHittableScore(): Boolean = any { score: Int -> score <= SCORE_BLACKJACK }
 }
