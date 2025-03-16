@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Participants
 import blackjack.domain.participant.Player
 
@@ -50,6 +51,19 @@ class BlackJackGame(
             dealer.addCard(deck.draw())
         }
         return dealer.cards.items.size - INITIAL_CARD_COUNT
+    }
+
+    fun calculateDealerResult(participants: Participants): Double {
+        return participants.players
+            .sumOf { it.money * participants.dealer.compare(it).dividend }
+    }
+
+    fun calculatePlayers(
+        player: Player,
+        dealer: Dealer,
+    ): Double {
+        val dividend = player.compare(dealer).dividend
+        return player.profit(dividend)
     }
 
     companion object {

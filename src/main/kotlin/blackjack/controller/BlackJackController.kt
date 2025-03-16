@@ -3,7 +3,6 @@ package blackjack.controller
 import blackjack.domain.BettingAmount
 import blackjack.domain.BlackJackGame
 import blackjack.domain.Deck
-import blackjack.domain.GameResult
 import blackjack.domain.UserChoice
 import blackjack.domain.card.cardFactoryImpl
 import blackjack.domain.participant.Dealer
@@ -13,7 +12,6 @@ import blackjack.domain.participant.PlayerState
 import blackjack.util.retryWhenException
 import blackjack.view.InputView
 import blackjack.view.OutputView
-import blackjack.view.model.DealerUiModel
 import blackjack.view.model.PlayerUiModel
 
 class BlackJackController(
@@ -96,8 +94,8 @@ class BlackJackController(
     ) {
         displayDealerExtraCard(game)
         displaySumOfParticipants(participants)
-        displayDealerResult(participants)
-        displayPlayerResult(participants)
+        displayDealerResult(game, participants)
+        displayPlayerResult(game, participants)
     }
 
     private fun displayDealerExtraCard(game: BlackJackGame) {
@@ -112,22 +110,24 @@ class BlackJackController(
         outputView.printPlayerSum(participants.players)
     }
 
-    private fun displayDealerResult(participants: Participants) {
-        val profit =
-            participants.players
-                .filter { participants.dealer.compare(it) in listOf(GameResult.BLACKJACK, GameResult.WIN) }
-                .sumOf { it.money }
-                .toDouble()
-
-        outputView.printDealerResult(DealerUiModel(profit))
+    private fun displayDealerResult(
+        game: BlackJackGame,
+        participants: Participants,
+    ) {
+        val result = game.calculateDealerResult(participants)
+        outputView.printDealerResult(result)
     }
 
-    private fun displayPlayerResult(player: Participants) {
+    private fun displayPlayerResult(
+        game: BlackJackGame,
+        participants: Participants,
+    ) {
         val result =
-            player.players.map {
-                val dividend = it.compare(player.dealer).dividend
-                val money = it.profit(dividend)
-                PlayerUiModel(money, it.name)
+            participants.players.map {
+                PlayerUiModel(
+                    profit = game.calculatePlayers(it, participants.dealer),
+                    name = it.name,
+                )
             }
         outputView.printPlayerResult(result)
     }

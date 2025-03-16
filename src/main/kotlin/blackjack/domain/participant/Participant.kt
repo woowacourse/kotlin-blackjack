@@ -2,10 +2,6 @@ package blackjack.domain.participant
 
 import blackjack.domain.BlackJackGame.Companion.BUST_STANDARD
 import blackjack.domain.GameResult
-import blackjack.domain.GameResult.BLACKJACK
-import blackjack.domain.GameResult.LOSE
-import blackjack.domain.GameResult.PUSH
-import blackjack.domain.GameResult.WIN
 import blackjack.domain.card.PlayerCards
 import blackjack.domain.card.TrumpCard
 
@@ -18,24 +14,6 @@ sealed class Participant {
         _cards = cards + newCard
     }
 
-    fun compare(other: Participant): GameResult {
-        return when {
-            hasBlackJack() && !other.hasBlackJack() -> BLACKJACK
-            hasBlackJack() && other.hasBlackJack() -> PUSH
-            isBust() && other.isBust() -> {
-                when (other) {
-                    is Player -> WIN
-                    is Dealer -> LOSE
-                }
-            }
-            isBust() -> LOSE
-            other.isBust() -> WIN
-            totalScore() > other.totalScore() -> WIN
-            totalScore() < other.totalScore() -> LOSE
-            else -> PUSH
-        }
-    }
-
     fun totalScore(): Int {
         val sumOfCards = cards.sumOfCards()
         return if (cards.hasAce() && (sumOfCards + ACE_EXTRACT_SCORE > BUST_STANDARD).not()) {
@@ -45,11 +23,11 @@ sealed class Participant {
         }
     }
 
-    private fun hasBlackJack(): Boolean {
-        return cards.hasBlackJack(totalScore())
-    }
+    fun hasBlackJack(): Boolean = cards.hasBlackJack(totalScore())
 
-    private fun isBust(): Boolean = totalScore() > BUST_STANDARD
+    fun isBust(): Boolean = totalScore() > BUST_STANDARD
+
+    abstract fun compare(other: Participant): GameResult
 
     abstract fun getInitialCards(): Set<TrumpCard>
 
