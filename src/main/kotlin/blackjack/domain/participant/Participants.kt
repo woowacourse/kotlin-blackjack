@@ -14,9 +14,9 @@ class Participants(
     }
 
     fun drawCard(deck: Deck) {
-        dealer.drawCard(deck.pick())
+        dealer.receiveCard(deck.pick())
         players.forEach {
-            it.drawCard(deck.pick())
+            it.receiveCard(deck.pick())
         }
     }
 
@@ -29,6 +29,8 @@ class Participants(
         playPlayersTurn(draw, onPlayerChoice, onPlayerDraw)
         playDealerTurn(draw, onDealerDraw)
     }
+
+    fun blackjackResult(): BlackjackResult = BlackjackResult(dealerResult(), playersResult())
 
     private fun playPlayersTurn(
         draw: () -> Card,
@@ -55,11 +57,9 @@ class Participants(
         )
     }
 
-    fun blackjackResult(): BlackjackResult = BlackjackResult(dealerResult(), playersResult())
+    private fun dealerResult(): Map<Player, GameResult> = players.associateWith { dealer.resultAgainst(it) }
 
-    private fun dealerResult(): Map<Player, GameResult> = players.associateWith { dealer.getResult(it) }
-
-    private fun playersResult(): Map<Player, GameResult> = players.associateWith { it.getResult(dealer) }
+    private fun playersResult(): Map<Player, GameResult> = players.associateWith { it.resultAgainst(dealer) }
 
     companion object {
         private const val MIN_PLAYER_COUNT = 1

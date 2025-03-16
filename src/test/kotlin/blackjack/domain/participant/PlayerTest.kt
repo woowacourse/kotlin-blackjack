@@ -24,7 +24,7 @@ class PlayerTest {
         val card = Card(Rank.ACE, Suit.SPADE)
 
         // when
-        player.drawCard(card)
+        player.receiveCard(card)
 
         // then
         assertThat(player.hand.cards.size).isEqualTo(1)
@@ -96,7 +96,7 @@ class PlayerTest {
         // when
         player.drawCards(queenSpade, queenHeart)
         dealer.drawCards(queenSpade, eightSpade)
-        val result = player.getResult(dealer)
+        val result = player.resultAgainst(dealer)
 
         // then
         assertThat(result).isEqualTo(GameResult.WIN)
@@ -112,7 +112,7 @@ class PlayerTest {
         // when
         player.drawCards(queenSpade, queenHeart)
         dealer.drawCards(queenSpade, aceSpade)
-        val result = player.getResult(dealer)
+        val result = player.resultAgainst(dealer)
 
         // then
         assertThat(result).isEqualTo(GameResult.LOSE)
@@ -128,7 +128,7 @@ class PlayerTest {
         // when
         player.drawCards(queenSpade, queenHeart)
         dealer.drawCards(queenSpade, queenHeart, twoSpade)
-        val result = player.getResult(dealer)
+        val result = player.resultAgainst(dealer)
 
         // then
         assertThat(result).isEqualTo(GameResult.WIN)
@@ -143,7 +143,7 @@ class PlayerTest {
         // when
         player.drawCards(queenSpade, queenHeart)
         dealer.drawCards(queenSpade, queenHeart)
-        val result = player.getResult(dealer)
+        val result = player.resultAgainst(dealer)
 
         // then
         assertThat(result).isEqualTo(GameResult.PUSH)
@@ -159,13 +159,13 @@ class PlayerTest {
         // when
         player.drawCards(aceSpade, queenSpade)
         dealer.drawCards(queenSpade, queenHeart)
-        val result = player.getResult(dealer)
+        val result = player.resultAgainst(dealer)
 
         // then
         assertThat(result).isEqualTo(GameResult.WIN_BLACKJACK)
     }
 
     private fun Participant.drawCards(vararg cards: Card) {
-        cards.forEach { this.drawCard(it) }
+        cards.forEach { this.receiveCard(it) }
     }
 }

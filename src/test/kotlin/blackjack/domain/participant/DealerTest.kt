@@ -24,7 +24,7 @@ class DealerTest {
         val card = Card(Rank.ACE, Suit.SPADE)
 
         // when
-        dealer.drawCard(card)
+        dealer.receiveCard(card)
 
         // then
         assertThat(dealer.hand.cards.size).isEqualTo(1)
@@ -37,8 +37,8 @@ class DealerTest {
         val queenCard = Card(Rank.QUEEN, Suit.SPADE)
 
         // when
-        dealer.drawCard(aceCard)
-        dealer.drawCard(queenCard)
+        dealer.receiveCard(aceCard)
+        dealer.receiveCard(queenCard)
         val score = dealer.score()
 
         // then
@@ -53,9 +53,9 @@ class DealerTest {
         val nineSpade = Card(Rank.NINE, Suit.SPADE)
 
         // when
-        dealer.drawCard(aceSpade)
-        dealer.drawCard(aceDiamond)
-        dealer.drawCard(nineSpade)
+        dealer.receiveCard(aceSpade)
+        dealer.receiveCard(aceDiamond)
+        dealer.receiveCard(nineSpade)
         val score = dealer.score()
 
         // then
@@ -97,7 +97,7 @@ class DealerTest {
         // when
         dealer.drawCards(queenSpade, aceSpade)
         player.drawCards(queenSpade, queenSpade)
-        val result = dealer.getResult(player)
+        val result = dealer.resultAgainst(player)
 
         // then
         assertThat(result).isEqualTo(GameResult.WIN)
@@ -112,7 +112,7 @@ class DealerTest {
         // when
         dealer.drawCards(queenSpade, eightSpade)
         player.drawCards(queenSpade, queenSpade)
-        val result = dealer.getResult(player)
+        val result = dealer.resultAgainst(player)
 
         // then
         assertThat(result).isEqualTo(GameResult.LOSE)
@@ -128,7 +128,7 @@ class DealerTest {
         // when
         dealer.drawCards(queenSpade, queenHeart, twoSpade)
         player.drawCards(queenSpade, queenHeart, twoSpade)
-        val result = dealer.getResult(player)
+        val result = dealer.resultAgainst(player)
 
         // then
         assertThat(result).isEqualTo(GameResult.WIN)
@@ -143,13 +143,13 @@ class DealerTest {
         // when
         dealer.drawCards(queenSpade, queenHeart)
         player.drawCards(queenSpade, queenHeart)
-        val result = dealer.getResult(player)
+        val result = dealer.resultAgainst(player)
 
         // then
         assertThat(result).isEqualTo(GameResult.PUSH)
     }
 
     private fun Participant.drawCards(vararg cards: Card) {
-        cards.forEach { this.drawCard(it) }
+        cards.forEach { this.receiveCard(it) }
     }
 }

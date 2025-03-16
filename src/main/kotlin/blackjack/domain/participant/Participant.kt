@@ -10,7 +10,7 @@ abstract class Participant(
 ) {
     val hand = Hand()
 
-    fun drawCard(card: Card) {
+    fun receiveCard(card: Card) {
         hand.addCard(card)
     }
 
@@ -24,12 +24,22 @@ abstract class Participant(
         onDraw: (Participant) -> Unit,
     ) {
         while (canHit() && shouldContinue(this)) {
-            drawCard(draw())
+            receiveCard(draw())
             onDraw(this)
         }
     }
 
+    fun compare(
+        thisScore: Score,
+        otherScore: Score,
+    ): GameResult =
+        when {
+            thisScore > otherScore -> GameResult.WIN
+            thisScore < otherScore -> GameResult.LOSE
+            else -> GameResult.PUSH
+        }
+
     abstract fun canHit(): Boolean
 
-    abstract fun getResult(other: Participant): GameResult
+    abstract fun resultAgainst(other: Participant): GameResult
 }

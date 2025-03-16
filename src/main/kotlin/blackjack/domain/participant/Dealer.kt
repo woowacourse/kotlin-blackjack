@@ -7,16 +7,14 @@ class Dealer(
 ) : Participant(name) {
     override fun canHit(): Boolean = score().score <= DEALER_HIT_CONDITION
 
-    override fun getResult(other: Participant): GameResult {
+    override fun resultAgainst(other: Participant): GameResult {
         val thisScore = score()
         val otherScore = other.score()
         return when {
             (!this.isBlackjack() && other.isBlackjack()) -> GameResult.LOSE_BLACKJACK
-            (otherScore.isBust()) -> GameResult.WIN
-            (thisScore.isBust()) -> GameResult.LOSE
-            thisScore > otherScore -> GameResult.WIN
-            thisScore < otherScore -> GameResult.LOSE
-            else -> GameResult.PUSH
+            otherScore.isBust() -> GameResult.WIN
+            thisScore.isBust() -> GameResult.LOSE
+            else -> compare(thisScore, otherScore)
         }
     }
 
