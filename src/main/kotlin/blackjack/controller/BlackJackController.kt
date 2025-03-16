@@ -101,7 +101,10 @@ class BlackJackController(
     }
 
     private fun displayDealerExtraCard(game: BlackJackGame) {
-        game.processDealerTurn().takeIf { it > 0 }?.let { outputView::printDealerExtraCard }
+        when (val drawCount = game.processDealerTurn()) {
+            0 -> return
+            else -> outputView.printDealerExtraCard(drawCount)
+        }
     }
 
     private fun displaySumOfParticipants(participants: Participants) {
