@@ -2,7 +2,7 @@ package blackjack.model.participant
 
 import blackjack.model.card.Card
 import blackjack.model.card.CardCount
-import blackjack.model.winning.GameResult
+import blackjack.model.winning.WinningResult.PlayersResult
 
 class Players private constructor(
     val value: List<Player>,
@@ -33,9 +33,9 @@ class Players private constructor(
         }
     }
 
-    fun winningResult(dealer: Dealer): GameResult.PlayersResult {
+    fun winningResult(dealer: Dealer): PlayersResult {
         val result = value.associate { it.name to it.winningState(dealer) }
-        return GameResult.PlayersResult(result)
+        return PlayersResult(result)
     }
 
     companion object {

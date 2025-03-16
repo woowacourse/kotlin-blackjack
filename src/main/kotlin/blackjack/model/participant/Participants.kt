@@ -2,7 +2,7 @@ package blackjack.model.participant
 
 import blackjack.model.card.Card
 import blackjack.model.card.CardCount
-import blackjack.model.winning.GameResult
+import blackjack.model.winning.WinningResult
 
 class Participants(
     val dealer: Dealer,
@@ -14,8 +14,8 @@ class Participants(
         }
     }
 
-    fun winningResult(): GameResult =
-        GameResult(
+    fun winningResult(): WinningResult =
+        WinningResult(
             playersResult = players.winningResult(dealer),
             dealerResult = dealer.winningResult(players),
         )

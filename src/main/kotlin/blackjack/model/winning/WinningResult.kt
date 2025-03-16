@@ -2,7 +2,7 @@ package blackjack.model.winning
 
 import blackjack.model.participant.Name
 
-class GameResult(
+class WinningResult(
     val playersResult: PlayersResult,
     val dealerResult: DealerResult,
 ) {
