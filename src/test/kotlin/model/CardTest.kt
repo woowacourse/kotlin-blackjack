@@ -3,11 +3,12 @@ package model
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
+import util.TestCards
 
 class CardTest {
     @Test
     fun `카드를 하나 생성할 수 있다`() {
-        assertDoesNotThrow { Card.of(CardRank.KING, Shape.CLUB) }
+        assertDoesNotThrow { TestCards.CLUB_KING }
     }
 
     @Test

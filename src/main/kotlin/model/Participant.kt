@@ -11,9 +11,11 @@ abstract class Participant(private val hand: Hand) {
     }
 
     fun getHand(): Hand = hand
+
     fun getTotalScore(): Int = hand.getTotalScore()
 
     fun isBust(): Boolean = hand.isBust()
+
     fun isBlackJack(): Boolean = hand.isBlackJack()
 
     companion object {

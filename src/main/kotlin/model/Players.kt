@@ -15,9 +15,9 @@ class Players(private val players: List<Player>) : Iterable<Player> {
 
     fun playersToPlayTurn(
         getCard: () -> List<Card>,
-        showCards: (Player) -> Unit
+        showCards: (Player) -> Unit,
     ) {
-        players.forEach { it.playTurn(getCard, {showCards(it)}) }
+        players.forEach { it.playTurn(getCard, { showCards(it) }) }
     }
 
     companion object {

@@ -29,12 +29,10 @@ class GameManager(private val cards: Cards) {
         }
     }
 
-    fun playersPlay(
-        showCards: (Player) -> Unit
-    ) {
+    fun playersPlay(showCards: (Player) -> Unit) {
         players.playersToPlayTurn(
             getCard = { cards.drawCards(1) },
-            showCards = showCards
+            showCards = showCards,
         )
     }
 

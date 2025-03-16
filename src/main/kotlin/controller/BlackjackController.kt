@@ -46,13 +46,13 @@ class BlackjackController(
         )
 
         gameManager.getPlayers().forEach { player ->
-            player.decisionMaker = {inputView.readHitOrStand(player.name)}
+            player.decisionMaker = { inputView.readHitOrStand(player.name) }
         }
 
         gameManager.playersPlay(
             showCards = { player ->
                 outputView.printPlayerCards(player.name, player.cards.displayNames())
-            }
+            },
         )
     }
 
