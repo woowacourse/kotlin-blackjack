@@ -48,8 +48,8 @@ class BlackjackController(
         game: BlackjackGame,
         participants: Participants,
     ) {
-        game.distributeInitialCards()
-        outputView.printCardInfo(participants.dealer, participants.players)
+        game.dealInitialCards()
+        outputView.printCardInfo(participants)
     }
 
     private fun playGame(game: BlackjackGame) {
@@ -62,8 +62,8 @@ class BlackjackController(
             },
             onDraw = { participant ->
                 when (participant) {
-                    is Player -> outputView.printPlayerCards(participant)
-                    is Dealer -> outputView.printDealerHit(participant)
+                    is Player -> outputView.printCards(participant)
+                    is Dealer -> outputView.printHitOnce(participant)
                 }
             },
         )
@@ -73,12 +73,11 @@ class BlackjackController(
         participants: Participants,
         bettingInfo: Map<Player, BettingAmount>,
     ) {
-        outputView.printParticipantScore(participants.dealer, participants.players)
+        outputView.printParticipantScore(participants)
 
         val blackjackResult = participants.blackjackResult()
         val dealerProfit = blackjackResult.dealerProfit(bettingInfo)
         val playersProfit = blackjackResult.playersProfit(bettingInfo)
-        outputView.printDealerProfit(participants.dealer, dealerProfit)
-        outputView.printPlayersProfit(playersProfit)
+        outputView.printParticipantsProfit(participants, dealerProfit, playersProfit)
     }
 }

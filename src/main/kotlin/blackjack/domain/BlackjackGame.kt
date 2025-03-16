@@ -8,7 +8,7 @@ class BlackjackGame(
     private val deck: Deck,
     private val participants: Participants,
 ) {
-    fun distributeInitialCards() {
+    fun dealInitialCards() {
         repeat(INITIAL_CARD_COUNT) {
             participants.drawCard(deck)
         }
