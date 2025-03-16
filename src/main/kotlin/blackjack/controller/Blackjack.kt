@@ -16,50 +16,58 @@ class Blackjack(
         val deck = Deck(RandomShuffler)
         val players: List<Player> = askView.readPlayers().toPlayers(deck)
         val dealer = Dealer(deck)
+        startDealing(players, dealer)
+        startPlayersTurn(players)
+        startDealerTurn(dealer)
+        showResult(dealer, players)
+    }
+
+    private fun startDealing(
+        players: List<Player>,
+        dealer: Dealer,
+    ) {
         resultView.showDealing(
             playersName = players.names,
             dealerCards = dealer.cardsPrettyString,
             playersCards = players.cardsPrettyStrings,
         )
-        startPlayersTurn(players)
-        startDealerTurn(dealer)
-        resultView.showParticipantsSummary(
-            dealer.summary,
-            players.summaries,
-        )
-        resultView.showProfit(players.toResults(dealer.state))
     }
 
     private fun startPlayersTurn(players: List<Player>) {
         players.forEach { player ->
-            resultView.showPlayerCard(
-                PlayerSummary(
-                    player.name,
-                    player.cards.prettyString,
-                    player.score.value,
-                ),
-            )
+            showPlayerCard(player)
+            hitOrStay(player)
+        }
+    }
 
-            while (!player.isFinished) {
-                val wantToHit: Boolean = askView.askWantToHit(player.name)
-                if (wantToHit) {
-                    player.hit()
-                    resultView.showPlayerCard(
-                        PlayerSummary(
-                            player.name,
-                            player.cards.prettyString,
-                            player.score.value,
-                        ),
-                    )
-                } else {
-                    player.stay()
-                }
+    private fun showPlayerCard(player: Player) {
+        resultView.showPlayerCard(
+            PlayerSummary(
+                player.name,
+                player.cards.prettyString,
+                player.score.value,
+            ),
+        )
+    }
+
+    private fun hitOrStay(player: Player) {
+        while (!player.isFinished) {
+            val wantToHit: Boolean = askView.askWantToHit(player.name)
+            if (wantToHit) {
+                player.hit()
+                showPlayerCard(player)
+            } else {
+                player.stay()
             }
         }
     }
 
     private fun startDealerTurn(dealer: Dealer) {
         dealer.hit()
+        hitOrStay(dealer)
+    }
+
+    private fun hitOrStay(dealer: Dealer) {
         while (!dealer.isFinished) {
             if (dealer.score < 17) {
                 resultView.showDealerHit()
@@ -68,5 +76,16 @@ class Blackjack(
                 dealer.stay()
             }
         }
+    }
+
+    private fun showResult(
+        dealer: Dealer,
+        players: List<Player>,
+    ) {
+        resultView.showParticipantsSummary(
+            dealer.summary,
+            players.summaries,
+        )
+        resultView.showProfit(players.toResults(dealer.state))
     }
 }
