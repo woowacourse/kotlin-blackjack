@@ -2,6 +2,7 @@ package blackjack.controller
 
 import blackjack.domain.Deck
 import blackjack.domain.RandomShuffler
+import blackjack.domain.Score.Companion.SCORE_DEALER_HIT_UNTIL
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Player
 import blackjack.view.AskView
@@ -69,7 +70,7 @@ class Blackjack(
 
     private fun hitOrStay(dealer: Dealer) {
         while (!dealer.isFinished) {
-            if (dealer.score < 17) {
+            if (dealer.score < SCORE_DEALER_HIT_UNTIL) {
                 resultView.showDealerHit()
                 dealer.hit()
             } else {

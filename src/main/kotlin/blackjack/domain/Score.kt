@@ -13,5 +13,6 @@ value class Score(
 
     companion object {
         const val SCORE_BLACKJACK = 21
+        const val SCORE_DEALER_HIT_UNTIL = 17
     }
 }
