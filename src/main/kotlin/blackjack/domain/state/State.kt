@@ -8,5 +8,7 @@ interface State {
 
     fun draw(card: Card): State
 
+    fun canDrawCard(): Boolean
+
     fun profit(profitMoney: Int): Int
 }
