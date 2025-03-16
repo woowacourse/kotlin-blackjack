@@ -9,6 +9,6 @@ class Dealer : Participant() {
         get() = DEALER_HIT_THRESHOLD
 
     companion object {
-        const val DEALER_HIT_THRESHOLD = 16
+        private const val DEALER_HIT_THRESHOLD = 16
     }
 }

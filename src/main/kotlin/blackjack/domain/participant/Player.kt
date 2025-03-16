@@ -35,6 +35,6 @@ class Player(val name: String, private val betAmount: BetAmount) : Participant()
     fun getBetAmount() = betAmount.getAmount()
 
     companion object {
-        const val PLAYER_HIT_THRESHOLD = 21
+        private const val PLAYER_HIT_THRESHOLD = 21
     }
 }
