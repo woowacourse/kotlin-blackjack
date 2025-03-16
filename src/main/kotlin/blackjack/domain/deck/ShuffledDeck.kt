@@ -17,8 +17,10 @@ class ShuffledDeck : Deck {
     }
 
     override fun pop(): TrumpCard {
-        while (currentDeckIndex < MAX_DECK_COUNT) {
-            val currentDeck = deckPool[currentDeckIndex]
+        while (true) {
+            val currentDeck =
+                deckPool.getOrNull(currentDeckIndex)
+                    ?: throw IllegalArgumentException(ERROR_EMPTY_DECK_MESSAGE)
 
             if (currentDeck.isNotEmpty()) {
                 return currentDeck.pop()
@@ -26,7 +28,6 @@ class ShuffledDeck : Deck {
                 currentDeckIndex++
             }
         }
-        throw IllegalArgumentException(ERROR_EMPTY_DECK_MESSAGE)
     }
 
     override fun makeCards(): Deque<TrumpCard> {
