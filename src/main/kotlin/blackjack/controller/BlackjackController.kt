@@ -54,7 +54,7 @@ class BlackjackController(
         }
         players.draw(
             newCards = cardDeck::draw,
-            choice = { inputView.getIsReceiveMore(it) },
+            choice = { name -> inputView.getIsReceiveMore(name) },
             onCardReceived = { name, cards -> outputView.displayParticipantCards(name, cards) },
         )
     }

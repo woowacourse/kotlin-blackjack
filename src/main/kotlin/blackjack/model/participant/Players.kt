@@ -20,7 +20,7 @@ class Players private constructor(
         name: Name,
         money: Money,
     ) {
-        value.find { it.name == name }?.receiveMoney(money) ?: return
+        value.find { player -> player.name == name }?.receiveMoney(money) ?: return
     }
 
     fun draw(
