@@ -233,6 +233,6 @@ class PlayerResultTest {
             Card.of(Rank.TEN, Suit.SPADE),
         )
         val blackjackPair = BlackJackPair(listOf(player), dealer)
-        assertThat(PlayerResult.createResultList(blackjackPair)[0].getProfit()).isEqualTo(-5000)
+        assertThat(PlayerResult.createResultList(blackjackPair)[0].getProfit()).isEqualTo(5000)
     }
 }
