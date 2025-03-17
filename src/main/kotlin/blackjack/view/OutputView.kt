@@ -1,7 +1,6 @@
 package blackjack.view
 
 import blackjack.model.Card
-import blackjack.model.GameResult
 import blackjack.model.Participant
 import blackjack.model.Participants
 import blackjack.model.Player
@@ -76,12 +75,5 @@ class OutputView {
             Suit.SPADE -> "스페이드"
             Suit.DIAMOND -> "다이아몬드"
             Suit.CLOVER -> "클로버"
-        }
-
-    private fun GameResult.toKoreanName(): String =
-        when (this) {
-            GameResult.PUSH -> "무"
-            GameResult.WIN -> "승"
-            GameResult.LOSE -> "패"
         }
 }

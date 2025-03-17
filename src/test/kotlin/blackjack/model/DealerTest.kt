@@ -77,22 +77,4 @@ class DealerTest {
 
         assertThat(actual).isEqualTo(expected)
     }
-
-    @Test
-    fun `플레이어의 스코어를 통해 딜러는 자신의 결과를 반환한다`() {
-        val hand =
-            Hand(
-                listOf(
-                    Card(Suit.DIAMOND, Denomination.TEN),
-                    Card(Suit.CLOVER, Denomination.TEN),
-                ),
-            )
-        val dealer = Dealer(hand = hand)
-
-        val actual = dealer.getResult(playerScore = 19)
-
-        val expected = GameResult.WIN
-
-        assertThat(actual).isEqualTo(expected)
-    }
 }

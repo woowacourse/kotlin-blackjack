@@ -1,7 +1,5 @@
 package blackjack.model
 
-import blackjack.model.CardsStatus.Companion.BUST_SCORE
-
 class Dealer(
     name: String = DEFAULT_DEALER_NAME,
     hand: Hand = Hand(emptyList()),
@@ -9,14 +7,6 @@ class Dealer(
     val openCard: Card
         get() = hand.value[OPEN_CARD_INDEX]
     override val money: Money = Money(INITIAL_MONEY_VALUE)
-
-    fun getResult(playerScore: Int): GameResult {
-        if (playerScore == BUST_SCORE) return GameResult.WIN
-        if (isBust()) return GameResult.LOSE
-        return calculateResult(playerScore)
-    }
-
-    private fun calculateResult(playerScore: Int): GameResult = GameResult.of(getScore(), playerScore)
 
     override fun canHit(): Boolean = getScore() <= DEALER_HIT_SCORE
 
