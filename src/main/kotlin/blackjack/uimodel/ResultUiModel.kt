@@ -1,30 +1,20 @@
 package blackjack.uimodel
 
-import blackjack.domain.betting.ProfitAmount
+import blackjack.domain.GameResult
 import blackjack.domain.participants.Player
 
 data class ResultUiModel(
     val name: String,
-    val profit: Int,
+    val profit: Double,
 ) {
     companion object {
-        fun create(profitResult: Map<Player, ProfitAmount>): List<ResultUiModel> {
-            val dealerProfit = -profitResult.values.sumOf { it.value }
-            val dealerResult =
+        fun create(gameResult: GameResult): List<ResultUiModel> {
+            return gameResult.results.map { (participant, profitAmount) ->
                 ResultUiModel(
-                    name = "딜러",
-                    profit = dealerProfit,
+                    name = (participant as? Player)?.name ?: "딜러",
+                    profit = profitAmount.value,
                 )
-
-            val playersResult =
-                profitResult.map { (player, profitAmount) ->
-                    ResultUiModel(
-                        name = player.name,
-                        profit = profitAmount.value,
-                    )
-                }
-
-            return listOf(dealerResult) + playersResult
+            }
         }
     }
 }
