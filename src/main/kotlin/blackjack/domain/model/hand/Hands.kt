@@ -20,6 +20,14 @@ class Hands(private val _cards: List<Card>) {
         return score + getBonusScore(score = score)
     }
 
+    fun isBlackJack(count: Int) = score().isBlackJack(count)
+
+    fun isBustScore() = score().isBustScore()
+
+    fun isMaxScore() = score().isMaxScore()
+
+    fun isDealerStay() = score().isDealerStay()
+
     private fun getBonusScore(score: Score): Int {
         val totalScore = score + BONUS_SCORE
         if (totalScore.isBustScore() && hasAce()) return BONUS_SCORE
