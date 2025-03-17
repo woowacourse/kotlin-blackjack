@@ -18,8 +18,8 @@ abstract class Participant(
     private var _money: Money,
     private val hand: Hand,
 ) {
-    val money: Money get() = _money
     abstract val isDrawable: Boolean
+    val money: Money get() = _money
     val cards: List<Card> get() = hand.cards
 
     val handState: HandState get() = hand.state
