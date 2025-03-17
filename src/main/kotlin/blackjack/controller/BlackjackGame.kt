@@ -10,7 +10,7 @@ import blackjack.model.Player.Behavior
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
-class BlackjackController(
+class BlackjackGame(
     private val inputView: InputView,
     private val outputView: OutputView,
 ) {
