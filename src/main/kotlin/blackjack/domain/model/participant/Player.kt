@@ -34,7 +34,7 @@ class Player(
     ) {
         if (!canHit()) return
         if (input(this) == Action.STAND) {
-            if (showHand().size == Hand.STARTING_HAND_SIZE) output(this)
+            if (openHand().size == Hand.STARTING_HAND_SIZE) output(this)
             return
         }
         accept(deck.draw())

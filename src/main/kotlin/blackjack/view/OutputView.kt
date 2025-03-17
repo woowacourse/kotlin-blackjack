@@ -32,7 +32,7 @@ class OutputView {
 
     private fun renderParticipantCards(participant: Participant): String {
         return participant.name + PARTICIPANT_NAME_CARDS_DELIMITER +
-            participant.showHand().joinToString { card ->
+            participant.openHand().joinToString { card ->
                 card.rank.stringRepresentation() + card.suit.stringRepresentation()
             }
     }

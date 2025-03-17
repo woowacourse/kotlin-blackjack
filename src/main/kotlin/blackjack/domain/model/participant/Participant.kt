@@ -16,7 +16,7 @@ abstract class Participant(val name: String, cards: List<Card>) {
     }
 
     fun computePoint(): Int {
-        return hand.computePoint()
+        return hand.point()
     }
 
     fun isBusted(): Boolean {
@@ -27,8 +27,8 @@ abstract class Participant(val name: String, cards: List<Card>) {
         return hand.isBlackJack()
     }
 
-    open fun showHand(): List<Card> {
-        return hand.show()
+    open fun openHand(): List<Card> {
+        return hand.open()
     }
 
     open fun compareAgainst(other: Participant): GameResult {

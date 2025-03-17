@@ -10,7 +10,7 @@ class Hand(cards: List<Card>) {
         add(cards)
     }
 
-    fun show(): List<Card> {
+    fun open(): List<Card> {
         return cards.map { card -> card.copy() }
     }
 
@@ -18,7 +18,7 @@ class Hand(cards: List<Card>) {
         this.cards.addAll(cards)
     }
 
-    fun computePoint(): Int {
+    fun point(): Int {
         val point = cards.sumOf { it.rank.point }
         return point + computeBonusPoint(point)
     }
@@ -31,11 +31,11 @@ class Hand(cards: List<Card>) {
     private fun hasAce(): Boolean = cards.any { card -> card.isAce() }
 
     fun isBusted(): Boolean {
-        return computePoint() > BUST_THRESHOLD
+        return point() > BUST_THRESHOLD
     }
 
     fun isBlackJack(): Boolean {
-        return computePoint() == BUST_THRESHOLD && Hand(cards.take(STARTING_HAND_SIZE)).computePoint() == BUST_THRESHOLD
+        return point() == BUST_THRESHOLD && Hand(cards.take(STARTING_HAND_SIZE)).point() == BUST_THRESHOLD
     }
 
     companion object {

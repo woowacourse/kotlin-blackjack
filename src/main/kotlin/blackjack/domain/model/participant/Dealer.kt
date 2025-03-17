@@ -20,12 +20,12 @@ class Dealer(
         return (computePoint() <= HIT_THRESHOLD)
     }
 
-    override fun showHand(): List<Card> {
+    override fun openHand(): List<Card> {
         if (isInitialOpen) {
             isInitialOpen = false
-            return super.showHand().take(INITIAL_OPEN_SIZE)
+            return super.openHand().take(INITIAL_OPEN_SIZE)
         }
-        return super.showHand()
+        return super.openHand()
     }
 
     override fun compareAgainst(other: Participant): GameResult {

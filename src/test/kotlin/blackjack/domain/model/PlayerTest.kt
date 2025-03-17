@@ -29,7 +29,7 @@ class PlayerTest {
     @Test
     fun `플레이어는 모든 카드를 공개한다`() {
         val player = Player("A", HEART_TWO, HEART_THREE)
-        assertThat(player.showHand()).isEqualTo(listOf(HEART_TWO, HEART_THREE))
+        assertThat(player.openHand()).isEqualTo(listOf(HEART_TWO, HEART_THREE))
     }
 
     @Test

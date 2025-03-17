@@ -23,13 +23,13 @@ class DealerTest {
     @Test
     fun `딜러는 최초로 패를 공개할 때 첫 번째 카드만 공개한다`() {
         val dealer = Dealer(HEART_SIX, HEART_KING)
-        assertThat(dealer.showHand()).isEqualTo(listOf(HEART_SIX))
+        assertThat(dealer.openHand()).isEqualTo(listOf(HEART_SIX))
     }
 
     @Test
     fun `딜러는 마지막으로 패를 공개할 때 모든 카드를 공개한다`() {
         val dealer = Dealer(HEART_SIX, HEART_KING)
-        dealer.showHand()
-        assertThat(dealer.showHand()).isEqualTo(listOf(HEART_SIX, HEART_KING))
+        dealer.openHand()
+        assertThat(dealer.openHand()).isEqualTo(listOf(HEART_SIX, HEART_KING))
     }
 }
