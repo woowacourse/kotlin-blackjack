@@ -17,7 +17,10 @@ fun main() {
     println(person)
 }
 
-fun introduce(name: String, block: PersonBuilder.() -> Unit): Person {
+fun introduce(
+    name: String,
+    block: PersonBuilder.() -> Unit,
+): Person {
     return PersonBuilder().apply {
         name(name)
         block()

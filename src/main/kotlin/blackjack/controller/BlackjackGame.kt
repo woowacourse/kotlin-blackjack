@@ -97,7 +97,8 @@ class BlackjackGame(
     }
 
     private fun setBettingAmount(player: Player) {
-        runCatching { val bettingAmount = inputView.readBettingAmount(player.name)
+        runCatching {
+            val bettingAmount = inputView.readBettingAmount(player.name)
             player.bet(bettingAmount)
         }.onFailure { error ->
             outputView.printError(error)

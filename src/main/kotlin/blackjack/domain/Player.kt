@@ -32,6 +32,5 @@ class Player(name: String) : Participant(name) {
         const val WIN_MULTIPLIER = 1.0
         const val LOSE_MULTIPLIER = -1.0
         const val PUSH_MULTIPLIER = 0.0
-
     }
 }
