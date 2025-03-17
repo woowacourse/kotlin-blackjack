@@ -24,7 +24,7 @@ abstract class Participant {
     }
 
     fun isBust(): Boolean {
-        return Score(this) > BLACKJACK_BUST_LIMIT
+        return Score(innerHand.toList()) > BLACKJACK_BUST_LIMIT
     }
 
     fun isBlackJack(): Boolean {
