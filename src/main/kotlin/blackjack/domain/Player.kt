@@ -3,7 +3,7 @@ package blackjack.domain
 import blackjack.domain.state.Hit
 import blackjack.domain.state.State
 
-class Player(
+data class Player(
     val name: String,
     override var state: State,
     val getMoreCard: (String) -> Boolean,
