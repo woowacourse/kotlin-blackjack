@@ -8,7 +8,7 @@ class Dealer(
 ) : Participant(name, hand) {
     val openCard: Card
         get() = hand.value[OPEN_CARD_INDEX]
-    val profit: Money = Money(0.0)
+    val profit: Money = Money(INITIAL_MONEY_VALUE)
 
     fun getResult(playerScore: Int): GameResult {
         if (playerScore == BUST_SCORE) return GameResult.WIN
@@ -30,6 +30,7 @@ class Dealer(
 
     companion object {
         private const val OPEN_CARD_INDEX = 0
+        private const val INITIAL_MONEY_VALUE = 0.0
         private const val DEALER_HIT_SCORE = 16
     }
 }

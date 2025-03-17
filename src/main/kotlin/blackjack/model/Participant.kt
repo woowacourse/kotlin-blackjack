@@ -6,7 +6,7 @@ abstract class Participant(
 ) {
     fun pickCard(
         cardDeck: CardDeck,
-        times: Int = 1,
+        times: Int = STANDARD_PICK_COUNT,
     ) {
         repeat(times) {
             val card = cardDeck.pickCard()
@@ -25,4 +25,8 @@ abstract class Participant(
     abstract fun gainMoney(money: Money)
 
     abstract fun lossMoney(money: Money)
+
+    companion object {
+        private const val STANDARD_PICK_COUNT = 1
+    }
 }

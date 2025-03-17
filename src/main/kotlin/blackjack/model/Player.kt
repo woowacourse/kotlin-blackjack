@@ -10,7 +10,7 @@ class Player(
 
     init {
         require(name != "딜러") { "플레이어는 딜러라는 이름을 가질 수 없습니다." }
-        require(name.length in 1..5) { "플레이어는 1에서 5사이 길이의 이름만 가질 수 있습니다." }
+        require(name.length in MIN_NAME_SIZE..MAX_NAME_SIZE) { "플레이어는 ${MIN_NAME_SIZE}에서 ${MAX_NAME_SIZE}사이 길이의 이름만 가질 수 있습니다." }
     }
 
     fun updateBettingMoney(money: BettingMoney) {
@@ -30,5 +30,10 @@ class Player(
     enum class Behavior {
         HIT,
         STAY,
+    }
+
+    companion object {
+        private const val MIN_NAME_SIZE = 1
+        private const val MAX_NAME_SIZE = 5
     }
 }
