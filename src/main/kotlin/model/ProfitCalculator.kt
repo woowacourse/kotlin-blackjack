@@ -5,15 +5,26 @@ class ProfitCalculator {
         return playerResult.result.profitRate
     }
 
-    fun calculateFinalProfits(
+    fun calculatePlayerProfits(
         playerResults: List<PlayerResult>,
-        bettingManager: BettingManager,
-        players: Players,
-    ): Map<Player, Money> {
-        return players.associateWith { player ->
-            val baseBet = bettingManager.getProfit(player)
-            val multiplier = getProfitRate(playerResults.first { it.player == player })
-            baseBet.multiply(multiplier)
+        bettingManager: BettingManager
+    ): GameResults {
+        val results = playerResults.associate { playerResult ->
+            val baseBet = bettingManager.getBetAmount(playerResult.player)
+            val profit = baseBet.multiply(getProfitRate(playerResult))
+            playerResult.player to profit
         }
+        return GameResults(results)
     }
+
+    fun dealerProfit(playerProfits: GameResults): Money {
+        return Money(-playerProfits.getPlayersProfit().values.sumOf { it.amount })
+    }
+//    fun dealerProfit(gameResults: GameResults): Int {
+//        var rate = 0
+//        gameResults.getPlayersProfit().values.forEach { money ->
+//            rate -= money.amount
+//        }
+//        return rate
+//    }
 }
