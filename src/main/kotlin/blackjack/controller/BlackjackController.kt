@@ -31,8 +31,8 @@ class BlackjackController(
     ) {
         blackjackGame.startGame(
             wantsToDraw = { player -> getValidDrawChoice(player) },
-            printPlayerHands = { player -> outputView.printPlayerHands(player) },
-            printDealerHandStatus = { status -> outputView.printDealerHandStatus(status) },
+            onEndPlayerTurn = { player -> outputView.printPlayerHands(player) },
+            onEndDealerTurn = { status -> outputView.printDealerHandStatus(status) },
             printAllHands = { _, _ -> outputView.printAllPlayerHands(dealer, players) },
         )
     }

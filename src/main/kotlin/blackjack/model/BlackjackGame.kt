@@ -11,22 +11,22 @@ class BlackjackGame(
 
     fun startGame(
         wantsToDraw: (Player) -> DrawChoice,
-        printPlayerHands: (Player) -> Unit,
-        printDealerHandStatus: (Boolean) -> Unit,
+        onEndPlayerTurn: (Player) -> Unit,
+        onEndDealerTurn: (Boolean) -> Unit,
         printAllHands: (Dealer, List<Player>) -> Unit,
     ) {
         gameManager.dealInitialCards()
         printAllHands(dealer, players)
 
         if (!dealer.isBlackjack()) {
-            players.forEach { drawCards(it, wantsToDraw, printPlayerHands) }
-            dealerDrawCards(printDealerHandStatus)
+            players.forEach { playerDrawPhase(it, wantsToDraw, onEndPlayerTurn) }
+            dealerDrawPhase(onEndDealerTurn)
         }
     }
 
     fun calculateResults(): List<Profit> = gameManager.gameResult(gameManager.calculateResultMap())
 
-    private fun drawCards(
+    private fun playerDrawPhase(
         player: Player,
         wantsToDraw: (Player) -> DrawChoice,
         printPlayerHands: (Player) -> Unit,
@@ -38,7 +38,7 @@ class BlackjackGame(
         printPlayerHands(player)
     }
 
-    private fun dealerDrawCards(printDealerHandStatus: (Boolean) -> Unit) {
+    private fun dealerDrawPhase(printDealerHandStatus: (Boolean) -> Unit) {
         val condition = dealer.isMoreCard()
         if (!condition) {
             printDealerHandStatus(false)
