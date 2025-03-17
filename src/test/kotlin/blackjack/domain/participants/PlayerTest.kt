@@ -5,6 +5,7 @@ import blackjack.domain.card.CardNumber
 import blackjack.domain.card.CardPattern
 import blackjack.domain.card.Deck
 import io.kotest.assertions.assertSoftly
+import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -33,7 +34,7 @@ class PlayerTest {
         player.addCard(card)
 
         // Then
-        player.hand.size shouldBe 1
+        player.hand.cards shouldContain card
     }
 
     @Test
@@ -43,7 +44,7 @@ class PlayerTest {
         val player = Player("pobi", cards)
 
         // Then
-        player.score() shouldBe 20
+        player.score shouldBe 20
     }
 
     @Test
