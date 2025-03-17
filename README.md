@@ -90,3 +90,19 @@
 - [x] Dealer | 카드 공개 메서드 추상화
 - [x] DealerTest | Dealer의 테스트 추가 작성
 - [x] HandTest | Hand의 테스트 추가 작성
+
+## TODO
+
+- [ ] Hand | status 삭제
+- [ ] BlackjackController | 버스트되어서 플레이어에게 카드를 뽑을 수 없다고 메시지 출력
+- [ ] BlackjackController | 컨트롤러의 인스턴스 변수 삭제
+- [ ] BettingMoney | rate를 인수로 받도록 수정
+- [ ] Hand | 빽킹 프로퍼티와 프로퍼티를 구별하여 메소드에 적용
+- [ ] Hand | sum을 val로 선언
+- [ ] Hand | if문을 return if 형태로 작성
+- [ ] Hand | BUST_STANDARD를 private 으로 변경
+- [ ] Participant | showInitCards메소드 네이밍 변경
+- [ ] Player | 점수 비교 로직 Participants로 이동
+- [ ] BlackjackController | 딜러의 수익 판단 메소드 생성
+- [ ] 여러 객체들의 Test코드 작성
+- [ ] HandTest | methodSource를 활용한 getSumNumber에 대한 테스트 추가 생성
