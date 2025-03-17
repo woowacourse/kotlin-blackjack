@@ -91,9 +91,8 @@ class BlackjackController(
         bettingInfos: List<BettingInfo>,
     ) {
         outputView.printCardScore(toParticipantsUiModel(dealer, players))
-        val result = GameResult.create(dealer, players)
-        val profits = result.calculateProfits(bettingInfos)
-        outputView.printResult(ResultUiModel.create(profits))
+        val result = GameResult.create(dealer, bettingInfos)
+        outputView.printResult(ResultUiModel.create(result))
     }
 
     private fun toParticipantsUiModel(
