@@ -8,8 +8,6 @@ class Dealer(
     name: String,
     cards: List<Card>,
 ) : Participant(name, cards) {
-    private var isInitialOpen = true
-
     constructor(cards: List<Card>) : this(DEFAULT_NAME, cards)
 
     constructor(vararg cards: Card) : this(DEFAULT_NAME, cards.toList())
@@ -20,12 +18,8 @@ class Dealer(
         return (computePoint() <= HIT_THRESHOLD)
     }
 
-    override fun openHand(): List<Card> {
-        if (isInitialOpen) {
-            isInitialOpen = false
-            return super.openHand().take(INITIAL_OPEN_SIZE)
-        }
-        return super.openHand()
+    override fun openInitialHand(): List<Card> {
+        return openHand().take(INITIAL_OPEN_SIZE)
     }
 
     override fun compareAgainst(other: Participant): GameResult {

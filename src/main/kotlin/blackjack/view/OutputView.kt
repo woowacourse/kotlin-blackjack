@@ -21,6 +21,10 @@ class OutputView {
         println()
     }
 
+    fun printParticipantInitialStatus(participant: Participant) {
+        println(renderParticipantInitialCards(participant))
+    }
+
     fun printParticipantStatus(participant: Participant) {
         println(renderParticipantCards(participant))
     }
@@ -29,6 +33,13 @@ class OutputView {
         println(
             renderParticipantCards(participant) + PARTICIPANT_STATUS_RESULT_DELIMITER + participant.computePoint(),
         )
+    }
+
+    private fun renderParticipantInitialCards(participant: Participant): String {
+        return participant.name + PARTICIPANT_NAME_CARDS_DELIMITER +
+            participant.openInitialHand().joinToString { card ->
+                card.rank.stringRepresentation() + card.suit.stringRepresentation()
+            }
     }
 
     private fun renderParticipantCards(participant: Participant): String {

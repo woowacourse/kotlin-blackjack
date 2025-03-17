@@ -27,7 +27,9 @@ abstract class Participant(val name: String, cards: List<Card>) {
         return hand.isBlackJack()
     }
 
-    open fun openHand(): List<Card> {
+    abstract fun openInitialHand(): List<Card>
+
+    fun openHand(): List<Card> {
         return hand.open()
     }
 

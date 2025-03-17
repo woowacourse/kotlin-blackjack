@@ -38,7 +38,7 @@ class GameController(
 
     private fun initialize(game: Game) {
         game.processBets { player -> retryOnError { Bet(inputView.readPlayerBet(player)) } }
-        game.showStatus(outputView::printParticipantStatus)
+        game.showStatus(outputView::printParticipantInitialStatus)
         outputView.printInitialDeals(game)
     }
 

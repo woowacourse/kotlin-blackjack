@@ -23,6 +23,10 @@ class Player(
         return !isBusted()
     }
 
+    override fun openInitialHand(): List<Card> {
+        return openHand()
+    }
+
     fun placeBet(input: (Player) -> Bet) {
         bet = input(this)
     }
