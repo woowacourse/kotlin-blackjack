@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import blackjack.card.Card
+
 class Hand(
     private val cards: MutableList<Card> = mutableListOf(),
 ) {

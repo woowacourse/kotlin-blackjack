@@ -1,9 +1,9 @@
 package blackjack
 
-import blackjack.domain.Card
+import blackjack.card.Card
+import blackjack.card.Rank
+import blackjack.card.Suit
 import blackjack.domain.Hand
-import blackjack.domain.Rank
-import blackjack.domain.Suit
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test

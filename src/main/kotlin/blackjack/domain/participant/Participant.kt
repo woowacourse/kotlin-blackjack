@@ -1,6 +1,6 @@
 package blackjack.domain.participant
 
-import blackjack.domain.Card
+import blackjack.card.Card
 import blackjack.domain.Hand
 import blackjack.domain.HandStatus
 

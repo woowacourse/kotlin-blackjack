@@ -1,8 +1,8 @@
 package blackjack
 
+import blackjack.card.Card
+import blackjack.card.Deck
 import blackjack.domain.BetAmount
-import blackjack.domain.Card
-import blackjack.domain.Deck
 import blackjack.domain.GameResult
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Player

@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.card
 
 enum class Rank(val score: Int) {
     ACE(1),
