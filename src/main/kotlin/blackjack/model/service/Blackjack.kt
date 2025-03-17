@@ -11,10 +11,8 @@ class Blackjack(private val deck: PlayingCard, private val playerGroup: PlayerGr
     fun initGame() {
         playerGroup.players.forEach { player ->
             distributeStartingHands(player)
-            player.hand.isBlackJack()
         }
         distributeStartingHands(playerGroup.dealer)
-        playerGroup.dealer.hand.isBlackJack()
     }
 
     private fun distributeStartingHands(player: Participants) {
@@ -38,7 +36,7 @@ class Blackjack(private val deck: PlayingCard, private val playerGroup: PlayerGr
         val dealerResult = playerGroup.dealer.sumCardNumber
 
         return playerGroup.players.associateWith { player ->
-            player.compareScores(playerGroup.dealer.hand.status, dealerResult)
+            player.compareScores(playerGroup.dealer.hand, dealerResult)
         }
     }
 

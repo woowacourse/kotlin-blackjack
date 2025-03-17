@@ -1,10 +1,7 @@
 package blackjack.model.domain.card
 
 class Hand(private val _cards: MutableList<Card>) {
-    private var _status: Status = Status.NEUTRAL
-
     val cards get() = _cards.deepCopy()
-    val status get() = _status
 
     fun getSumNumber(): Int {
         var sum = cards.sumOf { it.cardNumber.number }
@@ -20,17 +17,18 @@ class Hand(private val _cards: MutableList<Card>) {
         _cards.addAll(card)
     }
 
-    fun isBust() {
-        if (getSumNumber() > BUST_STANDARD) this._status = Status.BUST
+    fun isBust(): Boolean {
+        return getSumNumber() > BUST_STANDARD
     }
 
-    fun isBlackJack() {
-        if (getSumNumber() == BUST_STANDARD) this._status = Status.BLACKJACK
+    fun isBlackJack(): Boolean {
+        return getSumNumber() == BUST_STANDARD && _cards.size == INIT_HAND_SIZE
     }
 
     private fun MutableList<Card>.deepCopy(): List<Card> = map { it.copy() }
 
     companion object {
         const val BUST_STANDARD: Int = 21
+        const val INIT_HAND_SIZE: Int = 2
     }
 }

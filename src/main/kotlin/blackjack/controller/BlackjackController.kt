@@ -57,7 +57,6 @@ class BlackjackController(
             if (shouldStopDrawing(playerAction)) break
             blackjack.hitAction(player)
             outputView.printCardStatus(player)
-            player.hand.isBust()
         }
         if (player.cardDeck.size == 2) outputView.printCardStatus(player)
     }
@@ -78,7 +77,6 @@ class BlackjackController(
 
     private fun dealerReceiveCard(dealer: Dealer) {
         val count: Int = blackjack.drawUntilThresholdWithCount(dealer)
-        dealer.hand.isBust()
         outputView.printDealerReceiveCard(count, dealer)
     }
 

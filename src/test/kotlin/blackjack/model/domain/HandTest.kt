@@ -2,7 +2,6 @@ package blackjack.model.domain
 
 import blackjack.model.domain.card.Card
 import blackjack.model.domain.card.Hand
-import blackjack.model.domain.card.Status
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -59,27 +58,25 @@ class HandTest {
     }
 
     @Test
-    fun `Bust이면 상태가 bust가 된다`() {
+    fun `카드들의 숫자들의 합이 21이 넘으면 bust상태가 된다`() {
         // given
         val cards = mutableListOf(Card.from("TenHeart"), Card.from("QueenSpade"), Card.from("FiveSpade"))
         val hand = Hand(cards)
         // when
-        hand.isBust()
-        val actual = hand.status
-        val expected = Status.BUST
+        val actual = hand.isBust()
+        val expected = true
         // then
         assertThat(actual).isEqualTo(expected)
     }
 
     @Test
-    fun `Blackjack이면 상태가 Blackjack이 된다`() {
+    fun `손에 카드가 두장이고 카드 숫자이 합이 21이면 상태가 Blackjack이 된다`() {
         // given
         val cards = mutableListOf(Card.from("TenHeart"), Card.from("AceSpade"))
         val hand = Hand(cards)
         // when
-        hand.isBlackJack()
-        val actual = hand.status
-        val expected = Status.BLACKJACK
+        val actual = hand.isBlackJack()
+        val expected = true
         // then
         assertThat(actual).isEqualTo(expected)
     }

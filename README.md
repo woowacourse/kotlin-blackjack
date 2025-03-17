@@ -93,7 +93,7 @@
 
 ## TODO
 
-- [ ] Hand | status 삭제
+- [x] Hand | status 삭제
 - [ ] BlackjackController | 버스트되어서 플레이어에게 카드를 뽑을 수 없다고 메시지 출력
 - [ ] BlackjackController | 컨트롤러의 인스턴스 변수 삭제
 - [ ] BettingMoney | rate를 인수로 받도록 수정

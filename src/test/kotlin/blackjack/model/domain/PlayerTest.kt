@@ -1,7 +1,7 @@
 package blackjack.model.domain
 
 import blackjack.model.domain.card.Card
-import blackjack.model.domain.card.Status
+import blackjack.model.domain.participant.Dealer
 import blackjack.model.domain.participant.Player
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -25,9 +25,8 @@ class PlayerTest {
         // given
         player1.receiveCard(listOf(Card.from("QueenHeart"), Card.from("QueenSpade"), Card.from("QueenClover")))
         // when
-        player1.hand.isBust()
-        val actual = player1.hand.status
-        val expected = Status.BUST
+        val actual = player1.hand.isBust()
+        val expected = true
         // then
         assertThat(actual).isEqualTo(expected)
     }
@@ -35,10 +34,11 @@ class PlayerTest {
     @Test
     fun `상대 상태가 BlackJack 이고 내 상태도 BlackJack이면 게임이 비긴다`() {
         // given
+        val blackjackDealer = Dealer()
+        blackjackDealer.receiveCard(listOf(Card.from("QueenHeart"), Card.from("AceSpade")))
         player1.receiveCard(listOf(Card.from("QueenHeart"), Card.from("AceHeart")))
-        player1.hand.isBlackJack()
         // when
-        val actual = player1.compareScores(Status.BLACKJACK, 21)
+        val actual = player1.compareScores(blackjackDealer.hand, 21)
         val expected = GameResult.Draw
         // then
         assertThat(actual).isEqualTo(expected)
@@ -47,23 +47,51 @@ class PlayerTest {
     @Test
     fun `상대 상태가 BlackJack 이면 게임이 진다`() {
         // given
+        val blackjackDealer = Dealer()
+        blackjackDealer.receiveCard(listOf(Card.from("QueenHeart"), Card.from("AceSpade")))
         player1.receiveCard(listOf(Card.from("QueenHeart"), Card.from("QueenClover")))
-        player1.hand.isBlackJack()
         // when
-        val actual = player1.compareScores(Status.BLACKJACK, 20)
+        val actual = player1.compareScores(blackjackDealer.hand, 20)
         val expected = GameResult.Lose
         // then
         assertThat(actual).isEqualTo(expected)
     }
 
     @Test
-    fun `내 상태가 BlackJack 이면 게임이 Blackjack 상태로 이긴다`() {
+    fun `내 상태가 BlackJack 이고 상대 상태가 BlackJack이 아니면 게임이 Blackjack 상태로 이긴다`() {
         // given
+        val dealer = Dealer()
+        dealer.receiveCard(listOf(Card.from("NineClover"), Card.from("TenSpade")))
         player1.receiveCard(listOf(Card.from("QueenHeart"), Card.from("AceHeart")))
-        player1.hand.isBlackJack()
         // when
-        val actual = player1.compareScores(Status.NEUTRAL, 21)
+        val actual = player1.compareScores(dealer.hand, 21)
         val expected = GameResult.BlackjackWin
+        // then
+        assertThat(actual).isEqualTo(expected)
+    }
+
+    @Test
+    fun `내 상태가 BlackJack 이고 상대 상태가 Bust면 게임이 Blackjack 상태로 이긴다`() {
+        // given
+        val dealer = Dealer()
+        dealer.receiveCard(listOf(Card.from("NineClover"), Card.from("TenSpade"), Card.from("QueenHeart")))
+        player1.receiveCard(listOf(Card.from("QueenHeart"), Card.from("AceHeart")))
+        // when
+        val actual = player1.compareScores(dealer.hand, 21)
+        val expected = GameResult.BlackjackWin
+        // then
+        assertThat(actual).isEqualTo(expected)
+    }
+
+    @Test
+    fun `내 상태가 Bust 이고 상대 상태가 Bust면 게임이 진다`() {
+        // given
+        val dealer = Dealer()
+        dealer.receiveCard(listOf(Card.from("NineClover"), Card.from("TenSpade"), Card.from("QueenHeart")))
+        player1.receiveCard(listOf(Card.from("NineHeart"), Card.from("TenClover"), Card.from("QueenSpade")))
+        // when
+        val actual = player1.compareScores(dealer.hand, 29)
+        val expected = GameResult.Lose
         // then
         assertThat(actual).isEqualTo(expected)
     }
@@ -71,9 +99,11 @@ class PlayerTest {
     @Test
     fun `플레이어의 숫자의 합과 받은 숫자의 합을 비교하여 승패를 결정한다`() {
         // given
-        player1.receiveCard(listOf(Card.from("AceHeart"), Card.from("SixSpade")))
+        val dealer = Dealer()
+        dealer.receiveCard(listOf(Card.from("NineClover"), Card.from("TenSpade")))
+        player1.receiveCard(listOf(Card.from("QueenHeart"), Card.from("QueenHeart")))
         // when
-        val actual = player1.compareScores(Status.NEUTRAL, 8)
+        val actual = player1.compareScores(dealer.hand, 10)
         val expected = GameResult.Win
         // then
         assertThat(actual).isEqualTo(expected)
