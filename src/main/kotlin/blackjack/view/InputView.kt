@@ -12,7 +12,7 @@ class InputView {
 
     fun readPlayerBetAmount(playerName: String): Double {
         println("${playerName}의 배팅 금액은?")
-        return requireNotNull(readln().toDoubleOrNull())
+        return requireNotNull(readln().toDoubleOrNull()) { "배팅 금액은 소수를 입력해주세요" }
     }
 
     fun readPlayerAction(player: PlayingParticipant): UserChoice {

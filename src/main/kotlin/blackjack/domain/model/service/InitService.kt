@@ -15,8 +15,12 @@ class InitService(private val playersName: Set<String>, private val deck: Deck) 
     }
 
     fun dealInitialCard(playingParticipants: PlayingParticipants) {
-        repeat(2) {
+        repeat(START_CARD_COUNT) {
             playingParticipants.dealInitialCard(deck)
         }
+    }
+
+    companion object {
+        const val START_CARD_COUNT = 2
     }
 }

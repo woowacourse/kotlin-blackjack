@@ -2,13 +2,13 @@ package blackjack.domain.model
 
 @JvmInline
 value class Score(val value: Int) {
-    fun isBlackJack(count: Int) = value == 21 && count == 2
+    fun isBlackJack(count: Int) = value == MAX_SCORE && count == BLACK_JACK_CARD_COUNT
 
-    fun isBustScore() = value > 21
+    fun isBustScore() = value > MAX_SCORE
 
-    fun isMaxScore() = value == 21
+    fun isMaxScore() = value == MAX_SCORE
 
-    fun isDealerStay() = value > 17
+    fun isDealerStay() = value > DEALER_MIN_STAY_SCORE
 
     operator fun plus(other: Int) = Score(value + other)
 
@@ -17,4 +17,10 @@ value class Score(val value: Int) {
     }
 
     override fun toString(): String = value.toString()
+
+    private companion object {
+        const val MAX_SCORE = 21
+        const val BLACK_JACK_CARD_COUNT = 2
+        const val DEALER_MIN_STAY_SCORE = 17
+    }
 }

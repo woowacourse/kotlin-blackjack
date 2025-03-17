@@ -6,6 +6,7 @@ import blackjack.domain.model.playing.PlayingParticipant
 import blackjack.domain.model.playing.PlayingParticipants
 import blackjack.domain.model.playing.PlayingPlayer
 import blackjack.domain.model.profit.ProfitParticipant
+import blackjack.domain.model.service.InitService.Companion.START_CARD_COUNT
 
 class OutputView {
     fun printInitialDeals(playingParticipants: PlayingParticipants) {
@@ -87,7 +88,6 @@ class OutputView {
     }
 
     companion object {
-        private const val START_CARD_COUNT = 2
         private const val MESSAGE_INITIAL_HAND_DISTRIBUTED = "%s와(과) %s에게 %s장의 카드를 나누었습니다."
         private const val MESSAGE_DEALER_HITS_STATE = "딜러는 16이하라 한장의 카드를 더 받았습니다."
         private const val MESSAGE_RESULTS_HEADER = "## 최종 승패"

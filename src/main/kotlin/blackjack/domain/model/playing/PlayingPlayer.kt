@@ -8,5 +8,9 @@ import blackjack.domain.model.hand.State
 class PlayingPlayer(override var handsState: State, override val name: String) : PlayingParticipant() {
     constructor(name: String, vararg card: Card) : this(PlayerHit(Hands(card.toList())), name)
 
-    override fun showStartCards(): List<Card> = showCards().take(2)
+    override fun showStartCards(): List<Card> = showCards().take(SHOW_START_PLAYER_CARD_COUNT)
+
+    private companion object {
+        const val SHOW_START_PLAYER_CARD_COUNT = 2
+    }
 }
