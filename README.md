@@ -96,7 +96,7 @@
 - [x] Hand | status 삭제
 - [x] BlackjackController | 컨트롤러의 인스턴스 변수 삭제
 - [x] Player | compareScores | 매개변수를 하나로 받도록 수정
-- [ ] BettingMoney | rate를 인수로 받도록 수정
+- [x] PlayerBetResult | 플레이어 베팅 금액 정산 결과를 받는 클래스 생성
 - [ ] Hand | 빽킹 프로퍼티와 프로퍼티를 구별하여 메소드에 적용
 - [ ] Hand | sum을 val로 선언
 - [ ] Hand | if문을 return if 형태로 작성

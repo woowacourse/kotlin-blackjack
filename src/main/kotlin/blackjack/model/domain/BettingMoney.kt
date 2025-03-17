@@ -2,8 +2,11 @@ package blackjack.model.domain
 
 @JvmInline
 value class BettingMoney(val amount: Float) {
-    val blackjackMoney get() = amount * 1.5f
-    val loseMoney get() = amount * -1f
-    val winMoney get() = amount * 1f
-    val drawMoney get() = 0f
+    init {
+        require(amount > 0) { ERROR_INVALID_BETTING_MONEY }
+    }
+
+    companion object {
+        private const val ERROR_INVALID_BETTING_MONEY: String = "베팅 금액은 양수만 입력가능합니다."
+    }
 }

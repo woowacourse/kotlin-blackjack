@@ -8,6 +8,7 @@ import blackjack.model.domain.card.PlayingCard
 import blackjack.model.domain.participant.Dealer
 import blackjack.model.domain.participant.Player
 import blackjack.model.domain.participant.PlayerBetAmount
+import blackjack.model.domain.participant.PlayerBetResult
 import blackjack.model.domain.participant.PlayerGroup
 import blackjack.model.service.Blackjack
 import blackjack.view.InputView
@@ -89,41 +90,27 @@ class BlackjackController(
         outputView.printDealerReceiveCard(count, dealer)
     }
 
-    private fun settlePlayerBet(
-        playerBetAmount: PlayerBetAmount,
-        gameResult: GameResult,
-    ): PlayerBetAmount {
-        val settledBetAmount =
-            when (gameResult) {
-                GameResult.BlackjackWin -> BettingMoney(playerBetAmount.betAmount.blackjackMoney)
-                GameResult.Win -> BettingMoney(playerBetAmount.betAmount.winMoney)
-                GameResult.Lose -> BettingMoney(playerBetAmount.betAmount.loseMoney)
-                GameResult.Draw -> BettingMoney(playerBetAmount.betAmount.drawMoney)
-            }
-        return PlayerBetAmount(playerBetAmount.player, settledBetAmount)
-    }
-
     private fun settleMoney(
         playersResult: Map<Player, GameResult>,
         playersBetAmount: List<PlayerBetAmount>,
-    ): List<PlayerBetAmount> {
+    ): List<PlayerBetResult> {
         return playersBetAmount.map { playerBetAmount ->
-            val result = playersResult[playerBetAmount.player] ?: return@map playerBetAmount
-            settlePlayerBet(playerBetAmount, result)
+            val result = playersResult[playerBetAmount.player] ?: return emptyList()
+            playerBetAmount.profitResult(result.rate)
         }
     }
 
     private fun printResult(
-        playerBetAmount: List<PlayerBetAmount>,
+        playerBetResult: List<PlayerBetResult>,
         dealer: Dealer,
     ) {
-        outputView.participantsCardResult(listOf(dealer) + playerBetAmount.map { it.player })
-        outputView.dealerResult(dealer, getLosePlayers(playerBetAmount))
-        outputView.playerResult(playerBetAmount)
+        outputView.participantsCardResult(listOf(dealer) + playerBetResult.map { it.player })
+        outputView.dealerResult(dealer, getLosePlayers(playerBetResult))
+        outputView.playerResult(playerBetResult)
     }
 
-    private fun getLosePlayers(playerBetAmount: List<PlayerBetAmount>): List<PlayerBetAmount> {
-        return playerBetAmount.filter { it.betAmount.amount < 0 }
+    private fun getLosePlayers(playerBetResult: List<PlayerBetResult>): List<PlayerBetResult> {
+        return playerBetResult.filter { it.bettingResult < 0 }
     }
 
     private fun <T> retryInput(inputFunction: () -> T): T {

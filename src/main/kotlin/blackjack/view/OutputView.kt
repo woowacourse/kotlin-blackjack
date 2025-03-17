@@ -5,7 +5,7 @@ import blackjack.model.domain.card.CardNumber
 import blackjack.model.domain.card.Shape
 import blackjack.model.domain.participant.Dealer
 import blackjack.model.domain.participant.Participants
-import blackjack.model.domain.participant.PlayerBetAmount
+import blackjack.model.domain.participant.PlayerBetResult
 
 class OutputView {
     fun printInitCardStatus(
@@ -53,19 +53,19 @@ class OutputView {
         }
     }
 
-    fun playerResult(playersBetAmount: List<PlayerBetAmount>) {
-        playersBetAmount.forEach { (player, betAmount) ->
-            println(PLAYER_STATUS.format(player.name, formatNumber(betAmount.amount)))
+    fun playerResult(playersBetResult: List<PlayerBetResult>) {
+        playersBetResult.forEach { (player, betAmount) ->
+            println(PLAYER_STATUS.format(player.name, formatNumber(betAmount)))
         }
         println()
     }
 
     fun dealerResult(
         dealer: Dealer,
-        losePlayersBetAmount: List<PlayerBetAmount>,
+        losePlayersBetAmount: List<PlayerBetResult>,
     ) {
         println(FINAL_RESULT)
-        println(PLAYER_STATUS.format(dealer.name, formatNumber(-losePlayersBetAmount.map { it.betAmount.amount }.sum())))
+        println(PLAYER_STATUS.format(dealer.name, formatNumber(-losePlayersBetAmount.map { it.bettingResult }.sum())))
     }
 
     private fun formatNumber(value: Float): String {
