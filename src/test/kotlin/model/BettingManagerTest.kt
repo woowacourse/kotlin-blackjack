@@ -43,6 +43,6 @@ class BettingManagerTest {
         val bettingAmount = 10000
         bettingManager.placeBet(player, bettingAmount)
 
-        assertThat(bettingManager.getProfit(player).amount).isEqualTo(bettingAmount)
+        assertThat(bettingManager.getBetAmount(player).amount).isEqualTo(bettingAmount)
     }
 }
