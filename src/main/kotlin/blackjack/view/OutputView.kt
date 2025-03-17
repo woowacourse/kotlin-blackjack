@@ -6,13 +6,13 @@ import blackjack.uimodel.ResultUiModel
 class OutputView {
     fun printDrawMessage(participantsUiModels: List<ParticipantsUiModel>) {
         println()
-        val nameList = participantsUiModels.map { it.name }.joinToString(DELIMITER)
+        val nameList = participantsUiModels.joinToString(DELIMITER) { it.name }
         println(FIRST_DRAW_MESSAGE.format(nameList))
         participantsUiModels.forEach { person ->
             println(
                 DRAW_STATUS_MESSAGE.format(
                     person.name,
-                    if (person.name == DEALER) person.cards.first() else person.cards.joinToString(DELIMITER),
+                    person.cards.joinToString(DELIMITER),
                 ),
             )
         }

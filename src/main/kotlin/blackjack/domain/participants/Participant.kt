@@ -28,6 +28,14 @@ abstract class Participant(initialHand: List<Card> = emptyList()) {
         return 0
     }
 
+    fun visibleCard(isFirstTurn: Boolean): List<Card> {
+        return if (isFirstTurn && this is Dealer) {
+            hand.cards.take(1)
+        } else {
+            hand.cards
+        }
+    }
+
     companion object {
         private const val FIRST_TURN_DRAW_AMOUNT = 2
         private const val HIT_DRAW_AMOUNT = 1

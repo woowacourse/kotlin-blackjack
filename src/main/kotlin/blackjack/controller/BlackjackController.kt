@@ -99,6 +99,6 @@ class BlackjackController(
         dealer: Dealer,
         players: List<Player>,
     ): List<ParticipantsUiModel> {
-        return listOf(ParticipantsUiModel.create(dealer)) + players.map(ParticipantsUiModel::create)
+        return listOf(ParticipantsUiModel.create(dealer, true)) + players.map(ParticipantsUiModel::create)
     }
 }
