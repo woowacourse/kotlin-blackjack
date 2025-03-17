@@ -1,7 +1,9 @@
 package blackjack
 
 import blackjack.controller.BlackJackController
+import blackjack.view.InputView
+import blackjack.view.OutputView
 
 fun main() {
-    BlackJackController().play()
+    BlackJackController(InputView(), OutputView()).play()
 }

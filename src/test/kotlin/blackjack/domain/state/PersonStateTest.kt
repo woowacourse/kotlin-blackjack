@@ -28,7 +28,7 @@ class PersonStateTest {
         repeat(customCards.size) { person.draw(deck) }
 
         assertAll(
-            { (person.score > 21) shouldBe true },
+            { (person.score().value > 21) shouldBe true },
             { PersonState.from(person) shouldBe PersonState.BUST },
         )
     }
@@ -41,7 +41,7 @@ class PersonStateTest {
         repeat(customCards.size) { person.draw(deck) }
 
         assertAll(
-            { (person.score <= 21) shouldBe true },
+            { (person.score().value <= 21) shouldBe true },
             { PersonState.from(person) shouldBe PersonState.HIT },
         )
     }
@@ -66,5 +66,16 @@ class PersonStateTest {
         repeat(customCards.size) { person.draw(deck) }
 
         PersonState.from(person) shouldBe PersonState.HIT
+    }
+
+    @Test
+    fun `보유한 카드 수가 2장일 때 스코어가 21이라면 BLACKJACK을 반환한다`() {
+        val customCards = listOf(CardNumber.JACK, CardNumber.ACE)
+        deck = generateCustomDeck(customCards)
+        person = Dealer()
+
+        repeat(customCards.size) { person.draw(deck) }
+
+        PersonState.from(person) shouldBe PersonState.BLACKJACK
     }
 }

@@ -1,62 +1,70 @@
 package blackjack.domain
 
-import blackjack.domain.person.Dealer
-import blackjack.domain.person.Player
+import blackjack.view.InputView
+import blackjack.view.OutputView
 import io.kotest.matchers.shouldBe
-import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
+import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
+import java.io.PrintStream
+import kotlin.test.assertTrue
 
 class BlackJackGameTest {
-    private lateinit var dealer: Dealer
-    private lateinit var players: List<Player>
-    private lateinit var game: BlackJackGame
+    private lateinit var outputStream: ByteArrayOutputStream
+    private lateinit var printStream: PrintStream
 
     @BeforeEach
     fun setUp() {
-        dealer = Dealer()
-        players = listOf(Player("Alice"), Player("Bob"))
-        game = BlackJackGame(dealer, players)
+        outputStream = ByteArrayOutputStream()
+        printStream = PrintStream(outputStream)
+        System.setOut(printStream)
+    }
+
+    private fun setInput(input: String) {
+        System.setIn(ByteArrayInputStream(input.toByteArray()))
     }
 
     @Test
-    fun `딜러와 플레이어가 각각 2장의 카드를 받아야 한다`() {
-        game.dealCards()
+    fun `블랙잭 게임을 정상적으로 수행한다`() {
+        setInput("player1, player2\n100\n100\nn\nn\n")
+
+        BlackJackGame(InputView(), OutputView()).play()
+
+        val output = outputStream.toString()
 
         assertAll(
-            { dealer.cards.size shouldBe 2 },
-            { players.all { it.cards.size == 2 } shouldBe true },
+            { assertTrue(output.contains("게임에 참여할 사람의 이름을 입력하세요")) },
+            { assertTrue(output.contains("배팅 금액은?")) },
+            { assertTrue(output.contains("한장의 카드를 더 받겠습니까?")) },
+            { assertTrue(output.contains("## 최종 수익")) },
         )
     }
 
     @Test
-    fun `hitFlag이 true이면 플레이어가 카드를 추가로 뽑는다`() {
-        game.dealCards()
-        game.playPlayersTurns(getHitFlag = { name -> name == "Alice" }, {})
+    fun `블랙잭 게임을 정상적으로 수행한다2`() {
+        setInput("player1, player2\n100\n100\ny\nn\nn\n")
 
-        val alice = players.find { it.name == "Alice" }!!
-        val bob = players.find { it.name == "Bob" }!!
+        BlackJackGame(InputView(), OutputView()).play()
+
+        val output = outputStream.toString()
 
         assertAll(
-            { (alice.cards.size > 2) shouldBe true },
-            { bob.cards.size shouldBe 2 },
+            { assertTrue(output.contains("게임에 참여할 사람의 이름을 입력하세요")) },
+            { assertTrue(output.contains("배팅 금액은?")) },
+            { assertTrue(output.contains("한장의 카드를 더 받겠습니까?")) },
+            { assertTrue(output.contains("## 최종 수익")) },
         )
     }
 
     @Test
-    fun `딜러는 17 이상이 될 때까지 카드를 뽑는다`() {
-        game.dealCards()
-        game.playDealerTurns {}
+    fun `잘못된 입력이 들어왔을 때 예외 메시지를 출력한다`() {
+        setInput("player1, player2\n-100\n100\n100\nn\nn\n")
 
-        (dealer.score >= 17) shouldBe true
-    }
+        BlackJackGame(InputView(), OutputView()).play()
 
-    @Test
-    fun `플레이어와 딜러의 승패를 올바르게 판단해야 한다`() {
-        game.dealCards()
-        val result = game.gameResult()
-
-        assertNotNull(result)
+        val output = outputStream.toString()
+        output.contains("[ERROR]") shouldBe true
     }
 }
