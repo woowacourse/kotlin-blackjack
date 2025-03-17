@@ -3,7 +3,7 @@ package blackjack.domain
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
 
-class Score(val value: Int) {
+class Score private constructor(val value: Int) {
     fun isBlackJackScore(): Boolean = value == BLACKJACK_SCORE
 
     fun isBustScore(): Boolean = value > BLACKJACK_SCORE
