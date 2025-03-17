@@ -30,7 +30,7 @@ class Dealer(
 
     companion object {
         private const val OPEN_CARD_INDEX = 0
-        private const val INITIAL_MONEY_VALUE = 0.0
+        private const val INITIAL_MONEY_VALUE = 0
         private const val DEALER_HIT_SCORE = 16
     }
 }

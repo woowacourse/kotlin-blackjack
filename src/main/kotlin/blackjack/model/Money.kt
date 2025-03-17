@@ -1,10 +1,10 @@
 package blackjack.model
 
 open class Money(
-    value: Double,
+    value: Int,
 ) {
-    private val initialValue: Double = value
-    var value: Double = initialValue
+    private val initialValue: Int = value
+    var value: Double = initialValue.toDouble()
         private set
 
     fun plus(money: Money) {

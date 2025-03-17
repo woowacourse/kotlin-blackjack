@@ -2,7 +2,7 @@ package blackjack.model
 
 class BettingMoney(
     value: Int,
-) : Money(value.toDouble()) {
+) : Money(value) {
     init {
         require(
             value in MIN_BETTING_MONEY..MAX_BETTING_MONEY,
