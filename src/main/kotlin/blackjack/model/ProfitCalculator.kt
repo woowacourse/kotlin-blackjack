@@ -9,18 +9,29 @@ object ProfitCalculator {
     fun calculateProfit(
         dealer: Dealer,
         player: Player,
-    ): Money {
+    ): Money = getMoneyByGameStatusOrNull(dealer, player) ?: getMoneyByCompareToScore(dealer, player)
+
+    private fun getMoneyByGameStatusOrNull(
+        dealer: Dealer,
+        player: Player,
+    ): Money? {
         val dealerGameStatus = GameJudge.judge(dealer.hand)
         val playerGameStatus = GameJudge.judge(player.hand)
         if (dealerGameStatus == BLACKJACK && playerGameStatus == BLACKJACK) return Money.toDrawMoney()
         if (playerGameStatus == BLACKJACK) return Money.toBlackjackMoney(player.money)
         if (playerGameStatus == BUST) return Money.toLoseMoney(player.money)
         if (dealerGameStatus == BUST) return Money.toWinMoney(player.money)
+        return null
+    }
 
-        val dealerFinalScore = dealer.hand.score
-        val playerFinalScore = player.hand.score
-        if (dealerFinalScore < playerFinalScore) return Money.toWinMoney(player.money)
-        if (dealerFinalScore == playerFinalScore) return Money.toDrawMoney()
+    private fun getMoneyByCompareToScore(
+        dealer: Dealer,
+        player: Player,
+    ): Money {
+        val dealerScore = dealer.hand.score
+        val playerScore = player.hand.score
+        if (dealerScore < playerScore) return Money.toWinMoney(player.money)
+        if (dealerScore == playerScore) return Money.toDrawMoney()
         return Money.toLoseMoney(player.money)
     }
 }
