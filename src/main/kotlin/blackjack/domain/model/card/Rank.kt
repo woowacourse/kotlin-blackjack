@@ -1,4 +1,4 @@
-package blackjack.domain.model
+package blackjack.domain.model.card
 
 enum class Rank(val point: Int) {
     ACE(1),

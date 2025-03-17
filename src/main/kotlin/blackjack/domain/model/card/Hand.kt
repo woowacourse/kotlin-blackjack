@@ -1,0 +1,48 @@
+package blackjack.domain.model.card
+
+class Hand(cards: List<Card>) {
+    private val cards: MutableList<Card> = mutableListOf()
+
+    constructor(vararg cards: Card) : this(cards.toList())
+
+    init {
+        require(cards.size >= STARTING_HAND_SIZE) { ERROR_MESSAGE_INCORRECT_STARTING_HAND }
+        add(cards)
+    }
+
+    fun open(): List<Card> {
+        return cards.map { card -> card.copy() }
+    }
+
+    fun add(cards: List<Card>) {
+        this.cards.addAll(cards)
+    }
+
+    fun point(): Int {
+        val point = cards.sumOf { it.rank.point }
+        return point + computeBonusPoint(point)
+    }
+
+    private fun computeBonusPoint(point: Int): Int {
+        if (point + BONUS_POINT <= BUST_THRESHOLD && hasAce()) return BONUS_POINT
+        return 0
+    }
+
+    private fun hasAce(): Boolean = cards.any { card -> card.isAce() }
+
+    fun isBusted(): Boolean {
+        return point() > BUST_THRESHOLD
+    }
+
+    fun isBlackJack(): Boolean {
+        return point() == BUST_THRESHOLD && Hand(cards.take(STARTING_HAND_SIZE)).point() == BUST_THRESHOLD
+    }
+
+    companion object {
+        const val STARTING_HAND_SIZE = 2
+        private const val BUST_THRESHOLD = 21
+        private const val BONUS_POINT = 10
+
+        private const val ERROR_MESSAGE_INCORRECT_STARTING_HAND = "시작 시 ${STARTING_HAND_SIZE}장의 카드를 보유해야 합니다."
+    }
+}

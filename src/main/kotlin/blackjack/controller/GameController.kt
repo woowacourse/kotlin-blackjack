@@ -1,9 +1,12 @@
 package blackjack.controller
 
-import blackjack.domain.model.Dealer
-import blackjack.domain.model.Deck
-import blackjack.domain.model.Participants
-import blackjack.domain.model.Player
+import blackjack.domain.model.Bet
+import blackjack.domain.model.Game
+import blackjack.domain.model.card.Deck
+import blackjack.domain.model.card.Hand
+import blackjack.domain.model.participant.Dealer
+import blackjack.domain.model.participant.Player
+import blackjack.domain.model.result.Scoreboard
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -12,39 +15,50 @@ class GameController(
     private val outputView: OutputView = OutputView(),
 ) {
     fun run() {
+        val game = makeGame()
+        initialize(game)
+        play(game)
+        announceResults(game)
+    }
+
+    private fun makeGame(): Game {
         val deck = Deck()
-        val participants = repeatUntilValid { Participants(Dealer(), inputView.readPlayerNames().map(::Player)) }
-        processInitialDeals(deck, participants)
-        processHits(deck, participants)
-        outputView.printResults(participants)
+        val game =
+            retryOnError {
+                Game(
+                    deck,
+                    Dealer(deck.draw(Hand.STARTING_HAND_SIZE)),
+                    inputView.readPlayerNames().map { playerName ->
+                        Player(playerName, deck.draw(Hand.STARTING_HAND_SIZE))
+                    },
+                )
+            }
+        return game
     }
 
-    private fun processInitialDeals(
-        deck: Deck,
-        participants: Participants,
-    ) {
-        participants.makeInitialDeals(deck)
-        outputView.printInitialDeals(participants)
-        participants.all.forEach { participant -> outputView.printParticipantStatus(participant) }
+    private fun initialize(game: Game) {
+        game.processBets { player -> retryOnError { Bet(inputView.readPlayerBet(player)) } }
+        game.showStatus(outputView::printParticipantInitialStatus)
+        outputView.printInitialDeals(game)
     }
 
-    private fun processHits(
-        deck: Deck,
-        participants: Participants,
-    ) {
-        participants.processPlayersHits(
-            deck,
-            { player -> repeatUntilValid { inputView.readPlayerAction(player) } },
+    private fun play(game: Game) {
+        game.processPlayersHits(
+            { player -> retryOnError { inputView.readPlayerAction(player) } },
             outputView::printParticipantStatus,
         )
-        participants.processDealerHits(deck, outputView::printDealerHit)
+        game.processDealerHits(outputView::printDealerHit)
     }
 
-    private fun <T> repeatUntilValid(event: () -> T): T {
-        while (true) {
-            kotlin.runCatching { event() }
-                .onSuccess { return it }
-                .onFailure { println(it.message ?: it.stackTraceToString()) }
+    private fun announceResults(game: Game) {
+        game.showStatus(outputView::printParticipantStatusWithPoint)
+        outputView.printFinalResult(Scoreboard(game.dealer, game.players))
+    }
+
+    private fun <T> retryOnError(function: () -> T): T {
+        return runCatching { function() }.getOrElse { error ->
+            println(error.message)
+            retryOnError(function)
         }
     }
 }
