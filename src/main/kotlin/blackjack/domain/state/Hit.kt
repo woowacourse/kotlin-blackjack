@@ -20,9 +20,7 @@ class Hit(
 
     override fun canDrawCard(): Boolean = hand.getTotalScore() <= DRAW_CARD_STANDARD
 
-    override fun profit(profitMoney: Int): Int {
-        TODO("Not yet implemented")
-    }
+    override fun profit(dealerTotal: Int): Int = hand.getProfitMoney(hand.findWinner(dealerTotal).toDouble()).toInt()
 
     companion object {
         const val BLACKJACK_SIZE = 2

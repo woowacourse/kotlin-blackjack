@@ -15,4 +15,6 @@ class Hand(
     }
 
     fun getProfitMoney(rate: Double): Double = rate * money
+
+    fun findWinner(dealerTotal: Int): Int = this.getTotalScore().compareTo(dealerTotal)
 }
