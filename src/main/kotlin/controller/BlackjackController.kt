@@ -19,7 +19,7 @@ class BlackjackController(
         val initialDealerCards = allCards.initialCards()
         val playerNames = inputView.inputPlayerNames()
         val players = Players(createPlayers(playerNames, allCards))
-        updateBet(players, inputView.inputBetAmount(playerNames))
+        updateBet(players)
         val dealer = Dealer(initialDealerCards)
 
         showInitialGameState(players, initialDealerCards)
@@ -94,12 +94,9 @@ class BlackjackController(
         return Players(players)
     }
 
-    private fun updateBet(
-        players: List<Player>,
-        betAmounts: List<Float>,
-    ) {
-        players.forEachIndexed { index, player ->
-            player.betting(betAmounts[index])
+    private fun updateBet(players: List<Player>) {
+        players.forEach { player ->
+            player.betting(inputView.inputBetAmount(player.name))
         }
     }
 }

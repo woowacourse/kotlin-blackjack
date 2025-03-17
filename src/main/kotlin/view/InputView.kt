@@ -16,11 +16,9 @@ class InputView {
         }
     }
 
-    fun inputBetAmount(playerNames: List<String>): List<Float> {
-        return playerNames.map { name ->
-            println("${name}의 배팅 금액은?")
-            readln().toFloat()
-        }
+    fun inputBetAmount(playerName: String): Float {
+        println("${playerName}의 배팅 금액은?")
+        return readln().toFloat()
     }
 
     companion object {
