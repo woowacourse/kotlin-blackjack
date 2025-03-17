@@ -1,19 +1,13 @@
 package blackjack.domain.participant
 
-import blackjack.domain.deck.Deck
+import blackjack.domain.score.Score
 
 class Dealer : Participant() {
     override val hitThreshold: Int
         get() = DEALER_HIT_THRESHOLD
 
-    fun setAllCard(deck: Deck) {
-        while (canHit()) {
-            innerHand.add(deck.draw())
-        }
-    }
-
-    fun hasAdditionalCard(): Boolean {
-        return innerHand.size() > INITIAL_CARD_COUNT
+    fun needsAdditionalCard(): Boolean {
+        return Score(this) < DEALER_HIT_THRESHOLD
     }
 
     companion object {

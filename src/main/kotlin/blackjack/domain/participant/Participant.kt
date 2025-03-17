@@ -2,10 +2,11 @@ package blackjack.domain.participant
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.Hand
+import blackjack.domain.deck.Deck
 import blackjack.domain.score.Score
 
 abstract class Participant {
-    val innerHand: Hand = Hand()
+    private val innerHand: Hand = Hand()
     abstract val hitThreshold: Int
 
     fun getCards(): List<Card> {
@@ -14,6 +15,12 @@ abstract class Participant {
 
     fun addCard(card: Card) {
         if (canHit()) innerHand.add(card)
+    }
+
+    fun setInitialCard(deck: Deck) {
+        repeat(INITIAL_CARD_COUNT) {
+            addCard(deck.draw())
+        }
     }
 
     fun isBust(): Boolean {
@@ -30,5 +37,6 @@ abstract class Participant {
 
     companion object {
         const val BLACKJACK_BUST_LIMIT = 21
+        private const val INITIAL_CARD_COUNT = 2
     }
 }

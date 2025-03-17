@@ -13,16 +13,17 @@ class BlackJackGame(
     private val inputView: BlackJackInputView,
 ) {
     fun setUp() {
-        pair.dealer.setAllCard(deck)
+        pair.dealer.setInitialCard(deck)
         setInitialPlayerCards(pair.players)
         outputView.showInitialCards(pair)
     }
 
     fun run() {
         eachPlayerHitOrNot()
-        if (hasDealerAdditionalCard()) {
+        if (pair.dealer.needsAdditionalCard()) {
             outputView.printDealerHaveAdditionalCard()
         }
+        addDealerCard()
     }
 
     fun eachPlayerHitOrNot() {
@@ -31,16 +32,14 @@ class BlackJackGame(
         }
     }
 
-    fun hasDealerAdditionalCard(): Boolean {
-        return pair.dealer.hasAdditionalCard()
+    private fun addDealerCard() {
+        while (pair.dealer.canHit()) {
+            pair.dealer.addCard(deck.draw())
+        }
     }
 
     private fun setInitialPlayerCards(players: List<Player>) {
-        players.forEach { player ->
-            repeat(INITIAL_CARD_COUNT) {
-                player.addCard(deck.draw())
-            }
-        }
+        players.forEach { it.setInitialCard(deck) }
     }
 
     private fun handlePlayerHit(player: Player) {

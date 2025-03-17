@@ -24,10 +24,11 @@ class GameController(
             runCatchingUntilValidInput(RETRY_COUNT) {
                 getPlayers()
             }
-        val game = BlackJackGame(BlackJackPair(players), deck, BlackJackOutputView, BlackJackInputView)
+        val pair = BlackJackPair(players)
+        val game = BlackJackGame(pair, deck, BlackJackOutputView, BlackJackInputView)
         game.setUp()
         game.run()
-        showResult(BlackJackPair(players))
+        showResult(pair)
     }
 
     private fun getPlayers(): List<Player> {

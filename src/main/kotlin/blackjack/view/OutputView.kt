@@ -45,7 +45,7 @@ object OutputView {
 
     private fun printPlayerCard(player: Player): String = "${player.name}카드: ${player.getCards().format()}"
 
-    private fun printTotalSum(participant: Participant): String = " - 결과: ${Score(participant)}\""
+    private fun printTotalSum(participant: Participant): String = " - 결과: ${Score(participant).value}\""
 
     private fun printDealerResult(dealerProfit: Int): String = "딜러: $dealerProfit"
 
