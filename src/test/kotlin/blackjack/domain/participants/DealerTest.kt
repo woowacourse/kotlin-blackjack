@@ -7,11 +7,25 @@ import blackjack.domain.card.CardNumber
 import blackjack.domain.card.CardPattern
 import blackjack.domain.card.Deck
 import io.kotest.assertions.assertSoftly
+import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.ints.shouldBeLessThanOrEqual
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
 class DealerTest {
+    @Test
+    fun `덱에서 카드를 한 장 나눠준다`() {
+        // Given
+        val card = Card(CardNumber.ACE, CardPattern.CLOVER)
+        val dealer = Dealer(Deck.createCustomDeck(listOf(card)))
+
+        // When
+        dealer.handOut(dealer)
+
+        // Then
+        dealer.hand.cards shouldContain card
+    }
+
     @Test
     fun `초기 상태일 경우 카드를 2장 받는다`() {
         val dealer = Dealer(Deck.createDefaultDeck())
