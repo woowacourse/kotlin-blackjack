@@ -49,11 +49,11 @@ class OutputView {
     }
 
     fun printResult(
-        dealerProfit: Int,
+        dealerProfit: Money,
         playersProfit: Map<Player, Money>,
     ) {
         println("\n## 최종 수익")
-        println("딜러: $dealerProfit")
+        println("딜러: ${dealerProfit.amount}")
 
         playersProfit.forEach { (player, profit) ->
             println("${player.name}: ${profit.amount}")

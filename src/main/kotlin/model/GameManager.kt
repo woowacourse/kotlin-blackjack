@@ -44,17 +44,15 @@ class GameManager(private val cards: Cards) {
         return dealer.cards.size - INITIAL_DEALER_CARDS
     }
 
-    fun determinePlayersProfit(bettingManager: BettingManager): Map<Player, Money> {
+    fun determineGameResults(
+        bettingManager: BettingManager,
+        profitCalculator: ProfitCalculator
+    ): ProfitResult {
         val playerResults = compareWinOrLose(dealer, players)
+        val playerProfits = profitCalculator.calculatePlayerProfits(playerResults, bettingManager)
+        val dealerProfit = profitCalculator.dealerProfit(playerProfits)
 
-        val profitCalculator = ProfitCalculator()
-        val playersTotalProfits = profitCalculator.calculateFinalProfits(playerResults, bettingManager, players)
-        return playersTotalProfits
-    }
-
-    fun determineDealerProfit(playersProfit: Map<Player, Money>): Int {
-        val totalPlayerProfit = playersProfit.values.sumOf { it.amount }
-        return -totalPlayerProfit
+        return ProfitResult(playerProfits, dealerProfit)
     }
 
     companion object {

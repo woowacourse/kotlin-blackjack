@@ -3,6 +3,7 @@ package controller
 import model.BettingManager
 import model.CardsGenerator
 import model.GameManager
+import model.ProfitCalculator
 import view.InputView
 import view.OutputView
 import view.displayNames
@@ -70,10 +71,16 @@ class BlackjackController(
         gameManager: GameManager,
         bettingManager: BettingManager,
     ) {
-        val playersProfit = gameManager.determinePlayersProfit(bettingManager)
+        val profitCalculator = ProfitCalculator()
+        val gameResults = gameManager.determineGameResults(
+            bettingManager,
+            profitCalculator
+        )
+
         outputView.printResult(
-            gameManager.determineDealerProfit(playersProfit),
-            playersProfit,
+            gameResults.dealerProfit,
+            gameResults.playerProfits.getPlayersProfit()
         )
     }
+
 }
