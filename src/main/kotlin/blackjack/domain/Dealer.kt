@@ -2,7 +2,7 @@ package blackjack.domain
 
 class Dealer(name: String = DEALER_NAME) : Participant(name) {
     fun isBust(): Boolean {
-        return this.state.hand.sum() > 21
+        return this.state.hand.isBust()
     }
 
     companion object {
