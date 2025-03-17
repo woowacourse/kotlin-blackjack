@@ -8,12 +8,10 @@ import blackjack.domain.model.participant.ParticipantInfo
 import blackjack.domain.model.participant.Player
 import blackjack.domain.model.participant.bet.BetAmount
 import blackjack.domain.model.participant.bet.Profit
-import blackjack.view.InputView
-import blackjack.view.OutputView
+import blackjack.view.Views
 
 class Casino(
-    private val inputView: InputView,
-    private val outputView: OutputView,
+    private val views: Views,
     private val deck: Deck,
 ) {
     fun blackJackGame() {
@@ -21,16 +19,16 @@ class Casino(
         val dealer = Dealer()
         val participants: List<GameParticipant> = listOf(dealer) + players
         initDistributeCard(participants)
-        outputView.showDistributeCardMessage(players)
-        outputView.showInitCardInfo(participants)
+        views.output.showDistributeCardMessage(players)
+        views.output.showInitCardInfo(participants)
         runPlayersDrawPhase(players)
         runDealerDrawPhase(dealer)
-        outputView.showCardsResult(participants)
+        views.output.showCardsResult(participants)
         outputFinalProfit(dealer, players)
     }
 
     private fun initPlayers(): List<Player> {
-        val playerNames = inputView.readPlayerNames()
+        val playerNames = views.input.readPlayerNames()
         return playerNames.map { playerName ->
             val betAmount = askSingleBetAmount(playerName)
             Player(ParticipantInfo(playerName, betAmount))
@@ -39,9 +37,9 @@ class Casino(
 
     private fun askSingleBetAmount(playerName: String): BetAmount =
         runCatching {
-            BetAmount(inputView.readBetAmount(playerName))
+            BetAmount(views.input.readBetAmount(playerName))
         }.onFailure { exception ->
-            exception.message?.let { outputView.showErrorMessage(it) }
+            exception.message?.let { views.output.showErrorMessage(it) }
         }.getOrNull() ?: askSingleBetAmount(playerName)
 
     private fun initDistributeCard(participants: List<GameParticipant>) {
@@ -56,21 +54,21 @@ class Casino(
         players.forEach { player ->
             while (player.cardStatus != CardStatus.BUST && isPlayerWantHit(player)) {
                 player.drawCardFromDeck(deck)
-                outputView.showPlayerCardsInfo(player)
+                views.output.showPlayerCardsInfo(player)
             }
             if (player.isInitHandCard()) {
-                outputView.showPlayerCardsInfo(player)
+                views.output.showPlayerCardsInfo(player)
             }
         }
-        outputView.endDrawPhase()
+        views.output.endDrawPhase()
     }
 
-    private fun isPlayerWantHit(player: Player): Boolean = inputView.readWantExtraCard(player.name)
+    private fun isPlayerWantHit(player: Player): Boolean = views.input.readWantExtraCard(player.name)
 
     private fun runDealerDrawPhase(dealer: Dealer) {
         while (dealer.isDrawFinish()) {
             dealer.drawCardFromDeck(deck)
-            outputView.showDealerDrawMessage()
+            views.output.showDealerDrawMessage()
         }
     }
 
@@ -83,6 +81,6 @@ class Casino(
             players.map { player ->
                 player to player.calculateProfit(dealer)
             }
-        outputView.showFinalProfit(listOf(dealerProfitInfo) + playerProfitInfos)
+        views.output.showFinalProfit(listOf(dealerProfitInfo) + playerProfitInfos)
     }
 }
