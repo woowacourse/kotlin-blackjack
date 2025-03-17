@@ -18,13 +18,13 @@ class OutputView : BlackjackOutput {
         dealer: Dealer,
         players: List<Player>,
     ) {
-        println(HANDS_STATUS_MESSAGE_FORMAT.format(dealer.name, initialDealerHands(dealer.cards)))
+        println(HANDS_STATUS_MESSAGE_FORMAT.format(dealer.name, initialDealerHands(dealer.hand.cards)))
         players.forEach { player -> printPlayerHands(player) }
         printContentSeparator()
     }
 
     override fun printPlayerHands(player: Player) {
-        println(HANDS_STATUS_MESSAGE_FORMAT.format(player.name, getHandsStatus(player.cards)))
+        println(HANDS_STATUS_MESSAGE_FORMAT.format(player.name, getHandsStatus(player.hand.cards)))
     }
 
     override fun printDealerHandStatus(isDraw: Boolean) {
@@ -44,8 +44,8 @@ class OutputView : BlackjackOutput {
         println(
             FINAL_HANDS_STATUS_MESSAGE_FORMAT.format(
                 dealer.name,
-                getHandsStatus(dealer.cards),
-                ScoreCalculator.calculateOptimalSum(dealer.cards),
+                getHandsStatus(dealer.hand.cards),
+                ScoreCalculator.calculateOptimalSum(dealer.hand.cards),
             ),
         )
         players.forEach { player -> printFinalPlayerHandStatus(player) }
@@ -71,8 +71,8 @@ class OutputView : BlackjackOutput {
         println(
             FINAL_HANDS_STATUS_MESSAGE_FORMAT.format(
                 player.name,
-                getHandsStatus(player.cards),
-                ScoreCalculator.calculateOptimalSum(player.cards),
+                getHandsStatus(player.hand.cards),
+                ScoreCalculator.calculateOptimalSum(player.hand.cards),
             ),
         )
     }

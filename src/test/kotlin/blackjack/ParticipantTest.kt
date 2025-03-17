@@ -17,6 +17,6 @@ class ParticipantTest {
     @Test
     fun `참여자는 카드 한 장을 받을 수 있다`() {
         participant.addCard(CLOVER_NINE)
-        assertThat(participant.cards.size).isEqualTo(1)
+        assertThat(participant.hand.cards.size).isEqualTo(1)
     }
 }

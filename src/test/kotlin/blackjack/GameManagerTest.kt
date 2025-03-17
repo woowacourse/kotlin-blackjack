@@ -17,16 +17,15 @@ class GameManagerTest {
     fun `초기 세팅은 플레이어와 딜러에게 카드 2장씩 나눠준다`() {
         // given
         val player1 = Player("a", Money.from(1_000L))
-        val player2 = Player("b", Money.from(1_000L))
         val dealer = Dealer()
-        val gameManager = GameManager(dealer, listOf(player1, player2))
+        val gameManager = GameManager(dealer, listOf(player1))
 
         // when
         gameManager.drawInitialCardWithCount(2)
 
         // then
-        assertThat(player1.cards.size).isEqualTo(2)
-        assertThat(dealer.cards.size).isEqualTo(2)
+        assertThat(player1.hand.cards.size).isEqualTo(2)
+        assertThat(dealer.hand.cards.size).isEqualTo(2)
     }
 
     @ParameterizedTest
@@ -47,11 +46,11 @@ class GameManagerTest {
     fun `카드 추가 요청을 한다면 플레이어 카드는 한 장 추가된다`() {
         val player = Player("플레이어", Money.from(1_000L))
         val gameManager = GameManager(Dealer(), listOf(player))
-        val expected = player.cards.size + 1
+        val expected = player.hand.cards.size + 1
 
         gameManager.drawCardWithChoice(CardDrawDecision.YES, player)
 
-        val actual = player.cards.size
+        val actual = player.hand.cards.size
 
         assertThat(actual).isEqualTo(expected)
     }
