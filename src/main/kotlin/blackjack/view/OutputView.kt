@@ -1,7 +1,7 @@
 package blackjack.view
 
-import blackjack.domain.BlackJackGame
 import blackjack.domain.gameResult.PlayerResult
+import blackjack.domain.participant.BlackJackPair
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Participant
 import blackjack.domain.participant.Player
@@ -9,10 +9,10 @@ import blackjack.domain.score.Score
 import blackjack.view.blackjackView.format
 
 object OutputView {
-    fun printFinalCards(game: BlackJackGame) {
-        println(printDealerCard(game.dealer) + printTotalSum(game.dealer))
+    fun printFinalCards(pair: BlackJackPair) {
+        println(printDealerCard(pair.dealer) + printTotalSum(pair.dealer))
 
-        game.players.forEach { player ->
+        pair.players.forEach { player ->
             println(printPlayerCard(player) + printTotalSum(player))
         }
     }

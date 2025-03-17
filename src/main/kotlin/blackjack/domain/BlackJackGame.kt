@@ -1,23 +1,21 @@
 package blackjack.domain
 
 import blackjack.domain.deck.Deck
-import blackjack.domain.participant.Dealer
+import blackjack.domain.participant.BlackJackPair
 import blackjack.domain.participant.Player
 import blackjack.view.blackjackView.BlackJackInputView
 import blackjack.view.blackjackView.BlackJackOutputView
 
 class BlackJackGame(
-    val players: List<Player>,
+    private val pair: BlackJackPair,
     private val deck: Deck,
     private val outputView: BlackJackOutputView,
     private val inputView: BlackJackInputView,
 ) {
-    val dealer = Dealer()
-
     fun setUp() {
-        dealer.setAllCard(deck)
-        setInitialPlayerCards(players)
-        outputView.showInitialCards(this)
+        pair.dealer.setAllCard(deck)
+        setInitialPlayerCards(pair.players)
+        outputView.showInitialCards(pair)
     }
 
     fun run() {
@@ -28,13 +26,13 @@ class BlackJackGame(
     }
 
     fun eachPlayerHitOrNot() {
-        players.forEach { player ->
+        pair.players.forEach { player ->
             handlePlayerHit(player)
         }
     }
 
     fun hasDealerAdditionalCard(): Boolean {
-        return dealer.hasAdditionalCard()
+        return pair.dealer.hasAdditionalCard()
     }
 
     private fun setInitialPlayerCards(players: List<Player>) {
