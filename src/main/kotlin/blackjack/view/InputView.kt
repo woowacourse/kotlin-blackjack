@@ -14,14 +14,13 @@ class InputView {
 
     fun askDrawCard(playerName: String): Boolean {
         println("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)".format(playerName))
-        val input = readln().trim().lowercase()
+        while (true) {
+            val input = readln().trim().lowercase()
 
-        if (input == "y") {
-            return true
-        } else {
-            return false
+            if (input == "y") return true
+            if (input == "n") return false
+
+            println("잘못된 입력입니다. 'y'또는 'n'을 입력해 주세요.")
         }
-
-        println("잘못된 입력입니다. 'y'또는 'n'을 입력해 주세요.")
     }
 }
