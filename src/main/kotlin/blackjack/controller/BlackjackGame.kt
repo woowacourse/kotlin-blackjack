@@ -21,28 +21,31 @@ class BlackjackGame(
         getBettingAmount(players)
         dealFirstTurn(dealer, players)
         players.forEach {
-            while (true) {
-                if (it.state.hand.isBust()) {
-                    outputView.printBust(it)
-                    break
-                }
-                val answer = inputView.readHitOrStay(it)
-                if (answer == Action.HIT && it.state !is Bust) {
-                    it.state = it.state.draw(deck.draw())
-                    outputView.printPlayerCards(it)
-                }
-                if (it.state is Bust) {
-                    outputView.printBust(it)
-                    break
-                }
-                if (answer == Action.STAY && it.state is Hit) {
-                    it.state = (it.state as Hit).stay()
-                    break
-                }
-            }
+            turnPlayer(it)
         }
         dealerPlay(dealer)
         printResults(dealer, players)
+    }
+
+    private fun turnPlayer(it: Player) {
+        if (it.state.hand.isBust()) {
+            outputView.printBust(it)
+            return
+        }
+        val answer = inputView.readHitOrStay(it)
+        if (answer == Action.HIT && it.state !is Bust) {
+            it.state = it.state.draw(deck.draw())
+            outputView.printPlayerCards(it)
+        }
+        if (it.state is Bust) {
+            outputView.printBust(it)
+            return
+        }
+        if (answer == Action.STAY && it.state is Hit) {
+            it.state = (it.state as Hit).stay()
+            return
+        }
+        return turnPlayer(it)
     }
 
     private fun printResults(
@@ -55,9 +58,7 @@ class BlackjackGame(
             val playerProfit = it.profit(dealer)
             dealerProfit -= playerProfit
         }
-
         outputView.printDealerProfit(dealerProfit.toInt())
-
         players.forEach {
             val playerProfit = it.profit(dealer)
             outputView.printPlayerProfit(it, playerProfit.toInt())

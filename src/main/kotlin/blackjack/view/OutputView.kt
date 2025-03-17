@@ -98,7 +98,7 @@ class OutputView {
         private const val MESSAGE_SCORE = "- 결과: %d"
         private const val MESSAGE_DEALER_HIT = "\n딜러는 16이하라 %d장의 카드를 더 받았습니다.\n"
         private const val MESSAGE_GAME_RESULT = "\n## 최종 수익"
-        private const val MESSAGE_DEALER_RESULT = "\n딜러: %d"
+        private const val MESSAGE_DEALER_RESULT = "딜러: %d"
         private const val MESSAGE_PLAYER_RESULT = "%s: %d"
     }
 }
