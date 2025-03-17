@@ -1,13 +1,5 @@
 package blackjack.domain
 
-import blackjack.model.Card
-import blackjack.model.CardRank.ACE
-import blackjack.model.CardRank.KING
-import blackjack.model.CardRank.NINE
-import blackjack.model.CardRank.QUEEN
-import blackjack.model.CardRank.TWO
-import blackjack.model.CardSuit.CLUB
-import blackjack.model.CardSuit.DIAMOND
 import blackjack.model.Dealer
 import blackjack.model.Hand
 import blackjack.model.Player
@@ -26,8 +18,8 @@ class PlayersTest {
         val playerHand =
             Hand(
                 listOf(
-                    Card.getCashed(TWO, CLUB),
-                    Card.getCashed(NINE, CLUB),
+                    TWO_CLUB,
+                    NINE_CLUB,
                 ),
             )
         val player = Player.makePlayer(playerName, playerHand)
@@ -35,8 +27,8 @@ class PlayersTest {
         val dealerHand =
             Hand(
                 listOf(
-                    Card.getCashed(TWO, DIAMOND),
-                    Card.getCashed(NINE, DIAMOND),
+                    TWO_CLUB,
+                    NINE_CLUB,
                 ),
             )
         val dealer = Dealer.makeDealer(hand = dealerHand)
@@ -54,8 +46,8 @@ class PlayersTest {
         val playerHand =
             Hand(
                 listOf(
-                    Card.getCashed(ACE, CLUB),
-                    Card.getCashed(KING, CLUB),
+                    ACE_CLUB,
+                    KING_CLUB,
                 ),
             )
         val player = Player.makePlayer(playerName, playerHand)
@@ -63,8 +55,8 @@ class PlayersTest {
         val dealerHand =
             Hand(
                 listOf(
-                    Card.getCashed(TWO, DIAMOND),
-                    Card.getCashed(NINE, DIAMOND),
+                    TWO_CLUB,
+                    NINE_CLUB,
                 ),
             )
         val dealer = Dealer.makeDealer(hand = dealerHand)
@@ -82,16 +74,16 @@ class PlayersTest {
         val playerHand =
             Hand(
                 listOf(
-                    Card.getCashed(QUEEN, CLUB),
-                    Card.getCashed(KING, CLUB),
+                    QUEEN_CLUB,
+                    KING_CLUB,
                 ),
             )
         val player = Player.makePlayer(playerName, playerHand)
         val dealerHand =
             Hand(
                 listOf(
-                    Card.getCashed(TWO, DIAMOND),
-                    Card.getCashed(NINE, DIAMOND),
+                    TWO_CLUB,
+                    NINE_CLUB,
                 ),
             )
         val dealer = Dealer.makeDealer(hand = dealerHand)
@@ -109,8 +101,8 @@ class PlayersTest {
         val playerHand =
             Hand(
                 listOf(
-                    Card.getCashed(TWO, CLUB),
-                    Card.getCashed(NINE, CLUB),
+                    TWO_CLUB,
+                    NINE_CLUB,
                 ),
             )
         val player = Player.makePlayer(playerName, playerHand)
@@ -118,8 +110,8 @@ class PlayersTest {
         val dealerHand =
             Hand(
                 listOf(
-                    Card.getCashed(KING, DIAMOND),
-                    Card.getCashed(QUEEN, DIAMOND),
+                    KING_CLUB,
+                    QUEEN_CLUB,
                 ),
             )
         val dealer = Dealer.makeDealer(hand = dealerHand)
