@@ -4,7 +4,7 @@ import blackjack.model.CardsStatus.Companion.BUST_SCORE
 
 class Dealer(
     name: String = "딜러",
-    hand: Hand = Hand(mutableListOf()),
+    hand: Hand = Hand(emptyList()),
 ) : Participant(name, hand) {
     val openCard: Card
         get() = hand.value[OPEN_CARD_INDEX]
