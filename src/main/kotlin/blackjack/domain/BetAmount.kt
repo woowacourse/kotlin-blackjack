@@ -9,7 +9,7 @@ class BetAmount(private var amount: Int) {
                 PlayerResultStatus.BLACKJACK_WIN -> (amount * 1.5).toInt()
                 PlayerResultStatus.PLAYER_WIN -> amount
                 PlayerResultStatus.PLAYER_LOSE -> -amount
-                else -> 0
+                PlayerResultStatus.DRAW -> 0
             }
     }
 }
