@@ -1,29 +1,28 @@
 package blackjack.domain
 
-import blackjack.domain.Rank.AceRank
-import blackjack.domain.Rank.FaceRank
-import blackjack.domain.Rank.NumberRank
+import blackjack.domain.card.Card
+import blackjack.domain.card.TrumpCard
 
 class Deck(
-    shuffler: Shuffler,
+    private val shuffler: Shuffler,
 ) {
-    fun draw(): Card {
-        val card = cards.first()
+    private var cards: List<Card> = emptyList()
+
+    init {
+        refillDeck()
+    }
+
+    fun take(): Card {
+        val card: Card =
+            cards.firstOrNull() ?: run {
+                refillDeck()
+                cards.first()
+            }
         cards = cards.minus(card)
         return card
     }
 
-    private val aceCards: List<Card> = Suit.entries.map { suit -> Card(AceRank, suit) }
-    private val numberCards: List<Card> =
-        Suit.entries.flatMap { suit ->
-            NumberRank.entries.map { number: NumberRank ->
-                Card(number, suit)
-            }
-        }
-    private val faceCards: List<Card> =
-        Suit.entries.flatMap { suit ->
-            FaceRank.entries.map { face: FaceRank -> Card(face, suit) }
-        }
-
-    private var cards: List<Card> = shuffler.shuffle(aceCards + numberCards + faceCards)
+    private fun refillDeck() {
+        cards = shuffler.shuffle(TrumpCard.getNewCardPack())
+    }
 }

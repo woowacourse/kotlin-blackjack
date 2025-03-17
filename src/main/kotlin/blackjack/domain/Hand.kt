@@ -1,17 +1,26 @@
 package blackjack.domain
 
-class Hand {
-    private val _cards = Cards()
-    val cards: List<Card> = _cards.value
+import blackjack.domain.Score.Companion.SCORE_BLACKJACK
+import blackjack.domain.card.Card
 
-    fun getScore(onBusted: () -> Unit): Score {
-        if (_cards.score is Score.Bust) {
-            onBusted()
+class Hand(
+    vararg initialCards: Card,
+) {
+    var cards: List<Card> = initialCards.toList()
+        private set
+
+    val size: Int get() = cards.size
+
+    val score: Score
+        get() {
+            val possibleScores: Set<Int> = ScoreCalculator.possibleScoreOf(*(cards.toTypedArray()))
+            if (!possibleScores.hasHittableScore()) return Score(possibleScores.min())
+            return Score(possibleScores.filter { score: Int -> score <= SCORE_BLACKJACK }.max())
         }
-        return _cards.score
-    }
 
     fun draw(card: Card) {
-        _cards.add(card)
+        cards = cards + card
     }
+
+    private fun Set<Int>.hasHittableScore(): Boolean = any { score: Int -> score <= SCORE_BLACKJACK }
 }

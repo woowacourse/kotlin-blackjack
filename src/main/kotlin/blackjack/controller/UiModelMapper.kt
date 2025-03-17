@@ -1,44 +1,56 @@
 package blackjack.controller
 
-import blackjack.domain.Card
-import blackjack.domain.Dealer
-import blackjack.domain.ParticipantState
-import blackjack.domain.Player
-import blackjack.domain.Rank
-import blackjack.domain.Suit
-import blackjack.view.model.DealerResult
+import blackjack.domain.Betting
+import blackjack.domain.Deck
+import blackjack.domain.card.Card
+import blackjack.domain.card.Rank
+import blackjack.domain.card.Suit
+import blackjack.domain.participant.Dealer
+import blackjack.domain.participant.Participant
+import blackjack.domain.participant.Player
+import blackjack.domain.state.ParticipantState
 import blackjack.view.model.DealerSummary
+import blackjack.view.model.PlayerConfig
 import blackjack.view.model.PlayerResult
 import blackjack.view.model.PlayerSummary
+
+fun List<PlayerConfig>.toPlayers(deck: Deck): List<Player> = map { playerConfig -> playerConfig.toPlayer(deck) }
+
+private fun PlayerConfig.toPlayer(deck: Deck): Player = Player(name, Betting(bettingAmount), deck)
+
+val List<Player>.names: List<String> get() = map { player -> player.name }
 
 private val Rank.prettyString: String
     get() =
         when (this) {
             Rank.AceRank -> "A"
-            is Rank.FaceRank -> value.toString()
-            is Rank.NumberRank -> value.toString()
+            Rank.NumberRank.TWO -> "2"
+            Rank.NumberRank.THREE -> "3"
+            Rank.NumberRank.FOUR -> "4"
+            Rank.NumberRank.FIVE -> "5"
+            Rank.NumberRank.SIX -> "6"
+            Rank.NumberRank.SEVEN -> "7"
+            Rank.NumberRank.EIGHT -> "8"
+            Rank.NumberRank.NINE -> "9"
+            Rank.NumberRank.TEN -> "10"
+            Rank.FaceRank.JACK -> "J"
+            Rank.FaceRank.QUEEN -> "Q"
+            Rank.FaceRank.KING -> "K"
         }
 
 private val Suit.prettyString: String
     get() =
         when (this) {
-            Suit.SPADE -> "스페이드"
-            Suit.HEART -> "하트"
-            Suit.DIAMOND -> "다이아몬드"
-            Suit.CLOVER -> "클로버"
+            Suit.SPADE -> "♠"
+            Suit.HEART -> "♥"
+            Suit.DIAMOND -> "♦"
+            Suit.CLOVER -> "♣"
         }
 
-val ParticipantState.prettyString: String
-    get() =
-        when (this) {
-            ParticipantState.PLAYING -> "진행중"
-            ParticipantState.WIN -> "승"
-            ParticipantState.DRAW -> "무"
-            ParticipantState.LOSE -> "패"
-        }
+val Dealer.cardsPrettyString: List<String> get() = cards.prettyString
 
-val List<Player>.names: List<String>
-    get() = map { player -> player.name }
+val List<Participant>.cardsPrettyStrings: List<List<String>>
+    get() = map { participant -> participant.cards.prettyString }
 
 val List<Card>.prettyString: List<String>
     get() = map { card: Card -> card.prettyString }
@@ -46,30 +58,10 @@ val List<Card>.prettyString: List<String>
 private val Card.prettyString: String
     get() = rank.prettyString + suit.prettyString
 
-val List<Player>.playersCards: List<List<String>>
-    get() = map { player -> player.cards.prettyString }
-
-val List<String>.toPlayers: List<Player>
-    get() = map { playerName -> Player(playerName) }
-
-val Dealer.result: DealerResult
-    get() =
-        DealerResult(
-            dealerResults.count { state: ParticipantState -> state == ParticipantState.WIN },
-            dealerResults.count { state: ParticipantState -> state == ParticipantState.DRAW },
-            dealerResults.count { state: ParticipantState -> state == ParticipantState.LOSE },
-        )
-
-val List<Player>.results: List<PlayerResult>
-    get() = map { player -> player.result }
-
-private val Player.result: PlayerResult
-    get() = PlayerResult(name, state.prettyString)
-
-val Dealer.summary: DealerSummary
+val Participant.summary: DealerSummary
     get() =
         DealerSummary(
-            cards.map { card -> card.prettyString },
+            cards.prettyString,
             score.value,
         )
 
@@ -78,3 +70,6 @@ private val Player.summary: PlayerSummary
 
 val List<Player>.summaries: List<PlayerSummary>
     get() = map { player -> player.summary }
+
+fun List<Player>.toResults(dealerState: ParticipantState): List<PlayerResult> =
+    map { player -> PlayerResult(player.name, player.calculateProfit(dealerState).toInt()) }

@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.card
 
 sealed interface Rank {
     val possibleValues: Set<Int>
@@ -8,7 +8,7 @@ sealed interface Rank {
     }
 
     enum class NumberRank(
-        val value: Int,
+        vararg values: Int,
     ) : Rank {
         TWO(2),
         THREE(3),
@@ -21,17 +21,17 @@ sealed interface Rank {
         TEN(10),
         ;
 
-        override val possibleValues: Set<Int> = setOf(value)
+        override val possibleValues: Set<Int> = setOf(*(values.toTypedArray()))
     }
 
     enum class FaceRank(
-        val value: Int,
+        vararg values: Int,
     ) : Rank {
         JACK(10),
         QUEEN(10),
         KING(10),
         ;
 
-        override val possibleValues: Set<Int> = setOf(value)
+        override val possibleValues: Set<Int> = setOf(*(values.toTypedArray()))
     }
 }

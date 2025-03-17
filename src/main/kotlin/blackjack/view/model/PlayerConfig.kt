@@ -1,6 +1,6 @@
 package blackjack.view.model
 
-class PlayerResult(
+class PlayerConfig(
     val name: String,
-    val profit: Int,
+    val bettingAmount: Double,
 )
