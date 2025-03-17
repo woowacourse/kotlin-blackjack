@@ -12,9 +12,8 @@ class InputView {
         return readln().toInt()
     }
 
-    fun askDrawCard(playerName: String): String {
+    fun askDrawCard(playerName: String): Boolean {
         println("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)".format(playerName))
-        return readln().trim()
-        // y이면 true로 바꿔주는 로직 어디에....?
+        return readln().trim().lowercase() == "y"
     }
 }
