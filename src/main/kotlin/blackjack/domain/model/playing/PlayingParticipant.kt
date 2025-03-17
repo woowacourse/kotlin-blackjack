@@ -31,6 +31,7 @@ abstract class PlayingParticipant {
 
     private fun matchStay(otherState: State): MatchResult {
         return when {
+            otherState is BlackJack -> MatchResult.LOSE
             otherState is Bust -> MatchResult.WIN
             handsState.score() > otherState.score() -> MatchResult.WIN
             handsState.score() < otherState.score() -> MatchResult.LOSE

@@ -10,7 +10,7 @@ class PlayingParticipants(val dealer: PlayingDealer, val players: List<PlayingPl
     val participants get() = listOf(dealer, *players.toTypedArray())
 
     fun dealInitialCard(deck: Deck) {
-        participants.map { playingParticipant ->
+        participants.forEach { playingParticipant ->
             playingParticipant.acceptCard(deck.draw())
         }
     }

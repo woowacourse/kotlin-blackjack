@@ -12,8 +12,4 @@ class PlayerHit(hands: Hands = Hands()) : Playing(hands) {
             else -> this
         }
     }
-
-    override fun stay(): Finished = Stay(hands)
-
-    override fun isFinished(): Boolean = false
 }
