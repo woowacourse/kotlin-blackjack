@@ -87,8 +87,9 @@ class GameController(
     ) {
         val gameResult = GameResult(dealer, players)
         gameResult.updateGameResult()
+        gameResult.calculatePlayerProfit()
         outputView.printFinalCards(dealer, players)
-        outputView.printGameResult(dealer, gameResult.playersGameResult)
+        outputView.printResult(gameResult)
     }
 
     companion object {

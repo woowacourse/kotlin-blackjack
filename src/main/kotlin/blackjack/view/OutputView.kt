@@ -1,5 +1,6 @@
 package blackjack.view
 
+import blackjack.domain.GameResult
 import blackjack.domain.PlayerResultStatus
 import blackjack.domain.card.Card
 import blackjack.domain.card.Rank
@@ -38,18 +39,18 @@ object OutputView {
         }
     }
 
-    fun printGameResult(
-        dealer: Dealer,
-        playersGameResult: Map<Player, PlayerResultStatus>,
-    ) {
+    fun printResult(gameResult: GameResult) {
         println("\n##최종 승패")
         println(
-            "딜러: ${dealer.dealerResult.win}승 ${dealer.dealerResult.lose}패 ${dealer.dealerResult.draw}무" +
-                "| 수익: ${dealer.dealerResult.revenue}",
+            "딜러: ${gameResult.dealerWin}승 ${gameResult.dealerLose}패 ${gameResult.dealerDraw}무",
         )
-
-        playersGameResult.forEach { (player, result) ->
-            println("${player.name}: ${result.toDisplayName()} | 수익: ${player.getBetAmount()}")
+        gameResult.playersGameResult.forEach { (player, result) ->
+            println("${player.name}: ${result.toDisplayName()}")
+        }
+        println("## 최종 수익")
+        println("딜러 : ${gameResult.dealerRevenue}")
+        gameResult.playerProfits.forEach { (player, profit) ->
+            println("${player.name}: $profit")
         }
     }
 

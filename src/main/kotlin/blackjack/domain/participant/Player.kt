@@ -33,7 +33,6 @@ class Player(val name: String, private val betAmount: BetAmount) : Participant()
                 getTotalSum() < dealer.getTotalSum() -> PlayerResultStatus.PLAYER_LOSE
                 else -> PlayerResultStatus.DRAW
             }
-        betAmount.update(result)
         return result
     }
 
