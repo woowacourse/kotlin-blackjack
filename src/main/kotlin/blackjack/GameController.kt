@@ -5,6 +5,7 @@ import blackjack.domain.GameResult
 import blackjack.domain.card.Card
 import blackjack.domain.card.Deck
 import blackjack.domain.participant.Dealer
+import blackjack.domain.participant.Participant
 import blackjack.domain.participant.Player
 import blackjack.view.InputView
 import blackjack.view.OutputView
@@ -52,13 +53,13 @@ class GameController(
         dealer: Dealer,
         players: List<Player>,
     ) {
+        dealCards(dealer)
+        players.forEach { player -> dealCards(player) }
+    }
+
+    private fun dealCards(participant: Participant) {
         repeat(INITIAL_CARD_COUNT) {
-            dealer.addCard(deck.draw())
-        }
-        players.forEach { player ->
-            repeat(INITIAL_CARD_COUNT) {
-                player.addCard(deck.draw())
-            }
+            participant.addCard(deck.draw())
         }
     }
 
