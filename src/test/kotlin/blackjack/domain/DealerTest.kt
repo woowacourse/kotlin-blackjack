@@ -7,7 +7,6 @@ import blackjack.model.CardSuit
 import blackjack.model.Dealer
 import blackjack.model.Hand
 import blackjack.model.Player
-import blackjack.model.Players
 import blackjack.model.WinningResult
 import blackjack.view.InputView
 import blackjack.view.OutputView
@@ -46,12 +45,7 @@ class DealerTest {
             )
 
         // when
-        val losePlayer1 =
-            Player.makePlayer(
-                "패배",
-                Hand(listOf(Card.getCashed(CardRank.TWO, CardSuit.CLUB), Card.getCashed(CardRank.TWO, CardSuit.CLUB))),
-            )
-        val losePlayer2 =
+        val losePlayer =
             Player.makePlayer(
                 "패배",
                 Hand(listOf(Card.getCashed(CardRank.TWO, CardSuit.CLUB), Card.getCashed(CardRank.TWO, CardSuit.CLUB))),
@@ -71,13 +65,12 @@ class DealerTest {
                 "승리",
                 Hand(listOf(Card.getCashed(CardRank.TWO, CardSuit.CLUB), Card.getCashed(CardRank.ACE, CardSuit.CLUB))),
             )
-        val players = Players(listOf(losePlayer1, losePlayer2, winningPlayer, pushPlayer))
 
         // then
         assertAll(
-            { assertEquals(dealer.getWinDrawLossResult(players)[WinningResult.WIN], 2) },
-            { assertEquals(dealer.getWinDrawLossResult(players)[WinningResult.LOSE], 1) },
-            { assertEquals(dealer.getWinDrawLossResult(players)[WinningResult.PUSH], 1) },
+            { assertEquals(dealer.compareHand(winningPlayer), WinningResult.LOSE) },
+            { assertEquals(dealer.compareHand(pushPlayer), WinningResult.PUSH) },
+            { assertEquals(dealer.compareHand(losePlayer), WinningResult.WIN) },
         )
     }
 }

@@ -11,7 +11,6 @@ import blackjack.model.CardSuit.DIAMOND
 import blackjack.model.Dealer
 import blackjack.model.Hand
 import blackjack.model.Player
-import blackjack.model.Players
 import blackjack.model.WinningResult.BLACKJACK
 import blackjack.model.WinningResult.LOSE
 import blackjack.model.WinningResult.PUSH
@@ -32,7 +31,6 @@ class PlayersTest {
                 ),
             )
         val player = Player.makePlayer(playerName, playerHand)
-        val players = Players(listOf(player))
 
         val dealerHand =
             Hand(
@@ -44,11 +42,10 @@ class PlayersTest {
         val dealer = Dealer.makeDealer(hand = dealerHand)
 
         // when
-        val results = players.results(dealer)
+        val results = player.compareHand(dealer)
 
         // then
-        val expected = mapOf(playerName to PUSH)
-        assertThat(results).isEqualTo(expected)
+        assertThat(results).isEqualTo(PUSH)
     }
 
     @Test
@@ -62,7 +59,6 @@ class PlayersTest {
                 ),
             )
         val player = Player.makePlayer(playerName, playerHand)
-        val players = Players(listOf(player))
 
         val dealerHand =
             Hand(
@@ -74,11 +70,10 @@ class PlayersTest {
         val dealer = Dealer.makeDealer(hand = dealerHand)
 
         // when
-        val results = players.results(dealer)
+        val results = player.compareHand(dealer)
 
         // then
-        val expected = mapOf(playerName to BLACKJACK)
-        assertThat(results).isEqualTo(expected)
+        assertThat(results).isEqualTo(BLACKJACK)
     }
 
     @Test
@@ -92,8 +87,6 @@ class PlayersTest {
                 ),
             )
         val player = Player.makePlayer(playerName, playerHand)
-        val players = Players(listOf(player))
-
         val dealerHand =
             Hand(
                 listOf(
@@ -104,11 +97,10 @@ class PlayersTest {
         val dealer = Dealer.makeDealer(hand = dealerHand)
 
         // when
-        val results = players.results(dealer)
+        val results = player.compareHand(dealer)
 
         // then
-        val expected = mapOf(playerName to WIN)
-        assertThat(results).isEqualTo(expected)
+        assertThat(results).isEqualTo(WIN)
     }
 
     @Test
@@ -122,7 +114,6 @@ class PlayersTest {
                 ),
             )
         val player = Player.makePlayer(playerName, playerHand)
-        val players = Players(listOf(player))
 
         val dealerHand =
             Hand(
@@ -134,10 +125,10 @@ class PlayersTest {
         val dealer = Dealer.makeDealer(hand = dealerHand)
 
         // when
-        val results = players.results(dealer)
+        val results = player.compareHand(dealer)
 
         // then
-        val expected = mapOf(playerName to LOSE)
+        val expected = LOSE
         assertThat(results).isEqualTo(expected)
     }
 }
