@@ -12,6 +12,5 @@ class Dealer : Participant() {
 
     companion object {
         const val DEALER_HIT_THRESHOLD = 17
-        const val INITIAL_CARD_COUNT = 2
     }
 }
