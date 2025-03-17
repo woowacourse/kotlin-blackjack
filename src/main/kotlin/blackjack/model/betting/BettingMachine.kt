@@ -4,7 +4,7 @@ import blackjack.model.participant.Money
 import blackjack.model.participant.Name
 import blackjack.model.participant.Participants
 import blackjack.model.participant.Players
-import blackjack.model.winning.WinningResult
+import blackjack.model.winning.PlayersResult
 
 class BettingMachine(
     private val bettingTable: BettingTable = BettingTable(),
@@ -26,21 +26,21 @@ class BettingMachine(
     }
 
     fun result(
-        winningResult: WinningResult,
+        playersResult: PlayersResult,
         participants: Participants,
     ): BettingResult {
         val resultBettingTable = BettingTable()
-        updateTable(winningResult, resultBettingTable, participants)
+        updateTable(playersResult, resultBettingTable, participants)
         bettingTable.reset()
         return resultBettingTable.table
     }
 
     private fun updateTable(
-        winningResult: WinningResult,
+        playersResult: PlayersResult,
         resultBettingTable: BettingTable,
         participants: Participants,
     ) {
-        winningResult.playersResult.value.forEach { (name, result) ->
+        playersResult.value.forEach { (name, result) ->
             val profit = bettingTable.get(name) * result.profitRate
 
             resultBettingTable.add(participants.dealer.name, -profit)

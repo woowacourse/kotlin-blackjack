@@ -4,14 +4,7 @@ import blackjack.model.card.Card
 import blackjack.model.card.CardCount
 import blackjack.model.hand.Hand
 import blackjack.model.hand.HandState
-import blackjack.model.hand.HandState.BLACKJACK
-import blackjack.model.hand.HandState.BUST
 import blackjack.model.hand.Score
-import blackjack.model.winning.WinningState
-import blackjack.model.winning.WinningState.LOSE
-import blackjack.model.winning.WinningState.PUSH
-import blackjack.model.winning.WinningState.WIN_BY_BLACKJACK
-import blackjack.model.winning.WinningState.WIN_DEFAULT
 
 abstract class Participant(
     val name: Name,
@@ -40,21 +33,6 @@ abstract class Participant(
         val count = if (cards.isEmpty()) INITIAL_DRAW_COUNT else DEFAULT_DRAW_COUNT
         hand.addAll(drawCards(count))
     }
-
-    fun winningState(other: Participant): WinningState =
-        when {
-            handState == BLACKJACK && other.handState != BLACKJACK -> WIN_BY_BLACKJACK
-            handState == BLACKJACK && other.handState == BLACKJACK -> PUSH
-            other.handState == BLACKJACK -> LOSE
-
-            handState == BUST -> LOSE
-            other.handState == BUST -> WIN_DEFAULT
-
-            score > other.score -> WIN_DEFAULT
-            score < other.score -> LOSE
-
-            else -> PUSH
-        }
 
     companion object {
         val INITIAL_DRAW_COUNT = CardCount(2)

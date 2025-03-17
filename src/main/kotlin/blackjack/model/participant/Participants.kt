@@ -2,7 +2,7 @@ package blackjack.model.participant
 
 import blackjack.model.card.Card
 import blackjack.model.card.CardCount
-import blackjack.model.winning.WinningResult
+import blackjack.model.winning.PlayersResult
 
 class Participants(
     val dealer: Dealer,
@@ -14,11 +14,7 @@ class Participants(
         }
     }
 
-    fun winningResult(): WinningResult =
-        WinningResult(
-            playersResult = players.winningResult(dealer),
-            dealerResult = dealer.winningResult(players),
-        )
+    val playersResult: PlayersResult get() = players.winningResult(dealer)
 
     companion object {
         fun create(

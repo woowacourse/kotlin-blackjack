@@ -4,8 +4,6 @@ import blackjack.model.card.Card
 import blackjack.model.card.CardCount
 import blackjack.model.hand.Hand
 import blackjack.model.hand.Score
-import blackjack.model.winning.WinningCount
-import blackjack.model.winning.WinningResult.DealerResult
 
 class Dealer private constructor(
     name: Name,
@@ -22,16 +20,6 @@ class Dealer private constructor(
         while (isDrawable) {
             receiveCards(cards)
         }
-    }
-
-    fun winningResult(players: Players): DealerResult {
-        val dealerResult =
-            players.value
-                .groupingBy { player -> winningState(player) }
-                .eachCount()
-                .mapValues { WinningCount(it.value) }
-
-        return DealerResult(dealerResult)
     }
 
     companion object {

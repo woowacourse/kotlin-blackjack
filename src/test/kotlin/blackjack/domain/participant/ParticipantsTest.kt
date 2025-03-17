@@ -66,7 +66,7 @@ class ParticipantsTest {
             .receiveCards { listOf(ACE_HEART, SEVEN_HEART) }
 
         // when
-        val playerResult = participants.winningResult().playersResult
+        val playerResult = participants.playersResult
 
         // then
         assertThat(playerResult.value.values.first()).isEqualTo(WinningState.PUSH)
@@ -81,7 +81,7 @@ class ParticipantsTest {
             .receiveCards { listOf(ACE_HEART, SEVEN_HEART) }
 
         // when
-        val playerResult = participants.winningResult().playersResult
+        val playerResult = participants.playersResult
 
         // then
         assertThat(playerResult.value.values.first()).isEqualTo(WinningState.WIN_DEFAULT)
@@ -96,7 +96,7 @@ class ParticipantsTest {
             .receiveCards { listOf(ACE_HEART, SIX_HEART) }
 
         // when
-        val playerResult = participants.winningResult().playersResult
+        val playerResult = participants.playersResult
 
         // then
         assertThat(playerResult.value.values.first()).isEqualTo(WinningState.LOSE)
@@ -111,7 +111,7 @@ class ParticipantsTest {
             .receiveCards { listOf(TEN_HEART, TEN_HEART, TEN_HEART) }
 
         // when
-        val playerResult = participants.winningResult().playersResult
+        val playerResult = participants.playersResult
 
         // then
         assertThat(playerResult.value.values.first()).isEqualTo(WinningState.LOSE)

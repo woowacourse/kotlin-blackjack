@@ -2,7 +2,7 @@ package blackjack.model.participant
 
 import blackjack.model.card.Card
 import blackjack.model.card.CardCount
-import blackjack.model.winning.WinningResult.PlayersResult
+import blackjack.model.winning.PlayersResult
 
 class Players private constructor(
     val value: List<Player>,

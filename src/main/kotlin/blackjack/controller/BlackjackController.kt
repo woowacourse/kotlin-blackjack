@@ -76,7 +76,7 @@ class BlackjackController(
         participants.players.value.forEach { player ->
             outputView.displayParticipantInfo(player.name, player.cards, player.score)
         }
-        val gameResult = participants.winningResult()
+        val gameResult = participants.playersResult
         val bettingResult = bettingMachine.result(gameResult, participants)
 
         outputView.displayProfitTitle()

@@ -7,7 +7,7 @@ import blackjack.model.participant.Money
 import blackjack.model.participant.Name
 import blackjack.model.participant.Participants
 import blackjack.model.participant.Players
-import blackjack.model.winning.WinningResult
+import blackjack.model.winning.PlayersResult
 import blackjack.model.winning.WinningState
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
@@ -61,22 +61,18 @@ class BettingMachineTest {
 
         val bettingMachine = BettingMachine(bettingTable)
 
-        val winningResult =
-            WinningResult(
-                playersResult =
-                    WinningResult.PlayersResult(
-                        mapOf(
-                            Name("공백") to WinningState.WIN_BY_BLACKJACK,
-                            Name("비비") to WinningState.WIN_DEFAULT,
-                            Name("메다") to WinningState.PUSH,
-                            Name("제이") to WinningState.LOSE,
-                        ),
-                    ),
-                dealerResult = WinningResult.DealerResult(),
+        val playersResult =
+            PlayersResult(
+                mapOf(
+                    Name("공백") to WinningState.WIN_BY_BLACKJACK,
+                    Name("비비") to WinningState.WIN_DEFAULT,
+                    Name("메다") to WinningState.PUSH,
+                    Name("제이") to WinningState.LOSE,
+                ),
             )
 
         // when
-        val resultTable = bettingMachine.result(winningResult, participants)
+        val resultTable = bettingMachine.result(playersResult, participants)
 
         // then
         assertEquals(money1.times(1.5), resultTable.value[Name("공백")])
