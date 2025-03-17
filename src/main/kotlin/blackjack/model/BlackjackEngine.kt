@@ -82,9 +82,9 @@ class BlackjackEngine(
         dealer: Dealer,
         players: Players,
     ) {
-        dealer.items.setNewHand(makeFirstHand())
+        dealer.changeHand(makeFirstHand())
         players.value.forEach { player ->
-            player.items.setNewHand(makeFirstHand())
+            player.changeHand(makeFirstHand())
         }
     }
 
