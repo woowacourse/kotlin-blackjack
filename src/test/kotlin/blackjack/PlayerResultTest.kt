@@ -5,7 +5,7 @@ import blackjack.domain.card.Rank
 import blackjack.domain.card.Suit
 import blackjack.domain.gameResult.GameResult
 import blackjack.domain.gameResult.PlayerResult
-import blackjack.domain.gameResult.state.Stay
+import blackjack.domain.gameResult.rule.Stay
 import blackjack.domain.participant.BlackJackPair
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Player

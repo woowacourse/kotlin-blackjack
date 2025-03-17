@@ -1,6 +1,6 @@
 package blackjack.domain.gameResult
 
-import blackjack.domain.gameResult.state.BlackJackRule
+import blackjack.domain.gameResult.rule.BlackJackRule
 import blackjack.domain.participant.BlackJackPair
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Player

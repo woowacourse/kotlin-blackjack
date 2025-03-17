@@ -1,4 +1,4 @@
-package blackjack.domain.gameResult.state
+package blackjack.domain.gameResult.rule
 
 import blackjack.domain.gameResult.GameResult
 import blackjack.domain.participant.Participant
