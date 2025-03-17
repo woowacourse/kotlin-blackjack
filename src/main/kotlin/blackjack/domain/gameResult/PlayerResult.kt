@@ -1,8 +1,8 @@
 package blackjack.domain.gameResult
 
-import blackjack.domain.gameResult.state.BlackJackRole
+import blackjack.domain.gameResult.state.BlackJackRule
 import blackjack.domain.participant.Player
 
-data class PlayerResult(val blackJackRole: BlackJackRole<Player>, val gameResult: GameResult) {
-    fun getProfit(): Int = (blackJackRole.getEarnRate(gameResult) * blackJackRole.participant.bettingAmount).toInt()
+data class PlayerResult(val blackJackRule: BlackJackRule<Player>, val gameResult: GameResult) {
+    fun getProfit(): Int = (blackJackRule.getEarnRate(gameResult) * blackJackRule.participant.bettingAmount).toInt()
 }
