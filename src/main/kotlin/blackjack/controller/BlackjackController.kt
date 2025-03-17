@@ -111,15 +111,16 @@ class BlackjackController(
         player: Player,
     ): Boolean {
         when (playerBehavior) {
-            Behavior.HIT -> {
-                player.pickCard(cardDeck)
-                outputView.printPlayerCard(player)
-                if (isPlayerBust(player)) return true
-            }
-
+            Behavior.HIT -> if (isHitPlayerBust(player)) return true
             Behavior.STAY -> return true
         }
         return false
+    }
+
+    private fun isHitPlayerBust(player: Player): Boolean {
+        player.pickCard(cardDeck)
+        outputView.printPlayerCard(player)
+        return isPlayerBust(player)
     }
 
     private fun isPlayerBust(player: Player): Boolean {
