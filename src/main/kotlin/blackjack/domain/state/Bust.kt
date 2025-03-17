@@ -3,13 +3,14 @@ package blackjack.domain.state
 import blackjack.domain.Dealer
 import blackjack.domain.Hand
 import blackjack.domain.Result
+import blackjack.domain.card.Card
 
-class Bust(override val hand: Hand) : Finished(hand, BUST_PROFIT) {
-    override fun decideResult(dealer: Dealer): Result {
-        return Result.LOSE
+class Bust(override val hand: Hand) : Finished(hand) {
+    override fun draw(card: Card): PlayingState {
+        return this
     }
 
-    companion object {
-        private const val BUST_PROFIT = -1.0
+    override fun decideResult(dealer: Dealer): Result {
+        return Result.LOSE
     }
 }

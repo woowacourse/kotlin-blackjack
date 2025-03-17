@@ -48,8 +48,8 @@ class PlayingStateTest {
     fun `딜러가 blackjack이고 플레이어가 blackjack이면 무승부다`() {
         val dealer = Dealer()
         val player = Player("name1")
-        dealer.state = Blackjack(dealer.hand)
-        val result = Blackjack(player.hand).decideResult(dealer)
+        dealer.state = Blackjack(dealer.state.hand)
+        val result = Blackjack(player.state.hand).decideResult(dealer)
         assertThat(result).isEqualTo(Result.PUSH)
     }
 
@@ -57,8 +57,8 @@ class PlayingStateTest {
     fun `딜러가 blackjack이고 플레이어가 stay이면 플레이어가 진다`() {
         val dealer = Dealer()
         val player = Player("name1")
-        dealer.state = Blackjack(dealer.hand)
-        val result = Stay(player.hand).decideResult(dealer)
+        dealer.state = Blackjack(dealer.state.hand)
+        val result = Stay(player.state.hand).decideResult(dealer)
         assertThat(result).isEqualTo(Result.LOSE)
     }
 
@@ -66,9 +66,9 @@ class PlayingStateTest {
     fun `딜러가 blackjack이고 플레이어가 bust이면 플레이어가 진다`() {
         val dealer = Dealer()
         val player = Player("name1")
-        dealer.hand.addCard(TestFixture.ClubKing)
-        dealer.hand.addCard(TestFixture.ClubAce)
-        val result = Bust(player.hand).decideResult(dealer)
+        dealer.state.hand.addCard(TestFixture.ClubKing)
+        dealer.state.hand.addCard(TestFixture.ClubAce)
+        val result = Bust(player.state.hand).decideResult(dealer)
         assertThat(result).isEqualTo(Result.LOSE)
     }
 
@@ -76,7 +76,7 @@ class PlayingStateTest {
     fun `딜러가 bust이고 플레이어가 bust이면 플레이어가 진다`() {
         val dealer = Dealer()
         val player = Player("name1")
-        val result = Bust(player.hand).decideResult(dealer)
+        val result = Bust(player.state.hand).decideResult(dealer)
         assertThat(result).isEqualTo(Result.LOSE)
     }
 
@@ -84,7 +84,7 @@ class PlayingStateTest {
     fun `딜러가 bust이고 플레이어가 blackjack이면 플레이어가 이긴다`() {
         val dealer = Dealer()
         val player = Player("name1")
-        val result = Blackjack(player.hand).decideResult(dealer)
+        val result = Blackjack(player.state.hand).decideResult(dealer)
         assertThat(result).isEqualTo(Result.WIN)
     }
 
@@ -92,8 +92,8 @@ class PlayingStateTest {
     fun `딜러가 bust이고 플레이어가 stay이면 플레이어가 이긴다`() {
         val dealer = Dealer()
         val player = Player("name1")
-        dealer.state = Bust(dealer.hand)
-        val result = Stay(player.hand).decideResult(dealer)
+        dealer.state = Bust(dealer.state.hand)
+        val result = Stay(player.state.hand).decideResult(dealer)
         assertThat(result).isEqualTo(Result.WIN)
     }
 
@@ -101,7 +101,7 @@ class PlayingStateTest {
     fun `딜러가 Stay이고 플레이어가 blackjack이면 플레이어가 이긴다`() {
         val dealer = Dealer()
         val player = Player("name1")
-        val result = Blackjack(player.hand).decideResult(dealer)
+        val result = Blackjack(player.state.hand).decideResult(dealer)
         assertThat(result).isEqualTo(Result.WIN)
     }
 
@@ -109,7 +109,7 @@ class PlayingStateTest {
     fun `딜러가 Stay이고 플레이어가 bust이면 플레이어가 진다`() {
         val dealer = TestFixture.Dealer
         val player = TestFixture.Player
-        val result = Bust(player.hand).decideResult(dealer)
+        val result = Bust(player.state.hand).decideResult(dealer)
         assertThat(result).isEqualTo(Result.LOSE)
     }
 
@@ -117,11 +117,11 @@ class PlayingStateTest {
     fun `딜러와 플레이어가 stay일 때 플레이어 점수가 더 크면 플레이어가 이긴다`() {
         val dealer = Dealer()
         val player = Player("name1")
-        dealer.hand.addCard(TestFixture.ClubKing)
-        dealer.hand.addCard(TestFixture.ClubEight)
-        player.hand.addCard(TestFixture.ClubKing)
-        player.hand.addCard(TestFixture.ClubQueen)
-        val result = Stay(player.hand).decideResult(dealer)
+        dealer.state.hand.addCard(TestFixture.ClubKing)
+        dealer.state.hand.addCard(TestFixture.ClubEight)
+        player.state.hand.addCard(TestFixture.ClubKing)
+        player.state.hand.addCard(TestFixture.ClubQueen)
+        val result = Stay(player.state.hand).decideResult(dealer)
         assertThat(result).isEqualTo(Result.WIN)
     }
 
@@ -129,11 +129,11 @@ class PlayingStateTest {
     fun `딜러와 플레이어가 stay일 때 플레이어 점수가 같으면 플레이어가 비긴다`() {
         val dealer = Dealer()
         val player = Player("name1")
-        dealer.hand.addCard(TestFixture.ClubKing)
-        dealer.hand.addCard(TestFixture.ClubEight)
-        player.hand.addCard(TestFixture.ClubKing)
-        player.hand.addCard(TestFixture.ClubEight)
-        val result = Stay(player.hand).decideResult(dealer)
+        dealer.state.hand.addCard(TestFixture.ClubKing)
+        dealer.state.hand.addCard(TestFixture.ClubEight)
+        player.state.hand.addCard(TestFixture.ClubKing)
+        player.state.hand.addCard(TestFixture.ClubEight)
+        val result = Stay(player.state.hand).decideResult(dealer)
         assertThat(result).isEqualTo(Result.PUSH)
     }
 
@@ -141,11 +141,11 @@ class PlayingStateTest {
     fun `딜러와 플레이어가 stay일 때 플레이어 점수가 더 작으면 진다`() {
         val dealer = Dealer()
         val player = Player("name1")
-        dealer.hand.addCard(TestFixture.ClubKing)
-        dealer.hand.addCard(TestFixture.ClubQueen)
-        player.hand.addCard(TestFixture.ClubKing)
-        player.hand.addCard(TestFixture.ClubEight)
-        val result = Stay(player.hand).decideResult(dealer)
+        dealer.state.hand.addCard(TestFixture.ClubKing)
+        dealer.state.hand.addCard(TestFixture.ClubQueen)
+        player.state.hand.addCard(TestFixture.ClubKing)
+        player.state.hand.addCard(TestFixture.ClubEight)
+        val result = Stay(player.state.hand).decideResult(dealer)
         assertThat(result).isEqualTo(Result.LOSE)
     }
 }
