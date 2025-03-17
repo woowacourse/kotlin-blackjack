@@ -1,11 +1,10 @@
 package blackjack.view
 
 import blackjack.model.Card
-import blackjack.model.Dealer
 import blackjack.model.GameResult
 import blackjack.model.Participant
+import blackjack.model.Participants
 import blackjack.model.Player
-import blackjack.model.Players
 import blackjack.model.Suit
 
 class OutputView {
@@ -17,14 +16,11 @@ class OutputView {
         println("${player.name}의 배팅 금액은?")
     }
 
-    fun printPlayersCards(
-        dealer: Dealer,
-        players: List<Player>,
-    ) {
-        val playersNames: String = players.joinToString(", ") { it.name }
-        println("\n${dealer.name}와 ${playersNames}에게 2장의 카드를 나누었습니다.")
-        println("${dealer.name}: ${dealer.openCard.toBlackjackView()}")
-        players.forEach { player ->
+    fun printParticipantCards(participants: Participants) {
+        val playersNames: String = participants.players.joinToString(", ") { it.name }
+        println("\n${participants.dealer.name}와 ${playersNames}에게 2장의 카드를 나누었습니다.")
+        println("${participants.dealer.name}: ${participants.dealer.openCard.toBlackjackView()}")
+        participants.players.forEach { player ->
             printPlayerCard(player)
         }
         println()
@@ -50,16 +46,13 @@ class OutputView {
         println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.")
     }
 
-    fun printResult(
-        dealer: Dealer,
-        players: Players,
-    ) {
-        printParticipantResult(dealer)
-        players.value.forEach { player ->
+    fun printResult(participants: Participants) {
+        printParticipantResult(participants.dealer)
+        participants.players.forEach { player ->
             printParticipantResult(player)
         }
 
-        printTotalResult(dealer, players)
+        printTotalResult(participants)
     }
 
     private fun printParticipantResult(participant: Participant) {
@@ -67,13 +60,10 @@ class OutputView {
         println("${participant.name}카드: $participantCards - 결과: ${participant.hand.getScore()}")
     }
 
-    private fun printTotalResult(
-        dealer: Dealer,
-        players: Players,
-    ) {
+    private fun printTotalResult(participants: Participants) {
         println("\n## 최종 수익")
-        println("${dealer.name}: ${dealer.money.getProfit()}")
-        players.value.forEach { player ->
+        println("${participants.dealer.name}: ${participants.dealer.money.getProfit()}")
+        participants.players.forEach { player ->
             println("${player.name}: ${player.bettingMoney.getProfit()}")
         }
     }

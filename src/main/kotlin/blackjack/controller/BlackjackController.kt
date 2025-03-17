@@ -4,9 +4,9 @@ import blackjack.model.BettingMoney
 import blackjack.model.Card
 import blackjack.model.CardDeck
 import blackjack.model.Dealer
+import blackjack.model.Participants
 import blackjack.model.Player
 import blackjack.model.Player.Behavior
-import blackjack.model.Players
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -18,52 +18,41 @@ class BlackjackController(
 
     fun run() {
         outputView.printStartMessage()
-        val players: Players = inputView.readPlayers()
-        val dealer = Dealer()
+        val participants = Participants(players = inputView.readPlayers(), dealer = Dealer())
 
-        getBettingMoney(players)
-        getCards(players, dealer)
-        playGames(players, dealer)
+        getBettingMoney(participants.players)
+        getCards(participants)
+        playGames(participants)
     }
 
-    private fun getBettingMoney(players: Players) {
-        players.value.forEach { player ->
+    private fun getBettingMoney(players: List<Player>) {
+        players.forEach { player ->
             outputView.printBettingMessage(player)
             val money: BettingMoney = inputView.readBettingMoney()
             player.updateBettingMoney(money)
         }
     }
 
-    private fun getCards(
-        players: Players,
-        dealer: Dealer,
-    ) {
-        players.pickCard(cardDeck, 2)
-        dealer.pickCard(cardDeck, 2)
-        outputView.printPlayersCards(dealer, players.value)
+    private fun getCards(participants: Participants) {
+        participants.pickCard(cardDeck, 2)
+        outputView.printParticipantCards(participants)
     }
 
-    private fun playGames(
-        players: Players,
-        dealer: Dealer,
-    ) {
-        if (handleDealerBlackjack(dealer, players)) return
-        players.value.forEach { player ->
+    private fun playGames(participants: Participants) {
+        if (handleDealerBlackjack(participants)) return
+        participants.players.forEach { player ->
             executePlayerGame(player)
         }
-        executeDealerGameLogic(dealer)
-        players.updateProfit(dealer)
-        displayResult(players, dealer)
+        executeDealerGameLogic(participants.dealer)
+        participants.updateProfit()
+        displayResult(participants)
     }
 
-    private fun handleDealerBlackjack(
-        dealer: Dealer,
-        players: Players,
-    ): Boolean {
-        if (dealer.isBlackjack()) {
-            players.updateProfit(dealer)
+    private fun handleDealerBlackjack(participants: Participants): Boolean {
+        if (participants.dealer.isBlackjack()) {
+            participants.updateProfit()
             outputView.printDealerBlackjack()
-            displayResult(players, dealer)
+            displayResult(participants)
             return true
         }
         return false
@@ -111,10 +100,7 @@ class BlackjackController(
         }
     }
 
-    private fun displayResult(
-        players: Players,
-        dealer: Dealer,
-    ) {
-        outputView.printResult(dealer, players)
+    private fun displayResult(participants: Participants) {
+        outputView.printResult(participants)
     }
 }

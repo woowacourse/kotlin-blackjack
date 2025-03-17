@@ -2,15 +2,14 @@ package blackjack.view
 
 import blackjack.model.BettingMoney
 import blackjack.model.Player
-import blackjack.model.Players
 
 class InputView {
-    fun readPlayers(): Players {
+    fun readPlayers(): List<Player> {
         val players =
             readln()
                 .split(",")
                 .map { Player(name = it.trim()) }
-        return Players(players)
+        return players
     }
 
     fun readBettingMoney(): BettingMoney {

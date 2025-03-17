@@ -3,7 +3,7 @@ package blackjack.model
 open class Money(
     value: Int,
 ) {
-    val initialValue: Int = value
+    private val initialValue: Int = value
     var value: Double = initialValue.toDouble()
         private set
 
