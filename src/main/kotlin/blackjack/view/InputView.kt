@@ -1,7 +1,5 @@
 package blackjack.view
 
-import blackjack.model.participant.Player
-
 class InputView {
     fun readPlayerNames(): List<String>? {
         println(PLAYER_NAME_MESSAGE_GUIDE)
@@ -27,8 +25,8 @@ class InputView {
         return betAmount.toInt()
     }
 
-    fun readMoreCardCondition(player: Player): String {
-        println(PLAYER_MORE_CARD_MESSAGE_GUIDE.format(player.name))
+    fun readMoreCardCondition(playerName: String): String {
+        println(PLAYER_MORE_CARD_MESSAGE_GUIDE.format(playerName))
         val condition: String = readln().trim()
         return condition
     }

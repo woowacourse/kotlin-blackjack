@@ -54,7 +54,7 @@ class BlackjackController(
 
     private fun getValidDrawChoice(player: Player): DrawChoice {
         while (true) {
-            val input = inputView.readMoreCardCondition(player)
+            val input = inputView.readMoreCardCondition(player.name)
             val choice = DrawChoice.from(input)
             if (choice != null) {
                 return choice

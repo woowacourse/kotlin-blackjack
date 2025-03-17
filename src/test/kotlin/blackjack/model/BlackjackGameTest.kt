@@ -27,7 +27,7 @@ class BlackjackGameTest {
             wantsToDraw = { if (drawCount < 2) DrawChoice.YES else DrawChoice.NO },
             printPlayerHands = { drawCount++ },
             printDealerHandStatus = { _ -> },
-            printAllHands = { _, _ -> }
+            printAllHands = { _, _ -> },
         )
 
         // then
