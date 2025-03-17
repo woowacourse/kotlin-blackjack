@@ -12,7 +12,7 @@ fun <T : Participant> BlackJackRule(participant: T): BlackJackRule<T> {
     }
 }
 
-sealed interface BlackJackRule<T : Participant> {
+sealed class BlackJackRule<T : Participant> {
     val participant: T
 
     fun getEarnRate(gameResult: GameResult): Double

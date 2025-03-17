@@ -3,7 +3,7 @@ package blackjack.domain.gameResult.rule
 import blackjack.domain.gameResult.GameResult
 import blackjack.domain.participant.Participant
 
-data class BlackJack<T : Participant>(override val participant: T) : BlackJackRule<T> {
+data class BlackJack<T : Participant>(override val participant: T) : BlackJackRule<T>() {
     override fun getEarnRate(gameResult: GameResult): Double {
         return 1.5 * gameResult.sign
     }
