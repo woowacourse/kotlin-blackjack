@@ -43,7 +43,7 @@ class GameManager(
             }
 
         val dealerProfit = calculateDealerProfit(playerProfits)
-        return playerProfits + listOf(dealerProfit)
+        return listOf(dealerProfit) + playerProfits
     }
 
     fun drawCard(person: Participant) {

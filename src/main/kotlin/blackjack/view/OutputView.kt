@@ -58,11 +58,7 @@ class OutputView {
 
     fun printFinalResult(profitResults: List<Profit>) {
         println(FINAL_RESULT_MESSAGE)
-
-        val dealerProfit = profitResults.find { it.participant is Dealer }!!.winningMoney.amount
-        println(DEALER_RESULT_FORMAT.format(dealerProfit.formatAmount()))
-
-        profitResults.filter { it.participant !is Dealer }.forEach { profit ->
+        profitResults.forEach { profit ->
             println(PLAYER_RESULT_FORMAT.format(profit.participant.name, profit.winningMoney.amount.formatAmount()))
         }
     }
