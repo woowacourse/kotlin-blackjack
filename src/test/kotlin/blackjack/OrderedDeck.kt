@@ -8,26 +8,41 @@ import java.util.ArrayDeque
 import java.util.Deque
 
 class OrderedDeck : Deck {
-    private val cards: Deque<TrumpCard> = ArrayDeque()
+    private val deckPool: MutableList<Deque<TrumpCard>> = mutableListOf()
+    private var currentDeckIndex = 0
 
     init {
-        cards.addAll(makeCards())
+        repeat(MAX_DECK_COUNT) {
+            deckPool.add(makeCards())
+        }
     }
 
     override fun pop(): TrumpCard {
-        require(cards.isNotEmpty()) { ERROR_EMPTY_DECK_MESSAGE }
-        return cards.pop()
+        while (currentDeckIndex < MAX_DECK_COUNT) {
+            val currentDeck = deckPool[currentDeckIndex]
+
+            if (currentDeck.isNotEmpty()) {
+                return currentDeck.pop()
+            } else {
+                currentDeckIndex++
+            }
+        }
+        throw IllegalArgumentException(ERROR_EMPTY_DECK_MESSAGE)
     }
 
-    override fun makeCards(): List<TrumpCard> =
-        Shape.entries
-            .flatMap { shape ->
-                CardTier.entries.map { tier ->
-                    TrumpCard(tier, shape)
+    override fun makeCards(): Deque<TrumpCard> {
+        val shuffledCards =
+            Shape.entries
+                .flatMap { shape ->
+                    CardTier.entries.map { tier ->
+                        TrumpCard(tier, shape)
+                    }
                 }
-            }
+        return ArrayDeque(shuffledCards)
+    }
 
     companion object {
+        const val MAX_DECK_COUNT = 8
         const val ERROR_EMPTY_DECK_MESSAGE = "[ERROR] 더 이상 뽑을 카드가 없습니다."
     }
 }

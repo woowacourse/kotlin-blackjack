@@ -1,10 +1,14 @@
 package blackjack
 
+import blackjack.domain.GameResult
+import blackjack.domain.Money
 import blackjack.domain.ParticipantCards
 import blackjack.domain.card.CardTier
 import blackjack.domain.card.Shape
 import blackjack.domain.card.TrumpCard
 import blackjack.domain.participant.Dealer
+import blackjack.domain.participant.Participants
+import blackjack.domain.participant.Player
 import blackjack.fixture.trumpCardFixture
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -17,7 +21,7 @@ class DealerTest {
         fixture.forEach {
             dealer.receiveCard(it)
         }
-        assertThat(dealer.getAllCards()).containsExactly(*fixture.toTypedArray())
+        assertThat(dealer.cards.allCards).containsExactly(*fixture.toTypedArray())
     }
 
     @Test
@@ -26,7 +30,18 @@ class DealerTest {
         repeat(3) {
             dealer.receiveCard(TrumpCard(CardTier.KING, Shape.DIA))
         }
-        assertThat(dealer.isBust()).isEqualTo(true)
+        assertThat(dealer.cards.isBust()).isEqualTo(true)
+    }
+
+    @Test
+    fun `총합을 구해서 16 이하면 카드를 한 장 더 뽑는다`() {
+        val dealer = Dealer(ParticipantCards())
+
+        dealer.receiveCard(TrumpCard(CardTier.KING, Shape.DIA))
+        dealer.receiveCard(TrumpCard(CardTier.SIX, Shape.HEART))
+
+        val expected = true
+        assertThat(dealer.isDrawable()).isEqualTo(expected)
     }
 
     @Test
@@ -94,5 +109,42 @@ class DealerTest {
 
         val expected = false
         assertThat(dealer.isDrawable()).isEqualTo(expected)
+    }
+
+    @Test
+    fun `처음 받은 두 장의 합이 21이면 블랙잭이다`() {
+        val dealer = Dealer(ParticipantCards())
+
+        dealer.receiveCard(TrumpCard(CardTier.KING, Shape.DIA))
+        dealer.receiveCard(TrumpCard(CardTier.ACE, Shape.DIA))
+
+        val expected = true
+        assertThat(dealer.cards.isBlackJack()).isEqualTo(expected)
+    }
+
+    @Test
+    fun `딜러가 버스트되어도 플레이어가 버스트라면 딜러는 승리한다`() {
+        val participants = Participants(Dealer(ParticipantCards()), listOf(Player("bibi", ParticipantCards(), Money(10000))))
+        participants.dealer.receiveCard(TrumpCard(CardTier.KING, Shape.DIA))
+        participants.dealer.receiveCard(TrumpCard(CardTier.KING, Shape.DIA))
+        participants.dealer.receiveCard(TrumpCard(CardTier.KING, Shape.DIA))
+
+        participants.players.first().receiveCard(TrumpCard(CardTier.KING, Shape.DIA))
+        participants.players.first().receiveCard(TrumpCard(CardTier.KING, Shape.DIA))
+        participants.players.first().receiveCard(TrumpCard(CardTier.KING, Shape.DIA))
+        assertThat(participants.dealer.getResult(participants.players.first())).isEqualTo(GameResult.WIN)
+    }
+
+    @Test
+    fun `딜러만 버스트이면 딜러는 진다`() {
+        val participants = Participants(Dealer(ParticipantCards()), listOf(Player("bibi", ParticipantCards(), Money(10000))))
+        participants.dealer.receiveCard(TrumpCard(CardTier.KING, Shape.DIA))
+        participants.dealer.receiveCard(TrumpCard(CardTier.KING, Shape.DIA))
+        participants.dealer.receiveCard(TrumpCard(CardTier.KING, Shape.DIA))
+
+        repeat(2) {
+            participants.players.first().receiveCard(TrumpCard(CardTier.KING, Shape.DIA))
+        }
+        assertThat(participants.dealer.getResult(participants.players.first())).isEqualTo(GameResult.LOSE)
     }
 }

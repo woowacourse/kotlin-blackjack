@@ -18,7 +18,7 @@ class BlackJackGameTest {
         assertThat(
             participants.players
                 .first()
-                .getAllCards()
+                .cards.allCards
                 .size,
         ).isEqualTo(2)
     }
@@ -29,14 +29,14 @@ class BlackJackGameTest {
         val game = BlackJackGame(participants, ShuffledDeck())
         participants.players.first().receiveCard(TrumpCard(CardTier.JACK, Shape.DIA))
         participants.players.first().receiveCard(TrumpCard(CardTier.JACK, Shape.DIA))
-        game.playGame(
+        game.processPlayerTurn(
             getPlayerChoice = { true },
             onPlayerStateUpdated = {},
         )
         assertThat(
             participants.players
                 .first()
-                .getAllCards()
+                .cards.allCards
                 .size,
         ).isEqualTo(3)
     }
@@ -46,14 +46,14 @@ class BlackJackGameTest {
         val participants = playersFixture()
         val game = BlackJackGame(participants, ShuffledDeck())
 
-        game.playGame(
+        game.processPlayerTurn(
             getPlayerChoice = { false },
             onPlayerStateUpdated = {},
         )
         assertThat(
             participants.players
                 .first()
-                .getAllCards()
+                .cards.allCards
                 .size,
         ).isEqualTo(0)
     }

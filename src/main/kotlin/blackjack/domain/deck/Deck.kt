@@ -1,9 +1,10 @@
 package blackjack.domain.deck
 
 import blackjack.domain.card.TrumpCard
+import java.util.Deque
 
 interface Deck {
     fun pop(): TrumpCard
 
-    fun makeCards(): List<TrumpCard>
+    fun makeCards(): Deque<TrumpCard>
 }

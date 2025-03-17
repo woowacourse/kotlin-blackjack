@@ -1,16 +1,18 @@
 package blackjack.domain.participant
 
-import blackjack.domain.BlackJackGame.Companion.BUST_STANDARD
 import blackjack.domain.GameResult
+import blackjack.domain.Money
 import blackjack.domain.ParticipantCards
+import blackjack.domain.ParticipantCards.Companion.BUST_STANDARD
 import blackjack.domain.card.TrumpCard
 import blackjack.domain.deck.Deck
 
 class Player(
     val name: String,
     cards: ParticipantCards,
+    val money: Money,
 ) : Participant(cards) {
-    override fun showInitialCards(): List<TrumpCard> = cards.allCards.take(PLAYER_INITIAL_CARD_COUNT)
+    override fun showInitialCards(): List<TrumpCard> = takeCards(PLAYER_INITIAL_CARD_COUNT)
 
     override fun isDrawable(): Boolean = cards.sumOfCards <= BUST_STANDARD
 
@@ -19,30 +21,22 @@ class Player(
         getPlayerChoice: (String) -> Boolean,
         onPlayerStateUpdated: (Player) -> Unit,
     ) {
-        while (isDrawable()) {
-            if (getPlayerChoice(name)) {
-                receiveCard(deck.pop())
-                onPlayerStateUpdated(this)
-            } else {
-                return
-            }
+        if (!isDrawable()) return
+
+        if (getPlayerChoice(name)) {
+            receiveCard(deck.pop())
+            onPlayerStateUpdated(this)
+            choice(deck, getPlayerChoice, onPlayerStateUpdated)
         }
     }
 
-    override fun getResult(other: Participant): GameResult {
-        val myScore = this.finalScore()
-        val otherScore = other.finalScore()
-
-        return when {
-            this.isBust() -> GameResult.LOSE
-            other.isBust() && !this.isBust() -> GameResult.WIN
-            myScore > otherScore -> GameResult.WIN
-            myScore < otherScore -> GameResult.LOSE
-            else -> GameResult.DRAW
+    override fun getResult(other: Participant): GameResult =
+        when {
+            cards.isBust() -> GameResult.LOSE
+            else -> super.getResult(other)
         }
-    }
 
     companion object {
-        const val PLAYER_INITIAL_CARD_COUNT = 2
+        private const val PLAYER_INITIAL_CARD_COUNT = 2
     }
 }

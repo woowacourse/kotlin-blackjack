@@ -7,30 +7,24 @@ import blackjack.domain.card.TrumpCard
 class Dealer(
     cards: ParticipantCards,
 ) : Participant(cards) {
-    override fun showInitialCards(): List<TrumpCard> = cards.allCards.take(DEALER_INITIAL_CARD_COUNT)
+    override fun showInitialCards(): List<TrumpCard> = takeCards(DEALER_INITIAL_CARD_COUNT)
 
     override fun isDrawable(): Boolean {
-        if (cards.hasAce() && !isBust(ACE_SOFT_SCORE)) {
-            return cards.sumOfCards + ACE_SOFT_SCORE < DEALER_MAX_SCORE
+        if (cards.hasAce() && !cards.isBust(ACE_SOFT_SCORE)) {
+            return cards.sumOfCards + ACE_SOFT_SCORE <= DEALER_MAX_SCORE
         }
-        return cards.sumOfCards < DEALER_MAX_SCORE
+        return cards.sumOfCards <= DEALER_MAX_SCORE
     }
 
-    override fun getResult(other: Participant): GameResult {
-        val myScore = this.finalScore()
-        val otherScore = other.finalScore()
-
-        return when {
-            other.isBust() -> GameResult.WIN
-            this.isBust() && !other.isBust() -> GameResult.LOSE
-            myScore > otherScore -> GameResult.WIN
-            myScore < otherScore -> GameResult.LOSE
-            else -> GameResult.DRAW
+    override fun getResult(other: Participant): GameResult =
+        when {
+            cards.isBust() && !other.cards.isBust() -> GameResult.LOSE
+            else -> super.getResult(other)
         }
-    }
 
     companion object {
         private const val DEALER_MAX_SCORE = 16
         private const val DEALER_INITIAL_CARD_COUNT = 1
+        private const val ACE_SOFT_SCORE = 10
     }
 }
