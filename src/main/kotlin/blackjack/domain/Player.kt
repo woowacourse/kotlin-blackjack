@@ -9,6 +9,7 @@ class Player(name: String) : Participant(name) {
         private set
 
     fun bet(bettingAmount: Int) {
+        require(bettingAmount > 0) { "배팅금은 0보다 커야 합니다" }
         this.bettingAmount = bettingAmount
     }
 

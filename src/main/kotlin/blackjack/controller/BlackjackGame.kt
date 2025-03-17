@@ -91,9 +91,17 @@ class BlackjackGame(
     }
 
     private fun getBettingAmount(players: List<Player>) {
-        players.forEach {
-            val bettingAmount = inputView.readBettingAmount(it.name)
-            it.bet(bettingAmount)
+        players.forEach { player ->
+            setBettingAmount(player)
+        }
+    }
+
+    private fun setBettingAmount(player: Player) {
+        runCatching { val bettingAmount = inputView.readBettingAmount(player.name)
+            player.bet(bettingAmount)
+        }.onFailure { error ->
+            outputView.printError(error)
+            setBettingAmount(player)
         }
     }
 }

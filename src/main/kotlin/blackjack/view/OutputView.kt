@@ -90,6 +90,10 @@ class OutputView {
             else -> denomination.value
         }
 
+    fun printError(error: Throwable) {
+        println(error)
+    }
+
     companion object {
         private const val MESSAGE_DEALING = "\n딜러와 %s에게 각각 2장의 카드를 나누었습니다."
         private const val MESSAGE_BUST = "%s는 더 이상 카드를 받을 수 없습니다."
