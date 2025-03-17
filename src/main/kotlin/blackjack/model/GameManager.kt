@@ -29,17 +29,6 @@ class GameManager(
         }
     }
 
-    fun drawCardWithChoice(
-        drawDecision: CardDrawDecision,
-        player: Player,
-    ): Boolean {
-        if (drawDecision.isDraw()) {
-            drawCard(player)
-            return true
-        }
-        return false
-    }
-
     fun processDrawOrStayBasedOnPlayer(
         player: Player,
         playerDrawDecision: (Player) -> CardDrawDecision,
@@ -55,6 +44,17 @@ class GameManager(
             showPlayerHands(player)
             break
         }
+    }
+
+    private fun drawCardWithChoice(
+        drawDecision: CardDrawDecision,
+        player: Player,
+    ): Boolean {
+        if (drawDecision.isDraw()) {
+            drawCard(player)
+            return true
+        }
+        return false
     }
 
     fun isDrawCardBasedOnDealer(): Boolean {
