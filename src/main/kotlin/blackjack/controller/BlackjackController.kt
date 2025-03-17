@@ -105,12 +105,14 @@ class BlackjackController(
         dealer: Dealer,
     ) {
         outputView.participantsCardResult(listOf(dealer) + playerBetResult.map { it.player })
-        outputView.dealerResult(dealer, getLosePlayers(playerBetResult))
+        outputView.dealerResult(dealer, getDealerResult(playerBetResult))
         outputView.playerResult(playerBetResult)
     }
 
-    private fun getLosePlayers(playerBetResult: List<PlayerBetResult>): List<PlayerBetResult> {
-        return playerBetResult.filter { it.bettingResult < 0 }
+    private fun getDealerResult(playerBetResult: List<PlayerBetResult>): Float {
+        val dealerProfit = -playerBetResult.filter { it.bettingResult < 0 }.map { it.bettingResult }.sum()
+        val dealerLoss = playerBetResult.filter { it.bettingResult > 0 }.map { it.bettingResult }.sum()
+        return dealerProfit - dealerLoss
     }
 
     private fun <T> retryInput(inputFunction: () -> T): T {

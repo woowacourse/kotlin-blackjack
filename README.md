@@ -103,7 +103,7 @@
 - [x] Hand | BUST_STANDARD를 private 으로 변경
 - [x] Participant | showInitCards메소드 네이밍 변경
 - [x] Player | 점수 비교 로직 Participants로 이동
-- [ ] BlackjackController | 딜러의 수익 판단 메소드 생성
+- [x] BlackjackController | 딜러의 수익 판단 메소드 생성
 - [ ] 여러 객체들의 Test코드 작성
 - [ ] HandTest | methodSource를 활용한 getSumNumber에 대한 테스트 추가 생성
 - [ ] BlackjackController | 버스트되어서 플레이어에게 카드를 뽑을 수 없다고 메시지 출력

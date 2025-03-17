@@ -62,10 +62,10 @@ class OutputView {
 
     fun dealerResult(
         dealer: Dealer,
-        losePlayersBetAmount: List<PlayerBetResult>,
+        dealerNetProfit: Float,
     ) {
         println(FINAL_RESULT)
-        println(PLAYER_STATUS.format(dealer.name, formatNumber(-losePlayersBetAmount.map { it.bettingResult }.sum())))
+        println(PLAYER_STATUS.format(dealer.name, formatNumber(dealerNetProfit)))
     }
 
     private fun formatNumber(value: Float): String {
