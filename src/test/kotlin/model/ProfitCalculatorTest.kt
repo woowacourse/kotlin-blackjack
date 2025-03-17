@@ -23,9 +23,9 @@ class ProfitCalculatorTest {
         val playerResults = listOf(PlayerResult(player, GameResult.WIN))
         bettingManager.placeBet(player, 100)
 
-        val finalProfits = profitCalculator.calculateFinalProfits(playerResults, bettingManager, players)
+        val finalProfits = profitCalculator.calculatePlayerProfits(playerResults, bettingManager)
 
-        assertThat(finalProfits[player]?.amount).isEqualTo(100)
+        assertThat(finalProfits.getPlayersProfit()[player]?.amount).isEqualTo(100)
     }
 
     @Test
@@ -36,9 +36,9 @@ class ProfitCalculatorTest {
         val playerResults = listOf(PlayerResult(player, GameResult.LOSE))
         bettingManager.placeBet(player, 100)
 
-        val finalProfits = profitCalculator.calculateFinalProfits(playerResults, bettingManager, players)
+        val finalProfits = profitCalculator.calculatePlayerProfits(playerResults, bettingManager)
 
-        assertThat(finalProfits[player]?.amount).isEqualTo(-100)
+        assertThat(finalProfits.getPlayersProfit()[player]?.amount).isEqualTo(-100)
     }
 
     @Test
@@ -49,9 +49,9 @@ class ProfitCalculatorTest {
         val playerResults = listOf(PlayerResult(player, GameResult.PUSH))
         bettingManager.placeBet(player, 100)
 
-        val finalProfits = profitCalculator.calculateFinalProfits(playerResults, bettingManager, players)
+        val finalProfits = profitCalculator.calculatePlayerProfits(playerResults, bettingManager)
 
-        assertThat(finalProfits[player]?.amount).isEqualTo(0)
+        assertThat(finalProfits.getPlayersProfit()[player]?.amount).isEqualTo(0)
     }
 
     @Test
@@ -62,8 +62,8 @@ class ProfitCalculatorTest {
         val playerResults = listOf(PlayerResult(player, GameResult.BLACKJACK))
         bettingManager.placeBet(player, 100)
 
-        val finalProfits = profitCalculator.calculateFinalProfits(playerResults, bettingManager, players)
+        val finalProfits = profitCalculator.calculatePlayerProfits(playerResults, bettingManager)
 
-        assertThat(finalProfits[player]?.amount).isEqualTo(150)
+        assertThat(finalProfits.getPlayersProfit()[player]?.amount).isEqualTo(150)
     }
 }
