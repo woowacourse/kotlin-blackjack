@@ -1,4 +1,4 @@
-package blackjack.card
+package blackjack.domain.card
 
 class Deck(cards: List<Card>) {
     private val deck: ArrayDeque<Card> = ArrayDeque(cards)

@@ -1,7 +1,7 @@
 package blackjack.domain.participant
 
-import blackjack.card.Card
 import blackjack.domain.DealerResult
+import blackjack.domain.card.Card
 
 class Dealer : Participant() {
     val dealerResult: DealerResult = DealerResult()

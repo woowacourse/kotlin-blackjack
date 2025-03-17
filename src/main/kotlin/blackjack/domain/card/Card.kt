@@ -1,4 +1,4 @@
-package blackjack.card
+package blackjack.domain.card
 
 import java.lang.IllegalArgumentException
 

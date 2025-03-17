@@ -1,9 +1,9 @@
 package blackjack.domain.participant
 
-import blackjack.card.Card
 import blackjack.domain.BetAmount
 import blackjack.domain.HandStatus
 import blackjack.domain.PlayerResultStatus
+import blackjack.domain.card.Card
 
 class Player(val name: String, private val betAmount: BetAmount) : Participant() {
     override val hitThreshold: Int
