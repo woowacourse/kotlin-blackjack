@@ -8,7 +8,6 @@ import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Player
 import blackjack.view.InputView
 import blackjack.view.OutputView
-import java.lang.IllegalArgumentException
 
 class GameController(
     private val inputView: InputView,
@@ -41,11 +40,10 @@ class GameController(
     }
 
     private fun getPlayersWithBets(): List<Player> {
-        val playerNames = InputView.getPlayerNames()
-        val betAmounts = InputView.getBetAmounts(playerNames)
+        val playerNames = InputView.readPlayerNames()
 
         return playerNames.map { name ->
-            val betAmount = betAmounts[name] ?: throw IllegalArgumentException("${name}의 베팅금액이 없습니다.")
+            val betAmount = InputView.readBetAmounts(name)
             Player(name, BetAmount(betAmount))
         }
     }
