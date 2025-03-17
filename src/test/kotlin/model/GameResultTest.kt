@@ -27,7 +27,7 @@ class GameResultTest {
         val players = Players(listOf(player))
         val gameOutput = compareWinOrLose(dealer, players)
 
-        val playerWinOrLose = gameOutput.all { it.result == GameResult.LOSE }
+        val playerWinOrLose = gameOutput.all { it.outcome.result == GameResult.LOSE }
         assertTrue(playerWinOrLose)
     }
 
@@ -52,7 +52,7 @@ class GameResultTest {
         val players = Players(listOf(player))
         val gameOutput = compareWinOrLose(dealer, players)
 
-        val playerWinOrLose = gameOutput.all { it.result == GameResult.PUSH }
+        val playerWinOrLose = gameOutput.all { it.outcome.result == GameResult.PUSH }
         assertTrue(playerWinOrLose)
     }
 
@@ -77,7 +77,7 @@ class GameResultTest {
         val players = Players(listOf(player))
         val gameOutput = compareWinOrLose(dealer, players)
 
-        val playerWinOrLose = gameOutput.all { it.result == GameResult.WIN }
+        val playerWinOrLose = gameOutput.all { it.outcome.result == GameResult.WIN }
         assertTrue(playerWinOrLose)
     }
 
@@ -103,7 +103,7 @@ class GameResultTest {
         val players = Players(listOf(player))
         val gameOutput: List<PlayerResult> = compareWinOrLose(dealer, players)
 
-        val playerWinOrLose = gameOutput.all { it.result == GameResult.WIN }
+        val playerWinOrLose = gameOutput.all { it.outcome.result == GameResult.WIN }
         assertTrue(playerWinOrLose)
     }
 }

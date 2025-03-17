@@ -18,9 +18,7 @@ class ProfitCalculatorTest {
     @Test
     fun `플레이어가 WIN일 때 profit을 확인할 수 있다`() {
         val player = Player("joy", Hand(listOf(TestCards.DIAMOND_KING, TestCards.DIAMOND_QUEEN)))
-        val players = Players(listOf(player))
-
-        val playerResults = listOf(PlayerResult(player, GameResult.WIN))
+        val playerResults = listOf(PlayerResult(player, PlayerOutcome(GameResult.WIN, Money(0))))
         bettingManager.placeBet(player, 100)
 
         val finalProfits = profitCalculator.calculatePlayerProfits(playerResults, bettingManager)
@@ -31,9 +29,8 @@ class ProfitCalculatorTest {
     @Test
     fun `플레이어가 LOSE일 때 profit을 확인할 수 있다`() {
         val player = Player("joy", Hand(listOf(TestCards.SPADE_EIGHT, TestCards.HEART_TEN)))
-        val players = Players(listOf(player))
 
-        val playerResults = listOf(PlayerResult(player, GameResult.LOSE))
+        val playerResults = listOf(PlayerResult(player, PlayerOutcome(GameResult.LOSE, Money(0))))
         bettingManager.placeBet(player, 100)
 
         val finalProfits = profitCalculator.calculatePlayerProfits(playerResults, bettingManager)
@@ -44,9 +41,8 @@ class ProfitCalculatorTest {
     @Test
     fun `플레이어가 PUSH일 때 profit을 확인할 수 있다`() {
         val player = Player("joy", Hand(listOf(TestCards.CLUB_TEN, TestCards.HEART_TEN)))
-        val players = Players(listOf(player))
 
-        val playerResults = listOf(PlayerResult(player, GameResult.PUSH))
+        val playerResults = listOf(PlayerResult(player, PlayerOutcome(GameResult.PUSH, Money(0))))
         bettingManager.placeBet(player, 100)
 
         val finalProfits = profitCalculator.calculatePlayerProfits(playerResults, bettingManager)
@@ -57,9 +53,8 @@ class ProfitCalculatorTest {
     @Test
     fun `플레이어가 BLACKJACK일 때 profit을 확인할 수 있다`() {
         val player = Player("joy", Hand(listOf(TestCards.CLUB_ACE, TestCards.CLUB_TEN)))
-        val players = Players(listOf(player))
 
-        val playerResults = listOf(PlayerResult(player, GameResult.BLACKJACK))
+        val playerResults = listOf(PlayerResult(player, PlayerOutcome(GameResult.BLACKJACK, Money(0))))
         bettingManager.placeBet(player, 100)
 
         val finalProfits = profitCalculator.calculatePlayerProfits(playerResults, bettingManager)
