@@ -1,5 +1,6 @@
 package blackjack.domain.participant
 
+import blackjack.domain.GameResult
 import blackjack.domain.ParticipantCards
 import blackjack.domain.card.TrumpCard
 
@@ -14,6 +15,12 @@ class Dealer(
         }
         return cards.sumOfCards <= DEALER_MAX_SCORE
     }
+
+    override fun getResult(other: Participant): GameResult =
+        when {
+            cards.isBust() && !other.cards.isBust() -> GameResult.LOSE
+            else -> super.getResult(other)
+        }
 
     companion object {
         private const val DEALER_MAX_SCORE = 16

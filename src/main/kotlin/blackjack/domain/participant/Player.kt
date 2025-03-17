@@ -1,5 +1,6 @@
 package blackjack.domain.participant
 
+import blackjack.domain.GameResult
 import blackjack.domain.ParticipantCards
 import blackjack.domain.ParticipantCards.Companion.BUST_STANDARD
 import blackjack.domain.card.TrumpCard
@@ -27,6 +28,12 @@ class Player(
             }
         }
     }
+
+    override fun getResult(other: Participant): GameResult =
+        when {
+            cards.isBust() -> GameResult.LOSE
+            else -> super.getResult(other)
+        }
 
     companion object {
         private const val PLAYER_INITIAL_CARD_COUNT = 2
