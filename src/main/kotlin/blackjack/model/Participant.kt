@@ -14,7 +14,7 @@ abstract class Participant(
         }
     }
 
-    fun getScore(): Int = hand.calculateScore()
+    fun getScore(): Int = hand.getScore()
 
     fun isBlackjack(): Boolean = hand.status == CardsStatus.BLACKJACK
 

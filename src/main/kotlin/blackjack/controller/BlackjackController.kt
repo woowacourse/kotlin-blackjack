@@ -34,7 +34,7 @@ class BlackjackController(
         players.value.forEach { player ->
             outputView.printBettingMessage(player)
             val money: BettingMoney = inputView.readBettingMoney()
-            player.getBettingMoney(money)
+            player.updateBettingMoney(money)
         }
     }
 

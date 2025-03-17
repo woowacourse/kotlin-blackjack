@@ -15,7 +15,7 @@ class HandTest {
     @Test
     fun `Ace 카드가 1~4개가 아닐 때 일때, 카드들의 점수를 반환한다`() {
         val cards = listOf((Card(Suit.HEART, Denomination.FIVE)), Card(Suit.CLOVER, Denomination.TWO))
-        val actual = Hand(cards).calculateScore()
+        val actual = Hand(cards).getScore()
 
         assertThat(actual).isEqualTo(7)
     }
@@ -23,7 +23,7 @@ class HandTest {
     @Test
     fun `Ace 카드가 1개이고 카드들의 점수가 11미만 일때, Ace의 점수를 11로 판단하고, 카드의 스코어에 Ace의 점수를 추가하여 반환한다`() {
         val cards = listOf((Card(Suit.HEART, Denomination.ACE)), Card(Suit.CLOVER, Denomination.KING))
-        val actual = Hand(cards).calculateScore()
+        val actual = Hand(cards).getScore()
 
         assertThat(actual).isEqualTo(21)
     }
@@ -31,7 +31,7 @@ class HandTest {
     @Test
     fun `Ace 카드가 1개이고 카드들의 점수가 11이상 일때, Ace의 점수를 1로 판단하고, 카드의 스코어에 Ace의 점수를 추가하여 반환한다`() {
         val cards = listOf((Card(Suit.HEART, Denomination.ACE)), Card(Suit.CLOVER, Denomination.TWO))
-        val actual = Hand(cards).calculateScore()
+        val actual = Hand(cards).getScore()
 
         assertThat(actual).isEqualTo(13)
     }
@@ -44,7 +44,7 @@ class HandTest {
                 Card(Suit.CLOVER, Denomination.THREE),
                 Card(Suit.DIAMOND, Denomination.ACE),
             )
-        val actual = Hand(cards).calculateScore()
+        val actual = Hand(cards).getScore()
 
         assertThat(actual).isEqualTo(15)
     }
@@ -57,7 +57,7 @@ class HandTest {
                 Card(Suit.CLOVER, Denomination.TEN),
                 Card(Suit.DIAMOND, Denomination.ACE),
             )
-        val actual = Hand(cards).calculateScore()
+        val actual = Hand(cards).getScore()
 
         assertThat(actual).isEqualTo(12)
     }
@@ -71,7 +71,7 @@ class HandTest {
                 Card(Suit.DIAMOND, Denomination.ACE),
                 Card(Suit.CLOVER, Denomination.ACE),
             )
-        val actual = Hand(cards).calculateScore()
+        val actual = Hand(cards).getScore()
 
         assertThat(actual).isEqualTo(16)
     }
@@ -85,7 +85,7 @@ class HandTest {
                 Card(Suit.DIAMOND, Denomination.ACE),
                 Card(Suit.CLOVER, Denomination.ACE),
             )
-        val actual = Hand(cards).calculateScore()
+        val actual = Hand(cards).getScore()
 
         assertThat(actual).isEqualTo(12)
     }
@@ -100,7 +100,7 @@ class HandTest {
                 Card(Suit.CLOVER, Denomination.ACE),
                 Card(Suit.SPADE, Denomination.ACE),
             )
-        val actual = Hand(cards).calculateScore()
+        val actual = Hand(cards).getScore()
 
         assertThat(actual).isEqualTo(17)
     }
@@ -115,7 +115,7 @@ class HandTest {
                 Card(Suit.CLOVER, Denomination.ACE),
                 Card(Suit.SPADE, Denomination.ACE),
             )
-        val actual = Hand(cards).calculateScore()
+        val actual = Hand(cards).getScore()
 
         assertThat(actual).isEqualTo(13)
     }
