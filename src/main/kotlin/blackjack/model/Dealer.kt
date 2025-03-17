@@ -7,7 +7,7 @@ import blackjack.model.WinningResult.WIN
 
 class Dealer(
     val name: String = DEALER_NAME,
-    override var items: Items,
+    override val items: Items,
 ) : Participant {
     tailrec fun drawUntilFinished(cardDeck: CardDeck) {
         if (items.hand.score() > DEALER_DRAW_CRITERIA || items.hand.isBust()) return

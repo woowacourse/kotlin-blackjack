@@ -16,4 +16,8 @@ interface Participant {
     fun compareHand(other: Participant): WinningResult
 
     fun addPrize(prize: Money) = items.money.addMoney(prize)
+
+    fun changeHand(hand: Hand) {
+        items.setNewHand(hand)
+    }
 }
