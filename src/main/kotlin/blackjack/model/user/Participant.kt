@@ -12,5 +12,5 @@ open class Participant(
 
     fun addCard(card: Card) = hand.addCard(card)
 
-    fun isBust(): Boolean = GameJudge.judge(hand.cards) == GameStatus.BUST
+    fun isBust(): Boolean = GameJudge.judge(hand) == GameStatus.BUST
 }

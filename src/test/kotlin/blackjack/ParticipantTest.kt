@@ -1,6 +1,8 @@
 package blackjack
 
 import blackjack.CardFixture.Companion.CLOVER_NINE
+import blackjack.model.Hand
+import blackjack.model.card.Card
 import blackjack.model.user.Participant
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
@@ -19,4 +21,9 @@ class ParticipantTest {
         participant.addCard(CLOVER_NINE)
         assertThat(participant.hand.cards.size).isEqualTo(1)
     }
+}
+
+fun Hand.make(vararg cards: Card): Hand {
+    cards.forEach { card -> this.addCard(card) }
+    return this
 }

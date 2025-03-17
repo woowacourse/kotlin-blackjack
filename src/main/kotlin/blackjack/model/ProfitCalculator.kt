@@ -10,15 +10,15 @@ object ProfitCalculator {
         dealer: Dealer,
         player: Player,
     ): Money {
-        val dealerGameStatus = GameJudge.judge(dealer.hand.cards)
-        val playerGameStatus = GameJudge.judge(player.hand.cards)
+        val dealerGameStatus = GameJudge.judge(dealer.hand)
+        val playerGameStatus = GameJudge.judge(player.hand)
         if (dealerGameStatus == BLACKJACK && playerGameStatus == BLACKJACK) return Money.toDrawMoney()
         if (playerGameStatus == BLACKJACK) return Money.toBlackjackMoney(player.money)
         if (playerGameStatus == BUST) return Money.toLoseMoney(player.money)
         if (dealerGameStatus == BUST) return Money.toWinMoney(player.money)
 
-        val dealerFinalScore = ScoreCalculator.calculateFinalScore(dealer.hand.cards)
-        val playerFinalScore = ScoreCalculator.calculateFinalScore(player.hand.cards)
+        val dealerFinalScore = dealer.hand.score
+        val playerFinalScore = player.hand.score
         if (dealerFinalScore < playerFinalScore) return Money.toWinMoney(player.money)
         if (dealerFinalScore == playerFinalScore) return Money.toDrawMoney()
         return Money.toLoseMoney(player.money)
