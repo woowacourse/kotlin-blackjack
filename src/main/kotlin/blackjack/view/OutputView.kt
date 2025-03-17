@@ -50,5 +50,5 @@ object OutputView {
     private fun printDealerResult(dealerProfit: Int): String = "딜러: $dealerProfit"
 
     private fun printPlayerResult(playerResult: PlayerResult): String =
-        "${playerResult.state.participant.name}: ${playerResult.getProfit()}"
+        "${playerResult.blackJackRole.participant.name}: ${playerResult.getProfit()}"
 }

@@ -4,7 +4,7 @@ import blackjack.domain.gameResult.GameResult
 import blackjack.domain.participant.Participant
 
 @Suppress("FunctionName")
-fun <T : Participant> State(participant: T): State<T> {
+fun <T : Participant> BlackJackRole(participant: T): BlackJackRole<T> {
     return when {
         participant.isBust() -> Bust(participant)
         participant.isBlackJack() -> BlackJack(participant)
@@ -12,10 +12,10 @@ fun <T : Participant> State(participant: T): State<T> {
     }
 }
 
-interface State<T : Participant> {
+interface BlackJackRole<T : Participant> {
     val participant: T
 
     fun getEarnRate(gameResult: GameResult): Double
 
-    fun compare(state: State<out Participant>): GameResult
+    fun compare(blackJackRole: BlackJackRole<out Participant>): GameResult
 }
