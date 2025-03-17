@@ -22,8 +22,8 @@ class Participants(
 
     fun updateProfit() {
         players.forEach { player ->
-            dealer.updateProfit(player)
             player.updateProfit(dealer)
+            dealer.updateProfit(player)
         }
     }
 

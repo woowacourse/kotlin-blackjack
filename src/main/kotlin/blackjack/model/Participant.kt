@@ -5,7 +5,8 @@ abstract class Participant(
     val hand: Hand = Hand(emptyList()),
 ) {
     abstract val openCard: List<Card>
-    abstract val money: Money
+    abstract var profit: Profit
+        protected set
 
     fun pickCard(
         cardDeck: CardDeck,

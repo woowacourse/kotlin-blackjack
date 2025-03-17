@@ -61,9 +61,9 @@ class OutputView {
 
     private fun printTotalResult(participants: Participants) {
         println("\n## 최종 수익")
-        println("${participants.dealer.name}: ${participants.dealer.money.getProfit()}")
+        println("${participants.dealer.name}: ${participants.dealer.profit.value}")
         participants.players.forEach { player ->
-            println("${player.name}: ${player.bettingMoney.getProfit()}")
+            println("${player.name}: ${player.profit.value}")
         }
     }
 
