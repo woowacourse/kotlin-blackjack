@@ -94,8 +94,7 @@
 ## TODO
 
 - [x] Hand | status 삭제
-- [ ] BlackjackController | 버스트되어서 플레이어에게 카드를 뽑을 수 없다고 메시지 출력
-- [ ] BlackjackController | 컨트롤러의 인스턴스 변수 삭제
+- [x] BlackjackController | 컨트롤러의 인스턴스 변수 삭제
 - [ ] BettingMoney | rate를 인수로 받도록 수정
 - [ ] Hand | 빽킹 프로퍼티와 프로퍼티를 구별하여 메소드에 적용
 - [ ] Hand | sum을 val로 선언
@@ -106,3 +105,4 @@
 - [ ] BlackjackController | 딜러의 수익 판단 메소드 생성
 - [ ] 여러 객체들의 Test코드 작성
 - [ ] HandTest | methodSource를 활용한 getSumNumber에 대한 테스트 추가 생성
+- [ ] BlackjackController | 버스트되어서 플레이어에게 카드를 뽑을 수 없다고 메시지 출력
