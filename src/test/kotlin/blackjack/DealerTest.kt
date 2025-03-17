@@ -1,6 +1,7 @@
 package blackjack
 
 import blackjack.domain.GameResult
+import blackjack.domain.Money
 import blackjack.domain.ParticipantCards
 import blackjack.domain.card.CardTier
 import blackjack.domain.card.Shape
@@ -123,7 +124,7 @@ class DealerTest {
 
     @Test
     fun `딜러가 버스트되어도 플레이어가 버스트라면 딜러는 승리한다`() {
-        val participants = Participants(Dealer(ParticipantCards()), listOf(Player("bibi", ParticipantCards())))
+        val participants = Participants(Dealer(ParticipantCards()), listOf(Player("bibi", ParticipantCards(), Money(10000))))
         participants.dealer.receiveCard(TrumpCard(CardTier.KING, Shape.DIA))
         participants.dealer.receiveCard(TrumpCard(CardTier.KING, Shape.DIA))
         participants.dealer.receiveCard(TrumpCard(CardTier.KING, Shape.DIA))
@@ -136,7 +137,7 @@ class DealerTest {
 
     @Test
     fun `딜러만 버스트이면 딜러는 진다`() {
-        val participants = Participants(Dealer(ParticipantCards()), listOf(Player("bibi", ParticipantCards())))
+        val participants = Participants(Dealer(ParticipantCards()), listOf(Player("bibi", ParticipantCards(), Money(10000))))
         participants.dealer.receiveCard(TrumpCard(CardTier.KING, Shape.DIA))
         participants.dealer.receiveCard(TrumpCard(CardTier.KING, Shape.DIA))
         participants.dealer.receiveCard(TrumpCard(CardTier.KING, Shape.DIA))

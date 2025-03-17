@@ -1,6 +1,7 @@
 package blackjack.domain.participant
 
 import blackjack.domain.GameResult
+import blackjack.domain.Money
 import blackjack.domain.ParticipantCards
 import blackjack.domain.ParticipantCards.Companion.BUST_STANDARD
 import blackjack.domain.card.TrumpCard
@@ -9,6 +10,7 @@ import blackjack.domain.deck.Deck
 class Player(
     val name: String,
     cards: ParticipantCards,
+    val money: Money,
 ) : Participant(cards) {
     override fun showInitialCards(): List<TrumpCard> = takeCards(PLAYER_INITIAL_CARD_COUNT)
 

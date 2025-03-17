@@ -1,16 +1,17 @@
 package blackjack.domain
 
+import blackjack.domain.deck.Deck
 import blackjack.domain.participant.Participants
 import blackjack.domain.participant.Player
 
 class BlackJackGame(
     private val participants: Participants,
-    private val table: BlackJackTable,
+    private val deck: Deck,
 ) {
     fun handOutInitializedCards(initializedCardCount: Int = INITIAL_CARD_TAKE_COUNT) {
         (participants.players + participants.dealer).forEach { player ->
             repeat(initializedCardCount) {
-                player.receiveCard(table.deck.pop())
+                player.receiveCard(deck.pop())
             }
         }
     }
@@ -19,13 +20,13 @@ class BlackJackGame(
         getPlayerChoice: (String) -> Boolean,
         onPlayerStateUpdated: (Player) -> Unit,
     ) {
-        participants.getChoice(table.deck, getPlayerChoice, onPlayerStateUpdated)
+        participants.getChoice(deck, getPlayerChoice, onPlayerStateUpdated)
     }
 
     fun processDealerTurn(): Int {
         var count = 0
         while (participants.dealer.isDrawable()) {
-            participants.dealer.receiveCard(table.deck.pop())
+            participants.dealer.receiveCard(deck.pop())
             count++
         }
         return count
@@ -34,13 +35,13 @@ class BlackJackGame(
     fun getDealerProfit(): Double =
         participants.players.sumOf { player ->
             val result = participants.dealer.getResult(player)
-            result.calculateDealerProfit(table.getPlayerBettingMoney(player))
+            result.calculateDealerProfit(player.money)
         }
 
     fun getPlayerProfit(action: (String, Double) -> Unit) {
         participants.players.forEach { player ->
             val result = player.getResult(participants.dealer)
-            val profit = result.calculatePlayerProfit(table.getPlayerBettingMoney(player))
+            val profit = result.calculatePlayerProfit(player.money)
             action(player.name, profit)
         }
     }
