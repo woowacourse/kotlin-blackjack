@@ -60,16 +60,8 @@ class BlackjackEngine(
         dealer: Dealer,
         players: Players,
     ): Map<Participant, Money> {
-        val participantPrize = mutableMapOf<Participant, Money>()
-        val dealerMoney = Money(0.0)
-        players.value.forEach { player ->
-            val playerBets = bets[player] ?: throw (IllegalArgumentException("[ERROR] 유저를 찾을 수 없습니다."))
-            val playerMoney = playerBets.multiplyMoney(WinningResult.getPrize(player.compareHand(dealer)))
-            participantPrize[player] = playerMoney
-            dealerMoney.addMoney(playerBets.multiplyMoney(WinningResult.getPrize(dealer.compareHand(player))))
-        }
-        participantPrize[dealer] = dealerMoney
-        return participantPrize
+        val betResult = BetResult.makeBetResultByPlayers(players, dealer)
+        return betResult.getResult(dealer, bets.toMap())
     }
 
     fun progressCalculateFullResult(currentResult: Map<Participant, Money>) {

@@ -4,7 +4,7 @@ class Player(
     val name: String,
     override val items: Items,
 ) : Participant {
-    override fun compareHand(other: Participant): WinningResult = WinningResult.getResult(this, other)
+    fun compareHand(other: Participant): WinningResult = WinningResult.getResult(this, other)
 
     companion object {
         fun makePlayer(

@@ -1,8 +1,5 @@
 package blackjack.model
 
-import blackjack.model.WinningResult.BLACKJACK
-import blackjack.model.WinningResult.WIN
-
 class Dealer(
     val name: String = DEALER_NAME,
     override val items: Items,
@@ -11,12 +8,6 @@ class Dealer(
         if (items.hand.score() > DEALER_DRAW_CRITERIA || items.hand.isBust()) return
         draw(cardDeck.draw())
         drawUntilFinished(cardDeck)
-    }
-
-    override fun compareHand(other: Participant): WinningResult {
-        val result = WinningResult.getResult(this, other)
-        if (result == BLACKJACK) return WIN
-        return result
     }
 
     companion object {
