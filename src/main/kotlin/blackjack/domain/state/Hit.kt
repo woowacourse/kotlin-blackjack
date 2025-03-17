@@ -18,13 +18,13 @@ class Hit(
         return Hit(hand)
     }
 
-    override fun canDrawCard(): Boolean = hand.getTotalScore() <= DRAW_CARD_STANDARD
+    override fun canDrawCard(): Boolean = hand.getTotalScore() <= DEALER_DRAW_CARD_STANDARD
 
     override fun profit(dealerTotal: Int): Int = hand.getProfitMoney(hand.findWinner(dealerTotal).toDouble()).toInt()
 
     companion object {
         const val BLACKJACK_SIZE = 2
         const val BLACKJACK_SCORE = 21
-        const val DRAW_CARD_STANDARD = 16
+        const val DEALER_DRAW_CARD_STANDARD = 16
     }
 }
