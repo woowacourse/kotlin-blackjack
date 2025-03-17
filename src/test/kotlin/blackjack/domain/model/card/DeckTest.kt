@@ -6,11 +6,24 @@ import org.junit.jupiter.api.Test
 
 class DeckTest {
     @Test
-    fun `카드를 뽑을 수 있다`() {
-        val card: Card = Card.of(CardNumber.ACE, Suit.CLUB)
+    fun `카드를 원하는 수만큼 뽑을 수 있다`() {
+        val actual: List<Card> = Deck(ShuffledCardsGenerator()).pop(5) ?: listOf()
 
-        val deck = Deck(ShuffledCardsGenerator()).pop()
+        val expectedSize = 5
 
-        assertThat(card).isInstanceOf(Card::class.java)
+        assertThat(actual.size).isEqualTo(expectedSize)
+    }
+
+    @Test
+    fun `원하는 카드로 덱을 구성할 수 있다`() {
+        val deck =
+            Deck {
+                listOf(SPADE_ACE, CLUB_KING)
+            }
+        val actualCards = deck.pop(2)
+
+        val expectedCards = listOf(SPADE_ACE, CLUB_KING)
+
+        assertThat(actualCards).isEqualTo(expectedCards)
     }
 }

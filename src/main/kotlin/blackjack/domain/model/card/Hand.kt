@@ -1,25 +1,23 @@
 package blackjack.domain.model.card
 
 class Hand {
-    private var _cards = mutableListOf<Card>()
-    private val cards
-        get() = _cards.toList()
+    private var _cards = listOf<Card>()
+    val cards
+        get() = _cards.deepCopy()
 
     fun add(card: Card) {
         _cards += card
     }
 
-    fun toList(): List<Card> {
-        return cards
-    }
+    fun isBust(): Boolean = getScore() > BLACK_JACK_NUMBER
 
-    fun isBust(): Boolean {
-        return getScore() > BLACK_JACK_NUMBER
-    }
+    fun isNotBust(): Boolean = !isBust()
 
-    fun isLessOrSameThan(score: Int): Boolean {
-        return getScore() <= score
-    }
+    fun isBlackJack(): Boolean = cards.size == 2 && getScore() == BLACK_JACK_NUMBER
+
+    fun isNotBlackJack(): Boolean = !isBlackJack()
+
+    fun isMoreThan(score: Int): Boolean = getScore() > score
 
     fun getScore(): Int {
         val cardValues: Int = cards.sumOf { it.cardNumber.value }
@@ -31,6 +29,8 @@ class Hand {
     }
 
     companion object {
+        fun List<Card>.deepCopy(): List<Card> = map(Card::copy)
+
         private const val ACE_EXTRA_SCORE = 10
         private const val BLACK_JACK_NUMBER = 21
 

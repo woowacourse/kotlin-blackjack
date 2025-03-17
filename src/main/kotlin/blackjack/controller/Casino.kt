@@ -2,11 +2,15 @@ package blackjack.controller
 
 import blackjack.domain.generator.CardsGenerator
 import blackjack.domain.model.GameResult
-import blackjack.domain.model.GameResultRecord
+import blackjack.domain.model.Scoreboard
+import blackjack.domain.model.betting.BetAmount
+import blackjack.domain.model.betting.BetRecords
+import blackjack.domain.model.card.Card
 import blackjack.domain.model.card.Deck
 import blackjack.domain.model.participant.Dealer
 import blackjack.domain.model.participant.Participant
 import blackjack.domain.model.participant.Player
+import blackjack.domain.model.participant.PlayerResponse
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -17,14 +21,32 @@ class Casino(
 ) {
     fun run() {
         val deck = Deck(cardsGenerator)
-        val players: List<Player> = inputView.readPlayerNames().map { Player(it) }
-        val dealer: Dealer = Dealer()
-        initialCardsDistribute(players + dealer, deck)
-        outputParticipantCardsInfo(dealer, players)
+        val dealer = Dealer()
+        val players: List<Player> = setPlayers()
+        val participants: List<Participant> = listOf(dealer) + players
+        initialCardsDistribute(participants, deck)
 
-        runPlayersDrawPhase(players, deck)
-        runDealerDrawPhase(dealer, deck)
-        outputFinalResult(dealer, players)
+        runPlayersPhase(players, deck)
+        runDealerPhase(dealer, deck)
+        outputGameResults(dealer, players)
+        outputParticipantsProfit(BetRecords(dealer, players))
+    }
+
+    private fun setPlayers(): List<Player> {
+        val names = inputView.readPlayerNames()
+        return names.map {
+            val betAmount = setBetAmount(it)
+            Player(it, betAmount = betAmount)
+        }
+    }
+
+    private fun setBetAmount(playerName: String): BetAmount {
+        val amount: Double = inputView.readBetAmount(playerName)
+        return runCatching {
+            BetAmount(amount)
+        }.getOrElse {
+            setBetAmount(playerName)
+        }
     }
 
     private fun initialCardsDistribute(
@@ -32,47 +54,88 @@ class Casino(
         deck: Deck,
     ) {
         participants.forEach { participant ->
-            repeat(2) { participant.drawCard(deck) }
+            participant.draw(drawSafely(2, deck))
         }
-    }
-
-    private fun outputParticipantCardsInfo(
-        dealer: Dealer,
-        players: List<Player>,
-    ) {
-        outputView.showDistributeCardMessage(players)
-        outputView.showDealerCardsInfo(dealer)
-        players.forEach { outputView.showPlayerCardsInfo(it) }
+        outputView.showParticipantFirstCardsInfo(participants)
         outputView.newLine()
     }
 
-    private fun runPlayersDrawPhase(
+    private fun drawSafely(
+        number: Int,
+        deck: Deck,
+    ): List<Card> =
+        deck.pop(number) ?: run {
+            deck.refill()
+            drawSafely(number, deck)
+        }
+
+    private fun runPlayersPhase(
         players: List<Player>,
         deck: Deck,
     ) {
-        players.forEach { player ->
-            player.play(deck, inputView::readWantExtraCard, outputView::showPlayerCardsInfo)
-            outputView.newLine()
+        players.forEach {
+            runPlayerPhase(it, deck)
+        }
+    }
+
+    private fun runPlayerPhase(
+        player: Player,
+        deck: Deck,
+    ) {
+        while (player.isDrawable()) {
+            val response: PlayerResponse = inputView.readWantExtraCard(player.name)
+            playerActByResponse(player, deck, response)
+
+            if (response == PlayerResponse.STAY) {
+                break
+            }
         }
         outputView.newLine()
     }
 
-    private fun runDealerDrawPhase(
+    private fun playerActByResponse(
+        player: Player,
+        deck: Deck,
+        playerResponse: PlayerResponse,
+    ) {
+        when (playerResponse) {
+            PlayerResponse.STAY -> {
+                outputView.showParticipantCardsInfo(player)
+            }
+
+            PlayerResponse.HIT -> {
+                player.draw(drawSafely(1, deck))
+                outputView.showParticipantCardsInfo(player)
+            }
+        }
+    }
+
+    private fun runDealerPhase(
         dealer: Dealer,
         deck: Deck,
     ) {
-        dealer.play(deck, outputView::showDealerDrawMessage)
+        while (dealer.isDrawable()) {
+            dealer.draw(drawSafely(1, deck))
+            outputView.showDealerDrawMessage()
+        }
         outputView.newLine()
     }
 
-    private fun outputFinalResult(
+    private fun outputGameResults(
         dealer: Dealer,
         players: List<Player>,
     ) {
         outputView.showCardsResult(listOf(dealer) + players)
         outputView.newLine()
 
-        val finalResult: Map<GameResult, Int> = GameResultRecord(dealer, players).getDealerResult()
-        outputView.showFinalResult(finalResult, dealer, players)
+        val dealerGameResult: Map<GameResult, Int> = Scoreboard(dealer, players).getDealerResult()
+        outputView.showGameResults(dealerGameResult, dealer, players)
+    }
+
+    private fun outputParticipantsProfit(betRecords: BetRecords) {
+        val dealerProfit: Double = betRecords.dealerProfit()
+        val playersProfit: Map<Player, Double> = betRecords.playersProfit()
+
+        outputView.showProfitResults(dealerProfit, playersProfit)
     }
 }
