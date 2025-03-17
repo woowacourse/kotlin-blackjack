@@ -8,6 +8,8 @@ class Player(
     name: String,
     hand: Hand = Hand(emptyList()),
 ) : Participant(name, hand) {
+    override val openCard: List<Card>
+        get() = hand.value
     lateinit var bettingMoney: BettingMoney
 
     override val money: Money get() = bettingMoney

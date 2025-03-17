@@ -18,7 +18,7 @@ class OutputView {
     fun printParticipantCards(participants: Participants) {
         val playersNames: String = participants.players.joinToString(", ") { it.name }
         println("\n${participants.dealer.name}와 ${playersNames}에게 2장의 카드를 나누었습니다.")
-        println("${participants.dealer.name}: ${participants.dealer.openCard.toBlackjackView()}")
+        println("${participants.dealer.name}: ${participants.dealer.openCard.joinToString { it.toBlackjackView() }}")
         participants.players.forEach { player ->
             printPlayerCard(player)
         }
@@ -26,7 +26,7 @@ class OutputView {
     }
 
     fun printPlayerCard(player: Player) {
-        println("${player.name}카드: ${player.hand.value.joinToString { it.toBlackjackView() }}")
+        println("${player.name}카드: ${player.openCard.joinToString { it.toBlackjackView() }}")
     }
 
     fun printDealerBlackjack() {

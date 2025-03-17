@@ -4,8 +4,8 @@ class Dealer(
     name: String = DEFAULT_DEALER_NAME,
     hand: Hand = Hand(emptyList()),
 ) : Participant(name, hand) {
-    val openCard: Card
-        get() = hand.value[OPEN_CARD_INDEX]
+    override val openCard: List<Card>
+        get() = listOf(hand.value[OPEN_CARD_INDEX])
     override val money: Money = Money(INITIAL_MONEY_VALUE)
 
     override fun canHit(): Boolean = getScore() <= DEALER_HIT_SCORE

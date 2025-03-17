@@ -4,6 +4,7 @@ abstract class Participant(
     val name: String,
     val hand: Hand = Hand(emptyList()),
 ) {
+    abstract val openCard: List<Card>
     abstract val money: Money
 
     fun pickCard(
