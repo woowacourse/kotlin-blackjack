@@ -102,7 +102,7 @@
 - [x] Hand | if문을 return if 형태로 작성
 - [x] Hand | BUST_STANDARD를 private 으로 변경
 - [x] Participant | showInitCards메소드 네이밍 변경
-- [ ] Player | 점수 비교 로직 Participants로 이동
+- [x] Player | 점수 비교 로직 Participants로 이동
 - [ ] BlackjackController | 딜러의 수익 판단 메소드 생성
 - [ ] 여러 객체들의 Test코드 작성
 - [ ] HandTest | methodSource를 활용한 getSumNumber에 대한 테스트 추가 생성
