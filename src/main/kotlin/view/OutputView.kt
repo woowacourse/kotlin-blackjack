@@ -56,7 +56,7 @@ class OutputView {
         println("딜러: $dealerProfit")
 
         playersProfit.forEach { (player, profit) ->
-            println("${player.name}: ${profit.toInt()}")
+            println("${player.name}: ${profit.amount}")
         }
     }
 }
