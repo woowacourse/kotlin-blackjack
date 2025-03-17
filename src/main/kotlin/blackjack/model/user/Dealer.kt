@@ -12,6 +12,5 @@ class Dealer(
 
     companion object {
         private const val DEALER_NAME = "딜러"
-        private const val DEALER_DRAW_CARD_MINIMUM_SCORE = 17
     }
 }
