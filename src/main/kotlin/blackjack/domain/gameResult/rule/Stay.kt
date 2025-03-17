@@ -9,9 +9,9 @@ data class Stay<T : Participant>(override val participant: T) : BlackJackRule<T>
         return gameResult.sign * 1.0
     }
 
-    override fun compare(blackJackRule: BlackJackRule<out Participant>): GameResult {
-        if (blackJackRule is BlackJack) return GameResult.LOSE
-        if (blackJackRule is Bust) return GameResult.WIN
-        return Score(participant).compare(Score(blackJackRule.participant))
+    override fun compare(other: BlackJackRule<out Participant>): GameResult {
+        if (other is BlackJack) return GameResult.LOSE
+        if (other is Bust) return GameResult.WIN
+        return Score(participant).compare(Score(other.participant))
     }
 }

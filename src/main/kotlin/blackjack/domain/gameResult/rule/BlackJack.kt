@@ -8,8 +8,8 @@ data class BlackJack<T : Participant>(override val participant: T) : BlackJackRu
         return 1.5 * gameResult.sign
     }
 
-    override fun compare(blackJackRule: BlackJackRule<out Participant>): GameResult {
-        if (blackJackRule is BlackJack) return GameResult.DRAW
+    override fun compare(other: BlackJackRule<out Participant>): GameResult {
+        if (other is BlackJack) return GameResult.DRAW
         return GameResult.WIN
     }
 }

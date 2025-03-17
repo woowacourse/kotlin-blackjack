@@ -17,5 +17,5 @@ sealed class BlackJackRule<T : Participant> {
 
     abstract fun getEarnRate(gameResult: GameResult): Double
 
-    abstract fun compare(blackJackRule: BlackJackRule<out Participant>): GameResult
+    abstract fun compare(other: BlackJackRule<out Participant>): GameResult
 }
