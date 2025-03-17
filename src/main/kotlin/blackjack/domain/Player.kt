@@ -8,18 +8,31 @@ data class Player(
     override var state: State,
     val getMoreCard: (String) -> Boolean,
 ) : Participant {
-    override fun drawCard(giveCard: () -> Card) {
+    fun drawInitialCards(giveCard: () -> Card) {
         repeat(2) {
             state = state.draw(giveCard())
         }
+    }
+
+    fun drawAdditionalCards(
+        giveCard: () -> Card,
+        printCards: (String, Hand) -> Unit,
+    ) {
+        while (state is Hit && getMoreCard(name)) {
+            state = state.draw(giveCard())
+            printCards(name, state.hand)
+        }
+    }
+
+    override fun drawCard(giveCard: () -> Card) {
+        drawInitialCards(giveCard)
     }
 
     override fun drawMoreCard(
         giveCards: () -> Card,
         printCards: (Participant) -> Unit,
     ) {
-        while (state == Hit(state.hand) && getMoreCard(name)) {
-            state = state.draw(giveCards())
+        drawAdditionalCards(giveCards) { _, hand ->
             printCards(this)
         }
     }
