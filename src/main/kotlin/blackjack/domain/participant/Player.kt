@@ -1,5 +1,6 @@
 package blackjack.domain.participant
 
+import blackjack.card.Card
 import blackjack.domain.BetAmount
 import blackjack.domain.HandStatus
 import blackjack.domain.PlayerResultStatus
@@ -7,6 +8,10 @@ import blackjack.domain.PlayerResultStatus
 class Player(val name: String, private val betAmount: BetAmount) : Participant() {
     override val hitThreshold: Int
         get() = PLAYER_HIT_THRESHOLD
+
+    override fun showInitialCards(): List<Card> {
+        return hand.getCards().take(PLAYER_INITIAL_CARD_COUNT)
+    }
 
     fun getPlayerStatus(dealer: Dealer): PlayerResultStatus {
         val playerStatus = getStatus()
@@ -36,5 +41,6 @@ class Player(val name: String, private val betAmount: BetAmount) : Participant()
 
     companion object {
         private const val PLAYER_HIT_THRESHOLD = 21
+        private const val PLAYER_INITIAL_CARD_COUNT = 2
     }
 }

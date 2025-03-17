@@ -11,6 +11,8 @@ abstract class Participant {
 
     abstract val hitThreshold: Int
 
+    abstract fun showInitialCards(): List<Card>
+
     fun addCard(card: Card) {
         hand.addCard(card)
     }
