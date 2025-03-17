@@ -14,7 +14,7 @@ abstract class Participants() {
         hand.append(cards)
     }
 
-    abstract fun showInitCards(): List<Card>
+    abstract fun showStartCards(): List<Card>
 
     abstract fun canHit(): Boolean
 }

@@ -101,7 +101,7 @@
 - [x] Hand | sum을 val로 선언
 - [x] Hand | if문을 return if 형태로 작성
 - [x] Hand | BUST_STANDARD를 private 으로 변경
-- [ ] Participant | showInitCards메소드 네이밍 변경
+- [x] Participant | showInitCards메소드 네이밍 변경
 - [ ] Player | 점수 비교 로직 Participants로 이동
 - [ ] BlackjackController | 딜러의 수익 판단 메소드 생성
 - [ ] 여러 객체들의 Test코드 작성

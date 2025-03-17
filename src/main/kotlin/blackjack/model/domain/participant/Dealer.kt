@@ -10,7 +10,7 @@ class Dealer(override val name: String = DEALER_NAME) : Participants() {
         return sumCardNumber <= THRESHOLD
     }
 
-    override fun showInitCards(): List<Card> {
+    override fun showStartCards(): List<Card> {
         return listOf(hand.cards.first())
     }
 

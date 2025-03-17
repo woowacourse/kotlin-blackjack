@@ -19,7 +19,7 @@ class OutputView {
 
     private fun printPlayerInitCard(players: List<Participants>) {
         players.forEach { player ->
-            println(PLAYER_STATUS.format(player.name + CARD, displayCard(player.showInitCards())))
+            println(PLAYER_STATUS.format(player.name + CARD, displayCard(player.showStartCards())))
         }
         println()
     }

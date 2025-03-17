@@ -11,7 +11,7 @@ data class Player(override val name: String) : Participants() {
         return hand.isBust()
     }
 
-    override fun showInitCards(): List<Card> {
+    override fun showStartCards(): List<Card> {
         return hand.cards
     }
 
