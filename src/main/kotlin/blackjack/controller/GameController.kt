@@ -47,7 +47,6 @@ class GameController(
         playingService.playPlayers(
             retryEvent { inputView::readPlayerAction },
             outputView::printPlayerStatus,
-            outputView::printPlayerStatus,
         )
         playingService.playDealer {
             outputView.printDealerHitsState()

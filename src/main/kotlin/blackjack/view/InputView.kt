@@ -1,6 +1,6 @@
 package blackjack.view
 
-import blackjack.domain.model.hand.HandState
+import blackjack.domain.model.hand.UserChoice
 import blackjack.domain.model.playing.PlayingParticipant
 
 class InputView {
@@ -15,17 +15,17 @@ class InputView {
         return requireNotNull(readln().toDoubleOrNull())
     }
 
-    fun readPlayerAction(player: PlayingParticipant): HandState {
+    fun readPlayerAction(player: PlayingParticipant): UserChoice {
         println(MESSAGE_ENTER_PLAYER_YES_OR_NO.format(player.name))
         val input: String = readln()
         require(input == CHOICE_YES || input == CHOICE_NO) { ERROR_INVALID_CHOICE }
         return convertChoice(input)
     }
 
-    private fun convertChoice(input: String): HandState {
+    private fun convertChoice(input: String): UserChoice {
         require(input == CHOICE_YES || input == CHOICE_NO) { ERROR_INVALID_CHOICE }
-        if (input == CHOICE_YES) return HandState.HIT
-        return HandState.STAY
+        if (input == CHOICE_YES) return UserChoice.HIT
+        return UserChoice.STAY
     }
 
     companion object {

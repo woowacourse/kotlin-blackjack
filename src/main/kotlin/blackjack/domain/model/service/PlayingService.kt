@@ -2,38 +2,36 @@ package blackjack.domain.model.service
 
 import blackjack.domain.model.Deck
 import blackjack.domain.model.betting.BettingPlayers
-import blackjack.domain.model.hand.HandState
+import blackjack.domain.model.hand.UserChoice
 import blackjack.domain.model.playing.PlayingParticipant
 import blackjack.domain.model.playing.PlayingParticipants
 import blackjack.domain.model.profit.ProfitParticipants
 
 class PlayingService(val playingParticipants: PlayingParticipants, private val deck: Deck) {
     fun playPlayers(
-        onHandAction: (PlayingParticipant) -> HandState,
-        onStartStay: (PlayingParticipant) -> Unit,
+        onHandAction: (PlayingParticipant) -> UserChoice,
         onPlayerState: (PlayingParticipant) -> Unit,
     ) {
         playingParticipants.players.forEach { participant ->
-            playHand(participant, onHandAction, onStartStay, onPlayerState)
+            playHand(participant, onHandAction, onPlayerState)
         }
     }
 
     private fun playHand(
         playingParticipant: PlayingParticipant,
-        onHandAction: (PlayingParticipant) -> HandState,
-        onStartStay: (PlayingParticipant) -> Unit,
+        onUserAction: (PlayingParticipant) -> UserChoice,
         onPlayerState: (PlayingParticipant) -> Unit,
     ) {
         if (playingParticipant.handsState.isFinished()) return
-        val choice = onHandAction(playingParticipant)
-        if (HandState.STAY == choice) {
+        val choice = onUserAction(playingParticipant)
+        if (UserChoice.STAY == choice) {
             playingParticipant.handsState.stay()
-            if (playingParticipant.handsState.cards().size == 2) onStartStay(playingParticipant)
+            if (playingParticipant.handsState.cards().size == 2) onPlayerState(playingParticipant)
             return
         }
         playingParticipant.acceptCard(deck.draw())
         onPlayerState(playingParticipant)
-        playHand(playingParticipant, onHandAction, onStartStay, onPlayerState)
+        playHand(playingParticipant, onUserAction, onPlayerState)
     }
 
     fun playDealer(onDealerHitsState: () -> Unit) {

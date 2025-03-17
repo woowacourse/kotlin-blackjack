@@ -1,8 +1,6 @@
 package blackjack.domain.model.hand
 
-enum class HandState {
-    BUST,
+enum class UserChoice {
     HIT,
     STAY,
-    BLACKJACK,
 }
