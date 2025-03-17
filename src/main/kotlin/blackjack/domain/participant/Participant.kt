@@ -6,7 +6,7 @@ import blackjack.domain.deck.Deck
 import blackjack.domain.score.Score
 
 abstract class Participant {
-    private val innerHand: Hand = Hand()
+    protected val innerHand: Hand = Hand()
     abstract val hitThreshold: Int
 
     fun getCards(): List<Card> {

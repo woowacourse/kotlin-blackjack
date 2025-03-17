@@ -25,7 +25,7 @@ object BlackJackOutputView {
 
     private fun printProvidedCard(pair: BlackJackPair): String = "딜러와 ${pair.players.joinToString { it.name }}에게 2장을 나누었습니다.\n"
 
-    private fun printDealerCard(dealer: Dealer): String = "딜러: ${dealer.getCards().first().format()}"
+    private fun printDealerCard(dealer: Dealer): String = "딜러: ${dealer.getOpenedCard().format()}"
 
     private fun printPlayerCard(player: Player): String = "${player.name}카드: ${player.getCards().format()}"
 }

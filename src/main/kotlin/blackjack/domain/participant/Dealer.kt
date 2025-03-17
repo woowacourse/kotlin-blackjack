@@ -1,5 +1,6 @@
 package blackjack.domain.participant
 
+import blackjack.domain.card.Card
 import blackjack.domain.score.Score
 
 class Dealer : Participant() {
@@ -8,6 +9,10 @@ class Dealer : Participant() {
 
     fun needsAdditionalCard(): Boolean {
         return Score(this) < DEALER_HIT_THRESHOLD
+    }
+
+    fun getOpenedCard(): Card {
+        return innerHand.toList().first()
     }
 
     companion object {
