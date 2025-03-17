@@ -14,5 +14,9 @@ value class Money private constructor(
         fun toDrawMoney(): Money = Money(0L)
 
         fun toLoseMoney(money: Money): Money = Money(money.amount * -1)
+
+        fun toDealerMoney(playersProfitSum: Money): Money = Money(playersProfitSum.amount * -1)
+
+        operator fun Money.plus(other: Money): Money = Money(amount + other.amount)
     }
 }

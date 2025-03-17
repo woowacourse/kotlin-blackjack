@@ -1,5 +1,6 @@
 package blackjack.model
 
+import blackjack.model.Money.Companion.plus
 import blackjack.model.card.Deck
 import blackjack.model.dto.ParticipantProfitInfo
 import blackjack.model.state.CardDrawDecision
@@ -74,8 +75,8 @@ class GameManager(
             ParticipantProfitInfo(player.name, ProfitCalculator.calculateProfit(dealer, player))
         }
 
-    fun getDealerProfit(playerProfitInfo: List<ParticipantProfitInfo>): ParticipantProfitInfo {
-        val playersSum = playerProfitInfo.sumOf { player -> player.profit.amount }
-        return ParticipantProfitInfo(dealer.name, Money.from(playersSum * -1))
+    fun getDealerProfit(playersProfitInfo: List<ParticipantProfitInfo>): ParticipantProfitInfo {
+        val playersSum = playersProfitInfo.fold(Money.from(0L)) { sum, player -> sum + player.profit }
+        return ParticipantProfitInfo(dealer.name, Money.toDealerMoney(playersSum))
     }
 }
