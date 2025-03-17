@@ -29,17 +29,13 @@ object ResultCalculator {
         dealer: Dealer,
         player: Player,
     ): ResultType? {
-        if (player.isBust()) return LOSS
-        if (player.isBlackjack()) {
-            return if (dealer.isBlackjack()) {
-                TIE
-            } else {
-                BLACKJACK
-            }
+        return when {
+            player.isBust() -> LOSS
+            player.isBlackjack() && dealer.isBlackjack() -> TIE
+            player.isBlackjack() && !dealer.isBlackjack() -> BLACKJACK
+            dealer.isBust() -> WIN
+            else -> null
         }
-        if (dealer.isBust()) return WIN
-
-        return null
     }
 
     fun judgeScore(
