@@ -4,13 +4,12 @@ class Hand(private val _cards: MutableList<Card>) {
     val cards get() = _cards.deepCopy()
 
     fun getSumNumber(): Int {
-        var sum = cards.sumOf { it.cardNumber.number }
-
-        if (_cards.any { it.isAce() } && sum + CardNumber.BONUS_SCORE <= BUST_STANDARD) {
-            sum += CardNumber.BONUS_SCORE
+        val sum = _cards.sumOf { it.cardNumber.number }
+        return if (_cards.any { it.isAce() } && sum + CardNumber.BONUS_SCORE <= BUST_STANDARD) {
+            sum + CardNumber.BONUS_SCORE
+        } else {
+            sum
         }
-
-        return sum
     }
 
     fun append(card: List<Card>) {

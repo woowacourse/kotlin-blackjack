@@ -97,10 +97,10 @@
 - [x] BlackjackController | 컨트롤러의 인스턴스 변수 삭제
 - [x] Player | compareScores | 매개변수를 하나로 받도록 수정
 - [x] PlayerBetResult | 플레이어 베팅 금액 정산 결과를 받는 클래스 생성
-- [ ] Hand | 빽킹 프로퍼티와 프로퍼티를 구별하여 메소드에 적용
-- [ ] Hand | sum을 val로 선언
-- [ ] Hand | if문을 return if 형태로 작성
-- [ ] Hand | BUST_STANDARD를 private 으로 변경
+- [x] Hand | 빽킹 프로퍼티와 프로퍼티를 구별하여 메소드에 적용
+- [x] Hand | sum을 val로 선언
+- [x] Hand | if문을 return if 형태로 작성
+- [x] Hand | BUST_STANDARD를 private 으로 변경
 - [ ] Participant | showInitCards메소드 네이밍 변경
 - [ ] Player | 점수 비교 로직 Participants로 이동
 - [ ] BlackjackController | 딜러의 수익 판단 메소드 생성
