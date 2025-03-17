@@ -17,16 +17,15 @@ class ShuffledDeck : Deck {
     }
 
     override fun pop(): TrumpCard {
-        while (true) {
-            val currentDeck =
-                deckPool.getOrNull(currentDeckIndex)
-                    ?: throw IllegalArgumentException(ERROR_EMPTY_DECK_MESSAGE)
+        val currentDeck =
+            deckPool.getOrNull(currentDeckIndex)
+                ?: throw IllegalArgumentException(ERROR_EMPTY_DECK_MESSAGE)
 
-            if (currentDeck.isNotEmpty()) {
-                return currentDeck.pop()
-            } else {
-                currentDeckIndex++
-            }
+        return if (currentDeck.isNotEmpty()) {
+            currentDeck.pop()
+        } else {
+            currentDeckIndex++
+            pop()
         }
     }
 
