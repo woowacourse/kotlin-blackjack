@@ -18,14 +18,15 @@ sealed class Participant(
 
     fun isBlackjack(): Boolean = hand.isBlackjack()
 
-    fun playGame(
+    tailrec fun playGame(
         draw: () -> Card,
         shouldContinue: (Participant) -> Boolean,
         onDraw: (Participant) -> Unit,
     ) {
-        while (canHit() && shouldContinue(this)) {
+        if (canHit() && shouldContinue(this)) {
             receiveCard(draw())
             onDraw(this)
+            playGame(draw, shouldContinue, onDraw)
         }
     }
 

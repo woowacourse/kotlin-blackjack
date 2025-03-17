@@ -3,7 +3,7 @@ package blackjack.view
 import blackjack.domain.participant.Participant
 
 class InputView {
-    fun readPlayerNames(): List<String> {
+    tailrec fun readPlayerNames(): List<String> {
         println(MESSAGE_INPUT_PLAYER_NAME)
         val input = readln().split(COMMA).map { it.trim() }.filter { it.isNotBlank() }
         if (input.isNotEmpty()) {
@@ -13,7 +13,7 @@ class InputView {
         return readPlayerNames()
     }
 
-    fun readBettingAmount(name: String): Int {
+    tailrec fun readBettingAmount(name: String): Int {
         println(MESSAGE_INPUT_BETTING_AMOUNT.format(name))
         val input = readln().trim().toIntOrNull()
         if (input != null) {
@@ -23,7 +23,7 @@ class InputView {
         return readBettingAmount(name)
     }
 
-    fun readPlayerHit(player: Participant): Boolean {
+    tailrec fun readPlayerHit(player: Participant): Boolean {
         println(MESSAGE_INPUT_HIT_OR_STAY.format(player.name))
         val input = readln().trim()
         if (input == YES) {
