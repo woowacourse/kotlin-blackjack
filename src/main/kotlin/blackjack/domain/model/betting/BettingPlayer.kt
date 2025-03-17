@@ -5,7 +5,5 @@ import blackjack.domain.model.Money
 import blackjack.domain.model.Profit
 
 class BettingPlayer(val name: String, private val money: Money) {
-    fun calculate(matchResult: MatchResult): Profit {
-        return Profit(money * matchResult.profitRate)
-    }
+    fun calculate(matchResult: MatchResult): Profit = Profit(money * matchResult.profitRate)
 }

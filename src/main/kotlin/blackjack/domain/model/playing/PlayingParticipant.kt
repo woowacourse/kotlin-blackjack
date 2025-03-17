@@ -11,6 +11,8 @@ abstract class PlayingParticipant {
     abstract val name: String
     abstract var handsState: State
 
+    abstract fun showStartCards(): List<Card>
+
     fun showCards(): List<Card> = handsState.cards()
 
     fun acceptCard(card: Card) {

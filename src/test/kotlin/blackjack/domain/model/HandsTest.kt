@@ -32,12 +32,12 @@ class HandsTest {
     @Test
     fun `카드를 더한 값이 11이하이고 에이스가 포함될 경우 10점 보너스를 받는다`() {
         hands = Hands(HEART_ACE, HEART_KING) // 1+10 보너스 10
-        assertThat(hands.getScore()).isEqualTo(21)
+        assertThat(hands.score()).isEqualTo(21)
     }
 
     @Test
     fun `카드를 더한 값이 11이상일 경우 에이스가 포함되어도 보너스 값을 받지 않는다`() {
         hands = Hands(HEART_ACE, HEART_KING, CLUB_KING) // 1 +10 +10
-        assertThat(hands.getScore()).isEqualTo(21)
+        assertThat(hands.score()).isEqualTo(21)
     }
 }

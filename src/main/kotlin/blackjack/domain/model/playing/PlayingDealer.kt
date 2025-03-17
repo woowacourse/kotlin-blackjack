@@ -8,6 +8,8 @@ import blackjack.domain.model.hand.State
 class PlayingDealer(override var handsState: State, override val name: String = DEALER_NAME) : PlayingParticipant() {
     constructor(vararg card: Card) : this(DealerHit(Hands(card.toList())))
 
+    override fun showStartCards() = showCards().take(1)
+
     companion object {
         private const val DEALER_NAME = "딜러"
     }

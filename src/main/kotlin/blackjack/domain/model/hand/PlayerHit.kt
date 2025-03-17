@@ -6,9 +6,9 @@ class PlayerHit(hands: Hands = Hands()) : Playing(hands) {
     override fun nextState(card: Card): State {
         hands = hands.nextHand(card)
         return when {
-            hands.getScore() == 21 && hands.size == 2 -> BlackJack(hands)
-            hands.getScore() > 21 -> Bust(hands)
-            hands.getScore() == 21 -> Stay(hands)
+            hands.score().isMaxScore() && hands.score().isBlackJack(hands.size) -> BlackJack(hands)
+            hands.score().isBustScore() -> Bust(hands)
+            hands.score().isMaxScore() -> Stay(hands)
             else -> this
         }
     }

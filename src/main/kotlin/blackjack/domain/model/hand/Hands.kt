@@ -2,6 +2,7 @@ package blackjack.domain.model.hand
 
 import blackjack.domain.model.Card
 import blackjack.domain.model.Rank
+import blackjack.domain.model.Score
 
 class Hands(private val _cards: List<Card>) {
     constructor(vararg card: Card) : this(card.toList())
@@ -14,23 +15,20 @@ class Hands(private val _cards: List<Card>) {
 
     fun nextHand(card: Card) = Hands(cards + card)
 
-    fun getScore(): Int {
-        val score = cards.sumOf { it.rank.score }
+    fun score(): Score {
+        val score = Score(cards.sumOf { it.rank.score })
         return score + getBonusScore(score = score)
     }
 
-    private fun getBonusScore(score: Int): Int {
-        if (score + BONUS_SCORE <= BUST_THRESHOLD && hasAce()) return BONUS_SCORE
+    private fun getBonusScore(score: Score): Int {
+        val totalScore = score + BONUS_SCORE
+        if (totalScore.isBustScore() && hasAce()) return BONUS_SCORE
         return 0
     }
 
     private fun hasAce(): Boolean = this.cards.any { it.rank == Rank.ACE }
 
-    fun isStartCardCount(): Boolean = cards.count() == START_CARD_COUNT
-
     companion object {
-        const val START_CARD_COUNT = 2
         private const val BONUS_SCORE = 10
-        const val BUST_THRESHOLD = 21
     }
 }
