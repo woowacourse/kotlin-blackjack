@@ -1,6 +1,6 @@
 package blackjack.domain.card
 
-class Cards {
+class Hand {
     private val cards = mutableListOf<Card>()
 
     fun add(card: Card) {
@@ -20,9 +20,5 @@ class Cards {
 
     fun size(): Int {
         return cards.size
-    }
-
-    companion object {
-        private const val ACE_SPECIFIC_SCORE = 11
     }
 }

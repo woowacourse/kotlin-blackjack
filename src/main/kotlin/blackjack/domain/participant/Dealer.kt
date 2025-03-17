@@ -8,12 +8,12 @@ class Dealer : Participant() {
 
     fun setAllCard(deck: Deck) {
         while (canHit()) {
-            innerCards.add(deck.draw())
+            innerHand.add(deck.draw())
         }
     }
 
     fun hasAdditionalCard(): Boolean {
-        return innerCards.size() > INITIAL_CARD_COUNT
+        return innerHand.size() > INITIAL_CARD_COUNT
     }
 
     companion object {

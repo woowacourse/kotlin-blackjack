@@ -1,19 +1,19 @@
 package blackjack.domain.participant
 
 import blackjack.domain.card.Card
-import blackjack.domain.card.Cards
+import blackjack.domain.card.Hand
 import blackjack.domain.score.Score
 
 abstract class Participant {
-    val innerCards: Cards = Cards()
+    val innerHand: Hand = Hand()
     abstract val hitThreshold: Int
 
     fun getCards(): List<Card> {
-        return innerCards.toList()
+        return innerHand.toList()
     }
 
     fun addCard(card: Card) {
-        if (canHit()) innerCards.add(card)
+        if (canHit()) innerHand.add(card)
     }
 
     fun isBust(): Boolean {
@@ -21,7 +21,7 @@ abstract class Participant {
     }
 
     fun isBlackJack(): Boolean {
-        return innerCards.countAce() == 1 && innerCards.countScoredTen() == 1
+        return innerHand.countAce() == 1 && innerHand.countScoredTen() == 1
     }
 
     fun canHit(): Boolean {
