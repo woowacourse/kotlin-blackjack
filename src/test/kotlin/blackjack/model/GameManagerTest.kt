@@ -15,7 +15,7 @@ class GameManagerTest {
 
     @BeforeEach
     fun setUp() {
-        player = Player("미플", BetAmount(100))
+        player = Player("미플", BetAmount(100.0))
         dealer = Dealer()
         gameManager = GameManager(dealer, listOf(player))
     }

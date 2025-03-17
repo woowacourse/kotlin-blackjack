@@ -48,7 +48,7 @@ class BlackjackController(
             while (betAmount == null) {
                 betAmount = inputView.readBetAmount(name)
             }
-            Player(name, BetAmount(betAmount))
+            Player(name, BetAmount(betAmount.toDouble()))
         }
     }
 

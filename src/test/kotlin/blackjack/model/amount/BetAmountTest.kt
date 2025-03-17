@@ -9,7 +9,7 @@ class BetAmountTest {
     @ValueSource(ints = [0, -1, -999])
     fun `배팅 금액이 0원 이하면 예외를 던진다`(amount: Int) {
         assertThrows<IllegalArgumentException> {
-            BetAmount(amount)
+            BetAmount(amount.toDouble())
         }
     }
 }

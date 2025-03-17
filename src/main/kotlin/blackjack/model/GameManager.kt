@@ -3,7 +3,6 @@ package blackjack.model
 import blackjack.model.ResultType.Companion.BLACKJACK_PROFIT_MULTIPLIER
 import blackjack.model.ResultType.Companion.LOSS_PROFIT_MULTIPLIER
 import blackjack.model.ResultType.Companion.TIE_PROFIT_MULTIPLIER
-import blackjack.model.amount.BetAmount
 import blackjack.model.amount.WinningMoney
 import blackjack.model.participant.Dealer
 import blackjack.model.participant.Participant
@@ -54,19 +53,15 @@ class GameManager(
         resultType: ResultType,
         player: Player,
     ) = when (resultType) {
-        ResultType.BLACKJACK -> WinningMoney(player.betAmount.toDouble() * BLACKJACK_PROFIT_MULTIPLIER)
-        ResultType.WIN -> WinningMoney(player.betAmount.toDouble())
-        ResultType.TIE -> WinningMoney(player.betAmount.toDouble() * TIE_PROFIT_MULTIPLIER)
-        ResultType.LOSS -> WinningMoney(player.betAmount.toDouble() * LOSS_PROFIT_MULTIPLIER)
+        ResultType.BLACKJACK -> WinningMoney(player.betAmount.amount * BLACKJACK_PROFIT_MULTIPLIER)
+        ResultType.WIN -> WinningMoney(player.betAmount.amount)
+        ResultType.TIE -> WinningMoney(player.betAmount.amount * TIE_PROFIT_MULTIPLIER)
+        ResultType.LOSS -> WinningMoney(player.betAmount.amount * LOSS_PROFIT_MULTIPLIER)
     }
 
     fun calculateDealerProfit(profitResults: List<Profit>): Profit {
         val totalPlayerProfit = profitResults.sumOf { it.winningMoney.amount }
         return Profit(dealer, WinningMoney(totalPlayerProfit * DEALER_PROFIT_MULTIPLIER))
-    }
-
-    private fun BetAmount.toDouble(): Double {
-        return this.amount.toDouble()
     }
 
     companion object {
