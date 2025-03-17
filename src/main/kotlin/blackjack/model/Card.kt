@@ -10,7 +10,7 @@ data class Card(
         private val denominations: List<Denomination> = Denomination.entries
         private val suits: List<Suit> = Suit.entries
 
-        val whole_cards: List<Card> =
+        val wholeCards: List<Card> =
             denominations
                 .flatMap { denomination ->
                     suits.map { shape ->
