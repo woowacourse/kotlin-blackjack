@@ -30,16 +30,16 @@ class OutputView {
         println()
     }
 
+    fun printPlayerCard(player: Player) {
+        println("${player.name}카드: ${player.hand.value.joinToString { it.toBlackjackView() }}")
+    }
+
     fun printDealerBlackjack() {
         println("딜러의 블랙잭으로 게임이 종료됩니다.")
     }
 
     fun printPlayerBehaviorGuide(player: Player) {
         println("${player.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
-    }
-
-    fun printPlayerCard(player: Player) {
-        println("${player.name}카드: ${player.hand.value.joinToString { it.toBlackjackView() }}")
     }
 
     fun printBust(participant: Participant) {
@@ -54,19 +54,23 @@ class OutputView {
         dealer: Dealer,
         players: Players,
     ) {
-        val dealerCards: String =
-            dealer.hand.value.joinToString { it.toBlackjackView() }
-        println(
-            "\n${dealer.name}카드: $dealerCards - 결과: ${dealer.hand.getScore()}",
-        )
+        printParticipantResult(dealer)
         players.value.forEach { player ->
-            val playersCards: String =
-                player.hand.value.joinToString { it.toBlackjackView() }
-            println(
-                "${player.name}카드: $playersCards - 결과: ${player.hand.getScore()}",
-            )
+            printParticipantResult(player)
         }
 
+        printTotalResult(dealer, players)
+    }
+
+    private fun printParticipantResult(participant: Participant) {
+        val participantCards: String = participant.hand.value.joinToString { it.toBlackjackView() }
+        println("${participant.name}카드: $participantCards - 결과: ${participant.hand.getScore()}")
+    }
+
+    private fun printTotalResult(
+        dealer: Dealer,
+        players: Players,
+    ) {
         println("\n## 최종 수익")
         println("${dealer.name}: ${dealer.money.getProfit()}")
         players.value.forEach { player ->
