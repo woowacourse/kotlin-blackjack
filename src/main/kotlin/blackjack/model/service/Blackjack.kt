@@ -33,10 +33,8 @@ class Blackjack(private val deck: PlayingCard, private val playerGroup: PlayerGr
     }
 
     fun endGame(): Map<Player, GameResult> {
-        val dealerResult = playerGroup.dealer.sumCardNumber
-
         return playerGroup.players.associateWith { player ->
-            player.compareScores(playerGroup.dealer.hand, dealerResult)
+            player.compareScores(playerGroup.dealer.hand)
         }
     }
 

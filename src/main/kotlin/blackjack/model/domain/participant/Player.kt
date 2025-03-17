@@ -15,17 +15,14 @@ data class Player(override val name: String) : Participants() {
         return hand.cards
     }
 
-    fun compareScores(
-        otherHand: Hand,
-        number: Int,
-    ): GameResult =
+    fun compareScores(otherHand: Hand): GameResult =
         when {
             otherHand.isBlackJack() && hand.isBlackJack() -> GameResult.Draw
             hand.isBlackJack() -> GameResult.BlackjackWin
             hand.isBust() -> GameResult.Lose
             otherHand.isBust() -> GameResult.Win
             otherHand.isBlackJack() -> GameResult.Lose
-            else -> compare(sumCardNumber, number)
+            else -> compare(sumCardNumber, otherHand.getSumNumber())
         }
 
     private fun compare(

@@ -38,7 +38,7 @@ class PlayerTest {
         blackjackDealer.receiveCard(listOf(Card.from("QueenHeart"), Card.from("AceSpade")))
         player1.receiveCard(listOf(Card.from("QueenHeart"), Card.from("AceHeart")))
         // when
-        val actual = player1.compareScores(blackjackDealer.hand, 21)
+        val actual = player1.compareScores(blackjackDealer.hand)
         val expected = GameResult.Draw
         // then
         assertThat(actual).isEqualTo(expected)
@@ -51,7 +51,7 @@ class PlayerTest {
         blackjackDealer.receiveCard(listOf(Card.from("QueenHeart"), Card.from("AceSpade")))
         player1.receiveCard(listOf(Card.from("QueenHeart"), Card.from("QueenClover")))
         // when
-        val actual = player1.compareScores(blackjackDealer.hand, 20)
+        val actual = player1.compareScores(blackjackDealer.hand)
         val expected = GameResult.Lose
         // then
         assertThat(actual).isEqualTo(expected)
@@ -64,7 +64,7 @@ class PlayerTest {
         dealer.receiveCard(listOf(Card.from("NineClover"), Card.from("TenSpade")))
         player1.receiveCard(listOf(Card.from("QueenHeart"), Card.from("AceHeart")))
         // when
-        val actual = player1.compareScores(dealer.hand, 21)
+        val actual = player1.compareScores(dealer.hand)
         val expected = GameResult.BlackjackWin
         // then
         assertThat(actual).isEqualTo(expected)
@@ -77,7 +77,7 @@ class PlayerTest {
         dealer.receiveCard(listOf(Card.from("NineClover"), Card.from("TenSpade"), Card.from("QueenHeart")))
         player1.receiveCard(listOf(Card.from("QueenHeart"), Card.from("AceHeart")))
         // when
-        val actual = player1.compareScores(dealer.hand, 21)
+        val actual = player1.compareScores(dealer.hand)
         val expected = GameResult.BlackjackWin
         // then
         assertThat(actual).isEqualTo(expected)
@@ -90,7 +90,7 @@ class PlayerTest {
         dealer.receiveCard(listOf(Card.from("NineClover"), Card.from("TenSpade"), Card.from("QueenHeart")))
         player1.receiveCard(listOf(Card.from("NineHeart"), Card.from("TenClover"), Card.from("QueenSpade")))
         // when
-        val actual = player1.compareScores(dealer.hand, 29)
+        val actual = player1.compareScores(dealer.hand)
         val expected = GameResult.Lose
         // then
         assertThat(actual).isEqualTo(expected)
@@ -103,7 +103,7 @@ class PlayerTest {
         dealer.receiveCard(listOf(Card.from("NineClover"), Card.from("TenSpade")))
         player1.receiveCard(listOf(Card.from("QueenHeart"), Card.from("QueenHeart")))
         // when
-        val actual = player1.compareScores(dealer.hand, 10)
+        val actual = player1.compareScores(dealer.hand)
         val expected = GameResult.Win
         // then
         assertThat(actual).isEqualTo(expected)
