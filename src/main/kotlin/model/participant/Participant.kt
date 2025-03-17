@@ -2,30 +2,25 @@ package model.participant
 
 import model.card.Card
 import model.card.Cards
-import model.result.ProfitCalculator.Companion.BLACKJACK_SCORE
-import model.result.ScoreCalculator
+import model.card.HandCards
 
 abstract class Participant(private val cards: Cards) {
-    private val handCards: MutableList<Card>
-        get() = cards.allCards
+    val handCards
+        get() = HandCards(cards)
 
     val score: Int
-        get() = ScoreCalculator(cards).calculateTotalCardScore()
+        get() = handCards.score
 
-    val isBlackJack: Boolean =
-        handCards.size == INITIAL_CARDS_COUNT && ScoreCalculator(cards).initialTotalCardScore == BLACKJACK_SCORE
+    val isBust: Boolean
+        get() = handCards.isBust
 
-    val isBust: Boolean = score > BLACKJACK_SCORE
+    val isBlackJack: Boolean = handCards.isBlackJack
 
     abstract fun turn(drawnCard: Card): Boolean
 
     abstract fun canHit(): Boolean
 
     protected fun addCard(card: Card) {
-        handCards.add(card)
-    }
-
-    companion object {
-        private const val INITIAL_CARDS_COUNT = 2
+        handCards.addCard(card)
     }
 }
