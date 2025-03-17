@@ -46,13 +46,13 @@ class GameManager(private val cards: Cards) {
 
     fun determineGameResults(
         bettingManager: BettingManager,
-        profitCalculator: ProfitCalculator
-    ): ProfitResult {
+        profitCalculator: ProfitCalculator,
+    ): GameResults {
         val playerResults = compareWinOrLose(dealer, players)
-        val playerProfits = profitCalculator.calculatePlayerProfits(playerResults, bettingManager)
-        val dealerProfit = profitCalculator.dealerProfit(playerProfits)
+        val gameResults = profitCalculator.calculatePlayerProfits(playerResults, bettingManager) // 수익 계산
+        val dealerProfit = profitCalculator.dealerProfit(gameResults)
 
-        return ProfitResult(playerProfits, dealerProfit)
+        return gameResults.copy(dealerProfit = dealerProfit)
     }
 
     companion object {

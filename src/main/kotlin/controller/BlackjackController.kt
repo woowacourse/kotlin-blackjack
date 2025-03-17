@@ -72,15 +72,15 @@ class BlackjackController(
         bettingManager: BettingManager,
     ) {
         val profitCalculator = ProfitCalculator()
-        val gameResults = gameManager.determineGameResults(
-            bettingManager,
-            profitCalculator
-        )
+        val gameResults =
+            gameManager.determineGameResults(
+                bettingManager,
+                profitCalculator,
+            )
 
         outputView.printResult(
             gameResults.dealerProfit,
-            gameResults.playerProfits.getPlayersProfit()
+            gameResults.getPlayersProfit(),
         )
     }
-
 }

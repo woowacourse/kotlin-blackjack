@@ -1,30 +1,21 @@
 package model
 
 class ProfitCalculator {
-    private fun getProfitRate(playerResult: PlayerResult): Float {
-        return playerResult.result.profitRate
-    }
-
     fun calculatePlayerProfits(
         playerResults: List<PlayerResult>,
-        bettingManager: BettingManager
-    ): PlayersResult {
-        val results = playerResults.associate { playerResult ->
-            val baseBet = bettingManager.getBetAmount(playerResult.player)
-            val profit = baseBet.multiply(getProfitRate(playerResult))
-            playerResult.player to profit
-        }
-        return PlayersResult(results)
+        bettingManager: BettingManager,
+    ): GameResults {
+        val updatedResults =
+            playerResults.map { playerResult ->
+                val baseBet = bettingManager.getBetAmount(playerResult.player)
+                val profit = baseBet.multiply(playerResult.outcome.result.profitRate)
+
+                playerResult.copy(outcome = PlayerOutcome(playerResult.outcome.result, profit))
+            }
+        return GameResults(updatedResults, Money(0))
     }
 
-    fun dealerProfit(playerProfits: PlayersResult): Money {
-        return Money(-playerProfits.getPlayersProfit().values.sumOf { it.amount })
+    fun dealerProfit(gameResults: GameResults): Money {
+        return Money(-gameResults.getPlayersProfit().values.sumOf { it.amount })
     }
-//    fun dealerProfit(gameResults: GameResults): Int {
-//        var rate = 0
-//        gameResults.getPlayersProfit().values.forEach { money ->
-//            rate -= money.amount
-//        }
-//        return rate
-//    }
 }
