@@ -4,6 +4,8 @@ abstract class Participant(
     val name: String,
     val hand: Hand = Hand(emptyList()),
 ) {
+    abstract val money: Money
+
     fun pickCard(
         cardDeck: CardDeck,
         times: Int = STANDARD_PICK_COUNT,
@@ -22,9 +24,7 @@ abstract class Participant(
 
     abstract fun canHit(): Boolean
 
-    abstract fun gainMoney(money: Money)
-
-    abstract fun lossMoney(money: Money)
+    abstract fun updateProfit(opponent: Participant)
 
     companion object {
         private const val STANDARD_PICK_COUNT = 1

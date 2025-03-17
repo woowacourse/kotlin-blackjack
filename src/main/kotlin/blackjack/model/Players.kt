@@ -16,13 +16,12 @@ class Players(
         }
     }
 
-    fun getBlackjackPlayers(): List<Player> = value.filter { player -> player.isBlackjack() }
-
-    fun getNotBlackjackPlayers(): List<Player> = value.filterNot { player -> player.isBlackjack() }
-
-    fun getNotDyingPlayers(): List<Player> = value.filterNot { player -> player.isBust() }
-
-    fun getDyingPlayers(): List<Player> = value.filter { player -> player.isBust() }
+    fun updateProfit(dealer: Dealer) {
+        value.forEach { player ->
+            dealer.updateProfit(player)
+            player.updateProfit(dealer)
+        }
+    }
 
     companion object {
         private const val MIN_PLAYER_COUNT = 1

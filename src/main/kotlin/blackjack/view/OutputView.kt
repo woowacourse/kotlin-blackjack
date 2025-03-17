@@ -68,7 +68,7 @@ class OutputView {
         }
 
         println("\n## 최종 수익")
-        println("${dealer.name}: ${dealer.profit.value}")
+        println("${dealer.name}: ${dealer.money.getProfit()}")
         players.value.forEach { player ->
             println("${player.name}: ${player.bettingMoney.getProfit()}")
         }

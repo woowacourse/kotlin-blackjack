@@ -1,13 +1,9 @@
 package blackjack.controller
 
 import blackjack.model.BettingMoney
-import blackjack.model.BettingMoney.Companion.BLACKJACK_MULTIPLE
 import blackjack.model.Card
 import blackjack.model.CardDeck
-import blackjack.model.CardsStatus.Companion.BUST_SCORE
 import blackjack.model.Dealer
-import blackjack.model.GameResult
-import blackjack.model.Money
 import blackjack.model.Player
 import blackjack.model.Player.Behavior
 import blackjack.model.Players
@@ -56,7 +52,7 @@ class BlackjackController(
             executePlayerGame(player)
         }
         executeDealerGameLogic(dealer)
-        calculateResult(players, dealer)
+        players.updateProfit(dealer)
         displayResult(players, dealer)
     }
 
@@ -65,36 +61,12 @@ class BlackjackController(
         players: Players,
     ): Boolean {
         if (dealer.isBlackjack()) {
-            executeBlackjackPlayersLogic(players, dealer)
-            executeNotBlackjackPlayersLogic(players, dealer)
+            players.updateProfit(dealer)
             outputView.printDealerBlackjack()
             displayResult(players, dealer)
             return true
         }
         return false
-    }
-
-    private fun executeBlackjackPlayersLogic(
-        players: Players,
-        dealer: Dealer,
-    ) {
-        val blackjackPlayers: List<Player> = players.getBlackjackPlayers()
-
-        blackjackPlayers.forEach { player ->
-            player.bettingMoney.multiple(BLACKJACK_MULTIPLE)
-            executePlayerGainMoney(dealer, player.bettingMoney, player)
-        }
-    }
-
-    private fun executeNotBlackjackPlayersLogic(
-        players: Players,
-        dealer: Dealer,
-    ) {
-        val notBlackjackPlayers: List<Player> = players.getNotBlackjackPlayers()
-        notBlackjackPlayers.forEach { player ->
-            val money: Money = player.bettingMoney
-            executeDealerGainMoney(dealer, money, player)
-        }
     }
 
     private fun executePlayerGame(player: Player) {
@@ -137,61 +109,6 @@ class BlackjackController(
             outputView.printDealerGettingCard()
             if (dealer.isBust()) break
         }
-    }
-
-    private fun calculateResult(
-        players: Players,
-        dealer: Dealer,
-    ) {
-        val playersWhichNotDying: List<Player> = players.getNotDyingPlayers()
-        val playersWhichDying: List<Player> = players.getDyingPlayers()
-
-        playersWhichDying.forEach { player ->
-            val dealerResult: GameResult = dealer.getResult(BUST_SCORE)
-            executeMoneyLogic(dealerResult, player, dealer)
-        }
-        playersWhichNotDying.forEach { player ->
-            if (player.isBlackjack()) return executeBlackjackPlayersLogic(players, dealer)
-            val dealerResult: GameResult = dealer.getResult(player.getScore())
-            executeMoneyLogic(dealerResult, player, dealer)
-        }
-    }
-
-    private fun executeMoneyLogic(
-        dealerResult: GameResult,
-        player: Player,
-        dealer: Dealer,
-    ) {
-        when (dealerResult) {
-            GameResult.PUSH -> Unit
-            GameResult.WIN -> {
-                val money: Money = player.bettingMoney
-                executeDealerGainMoney(dealer, money, player)
-            }
-
-            GameResult.LOSE -> {
-                val money: Money = player.bettingMoney
-                executePlayerGainMoney(dealer, money, player)
-            }
-        }
-    }
-
-    private fun executeDealerGainMoney(
-        dealer: Dealer,
-        money: Money,
-        player: Player,
-    ) {
-        dealer.gainMoney(money)
-        player.lossMoney(money)
-    }
-
-    private fun executePlayerGainMoney(
-        dealer: Dealer,
-        money: Money,
-        player: Player,
-    ) {
-        dealer.lossMoney(money)
-        player.gainMoney(money)
     }
 
     private fun displayResult(

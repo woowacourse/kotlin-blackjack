@@ -1,5 +1,6 @@
 package blackjack.model
 
+import blackjack.model.BettingMoney.Companion.BLACKJACK_MULTIPLE
 import blackjack.model.CardsStatus.Companion.BLACKJACK_SCORE
 
 class Player(
@@ -7,6 +8,8 @@ class Player(
     hand: Hand = Hand(emptyList()),
 ) : Participant(name, hand) {
     lateinit var bettingMoney: BettingMoney
+
+    override val money: Money get() = bettingMoney
 
     init {
         require(name != "딜러") { "플레이어는 딜러라는 이름을 가질 수 없습니다." }
@@ -19,12 +22,14 @@ class Player(
 
     override fun canHit(): Boolean = getScore() < BLACKJACK_SCORE && !isBlackjack() && !isBust()
 
-    override fun gainMoney(money: Money) {
-        bettingMoney.plus(money)
-    }
-
-    override fun lossMoney(money: Money) {
-        bettingMoney.minus(money)
+    override fun updateProfit(opponent: Participant) {
+        when {
+            isBlackjack() && opponent.isBlackjack().not() -> bettingMoney.multiple(BLACKJACK_MULTIPLE)
+            isBust() -> bettingMoney.minus(bettingMoney)
+            opponent.isBust() -> bettingMoney.plus(bettingMoney)
+            getScore() > opponent.getScore() -> bettingMoney.plus(bettingMoney)
+            getScore() < opponent.getScore() -> bettingMoney.minus(bettingMoney)
+        }
     }
 
     enum class Behavior {

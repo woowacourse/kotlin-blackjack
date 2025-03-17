@@ -8,7 +8,7 @@ class Dealer(
 ) : Participant(name, hand) {
     val openCard: Card
         get() = hand.value[OPEN_CARD_INDEX]
-    val profit: Money = Money(INITIAL_MONEY_VALUE)
+    override val money: Money = Money(INITIAL_MONEY_VALUE)
 
     fun getResult(playerScore: Int): GameResult {
         if (playerScore == BUST_SCORE) return GameResult.WIN
@@ -20,12 +20,15 @@ class Dealer(
 
     override fun canHit(): Boolean = getScore() <= DEALER_HIT_SCORE
 
-    override fun gainMoney(money: Money) {
-        profit.plus(money)
-    }
-
-    override fun lossMoney(money: Money) {
-        profit.minus(money)
+    override fun updateProfit(opponent: Participant) {
+        when {
+            isBlackjack().not() && opponent.isBlackjack() -> money.minus(opponent.money)
+            isBlackjack() && opponent.isBlackjack().not() -> money.plus(opponent.money)
+            opponent.isBust() -> money.plus(opponent.money)
+            isBust() && opponent.isBust().not() -> money.minus(opponent.money)
+            getScore() > opponent.getScore() -> money.plus(opponent.money)
+            getScore() < opponent.getScore() -> money.minus(opponent.money)
+        }
     }
 
     companion object {
