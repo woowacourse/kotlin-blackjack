@@ -1,31 +1,23 @@
 package blackjack.domain.participants
 
-import blackjack.const.GameRule
-import blackjack.domain.ScoreCalculator
 import blackjack.domain.card.Card
 
 abstract class Participant(initialHand: List<Card> = emptyList()) {
-    private val _hand: MutableList<Card> = initialHand.map { it.copy() }.toMutableList()
+    val hand: Hand = Hand(initialHand)
 
-    val hand: List<Card>
-        get() = _hand.toList()
+    val score: Int
+        get() = hand.calculateScore()
 
     abstract fun canHit(): Boolean
 
-    fun addCard(card: Card) {
-        _hand.add(card)
-    }
+    fun addCard(card: Card) = hand.addCard(card)
 
-    fun isBlackjack(): Boolean {
-        return score() == GameRule.BLACKJACK_SCORE && _hand.size == FIRST_TURN_DRAW_AMOUNT
-    }
+    fun isBlackjack(): Boolean = hand.isBlackjack()
 
-    fun isBust(): Boolean = score() > GameRule.BLACKJACK_SCORE
-
-    fun score(): Int = ScoreCalculator.calculate(hand)
+    fun isBust(): Boolean = hand.isBust()
 
     fun getDrawAmount(): Int {
-        if (hand.isEmpty()) {
+        if (hand.cards.isEmpty()) {
             return FIRST_TURN_DRAW_AMOUNT
         }
 
