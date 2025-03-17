@@ -3,7 +3,7 @@ package blackjack.domain
 enum class HandStatus {
     BLACKJACK,
     BUST,
-    PLAYING,
+    STAND,
     ;
 
     companion object {
@@ -11,7 +11,7 @@ enum class HandStatus {
             return when {
                 hand.isBlackJack() -> BLACKJACK
                 hand.isBust() -> BUST
-                else -> PLAYING
+                else -> STAND
             }
         }
     }
