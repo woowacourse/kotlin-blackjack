@@ -19,13 +19,12 @@ class Player(
         getPlayerChoice: (String) -> Boolean,
         onPlayerStateUpdated: (Player) -> Unit,
     ) {
-        if (isDrawable()) {
-            if (getPlayerChoice(name)) {
-                receiveCard(deck.pop())
-                onPlayerStateUpdated(this)
-            } else {
-                choice(deck, getPlayerChoice, onPlayerStateUpdated)
-            }
+        if (!isDrawable()) return
+
+        if (getPlayerChoice(name)) {
+            receiveCard(deck.pop())
+            onPlayerStateUpdated(this)
+            choice(deck, getPlayerChoice, onPlayerStateUpdated)
         }
     }
 
