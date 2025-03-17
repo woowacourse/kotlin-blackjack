@@ -1,37 +1,39 @@
 package blackjack.domain.model.playing
 
 import blackjack.domain.model.Card
-import blackjack.domain.model.HandState
-import blackjack.domain.model.Hands
 import blackjack.domain.model.MatchResult
+import blackjack.domain.model.hand.BlackJack
+import blackjack.domain.model.hand.Bust
+import blackjack.domain.model.hand.State
+import blackjack.domain.model.hand.Stay
 
 abstract class PlayingParticipant {
     abstract val name: String
-    protected abstract var hands: Hands
+    abstract var handsState: State
 
-    abstract fun getHandsState(): HandState
-
-    fun getScore() = hands.getScore()
-
-    fun isStartCardCount() = hands.isStartCardCount()
-
-    fun showCards(count: Int = hands.cards.count()): List<Card> = hands.extractCards(count)
+    fun showCards(): List<Card> = handsState.cards()
 
     fun acceptCard(card: Card) {
-        hands = hands.nextHand(card)
+        handsState = handsState.nextState(card)
     }
 
-    fun match(otherPlayingParticipant: PlayingParticipant): MatchResult {
-        val handState = getHandsState()
-        val otherHandState = otherPlayingParticipant.getHandsState()
-        val score = getScore()
-        val otherScore = otherPlayingParticipant.getScore()
+    fun match(otherState: State): MatchResult =
+        when (handsState.stay()) {
+            is BlackJack -> matchBlackJack(otherState)
+            is Bust -> MatchResult.LOSE
+            is Stay -> matchStay(otherState)
+        }
+
+    private fun matchBlackJack(otherState: State): MatchResult {
+        if (otherState is BlackJack) return MatchResult.DRAW
+        return MatchResult.BLACKJACK
+    }
+
+    private fun matchStay(otherState: State): MatchResult {
         return when {
-            handState == HandState.BLACKJACK && otherHandState == HandState.HIT -> MatchResult.DRAW
-            handState == HandState.BLACKJACK -> MatchResult.BLACKJACK
-            handState == HandState.BUST -> MatchResult.LOSE
-            score > otherScore -> MatchResult.WIN
-            score < otherScore -> MatchResult.LOSE
+            otherState is Bust -> MatchResult.WIN
+            handsState.score() > otherState.score() -> MatchResult.WIN
+            handsState.score() < otherState.score() -> MatchResult.LOSE
             else -> MatchResult.DRAW
         }
     }

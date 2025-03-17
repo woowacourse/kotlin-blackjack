@@ -1,3 +1,3 @@
 package blackjack.domain.model.profit
 
-class ProfitParticipants(val profitDealer: ProfitDealer, val profitPlayer: List<ProfitPlayer>)
+class ProfitParticipants(val dealer: ProfitParticipant, val players: List<ProfitParticipant>)

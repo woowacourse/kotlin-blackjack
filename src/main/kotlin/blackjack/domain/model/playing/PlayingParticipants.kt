@@ -1,19 +1,36 @@
 package blackjack.domain.model.playing
 
-import blackjack.domain.model.finished.MatchDealer
-import blackjack.domain.model.finished.MatchParticipants
-import blackjack.domain.model.finished.MatchPlayer
+import blackjack.domain.model.Deck
+import blackjack.domain.model.Profit
+import blackjack.domain.model.betting.BettingPlayers
+import blackjack.domain.model.profit.ProfitParticipant
+import blackjack.domain.model.profit.ProfitParticipants
 
-class PlayingParticipants(val playingDealer: PlayingDealer, val playingPlayers: List<PlayingPlayer>) {
-    val participants get() = listOf(playingDealer, *playingPlayers.toTypedArray())
+class PlayingParticipants(val dealer: PlayingDealer, val players: List<PlayingPlayer>) {
+    val participants get() = listOf(dealer, *players.toTypedArray())
 
-    fun toMatchPlayers(): MatchParticipants {
-        val matchPlayers =
-            playingPlayers.map { playingPlayer ->
-                val matchResult = playingPlayer.match(playingDealer)
-                MatchPlayer(playingPlayer.name, matchResult)
+    fun dealInitialCard(deck: Deck) {
+        participants.map { playingParticipant ->
+            playingParticipant.acceptCard(deck.draw())
+        }
+    }
+
+    fun toProfitParticipants(bettingPlayers: BettingPlayers) =
+        ProfitParticipants(profitDealer(bettingPlayers), profitPlayers(bettingPlayers))
+
+    private fun profitPlayers(bettingPlayers: BettingPlayers): List<ProfitParticipant> =
+        players.map { player ->
+            val bettingPlayer = bettingPlayers.findPlayer(player.name)
+            val profit = bettingPlayer.calculate(player.match(dealer.handsState))
+            ProfitParticipant(player.name, profit)
+        }
+
+    private fun profitDealer(bettingPlayers: BettingPlayers): ProfitParticipant {
+        val dealerProfit =
+            players.sumOf { player ->
+                val bettingPlayer = bettingPlayers.findPlayer(player.name)
+                bettingPlayer.calculate(player.match(dealer.handsState).reverse()).value
             }
-        val matchDealer = MatchDealer(playingDealer.name)
-        return MatchParticipants(matchDealer, matchPlayers)
+        return ProfitParticipant(dealer.name, Profit(dealerProfit))
     }
 }

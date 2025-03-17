@@ -1,6 +1,6 @@
 package blackjack.view
 
-import blackjack.domain.model.HandState
+import blackjack.domain.model.hand.HandState
 import blackjack.domain.model.playing.PlayingParticipant
 
 class InputView {

@@ -1,4 +1,7 @@
-package blackjack.domain.model
+package blackjack.domain.model.hand
+
+import blackjack.domain.model.Card
+import blackjack.domain.model.Rank
 
 class Hands(private val _cards: List<Card>) {
     constructor(vararg card: Card) : this(card.toList())

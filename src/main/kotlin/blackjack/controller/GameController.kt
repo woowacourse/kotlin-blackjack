@@ -1,10 +1,10 @@
 package blackjack.controller
 
-import InitialParticipants
 import blackjack.domain.model.Deck
 import blackjack.domain.model.Money
 import blackjack.domain.model.betting.BettingPlayer
 import blackjack.domain.model.betting.BettingPlayers
+import blackjack.domain.model.playing.PlayingParticipants
 import blackjack.domain.model.profit.ProfitParticipants
 import blackjack.domain.model.service.InitService
 import blackjack.domain.model.service.PlayingService
@@ -21,7 +21,7 @@ class GameController(
         val initService = InitService(playerNames, deck)
         val bettingPlayers = initBettingPlayers(playerNames)
         val initialParticipants = initParticipants(initService)
-        val playingService = PlayingService(initialParticipants.toPlayingParticipants(), deck)
+        val playingService = PlayingService(initialParticipants, deck)
         playHand(playingService)
         announceResult(playingService.calculateProfitPlayers(bettingPlayers))
     }
@@ -35,8 +35,9 @@ class GameController(
         return BettingPlayers(bettingPlayers)
     }
 
-    private fun initParticipants(initService: InitService): InitialParticipants {
+    private fun initParticipants(initService: InitService): PlayingParticipants {
         val initialParticipants = initService.initPlayingParticipants()
+        initService.dealInitialCard(initialParticipants)
         outputView.printInitialDeals(initialParticipants)
         outputView.printParticipantsStatus(initialParticipants)
         return initialParticipants
@@ -56,8 +57,8 @@ class GameController(
 
     private fun announceResult(profitParticipants: ProfitParticipants) {
         outputView.printResultsHeader()
-        outputView.printDealerProfit(profitParticipants.profitDealer)
-        outputView.printPlayersProfit(profitParticipants.profitPlayer)
+        outputView.printDealerProfit(profitParticipants.dealer)
+        outputView.printPlayersProfit(profitParticipants.players)
     }
 
     private fun <T> retryEvent(event: () -> T): T {

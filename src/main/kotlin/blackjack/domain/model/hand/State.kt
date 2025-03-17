@@ -1,0 +1,15 @@
+package blackjack.domain.model.hand
+
+import blackjack.domain.model.Card
+
+interface State {
+    fun cards(): List<Card>
+
+    fun nextState(card: Card): State
+
+    fun stay(): Finished
+
+    fun isFinished(): Boolean
+
+    fun score(): Int
+}
