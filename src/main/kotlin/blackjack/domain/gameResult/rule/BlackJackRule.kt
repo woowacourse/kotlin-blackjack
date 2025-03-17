@@ -13,9 +13,9 @@ fun <T : Participant> BlackJackRule(participant: T): BlackJackRule<T> {
 }
 
 sealed class BlackJackRule<T : Participant> {
-    val participant: T
+    abstract val participant: T
 
-    fun getEarnRate(gameResult: GameResult): Double
+    abstract fun getEarnRate(gameResult: GameResult): Double
 
-    fun compare(blackJackRule: BlackJackRule<out Participant>): GameResult
+    abstract fun compare(blackJackRule: BlackJackRule<out Participant>): GameResult
 }
