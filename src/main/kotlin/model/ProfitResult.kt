@@ -1,6 +1,6 @@
 package model
 
 data class ProfitResult(
-    val playerProfits: GameResults,
+    val playerProfits: PlayersResult,
     val dealerProfit: Money,
 )

@@ -8,16 +8,16 @@ class ProfitCalculator {
     fun calculatePlayerProfits(
         playerResults: List<PlayerResult>,
         bettingManager: BettingManager
-    ): GameResults {
+    ): PlayersResult {
         val results = playerResults.associate { playerResult ->
             val baseBet = bettingManager.getBetAmount(playerResult.player)
             val profit = baseBet.multiply(getProfitRate(playerResult))
             playerResult.player to profit
         }
-        return GameResults(results)
+        return PlayersResult(results)
     }
 
-    fun dealerProfit(playerProfits: GameResults): Money {
+    fun dealerProfit(playerProfits: PlayersResult): Money {
         return Money(-playerProfits.getPlayersProfit().values.sumOf { it.amount })
     }
 //    fun dealerProfit(gameResults: GameResults): Int {
