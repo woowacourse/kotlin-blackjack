@@ -1,32 +1,44 @@
 package blackjack.model.participant
 
 import blackjack.model.card.Card
+import blackjack.model.card.CardCount
+import blackjack.model.hand.Hand
+import blackjack.model.hand.HandState
+import blackjack.model.hand.Score
 
 abstract class Participant(
-    val name: String,
+    val name: Name,
+    private var _money: Money,
     private val hand: Hand,
 ) {
+    abstract val isDrawable: Boolean
+    val money: Money get() = _money
     val cards: List<Card> get() = hand.cards
+
+    val handState: HandState get() = hand.state
+
+    val score: Score get() = hand.score()
 
     abstract fun showInitialCards(): List<Card>
 
-    abstract fun isDrawable(): Boolean
+    fun receiveMoney(money: Money) {
+        _money += money
+    }
 
-    fun recieveCards(getCards: (Int) -> List<Card>) {
+    fun payMoney(money: Money) {
+        require(this.money > money) {
+            ("[ERROR] 현재 잔액보다 큰 금액을 베팅할 수 없습니다.")
+        }
+        _money -= money
+    }
+
+    fun receiveCards(drawCards: (CardCount) -> List<Card>) {
         val count = if (cards.isEmpty()) INITIAL_DRAW_COUNT else DEFAULT_DRAW_COUNT
-        addAll(getCards(count))
+        hand.addAll(drawCards(count))
     }
-
-    fun score(): Int = hand.score()
-
-    fun addAll(cards: List<Card>) {
-        hand.addAll(cards)
-    }
-
-    fun isBust(): Boolean = hand.isBust()
 
     companion object {
-        const val INITIAL_DRAW_COUNT = 2
-        const val DEFAULT_DRAW_COUNT = 1
+        val INITIAL_DRAW_COUNT = CardCount(2)
+        val DEFAULT_DRAW_COUNT = CardCount(1)
     }
 }

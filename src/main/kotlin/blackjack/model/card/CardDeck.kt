@@ -1,10 +1,10 @@
 package blackjack.model.card
 
 class CardDeck {
-    private val cards = ArrayDeque(BLACKJACK_CACHE_CARDS.shuffled())
+    private val cards: ArrayDeque<Card> = ArrayDeque(BLACKJACK_CACHE_CARDS.shuffled())
 
-    fun draw(count: Int): List<Card> =
-        List(count) {
+    fun draw(count: CardCount): List<Card> =
+        List(count.value) {
             cards.removeFirstOrNull()
                 ?: throw IllegalArgumentException("[ERROR] 더 이상 카드를 뽑을 수 없습니다.")
         }

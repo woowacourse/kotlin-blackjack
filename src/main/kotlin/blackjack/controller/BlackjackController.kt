@@ -1,15 +1,11 @@
 package blackjack.controller
 
+import blackjack.model.betting.BettingTable
 import blackjack.model.card.CardDeck
-import blackjack.model.game.GameManager
-import blackjack.model.game.ResultManager
-import blackjack.model.game.UserCommand.HIT
-import blackjack.model.game.UserCommand.STAY
-import blackjack.model.game.UserCommand.UNKNOWN
 import blackjack.model.participant.Dealer
-import blackjack.model.participant.Player
+import blackjack.model.participant.Dealer.Companion.DEFAULT_DEALER_NAME
+import blackjack.model.participant.Participants
 import blackjack.model.participant.Players
-import blackjack.model.rule.ScoreCalculator
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -18,33 +14,31 @@ class BlackjackController(
     private val outputView: OutputView,
 ) {
     fun run() {
-        val gameManager = GameManager()
         val cardDeck = CardDeck()
-        val scoreCalculator = ScoreCalculator()
-        val dealer = gameManager.prepareDealer(TEMP_DEALER_NAME, cardDeck, scoreCalculator)
-        val players = preparePlayers(gameManager, cardDeck, dealer, scoreCalculator)
-        val resultManager = ResultManager(dealer, players)
-
-        progressPlayersDraw(players, cardDeck)
-        progressDealerDraw(gameManager, dealer, cardDeck)
-
-        displayParticipantsInfo(players)
-        displayResults(gameManager, resultManager)
-    }
-
-    private fun preparePlayers(
-        gameManager: GameManager,
-        cardDeck: CardDeck,
-        dealer: Dealer,
-        scoreCalculator: ScoreCalculator,
-    ): Players {
-        val playerNames = inputView.getPlayers()
-        val players = gameManager.preparePlayers(playerNames, cardDeck, scoreCalculator)
+        val participants =
+            Participants.create(
+                dealerName = DEFAULT_DEALER_NAME,
+                distributeCards = cardDeck::draw,
+                getPlayerNames = inputView::getPlayers,
+            )
+        val (dealer, players) = participants.dealer to participants.players
+        val bettingTable = progressBetting(participants)
 
         outputView.displayFirstDrawEnd(players.value.map { player -> player.name })
         outputView.displayParticipantCards(dealer.name, dealer.showInitialCards())
 
-        return players
+        progressPlayersDraw(players, cardDeck)
+        progressDealerDraw(dealer, cardDeck)
+
+        endGame(participants, bettingTable)
+    }
+
+    private fun progressBetting(participants: Participants): BettingTable {
+        outputView.displayInitialMoney()
+
+        return participants.betMoney { name ->
+            inputView.getBettingMoney(name)
+        }
     }
 
     private fun progressPlayersDraw(
@@ -54,55 +48,35 @@ class BlackjackController(
         players.value.forEach { player ->
             outputView.displayParticipantCards(player.name, player.cards)
         }
-        players.value.forEach { player ->
-            progressPlayerDrawUntilFinished(player, cardDeck)
-        }
-    }
-
-    private fun progressPlayerDrawUntilFinished(
-        player: Player,
-        cardDeck: CardDeck,
-    ) {
-        while (true) {
-            when (inputView.getIsRecieveMore(player.name)) {
-                HIT -> {
-                    player.recieveCards(cardDeck::draw)
-                    outputView.displayParticipantCards(player.name, player.cards)
-                    if (!player.isDrawable()) return
-                }
-                STAY -> break
-                UNKNOWN -> throw IllegalArgumentException("[ERROR] 올바르지 않은 입력입니다.")
-            }
-        }
+        players.progressDraw(
+            newCards = cardDeck::draw,
+            choice = { name -> inputView.getIsReceiveMore(name) },
+            onCardReceived = { name, cards -> outputView.displayParticipantCards(name, cards) },
+        )
     }
 
     private fun progressDealerDraw(
-        gameManager: GameManager,
         dealer: Dealer,
         cardDeck: CardDeck,
     ) {
-        gameManager.progressDealerDraw(dealer, cardDeck::draw)
+        dealer.draw(cardDeck::draw)
 
-        outputView.displayDealerDrawInfo(dealer.additionalDrawCount())
-        outputView.displayParticipantInfo(dealer.name, dealer.cards, dealer.score(), dealer.isBust())
+        outputView.displayDealerDrawInfo(dealer.additionalDrawCount)
+        outputView.displayParticipantInfo(dealer.name, dealer.cards, dealer.score)
     }
 
-    private fun displayParticipantsInfo(players: Players) {
-        players.value.forEach { player ->
-            outputView.displayParticipantInfo(player.name, player.cards, player.score(), player.isBust())
-        }
-    }
-
-    private fun displayResults(
-        gameManager: GameManager,
-        resultManager: ResultManager,
+    private fun endGame(
+        participants: Participants,
+        bettingTable: BettingTable,
     ) {
-        val result = gameManager.getResult(resultManager)
+        participants.players.value.forEach { player ->
+            outputView.displayParticipantInfo(player.name, player.cards, player.score)
+        }
+        val bettingResult = participants.profitResult(bettingTable)
 
-        outputView.displayResult(result)
-    }
-
-    companion object {
-        private const val TEMP_DEALER_NAME = "딜러"
+        outputView.displayProfitTitle()
+        bettingResult.value.forEach { (name, money) ->
+            outputView.displayProfit(name, money)
+        }
     }
 }

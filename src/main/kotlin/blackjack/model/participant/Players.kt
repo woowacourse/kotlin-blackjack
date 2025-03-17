@@ -1,6 +1,8 @@
 package blackjack.model.participant
 
-import blackjack.model.rule.ScoreCalculator
+import blackjack.model.card.Card
+import blackjack.model.card.CardCount
+import blackjack.model.winning.PlayersResult
 
 class Players private constructor(
     val value: List<Player>,
@@ -14,13 +16,37 @@ class Players private constructor(
         }
     }
 
+    fun receiveMoney(
+        name: Name,
+        money: Money,
+    ) {
+        value.find { player -> player.name == name }?.receiveMoney(money) ?: return
+    }
+
+    fun progressDraw(
+        newCards: (CardCount) -> List<Card>,
+        choice: (Name) -> PlayerAction,
+        onCardReceived: (Name, List<Card>) -> Unit,
+    ) {
+        value.forEach { player ->
+            player.draw(newCards, choice, onCardReceived)
+        }
+    }
+
+    fun winningResult(dealer: Dealer): PlayersResult {
+        val result =
+            value.associate { player ->
+                player.name to player.winningState(dealer)
+            }
+        return PlayersResult(result)
+    }
+
     companion object {
         private const val MIN_PLAYER_COUNT = 1
         private const val MAX_PLAYER_COUNT = 7
 
-        fun from(
-            players: List<String>,
-            scoreCalculator: ScoreCalculator,
-        ): Players = Players(players.map { name -> Player(name, Hand(scoreCalculator)) })
+        fun from(names: List<Name>): Players = Players(names.map { name -> Player.create(name) })
+
+        fun from(vararg names: String): Players = Players(names.map { Name(it) }.map { name -> Player.create(name) })
     }
 }
