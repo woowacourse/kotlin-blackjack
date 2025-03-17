@@ -6,6 +6,8 @@ class Dealer(
     name: String = "딜러",
     hand: Hand = Hand(mutableListOf()),
 ) : Participant(name, hand) {
+    val openCard: Card
+        get() = hand.value[OPEN_CARD_INDEX]
     val profit: Money = Money(0.0)
 
     fun getResult(playerScore: Int): GameResult {
@@ -27,6 +29,7 @@ class Dealer(
     }
 
     companion object {
+        private const val OPEN_CARD_INDEX = 0
         private const val DEALER_HIT_SCORE = 16
     }
 }

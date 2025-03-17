@@ -23,7 +23,7 @@ class OutputView {
     ) {
         val playersNames: String = players.joinToString(", ") { it.name }
         println("\n${dealer.name}와 ${playersNames}에게 2장의 카드를 나누었습니다.")
-        println("${dealer.name}: ${dealer.hand.value[0].toBlackjackView()}")
+        println("${dealer.name}: ${dealer.openCard.toBlackjackView()}")
         players.forEach { player ->
             printPlayerCard(player)
         }
