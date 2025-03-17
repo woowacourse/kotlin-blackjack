@@ -3,6 +3,7 @@ package blackjack.controller
 import blackjack.model.BettingMoney
 import blackjack.model.Card
 import blackjack.model.CardDeck
+import blackjack.model.CardsStatus.Companion.FIRST_TURN_CARD_COUNT
 import blackjack.model.Dealer
 import blackjack.model.Participants
 import blackjack.model.Player
@@ -34,7 +35,7 @@ class BlackjackGame(
     }
 
     private fun getCards(participants: Participants) {
-        participants.pickCard(cardDeck, 2)
+        participants.pickCard(cardDeck, FIRST_TURN_CARD_COUNT)
         outputView.printParticipantCards(participants)
     }
 
