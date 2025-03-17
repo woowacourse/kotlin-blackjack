@@ -2,8 +2,6 @@ package model
 
 import kotlin.math.abs
 
-data class PlayerResult(val player: Player, val result: GameResult)
-
 enum class GameResult(val profitRate: Float) {
     WIN(1f),
     LOSE(-1f),
@@ -18,11 +16,11 @@ enum class GameResult(val profitRate: Float) {
             dealer: Dealer,
             players: Players,
         ): List<PlayerResult> {
-            val playerResults: List<PlayerResult> =
-                players.map { player ->
-                    PlayerResult(player, decideResult(dealer, player))
-                }
-            return playerResults
+            return players.map { player ->
+                val gameResult = decideResult(dealer, player)
+                val outcome = PlayerOutcome(gameResult, Money(0))
+                PlayerResult(player, outcome)
+            }
         }
 
         private fun decideResult(
