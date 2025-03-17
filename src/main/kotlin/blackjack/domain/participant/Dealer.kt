@@ -1,11 +1,8 @@
 package blackjack.domain.participant
 
-import blackjack.domain.DealerResult
 import blackjack.domain.card.Card
 
 class Dealer : Participant() {
-    val dealerResult: DealerResult = DealerResult()
-
     override val hitThreshold: Int
         get() = DEALER_HIT_THRESHOLD
 
