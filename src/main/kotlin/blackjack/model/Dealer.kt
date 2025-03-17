@@ -3,7 +3,7 @@ package blackjack.model
 import blackjack.model.CardsStatus.Companion.BUST_SCORE
 
 class Dealer(
-    name: String = "딜러",
+    name: String = DEFAULT_DEALER_NAME,
     hand: Hand = Hand(emptyList()),
 ) : Participant(name, hand) {
     val openCard: Card
@@ -32,6 +32,7 @@ class Dealer(
     }
 
     companion object {
+        const val DEFAULT_DEALER_NAME = "딜러"
         private const val OPEN_CARD_INDEX = 0
         private const val INITIAL_MONEY_VALUE = 0
         private const val DEALER_HIT_SCORE = 16
