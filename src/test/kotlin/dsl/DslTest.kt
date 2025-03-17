@@ -3,11 +3,14 @@ package dsl
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-private fun introduce(block: PersonBuilder.() -> Unit): Person {
-    return PersonBuilder().apply(block).build()
-}
+private fun introduce(block: PersonBuilder.() -> Unit): Person = PersonBuilder().apply(block).build()
 
-data class Person(val name: String, val affiliation: String?, val skills: Skills?, val languages: List<Languages>?)
+data class Person(
+    val name: String,
+    val affiliation: String?,
+    val skills: Skills?,
+    val languages: List<Languages>?,
+)
 
 class PersonBuilder {
     private lateinit var name: String
@@ -33,12 +36,13 @@ class PersonBuilder {
         return languages
     }
 
-    fun build(): Person {
-        return Person(name, affiliation, skills, languages)
-    }
+    fun build(): Person = Person(name, affiliation, skills, languages)
 }
 
-data class Skills(val sort: List<String>, val hard: List<String>)
+data class Skills(
+    val sort: List<String>,
+    val hard: List<String>,
+)
 
 class SkillsBuilder {
     private val soft: MutableList<String> = mutableListOf()
@@ -52,12 +56,13 @@ class SkillsBuilder {
         hard.add(value)
     }
 
-    fun build(): Skills? {
-        return Skills(soft, hard)
-    }
+    fun build(): Skills? = Skills(soft, hard)
 }
 
-data class Languages(val name: String, val ability: Int)
+data class Languages(
+    val name: String,
+    val ability: Int,
+)
 
 class LanguagesBuilder {
     private val languagesInfo: MutableList<Languages> = mutableListOf()
@@ -72,9 +77,7 @@ class LanguagesBuilder {
         return languages
     }
 
-    fun build(): List<Languages>? {
-        return languagesInfo
-    }
+    fun build(): List<Languages>? = languagesInfo
 }
 
 class DslTest {

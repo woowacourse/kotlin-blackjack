@@ -1,6 +1,12 @@
 package blackjack.model
 
+import blackjack.model.Money.Companion.plus
 import blackjack.model.card.Deck
+import blackjack.model.dto.ParticipantProfitInfo
+import blackjack.model.state.CardDrawDecision
+import blackjack.model.user.Dealer
+import blackjack.model.user.Participant
+import blackjack.model.user.Player
 
 class GameManager(
     private val dealer: Dealer,
@@ -8,14 +14,14 @@ class GameManager(
 ) {
     private val deck = Deck.create()
 
-    fun distributeInitialCardWithCount(count: Int) {
-        distributeCardWithCount(dealer, count)
+    fun drawInitialCardWithCount(count: Int) {
+        drawCardWithCount(dealer, count)
         players.forEach { player ->
-            distributeCardWithCount(player, count)
+            drawCardWithCount(player, count)
         }
     }
 
-    private fun distributeCardWithCount(
+    private fun drawCardWithCount(
         participant: Participant,
         count: Int,
     ) {
@@ -24,35 +30,53 @@ class GameManager(
         }
     }
 
-    fun distributeCardWithChoice(
+    fun processDrawOrStayBasedOnPlayer(
+        player: Player,
+        playerDrawDecision: (Player) -> CardDrawDecision,
+        showPlayerHands: (Player) -> Unit,
+    ) {
+        while (true) {
+            val decision: CardDrawDecision = playerDrawDecision(player)
+            if (drawCardWithChoice(decision, player)) {
+                showPlayerHands(player)
+                if (player.isBust()) break
+                continue
+            }
+            showPlayerHands(player)
+            break
+        }
+    }
+
+    private fun drawCardWithChoice(
         drawDecision: CardDrawDecision,
         player: Player,
     ): Boolean {
         if (drawDecision.isDraw()) {
-            distributeCard(player)
+            drawCard(player)
             return true
         }
         return false
     }
 
-    fun distributeCard(participant: Participant) {
+    fun isDrawCardBasedOnDealer(): Boolean {
+        if (dealer.isAvailDrawCard()) {
+            drawCard(dealer)
+            return true
+        }
+        return false
+    }
+
+    private fun drawCard(participant: Participant) {
         participant.addCard(deck.draw())
     }
 
-    fun calculatePlayersSummary(): Map<Player, ResultType> {
-        val playersSummary =
-            players.associateBy(
-                { player -> player },
-                { player -> ResultType.judgeScore(reference = player, target = dealer) },
-            )
-        return playersSummary
-    }
-
-    fun calculateDealerSummary(): Map<ResultType, Int> {
-        return players.groupBy { player ->
-            ResultType.judgeScore(reference = dealer, target = player)
-        }.mapValues { typeGroup ->
-            typeGroup.value.size
+    fun getPlayersProfit(): List<ParticipantProfitInfo> =
+        players.map { player ->
+            ParticipantProfitInfo(player.name, ProfitCalculator.calculateProfit(dealer, player))
         }
+
+    fun getDealerProfit(playersProfitInfo: List<ParticipantProfitInfo>): ParticipantProfitInfo {
+        val playersSum = playersProfitInfo.fold(Money.from(0L)) { sum, player -> sum + player.profit }
+        return ParticipantProfitInfo(dealer.name, Money.toDealerMoney(playersSum))
     }
 }

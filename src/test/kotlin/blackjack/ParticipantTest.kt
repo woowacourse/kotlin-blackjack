@@ -1,9 +1,9 @@
 package blackjack
 
-import blackjack.model.Participant
+import blackjack.CardFixture.Companion.CLOVER_NINE
+import blackjack.model.Hand
 import blackjack.model.card.Card
-import blackjack.model.card.Number
-import blackjack.model.card.Shape
+import blackjack.model.user.Participant
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -13,17 +13,17 @@ class ParticipantTest {
 
     @BeforeEach
     fun setUp() {
-        participant =
-            object : Participant("참가자이름") {
-                override fun isBust(): Boolean {
-                    return true
-                }
-            }
+        participant = Participant("참가자이름")
     }
 
     @Test
     fun `참여자는 카드 한 장을 받을 수 있다`() {
-        participant.addCard(Card(Shape.SPADE, Number.NINE))
-        assertThat(participant.cards.size).isEqualTo(1)
+        participant.addCard(CLOVER_NINE)
+        assertThat(participant.hand.cards.size).isEqualTo(1)
     }
+}
+
+fun Hand.make(vararg cards: Card): Hand {
+    cards.forEach { card -> this.addCard(card) }
+    return this
 }
