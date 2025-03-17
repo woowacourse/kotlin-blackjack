@@ -38,14 +38,16 @@ class PlayersTest {
 
         val players = Players(listOf(player1, player2))
 
-        val expected = listOf(
-            cards1.displayNames(),
-            cards2.displayNames()
-        )
+        val expected =
+            listOf(
+                cards1.displayNames(),
+                cards2.displayNames(),
+            )
 
-        val playersCardNames = players.map { player ->
-            player.getHand().handCards.displayNames()
-        }
+        val playersCardNames =
+            players.map { player ->
+                player.getHand().handCards.displayNames()
+            }
 
         assertThat(playersCardNames).isEqualTo(expected)
     }

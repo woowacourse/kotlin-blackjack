@@ -10,7 +10,6 @@ class ProfitCalculator {
         bettingManager: BettingManager,
         players: Players,
     ): Map<Player, Money> {
-
         return players.associateWith { player ->
             val baseBet = bettingManager.getProfit(player)
             val multiplier = getProfitRate(playerResults.first { it.player == player })
