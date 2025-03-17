@@ -20,9 +20,7 @@ class BlackjackGame(
 
         if (!dealer.isBlackjack()) {
             players.forEach { drawCards(it, wantsToDraw, printPlayerHands) }
-            println()
             dealerDrawCards(printDealerHandStatus)
-            println()
         }
     }
 
