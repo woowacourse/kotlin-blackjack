@@ -3,7 +3,7 @@ package blackjack.model
 class Money(
     var value: Double,
 ) {
-    fun addMoney(money: Money) {
+    operator fun plus(money: Money) {
         value = value + money.value
     }
 

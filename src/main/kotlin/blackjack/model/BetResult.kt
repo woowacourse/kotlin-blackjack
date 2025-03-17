@@ -18,7 +18,7 @@ class BetResult(
     ): Map<Participant, Money> {
         var dealerResult = Money(0.0)
         playerResults.forEach { (_, money) ->
-            dealerResult.addMoney(money)
+            dealerResult + money
         }
         dealerResult = dealerResult.multiplyMoney(-1.0)
         return mapOf(Pair(dealer, dealerResult))

@@ -13,7 +13,7 @@ interface Participant {
 
     fun isBusted(): Boolean = items.hand.isBust()
 
-    fun addPrize(prize: Money) = items.money.addMoney(prize)
+    fun addPrize(prize: Money) = items.money + prize
 
     fun changeHand(hand: Hand) {
         items.setNewHand(hand)
