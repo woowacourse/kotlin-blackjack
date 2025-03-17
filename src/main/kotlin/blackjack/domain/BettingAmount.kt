@@ -8,7 +8,7 @@ value class BettingAmount(
         require(value >= MIN_BETTING_AMOUNT) { ERROR_INVALID_RANGE }
     }
 
-    fun profit(result: GameResult): Profit = Profit(value * result.rate)
+    operator fun times(rate: Double): Double = value * rate
 
     companion object {
         private const val MIN_BETTING_AMOUNT = 0
