@@ -1,6 +1,6 @@
 package blackjack.controller
 
-import blackjack.model.betting.BettingMachine
+import blackjack.model.betting.BettingTable
 import blackjack.model.card.CardDeck
 import blackjack.model.participant.Dealer
 import blackjack.model.participant.Dealer.Companion.DEFAULT_DEALER_NAME
@@ -22,8 +22,7 @@ class BlackjackController(
                 getPlayerNames = inputView::getPlayers,
             )
         val (dealer, players) = participants.dealer to participants.players
-
-        val bettingMachine = progressBetting(players)
+        val bettingTable = progressBetting(participants)
 
         outputView.displayFirstDrawEnd(players.value.map { player -> player.name })
         outputView.displayParticipantCards(dealer.name, dealer.showInitialCards())
@@ -31,18 +30,15 @@ class BlackjackController(
         progressPlayersDraw(players, cardDeck)
         progressDealerDraw(dealer, cardDeck)
 
-        endGame(participants, bettingMachine)
+        endGame(participants, bettingTable)
     }
 
-    private fun progressBetting(players: Players): BettingMachine {
-        val bettingMachine = BettingMachine()
-
+    private fun progressBetting(participants: Participants): BettingTable {
         outputView.displayInitialMoney()
-        bettingMachine.betMoney(players) { name ->
+
+        return participants.betMoney { name ->
             inputView.getBettingMoney(name)
         }
-
-        return bettingMachine
     }
 
     private fun progressPlayersDraw(
@@ -71,13 +67,12 @@ class BlackjackController(
 
     private fun endGame(
         participants: Participants,
-        bettingMachine: BettingMachine,
+        bettingTable: BettingTable,
     ) {
         participants.players.value.forEach { player ->
             outputView.displayParticipantInfo(player.name, player.cards, player.score)
         }
-        val gameResult = participants.playersResult
-        val bettingResult = bettingMachine.result(gameResult, participants)
+        val bettingResult = participants.profitResult(bettingTable)
 
         outputView.displayProfitTitle()
         bettingResult.value.forEach { (name, money) ->

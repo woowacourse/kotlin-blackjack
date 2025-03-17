@@ -4,17 +4,19 @@ import blackjack.domain.ACE_HEART
 import blackjack.domain.SEVEN_HEART
 import blackjack.domain.SIX_HEART
 import blackjack.domain.TEN_HEART
+import blackjack.model.betting.BettingTable
 import blackjack.model.card.CardCount
+import blackjack.model.hand.Hand
 import blackjack.model.participant.Dealer
+import blackjack.model.participant.Money
 import blackjack.model.participant.Name
 import blackjack.model.participant.Participants
 import blackjack.model.participant.Players
-import blackjack.model.winning.WinningState
-import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 
 class ParticipantsTest {
@@ -58,62 +60,61 @@ class ParticipantsTest {
     }
 
     @Test
-    fun `딜러의 점수보다 플레이어의 점수가 같으면 무승부를 반환한다`() {
+    fun `베팅 금액이 0 이하이면 예외를 발생시킨다`() {
         // given
-        participants.dealer.receiveCards { listOf(ACE_HEART, SEVEN_HEART) }
-        participants.players.value
-            .first()
-            .receiveCards { listOf(ACE_HEART, SEVEN_HEART) }
+        val players = Players.from("시아", "공백")
+        val getBettingMoney: (Name) -> Money = { Money.ZERO }
 
-        // when
-        val playerResult = participants.playersResult
-
-        // then
-        assertThat(playerResult.value.values.first()).isEqualTo(WinningState.PUSH)
+        // when & then
+        assertThrows<IllegalArgumentException> {
+            participants.betMoney(getBettingMoney)
+        }
     }
 
     @Test
-    fun `딜러의 점수보다 플레이어의 점수가 높으면 우승을 반환한다`() {
+    fun `0원을 초과하고 플레이어가 가진 잔액보다 적은 돈을 베팅한다`() {
         // given
-        participants.dealer.receiveCards { listOf(ACE_HEART, SIX_HEART) }
-        participants.players.value
-            .first()
-            .receiveCards { listOf(ACE_HEART, SEVEN_HEART) }
+        val players = Players.from("시아", "공백")
+        val getBettingMoney: (Name) -> Money = { Money(1000.0) }
 
-        // when
-        val playerResult = participants.playersResult
-
-        // then
-        assertThat(playerResult.value.values.first()).isEqualTo(WinningState.WIN_DEFAULT)
+        // when & then
+        assertDoesNotThrow {
+            participants.betMoney(getBettingMoney)
+        }
     }
 
     @Test
-    fun `딜러의 점수보다 플레이어의 점수가 낮으면 패배를 반환한다`() {
+    fun `승패 결과에 따라 올바르게 베팅 결과가 계산된다`() {
         // given
-        participants.dealer.receiveCards { listOf(ACE_HEART, SEVEN_HEART) }
-        participants.players.value
-            .first()
-            .receiveCards { listOf(ACE_HEART, SIX_HEART) }
+        val dealer = Dealer.create(hand = Hand(listOf(TEN_HEART, SIX_HEART)))
+        val players = Players.from("공백", "비비", "메다", "제이")
+
+        players.value[0].receiveCards { listOf(TEN_HEART, ACE_HEART) }
+        players.value[1].receiveCards { listOf(TEN_HEART, SEVEN_HEART) }
+        players.value[2].receiveCards { listOf(TEN_HEART, SIX_HEART) }
+        players.value[3].receiveCards { listOf(TEN_HEART) }
+
+        val participants = Participants(dealer, players)
+        val bettingTable = BettingTable()
+
+        val money1 = Money(1000.0)
+        val money2 = Money(2000.0)
+        val money3 = Money(3000.0)
+        val money4 = Money(4000.0)
+
+        bettingTable.add(Name("공백"), money1)
+        bettingTable.add(Name("비비"), money2)
+        bettingTable.add(Name("메다"), money3)
+        bettingTable.add(Name("제이"), money4)
 
         // when
-        val playerResult = participants.playersResult
+        val resultTable = participants.profitResult(bettingTable)
+        println(resultTable.value.values)
 
         // then
-        assertThat(playerResult.value.values.first()).isEqualTo(WinningState.LOSE)
-    }
-
-    @Test
-    fun `딜러와 플레이어가 모두 버스트된 경우 플레이어는 패배한다`() {
-        // given
-        participants.dealer.receiveCards { listOf(TEN_HEART, TEN_HEART, TEN_HEART) }
-        participants.players.value
-            .first()
-            .receiveCards { listOf(TEN_HEART, TEN_HEART, TEN_HEART) }
-
-        // when
-        val playerResult = participants.playersResult
-
-        // then
-        assertThat(playerResult.value.values.first()).isEqualTo(WinningState.LOSE)
+        assertEquals(money1 * (1.5), resultTable.value[Name("공백")])
+        assertEquals(money2 * (1.0), resultTable.value[Name("비비")])
+        assertEquals(money3 * (0.0), resultTable.value[Name("메다")])
+        assertEquals(money4 * (-1.0), resultTable.value[Name("제이")])
     }
 }

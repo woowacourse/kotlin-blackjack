@@ -26,6 +26,9 @@ abstract class Participant(
     }
 
     fun payMoney(money: Money) {
+        require(this.money > money) {
+            ("[ERROR] 현재 잔액보다 큰 금액을 베팅할 수 없습니다.")
+        }
         _money -= money
     }
 
