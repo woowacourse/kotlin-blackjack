@@ -1,50 +1,54 @@
 package blackjack.view
 
-import blackjack.domain.BlackJackGame
-import blackjack.domain.gameResult.GameResults
 import blackjack.domain.gameResult.PlayerResult
+import blackjack.domain.participant.BlackJackPair
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Participant
 import blackjack.domain.participant.Player
+import blackjack.domain.score.Score
 import blackjack.view.blackjackView.format
-import blackjack.view.blackjackView.toDisplayName
 
 object OutputView {
-    fun printFinalCards(game: BlackJackGame) {
-        println(printDealerCard(game.dealer) + printTotalSum(game.dealer))
+    fun printFinalCards(pair: BlackJackPair) {
+        println(printDealerCard(pair.dealer) + printTotalSum(pair.dealer))
 
-        game.players.forEach { player ->
+        pair.players.forEach { player ->
             println(printPlayerCard(player) + printTotalSum(player))
         }
     }
 
-    fun printGameResult(gameResults: GameResults) {
+    fun printGameResult(playerResults: List<PlayerResult>) {
         println(FINAL_RESULT_NOTICE)
-        val dealerLose = gameResults.countDealerLose()
-        val dealerWin = gameResults.countDealerWin()
-        val draw = gameResults.countDealerDraw()
 
-        println(printDealerResult(dealerWin, dealerLose, draw))
+        val dealerProfit = playerResults.sumOf { it.getProfit() } * -1
+        println(printDealerResult(dealerProfit))
 
-        gameResults.playerResults.forEach {
+        playerResults.forEach {
             println(printPlayerResult(it))
         }
     }
 
-    private const val FINAL_RESULT_NOTICE = "\n##최종 승패"
+    fun printOnGlobalExceptionOccur(msg: String?) {
+        println(ON_GLOBAL_EXCEPTION_OCCUR)
+        println(msg)
+    }
 
-    private fun printDealerCard(dealer: Dealer): String = "딜러: ${dealer.cards.toList().first().format()}"
+    fun printOnException(throwable: Throwable) {
+        println(throwable.message)
+    }
 
-    private fun printPlayerCard(player: Player): String = "${player.name}카드: ${player.cards.format()}"
+    private const val FINAL_RESULT_NOTICE = "\n##최종 수익"
 
-    private fun printTotalSum(participant: Participant): String = " - 결과: ${participant.totalSum}\""
+    private const val ON_GLOBAL_EXCEPTION_OCCUR = "오류입니다 게임을 다시 시도해 주세요"
 
-    private fun printDealerResult(
-        dealerWin: Int,
-        dealerLose: Int,
-        draw: Int,
-    ): String = "딜러: ${dealerWin}승 ${dealerLose}패 ${draw}무"
+    private fun printDealerCard(dealer: Dealer): String = "딜러: ${dealer.getCards().format()}"
+
+    private fun printPlayerCard(player: Player): String = "${player.name}카드: ${player.getCards().format()}"
+
+    private fun printTotalSum(participant: Participant): String = " - 결과: ${Score(participant).value}\""
+
+    private fun printDealerResult(dealerProfit: Int): String = "딜러: $dealerProfit"
 
     private fun printPlayerResult(playerResult: PlayerResult): String =
-        "${playerResult.player.name}: ${playerResult.status.toDisplayName()}"
+        "${playerResult.blackJackRule.participant.name}: ${playerResult.getProfit()}"
 }

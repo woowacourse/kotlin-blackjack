@@ -1,14 +1,13 @@
 package blackjack.view.blackjackView
 
 import blackjack.domain.card.Card
-import blackjack.domain.card.Cards
 import blackjack.domain.card.Rank
 import blackjack.domain.card.Suit
 import java.lang.StringBuilder
 
-internal fun Cards.format(): String {
+internal fun List<Card>.format(): String {
     val cardStr = StringBuilder()
-    this.toList().forEach { card ->
+    this.forEach { card ->
         cardStr.append(card.format())
         cardStr.append(", ")
     }

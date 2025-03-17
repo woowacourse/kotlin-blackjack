@@ -17,7 +17,7 @@ class PlayerTest {
 
     @BeforeEach
     fun clear() {
-        player = Player("test")
+        player = Player("test", 50)
     }
 
     @Test
