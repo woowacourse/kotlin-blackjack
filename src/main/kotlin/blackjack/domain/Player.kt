@@ -9,23 +9,29 @@ class Player(name: String) : Participant(name) {
         private set
 
     fun bet(bettingAmount: Int) {
-        require(bettingAmount > 0) { "배팅금은 0보다 커야 합니다" }
+        require(bettingAmount >= MINIMUM_BETTING_AMOUNT) { "배팅금은 0보다 커야 합니다" }
         this.bettingAmount = bettingAmount
     }
 
     fun profit(dealer: Dealer): Double {
         return when (state) {
-            is Blackjack -> 1.5 * bettingAmount
-            is Bust -> -1.0 * bettingAmount
-            is Stay ->
+            is Blackjack -> BLACKJACK_MULTIPLIER * bettingAmount
+            is Bust -> LOSE_MULTIPLIER * bettingAmount
+            else ->
                 when ((state as Stay).decideResult(dealer)) {
-                    Result.WIN -> 1.0 * bettingAmount
-                    Result.LOSE -> -1.0 * bettingAmount
-                    Result.PUSH -> 0.0
+                    Result.WIN -> WIN_MULTIPLIER * bettingAmount
+                    Result.LOSE -> LOSE_MULTIPLIER * bettingAmount
+                    Result.PUSH -> PUSH_MULTIPLIER
                 }
-            else -> {
-                0.01
-            }
         }
+    }
+
+    companion object {
+        const val MINIMUM_BETTING_AMOUNT = 1
+        const val BLACKJACK_MULTIPLIER = 1.5
+        const val WIN_MULTIPLIER = 1.0
+        const val LOSE_MULTIPLIER = -1.0
+        const val PUSH_MULTIPLIER = 0.0
+
     }
 }
