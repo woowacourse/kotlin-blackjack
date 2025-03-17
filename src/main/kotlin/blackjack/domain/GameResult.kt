@@ -13,7 +13,7 @@ class GameResult(private val dealer: Dealer, players: List<Player>) {
                 PlayerResultStatus.PLAYER_WIN -> dealer.dealerResult.addLose()
                 PlayerResultStatus.PLAYER_LOSE -> {
                     dealer.dealerResult.addWin()
-                    dealer.dealerResult.updateRevenueWhenPlayerLose(player.getBetAmount())
+                    dealer.dealerResult.updateRevenueWhenPlayerLose(-player.getBetAmount())
                 }
                 PlayerResultStatus.DRAW -> dealer.dealerResult.addDraw()
             }
