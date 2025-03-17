@@ -11,7 +11,7 @@ class BettingManager {
         bets[player] = Money(amount)
     }
 
-    fun getProfit(player: Player): Money {
+    fun getBetAmount(player: Player): Money {
         return bets[player] ?: Money(0)
     }
 
