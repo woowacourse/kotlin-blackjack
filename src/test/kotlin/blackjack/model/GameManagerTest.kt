@@ -37,7 +37,6 @@ class GameManagerTest {
         assertThat(dealer.cards.size).isEqualTo(1)
     }
 
-
     @Test
     fun `플레이어가 블랙잭으로 승리하면 수익은 배팅 금액의 150%이다`() {
         val resultType = ResultType.BLACKJACK
@@ -80,10 +79,11 @@ class GameManagerTest {
 
     @Test
     fun `딜러의 수익은 플레이어 수익 총 합의 -1을 곱한 값이다`() {
-        val totalPlayerProfit = listOf(
-            Profit(player, WinningMoney(100.0)),
-            Profit(player, WinningMoney(200.0))
-        )
+        val totalPlayerProfit =
+            listOf(
+                Profit(player, WinningMoney(100.0)),
+                Profit(player, WinningMoney(200.0)),
+            )
         val expect = -300.0
 
         val actual = gameManager.calculateDealerProfit(totalPlayerProfit).winningMoney.amount

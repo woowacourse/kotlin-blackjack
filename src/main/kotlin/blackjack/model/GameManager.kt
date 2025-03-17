@@ -1,8 +1,8 @@
 package blackjack.model
 
-import blackjack.model.ResultCalculator.BLACKJACK_PROFIT_MULTIPLIER
-import blackjack.model.ResultCalculator.LOSS_PROFIT_MULTIPLIER
-import blackjack.model.ResultCalculator.TIE_PROFIT_MULTIPLIER
+import blackjack.model.ResultType.Companion.BLACKJACK_PROFIT_MULTIPLIER
+import blackjack.model.ResultType.Companion.LOSS_PROFIT_MULTIPLIER
+import blackjack.model.ResultType.Companion.TIE_PROFIT_MULTIPLIER
 import blackjack.model.amount.BetAmount
 import blackjack.model.amount.WinningMoney
 import blackjack.model.participant.Dealer

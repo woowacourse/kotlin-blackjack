@@ -11,9 +11,6 @@ import blackjack.model.participant.Player
 
 object ResultCalculator {
     const val BLACKJACK_NUMBER = 21
-    const val BLACKJACK_PROFIT_MULTIPLIER = 1.5
-    const val LOSS_PROFIT_MULTIPLIER = -1.0
-    const val TIE_PROFIT_MULTIPLIER = 0.0
     private const val ADJUST_ACE_NUMBER = 10
 
     fun calculate(cards: List<Card>): Int {
