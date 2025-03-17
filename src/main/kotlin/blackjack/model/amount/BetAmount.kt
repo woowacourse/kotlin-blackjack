@@ -1,9 +1,9 @@
 package blackjack.model.amount
 
 @JvmInline
-value class BetAmount(val amount: Double) {
+value class BetAmount(val value: Double) {
     init {
-        require(amount > 0) { ERROR_BET_AMOUNT_VALUE }
+        require(value > 0) { ERROR_BET_AMOUNT_VALUE }
     }
 
     companion object {

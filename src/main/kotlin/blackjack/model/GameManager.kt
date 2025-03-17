@@ -53,10 +53,10 @@ class GameManager(
         resultType: ResultType,
         player: Player,
     ) = when (resultType) {
-        ResultType.BLACKJACK -> WinningMoney(player.betAmount.amount * BLACKJACK_PROFIT_MULTIPLIER)
-        ResultType.WIN -> WinningMoney(player.betAmount.amount)
-        ResultType.TIE -> WinningMoney(player.betAmount.amount * TIE_PROFIT_MULTIPLIER)
-        ResultType.LOSS -> WinningMoney(player.betAmount.amount * LOSS_PROFIT_MULTIPLIER)
+        ResultType.BLACKJACK -> WinningMoney(player.betAmount.value * BLACKJACK_PROFIT_MULTIPLIER)
+        ResultType.WIN -> WinningMoney(player.betAmount.value)
+        ResultType.TIE -> WinningMoney(player.betAmount.value * TIE_PROFIT_MULTIPLIER)
+        ResultType.LOSS -> WinningMoney(player.betAmount.value * LOSS_PROFIT_MULTIPLIER)
     }
 
     fun calculateDealerProfit(profitResults: List<Profit>): Profit {
