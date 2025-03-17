@@ -25,8 +25,8 @@ class BlackjackGameTest {
         // when
         game.startGame(
             wantsToDraw = { if (drawCount < 2) DrawChoice.YES else DrawChoice.NO },
-            printPlayerHands = { drawCount++ },
-            printDealerHandStatus = { _ -> },
+            onEndPlayerTurn = { drawCount++ },
+            onEndDealerTurn = { _ -> },
             printAllHands = { _, _ -> },
         )
 
