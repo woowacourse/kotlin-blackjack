@@ -1,19 +1,21 @@
 package blackjack.model.card
 
+import blackjack.model.Score
+
 enum class CardNumber(
-    val score: Int,
+    val score: Score,
 ) {
-    ACE(11),
-    TWO(2),
-    THREE(3),
-    FOUR(4),
-    FIVE(5),
-    SIX(6),
-    SEVEN(7),
-    EIGHT(8),
-    NINE(9),
-    TEN(10),
-    JACK(10),
-    QUEEN(10),
-    KING(10),
+    ACE(Score.from(11)),
+    TWO(Score.from(2)),
+    THREE(Score.from(3)),
+    FOUR(Score.from(4)),
+    FIVE(Score.from(5)),
+    SIX(Score.from(6)),
+    SEVEN(Score.from(7)),
+    EIGHT(Score.from(8)),
+    NINE(Score.from(9)),
+    TEN(Score.from(10)),
+    JACK(Score.from(10)),
+    QUEEN(Score.from(10)),
+    KING(Score.from(10)),
 }

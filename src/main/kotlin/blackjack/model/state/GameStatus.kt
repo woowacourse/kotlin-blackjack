@@ -1,6 +1,6 @@
 package blackjack.model.state
 
-import blackjack.model.ScoreCalculator.BUST_NUMBER
+import blackjack.model.Score
 import blackjack.model.card.Deck.Companion.INITIAL_HAND_OUT_CARD_COUNT
 
 enum class GameStatus {
@@ -11,11 +11,11 @@ enum class GameStatus {
 
     companion object {
         fun of(
-            score: Int,
+            score: Score,
             cardCount: Int,
         ): GameStatus {
-            if (score == BUST_NUMBER && cardCount == INITIAL_HAND_OUT_CARD_COUNT) return BLACKJACK
-            if (score > BUST_NUMBER) return BUST
+            if (score.isBlackjackNumber() && cardCount == INITIAL_HAND_OUT_CARD_COUNT) return BLACKJACK
+            if (score.isBust()) return BUST
             return STAY
         }
     }

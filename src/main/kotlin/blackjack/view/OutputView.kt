@@ -1,6 +1,5 @@
 package blackjack.view
 
-import blackjack.model.ScoreCalculator
 import blackjack.model.card.Card
 import blackjack.model.card.Deck.Companion.INITIAL_HAND_OUT_CARD_COUNT
 import blackjack.model.dto.ParticipantProfitInfo
@@ -45,7 +44,7 @@ class OutputView : BlackjackOutput {
             FINAL_HANDS_STATUS_MESSAGE_FORMAT.format(
                 dealer.name,
                 getHandsStatus(dealer.hand.cards),
-                ScoreCalculator.calculateOptimalSum(dealer.hand.cards),
+                dealer.hand.score.number,
             ),
         )
         players.forEach { player -> printFinalPlayerHandStatus(player) }
@@ -72,7 +71,7 @@ class OutputView : BlackjackOutput {
             FINAL_HANDS_STATUS_MESSAGE_FORMAT.format(
                 player.name,
                 getHandsStatus(player.hand.cards),
-                ScoreCalculator.calculateOptimalSum(player.hand.cards),
+                player.hand.score.number,
             ),
         )
     }
