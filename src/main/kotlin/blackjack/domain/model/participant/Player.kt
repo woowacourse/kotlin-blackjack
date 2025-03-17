@@ -15,8 +15,8 @@ class Player(
 
     constructor(name: String, vararg cards: Card) : this(name, cards.toList())
 
-    constructor(name: String, bet: Int, vararg cards: Card) : this(name, cards.toList()) {
-        this.bet = Bet(bet)
+    constructor(name: String, betAmount: Int, vararg cards: Card) : this(name, cards.toList()) {
+        this.bet = Bet(betAmount)
     }
 
     override fun canHit(): Boolean {

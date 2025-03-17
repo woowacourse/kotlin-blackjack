@@ -1,8 +1,10 @@
 package blackjack.domain.model
 
-class Bet(val amount: Int) {
+class Bet(amount: Int) {
+    val amount = Money(amount)
+
     init {
-        require(amount >= MIN_BET_AMOUNT) { ERROR_MESSAGE_BET_NOT_POSITIVE }
+        require(this.amount >= Money(MIN_BET_AMOUNT)) { ERROR_MESSAGE_BET_NOT_POSITIVE }
     }
 
     companion object {
