@@ -44,12 +44,12 @@ class Player private constructor(
 
     fun winningState(dealer: Dealer): WinningState =
         when {
+            handState == BUST -> LOSE
+            dealer.handState == BUST -> WIN_DEFAULT
+
             handState == BLACKJACK && dealer.handState != BLACKJACK -> WIN_BY_BLACKJACK
             handState == BLACKJACK && dealer.handState == BLACKJACK -> PUSH
             dealer.handState == BLACKJACK -> LOSE
-
-            handState == BUST -> LOSE
-            dealer.handState == BUST -> WIN_DEFAULT
 
             score > dealer.score -> WIN_DEFAULT
             score < dealer.score -> LOSE
