@@ -23,7 +23,7 @@ class ParticipantTest {
     }
 
     @Test
-    fun `"공백"이라는 이름, 10000원, 빈 패를 가진 Participant가 정상적으로 생성된다`() {
+    fun `"공백"이라는 이름, 10000원, 빈 패를 가진 Participant가 생성된다`() {
         // then
         assertEquals("공백", participant.name.value)
         assertEquals(Money(10_000.0), participant.money)

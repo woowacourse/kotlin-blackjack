@@ -42,7 +42,7 @@ class ParticipantsTest {
     }
 
     @Test
-    fun `딜러 1명과 참가자 2명을 포함한 참가자 객체를 정상적으로 생성한다`() {
+    fun `딜러 1명과 참가자 2명을 포함한 참가자 객체를 생성한다`() {
         // given
         val distributeCards = { _: CardCount -> listOf(TEN_HEART, SIX_HEART) }
         val getPlayerNames = { listOf(Name("공백"), Name("오이")) }

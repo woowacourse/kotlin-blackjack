@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test
 
 class PlayerTest {
     @Test
-    fun `플레이어가 정상적으로 생성된다`() {
+    fun `이름을 가진 플레이어가 생성된다`() {
         // when
         val player = Player.create(Name("공백"))
 

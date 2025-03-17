@@ -29,7 +29,7 @@ class BettingMachineTest {
     }
 
     @Test
-    fun `0원을 초과하고 플레이어가 가진 잔액보다 적은 돈을 베팅하면 정상적으로 진행된다`() {
+    fun `0원을 초과하고 플레이어가 가진 잔액보다 적은 돈을 베팅한다`() {
         // given
         val bettingMachine = BettingMachine()
         val players = Players.from("시아", "공백")
