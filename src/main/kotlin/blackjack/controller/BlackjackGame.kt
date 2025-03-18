@@ -3,6 +3,7 @@ package blackjack.controller
 import blackjack.domain.Action
 import blackjack.domain.Dealer
 import blackjack.domain.Deck
+import blackjack.domain.Money
 import blackjack.domain.Player
 import blackjack.domain.state.Bust
 import blackjack.domain.state.Hit
@@ -18,7 +19,6 @@ class BlackjackGame(
     fun start() {
         val dealer = Dealer()
         val players = createPlayers()
-        getBettingAmount(players)
         dealFirstTurn(dealer, players)
         players.forEach {
             turnPlayer(it)
@@ -29,25 +29,11 @@ class BlackjackGame(
 
     private fun createPlayers(): List<Player> {
         val playersName = inputView.readPlayerNames()
-        val players = playersName.map { Player(it) }
+        val players = playersName.map {
+            val bettingAmount = inputView.readBettingAmount(it)
+            Player(it, Money(bettingAmount))
+        }
         return players
-    }
-
-
-    private fun getBettingAmount(players: List<Player>) {
-        players.forEach { player ->
-            setBettingAmount(player)
-        }
-    }
-
-    private fun setBettingAmount(player: Player) {
-        runCatching {
-            val bettingAmount = inputView.readBettingAmount(player.name)
-            player.bet(bettingAmount)
-        }.onFailure { error ->
-            outputView.printError(error)
-            setBettingAmount(player)
-        }
     }
 
     private fun dealFirstTurn(

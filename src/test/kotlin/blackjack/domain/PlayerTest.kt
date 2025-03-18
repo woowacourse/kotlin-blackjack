@@ -7,15 +7,16 @@ class PlayerTest {
     @Test
     fun `플레이어는 이름을 가진다`() {
         val name = "name"
-        val player = Player(name)
+        val bettingAmount = Money(1000)
+        val player = Player(name, bettingAmount)
         assertThat(player.name).isEqualTo(name)
     }
 
     @Test
-    fun `플레이어는 원하는 금액을 베팅한다`() {
-        val player = Player("name")
-        val bettingAmount = 1_000
-        player.bet(bettingAmount)
-        assertThat(player.bettingAmount).isEqualTo(bettingAmount)
+    fun `플레이어는 배팅금을 가진다`() {
+        val name = "name"
+        val bettingAmount = Money(1000)
+        val player = Player(name, bettingAmount)
+        assertThat(player.bettingAmount.amount).isEqualTo(1_000)
     }
 }
