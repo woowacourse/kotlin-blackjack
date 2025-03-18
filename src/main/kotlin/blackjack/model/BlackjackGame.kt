@@ -13,10 +13,10 @@ class BlackjackGame(
         wantsToDraw: (Player) -> DrawChoice,
         onEndPlayerTurn: (Player) -> Unit,
         onEndDealerTurn: (Boolean) -> Unit,
-        printAllHands: (Dealer, List<Player>) -> Unit,
+        printAllHands: () -> Unit,
     ) {
         gameManager.dealInitialCards()
-        printAllHands(dealer, players)
+        printAllHands()
 
         if (!dealer.isBlackjack()) {
             players.forEach { playerDrawPhase(it, wantsToDraw, onEndPlayerTurn) }
