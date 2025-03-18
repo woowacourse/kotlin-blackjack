@@ -1,19 +1,16 @@
 package model.participant
 
 import model.card.Card
-import model.card.CardName
 import model.card.Cards
 import model.result.ProfitCalculator.Companion.BLACKJACK_SCORE
 import model.result.ProfitCalculator.Companion.ZERO
 
-class Player(val name: String, private val playerCards: Cards) : Participant(playerCards) {
+class Player(val name: String, playerCards: Cards) : Participant(playerCards) {
     var betAmount: Float = ZERO
         private set(value) {
             require(value > ZERO) { PLAYER_AMOUNT_ERROR_MESSAGE }
             field = value
         }
-    val cardNames: List<CardName>
-        get() = playerCards.names
 
     init {
         require(name.isNotEmpty()) { PLAYER_BLANK_ERROR_MESSAGE }

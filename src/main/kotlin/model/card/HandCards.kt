@@ -3,7 +3,7 @@ package model.card
 import model.result.ProfitCalculator.Companion.BLACKJACK_SCORE
 import model.result.ScoreCalculator
 
-class HandCards(cards: Cards) {
+class HandCards(private val cards: Cards) {
     private val allCards: MutableList<Card> = cards.allCards
 
     val score: Int = ScoreCalculator(cards).calculateTotalCardScore()
@@ -12,6 +12,8 @@ class HandCards(cards: Cards) {
         allCards.size == INITIAL_CARDS_COUNT && ScoreCalculator(cards).initialTotalCardScore == BLACKJACK_SCORE
 
     val isBust: Boolean = score > BLACKJACK_SCORE
+
+    val cardNames: List<CardName> = cards.names
 
     fun addCard(card: Card) {
         allCards.add(card)

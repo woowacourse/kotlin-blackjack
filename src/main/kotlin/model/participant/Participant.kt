@@ -1,6 +1,7 @@
 package model.participant
 
 import model.card.Card
+import model.card.CardName
 import model.card.Cards
 import model.card.HandCards
 
@@ -15,6 +16,9 @@ abstract class Participant(private val cards: Cards) {
         get() = handCards.isBust
 
     val isBlackJack: Boolean = handCards.isBlackJack
+
+    val cardNames: List<CardName>
+        get() = handCards.cardNames
 
     abstract fun turn(drawnCard: Card): Boolean
 
