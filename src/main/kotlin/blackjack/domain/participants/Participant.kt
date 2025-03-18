@@ -14,10 +14,6 @@ abstract class Participant(initialHand: List<Card> = emptyList()) {
 
     fun addCard(card: Card) = hand.addCard(card)
 
-    fun isBlackjack(): Boolean = hand.isBlackjack()
-
-    fun isBust(): Boolean = hand.isBust()
-
     fun getDrawAmount(): Int {
         if (hand.cards.isEmpty()) {
             return FIRST_TURN_DRAW_AMOUNT

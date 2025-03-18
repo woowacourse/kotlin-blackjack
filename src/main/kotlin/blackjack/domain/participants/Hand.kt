@@ -2,6 +2,7 @@ package blackjack.domain.participants
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
+import blackjack.domain.state.ResultState
 
 class Hand(cards: List<Card> = emptyList()) {
     private val _cards: MutableList<Card> = cards.map { it.copy() }.toMutableList()
@@ -25,6 +26,19 @@ class Hand(cards: List<Card> = emptyList()) {
         return adjustAceValues(sum, values.count { it == ACE_HIGH_VALUE })
     }
 
+    fun determineResult(other: Hand): ResultState {
+        val dealerScore = this.calculateScore()
+        val playerScore = other.calculateScore()
+        return when {
+            other.isBlackjack() -> ResultState.BLACKJACK_WIN
+            other.isBust() -> ResultState.LOSE
+            this.isBust() -> ResultState.WIN
+            playerScore > dealerScore -> ResultState.WIN
+            playerScore < dealerScore -> ResultState.LOSE
+            else -> ResultState.DRAW
+        }
+    }
+
     private fun getCardValue(card: Card): Int {
         return if (card.number == CardNumber.ACE) ACE_HIGH_VALUE else card.number.value
     }
@@ -45,7 +59,7 @@ class Hand(cards: List<Card> = emptyList()) {
     }
 
     companion object {
-        private const val BLACKJACK_SCORE = 21
+        const val BLACKJACK_SCORE = 21
         private const val FIRST_TURN_DRAW_AMOUNT = 2
         private const val ACE_HIGH_VALUE = 11
         private const val ACE_VALUE_DIFFERENCE = 10

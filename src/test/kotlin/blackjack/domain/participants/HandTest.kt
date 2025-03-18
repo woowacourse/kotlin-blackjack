@@ -3,6 +3,7 @@ package blackjack.domain.participants
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
 import blackjack.domain.card.CardPattern
+import blackjack.domain.state.ResultState
 import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
@@ -46,5 +47,18 @@ class HandTest {
 
         // Then
         hand.calculateScore() shouldBe 21
+    }
+
+    @Test
+    fun `두 패의 점수가 같으면 무승부이다`() {
+        // Given
+        val playerHand = Hand(listOf(Card(CardNumber.ACE, CardPattern.SPADE)))
+        val dealerHand = Hand(listOf(Card(CardNumber.ACE, CardPattern.CLOVER)))
+
+        // When
+        val result = dealerHand.determineResult(playerHand)
+
+        // Then
+        result shouldBe ResultState.DRAW
     }
 }

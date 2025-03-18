@@ -57,10 +57,7 @@ class DealerTest {
         val dealer = Dealer(Deck.createDefaultDeck(), cards)
 
         // Then
-        assertSoftly(dealer) {
-            isBust() shouldBe true
-            canHit() shouldBe false
-        }
+        dealer.canHit() shouldBe false
     }
 
     @Test

@@ -4,7 +4,6 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
 import blackjack.domain.card.CardPattern
 import blackjack.domain.card.Deck
-import io.kotest.assertions.assertSoftly
 import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.BeforeEach
@@ -58,7 +57,7 @@ class PlayerTest {
     }
 
     @Test
-    fun `패에 2장만 존재하고, 총 합이 21이면 블랙잭이다`() {
+    fun `패에 2장만 존재하고, 총 합이 21이면 블랙잭이 되어 HIT 할 수 없다`() {
         // Given
         val cards =
             listOf(
@@ -68,17 +67,17 @@ class PlayerTest {
         val player = Player("pobi", cards)
 
         // Then
-        player.isBlackjack() shouldBe true
+        player.canHit() shouldBe false
     }
 
     @Test
-    fun `카드의 총 합이 21이 넘으면 버스트가 된다`() {
+    fun `카드의 총 합이 21이 넘으면 버스트가 되어 HIT 할 수 없다`() {
         // Given
         val cards = List(3) { Card(CardNumber.KING, CardPattern.HEART) }
         val player = Player("pobi", cards)
 
         // Then
-        player.isBust() shouldBe true
+        player.canHit() shouldBe false
     }
 
     @Test
@@ -107,9 +106,6 @@ class PlayerTest {
         val player = Player("pobi", cards)
 
         // Then
-        assertSoftly(player) {
-            isBust() shouldBe true
-            canHit() shouldBe false
-        }
+        player.canHit() shouldBe false
     }
 }
