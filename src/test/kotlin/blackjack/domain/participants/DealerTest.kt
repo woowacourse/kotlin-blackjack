@@ -71,7 +71,7 @@ class DealerTest {
         val dealer = Dealer(initialHand = listOf(Card(CardNumber.KING, CardPattern.CLOVER)))
 
         // When
-        val result = dealer.profitFromGame(bettingInfo)
+        val result = dealer.calculatePlayersProfit(bettingInfo)
 
         // Then
         result.value shouldBe 10000.0
@@ -85,7 +85,7 @@ class DealerTest {
         val dealer = Dealer(initialHand = listOf(Card(CardNumber.ACE, CardPattern.CLOVER)))
 
         // When
-        val result = dealer.profitFromGame(bettingInfo)
+        val result = dealer.calculatePlayersProfit(bettingInfo)
 
         // Then
         result.value shouldBe -10000.0
@@ -99,7 +99,7 @@ class DealerTest {
         val dealer = Dealer(initialHand = listOf(Card(CardNumber.ACE, CardPattern.SPADE)))
 
         // When
-        val result = dealer.profitFromGame(bettingInfo)
+        val result = dealer.calculatePlayersProfit(bettingInfo)
 
         // Then
         result.value shouldBe 0.0
@@ -113,7 +113,7 @@ class DealerTest {
         val dealer = Dealer(initialHand = listOf(Card(CardNumber.KING, CardPattern.SPADE)))
 
         // When
-        val result = dealer.profitFromGame(bettingInfo)
+        val result = dealer.calculatePlayersProfit(bettingInfo)
 
         // Then
         result.value shouldBe 15000.0

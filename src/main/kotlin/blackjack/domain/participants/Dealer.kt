@@ -25,7 +25,7 @@ class Dealer(
         participant.addCard(card)
     }
 
-    fun profitFromGame(bettingInfo: BettingInfo): ProfitAmount {
+    fun calculatePlayersProfit(bettingInfo: BettingInfo): ProfitAmount {
         val result = determineResult(bettingInfo.player)
         return calculateProfit(bettingInfo.bettingAmount, result)
     }

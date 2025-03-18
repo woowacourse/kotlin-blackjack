@@ -13,7 +13,7 @@ class GameResult private constructor(val results: Map<Participant, ProfitAmount>
         ): GameResult {
             val playerProfits =
                 bettingInfos.associate { bettingInfo ->
-                    bettingInfo.player to dealer.profitFromGame(bettingInfo)
+                    bettingInfo.player to dealer.calculatePlayersProfit(bettingInfo)
                 }
             val dealerProfit = ProfitAmount(-playerProfits.values.sumOf { it.value })
 
