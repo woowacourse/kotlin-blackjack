@@ -1,7 +1,4 @@
-package blackjack.domain
-
-import blackjack.enums.Rank
-import blackjack.enums.Suit
+package blackjack.domain.card
 
 class Deck(
     cards: List<Card>,

@@ -1,10 +1,11 @@
 package blackjack.controller
 
+import blackjack.domain.BettingAmount
 import blackjack.domain.BlackjackGame
-import blackjack.domain.Dealer
-import blackjack.domain.Deck
-import blackjack.domain.Participants
-import blackjack.domain.Player
+import blackjack.domain.card.Deck
+import blackjack.domain.participant.Dealer
+import blackjack.domain.participant.Participants
+import blackjack.domain.participant.Player
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -14,11 +15,12 @@ class BlackjackController(
 ) {
     fun play() {
         val participants = getParticipants()
+        val bettingInfo = getBettingInfo(participants.players)
         val game = BlackjackGame(Deck.create(), participants)
 
         startGame(game, participants)
         playGame(game)
-        showGameResult(participants)
+        showGameResult(participants, bettingInfo)
     }
 
     private fun getParticipants(): Participants {
@@ -32,33 +34,50 @@ class BlackjackController(
         return playerNames.map(::Player)
     }
 
+    private fun getBettingInfo(players: List<Player>): Map<Player, BettingAmount> =
+        players.associateWith {
+            getBettingAmount(it.name)
+        }
+
+    private fun getBettingAmount(name: String): BettingAmount {
+        val amount = inputView.readBettingAmount(name)
+        return BettingAmount(amount)
+    }
+
     private fun startGame(
         game: BlackjackGame,
         participants: Participants,
     ) {
-        game.distributeInitialCards()
-        outputView.printCardInfo(participants.dealer, participants.players)
+        game.dealInitialCards()
+        outputView.printCardInfo(participants)
     }
 
     private fun playGame(game: BlackjackGame) {
-        game.playPlayersTurn(
-            onResponse = inputView::readPlayerHit,
-            onDraw = outputView::printPlayerCards,
-        )
-        game.playDealerTurn(
-            onDraw = outputView::printDealerHit,
+        game.playTurns(
+            shouldContinue = { participant ->
+                when (participant) {
+                    is Player -> inputView.readPlayerHit(participant)
+                    is Dealer -> true
+                }
+            },
+            onDraw = { participant ->
+                when (participant) {
+                    is Player -> outputView.printCards(participant)
+                    is Dealer -> outputView.printHitOnce(participant)
+                }
+            },
         )
     }
 
-    private fun showGameResult(participants: Participants) {
-        outputView.printParticipantScore(participants.dealer, participants.players)
+    private fun showGameResult(
+        participants: Participants,
+        bettingInfo: Map<Player, BettingAmount>,
+    ) {
+        outputView.printParticipantScore(participants)
 
-        val dealerResult = participants.getDealerResult()
-        outputView.printDealerResult(participants.dealer, dealerResult)
-
-        val playersResult = participants.getPlayerResults()
-        playersResult.forEach { (name, result) ->
-            outputView.printPlayerResult(name, result)
-        }
+        val blackjackResult = participants.blackjackResult()
+        val dealerProfit = blackjackResult.dealerProfit(bettingInfo)
+        val playersProfit = blackjackResult.playersProfit(bettingInfo)
+        outputView.printParticipantsProfit(participants, dealerProfit, playersProfit)
     }
 }
