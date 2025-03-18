@@ -10,6 +10,8 @@ abstract class Participant(initialHand: List<Card> = emptyList()) {
 
     abstract fun canHit(): Boolean
 
+    abstract fun visibleCard(isFirstTurn: Boolean): List<Card>
+
     fun addCard(card: Card) = hand.addCard(card)
 
     fun isBlackjack(): Boolean = hand.isBlackjack()
@@ -26,14 +28,6 @@ abstract class Participant(initialHand: List<Card> = emptyList()) {
         }
 
         return 0
-    }
-
-    fun visibleCard(isFirstTurn: Boolean): List<Card> {
-        return if (isFirstTurn && this is Dealer) {
-            hand.cards.take(1)
-        } else {
-            hand.cards
-        }
     }
 
     companion object {

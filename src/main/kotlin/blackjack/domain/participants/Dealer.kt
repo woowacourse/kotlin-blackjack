@@ -13,6 +13,13 @@ class Dealer(
 ) : Participant(initialHand) {
     override fun canHit(): Boolean = score <= DRAW_SCORE
 
+    override fun visibleCard(isFirstTurn: Boolean): List<Card> {
+        if (isFirstTurn) {
+            return hand.cards.take(1)
+        }
+        return hand.cards
+    }
+
     fun handOut(participant: Participant) {
         val card = drawFromDeck()
         participant.addCard(card)

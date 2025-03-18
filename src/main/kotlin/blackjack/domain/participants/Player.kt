@@ -7,4 +7,6 @@ class Player(
     initialHand: List<Card> = emptyList(),
 ) : Participant(initialHand) {
     override fun canHit(): Boolean = !isBust()
+
+    override fun visibleCard(isFirstTurn: Boolean): List<Card> = hand.cards
 }
