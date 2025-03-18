@@ -1,8 +1,5 @@
 package blackjack.model
 
-import blackjack.model.ResultType.Companion.BLACKJACK_PROFIT_MULTIPLIER
-import blackjack.model.ResultType.Companion.LOSS_PROFIT_MULTIPLIER
-import blackjack.model.ResultType.Companion.TIE_PROFIT_MULTIPLIER
 import blackjack.model.amount.WinningMoney
 import blackjack.model.participant.Dealer
 import blackjack.model.participant.Participant
@@ -52,12 +49,7 @@ class GameManager(
     fun calculateProfit(
         resultType: ResultType,
         player: Player,
-    ) = when (resultType) {
-        ResultType.BLACKJACK -> WinningMoney(player.betAmount.value * BLACKJACK_PROFIT_MULTIPLIER)
-        ResultType.WIN -> WinningMoney(player.betAmount.value)
-        ResultType.TIE -> WinningMoney(player.betAmount.value * TIE_PROFIT_MULTIPLIER)
-        ResultType.LOSS -> WinningMoney(player.betAmount.value * LOSS_PROFIT_MULTIPLIER)
-    }
+    ) = WinningMoney(player.betAmount.value * resultType.profit)
 
     fun calculateDealerProfit(profitResults: List<Profit>): Profit {
         val totalPlayerProfit = profitResults.sumOf { it.winningMoney.amount }
