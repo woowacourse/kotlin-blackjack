@@ -6,7 +6,7 @@ import blackjack.domain.Result
 import blackjack.domain.card.Card
 
 abstract class Finished(override val hand: Hand) : PlayingState {
-    override fun draw(card: Card): PlayingState {
+    final override fun draw(card: Card): PlayingState {
         throw IllegalStateException(ERROR_CANT_DRAW_CARD)
     }
 
