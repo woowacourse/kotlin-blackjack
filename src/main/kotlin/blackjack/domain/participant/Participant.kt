@@ -1,16 +1,17 @@
 package blackjack.domain.participant
 
 import blackjack.domain.BlackJackGame.Companion.BUST_STANDARD
+import blackjack.domain.GameResult
 import blackjack.domain.card.PlayerCards
 import blackjack.domain.card.TrumpCard
 
-abstract class Participant {
+sealed class Participant {
     private var _cards = PlayerCards(emptySet())
     val cards: PlayerCards
         get() = _cards.deepCopy()
 
-    fun addCard(card: TrumpCard) {
-        _cards = cards.add(card)
+    fun addCard(newCard: TrumpCard) {
+        _cards = cards + newCard
     }
 
     fun totalScore(): Int {
@@ -22,9 +23,15 @@ abstract class Participant {
         }
     }
 
+    fun hasBlackJack(): Boolean = cards.hasBlackJack(totalScore())
+
+    fun isBust(): Boolean = totalScore() > BUST_STANDARD
+
+    abstract fun compare(other: Participant): GameResult
+
     abstract fun getInitialCards(): Set<TrumpCard>
 
-    abstract fun isDrawable(): Boolean
+    abstract fun canHit(): Boolean
 
     private fun PlayerCards.deepCopy(): PlayerCards = PlayerCards(this.items.map { it.copy() }.toSet())
 

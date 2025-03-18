@@ -1,26 +1,8 @@
 package blackjack.domain
 
-import blackjack.domain.BlackJackGame.Companion.BUST_STANDARD
-
-enum class GameResult {
-    WIN,
-    LOSE,
-    PUSH,
-    ;
-
-    companion object {
-        fun from(
-            dealerSum: Int,
-            playerSum: Int,
-            isPlayer: Boolean,
-        ): GameResult {
-            return when {
-                (dealerSum > BUST_STANDARD) && (playerSum > BUST_STANDARD) -> if (isPlayer) LOSE else WIN
-                dealerSum > BUST_STANDARD -> if (isPlayer) WIN else LOSE
-                playerSum > BUST_STANDARD || playerSum < dealerSum -> if (isPlayer) LOSE else WIN
-                playerSum > dealerSum -> if (isPlayer) WIN else LOSE
-                else -> PUSH
-            }
-        }
-    }
+enum class GameResult(val dividend: Double) {
+    WIN(1.0),
+    LOSE(-1.0),
+    PUSH(0.0),
+    BLACKJACK(1.5),
 }

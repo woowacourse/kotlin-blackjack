@@ -2,9 +2,9 @@ package blackjack.domain.card
 
 fun cardFactoryImpl() =
     CardFactory {
-        Shape.entries
+        Suit.entries
             .flatMap { shape ->
-                Tier.entries.map { tier ->
+                Denomination.entries.map { tier ->
                     TrumpCard(tier, shape)
                 }
             }.shuffled()

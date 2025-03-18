@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Participants
 import blackjack.domain.participant.Player
 
@@ -15,55 +16,58 @@ class BlackJackGame(
         }
     }
 
-    fun playGame(
+    fun playerTurn(
         getPlayerChoice: (String) -> UserChoice,
         onPlayerStateUpdated: (Player) -> Unit,
     ) {
         participants.players.forEach { player ->
-            while (player.isDrawable()) {
-                val choice = getPlayerChoice(player.name)
-                when (choice) {
-                    UserChoice.HIT -> player.addCard(deck.draw())
-                    UserChoice.STAY -> {
-                        if (player.cards.items.size == INITIAL_CARD_COUNT) {
-                            onPlayerStateUpdated(player)
-                        }
-                        break
+            processPlayerTurn(player, getPlayerChoice, onPlayerStateUpdated)
+        }
+    }
+
+    private fun processPlayerTurn(
+        player: Player,
+        getPlayerChoice: (String) -> UserChoice,
+        onPlayerStateUpdated: (Player) -> Unit,
+    ) {
+        while (player.canHit()) {
+            val choice = getPlayerChoice(player.name)
+            when (choice) {
+                UserChoice.HIT -> player.addCard(deck.draw())
+                UserChoice.STAY -> {
+                    if (player.cards.items.size == INITIAL_CARD_COUNT) {
+                        onPlayerStateUpdated(player)
                     }
+                    break
                 }
-                onPlayerStateUpdated(player)
             }
+            onPlayerStateUpdated(player)
         }
     }
 
     fun processDealerTurn(): Int {
-        var count = 0
-        while (participants.dealer.isDrawable()) {
-            participants.dealer.addCard(deck.draw())
-            count++
+        val dealer = participants.dealer
+        while (dealer.canHit()) {
+            dealer.addCard(deck.draw())
         }
-        return count
+        return dealer.cards.items.size - INITIAL_CARD_COUNT
     }
 
-    fun calculateDealerResult(): Map<GameResult, Int> {
-        val dealerMap = GameResult.entries.associateWith { 0 }.toMutableMap()
-
-        participants.players.forEach { player ->
-            val result = GameResult.from(participants.dealer.totalScore(), player.totalScore(), false)
-            dealerMap[result] = dealerMap.getOrDefault(result, 0) + 1
-        }
-        return dealerMap
+    fun calculateDealerResult(participants: Participants): Double {
+        return participants.players
+            .sumOf { it.money * participants.dealer.compare(it).dividend }
     }
 
-    fun calculatePlayerResult(action: (String, GameResult) -> Unit) {
-        participants.players.forEach { player ->
-            val result = GameResult.from(participants.dealer.totalScore(), player.totalScore(), true)
-            action(player.name, result)
-        }
+    fun calculatePlayers(
+        player: Player,
+        dealer: Dealer,
+    ): Double {
+        val dividend = player.compare(dealer).dividend
+        return player.profit(dividend)
     }
 
     companion object {
-        private const val INITIAL_CARD_COUNT = 2
+        const val INITIAL_CARD_COUNT = 2
         const val CARD_COUNT_OF_PLAYER_MUST_INITIAL_OPEN = 2
         const val CARD_COUNT_OF_DEALER_MUST_INITIAL_OPEN = 1
         const val BUST_STANDARD = 21

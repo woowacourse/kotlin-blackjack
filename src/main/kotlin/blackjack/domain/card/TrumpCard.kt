@@ -1,6 +1,6 @@
 package blackjack.domain.card
 
 data class TrumpCard(
-    val tier: Tier,
-    val shape: Shape,
+    val denomination: Denomination,
+    val suit: Suit,
 )

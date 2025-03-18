@@ -1,11 +1,11 @@
 package blackjack.view
 
-import blackjack.domain.GameResult
-import blackjack.domain.card.Shape
-import blackjack.domain.card.Tier
+import blackjack.domain.card.Denomination
+import blackjack.domain.card.Suit
 import blackjack.domain.card.TrumpCard
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Player
+import blackjack.view.model.PlayerUiModel
 import java.lang.String.format
 
 class OutputView {
@@ -15,7 +15,7 @@ class OutputView {
 
     fun printDealerCards(dealer: Dealer) {
         val cards = dealer.getInitialCards()
-        val cardFormat = cards.joinToString { MESSAGE_CARD.format(it.tier.toEnglish(), it.shape.toKorean()) }
+        val cardFormat = cards.joinToString { MESSAGE_CARD.format(it.denomination.toEnglish(), it.suit.toKorean()) }
         println(format(MESSAGE_OUTPUT_DEALER_CARD, cardFormat))
     }
 
@@ -41,19 +41,15 @@ class OutputView {
         }
     }
 
-    fun printDealerResult(result: Map<GameResult, Int>) {
+    fun printDealerResult(profit: Double) {
         println(MESSAGE_OUTPUT_RESULT_GUIDE)
-        val win = result[GameResult.WIN]
-        val lose = result[GameResult.LOSE]
-        val push = result[GameResult.PUSH]
-        println(format(MESSAGE_OUTPUT_DEALER_RESULT, win, lose, push))
+        println(format(MESSAGE_OUTPUT_DEALER_RESULT, profit))
     }
 
-    fun printPlayerResult(
-        name: String,
-        result: GameResult,
-    ) {
-        println(format(MESSAGE_OUTPUT_PLAYER_RESULT, name, result.toKorean()))
+    fun printPlayerResult(result: List<PlayerUiModel>) {
+        result.forEach {
+            println(format(MESSAGE_OUTPUT_PLAYER_RESULT, it.name, it.profit))
+        }
     }
 
     private fun makeCardListMessage(cards: Set<TrumpCard>): String =
@@ -61,7 +57,7 @@ class OutputView {
             cardMessageFormat(card)
         }
 
-    private fun cardMessageFormat(card: TrumpCard): String = MESSAGE_CARD.format(card.tier.toEnglish(), card.shape.toKorean())
+    private fun cardMessageFormat(card: TrumpCard): String = MESSAGE_CARD.format(card.denomination.toEnglish(), card.suit.toKorean())
 
     fun printDealerExtraCard(count: Int) {
         println(format(MESSAGE_OUTPUT_DEALER_EXTRA_CARD, count))
@@ -71,28 +67,21 @@ class OutputView {
         println(message)
     }
 
-    private fun Shape.toKorean(): String =
+    private fun Suit.toKorean(): String =
         when (this) {
-            Shape.HEART -> "하트"
-            Shape.DIA -> "다이아몬드"
-            Shape.CLOVER -> "클로버"
-            Shape.SPADE -> "스페이드"
+            Suit.HEART -> "하트"
+            Suit.DIA -> "다이아몬드"
+            Suit.CLOVER -> "클로버"
+            Suit.SPADE -> "스페이드"
         }
 
-    private fun Tier.toEnglish(): String =
+    private fun Denomination.toEnglish(): String =
         when (this) {
-            Tier.ACE -> "A"
-            Tier.JACK -> "J"
-            Tier.QUEEN -> "Q"
-            Tier.KING -> "K"
+            Denomination.ACE -> "A"
+            Denomination.JACK -> "J"
+            Denomination.QUEEN -> "Q"
+            Denomination.KING -> "K"
             else -> this.values.toString()
-        }
-
-    private fun GameResult.toKorean(): String =
-        when (this) {
-            GameResult.WIN -> "승"
-            GameResult.LOSE -> "패"
-            GameResult.PUSH -> "무"
         }
 
     companion object {
@@ -102,7 +91,7 @@ class OutputView {
         private const val MESSAGE_OUTPUT_PLAYER_CARD = "%s카드: %s"
         private const val MESSAGE_OUTPUT_DEALER_CARD = "딜러: %s"
         private const val MESSAGE_OUTPUT_RESULT_GUIDE = "\n## 최종 승패"
-        private const val MESSAGE_OUTPUT_DEALER_RESULT = "딜러: %d승 %d패 %d무"
+        private const val MESSAGE_OUTPUT_DEALER_RESULT = "딜러: %s"
         private const val MESSAGE_OUTPUT_PLAYER_RESULT = "%s: %s"
         private const val MESSAGE_CARD = "%s%s"
     }

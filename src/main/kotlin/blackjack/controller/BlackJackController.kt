@@ -1,42 +1,47 @@
 package blackjack.controller
 
+import blackjack.domain.BettingAmount
 import blackjack.domain.BlackJackGame
 import blackjack.domain.Deck
 import blackjack.domain.UserChoice
-import blackjack.domain.card.CardFactory
+import blackjack.domain.card.cardFactoryImpl
 import blackjack.domain.participant.Dealer
-import blackjack.domain.participant.Participant
 import blackjack.domain.participant.Participants
 import blackjack.domain.participant.Player
+import blackjack.domain.participant.PlayerState
 import blackjack.util.retryWhenException
 import blackjack.view.InputView
 import blackjack.view.OutputView
+import blackjack.view.model.PlayerUiModel
 
 class BlackJackController(
     private val inputView: InputView,
     private val outputView: OutputView,
-    private val cardFactory: CardFactory,
 ) {
     fun run() {
-        val players = readyForGamePlayers()
-        displayPlayerNames(players)
-        val game = makeGame(players)
-        startGame(game, players)
-        displayResult(game, players)
+        val participants = readyForParticipants()
+        displayPlayerNames(participants)
+        val game = makeGame(participants)
+        startGame(game, participants)
+        endGame(game, participants)
     }
 
-    private fun readyForGamePlayers(): Participants {
-        val dealer: Participant = Dealer()
-        return retryWhenException(
+    private fun readyForParticipants(): Participants =
+        retryWhenException(
             action = {
-                val players = inputView.readPlayerName().map(::Player)
-                Participants(players + dealer)
+                val players = readPlayers().map(::Player)
+                Participants(players + Dealer())
             },
-            onError = { message ->
-                outputView.printErrorMessage(message)
-            },
+            onError = outputView::printErrorMessage,
         )
-    }
+
+    private fun readPlayers(): List<PlayerState> = inputView.readPlayerName().map { PlayerState(it, readBettingAmount(it)) }
+
+    private fun readBettingAmount(name: String): BettingAmount =
+        retryWhenException(
+            action = { BettingAmount(inputView.readBettingAmount(name)) },
+            onError = outputView::printErrorMessage,
+        )
 
     private fun displayPlayerNames(participants: Participants) {
         outputView.printNames(participants.players)
@@ -50,20 +55,12 @@ class BlackJackController(
         outputView.printDealerCards(participants.dealer)
     }
 
-    private fun makeGame(participants: Participants): BlackJackGame {
-        val deck = Deck(cardFactory)
-        return BlackJackGame(participants, deck)
-    }
+    private fun makeGame(participants: Participants): BlackJackGame = BlackJackGame(participants, Deck(cardFactoryImpl()))
 
     private fun getUserChoice(name: String): UserChoice =
         retryWhenException(
-            action = {
-                val input = inputView.readHitOrStay(name)
-                UserChoice.from(input)
-            },
-            onError = { message ->
-                outputView.printErrorMessage(message)
-            },
+            action = { UserChoice.from(inputView.readHitOrStay(name)) },
+            onError = outputView::printErrorMessage,
         )
 
     private fun startGame(
@@ -82,27 +79,23 @@ class BlackJackController(
 
     private fun playGame(game: BlackJackGame) {
         runCatching {
-            game.playGame(
-                getPlayerChoice = { playerName ->
-                    getUserChoice(playerName)
-                },
-                onPlayerStateUpdated = { player ->
-                    outputView.printOneCardMessage(player)
-                },
+            game.playerTurn(
+                getPlayerChoice = ::getUserChoice,
+                onPlayerStateUpdated = outputView::printOneCardMessage,
             )
         }.onFailure {
             outputView.printErrorMessage(it.message)
         }
     }
 
-    private fun displayResult(
+    private fun endGame(
         game: BlackJackGame,
         participants: Participants,
     ) {
         displayDealerExtraCard(game)
         displaySumOfParticipants(participants)
-        displayDealerResult(game)
-        displayPlayerResult(game)
+        displayDealerResult(game, participants)
+        displayPlayerResult(game, participants)
     }
 
     private fun displayDealerExtraCard(game: BlackJackGame) {
@@ -117,14 +110,25 @@ class BlackJackController(
         outputView.printPlayerSum(participants.players)
     }
 
-    private fun displayDealerResult(game: BlackJackGame) {
-        val result = game.calculateDealerResult()
+    private fun displayDealerResult(
+        game: BlackJackGame,
+        participants: Participants,
+    ) {
+        val result = game.calculateDealerResult(participants)
         outputView.printDealerResult(result)
     }
 
-    private fun displayPlayerResult(game: BlackJackGame) {
-        game.calculatePlayerResult { name, result ->
-            outputView.printPlayerResult(name, result)
-        }
+    private fun displayPlayerResult(
+        game: BlackJackGame,
+        participants: Participants,
+    ) {
+        val result =
+            participants.players.map {
+                PlayerUiModel(
+                    profit = game.calculatePlayers(it, participants.dealer),
+                    name = it.name,
+                )
+            }
+        outputView.printPlayerResult(result)
     }
 }

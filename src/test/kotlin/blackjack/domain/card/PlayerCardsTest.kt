@@ -1,9 +1,6 @@
-package blackjack.domain
+package blackjack.domain.card
 
-import blackjack.domain.card.PlayerCards
-import blackjack.domain.card.Shape
-import blackjack.domain.card.Tier
-import blackjack.domain.card.TrumpCard
+import blackjack.fixture.blackJackCardFixture
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -18,7 +15,7 @@ class PlayerCardsTest {
 
     @Test
     fun `카드를 추가하면 보유한 카드가 1장 늘어난다`() {
-        val newCard = cards.add(TrumpCard(Tier.TEN, Shape.DIA))
+        val newCard = cards + TrumpCard(Denomination.TEN, Suit.DIA)
 
         assertEquals(newCard.items.size, 1)
     }
@@ -31,9 +28,21 @@ class PlayerCardsTest {
 
     @Test
     fun `에이스 카드가 있으면 에이스 카드가 있음을 반환한다`() {
-        val newCard = cards.add(TrumpCard(Tier.ACE, Shape.DIA))
+        val newCard = cards + TrumpCard(Denomination.ACE, Suit.DIA)
         val expected = newCard.hasAce()
 
+        assertEquals(expected, true)
+    }
+
+    @Test
+    fun `카드가 두 장이고 블랙잭이면 참을 반환한다`() {
+        var newCards = cards
+        blackJackCardFixture().forEach {
+            newCards += it
+        }
+        println(newCards.items)
+
+        val expected = newCards.hasBlackJack(21)
         assertEquals(expected, true)
     }
 }
