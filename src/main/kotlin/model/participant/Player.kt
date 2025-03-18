@@ -1,0 +1,37 @@
+package model.participant
+
+import model.card.Card
+import model.card.Cards
+import model.result.ProfitCalculator.Companion.BLACKJACK_SCORE
+import model.result.ProfitCalculator.Companion.ZERO
+
+class Player(val name: String, playerCards: Cards) : Participant(playerCards) {
+    var betAmount: Float = ZERO
+        private set(value) {
+            require(value > ZERO) { PLAYER_AMOUNT_ERROR_MESSAGE }
+            field = value
+        }
+
+    init {
+        require(name.isNotEmpty()) { PLAYER_BLANK_ERROR_MESSAGE }
+    }
+
+    fun betting(betAmount: Float) {
+        this.betAmount = betAmount
+    }
+
+    override fun turn(drawnCard: Card): Boolean {
+        if (canHit()) {
+            addCard(drawnCard)
+            return false
+        }
+        return true
+    }
+
+    override fun canHit(): Boolean = score <= BLACKJACK_SCORE
+
+    companion object {
+        private const val PLAYER_BLANK_ERROR_MESSAGE = "[ERROR] 이름은 빈 값일 수 없습니다."
+        private const val PLAYER_AMOUNT_ERROR_MESSAGE = "[ERROR] 0원 이하의 금액은 입력할 수 없습니다."
+    }
+}

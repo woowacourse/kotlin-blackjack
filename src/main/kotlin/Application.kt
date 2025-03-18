@@ -1,5 +1,5 @@
 import controller.BlackjackController
-import model.CardsGenerator
+import model.card.CardsGenerator
 import view.InputView
 import view.OutputView
 

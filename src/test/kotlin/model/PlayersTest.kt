@@ -1,6 +1,12 @@
 package model
 
 import model.CardsTest.Companion.cardOf
+import model.card.Card
+import model.card.CardName
+import model.card.CardRank
+import model.card.Shape
+import model.participant.Player
+import model.participant.Players
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
@@ -45,11 +51,10 @@ class PlayersTest {
 
         val players = Players(listOf(player1, player2))
 
-        // 예상 결과: 각 플레이어의 카드 네임 리스트
         val expected =
             listOf(
-                listOf("SIX" to "CLUB", "NINE" to "SPADE"),
-                listOf("TEN" to "CLUB", "EIGHT" to "SPADE"),
+                listOf(CardName(CardRank.SIX.name, Shape.CLUB.name), CardName(CardRank.NINE.name, Shape.SPADE.name)),
+                listOf(CardName(CardRank.TEN.name, Shape.CLUB.name), CardName(CardRank.EIGHT.name, Shape.SPADE.name)),
             )
 
         assertThat(players.cardNames).isEqualTo(expected)

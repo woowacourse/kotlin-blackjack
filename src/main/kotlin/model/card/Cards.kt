@@ -1,11 +1,11 @@
-package model
+package model.card
 
 class Cards(allCards: List<Card>) {
     val allCards: MutableList<Card> = allCards.toMutableList()
     val totalCount: Int
         get() = allCards.size
 
-    val names: List<Pair<String, String>>
+    val names: List<CardName>
         get() = allCards.map { it.cardName }
 
     val scores: List<Int>
