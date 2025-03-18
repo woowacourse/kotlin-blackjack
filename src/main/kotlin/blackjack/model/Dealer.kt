@@ -1,31 +1,19 @@
 package blackjack.model
 
-class Dealer(val firstCard: List<Card>, val name: String = DEALER_NAME) : Participant(firstCard) {
-    fun drawUntilFinished(cardDeck: CardDeck) {
-        while (hand.score() <= DEALER_DRAW_CRITERIA && !hand.isBust()) {
-            draw(cardDeck)
-        }
-    }
-
-    fun getAdditionalDrawCount(): Int {
-        return hand.getHandCount() - firstCard.size
-    }
-
-    fun getWinDrawLossResult(players: Players): Map<WinningResult, Int> {
-        val result = WinningResult.entries.associateWith { INITIAL_SCORE }.toMutableMap()
-
-        players.value.forEach { player ->
-            val winningResult = CalculateResult.getDealerResult(this, player)
-            result[winningResult] = result.getOrDefault(winningResult, INITIAL_SCORE) + ADDITIONAL_RESULT_COUNT
-        }
-
-        return result.toMap()
+class Dealer(
+    val name: String = DEALER_NAME,
+    override val items: Items,
+) : Participant {
+    tailrec fun drawUntilFinished(cardDeck: CardDeck) {
+        if (items.hand.score() > DEALER_DRAW_CRITERIA || items.hand.isBust()) return
+        draw(cardDeck.draw())
+        drawUntilFinished(cardDeck)
     }
 
     companion object {
         private const val DEALER_NAME = "딜러"
         private const val DEALER_DRAW_CRITERIA = 16
-        private const val INITIAL_SCORE = 0
-        private const val ADDITIONAL_RESULT_COUNT = 1
+
+        fun makeDealer(hand: Hand): Dealer = Dealer(DEALER_NAME, Items(hand, Money(0.0)))
     }
 }

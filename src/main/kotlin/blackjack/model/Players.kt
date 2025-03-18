@@ -12,11 +12,6 @@ class Players(
         }
     }
 
-    fun results(dealer: Dealer): Map<String, WinningResult> =
-        value.associate { player ->
-            player.name to CalculateResult.getUserResult(dealer, player)
-        }
-
     companion object {
         private const val MIN_PLAYER_COUNT = 1
         private const val MAX_PLAYER_COUNT = 7

@@ -11,17 +11,20 @@ import blackjack.model.CardSuit.CLUB
 import blackjack.model.CardSuit.DIAMOND
 import blackjack.model.CardSuit.HEART
 import blackjack.model.CardSuit.SPADE
-import blackjack.model.WinningResult
-import blackjack.model.WinningResult.LOSE
-import blackjack.model.WinningResult.PUSH
-import blackjack.model.WinningResult.WIN
+import blackjack.model.EventListener
 
-class OutputView {
-    fun displayFirstDrawEnd(dealerName: String, players: List<String>) {
-        println("\n딜러와 ${players.joinToString()}에게 2장을 나누었습니다.")
+class OutputView : EventListener {
+    fun displayFirstDrawEnd(
+        dealerName: String,
+        players: List<String>,
+    ) {
+        println("\n${dealerName}와 ${players.joinToString()}에게 2장을 나누었습니다.")
     }
 
-    fun displayDealerDrawInfo(name: String, count: Int) {
+    override fun displayDealerDrawInfo(
+        name: String,
+        count: Int,
+    ) {
         val output =
             when {
                 count == 0 -> "딜러는 16초과라 카드를 더 이상 뽑지 않았습니다."
@@ -30,14 +33,14 @@ class OutputView {
         println("\n" + output + "\n")
     }
 
-    fun displayParticipantCards(
+    override fun displayParticipantCards(
         name: String,
         cards: List<Card>,
     ) {
         println("$name 카드: ${cards.toText()}")
     }
 
-    fun displayParticipantInfo(
+    override fun displayParticipantInfo(
         name: String,
         cards: List<Card>,
         score: Int,
@@ -70,24 +73,17 @@ class OutputView {
         }
 
     fun displayResultTitle() {
-        println("\n## 최종 승패")
+        println("\n## 최종 수익")
     }
 
-    fun displayDealerResult(name: String, winningResult: Map<WinningResult, Int>) {
-        println("$name: ${winningResult[WIN]}승 ${winningResult[PUSH]}무 ${winningResult[LOSE]}패")
-    }
-
-    fun displayPlayerResult(
+    fun displayResultMoney(
         name: String,
-        winningResult: WinningResult,
+        resultMoney: Double,
     ) {
-        println("$name: ${winningResult.toText()}")
+        println("$name: ${resultMoney.toInt()}")
     }
 
-    private fun WinningResult.toText() =
-        when (this) {
-            WIN -> "승"
-            LOSE -> "패"
-            PUSH -> "무"
-        }
+    fun displayCurrentResultTitle() {
+        println("\n## 배팅 결과")
+    }
 }

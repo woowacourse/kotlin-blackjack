@@ -1,14 +1,21 @@
 package blackjack.model
 
-abstract class Participant(firstCard: List<Card>) {
-    val hand: Hand = Hand(firstCard)
+interface Participant {
+    val items: Items
 
-    fun draw(cardDeck: CardDeck) {
-        hand.add(cardDeck.draw())
+    fun draw(card: Card) {
+        items.hand.add(card)
     }
 
-    fun getHandSize(): Int = hand.getHandCount()
+    fun getHandSize(): Int = items.hand.getHandCount()
 
-    fun getScore(): Int = hand.score()
+    fun getScore(): Int = items.hand.score()
 
+    fun isBusted(): Boolean = items.hand.isBust()
+
+    fun addPrize(prize: Money) = items.money + prize
+
+    fun changeHand(hand: Hand) {
+        items.setNewHand(hand)
+    }
 }

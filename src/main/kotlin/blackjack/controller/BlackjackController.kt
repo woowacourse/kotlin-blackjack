@@ -2,9 +2,9 @@ package blackjack.controller
 
 import blackjack.model.BlackjackEngine
 import blackjack.model.Dealer
-import blackjack.model.Player
+import blackjack.model.Money
+import blackjack.model.Participant
 import blackjack.model.Players
-import blackjack.model.WinningResult
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -12,66 +12,75 @@ class BlackjackController(
     private val inputView: InputView,
     private val outputView: OutputView,
 ) {
-    val blackjackEngine = BlackjackEngine()
-    fun run() {
-        val dealer = blackjackEngine.prepareDealer()
-        val players = blackjackEngine.preparePlayers(inputView.getPlayers())
+    private val blackjackEngine = BlackjackEngine(eventListener = outputView, eventProvider = inputView)
+    private val dealer = blackjackEngine.prepareDealer()
+    private val players = blackjackEngine.preparePlayers(inputView.getNames())
+
+    tailrec fun run() {
+        blackjackEngine.getPlayersBet(players)
         outputView.displayFirstDrawEnd(dealer.name, players.value.map { player -> player.name })
-        outputView.displayParticipantCards(dealer.name, dealer.hand.cards.take(DEALER_FIRST_SHOWN_COUNT))
-        progressPlayersDraw(players)
-        progressDealerDraw(dealer)
-        displayParticipantsInfo(players)
-        displayResults(dealer, players)
+        outputView.displayParticipantCards(
+            dealer.name,
+            dealer.items.hand.cards
+                .take(DEALER_FIRST_SHOWN_COUNT),
+        )
+        progressDraw()
+        displayParticipantsInfo()
+        displayResult()
+        if (!inputView.moreGame()) return
+        blackjackEngine.setParticipantCard(dealer, players)
+        return run()
     }
 
-
-    private fun progressPlayersDraw(
-        players: Players,
-    ) {
-        players.value.forEach { player ->
-            outputView.displayParticipantCards(player.name, player.hand.cards)
-        }
-        players.value.forEach { player ->
-            progressPlayerDrawUntilFinished(player)
-        }
+    private fun displayResult() {
+        val currentResult = blackjackEngine.progressCalculateResult(dealer, players)
+        displayCurrentResult(currentResult, dealer, players)
+        blackjackEngine.progressCalculateFullResult(currentResult)
+        displayFullResult(dealer, players)
     }
 
-    private fun progressPlayerDrawUntilFinished(
-        player: Player,
-    ) {
-        while (inputView.getIsDrawMore(player.name)) {
-            blackjackEngine.playerDraw(player)
-            outputView.displayParticipantCards(player.name, player.hand.cards)
-            if (player.hand.isBust()) return
-        }
+    private fun progressDraw() {
+        blackjackEngine.progressPlayersDraw(players)
+        blackjackEngine.progressDealerDraw(dealer)
     }
 
-    private fun progressDealerDraw(
-        dealer: Dealer,
-    ) {
-        blackjackEngine.dealerDraw(dealer)
-        outputView.displayDealerDrawInfo(dealer.name, dealer.getAdditionalDrawCount())
-        outputView.displayParticipantInfo(dealer.name, dealer.hand.cards, dealer.hand.score(), dealer.hand.isBust())
-    }
-
-    private fun displayParticipantsInfo(players: Players) {
-        players.value.forEach { player ->
-            outputView.displayParticipantInfo(player.name, player.hand.cards, player.hand.score(), player.hand.isBust())
-        }
-    }
-
-    private fun displayResults(
+    private fun displayFullResult(
         dealer: Dealer,
         players: Players,
     ) {
         outputView.displayResultTitle()
+        outputView.displayResultMoney(dealer.name, dealer.items.money.value)
+        players.value.forEach { player ->
+            outputView.displayResultMoney(player.name, player.items.money.value)
+        }
+    }
 
-        val dealerResult = dealer.getWinDrawLossResult(players)
-        outputView.displayDealerResult(dealer.name, dealerResult)
+    private fun displayCurrentResult(
+        currentResult: Map<Participant, Money>,
+        dealer: Dealer,
+        players: Players,
+    ) {
+        outputView.displayCurrentResultTitle()
+        outputView.displayResultMoney(
+            dealer.name,
+            currentResult[dealer]?.value ?: throw IllegalArgumentException("[ERROR] 딜러를 찾을 수 없습니다."),
+        )
+        players.value.forEach { player ->
+            outputView.displayResultMoney(
+                player.name,
+                currentResult[player]?.value ?: throw IllegalArgumentException("[ERROR] 플레이어를 찾을 수 없습니다."),
+            )
+        }
+    }
 
-        val playerResults: Map<String, WinningResult> = players.results(dealer)
-        playerResults.forEach { (name, winningResult) ->
-            outputView.displayPlayerResult(name, winningResult)
+    private fun displayParticipantsInfo() {
+        players.value.forEach { player ->
+            outputView.displayParticipantInfo(
+                player.name,
+                player.items.hand.cards,
+                player.items.hand.score(),
+                player.items.hand.isBust(),
+            )
         }
     }
 

@@ -13,25 +13,31 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 
+val JACK_CLUB = Card.getCashed(JACK, CLUB)
+val QUEEN_CLUB = Card.getCashed(QUEEN, CLUB)
+val KING_CLUB = Card.getCashed(KING, CLUB)
+val ACE_CLUB = Card.getCashed(ACE, CLUB)
+val NINE_CLUB = Card.getCashed(NINE, CLUB)
+val TWO_CLUB = Card.getCashed(TWO, CLUB)
+
 class HandTest {
     @Test
     fun `뽑은 카드를 핸드에 추가한다`() {
         // given
-        val hand = Hand(listOf(Card(JACK,CLUB),Card(QUEEN,CLUB)))
-        val card = Card(ACE, CLUB)
+        val hand = Hand(listOf(JACK_CLUB, QUEEN_CLUB))
 
         // when
-        hand.add(card)
+        hand.add(ACE_CLUB)
 
         // then
-        assertTrue(hand.cards.contains(card))
+        assertTrue(hand.cards.contains(ACE_CLUB))
     }
 
     @Test
     fun `핸드에 2클로버 한 장,잭을 가지고 있으면 12점을 반환한다`() {
         // given
         val expectedScore = 12
-        val hand = Hand(listOf(Card(JACK,CLUB),Card(TWO, CLUB)))
+        val hand = Hand(listOf(JACK_CLUB, TWO_CLUB))
 
         // when
         val score = hand.score()
@@ -44,7 +50,7 @@ class HandTest {
     fun `핸드에 에이스를 포함한 값이 21이 넘으면 에이스를 1로 바꾼다`() {
         // given
         val expectedScore = 12
-        val hand = Hand(listOf(Card(ACE,CLUB),Card(ACE,CLUB)))
+        val hand = Hand(listOf(ACE_CLUB, ACE_CLUB))
 
         // when
         val score = hand.score()
@@ -56,14 +62,10 @@ class HandTest {
     @Test
     fun `21점이 초과하면 Bust를 반환한다`() {
         // given
-
-        val card1 = Card(QUEEN, CLUB)
-        val card2 = Card(KING, CLUB)
-        val card3 = Card(JACK, CLUB)
-        val hand = Hand(listOf(card1,card2))
+        val hand = Hand(listOf(QUEEN_CLUB, KING_CLUB))
 
         // when
-        hand.add(card3)
+        hand.add(JACK_CLUB)
 
         // then
         assertThat(hand.isBust()).isTrue()
@@ -72,13 +74,10 @@ class HandTest {
     @Test
     fun `ACE 1장, Q 1장, 9 1장을 가지고 있으면 20점을 반환한다`() {
         // given
-        val card1 = Card(ACE, CLUB)
-        val card2 = Card(QUEEN, CLUB)
-        val hand = Hand(listOf(card1,card2))
-        val card3 = Card(NINE, CLUB)
+        val hand = Hand(listOf(ACE_CLUB, QUEEN_CLUB))
 
-        //when
-        hand.add(card3)
+        // when
+        hand.add(NINE_CLUB)
         val expectedScore = 20
 
         // then
