@@ -7,9 +7,18 @@ class Players(private val players: List<Player>) : Iterable<Player> {
 
     override fun iterator(): Iterator<Player> = players.iterator()
 
-    fun getPlayersNames(): List<String> = players.map { player -> player.name }
+    fun getPlayersNames(): List<String> = players.map { it.name }
 
-    fun getPlayersScores(): List<Int> = players.map { player -> player.getScore() }
+    fun getPlayersCard(): List<List<Card>> = players.map { it.cards }
+
+    fun getPlayersScores(): List<Int> = players.map { it.getTotalScore() }
+
+    fun playersToPlayTurn(
+        getCard: () -> List<Card>,
+        showCards: (Player) -> Unit,
+    ) {
+        players.forEach { it.playTurn(getCard, { showCards(it) }) }
+    }
 
     companion object {
         private const val PLAYERS_NUMBER_ERROR_MESSAGE = "플레이어의 수는 1명 이상이어야 합니다"

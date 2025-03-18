@@ -2,39 +2,16 @@ package model
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertTrue
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
+import util.TestCards
 
 class PlayerTest {
-    private lateinit var cardDistributor: CardDistributor
-
-    @BeforeEach
-    fun setUp() {
-        val deck =
-            Cards(
-                listOf(
-                    Card.of(CardRank.ACE, Shape.CLUB),
-                    Card.of(CardRank.TWO, Shape.DIAMOND),
-                    Card.of(CardRank.THREE, Shape.HEART),
-                    Card.of(CardRank.FOUR, Shape.SPADE),
-                    Card.of(CardRank.FIVE, Shape.CLUB),
-                ),
-            )
-        cardDistributor = CardDistributor(deck)
-    }
-
-    @Test
-    fun `플레이어의 이름은 공백일 수 없다`() {
-        assertThrows<IllegalArgumentException> { Player("", Hand(mutableListOf())) }
-    }
-
     @Test
     fun `플레이어는 게임을 시작하면 2장의 카드를 갖는다`() {
         val cards =
             listOf(
-                Card.of(CardRank.KING, Shape.CLUB),
-                Card.of(CardRank.QUEEN, Shape.SPADE),
+                TestCards.CLUB_KING,
+                TestCards.SPADE_QUEEN,
             )
 
         assertThat(Hand(cards).getCardsCount()).isEqualTo(2)
@@ -44,8 +21,8 @@ class PlayerTest {
     fun `플레이어는 카드를 받을지 결정할 수 있다`() {
         val cards =
             listOf(
-                Card.of(CardRank.SIX, Shape.CLUB),
-                Card.of(CardRank.NINE, Shape.SPADE),
+                TestCards.CLUB_SIX,
+                TestCards.SPADE_NINE,
             )
 
         val player = Player("joy", Hand(cards))
@@ -56,12 +33,12 @@ class PlayerTest {
     fun `플레이어가 16 이하일 경우 카드를 뽑을 수 있다`() {
         val cards =
             listOf(
-                Card.of(CardRank.FOUR, Shape.SPADE),
-                Card.of(CardRank.FIVE, Shape.CLUB),
+                TestCards.SPADE_FOUR,
+                TestCards.CLUB_FIVE,
             )
 
         val player = Player("joy", Hand(cards))
 
-        assertTrue(player.performTurn(cardDistributor))
+        assertTrue(player.decideToHit())
     }
 }

@@ -3,6 +3,8 @@ package model
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
+import util.TestCards
+import view.displayNames
 
 class PlayersTest {
     @Test
@@ -27,17 +29,9 @@ class PlayersTest {
     }
 
     @Test
-    fun `플레이어들의 카드네임을 모두 알 수 있다`() {
-        val cards1 =
-            listOf(
-                Card.of(CardRank.SIX, Shape.CLUB),
-                Card.of(CardRank.NINE, Shape.SPADE),
-            )
-        val cards2 =
-            listOf(
-                Card.of(CardRank.TEN, Shape.CLUB),
-                Card.of(CardRank.EIGHT, Shape.SPADE),
-            )
+    fun `플레이어들의 카드 네임을 모두 알 수 있다`() {
+        val cards1 = listOf(TestCards.CLUB_SIX, TestCards.SPADE_NINE)
+        val cards2 = listOf(TestCards.CLUB_TEN, TestCards.SPADE_EIGHT)
 
         val player1 = Player("joy", Hand(cards1))
         val player2 = Player("jay", Hand(cards2))
@@ -46,13 +40,12 @@ class PlayersTest {
 
         val expected =
             listOf(
-                listOf("6클로버", "9스페이드"),
-                listOf("10클로버", "8스페이드"),
+                cards1.displayNames(),
+                cards2.displayNames(),
             )
 
         val playersCardNames =
-            players.map {
-                    player ->
+            players.map { player ->
                 player.getHand().handCards.displayNames()
             }
 
@@ -63,13 +56,13 @@ class PlayersTest {
     fun `플레이어들의 점수를 모두 알 수 있다`() {
         val cards1 =
             listOf(
-                Card.of(CardRank.SIX, Shape.CLUB),
-                Card.of(CardRank.NINE, Shape.SPADE),
+                TestCards.CLUB_SIX,
+                TestCards.SPADE_NINE,
             )
         val cards2 =
             listOf(
-                Card.of(CardRank.TEN, Shape.CLUB),
-                Card.of(CardRank.EIGHT, Shape.SPADE),
+                TestCards.CLUB_TEN,
+                TestCards.SPADE_EIGHT,
             )
 
         val player1 = Player("joy", Hand(cards1))

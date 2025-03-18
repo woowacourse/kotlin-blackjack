@@ -1,6 +1,7 @@
 package view
 
-import model.PlayerResult
+import model.Money
+import model.Player
 
 class OutputView {
     fun printDealerAndPlayers(players: List<String>) {
@@ -48,15 +49,14 @@ class OutputView {
     }
 
     fun printResult(
-        dealerWins: Int,
-        dealerLosses: Int,
-        playerResults: List<PlayerResult>,
+        dealerProfit: Money,
+        playersProfit: Map<Player, Money>,
     ) {
-        println("\n## 최종 승패")
-        println("딜러: ${dealerWins}승 ${dealerLosses}패")
+        println("\n## 최종 수익")
+        println("딜러: ${dealerProfit.amount}")
 
-        playerResults.forEach { playResult ->
-            println("${playResult.name}: ${playResult.result}")
+        playersProfit.forEach { (player, profit) ->
+            println("${player.name}: ${profit.amount}")
         }
     }
 }

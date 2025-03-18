@@ -6,6 +6,13 @@ class InputView {
         return readlnOrNull()?.split(",")?.map { it.trim() } ?: emptyList()
     }
 
+    fun inputBettingAmount(playerNames: List<String>): Map<String, Int> {
+        return playerNames.associateWith { playerName ->
+            println("${playerName}의 베팅 금액은?")
+            readln().toIntOrNull() ?: 0
+        }
+    }
+
     fun readHitOrStand(playerName: String): Boolean {
         println("${playerName}는 한 장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
         val answer = readln().lowercase()
