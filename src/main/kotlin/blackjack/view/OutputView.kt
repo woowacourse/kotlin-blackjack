@@ -1,7 +1,7 @@
 package blackjack.view
 
 import blackjack.model.GameManager.Companion.INITIAL_HAND_OUT_CARD_COUNT
-import blackjack.model.ResultType
+import blackjack.model.Profit
 import blackjack.model.card.Card
 import blackjack.model.card.CardNumber
 import blackjack.model.card.CardNumber.ACE
@@ -12,6 +12,7 @@ import blackjack.model.card.Shape
 import blackjack.model.participant.Dealer
 import blackjack.model.participant.Participant
 import blackjack.model.participant.Player
+import java.text.DecimalFormat
 
 class OutputView {
     fun printInitialHandOutCardMessage(players: List<Player>) {
@@ -33,19 +34,18 @@ class OutputView {
     }
 
     fun printDealerHandStatus(dealerCondition: Boolean) {
-        println()
         if (dealerCondition) {
             println(DEALER_HIT_MESSAGE)
         } else {
             println(DEALER_STAY_MESSAGE)
         }
-        println()
     }
 
     fun printFinalHandStatus(
         dealer: Dealer,
         players: List<Player>,
     ) {
+        println()
         println(
             FINAL_HANDS_STATUS_MESSAGE_FORMAT.format(
                 dealer.name,
@@ -57,20 +57,10 @@ class OutputView {
         println()
     }
 
-    fun printFinalResult(
-        resultMap: Map<Player, ResultType>,
-        dealerResult: Map<ResultType, Int>,
-    ) {
+    fun printFinalResult(profitResults: List<Profit>) {
         println(FINAL_RESULT_MESSAGE)
-
-        val dealerSummary =
-            listOf(ResultType.WIN, ResultType.TIE, ResultType.LOSS)
-                .filter { type -> dealerResult.getOrDefault(type, 0) > 0 }
-                .map { resultType -> "${dealerResult[resultType]}${getResultDisplayName(resultType)}" }
-        println(DEALER_RESULT_FORMAT.format(dealerSummary.joinToString(" ")))
-
-        resultMap.forEach { (player, result) ->
-            println(PLAYER_RESULT_FORMAT.format(player.name, getResultDisplayName(result)))
+        profitResults.forEach { profit ->
+            println(PLAYER_RESULT_FORMAT.format(profit.participant.name, profit.winningMoney.amount.formatAmount()))
         }
     }
 
@@ -113,22 +103,18 @@ class OutputView {
         }
     }
 
-    private fun getResultDisplayName(result: ResultType): String {
-        return when (result) {
-            ResultType.WIN -> DISPLAY_NAME_WIN
-            ResultType.TIE -> DISPLAY_NAME_TIE
-            ResultType.LOSS -> DISPLAY_NAME_DRAW
-        }
+    private fun Double.formatAmount(): String {
+        val formatter = DecimalFormat("#.##")
+        return formatter.format(this)
     }
 
     companion object {
         private const val INITIAL_HAND_OUT_CARD_MESSAGE_FORMAT = "\n딜러와 %s에게 %d장의 카드를 나누어 주었습니다."
-        private const val DEALER_HIT_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다."
-        private const val DEALER_STAY_MESSAGE = "딜러는 17이상이라 카드를 받지 않았습니다."
-        private const val FINAL_RESULT_MESSAGE = "## 최종 승패"
+        private const val DEALER_HIT_MESSAGE = "\n딜러는 16이하라 한장의 카드를 더 받았습니다."
+        private const val DEALER_STAY_MESSAGE = "\n딜러는 17이상이라 카드를 받지 않았습니다."
+        private const val FINAL_RESULT_MESSAGE = "## 최종 수익"
         private const val HANDS_STATUS_MESSAGE_FORMAT = "%s 카드: %s"
         private const val FINAL_HANDS_STATUS_MESSAGE_FORMAT = "%s 카드: %s - 결과: %s"
-        private const val DEALER_RESULT_FORMAT = "딜러: %s"
         private const val PLAYER_RESULT_FORMAT = "%s: %s"
 
         private const val DISPLAY_NAME_BLACKJACK = "블랙잭"
@@ -136,12 +122,9 @@ class OutputView {
         private const val DISPLAY_NAME_JACK = "J"
         private const val DISPLAY_NAME_QUEEN = "Q"
         private const val DISPLAY_NAME_KING = "K"
-        private const val DISPLAY_NAME_SPADE = "스페이드"
-        private const val DISPLAY_NAME_DIAMOND = "다이아몬드"
-        private const val DISPLAY_NAME_HEART = "하트"
-        private const val DISPLAY_NAME_CLOVER = "클로버"
-        private const val DISPLAY_NAME_WIN = "승"
-        private const val DISPLAY_NAME_TIE = "무"
-        private const val DISPLAY_NAME_DRAW = "패"
+        private const val DISPLAY_NAME_SPADE = " ♠️"
+        private const val DISPLAY_NAME_DIAMOND = " ♦️"
+        private const val DISPLAY_NAME_HEART = " ♥️"
+        private const val DISPLAY_NAME_CLOVER = " ♣️"
     }
 }

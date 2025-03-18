@@ -1,7 +1,8 @@
 package blackjack.controller
 
+import blackjack.model.BlackjackGame
 import blackjack.model.DrawChoice
-import blackjack.model.GameManager
+import blackjack.model.amount.BetAmount
 import blackjack.model.participant.Dealer
 import blackjack.model.participant.Player
 import blackjack.view.InputView
@@ -11,24 +12,29 @@ class BlackjackController(
     private val inputView: InputView,
     private val outputView: OutputView,
 ) {
-    private lateinit var gameManager: GameManager
-
     fun play(dealer: Dealer) {
         val players = playerSetting()
+        val blackjackGame = BlackjackGame(dealer, players)
 
         outputView.printInitialHandOutCardMessage(players)
-        gameManager = GameManager(dealer, players)
-        gameManager.startGame()
-        outputView.printAllPlayerHands(dealer, players)
-
-        if (!dealer.isBlackjack()) {
-            playersDrawCards(players)
-            dealerDrawCards(dealer)
-        }
+        startBlackjackGame(blackjackGame, dealer, players)
 
         outputView.printFinalHandStatus(dealer, players)
+        val result = blackjackGame.calculateResults()
+        outputView.printFinalResult(result)
+    }
 
-        resultSummary(gameManager)
+    private fun startBlackjackGame(
+        blackjackGame: BlackjackGame,
+        dealer: Dealer,
+        players: List<Player>,
+    ) {
+        blackjackGame.startGame(
+            wantsToDraw = { player -> getValidDrawChoice(player) },
+            onEndPlayerTurn = { player -> outputView.printPlayerHands(player) },
+            onEndDealerTurn = { status -> outputView.printDealerHandStatus(status) },
+            printAllHands = { outputView.printAllPlayerHands(dealer, players) },
+        )
     }
 
     private fun playerSetting(): List<Player> {
@@ -36,40 +42,23 @@ class BlackjackController(
         while (playerNames == null) {
             playerNames = inputView.readPlayerNames()
         }
-        return playerNames.map { Player(it) }
+
+        return playerNames.map { name ->
+            var betAmount: Int? = null
+            while (betAmount == null) {
+                betAmount = inputView.readBetAmount(name)
+            }
+            Player(name, BetAmount(betAmount.toDouble()))
+        }
     }
 
-    private fun playersDrawCards(players: List<Player>) {
-        players.forEach { player -> playerDrawOrStay(player) }
-    }
-
-    private fun playerDrawOrStay(player: Player) {
-        while (!player.isBust()) {
-            val playerChoice = inputView.readMoreCardCondition(player)
-            when (DrawChoice.from(playerChoice)) {
-                DrawChoice.YES -> {
-                    gameManager.drawCard(player)
-                    outputView.printPlayerHands(player)
-                }
-
-                DrawChoice.NO -> break
-
-                null -> continue
+    private fun getValidDrawChoice(player: Player): DrawChoice {
+        while (true) {
+            val input = inputView.readMoreCardCondition(player.name)
+            val choice = DrawChoice.from(input)
+            if (choice != null) {
+                return choice
             }
         }
-    }
-
-    private fun dealerDrawCards(dealer: Dealer) {
-        val moreCard = dealer.isMoreCard()
-        if (moreCard) {
-            gameManager.drawCard(dealer)
-        }
-        outputView.printDealerHandStatus(moreCard)
-    }
-
-    private fun resultSummary(gameManager: GameManager) {
-        val result = gameManager.calculateResultMap()
-        val dealerResult = gameManager.calculateDealerResult(result)
-        outputView.printFinalResult(result, dealerResult)
     }
 }

@@ -1,12 +1,11 @@
 package blackjack.model.participant
 
-import blackjack.model.ResultCalculator.BLACKJACK_NUMBER
+import blackjack.model.amount.BetAmount
 import blackjack.model.card.Card
 
 class Player(
     name: String,
+    val betAmount: BetAmount,
 ) : Participant(name) {
     override fun getInitialCard(): List<Card> = cards
-
-    override fun isBust() = score > BLACKJACK_NUMBER
 }

@@ -1,5 +1,6 @@
 package blackjack.model
 
+import blackjack.model.ResultType.BLACKJACK
 import blackjack.model.ResultType.LOSS
 import blackjack.model.ResultType.TIE
 import blackjack.model.ResultType.WIN
@@ -12,7 +13,7 @@ object ResultCalculator {
     const val BLACKJACK_NUMBER = 21
     private const val ADJUST_ACE_NUMBER = 10
 
-    fun adjustScore(cards: List<Card>): Int {
+    fun calculate(cards: List<Card>): Int {
         var sumScore = calculateTotalScore(cards)
         var countAce = countAce(cards)
         while (countAce-- > 0) {
@@ -24,21 +25,33 @@ object ResultCalculator {
         return sumScore
     }
 
+    private fun judgeState(
+        dealer: Dealer,
+        player: Player,
+    ): ResultType? {
+        return when {
+            player.isBust() -> LOSS
+            player.isBlackjack() && dealer.isBlackjack() -> TIE
+            player.isBlackjack() && !dealer.isBlackjack() -> BLACKJACK
+            dealer.isBust() -> WIN
+            else -> null
+        }
+    }
+
     fun judgeScore(
         dealer: Dealer,
         player: Player,
     ): ResultType {
-        if (player.isBust()) return LOSS
-        if (dealer.isBust()) return WIN
-
-        return when {
-            player.score > dealer.score -> WIN
-            player.score == dealer.score -> TIE
-            else -> LOSS
-        }
+        val stateResult = judgeState(dealer, player)
+        return stateResult
+            ?: when {
+                player.score > dealer.score -> WIN
+                player.score == dealer.score -> TIE
+                else -> LOSS
+            }
     }
 
-    fun calculateTotalScore(cards: List<Card>) = cards.sumOf { card -> card.number.score }
+    private fun calculateTotalScore(cards: List<Card>) = cards.sumOf { card -> card.number.score }
 
     private fun countAce(cards: List<Card>) = cards.count { it.number == CardNumber.ACE }
 }

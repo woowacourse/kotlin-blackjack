@@ -1,50 +1,42 @@
-package blackjack
+package blackjack.model.participant
 
 import blackjack.model.ResultCalculator
 import blackjack.model.ResultType
+import blackjack.model.amount.BetAmount
 import blackjack.model.card.Card
 import blackjack.model.card.CardNumber
 import blackjack.model.card.Shape
-import blackjack.model.participant.Dealer
-import blackjack.model.participant.Player
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-class ResultCalculatorTest {
+class PlayerTest {
     private lateinit var player: Player
 
     @BeforeEach
     fun setUp() {
-        player = Player("미플")
+        player = Player("미플", BetAmount(1.0))
     }
 
     @Test
-    fun `카드 총 합이 21을 넘고 ACE가 존재하면 점수 조정을 진행한다`() {
-        player.addCard(Card(Shape.SPADE, CardNumber.ACE))
-        player.addCard(Card(Shape.CLOVER, CardNumber.ACE))
-        player.addCard(Card(Shape.DIAMOND, CardNumber.ACE))
-        val expect = 13
-
-        val actual = ResultCalculator.adjustScore(player.cards)
-
-        assertThat(actual).isEqualTo(expect)
+    fun `플레이어는 이름을 가진다`() {
+        assertThat(player.name).isEqualTo("미플")
     }
 
     @Test
-    fun `플레이어 카드의 총 합을 계산한다`() {
+    fun `플레이어가 처음 공개하는 카드는 2장이다`() {
         player.addCard(Card(Shape.SPADE, CardNumber.NINE))
-        player.addCard(Card(Shape.SPADE, CardNumber.SEVEN))
-        val expect = 16
-        val actual = ResultCalculator.calculateTotalScore(player.cards)
+        player.addCard(Card(Shape.CLOVER, CardNumber.QUEEN))
+        val expect = 2
+
+        val actual = player.getInitialCard().size
 
         assertThat(actual).isEqualTo(expect)
     }
 
     @Test
-    fun `플레이어 카드 합이 딜러의 카드 합보다 작으면 LOSS를 반환한다`() {
+    fun `플레이어 카드 합이 딜러의 카드 합보다 작으면 진다`() {
         val dealer = Dealer()
-        val player = Player("플레이어")
         dealer.addCard(Card(Shape.CLOVER, CardNumber.NINE))
         dealer.addCard(Card(Shape.CLOVER, CardNumber.EIGHT))
         player.addCard(Card(Shape.HEART, CardNumber.EIGHT))

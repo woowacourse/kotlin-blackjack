@@ -1,5 +1,6 @@
 package blackjack.model
 
+import blackjack.model.amount.WinningMoney
 import blackjack.model.participant.Dealer
 import blackjack.model.participant.Participant
 import blackjack.model.participant.Player
@@ -10,7 +11,7 @@ class GameManager(
 ) {
     private var deck = Deck()
 
-    fun startGame() {
+    fun dealInitialCards() {
         deck = Deck()
         dealInitialCardWithCount()
     }
@@ -31,25 +32,32 @@ class GameManager(
         return playersStatus
     }
 
-    fun calculateDealerResult(resultMap: Map<Player, ResultType>): Map<ResultType, Int> {
-        val result = mutableMapOf<ResultType, Int>()
-
-        resultMap.forEach {
-            when (it.value) {
-                ResultType.WIN -> result[ResultType.LOSS] = result.getOrDefault(ResultType.LOSS, 0) + 1
-                ResultType.TIE -> result[ResultType.TIE] = result.getOrDefault(ResultType.TIE, 0) + 1
-                ResultType.LOSS -> result[ResultType.WIN] = result.getOrDefault(ResultType.WIN, 0) + 1
+    fun gameResult(result: Map<Player, ResultType>): List<Profit> {
+        val playerProfits =
+            result.map { (player, resultType) ->
+                Profit(player, calculateProfit(resultType, player))
             }
-        }
 
-        return result
+        val dealerProfit = calculateDealerProfit(playerProfits)
+        return listOf(dealerProfit) + playerProfits
     }
 
     fun drawCard(person: Participant) {
         person.addCard(deck.draw())
     }
 
+    fun calculateProfit(
+        resultType: ResultType,
+        player: Player,
+    ) = WinningMoney(player.betAmount.value * resultType.profit)
+
+    fun calculateDealerProfit(profitResults: List<Profit>): Profit {
+        val totalPlayerProfit = profitResults.sumOf { it.winningMoney.amount }
+        return Profit(dealer, WinningMoney(totalPlayerProfit * DEALER_PROFIT_MULTIPLIER))
+    }
+
     companion object {
         const val INITIAL_HAND_OUT_CARD_COUNT = 2
+        const val DEALER_PROFIT_MULTIPLIER = -1.0
     }
 }

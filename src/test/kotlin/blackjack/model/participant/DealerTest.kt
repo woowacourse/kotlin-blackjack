@@ -1,9 +1,8 @@
-package blackjack
+package blackjack.model.participant
 
 import blackjack.model.card.Card
 import blackjack.model.card.CardNumber
 import blackjack.model.card.Shape
-import blackjack.model.participant.Dealer
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -17,18 +16,12 @@ class DealerTest {
     }
 
     @Test
-    fun `딜러는 카드 한 장을 받을 수 있다`() {
-        dealer.addCard(Card(Shape.SPADE, CardNumber.NINE))
-        assertThat(dealer.cards.size).isEqualTo(1)
-    }
-
-    @Test
-    fun `딜러가 처음 공개하는 카드는 1장이다`() {
+    fun `딜러가 처음 공개하는 카드는 첫번째 카드이다`() {
         dealer.addCard(Card(Shape.SPADE, CardNumber.NINE))
         dealer.addCard(Card(Shape.CLOVER, CardNumber.QUEEN))
-        val expect = 1
+        val expect = Card(Shape.SPADE, CardNumber.NINE)
 
-        val actual = dealer.getInitialCard().size
+        val actual = dealer.getInitialCard().first()
 
         assertThat(actual).isEqualTo(expect)
     }
