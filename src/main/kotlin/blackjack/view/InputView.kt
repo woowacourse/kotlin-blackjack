@@ -17,7 +17,7 @@ class InputView {
     fun readBettingAmount(name: String): Int {
         println(MESSAGE_INPUT_BETTING_AMOUNT.format(name))
         val input = readln().trim().toIntOrNull()
-        if (input is Int) {
+        if (input != null) {
             return input
         }
         println(ERROR_INVALID_INPUT)
