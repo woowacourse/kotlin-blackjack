@@ -27,6 +27,39 @@ class BlackjackGame(
         printResults(dealer, players)
     }
 
+    private fun createPlayers(): List<Player> {
+        val playersName = inputView.readPlayerNames()
+        val players = playersName.map { Player(it) }
+        return players
+    }
+
+
+    private fun getBettingAmount(players: List<Player>) {
+        players.forEach { player ->
+            setBettingAmount(player)
+        }
+    }
+
+    private fun setBettingAmount(player: Player) {
+        runCatching {
+            val bettingAmount = inputView.readBettingAmount(player.name)
+            player.bet(bettingAmount)
+        }.onFailure { error ->
+            outputView.printError(error)
+            setBettingAmount(player)
+        }
+    }
+
+    private fun dealFirstTurn(
+        dealer: Dealer,
+        players: List<Player>,
+    ) {
+        dealer.state.draw(deck.draw())
+        players.forEach { it.state = it.state.draw(deck.draw()) }
+        players.forEach { it.state = it.state.draw(deck.draw()) }
+        outputView.printDealingResult(dealer, players)
+    }
+
     private fun turnPlayer(it: Player) {
         if (it.state.hand.isBust()) {
             outputView.printBust(it)
@@ -48,6 +81,16 @@ class BlackjackGame(
         return turnPlayer(it)
     }
 
+
+    private fun dealerPlay(dealer: Dealer) {
+        var count = 0
+        while (dealer.state.hand.sum() < 17) {
+            count++
+            dealer.state = dealer.state.draw(deck.draw())
+        }
+        outputView.printDealerHit(count)
+    }
+
     private fun printResults(
         dealer: Dealer,
         players: List<Player>,
@@ -62,47 +105,6 @@ class BlackjackGame(
         players.forEach {
             val playerProfit = it.profit(dealer)
             outputView.printPlayerProfit(it, playerProfit.toInt())
-        }
-    }
-
-    private fun dealerPlay(dealer: Dealer) {
-        var count = 0
-        while (dealer.state.hand.sum() < 17) {
-            count++
-            dealer.state = dealer.state.draw(deck.draw())
-        }
-        outputView.printDealerHit(count)
-    }
-
-    private fun dealFirstTurn(
-        dealer: Dealer,
-        players: List<Player>,
-    ) {
-        dealer.state.draw(deck.draw())
-        players.forEach { it.state = it.state.draw(deck.draw()) }
-        players.forEach { it.state = it.state.draw(deck.draw()) }
-        outputView.printDealingResult(dealer, players)
-    }
-
-    private fun createPlayers(): List<Player> {
-        val playersName = inputView.readPlayerNames()
-        val players = playersName.map { Player(it) }
-        return players
-    }
-
-    private fun getBettingAmount(players: List<Player>) {
-        players.forEach { player ->
-            setBettingAmount(player)
-        }
-    }
-
-    private fun setBettingAmount(player: Player) {
-        runCatching {
-            val bettingAmount = inputView.readBettingAmount(player.name)
-            player.bet(bettingAmount)
-        }.onFailure { error ->
-            outputView.printError(error)
-            setBettingAmount(player)
         }
     }
 }
