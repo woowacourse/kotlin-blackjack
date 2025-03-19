@@ -20,13 +20,6 @@ class Participants(
         dealer.pickCard(cardDeck, times)
     }
 
-    fun updateProfit() {
-        players.forEach { player ->
-            player.updateProfit(dealer)
-            dealer.updateProfit(player)
-        }
-    }
-
     companion object {
         private const val MIN_PLAYER_COUNT = 1
         private const val MAX_PLAYER_COUNT = 8

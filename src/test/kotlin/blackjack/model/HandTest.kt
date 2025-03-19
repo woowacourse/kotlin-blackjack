@@ -142,68 +142,66 @@ class HandTest {
     }
 
     @Test
-    fun `처음 턴이고, 카드들의 점수가 21이면 블랙잭 상태를 가진다`() {
-        val hand =
-            Hand(
-                listOf(
-                    Card(Suit.HEART, Denomination.ACE),
-                    Card(Suit.CLOVER, Denomination.TEN),
-                ),
-            )
-        val actual = hand.status
+    fun `내 카드가 블랙잭이고, 상대가 블랙잭이 아니면 승리를 반환한다`() {
+        val playerHand = Hand(listOf(Card(Suit.CLOVER, Denomination.ACE), Card(Suit.CLOVER, Denomination.TEN)))
+        val dealerHand = Hand(listOf(Card(Suit.CLOVER, Denomination.TEN), Card(Suit.CLOVER, Denomination.NINE)))
 
-        val expected = CardsStatus.BLACKJACK
+        val result = playerHand.gameResult(dealerHand)
 
-        assertThat(actual).isEqualTo(expected)
+        assertThat(result).isEqualTo(GameResult.BLACKJACK_WIN)
     }
 
     @Test
-    fun `처음 턴이고, 카드들의 점수가 21이 아니면 NONE 상태를 가진다`() {
-        val hand =
+    fun `플레이어가 버스트하면 패배를 반환한다`() {
+        val playerHand =
             Hand(
                 listOf(
-                    Card(Suit.HEART, Denomination.TEN),
                     Card(Suit.CLOVER, Denomination.TEN),
+                    Card(Suit.DIAMOND, Denomination.TEN),
+                    Card(Suit.CLOVER, Denomination.EIGHT),
                 ),
             )
-        val actual = hand.status
+        val dealerHand = Hand(listOf(Card(Suit.CLOVER, Denomination.TEN), Card(Suit.CLOVER, Denomination.SIX)))
 
-        val expected = CardsStatus.NONE
+        val result = playerHand.gameResult(dealerHand)
 
-        assertThat(actual).isEqualTo(expected)
+        assertThat(result).isEqualTo(GameResult.LOSE)
     }
 
     @Test
-    fun `카드가 추가된 후, 카드들의 점수가 21 초과일 경우 BUST 상태를 가진다`() {
-        val hand =
+    fun `상대가 버스트하고, 내가 버스트가 아니면 승리를 반환한다`() {
+        val playerHand = Hand(listOf(Card(Suit.CLOVER, Denomination.TEN), Card(Suit.CLOVER, Denomination.SIX)))
+        val dealerHand =
             Hand(
                 listOf(
-                    Card(Suit.HEART, Denomination.NINE),
                     Card(Suit.CLOVER, Denomination.TEN),
+                    Card(Suit.CLOVER, Denomination.SIX),
+                    Card(Suit.DIAMOND, Denomination.TEN),
                 ),
             )
-        hand.add(Card(Suit.DIAMOND, Denomination.TEN))
-        val actual = hand.status
 
-        val expected = CardsStatus.BUST
+        val result = playerHand.gameResult(dealerHand)
 
-        assertThat(actual).isEqualTo(expected)
+        assertThat(result).isEqualTo(GameResult.WIN)
     }
 
     @Test
-    fun `카드가 추가된 후, 카드들의 점수가 21이 초과되지 않으면 NONE 상태를 가진다`() {
-        val hand =
-            Hand(
-                listOf(
-                    Card(Suit.HEART, Denomination.TEN),
-                    Card(Suit.CLOVER, Denomination.TEN),
-                ),
-            )
-        hand.add(Card(Suit.SPADE, Denomination.ACE))
-        val actual = hand.status
+    fun `내 점수가 상대보다 높으면 승리를 반환한다`() {
+        val playerHand = Hand(listOf(Card(Suit.CLOVER, Denomination.TEN), Card(Suit.CLOVER, Denomination.SIX)))
+        val dealerHand = Hand(listOf(Card(Suit.CLOVER, Denomination.NINE), Card(Suit.CLOVER, Denomination.SIX)))
 
-        val expected = CardsStatus.NONE
+        val result = playerHand.gameResult(dealerHand)
 
-        assertThat(actual).isEqualTo(expected)
+        assertThat(result).isEqualTo(GameResult.WIN)
+    }
+
+    @Test
+    fun `내 점수가 상대보다 낮으면 패배를 반환한다`() {
+        val playerHand = Hand(listOf(Card(Suit.CLOVER, Denomination.TEN), Card(Suit.CLOVER, Denomination.FOUR)))
+        val dealerHand = Hand(listOf(Card(Suit.CLOVER, Denomination.QUEEN), Card(Suit.CLOVER, Denomination.FIVE)))
+
+        val result = playerHand.gameResult(dealerHand)
+
+        assertThat(result).isEqualTo(GameResult.LOSE)
     }
 }

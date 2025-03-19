@@ -37,10 +37,6 @@ class OutputView {
         println("${player.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
     }
 
-    fun printBust(participant: Participant) {
-        println("${participant.name}의 점수는 ${participant.hand.getScore()}점으로 21점을 초과하여 죽었습니다.")
-    }
-
     fun printDealerGettingCard() {
         println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.")
     }
@@ -61,9 +57,9 @@ class OutputView {
 
     private fun printTotalResult(participants: Participants) {
         println("\n## 최종 수익")
-        println("${participants.dealer.name}: ${participants.dealer.profit.value}")
+        println("${participants.dealer.name}: ${participants.dealer.calculateProfits(participants.players).value}")
         participants.players.forEach { player ->
-            println("${player.name}: ${player.profit.value}")
+            println("${player.name}: ${player.calculateProfit(participants.dealer.hand).value}")
         }
     }
 

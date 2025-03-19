@@ -8,7 +8,6 @@ enum class CardsStatus {
 
     companion object {
         const val BLACKJACK_SCORE = 21
-        const val BUST_SCORE = 0
         const val FIRST_TURN_CARD_COUNT = 2
 
         fun from(

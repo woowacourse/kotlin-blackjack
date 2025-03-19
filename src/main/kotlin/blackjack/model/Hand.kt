@@ -9,8 +9,7 @@ class Hand(
     private val _value: MutableList<Card> = value.toMutableList()
     val value: List<Card> get() = _value.map { card -> card.copy() }
 
-    var status: CardsStatus = CardsStatus.from(cardsScore = getScore(), cardsSize = value.size)
-        private set
+    private var status: CardsStatus = CardsStatus.from(cardsScore = getScore(), cardsSize = value.size)
 
     fun add(card: Card) {
         _value.add(card)
@@ -26,4 +25,16 @@ class Hand(
             score
         }
     }
+
+    fun gameResult(opponent: Hand): GameResult =
+        when {
+            isBlackjack() && opponent.isBlackjack().not() -> GameResult.BLACKJACK_WIN
+            isBust() -> GameResult.LOSE
+            opponent.isBust() -> GameResult.WIN
+            else -> GameResult.of(getScore(), opponent.getScore())
+        }
+
+    fun isBlackjack(): Boolean = status == CardsStatus.BLACKJACK
+
+    fun isBust(): Boolean = status == CardsStatus.BUST
 }

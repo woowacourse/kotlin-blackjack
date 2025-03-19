@@ -45,13 +45,11 @@ class BlackjackGame(
             executePlayerGame(player)
         }
         executeDealerGameLogic(participants.dealer)
-        participants.updateProfit()
         displayResult(participants)
     }
 
     private fun handleDealerBlackjack(participants: Participants): Boolean {
         if (participants.dealer.isBlackjack()) {
-            participants.updateProfit()
             outputView.printDealerBlackjack()
             displayResult(participants)
             return true
@@ -73,31 +71,22 @@ class BlackjackGame(
         player: Player,
     ): Boolean {
         when (playerBehavior) {
-            Behavior.HIT -> if (isHitPlayerBust(player)) return true
+            Behavior.HIT -> executeHitBehavior(player)
             Behavior.STAY -> return true
         }
         return false
     }
 
-    private fun isHitPlayerBust(player: Player): Boolean {
+    private fun executeHitBehavior(player: Player) {
         player.pickCard(cardDeck)
         outputView.printPlayerCard(player)
-        return isPlayerBust(player)
-    }
-
-    private fun isPlayerBust(player: Player): Boolean {
-        if (player.isBust()) {
-            outputView.printBust(player)
-            return true
-        }
-        return false
     }
 
     private fun executeDealerGameLogic(dealer: Dealer) {
         while (dealer.canHit()) {
             dealer.pickCard(cardDeck)
             outputView.printDealerGettingCard()
-            if (dealer.isBust()) break
+            if (!dealer.canHit()) break
         }
     }
 

@@ -1,9 +1,7 @@
 package blackjack.model
 
-import blackjack.model.BettingMoney.Companion.BLACKJACK_MULTIPLE
 import blackjack.model.CardsStatus.Companion.BLACKJACK_SCORE
 import blackjack.model.Dealer.Companion.DEFAULT_DEALER_NAME
-import blackjack.model.Profit.Companion.INITIAL_PROFIT
 
 class Player(
     name: String,
@@ -12,8 +10,6 @@ class Player(
     override val openCard: List<Card>
         get() = hand.value
     private lateinit var bettingMoney: BettingMoney
-
-    override var profit: Profit = Profit(INITIAL_PROFIT)
 
     init {
         require(name != DEFAULT_DEALER_NAME) { "플레이어는 ${DEFAULT_DEALER_NAME}라는 이름을 가질 수 없습니다." }
@@ -24,20 +20,11 @@ class Player(
         bettingMoney = money
     }
 
-    override fun canHit(): Boolean = getScore() < BLACKJACK_SCORE && !isBlackjack() && !isBust()
+    override fun canHit(): Boolean = getScore() < BLACKJACK_SCORE && !hand.isBlackjack() && !hand.isBust()
 
-    override fun updateProfit(opponent: Participant) {
-        val bettingAmount: Double = bettingMoney.value.toDouble()
-
-        profit =
-            when {
-                isBlackjack() && opponent.isBlackjack().not() -> Profit(bettingAmount * BLACKJACK_MULTIPLE)
-                isBust() -> Profit(-bettingAmount)
-                opponent.isBust() -> Profit(bettingAmount)
-                getScore() > opponent.getScore() -> Profit(bettingAmount)
-                getScore() < opponent.getScore() -> Profit(-bettingAmount)
-                else -> profit
-            }
+    fun calculateProfit(dealerHand: Hand): Profit {
+        val result = hand.gameResult(dealerHand)
+        return bettingMoney.profit(result)
     }
 
     enum class Behavior {

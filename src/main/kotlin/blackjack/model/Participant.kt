@@ -5,8 +5,6 @@ abstract class Participant(
     val hand: Hand = Hand(emptyList()),
 ) {
     abstract val openCard: List<Card>
-    abstract var profit: Profit
-        protected set
 
     fun pickCard(
         cardDeck: CardDeck,
@@ -20,13 +18,7 @@ abstract class Participant(
 
     fun getScore(): Int = hand.getScore()
 
-    fun isBlackjack(): Boolean = hand.status == CardsStatus.BLACKJACK
-
-    fun isBust(): Boolean = hand.status == CardsStatus.BUST
-
     abstract fun canHit(): Boolean
-
-    abstract fun updateProfit(opponent: Participant)
 
     companion object {
         private const val STANDARD_PICK_COUNT = 1

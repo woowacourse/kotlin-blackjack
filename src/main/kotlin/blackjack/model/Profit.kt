@@ -4,7 +4,7 @@ package blackjack.model
 value class Profit(
     val value: Double,
 ) {
-    companion object {
-        const val INITIAL_PROFIT = 0.0
-    }
+    operator fun plus(other: Profit): Profit = Profit(value + other.value)
+
+    fun reversed(): Profit = Profit(-value)
 }
