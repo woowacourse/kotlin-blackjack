@@ -58,14 +58,14 @@ class BlackjackController(
         blackjack: Blackjack,
         player: Player,
     ) {
-        while (!player.canHit()) {
+        while (player.canHit()) {
             val playerAction = inputView.askForHitOrStay(player)
             if (shouldStopDrawing(playerAction)) break
             blackjack.hitAction(player)
             outputView.printCardStatus(player)
         }
         when {
-            player.canHit() -> outputView.printNoMoreCards()
+            !player.canHit() -> outputView.printNoMoreCards()
             player.cardDeck.size == 2 -> outputView.printCardStatus(player)
         }
     }

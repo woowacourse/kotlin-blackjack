@@ -7,7 +7,7 @@ data class Player(override val name: String) : Participants() {
     override val hand: Hand = Hand(mutableListOf())
 
     override fun canHit(): Boolean {
-        return hand.isBust()
+        return !hand.isBust()
     }
 
     override fun showStartCards(): List<Card> {
