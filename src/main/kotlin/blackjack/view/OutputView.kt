@@ -28,6 +28,10 @@ class OutputView {
         println(makeFormat(player))
     }
 
+    fun printNoMoreCards() {
+        println(OUTPUT_NO_MORE_CARDS_MESSAGE)
+    }
+
     private fun makeFormat(player: Participants): String {
         return PLAYER_STATUS.format(player.name + CARD, displayCard(player.cardDeck))
     }
@@ -91,6 +95,7 @@ class OutputView {
     companion object {
         private const val OUTPUT_DISTRIBUTE_CARD: String = "\n%s와 %s에게 2장의 나누었습니다."
         private const val OUTPUT_DEALER_RECEIVE_CARD: String = "%s는 16이하라 한장의 카드를 더 받았습니다."
+        private const val OUTPUT_NO_MORE_CARDS_MESSAGE: String = "버스트가 되어서 카드를 더 뽑을 수 없습니다."
         private const val OUTPUT_PARTICIPANTS_CARD_RESULT: String = " - 결과: %d"
         private const val FINAL_RESULT: String = "\n## 최종 승패"
         private const val PLAYER_STATUS: String = "%s: %s"

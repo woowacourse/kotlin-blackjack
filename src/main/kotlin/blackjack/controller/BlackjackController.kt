@@ -64,7 +64,10 @@ class BlackjackController(
             blackjack.hitAction(player)
             outputView.printCardStatus(player)
         }
-        if (player.cardDeck.size == 2) outputView.printCardStatus(player)
+        when {
+            player.canHit() -> outputView.printNoMoreCards()
+            player.cardDeck.size == 2 -> outputView.printCardStatus(player)
+        }
     }
 
     private fun shouldStopDrawing(playerAction: ActionType): Boolean {
