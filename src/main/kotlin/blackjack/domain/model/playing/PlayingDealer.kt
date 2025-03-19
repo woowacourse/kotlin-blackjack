@@ -1,12 +1,13 @@
 package blackjack.domain.model.playing
 
 import blackjack.domain.model.Card
-import blackjack.domain.model.hand.DealerHit
+import blackjack.domain.model.hand.DealerStay
 import blackjack.domain.model.hand.Hands
+import blackjack.domain.model.hand.Hit
 import blackjack.domain.model.hand.State
 
 class PlayingDealer(override var handsState: State, override val name: String = DEALER_NAME) : PlayingParticipant() {
-    constructor(vararg card: Card) : this(DealerHit(Hands(card.toList())))
+    constructor(vararg card: Card) : this(Hit(DealerStay(), Hands(card.toList())))
 
     override fun showStartCards() = showCards().take(SHOW_START_DEALER_CARD_COUNT)
 

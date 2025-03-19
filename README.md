@@ -59,3 +59,11 @@
 ## 4차 피드백 사항
 - [x] Hand를 상태로 관리하도록 변경
 - [ ] InitService와 PlayingService 합치기 
+
+## 5차 피드백 사항
+- [x] 점수의 책임을 생각해보고 기능 나누기
+- [x] 단일 Hit를 통해서 상태 관리
+- [ ] Finished -> Initial 상속 관계 정리
+- [x] 보너스 점수 상수 -> Score로 이전
+- [ ] 고차 함수를 인터페이스로 변경 해보기
+- [ ] onPlayerState 호출을 init 조건에서 처리 하도록 수정

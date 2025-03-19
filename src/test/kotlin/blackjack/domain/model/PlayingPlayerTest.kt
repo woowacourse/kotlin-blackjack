@@ -9,7 +9,7 @@ import blackjack.domain.HEART_SIX
 import blackjack.domain.model.hand.BlackJack
 import blackjack.domain.model.hand.Bust
 import blackjack.domain.model.hand.Hands
-import blackjack.domain.model.hand.PlayerHit
+import blackjack.domain.model.hand.Hit
 import blackjack.domain.model.hand.State
 import blackjack.domain.model.hand.Stay
 import blackjack.domain.model.playing.PlayingPlayer
@@ -51,7 +51,7 @@ class PlayingPlayerTest {
     fun `플레이어는 20 이하일 경우 HandsState가 PlayerHit가 된다`() {
         val handState = playingPlayer.handsState
         playingPlayer.acceptCard(HEART_SIX) // score 17
-        assertThat(handState).isInstanceOf(PlayerHit::class.java)
+        assertThat(handState).isInstanceOf(Hit::class.java)
     }
 
     @Test

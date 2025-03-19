@@ -7,7 +7,7 @@ import blackjack.domain.HEART_KING
 import blackjack.domain.HEART_SIX
 import blackjack.domain.model.hand.BlackJack
 import blackjack.domain.model.hand.Bust
-import blackjack.domain.model.hand.DealerHit
+import blackjack.domain.model.hand.Hit
 import blackjack.domain.model.hand.Stay
 import blackjack.domain.model.playing.PlayingDealer
 import org.assertj.core.api.Assertions.assertThat
@@ -26,7 +26,7 @@ class PlayingDealerTest {
     fun `딜러는 16 이하일 경우 HIT 상태를 반환한다`() {
         val handState = playingDealer.handsState
         playingDealer.acceptCard(Card(Suit.HEART, Rank.FIVE)) // score 16
-        assertThat(handState).isInstanceOf(DealerHit::class.java)
+        assertThat(handState).isInstanceOf(Hit::class.java)
     }
 
     @Test
