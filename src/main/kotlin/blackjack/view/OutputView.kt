@@ -6,7 +6,7 @@ import blackjack.domain.model.playing.PlayingParticipant
 import blackjack.domain.model.playing.PlayingParticipants
 import blackjack.domain.model.playing.PlayingPlayer
 import blackjack.domain.model.profit.ProfitParticipant
-import blackjack.domain.model.service.InitService.Companion.START_CARD_COUNT
+import blackjack.domain.model.service.BlackJackService.Companion.START_CARD_COUNT
 
 class OutputView {
     fun printInitialDeals(playingParticipants: PlayingParticipants) {

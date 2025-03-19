@@ -1,13 +1,10 @@
 package blackjack.controller
 
-import blackjack.domain.model.Deck
 import blackjack.domain.model.Money
 import blackjack.domain.model.betting.BettingPlayer
 import blackjack.domain.model.betting.BettingPlayers
-import blackjack.domain.model.playing.PlayingParticipants
 import blackjack.domain.model.profit.ProfitParticipants
-import blackjack.domain.model.service.InitService
-import blackjack.domain.model.service.PlayingService
+import blackjack.domain.model.service.BlackJackService
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -16,14 +13,11 @@ class GameController(
     private val outputView: OutputView = OutputView(),
 ) {
     fun run() {
-        val deck = Deck()
         val playerNames = inputView.readPlayerNames()
-        val initService = InitService(playerNames, deck)
+        val blackJackService = BlackJackService.from(playerNames.toList())
         val bettingPlayers = initBettingPlayers(playerNames)
-        val initialParticipants = initParticipants(initService)
-        val playingService = PlayingService(initialParticipants, deck)
-        playHand(playingService)
-        announceResult(playingService.calculateProfitPlayers(bettingPlayers))
+        playHand(blackJackService)
+        announceResult(blackJackService.toProfitPlayers(bettingPlayers))
     }
 
     private fun initBettingPlayers(playerNames: Set<String>): BettingPlayers {
@@ -35,23 +29,14 @@ class GameController(
         return BettingPlayers(bettingPlayers)
     }
 
-    private fun initParticipants(initService: InitService): PlayingParticipants {
-        val initialParticipants = initService.initPlayingParticipants()
-        initService.dealInitialCard(initialParticipants)
-        outputView.printInitialDeals(initialParticipants)
-        outputView.printParticipantsStatus(initialParticipants)
-        return initialParticipants
-    }
-
-    private fun playHand(playingService: PlayingService) {
-        playingService.playPlayers(
+    private fun playHand(blackJackService: BlackJackService) {
+        blackJackService.dealInitialCard(outputView::printInitialDeals, outputView::printParticipantsStatus)
+        blackJackService.playPlayers(
             retryEvent { inputView::readPlayerAction },
             outputView::printPlayerStatus,
         )
-        playingService.playDealer {
-            outputView.printDealerHitsState()
-        }
-        outputView.printParticipantsResult(playingService.playingParticipants)
+
+        outputView.printParticipantsResult(blackJackService.playingParticipants)
     }
 
     private fun announceResult(profitParticipants: ProfitParticipants) {
