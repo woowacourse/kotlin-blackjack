@@ -105,6 +105,6 @@
 - [x] Player | 점수 비교 로직 Participants로 이동
 - [x] BlackjackController | 딜러의 수익 판단 메소드 생성
 - [x] 금액 출력을 Participants로 한번에 출력하도록 수정
-- [ ] 여러 객체들의 Test코드 작성
-- [ ] HandTest | methodSource를 활용한 getSumNumber에 대한 테스트 추가 생성
+- [x] 여러 객체들의 Test코드 작성
+- [x] HandTest | methodSource를 활용한 getSumNumber에 대한 테스트 추가 생성
 - [ ] BlackjackController | 버스트되어서 플레이어에게 카드를 뽑을 수 없다고 메시지 출력
