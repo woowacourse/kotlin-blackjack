@@ -6,12 +6,12 @@ import blackjack.domain.HEART_ACE
 import blackjack.domain.HEART_FOUR
 import blackjack.domain.HEART_KING
 import blackjack.domain.HEART_SIX
-import blackjack.domain.model.hand.BlackJack
-import blackjack.domain.model.hand.Bust
 import blackjack.domain.model.hand.Hands
-import blackjack.domain.model.hand.Hit
-import blackjack.domain.model.hand.State
-import blackjack.domain.model.hand.Stay
+import blackjack.domain.model.hand.state.BlackJack
+import blackjack.domain.model.hand.state.Bust
+import blackjack.domain.model.hand.state.Hit
+import blackjack.domain.model.hand.state.State
+import blackjack.domain.model.hand.state.Stay
 import blackjack.domain.model.playing.PlayingPlayer
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach

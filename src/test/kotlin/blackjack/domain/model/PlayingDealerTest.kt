@@ -5,10 +5,10 @@ import blackjack.domain.CLUB_SEVEN
 import blackjack.domain.HEART_ACE
 import blackjack.domain.HEART_KING
 import blackjack.domain.HEART_SIX
-import blackjack.domain.model.hand.BlackJack
-import blackjack.domain.model.hand.Bust
-import blackjack.domain.model.hand.Hit
-import blackjack.domain.model.hand.Stay
+import blackjack.domain.model.hand.state.BlackJack
+import blackjack.domain.model.hand.state.Bust
+import blackjack.domain.model.hand.state.Hit
+import blackjack.domain.model.hand.state.Stay
 import blackjack.domain.model.playing.PlayingDealer
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach

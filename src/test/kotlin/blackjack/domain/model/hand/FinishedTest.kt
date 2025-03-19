@@ -4,6 +4,8 @@ import blackjack.domain.HEART_ACE
 import blackjack.domain.model.Card
 import blackjack.domain.model.Rank
 import blackjack.domain.model.Suit
+import blackjack.domain.model.hand.state.Finished
+import blackjack.domain.model.hand.state.Stay
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.BeforeEach

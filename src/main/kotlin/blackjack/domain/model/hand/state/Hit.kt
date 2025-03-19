@@ -1,6 +1,8 @@
-package blackjack.domain.model.hand
+package blackjack.domain.model.hand.state
 
 import blackjack.domain.model.Card
+import blackjack.domain.model.hand.Hands
+import blackjack.domain.model.hand.strategy.StayStrategy
 
 class Hit(
     override val stayStrategy: StayStrategy,

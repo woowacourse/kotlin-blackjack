@@ -1,6 +1,7 @@
-package blackjack.domain.model.hand
+package blackjack.domain.model.hand.state
 
 import blackjack.domain.model.Card
+import blackjack.domain.model.hand.Hands
 
 sealed class Finished(hands: Hands) : Initial(hands) {
     override fun nextState(card: Card): State {

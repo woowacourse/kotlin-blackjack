@@ -2,10 +2,10 @@ package blackjack.domain.model.playing
 
 import blackjack.domain.model.Card
 import blackjack.domain.model.MatchResult
-import blackjack.domain.model.hand.BlackJack
-import blackjack.domain.model.hand.Bust
-import blackjack.domain.model.hand.State
-import blackjack.domain.model.hand.Stay
+import blackjack.domain.model.hand.state.BlackJack
+import blackjack.domain.model.hand.state.Bust
+import blackjack.domain.model.hand.state.State
+import blackjack.domain.model.hand.state.Stay
 
 abstract class PlayingParticipant {
     abstract val name: String

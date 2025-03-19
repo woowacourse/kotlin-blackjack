@@ -2,8 +2,8 @@ package blackjack.domain.model.service
 
 import blackjack.domain.model.Deck
 import blackjack.domain.model.hand.Hands
-import blackjack.domain.model.hand.Hit
-import blackjack.domain.model.hand.PlayerStay
+import blackjack.domain.model.hand.state.Hit
+import blackjack.domain.model.hand.strategy.PlayerStay
 import blackjack.domain.model.playing.PlayingDealer
 import blackjack.domain.model.playing.PlayingParticipants
 import blackjack.domain.model.playing.PlayingPlayer
