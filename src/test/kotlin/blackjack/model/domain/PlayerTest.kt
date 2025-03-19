@@ -108,4 +108,15 @@ class PlayerTest {
         // then
         assertThat(actual).isEqualTo(expected)
     }
+
+    @Test
+    fun `플레이어는 처음으로 카드 보여줄 때 항상 2장으로 출력된다`() {
+        // given
+        player1.receiveCard(listOf(Card.from("QueenHeart"), Card.from("AceHeart")))
+        // when
+        val actual = player1.showStartCards()
+        val expected = listOf(Card.from("QueenHeart"), Card.from("AceHeart"))
+        // then
+        assertThat(actual).isEqualTo(expected)
+    }
 }
