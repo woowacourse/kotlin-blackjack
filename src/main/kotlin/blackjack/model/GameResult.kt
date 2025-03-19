@@ -1,9 +1,12 @@
 package blackjack.model
 
-enum class GameResult {
-    PUSH,
-    WIN,
-    LOSE,
+enum class GameResult(
+    val rate: Double,
+) {
+    PUSH(0.0),
+    WIN(1.0),
+    BLACKJACK_WIN(1.5),
+    LOSE(-1.0),
     ;
 
     companion object {
@@ -23,6 +26,7 @@ enum class GameResult {
                 PUSH -> PUSH
                 WIN -> LOSE
                 LOSE -> WIN
+                BLACKJACK_WIN -> LOSE
             }
     }
 }

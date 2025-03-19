@@ -1,37 +1,31 @@
 package blackjack.model
 
-import blackjack.model.CardsStatus.Companion.BUST_SCORE
-
 class Dealer(
-    name: String = "딜러",
-    cards: Cards = Cards(mutableListOf()),
-) : Participant(name, cards) {
-    private var _results: MutableMap<GameResult, Int> = mutableMapOf()
-    val results: Map<GameResult, Int> get() = _results.toMap()
+    name: String = DEFAULT_DEALER_NAME,
+    hand: Hand = Hand(emptyList()),
+) : Participant(name, hand) {
+    override val firstOpenedCards: List<Card>
+        get() = listOf(hand.value[OPEN_CARD_INDEX])
 
-    fun isHit(): Boolean {
-        val dealerScore = cards.calculateScore()
-        return dealerScore <= 16
+    fun isBlackjack(): Boolean = hand.isBlackjack()
+
+    override fun canHit(): Boolean = getScore() <= DEALER_HIT_SCORE
+
+    fun calculateProfits(players: List<Player>): Profit {
+        var dealerProfit = Profit(DEFAULT_PROFIT)
+
+        players.forEach { player ->
+            val playerProfit: Profit = player.calculateProfit(hand)
+            dealerProfit += playerProfit.reversed()
+        }
+
+        return dealerProfit
     }
 
-    fun updateResult(playerScore: Int): GameResult {
-        if (playerScore == BUST_SCORE) {
-            val result: GameResult = GameResult.WIN
-            _results[result] = _results.getOrDefault(result, 0) + 1
-            return result
-        }
-        if (isBust()) {
-            val result: GameResult = GameResult.LOSE
-            _results[result] = _results.getOrDefault(result, 0) + 1
-            return result
-        }
-        return calculateResult(playerScore)
-    }
-
-    private fun calculateResult(playerScore: Int): GameResult {
-        val dealerScore: Int = cards.calculateScore()
-        val result: GameResult = GameResult.of(dealerScore, playerScore)
-        _results[result] = _results.getOrDefault(result, 0) + 1
-        return result
+    companion object {
+        const val DEFAULT_DEALER_NAME = "딜러"
+        private const val OPEN_CARD_INDEX = 0
+        private const val DEFAULT_PROFIT = 0.0
+        private const val DEALER_HIT_SCORE = 16
     }
 }

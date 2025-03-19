@@ -1,10 +1,10 @@
 package blackjack
 
-import blackjack.controller.BlackjackController
+import blackjack.controller.BlackjackGame
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
 fun main() {
-    val blackjackController = BlackjackController(InputView(), OutputView())
-    blackjackController.run()
+    val blackjackGame = BlackjackGame(InputView(), OutputView())
+    blackjackGame.run()
 }

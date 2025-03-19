@@ -4,15 +4,15 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
-class CardsStatusTest {
+class HandStatusTest {
     @ParameterizedTest
-    @CsvSource(value = ["21, true, BLACKJACK", "20, false, NONE", "21, false, NONE", "22, false, BUST"])
-    fun `카드들의 점수와 처음 턴 여부를 받아서 카드들의 상태를 반환한다`(
+    @CsvSource(value = ["21, 2, BLACKJACK", "20, 2, NONE", "21, 3, NONE", "22, 4, BUST"])
+    fun `카드들의 점수와 카드의 사이즈를 받아서 카드들의 상태를 반환한다`(
         cardsScore: Int,
-        firstTurn: Boolean,
+        cardsSize: Int,
         expected: CardsStatus,
     ) {
-        val actual = CardsStatus.from(cardsScore, firstTurn)
+        val actual = CardsStatus.from(cardsScore, cardsSize)
 
         assertThat(actual).isEqualTo(expected)
     }

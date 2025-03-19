@@ -2,14 +2,25 @@ package blackjack.model
 
 abstract class Participant(
     val name: String,
-    val cards: Cards = Cards(emptyList()),
+    val hand: Hand = Hand(emptyList()),
 ) {
-    fun pickCard(cardDeck: CardDeck) {
-        val card = cardDeck.pickCard()
-        cards.add(card)
+    abstract val firstOpenedCards: List<Card>
+
+    fun pickCard(
+        cardDeck: CardDeck,
+        times: Int = STANDARD_PICK_COUNT,
+    ) {
+        repeat(times) {
+            val card = cardDeck.pickCard()
+            hand.add(card)
+        }
     }
 
-    fun isBlackjack(): Boolean = cards.status == CardsStatus.BLACKJACK
+    fun getScore(): Int = hand.getScore()
 
-    fun isBust(): Boolean = cards.status == CardsStatus.BUST
+    abstract fun canHit(): Boolean
+
+    companion object {
+        private const val STANDARD_PICK_COUNT = 1
+    }
 }

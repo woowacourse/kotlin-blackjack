@@ -7,14 +7,14 @@ enum class CardsStatus {
     ;
 
     companion object {
-        private const val BLACKJACK_SCORE = 21
-        const val BUST_SCORE = 0
+        const val BLACKJACK_SCORE = 21
+        const val FIRST_TURN_CARD_COUNT = 2
 
         fun from(
             cardsScore: Int,
-            firstTurn: Boolean = false,
+            cardsSize: Int,
         ): CardsStatus {
-            if (firstTurn && cardsScore == BLACKJACK_SCORE) return BLACKJACK
+            if (cardsSize == FIRST_TURN_CARD_COUNT && cardsScore == BLACKJACK_SCORE) return BLACKJACK
             if (cardsScore > BLACKJACK_SCORE) return BUST
             return NONE
         }
