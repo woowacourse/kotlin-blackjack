@@ -7,7 +7,7 @@ class Player(
     name: String,
     hand: Hand = Hand(emptyList()),
 ) : Participant(name, hand) {
-    override val openCard: List<Card>
+    override val firstOpenedCards: List<Card>
         get() = hand.value
     private lateinit var bettingMoney: BettingMoney
 

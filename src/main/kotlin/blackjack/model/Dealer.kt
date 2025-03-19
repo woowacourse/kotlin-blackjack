@@ -4,7 +4,7 @@ class Dealer(
     name: String = DEFAULT_DEALER_NAME,
     hand: Hand = Hand(emptyList()),
 ) : Participant(name, hand) {
-    override val openCard: List<Card>
+    override val firstOpenedCards: List<Card>
         get() = listOf(hand.value[OPEN_CARD_INDEX])
 
     fun isBlackjack(): Boolean = hand.isBlackjack()
