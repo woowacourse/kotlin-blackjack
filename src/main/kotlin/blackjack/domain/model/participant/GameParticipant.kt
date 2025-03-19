@@ -27,18 +27,10 @@ abstract class GameParticipant(
 
     abstract val initCards: List<Card>
 
-    protected fun calculateWinLoss(rival: GameParticipant): WinLoss =
-        when {
-            (cardStatus == CardStatus.BLACKJACK) && (rival.cardStatus != CardStatus.BLACKJACK) -> WinLoss.WIN
-            cardStatus == CardStatus.BUST -> WinLoss.LOSE
-            (rival.cardStatus != CardStatus.BUST) && (rival.bestValue > bestValue) -> WinLoss.LOSE
-            (rival.cardStatus == CardStatus.BLACKJACK) && (cardStatus != CardStatus.BLACKJACK) -> WinLoss.LOSE
-            (rival.bestValue == bestValue) -> WinLoss.DRAW
-            else -> WinLoss.WIN
-        }
-
     private val cardSize: Int
         get() = handCards.cards.size
+
+    protected fun winLoss(rival: GameParticipant): WinLoss = handCards.calculateWinLoss(rival.cardStatus, rival.bestValue)
 
     fun isInitHandCard() = cardSize == HandCards.INIT_CARD_SIZE
 

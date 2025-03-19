@@ -1,6 +1,7 @@
 package blackjack.domain.model.card
 
 import blackjack.domain.model.card.Number.ACE
+import blackjack.domain.model.participant.WinLoss
 
 class HandCards(
     initCards: List<Card> = emptyList(),
@@ -27,6 +28,19 @@ class HandCards(
         }
         return minimumSum
     }
+
+    fun calculateWinLoss(
+        rivalStatus: CardStatus,
+        rivalBestValue: Int,
+    ): WinLoss =
+        when {
+            (getStatus() == CardStatus.BLACKJACK) && (rivalStatus != CardStatus.BLACKJACK) -> WinLoss.WIN
+            getStatus() == CardStatus.BUST -> WinLoss.LOSE
+            (rivalStatus != CardStatus.BUST) && (rivalBestValue > calculateBestCardValue()) -> WinLoss.LOSE
+            (rivalStatus == CardStatus.BLACKJACK) && (getStatus() != CardStatus.BLACKJACK) -> WinLoss.LOSE
+            (rivalBestValue == calculateBestCardValue()) -> WinLoss.DRAW
+            else -> WinLoss.WIN
+        }
 
     private fun calculateCardValueMinimumSum(cards: Collection<Card>): Int {
         val cardValues = cards.map { it.getMinimumValue() }

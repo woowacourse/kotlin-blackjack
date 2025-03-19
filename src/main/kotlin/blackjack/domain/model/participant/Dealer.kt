@@ -19,8 +19,8 @@ class Dealer(
         return bestCardValue <= DEALER_DRAW_LIMIT
     }
 
-    fun calculateProfit(players: Collection<Player>): Profit {
-        val playersProfitSum = players.sumOf { player -> player.calculateProfit(this).value }
+    fun allPlayersMatchProfit(players: Collection<Player>): Profit {
+        val playersProfitSum = players.sumOf { player -> player.dealerMatchProfit(this).value }
         return Profit(-playersProfitSum + 0.0)
     }
 

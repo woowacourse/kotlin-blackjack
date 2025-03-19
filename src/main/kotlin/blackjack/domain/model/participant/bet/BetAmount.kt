@@ -10,6 +10,8 @@ value class BetAmount(
 
     constructor() : this(DEFAULT_BET_AMOUNT)
 
+    fun calculateProfit(profitRate: ProfitRate): Profit = Profit(profitRate.value * value)
+
     companion object {
         private const val MINIMUM_BET_AMOUNT = 0
         private const val DEFAULT_BET_AMOUNT = 1

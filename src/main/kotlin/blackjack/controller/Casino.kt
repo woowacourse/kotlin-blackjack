@@ -76,10 +76,10 @@ class Casino(
         dealer: Dealer,
         players: List<Player>,
     ) {
-        val dealerProfitInfo: Pair<GameParticipant, Profit> = dealer to dealer.calculateProfit(players)
+        val dealerProfitInfo: Pair<GameParticipant, Profit> = dealer to dealer.allPlayersMatchProfit(players)
         val playerProfitInfos: List<Pair<GameParticipant, Profit>> =
             players.map { player ->
-                player to player.calculateProfit(dealer)
+                player to player.dealerMatchProfit(dealer)
             }
         views.output.showFinalProfit(listOf(dealerProfitInfo) + playerProfitInfos)
     }
