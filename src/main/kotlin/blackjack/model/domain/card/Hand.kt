@@ -5,11 +5,10 @@ class Hand(private val _cards: MutableList<Card>) {
 
     fun getSumNumber(): Int {
         val sum = _cards.sumOf { it.cardNumber.number }
-        return if (_cards.any { it.isAce() } && sum + CardNumber.BONUS_SCORE <= BUST_STANDARD) {
-            sum + CardNumber.BONUS_SCORE
-        } else {
-            sum
+        if (_cards.any { it.isAce() } && sum + CardNumber.BONUS_SCORE <= BUST_STANDARD) {
+            return sum + CardNumber.BONUS_SCORE
         }
+        return sum
     }
 
     fun append(card: List<Card>) {
@@ -27,7 +26,7 @@ class Hand(private val _cards: MutableList<Card>) {
     private fun MutableList<Card>.deepCopy(): List<Card> = map { it.copy() }
 
     companion object {
-        const val BUST_STANDARD: Int = 21
-        const val INIT_HAND_SIZE: Int = 2
+        private const val BUST_STANDARD: Int = 21
+        private const val INIT_HAND_SIZE: Int = 2
     }
 }

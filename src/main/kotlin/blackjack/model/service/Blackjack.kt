@@ -39,7 +39,7 @@ class Blackjack(private val deck: PlayingCard, private val playerGroup: PlayerGr
     }
 
     companion object {
-        const val INIT_CARD_AMOUNT = 2
-        const val ONE_CARD_AMOUNT = 1
+        private const val INIT_CARD_AMOUNT = 2
+        private const val ONE_CARD_AMOUNT = 1
     }
 }

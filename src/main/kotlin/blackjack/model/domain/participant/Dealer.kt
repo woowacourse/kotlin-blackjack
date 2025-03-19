@@ -16,6 +16,6 @@ class Dealer(override val name: String = DEALER_NAME) : Participants() {
 
     companion object {
         private const val DEALER_NAME: String = "딜러"
-        const val THRESHOLD: Int = 16
+        private const val THRESHOLD: Int = 16
     }
 }
