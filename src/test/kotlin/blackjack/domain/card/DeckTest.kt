@@ -8,24 +8,19 @@ class DeckTest {
     @Test
     fun `카드를 한 장 뽑는다`() {
         // Given
-        val cards = MutableList(3) { Card(CardNumber.ACE, CardPattern.HEART) }
-        val deck = Deck(cards)
+        val deck = Deck.createDefaultDeck()
 
         // When
         deck.draw()
 
         // Then
-        deck.cards.size shouldBe 2
+        deck.cards.size shouldBe 51
     }
 
     @Test
     fun `카드가 존재하지 않을 경우 카드를 뽑을 수 없다`() {
         // Given
-        val cards = mutableListOf(Card(CardNumber.ACE, CardPattern.HEART))
-        val deck = Deck(cards)
-
-        // When
-        deck.draw()
+        val deck = Deck.createCustomDeck(emptyList())
 
         // Then
         shouldThrowExactly<IllegalArgumentException> { deck.draw() }

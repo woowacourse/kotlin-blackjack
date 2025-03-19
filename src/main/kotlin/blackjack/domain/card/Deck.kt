@@ -1,25 +1,26 @@
 package blackjack.domain.card
 
-class Deck(private val _cards: MutableList<Card> = mutableListOf()) {
+class Deck private constructor(initialCards: List<Card>) {
+    private val _cards: MutableList<Card> = initialCards.toMutableList()
+
     val cards: List<Card>
         get() = _cards.toList()
-
-    init {
-        if (_cards.isEmpty()) _cards.addAll(generateDeck())
-    }
 
     fun draw(): Card {
         require(cards.isNotEmpty()) { NO_SUCH_ELEMENT_ERROR_MESSAGE }
         return _cards.removeFirst()
     }
 
-    private fun generateDeck(): List<Card> {
-        return CardPattern.entries.flatMap { pattern ->
-            CardNumber.entries.map { number -> Card(number, pattern) }
-        }.shuffled()
-    }
-
     companion object {
         private const val NO_SUCH_ELEMENT_ERROR_MESSAGE = "남은 카드가 없습니다."
+
+        fun createDefaultDeck(): Deck {
+            val cards = CardFactory.create()
+            return Deck(cards.shuffled())
+        }
+
+        fun createCustomDeck(cards: List<Card>): Deck {
+            return Deck(cards)
+        }
     }
 }

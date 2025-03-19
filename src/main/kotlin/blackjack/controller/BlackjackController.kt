@@ -1,9 +1,11 @@
 package blackjack.controller
 
-import blackjack.domain.Game
 import blackjack.domain.GameResult
+import blackjack.domain.betting.BettingAmount
+import blackjack.domain.betting.BettingInfo
 import blackjack.domain.card.Deck
 import blackjack.domain.participants.Dealer
+import blackjack.domain.participants.Participant
 import blackjack.domain.participants.Player
 import blackjack.uimodel.ParticipantsUiModel
 import blackjack.uimodel.ResultUiModel
@@ -16,12 +18,13 @@ class BlackjackController(
 ) {
     fun play() {
         val players = generatePlayers()
-        val game = generateGame(players)
+        val bettingInfos = generateBettingInfos(players)
+        val dealer = Dealer(Deck.createDefaultDeck())
 
-        showInitialDraw(game)
-        askHit(game)
-        showDealerDraw(game)
-        showResult(game)
+        initialDraw(dealer, players)
+        processPlayersTurn(dealer, players)
+        processDealerTurn(dealer)
+        showResult(dealer, players, bettingInfos)
     }
 
     private fun generatePlayers(): List<Player> {
@@ -29,30 +32,66 @@ class BlackjackController(
         return playerNames.map { Player(it) }
     }
 
-    private fun generateGame(players: List<Player>): Game {
-        val deck = Deck()
-        val dealer = Dealer(deck)
-        return Game(dealer, players)
+    private fun generateBettingInfos(players: List<Player>): List<BettingInfo> {
+        return players.map { player ->
+            val bettingAmount = BettingAmount(inputView.getBettingAmount(player.name))
+            BettingInfo(player, bettingAmount)
+        }
     }
 
-    private fun showInitialDraw(game: Game) {
-        outputView.printDrawMessage(toParticipantsUiModel(game.dealer, game.players))
+    private fun initialDraw(
+        dealer: Dealer,
+        players: List<Player>,
+    ) {
+        players.forEach { player ->
+            handOutCard(dealer, player)
+        }
+        handOutCard(dealer, dealer)
+        outputView.printDrawMessage(toParticipantsUiModel(dealer, players))
     }
 
-    private fun askHit(game: Game) {
-        game.askHit(
-            decideHit = { inputView.getFlag(it) },
-            onHit = { outputView.printDrawStatus(ParticipantsUiModel.create(it)) },
-        )
+    private fun processPlayersTurn(
+        dealer: Dealer,
+        players: List<Player>,
+    ) {
+        players.forEach { player ->
+            processEachPlayerTurn(dealer, player)
+        }
     }
 
-    private fun showDealerDraw(game: Game) {
-        outputView.printDealerDrawMessage(game.processDealerHit())
+    private fun processEachPlayerTurn(
+        dealer: Dealer,
+        player: Player,
+    ) {
+        while (player.canHit() && inputView.getUserChoice(player.name)) {
+            handOutCard(dealer, player)
+            outputView.printDrawStatus(ParticipantsUiModel.create(player))
+        }
     }
 
-    private fun showResult(game: Game) {
-        outputView.printCardScore(toParticipantsUiModel(game.dealer, game.players))
-        val result = GameResult.create(game.dealer, game.players)
+    private fun processDealerTurn(dealer: Dealer) {
+        while (dealer.canHit()) {
+            handOutCard(dealer, dealer)
+            outputView.printDealerDrawMessage()
+        }
+    }
+
+    private fun handOutCard(
+        dealer: Dealer,
+        participant: Participant,
+    ) {
+        repeat(participant.getDrawAmount()) {
+            dealer.handOut(participant)
+        }
+    }
+
+    private fun showResult(
+        dealer: Dealer,
+        players: List<Player>,
+        bettingInfos: List<BettingInfo>,
+    ) {
+        outputView.printCardScore(toParticipantsUiModel(dealer, players))
+        val result = GameResult.create(dealer, bettingInfos)
         outputView.printResult(ResultUiModel.create(result))
     }
 
@@ -60,6 +99,6 @@ class BlackjackController(
         dealer: Dealer,
         players: List<Player>,
     ): List<ParticipantsUiModel> {
-        return listOf(ParticipantsUiModel.create(dealer)) + players.map(ParticipantsUiModel::create)
+        return listOf(ParticipantsUiModel.create(dealer, true)) + players.map(ParticipantsUiModel::create)
     }
 }
