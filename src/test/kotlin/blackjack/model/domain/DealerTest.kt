@@ -41,4 +41,13 @@ class DealerTest {
         // then
         assertThat(actual).isFalse()
     }
+
+    @Test
+    fun `딜러는 처음으로 카드 보여줄 때 항상 1장으로 출력된다`() {
+        // when
+        val actual = dealer.showStartCards()
+        val expected = listOf(Card.from("AceHeart"))
+        // then
+        assertThat(actual).isEqualTo(expected)
+    }
 }
