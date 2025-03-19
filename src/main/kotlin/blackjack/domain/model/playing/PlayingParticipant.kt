@@ -4,6 +4,7 @@ import blackjack.domain.model.Card
 import blackjack.domain.model.MatchResult
 import blackjack.domain.model.hand.state.BlackJack
 import blackjack.domain.model.hand.state.Bust
+import blackjack.domain.model.hand.state.Finished
 import blackjack.domain.model.hand.state.State
 import blackjack.domain.model.hand.state.Stay
 
@@ -18,6 +19,12 @@ abstract class PlayingParticipant {
     fun acceptCard(card: Card) {
         handsState = handsState.nextState(card)
     }
+
+    fun stay(): Finished = handsState.stay()
+
+    fun isStarted(): Boolean = handsState.isStarted()
+
+    fun isFinished(): Boolean = handsState.isFinished()
 
     fun match(otherState: State): MatchResult =
         when (handsState.stay()) {

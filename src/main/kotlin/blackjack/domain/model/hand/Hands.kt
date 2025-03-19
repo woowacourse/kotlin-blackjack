@@ -10,13 +10,15 @@ class Hands(private val _cards: List<Card>) {
 
     private val size get() = _cards.size
 
+    fun isStartHandsCount() = size == START_CARD_COUNT
+
     fun extractCards(count: Int): List<Card> = cards.take(count)
 
     fun nextHand(card: Card) = Hands(cards + card)
 
     fun score() = Score(cards)
 
-    fun isBlackJack() = score().isMaxScore() && size == START_CARD_COUNT
+    fun isBlackJack() = score().isMaxScore() && isStartHandsCount()
 
     fun isBustScore() = score().isBustScore()
 

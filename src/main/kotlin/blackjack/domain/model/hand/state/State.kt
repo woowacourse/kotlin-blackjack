@@ -12,5 +12,7 @@ interface State {
 
     fun isFinished(): Boolean
 
+    fun isStarted(): Boolean
+
     fun score(): Score
 }

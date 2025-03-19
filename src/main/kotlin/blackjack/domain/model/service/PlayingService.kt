@@ -22,11 +22,11 @@ class PlayingService(val playingParticipants: PlayingParticipants, private val d
         onUserAction: (PlayingParticipant) -> UserChoice,
         onPlayerState: (PlayingParticipant) -> Unit,
     ) {
-        if (playingParticipant.handsState.isFinished()) return
+        if (playingParticipant.isFinished()) return
         val choice = onUserAction(playingParticipant)
         if (UserChoice.STAY == choice) {
-            playingParticipant.handsState.stay()
-            if (playingParticipant.handsState.cards().size == 2) onPlayerState(playingParticipant)
+            playingParticipant.stay()
+            if (playingParticipant.isStarted()) onPlayerState(playingParticipant)
             return
         }
         playingParticipant.acceptCard(deck.draw())
@@ -36,7 +36,7 @@ class PlayingService(val playingParticipants: PlayingParticipants, private val d
 
     fun playDealer(onDealerHitsState: () -> Unit) {
         val playingDealer = playingParticipants.dealer
-        if (playingDealer.handsState.isFinished()) return
+        if (playingDealer.isFinished()) return
         onDealerHitsState()
         playingDealer.acceptCard(deck.draw())
         playDealer(onDealerHitsState)

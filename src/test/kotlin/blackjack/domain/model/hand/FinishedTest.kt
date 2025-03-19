@@ -35,4 +35,9 @@ class FinishedTest {
     fun `Finished는 끝난 상태다`() {
         assertThat(finished.isFinished()).isTrue()
     }
+
+    @Test
+    fun `Finished는 시작 상태가 아니다`() {
+        assertThat(finished.isStarted()).isFalse()
+    }
 }
