@@ -18,7 +18,6 @@ class InputView {
     fun readPlayerAction(player: PlayingParticipant): UserChoice {
         println(MESSAGE_ENTER_PLAYER_YES_OR_NO.format(player.name))
         val input: String = readln()
-        require(input == CHOICE_YES || input == CHOICE_NO) { ERROR_INVALID_CHOICE }
         return convertChoice(input)
     }
 

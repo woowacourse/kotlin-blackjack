@@ -17,6 +17,7 @@ class GameController(
         val blackJackService = BlackJackService.from(playerNames.toList())
         val bettingPlayers = initBettingPlayers(playerNames)
         playHand(blackJackService)
+        blackJackService.playDealer(outputView::printDealerHitsState)
         announceResult(blackJackService.toProfitPlayers(bettingPlayers))
     }
 

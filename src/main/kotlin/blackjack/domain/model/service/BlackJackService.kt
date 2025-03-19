@@ -22,11 +22,9 @@ class BlackJackService private constructor(val playingParticipants: PlayingParti
         onPlayerStates: (PlayingParticipants) -> Unit,
     ) {
         repeat(START_CARD_COUNT) {
-            initialDeal(playingParticipants)
             dealParticipantsCards()
         }
         initialDeal(playingParticipants)
-        onPlayerStates(playingParticipants)
         onPlayerStates(playingParticipants)
     }
 
