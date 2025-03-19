@@ -53,19 +53,12 @@ class OutputView {
         }
     }
 
-    fun playerResult(playersBetResult: List<PlayerBetResult>) {
+    fun participantsMoneyResult(playersBetResult: List<PlayerBetResult>) {
+        println(FINAL_RESULT)
         playersBetResult.forEach { (player, betAmount) ->
             println(PLAYER_STATUS.format(player.name, formatNumber(betAmount)))
         }
         println()
-    }
-
-    fun dealerResult(
-        dealer: Dealer,
-        dealerNetProfit: Float,
-    ) {
-        println(FINAL_RESULT)
-        println(PLAYER_STATUS.format(dealer.name, formatNumber(dealerNetProfit)))
     }
 
     private fun formatNumber(value: Float): String {
