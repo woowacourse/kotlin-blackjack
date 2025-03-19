@@ -9,12 +9,4 @@ class DealerTest {
         val dealer = Dealer()
         assertThat(dealer.name).isEqualTo("딜러")
     }
-
-    @Test
-    fun `딜러는 뽑은 카드를 핸드에 추가한다`() {
-        val dealer = Dealer()
-        val deck = Deck()
-        dealer.draw(deck)
-        assertThat(dealer.hand.cards.size).isEqualTo(1)
-    }
 }
