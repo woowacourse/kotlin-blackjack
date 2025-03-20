@@ -1,26 +1,30 @@
 package blackjack.view
 
-import blackjack.domain.model.Choice
-import blackjack.domain.model.Participant
+import blackjack.domain.model.hand.UserChoice
+import blackjack.domain.model.playing.PlayingParticipant
 
 class InputView {
-    fun readPlayerNames(): List<String> {
+    fun readPlayerNames(): Set<String> {
         println(MESSAGE_ENTER_PLAYER_NAMES)
         val input: String = readln()
-        return input.split(PLAYER_NAMES_DELIMITER).map { name: String -> name.trim() }
+        return input.split(PLAYER_NAMES_DELIMITER).map { name: String -> name.trim() }.toSet()
     }
 
-    fun readPlayerAction(player: Participant): Choice {
+    fun readPlayerBetAmount(playerName: String): Double {
+        println("${playerName}의 배팅 금액은?")
+        return requireNotNull(readln().toDoubleOrNull()) { "배팅 금액은 소수를 입력해주세요" }
+    }
+
+    fun readPlayerAction(player: PlayingParticipant): UserChoice {
         println(MESSAGE_ENTER_PLAYER_YES_OR_NO.format(player.name))
         val input: String = readln()
-        require(input == CHOICE_YES || input == CHOICE_NO) { ERROR_INVALID_CHOICE }
         return convertChoice(input)
     }
 
-    private fun convertChoice(input: String): Choice {
+    private fun convertChoice(input: String): UserChoice {
         require(input == CHOICE_YES || input == CHOICE_NO) { ERROR_INVALID_CHOICE }
-        if (input == CHOICE_YES) return Choice.YES
-        return Choice.NO
+        if (input == CHOICE_YES) return UserChoice.HIT
+        return UserChoice.STAY
     }
 
     companion object {

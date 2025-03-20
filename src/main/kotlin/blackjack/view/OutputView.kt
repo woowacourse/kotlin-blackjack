@@ -1,51 +1,50 @@
 package blackjack.view
 
-import blackjack.domain.model.Dealer
-import blackjack.domain.model.Hands.Companion.START_CARD_COUNT
-import blackjack.domain.model.Participant
-import blackjack.domain.model.Participants
-import blackjack.domain.model.Player
 import blackjack.domain.model.Rank
 import blackjack.domain.model.Suit
-import blackjack.domain.model.VerdictResult
+import blackjack.domain.model.playing.PlayingParticipant
+import blackjack.domain.model.playing.PlayingParticipants
+import blackjack.domain.model.playing.PlayingPlayer
+import blackjack.domain.model.profit.ProfitParticipant
+import blackjack.domain.model.service.BlackJackService.Companion.START_CARD_COUNT
 
 class OutputView {
-    fun printInitialDeals(participants: Participants) {
+    fun printInitialDeals(playingParticipants: PlayingParticipants) {
         println(
             MESSAGE_INITIAL_HAND_DISTRIBUTED.format(
-                participants.findDealer().name,
-                participants.filterPlayers().map(Participant::name).joinToString(PLAYER_CARDS_DELIMITER),
+                playingParticipants.dealer.name,
+                playingParticipants.players.map(PlayingPlayer::name).joinToString(PLAYER_CARDS_DELIMITER),
                 START_CARD_COUNT,
             ),
         )
     }
 
-    fun printParticipantsStatus(participants: Participants) {
-        participants.participants.forEach { participant ->
-            println(renderParticipantsInitStatus(participant))
-        }
-    }
-
-    private fun renderParticipantsInitStatus(participant: Participant): String {
-        return participant.name + PLAYER_NAME_STATUS_DELIMITER +
-            participant.showInitCards()
+    private fun renderParticipantsInitStatus(playingParticipant: PlayingParticipant): String {
+        return playingParticipant.name + PLAYER_NAME_STATUS_DELIMITER +
+            playingParticipant.showStartCards()
                 .joinToString { convertKoreanRank(it.rank) + convertKoreanSuit(it.suit) }
     }
 
-    fun printPlayerStatus(player: Participant) {
+    fun printPlayerStatus(player: PlayingParticipant) {
         println(renderParticipantsStatus(player))
     }
 
-    fun printParticipantsResult(participants: Participants) {
-        participants.participants.forEach { participant ->
-            println(renderParticipantsStatus(participant) + PLAYER_RESULT_DELIMITER + participant.getScore())
+    fun printParticipantsResult(playingParticipants: PlayingParticipants) {
+        playingParticipants.participants.forEach { participant ->
+            println(renderParticipantsStatus(participant) + PLAYER_RESULT_DELIMITER + participant.handsState.score())
         }
     }
 
-    private fun renderParticipantsStatus(participant: Participant): String {
-        return participant.name + PLAYER_NAME_STATUS_DELIMITER +
-            participant.showCards()
+    private fun renderParticipantsStatus(playingParticipant: PlayingParticipant): String {
+        return playingParticipant.name + PLAYER_NAME_STATUS_DELIMITER +
+            playingParticipant.showCards()
                 .joinToString { convertKoreanRank(it.rank) + convertKoreanSuit(it.suit) }
+    }
+
+    fun printParticipantsStatus(participants: PlayingParticipants) {
+        participants.participants.forEach { participant ->
+            println(renderParticipantsInitStatus(participant))
+        }
     }
 
     fun printDealerHitsState() {
@@ -56,17 +55,14 @@ class OutputView {
         println(MESSAGE_RESULTS_HEADER)
     }
 
-    fun printDealerVerdicts(dealer: Dealer) {
-        print(dealer.name + NAME_RESULT_DELIMITER)
-        dealer.getRecord().filter { it.value > 0 }.forEach { (verdict, count) ->
-            print("${count}${convertKoreanVerdict(verdict)} ")
-        }
+    fun printDealerProfit(profitDealer: ProfitParticipant) {
+        print(profitDealer.name + NAME_RESULT_DELIMITER + profitDealer.profit.value)
         println()
     }
 
-    fun printPlayersVerdict(players: List<Player>) {
-        players.forEach { player ->
-            println(player.name + NAME_RESULT_DELIMITER + convertKoreanVerdict(player.getCurrentVerdict()))
+    fun printPlayersProfit(profitPlayers: List<ProfitParticipant>) {
+        profitPlayers.forEach { profitParticipant ->
+            println(profitParticipant.name + NAME_RESULT_DELIMITER + profitParticipant.profit.value)
         }
     }
 
@@ -88,14 +84,6 @@ class OutputView {
             Rank.ACE -> "A"
             Rank.TWO, Rank.THREE, Rank.FOUR, Rank.FIVE, Rank.SIX, Rank.SEVEN, Rank.EIGHT, Rank.NINE, Rank.TEN -> rank.score.toString()
             Rank.JACK, Rank.QUEEN, Rank.KING -> Rank.TEN.score.toString()
-        }
-    }
-
-    private fun convertKoreanVerdict(verdict: VerdictResult): String {
-        return when (verdict) {
-            VerdictResult.WIN -> "승"
-            VerdictResult.LOSE -> "패"
-            VerdictResult.DRAW -> "무"
         }
     }
 
