@@ -8,14 +8,11 @@ value class BetAmount(
         require(value > MINIMUM_BET_AMOUNT) { ERROR_INVALID_BET_AMOUNT }
     }
 
-    constructor() : this(DEFAULT_BET_AMOUNT)
-
     fun calculateProfit(profitRate: ProfitRate): Profit = Profit(profitRate.value * value)
 
     companion object {
         private const val MINIMUM_BET_AMOUNT = 0
-        private const val DEFAULT_BET_AMOUNT = 1
 
-        private const val ERROR_INVALID_BET_AMOUNT = "베팅 금액은 0보다 커야 합니다"
+        private const val ERROR_INVALID_BET_AMOUNT = "베팅 금액은 ${MINIMUM_BET_AMOUNT}보다 커야 합니다"
     }
 }

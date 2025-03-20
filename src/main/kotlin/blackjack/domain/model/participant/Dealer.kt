@@ -1,12 +1,11 @@
 package blackjack.domain.model.participant
 
 import blackjack.domain.model.card.Card
-import blackjack.domain.model.participant.bet.BetAmount
 import blackjack.domain.model.participant.bet.Profit
 
 class Dealer(
-    participantInfo: ParticipantInfo = ParticipantInfo(DEFAULT_NAME, BetAmount()),
-) : GameParticipant(participantInfo = participantInfo) {
+    name: String = DEFAULT_NAME,
+) : GameParticipant(name = name) {
     override val initCards: List<Card>
         get() = cards.subList(0, 1)
 

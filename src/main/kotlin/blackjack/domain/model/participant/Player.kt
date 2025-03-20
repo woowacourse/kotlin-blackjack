@@ -7,20 +7,21 @@ import blackjack.domain.model.participant.bet.Profit
 import blackjack.domain.model.participant.bet.ProfitRate
 
 class Player(
-    playerInfo: ParticipantInfo = ParticipantInfo(DEFAULT_NAME, BetAmount()),
-) : GameParticipant(participantInfo = playerInfo) {
+    name: String = DEFAULT_NAME,
+    private val betAmount: BetAmount,
+) : GameParticipant(name = name) {
     override val initCards: List<Card>
         get() = cards.subList(0, 2)
 
-    override fun isDrawFinish(): Boolean = this.cardStatus == CardStatus.BUST
-
-    constructor(participantInfo: ParticipantInfo, cards: List<Card> = emptyList()) : this(participantInfo) {
-        cards.forEach { card -> this.handCards.addCard(card) }
+    constructor(betAmount: BetAmount, cards: List<Card>) : this(betAmount = betAmount) {
+        cards.forEach { handCards.addCard(it) }
     }
+
+    override fun isDrawFinish(): Boolean = this.cardStatus == CardStatus.BUST
 
     fun dealerMatchProfit(dealer: Dealer): Profit {
         val profitRate = ProfitRate.calculateProfitRate(this.winLoss(dealer), this.cardStatus)
-        return participantInfo.betAmount.calculateProfit(profitRate)
+        return betAmount.calculateProfit(profitRate)
     }
 
     companion object {

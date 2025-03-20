@@ -1,10 +1,8 @@
 package blackjack.controller
 
-import blackjack.domain.model.card.CardStatus
 import blackjack.domain.model.card.Deck
 import blackjack.domain.model.participant.Dealer
 import blackjack.domain.model.participant.GameParticipant
-import blackjack.domain.model.participant.ParticipantInfo
 import blackjack.domain.model.participant.Player
 import blackjack.domain.model.participant.bet.BetAmount
 import blackjack.domain.model.participant.bet.Profit
@@ -31,7 +29,7 @@ class Casino(
         val playerNames = views.input.readPlayerNames()
         return playerNames.map { playerName ->
             val betAmount = askSingleBetAmount(playerName)
-            Player(ParticipantInfo(playerName, betAmount))
+            Player(playerName, betAmount)
         }
     }
 
@@ -52,7 +50,7 @@ class Casino(
 
     private fun runPlayersDrawPhase(players: List<Player>) {
         players.forEach { player ->
-            while (player.cardStatus != CardStatus.BUST && isPlayerWantHit(player)) {
+            while (!player.isDrawFinish() && isPlayerWantHit(player)) {
                 player.drawCardFromDeck(deck)
                 views.output.showPlayerCardsInfo(player)
             }
