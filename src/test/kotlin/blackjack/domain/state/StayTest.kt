@@ -19,7 +19,7 @@ class StayTest {
         dealer.state.hand.addCard(ClubEight)
         player.state.hand.addCard(ClubKing)
         player.state.hand.addCard(ClubQueen)
-        val result = Stay(player.state.hand).decideResult(dealer)
+        val result = Stay(player.state.hand).decideResult(dealer.state)
         assertThat(result).isEqualTo(Result.WIN)
     }
 
@@ -31,7 +31,7 @@ class StayTest {
         dealer.state.hand.addCard(ClubEight)
         player.state.hand.addCard(ClubKing)
         player.state.hand.addCard(ClubEight)
-        val result = Stay(player.state.hand).decideResult(dealer)
+        val result = Stay(player.state.hand).decideResult(dealer.state)
         assertThat(result).isEqualTo(Result.PUSH)
     }
 
@@ -43,7 +43,7 @@ class StayTest {
         dealer.state.hand.addCard(ClubQueen)
         player.state.hand.addCard(ClubKing)
         player.state.hand.addCard(ClubEight)
-        val result = Stay(player.state.hand).decideResult(dealer)
+        val result = Stay(player.state.hand).decideResult(dealer.state)
         assertThat(result).isEqualTo(Result.LOSE)
     }
 
@@ -52,7 +52,7 @@ class StayTest {
         val dealer = Dealer()
         val player = Player("name1", Money(1000))
         dealer.state = Blackjack(dealer.state.hand)
-        val result = Stay(player.state.hand).decideResult(dealer)
+        val result = Stay(player.state.hand).decideResult(dealer.state)
         assertThat(result).isEqualTo(Result.LOSE)
     }
 
@@ -61,7 +61,7 @@ class StayTest {
         val dealer = Dealer()
         val player = Player("name1", Money(1000))
         dealer.state = Bust(dealer.state.hand)
-        val result = Stay(player.state.hand).decideResult(dealer)
+        val result = Stay(player.state.hand).decideResult(dealer.state)
         assertThat(result).isEqualTo(Result.WIN)
     }
 }
