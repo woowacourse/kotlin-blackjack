@@ -8,7 +8,6 @@ class Ready(override val hand: Hand = Hand(emptyList())) : PlayingState {
         hand.addCard(card)
         return when {
             hand.isBlackjack() -> Blackjack(hand)
-            hand.isBust() -> Bust(hand)
             else -> Hit(hand)
         }
     }
