@@ -15,13 +15,34 @@ class Casino(
     fun blackJackGame() {
         val players: List<Player> = initPlayers()
         val dealer = Dealer()
-        val participants: List<GameParticipant> = listOf(dealer) + players
-        initCardDistribute(participants)
+
+        initializeGame(dealer, players)
+        playGame(players, dealer)
+        concludeGame(dealer, players)
+    }
+
+    private fun initializeGame(
+        dealer: Dealer,
+        players: List<Player>,
+    ) {
+        initCardDistribute(listOf(dealer) + players)
         views.output.showDistributeCardMessage(players)
-        views.output.showInitCardInfo(participants)
+        views.output.showInitCardInfo(listOf(dealer) + players)
+    }
+
+    private fun playGame(
+        players: List<Player>,
+        dealer: Dealer,
+    ) {
         playersDrawPhase(players)
         dealerDrawPhase(dealer)
-        views.output.showCardsResult(participants)
+    }
+
+    private fun concludeGame(
+        dealer: Dealer,
+        players: List<Player>,
+    ) {
+        views.output.showCardsResult(listOf(dealer) + players)
         showFinalProfit(dealer, players)
     }
 
