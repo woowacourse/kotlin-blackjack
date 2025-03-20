@@ -11,26 +11,27 @@ abstract class GameParticipant(
     protected val handCards: HandCards = HandCards()
 
     val cardStatus: CardStatus
-        get() = handCards.getStatus()
+        get() = handCards.status
 
     val bestValue: Int
-        get() = handCards.calculateBestCardValue()
+        get() = handCards.bestCardValue
 
     val cards: List<Card>
         get() = handCards.cards.toList()
 
-    abstract val initCards: List<Card>
+    val isInitHandCard: Boolean
+        get() = cardSize == HandCards.INIT_CARD_SIZE
 
     private val cardSize: Int
         get() = handCards.cards.size
 
-    protected fun winLoss(rival: GameParticipant): WinLoss = handCards.calculateWinLoss(rival.cardStatus, rival.bestValue)
+    abstract val initCards: List<Card>
 
-    fun isInitHandCard() = cardSize == HandCards.INIT_CARD_SIZE
+    abstract val isDrawFinish: Boolean
 
-    fun drawCardFromDeck(deck: Deck) {
-        handCards.addCard(deck.getCard())
+    protected fun winLoss(rival: GameParticipant): WinLoss = handCards.versusRivalWinLoss(rival.cardStatus, rival.bestValue)
+
+    fun fromDeckCardDraw(deck: Deck) {
+        handCards.cardAdd(deck.popCard())
     }
-
-    abstract fun isDrawFinish(): Boolean
 }

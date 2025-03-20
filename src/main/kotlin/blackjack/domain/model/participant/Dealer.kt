@@ -6,17 +6,15 @@ import blackjack.domain.model.participant.bet.Profit
 class Dealer(
     name: String = DEFAULT_NAME,
 ) : GameParticipant(name = name) {
+    constructor(cards: List<Card>) : this() {
+        cards.forEach { card -> handCards.cardAdd(card) }
+    }
+
     override val initCards: List<Card>
         get() = cards.subList(0, 1)
 
-    constructor(cards: List<Card>) : this() {
-        cards.forEach { card -> handCards.addCard(card) }
-    }
-
-    override fun isDrawFinish(): Boolean {
-        val bestCardValue = handCards.calculateBestCardValue()
-        return bestCardValue <= DEALER_DRAW_LIMIT
-    }
+    override val isDrawFinish: Boolean
+        get() = handCards.bestCardValue <= DEALER_DRAW_LIMIT
 
     fun allPlayersMatchProfit(players: Collection<Player>): Profit {
         val playersProfitSum = players.sumOf { player -> player.dealerMatchProfit(this).value }

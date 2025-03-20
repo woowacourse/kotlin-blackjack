@@ -9,10 +9,6 @@ import java.util.Locale
 class OutputView(
     private val locale: Locale,
 ) {
-    private fun lineSeparator() {
-        println()
-    }
-
     fun showDistributeCardMessage(participants: List<GameParticipant>) {
         lineSeparator()
         val joinedNames = participants.joinToString { it.name }
@@ -44,14 +40,6 @@ class OutputView(
         lineSeparator()
     }
 
-    private fun makeParticipantInfoText(participant: GameParticipant): String {
-        val name = participant.name
-        val cardsInfoText = participant.cards.joinToString { makeCardText(it) }
-        return CARD_INFO_MESSAGE.format(name, cardsInfoText)
-    }
-
-    private fun makeCardText(card: Card): String = card.number.initial + Translator.suitLocalize(card.suit, locale)
-
     fun showFinalProfit(participantProfitInfos: List<Pair<GameParticipant, Profit>>) {
         println(HEADER_FINAL_PROFIT)
         participantProfitInfos.forEach { (participant, profit) ->
@@ -65,6 +53,18 @@ class OutputView(
 
     fun showErrorMessage(errorMessage: String) {
         println(errorMessage)
+    }
+
+    private fun makeParticipantInfoText(participant: GameParticipant): String {
+        val name = participant.name
+        val cardsInfoText = participant.cards.joinToString { makeCardText(it) }
+        return CARD_INFO_MESSAGE.format(name, cardsInfoText)
+    }
+
+    private fun makeCardText(card: Card): String = card.number.initial + Translator.suitLocalize(card.suit, locale)
+
+    private fun lineSeparator() {
+        println()
     }
 
     companion object {

@@ -13,8 +13,8 @@ enum class CardStatus {
 
         fun calculateCardsStatus(cards: Collection<Card>): CardStatus =
             when {
-                cards.size == INIT_CARD_SIZE && cards.sumOf { it.getMaximumValue() } == BLACKJACK_NUMBER -> BLACKJACK
-                cards.sumOf { it.getMinimumValue() } > BLACKJACK_NUMBER -> BUST
+                cards.size == INIT_CARD_SIZE && cards.sumOf { it.maximumValue } == BLACKJACK_NUMBER -> BLACKJACK
+                cards.sumOf { it.minimumValue } > BLACKJACK_NUMBER -> BUST
                 else -> NORMAL
             }
     }

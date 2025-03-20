@@ -3,7 +3,7 @@ package blackjack.domain.model.card
 class Deck(
     private val _card: ArrayDeque<Card> = ArrayDeque(Card.CARD_INDEX_RANGE.shuffled().map { Card(it) }),
 ) {
-    fun getCard(): Card {
+    fun popCard(): Card {
         require(!_card.isEmpty()) { ERROR_EMPTY_DECK }
         return _card.removeFirst()
     }

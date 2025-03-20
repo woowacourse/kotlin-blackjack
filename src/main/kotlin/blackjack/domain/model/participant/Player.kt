@@ -10,14 +10,15 @@ class Player(
     name: String = DEFAULT_NAME,
     private val betAmount: BetAmount,
 ) : GameParticipant(name = name) {
+    constructor(betAmount: BetAmount, cards: List<Card>) : this(betAmount = betAmount) {
+        cards.forEach { handCards.cardAdd(it) }
+    }
+
     override val initCards: List<Card>
         get() = cards.subList(0, 2)
 
-    constructor(betAmount: BetAmount, cards: List<Card>) : this(betAmount = betAmount) {
-        cards.forEach { handCards.addCard(it) }
-    }
-
-    override fun isDrawFinish(): Boolean = this.cardStatus == CardStatus.BUST
+    override val isDrawFinish: Boolean
+        get() = this.cardStatus == CardStatus.BUST
 
     fun dealerMatchProfit(dealer: Dealer): Profit {
         val profitRate = ProfitRate.calculateProfitRate(this.winLoss(dealer), this.cardStatus)

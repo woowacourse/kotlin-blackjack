@@ -11,39 +11,41 @@ class HandCards(
     val cards: List<Card>
         get() = this._cards.toList()
 
-    fun getCardByIndex(index: Int): Card = this._cards[index]
+    val status: CardStatus
+        get() = CardStatus.calculateCardsStatus(this._cards)
 
-    fun addCard(card: Card) {
+    val bestCardValue: Int
+        get() {
+            val cardNumbers = this._cards.map { it.number }
+            val minimumSum = calculateCardValueMinimumSum(this._cards)
+
+            if (ACE in cardNumbers && (minimumSum + ACE_VALUE_GAP) <= CardStatus.BLACKJACK_NUMBER) {
+                return minimumSum + ACE_VALUE_GAP
+            }
+            return minimumSum
+        }
+
+    fun retrieveCard(index: Int): Card = this._cards[index]
+
+    fun cardAdd(card: Card) {
         this._cards += card
     }
 
-    fun getStatus(): CardStatus = CardStatus.calculateCardsStatus(this._cards)
-
-    fun calculateBestCardValue(): Int {
-        val cardNumbers = this._cards.map { it.number }
-        val minimumSum = calculateCardValueMinimumSum(this._cards)
-
-        if (ACE in cardNumbers && (minimumSum + ACE_VALUE_GAP) <= CardStatus.BLACKJACK_NUMBER) {
-            return minimumSum + ACE_VALUE_GAP
-        }
-        return minimumSum
-    }
-
-    fun calculateWinLoss(
+    fun versusRivalWinLoss(
         rivalStatus: CardStatus,
         rivalBestValue: Int,
     ): WinLoss =
         when {
-            (getStatus() == CardStatus.BLACKJACK) && (rivalStatus != CardStatus.BLACKJACK) -> WinLoss.WIN
-            getStatus() == CardStatus.BUST -> WinLoss.LOSE
-            (rivalStatus != CardStatus.BUST) && (rivalBestValue > calculateBestCardValue()) -> WinLoss.LOSE
-            (rivalStatus == CardStatus.BLACKJACK) && (getStatus() != CardStatus.BLACKJACK) -> WinLoss.LOSE
-            (rivalBestValue == calculateBestCardValue()) -> WinLoss.DRAW
+            (status == CardStatus.BLACKJACK) && (rivalStatus != CardStatus.BLACKJACK) -> WinLoss.WIN
+            status == CardStatus.BUST -> WinLoss.LOSE
+            (rivalStatus != CardStatus.BUST) && (rivalBestValue > bestCardValue) -> WinLoss.LOSE
+            (rivalStatus == CardStatus.BLACKJACK) && (status != CardStatus.BLACKJACK) -> WinLoss.LOSE
+            (rivalBestValue == bestCardValue) -> WinLoss.DRAW
             else -> WinLoss.WIN
         }
 
     private fun calculateCardValueMinimumSum(cards: Collection<Card>): Int {
-        val cardValues = cards.map { it.getMinimumValue() }
+        val cardValues = cards.map { it.minimumValue }
         return cardValues.sum()
     }
 

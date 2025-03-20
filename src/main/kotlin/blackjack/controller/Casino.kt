@@ -16,13 +16,13 @@ class Casino(
         val players: List<Player> = initPlayers()
         val dealer = Dealer()
         val participants: List<GameParticipant> = listOf(dealer) + players
-        initDistributeCard(participants)
+        initCardDistribute(participants)
         views.output.showDistributeCardMessage(players)
         views.output.showInitCardInfo(participants)
-        runPlayersDrawPhase(players)
-        runDealerDrawPhase(dealer)
+        playersDrawPhase(players)
+        dealerDrawPhase(dealer)
         views.output.showCardsResult(participants)
-        outputFinalProfit(dealer, players)
+        showFinalProfit(dealer, players)
     }
 
     private fun initPlayers(): List<Player> {
@@ -40,21 +40,21 @@ class Casino(
             exception.message?.let { views.output.showErrorMessage(it) }
         }.getOrNull() ?: askSingleBetAmount(playerName)
 
-    private fun initDistributeCard(participants: List<GameParticipant>) {
+    private fun initCardDistribute(participants: List<GameParticipant>) {
         participants.forEach { participant ->
-            while (!participant.isInitHandCard()) {
-                participant.drawCardFromDeck(deck)
+            while (!participant.isInitHandCard) {
+                participant.fromDeckCardDraw(deck)
             }
         }
     }
 
-    private fun runPlayersDrawPhase(players: List<Player>) {
+    private fun playersDrawPhase(players: List<Player>) {
         players.forEach { player ->
-            while (!player.isDrawFinish() && isPlayerWantHit(player)) {
-                player.drawCardFromDeck(deck)
+            while (!player.isDrawFinish && isPlayerWantHit(player)) {
+                player.fromDeckCardDraw(deck)
                 views.output.showPlayerCardsInfo(player)
             }
-            if (player.isInitHandCard()) {
+            if (player.isInitHandCard) {
                 views.output.showPlayerCardsInfo(player)
             }
         }
@@ -63,14 +63,14 @@ class Casino(
 
     private fun isPlayerWantHit(player: Player): Boolean = views.input.readWantExtraCard(player.name)
 
-    private fun runDealerDrawPhase(dealer: Dealer) {
-        while (dealer.isDrawFinish()) {
-            dealer.drawCardFromDeck(deck)
+    private fun dealerDrawPhase(dealer: Dealer) {
+        while (dealer.isDrawFinish) {
+            dealer.fromDeckCardDraw(deck)
             views.output.showDealerDrawMessage()
         }
     }
 
-    private fun outputFinalProfit(
+    private fun showFinalProfit(
         dealer: Dealer,
         players: List<Player>,
     ) {

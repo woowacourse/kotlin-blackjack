@@ -8,7 +8,7 @@ class HandCardsTest {
     fun `카드를 추가할 수 있다`() {
         val handCards = HandCards()
 
-        handCards.addCard(Card(Number.ACE))
+        handCards.cardAdd(Card(Number.ACE))
 
         assertThat(handCards.cards).containsExactly(Card(Number.ACE))
     }
@@ -17,28 +17,28 @@ class HandCardsTest {
     fun `특정 인덱스의 카드를 반환할 수 있다`() {
         val handCards = HandCards(mutableListOf(Card(Number.ACE), Card(Number.QUEEN), Card(Number.SEVEN)))
 
-        assertThat(handCards.getCardByIndex(1)).isEqualTo(Card(Number.QUEEN))
+        assertThat(handCards.retrieveCard(1)).isEqualTo(Card(Number.QUEEN))
     }
 
     @Test
     fun `카드가 만들 수 있는 최선의 값을 반환할 수 있다1`() {
         val handCards = HandCards()
 
-        handCards.addCard(Card(Number.ACE)) // 11 (1취급시 최선의 값x)
-        handCards.addCard(Card(Number.QUEEN)) // 10
+        handCards.cardAdd(Card(Number.ACE)) // 11 (1취급시 최선의 값x)
+        handCards.cardAdd(Card(Number.QUEEN)) // 10
 
-        assertThat(handCards.calculateBestCardValue()).isEqualTo(21)
+        assertThat(handCards.bestCardValue).isEqualTo(21)
     }
 
     @Test
     fun `카드가 만들 수 있는 최선의 값을 반환할 수 있다2`() {
         val handCards = HandCards()
 
-        handCards.addCard(Card(Number.QUEEN)) // 10
-        handCards.addCard(Card(Number.SEVEN)) // 7
-        handCards.addCard(Card(Number.ACE)) // 1 (10취급시 bust)
-        handCards.addCard(Card(Number.ACE)) // 1 (10취급시 bust)
+        handCards.cardAdd(Card(Number.QUEEN)) // 10
+        handCards.cardAdd(Card(Number.SEVEN)) // 7
+        handCards.cardAdd(Card(Number.ACE)) // 1 (10취급시 bust)
+        handCards.cardAdd(Card(Number.ACE)) // 1 (10취급시 bust)
 
-        assertThat(handCards.calculateBestCardValue()).isEqualTo(19)
+        assertThat(handCards.bestCardValue).isEqualTo(19)
     }
 }

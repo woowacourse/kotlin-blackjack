@@ -13,9 +13,11 @@ data class Card(
         require(cardIndex in CARD_INDEX_RANGE) { ERROR_OUT_OF_CARD_INDEX }
     }
 
-    fun getMinimumValue(): Int = number.value.first()
+    val minimumValue: Int
+        get() = number.value.first()
 
-    fun getMaximumValue(): Int = number.value.last()
+    val maximumValue: Int
+        get() = number.value.last()
 
     companion object {
         private const val MIN_CARD_INDEX = 0
