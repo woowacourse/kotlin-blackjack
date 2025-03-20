@@ -19,12 +19,6 @@ class OutputView {
         )
     }
 
-    fun printParticipantsStatus(participants: PlayingParticipants) {
-        participants.participants.forEach { participant ->
-            println(renderParticipantsInitStatus(participant))
-        }
-    }
-
     private fun renderParticipantsInitStatus(playingParticipant: PlayingParticipant): String {
         return playingParticipant.name + PLAYER_NAME_STATUS_DELIMITER +
             playingParticipant.showStartCards()
@@ -45,6 +39,12 @@ class OutputView {
         return playingParticipant.name + PLAYER_NAME_STATUS_DELIMITER +
             playingParticipant.showCards()
                 .joinToString { convertKoreanRank(it.rank) + convertKoreanSuit(it.suit) }
+    }
+
+    fun printParticipantsStatus(participants: PlayingParticipants) {
+        participants.participants.forEach { participant ->
+            println(renderParticipantsInitStatus(participant))
+        }
     }
 
     fun printDealerHitsState() {

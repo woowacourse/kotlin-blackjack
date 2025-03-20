@@ -3,8 +3,9 @@ package blackjack.domain.model
 import blackjack.domain.CLUB_KING
 import blackjack.domain.CLUB_SEVEN
 import blackjack.domain.HEART_ACE
+import blackjack.domain.HEART_FOUR
 import blackjack.domain.HEART_KING
-import blackjack.domain.HEART_SIX
+import blackjack.domain.HEART_TEN
 import blackjack.domain.model.hand.state.BlackJack
 import blackjack.domain.model.hand.state.Bust
 import blackjack.domain.model.hand.state.Hit
@@ -24,23 +25,22 @@ class PlayingDealerTest {
 
     @Test
     fun `딜러는 16 이하일 경우 HIT 상태를 반환한다`() {
-        val handState = playingDealer.handsState
         playingDealer.acceptCard(Card(Suit.HEART, Rank.FIVE)) // score 16
-        assertThat(handState).isInstanceOf(Hit::class.java)
+        assertThat(playingDealer.handsState).isInstanceOf(Hit::class.java)
     }
 
     @Test
     fun `딜러는 21이고 두장일 경우에 BLACKJACK 상태를 반환한다`() {
-        playingDealer.acceptCard(HEART_KING) // score 21
-        assertThat(playingDealer.handsState).isInstanceOf(BlackJack::class.java)
+        playingDealer.acceptCard(HEART_KING)
+        assertThat(playingDealer.handsState).isInstanceOf(BlackJack::class.java) // score 21
     }
 
     @Test
     fun `딜러는 21 초과일 경우 BUST를 반환한다`() {
-        playingDealer.acceptCard(HEART_SIX)
+        playingDealer.acceptCard(HEART_FOUR)
         playingDealer.acceptCard(CLUB_KING)
-        playingDealer.acceptCard(CLUB_SEVEN) // score 24
-        assertThat(playingDealer.handsState).isInstanceOf(Bust::class.java)
+        playingDealer.acceptCard(HEART_TEN)
+        assertThat(playingDealer.handsState).isInstanceOf(Bust::class.java) // score 24
     }
 
     @Test

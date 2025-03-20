@@ -48,10 +48,9 @@ class PlayingPlayerTest {
     }
 
     @Test
-    fun `플레이어는 20 이하일 경우 HandsState가 PlayerHit가 된다`() {
-        val handState = playingPlayer.handsState
-        playingPlayer.acceptCard(HEART_SIX) // score 17
-        assertThat(handState).isInstanceOf(Hit::class.java)
+    fun `플레이어는 20 이하일 경우 HandsState가 Hit가 된다`() {
+        playingPlayer.acceptCard(HEART_SIX)
+        assertThat(playingPlayer.handsState).isInstanceOf(Hit::class.java)
     }
 
     @Test

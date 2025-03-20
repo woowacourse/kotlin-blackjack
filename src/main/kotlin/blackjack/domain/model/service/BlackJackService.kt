@@ -2,6 +2,8 @@ package blackjack.domain.model.service
 
 import blackjack.domain.model.Card
 import blackjack.domain.model.Deck
+import blackjack.domain.model.Money
+import blackjack.domain.model.betting.BettingPlayer
 import blackjack.domain.model.betting.BettingPlayers
 import blackjack.domain.model.hand.Hands
 import blackjack.domain.model.hand.UserChoice
@@ -13,19 +15,29 @@ import blackjack.domain.model.playing.PlayingParticipant
 import blackjack.domain.model.playing.PlayingParticipants
 import blackjack.domain.model.playing.PlayingPlayer
 import blackjack.domain.model.profit.ProfitParticipants
+import blackjack.view.GameView
 
-class BlackJackService private constructor(val playingParticipants: PlayingParticipants) {
+class BlackJackService private constructor(
+    val playingParticipants: PlayingParticipants,
+    private val gameView: GameView,
+) {
     private var deck = Deck.from()
 
-    fun dealInitialCard(
-        initialDeal: (PlayingParticipants) -> Unit,
-        onPlayerStates: (PlayingParticipants) -> Unit,
-    ) {
+    fun bettingPlayers(playerNames: Set<String>): BettingPlayers {
+        val bettingPlayers =
+            playerNames.map { name ->
+                val money = Money(retryEvent { gameView.readPlayerBetAmount(name) })
+                BettingPlayer(name, money)
+            }
+        return BettingPlayers(bettingPlayers)
+    }
+
+    fun dealInitialCard() {
         repeat(START_CARD_COUNT) {
             dealParticipantsCards()
         }
-        initialDeal(playingParticipants)
-        onPlayerStates(playingParticipants)
+        gameView.printInitialDeals(playingParticipants)
+        gameView.printParticipantsStatus((playingParticipants))
     }
 
     private fun dealParticipantsCards() {
@@ -39,30 +51,23 @@ class BlackJackService private constructor(val playingParticipants: PlayingParti
         return requireNotNull(deck.draw()) { "새로운 덱에서 카드가 없으면 안됩니다." }
     }
 
-    fun playPlayers(
-        onHandAction: (PlayingParticipant) -> UserChoice,
-        onPlayerState: (PlayingParticipant) -> Unit,
-    ) {
+    fun playPlayers() {
         playingParticipants.players.forEach { participant ->
-            playHand(participant, onHandAction, onPlayerState)
+            playHand(participant)
         }
     }
 
-    private fun playHand(
-        playingParticipant: PlayingParticipant,
-        onUserAction: (PlayingParticipant) -> UserChoice,
-        onPlayerState: (PlayingParticipant) -> Unit,
-    ) {
+    private fun playHand(playingParticipant: PlayingParticipant) {
         if (playingParticipant.isFinished()) return
-        val choice = onUserAction(playingParticipant)
+        val choice = retryEvent { gameView.readPlayerAction(playingParticipant) }
         if (UserChoice.STAY == choice) {
             playingParticipant.stay()
-            if (playingParticipant.isStarted()) onPlayerState(playingParticipant)
+            if (playingParticipant.isStarted()) gameView.printPlayerStatus(playingParticipant)
             return
         }
         playingParticipant.acceptCard(deck.draw() ?: drawNewDeckCard())
-        onPlayerState(playingParticipant)
-        playHand(playingParticipant, onUserAction, onPlayerState)
+        gameView.printPlayerStatus(playingParticipant)
+        playHand(playingParticipant)
     }
 
     fun playDealer(onDealerHitsState: () -> Unit) {
@@ -76,12 +81,23 @@ class BlackJackService private constructor(val playingParticipants: PlayingParti
 
     fun toProfitPlayers(bettingPlayers: BettingPlayers): ProfitParticipants = playingParticipants.toProfitParticipants(bettingPlayers)
 
+    private fun <T> retryEvent(event: () -> T): T {
+        while (true) {
+            kotlin.runCatching { event() }
+                .onSuccess { return it }
+                .onFailure { gameView.printErrorMessage(it.message ?: it.stackTraceToString()) }
+        }
+    }
+
     companion object {
-        fun from(playersName: List<String>): BlackJackService {
+        fun from(
+            playersName: List<String>,
+            gameView: GameView,
+        ): BlackJackService {
             val playingPlayers =
                 playersName.map { name -> PlayingPlayer(Initial(PlayerStay(), Hands()), name) }
             val playingDealer = PlayingDealer(Initial(DealerStay(), Hands()))
-            return BlackJackService(PlayingParticipants(playingDealer, playingPlayers))
+            return BlackJackService(PlayingParticipants(playingDealer, playingPlayers), gameView)
         }
 
         const val START_CARD_COUNT = 2

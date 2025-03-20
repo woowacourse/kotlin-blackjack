@@ -8,7 +8,7 @@ class DeckTest {
     @Test
     fun `카드들에서 카드를 반환한다`() {
         val cards = listOf(HEART_SIX)
-        val deck = Deck(cards)
+        val deck = Deck.from(cards)
         assertThat(deck.draw()).isEqualTo(HEART_SIX)
     }
 }
