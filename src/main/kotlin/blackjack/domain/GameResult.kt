@@ -2,6 +2,7 @@ package blackjack.domain
 
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Player
+import blackjack.domain.participant.PlayerResultStatus
 
 class GameResult(private val dealer: Dealer, players: List<Player>) {
     val playersGameResult: Map<Player, PlayerResultStatus> = players.associateWith { it.getPlayerStatus(dealer) }

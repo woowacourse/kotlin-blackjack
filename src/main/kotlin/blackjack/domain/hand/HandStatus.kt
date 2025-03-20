@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.hand
 
 enum class HandStatus {
     BLACKJACK,

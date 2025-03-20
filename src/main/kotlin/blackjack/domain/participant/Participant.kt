@@ -1,8 +1,8 @@
 package blackjack.domain.participant
 
-import blackjack.domain.Hand
-import blackjack.domain.HandStatus
 import blackjack.domain.card.Card
+import blackjack.domain.hand.Hand
+import blackjack.domain.hand.HandStatus
 
 abstract class Participant {
     val hand: Hand = Hand()

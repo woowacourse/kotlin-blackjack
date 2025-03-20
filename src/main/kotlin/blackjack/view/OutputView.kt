@@ -1,12 +1,12 @@
 package blackjack.view
 
 import blackjack.domain.GameResult
-import blackjack.domain.PlayerResultStatus
 import blackjack.domain.card.Card
 import blackjack.domain.card.Rank
 import blackjack.domain.card.Suit
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Player
+import blackjack.domain.participant.PlayerResultStatus
 
 object OutputView {
     fun showInitialCards(

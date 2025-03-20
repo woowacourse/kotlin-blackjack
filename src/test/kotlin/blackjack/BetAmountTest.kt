@@ -1,7 +1,7 @@
 package blackjack
 
 import blackjack.domain.BetAmount
-import blackjack.domain.PlayerResultStatus
+import blackjack.domain.participant.PlayerResultStatus
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
