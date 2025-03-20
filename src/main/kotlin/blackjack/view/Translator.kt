@@ -12,7 +12,7 @@ object Translator {
             Locale.KOREAN ->
                 when (suit) {
                     Suit.SPADE -> "스페이드"
-                    Suit.HART -> "하트"
+                    Suit.HEART -> "하트"
                     Suit.DIAMOND -> "다이아몬드"
                     Suit.CLOVER -> "클로버"
                 }
