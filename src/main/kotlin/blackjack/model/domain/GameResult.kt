@@ -1,22 +1,8 @@
 package blackjack.model.domain
 
-enum class GameResult {
-    Win,
-    Lose,
-    Draw,
-    ;
-
-    companion object {
-        fun compare(
-            target: Int,
-            other: Int,
-        ): GameResult {
-            if (target < other) {
-                return Lose
-            } else if (target > other) {
-                return Win
-            }
-            return Draw
-        }
-    }
+enum class GameResult(val rate: Float) {
+    BlackjackWin(1.5f),
+    Win(1f),
+    Lose(-1f),
+    Draw(0f),
 }

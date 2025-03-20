@@ -4,6 +4,10 @@ data class Card(
     val symbol: Shape,
     val cardNumber: CardNumber,
 ) {
+    fun isAce(): Boolean {
+        return CardNumber.Ace == cardNumber
+    }
+
     companion object {
         private val symbols = Shape.entries
         private val cardNumbers = CardNumber.entries

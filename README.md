@@ -69,3 +69,42 @@
 - [x] BlackJack | 딜러 임계값 상수 이동
 - [x] DealerTest | 테스트명 변경
 - [x] Participants | checkBust메소드 Hand의 isBust로 병합
+
+## TODO
+
+- [x] Hand | 손에 카드에 따라 Bust와 BlackJack을 판단하는 메소드 추가
+- [x] Blackjack | 처음 카드를 받았을 때 BlackJack인지 판단
+- [x] Player | BlackJack인지 여부에 따라 승패 판단 기준 추가
+- [x] InputView | 플레이어들의 베팅 금액 입력
+- [x] PlayerBetAmount | 플레이어와 베팅 금액을 매핑하는 클래스 추가
+- [x] BlackjackController | 플레이어의 승패와 블랙잭여부에 따라 베팅 결과 출력
+- [x] CardFactory | 테스트에만 사용한 코드 제거
+- [x] BlackjackController | PlayerGroup 추가적으로 활용
+- [x] InputView | 입력에 따라 도메인이 출력되도록 수정
+- [x] Hand | 객체에 메시지를 던지도록 수정
+- [x] Player | 계산하는 로직 추가
+- [x] BlackJack | PlayerGroup을 인수로 받도록 수정
+- [x] BlackJack | 중복 메서드 수정
+- [x] BlackJack | drawUntilThreshold 메서드명 수정
+- [x] BlackJack | BUST_STANDARD 상수 이동
+- [x] Dealer | 카드 공개 메서드 추상화
+- [x] DealerTest | Dealer의 테스트 추가 작성
+- [x] HandTest | Hand의 테스트 추가 작성
+
+## TODO
+
+- [x] Hand | status 삭제
+- [x] BlackjackController | 컨트롤러의 인스턴스 변수 삭제
+- [x] Player | compareScores | 매개변수를 하나로 받도록 수정
+- [x] PlayerBetResult | 플레이어 베팅 금액 정산 결과를 받는 클래스 생성
+- [x] Hand | 빽킹 프로퍼티와 프로퍼티를 구별하여 메소드에 적용
+- [x] Hand | sum을 val로 선언
+- [x] Hand | if문을 return if 형태로 작성
+- [x] Hand | BUST_STANDARD를 private 으로 변경
+- [x] Participant | showInitCards메소드 네이밍 변경
+- [x] Player | 점수 비교 로직 Participants로 이동
+- [x] BlackjackController | 딜러의 수익 판단 메소드 생성
+- [x] 금액 출력을 Participants로 한번에 출력하도록 수정
+- [x] 여러 객체들의 Test코드 작성
+- [x] HandTest | methodSource를 활용한 getSumNumber에 대한 테스트 추가 생성
+- [ ] BlackjackController | 버스트되어서 플레이어에게 카드를 뽑을 수 없다고 메시지 출력

@@ -1,12 +1,14 @@
 package blackjack.controller
 
 import blackjack.model.domain.ActionType
+import blackjack.model.domain.BettingMoney
 import blackjack.model.domain.GameResult
-import blackjack.model.domain.card.Card
 import blackjack.model.domain.card.CardFactory
 import blackjack.model.domain.card.PlayingCard
 import blackjack.model.domain.participant.Dealer
 import blackjack.model.domain.participant.Player
+import blackjack.model.domain.participant.PlayerBetAmount
+import blackjack.model.domain.participant.PlayerBetResult
 import blackjack.model.domain.participant.PlayerGroup
 import blackjack.model.service.Blackjack
 import blackjack.view.InputView
@@ -16,38 +18,56 @@ class BlackjackController(
     private val inputView: InputView,
     private val outputView: OutputView,
 ) {
-    private val deck: ArrayDeque<Card> = CardFactory().makeCard()
-    private val blackjack: Blackjack = Blackjack(PlayingCard(deck))
-    private val dealer: Dealer = Dealer()
-
     fun run() {
-        val playerGroup = getPlayerGroup()
-        initGame(playerGroup.players)
-        startGame(playerGroup.players)
-        val playerResult = blackjack.endGame(playerGroup)
-        printResult(playerResult)
+        val playerGroup: PlayerGroup = getPlayerGroup(Dealer())
+        val playersBetAmount = getPlayerBetAmount(playerGroup)
+        val blackjack = Blackjack(PlayingCard(CardFactory().makeCard()), playerGroup)
+        initGame(blackjack, playerGroup)
+        startGame(blackjack, playerGroup)
+        val playerResult = blackjack.endGame()
+        val playersSettleMoney = settleMoney(playerResult, playersBetAmount)
+
+        printResult(playersSettleMoney, playerGroup.dealer)
     }
 
-    private fun initGame(players: List<Player>) {
-        blackjack.initGame(players + dealer)
-        outputView.printInitCardStatus(dealer, players)
-    }
-
-    private fun startGame(players: List<Player>) {
-        players.forEach { player ->
-            hitOrStay(player)
+    private fun getPlayerBetAmount(playerGroup: PlayerGroup): List<PlayerBetAmount> {
+        return retryInput {
+            playerGroup.players.map { PlayerBetAmount(it, BettingMoney(inputView.askForBetAmount(it))) }
         }
-        dealerReceiveCard()
     }
 
-    private fun hitOrStay(player: Player) {
-        while (!player.canHit()) {
-            val playerAction = getActionType(player)
+    private fun initGame(
+        blackjack: Blackjack,
+        playerGroup: PlayerGroup,
+    ) {
+        blackjack.initGame()
+        outputView.printInitCardStatus(playerGroup.dealer, playerGroup.players)
+    }
+
+    private fun startGame(
+        blackjack: Blackjack,
+        playerGroup: PlayerGroup,
+    ) {
+        playerGroup.players.forEach { player ->
+            hitOrStay(blackjack, player)
+        }
+        dealerReceiveCard(blackjack, playerGroup.dealer)
+    }
+
+    private fun hitOrStay(
+        blackjack: Blackjack,
+        player: Player,
+    ) {
+        while (player.canHit()) {
+            val playerAction = inputView.askForHitOrStay(player)
             if (shouldStopDrawing(playerAction)) break
             blackjack.hitAction(player)
             outputView.printCardStatus(player)
         }
-        if (player.cardDeck.size == 2) outputView.printCardStatus(player)
+        when {
+            !player.canHit() -> outputView.printNoMoreCards()
+            player.cardDeck.size == 2 -> outputView.printCardStatus(player)
+        }
     }
 
     private fun shouldStopDrawing(playerAction: ActionType): Boolean {
@@ -57,33 +77,47 @@ class BlackjackController(
         }
     }
 
-    private fun getActionType(player: Player): ActionType {
-        return retryInput {
-            ActionType.get(inputView.askForHitOrStay(player))
-        }
-    }
-
-    private fun getPlayerGroup(): PlayerGroup {
+    private fun getPlayerGroup(dealer: Dealer): PlayerGroup {
         return retryInput {
             val players: List<Player> = inputView.askForPlayersName().map(::Player)
+
             PlayerGroup(players, dealer)
         }
     }
 
-    private fun dealerReceiveCard() {
-        val count: Int = blackjack.drawUntilThreshold(dealer)
-        dealer.hand.isBust()
+    private fun dealerReceiveCard(
+        blackjack: Blackjack,
+        dealer: Dealer,
+    ) {
+        val count: Int = blackjack.drawUntilThresholdWithCount(dealer)
         outputView.printDealerReceiveCard(count, dealer)
     }
 
-    private fun printResult(playersResult: Map<Player, GameResult>) {
-        outputView.participantsCardResult(listOf(dealer) + playersResult.keys)
-        outputView.dealerResult(dealer, getDealerResult(playersResult))
-        outputView.playerResult(playersResult)
+    private fun settleMoney(
+        playersResult: Map<Player, GameResult>,
+        playersBetAmount: List<PlayerBetAmount>,
+    ): List<PlayerBetResult> {
+        return playersBetAmount.map { playerBetAmount ->
+            val result = playersResult[playerBetAmount.player] ?: return emptyList()
+            playerBetAmount.profitResult(result.rate)
+        }
     }
 
-    private fun getDealerResult(playersResult: Map<Player, GameResult>): Map<GameResult, Int> {
-        return playersResult.values.groupingBy { it }.eachCount()
+    private fun printResult(
+        playerBetResult: List<PlayerBetResult>,
+        dealer: Dealer,
+    ) {
+        outputView.participantsCardResult(listOf(dealer) + playerBetResult.map { it.player })
+        outputView.participantsMoneyResult(listOf(getDealerResult(dealer, playerBetResult)) + playerBetResult)
+    }
+
+    private fun getDealerResult(
+        dealer: Dealer,
+        playerBetResult: List<PlayerBetResult>,
+    ): PlayerBetResult {
+        val dealerProfit = -playerBetResult.filter { it.bettingResult < 0 }.map { it.bettingResult }.sum()
+        val dealerLoss = playerBetResult.filter { it.bettingResult > 0 }.map { it.bettingResult }.sum()
+        return PlayerBetResult(dealer, dealerProfit - dealerLoss)
     }
 
     private fun <T> retryInput(inputFunction: () -> T): T {

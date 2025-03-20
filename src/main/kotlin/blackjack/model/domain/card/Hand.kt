@@ -1,17 +1,13 @@
 package blackjack.model.domain.card
 
-import blackjack.model.service.Blackjack.Companion.BUST_STANDARD
-
 class Hand(private val _cards: MutableList<Card>) {
     val cards get() = _cards.deepCopy()
 
     fun getSumNumber(): Int {
-        var sum = cards.sumOf { it.cardNumber.number }
-
-        if (haveAce(cards.map { it.cardNumber }) && sum + CardNumber.BONUS_SCORE <= BUST_STANDARD) {
-            sum += CardNumber.BONUS_SCORE
+        val sum = _cards.sumOf { it.cardNumber.number }
+        if (_cards.any { it.isAce() } && sum + CardNumber.BONUS_SCORE <= BUST_STANDARD) {
+            return sum + CardNumber.BONUS_SCORE
         }
-
         return sum
     }
 
@@ -19,13 +15,18 @@ class Hand(private val _cards: MutableList<Card>) {
         _cards.addAll(card)
     }
 
-    private fun haveAce(cardNumbers: List<CardNumber>): Boolean {
-        return CardNumber.Ace in cardNumbers
-    }
-
     fun isBust(): Boolean {
         return getSumNumber() > BUST_STANDARD
     }
 
+    fun isBlackJack(): Boolean {
+        return getSumNumber() == BUST_STANDARD && _cards.size == INIT_HAND_SIZE
+    }
+
     private fun MutableList<Card>.deepCopy(): List<Card> = map { it.copy() }
+
+    companion object {
+        private const val BUST_STANDARD: Int = 21
+        private const val INIT_HAND_SIZE: Int = 2
+    }
 }

@@ -7,39 +7,39 @@ import blackjack.model.domain.participant.Participants
 import blackjack.model.domain.participant.Player
 import blackjack.model.domain.participant.PlayerGroup
 
-class Blackjack(private val deck: PlayingCard) {
-    fun initGame(players: List<Participants>) {
-        players.forEach { player ->
+class Blackjack(private val deck: PlayingCard, private val playerGroup: PlayerGroup) {
+    fun initGame() {
+        playerGroup.players.forEach { player ->
             distributeStartingHands(player)
         }
+        distributeStartingHands(playerGroup.dealer)
     }
 
     private fun distributeStartingHands(player: Participants) {
-        player.receiveCard(deck.spreadCard(2))
+        player.receiveCard(deck.spreadCard(INIT_CARD_AMOUNT))
     }
 
-    fun hitAction(player: Player) {
-        player.receiveCard(deck.spreadCard(1))
+    fun hitAction(participants: Participants) {
+        participants.receiveCard(deck.spreadCard(ONE_CARD_AMOUNT))
     }
 
-    fun drawUntilThreshold(dealer: Dealer): Int {
+    fun drawUntilThresholdWithCount(dealer: Dealer): Int {
         var count: Int = 0
-        while (!dealer.canHit()) {
-            dealer.receiveCard(deck.spreadCard(1))
+        while (dealer.canHit()) {
+            hitAction(dealer)
             count++
         }
         return count
     }
 
-    fun endGame(playerGroup: PlayerGroup): Map<Player, GameResult> {
-        val dealerResult = playerGroup.dealer.sumCardNumber
-
+    fun endGame(): Map<Player, GameResult> {
         return playerGroup.players.associateWith { player ->
-            player.compareScores(playerGroup.dealer.hand.isBust(), dealerResult)
+            player.compareScores(playerGroup.dealer.hand)
         }
     }
 
     companion object {
-        const val BUST_STANDARD: Int = 21
+        private const val INIT_CARD_AMOUNT = 2
+        private const val ONE_CARD_AMOUNT = 1
     }
 }
