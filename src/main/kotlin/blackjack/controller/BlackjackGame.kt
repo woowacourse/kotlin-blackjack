@@ -67,14 +67,9 @@ class BlackjackGame(
         return turnPlayer(it)
     }
 
-
     private fun dealerPlay(dealer: Dealer) {
-        var count = 0
-        while (dealer.state.hand.sum() < 17) {
-            count++
-            dealer.state = dealer.state.draw(deck.draw())
-        }
-        outputView.printDealerHit(count)
+        val hitCount = dealer.play(deck)
+        outputView.printDealerHit(hitCount)
     }
 
     private fun printResults(
