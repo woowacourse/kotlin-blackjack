@@ -13,7 +13,7 @@ class PlayingParticipants(val dealer: PlayingDealer, val players: List<PlayingPl
 
     private fun profitPlayers(bettingPlayers: BettingPlayers): List<ProfitParticipant> =
         players.map { player ->
-            val bettingPlayer = bettingPlayers.findPlayer(player.name)
+            val bettingPlayer = bettingPlayers.get(player.name)
             val profit = bettingPlayer.calculate(player.match(dealer.handsState))
             ProfitParticipant(player.name, profit)
         }
@@ -21,7 +21,7 @@ class PlayingParticipants(val dealer: PlayingDealer, val players: List<PlayingPl
     private fun profitDealer(bettingPlayers: BettingPlayers): ProfitParticipant {
         val dealerProfit =
             players.sumOf { player ->
-                val bettingPlayer = bettingPlayers.findPlayer(player.name)
+                val bettingPlayer = bettingPlayers.get(player.name)
                 bettingPlayer.calculate(player.match(dealer.handsState).reverse()).value
             }
         return ProfitParticipant(dealer.name, Profit(dealerProfit))
