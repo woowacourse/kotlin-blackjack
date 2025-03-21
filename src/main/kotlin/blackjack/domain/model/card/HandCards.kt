@@ -17,12 +17,18 @@ class HandCards(
     val bestCardValue: Int
         get() {
             val cardNumbers = this._cards.map { it.number }
-            val minimumSum = calculateCardValueMinimumSum(this._cards)
+            val minimumSum = minimumCardValuesSum
 
             if (ACE in cardNumbers && (minimumSum + ACE_VALUE_GAP) <= CardStatus.BLACKJACK_NUMBER) {
                 return minimumSum + ACE_VALUE_GAP
             }
             return minimumSum
+        }
+
+    private val minimumCardValuesSum: Int
+        get() {
+            val cardValues = _cards.map { it.minimumValue }
+            return cardValues.sum()
         }
 
     fun retrieveCard(index: Int): Card = this._cards[index]
@@ -43,11 +49,6 @@ class HandCards(
             (rivalBestValue == bestCardValue) -> WinLoss.DRAW
             else -> WinLoss.WIN
         }
-
-    private fun calculateCardValueMinimumSum(cards: Collection<Card>): Int {
-        val cardValues = cards.map { it.minimumValue }
-        return cardValues.sum()
-    }
 
     companion object {
         private const val ACE_VALUE_GAP = 10
