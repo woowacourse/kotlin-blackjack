@@ -2,7 +2,7 @@ package blackjack.domain.model.card
 
 import kotlin.runCatching
 
-enum class Number(
+enum class CardNumber(
     val value: List<Int>,
     val initial: String,
 ) {
@@ -22,12 +22,12 @@ enum class Number(
     ;
 
     companion object {
-        fun getByOrderNumber(orderNumber: Int): Number =
+        fun getByOrderNumber(orderNumber: Int): CardNumber =
             runCatching {
                 entries[orderNumber - 1]
             }.getOrElse { throw IllegalArgumentException(ERROR_UNKNOWN_CARD_ORDER_NUMBER) }
 
-        fun getByInitial(initial: String): Number =
+        fun getByInitial(initial: String): CardNumber =
             entries.find { it.initial == initial } ?: throw IllegalArgumentException(ERROR_UNKNOWN_CARD_INITIAL)
 
         const val MAX_ORDER_NUMBER = 13

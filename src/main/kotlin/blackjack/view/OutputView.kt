@@ -61,7 +61,7 @@ class OutputView(
         return CARD_INFO_MESSAGE.format(name, cardsInfoText)
     }
 
-    private fun makeCardText(card: Card): String = card.number.initial + Translator.suitLocalize(card.suit, locale)
+    private fun makeCardText(card: Card): String = card.cardNumber.initial + Translator.suitLocalize(card.suit, locale)
 
     private fun lineSeparator() {
         println()

@@ -1,6 +1,6 @@
 package blackjack.domain.model.card
 
-import blackjack.domain.model.card.Number.ACE
+import blackjack.domain.model.card.CardNumber.ACE
 import blackjack.domain.model.participant.WinLoss
 
 class HandCards(
@@ -16,7 +16,7 @@ class HandCards(
 
     val bestCardValue: Int
         get() {
-            val cardNumbers = this._cards.map { it.number }
+            val cardNumbers = this._cards.map { it.cardNumber }
             val minimumSum = minimumCardValuesSum
 
             if (ACE in cardNumbers && (minimumSum + ACE_VALUE_GAP) <= CardStatus.BLACKJACK_NUMBER) {

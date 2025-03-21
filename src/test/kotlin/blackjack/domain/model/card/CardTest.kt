@@ -16,11 +16,11 @@ class CardTest {
         rawSuit: Int,
     ) {
         // given
-        val number = Number.getByInitial(initial)
+        val cardNumber = CardNumber.getByInitial(initial)
         val suit = Suit.getBySuitIndex(rawSuit)
 
         // when then
-        assertDoesNotThrow { Card(number, suit) }
+        assertDoesNotThrow { Card(cardNumber, suit) }
     }
 
     @ParameterizedTest
@@ -32,11 +32,11 @@ class CardTest {
     ) {
         // given
         val actualCard = Card(index)
-        val number = Number.getByInitial(initial)
+        val cardNumber = CardNumber.getByInitial(initial)
         val suit = Suit.getBySuitIndex(rawSuit)
 
         // when
-        val expectedCard = Card(number, suit)
+        val expectedCard = Card(cardNumber, suit)
 
         // then
         assertThat(actualCard).isEqualTo(expectedCard)

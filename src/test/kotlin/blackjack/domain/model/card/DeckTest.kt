@@ -7,11 +7,11 @@ import org.junit.jupiter.api.assertThrows
 class DeckTest {
     @Test
     fun `덱에서 카드를 한장 줄 수 있다`() {
-        val deck = Deck(ArrayDeque(listOf(Card(Number.ACE, Suit.SPADE))))
+        val deck = Deck(ArrayDeque(listOf(Card(CardNumber.ACE, Suit.SPADE))))
 
         val card = deck.popCard()
 
-        assertThat(card).isEqualTo(Card(Number.ACE, Suit.SPADE))
+        assertThat(card).isEqualTo(Card(CardNumber.ACE, Suit.SPADE))
     }
 
     @Test
