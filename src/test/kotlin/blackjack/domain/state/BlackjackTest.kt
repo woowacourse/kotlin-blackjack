@@ -1,5 +1,7 @@
 package blackjack.domain.state
 
+import blackjack.domain.ClubAce
+import blackjack.domain.ClubKing
 import blackjack.domain.Dealer
 import blackjack.domain.Money
 import blackjack.domain.Player
@@ -31,5 +33,23 @@ class BlackjackTest {
         val player = Player("name1", Money(1000))
         val result = Blackjack(player.state.hand).decideResult(dealer.state)
         assertThat(result).isEqualTo(Result.WIN)
+    }
+
+    @Test
+    fun `blackjack 상태일 때 상대가 블랙잭이 아니면 수익률은 1쩜5다`() {
+        val dealer = Dealer()
+        val player = Player("name1", Money(1000))
+        val result = Blackjack(player.state.hand).profit(Stay(dealer.state.hand))
+        assertThat(result).isEqualTo(1.5)
+    }
+
+    @Test
+    fun `blackjack 상태일 때 상대가 블랙잭이 아니면 수익률은 1다`() {
+        val dealer = Dealer()
+        dealer.state.hand.addCard(ClubAce)
+        dealer.state.hand.addCard(ClubKing)
+        val player = Player("name1", Money(1000))
+        val result = Blackjack(player.state.hand).profit(Blackjack(dealer.state.hand))
+        assertThat(result).isEqualTo(-1.0)
     }
 }

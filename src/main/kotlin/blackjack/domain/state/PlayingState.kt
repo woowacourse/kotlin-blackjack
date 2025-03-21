@@ -7,4 +7,5 @@ interface PlayingState {
     val hand: Hand
 
     fun draw(card: Card): PlayingState
+    fun profit(state: PlayingState): Double
 }

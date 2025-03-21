@@ -12,6 +12,10 @@ class Hit(override val hand: Hand) : PlayingState {
         }
     }
 
+    override fun profit(state: PlayingState): Double {
+        return 0.0
+    }
+
     fun stay(): PlayingState {
         return Stay(hand)
     }

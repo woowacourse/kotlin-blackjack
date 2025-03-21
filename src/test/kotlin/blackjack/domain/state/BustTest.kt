@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test
 
 class BustTest {
     @Test
-    fun `bust 상태 일 때 상대가 blackjack이면 진다`() {
+    fun `플레이어가 bust 상태면 진다`() {
         val dealer = Dealer()
         val player = Player("name1", Money(1000))
         dealer.state.hand.addCard(ClubKing)
@@ -21,18 +21,12 @@ class BustTest {
     }
 
     @Test
-    fun `bust 상태일 때 상대가 bust면 플레이어가 진다`() {
+    fun `bust일 때 수익률은 -1이다`() {
         val dealer = Dealer()
+        dealer.state.hand.addCard(ClubAce)
+        dealer.state.hand.addCard(ClubKing)
         val player = Player("name1", Money(1000))
-        val result = Bust(player.state.hand).decideResult(dealer.state)
-        assertThat(result).isEqualTo(Result.LOSE)
+        val result = Bust(player.state.hand).profit(Blackjack(dealer.state.hand))
+        assertThat(result).isEqualTo(-1.0)
     }
-
-//    @Test
-//    fun `bust 상태일 때 상대가 stay이면 플레이어가 진다`() {
-//        val dealer = Dealer
-//        val player = Player
-//        val result = Bust(player.state.hand).decideResult(dealer)
-//        assertThat(result).isEqualTo(Result.LOSE)
-//    }
 }

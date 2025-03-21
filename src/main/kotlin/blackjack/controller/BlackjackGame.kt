@@ -77,15 +77,13 @@ class BlackjackGame(
         players: List<Player>,
     ) {
         outputView.printBlackjackScore(dealer, players)
-        var dealerProfit = 0.0
         players.forEach {
-            val playerProfit = it.profit(dealer)
-            dealerProfit -= playerProfit
+            it.profit(dealer)
         }
-        outputView.printDealerProfit(dealerProfit.toInt())
+        dealer.calculateProfitWith(players)
+        outputView.printDealerProfit(dealer.profit.toInt())
         players.forEach {
-            val playerProfit = it.profit(dealer)
-            outputView.printPlayerProfit(it, playerProfit.toInt())
+            outputView.printPlayerProfit(it, it.profit.toInt())
         }
     }
 }

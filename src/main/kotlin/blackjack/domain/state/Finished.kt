@@ -11,6 +11,8 @@ abstract class Finished(override val hand: Hand) : PlayingState {
 
     abstract fun decideResult(state: PlayingState): Result
 
+   abstract override fun profit(state: PlayingState): Double
+
     companion object {
         private const val ERROR_CANT_DRAW_CARD = "더 이상 카드를 뽑을 수 없습니다."
     }

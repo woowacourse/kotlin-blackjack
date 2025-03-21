@@ -11,4 +11,8 @@ class Ready(override val hand: Hand = Hand(emptyList())) : PlayingState {
             else -> Hit(hand)
         }
     }
+
+    override fun profit(state: PlayingState): Double {
+        return 0.0
+    }
 }
