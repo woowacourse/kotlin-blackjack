@@ -8,6 +8,10 @@ import blackjack.domain.model.card.HandCards
 abstract class GameParticipant(
     val name: String,
 ) {
+    abstract val initCards: List<Card>
+
+    abstract val isDrawFinish: Boolean
+
     protected val handCards: HandCards = HandCards()
 
     val cardStatus: CardStatus
@@ -24,10 +28,6 @@ abstract class GameParticipant(
 
     private val cardSize: Int
         get() = handCards.cards.size
-
-    abstract val initCards: List<Card>
-
-    abstract val isDrawFinish: Boolean
 
     protected fun winLoss(rival: GameParticipant): WinLoss = handCards.versusRivalWinLoss(rival.cardStatus, rival.bestValue)
 
