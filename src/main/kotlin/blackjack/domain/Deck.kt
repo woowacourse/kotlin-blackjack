@@ -5,7 +5,7 @@ import blackjack.domain.card.Denomination
 import blackjack.domain.card.Suit
 
 class Deck {
-    private var _cards: ArrayDeque<Card> = create()
+    private val _cards: ArrayDeque<Card> = ArrayDeque()
     val cards: List<Card> get() = _cards
 
     private fun create(): ArrayDeque<Card> {
@@ -22,7 +22,7 @@ class Deck {
 
     fun draw(): Card {
         if (_cards.isEmpty()) {
-            _cards = create()
+            _cards.addAll(create())
         }
         return _cards.removeLast()
     }
