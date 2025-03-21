@@ -37,3 +37,51 @@
 - [x] 모든 todo 완료 혹은 삭제
 - [x] companion object만 존재하는 class를 object로 변경
 - [x] DSL 실습 코드 분리
+
+## Step1 리팩터링 요구사항 2
+- [x] Number의 orderNumber 프로퍼티 삭제 후 getByOrderNumber 메서드 변경
+- [x] HandCards클래스 내 카드 조회시 backing property 활용
+  - [x] 손패 내부의 카드를 한번에 초기화 하도록 테스트 코드 변경
+- [x] DSLStudy코드를 Test로 이동
+- [x] Deck Object를 일반 Class로 변경
+  - [x] PlayerTest의 불필요해진 덱 관련 테스트 삭제
+- [x] DeckTest의 테스트명 수정 및 추가
+- [x] outputView.lineSeparator()호출을 컨트롤러에서 삭제
+- [x] 초기 카드 장수 상수를 Casino에서 handcard로 이동
+
+## Step2 기능 요구사항
+- [x] BetHistory에 플레이어별 베팅 기록 추가
+- [x] 베팅 금액 입력 로직 추가
+- [x] WinLossStatistics가 playerResult를 보관 후 반환하도록 수정
+- [x] ProfitStatistics를 추가하여 참가자별 수익 계산 로직 추가
+  - [x] BetHistory를 보고 플레이어별 수익 계산 및 기록
+  - [x] (플레이어의 수익의 합)의 역으로 딜러의 수익 역산 로직 추가
+- [x] ProfitStatistics를 사용한 최종 수익 콘솔 출력
+  - [x] step1의 최종 결과를 콘솔 출력하지 않도록 수정
+
+## Step2 리팩터링 요구사항
+- [x] GameParticipant의 isInitHandCard() 함수를 사용하도록 수정
+- [x] 외부에서 게임 참가자의 HandCard 직접 접근하지 않도록 수정
+- [x] HandCards 클래스에 방어적 복사 적용
+- [x] intial로 Number 객체를 가져올 수 있는 로직 추가
+- [x] 최소 베팅 금액 상수화
+- [x] 수익률 계산시 Float 대신 Double 사용
+- [x] 게임 참가자가 직접 수익이 얼마인지 알려줄 수 있도록 수정
+- [x] ProfitRate와 Profit 클래스를 추가하여 수익률 계산 로직 수정
+- [x] 게임 참여자가 직접 승 무 패를 알려주도록 수정
+- [x] 초기 카드를 가져오는 추상 필드 사용
+- [x] 패키지 추가 및 이동
+- [x] participant 패키지의 테스트 코드 추가
+- [x] 불필요해진 코드 삭제
+
+## Step2 리팩터링 요구사항2
+- [x] 승패 판단의 세부 구현 로직을 HandCard로 이동
+- [x] Suit의 오타 수정
+- [x] ParticipantInfo를 제거
+  - [x] 딜러가 betAmount를 갖지 않고 플레이어만 갖도록 수정
+  - [x] betAmount의 기본값 제거
+- [x] 커스텀 get() 프로퍼티와 함수가 적절한 상황에 사용되도록 수정
+- [x] 조정자와 빌더 역할에 맞는 함수명 수정
+- [x] 코틀린 컨벤션 재검토 후 수정
+- [ ] 참가자들 객체 추가
+  - [ ] 수익률을 게임 참가자들 객체를 통해 받아올 수 있도록 수정

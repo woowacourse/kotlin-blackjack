@@ -1,4 +1,4 @@
-package dslstudy
+package dslstudy.person
 
 class SkillsBuilder {
     private val softItems = mutableListOf<String>()

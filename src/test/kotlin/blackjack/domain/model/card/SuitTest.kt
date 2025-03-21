@@ -20,7 +20,7 @@ class SuitTest {
     ) {
         // given
         val suit = Suit.getBySuitIndex(rawSuitIndex)
-        val card = Card(Number.ACE, suit)
+        val card = Card(CardNumber.ACE, suit)
 
         // when
         val actualSuitName =

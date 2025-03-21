@@ -1,4 +1,4 @@
-package dslstudy
+package dslstudy.person
 
 class LanguagesBuilder {
     private val languages = mutableMapOf<String, Int>()

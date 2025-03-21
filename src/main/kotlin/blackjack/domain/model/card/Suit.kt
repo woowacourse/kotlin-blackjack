@@ -2,7 +2,7 @@ package blackjack.domain.model.card
 
 enum class Suit {
     SPADE,
-    HART,
+    HEART,
     DIAMOND,
     CLOVER,
     ;

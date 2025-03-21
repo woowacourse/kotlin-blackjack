@@ -1,4 +1,4 @@
-package dslstudy
+package dslstudy.person
 
 data class Person(
     val name: String,

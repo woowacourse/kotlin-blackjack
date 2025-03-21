@@ -1,4 +1,4 @@
-package blackjack.domain.model.progress
+package blackjack.domain.model.participant
 
 enum class WinLoss {
     WIN,
