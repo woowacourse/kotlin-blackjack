@@ -3,7 +3,7 @@ package blackjack.view
 import blackjack.domain.model.card.Card
 import blackjack.domain.model.participant.GameParticipant
 import blackjack.domain.model.participant.Player
-import blackjack.domain.model.participant.bet.Profit
+import blackjack.domain.model.participant.bet.ProfitInfo
 import java.util.Locale
 
 class OutputView(
@@ -40,10 +40,10 @@ class OutputView(
         lineSeparator()
     }
 
-    fun showFinalProfit(participantProfitInfos: List<Pair<GameParticipant, Profit>>) {
+    fun showParticipantsFinalProfit(profitInfos: List<ProfitInfo>) {
         println(HEADER_FINAL_PROFIT)
-        participantProfitInfos.forEach { (participant, profit) ->
-            println("%s: %.0f".format(participant.name, profit.value))
+        profitInfos.forEach { (name, profit) ->
+            println("%s: %.0f".format(name, profit.value))
         }
     }
 

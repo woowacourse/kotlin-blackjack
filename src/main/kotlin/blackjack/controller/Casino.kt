@@ -3,9 +3,9 @@ package blackjack.controller
 import blackjack.domain.model.card.Deck
 import blackjack.domain.model.participant.Dealer
 import blackjack.domain.model.participant.GameParticipant
+import blackjack.domain.model.participant.GameParticipants
 import blackjack.domain.model.participant.Player
 import blackjack.domain.model.participant.bet.BetAmount
-import blackjack.domain.model.participant.bet.Profit
 import blackjack.view.Views
 
 class Casino(
@@ -13,37 +13,32 @@ class Casino(
     private val deck: Deck,
 ) {
     fun blackJackGame() {
+        val gameParticipants = initGameParticipants()
+        initializeGame(gameParticipants)
+        playGame(gameParticipants)
+        concludeGame(gameParticipants)
+    }
+
+    private fun initGameParticipants(): GameParticipants {
         val players: List<Player> = initPlayers()
         val dealer = Dealer()
-
-        initializeGame(dealer, players)
-        playGame(players, dealer)
-        concludeGame(dealer, players)
+        return GameParticipants(dealer, players)
     }
 
-    private fun initializeGame(
-        dealer: Dealer,
-        players: List<Player>,
-    ) {
-        initCardDistribute(listOf(dealer) + players)
-        views.output.showDistributeCardMessage(players)
-        views.output.showInitCardInfo(listOf(dealer) + players)
+    private fun initializeGame(gameParticipants: GameParticipants) {
+        initCardDistribute(gameParticipants.gameParticipants)
+        views.output.showDistributeCardMessage(gameParticipants.players)
+        views.output.showInitCardInfo(gameParticipants.gameParticipants)
     }
 
-    private fun playGame(
-        players: List<Player>,
-        dealer: Dealer,
-    ) {
-        playersDrawPhase(players)
-        dealerDrawPhase(dealer)
+    private fun playGame(gameParticipants: GameParticipants) {
+        playersDrawPhase(gameParticipants.players)
+        dealerDrawPhase(gameParticipants.dealer)
     }
 
-    private fun concludeGame(
-        dealer: Dealer,
-        players: List<Player>,
-    ) {
-        views.output.showCardsResult(listOf(dealer) + players)
-        showFinalProfit(dealer, players)
+    private fun concludeGame(gameParticipants: GameParticipants) {
+        views.output.showCardsResult(gameParticipants.gameParticipants)
+        views.output.showParticipantsFinalProfit(gameParticipants.profitInfos)
     }
 
     private fun initPlayers(): List<Player> {
@@ -89,17 +84,5 @@ class Casino(
             dealer.fromDeckCardDraw(deck)
             views.output.showDealerDrawMessage()
         }
-    }
-
-    private fun showFinalProfit(
-        dealer: Dealer,
-        players: List<Player>,
-    ) {
-        val dealerProfitInfo: Pair<GameParticipant, Profit> = dealer to dealer.allPlayersMatchProfit(players)
-        val playerProfitInfos: List<Pair<GameParticipant, Profit>> =
-            players.map { player ->
-                player to player.dealerMatchProfit(dealer)
-            }
-        views.output.showFinalProfit(listOf(dealerProfitInfo) + playerProfitInfos)
     }
 }
