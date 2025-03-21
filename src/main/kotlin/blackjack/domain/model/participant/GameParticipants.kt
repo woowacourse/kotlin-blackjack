@@ -8,6 +8,7 @@ data class GameParticipants(
 ) {
     val gameParticipants: List<GameParticipant>
         get() = listOf(dealer) + players
+
     val profitInfos: List<ProfitInfo>
         get() {
             val dealerProfitInfo = ProfitInfo(dealer.name, dealer.allPlayersMatchProfit(players))
