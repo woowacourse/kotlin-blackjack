@@ -6,14 +6,15 @@ import org.junit.jupiter.api.Test
 class DeckTest {
     @Test
     fun `덱은 카드 한 장을 뽑을 수 있다`() {
-        val deck = Deck()
+        val customCards = ArrayDeque(listOf(ClubKing, ClubAce, ClubFive))
+        val deck =Deck.createCustomDeck(customCards)
         val drawnCard = deck.draw()
-        assertThat(deck.cards.contains(drawnCard)).isFalse()
+        assertThat(drawnCard).isEqualTo(ClubFive)
     }
 
     @Test
     fun `덱은 52장을 모두 뽑은 후 카드를 뽑으면 새로운 덱을 사용한다`() {
-        val deck = Deck()
+        val deck = Deck.createShuffled()
         repeat(53) {
             deck.draw()
         }

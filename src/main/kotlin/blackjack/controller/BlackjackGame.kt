@@ -12,7 +12,7 @@ class BlackjackGame(
     private val inputView: InputView,
     private val outputView: OutputView,
 ) {
-    private val deck = Deck()
+    private val deck = Deck.createShuffled()
 
     fun start() {
         val dealer = Dealer()
