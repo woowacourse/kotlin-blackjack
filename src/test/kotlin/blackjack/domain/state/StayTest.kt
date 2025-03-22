@@ -53,7 +53,7 @@ class StayTest {
     fun `stay 상태에서 상대가 blackjack이면 진다`() {
         val dealer = Dealer()
         val player = Player("name1", Money(1000))
-        dealer.state = Blackjack(dealer.state.hand)
+        dealer.changeState(Blackjack(dealer.state.hand))
         val result = Stay(player.state.hand).decideResult(dealer.state)
         assertThat(result).isEqualTo(Result.LOSE)
     }
@@ -62,7 +62,7 @@ class StayTest {
     fun `stay 상태에서 상대가 bust이면 이긴다`() {
         val dealer = Dealer()
         val player = Player("name1", Money(1000))
-        dealer.state = Bust(dealer.state.hand)
+        dealer.changeState(Bust(dealer.state.hand))
         val result = Stay(player.state.hand).decideResult(dealer.state)
         assertThat(result).isEqualTo(Result.WIN)
     }
