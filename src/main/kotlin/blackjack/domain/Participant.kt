@@ -1,11 +1,29 @@
 package blackjack.domain
 
-abstract class Participant {
-    val hand = Hand(emptyList())
+import blackjack.domain.card.Card
+import blackjack.domain.state.PlayingState
+import blackjack.domain.state.Ready
 
-    fun addCard(card: Card) {
-        hand.addCard(card)
+abstract class Participant(val name: String) {
+    var state: PlayingState = Ready()
+        private set
+
+    fun drawTo(card: Card) {
+        state = state.draw(card)
     }
 
+    fun profit(other: Participant) {
+        val stateProfit = state.profit(other.state)
+        return calculateProfit(stateProfit)
+    }
+
+    fun changeState(newState: PlayingState) {
+        state = newState
+    }
+
+    abstract fun calculateProfit(stateProfit: Double)
+
     abstract fun canDraw(): Boolean
+
+    abstract fun stay()
 }

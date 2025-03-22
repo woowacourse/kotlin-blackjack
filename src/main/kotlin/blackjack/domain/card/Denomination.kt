@@ -1,8 +1,6 @@
-package blackjack.domain
+package blackjack.domain.card
 
-enum class Rank(
-    val score: Int,
-) {
+enum class Denomination(val value: Int) {
     ACE(1),
     TWO(2),
     THREE(3),

@@ -1,15 +1,38 @@
 package blackjack.domain
 
-class Deck(cards: List<Card>) {
-    val cards: ArrayDeque<Card> = ArrayDeque(cards)
+import blackjack.domain.card.Card
+import blackjack.domain.card.Denomination
+import blackjack.domain.card.Suit
 
-    fun pick(): Card = cards.removeLast()
+class Deck private constructor(private val _cards: ArrayDeque<Card>) {
+    val cards: List<Card> get() = _cards
 
     companion object {
-        fun create(): Deck = Deck(CARDS.shuffled())
+        fun createShuffled(): Deck {
+            return Deck(generateShuffledCards())
+        }
 
-        private val CARDS: List<Card> =
-            Suit.entries
-                .flatMap { suit -> Rank.entries.map { rank -> Card(rank, suit) } }
+        fun createCustomDeck(customCards: ArrayDeque<Card>): Deck {
+            return Deck(customCards)
+        }
+
+        private fun generateShuffledCards(): ArrayDeque<Card> {
+            return Suit.entries.flatMap { suit ->
+                Denomination.entries.map { denomination ->
+                    Card(suit, denomination)
+                }
+            }.shuffled().toCollection(ArrayDeque())
+        }
+    }
+
+    fun draw(): Card {
+        if (_cards.isEmpty()) {
+            refillDeck()
+        }
+        return _cards.removeLast()
+    }
+
+    private fun refillDeck() {
+        _cards.addAll(generateShuffledCards())
     }
 }

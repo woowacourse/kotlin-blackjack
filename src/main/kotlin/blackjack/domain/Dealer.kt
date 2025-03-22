@@ -1,21 +1,31 @@
 package blackjack.domain
 
-class Dealer : Participant() {
+import blackjack.domain.state.Hit
+
+class Dealer(name: String = DEALER_NAME) : Participant(name) {
+    var profit: Double = 0.0
+        private set
+
+    override fun calculateProfit(stateProfit: Double) {}
+
     override fun canDraw(): Boolean {
-        return Rule.calculateScore(hand) <= DEALER_HIT_CONDITION
+        return state.hand.sum() < MINIMUM_STAY_CONDITION
     }
 
-    fun drawCard(deck: Deck) {
-        while (canDraw()) {
-            addCard(deck.pick())
+    override fun stay() {
+        if (state is Hit) {
+            changeState((state as Hit).changeStay())
         }
     }
 
-    fun getHitCount(): Int {
-        return hand.cards.size - Rule.INITIAL_CARD_COUNT
+    fun calculateProfitWith(players: List<Player>) {
+        players.forEach {
+            profit -= it.profit
+        }
     }
 
     companion object {
-        private const val DEALER_HIT_CONDITION = 16
+        private const val DEALER_NAME: String = "딜러"
+        private const val MINIMUM_STAY_CONDITION = 17
     }
 }

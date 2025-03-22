@@ -2,8 +2,7 @@ package dsl
 
 fun main() {
     val person =
-        introduce {
-            name("박재성")
+        introduce("박재성") {
             company("우아한형제들")
             skills {
                 soft("A passion for problem solving")
@@ -18,8 +17,14 @@ fun main() {
     println(person)
 }
 
-fun introduce(block: PersonBuilder.() -> Unit): Person {
-    return PersonBuilder().apply(block).build()
+fun introduce(
+    name: String,
+    block: PersonBuilder.() -> Unit,
+): Person {
+    return PersonBuilder().apply {
+        name(name)
+        block()
+    }.build()
 }
 
 data class Person(
@@ -52,6 +57,7 @@ class PersonBuilder {
     }
 
     fun build(): Person {
+        require(name.isNotEmpty()) { "이름은 빈 값일 수 없습니다." }
         return Person(name, company, skills, languages)
     }
 }
