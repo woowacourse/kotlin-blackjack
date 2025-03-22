@@ -8,6 +8,7 @@ class Hit(override val hand: Hand) : PlayingState {
         hand.addCard(card)
         return when {
             hand.isBust() -> Bust(hand)
+            hand.isBlackjack() -> Blackjack(hand)
             else -> this
         }
     }
@@ -16,7 +17,7 @@ class Hit(override val hand: Hand) : PlayingState {
         return 0.0
     }
 
-    fun stay(): PlayingState {
+    fun changeStay(): PlayingState {
         return Stay(hand)
     }
 }

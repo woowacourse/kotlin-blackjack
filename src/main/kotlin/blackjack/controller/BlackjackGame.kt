@@ -5,8 +5,6 @@ import blackjack.domain.Dealer
 import blackjack.domain.Deck
 import blackjack.domain.Money
 import blackjack.domain.Player
-import blackjack.domain.state.Bust
-import blackjack.domain.state.Hit
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -20,19 +18,18 @@ class BlackjackGame(
         val dealer = Dealer()
         val players = createPlayers()
         dealFirstTurn(dealer, players)
-        players.forEach {
-            turnPlayer(it)
-        }
+        players.forEach { turnPlayer(it) }
         dealerPlay(dealer)
         printResults(dealer, players)
     }
 
     private fun createPlayers(): List<Player> {
         val playersName = inputView.readPlayerNames()
-        val players = playersName.map {
-            val bettingAmount = inputView.readBettingAmount(it)
-            Player(it, Money(bettingAmount))
-        }
+        val players =
+            playersName.map {
+                val bettingAmount = inputView.readBettingAmount(it)
+                Player(it, Money(bettingAmount))
+            }
         return players
     }
 
@@ -40,36 +37,43 @@ class BlackjackGame(
         dealer: Dealer,
         players: List<Player>,
     ) {
-        dealer.state.draw(deck.draw())
-        players.forEach { it.state = it.state.draw(deck.draw()) }
-        players.forEach { it.state = it.state.draw(deck.draw()) }
+        dealer.drawTo(deck.draw())
+        players.forEach {
+            it.drawTo(deck.draw())
+            it.drawTo(deck.draw())
+        }
         outputView.printDealingResult(dealer, players)
+        dealer.drawTo(deck.draw())
     }
 
-    private fun turnPlayer(it: Player) {
-        if (it.state.hand.isBust()) {
-            outputView.printBust(it)
-            return
+    private fun turnPlayer(player: Player) {
+        while (player.canDraw() && askDraw(player)) {
+            player.drawTo(deck.draw())
+            outputView.printPlayerCards(player)
         }
-        val answer = inputView.readHitOrStay(it)
-        if (answer == Action.HIT && it.state !is Bust) {
-            it.state = it.state.draw(deck.draw())
-            outputView.printPlayerCards(it)
-        }
-        if (it.state is Bust) {
-            outputView.printBust(it)
-            return
-        }
-        if (answer == Action.STAY && it.state is Hit) {
-            it.state = (it.state as Hit).stay()
-            return
-        }
-        return turnPlayer(it)
+        player.stay()
+    }
+
+    private fun askDraw(player: Player): Boolean {
+        val answer = inputView.readHitOrStay(player)
+        return answer == Action.HIT
     }
 
     private fun dealerPlay(dealer: Dealer) {
-        val hitCount = dealer.play(deck)
-        outputView.printDealerHit(hitCount)
+        val countHit = drawUntilStay(dealer)
+        if (countHit > 0) {
+            outputView.printDealerHit(countHit)
+        }
+        dealer.stay()
+    }
+
+    private fun drawUntilStay(dealer: Dealer): Int {
+        var count = 0
+        while (dealer.canDraw()) {
+            dealer.drawTo(deck.draw())
+            count++
+        }
+        return count
     }
 
     private fun printResults(
@@ -77,8 +81,8 @@ class BlackjackGame(
         players: List<Player>,
     ) {
         outputView.printBlackjackScore(dealer, players)
-        players.forEach {
-            it.profit(dealer)
+        players.forEach { player ->
+            player.profit(dealer)
         }
         dealer.calculateProfitWith(players)
         outputView.printDealerProfit(dealer.profit.toInt())

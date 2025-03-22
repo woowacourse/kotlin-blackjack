@@ -12,7 +12,7 @@ class Blackjack(override val hand: Hand) : Finished(hand) {
     }
 
     override fun profit(state: PlayingState): Double {
-        return when(state) {
+        return when (state) {
             is Blackjack -> PUSH_MULTIPLIER
             else -> BLACKJACK_MULTIPLIER
         }

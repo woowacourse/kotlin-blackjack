@@ -14,7 +14,7 @@ class BlackjackTest {
     fun `blackjack 상태이고 상대가 blackjack 상태면 무승부다`() {
         val dealer = Dealer()
         val player = Player("name1", Money(1000))
-        dealer.state = Blackjack(dealer.state.hand)
+        dealer.changeState(Blackjack(dealer.state.hand))
         val result = Blackjack(player.state.hand).decideResult(dealer.state)
         assertThat(result).isEqualTo(Result.PUSH)
     }
@@ -44,12 +44,12 @@ class BlackjackTest {
     }
 
     @Test
-    fun `blackjack 상태일 때 상대가 블랙잭이 아니면 수익률은 1다`() {
+    fun `blackjack 상태일 때 상대가 블랙잭이면 1다`() {
         val dealer = Dealer()
         dealer.state.hand.addCard(ClubAce)
         dealer.state.hand.addCard(ClubKing)
         val player = Player("name1", Money(1000))
         val result = Blackjack(player.state.hand).profit(Blackjack(dealer.state.hand))
-        assertThat(result).isEqualTo(-1.0)
+        assertThat(result).isEqualTo(1.0)
     }
 }

@@ -13,7 +13,7 @@ class Stay(override val hand: Hand) : Finished(hand) {
     }
 
     override fun profit(state: PlayingState): Double {
-        return when(state) {
+        return when (state) {
             is Bust -> WIN_MULTIPLIER
             is Blackjack -> LOSE_MULTIPLIER
             else -> stayProfit(state.hand)
