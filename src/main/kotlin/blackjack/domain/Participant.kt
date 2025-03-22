@@ -14,7 +14,6 @@ abstract class Participant(val name: String) {
 
     fun profit(other: Participant) {
         val stateProfit = state.profit(other.state)
-        println("$stateProfit")
         return calculateProfit(stateProfit)
     }
 
