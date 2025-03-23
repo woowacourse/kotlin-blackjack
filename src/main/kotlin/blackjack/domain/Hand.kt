@@ -2,7 +2,6 @@ package blackjack.domain
 
 class Hand(
     cards: List<Card>,
-    val money: Int,
 ) {
     private val _cards: MutableList<Card> = cards.toMutableList()
 
