@@ -4,15 +4,17 @@ import blackjack.domain.Card
 import blackjack.domain.Hand
 
 class Ready(
-    override val hand: Hand,
+    override val hand: Hand = Hand(emptyList()),
 ) : State {
     override fun draw(card: Card): State {
-        val hand = Hand(listOf(card), hand.money)
-
-        return Hit(hand)
+        hand.addCard(card)
+        return when {
+            hand.hasBlackjack() -> Blackjack(hand)
+            else -> Hit(hand)
+        }
     }
 
     override fun canDrawCard(): Boolean = false
 
-    override fun profit(profitMoney: Int): Int = throw IllegalArgumentException()
+    override fun profit(state: State): Double = 0.0
 }
