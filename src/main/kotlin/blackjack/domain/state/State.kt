@@ -10,5 +10,5 @@ interface State {
 
     fun canDrawCard(): Boolean
 
-    fun profit(profitMoney: Int): Int
+    fun profit(state: State): Double
 }
