@@ -1,31 +1,33 @@
 package blackjack.domain
 
-class Deck {
-    private val cards: MutableList<Card> = mutableListOf()
+class Deck private constructor(
+    private val _cards: ArrayDeque<Card>,
+) {
+    val cards: List<Card> get() = _cards
 
-    init {
-        initializeDeck()
-        shuffleDeck()
+    companion object {
+        fun createShuffled(): Deck = Deck(generateShuffledCards())
+
+        fun createCustomDeck(customCards: ArrayDeque<Card>): Deck = Deck(customCards)
+
+        private fun generateShuffledCards(): ArrayDeque<Card> =
+            Rank.entries
+                .flatMap { rank ->
+                    Suit.entries.map { suit ->
+                        Card(rank, suit)
+                    }
+                }.shuffled()
+                .toCollection(ArrayDeque())
     }
 
-    private fun initializeDeck() {
-        Suit.entries.forEach { suit ->
-            Rank.entries.forEach { rank ->
-                cards.add(Card(rank, suit))
-            }
+    fun draw(): Card {
+        if (_cards.isEmpty()) {
+            refillDeck()
         }
+        return _cards.removeLast()
     }
 
-    fun shuffleDeck() {
-        cards.shuffle()
+    private fun refillDeck() {
+        _cards.addAll(generateShuffledCards())
     }
-
-    fun drawCard(): Card {
-        if (cards.isEmpty()) {
-            throw IllegalStateException("덱에 남아있는 카드가 없습니다.")
-        }
-        return cards.removeAt(0)
-    }
-
-    fun remainingCards(): Int = cards.size
 }
