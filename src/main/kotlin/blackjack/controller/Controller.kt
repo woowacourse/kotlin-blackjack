@@ -2,7 +2,7 @@ package blackjack.controller
 
 import blackjack.domain.Dealer
 import blackjack.domain.Deck
-import blackjack.domain.Players
+import blackjack.domain.Player
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -10,31 +10,40 @@ class Controller(
     private val inputView: InputView,
     private val outputView: OutputView,
 ) {
+    private val deck = Deck.createShuffled()
+    private val dealer = Dealer()
+
     fun gameStart() {
-        val deck = Deck()
-
         val playerNames = inputView.readPlayersName()
-        val players =
-            Players.from(
-                names = playerNames,
-                getMoreCard = inputView::askDrawCard,
-                battingAmountProvider = inputView::readPlayersBattingAmount,
-            )
+        playerNames.forEach {
+            val bettingAmount = inputView.readPlayersBattingAmount(it)
+            Player(it, bettingAmount)
+        }
 
-        val dealer = Dealer()
+        players.players.forEach { it.drawInitialCards(deck) }
+        dealer.drawInitialCards(deck)
 
-        dealer.drawCard(deck::drawCard)
-        players.initializeCards(deck::drawCard)
         outputView.printInitialCardsState(dealer, players)
 
-        players.drawMoreCards(deck::drawCard) { name, hand ->
-            outputView.printPlayerHand(name, hand)
+        players.players.forEach { player ->
+            while (!player.state.hand.hasBust() && !player.state.hand.hasBlackjack() && inputView.askDrawCard(player.name)) {
+                player.drawCard(deck.draw())
+                outputView.printPlayerResult(player)
+            }
+            player.stay()
         }
 
-        dealer.drawMoreCard(deck::drawCard) { participant ->
-            outputView.printDealerHand(dealer)
+        while (dealer.drawMoreCard()) {
+            dealer.playTurn(deck)
+            outputView.printDealerDrawCard()
         }
 
-        outputView.printFinalResult(dealer, players)
+        dealer.stay()
+
+        outputView.printFinalResults(dealer, players)
+
+        players.calculateProfits(dealer.state)
+
+        outputView.printFinalProfit(dealer, players)
     }
 }
