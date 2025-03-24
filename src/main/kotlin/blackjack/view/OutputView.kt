@@ -1,6 +1,7 @@
 package blackjack.view
 
 import blackjack.domain.Dealer
+import blackjack.domain.Player
 import blackjack.domain.Players
 
 class OutputView {
@@ -8,41 +9,71 @@ class OutputView {
         dealer: Dealer,
         players: Players,
     ) {
-        println("딜러와 ${players.players.joinToString { it.name }}에게 2장씩 나누었습니다.")
+        println("딜러와 ${players.players.joinToString { it.name }}에게 2장을 나누었습니다.")
+        val dealerCard = dealer.getVisibleCard()
+        println("딜러: ${dealerCard.rank.displayName} ${dealerCard.suit.displayName}")
 
-        println("딜러: ${dealer.state.hand.cards.joinToString { "${it.rank} ${it.suit}" }}")
         players.players.forEach { player ->
-            println("${player.name}카드: ${player.state.hand.cards.joinToString { "${it.rank} ${it.suit}" }}")
+            println("${player.name}카드: ${player.state.hand.cards.joinToString { "${it.rank.displayName}${it.suit.displayName}" }}")
         }
+
         println()
     }
 
-    fun printPlayerHand(
-        playerName: String,
-        hand: blackjack.domain.Hand,
-    ) {
-        println("${playerName}카드: ${hand.cards.joinToString { "${it.rank} ${it.suit}" }}")
+    fun printPlayerResult(player: Player) {
+        println(
+            "${player.name}카드: ${
+                player.state.hand.cards.joinToString {
+                    "${it.rank.displayName} ${it.suit.displayName}"
+                }
+            }",
+        )
     }
 
-    fun printDealerHand(dealer: Dealer) {
-        println("딜러 카드: ${dealer.state.hand.cards.joinToString { "${it.rank} ${it.suit}" }}")
+    fun printDealerDrawCard() {
+        println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
     }
 
-    fun printFinalResult(
+    fun printDealerResult(dealer: Dealer) {
+        println(
+            "딜러 카드: ${
+                dealer.state.hand.cards.joinToString {
+                    "${it.rank.displayName} ${it.suit.displayName}"
+                }
+            } - 결과: ${dealer.state.hand.getTotalScore()}",
+        )
+    }
+
+    fun printFinalResults(
         dealer: Dealer,
         players: Players,
     ) {
-        val dealerTotalScore = dealer.state.hand.getTotalScore()
+        println("\n## 최종 결과")
 
-        println("\n## 최종 수익")
+        printDealerResult(dealer)
+
         players.players.forEach { player ->
-            val playerTotalScore = player.state.hand.getTotalScore()
-            val profit = player.state.profit(dealerTotalScore)
-
-            println("${player.name}: $profit")
+            println(
+                "${player.name}카드: ${
+                    player.state.hand.cards.joinToString {
+                        "${it.rank.displayName} ${it.suit.displayName}"
+                    }
+                } - 결과: ${player.state.hand.getTotalScore()}",
+            )
         }
+    }
 
-        val dealerProfit = -players.players.sumOf { it.state.profit(dealerTotalScore) }
+    fun printFinalProfit(
+        dealer: Dealer,
+        players: Players,
+    ) {
+        println("\n## 최종 수익")
+
+        val dealerProfit = -players.players.sumOf { it.profit.toInt() }
         println("딜러: $dealerProfit")
+
+        players.players.forEach { player ->
+            println("${player.name}: ${player.profit.toInt()}")
+        }
     }
 }
