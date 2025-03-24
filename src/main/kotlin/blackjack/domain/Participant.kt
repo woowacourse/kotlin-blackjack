@@ -1,14 +1,16 @@
 package blackjack.domain
 
+import blackjack.domain.state.Ready
 import blackjack.domain.state.State
 
-interface Participant {
-    val state: State
+abstract class Participant {
+    var state: State = Ready()
 
-    fun drawCard(giveCard: () -> Card)
+    fun drawCard(card: Card) {
+        state = state.draw(card)
+    }
 
-    fun drawMoreCard(
-        giveCards: () -> Card,
-        printCards: (Participant) -> Unit,
-    )
+    abstract fun drawMoreCard(): Boolean
+
+    abstract fun stay()
 }
