@@ -3,37 +3,37 @@ package blackjack.domain
 import blackjack.domain.state.Hit
 import blackjack.domain.state.State
 
-data class Player(
+class Player(
     val name: String,
-    override var state: State,
-    val getMoreCard: (String) -> Boolean,
-) : Participant {
-    fun drawInitialCards(giveCard: () -> Card) {
-        repeat(2) {
-            state = state.draw(giveCard())
+    var bettingMoney: Int,
+) : Participant() {
+    var profit: Double = 0.0
+        private set
+
+    fun drawInitialCards(deck: Deck) {
+        repeat(2) { drawCard(deck.draw()) }
+        checkInitialState()
+    }
+
+    private fun checkInitialState() {
+        if (state is Hit && !state.canDrawCard()) {
+            stay()
         }
     }
 
-    fun drawAdditionalCards(
-        giveCard: () -> Card,
-        printCards: (String, Hand) -> Unit,
-    ) {
-        while (state is Hit && getMoreCard(name)) {
-            state = state.draw(giveCard())
-            printCards(name, state.hand)
+    fun calculateProfit(dealerState: State) {
+        profit = bettingMoney * state.profit(dealerState)
+    }
+
+    override fun drawMoreCard(): Boolean = state.canDrawCard()
+
+    override fun stay() {
+        if (state is Hit) {
+            state = (state as Hit).changeStay()
         }
     }
 
-    override fun drawCard(giveCard: () -> Card) {
-        drawInitialCards(giveCard)
-    }
-
-    override fun drawMoreCard(
-        giveCards: () -> Card,
-        printCards: (Participant) -> Unit,
-    ) {
-        drawAdditionalCards(giveCards) { _, hand ->
-            printCards(this)
-        }
+    fun calculateProfits(dealerState: State) {
+        players.forEach { it.calculateProfit(dealerState) }
     }
 }
