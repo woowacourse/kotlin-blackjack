@@ -35,7 +35,7 @@ class BlackJackController(
 
         return playerNames.map { name ->
             val betAmount = InputView.readBetAmounts(name)
-            Player(name, BetAmount(betAmount))
+            Player(name, betAmount)
         }
     }
 }

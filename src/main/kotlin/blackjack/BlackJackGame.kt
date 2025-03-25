@@ -42,19 +42,6 @@ class BlackJackGame(
         }
     }
 
-    private fun handleDealerHit(
-        dealer: Dealer,
-        deck: Deck,
-    ) {
-        if (dealer.canHit()) {
-            outputView.printDealerHaveAdditionalCard()
-
-            while (dealer.canHit()) {
-                dealer.addCard(deck.draw())
-            }
-        }
-    }
-
     private fun handlePlayersHit(
         players: List<Player>,
         deck: Deck,
@@ -75,6 +62,19 @@ class BlackJackGame(
                 outputView.printPlayerCards(player)
             } else {
                 break
+            }
+        }
+    }
+
+    private fun handleDealerHit(
+        dealer: Dealer,
+        deck: Deck,
+    ) {
+        if (dealer.canHit()) {
+            outputView.printDealerHaveAdditionalCard()
+
+            while (dealer.canHit()) {
+                dealer.addCard(deck.draw())
             }
         }
     }
