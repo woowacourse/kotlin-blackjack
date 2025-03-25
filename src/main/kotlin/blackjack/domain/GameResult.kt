@@ -5,56 +5,28 @@ import blackjack.domain.participant.Player
 import blackjack.domain.participant.PlayerResultStatus
 
 class GameResult(private val dealer: Dealer, players: List<Player>) {
-    val playersGameResult: Map<Player, PlayerResultStatus> = players.associateWith { it.getPlayerStatus(dealer) }
-    val playerProfits = mutableMapOf<Player, Int>()
+    private val playersGameResult: Map<Player, PlayerResultStatus> =
+        players.associateWith { it.getPlayerStatus(dealer) }
+    private val playerProfits: Map<Player, Int> = calculatePlayerProfits()
 
-    var dealerRevenue: Int = 0
-    var dealerWin: Int = 0
-    var dealerLose: Int = 0
-    var dealerDraw: Int = 0
+    val dealerRevenue: Int = -playerProfits.values.sum()
+    val dealerWin: Int = playersGameResult.count { it.value == PlayerResultStatus.PLAYER_LOSE }
+    val dealerLose: Int =
+        playersGameResult.count { it.value in listOf(PlayerResultStatus.BLACKJACK_WIN, PlayerResultStatus.PLAYER_WIN) }
+    val dealerDraw: Int = playersGameResult.count { it.value == PlayerResultStatus.DRAW }
 
-    fun updateGameResult() {
-        playersGameResult.forEach { (player, result) ->
+    fun getPlayerResults(): Map<Player, PlayerResultStatus> = playersGameResult
+
+    fun getPlayerProfits(): Map<Player, Int> = playerProfits
+
+    private fun calculatePlayerProfits(): Map<Player, Int> {
+        return playersGameResult.mapValues { (player, result) ->
             when (result) {
-                PlayerResultStatus.BLACKJACK_WIN, PlayerResultStatus.PLAYER_WIN -> {
-                    dealerLose++
-                }
-
-                PlayerResultStatus.PLAYER_LOSE -> {
-                    dealerWin++
-                    dealerRevenue + (-player.getBetAmount())
-                }
-
-                PlayerResultStatus.DRAW -> {
-                    dealerDraw++
-                }
+                PlayerResultStatus.BLACKJACK_WIN -> (player.getBetAmount() * 1.5).toInt()
+                PlayerResultStatus.PLAYER_WIN -> player.getBetAmount()
+                PlayerResultStatus.PLAYER_LOSE -> -player.getBetAmount()
+                PlayerResultStatus.DRAW -> 0
             }
         }
-    }
-
-    fun calculatePlayerProfit(): Map<Player, Int> {
-        playersGameResult.forEach { (player, result) ->
-            val profit =
-                when (result) {
-                    PlayerResultStatus.BLACKJACK_WIN -> {
-                        (player.getBetAmount() * 1.5).toInt()
-                    }
-
-                    PlayerResultStatus.PLAYER_WIN -> {
-                        player.getBetAmount()
-                    }
-
-                    PlayerResultStatus.PLAYER_LOSE -> {
-                        -player.getBetAmount()
-                    }
-
-                    PlayerResultStatus.DRAW -> {
-                        0
-                    }
-                }
-            playerProfits[player] = profit
-        }
-
-        return playerProfits
     }
 }

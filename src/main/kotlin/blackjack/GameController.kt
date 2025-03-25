@@ -86,8 +86,7 @@ class GameController(
         players: List<Player>,
     ) {
         val gameResult = GameResult(dealer, players)
-        gameResult.updateGameResult()
-        gameResult.calculatePlayerProfit()
+
         outputView.printFinalCards(dealer, players)
         outputView.printResult(gameResult)
     }

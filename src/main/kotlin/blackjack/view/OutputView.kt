@@ -39,17 +39,32 @@ object OutputView {
         }
     }
 
+//    fun printResult(gameResult: GameResult) {
+//        println("\n##최종 승패")
+//        println(
+//            "딜러: ${gameResult.dealerWin}승 ${gameResult.dealerLose}패 ${gameResult.dealerDraw}무",
+//        )
+//        gameResult.playersGameResult.forEach { (player, result) ->
+//            println("${player.name}: ${result.toDisplayName()}")
+//        }
+//        println("## 최종 수익")
+//        println("딜러 : ${gameResult.dealerRevenue}")
+//        gameResult.playerProfits.forEach { (player, profit) ->
+//            println("${player.name}: $profit")
+//        }
+//    }
     fun printResult(gameResult: GameResult) {
-        println("\n##최종 승패")
-        println(
-            "딜러: ${gameResult.dealerWin}승 ${gameResult.dealerLose}패 ${gameResult.dealerDraw}무",
-        )
-        gameResult.playersGameResult.forEach { (player, result) ->
+        println("\n## 최종 승패")
+        println("딜러: ${gameResult.dealerWin}승 ${gameResult.dealerLose}패 ${gameResult.dealerDraw}무")
+
+        gameResult.getPlayerResults().forEach { (player, result) ->
             println("${player.name}: ${result.toDisplayName()}")
         }
-        println("## 최종 수익")
-        println("딜러 : ${gameResult.dealerRevenue}")
-        gameResult.playerProfits.forEach { (player, profit) ->
+
+        println("\n## 최종 수익")
+        println("딜러: ${gameResult.dealerRevenue}")
+
+        gameResult.getPlayerProfits().forEach { (player, profit) ->
             println("${player.name}: $profit")
         }
     }
