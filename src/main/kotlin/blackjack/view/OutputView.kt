@@ -21,7 +21,7 @@ object OutputView {
     }
 
     fun printPlayerCards(player: Player) {
-        println("${player.name}카드: ${printCardList(player.hand.getCards())}")
+        println("${player.name}카드: ${printCardList(player.hand.cards())}")
     }
 
     fun printDealerHaveAdditionalCard() {
@@ -32,10 +32,10 @@ object OutputView {
         dealer: Dealer,
         players: List<Player>,
     ) {
-        println("딜러 카드: ${printCardList(dealer.hand.getCards())} - 결과: ${dealer.hand.getTotalSum()}")
+        println("딜러 카드: ${printCardList(dealer.hand.cards())} - 결과: ${dealer.hand.totalSum()}")
 
         players.forEach { player ->
-            println("${player.name}카드: ${printCardList(player.hand.getCards())} - 결과: ${player.hand.getTotalSum()}")
+            println("${player.name}카드: ${printCardList(player.hand.cards())} - 결과: ${player.hand.totalSum()}")
         }
     }
 

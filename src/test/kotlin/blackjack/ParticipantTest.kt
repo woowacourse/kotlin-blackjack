@@ -3,22 +3,18 @@ package blackjack
 import blackjack.domain.card.Card
 import blackjack.domain.card.Rank
 import blackjack.domain.card.Suit
+import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Participant
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-
-class FakeParticipant : Participant() {
-    override val hitThreshold: Int
-        get() = 21
-}
 
 class ParticipantTest {
     private lateinit var participant: Participant
 
     @BeforeEach
     fun setUp() {
-        participant = FakeParticipant()
+        participant = Dealer()
     }
 
     @Test
@@ -27,7 +23,7 @@ class ParticipantTest {
 
         participant.addCard(card)
 
-        assertThat(participant.hand.getCards()).contains(card)
+        assertThat(participant.hand.cards()).contains(card)
     }
 
     @Test

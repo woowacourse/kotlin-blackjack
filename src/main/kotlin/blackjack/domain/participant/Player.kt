@@ -9,7 +9,7 @@ class Player(val name: String, private val betAmount: BetAmount) : Participant()
         get() = PLAYER_HIT_THRESHOLD
 
     override fun showInitialCards(): List<Card> {
-        return hand.getCards().take(PLAYER_INITIAL_CARD_COUNT)
+        return hand.cards().take(PLAYER_INITIAL_CARD_COUNT)
     }
 
     fun getPlayerStatus(dealer: Dealer): PlayerResultStatus {

@@ -22,6 +22,6 @@ abstract class Participant {
     }
 
     fun getTotalSum(): Int {
-        return hand.getTotalSum()
+        return hand.totalSum()
     }
 }

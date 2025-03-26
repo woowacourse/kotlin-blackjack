@@ -7,7 +7,7 @@ class Dealer : Participant() {
         get() = DEALER_HIT_THRESHOLD
 
     override fun showInitialCards(): List<Card> {
-        return hand.getCards().take(DEALER_INITIAL_CARD_COUNT)
+        return hand.cards().take(DEALER_INITIAL_CARD_COUNT)
     }
 
     companion object {

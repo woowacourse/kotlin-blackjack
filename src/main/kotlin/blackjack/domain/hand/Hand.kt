@@ -5,25 +5,25 @@ import blackjack.domain.card.Card
 class Hand(
     private val cards: MutableList<Card> = mutableListOf(),
 ) {
-    fun getCards(): List<Card> = cards.toList()
+    fun cards(): List<Card> = cards.toList()
 
     fun addCard(card: Card) {
         cards.add(card)
     }
 
     fun isBust(): Boolean {
-        return getTotalSum() > BUST_THRESHOLD
+        return totalSum() > BUST_THRESHOLD
     }
 
     fun isBlackJack(): Boolean {
-        return cards.size == BLACKJACK_CONDITION_NUMBER && getTotalSum() == BLACKJACK_CONDITION_SUM
+        return cards.size == BLACKJACK_CONDITION_NUMBER && totalSum() == BLACKJACK_CONDITION_SUM
     }
 
     fun canHit(hitThreshold: Int): Boolean {
-        return getTotalSum() <= hitThreshold
+        return totalSum() <= hitThreshold
     }
 
-    fun getTotalSum(): Int {
+    fun totalSum(): Int {
         var sum = cards.sumOf { it.getScore() }
 
         if (hasAce() && sum + ACE_BONUS_SCORE <= BUST_THRESHOLD) {
