@@ -16,4 +16,3 @@ class CatBuilder {
         return Cat(name, age, gender)
     }
 }
-

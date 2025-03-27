@@ -1,6 +1,5 @@
-package blackjack.model
+package blackjack.model.card
 
-import blackjack.model.card.Denomination
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -10,7 +9,7 @@ import org.junit.jupiter.params.provider.ValueSource
 class DenominationTest {
     @ParameterizedTest
     @ValueSource(strings = ["JACK", "QUEEN", "KING"])
-    fun `끗수가 J,Q,K일 경우 숫자가 10이다`(denomination: Denomination) {
+    fun `끗수가 {0}일 경우 숫자가 10이다`(denomination: Denomination) {
         assertThat(denomination.number).isEqualTo(10)
     }
 
@@ -24,8 +23,8 @@ class DenominationTest {
     }
 
     @Test
-    fun `끗수가 Ace일 경우 숫자가 0이다`() {
+    fun `끗수가 Ace일 경우 숫자가 1이다`() {
         val actual = Denomination.ACE.number
-        assertThat(actual).isEqualTo(0)
+        assertThat(actual).isEqualTo(1)
     }
 }

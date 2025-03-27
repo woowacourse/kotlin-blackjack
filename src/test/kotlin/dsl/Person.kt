@@ -5,5 +5,5 @@ data class Person(
     val mbti: String,
     val cats: List<Cat>,
     val hobbies: List<String>,
-    val skills: List<Skill>
+    val skills: List<Skill>,
 )

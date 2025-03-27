@@ -1,24 +1,16 @@
 package blackjack.model.participant
 
-import blackjack.model.GameResult
-import blackjack.model.card.Cards
+import blackjack.model.state.StartGame
+import blackjack.model.state.State
 
 class Dealer(
-    name: String = "딜러",
-    cards: Cards = Cards(emptyList()),
-) : Participant(name, cards) {
-    private var _results: MutableMap<GameResult, Int> = mutableMapOf()
-    val results: Map<GameResult, Int> get() = _results.toMap()
+    name: String = DEALER,
+    state: State = StartGame(),
+) : Participant(name, state) {
+    fun canDraw(): Boolean = state.hand.score() <= DEALER_HIT_SCORE
 
-    fun isHit(): Boolean {
-        val dealerScore = cards.calculateScore()
-        return dealerScore <= 16
-    }
-
-    fun updateResult(playerScore: Int): GameResult {
-        val dealerScore: Int = cards.calculateScore()
-        val result: GameResult = GameResult.of(dealerScore, playerScore)
-        _results[result] = _results.getOrDefault(result, 0) + 1
-        return result
+    companion object {
+        const val DEALER = "딜러"
+        const val DEALER_HIT_SCORE = 16
     }
 }

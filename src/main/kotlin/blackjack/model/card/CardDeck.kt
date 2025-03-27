@@ -1,9 +1,18 @@
 package blackjack.model.card
 
-class CardDeck(
-    private val cards: List<Card>,
+class CardDeck private constructor(
+    private val trumpCard: List<Card>,
 ) {
     private var index = 0
 
-    fun pickCard(): Card = cards[index++]
+    val size = trumpCard.size
+
+    fun pickCard(): Card = trumpCard[index++]
+
+    companion object {
+        fun create(): CardDeck {
+            val shuffledTrumpCard = TrumpCard.CARDS.shuffled()
+            return CardDeck(shuffledTrumpCard)
+        }
+    }
 }

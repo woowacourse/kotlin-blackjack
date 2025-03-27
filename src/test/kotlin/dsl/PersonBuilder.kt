@@ -28,5 +28,4 @@ class PersonBuilder {
     }
 
     fun build(): Person = Person(name, mbti, cats, hobbies, skills)
-
 }
