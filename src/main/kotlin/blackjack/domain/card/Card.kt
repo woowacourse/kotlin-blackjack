@@ -1,9 +1,13 @@
-package blackjack.domain
+package blackjack.domain.card
 
 import java.lang.IllegalArgumentException
 
 class Card private constructor(val rank: Rank, val suit: Suit) {
     fun getScore() = this.rank.score
+
+    fun isAce(): Boolean {
+        return rank == Rank.ACE
+    }
 
     companion object {
         private val POOL: List<Card> =

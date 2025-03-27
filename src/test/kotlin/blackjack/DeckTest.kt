@@ -1,44 +1,38 @@
 package blackjack
 
-import blackjack.domain.Card
-import blackjack.domain.Deck
+import blackjack.domain.card.Card
+import blackjack.domain.card.Deck
+import blackjack.domain.card.Rank
+import blackjack.domain.card.Suit
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.BeforeEach
+import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 import kotlin.IllegalArgumentException
 
 class DeckTest {
-    private lateinit var testDeck: Deck
-
-    @BeforeEach
-    fun setUp() {
-        testDeck = Deck(Card.getAllCard())
-    }
+    private val card1 = Card.of(rank = Rank.ACE, suit = Suit.SPADE)
+    private val card2 = Card.of(rank = Rank.NINE, suit = Suit.SPADE)
+    private val card3 = Card.of(rank = Rank.NINE, suit = Suit.HEART)
 
     @Test
-    fun `카드를 한 장 뽑으면, 덱의 크기가 1 줄어든다`() {
-        val originalSize = testDeck.getSize()
+    fun `덱에 카드가 한 장 있을 때, 카드를 한 장 뽑으면, 덱의 크기가 0이된다`() {
+        val cards = listOf(card1)
+        val deck = Deck(cards)
 
-        testDeck.draw()
+        deck.draw()
 
-        val newSize = testDeck.getSize()
-        assertThat(newSize).isEqualTo(originalSize - 1)
-    }
-
-    @Test
-    fun `덱이 비어있을 때, 카드를 뽑으면 예외가 발생한다`() {
-        assertThrows<IllegalArgumentException> {
-            repeat(testDeck.getSize() + 1) { testDeck.draw() }
-        }
+        assertThatThrownBy { deck.draw() }
+            .isInstanceOf(IllegalArgumentException::class.java)
+            .hasMessage("덱이 비어 있습니다")
     }
 
     @Test
     fun `뽑은 카드는 덱에 존재하지 않는다`() {
-        val drawnCard = testDeck.draw()
+        val cards = listOf(card1, card2, card3)
+        val deck = Deck(cards)
 
-        repeat(testDeck.getSize() - 1) {
-            assertThat(testDeck.draw()).isNotEqualTo(drawnCard)
-        }
+        val drawnCard = deck.draw()
+
+        assertThat(drawnCard).isEqualTo(cards.first())
     }
 }

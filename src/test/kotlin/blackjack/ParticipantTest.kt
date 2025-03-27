@@ -1,32 +1,29 @@
 package blackjack
 
-import blackjack.domain.Card
-import blackjack.domain.Rank
-import blackjack.domain.Suit
+import blackjack.domain.card.Card
+import blackjack.domain.card.Rank
+import blackjack.domain.card.Suit
+import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Participant
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-
-class FakeParticipant : Participant() {
-    override val hitThreshold: Int
-        get() = 21
-}
 
 class ParticipantTest {
     private lateinit var participant: Participant
 
     @BeforeEach
     fun setUp() {
-        participant = FakeParticipant()
+        participant = Dealer()
     }
 
     @Test
-    fun `덱에서 한 장의 카드를 가져올 수 있다`() {
+    fun `참가자가 카드를 추가하면 핸드에 카드가 포함된다`() {
         val card = Card.of(rank = Rank.ACE, suit = Suit.SPADE)
 
         participant.addCard(card)
-        assertThat(participant.hand.getCards()).contains(card)
+
+        assertThat(participant.hand.cards()).contains(card)
     }
 
     @Test

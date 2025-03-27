@@ -1,11 +1,12 @@
 package blackjack.view
 
-import blackjack.domain.Card
-import blackjack.domain.PlayerResultStatus
-import blackjack.domain.Rank
-import blackjack.domain.Suit
+import blackjack.domain.GameResult
+import blackjack.domain.card.Card
+import blackjack.domain.card.Rank
+import blackjack.domain.card.Suit
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Player
+import blackjack.domain.participant.PlayerResultStatus
 
 object OutputView {
     fun showInitialCards(
@@ -13,14 +14,14 @@ object OutputView {
         players: List<Player>,
     ) {
         println("딜러와 ${players.joinToString { it.name }}에게 2장을 나누었습니다.\n")
-        println("딜러: ${printFormattedCard(dealer.hand.getCards().first())}")
+        println("딜러: ${printCardList(dealer.showInitialCards())}")
         players.forEach { player ->
-            printPlayerCards(player)
+            println("${player.name}: ${printCardList(player.showInitialCards())}")
         }
     }
 
     fun printPlayerCards(player: Player) {
-        println("${player.name}카드: ${printCardList(player.hand.getCards())}")
+        println("${player.name}카드: ${printCardList(player.hand.cards())}")
     }
 
     fun printDealerHaveAdditionalCard() {
@@ -31,22 +32,40 @@ object OutputView {
         dealer: Dealer,
         players: List<Player>,
     ) {
-        println("딜러 카드: ${printCardList(dealer.hand.getCards())} - 결과: ${dealer.hand.getTotalSum()}")
+        println("딜러 카드: ${printCardList(dealer.hand.cards())} - 결과: ${dealer.hand.totalSum()}")
 
         players.forEach { player ->
-            println("${player.name}카드: ${printCardList(player.hand.getCards())} - 결과: ${player.hand.getTotalSum()}")
+            println("${player.name}카드: ${printCardList(player.hand.cards())} - 결과: ${player.hand.totalSum()}")
         }
     }
 
-    fun printGameResult(
-        dealer: Dealer,
-        playersGameResult: Map<Player, PlayerResultStatus>,
-    ) {
-        println("\n##최종 승패")
-        println("딜러: ${dealer.result.win}승 ${dealer.result.lose}패 ${dealer.result.draw}무")
+//    fun printResult(gameResult: GameResult) {
+//        println("\n##최종 승패")
+//        println(
+//            "딜러: ${gameResult.dealerWin}승 ${gameResult.dealerLose}패 ${gameResult.dealerDraw}무",
+//        )
+//        gameResult.playersGameResult.forEach { (player, result) ->
+//            println("${player.name}: ${result.toDisplayName()}")
+//        }
+//        println("## 최종 수익")
+//        println("딜러 : ${gameResult.dealerRevenue}")
+//        gameResult.playerProfits.forEach { (player, profit) ->
+//            println("${player.name}: $profit")
+//        }
+//    }
+    fun printResult(gameResult: GameResult) {
+        println("\n## 최종 승패")
+        println("딜러: ${gameResult.dealerWin}승 ${gameResult.dealerLose}패 ${gameResult.dealerDraw}무")
 
-        playersGameResult.forEach { (player, result) ->
+        gameResult.getPlayerResults().forEach { (player, result) ->
             println("${player.name}: ${result.toDisplayName()}")
+        }
+
+        println("\n## 최종 수익")
+        println("딜러: ${gameResult.dealerRevenue}")
+
+        gameResult.getPlayerProfits().forEach { (player, profit) ->
+            println("${player.name}: $profit")
         }
     }
 
@@ -85,6 +104,7 @@ object OutputView {
 
     private fun PlayerResultStatus.toDisplayName(): String =
         when (this) {
+            PlayerResultStatus.BLACKJACK_WIN -> "블랙잭 !"
             PlayerResultStatus.PLAYER_WIN -> "승"
             PlayerResultStatus.PLAYER_LOSE -> "패"
             PlayerResultStatus.DRAW -> "무"

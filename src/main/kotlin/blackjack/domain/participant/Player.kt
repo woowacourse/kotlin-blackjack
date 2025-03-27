@@ -1,41 +1,44 @@
 package blackjack.domain.participant
 
-import blackjack.domain.PlayerResultStatus
+import blackjack.domain.BetAmount
+import blackjack.domain.card.Card
+import blackjack.domain.hand.HandStatus
 
-class Player(val name: String) : Participant() {
-    private var gameStatus: PlayerResultStatus = PlayerResultStatus.DRAW
-
+class Player(val name: String, private val betAmount: BetAmount) : Participant() {
     override val hitThreshold: Int
         get() = PLAYER_HIT_THRESHOLD
 
-    fun setPlayerStatus(dealer: Dealer): PlayerResultStatus {
-        val playerBlackJack = hand.isBlackJack()
-        val dealerBlackJack = dealer.hand.isBlackJack()
-        val playerBust = hand.isBust()
-        val dealerBust = dealer.hand.isBust()
-        val playerTotalSum = hand.getTotalSum()
-        val dealerTotalSum = dealer.hand.getTotalSum()
-
-        gameStatus =
-            when {
-                // 블랙잭 판별
-                playerBlackJack && !dealerBlackJack -> PlayerResultStatus.PLAYER_WIN
-                playerBlackJack && dealerBlackJack -> PlayerResultStatus.DRAW
-                dealerBlackJack && !playerBlackJack -> PlayerResultStatus.PLAYER_LOSE
-
-                // 버스트 판별
-                playerBust -> PlayerResultStatus.PLAYER_LOSE
-                dealerBust -> PlayerResultStatus.PLAYER_WIN
-
-                // 점수 비교
-                playerTotalSum > dealerTotalSum -> PlayerResultStatus.PLAYER_WIN
-                playerTotalSum < dealerTotalSum -> PlayerResultStatus.PLAYER_LOSE
-                else -> PlayerResultStatus.DRAW
-            }
-        return gameStatus
+    override fun showInitialCards(): List<Card> {
+        return hand.cards().take(PLAYER_INITIAL_CARD_COUNT)
     }
 
+    fun getPlayerStatus(dealer: Dealer): PlayerResultStatus {
+        val playerStatus = getStatus()
+        val dealerStatus = dealer.getStatus()
+
+        val result =
+            when {
+                // 블랙잭 판별
+                playerStatus == HandStatus.BLACKJACK && dealerStatus != HandStatus.BLACKJACK -> PlayerResultStatus.BLACKJACK_WIN
+                playerStatus == HandStatus.BLACKJACK && dealerStatus == HandStatus.BLACKJACK -> PlayerResultStatus.DRAW
+                dealerStatus == HandStatus.BLACKJACK -> PlayerResultStatus.PLAYER_LOSE
+
+                // 버스트 판별
+                playerStatus == HandStatus.BUST -> PlayerResultStatus.PLAYER_LOSE
+                dealerStatus == HandStatus.BUST -> PlayerResultStatus.PLAYER_WIN
+
+                // 점수 비교
+                getTotalSum() > dealer.getTotalSum() -> PlayerResultStatus.PLAYER_WIN
+                getTotalSum() < dealer.getTotalSum() -> PlayerResultStatus.PLAYER_LOSE
+                else -> PlayerResultStatus.DRAW
+            }
+        return result
+    }
+
+    fun getBetAmount() = betAmount.getAmount()
+
     companion object {
-        const val PLAYER_HIT_THRESHOLD = 21
+        private const val PLAYER_HIT_THRESHOLD = 21
+        private const val PLAYER_INITIAL_CARD_COUNT = 2
     }
 }
