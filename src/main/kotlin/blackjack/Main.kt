@@ -7,6 +7,7 @@ import blackjack.view.OutputView
 fun main() {
     val inputView = InputView()
     val outputView = OutputView()
-    val controller = Controller(inputView, outputView)
+    val controller = Controller(inputView = inputView, outputView = outputView)
+
     controller.gameStart()
 }

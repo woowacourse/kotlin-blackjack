@@ -1,41 +1,39 @@
 package blackjack.domain
 
+import blackjack.domain.state.Hit
+import blackjack.domain.state.State
+
 class Player(
     val name: String,
-) {
-    private val hand: Hand = Hand(emptyList())
-    val cards: List<Card>
-        get() = hand.value
+    var bettingMoney: Int,
+) : Participant() {
+    var profit: Double = 0.0
+        private set
 
-    var result: Result = Result.NOT_YET
-
-    fun getCard(card: Card) {
-        hand.add(card)
+    fun drawInitialCards(deck: Deck) {
+        repeat(2) { drawCard(deck.draw()) }
+        checkInitialState()
     }
 
-    fun getCards(cards: List<Card>) {
-        hand.add(cards)
-    }
-
-    fun getCountOfCards(): Int = hand.getSize()
-
-    fun wantToHit(): Boolean = hand.getScore() <= 21
-
-//    fun hitOrStay(hit: () -> Unit): Boolean {
-//        if (wantToHit) {
-//            hit()
-//            return true
-//        }
-//        return false
-//    }
-
-    fun canGetCard(): Boolean = getScore() <= 21
-
-    fun setResult() {
-        if (!wantToHit()) {
-            result = Result.LOSE
+    private fun checkInitialState() {
+        if (state is Hit && !state.canDrawCard()) {
+            stay()
         }
     }
 
-    fun getScore() = hand.getScore()
+    fun calculateProfit(dealerState: State) {
+        profit = bettingMoney * state.profit(dealerState)
+    }
+
+    override fun drawMoreCard(): Boolean = state.canDrawCard()
+
+    override fun stay() {
+        if (state is Hit) {
+            state = (state as Hit).changeStay()
+        }
+    }
+
+    fun calculateProfits(dealerState: State) {
+        players.forEach { it.calculateProfit(dealerState) }
+    }
 }

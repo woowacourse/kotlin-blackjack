@@ -1,48 +1,29 @@
 package blackjack.domain
 
-class Dealer(
-    private val players: List<Player>,
-) {
-    private val deck: Deck = Deck()
-    private val hand: Hand = Hand(emptyList())
-    val cards: List<Card>
-        get() = hand.value
-    val results: List<Result>
-        get() =
-            players.map { player ->
-                when (player.result) {
-                    Result.WIN -> Result.LOSE
-                    Result.DRAW -> Result.DRAW
-                    Result.LOSE -> Result.WIN
-                    Result.NOT_YET -> Result.NOT_YET
-                }
-            }
+import blackjack.domain.state.Hit
 
-    fun getCard(card: Card = deck.getCard()) {
-        hand.add(card)
+class Dealer : Participant() {
+    var profit: Double = 0.0
+        private set
+
+    fun drawInitialCards(deck: Deck) {
+        repeat(2) { drawCard(deck.draw()) }
     }
 
-    fun getCards(cards: List<Card>) {
-        cards.forEach { card: Card -> getCard(card) }
-    }
+    fun getVisibleCard(): Card = state.hand.cards.first()
 
-    fun giveCard() {
-        players.forEach { player -> player.getCard(deck.getCard()) }
-    }
+    override fun drawMoreCard(): Boolean = state.hand.getTotalScore() < 17
 
-    fun giveCard(player: Player) {
-        player.getCard(deck.getCard())
-    }
-
-    fun getScore(): Int = hand.getScore()
-
-    fun getCountOfCards(): Int = hand.getSize()
-
-    fun hitOrStay() {
-        var dealerScore = getScore()
-        while (dealerScore < 17) {
-            getCard()
-            dealerScore = getScore()
+    override fun stay() {
+        if (state is Hit) {
+            state = (state as Hit).changeStay()
         }
+    }
+
+    fun playTurn(deck: Deck) {
+        while (drawMoreCard()) {
+            drawCard(deck.draw())
+        }
+        stay()
     }
 }

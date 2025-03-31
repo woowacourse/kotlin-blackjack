@@ -1,45 +1,35 @@
 package blackjack.domain
 
 class Hand(
-    private val _value: MutableList<Card>,
+    cards: List<Card>,
 ) {
-    val value: List<Card> get() = _value
+    private val _cards: MutableList<Card> = cards.toMutableList()
 
-    fun getSize(): Int = value.size
+    val cards: List<Card>
+        get() = _cards
 
-    /**
-     * @return null if all posible score is bigger than 21
-     * */
-    fun getScore(): Int {
-        val aces: List<Card> = value.filter { card: Card -> card.rank is Ace }
-        val acesSums: List<Int> =
-            when (aces.size) {
-                0 -> listOf(0)
-                1 -> listOf(1, 11)
-                2 -> listOf(2, 12, 22)
-                3 -> listOf(3, 13, 23, 33)
-                4 -> listOf(4, 14, 24, 34, 44)
-                else -> throw IllegalArgumentException("Cards can't contain more than 4 aces")
-            }
+    val size = cards.size
 
-        val otherCards: List<Card> = value.filter { card: Card -> card.rank !is Ace }
-        val otherCardsSum: Int =
-            otherCards.sumOf { card: Card ->
-                card.rank.possibleValues.first()
-            }
-        val possibleSums: List<Int> = acesSums.map { acesSum -> acesSum + otherCardsSum }.sortedDescending()
-        val validScore: Int = possibleSums.firstOrNull { possibleSum -> possibleSum <= 21 } ?: possibleSums.min()
-        return validScore
+    fun addCard(card: Card) {
+        _cards.add(card)
     }
 
-    fun add(card: Card) {
-//        require(canGetCard()) { "모든 카드의 합이 21 미만이 될 수 있을 경우에만 카드를 얻을 수 있습니다." }
-        _value.add(card)
+    fun getTotalScore(): Int {
+        val score = _cards.sumOf { it.getScore() }
+        if (_cards.any { it.hasAce() && score + 10 <= 21 }) {
+            return score + 10
+        }
+        return score
     }
 
-    fun add(cards: List<Card>) {
-        cards.forEach { card -> add(card) }
+    fun hasBlackjack(): Boolean = _cards.size == BLACKJACK_SIZE && getTotalScore() == BLACKJACK_SCORE && hasAce()
+
+    fun hasBust(): Boolean = getTotalScore() > BLACKJACK_SCORE
+
+    private fun hasAce(): Boolean = _cards.any { it.hasAce() }
+
+    companion object {
+        const val BLACKJACK_SIZE = 2
+        const val BLACKJACK_SCORE = 21
     }
 }
-
-fun Hand(value: List<Card>): Hand = Hand(value.toMutableList())
